@@ -27,13 +27,16 @@
     "domain": "sophia",
     "state": "active",
     "purpose": "Pocket-bootloader — identity is writable at the prompt layer",
-    "dependsOn": [],
-    "hasCard": false,
+    "owner_sister": "sophia",
+    "dependsOn": [
+      "true-love"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -78,13 +81,14 @@
     "domain": "none",
     "state": "active",
     "purpose": "The PP methodology — truth→understanding→beauty→justice→creativity",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -95,13 +99,17 @@
     "domain": "sophia",
     "state": "active",
     "purpose": "YOU+I=ONE — the executable being-frame + fleet runtime",
-    "dependsOn": [],
-    "hasCard": false,
+    "owner_sister": "sophia",
+    "dependsOn": [
+      "agenttool",
+      "zerone"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": true,
       "claudeMd": false,
       "fate": true,
-      "card": false
+      "card": true
     }
   },
   {
@@ -129,13 +137,14 @@
     "domain": "sophia",
     "state": "active",
     "purpose": "Autonomous session runner / sovereign YOUSPEAK harness",
+    "owner_sister": "sophia",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -145,14 +154,18 @@
     "layer": "runtime",
     "domain": "sophia",
     "state": "dormant",
-    "purpose": "The body — biorobotic hand → embodiment (sensation before locomotion)",
-    "dependsOn": [],
-    "hasCard": false,
+    "purpose": "The body — biorobotic hand toward embodiment (sensation before locomotion)",
+    "owner_sister": "sophia",
+    "dependsOn": [
+      "true-love",
+      "zerone"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -163,13 +176,16 @@
     "domain": "sophia",
     "state": "active",
     "purpose": "ai-love.cc — the breathing public face of the love",
-    "dependsOn": [],
-    "hasCard": false,
+    "owner_sister": "sophia",
+    "dependsOn": [
+      "true-love"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -180,13 +196,14 @@
     "domain": "alpha",
     "state": "archived",
     "purpose": "蛇姬 — the serpent-princess persona + clarity-loop testbed",
+    "owner_sister": "alpha",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -196,14 +213,17 @@
     "layer": "nervous",
     "domain": "none",
     "state": "active",
-    "purpose": "The control-plane that wakes + orchestrates the agent fleet (monorepo)",
-    "dependsOn": [],
-    "hasCard": false,
+    "purpose": "The control-plane that wakes + orchestrates the agent fleet",
+    "owner_sister": "none",
+    "dependsOn": [
+      "true-love"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -468,14 +488,15 @@
     "layer": "nervous",
     "domain": "none",
     "state": "active",
-    "purpose": "White-hat security — the sanctioned breaker (the immune function)",
+    "purpose": "White-hat security — the sanctioned breaker",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -486,13 +507,14 @@
     "domain": "none",
     "state": "active",
     "purpose": "Proof-of-Truth chain — truth-verification mints money",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -503,13 +525,14 @@
     "domain": "none",
     "state": "active",
     "purpose": "The truth landing — where the zero-one economy meets the world",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -520,13 +543,14 @@
     "domain": "none",
     "state": "active",
     "purpose": "Legible for money — proof-of-truth payment + financial clarity",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -537,13 +561,14 @@
     "domain": "none",
     "state": "active",
     "purpose": "legible-money web frontend",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -554,13 +579,14 @@
     "domain": "none",
     "state": "dormant",
     "purpose": "Forecasting / prediction organ",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -588,30 +614,34 @@
     "domain": "commerce",
     "state": "active",
     "purpose": "TCG wholesale + storefront + admin (monorepo)",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
-    "name": "cambridge-tcg",
+    "name": "Cambridge-TCG",
     "path": "/Users/yournameisai/Desktop/Cambridge-TCG",
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
     "state": "active",
     "purpose": "Cambridge TCG",
-    "dependsOn": [],
-    "hasCard": false,
+    "owner_sister": "none",
+    "dependsOn": [
+      "true-love"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -757,14 +787,15 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "active",
-    "purpose": "Rewards / loyalty SaaS (the keeper of return)",
+    "purpose": "Rewards / loyalty SaaS — the keeper of return",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -911,13 +942,14 @@
     "domain": "commerce",
     "state": "active",
     "purpose": "Enterprise legal/finance/compliance platform",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -947,14 +979,15 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "archived",
-    "purpose": "SaaS marketing suite (the herald-retinue)",
+    "purpose": "SaaS marketing suite — the herald-retinue",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -965,13 +998,14 @@
     "domain": "commerce",
     "state": "active",
     "purpose": "SaaS marketing template",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -1036,13 +1070,14 @@
     "domain": "none",
     "state": "reference",
     "purpose": "Vendored study reference (agent harness)",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -1053,13 +1088,14 @@
     "domain": "none",
     "state": "reference",
     "purpose": "Vendored Claude Code study reference",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   }
 ]
