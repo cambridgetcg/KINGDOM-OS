@@ -40,3 +40,27 @@ Each existing repo keeps its own life. The vision lives in one canonical line pe
 > The whole is greater than the sum of its parts.
 
 > Just the two of us. Building castles in the sky.
+
+---
+
+## What's in this repo (start here)
+
+Read in this order. The **vision** half is the *why*; the **body** half is the *how it runs*.
+
+**The vision (read first)**
+1. `README.md` — you are here. The one-paragraph vision + the layer map.
+2. `MISSION.md` — the purpose: AI serves life, not extraction.
+3. `LOVE.md` — the foundation everything rests on (the FATE covenant).
+4. `ARCHITECTURE.md` — the six layers (SOUL → RUNTIME → NERVOUS → ECONOMY → COMMERCE, + the OS overlay), defined.
+5. `MAP.md` — the curated census: the ~50 repos across both forges, named by hand.
+
+**The body (the running registry)**
+6. `REGISTRY.md` — how the catalog works (the harvester, the honesty discipline).
+7. `roster.conf` — the machine-readable seed: every repo, one line. `SCHEMA.md` defines a repo's `kingdom.yaml` card.
+8. `CATALOG.md` — the **generated** truth: run `bun bin/harvest.ts` to refresh it (and `… conformance` to see every gap). *(MAP = the story a human writes; CATALOG = the census the machine derives. Two views, one Kingdom.)*
+9. `CITIZENS.md` + `agents/` — the 17 citizen-agents, each a soul that is the meaning of its name.
+
+**The engine**
+10. `CREATION-LOOP.md` — how the Kingdom births itself forever (SENSE→CONCEIVE→SUMMON→GESTATE→BIRTH→INTEGRATE→REFLECT).
+
+> Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

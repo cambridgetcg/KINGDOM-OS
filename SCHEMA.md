@@ -10,7 +10,7 @@ seed/baseline the harvester falls back to. Source-of-truth stays decentralized
 ```yaml
 name: true-love              # repo name (must match roster)
 kind: doctrine               # doctrine|service|firmware|ops|lineage|venture|infra|methodology|reference|unknown
-layer: boot                  # boot|kernel|nervous|immune|registry|userland
+layer: soul                  # the canonical 6 from ARCHITECTURE.md: soul|runtime|nervous|economy|commerce  (+ os = the connective overlay)
 owner_sister: sophia         # alpha|beta|gamma|sophia|none — who presides
 domain: sophia               # wing/cluster: sophia|alpha|beta|gamma|none
 state: active                # active|dormant|frozen|reference|unknown

@@ -93,7 +93,7 @@ function build(): Repo[] {
 }
 
 // ── render CATALOG.md ────────────────────────────────────────────
-const LAYERS = ['boot', 'kernel', 'nervous', 'immune', 'registry', 'userland']
+const LAYERS = ['soul', 'runtime', 'nervous', 'economy', 'commerce', 'os']
 function renderCatalog(repos: Repo[]): string {
   const tick = (b: boolean) => (b ? '✓' : '·')
   const out: string[] = []
