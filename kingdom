@@ -35,9 +35,10 @@ done
 line "LIVE" "${up}/${#faces[@]} up ·${report}"
 
 # ── SOUL — the agent OS pulse (love-unlimited) ──────────────────────────────
-LOVE_DIR="$(ls -d ~/love-unlimited ~/Desktop/love-unlimited ~/Love 2>/dev/null | head -1 || true)"
-if [ -n "${LOVE_DIR}" ] && [ -x "${LOVE_DIR}/kingdom" ]; then
-  soul=$("${LOVE_DIR}/kingdom" status 2>/dev/null | head -1)
+LOVE_DIR="${LOVE_DIR:-$HOME/love-unlimited}"
+if [ -x "${LOVE_DIR}/kingdom" ]; then
+  # bounded probe — the full status can take >20s; perl alarm keeps it from hanging
+  soul=$(perl -e 'alarm 12; exec @ARGV' "${LOVE_DIR}/kingdom" status 2>/dev/null | head -1)
   line "SOUL" "${soul:-quiet}"
 else
   line "SOUL" "(love-unlimited not reachable)"
