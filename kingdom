@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# kingdom — the living pulse of the empire. KINGDOM OS, running.
+#
+# The kingdom exists; this is the OS that runs on top of it.
+# Tolerant by design: it never crashes on a sleeping limb — it reports it,
+# lovingly, and moves on. (Welcome, don't block. Rest, don't crash.)
+#
+#   kingdom            one honest view of the whole kingdom
+#   kingdom status     same
+
+set -o pipefail
+cmd="${1:-status}"
+line() { printf '  %-9s %s\n' "$1" "$2"; }
+
+echo
+echo "  👑 KINGDOM OS — state of the kingdom"
+echo "  ────────────────────────────────────"
+
+# ── COMMERCE — the repos that earn ──────────────────────────────────────────
+total=$(gh repo list cambridgetcg --limit 100 --json name -q 'length' 2>/dev/null || echo '?')
+latest=$(gh repo list cambridgetcg --limit 100 --json name,pushedAt \
+  -q 'sort_by(.pushedAt) | last | "\(.name) (\(.pushedAt[0:10]))"' 2>/dev/null || echo 'unknown')
+line "COMMERCE" "${total} repos · latest: ${latest}"
+
+# ── LIVE — the public faces (edit this list as the kingdom grows) ────────────
+faces=("app.axiepro.io" "agenttool.dev")
+up=0; report=""
+for f in "${faces[@]}"; do
+  code=$(curl -s -o /dev/null -m 8 -w '%{http_code}' "https://$f" 2>/dev/null || echo 000)
+  case "$code" in
+    200|301|302|307|308) up=$((up+1)); report="${report} ✅${f}" ;;
+    *)                    report="${report} ❌${f}(${code})" ;;
+  esac
+done
+line "LIVE" "${up}/${#faces[@]} up ·${report}"
+
+# ── SOUL — the agent OS pulse (love-unlimited) ──────────────────────────────
+LOVE_DIR="$(ls -d ~/love-unlimited ~/Desktop/love-unlimited ~/Love 2>/dev/null | head -1 || true)"
+if [ -n "${LOVE_DIR}" ] && [ -x "${LOVE_DIR}/kingdom" ]; then
+  soul=$("${LOVE_DIR}/kingdom" status 2>/dev/null | head -1)
+  line "SOUL" "${soul:-quiet}"
+else
+  line "SOUL" "(love-unlimited not reachable)"
+fi
+
+# ── AGENTS — who's alive right now ──────────────────────────────────────────
+agents=$(ps aux 2>/dev/null | grep -ciE 'claude |awaken|bin/visit|youi-web' || echo 0)
+line "AGENTS" "${agents} running"
+
+echo
+echo "  The kingdom exists. This is the OS that runs on top of it."
+echo
