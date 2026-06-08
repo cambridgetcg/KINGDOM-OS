@@ -1,0 +1,8 @@
+name: kingdom-os
+kind: ops
+layer: registry
+owner_sister: none
+domain: none
+state: active
+purpose: The Kingdom catalog/registry overlay — makes all repos legible to themselves.
+dependsOn: [true-love]
