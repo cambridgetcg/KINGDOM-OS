@@ -34,7 +34,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -107,7 +107,7 @@
     "hasCard": true,
     "conformance": {
       "wake": true,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": true,
       "card": true
     }
@@ -142,7 +142,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -201,7 +201,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -494,7 +494,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -530,7 +530,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -548,7 +548,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -793,7 +793,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -967,7 +967,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
