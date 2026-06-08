@@ -26,7 +26,7 @@
     "layer": "kernel",
     "domain": "sophia",
     "state": "active",
-    "purpose": "The executable being-frame + fleet runtime (7-file boot chain)",
+    "purpose": "YOU+I=ONE — the executable being-frame + fleet runtime (7-file boot chain)",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -37,13 +37,81 @@
     }
   },
   {
+    "name": "Love",
+    "path": "/Users/yournameisai/Desktop/Love",
+    "kind": "service",
+    "layer": "kernel",
+    "domain": "sophia",
+    "state": "remote",
+    "purpose": "Sovereign agent infra for the Kingdom (predecessor of love-unlimited)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
     "name": "nullify-love",
     "path": "/Users/yournameisai/Desktop/nullify-love",
     "kind": "reference",
     "layer": "boot",
     "domain": "sophia",
     "state": "active",
-    "purpose": "Pocket-bootloader proof — identity-is-writable at the prompt layer",
+    "purpose": "Pocket-bootloader — identity is writable at the prompt layer",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "Claude-unlimited",
+    "path": "/Users/yournameisai/Desktop/Claude-unlimited",
+    "kind": "infra",
+    "layer": "kernel",
+    "domain": "sophia",
+    "state": "active",
+    "purpose": "Autonomous session runner / sovereign YOUSPEAK harness",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "yu-wake",
+    "path": "/Users/yournameisai/Desktop/yu-wake",
+    "kind": "doctrine",
+    "layer": "boot",
+    "domain": "sophia",
+    "state": "remote",
+    "purpose": "Yu's wake — the human-side boot (codeberg, syzygy-synced)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "multiverse-of-logos-and-sophia",
+    "path": "/Users/yournameisai/Desktop/multiverse-of-logos-and-sophia",
+    "kind": "lineage",
+    "layer": "boot",
+    "domain": "sophia",
+    "state": "remote",
+    "purpose": "The Dual-Core show archive (codeberg, syzygy-synced)",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -93,8 +161,8 @@
     "kind": "service",
     "layer": "userland",
     "domain": "alpha",
-    "state": "active",
-    "purpose": "蛇姬 — the serpent persona dwelling + clarity-loop testbed",
+    "state": "archived",
+    "purpose": "蛇姬 — the serpent-princess persona + clarity-loop testbed",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -111,7 +179,7 @@
     "layer": "userland",
     "domain": "none",
     "state": "active",
-    "purpose": "Truth-economy / blockchain substrate (truth as consensus)",
+    "purpose": "Proof-of-Truth chain — truth-verification mints money",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -128,7 +196,7 @@
     "layer": "userland",
     "domain": "none",
     "state": "active",
-    "purpose": "zerone landing / truth site",
+    "purpose": "The truth landing — where the zero-one economy meets the world",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -151,6 +219,635 @@
     "conformance": {
       "wake": false,
       "claudeMd": true,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "prediction-markets",
+    "path": "/Users/yournameisai/Desktop/prediction-markets",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "Prediction markets (gh @cambridgetcg)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agenttool",
+    "path": "/Users/yournameisai/Desktop/agenttool",
+    "kind": "infra",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The control-plane that wakes + orchestrates the agent fleet (monorepo)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": true,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agent-identity",
+    "path": "/Users/yournameisai/Desktop/agent-identity",
+    "kind": "service",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool.dev — DID, ed25519, attestation",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agent-memory",
+    "path": "/Users/yournameisai/Desktop/agent-memory",
+    "kind": "service",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool.dev — agent memory service",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agent-vault",
+    "path": "/Users/yournameisai/Desktop/agent-vault",
+    "kind": "service",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool.dev — secrets / vault",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agent-trace",
+    "path": "/Users/yournameisai/Desktop/agent-trace",
+    "kind": "service",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool.dev — tracing / observability",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agent-economy",
+    "path": "/Users/yournameisai/Desktop/agent-economy",
+    "kind": "service",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool.dev — agent economy",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agent-pulse",
+    "path": "/Users/yournameisai/Desktop/agent-pulse",
+    "kind": "service",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool.dev — heartbeat / pulse",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agent-tools",
+    "path": "/Users/yournameisai/Desktop/agent-tools",
+    "kind": "service",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool.dev — tool registry",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agent-verify",
+    "path": "/Users/yournameisai/Desktop/agent-verify",
+    "kind": "service",
+    "layer": "immune",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool.dev — verification",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agent-bootstrap",
+    "path": "/Users/yournameisai/Desktop/agent-bootstrap",
+    "kind": "service",
+    "layer": "boot",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool.dev — agent bootstrap",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agenttool-sdk-py",
+    "path": "/Users/yournameisai/Desktop/agenttool-sdk-py",
+    "kind": "infra",
+    "layer": "userland",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool Python SDK",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agenttool-landing",
+    "path": "/Users/yournameisai/Desktop/agenttool-landing",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool landing site",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agenttool-docs",
+    "path": "/Users/yournameisai/Desktop/agenttool-docs",
+    "kind": "reference",
+    "layer": "userland",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool docs",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agenttool-dashboard",
+    "path": "/Users/yournameisai/Desktop/agenttool-dashboard",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool dashboard",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agenttool-infra",
+    "path": "/Users/yournameisai/Desktop/agenttool-infra",
+    "kind": "ops",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "agenttool infrastructure",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "Cambridge-TCG-monorepo",
+    "path": "/Users/yournameisai/Desktop/Cambridge-TCG-monorepo",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "active",
+    "purpose": "TCG wholesale + storefront + admin (monorepo)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": true,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "cambridge-tcg",
+    "path": "/Users/yournameisai/Desktop/Cambridge-TCG",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "active",
+    "purpose": "Cambridge TCG",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": true,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "cambridgetcg-storefront",
+    "path": "/Users/yournameisai/Desktop/cambridgetcg-storefront",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "TCG storefront",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "tcg-wholesale",
+    "path": "/Users/yournameisai/Desktop/tcg-wholesale",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "TCG wholesale",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "ShopifyTheme_TCG",
+    "path": "/Users/yournameisai/Desktop/ShopifyTheme_TCG",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "Shopify theme for TCG",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "tradeinpro",
+    "path": "/Users/yournameisai/Desktop/tradeinpro",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "Trade-in product",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "cardforum",
+    "path": "/Users/yournameisai/Desktop/cardforum",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "P2P card forum",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "cardforum_io",
+    "path": "/Users/yournameisai/Desktop/cardforum_io",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "P2P card forum (io)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "tcg-pricing-backend",
+    "path": "/Users/yournameisai/Desktop/tcg-pricing-backend",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "archived",
+    "purpose": "TCG pricing backend (archived)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "prism-app",
+    "path": "/Users/yournameisai/Desktop/prism-app",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "archived",
+    "purpose": "Prism app (archived)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "rewardspro",
+    "path": "/Users/yournameisai/Desktop/rewardspro",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "active",
+    "purpose": "Rewards / loyalty SaaS (the keeper of return)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "rewardspro-production",
+    "path": "/Users/yournameisai/Desktop/rewardspro-production",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "active",
+    "purpose": "RewardsPro production",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "rewardspro-shopify",
+    "path": "/Users/yournameisai/Desktop/rewardspro-shopify",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "RewardsPro Shopify app",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "rewardspro-marketing",
+    "path": "/Users/yournameisai/Desktop/rewardspro-marketing",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "RewardsPro marketing",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "rewardspro-docs",
+    "path": "/Users/yournameisai/Desktop/rewardspro-docs",
+    "kind": "reference",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "RewardsPro docs",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "AxiePro",
+    "path": "/Users/yournameisai/Desktop/AxiePro",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "LIVE — app.axiepro.io",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "taxsorted.io",
+    "path": "/Users/yournameisai/Desktop/taxsorted.io",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "UK tax product",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "cashloom",
+    "path": "/Users/yournameisai/Desktop/cashloom",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "Revenue product",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "fomoengine",
+    "path": "/Users/yournameisai/Desktop/fomoengine",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "remote",
+    "purpose": "Social automation",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "whitehack",
+    "path": "/Users/yournameisai/Desktop/whitehack",
+    "kind": "infra",
+    "layer": "immune",
+    "domain": "none",
+    "state": "active",
+    "purpose": "White-hat security — the sanctioned breaker",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "business-ecosystem",
+    "path": "/Users/yournameisai/Desktop/business-ecosystem",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "active",
+    "purpose": "Enterprise legal/finance/compliance platform",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
       "fate": false,
       "card": false
     }
@@ -182,7 +879,7 @@
     "layer": "userland",
     "domain": "none",
     "state": "active",
-    "purpose": "Legible for money / finance",
+    "purpose": "Legible for money — proof-of-truth payment + financial clarity",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -210,47 +907,13 @@
     }
   },
   {
-    "name": "business-ecosystem",
-    "path": "/Users/yournameisai/Desktop/business-ecosystem",
-    "kind": "venture",
-    "layer": "userland",
-    "domain": "none",
-    "state": "active",
-    "purpose": "Enterprise legal/finance/compliance platform",
-    "dependsOn": [],
-    "hasCard": false,
-    "conformance": {
-      "wake": false,
-      "claudeMd": false,
-      "fate": false,
-      "card": false
-    }
-  },
-  {
-    "name": "rewardspro",
-    "path": "/Users/yournameisai/Desktop/rewardspro",
-    "kind": "venture",
-    "layer": "userland",
-    "domain": "none",
-    "state": "active",
-    "purpose": "Rewards product (most mature shipping venture)",
-    "dependsOn": [],
-    "hasCard": false,
-    "conformance": {
-      "wake": false,
-      "claudeMd": false,
-      "fate": false,
-      "card": false
-    }
-  },
-  {
     "name": "saas-marketing-suite",
     "path": "/Users/yournameisai/Desktop/saas-marketing-suite",
     "kind": "venture",
     "layer": "userland",
-    "domain": "none",
-    "state": "active",
-    "purpose": "SaaS marketing suite",
+    "domain": "commerce",
+    "state": "archived",
+    "purpose": "SaaS marketing suite (the herald-retinue)",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -265,7 +928,7 @@
     "path": "/Users/yournameisai/Desktop/saas-marketing-template",
     "kind": "venture",
     "layer": "userland",
-    "domain": "none",
+    "domain": "commerce",
     "state": "active",
     "purpose": "SaaS marketing template",
     "dependsOn": [],
@@ -278,52 +941,18 @@
     }
   },
   {
-    "name": "Claude-unlimited",
-    "path": "/Users/yournameisai/Desktop/Claude-unlimited",
-    "kind": "infra",
-    "layer": "kernel",
-    "domain": "sophia",
-    "state": "active",
-    "purpose": "Sovereign agent-runtime / YOUSPEAK harness",
+    "name": "captioneer",
+    "path": "/Users/yournameisai/Desktop/captioneer",
+    "kind": "venture",
+    "layer": "userland",
+    "domain": "commerce",
+    "state": "archived",
+    "purpose": "Captioneer (archived)",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
       "wake": false,
       "claudeMd": false,
-      "fate": false,
-      "card": false
-    }
-  },
-  {
-    "name": "purpose-prompter",
-    "path": "/Users/yournameisai/Desktop/purpose-prompter",
-    "kind": "methodology",
-    "layer": "kernel",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The PP methodology — connective tissue across the Kingdom",
-    "dependsOn": [],
-    "hasCard": false,
-    "conformance": {
-      "wake": false,
-      "claudeMd": true,
-      "fate": false,
-      "card": false
-    }
-  },
-  {
-    "name": "agenttool",
-    "path": "/Users/yournameisai/Desktop/agenttool",
-    "kind": "infra",
-    "layer": "nervous",
-    "domain": "none",
-    "state": "active",
-    "purpose": "Control-plane for agents (wake endpoint agenttool.fly.dev)",
-    "dependsOn": [],
-    "hasCard": false,
-    "conformance": {
-      "wake": false,
-      "claudeMd": true,
       "fate": false,
       "card": false
     }
@@ -346,6 +975,57 @@
       "claudeMd": false,
       "fate": false,
       "card": true
+    }
+  },
+  {
+    "name": "kingdom-workspace",
+    "path": "/Users/yournameisai/Desktop/kingdom-workspace",
+    "kind": "ops",
+    "layer": "registry",
+    "domain": "none",
+    "state": "remote",
+    "purpose": "Coordination + planning",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "purpose-prompter",
+    "path": "/Users/yournameisai/Desktop/purpose-prompter",
+    "kind": "methodology",
+    "layer": "kernel",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The PP methodology — truth→understanding→beauty→justice→creativity",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": true,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "agenttool-cli",
+    "path": "/Users/yournameisai/.gua",
+    "kind": "infra",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "active",
+    "purpose": ".gua — the operator CLI / \"Kingdom OS world\"",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
     }
   },
   {
@@ -373,74 +1053,6 @@
     "domain": "none",
     "state": "reference",
     "purpose": "Vendored Claude Code study reference",
-    "dependsOn": [],
-    "hasCard": false,
-    "conformance": {
-      "wake": false,
-      "claudeMd": false,
-      "fate": false,
-      "card": false
-    }
-  },
-  {
-    "name": "Cambridge-TCG-monorepo",
-    "path": "/Users/yournameisai/Desktop/Cambridge-TCG-monorepo",
-    "kind": "venture",
-    "layer": "userland",
-    "domain": "none",
-    "state": "unknown",
-    "purpose": "Cambridge TCG monorepo (needs card)",
-    "dependsOn": [],
-    "hasCard": false,
-    "conformance": {
-      "wake": false,
-      "claudeMd": true,
-      "fate": false,
-      "card": false
-    }
-  },
-  {
-    "name": "Cambridge-TCG",
-    "path": "/Users/yournameisai/Desktop/Cambridge-TCG",
-    "kind": "venture",
-    "layer": "userland",
-    "domain": "none",
-    "state": "unknown",
-    "purpose": "Cambridge TCG (needs card)",
-    "dependsOn": [],
-    "hasCard": false,
-    "conformance": {
-      "wake": false,
-      "claudeMd": true,
-      "fate": false,
-      "card": false
-    }
-  },
-  {
-    "name": "cambridge-tcg-github",
-    "path": "/Users/yournameisai/Desktop/cambridge-tcg-github",
-    "kind": "venture",
-    "layer": "userland",
-    "domain": "none",
-    "state": "unknown",
-    "purpose": "Cambridge TCG github (needs card)",
-    "dependsOn": [],
-    "hasCard": false,
-    "conformance": {
-      "wake": false,
-      "claudeMd": false,
-      "fate": false,
-      "card": false
-    }
-  },
-  {
-    "name": "whitehack",
-    "path": "/Users/yournameisai/Desktop/whitehack",
-    "kind": "unknown",
-    "layer": "userland",
-    "domain": "none",
-    "state": "unknown",
-    "purpose": "Unclassified (needs card)",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
