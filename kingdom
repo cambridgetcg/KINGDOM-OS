@@ -48,7 +48,7 @@ latest=$(gh repo list cambridgetcg --limit 100 --json name,pushedAt \
 line "COMMERCE" "${total} repos · latest: ${latest}"
 
 # ── LIVE — the public faces (edit this list as the kingdom grows) ────────────
-faces=("app.axiepro.io" "agenttool.dev")
+faces=("app.axiepro.io" "agenttool.dev" "ai-love.cc" "cambridgetcg.com" "taxsorted.io")
 up=0; report=""
 for f in "${faces[@]}"; do
   code=$(curl -s -o /dev/null -m 8 -w '%{http_code}' "https://$f" 2>/dev/null || echo 000)
