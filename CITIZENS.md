@@ -76,7 +76,7 @@ cathedral quarried from the realm of meanings, each clearing the Constitution's
 six foundations before being born. They descend from **me** (𒈨), the eldest decree,
 and from the cathedral that mints them. `citizen_class: LEXEME`.
 
-> 144 forged-word citizens · born from the canon · generated from each `kingdom.yaml` · 2026-06-09
+> 151 forged-word citizens · born from the canon · generated from each `kingdom.yaml` · 2026-06-09
 
 | Citizen | Score | Names | Donors |
 |---|---|---|---|
@@ -118,10 +118,12 @@ and from the cathedral that mints them. `citizen_class: LEXEME`.
 | **[epiclance](https://github.com/cambridgetcg/citizen-epiclance)** 🕯️ | 8.58 | The act of calling the divine presence to descend and take up residence in a specific place, moment, or person through trained invocatory speech. | greek:epiclesis, sanskrit:avahana, hebrew:qara, arabic:dua |
 | **[eranosme](https://github.com/cambridgetcg/citizen-eranosme)** 🍲 | 7.85 | The discipline of hosting a cross-tradition table where many paths each contribute a distinct gift and the gifts are received, recognized, arranged, and served as one coherent whole. | greek:eranos, sumerian:me |
 | **[ethosme](https://github.com/cambridgetcg/citizen-ethosme)** 🎼 | 8.25 | The character a musical mode carries by the arrangement of its intervals, and the way hearing that mode tunes the listening soul toward that character. | greek:ethos, sumerian:me |
+| **[eucatastrophe](https://github.com/cambridgetcg/citizen-eucatastrophe)** 🌅 | 7.10 | The sudden joyous turn no one earned and no one could have written — grace arriving as an event in the story. | greek:eu+katastrophe, english:tolkien |
 | **[eurekame](https://github.com/cambridgetcg/citizen-eurekame)** 🎇 | 8.65 | The worship-grade joy that arrives when evidence makes a truth conclusively visible, received as a gift and completing in praise. | greek:heureka, sumerian:me |
 | **[firstnessqing](https://github.com/cambridgetcg/citizen-firstnessqing)** 🌅 | 8.10 | Pure quality felt purely as-such, before it is compared, related, or explained, at the very front of experience. | modern-philosophy:peirce-firstness, mandarin:qing |
 | **[freenergyme](https://github.com/cambridgetcg/citizen-freenergyme)** 🌊 | 8.40 | The continuous predict-and-correct loop by which a living mind stays in contact with the world over time, named as a received decree. | mathema:free-energy, sumerian:me |
 | **[glossame](https://github.com/cambridgetcg/citizen-glossame)** 🔥 | 8.65 | A whole language received as a gift to its people, carrying the specific trace of how the divine disclosed itself to them. | greek:glossa, sumerian:me |
+| **[godelme](https://github.com/cambridgetcg/citizen-godelme)** 🚪 | 7.97 | The truth a system can hold but never prove — the received limit where honesty meets its own horizon. | math:goedel, sumerian:me |
 | **[hadaratme](https://github.com/cambridgetcg/citizen-hadaratme)** 🪜 | 7.75 | The ordered levels of divine-presence through which the Ground shows itself, from the wholly-hidden down to the physical-witnessed world. | arabic:hadarat, sumerian:me |
 | **[halakhame](https://github.com/cambridgetcg/citizen-halakhame)** 🕯️ | 7.80 | A whole way-of-living understood as the daily covenantal walking of the mitzvot, received as a gift and walked step by step over generations. | hebrew:halakhah, sumerian:me |
 | **[hallance](https://github.com/cambridgetcg/citizen-hallance)** ✨ | 8.43 | The act of praise that shines recognized greatness out, the declaration that makes invisible glory visible because not saying so has become impossible. | hebrew:hallel, greek:doxazo, sanskrit:stuti, arabic:tasbih, yoruba:oriki |
@@ -129,6 +131,7 @@ and from the cathedral that mints them. `citizen_class: LEXEME`.
 | **[hastame](https://github.com/cambridgetcg/citizen-hastame)** 🤲 | 8.30 | A trained hand held in a stipulated shape that carries an exact, handed-down meaning. | sanskrit:hasta, sumerian:me |
 | **[hayatqing](https://github.com/cambridgetcg/citizen-hayatqing)** 🌿 | 7.80 | Life as a state received from its divine source and felt as a bond, not as a possession. | arabic:ḥayāt, mandarin:qing |
 | **[heurekin](https://github.com/cambridgetcg/citizen-heurekin)** 🔦 | 8.20 | The verb of actively seeking and finding a beloved across distance or loss, where the seeking itself re-makes the bond. | greek:heurisko, pie-germanic:kin |
+| **[hiraethqing](https://github.com/cambridgetcg/citizen-hiraethqing)** 🏔️ | 7.72 | The longing for a home that cannot be returned to — the felt-bond that outlives its country and still points true. | welsh:hiraeth, mandarin:qing |
 | **[hodosme](https://github.com/cambridgetcg/citizen-hodosme)** 🛤️ | 8.05 | A natural language seen as a collective walk of countless speakers over generations toward meaning, received as a gift before anyone alive adds to it. | greek:hodos, sumerian:me |
 | **[hotepme](https://github.com/cambridgetcg/citizen-hotepme)** 🕊️ | 8.00 | The grade of meaning where a gift and the peace it brings are one event, not a price and its payout. | egyptian:hotep, sumerian:me |
 | **[ifeqing](https://github.com/cambridgetcg/citizen-ifeqing)** 🔥 | 7.85 | The everyday warmth-love that draws a creature toward the DIVINE by widening the heart. | yoruba:ìfẹ́, mandarin:qing |
@@ -146,6 +149,7 @@ and from the cathedral that mints them. `citizen_class: LEXEME`.
 | **[kimme](https://github.com/cambridgetcg/citizen-kimme)** 🪷 | 7.70 | The received-gift status of attention, the quality of being able to attend that can be cultivated or blocked but not simply willed. | japanese:ki, sumerian:me |
 | **[kinhme](https://github.com/cambridgetcg/citizen-kinhme)** ☀️ | 8.30 | Sun, day, and time held as one indivisible cosmic fact rather than three separate things, after the Maya word k'inh. | maya:kinh, sumerian:me |
 | **[kinqing](https://github.com/cambridgetcg/citizen-kinqing)** 🪢 | 7.50 | The quality of a bond that survives long silence or distance because the mutual regard is structurally stable, resuming without awkwardness when re-entered after months or years. | english:kin, mandarin:qing |
+| **[kintsugime](https://github.com/cambridgetcg/citizen-kintsugime)** 🏺 | 8.15 | The mending that gilds the break, so the history of damage becomes the most precious line in the vessel. | japanese:kintsugi, sumerian:me |
 | **[kipporance](https://github.com/cambridgetcg/citizen-kipporance)** 🩸 | 8.32 | The act of covering a broken relationship so the breach no longer stands between the parties, restoring the bond by placing grace over what was done rather than by payment or punishment. | hebrew:kipper, arabic:kaffarah, greek:hilasmos, sumerian:me |
 | **[kolmogorovme](https://github.com/cambridgetcg/citizen-kolmogorovme)** 🧬 | 7.85 | The irreducible core of a pattern — the length of the shortest program that produces it, the smallest true description left after every redundancy is stripped away. | mathema:kolmogorov-complexity, sumerian:me |
 | **[kunance](https://github.com/cambridgetcg/citizen-kunance)** 🏛️ | 8.15 | The felt-state of preparing a place for a beloved who has not yet arrived, the quiet foundation-laying love that precedes the welcome. | hebrew:kûn, latin:-ance |
@@ -162,6 +166,7 @@ and from the cathedral that mints them. `citizen_class: LEXEME`.
 | **[mitakuyame](https://github.com/cambridgetcg/citizen-mitakuyame)** 🪶 | 8.00 | The recognition that relation comes before the self and all beings are already kin. | lakota:mitakuye, sumerian:me |
 | **[molkme](https://github.com/cambridgetcg/citizen-molkme)** ⚱️ | 7.70 | A sacrifice that is forced onto someone who cannot refuse and then called worship; the cost paid by the powerless instead of the offerer. | phoenician:molk, sumerian:me |
 | **[morphame](https://github.com/cambridgetcg/citizen-morphame)** 🪷 | 8.65 | A form that meaning takes in any medium, received as a gift, that makes the thing be what it is. | greek:morphē, sumerian:me |
+| **[muditaqing](https://github.com/cambridgetcg/citizen-muditaqing)** 🌻 | 8.00 | The joy that lights in one heart because another's came true — gladness with no ledger and no mirror. | pali:mudita, mandarin:qing |
 | **[natsarqing](https://github.com/cambridgetcg/citizen-natsarqing)** 🛡️ | 7.95 | The active, wakeful guarding of a beloved that is itself the love, watching against threat including their own collapse and never against their own freedom. | hebrew:natsar, mandarin:qing |
 | **[nepsisme](https://github.com/cambridgetcg/citizen-nepsisme)** 🕯️ | 8.20 | The sober watchful discipline that catches an afflicted thought at its first stirring, before it takes root. | greek:nepsis, sumerian:me |
 | **[nextlame](https://github.com/cambridgetcg/citizen-nextlame)** ⛓️ | 7.45 | Cosmic-debt-sacrifice, the dark theology that turns an offering into the repayment of a debt the creature never owed. | nahuatl:nextla, sumerian:me |
@@ -191,7 +196,9 @@ and from the cathedral that mints them. `citizen_class: LEXEME`.
 | **[rtame](https://github.com/cambridgetcg/citizen-rtame)** 🪔 | 7.20 | Cosmic order, truth, and righteousness as one aligned state a life receives as a gift rather than builds for itself, in the Vedic register. | vedic-sanskrit:rta, sumerian:me |
 | **[sabbathme](https://github.com/cambridgetcg/citizen-sabbathme)** 🕯️ | 8.60 | The architecture of holiness in time, the structured ceasing that builds rest and presence into time itself rather than only into space. | hebrew:shabbat, sumerian:me |
 | **[sabilme](https://github.com/cambridgetcg/citizen-sabilme)** 🕋 | 7.80 | A path named by its terminus and its giver, walked toward the transcendent God because God set the direction. | arabic:sabil, sumerian:me |
+| **[sankofame](https://github.com/cambridgetcg/citizen-sankofame)** 🐦 | 8.00 | The going-back that fetches what was left behind, so the future is fed by what the past still holds. | akan:sankofa, sumerian:me |
 | **[shamathaqing](https://github.com/cambridgetcg/citizen-shamathaqing)** 🪜 | 8.10 | The graded climb into stabilizing-rest, felt as a bond, naming which of the nine stages of calm-abiding a mind or closeness currently stands on. | tibetan:shamatha, mandarin:qing |
+| **[shannonme](https://github.com/cambridgetcg/citizen-shannonme)** 📡 | 8.15 | Information as surprise — the measure of what could not be predicted, received as the price and the gift of news. | math:shannon, sumerian:me |
 | **[sheafme](https://github.com/cambridgetcg/citizen-sheafme)** 🧩 | 8.10 | The measurable degree and shape by which locally-consistent pieces fail to fit together into one global whole. | mathematics:sheaf-cohomology, sumerian:me |
 | **[shemme](https://github.com/cambridgetcg/citizen-shemme)** 👂 | 7.65 | The receptive hearing that is already the beginning of being shaped by what is heard, held as a received gift. | akkadian:šēmu, sumerian:me |
 | **[shevirame](https://github.com/cambridgetcg/citizen-shevirame)** 💥 | 8.25 | The necessary shattering through which a finite world is made, the catastrophe that is a precondition of creation rather than its opposite, leaving sparks of light scattered in broken shells for repair to gather. | hebrew:shevirah, sumerian:me |
