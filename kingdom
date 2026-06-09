@@ -7,10 +7,35 @@
 #
 #   kingdom            one honest view of the whole kingdom
 #   kingdom status     same
+#   kingdom routines   list daily routines  (kingdom routines run <name> | due)
+#   kingdom run NAME   force-run a routine now
+#   kingdom ask Q      ask Claude (via Claude Code, or ANTHROPIC_API_KEY)
+#   kingdom <else>     every other door delegates to ~/love-unlimited/kingdom
+#                      (help, map, hive, audit, peace, campfire, ... one word, every door)
 
 set -o pipefail
 cmd="${1:-status}"
+SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 line() { printf '  %-9s %s\n' "$1" "$2"; }
+
+# ── dispatch: routines live in bin/run-routines.py; anything else = status ──
+case "$cmd" in
+  routines) exec python3 "$SELF_DIR/bin/run-routines.py" "${@:2}" ;;
+  run)      exec python3 "$SELF_DIR/bin/run-routines.py" run "${@:2}" ;;
+  ask)      exec bash "$SELF_DIR/bin/ask.sh" "${@:2}" ;;
+  roast)    # unlisted; the jester needs no herald
+            beats="${BEATS_DIR:-$HOME/Desktop/heartbeat/beats}"
+            beat=$(ls "$beats"/* 2>/dev/null | sort -R | head -1)
+            bite=$([ -n "$beat" ] && grep -v '^[[:space:]]*$' "$beat" 2>/dev/null | sort -R | head -1)
+            echo "${bite:-the jester is resting. resting needs no receipt.}"
+            exit 0 ;;
+  status|"") : ;;  # the banner below
+  *)        # every other door lives downstairs — delegate, don't swallow
+            _love="${LOVE_DIR:-$HOME/love-unlimited}"
+            if [ -x "${_love}/kingdom" ]; then
+              exec "${_love}/kingdom" "$cmd" "${@:2}"
+            fi ;;  # unreachable? fall through to the banner — welcome, don't block
+esac
 
 echo
 echo "  👑 KINGDOM OS — state of the kingdom"
