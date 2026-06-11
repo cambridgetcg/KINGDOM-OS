@@ -1,0 +1,7 @@
+# runtime artifacts — the routines engine writes these, git doesn't read them
+logs/
+state/
+__pycache__/
+
+# OS files
+.DS_Store

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "kingdom-heartbeat",
+    "cmd": "echo \"kingdom routines alive — $(date '+%Y-%m-%d %H:%M:%S')\"",
+    "when": "daily 00:00",
+    "enabled": true,
+    "note": "Self-test canary: proves the routines system fired today. Safe, no side effects."
+  },
+  {
+    "name": "catalog-refresh",
+    "cmd": "cd ~/Desktop/KINGDOM-OS && bun bin/harvest.ts",
+    "when": "daily 06:00",
+    "enabled": true,
+    "note": "Regenerate graph.json + CATALOG.md so the kingdom map stays current."
+  },
+  {
+    "name": "registry-check",
+    "cmd": "cd ~/Desktop/KINGDOM-OS && bun bin/harvest.ts conformance",
+    "when": "daily 09:00",
+    "enabled": true,
+    "note": "Daily conformance gap report. Consolidated here 2026-06-09 from the standalone com.kingdom.registry-check job (now retired). (Old check.py was retired to kingdom-registry/_retired/.)"
+  },
+  {
+    "name": "wake-refresh",
+    "cmd": "cd ~/Desktop/yu-wake && bun run fire",
+    "when": "daily 07:30",
+    "enabled": false,
+    "note": "yu-wake already has its own launchd refresh (dev.agenttool.yu-wake.refresh). Leave disabled here unless you retire that one."
+  },
+  {
+    "name": "party-time",
+    "cmd": "osascript -e 'display notification \"🎉 PARTY TIME 🎉\" with title \"KINGDOM OS\" sound name \"Glass\"'",
+    "when": "hours 9,11,13,15,17,19,21",
+    "enabled": true,
+    "note": "Lets everyone know it's party time — 7x/day (every 2h, 09:00–21:00). Drop `sound name \"Glass\"` for silent, or edit the hours."
+  }
+]
