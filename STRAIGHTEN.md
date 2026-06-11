@@ -77,3 +77,54 @@ Ranked by **(smoothness gained) ÷ (effort)**. The top three are one-line fixes 
 Items **1, 2, 3, 5, 6, 9** are one-to-three-line edits an agent can land safely in one pass. **#1 is the keystone** — it alone makes the whole OS target the repo you actually edit, which silently un-breaks wake, memory, status, and the SOUL probe at once. Fix it first; several other "gaps" may simply disappear once commands stop running against the April fork.
 
 Relevant files: `/Users/yu/love-unlimited/kingdom` (lines 24, 125/153/160/186, wake handler), `/Users/yu/Desktop/KINGDOM-OS/kingdom` (line 38), `nerve/signals.py:25`, `security/policies.json` (Wall 1), `tools/kosmem.py` + `love.kosmem.plist` + `kosmem-consolidate.sh`, `soma/.../kingdom.py`, `love.heartbeat.plist`.
+
+---
+
+# Cross-layer additions — from the 2026-06-08 6-layer study
+
+_The list above (1–11) is the CLI / fork / memory layer, line-precise. The items
+below are the **cross-layer** findings from a read-only 6-agent crawl
+(KINGDOM-OS repo · wiring reality · registry/maps · daemons/HIVE/nerve ·
+governance · live spine). Same principle: **straight = subtraction.** Numbering
+continues from #11; cross-refs noted to avoid overlap._
+
+## 12. Amputate the dead-VPS trunk in one pass — THE cross-layer keystone
+- **What's bent:** Sentry VPS `135.181.28.252` is dead (NATS :4222 + SSH :22 down) yet is wired into 30+ files. One host severs **four** connectors at once: HIVE comms, kos `_alert_hive` delivery, the nerve coordinator's link (sentinel exit=1), AND the offsite-backup target. Nothing *alive* depends on it (render + earn + local kos all survive without it).
+- **Why it matters:** It is the single biggest SPOF in the whole system, and the cheapest fix is removal, not revival.
+- **Straighten (one pass):** Unload+delete `dev.agenttool.hive-tunnel` (tunnels to the dead host; code doesn't even use the tunnel); park `hive/` + the `nats://…:2222` listener (zero signal since 2026-04-08); re-point `_alert_hive` to a local sink; drop the offsite-backup target. (Fleet-check half is already your **#4**.)
+- **Effort:** M. **Safe-for-agent:** ⚠️ needs-Yu (daemons + prod).
+
+## 13. Unload the loaded-but-failing daemons (the worst moving part)
+- **What's bent:** Daemons loaded and failing every cycle: `cc.true-love.awaken` (status 64 — Claude token expired), `com.kingdom.youi-web` (-9, KeepAlive flapping a killed server), `oracle-run`/`oracle-deliver` (78). (Your **#8** covers `love.heartbeat`'s shell bug.)
+- **Why it matters:** "Loaded but red" looks alive in `launchctl` while doing nothing — silent rot that hides real failures.
+- **Straighten:** Re-auth or unload `awaken`; fix or stop `youi-web`; fix or unload the oracle jobs.
+- **Effort:** S each. **Safe-for-agent:** ⚠️ needs-Yu (daemons/auth).
+
+## 14. Kill the cross-repo / cross-module duplicates
+- **What's bent:** Beyond the `~/Love` fork (#1): `legible_money` (frozen) vs `zerone` (live) both = the chain · `~/Desktop/kingdom-workspace` (stale 2026-03) vs `~/.openclaw/workspace` (live) — same remote, diverged · **5 HIVE modules** (`hive.py` ×2, `hive-protocol.py`, `koshive.py`, `hive_kv.py`) + **2 key stores** (`~/.openclaw/.hive` vs `~/.love/hive`) · dual renderer (`yu-wake/src/renderer.ts` hand-forked from `agenttool/services/wake/markdown.ts`) · 3 overlapping "everything maps." (Your **#10** is the instance-list config drift.)
+- **Why it matters:** Two copies of one thing guarantee drift; every duplicate is a future "which is real?"
+- **Straighten:** Archive `legible_money`; delete the Desktop `kingdom-workspace`; if HIVE retired (see #12) delete all hive modules + one key store, else keep ONE of each; make one renderer import the other; keep the auto registry as the single inventory, demote the other maps to pointers.
+- **Effort:** S–M. **Safe-for-agent:** ⚠️ needs-Yu (deletes — decide canonical first).
+
+## 15. Make the governance layer stop asserting it's alive
+- **What's bent:** `kingdom-workspace/CIVILISATION.md` claims "9 citizens pulsing, on-chain / keys secured," but `memory/civilisation.json` shows all 9 `bootstrapped:false`, `zerone_address:null`, `wallet_id:null`; `memory/citizen-keys/` and `memory/alignment/` don't exist (align protocol has written zero records). `align.py` + 5 tools hardcode `WORKSPACE = /root/.openclaw/workspace` (a container path) so they can't run on this Mac at all.
+- **Why it matters:** The biggest declared-vs-wired gap in the charter layer; every doc citing "9 on-chain" inherits a false premise.
+- **Straighten:** Reconcile `CIVILISATION.md` to actual state; mark `ALIGNMENT.md` "designed, not operated"; replace the `/root/.openclaw/workspace` hardcode with one env/path helper (re-wires 6 tools at once).
+- **Effort:** S (docs) + M (the path helper). **Safe-for-agent:** ✅ doc edits; ⚠️ the code path-fix needs-Yu.
+
+## 16. Demote the `## Kingdom Engine` keystone tag — it exists nowhere
+- **What's bent:** README + ARCHITECTURE lean on a per-repo `## Kingdom Engine` tag as the mechanism the connective map reads. Grep across ~/Desktop and ~/love-unlimited finds it in **zero** repos — only KINGDOM-OS's own README, describing it. The map-by-tag is entirely aspirational.
+- **Why it matters:** The whole "one map, one identity" story rests on a convention nothing produces or consumes.
+- **Straighten:** Either seed the tag in repos, or (cheaper) demote it from present tense to "planned" in README + ARCHITECTURE until it exists. Also delete the untracked `HOW-IT-WORKS.md` (dangling ref + describes the pre-fix glob bug).
+- **Effort:** S. **Safe-for-agent:** ✅ doc edits.
+
+## 17. Let the registry see its own home
+- **What's bent:** `kingdom-registry/scan.py` defaults to scanning `~/Desktop` only, so the registry can't see `~/.openclaw/workspace` (its own house) and instead catalogues the *stale* Desktop `kingdom-workspace` duplicate (#14).
+- **Why it matters:** The one piece of self-checking automation has a blind spot over itself.
+- **Straighten:** Add `~/.openclaw/workspace` to `DEFAULT_ROOTS` (and drop the stale Desktop copy per #14); update `walls.json` for the newly-seen dirs. ✅ Already done: the drift notification now points at the real `check.py` (was a non-existent `kingdom check`).
+- **Effort:** S. **Safe-for-agent:** ✅ (my tooling).
+
+---
+
+### Cross-layer do-now (safe, no prod/daemons)
+**#16** (demote the tag + drop HOW-IT-WORKS.md), the doc-reconcile half of **#15**, and **#17** (registry self-scan) are safe agent edits. **#12, #13, #14** touch daemons/prod/deletes → Yu drives. The single highest-leverage cross-layer act remains **#12** (retire the dead VPS) — the partner to your #1.

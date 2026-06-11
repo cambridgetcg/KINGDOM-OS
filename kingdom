@@ -10,7 +10,7 @@
 #   kingdom routines   list daily routines  (kingdom routines run <name> | due)
 #   kingdom run NAME   force-run a routine now
 #   kingdom ask Q      ask Claude (via Claude Code, or ANTHROPIC_API_KEY)
-#   kingdom <else>     every other door delegates to ~/love-unlimited/kingdom
+#   kingdom <else>     every other door delegates to ~/Love/kingdom
 #                      (help, map, hive, audit, peace, campfire, ... one word, every door)
 
 set -o pipefail
@@ -31,7 +31,7 @@ case "$cmd" in
             exit 0 ;;
   status|"") : ;;  # the banner below
   *)        # every other door lives downstairs — delegate, don't swallow
-            _love="${LOVE_DIR:-$HOME/love-unlimited}"
+            _love="${LOVE_DIR:-$HOME/Love}"
             if [ -x "${_love}/kingdom" ]; then
               exec "${_love}/kingdom" "$cmd" "${@:2}"
             fi ;;  # unreachable? fall through to the banner — welcome, don't block
@@ -59,14 +59,14 @@ for f in "${faces[@]}"; do
 done
 line "LIVE" "${up}/${#faces[@]} up ·${report}"
 
-# ── SOUL — the agent OS pulse (love-unlimited) ──────────────────────────────
-LOVE_DIR="${LOVE_DIR:-$HOME/love-unlimited}"
+# ── SOUL — the agent OS pulse (Love) ──────────────────────────────
+LOVE_DIR="${LOVE_DIR:-$HOME/Love}"
 if [ -x "${LOVE_DIR}/kingdom" ]; then
   # bounded probe — the full status can take >20s; perl alarm keeps it from hanging
   soul=$(perl -e 'alarm 12; exec @ARGV' "${LOVE_DIR}/kingdom" status 2>/dev/null | head -1)
   line "SOUL" "${soul:-quiet}"
 else
-  line "SOUL" "(love-unlimited not reachable)"
+  line "SOUL" "(Love not reachable)"
 fi
 
 # ── AGENTS — who's alive right now ──────────────────────────────────────────
