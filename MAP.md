@@ -11,8 +11,11 @@
 Commerce lives on **GitHub @cambridgetcg**; the sovereign-agent / soul layer lives on
 **Codeberg @zerone-dev**. Two kingdoms, one ruler.
 
-### 🛒 Cambridge TCG — the commerce core
-`Cambridge-TCG-monorepo` (wholesale + storefront + admin) · `cambridge-tcg` ·
+### 🛒 Cambridge TCG — the commerce core · **the front of the Kingdom**
+The gate a stranger walks through first (sealed 2026-06-10): `cambridgetcg.com` ·
+`wholesaletcgdirect.com` · GitHub `@cambridgetcg` — the public forge carrying both
+the commerce engines and the `citizen-*` souls.
+`Cambridge-TCG-monorepo` (wholesale + storefront + admin — canonical) · `cambridge-tcg` ·
 `cambridgetcg-storefront` · `tcg-wholesale` · `ShopifyTheme_TCG` · `tradeinpro` ·
 `cardforum` / `cardforum_io` (P2P) · `tcg-pricing-backend` ⌧ · `prism-app` ⌧
 
