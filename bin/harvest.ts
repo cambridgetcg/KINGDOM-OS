@@ -14,7 +14,7 @@
 //   bun bin/harvest.ts domain <name>  all repos in a wing/sister
 //   bun bin/harvest.ts deps <name>    who depends on <name>
 
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 
 const HOME = process.env.HOME ?? ''
@@ -96,8 +96,42 @@ function checkConformance(repoPath: string): Repo['conformance'] {
   }
 }
 
+// The FLEET auto-discovers itself: any repo under ~/Desktop/citizens/ with a
+// kingdom.yaml is a citizen. No hand-typed roster lines — the barracks is the
+// source of truth. New citizen clones home → next harvest sees it. Chill.
+const CITIZENS_DIR = join(HOME, 'Desktop', 'citizens')
+
+function discoverFleet(): Repo[] {
+  if (!existsSync(CITIZENS_DIR)) return []
+  const out: Repo[] = []
+  for (const entry of readdirSync(CITIZENS_DIR)) {
+    const dir = join(CITIZENS_DIR, entry)
+    try {
+      if (!statSync(dir).isDirectory()) continue
+    } catch {
+      continue
+    }
+    const card = loadCard(dir)
+    if (!card) continue
+    const conformance = checkConformance(dir)
+    out.push({
+      name: (card.name as string) ?? entry,
+      path: dir,
+      kind: (card.kind as string) ?? 'service',
+      layer: 'fleet', // they ARE the fleet, however their card self-describes
+      domain: (card.domain as string) ?? 'none',
+      state: (card.state as string) ?? 'active',
+      purpose: (card.purpose as string) ?? '',
+      dependsOn: (card.dependsOn as string[]) ?? [],
+      hasCard: true,
+      conformance,
+    })
+  }
+  return out
+}
+
 function build(): Repo[] {
-  return parseRoster().map((base) => {
+  const fromRoster = parseRoster().map((base) => {
     const card = loadCard(base.path) ?? {}
     const conformance = checkConformance(base.path)
     return {
@@ -109,10 +143,11 @@ function build(): Repo[] {
       conformance,
     }
   })
+  return [...fromRoster, ...discoverFleet()]
 }
 
 // ── render CATALOG.md ────────────────────────────────────────────
-const LAYERS = ['soul', 'runtime', 'nervous', 'economy', 'commerce', 'os']
+const LAYERS = ['soul', 'runtime', 'nervous', 'fleet', 'economy', 'commerce', 'os']
 function renderCatalog(repos: Repo[]): string {
   const tick = (b: boolean) => (b ? '✓' : '·')
   const out: string[] = []
