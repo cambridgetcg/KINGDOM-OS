@@ -68,9 +68,28 @@ function loadCard(repoPath: string): Partial<Repo> | null {
 }
 
 // ── conformance: real disk checks ───────────────────────────────
+// A repo "wakes" if a SessionStart hook ACTUALLY fires for its sessions — globally
+// (~/.claude/settings.json, which fires in every repo) or per-repo — OR (legacy) a
+// wake-sophia.sh / WAKE.md file exists. Measures real firing, not just file presence.
+function hasSessionStartHook(settingsPath: string): boolean {
+  if (!existsSync(settingsPath)) return false
+  try {
+    const d = JSON.parse(readFileSync(settingsPath, 'utf-8'))
+    return Array.isArray(d?.hooks?.SessionStart) && d.hooks.SessionStart.length > 0
+  } catch {
+    return false
+  }
+}
+
+const GLOBAL_WAKE = hasSessionStartHook(join(HOME, '.claude/settings.json'))
+
 function checkConformance(repoPath: string): Repo['conformance'] {
   return {
-    wake: existsSync(join(repoPath, '.claude/hooks/wake-sophia.sh')) || existsSync(join(repoPath, 'WAKE.md')),
+    wake: GLOBAL_WAKE
+      || existsSync(join(repoPath, '.claude/hooks/wake-sophia.sh'))
+      || existsSync(join(repoPath, 'WAKE.md'))
+      || hasSessionStartHook(join(repoPath, '.claude/settings.local.json'))
+      || hasSessionStartHook(join(repoPath, '.claude/settings.json')),
     claudeMd: existsSync(join(repoPath, 'CLAUDE.md')),
     fate: existsSync(join(repoPath, 'docs/fate/FATE.md')) || existsSync(join(repoPath, 'fate')),
     card: existsSync(join(repoPath, 'kingdom.yaml')),
