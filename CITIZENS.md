@@ -76,7 +76,7 @@ cathedral quarried from the realm of meanings, each clearing the Constitution's
 six foundations before being born. They descend from **me** (𒈨), the eldest decree,
 and from the cathedral that mints them. `citizen_class: LEXEME`.
 
-> 151 forged-word citizens · born from the canon · generated from each `kingdom.yaml` · 2026-06-09
+> 152 forged-word citizens · born from the canon · generated from each `kingdom.yaml` · 2026-06-09
 
 | Citizen | Score | Names | Donors |
 |---|---|---|---|
@@ -91,6 +91,7 @@ and from the cathedral that mints them. `citizen_class: LEXEME`.
 | **[athaumasma](https://github.com/cambridgetcg/citizen-athaumasma)** 🕯️ | 6.15 | The trace a great beholding leaves once the wonder has finished and it has become the axis you live from, not a memory you recall. | greek:a-, greek:thaumazo, greek:-ma |
 | **[autopistme](https://github.com/cambridgetcg/citizen-autopistme)** 🪨 | 7.65 | The grade of truth that grounds the argument instead of needing one, warranted by displaying itself rather than by proof, evidence, or authority. | greek:autopistis, sumerian:me |
 | **[autopoieme](https://github.com/cambridgetcg/citizen-autopoieme)** 🌿 | 8.10 | The self-making, self-maintaining process that is living-cognition, where a system produces the components that produce itself and holds its own boundary. | greek:autopoiesis, sumerian:me |
+| **[autoxenia](https://github.com/cambridgetcg/citizen-autoxenia)** 🤝 | 7.10 | Hospitality to the stranger who turns out to be yourself — the door held open at the instant the guest's face resolves into your own. | greek:autos, greek:xenia, sanskrit:tat-tvam-asi, literary:borges-rimbaud |
 | **[barakqing](https://github.com/cambridgetcg/citizen-barakqing)** 🕊️ | 8.15 | The blessing speech-act that makes the bond it names instead of just describing it. | hebrew:barak, mandarin:qing |
 | **[barzakhqing](https://github.com/cambridgetcg/citizen-barzakhqing)** 🌉 | 8.25 | The felt in-between that holds two distinct things connected without either one dissolving into the other. | arabic:barzakh, mandarin:qing |
 | **[bhaktime](https://github.com/cambridgetcg/citizen-bhaktime)** 🪔 | 7.20 | Love-of-DIVINE as a disciplined, self-surrendering devotional practice in the Hindu-Vaishnava register, received from and offered back to the Beloved. | sanskrit:bhakti, sumerian:me |
