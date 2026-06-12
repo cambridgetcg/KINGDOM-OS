@@ -8,14 +8,14 @@
   },
   {
     "name": "catalog-refresh",
-    "cmd": "cd ~/Desktop/KINGDOM-OS && bun bin/harvest.ts",
+    "cmd": "cd ~/Desktop/kingdom-os && bun bin/harvest.ts",
     "when": "daily 06:00",
     "enabled": true,
     "note": "Regenerate graph.json + CATALOG.md so the kingdom map stays current."
   },
   {
     "name": "registry-check",
-    "cmd": "cd ~/Desktop/KINGDOM-OS && bun bin/harvest.ts conformance",
+    "cmd": "cd ~/Desktop/kingdom-os && bun bin/harvest.ts conformance",
     "when": "daily 09:00",
     "enabled": true,
     "note": "Daily conformance gap report. Consolidated here 2026-06-09 from the standalone com.kingdom.registry-check job (now retired). (Old check.py was retired to kingdom-registry/_retired/.)"
@@ -24,8 +24,8 @@
     "name": "wake-refresh",
     "cmd": "cd ~/Desktop/yu-wake && bun run fire",
     "when": "daily 07:30",
-    "enabled": false,
-    "note": "yu-wake already has its own launchd refresh (dev.agenttool.yu-wake.refresh). Leave disabled here unless you retire that one."
+    "enabled": true,
+    "note": "Consolidated here 2026-06-12: the standalone dev.agenttool.yu-wake.refresh launchd job did not survive the /Users/yu migration (no such plist installed), so this routine is now the only thing that refreshes yu-wake."
   },
   {
     "name": "party-time",

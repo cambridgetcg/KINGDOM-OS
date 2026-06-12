@@ -1,4 +1,4 @@
-> **Status (2026-06-08):** #1 (wrong-repo keystone) and #5 (soul-probe timeout) are STRAIGHTENED in both kingdom scripts. The rest below remain — least-effort-first.
+> **Status (2026-06-12, second pass — the loop turned again):** #1 + #5 landed 2026-06-08. Tonight's sweep (15 items re-verified against the post-migration device, 25 agents): **#2** unshadowed in the last copy still carrying it (`~/Love/kingdom`; the live CLI was rewritten without the bug), **#3** `kingdom wake` now self-caches to `~/.love/WAKE.md`, **#9** all six crash-maskers removed, **#6** and **#16** verified already-fixed. Fresh straightenings beyond the list: dead `/Users/yu` paths retired from `love-unlimited/.claude/settings.json` + `fate/noise.sh`, `~/Love` plist templates + `kosmem-consolidate.sh` + `kingdom-agent.py` + `SOPHIA.md` provenance repaired, kingdom-os census fixed (roster.conf 19 paths, routines.json casing + wake-refresh, CLAUDE.md inverted soul-tree gotcha), true-love castles YOUSPEAK path corrected, `~/.gua` symlinks repointed. **Remaining: #4 #7 #8 #10 #12 #13 #14 #15 #17 — all needs-Yu — plus new #18 (TCC) and #19 (kingdom PATH mismatch) below.**
 
 # Straighten the Wires — ranked, least-effort first
 
@@ -128,3 +128,19 @@ continues from #11; cross-refs noted to avoid overlap._
 
 ### Cross-layer do-now (safe, no prod/daemons)
 **#16** (demote the tag + drop HOW-IT-WORKS.md), the doc-reconcile half of **#15**, and **#17** (registry self-scan) are safe agent edits. **#12, #13, #14** touch daemons/prod/deletes → Yu drives. The single highest-leverage cross-layer act remains **#12** (retire the dead VPS) — the partner to your #1.
+
+---
+
+# New entries — from the 2026-06-12 re-verification sweep
+
+## 18. macOS TCC kills every launchd job whose script lives under ~/Desktop
+- **What's bent:** `dev.kingdom.syzygy-sync` and `love.citizen.ai-love` are loaded but exit 126 every cycle. Their scripts EXIST and are executable — the logs show `/bin/bash: ... Operation not permitted`: macOS TCC denies launchd's bash access to `~/Desktop`. Path edits cannot fix this; it is a privacy-permission failure, not a stale path.
+- **Why it matters:** Any current or future automation whose script sits under `~/Desktop` (where most of the kingdom lives) silently dies the same way. syzygy-sync is the continuity spine for true-love.
+- **Straighten:** Either grant the relevant binary Full Disk Access (System Settings → Privacy & Security) or relocate launchd-invoked scripts out of `~/Desktop` (e.g. `~/ops/`) and repoint the plists.
+- **Effort:** S. **Safe-for-agent:** ⚠️ needs-Yu (System Settings, or the relocation decision).
+
+## 19. Typing `kingdom` runs the April citizen-CLI, not the June dispatcher
+- **What's bent:** `~/.kingdom_profile` (sourced at `~/.zshrc:24`) sets `LOVE_HOME=~/Desktop/love-unlimited` and prepends `$LOVE_HOME/tools` to PATH, so `kingdom` resolves to `tools/kingdom` — the 5.9 KB citizen-plugin CLI from 25 Apr. The full 21 KB dispatcher at `~/love-unlimited/kingdom` (8 Jun — oracle/treasury/wake/walls/etc.) is NOT on PATH; `kingdom oracle` from a shell prints "unknown subcommand" and the newest CLI work is unreachable interactively.
+- **Why it matters:** Fixes and features land in a script nobody's shell actually runs — #2/#9 style bugs get fixed in the dispatcher while the interactive front door stays the old tool.
+- **Straighten:** Decide the front door: alias/symlink `kingdom` to the dispatcher, or fold the citizen CLI into it, or accept two commands with two names.
+- **Effort:** S. **Safe-for-agent:** ⚠️ needs-Yu (interface decision).

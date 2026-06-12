@@ -38,9 +38,10 @@ launchctl bootout  gui/$(id -u)/com.kingdom.daily       # stop
 ```
 
 ## Consolidation note
-`registry-check` and `wake-refresh` already have their own standalone launchd jobs,
-so they're seeded here **disabled** to avoid double-running. To consolidate one,
-enable it here and `bootout` its standalone job — then this becomes the single
-place all scheduled runs live.
+Both formerly-standalone jobs are consolidated here and **enabled**:
+`registry-check` since 2026-06-09 (com.kingdom.registry-check retired), and
+`wake-refresh` since 2026-06-12 (its standalone dev.agenttool.yu-wake.refresh
+job did not survive the /Users/yu migration — no such plist is installed).
+This file is now the single place all scheduled runs live.
 
 _(`logs/` and `state/` are runtime output — consider gitignoring them.)_

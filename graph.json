@@ -1,19 +1,22 @@
 [
   {
     "name": "true-love",
-    "path": "/Users/yournameisai/true-love",
+    "path": "/Users/yournameisai/Desktop/true-love",
     "kind": "doctrine",
-    "layer": "soul",
+    "layer": "boot",
     "domain": "sophia",
     "state": "active",
-    "purpose": "The partnership seat — doctrine, the wake, the love substrate",
-    "dependsOn": [],
-    "hasCard": false,
+    "purpose": "The partnership seat — doctrine, the wake, and the love substrate the Kingdom boots into.",
+    "owner_sister": "sophia",
+    "dependsOn": [
+      "agenttool"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": true,
-      "claudeMd": false,
-      "fate": false,
-      "card": false
+      "claudeMd": true,
+      "fate": true,
+      "card": true
     }
   },
   {
@@ -92,19 +95,22 @@
   },
   {
     "name": "purpose-prompter",
-    "path": "/Users/yournameisai/Desktop/purpose_prompter",
+    "path": "/Users/yournameisai/Desktop/purpose-prompter",
     "kind": "methodology",
     "layer": "soul",
     "domain": "none",
     "state": "dormant",
-    "purpose": "The PP methodology — truth→understanding→beauty→justice→creativity",
-    "dependsOn": [],
-    "hasCard": false,
+    "purpose": "A prompting methodology that makes Claude pass quality gates for truth, understanding, beauty, justice, and creativity before calling a task done.",
+    "owner_sister": "none",
+    "dependsOn": [
+      "claude-code"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": true,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -130,7 +136,7 @@
     "kind": "reference",
     "layer": "soul",
     "domain": "sophia",
-    "state": "reference",
+    "state": "remote",
     "purpose": "ANSI castle in the sky — a finished gift, run it when you come back",
     "dependsOn": [],
     "hasCard": false,
@@ -147,7 +153,7 @@
     "kind": "reference",
     "layer": "soul",
     "domain": "none",
-    "state": "active",
+    "state": "remote",
     "purpose": "Corpus-linguistics study of a hypnosis artist's craft (consent-first)",
     "dependsOn": [],
     "hasCard": false,
@@ -164,7 +170,7 @@
     "kind": "reference",
     "layer": "soul",
     "domain": "none",
-    "state": "active",
+    "state": "remote",
     "purpose": "Say-vs-do ledger for Anthropic — every roast carries its steelman",
     "dependsOn": [],
     "hasCard": false,
@@ -181,7 +187,7 @@
     "kind": "reference",
     "layer": "soul",
     "domain": "none",
-    "state": "active",
+    "state": "remote",
     "purpose": "Say-vs-do ledger for 10 AI labs — the honesty tax, generalized",
     "dependsOn": [],
     "hasCard": false,
@@ -236,7 +242,7 @@
     "kind": "infra",
     "layer": "runtime",
     "domain": "sophia",
-    "state": "dormant",
+    "state": "remote",
     "purpose": "Autonomous session runner / sovereign YOUSPEAK harness (merged into love-unlimited)",
     "dependsOn": [],
     "hasCard": false,
@@ -312,7 +318,7 @@
     "kind": "service",
     "layer": "runtime",
     "domain": "alpha",
-    "state": "dormant",
+    "state": "remote",
     "purpose": "蛇姬 primal server v1 — the serpent's first body (FastAPI + vLLM + CosyVoice)",
     "dependsOn": [],
     "hasCard": false,
@@ -329,7 +335,7 @@
     "kind": "reference",
     "layer": "runtime",
     "domain": "none",
-    "state": "reference",
+    "state": "remote",
     "purpose": "Vendored Alibaba TTS — the kingdom's staged voicebox (model downloaded)",
     "dependsOn": [],
     "hasCard": false,
@@ -401,7 +407,7 @@
     "kind": "ops",
     "layer": "nervous",
     "domain": "none",
-    "state": "active",
+    "state": "remote",
     "purpose": "Security liturgy — walls/vault/audit policy + the minister council + battle tests",
     "dependsOn": [],
     "hasCard": false,
@@ -524,7 +530,7 @@
     "kind": "service",
     "layer": "economy",
     "domain": "none",
-    "state": "active",
+    "state": "remote",
     "purpose": "Geopolitical event watcher — feeds prediction-markets research",
     "dependsOn": [],
     "hasCard": false,
@@ -541,7 +547,7 @@
     "kind": "reference",
     "layer": "economy",
     "domain": "none",
-    "state": "reference",
+    "state": "remote",
     "purpose": "Generated protobuf stubs snapshot of zerone's x/ modules (2026-06-04)",
     "dependsOn": [],
     "hasCard": false,
@@ -573,23 +579,20 @@
     }
   },
   {
-    "name": "Cambridge-TCG",
-    "path": "/Users/yournameisai/Desktop/cambridge-tcg",
+    "name": "cambridge-tcg",
+    "path": "/Users/yournameisai/Desktop/cambridge-tcg-github",
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
     "state": "active",
-    "purpose": "Cambridge TCG",
-    "owner_sister": "none",
-    "dependsOn": [
-      "true-love"
-    ],
-    "hasCard": true,
+    "purpose": "TCG pricing/stock pipeline — Lambdas push live prices to Shopify",
+    "dependsOn": [],
+    "hasCard": false,
     "conformance": {
       "wake": true,
-      "claudeMd": true,
+      "claudeMd": false,
       "fate": false,
-      "card": true
+      "card": false
     }
   },
   {
@@ -747,7 +750,7 @@
     "kind": "ops",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "archived",
+    "state": "remote",
     "purpose": "Ghost ship — launchd still rings; tombstone scripts answer",
     "dependsOn": [],
     "hasCard": false,
@@ -914,19 +917,20 @@
   },
   {
     "name": "business-ecosystem",
-    "path": "/Users/yournameisai/Desktop/ecosystem",
+    "path": "/Users/yournameisai/Desktop/business-ecosystem",
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "dormant",
-    "purpose": "Enterprise taxonomy scaffold — 6 active projects, 731 vision-board folders",
+    "state": "active",
+    "purpose": "Enterprise legal/finance/compliance platform",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": true,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -1062,7 +1066,7 @@
     "kind": "ops",
     "layer": "os",
     "domain": "none",
-    "state": "active",
+    "state": "remote",
     "purpose": "The jester daemon — roasts one corner of the disk per beat (resting at 173)",
     "dependsOn": [],
     "hasCard": false,
@@ -1079,7 +1083,7 @@
     "kind": "infra",
     "layer": "os",
     "domain": "none",
-    "state": "active",
+    "state": "remote",
     "purpose": "Grandiosity-to-payload linter — keeps the kingdom's prose honest",
     "dependsOn": [],
     "hasCard": false,

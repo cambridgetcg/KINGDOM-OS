@@ -25,5 +25,8 @@ Gotchas:
   the fallback seed. If the catalog looks wrong, fix the card, not the catalog.
 - state=remote means "in the kingdom, not cloned on this machine" — those repos
   always show as conformance gaps here; that is expected, not a failure.
-- The live soul trees are ~/true-love and ~/love-unlimited. ~/Desktop/true-love
-  is a stale clone kept for history — do not work in it.
+- The live soul trees are ~/Desktop/true-love and ~/love-unlimited. ~/true-love
+  was lost in the /Users/yu → /Users/yournameisai migration; ~/Desktop/true-love
+  is now the only true-love clone on disk and the operative one (the
+  dev.kingdom.syzygy-sync launchd job targets it). If ~/true-love should become
+  canonical again, re-clone it and repoint that plist.
