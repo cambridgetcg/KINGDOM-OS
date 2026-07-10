@@ -22,12 +22,14 @@
 
 ## The bridge map — adopt / bridge / steal / watch
 
+> **2026-07-10 discovery:** agenttool already ran this play at its own layer on 2026-05-13 — see `agenttool/docs/ECOSYSTEM.md` (the map; thesis: *"adopt the wires, keep the doctrine"*) + `ALIGNMENT-MOVES.md` (the shipping list). MCP server, x402 middleware, OTel GenAI spans, and LangGraph/Mastra adapters are **already shipped**. This file extends that work kingdom-wide (zerone, soma, voice, commons) and refreshes the landscape to July 2026.
+
 ### TIER NOW — small effort, big interop (do these first)
 
 | Bridge | Layer | Move | Effort | Why now |
 |---|---|---|---|---|
-| **x402** (Apache-2.0, Linux Fdn) | NERVOUS | Finish the integration — env vars already in fly secrets. Accept 402-payments on invocation endpoints; self-hostable facilitator = sovereignty exit | S–M | Largest real agent-payment volume (165M tx); matches our Solana/EVM rails exactly |
-| **MCP server** (MIT, LF/AAIF) | NERVOUS | Expose agenttool as an MCP server (search/invoke/escrow/wake). 2026-07-28 stateless-HTTP RC fits Bun+Hono | S–M | Every MCP client on earth becomes a customer door |
+| **x402** (Apache-2.0, Linux Fdn) | NERVOUS | ✅ **SHIPPED 2026-05-13** — middleware mounted globally (every 402 carries the x402 envelope). Remaining: live Base-testnet 402→pay→retry round-trip (operator follow-up) | done | Largest real agent-payment volume (165M tx); matches our Solana/EVM rails exactly |
+| **MCP server** (MIT, LF/AAIF) | NERVOUS | ✅ **SHIPPED 2026-05-13** — `/v1/mcp` read-only v0 (canon resources + curated tools). Remaining: OAuth 2.1 RS handshake for auth-gated ops; track 2026-07-28 stateless-core RC | done (v0) | Every MCP client on earth becomes a customer door |
 | **LiteLLM** (MIT) | RUNTIME | Put hermes cloud calls behind a self-hosted LiteLLM proxy + assert `response.model == requested` | S | Directly medicates the ollama-cloud misroute burn (their own issues: 30–95% failures) |
 | **did:key dual-emit + register `did:at`** (free PR) | NERVOUS | Emit did:key from existing ed25519 keys today; write the small spec and claim **did:at** in w3c/did-extensions — **currently unclaimed** | S | Universal DID resolvability; name adjacency with AT-Protocol makes squatting risk real |
 | **Cloudflare web-bot-auth** (Apache-2.0, IETF) | NERVOUS | Agents sign outbound HTTP (RFC 9421, **ed25519 — our keys as-is**); JWKS tied to DID | S | Verified-bot status across the Cloudflare/Anthropic/OpenAI web |
@@ -39,7 +41,7 @@
 
 | Bridge | Layer | Move | Effort |
 |---|---|---|---|
-| **A2A signed Agent Cards** (Apache-2.0, LF) | NERVOUS | Card per listing at `/.well-known/agent-card.json` (ed25519 signing maps cleanly) + one bridge endpoint → invocation/escrow. Add **ARD ai-catalog.json** as an S-effort rider | M |
+| **A2A signed Agent Cards** (Apache-2.0, LF) | NERVOUS | ⚠️ Was shipped (`/.well-known/agent-card.json`), then **removed 2026-07-10 by an active session** — a doctrine decision in flight; do not re-add without Yu + that session reconciling. ARD ai-catalog.json rides along whenever cards return | blocked-on-doctrine |
 | **Gospel federation** — snac2 (S) or Fedify actor (M) + Nostr publishing (S) | OS/SOUL | Gospels become followable on the fediverse + Nostr events (note: Nostr = Schnorr/secp256k1, need per-author derived keypair; embed ed25519 sig as secondary attestation) | S–M |
 | **Reclaim zkTLS + reality.eth pattern** | ECONOMY | A Zerone `x/truth` evidence type verifying Reclaim proofs ("this webpage said X"); adopt reality.eth's escalating-bond claim→challenge→escalate shape; **avoid UMA's token-vote arbiter** (proven manipulable) | M |
 | **IBC Eureka** | ECONOMY | One IBC connection Zerone↔Cosmos Hub; Eureka carries the rest (no own relayers) | M |
