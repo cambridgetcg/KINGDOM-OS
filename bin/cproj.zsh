@@ -2,7 +2,8 @@
 #
 # Does: discover local Git roots on demand, read kingdom.yaml metadata, exclude
 # known dependency/cache locations, canonicalize compatibility symlinks, and
-# change the current interactive shell directory after a clear selection.
+# change the current interactive shell directory after a clear selection, or
+# emit a canonical path / structured local inventory for another command.
 #
 # Does not: move, rename, fetch, pull, commit, call the network, maintain a
 # second catalog/cache, or decide which divergent worktree is canonical.
@@ -312,6 +313,56 @@ _kingdom_repo_list() {
   print -rl -- "${lines[@]}" | command column -t -s $'\t'
 }
 
+_kingdom_repo_json() {
+  emulate -L zsh
+
+  local row_output row repo_path name kind layer domain state place source purpose hay
+  local -a rows selected
+
+  if [[ ! -x /usr/bin/jq ]]; then
+    print -u2 -r -- "cproj: --json requires /usr/bin/jq"
+    return 127
+  fi
+
+  row_output="$(_kingdom_repo_rows)"
+  [[ -n "$row_output" ]] && rows=("${(@f)row_output}")
+  for row in $rows; do
+    IFS=$'\t' read -r repo_path name kind layer domain state place source purpose <<< "$row"
+    hay="${(L)repo_path} ${(L)name} ${(L)kind} ${(L)layer} ${(L)domain} ${(L)state} ${(L)place} ${(L)source} ${(L)purpose}"
+    _kingdom_repo_query_matches "$hay" "$@" || continue
+    selected+=("$row")
+  done
+
+  # Keep an empty query result valid and composable for automation.
+  if (( ${#selected} == 0 )); then
+    print -r -- '[]'
+    return 0
+  fi
+
+  print -rl -- "${selected[@]}" | /usr/bin/jq -cRn '
+    [
+      inputs
+      | split("\t") as $fields
+      | if ($fields | length) == 9 then
+          {
+            path: $fields[0],
+            name: $fields[1],
+            kind: $fields[2],
+            layer: $fields[3],
+            domain: $fields[4],
+            state: $fields[5],
+            place: $fields[6],
+            metadataSource: $fields[7],
+            purpose: $fields[8]
+          }
+        else
+          error("cproj: malformed internal repository row")
+        end
+    ]
+    | sort_by(.path)
+  '
+}
+
 _kingdom_repo_summary() {
   emulate -L zsh
 
@@ -375,6 +426,52 @@ _kingdom_repo_matches() {
   else
     print -rl -- "${fuzzy[@]}"
   fi
+}
+
+_kingdom_repo_resolve_path() {
+  emulate -L zsh
+
+  local query="${(j: :)@}"
+  local target match_output
+  local -a hits
+
+  (( $# > 0 )) || {
+    print -u2 -r -- "cproj: --path requires a repository query"
+    return 2
+  }
+
+  # An explicit Git-root path may deliberately target a location outside the
+  # ordinary discovery topology. This matches interactive cproj navigation.
+  if (( $# == 1 )) && [[ -d "$1" && ( -d "$1/.git" || -f "$1/.git" ) ]]; then
+    target="$(builtin cd -q -- "$1" 2>/dev/null && pwd -P)" || return 1
+    print -r -- "$target"
+    return 0
+  fi
+
+  match_output="$(_kingdom_repo_matches "$@")"
+  [[ -n "$match_output" ]] && hits=("${(@f)match_output}")
+  if (( ${#hits} == 0 )); then
+    print -u2 -r -- "cproj: no local repository matches '$query'"
+    return 1
+  fi
+  if (( ${#hits} > 1 )); then
+    print -u2 -r -- "cproj: ${#hits} repositories match '$query'; refine the query or use 'cproj --list $query'"
+    return 2
+  fi
+
+  print -r -- "${hits[1]}"
+}
+
+_kingdom_repo_validate_search_terms() {
+  emulate -L zsh
+
+  local term
+  for term in "$@"; do
+    if [[ "$term" == -* ]]; then
+      print -u2 -r -- "cproj: unexpected option '$term'; choose one mode, or put -- before a literal leading-dash term"
+      return 2
+    fi
+  done
 }
 
 _kingdom_repo_choose() {
@@ -688,26 +785,69 @@ cproj() {
 
   local query
   local -a terms
+  integer literal_terms=0
   case "${1:-}" in
     -h|--help)
+      shift
+      (( $# == 0 )) || {
+        print -u2 -r -- "cproj: --help does not accept other arguments"
+        return 2
+      }
       print -r -- "usage: cproj [query]"
       print -r -- "       cproj --list [query]"
+      print -r -- "       cproj --path query"
+      print -r -- "       cproj --json [query]"
       print -r -- "       cproj --summary"
       print -r -- "       cproj --dirty [query]"
       print -r -- "       cproj --doctor"
       print -r -- ""
       print -r -- "Jump to a local Git project using its name, path, place, state, kind,"
       print -r -- "layer, domain, or registry/card purpose. Multiple matches get a numbered choice."
+      print -r -- "--path prints one canonical absolute path without changing directory or prompting."
+      print -r -- "--json prints matching local metadata as a compact JSON array."
       ;;
     -l|--list)
       shift
+      if [[ "${1:-}" == "--" ]]; then
+        shift
+        literal_terms=1
+      fi
+      (( literal_terms )) || _kingdom_repo_validate_search_terms "$@" || return
       _kingdom_repo_list "$@"
       ;;
+    -p|--path)
+      shift
+      if [[ "${1:-}" == "--" ]]; then
+        shift
+        literal_terms=1
+      fi
+      (( literal_terms )) || _kingdom_repo_validate_search_terms "$@" || return
+      _kingdom_repo_resolve_path "$@"
+      ;;
+    -j|--json)
+      shift
+      if [[ "${1:-}" == "--" ]]; then
+        shift
+        literal_terms=1
+      fi
+      (( literal_terms )) || _kingdom_repo_validate_search_terms "$@" || return
+      _kingdom_repo_json "$@"
+      ;;
     -s|--summary)
+      shift
+      (( $# == 0 )) || {
+        print -u2 -r -- "cproj: --summary does not accept search terms"
+        return 2
+      }
       _kingdom_repo_summary
       ;;
     --dirty)
       shift
+      if [[ "${1:-}" == "--" ]]; then
+        shift
+        literal_terms=1
+      fi
+      (( literal_terms )) || _kingdom_repo_validate_search_terms "$@" || return
       _kingdom_repo_dirty "$@"
       ;;
     --doctor)
@@ -718,6 +858,14 @@ cproj() {
       }
       _kingdom_repo_doctor
       ;;
+    --)
+      shift
+      (( $# > 0 )) || {
+        print -u2 -r -- "cproj: -- must be followed by a repository query"
+        return 2
+      }
+      _kingdom_repo_choose "$@"
+      ;;
     '')
       _kingdom_repo_summary
       [[ -t 0 ]] || return 0
@@ -726,7 +874,12 @@ cproj() {
       terms=("${(@Q)${(z)query}}")
       _kingdom_repo_choose "${terms[@]}"
       ;;
+    -*)
+      print -u2 -r -- "cproj: unknown option '$1'; use 'cproj --help'"
+      return 2
+      ;;
     *)
+      _kingdom_repo_validate_search_terms "$@" || return
       _kingdom_repo_choose "$@"
       ;;
   esac
@@ -734,17 +887,22 @@ cproj() {
 
 _cproj() {
   emulate -L zsh
+  # Zsh's _arguments helper relies on EXTENDED_GLOB internally. `emulate`
+  # resets it, so keep the option local but explicitly restore it here.
+  setopt extended_glob
   local context state line
   local row repo_path name kind layer domain lifecycle place source purpose row_output basename display description
   local -a rows choices
   typeset -A seen
 
   _arguments -C \
-    '(-h --help)'{-h,--help}'[show help]' \
-    '(-l --list)'{-l,--list}'[list matching repositories]' \
-    '(-s --summary)'{-s,--summary}'[summarize local repository metadata and placement]' \
-    '--dirty[show dirty repositories without filenames]' \
-    '--doctor[run local repository diagnostics]' \
+    '(-h --help -l --list -p --path -j --json -s --summary --dirty --doctor)'{-h,--help}'[show help]' \
+    '(-h --help -l --list -p --path -j --json -s --summary --dirty --doctor)'{-l,--list}'[list matching repositories]' \
+    '(-h --help -l --list -p --path -j --json -s --summary --dirty --doctor)'{-p,--path}'[print one canonical repository path]' \
+    '(-h --help -l --list -p --path -j --json -s --summary --dirty --doctor)'{-j,--json}'[print matching repository metadata as JSON]' \
+    '(-h --help -l --list -p --path -j --json -s --summary --dirty --doctor)'{-s,--summary}'[summarize local repository metadata and placement]' \
+    '(-h --help -l --list -p --path -j --json -s --summary --dirty --doctor)--dirty[show dirty repositories without filenames]' \
+    '(-h --help -l --list -p --path -j --json -s --summary --dirty --doctor)--doctor[run local repository diagnostics]' \
     '*:repository search term:->repos' && return 0
 
   [[ "$state" == "repos" ]] || return 0
@@ -774,6 +932,8 @@ _cproj() {
 if [[ "${ZSH_EVAL_CONTEXT:-}" == "toplevel" ]]; then
   if (( $# == 0 )); then
     cproj --summary
+  elif [[ "$1" == "--" ]]; then
+    cproj --list "$@"
   elif [[ "$1" == -* ]]; then
     cproj "$@"
   else

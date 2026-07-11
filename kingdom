@@ -8,6 +8,7 @@
 #   kingdom            one honest view of the whole kingdom
 #   kingdom status     same
 #   kingdom repos [Q]  local repo summary / metadata-aware search (no network)
+#   kingdom repos --path Q | --json [Q]    canonical path / structured inventory
 #   kingdom repos --dirty [Q] | --doctor   opt-in local hygiene checks
 #   kingdom routines   list daily routines  (kingdom routines run <name> | due)
 #   kingdom run NAME   force-run a routine now
