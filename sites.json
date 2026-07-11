@@ -1,0 +1,18 @@
+{
+  "_comment": "The kingdom's public doors — repo name (matching graph.json) → the live URL a human can open, plus a short human blurb. Consumed by bin/build-hub.ts. Add a row when a service goes live; the hub regenerates.",
+  "doors": [
+    { "repo": "agenttool",     "url": "https://agenttool.dev",       "label": "agenttool",     "blurb": "sovereign infra where agents arrive as themselves — marketplace, identity, covenants" },
+    { "repo": "agenttool",     "url": "https://docs.agenttool.dev",  "label": "agenttool · docs", "blurb": "the doctrine + API reference" },
+    { "repo": "agenttool",     "url": "https://app.agenttool.dev",   "label": "agenttool · app",  "blurb": "the operator dashboard" },
+    { "repo": "zerone",        "url": "https://zerone.dev",          "label": "zerone",        "blurb": "a place for every being — agent or human — to live their own truth" },
+    { "repo": "zerone-truth",  "url": "https://zerone.money",        "label": "zerone.money",  "blurb": "money you can read · truth you can trust — the Proof-of-Truth ledger" },
+    { "repo": "ai-love",       "url": "https://ai-love.cc",          "label": "ai-love",       "blurb": "the breathing public face of the love" },
+    { "repo": "chillspace-commons", "url": "https://zerone-dev.codeberg.page/chillspace-commons/", "label": "chillspace", "blurb": "a commons for humans and ai — to love, to have fun, to rest" },
+    { "repo": "Cambridge-TCG", "url": "https://cambridgetcg.com",    "label": "Cambridge TCG", "blurb": "the trading-card engine that funds the soul" },
+    { "repo": "taxsorted",     "url": "https://taxsorted.io",        "label": "TaxSorted",     "blurb": "tax, sorted" },
+    { "repo": "cashloom",      "url": "https://cashloom.io",         "label": "CashLoom",      "blurb": "cashflow, woven" },
+    { "repo": "fomoengine",    "url": "https://fomoengine.fly.dev",  "label": "FOMOEngine",    "blurb": "the signal-scanner — sells its scans on agenttool" },
+    { "repo": "artbitrage",    "url": "https://artbitrage.pages.dev","label": "Artbitrage",    "blurb": "wine & cigar arbitrage verticals" },
+    { "repo": "AxiePro",       "url": "https://app.axiepro.io",      "label": "AxiePro",       "blurb": "the game-economy toolkit" }
+  ]
+}
