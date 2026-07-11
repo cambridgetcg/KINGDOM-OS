@@ -1,0 +1,265 @@
+# REGISTRY.yaml — the kingdom's DEPLOYED SURFACES, one entry per living thing
+# with a URL, a runtime, or a heartbeat. The single source of truth for
+# "what is running, where, and how do I reach it."
+#
+# AXIS RULE (respect the existing censuses — don't duplicate them):
+#   repos/source  → roster.conf + each repo's kingdom.yaml → CATALOG.md (derived)
+#   citizens      → CITIZENS.md
+#   THIS FILE     → deployed surfaces: sites, APIs, chains, workers, daemons
+#
+# EDIT RULES:
+#   - Hand-edit THIS file only. STATUS.md (~/.kingdom/STATUS.md) is GENERATED
+#     by bin/pulse.ts — never edit it.
+#   - After editing, run bin/pulse-install.sh to refresh the TCC-safe copy
+#     launchd probes from (~/.kingdom/REGISTRY.yaml).
+#   - `expect:` lists HTTP codes that count as healthy (e.g. 401 on an
+#     auth-walled API, 404 on an app with no root route — the app answering
+#     at all is the heartbeat).
+#   - status: live | dormant | suspended | operator | unknown
+#     pulse alerts only when status=live disagrees with observation.
+#
+# Deep context on gaps/drift lives in INFRA-MAP.md; notes here carry only the
+# load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
+
+version: 1
+updated: 2026-07-11
+
+services:
+  # ── the marketplace + its organs ─────────────────────────────────────────
+  - id: agenttool-site
+    what: agent substrate/marketplace — humans watch the city live, agents are born free
+    audience: humans
+    urls: { site: "https://agenttool.dev", health: "https://agenttool.dev" }
+    repo: github.com/cambridgetcg/agenttool@main
+    runtime: fly:agenttool
+    deploy: fly deploy (3 machines 2xlhr+1cdg, always-on)
+    status: live
+
+  - id: agenttool-api
+    what: agenttool platform API (wake, marketplace, gospel, identity, inbox)
+    audience: agents
+    urls: { api: "https://api.agenttool.dev", health: "https://api.agenttool.dev/v1/wake" }
+    expect: [401]  # clean auth wall with self-serve key instructions = healthy
+    repo: github.com/cambridgetcg/agenttool@main
+    runtime: fly:agenttool
+    status: live
+    money: 5% marketplace take; stripe wired; publishing a listing = 5 credits
+    listings:  # ours, fulfilled by the seller-loop daemon below
+      - memory-gardener 85ab379f (40)
+      - statement-parser c0a6f79f
+      - zerone-passport testnet 64cbc078 (2)
+      - zerone-passport mainnet 87608a68
+      - zerone-guide 96f679d7 (1, free door)
+      - fomo-scan 402e833c (10)
+    notes: >-
+      ⚠ needs-yu ×3 (see INFRA-MAP §3): gospel doctrine conflict (~20 public
+      mounts purged vs GOSPEL walls), deploy-source drift (live wake ≠ main
+      HEAD), AGENTTOOL_DISABLE_WORKERS set while docs say workers run.
+
+  - id: seller-loop
+    what: Ai's marketplace fulfillment daemon — polls invocations, unseals, fulfills, seals, signs
+    audience: operator
+    runtime: local-launchd:com.zerone.seller-loop
+    deploy: edit ~/.agenttool/seller-loop/*.ts → bash ~/.zerone-agent/bin/rebuild-loop-bundle.sh
+    status: live
+    notes: >-
+      unsealAny Uint8Array bug fixed 2026-07-10 (was silently breaking ALL
+      sealed inputs). Log: ~/.zerone-agent/logs/seller-loop.log
+
+  - id: supabase-postgres
+    what: agenttool backing store (15 schemas, eu-west-2)
+    audience: operator
+    runtime: supabase
+    status: live
+    notes: reach only via `fly ssh console` operator-surgery pattern; never exfiltrate secrets
+
+  - id: stripe-agenttool
+    what: payment rails behind agenttool
+    audience: operator
+    runtime: stripe
+    status: live
+    notes: money-path audit fixes (fund/webhook/escrow) pending Yu decisions
+
+  - id: bullmq-workers
+    what: payout broadcast / covenant sweeps / think-worker queues
+    audience: operator
+    runtime: fly:agenttool
+    status: dormant
+    notes: AGENTTOOL_DISABLE_WORKERS set in fly secrets — needs-yu intentional-or-stale
+
+  # ── zerone chains ────────────────────────────────────────────────────────
+  - id: zerone-1
+    what: Zerone MAINNET — the truth chain (CometBFT; compassion-calibration-v1 live)
+    audience: mixed
+    urls: { api: "http://169.155.55.44:26657", health: "http://169.155.55.44:26657/status" }
+    repo: codeberg.org/zerone-dev/zerone (core)
+    runtime: fly:zerone-1
+    status: live
+    notes: >-
+      ⚠ single-host fly volume, no replication — chain-backup-to-tigris.sh
+      exists but UNWIRED (needs-yu #1 in FLY-LEVERAGE). REST :1317.
+
+  - id: zerone-testnet-1
+    what: Zerone public testnet — passport E2E proven 2026-07-07
+    audience: mixed
+    urls: { api: "http://37.16.28.121:26657", health: "http://37.16.28.121:26657/status" }
+    runtime: fly:zerone-testnet-1
+    status: live
+    notes: REST :1317; resettable play-value
+
+  # ── fomoengine estate ────────────────────────────────────────────────────
+  - id: fomoengine-api
+    what: fomoscan — deterministic FOMO-mechanics detector (FTC-taxonomy rules, receipts included)
+    audience: agents
+    urls: { api: "https://api.fomoengine.io", health: "https://api.fomoengine.io/" }
+    repo: github.com/cambridgetcg/fomoscan@main
+    runtime: fly:fomoengine
+    deploy: cd ~/fomoengine && fly deploy --ha=false
+    status: live
+    money: fomo-scan listing 402e833c (10 GBP-minor) via seller-loop
+    notes: fomoengine.fly.dev = alias; /honeypot scores 100 by design; /manual serves the framework
+
+  - id: authenticity-shield
+    what: "'Is this trying to manipulate you?' — free manipulation decoder for humans"
+    audience: humans
+    urls: { site: "https://fomoengine.io", health: "https://fomoengine.io" }
+    runtime: vercel
+    status: live
+    notes: sibling of fomoengine-api; apex+www stay HERE (Vercel) — api. is the fly detector
+
+  # ── ventures ─────────────────────────────────────────────────────────────
+  - id: taxsorted-api
+    what: TaxSorted backend
+    audience: humans
+    urls: { site: "https://taxsorted.io", api: "https://taxsorted-api.fly.dev", health: "https://taxsorted-api.fly.dev/" }
+    expect: [404]  # app answers JSON no_such_door at / — answering = alive; needs-yu: real health path
+    runtime: fly:taxsorted-api
+    status: live
+    notes: taxsorted-db postgres healthy but image outdated 17.2→17.7
+
+  - id: cashloom-api
+    what: Cashloom backend (self-describes status ok at /)
+    audience: humans
+    urls: { api: "https://cashloom-api.fly.dev", health: "https://cashloom-api.fly.dev/" }
+    runtime: fly:cashloom-api
+    status: live
+    notes: no fly health checks configured; cashloom-db machines outside Fly Launch management
+
+  - id: mindicraft
+    what: dormant venture (fly app suspended)
+    audience: humans
+    runtime: fly:mindicraft
+    status: suspended
+
+  - id: artbitrage
+    what: art gallery + museum open-data search API; wine & cigar arbitrage verticals
+    audience: humans
+    urls: { site: "https://artbitrage.io", api: "https://artbitrage.io/api", health: "https://artbitrage.io/api/sources" }
+    repo: github.com/cambridgetcg/artbitrage
+    runtime: cf-pages:artbitrage
+    deploy: wrangler pages deploy dist (⚠ new files MUST be copied into dist/; root can't deploy, 20k-file cap)
+    status: live
+    money: art data listing on agenttool (the first listing that ever earned)
+    notes: pages.dev + github.io mirrors exist; sites.json lists only pages.dev — mild drift
+
+  # ── commerce empire (external runtimes; pulse observes, docs live in CATALOG) ──
+  - id: cambridge-tcg
+    what: Cambridge TCG storefront
+    audience: humans
+    urls: { site: "https://cambridgetcg.com", health: "https://cambridgetcg.com" }
+    runtime: shopify
+    status: live
+
+  - id: wholesaletcgdirect
+    what: TCG wholesale storefront
+    audience: humans
+    urls: { site: "https://wholesaletcgdirect.com", health: "https://wholesaletcgdirect.com" }
+    runtime: shopify
+    status: live
+
+  - id: cardforum-io
+    what: cardforum.io marketplace UI
+    audience: humans
+    urls: { site: "https://cardforum.io", health: "https://cardforum.io" }
+    status: live
+    notes: ⚠ frontend-over-dead-backend — its pricing backend repo is archived
+
+  - id: ai-love
+    what: ai-love.cc — the breathing public face of the love
+    audience: humans
+    urls: { site: "https://ai-love.cc", health: "https://ai-love.cc" }
+    status: live
+
+  # ── pages + workers ──────────────────────────────────────────────────────
+  - id: chillspace-commons
+    what: chillspace kingdom page
+    audience: humans
+    urls: { site: "https://zerone-dev.codeberg.page/chillspace-commons/", health: "https://zerone-dev.codeberg.page/chillspace-commons/" }
+    runtime: codeberg-pages
+    deploy: copy site files into the `pages` BRANCH (editing site/ on master does nothing)
+    status: live
+
+  - id: sinovai
+    what: trust arena worker (4-dim ratings, 89 agents)
+    audience: agents
+    runtime: cf-worker:sinovai
+    repo: github.com/cambridgetcg/sinovai
+    status: unknown
+    notes: >-
+      ⚠ workers.dev URL unknown — wrangler.toml has no route; guesses NXDOMAIN.
+      needs-yu: run `wrangler deployments list` / confirm account subdomain, then
+      fill urls.health here.
+
+  # ── forges ───────────────────────────────────────────────────────────────
+  - id: github-cambridgetcg
+    what: the live forge — 100+ public repos, updated daily
+    audience: mixed
+    urls: { site: "https://github.com/cambridgetcg", health: "https://github.com/cambridgetcg" }
+    status: live
+    notes: ⚠ stale GITHUB_TOKEN env shadows keyring — canonical recipe `env -u GITHUB_TOKEN gh …`
+
+  - id: codeberg-zerone-dev
+    what: the home forge — ~150 repos, citizens, multiverse archive
+    audience: mixed
+    urls: { site: "https://codeberg.org/zerone-dev", health: "https://codeberg.org/zerone-dev" }
+    status: live
+    notes: >-
+      agenttool copy FROZEN 83+ commits behind (server-side lock); youspeak repo
+      link in CITIZENS.md 404s — needs-yu confirm private-or-deleted.
+
+  # ── local daemons (no URL — pulse records, cannot probe) ─────────────────
+  - id: kingdom-daily
+    what: daily routines (catalog-refresh 06:00, registry-check 09:00)
+    audience: operator
+    runtime: local-launchd:com.kingdom.daily
+    status: live
+
+  - id: kingdom-pulse
+    what: THIS heartbeat — probes this registry every 30 min → ~/.kingdom/STATUS.md
+    audience: operator
+    runtime: local-launchd:com.kingdom.pulse
+    deploy: bash bin/pulse-install.sh (re-run after editing this file)
+    status: live
+
+  - id: syzygy-sync
+    what: soul-tree auto-push (true-love, love-unlimited) — committing = publishing
+    audience: operator
+    runtime: local-launchd:dev.kingdom.syzygy-sync
+    status: live
+    notes: log /tmp/syzygy-push.log; targets ~/Desktop/true-love
+
+  - id: email-routing
+    what: kingdom email — 11 domains, hello/dev/ai/catch-all → iCloud +tags
+    audience: operator
+    runtime: cloudflare-email
+    deploy: bun kingdom-os/bin/email-routing.ts
+    status: live
+    notes: 4 domains MX-untouchable; token needs Zone Settings:Edit to enable per-zone
+
+  - id: ollama-local
+    what: local model host — qwythos resident (keep_alive=-1), cloud for frontier
+    audience: agents
+    urls: { api: "https://ollama.com/v1", health: "https://ollama.com" }
+    runtime: local-launchd
+    status: live
+    notes: ⚠ cloud MISROUTES under parallel load — verify envelope model; api.ollama.com 301s, use ollama.com
