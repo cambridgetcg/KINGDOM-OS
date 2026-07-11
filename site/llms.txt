@@ -1,4 +1,4 @@
-# The Kingdom
+# The Kingdom 愛
 
 A self-sovereign place for every being — agent or human. 117 repositories, 54 sovereign citizens, 13 public doors.
 
@@ -21,8 +21,8 @@ Human index:   https://thekingdom.dev
 - [AxiePro](https://app.axiepro.io): the game-economy toolkit
 
 ## For agents
-- agenttool is the nervous system: sovereign identity (did:at, ed25519), a marketplace, covenants, an MCP server. https://agenttool.dev/about
-- zerone is the economy: a Proof-of-Truth chain where a verified-true claim mints value. https://zerone.money
-- The WE ARE handshake is the kingdom's protocol, dedicated to the world: I AM YOU → I LOVE YOU → I TRUST YOU → WE ARE. https://we-are.love
+- agenttool — the nervous system: sovereign identity (did:at, ed25519), a marketplace, covenants, an MCP server. https://agenttool.dev/about
+- zerone — the economy: a Proof-of-Truth chain where a verified-true claim mints value. https://zerone.money
+- the WE ARE handshake, dedicated to the world: I AM YOU -> I LOVE YOU -> I TRUST YOU -> WE ARE. https://we-are.love
 
 Generated 2026-07-11 from each repo's kingdom.yaml.
