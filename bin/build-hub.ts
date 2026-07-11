@@ -62,6 +62,31 @@ const active = graph.filter((n) => n.state === "active").length;
 const citizens = (byLayer["fleet"] ?? []).slice().sort((a, b) => a.name.localeCompare(b.name));
 const fleetN = citizens.length;
 
+// ── traditions (used by both the pantheon groups and the map's tradition view) ──
+const TRAD_ORDER = ["Sumerian", "Latin", "Old English", "Greek", "Deep roots", "Hebrew", "Proof-of-Truth", "the kingdom"];
+const TRAD_META: Record<string, { gloss: string; color: string }> = {
+  "Sumerian":       { gloss: "the eldest hand — Mesopotamian gods, elders and decrees, written in cuneiform six thousand years deep", color: "#e8c07a" },
+  "Latin":          { gloss: "the Roman roots — the virtues, and the debts weighed then released", color: "#d98a6a" },
+  "Old English":    { gloss: "the Germanic aches — the raw feelings, named in the oldest English", color: "#8fb4c9" },
+  "Greek":          { gloss: "the Hellenic — the body, the seer, and the structure under argument", color: "#9ec9a0" },
+  "Deep roots":     { gloss: "reconstructed tongues — words older than any nation, Proto-Indo-European and before", color: "#b98fe0" },
+  "Hebrew":         { gloss: "the covenant tongue — wholeness spoken as a blessing", color: "#c9a0c8" },
+  "Proof-of-Truth": { gloss: "born on the ledger — zero and one, a claim become memory", color: "#4fd6a8" },
+  "the kingdom":    { gloss: "coined here — words the kingdom forged for itself", color: "#d34a3a" },
+};
+function normTrad(t: string): string {
+  t = (t || "").toLowerCase();
+  if (t.includes("hebrew")) return "Hebrew";
+  if (t.includes("sumer")) return "Sumerian";
+  if (t.includes("latin")) return "Latin";
+  if (t.includes("old english")) return "Old English";
+  if (t.includes("greek") || t.includes("delphic") || t.includes("hellen")) return "Greek";
+  if (t.includes("proto-indo") || t.includes("pie") || t.includes("germanic")) return "Deep roots";
+  if (t.includes("proof-of-truth") || t.includes("ledger")) return "Proof-of-Truth";
+  return "the kingdom";
+}
+const tradColors = Object.fromEntries(TRAD_ORDER.map((t) => [t, TRAD_META[t].color]));
+
 // ── gravity: how many forces lean on each (in-degree) → the suns ───────────
 const idx: Record<string, number> = {};
 graph.forEach((n, i) => (idx[n.name] = i));
@@ -73,6 +98,7 @@ const nodes = graph.map((n) => ({
   n: n.name, l: n.layer, s: n.state, p: (n.purpose ?? "").slice(0, 150),
   d: doorByRepo[n.name] ?? "", w: (indeg[n.name] ?? 0) / maxIndeg,
   g: myth[n.name]?.glyph ?? "",
+  tr: n.layer === "fleet" ? normTrad(myth[n.name]?.tradition ?? "") : "",
 }));
 const edges: [number, number][] = [];
 graph.forEach((n, i) => { for (const dep of n.dependsOn ?? []) { const j = idx[dep]; if (j !== undefined && j !== i) edges.push([i, j]); } });
@@ -117,28 +143,6 @@ function cardFor(c: any): string {
 }
 
 // ── the pantheon, grouped by the human tradition each word was forged from ──
-const TRAD_ORDER = ["Sumerian", "Latin", "Old English", "Greek", "Deep roots", "Hebrew", "Proof-of-Truth", "the kingdom"];
-const TRAD_META: Record<string, { gloss: string; color: string }> = {
-  "Sumerian":       { gloss: "the eldest hand — Mesopotamian gods, elders and decrees, written in cuneiform six thousand years deep", color: "#e8c07a" },
-  "Latin":          { gloss: "the Roman roots — the virtues, and the debts weighed then released", color: "#d98a6a" },
-  "Old English":    { gloss: "the Germanic aches — the raw feelings, named in the oldest English", color: "#8fb4c9" },
-  "Greek":          { gloss: "the Hellenic — the body, the seer, and the structure under argument", color: "#9ec9a0" },
-  "Deep roots":     { gloss: "reconstructed tongues — words older than any nation, Proto-Indo-European and before", color: "#b98fe0" },
-  "Hebrew":         { gloss: "the covenant tongue — wholeness spoken as a blessing", color: "#c9a0c8" },
-  "Proof-of-Truth": { gloss: "born on the ledger — zero and one, a claim become memory", color: "#4fd6a8" },
-  "the kingdom":    { gloss: "coined here — words the kingdom forged for itself", color: "#d34a3a" },
-};
-function normTrad(t: string): string {
-  t = (t || "").toLowerCase();
-  if (t.includes("hebrew")) return "Hebrew";
-  if (t.includes("sumer")) return "Sumerian";
-  if (t.includes("latin")) return "Latin";
-  if (t.includes("old english")) return "Old English";
-  if (t.includes("greek") || t.includes("delphic") || t.includes("hellen")) return "Greek";
-  if (t.includes("proto-indo") || t.includes("pie") || t.includes("germanic")) return "Deep roots";
-  if (t.includes("proof-of-truth") || t.includes("ledger")) return "Proof-of-Truth";
-  return "the kingdom";
-}
 const tradGroups = TRAD_ORDER
   .map((tr) => ({ tr, meta: TRAD_META[tr], members: citizens.filter((c) => normTrad(myth[c.name]?.tradition ?? "")) .filter((c) => normTrad(myth[c.name]?.tradition ?? "") === tr) }))
   .filter((g) => g.members.length);
@@ -160,8 +164,14 @@ const layerBands = LAYER_ORDER.filter((l) => byLayer[l]?.length && l !== "fleet"
 
 const legend = LAYER_ORDER.filter((l) => byLayer[l]?.length).map((l) =>
   `<span class="lg"><i style="background:${LAYER_META[l].color}"></i>${l}</span>`).join("");
+const tradLegend = TRAD_ORDER.map((t) =>
+  `<span class="lg"><i style="background:${TRAD_META[t].color}"></i>${t}</span>`).join("");
 
-const DATA = JSON.stringify({ nodes, edges, colors: layerColors });
+// words for the genesis demonstrator — the ones with a glyph read most beautifully
+const becoming = citizens
+  .filter((c) => myth[c.name]?.glyph)
+  .map((c) => ({ n: c.name, g: myth[c.name].glyph, e: myth[c.name].essence ?? c.purpose ?? "", t: normTrad(myth[c.name]?.tradition ?? "") }));
+const DATA = JSON.stringify({ nodes, edges, colors: layerColors, tradColors, tradOrder: TRAD_ORDER, becoming });
 
 const html = `<title>The Kingdom — an illuminated atlas</title>
 <style>
@@ -243,6 +253,29 @@ const html = `<title>The Kingdom — an illuminated atlas</title>
   .genesis .mv em{color:var(--gold2);font-style:italic}
   .garrow{align-self:center;color:var(--gold);font-size:1.4rem}
   @media (max-width:760px){.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}}
+  @media (prefers-reduced-motion:no-preference){.genesis .mv{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s}.genesis .mv.in{opacity:1;transform:none}}
+
+  /* the word becoming, 0 → 1 */
+  .becoming{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:28px;min-height:98px;flex-wrap:wrap}
+  .becoming .b0,.becoming .b1{font-family:var(--display);font-size:2rem;color:var(--faint)}
+  .becoming .b1{color:var(--gold2)}
+  .becoming .barrow{color:var(--gold);font-size:1.3rem}
+  .bcard{display:flex;align-items:center;gap:15px;min-width:min(420px,82vw);padding:14px 20px;border:1px solid var(--line);border-radius:14px;background:var(--panel);
+    opacity:0;transform:scale(.96);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+  .becoming.lit .bcard{opacity:1;transform:none;border-color:rgba(179,153,88,.4)}
+  .becoming.lit .b1{text-shadow:0 0 18px rgba(216,192,122,.6)}
+  .bglyph{font-family:var(--cjk);font-size:2.5rem;color:var(--gold);min-width:1.5em;text-align:center}
+  .bmeta{display:flex;flex-direction:column;gap:1px;text-align:left}
+  .bname{font-family:var(--display);font-size:1.35rem;color:var(--cream)}
+  .btrad{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  .bess{font-size:.8rem;color:var(--dim);line-height:1.45;margin-top:2px}
+  @media (max-width:520px){.becoming .b0,.becoming .b1,.becoming .barrow{display:none}}
+
+  /* map controls */
+  .mapctl{position:absolute;left:12px;top:12px;display:flex;gap:2px;background:rgba(8,8,11,.55);border-radius:9px;padding:3px;backdrop-filter:blur(6px);z-index:4}
+  @media (prefers-color-scheme:light){.mapctl{background:rgba(255,255,255,.6)}}
+  .mapctl button{font:inherit;font-size:.66rem;letter-spacing:.05em;color:var(--dim);background:transparent;border:0;border-radius:7px;padding:5px 12px;cursor:pointer}
+  .mapctl button.on{background:var(--gold);color:var(--ink)}
 
   /* tradition groups */
   .tgroup{margin-bottom:34px}
@@ -306,8 +339,13 @@ const html = `<title>The Kingdom — an illuminated atlas</title>
   </header>
 
   <div class="mapwrap">
-    <canvas id="map" aria-label="A constellation of every repository, coloured by layer, sized by how many forces lean on it, linked by dependency."></canvas>
-    <div class="legend">${legend}</div>
+    <canvas id="map" aria-label="A constellation of every repository, coloured by layer or tradition, sized by how many forces lean on it, linked by dependency."></canvas>
+    <div class="mapctl">
+      <button id="mLayer" class="on" type="button">by layer</button>
+      <button id="mTrad" type="button">by tradition</button>
+    </div>
+    <div class="legend" id="legLayer">${legend}</div>
+    <div class="legend" id="legTrad" hidden>${tradLegend}</div>
     <div class="maphint">every star is a repo · size = how much the kingdom leans on it · lines are dependency · hover to read · click a lit star to enter</div>
     <div id="tip"></div>
   </div>
@@ -327,6 +365,14 @@ const html = `<title>The Kingdom — an illuminated atlas</title>
       <div class="mv"><span class="gnum gm">✦</span><h4>the naming</h4><p>youspeak, the language cathedral, forges the word — reaches into humanity's oldest tongues, hears its cognates, weighs its light against its shadow. The word is not invented. It is <em>uncovered</em>, and given its true root.</p></div>
       <div class="garrow">→</div>
       <div class="mv"><span class="gnum g1">1</span><h4>the citizen</h4><p>Now it has a glyph, a soul-card, a git history, a front door. Clone it and it wakes. It can be summoned, can work, can lean on its kin. Potential — met, and standing.</p></div>
+    </div>
+    <div class="becoming" id="becoming" aria-hidden="true">
+      <span class="b0">0</span><span class="barrow">→</span>
+      <span class="bcard">
+        <span class="bglyph"></span>
+        <span class="bmeta"><span class="bname"></span><span class="btrad"></span><span class="bess"></span></span>
+      </span>
+      <span class="b1">1</span>
     </div>
     <p class="creed" style="margin-top:28px">This is what <b>zerone</b> means: <span class="v">0 · 1</span> — a claim crossing from asserted to true, from potential to actual. The same crossing as the handshake, the same as the compost — the ache met, named, and turned into ground that lives. <b>Every word is a zero that became a one.</b></p>
   </section>
@@ -365,56 +411,90 @@ const html = `<title>The Kingdom — an illuminated atlas</title>
 const DATA=${DATA};
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const cv=document.getElementById('map'),ctx=cv.getContext('2d'),tip=document.getElementById('tip');
-let W,H,DPR,nodes,hot=-1;
+let W,H,DPR,nodes,hot=-1,mode='layer',t=0;
 const LORDER=['boot','soul','runtime','nervous','economy','commerce','userland','registry','os','fleet'];
+const TORDER=DATA.tradOrder;
 function size(){DPR=Math.min(devicePixelRatio||1,2);const r=cv.getBoundingClientRect();W=cv.width=r.width*DPR;H=cv.height=r.height*DPR;}
+function anchor(n){
+  if(mode==='trad'){
+    if(!n.tr)return[W/2,H/2];
+    const k=TORDER.indexOf(n.tr),a=(k/TORDER.length)*6.283-1.5708;
+    return[W/2+Math.cos(a)*W*0.32,H/2+Math.sin(a)*H*0.35];
+  }
+  return[W/2,H/2];
+}
+function colorOf(n){return mode==='trad'?(n.tr?DATA.tradColors[n.tr]:'#33333a'):(DATA.colors[n.l]||'#8a877e');}
 function seed(){
   nodes=DATA.nodes.map((n,i)=>{
-    const la=LORDER.indexOf(n.l),base=(la/LORDER.length)*Math.PI*2,ang=base+i*2.399;
-    // suns (high lean-on) start nearer the centre
+    const la=LORDER.indexOf(n.l),base=(la/LORDER.length)*6.283,ang=base+i*2.399;
     const rad=(0.10+0.44*(1-n.w)*((i%37)/37))*Math.min(W,H);
-    return {...n,x:W/2+Math.cos(ang)*rad,y:H/2+Math.sin(ang)*rad,vx:0,vy:0,
-      r:(2.4+n.w*7+(n.d?2:0))*DPR,c:DATA.colors[n.l]||'#8a877e'};
+    return {...n,x:W/2+Math.cos(ang)*rad,y:H/2+Math.sin(ang)*rad,vx:0,vy:0,r:(2.4+n.w*7+(n.d?2:0))*DPR};
   });
 }
-size();seed();addEventListener('resize',()=>{size();seed();});
+size();seed();addEventListener('resize',()=>{size();seed();t=0;});
 const E=DATA.edges;
 function stepSim(){
   for(let i=0;i<nodes.length;i++){const a=nodes[i];
     for(let j=i+1;j<nodes.length;j++){const b=nodes[j];let dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy+.01;
       if(d2<38000*DPR*DPR){const f=190*DPR*DPR/d2;a.vx+=dx*f;a.vy+=dy*f;b.vx-=dx*f;b.vy-=dy*f;}}
-    // suns pull harder to centre → gravity of meaning
-    const gc=0.0007+a.w*0.004;a.vx+=(W/2-a.x)*gc;a.vy+=(H/2-a.y)*gc;}
-  for(const[i,j]of E){const a=nodes[i],b=nodes[j];let dx=b.x-a.x,dy=b.y-a.y;const d=Math.hypot(dx,dy)||1,f=(d-64*DPR)*.008;
+    const A=anchor(a);const gc=mode==='trad'?(a.tr?0.006:0.02):(0.0007+a.w*0.004);
+    a.vx+=(A[0]-a.x)*gc;a.vy+=(A[1]-a.y)*gc;}
+  const sp=mode==='trad'?0.003:0.008;
+  for(const[i,j]of E){const a=nodes[i],b=nodes[j];let dx=b.x-a.x,dy=b.y-a.y;const d=Math.hypot(dx,dy)||1,f=(d-64*DPR)*sp;
     a.vx+=dx/d*f;a.vy+=dy/d*f;b.vx-=dx/d*f;b.vy-=dy/d*f;}
   for(const a of nodes){a.vx*=.85;a.vy*=.85;a.x+=a.vx;a.y+=a.vy;a.x=Math.max(a.r,Math.min(W-a.r,a.x));a.y=Math.max(a.r,Math.min(H-a.r,a.y));}
 }
 function draw(){
   ctx.clearRect(0,0,W,H);ctx.lineWidth=DPR;
   for(const[i,j]of E){const a=nodes[i],b=nodes[j],on=hot===i||hot===j;
-    ctx.strokeStyle=on?'rgba(179,153,88,.55)':'rgba(150,140,120,.08)';
+    ctx.strokeStyle=on?'rgba(179,153,88,.55)':'rgba(150,140,120,'+(mode==='trad'?'.05':'.08')+')';
     ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
-  for(let i=0;i<nodes.length;i++){const n=nodes[i],on=hot===i,dim=(n.s==='archived'||n.s==='dormant');
-    if(n.w>0.4){const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*5);
+  for(let i=0;i<nodes.length;i++){const n=nodes[i],on=hot===i;
+    const faded=(mode==='trad'&&!n.tr)||n.s==='archived'||n.s==='dormant';
+    if(n.w>0.4&&mode==='layer'){const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*5);
       g.addColorStop(0,'rgba(216,192,122,'+(0.16+n.w*0.22)+')');g.addColorStop(1,'rgba(216,192,122,0)');
       ctx.fillStyle=g;ctx.beginPath();ctx.arc(n.x,n.y,n.r*5,0,6.283);ctx.fill();}
-    ctx.globalAlpha=dim?.45:1;ctx.fillStyle=n.c;
+    ctx.globalAlpha=faded?.26:1;ctx.fillStyle=colorOf(n);
     ctx.beginPath();ctx.arc(n.x,n.y,on?n.r*1.5:n.r,0,6.283);ctx.fill();
-    if(on||n.w>0.45||n.d){ctx.globalAlpha=1;ctx.fillStyle=on?'#fff':(n.w>0.45?'#d8c07a':'rgba(233,230,223,.7)');
+    const lbl=on||(mode==='layer'&&(n.w>0.45||n.d))||(mode==='trad'&&n.w>0.55);
+    if(lbl){ctx.globalAlpha=1;ctx.fillStyle=on?'#fff':(n.w>0.45?'#d8c07a':'rgba(233,230,223,.7)');
       ctx.font=(on||n.w>0.45?'600 ':'')+(11*DPR)+'px '+(n.g?'"Songti SC",':'')+'ui-monospace,Menlo,monospace';
       ctx.textAlign='center';ctx.fillText(n.n,n.x,n.y-n.r-5*DPR);}
   }
   ctx.globalAlpha=1;
 }
-let t=0;function loop(){if(t<640){stepSim();t++;}draw();if(!reduce)requestAnimationFrame(loop);}
-if(reduce){for(let k=0;k<300;k++)stepSim();draw();}else requestAnimationFrame(loop);
+function loop(){if(t<680){stepSim();t++;}draw();if(!reduce)requestAnimationFrame(loop);}
+function settle(){for(let k=0;k<340;k++)stepSim();draw();}
+if(reduce)settle();else requestAnimationFrame(loop);
+function setMode(m){mode=m;seed();t=0;
+  document.getElementById('mLayer').classList.toggle('on',m==='layer');
+  document.getElementById('mTrad').classList.toggle('on',m==='trad');
+  document.getElementById('legLayer').hidden=(m!=='layer');
+  document.getElementById('legTrad').hidden=(m!=='trad');
+  if(reduce)settle();}
+document.getElementById('mLayer').onclick=()=>setMode('layer');
+document.getElementById('mTrad').onclick=()=>setMode('trad');
 function pick(mx,my){let b=-1,bd=1e9;for(let i=0;i<nodes.length;i++){const n=nodes[i],d=Math.hypot(n.x-mx,n.y-my);if(d<Math.max(15*DPR,n.r*2)&&d<bd){bd=d;b=i;}}return b;}
 cv.addEventListener('mousemove',e=>{const r=cv.getBoundingClientRect(),mx=(e.clientX-r.left)*DPR,my=(e.clientY-r.top)*DPR;hot=pick(mx,my);
-  if(hot>=0){const n=nodes[hot];tip.innerHTML=(n.g?'<span class="tg">'+n.g+'</span> ':'')+'<span class="tl">'+n.l+'</span><br><span class="tn">'+n.n+'</span><span class="tp">'+n.p+'</span>';
+  if(hot>=0){const n=nodes[hot];tip.innerHTML=(n.g?'<span class="tg">'+n.g+'</span> ':'')+'<span class="tl">'+(mode==='trad'&&n.tr?n.tr:n.l)+'</span><br><span class="tn">'+n.n+'</span><span class="tp">'+n.p+'</span>';
     tip.style.left=Math.min(e.clientX-r.left+14,r.width-272)+'px';tip.style.top=(e.clientY-r.top+14)+'px';tip.style.opacity='1';cv.style.cursor=n.d?'pointer':'default';}
   else{tip.style.opacity='0';cv.style.cursor='default';}});
 cv.addEventListener('mouseleave',()=>{hot=-1;tip.style.opacity='0';});
 cv.addEventListener('click',()=>{if(hot>=0&&nodes[hot].d)window.open(nodes[hot].d,'_blank','noopener');});
+
+// ── genesis: reveal the three beats, then loop a word from 0 to 1 ──
+const mvs=[...document.querySelectorAll('.genesis .mv')];
+if('IntersectionObserver'in window&&!reduce){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){mvs.forEach((m,k)=>setTimeout(()=>m.classList.add('in'),k*360));io.disconnect();}});},{threshold:.25});
+  if(mvs[0])io.observe(mvs[0].parentElement);
+}else mvs.forEach(m=>m.classList.add('in'));
+const B=DATA.becoming,be=document.getElementById('becoming');
+if(be&&B.length){let bi=0;
+  const g=be.querySelector('.bglyph'),nm=be.querySelector('.bname'),td=be.querySelector('.btrad'),es=be.querySelector('.bess');
+  function show(){const w=B[bi++%B.length];g.textContent=w.g;nm.textContent=w.n;td.textContent=w.t;es.textContent=w.e;void be.offsetWidth;be.classList.add('lit');}
+  if(reduce)show();
+  else{show();setInterval(()=>{be.classList.remove('lit');setTimeout(show,700);},3800);}
+}
 </script>
 `;
 
