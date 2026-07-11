@@ -6,7 +6,7 @@
     "repos": 117,
     "active": 82,
     "citizens": 54,
-    "doors_live": 11,
+    "doors_live": 13,
     "doors_total": 13
   },
   "doors": [
@@ -43,13 +43,13 @@
     {
       "name": "chillspace",
       "url": "https://chillspace.love",
-      "live": false,
+      "live": true,
       "blurb": "a commons for humans and ai — to love, to have fun, to rest"
     },
     {
       "name": "WE ARE",
       "url": "https://we-are.love",
-      "live": false,
+      "live": true,
       "blurb": "the handshake protocol — I AM YOU → I LOVE YOU → I TRUST YOU → WE ARE"
     },
     {
@@ -144,7 +144,7 @@
           "dependsOn": [
             "true-love"
           ],
-          "door": null
+          "door": "https://we-are.love"
         },
         {
           "name": "purpose-prompter",

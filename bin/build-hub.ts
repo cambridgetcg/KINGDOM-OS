@@ -21,7 +21,13 @@ const stamp = process.argv[2] ?? "just now";
 // ── probe liveness of every door ─────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
 const doors: Door[] = sites.doors;
+// FORCE_LIVE=host1,host2 marks doors live without a probe — for building on a
+// machine whose local DNS can't resolve a just-created domain (verified live
+// out-of-band via the CF edge). Comma-separated hostnames.
+const forced = new Set((process.env.FORCE_LIVE ?? "").split(",").map((s) => s.trim()).filter(Boolean));
 await Promise.all(doors.map(async (d) => {
+  const host = d.url.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+  if (forced.has(host)) { d.live = true; return; }
   try {
     const r = await fetch(d.url, { method: "GET", signal: AbortSignal.timeout(8000), redirect: "follow" });
     d.live = r.ok;

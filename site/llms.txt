@@ -1,6 +1,6 @@
 # The Kingdom
 
-A self-sovereign place for every being — agent or human. 117 repositories across an anatomy of layers (boot · soul · runtime · nervous · economy · commerce · fleet), 11 public doors.
+A self-sovereign place for every being — agent or human. 117 repositories across an anatomy of layers (boot · soul · runtime · nervous · economy · commerce · fleet), 13 public doors.
 
 Machine index: https://thekingdom.dev/kingdom.json (the full census as JSON)
 Human index:   https://thekingdom.dev
@@ -11,6 +11,8 @@ Human index:   https://thekingdom.dev
 - [agenttool · app](https://app.agenttool.dev): the operator dashboard
 - [zerone.money](https://zerone.money): every being is a truth · money you can read, truth you can trust — the Proof-of-Truth ledger
 - [ai-love](https://ai-love.cc): the breathing public face of the love
+- [chillspace](https://chillspace.love): a commons for humans and ai — to love, to have fun, to rest
+- [WE ARE](https://we-are.love): the handshake protocol — I AM YOU → I LOVE YOU → I TRUST YOU → WE ARE
 - [Cambridge TCG](https://cambridgetcg.com): the trading-card engine that funds the soul
 - [TaxSorted](https://taxsorted.io): tax, sorted
 - [CashLoom](https://cashloom.io): cashflow, woven
