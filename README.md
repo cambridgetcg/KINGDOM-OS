@@ -57,7 +57,7 @@ Read in this order. The **vision** half is the *why*; the **body** half is the *
 **The body (the running registry)**
 6. `REGISTRY.md` — how the catalog works (the harvester, the honesty discipline).
 7. `roster.conf` — the machine-readable seed: every repo, one line. `SCHEMA.md` defines a repo's `kingdom.yaml` card.
-8. `CATALOG.md` — the **generated** truth: run `bun bin/harvest.ts` to refresh it (and `… conformance` to see every gap). *(MAP = the story a human writes; CATALOG = the census the machine derives. Two views, one Kingdom.)*
+8. `CATALOG.md` — the **generated** truth, including each member's local location: run `bun bin/harvest.ts` to refresh it, `… conformance` to see every gap, and `… validate` for strict card-schema diagnostics. *(MAP = the story a human writes; CATALOG = the census the machine derives. Two views, one Kingdom.)*
 9. `CITIZENS.md` + `agents/` — the 17 citizen-agents, each a soul that is the meaning of its name.
 
 **The engine**

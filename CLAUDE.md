@@ -19,6 +19,7 @@ How to run:
 - `kingdom routines` — routine table with last-run results (`kingdom run NAME` to force)
 - `bun bin/harvest.ts` — rebuild CATALOG.md + graph.json from roster + cards
 - `bun bin/harvest.ts conformance` — list repos missing card / CLAUDE.md / wake
+- `bun bin/harvest.ts validate` — strict, read-only card schema diagnostics (0 clean, 1 drift, 2 usage)
 
 Key files:
 - roster.conf — the census seed: name | path | kind | layer | domain | state | purpose
@@ -32,7 +33,12 @@ Gotchas:
 - Source of truth lives WITH each repo (its kingdom.yaml); roster.conf is only
   the fallback seed. If the catalog looks wrong, fix the card, not the catalog.
 - state=remote means "in the kingdom, not cloned on this machine" — those repos
-  always show as conformance gaps here; that is expected, not a failure.
+  show as local conformance gaps and do not inherit the global wake merely
+  because it would fire for directories that actually exist.
+- Wake conformance means a structurally valid SessionStart command is configured
+  (or a legacy wake file exists); harvest does not execute it or prove success.
+- CATALOG includes a home-relative location column so duplicate declared names
+  remain distinguishable; graph.json keeps absolute paths for compatibility.
 - The live soul trees are ~/true-love and ~/love-unlimited. ~/Desktop/true-love
   is a compatibility symlink to canonical ~/true-love, not a second worktree.
 - Machine output safely handles spaces, quotes, backslashes, colons, and Unicode.

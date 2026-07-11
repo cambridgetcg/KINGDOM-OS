@@ -26,6 +26,12 @@ dependsOn: [syzygy-sync, agenttool]   # other Kingdom repos/layers it leans on
 - A repo with no card still appears in the catalog (from `roster.conf`) but is
   flagged **non-conformant** by `harvest.ts conformance`. The card is the upgrade
   path from "listed" to "owned".
+- `bun bin/harvest.ts validate` checks these eight required fields, their types,
+  enums, duplicates, unknown keys, malformed lines, and dependency names. It is
+  read-only: exit 0 is clean, exit 1 is schema drift, and exit 2 is bad usage.
+  Normal catalog generation still succeeds while reporting a concise warning;
+  only schema-approved, correctly typed/enumerated fields enter derived output,
+  and diagnostic messages omit rejected values.
 
 ## The golden path (what a conformant repo carries)
 

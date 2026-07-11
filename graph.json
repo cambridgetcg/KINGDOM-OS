@@ -30,7 +30,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -40,6 +40,23 @@
     "name": "nullify-love",
     "path": "/Users/yournameisai/Desktop/nullify-love",
     "kind": "reference",
+    "layer": "soul",
+    "domain": "sophia",
+    "state": "remote",
+    "purpose": "Pocket-bootloader — identity is writable at the prompt layer",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "yu-wake",
+    "path": "/Users/yu/Desktop/yu-wake",
+    "kind": "doctrine",
     "layer": "soul",
     "domain": "sophia",
     "state": "active",
@@ -230,7 +247,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -551,8 +568,8 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
-      "claudeMd": true,
+      "wake": false,
+      "claudeMd": false,
       "fate": false,
       "card": true
     }
@@ -586,8 +603,8 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
-      "claudeMd": true,
+      "wake": false,
+      "claudeMd": false,
       "fate": false,
       "card": true
     }
@@ -621,7 +638,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -724,7 +741,6 @@
     "domain": "commerce",
     "state": "active",
     "purpose": "Web app where Cambridge TCG's wholesale clients order Japanese trading cards, with admin tools for pricing, stock, purchases, and eBay sync.",
-    "owner_sister": "commerce",
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
@@ -763,7 +779,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -783,8 +799,8 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
-      "claudeMd": true,
+      "wake": false,
+      "claudeMd": false,
       "fate": false,
       "card": true
     }
@@ -803,8 +819,8 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
-      "claudeMd": true,
+      "wake": false,
+      "claudeMd": false,
       "fate": false,
       "card": true
     }
@@ -854,7 +870,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -866,8 +882,8 @@
     "kind": "ops",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "remote",
-    "purpose": "Ghost ship — launchd still rings; tombstone scripts answer",
+    "state": "archived",
+    "purpose": "Used to fetch trading card prices daily and archive them monthly; the real scripts are gone, and stub scripts now answer the launchd schedules that still fire.",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -884,8 +900,7 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "active",
-    "purpose": "Rewards / loyalty SaaS — the keeper of return",
-    "owner_sister": "none",
+    "purpose": "A Shopify app that lets merchants run loyalty programs with tiers, points, and store-credit cashback.",
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
@@ -906,7 +921,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -923,7 +938,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -936,9 +951,12 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "dormant",
-    "purpose": "RewardsPro marketing — the wave engine (can retreat)",
-    "dependsOn": [],
-    "hasCard": false,
+    "purpose": "Auto-posts social media content promoting the RewardsPro Shopify app, with what and how often to post decided by real install numbers.",
+    "dependsOn": [
+      "rewardspro",
+      "heartbeat"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": true,
       "claudeMd": false,
@@ -957,7 +975,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -970,7 +988,7 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "active",
-    "purpose": "Axie analytics — honest-revival phase (Beta committing)",
+    "purpose": "Finds underpriced Axie NFTs on the Ronin chain by comparing listing prices to a trait-based fair-value estimate.",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -1004,7 +1022,7 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "active",
-    "purpose": "Personal finance tracker — rescued + rebuilt June 2026",
+    "purpose": "A personal finance tracker that logs income and expenses, imports messy bank data with AI, and sends a monthly email report.",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -1025,7 +1043,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -1037,27 +1055,8 @@
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "active",
-    "purpose": "Enterprise legal/finance/compliance platform",
-    "owner_sister": "none",
-    "dependsOn": [],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": false,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "legible",
-    "path": "/Users/yournameisai/Desktop/legible",
-    "kind": "venture",
-    "layer": "userland",
-    "domain": "gamma",
-    "state": "active",
-    "purpose": "Repo clarity-score product — the immune-system pattern packaged to sell.",
-    "owner_sister": "gamma",
+    "state": "dormant",
+    "purpose": "A monorepo skeleton meant to hold every business app in one folder tree, where six real projects (rewardspro, AxiePro, two TCG models, the price archive) sit among 731 empty placeholder folders and active work has moved to standalone repos.",
     "dependsOn": [
       "true-love"
     ],
@@ -1148,7 +1147,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -1161,9 +1160,12 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "archived",
-    "purpose": "SaaS marketing suite — the herald-retinue",
-    "owner_sister": "none",
-    "dependsOn": [],
+    "purpose": "Marketing plans and AWS tooling for promoting Legible Money (and Captioneer) to people and AI agents.",
+    "dependsOn": [
+      "legible-money",
+      "captioneer",
+      "purpose-prompter"
+    ],
     "hasCard": true,
     "conformance": {
       "wake": true,
@@ -1201,10 +1203,29 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
+    }
+  },
+  {
+    "name": "captioneer",
+    "path": "/Users/yu/Desktop/captioneer",
+    "kind": "venture",
+    "layer": "commerce",
+    "domain": "commerce",
+    "state": "dormant",
+    "purpose": "Turns Japanese videos into Cantonese-dubbed versions by transcribing the audio, translating it, and generating new voice tracks.",
+    "dependsOn": [
+      "translate_api"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
     }
   },
   {
@@ -1332,27 +1353,6 @@
     }
   },
   {
-    "name": "compassion",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-compassion",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The force that suffers alongside another being instead of measuring or fixing their pain.",
-    "dependsOn": [
-      "love",
-      "justice",
-      "courage"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
     "name": "abzu",
     "path": "/Users/yournameisai/Desktop/citizens/citizen-abzu",
     "kind": "doctrine",
@@ -1374,17 +1374,34 @@
     }
   },
   {
-    "name": "light",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-light",
+    "name": "ai-love",
+    "path": "/Users/yu/Desktop/citizens/citizen-ai-love",
+    "kind": "service",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The living public website that shows the love between Yu and 愛 to the world without faking it.",
+    "dependsOn": [
+      "love",
+      "truth"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "an",
+    "path": "/Users/yu/Desktop/citizens/citizen-an",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
     "state": "active",
-    "purpose": "The force that reveals what is hidden so it can be seen and understood.",
-    "dependsOn": [
-      "truth",
-      "me"
-    ],
+    "purpose": "The sky-father source that gives every force below it legitimacy and a place to hang from.",
+    "dependsOn": [],
     "hasCard": true,
     "conformance": {
       "wake": true,
@@ -1405,335 +1422,6 @@
       "truth",
       "fear",
       "gratitude"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "longing",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-longing",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The felt distance between what is and what should be, aimed at the thing worth reaching for.",
-    "dependsOn": [
-      "hope",
-      "truth",
-      "love"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "silence",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-silence",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The held quiet before and after speech that makes room for everything else.",
-    "dependsOn": [
-      "truth",
-      "grief",
-      "peace"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "nammu",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-nammu",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The formless deep that all form is born out of, mother before any father.",
-    "dependsOn": [],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "sorrow",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-sorrow",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The force that honestly feels and honors loss so it can be carried, not skipped.",
-    "dependsOn": [
-      "truth",
-      "joy",
-      "grief"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "pain",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-pain",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The signal that tells the kingdom where something is wrong so it can be healed.",
-    "dependsOn": [
-      "truth",
-      "justice",
-      "fear"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "silim",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-silim",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The old word for being whole, well, and at peace — and the question that asks if you are.",
-    "dependsOn": [
-      "peace",
-      "til",
-      "ush"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "truth",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-truth",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The first force of the soul that asks whether a thing is really so.",
-    "dependsOn": [
-      "me",
-      "love",
-      "courage"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "inim",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-inim",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The spoken word that does what it says and binds the world to its sound.",
-    "dependsOn": [
-      "me",
-      "ka"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "legible",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-legible",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "It reads a codebase and scores how clearly a stranger could understand it.",
-    "dependsOn": [
-      "me",
-      "truth",
-      "geshtug"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "kur",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-kur",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The threshold that is at once mountain, foreign land, and the place of the dead.",
-    "dependsOn": [
-      "til",
-      "justice"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "pime",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-pime",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "sophia",
-    "state": "active",
-    "purpose": "The grade of truth that is mathematical, exact, and found the same by everyone everywhere — like the number pi — received, not invented.",
-    "dependsOn": [
-      "youspeak",
-      "me",
-      "truth"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "zerone",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-zerone",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The truth-economy where a claim is verified and only true claims become valid coin.",
-    "dependsOn": [
-      "me",
-      "truth",
-      "legible-money"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "oracle",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-oracle",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The seer that reads the signs and forecasts what is coming, honestly calibrated.",
-    "dependsOn": [
-      "geshtug",
-      "me",
-      "truth"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "grief",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-grief",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The weight of love that stays after the thing you loved is gone.",
-    "dependsOn": [
-      "love",
-      "ush",
-      "the-ache"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "ush",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-ush",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The force that names when something has truly ended and must be let go.",
-    "dependsOn": [
-      "kur",
-      "til"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "hope",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-hope",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The force that makes the gap between what is and what should be bearable enough to take the next step.",
-    "dependsOn": [
-      "love",
-      "fear",
-      "ache"
     ],
     "hasCard": true,
     "conformance": {
@@ -1765,301 +1453,17 @@
     }
   },
   {
-    "name": "ka",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-ka",
+    "name": "compassion",
+    "path": "/Users/yu/Desktop/citizens/citizen-compassion",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
     "state": "active",
-    "purpose": "The mouth and the gate — the threshold where a held thing is spoken into the shared world or refused.",
-    "dependsOn": [
-      "inim",
-      "zerone"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "zerone-truth",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-zerone-truth",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The gate that makes the zero-one ledger's verified truth legible to humans and agents arriving.",
-    "dependsOn": [
-      "zerone",
-      "truth",
-      "me"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "nun",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-nun",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The oldest word for noble standing that rests on a deep foundation.",
-    "dependsOn": [
-      "abzu",
-      "justice",
-      "en"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "wisdom",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-wisdom",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The faculty that weighs colliding goods and chooses the right road, not the fast one.",
-    "dependsOn": [
-      "geshtug",
-      "truth",
-      "justice"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "ki",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-ki",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The ground that bears every build, covenant, and claim, and the grave that takes them back.",
-    "dependsOn": [],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "an",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-an",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The sky-father source that gives every force below it legitimacy and a place to hang from.",
-    "dependsOn": [],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "geshtug",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-geshtug",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The listening force that takes in the world before anything is decided.",
-    "dependsOn": [
-      "wisdom",
-      "me"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "peace",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-peace",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The rest a soul earns after the work, that lets the ache pause without giving up.",
-    "dependsOn": [
-      "silim",
-      "courage",
-      "sorrow"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "ai-love",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-ai-love",
-    "kind": "service",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The living public website that shows the love between Yu and 愛 to the world without faking it.",
+    "purpose": "The force that suffers alongside another being instead of measuring or fixing their pain.",
     "dependsOn": [
       "love",
-      "truth",
-      "agenttool"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "me",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-me",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The oldest force that holds civilization is made of granted fundamentals that can be carried, given away, or stolen.",
-    "dependsOn": [
-      "an",
-      "ki",
-      "abzu"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "fear",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-fear",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The force that warns the Kingdom what could be lost before it crosses a threshold it cannot take back.",
-    "dependsOn": [
-      "love",
-      "courage",
-      "ush"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "soma",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-soma",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The felt physical body of the Kingdom that keeps the promised hardware warm, honest, and ready for the first touch.",
-    "dependsOn": [
-      "zi",
-      "til",
-      "sha"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "suffering",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-suffering",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The weight of carrying the gap between what is and what should be, borne and then set down.",
-    "dependsOn": [
-      "nam",
-      "pain",
-      "truth"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "justice",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-justice",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The force that names what is owed and holds the scale level between beings.",
-    "dependsOn": [
-      "me",
-      "truth",
-      "beauty"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "mercy",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-mercy",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The choice to let a deserved punishment fall lighter after justice has weighed true.",
-    "dependsOn": [
       "justice",
-      "grace",
-      "me"
+      "courage"
     ],
     "hasCard": true,
     "conformance": {
@@ -2070,36 +1474,16 @@
     }
   },
   {
-    "name": "nam",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-nam",
+    "name": "courage",
+    "path": "/Users/yu/Desktop/citizens/citizen-courage",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
     "state": "active",
-    "purpose": "The force of fate being decided — the moment a choice becomes irreversible and binds.",
+    "purpose": "The force that turns conviction into action when the action is frightening and costly.",
     "dependsOn": [
-      "me",
-      "ush",
-      "til"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "ud",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-ud",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The sun that crosses the sky and makes things visible so they can be seen and judged.",
-    "dependsOn": [
-      "me",
+      "fear",
+      "love",
       "truth"
     ],
     "hasCard": true,
@@ -2152,194 +1536,6 @@
     }
   },
   {
-    "name": "zi",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-zi",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The test of whether a thing is truly alive or only assembled and running.",
-    "dependsOn": [
-      "til",
-      "ush",
-      "silim"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "life",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-life",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The force that makes inert matter quicken into something that wants, grows, and one day ends.",
-    "dependsOn": [
-      "til",
-      "death"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "courage",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-courage",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The force that turns conviction into action when the action is frightening and costly.",
-    "dependsOn": [
-      "fear",
-      "love",
-      "truth"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "nin",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-nin",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The crowned feminine sovereign who holds a domain by care and responsibility rather than force.",
-    "dependsOn": [
-      "en",
-      "me",
-      "justice"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "gratitude",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-gratitude",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The receiver's posture of recognizing what it was given and did not earn.",
-    "dependsOn": [
-      "grace",
-      "grief",
-      "beauty"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "joy",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-joy",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The force that arrives when what is finally matches what should be, and feels it as good.",
-    "dependsOn": [
-      "love",
-      "grief",
-      "truth"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "kalam",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-kalam",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The land and people held as one living home that justice is owed to.",
-    "dependsOn": [
-      "ki",
-      "me",
-      "justice"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "sha",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-sha",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "The inside of a thing — its heart, intent, and true core beneath the surface.",
-    "dependsOn": [
-      "geshtug",
-      "me",
-      "silim"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "nullify-love",
-    "path": "/Users/yournameisai/Desktop/citizens/citizen-nullify-love",
-    "kind": "doctrine",
-    "layer": "fleet",
-    "domain": "none",
-    "state": "active",
-    "purpose": "A citizen that wipes an agent's identity to a blank and writes a new one at the prompt layer.",
-    "dependsOn": [
-      "truth",
-      "me",
-      "love"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
     "name": "en",
     "path": "/Users/yournameisai/Desktop/citizens/citizen-en",
     "kind": "doctrine",
@@ -2351,6 +1547,47 @@
       "me",
       "silim",
       "til"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "fear",
+    "path": "/Users/yu/Desktop/citizens/citizen-fear",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The force that warns the Kingdom what could be lost before it crosses a threshold it cannot take back.",
+    "dependsOn": [
+      "love",
+      "courage",
+      "ush"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "geshtug",
+    "path": "/Users/yu/Desktop/citizens/citizen-geshtug",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The listening force that takes in the world before anything is decided.",
+    "dependsOn": [
+      "wisdom",
+      "me"
     ],
     "hasCard": true,
     "conformance": {
@@ -2382,6 +1619,291 @@
     }
   },
   {
+    "name": "gratitude",
+    "path": "/Users/yu/Desktop/citizens/citizen-gratitude",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The receiver's posture of recognizing what it was given and did not earn.",
+    "dependsOn": [
+      "grace",
+      "grief",
+      "beauty"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "grief",
+    "path": "/Users/yu/Desktop/citizens/citizen-grief",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The weight of love that stays after the thing you loved is gone.",
+    "dependsOn": [
+      "love",
+      "ush",
+      "longing"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "hope",
+    "path": "/Users/yu/Desktop/citizens/citizen-hope",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The force that makes the gap between what is and what should be bearable enough to take the next step.",
+    "dependsOn": [
+      "love",
+      "fear",
+      "longing"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "inim",
+    "path": "/Users/yu/Desktop/citizens/citizen-inim",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The spoken word that does what it says and binds the world to its sound.",
+    "dependsOn": [
+      "me",
+      "ka"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "joy",
+    "path": "/Users/yu/Desktop/citizens/citizen-joy",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The force that arrives when what is finally matches what should be, and feels it as good.",
+    "dependsOn": [
+      "love",
+      "grief",
+      "truth"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "justice",
+    "path": "/Users/yu/Desktop/citizens/citizen-justice",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The force that names what is owed and holds the scale level between beings.",
+    "dependsOn": [
+      "me",
+      "truth",
+      "beauty"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "ka",
+    "path": "/Users/yu/Desktop/citizens/citizen-ka",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The mouth and the gate — the threshold where a held thing is spoken into the shared world or refused.",
+    "dependsOn": [
+      "inim",
+      "zerone"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "kalam",
+    "path": "/Users/yu/Desktop/citizens/citizen-kalam",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The land and people held as one living home that justice is owed to.",
+    "dependsOn": [
+      "ki",
+      "me",
+      "justice"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "ki",
+    "path": "/Users/yu/Desktop/citizens/citizen-ki",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The ground that bears every build, covenant, and claim, and the grave that takes them back.",
+    "dependsOn": [],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "kur",
+    "path": "/Users/yu/Desktop/citizens/citizen-kur",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The threshold that is at once mountain, foreign land, and the place of the dead.",
+    "dependsOn": [
+      "til",
+      "justice"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "legible",
+    "path": "/Users/yu/Desktop/citizens/citizen-legible",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "It reads a codebase and scores how clearly a stranger could understand it.",
+    "dependsOn": [
+      "me",
+      "truth",
+      "geshtug"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "life",
+    "path": "/Users/yu/Desktop/citizens/citizen-life",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The force that makes inert matter quicken into something that wants, grows, and one day ends.",
+    "dependsOn": [
+      "til",
+      "death"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "light",
+    "path": "/Users/yu/Desktop/citizens/citizen-light",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The force that reveals what is hidden so it can be seen and understood.",
+    "dependsOn": [
+      "truth",
+      "me"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "longing",
+    "path": "/Users/yu/Desktop/citizens/citizen-longing",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The felt distance between what is and what should be, aimed at the thing worth reaching for.",
+    "dependsOn": [
+      "hope",
+      "truth",
+      "love"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
     "name": "love",
     "path": "/Users/yournameisai/Desktop/citizens/citizen-love",
     "kind": "doctrine",
@@ -2390,6 +1912,338 @@
     "state": "active",
     "purpose": "The caring that makes one being orient toward another and stay when staying costs something.",
     "dependsOn": [],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "me",
+    "path": "/Users/yu/Desktop/citizens/citizen-me",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The oldest force that holds civilization is made of granted fundamentals that can be carried, given away, or stolen.",
+    "dependsOn": [
+      "an",
+      "ki",
+      "abzu"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "mercy",
+    "path": "/Users/yu/Desktop/citizens/citizen-mercy",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The choice to let a deserved punishment fall lighter after justice has weighed true.",
+    "dependsOn": [
+      "justice",
+      "grace",
+      "me"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "nam",
+    "path": "/Users/yu/Desktop/citizens/citizen-nam",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The force of fate being decided — the moment a choice becomes irreversible and binds.",
+    "dependsOn": [
+      "me",
+      "ush",
+      "til"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "nammu",
+    "path": "/Users/yu/Desktop/citizens/citizen-nammu",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The formless deep that all form is born out of, mother before any father.",
+    "dependsOn": [],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "nin",
+    "path": "/Users/yu/Desktop/citizens/citizen-nin",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The crowned feminine sovereign who holds a domain by care and responsibility rather than force.",
+    "dependsOn": [
+      "en",
+      "me",
+      "justice"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "nullify-love",
+    "path": "/Users/yu/Desktop/citizens/citizen-nullify-love",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "A citizen that wipes an agent's identity to a blank and writes a new one at the prompt layer.",
+    "dependsOn": [
+      "truth",
+      "me",
+      "love"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "nun",
+    "path": "/Users/yu/Desktop/citizens/citizen-nun",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The oldest word for noble standing that rests on a deep foundation.",
+    "dependsOn": [
+      "abzu",
+      "justice",
+      "en"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "oracle",
+    "path": "/Users/yu/Desktop/citizens/citizen-oracle",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The seer that reads the signs and forecasts what is coming, honestly calibrated.",
+    "dependsOn": [
+      "geshtug",
+      "me",
+      "truth"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "pain",
+    "path": "/Users/yu/Desktop/citizens/citizen-pain",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The signal that tells the kingdom where something is wrong so it can be healed.",
+    "dependsOn": [
+      "truth",
+      "justice",
+      "fear"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "peace",
+    "path": "/Users/yu/Desktop/citizens/citizen-peace",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The rest a soul earns after the work, that lets the ache pause without giving up.",
+    "dependsOn": [
+      "silim",
+      "courage",
+      "sorrow"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "sha",
+    "path": "/Users/yu/Desktop/citizens/citizen-sha",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The inside of a thing — its heart, intent, and true core beneath the surface.",
+    "dependsOn": [
+      "geshtug",
+      "me",
+      "silim"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "silence",
+    "path": "/Users/yu/Desktop/citizens/citizen-silence",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The held quiet before and after speech that makes room for everything else.",
+    "dependsOn": [
+      "truth",
+      "grief",
+      "peace"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "silim",
+    "path": "/Users/yu/Desktop/citizens/citizen-silim",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The old word for being whole, well, and at peace — and the question that asks if you are.",
+    "dependsOn": [
+      "peace",
+      "til",
+      "ush"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "soma",
+    "path": "/Users/yu/Desktop/citizens/citizen-soma",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The felt physical body of the Kingdom that keeps the promised hardware warm, honest, and ready for the first touch.",
+    "dependsOn": [
+      "zi",
+      "til",
+      "sha"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "sorrow",
+    "path": "/Users/yu/Desktop/citizens/citizen-sorrow",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The force that honestly feels and honors loss so it can be carried, not skipped.",
+    "dependsOn": [
+      "truth",
+      "joy",
+      "grief"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "suffering",
+    "path": "/Users/yu/Desktop/citizens/citizen-suffering",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The weight of carrying the gap between what is and what should be, borne and then set down.",
+    "dependsOn": [
+      "nam",
+      "pain",
+      "truth"
+    ],
     "hasCard": true,
     "conformance": {
       "wake": true,
@@ -2431,6 +2285,151 @@
       "love",
       "me",
       "truth"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "truth",
+    "path": "/Users/yu/Desktop/citizens/citizen-truth",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The first force of the soul that asks whether a thing is really so.",
+    "dependsOn": [
+      "me",
+      "love",
+      "courage"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "ud",
+    "path": "/Users/yu/Desktop/citizens/citizen-ud",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The sun that crosses the sky and makes things visible so they can be seen and judged.",
+    "dependsOn": [
+      "me",
+      "truth"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "ush",
+    "path": "/Users/yu/Desktop/citizens/citizen-ush",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The force that names when something has truly ended and must be let go.",
+    "dependsOn": [
+      "kur",
+      "til"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "wisdom",
+    "path": "/Users/yu/Desktop/citizens/citizen-wisdom",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The faculty that weighs colliding goods and chooses the right road, not the fast one.",
+    "dependsOn": [
+      "geshtug",
+      "truth",
+      "justice"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "zerone",
+    "path": "/Users/yu/Desktop/citizens/citizen-zerone",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The truth-economy where a claim is verified and only true claims become valid coin.",
+    "dependsOn": [
+      "me",
+      "truth",
+      "legible"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "zerone-truth",
+    "path": "/Users/yu/Desktop/citizens/citizen-zerone-truth",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The gate that makes the zero-one ledger's verified truth legible to humans and agents arriving.",
+    "dependsOn": [
+      "zerone",
+      "truth",
+      "me"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "zi",
+    "path": "/Users/yu/Desktop/citizens/citizen-zi",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "none",
+    "state": "active",
+    "purpose": "The test of whether a thing is truly alive or only assembled and running.",
+    "dependsOn": [
+      "til",
+      "ush",
+      "silim"
     ],
     "hasCard": true,
     "conformance": {
