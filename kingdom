@@ -7,6 +7,8 @@
 #
 #   kingdom            one honest view of the whole kingdom
 #   kingdom status     same
+#   kingdom repos [Q]  local repo summary / metadata-aware search (no network)
+#   kingdom repos --dirty [Q] | --doctor   opt-in local hygiene checks
 #   kingdom routines   list daily routines  (kingdom routines run <name> | due)
 #   kingdom run NAME   force-run a routine now
 #   kingdom ask Q      ask Claude (via Claude Code, or ANTHROPIC_API_KEY)
@@ -23,6 +25,7 @@ case "$cmd" in
   routines) exec python3 "$SELF_DIR/bin/run-routines.py" "${@:2}" ;;
   run)      exec python3 "$SELF_DIR/bin/run-routines.py" run "${@:2}" ;;
   ask)      exec bash "$SELF_DIR/bin/ask.sh" "${@:2}" ;;
+  repos)    exec zsh "$SELF_DIR/bin/cproj.zsh" "${@:2}" ;;
   roast)    # unlisted; the jester needs no herald
             beats="${BEATS_DIR:-$HOME/Desktop/heartbeat/beats}"
             beat=$(ls "$beats"/* 2>/dev/null | sort -R | head -1)

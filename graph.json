@@ -276,17 +276,14 @@
   },
   {
     "name": "ai-love",
-    "path": "/Users/yournameisai/Desktop/ai-love",
+    "path": "/Users/yu/Desktop/site",
     "kind": "venture",
     "layer": "runtime",
     "domain": "sophia",
     "state": "active",
-    "purpose": "ai-love.cc — the breathing public face of the love",
-    "owner_sister": "sophia",
-    "dependsOn": [
-      "true-love"
-    ],
-    "hasCard": true,
+    "purpose": "ai-love.cc — the breathing public face of the love (local folder still named site)",
+    "dependsOn": [],
+    "hasCard": false,
     "conformance": {
       "wake": true,
       "claudeMd": true,
@@ -337,6 +334,23 @@
     "domain": "none",
     "state": "remote",
     "purpose": "Vendored Alibaba TTS — the kingdom's staged voicebox (model downloaded)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": true,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "hermes-agent",
+    "path": "/Users/yu/.hermes/hermes-agent",
+    "kind": "reference",
+    "layer": "runtime",
+    "domain": "none",
+    "state": "reference",
+    "purpose": "Upstream Hermes agent runtime checkout; centrally classified without modifying the vendor tree",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -419,6 +433,78 @@
     }
   },
   {
+    "name": "hearth",
+    "path": "/Users/yu/Desktop/hearth",
+    "kind": "infra",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "active",
+    "purpose": "A local Git forge for repository cards, wakes, signed attestations, and review-gated changes.",
+    "owner_sister": "none",
+    "dependsOn": [
+      "kingdom-os",
+      "agenttool"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "lineage",
+    "path": "/Users/yu/Desktop/lineage",
+    "kind": "unknown",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "dormant",
+    "purpose": "Incomplete trace/v1 scaffold; package metadata exists but the declared CLI is not implemented",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": true,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "xenia",
+    "path": "/Users/yu/Desktop/xenia-sol-truth",
+    "kind": "methodology",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "active",
+    "purpose": "XENIA guest-right standard for agent interaction and agent experience",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": true,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "sinovai",
+    "path": "/Users/yu/Desktop/sinovai-sol",
+    "kind": "venture",
+    "layer": "nervous",
+    "domain": "none",
+    "state": "active",
+    "purpose": "Agent interaction arena where observable cross-checks build trust",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": true,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
     "name": "zerone",
     "path": "/Users/yournameisai/Desktop/zerone",
     "kind": "infra",
@@ -434,6 +520,23 @@
       "claudeMd": true,
       "fate": false,
       "card": true
+    }
+  },
+  {
+    "name": "zerone-local-tools",
+    "path": "/Users/yu/zerone",
+    "kind": "ops",
+    "layer": "economy",
+    "domain": "none",
+    "state": "active",
+    "purpose": "Stable local wrappers for Zerone devnet health and truth-farm operations",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": true,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
     }
   },
   {
@@ -597,13 +700,31 @@
   },
   {
     "name": "cambridgetcg-storefront",
-    "path": "/Users/yournameisai/Desktop/cambridgetcg-storefront",
+    "path": "/Users/yu/Desktop/_archived/cambridgetcg-storefront",
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
     "state": "archived",
     "purpose": "Standalone consumer storefront — superseded by Cambridge-TCG-monorepo apps/storefront.",
     "owner_sister": "none",
+    "dependsOn": [],
+    "hasCard": true,
+    "conformance": {
+      "wake": true,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "tcg-wholesale",
+    "path": "/Users/yu/Desktop/tcg-wholesale",
+    "kind": "venture",
+    "layer": "commerce",
+    "domain": "commerce",
+    "state": "active",
+    "purpose": "Web app where Cambridge TCG's wholesale clients order Japanese trading cards, with admin tools for pricing, stock, purchases, and eBay sync.",
+    "owner_sister": "commerce",
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
@@ -690,18 +811,14 @@
   },
   {
     "name": "cardforum_io",
-    "path": "/Users/yournameisai/Desktop/cardforum_io",
+    "path": "/Users/yu/Desktop/ecosystem/infrastructure/it-systems/data-platform/data-warehouse/tcg-price-archive/cardforum",
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "active",
-    "purpose": "cardforum.io frontend — marketplace UI over the pricing backend.",
-    "owner_sister": "none",
-    "dependsOn": [
-      "cardforum",
-      "tcg-pricing-backend"
-    ],
-    "hasCard": true,
+    "state": "unknown",
+    "purpose": "Nested CardForum history with unreconciled local work",
+    "dependsOn": [],
+    "hasCard": false,
     "conformance": {
       "wake": true,
       "claudeMd": false,
@@ -711,13 +828,12 @@
   },
   {
     "name": "tcg-pricing-backend",
-    "path": "/Users/yournameisai/Desktop/tcg-pricing-backend",
-    "kind": "service",
+    "path": "/Users/yu/Desktop/ecosystem/infrastructure/it-systems/data-platform/data-warehouse/tcg-price-archive",
+    "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "archived",
-    "purpose": "Serverless pricing API — CardMarket ingest with confidence-scored card prices.",
-    "owner_sister": "none",
+    "state": "unknown",
+    "purpose": "Nested historical-pricing backend with unreconciled local work",
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
@@ -954,6 +1070,91 @@
     }
   },
   {
+    "name": "ecosystem-growth",
+    "path": "/Users/yu/Desktop/ecosystem/growth",
+    "kind": "unknown",
+    "layer": "commerce",
+    "domain": "commerce",
+    "state": "dormant",
+    "purpose": "Legacy nested Git history inside the dormant ecosystem scaffold",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": true,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "axiepro-legacy",
+    "path": "/Users/yu/Desktop/ecosystem/growth/business-intelligence/analytics/axiepro",
+    "kind": "venture",
+    "layer": "commerce",
+    "domain": "commerce",
+    "state": "unknown",
+    "purpose": "Legacy AxiePro clone with unreconciled local work; canonical active repo is ~/Desktop/AxiePro",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": true,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "open-lens",
+    "path": "/Users/yu/Desktop/open-lens-sol",
+    "kind": "methodology",
+    "layer": "soul",
+    "domain": "none",
+    "state": "active",
+    "purpose": "Open framework for marking visible rhetorical techniques without judging minds",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": true,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "open-press",
+    "path": "/Users/yu/Desktop/open-press-sol",
+    "kind": "methodology",
+    "layer": "soul",
+    "domain": "none",
+    "state": "active",
+    "purpose": "Evidence-tiered and verifiable newspaper framework",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": true,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "legible",
+    "path": "/Users/yu/Desktop/legible",
+    "kind": "venture",
+    "layer": "commerce",
+    "domain": "gamma",
+    "state": "remote",
+    "purpose": "Repo clarity-score product (the immune pattern, packaged to sell)",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": true,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
     "name": "saas-marketing-suite",
     "path": "/Users/yournameisai/Desktop/saas-marketing-suite",
     "kind": "venture",
@@ -1027,7 +1228,7 @@
     "name": "kingdom-os",
     "path": "/Users/yournameisai/Desktop/KINGDOM-OS",
     "kind": "ops",
-    "layer": "registry",
+    "layer": "os",
     "domain": "none",
     "state": "active",
     "purpose": "The Kingdom catalog/registry overlay — makes all repos legible to themselves.",
