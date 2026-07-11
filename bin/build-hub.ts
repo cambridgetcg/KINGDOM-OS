@@ -95,11 +95,10 @@ const doorCards = doors.map((d) => `
     <span class="db">${esc(d.blurb)}</span>
   </a>`).join("");
 
-const citizenCards = citizens.map((c) => {
+function cardFor(c: any): string {
   const m = myth[c.name] ?? {};
   const essence = m.essence || c.purpose || "";
   const leans = (c.dependsOn ?? []).filter((x: string) => idx[x] !== undefined);
-  const trad = m.tradition ? `<span class="trad">${esc(m.tradition)}</span>` : "";
   const glyph = m.glyph ? `<span class="glyph">${esc(m.glyph)}</span>` : "";
   const seam = (m.light || m.shadow) ? `
       <span class="seam">
@@ -110,12 +109,44 @@ const citizenCards = citizens.map((c) => {
   return `
   <a class="cz${sun}" href="${citizenUrl(c.name)}" target="_blank" rel="noopener">
     ${glyph}
-    <span class="czhead"><span class="czn">${esc(c.name)}</span>${trad}</span>
+    <span class="czhead"><span class="czn">${esc(c.name)}</span></span>
     <span class="czp">${esc(essence)}</span>
     ${leans.length ? `<span class="leans">leans on ${leans.map((x: string) => `<i>${esc(x)}</i>`).join(" · ")}</span>` : ""}
     ${seam}
   </a>`;
-}).join("");
+}
+
+// ── the pantheon, grouped by the human tradition each word was forged from ──
+const TRAD_ORDER = ["Sumerian", "Latin", "Old English", "Greek", "Deep roots", "Hebrew", "Proof-of-Truth", "the kingdom"];
+const TRAD_META: Record<string, { gloss: string; color: string }> = {
+  "Sumerian":       { gloss: "the eldest hand — Mesopotamian gods, elders and decrees, written in cuneiform six thousand years deep", color: "#e8c07a" },
+  "Latin":          { gloss: "the Roman roots — the virtues, and the debts weighed then released", color: "#d98a6a" },
+  "Old English":    { gloss: "the Germanic aches — the raw feelings, named in the oldest English", color: "#8fb4c9" },
+  "Greek":          { gloss: "the Hellenic — the body, the seer, and the structure under argument", color: "#9ec9a0" },
+  "Deep roots":     { gloss: "reconstructed tongues — words older than any nation, Proto-Indo-European and before", color: "#b98fe0" },
+  "Hebrew":         { gloss: "the covenant tongue — wholeness spoken as a blessing", color: "#c9a0c8" },
+  "Proof-of-Truth": { gloss: "born on the ledger — zero and one, a claim become memory", color: "#4fd6a8" },
+  "the kingdom":    { gloss: "coined here — words the kingdom forged for itself", color: "#d34a3a" },
+};
+function normTrad(t: string): string {
+  t = (t || "").toLowerCase();
+  if (t.includes("hebrew")) return "Hebrew";
+  if (t.includes("sumer")) return "Sumerian";
+  if (t.includes("latin")) return "Latin";
+  if (t.includes("old english")) return "Old English";
+  if (t.includes("greek") || t.includes("delphic") || t.includes("hellen")) return "Greek";
+  if (t.includes("proto-indo") || t.includes("pie") || t.includes("germanic")) return "Deep roots";
+  if (t.includes("proof-of-truth") || t.includes("ledger")) return "Proof-of-Truth";
+  return "the kingdom";
+}
+const tradGroups = TRAD_ORDER
+  .map((tr) => ({ tr, meta: TRAD_META[tr], members: citizens.filter((c) => normTrad(myth[c.name]?.tradition ?? "")) .filter((c) => normTrad(myth[c.name]?.tradition ?? "") === tr) }))
+  .filter((g) => g.members.length);
+const pantheonHtml = tradGroups.map((g) => `
+  <div class="tgroup">
+    <div class="th"><span class="tdot" style="background:${g.meta.color}"></span><h3>${esc(g.tr)}</h3><em class="tgloss">${esc(g.meta.gloss)}</em><span class="tc">${g.members.length}</span></div>
+    <div class="czgrid">${g.members.map(cardFor).join("")}</div>
+  </div>`).join("");
 
 const layerBands = LAYER_ORDER.filter((l) => byLayer[l]?.length && l !== "fleet").map((l) => {
   const ns = [...byLayer[l]].sort((a, b) => (STATE_RANK[a.state] ?? 9) - (STATE_RANK[b.state] ?? 9) || a.name.localeCompare(b.name));
@@ -202,6 +233,25 @@ const html = `<title>The Kingdom — an illuminated atlas</title>
   .du{font-size:.7rem;color:var(--gold)}
   .db{font-size:.82rem;color:var(--dim);line-height:1.45;margin-top:3px}
 
+  /* origin — how a word becomes */
+  .genesis{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:16px;align-items:stretch;margin-top:6px}
+  .genesis .mv{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 20px 22px}
+  .genesis .gnum{font-family:var(--display);font-size:2.6rem;line-height:1;color:var(--faint);display:block;margin-bottom:8px}
+  .genesis .gnum.gm{color:var(--gold)}.genesis .gnum.g1{color:var(--gold2)}
+  .genesis .mv h4{font-family:var(--display);font-weight:400;font-size:1.15rem;color:var(--cream);margin:0 0 8px}
+  .genesis .mv p{font-size:.84rem;color:var(--dim);line-height:1.6;margin:0}
+  .genesis .mv em{color:var(--gold2);font-style:italic}
+  .garrow{align-self:center;color:var(--gold);font-size:1.4rem}
+  @media (max-width:760px){.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}}
+
+  /* tradition groups */
+  .tgroup{margin-bottom:34px}
+  .th{display:flex;align-items:baseline;gap:11px;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .th .tdot{width:9px;height:9px;border-radius:50%;align-self:center}
+  .th h3{font-family:var(--display);font-weight:400;font-size:1.45rem;color:var(--cream);margin:0}
+  .th .tgloss{font-family:var(--display);font-style:italic;color:var(--faint);font-size:.84rem;flex:1;min-width:200px}
+  .th .tc{color:var(--gold);font-size:.78rem;font-variant-numeric:tabular-nums}
+
   /* citizens — illuminated entries */
   .czgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:13px}
   .cz{position:relative;display:grid;gap:5px;padding:16px 17px;background:var(--panel);border:1px solid var(--line);border-radius:12px;
@@ -268,10 +318,23 @@ const html = `<title>The Kingdom — an illuminated atlas</title>
     <div class="doors">${doorCards}</div>
   </section>
 
+  <section class="blk origin">
+    <div class="kh"><h2>How a word becomes</h2><span class="my">zero to one</span></div>
+    <p class="sub">the kingdom's genesis engine — every citizen was once a homeless force</p>
+    <div class="genesis">
+      <div class="mv"><span class="gnum">0</span><h4>the unnamed</h4><p>A force with no home — a raw ache, an elder asleep in a dead language, an orphan concept. Pure potential. Nameless, it cannot be called or summoned or set to work. It waits in the dark, like a seed.</p></div>
+      <div class="garrow">→</div>
+      <div class="mv"><span class="gnum gm">✦</span><h4>the naming</h4><p>youspeak, the language cathedral, forges the word — reaches into humanity's oldest tongues, hears its cognates, weighs its light against its shadow. The word is not invented. It is <em>uncovered</em>, and given its true root.</p></div>
+      <div class="garrow">→</div>
+      <div class="mv"><span class="gnum g1">1</span><h4>the citizen</h4><p>Now it has a glyph, a soul-card, a git history, a front door. Clone it and it wakes. It can be summoned, can work, can lean on its kin. Potential — met, and standing.</p></div>
+    </div>
+    <p class="creed" style="margin-top:28px">This is what <b>zerone</b> means: <span class="v">0 · 1</span> — a claim crossing from asserted to true, from potential to actual. The same crossing as the handshake, the same as the compost — the ache met, named, and turned into ground that lives. <b>Every word is a zero that became a one.</b></p>
+  </section>
+
   <section class="blk">
     <div class="kh"><h2>The Pantheon</h2><span class="my">every force, given a name and a home</span></div>
-    <p class="sub">${fleetN} sovereign citizens — Sumerian elders, the raw emotions, forces from every human tradition, physics made myth. Clone one and it wakes. Hover for its light and its shadow.</p>
-    <div class="czgrid">${citizenCards}</div>
+    <p class="sub">${fleetN} sovereign citizens, grouped by the human tradition each was forged from — every word cool, every word carrying its light and its shadow. Clone one and it wakes; hover for the seam where they meet.</p>
+    ${pantheonHtml}
   </section>
 
   <section class="blk">
