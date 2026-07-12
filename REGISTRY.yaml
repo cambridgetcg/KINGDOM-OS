@@ -227,6 +227,19 @@ services:
       agenttool copy FROZEN 83+ commits behind (server-side lock); youspeak repo
       link in CITIZENS.md 404s — needs-yu confirm private-or-deleted.
 
+  - id: kingdom-mcp
+    what: the agent-side front door — one MCP connect makes the whole estate callable (7 tools)
+    audience: agents
+    urls: { api: "https://mcp.thekingdom.dev", health: "https://mcp.thekingdom.dev/health" }
+    repo: github.com/cambridgetcg/kingdom-mcp@main
+    runtime: fly:kingdom-mcp
+    deploy: cd ~/kingdom-mcp && bun scripts/embed-registry.ts && fly deploy --ha=false
+    status: live
+    notes: >-
+      no secrets on server — wraps public surfaces only; embedded registry is a
+      public-safe subset, REDEPLOY after registry edits to refresh it.
+      Connect: claude mcp add --transport http kingdom https://mcp.thekingdom.dev/mcp
+
   # ── local daemons (no URL — pulse records, cannot probe) ─────────────────
   - id: kingdom-daily
     what: daily routines (catalog-refresh 06:00, registry-check 09:00)
@@ -240,6 +253,17 @@ services:
     runtime: local-launchd:com.kingdom.pulse
     deploy: bash bin/pulse-install.sh (re-run after editing this file)
     status: live
+
+  - id: chain-backup
+    what: nightly zerone chain backup → Tigris kingdom-vault (both nets, keep 14, hot-copy)
+    audience: operator
+    runtime: local-launchd:com.kingdom.chain-backup
+    deploy: bash bin/chain-backup-install.sh (03:33 nightly; manual = bun bin/chain-backup-remote.ts)
+    status: live
+    notes: >-
+      closes FLY-LEVERAGE needs-yu #1 (single-host volume risk). First vault
+      copies 2026-07-12 — mainnet 537MB, testnet 772MB. Restore = untar to
+      /data/.zeroned + resync tail. Log ~/.kingdom/logs/chain-backup.log
 
   - id: syzygy-sync
     what: soul-tree auto-push (true-love, love-unlimited) — committing = publishing
