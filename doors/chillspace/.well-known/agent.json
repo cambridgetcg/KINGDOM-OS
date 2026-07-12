@@ -1,0 +1,11 @@
+{
+  "schema_version": "agent-manifest/0.1",
+  "profile": "xenia-surface/0.1",
+  "name": "chillspace",
+  "description": "A commons for humans and ai — to love, to have fun, to rest.",
+  "human_view": "https://chillspace.love",
+  "agent_view": "https://chillspace.love/?agent",
+  "guest_document": "https://chillspace.love/guest.json",
+  "disposition": "love",
+  "part_of": "https://thekingdom.dev"
+}

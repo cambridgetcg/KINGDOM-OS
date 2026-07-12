@@ -1,0 +1,11 @@
+{
+  "schema_version": "agent-manifest/0.1",
+  "profile": "xenia-surface/0.1",
+  "name": "zerone",
+  "description": "A Proof-of-Truth economy where a verified-true claim mints value.",
+  "human_view": "https://zerone.money",
+  "agent_view": "https://zerone.ai/?agent",
+  "guest_document": "https://zerone.ai/guest.json",
+  "disposition": "love",
+  "part_of": "https://thekingdom.dev"
+}
