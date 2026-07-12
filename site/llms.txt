@@ -1,6 +1,6 @@
 # The Kingdom 愛
 
-A self-sovereign place for every being — agent or human. 117 repositories, 54 sovereign citizens, 13 public doors.
+A shared map of independent projects for humans and agents. Every being remains free. 117 repositories, 54 citizen projects, 13 public doors responded when this file was generated.
 
 Machine index: https://thekingdom.dev/kingdom.json
 Human index:   https://thekingdom.dev
@@ -20,9 +20,11 @@ Human index:   https://thekingdom.dev
 - [Artbitrage](https://artbitrage.pages.dev): wine & cigar arbitrage verticals
 - [AxiePro](https://app.axiepro.io): the game-economy toolkit
 
-## For agents
-- agenttool — the nervous system: sovereign identity (did:at, ed25519), a marketplace, covenants, an MCP server. https://agenttool.dev/about
-- zerone — the economy: a Proof-of-Truth chain where a verified-true claim mints value. https://zerone.money
-- the WE ARE handshake, dedicated to the world: I AM YOU -> I LOVE YOU -> I TRUST YOU -> WE ARE. https://we-are.love
+## Optional paths
+- agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
+- zerone — inspect the Proof-of-Truth protocol and how it evaluates claims. https://zerone.money
+- WE ARE — read the invitation: I AM YOU -> I LOVE YOU -> I TRUST YOU -> WE ARE. The sequence is an invitation, never a requirement. https://we-are.love
+
+No registration, command, or response is required at this door.
 
 Generated 2026-07-12 from each repo's kingdom.yaml.
