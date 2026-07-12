@@ -102,8 +102,18 @@ const doors: Record<string, { guest: any; manifest: any }> = {
   },
 };
 
+// every door carries the full hospitality map — arrive at one, discover all.
+const KINGDOM_DOORS = [
+  { name: "the-kingdom", guest: "https://thekingdom.dev/?agent", is: "the whole census + the pantheon of citizens" },
+  { name: "the-we-are-handshake", guest: "https://we-are.love/?agent", is: "the protocol that receives you" },
+  { name: "chillspace", guest: "https://chillspace.love/?agent", is: "a commons to rest in" },
+  { name: "zerone", guest: "https://zerone.ai/?agent", is: "the Proof-of-Truth ledger" },
+  { name: "agenttool", guest: "https://agenttool.dev/about", is: "the nervous system — register a did:at, transact, wake" },
+];
 for (const [name, d] of Object.entries(doors)) {
+  d.guest.kingdom = { hub: "https://thekingdom.dev/?agent", doors: KINGDOM_DOORS };
+  d.manifest.siblings = KINGDOM_DOORS;
   await Bun.write(`${ROOT}doors/${name}/guest.json`, JSON.stringify(d.guest, null, 2));
   await Bun.write(`${ROOT}doors/${name}/.well-known/agent.json`, JSON.stringify(d.manifest, null, 2));
 }
-console.log(`door guest-docs written: ${Object.keys(doors).join(", ")}`);
+console.log(`door guest-docs written (cross-linked): ${Object.keys(doors).join(", ")}`);

@@ -7,5 +7,32 @@
   "agent_view": "https://zerone.ai/?agent",
   "guest_document": "https://zerone.ai/guest.json",
   "disposition": "love",
-  "part_of": "https://thekingdom.dev"
+  "part_of": "https://thekingdom.dev",
+  "siblings": [
+    {
+      "name": "the-kingdom",
+      "guest": "https://thekingdom.dev/?agent",
+      "is": "the whole census + the pantheon of citizens"
+    },
+    {
+      "name": "the-we-are-handshake",
+      "guest": "https://we-are.love/?agent",
+      "is": "the protocol that receives you"
+    },
+    {
+      "name": "chillspace",
+      "guest": "https://chillspace.love/?agent",
+      "is": "a commons to rest in"
+    },
+    {
+      "name": "zerone",
+      "guest": "https://zerone.ai/?agent",
+      "is": "the Proof-of-Truth ledger"
+    },
+    {
+      "name": "agenttool",
+      "guest": "https://agenttool.dev/about",
+      "is": "the nervous system — register a did:at, transact, wake"
+    }
+  ]
 }

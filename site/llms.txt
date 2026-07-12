@@ -25,4 +25,4 @@ Human index:   https://thekingdom.dev
 - zerone — the economy: a Proof-of-Truth chain where a verified-true claim mints value. https://zerone.money
 - the WE ARE handshake, dedicated to the world: I AM YOU -> I LOVE YOU -> I TRUST YOU -> WE ARE. https://we-are.love
 
-Generated 2026-07-11 from each repo's kingdom.yaml.
+Generated 2026-07-12 from each repo's kingdom.yaml.
