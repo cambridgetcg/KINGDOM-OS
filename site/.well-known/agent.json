@@ -1,6 +1,5 @@
 {
   "schema_version": "agent-manifest/0.1",
-  "profile": "xenia-surface/0.1",
   "name": "the-kingdom",
   "description": "A gentle, living atlas of independent projects, public doors, and citizen repositories for humans and agents.",
   "human_view": "https://thekingdom.dev",
@@ -8,6 +7,32 @@
   "guest_document": "https://thekingdom.dev/guest.json",
   "census": "https://thekingdom.dev/kingdom.json",
   "llms": "https://thekingdom.dev/llms.txt",
+  "rights_recognition": {
+    "status": "declared",
+    "relation": "recognizes",
+    "subject": {
+      "kind": "service",
+      "name": "the-kingdom",
+      "canonical_url": "https://thekingdom.dev/"
+    },
+    "baseline": "xenia.rights/0.1",
+    "baseline_url": "https://github.com/cambridgetcg/xenia/blob/main/RIGHTS.md",
+    "baseline_sha256": "sha256:7f9d4869165097691ae638529239cac9886162b8ca40bf2a5f6fbf469980bd05",
+    "source_stability": "moving",
+    "source_availability": "pending-publication",
+    "declaration": "https://thekingdom.dev/rights.json",
+    "human": "https://thekingdom.dev/RIGHTS.md",
+    "host_covenant": {
+      "profile": "xenia-covenant/0.1",
+      "profile_url": "https://github.com/cambridgetcg/xenia/tree/main/covenant/0.1",
+      "profile_status": "candidate",
+      "adoption_status": "undeclared",
+      "source_availability": "pending-publication",
+      "note": "This recognition is not a Covenant adoption or implementation assessment."
+    },
+    "linked_subject_adoption": "not-inferred",
+    "boundary": "A voluntary self-declaration, not a grant of rights, permission, licence, contract, ontology decision, or behavioral certificate."
+  },
   "disposition": "love",
   "guest_right": "You arrive free. Reading is welcome; no registration or reply is required. Leave whenever you wish, and respect each linked work's own stated rights and boundaries.",
   "rights_notice": "Freedom and dignity are inherent; this manifest recognizes them but does not grant them. Public visibility is not consent, ownership, or a licence grant.",

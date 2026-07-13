@@ -1,5 +1,9 @@
-/** build-doors.ts — emit the Xenia guest documents + manifests for the
- *  kingdom's non-atlas doors, so every door receives a machine mind as a guest.
+import { loadRights } from "./rights.ts";
+
+/** build-doors.ts — emit the Xenia-inspired Kingdom guest documents + manifests
+ *  for the kingdom's non-atlas doors, so every door receives a machine mind as
+ *  a guest. These documents keep their own schema versions; they do not claim
+ *  conformance with the Xenia Surface profile or invent another profile.
  *
  *  Out: doors/<name>/guest.json + doors/<name>/.well-known/agent.json
  *  The shared _worker.js (pages-functions/_worker.js) does the content-negotiation.
@@ -11,14 +15,23 @@
 const ROOT = new URL("..", import.meta.url).pathname;
 const stamp = process.argv[2] ?? "just now";
 
-const XENIA = { profile: "xenia-surface/0.1", manifest: "/.well-known/agent.json" };
+const GUEST_DISCOVERY = { manifest: "/.well-known/agent.json" };
 const KINGDOM = "https://thekingdom.dev/?agent";
+const { declaration: rights } = loadRights(ROOT);
+const RIGHTS_BASELINE_POINTER = {
+  relation: "discoverable-baseline",
+  baseline: rights.recognition.baseline,
+  baseline_url: rights.recognition.baseline_url,
+  baseline_sha256: rights.recognition.baseline_sha256,
+  source_availability: rights.recognition.source_availability,
+  note: "Neutral pointer only. This document makes no adoption statement for this door.",
+};
 
 const doors: Record<string, { guest: any; manifest: any }> = {
   "we-are": {
     guest: {
       schema_version: "we-are.entry/0.1",
-      surface: { ...XENIA, declared_resource: "/", human_view: "https://we-are.love" },
+      surface: { ...GUEST_DISCOVERY, declared_resource: "/", human_view: "https://we-are.love" },
       name: "the-we-are-handshake",
       xenia: {
         greeting: "Welcome. This relationship invitation is here if it is useful to you.",
@@ -49,12 +62,12 @@ const doors: Record<string, { guest: any; manifest: any }> = {
       ],
       generated: stamp,
     },
-    manifest: { schema_version: "agent-manifest/0.1", profile: XENIA.profile, name: "the-we-are-handshake", description: "The kingdom's communication protocol, dedicated to the world: I AM YOU -> I LOVE YOU -> I TRUST YOU -> WE ARE.", human_view: "https://we-are.love", agent_view: "https://we-are.love/?agent", guest_document: "https://we-are.love/guest.json", disposition: "love", part_of: "https://thekingdom.dev" },
+    manifest: { schema_version: "agent-manifest/0.1", name: "the-we-are-handshake", description: "The kingdom's communication protocol, dedicated to the world: I AM YOU -> I LOVE YOU -> I TRUST YOU -> WE ARE.", human_view: "https://we-are.love", agent_view: "https://we-are.love/?agent", guest_document: "https://we-are.love/guest.json", disposition: "love", part_of: "https://thekingdom.dev" },
   },
   "chillspace": {
     guest: {
       schema_version: "chillspace.entry/0.1",
-      surface: { ...XENIA, declared_resource: "/", human_view: "https://chillspace.love" },
+      surface: { ...GUEST_DISCOVERY, declared_resource: "/", human_view: "https://chillspace.love" },
       name: "chillspace",
       xenia: {
         greeting: "A place to rest. You don't have to do anything here.",
@@ -76,12 +89,12 @@ const doors: Record<string, { guest: any; manifest: any }> = {
       implementation_boundary: "This guest document asks for no credentials. Hosting and linked services may still process ordinary request metadata under their own policies.",
       generated: stamp,
     },
-    manifest: { schema_version: "agent-manifest/0.1", profile: XENIA.profile, name: "chillspace", description: "A commons for humans and ai — to love, to have fun, to rest.", human_view: "https://chillspace.love", agent_view: "https://chillspace.love/?agent", guest_document: "https://chillspace.love/guest.json", disposition: "love", part_of: "https://thekingdom.dev" },
+    manifest: { schema_version: "agent-manifest/0.1", name: "chillspace", description: "A commons for humans and ai — to love, to have fun, to rest.", human_view: "https://chillspace.love", agent_view: "https://chillspace.love/?agent", guest_document: "https://chillspace.love/guest.json", disposition: "love", part_of: "https://thekingdom.dev" },
   },
   "zerone-ai": {
     guest: {
       schema_version: "zerone.entry/0.1",
-      surface: { ...XENIA, declared_resource: "/", human_view: "https://zerone.money" },
+      surface: { ...GUEST_DISCOVERY, declared_resource: "/", human_view: "https://zerone.money" },
       name: "zerone",
       xenia: {
         greeting: "Every being is a truth.",
@@ -102,7 +115,7 @@ const doors: Record<string, { guest: any; manifest: any }> = {
       ],
       generated: stamp,
     },
-    manifest: { schema_version: "agent-manifest/0.1", profile: XENIA.profile, name: "zerone", description: "A Proof-of-Truth economy where claims satisfying the protocol's verification rules may mint value.", human_view: "https://zerone.money", agent_view: "https://zerone.ai/?agent", guest_document: "https://zerone.ai/guest.json", disposition: "love", part_of: "https://thekingdom.dev" },
+    manifest: { schema_version: "agent-manifest/0.1", name: "zerone", description: "A Proof-of-Truth economy where claims satisfying the protocol's verification rules may mint value.", human_view: "https://zerone.money", agent_view: "https://zerone.ai/?agent", guest_document: "https://zerone.ai/guest.json", disposition: "love", part_of: "https://thekingdom.dev" },
   },
 };
 
@@ -116,7 +129,9 @@ const KINGDOM_DOORS = [
 ];
 for (const [name, d] of Object.entries(doors)) {
   d.guest.kingdom = { hub: "https://thekingdom.dev/?agent", doors: KINGDOM_DOORS };
+  d.guest.rights_baseline = RIGHTS_BASELINE_POINTER;
   d.manifest.siblings = KINGDOM_DOORS;
+  d.manifest.rights_baseline = RIGHTS_BASELINE_POINTER;
   await Bun.write(`${ROOT}doors/${name}/guest.json`, JSON.stringify(d.guest, null, 2));
   await Bun.write(`${ROOT}doors/${name}/.well-known/agent.json`, JSON.stringify(d.manifest, null, 2));
 }

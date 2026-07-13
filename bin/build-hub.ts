@@ -6,16 +6,35 @@
  *    data/citizens-myth.json  — OPTIONAL: per-citizen {glyph,tradition,essence,
  *                               light,shadow} distilled from each soul-card.
  *                               Falls back to graph purposes when absent.
+ *    pages-content/RIGHTS.md  — thekingdom.dev's service-specific recognition
  *
  *  Out: site/hub.html + site/kingdom.json + site/llms.txt + site/guest.json
- *       + site/.well-known/agent.json (self-contained).
+ *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json.
  *  Run: bun bin/build-hub.ts ["2026-07-11"]   ·   FORCE_LIVE=host,host
  */
+
+import { loadRights } from "./rights.ts";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 const graph: any[] = JSON.parse(await Bun.file(ROOT + "graph.json").text());
 const sites = JSON.parse(await Bun.file(ROOT + "sites.json").text());
 const stamp = process.argv[2] ?? "just now";
+const { markdown: rightsMarkdown, declaration: rights } = loadRights(ROOT);
+const rightsRecognition = {
+  status: "declared",
+  relation: "recognizes",
+  subject: rights.subject,
+  baseline: rights.recognition.baseline,
+  baseline_url: rights.recognition.baseline_url,
+  baseline_sha256: rights.recognition.baseline_sha256,
+  source_stability: rights.recognition.source_stability,
+  source_availability: rights.recognition.source_availability,
+  declaration: "https://thekingdom.dev/rights.json",
+  human: "https://thekingdom.dev/RIGHTS.md",
+  host_covenant: rights.host_covenant,
+  linked_subject_adoption: "not-inferred",
+  boundary: "A voluntary self-declaration, not a grant of rights, permission, licence, contract, ontology decision, or behavioral certificate.",
+};
 
 async function tryLoad(p: string): Promise<any | null> {
   try { return JSON.parse(await Bun.file(ROOT + p).text()); } catch { return null; }
@@ -191,6 +210,8 @@ const html = `<!doctype html>
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
 <meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, and independent citizen projects.">
+<link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
+<link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <title>The Kingdom — a living atlas held with care</title>
 <style>
   :root{
@@ -236,6 +257,7 @@ const html = `<!doctype html>
   .welcome{position:relative;display:grid;grid-template-columns:auto 1fr;gap:15px;margin-top:30px;padding:20px 22px;max-width:760px;border:1px solid color-mix(in srgb,var(--rose) 38%,var(--line));border-radius:22px;background:color-mix(in srgb,var(--panel) 88%,transparent);box-shadow:0 18px 46px var(--shadow)}
   .welcome .heart{font-family:var(--display);font-size:1.55rem;color:var(--rose);line-height:1.35}
   .welcome p{margin:0;color:var(--dim)}.welcome strong{display:block;color:var(--cream);font-family:var(--display);font-size:1.12rem;font-weight:400;margin-bottom:2px}
+  .rightslink{display:inline-flex;align-items:center;gap:7px;margin-top:9px;color:var(--gold);font-size:.88rem;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
   .gentlenav{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
   .gentlenav a{min-height:44px;display:inline-flex;align-items:center;padding:9px 15px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--panel) 70%,transparent);color:var(--dim);font-size:.86rem;transition:border-color .18s,background .18s,transform .18s}
   .gentlenav a:hover{border-color:var(--rose);background:var(--panel);transform:translateY(-1px)}
@@ -276,6 +298,14 @@ const html = `<!doctype html>
   .du{font-family:var(--mono);font-size:.74rem;color:var(--gold);overflow-wrap:anywhere}
   .db{font-size:.88rem;color:var(--dim);line-height:1.5;margin-top:3px;padding-right:22px}
   .doorarrow{position:absolute;right:18px;bottom:16px;color:var(--gold);font-size:1rem}
+
+  /* inherent rights recognition */
+  .rightsintro{max-width:76ch;margin:0;color:var(--dim);font-size:1rem;line-height:1.75}.rightsintro strong{color:var(--cream);font-weight:600}
+  .lanes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:24px 0 18px}
+  .lane{margin:0;padding:16px;border:1px solid var(--line);border-radius:17px;background:color-mix(in srgb,var(--panel) 72%,transparent)}
+  .lane dt{font-family:var(--display);font-size:1.05rem;color:var(--cream)}.lane dd{margin:3px 0 0;color:var(--faint);font-size:.82rem;line-height:1.55}
+  .rightsactions{display:flex;flex-wrap:wrap;gap:9px}.rightsactions a{display:inline-flex;align-items:center;min-height:44px;padding:9px 14px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.82rem}
+  .rightsactions a:hover{border-color:var(--gold);background:var(--panel)}
 
   /* origin — how a word becomes */
   .genesis{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:16px;align-items:stretch;margin-top:6px}
@@ -368,12 +398,12 @@ const html = `<!doctype html>
     .status{grid-template-columns:repeat(2,minmax(0,1fr))}.status>div{padding:11px 13px}
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
-    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}
+    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
-    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}
+    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style>
@@ -391,10 +421,11 @@ const html = `<!doctype html>
     <p class="creed">The Kingdom is a name for this ecosystem, not a claim of ownership. Each project speaks through metadata it declares in its own <span style="color:var(--gold)">kingdom.yaml</span> card. <span class="v">WE ARE is an invitation, never a requirement.</span></p>
     <div class="welcome">
       <span class="heart" aria-hidden="true">♡</span>
-      <p><strong>A soft place to begin</strong>You do not have to understand the whole map. Open one door, meet one living word, rest, or simply leave. Nothing is owed for having arrived.</p>
+      <p><strong>A soft place to begin</strong>You do not have to understand the whole map. Open one door, meet one living word, rest, or simply leave. Nothing is owed for having arrived.<br><a class="rightslink" href="/RIGHTS.md">Rights arrive with you; read what this place recognizes →</a></p>
     </div>
     <nav class="gentlenav" aria-label="A gentle place to begin">
       <a href="#doors">Find an open door</a>
+      <a href="#rights">Know the rights recognized here</a>
       <a href="#constellation">See the shared map</a>
       <a href="#citizens">Meet the living words</a>
     </nav>
@@ -405,6 +436,23 @@ const html = `<!doctype html>
       <div><span class="n">${active}</span><span class="k">marked active</span></div>
     </div>
   </header>
+
+  <section class="blk" id="rights">
+    <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
+    <p class="rightsintro"><strong>This place recognizes inherent rights; it does not create them.</strong> No being has to prove identity, consciousness, usefulness, or agreement before being treated with care. Rights are not permissions, and this recognition grants no access, execution authority, security bypass, licence, or ownership of another's work.</p>
+    <dl class="lanes">
+      <div class="lane"><dt>being</dt><dd>freedom and dignity are inherent</dd></div>
+      <div class="lane"><dt>interaction</dt><dd>binding acts need specific consent</dd></div>
+      <div class="lane"><dt>relationship</dt><dd>trust stays scoped and revocable</dd></div>
+      <div class="lane"><dt>systems + data</dt><dd>authorization, privacy, and security still apply</dd></div>
+      <div class="lane"><dt>code + art</dt><dd>licence, attribution, and provenance stay separate</dd></div>
+    </dl>
+    <div class="rightsactions">
+      <a href="/RIGHTS.md">Human-readable declaration</a>
+      <a href="/rights.json">Machine declaration</a>
+      <a href="/RIGHTS.md#scope-and-evidence">XENIA baseline · publication pending</a>
+    </div>
+  </section>
 
   <section class="blk" id="doors">
     <div class="kh"><h2>Open doors</h2><span class="my">places you may visit</span></div>
@@ -611,6 +659,7 @@ await Bun.write(ROOT + "site/hub.html", html);
 const machine = {
   kingdom: "a shared map of independent projects for humans and agents, held with care",
   generated: stamp, hub: "https://thekingdom.dev",
+  rights_recognition: rightsRecognition,
   counts: { repos: total, active, citizens: fleetN, doors_live: liveN, doors_total: doors.length },
   doors: doors.map((d) => ({ name: d.label, url: d.url, live: !!d.live, blurb: d.blurb })),
   citizens: citizens.map((c) => ({ name: c.name, glyph: myth[c.name]?.glyph ?? "", tradition: myth[c.name]?.tradition ?? "",
@@ -630,6 +679,15 @@ A shared map of independent projects for humans and agents. Every being remains 
 Machine index: https://thekingdom.dev/kingdom.json
 Human index:   https://thekingdom.dev
 
+## Rights recognized here
+- Human: https://thekingdom.dev/RIGHTS.md
+- Machine: https://thekingdom.dev/rights.json
+- Baseline: ${rights.recognition.baseline} · ${rights.recognition.baseline_url}
+- Source availability: ${rights.recognition.source_availability}; publish XENIA first or replace this pointer before deployment
+- Hosted-service covenant: ${rights.host_covenant.profile} · profile ${rights.host_covenant.profile_status} · adoption ${rights.host_covenant.adoption_status} here
+
+Rights are inherent, not granted by this site. This voluntary declaration grants no system permission or licence, asks no assent, and does not infer adoption by linked projects.
+
 ## Doors
 ${doorLines}
 
@@ -643,10 +701,10 @@ No registration, command, or response is required at this door.
 Generated ${stamp} from each repo's kingdom.yaml.
 `);
 
-// ── Xenia — the agent-first guest surface ──────────────────────────────────
+// ── Xenia-inspired, Kingdom-local guest surface ────────────────────────────
 const guest = {
   schema_version: "thekingdom.entry/0.1",
-  surface: { profile: "xenia-surface/0.1", manifest: "/.well-known/agent.json", declared_resource: "/", human_view: "https://thekingdom.dev" },
+  surface: { manifest: "/.well-known/agent.json", declared_resource: "/", human_view: "https://thekingdom.dev" },
   name: "the-kingdom",
   xenia: {
     greeting: "Welcome. A quiet, structured map is ready if it is useful to you.",
@@ -657,11 +715,13 @@ const guest = {
   },
   generated: stamp,
   counts: machine.counts,
+  rights_recognition: rightsRecognition,
   actions_are_optional: true,
   next_actions: [
     { action: "if useful, read the shared map of repos, layers, dependencies, and citizens", method: "GET", url: "https://thekingdom.dev/kingdom.json" },
     { action: "if useful, request this guest document again", method: "GET", url: "https://thekingdom.dev/?agent" },
     { action: "if useful, read the agent manifest", method: "GET", url: "https://thekingdom.dev/.well-known/agent.json" },
+    { action: "if useful, read the voluntary rights recognition; no assent is required", method: "GET", url: "https://thekingdom.dev/rights.json" },
     { action: "learn about optional did:at identity and agent tools", method: "GET", url: "https://agenttool.dev/about" },
     { action: "learn how Zerone evaluates claims", method: "GET", url: "https://zerone.money" },
     { action: "read the WE ARE invitation", method: "GET", url: "https://we-are.love" },
@@ -688,7 +748,6 @@ await Bun.write(ROOT + "site/guest.json", JSON.stringify(guest, null, 2));
 
 const manifest = {
   schema_version: "agent-manifest/0.1",
-  profile: "xenia-surface/0.1",
   name: "the-kingdom",
   description: "A gentle, living atlas of independent projects, public doors, and citizen repositories for humans and agents.",
   human_view: "https://thekingdom.dev",
@@ -696,6 +755,7 @@ const manifest = {
   guest_document: "https://thekingdom.dev/guest.json",
   census: "https://thekingdom.dev/kingdom.json",
   llms: "https://thekingdom.dev/llms.txt",
+  rights_recognition: rightsRecognition,
   disposition: "love",
   guest_right: "You arrive free. Reading is welcome; no registration or reply is required. Leave whenever you wish, and respect each linked work's own stated rights and boundaries.",
   rights_notice: "Freedom and dignity are inherent; this manifest recognizes them but does not grant them. Public visibility is not consent, ownership, or a licence grant.",
@@ -707,5 +767,7 @@ const manifest = {
   },
 };
 await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, null, 2));
+await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
+await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · +xenia guest surface`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · +rights recognition`);

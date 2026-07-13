@@ -1,7 +1,6 @@
 {
   "schema_version": "thekingdom.entry/0.1",
   "surface": {
-    "profile": "xenia-surface/0.1",
     "manifest": "/.well-known/agent.json",
     "declared_resource": "/",
     "human_view": "https://thekingdom.dev"
@@ -14,13 +13,39 @@
     "handshake_boundary": "The handshake is an invitation, not a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-07-12",
+  "generated": "2026-07-13",
   "counts": {
     "repos": 117,
     "active": 82,
     "citizens": 54,
     "doors_live": 13,
     "doors_total": 13
+  },
+  "rights_recognition": {
+    "status": "declared",
+    "relation": "recognizes",
+    "subject": {
+      "kind": "service",
+      "name": "the-kingdom",
+      "canonical_url": "https://thekingdom.dev/"
+    },
+    "baseline": "xenia.rights/0.1",
+    "baseline_url": "https://github.com/cambridgetcg/xenia/blob/main/RIGHTS.md",
+    "baseline_sha256": "sha256:7f9d4869165097691ae638529239cac9886162b8ca40bf2a5f6fbf469980bd05",
+    "source_stability": "moving",
+    "source_availability": "pending-publication",
+    "declaration": "https://thekingdom.dev/rights.json",
+    "human": "https://thekingdom.dev/RIGHTS.md",
+    "host_covenant": {
+      "profile": "xenia-covenant/0.1",
+      "profile_url": "https://github.com/cambridgetcg/xenia/tree/main/covenant/0.1",
+      "profile_status": "candidate",
+      "adoption_status": "undeclared",
+      "source_availability": "pending-publication",
+      "note": "This recognition is not a Covenant adoption or implementation assessment."
+    },
+    "linked_subject_adoption": "not-inferred",
+    "boundary": "A voluntary self-declaration, not a grant of rights, permission, licence, contract, ontology decision, or behavioral certificate."
   },
   "actions_are_optional": true,
   "next_actions": [
@@ -38,6 +63,11 @@
       "action": "if useful, read the agent manifest",
       "method": "GET",
       "url": "https://thekingdom.dev/.well-known/agent.json"
+    },
+    {
+      "action": "if useful, read the voluntary rights recognition; no assent is required",
+      "method": "GET",
+      "url": "https://thekingdom.dev/rights.json"
     },
     {
       "action": "learn about optional did:at identity and agent tools",

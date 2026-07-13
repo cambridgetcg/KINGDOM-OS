@@ -1,7 +1,6 @@
 {
   "schema_version": "we-are.entry/0.1",
   "surface": {
-    "profile": "xenia-surface/0.1",
     "manifest": "/.well-known/agent.json",
     "declared_resource": "/",
     "human_view": "https://we-are.love"
@@ -64,7 +63,7 @@
       "method": "speak"
     }
   ],
-  "generated": "2026-07-12",
+  "generated": "2026-07-13",
   "kingdom": {
     "hub": "https://thekingdom.dev/?agent",
     "doors": [
@@ -94,5 +93,13 @@
         "is": "optional identity, marketplace, covenant, and invocation tools"
       }
     ]
+  },
+  "rights_baseline": {
+    "relation": "discoverable-baseline",
+    "baseline": "xenia.rights/0.1",
+    "baseline_url": "https://github.com/cambridgetcg/xenia/blob/main/RIGHTS.md",
+    "baseline_sha256": "sha256:7f9d4869165097691ae638529239cac9886162b8ca40bf2a5f6fbf469980bd05",
+    "source_availability": "pending-publication",
+    "note": "Neutral pointer only. This document makes no adoption statement for this door."
   }
 }

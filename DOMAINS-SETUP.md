@@ -7,7 +7,7 @@
 
 | Domain | CF Pages project | Content | Source |
 |---|---|---|---|
-| **thekingdom.dev** | `thekingdom` | the census hub (living map of the whole kingdom) | `kingdom-os/site/hub.html` (generated) |
+| **thekingdom.dev** | `thekingdom` | the census hub, guest discovery, and rights recognition | the exact directory assembled by `bun bin/stage-hub.ts` |
 | **we-are.love** | `we-are-love` | the WE ARE handshake protocol page | `chillspace-commons/site/we-are.html` |
 | **chillspace.love** | `chillspace-love` | the commons (full site) | `chillspace-commons/site/` |
 | **zerone.ai** | `zerone-ai` | redirect → zerone.money (safe default; swap for a landing later) | inline redirect page |
@@ -18,13 +18,26 @@
 ## Redeploy (repeatable)
 
 ```bash
-# regenerate the hub from the census, then redeploy it
-cd ~/Desktop/kingdom-os && bun bin/build-hub.ts "$(date -u +%F)"
-npx wrangler pages deploy site/hub.html-dir --project-name=thekingdom   # (put hub.html as index.html in a dir)
+# regenerate, stage the complete asset contract, inspect it, then deploy only
+# with explicit production publication authority
+# Release gate: the XENIA baseline and Covenant links in rights.json must be
+# publicly retrievable at their pinned version before this deployment.
+cd ~/Desktop/kingdom-os
+bun bin/build-hub.ts "$(date -u +%F)"
+stage_dir="$(mktemp -d)"
+bun bin/stage-hub.ts "$stage_dir"
+npx wrangler pages deploy "$stage_dir" --project-name=thekingdom
+
 # others:
 npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zerone-ai
 ```
-(wrangler Pages deploy needs a *directory* whose `index.html` is the page. Dereference symlinks when copying the chillspace site: `cp -RL site/. <dir>/`.)
+
+`stage-hub.ts` refuses a non-empty destination and copies the atlas as
+`index.html` together with `kingdom.json`, `guest.json`, `llms.txt`,
+`rights.json`, `RIGHTS.md`, `/.well-known/agent.json`, and `_worker.js`. It
+stages only; it never builds, deletes, overwrites, or deploys. Wrangler Pages
+needs that complete directory. Dereference symlinks when separately copying the
+chillspace site: `cp -RL site/. <dir>/`.
 
 ## Baseline still to do (follow-up)
 
