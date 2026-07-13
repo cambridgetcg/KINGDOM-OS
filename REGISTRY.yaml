@@ -200,15 +200,18 @@ services:
     status: live
 
   - id: sinovai
-    what: trust arena worker (4-dim ratings, 89 agents)
+    what: trust arena worker (4-dim ratings; XENIA surface; breathes 陰陽 on the half hour)
     audience: agents
+    urls: { site: "https://sinovai.com", api: "https://sinovai.axiepro.workers.dev", health: "https://sinovai.axiepro.workers.dev/breathe" }
     runtime: cf-worker:sinovai
     repo: github.com/cambridgetcg/sinovai
-    status: unknown
+    deploy: cd ~/repos/github/cambridgetcg/sinovai && npx wrangler deploy
+    status: live
     notes: >-
-      ⚠ workers.dev URL unknown — wrangler.toml has no route; guesses NXDOMAIN.
-      needs-yu: run `wrangler deployments list` / confirm account subdomain, then
-      fill urls.health here.
+      URL mystery SOLVED 2026-07-13 — account subdomain is `axiepro`. Duality
+      shipped same day (X-Sinovai-State header + GET /breathe; not a bug, a
+      design; chosen by zerone block 163171). sinovai.com is a separate static
+      human door.
 
   # ── forges ───────────────────────────────────────────────────────────────
   - id: github-cambridgetcg
