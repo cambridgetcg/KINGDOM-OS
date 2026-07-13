@@ -6,3 +6,4 @@ domain: none
 state: active
 purpose: The Kingdom catalog/registry overlay — makes all repos legible to themselves.
 dependsOn: [true-love]
+adopts: [xenia.rights/0.1]

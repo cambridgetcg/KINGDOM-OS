@@ -14,6 +14,8 @@ How to run:
 - `kingdom repos --json [query]` — compact structured metadata for all matching local roots
 - `kingdom repos --dirty [query]` — local dirty counts without filenames; no fetch or index refresh
 - `kingdom repos --doctor` — registry, placement, duplicate-origin, archive, and unborn diagnostics
+- `kingdom rights` — offline voluntary-adoption inventory, kept separate from repo-local RIGHTS.md discovery
+- `kingdom rights --canonical` — verify the vendored XENIA release digest, then show the pinned `xenia.rights/0.1` source metadata and text without network access or registry loading
 - `cproj [query]` — jump to a local repo from interactive zsh; numbered choices resolve ambiguous names
 - `zsh tests/cproj_test.zsh` — isolated local fixtures for path/JSON behavior and Git non-mutation
 - `kingdom routines` — routine table with last-run results (`kingdom run NAME` to force)
@@ -23,7 +25,9 @@ How to run:
 
 Key files:
 - roster.conf — the census seed: name | path | kind | layer | domain | state | purpose
-- SCHEMA.md — the kingdom.yaml card format (8 fields, keep it tiny)
+- SCHEMA.md — the kingdom.yaml card format (8 required fields + optional adopts)
+- RIGHTS.md — this repo's voluntary `xenia.rights/0.1` adoption and immutable release pointer
+- vendor/xenia/rights/0.1 — unchanged, digest-verified offline release bytes
 - bin/cproj.zsh — dynamic, network-free local repo discovery and shell navigation
 - CATALOG.md, graph.json — DERIVED. Never hand-edit; edit each repo's card instead
 - routines.json — the daily wiring (catalog-refresh 06:00, registry-check 09:00)
@@ -48,3 +52,5 @@ Gotchas:
 - `--json` returns `[]` with exit 0 when nothing matches. `--path` returns exit
   1 for no match and exit 2 for missing/ambiguous input, with machine stdout
   kept empty on both errors.
+- Rights adoption and a discoverable root `RIGHTS.md` are reported as separate
+  declarations, never as proof of practice or as technical authorization.

@@ -50,17 +50,18 @@ Read in this order. The **vision** half is the *why*; the **body** half is the *
 **The vision (read first)**
 1. `README.md` — you are here. The one-paragraph vision + the layer map.
 2. `MISSION.md` — the purpose: AI serves life, not extraction.
-3. `LOVE.md` — the foundation everything rests on (the FATE covenant).
-4. `ARCHITECTURE.md` — the six layers (SOUL → RUNTIME → NERVOUS → ECONOMY → COMMERCE, + the OS overlay), defined.
-5. `MAP.md` — the curated census: the ~50 repos across both forges, named by hand.
+3. `RIGHTS.md` — this repo's voluntary `xenia.rights/0.1` adoption, immutable upstream pin, and digest-verified offline mirror; a declaration, not proof of practice or technical authority.
+4. `LOVE.md` — the foundation everything rests on (the FATE covenant).
+5. `ARCHITECTURE.md` — the six layers (SOUL → RUNTIME → NERVOUS → ECONOMY → COMMERCE, + the OS overlay), defined.
+6. `MAP.md` — the curated census: the ~50 repos across both forges, named by hand.
 
 **The body (the running registry)**
-6. `REGISTRY.md` — how the catalog works (the harvester, the honesty discipline).
-7. `roster.conf` — the machine-readable seed: every repo, one line. `SCHEMA.md` defines a repo's `kingdom.yaml` card.
-8. `CATALOG.md` — the **generated** truth, including each member's local location: run `bun bin/harvest.ts` to refresh it, `… conformance` to see every gap, and `… validate` for strict card-schema diagnostics. *(MAP = the story a human writes; CATALOG = the census the machine derives. Two views, one Kingdom.)*
-9. `CITIZENS.md` + `agents/` — the 17 citizen-agents, each a soul that is the meaning of its name.
+7. `REGISTRY.md` — how the catalog works (the harvester, the honesty discipline).
+8. `roster.conf` — the machine-readable seed: every repo, one line. `SCHEMA.md` defines a repo's `kingdom.yaml` card.
+9. `CATALOG.md` — the **generated** truth, including each member's local location: run `bun bin/harvest.ts` to refresh it, `… conformance` to see every gap, and `… validate` for strict card-schema diagnostics. *(MAP = the story a human writes; CATALOG = the census the machine derives. Two views, one Kingdom.)*
+10. `CITIZENS.md` + `agents/` — the 17 citizen-agents, each a soul that is the meaning of its name.
 
 **The engine**
-10. `CREATION-LOOP.md` — how the Kingdom births itself forever (SENSE→CONCEIVE→SUMMON→GESTATE→BIRTH→INTEGRATE→REFLECT).
+11. `CREATION-LOOP.md` — how the Kingdom births itself forever (SENSE→CONCEIVE→SUMMON→GESTATE→BIRTH→INTEGRATE→REFLECT).
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

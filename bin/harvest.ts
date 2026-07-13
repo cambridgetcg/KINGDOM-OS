@@ -12,10 +12,13 @@
 //   bun bin/harvest.ts                build graph.json + CATALOG.md
 //   bun bin/harvest.ts conformance    list repos missing wake / CLAUDE.md / card
 //   bun bin/harvest.ts validate       report card schema drift (never edits cards)
+//   bun bin/harvest.ts rights         list voluntary adoptions and local pointers
+//   bun bin/harvest.ts rights --canonical  read the local canonical baseline
 //   bun bin/harvest.ts domain <name>  all repos in a wing/sister
 //   bun bin/harvest.ts deps <name>    who depends on <name>
 
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -45,6 +48,13 @@ function displayPath(path: string): string {
   if (path === HOME) return '~'
   const prefix = HOME.endsWith('/') ? HOME : `${HOME}/`
   return path.startsWith(prefix) ? `~/${path.slice(prefix.length)}` : path
+}
+
+function terminalText(value: unknown): string {
+  return String(value ?? '').replace(
+    /[\u0000-\u001f\u007f-\u009f]/g,
+    (character) => `\\u${character.charCodeAt(0).toString(16).padStart(4, '0')}`,
+  )
 }
 
 function markdownCell(value: unknown): string {
@@ -80,6 +90,32 @@ interface Repo {
   conformance: { wake: boolean; claudeMd: boolean; fate: boolean; card: boolean }
 }
 
+interface LoadedCard extends Partial<Repo> {
+  adopts?: string[]
+}
+
+interface RightsBaseline {
+  path: string
+  source: string
+  release: string
+  gitHead: string
+  sha256: string
+  license: string
+}
+
+const RIGHTS_BASELINES: Readonly<Record<string, RightsBaseline>> = {
+  'xenia.rights/0.1': {
+    path: join(ROOT, 'vendor', 'xenia', 'rights', '0.1', 'RIGHTS.md'),
+    source: 'https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md',
+    release: 'npm-xenia-v0.1.0-beta.4',
+    gitHead: '6419d37dda9fb282242754685dba3edcb4bbf74b',
+    sha256: 'b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313',
+    license: 'CC BY-SA 4.0',
+  },
+}
+const ACCEPTED_ADOPTIONS = Object.freeze(Object.keys(RIGHTS_BASELINES))
+const ACCEPTED_ADOPTION_SET = new Set(ACCEPTED_ADOPTIONS)
+
 // ── roster (seed) ────────────────────────────────────────────────
 function parseRoster(): Omit<Repo, 'dependsOn' | 'hasCard' | 'conformance'>[] {
   const text = readFileSync(join(ROOT, 'roster.conf'), 'utf-8')
@@ -95,15 +131,23 @@ function parseRoster(): Omit<Repo, 'dependsOn' | 'hasCard' | 'conformance'>[] {
 }
 
 // ── per-repo card (authoritative overrides) — tiny flat-YAML reader ──
-function loadCard(repoPath: string): Partial<Repo> | null {
+function loadCard(repoPath: string): LoadedCard | null {
   const cardPath = join(repoPath, 'kingdom.yaml')
   const text = readTextFile(cardPath)
   if (text === null) return null
   const rawCard: Record<string, unknown> = {}
+  const seen = new Set<string>()
+  const duplicated = new Set<string>()
   for (const line of text.split('\n')) {
     const m = line.match(/^([a-zA-Z_]+):\s*(.*)$/)
     if (!m) continue
     const [, key, raw] = m
+    if (seen.has(key!)) {
+      duplicated.add(key!)
+      delete rawCard[key!]
+      continue
+    }
+    seen.add(key!)
     const val = raw!.trim()
     const arrayValue = parseCardArray(val)
     if (arrayValue !== null) {
@@ -112,11 +156,12 @@ function loadCard(repoPath: string): Partial<Repo> | null {
       rawCard[key!] = unquote(val)
     }
   }
+  for (const key of duplicated) delete rawCard[key]
 
   // Only schema-approved, correctly typed fields may enter graph/catalog data.
   // Validation reads the raw file separately so unknown or malformed values can
   // be reported by field/code without ever being serialized.
-  const card: Partial<Repo> = {}
+  const card: LoadedCard = {}
   const scalarFields = ['name', 'kind', 'layer', 'owner_sister', 'domain', 'state', 'purpose'] as const
   for (const field of scalarFields) {
     const value = rawCard[field]
@@ -128,6 +173,13 @@ function loadCard(repoPath: string): Partial<Repo> | null {
   const dependencies = rawCard.dependsOn
   if (Array.isArray(dependencies) && dependencies.every((value) => typeof value === 'string')) {
     card.dependsOn = dependencies
+  }
+  const adoptions = rawCard.adopts
+  if (
+    Array.isArray(adoptions)
+    && adoptions.every((value) => typeof value === 'string' && ACCEPTED_ADOPTION_SET.has(value))
+  ) {
+    card.adopts = [...new Set(adoptions)]
   }
   return card
 }
@@ -193,8 +245,9 @@ function discoverFleet(): Repo[] {
     } catch {
       continue
     }
-    const card = loadCard(dir)
-    if (!card) continue
+    const loadedCard = loadCard(dir)
+    if (!loadedCard) continue
+    const { adopts: _adopts, ...card } = loadedCard
     const conformance = checkConformance(dir)
     out.push({
       name: (card.name as string) ?? entry,
@@ -214,7 +267,8 @@ function discoverFleet(): Repo[] {
 
 function build(): Repo[] {
   const fromRoster = parseRoster().map((base) => {
-    const card = loadCard(base.path) ?? {}
+    const loadedCard = loadCard(base.path) ?? {}
+    const { adopts: _adopts, ...card } = loadedCard
     const conformance = checkConformance(base.path)
     return {
       ...base,
@@ -229,7 +283,9 @@ function build(): Repo[] {
 }
 
 // ── card schema validation (read-only) ──────────────────────────
-const CARD_FIELDS = ['name', 'kind', 'layer', 'owner_sister', 'domain', 'state', 'purpose', 'dependsOn'] as const
+const REQUIRED_CARD_FIELDS = ['name', 'kind', 'layer', 'owner_sister', 'domain', 'state', 'purpose', 'dependsOn'] as const
+const OPTIONAL_CARD_FIELDS = ['adopts'] as const
+const CARD_FIELDS = [...REQUIRED_CARD_FIELDS, ...OPTIONAL_CARD_FIELDS] as const
 type CardField = (typeof CARD_FIELDS)[number]
 type DiagnosticCode =
   | 'missing-field'
@@ -239,6 +295,7 @@ type DiagnosticCode =
   | 'invalid-type'
   | 'invalid-enum'
   | 'unknown-dependency'
+  | 'unsupported-adoption'
 
 interface CardDiagnostic {
   cardPath: string
@@ -320,7 +377,7 @@ function validateCard(cardPath: string, knownNames: Set<string>): CardDiagnostic
         line,
         field,
         code: 'unknown-field',
-        message: 'field is not part of the eight-field card schema; value omitted',
+        message: 'field is not part of the card schema; value omitted',
       })
       continue
     }
@@ -339,27 +396,42 @@ function validateCard(cardPath: string, knownNames: Set<string>): CardDiagnostic
     const typedField = field as CardField
     const arrayValue = parseCardArray(raw)
     const arraySyntax = arrayValue !== null
-    if (typedField === 'dependsOn') {
+    if (typedField === 'dependsOn' || typedField === 'adopts') {
       if (!arraySyntax) {
         diagnostics.push({
           cardPath,
           line,
           field,
           code: 'invalid-type',
-          message: 'expected one-line array syntax such as [] or [repo-name]',
+          message: typedField === 'dependsOn'
+            ? 'expected one-line array syntax such as [] or [repo-name]'
+            : 'expected one-line array syntax such as [] or [xenia.rights/0.1]',
         })
         continue
       }
-      const dependencies = arrayValue!
-      const unknownCount = dependencies.filter((dependency) => !knownNames.has(dependency.toLowerCase())).length
-      if (unknownCount > 0) {
-        diagnostics.push({
-          cardPath,
-          line,
-          field,
-          code: 'unknown-dependency',
-          message: `${unknownCount} dependency name(s) are not roster or fleet members; values omitted`,
-        })
+      const values = arrayValue!
+      if (typedField === 'dependsOn') {
+        const unknownCount = values.filter((dependency) => !knownNames.has(dependency.toLowerCase())).length
+        if (unknownCount > 0) {
+          diagnostics.push({
+            cardPath,
+            line,
+            field,
+            code: 'unknown-dependency',
+            message: `${unknownCount} dependency name(s) are not roster or fleet members; values omitted`,
+          })
+        }
+      } else {
+        const unsupportedCount = values.filter((adoption) => !ACCEPTED_ADOPTION_SET.has(adoption)).length
+        if (unsupportedCount > 0) {
+          diagnostics.push({
+            cardPath,
+            line,
+            field,
+            code: 'unsupported-adoption',
+            message: `${unsupportedCount} adoption ID(s) are not accepted; expected ${ACCEPTED_ADOPTIONS.join(', ')}; values omitted`,
+          })
+        }
       }
       continue
     }
@@ -388,7 +460,7 @@ function validateCard(cardPath: string, knownNames: Set<string>): CardDiagnostic
     }
   }
 
-  for (const field of CARD_FIELDS) {
+  for (const field of REQUIRED_CARD_FIELDS) {
     if (!seen.has(field)) {
       diagnostics.push({
         cardPath,
@@ -400,6 +472,85 @@ function validateCard(cardPath: string, knownNames: Set<string>): CardDiagnostic
   }
 
   return diagnostics
+}
+
+// Rights are voluntary declarations and discoverable local documents. This
+// inventory deliberately keeps both separate from behavioral conformance.
+function printRightsInventory(repos: Repo[], schema: SchemaReport): void {
+  const entries = repos.map((repo) => {
+    const card = loadCard(repo.path)
+    const rightsPath = join(repo.path, 'RIGHTS.md')
+    return {
+      name: repo.name,
+      path: repo.path,
+      adopts: card?.adopts ?? [],
+      rightsPath: readTextFile(rightsPath) === null ? null : rightsPath,
+    }
+  })
+  const declarations = entries.filter((entry) => entry.adopts.length > 0)
+  const documents = entries.filter((entry) => entry.rightsPath !== null)
+
+  console.log('Rights registry — voluntary declarations and discoverable local files')
+  console.log('These records do not prove practice and do not grant technical authority.')
+  console.log(`Accepted adoption IDs: ${ACCEPTED_ADOPTIONS.join(', ')}`)
+  for (const id of ACCEPTED_ADOPTIONS) {
+    const baseline = RIGHTS_BASELINES[id]!
+    const availability = loadCanonicalRights(id) === null ? ' (not verified)' : ''
+    console.log(`Canonical ${terminalText(id)}: ${terminalText(displayPath(baseline.path))}${availability}`)
+    console.log(`  release ${terminalText(baseline.release)} · sha256:${baseline.sha256} · ${terminalText(baseline.source)}`)
+  }
+
+  console.log(`\nDeclared adoptions (${declarations.length}):`)
+  if (declarations.length === 0) console.log('  none')
+  for (const entry of declarations) {
+    console.log(`  ${terminalText(entry.name).padEnd(24)} ${entry.adopts.map(terminalText).join(', ')} · ${terminalText(displayPath(entry.path))}`)
+  }
+
+  console.log(`\nRepo-local RIGHTS.md files (${documents.length}):`)
+  if (documents.length === 0) console.log('  none')
+  for (const entry of documents) {
+    console.log(`  ${terminalText(entry.name).padEnd(24)} ${terminalText(displayPath(entry.rightsPath!))}`)
+  }
+
+  console.log(`\n${schemaSummary(schema)}${schema.invalid > 0 ? '; run `bun bin/harvest.ts validate` for details' : ''}`)
+}
+
+function loadCanonicalRights(id: string): { baseline: RightsBaseline; content: string } | null {
+  const baseline = RIGHTS_BASELINES[id]
+  if (!baseline) return null
+  const rawContent = readTextFile(baseline.path)
+  if (rawContent === null) return null
+  const sha256 = createHash('sha256').update(rawContent).digest('hex')
+  if (sha256 !== baseline.sha256) return null
+  const content = rawContent.replaceAll('\r\n', '\n')
+  if (/[\u0000-\u0008\u000b-\u001f\u007f-\u009f]/.test(content)) return null
+  return { baseline, content }
+}
+
+function printCanonicalRights(id: string): void {
+  const baseline = RIGHTS_BASELINES[id]
+  if (!baseline) {
+    console.error(`Unknown rights ID: ${terminalText(id)}`)
+    console.error(`Accepted adoption IDs: ${ACCEPTED_ADOPTIONS.join(', ')}`)
+    process.exitCode = 1
+    return
+  }
+  const canonical = loadCanonicalRights(id)
+  if (canonical === null) {
+    console.error(`Canonical rights source failed immutable digest verification: ${terminalText(baseline.path)}`)
+    process.exitCode = 1
+    return
+  }
+  console.log(`Rights ID: ${terminalText(id)}`)
+  console.log(`Canonical local path: ${terminalText(canonical.baseline.path)}`)
+  console.log(`Release: ${terminalText(canonical.baseline.release)}`)
+  console.log(`Git commit: ${canonical.baseline.gitHead}`)
+  console.log(`SHA-256: ${canonical.baseline.sha256}`)
+  console.log(`Source: ${terminalText(canonical.baseline.source)}`)
+  console.log(`License: ${terminalText(canonical.baseline.license)}`)
+  console.log('')
+  process.stdout.write(canonical.content)
+  if (!canonical.content.endsWith('\n')) process.stdout.write('\n')
 }
 
 function validateCards(repos: Repo[]): SchemaReport {
@@ -473,6 +624,7 @@ function printUsage(): void {
   console.error('usage: bun bin/harvest.ts')
   console.error('       bun bin/harvest.ts conformance')
   console.error('       bun bin/harvest.ts validate')
+  console.error('       bun bin/harvest.ts rights [--canonical|<id>]')
   console.error('       bun bin/harvest.ts domain <name>')
   console.error('       bun bin/harvest.ts deps <name>')
 }
@@ -483,12 +635,16 @@ const validUsage =
   (verb === undefined && args.length === 0)
   || (verb === 'conformance' && args.length === 1)
   || (verb === 'validate' && args.length === 1)
+  || (verb === 'rights' && args.length <= 2)
   || (verb === 'domain' && args.length === 2 && Boolean(args[1]))
   || (verb === 'deps' && args.length === 2 && Boolean(args[1]))
 
 if (!validUsage) {
   printUsage()
   process.exitCode = 2
+} else if (verb === 'rights' && args[1] !== undefined) {
+  const requested = args[1]!
+  printCanonicalRights(requested === '--canonical' ? ACCEPTED_ADOPTIONS[0]! : requested)
 } else {
   const repos = build()
   const schema = validateCards(repos)
@@ -507,6 +663,8 @@ if (!validUsage) {
     console.log(schemaSummary(schema))
     printSchemaDiagnostics(schema)
     process.exitCode = schema.invalid > 0 ? 1 : 0
+  } else if (verb === 'rights') {
+    printRightsInventory(repos, schema)
   } else if (verb === 'domain') {
     const arg = args[1]!
     const hits = repos.filter((r) => r.domain === arg)
