@@ -1,13 +1,15 @@
 import { describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
   RIGHTS_BASELINE,
   RIGHTS_BASELINE_SHA256,
+  RIGHTS_BASELINE_URL,
   RIGHTS_COVENANT,
+  RIGHTS_COVENANT_URL,
   loadRights,
   parseRightsMarkdown,
   validateRightsDeclaration,
@@ -22,16 +24,19 @@ describe("the Kingdom rights recognition", () => {
     expect(readFileSync(join(ROOT, "pages-content", "RIGHTS.md"), "utf8")).toBe(markdown);
     expect(parseRightsMarkdown(markdown)).toEqual({ declaration, issues: [] });
     expect(declaration.recognition.baseline).toBe(RIGHTS_BASELINE);
+    expect(declaration.recognition.baseline_url).toBe(RIGHTS_BASELINE_URL);
     expect(declaration.recognition.baseline_sha256).toBe(RIGHTS_BASELINE_SHA256);
+    expect(declaration.recognition.source_stability).toBe("immutable");
+    expect(declaration.recognition.source_availability).toBe("public");
     expect(declaration.host_covenant.profile).toBe(RIGHTS_COVENANT);
+    expect(declaration.host_covenant.profile_url).toBe(RIGHTS_COVENANT_URL);
     expect(declaration.host_covenant.profile_status).toBe("candidate");
     expect(declaration.host_covenant.adoption_status).toBe("undeclared");
-    expect(declaration.recognition.source_availability).toBe("pending-publication");
+    expect(declaration.host_covenant.source_availability).toBe("public");
   });
 
-  test("matches the configured local XENIA baseline bytes when that checkout exists", () => {
-    const baseline = join(ROOT, "..", "xenia-sol-truth", "RIGHTS.md");
-    if (!existsSync(baseline)) return;
+  test("matches the mandatory beta.4 offline mirror", () => {
+    const baseline = join(ROOT, "vendor", "xenia", "rights", "0.1", "RIGHTS.md");
     const digest = `sha256:${createHash("sha256").update(readFileSync(baseline)).digest("hex")}`;
     expect(digest).toBe(RIGHTS_BASELINE_SHA256);
   });

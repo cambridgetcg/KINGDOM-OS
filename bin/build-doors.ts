@@ -23,6 +23,7 @@ const RIGHTS_BASELINE_POINTER = {
   baseline: rights.recognition.baseline,
   baseline_url: rights.recognition.baseline_url,
   baseline_sha256: rights.recognition.baseline_sha256,
+  source_stability: rights.recognition.source_stability,
   source_availability: rights.recognition.source_availability,
   note: "Neutral pointer only. This document makes no adoption statement for this door.",
 };

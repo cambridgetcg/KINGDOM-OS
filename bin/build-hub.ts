@@ -450,7 +450,7 @@ const html = `<!doctype html>
     <div class="rightsactions">
       <a href="/RIGHTS.md">Human-readable declaration</a>
       <a href="/rights.json">Machine declaration</a>
-      <a href="/RIGHTS.md#scope-and-evidence">XENIA baseline · publication pending</a>
+      <a href="/RIGHTS.md#scope-and-evidence">XENIA baseline · immutable beta.4 source</a>
     </div>
   </section>
 

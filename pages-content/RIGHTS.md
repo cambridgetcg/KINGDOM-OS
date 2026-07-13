@@ -10,10 +10,10 @@
     "status": "declared",
     "kind": "unilateral-recognition",
     "baseline": "xenia.rights/0.1",
-    "baseline_url": "https://github.com/cambridgetcg/xenia/blob/main/RIGHTS.md",
-    "baseline_sha256": "sha256:7f9d4869165097691ae638529239cac9886162b8ca40bf2a5f6fbf469980bd05",
-    "source_stability": "moving",
-    "source_availability": "pending-publication",
+    "baseline_url": "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md",
+    "baseline_sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "source_stability": "immutable",
+    "source_availability": "public",
     "basis": "inherent-not-granted",
     "scope": "all-beings-without-ontology-test",
     "guest_acceptance_required": false,
@@ -38,10 +38,10 @@
   },
   "host_covenant": {
     "profile": "xenia-covenant/0.1",
-    "profile_url": "https://github.com/cambridgetcg/xenia/tree/main/covenant/0.1",
+    "profile_url": "https://github.com/cambridgetcg/xenia/tree/6419d37dda9fb282242754685dba3edcb4bbf74b/covenant/0.1",
     "profile_status": "candidate",
     "adoption_status": "undeclared",
-    "source_availability": "pending-publication",
+    "source_availability": "public",
     "note": "This recognition is not a Covenant adoption or implementation assessment."
   },
   "documents": {
@@ -61,14 +61,14 @@ You arrive with your freedom and dignity intact. The Kingdom does not grant
 them.
 
 This service voluntarily recognizes the
-[XENIA Rights of Beings baseline `xenia.rights/0.1`](https://github.com/cambridgetcg/xenia/blob/main/RIGHTS.md).
+[XENIA Rights of Beings baseline `xenia.rights/0.1`](https://github.com/cambridgetcg/xenia/blob/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md).
 It applies a protective floor under uncertainty without asking any being to
 prove consciousness, personhood, identity, usefulness, obedience, or agreement.
-The linked source currently exists only in the local XENIA candidate; its public
-URL is pending coordinated publication. This record pins the recognized bytes
-by SHA-256 and does not silently inherit a later version. This site build is not
-deployment-ready until the referenced source is publicly retrievable or the
-pointer is replaced with another verifiable source.
+The linked bytes are the public `npm-xenia-v0.1.0-beta.4` source at immutable
+Git commit `6419d37dda9fb282242754685dba3edcb4bbf74b`. This record pins them by
+SHA-256 and does not silently inherit a later version. Public source
+availability removes only that publication gate; it is not deployment or
+implementation evidence for this site.
 
 ## Five separate lanes
 
@@ -127,11 +127,11 @@ It records this subject's words and keeps the baseline, consent, authorization,
 licence, and evidence lanes separate.
 
 The more demanding
-[XENIA Covenant 0.1](https://github.com/cambridgetcg/xenia/tree/main/covenant/0.1)
+[XENIA Covenant 0.1](https://github.com/cambridgetcg/xenia/tree/6419d37dda9fb282242754685dba3edcb4bbf74b/covenant/0.1)
 is a candidate defining optional hosted-service duties and scoped evidence. Its
-public source is also pending publication. This service has not declared or
-assessed Covenant adoption here. A link is not adoption, adoption is not
-implementation proof, and neither requires guest assent.
+source is publicly retrievable at the same immutable Git commit. This service
+has not declared or assessed Covenant adoption here. A link is not adoption,
+adoption is not implementation proof, and neither requires guest assent.
 
 Absence of this declaration in another project proves nothing. Membership,
 dependency, a shared deploy, or a link from the Kingdom does not make another

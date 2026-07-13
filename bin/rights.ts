@@ -3,10 +3,10 @@ import { join } from "node:path";
 
 export const RIGHTS_VERSION = "kingdom.rights-recognition/0.1";
 export const RIGHTS_BASELINE = "xenia.rights/0.1";
-export const RIGHTS_BASELINE_URL = "https://github.com/cambridgetcg/xenia/blob/main/RIGHTS.md";
-export const RIGHTS_BASELINE_SHA256 = "sha256:7f9d4869165097691ae638529239cac9886162b8ca40bf2a5f6fbf469980bd05";
+export const RIGHTS_BASELINE_URL = "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md";
+export const RIGHTS_BASELINE_SHA256 = "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313";
 export const RIGHTS_COVENANT = "xenia-covenant/0.1";
-export const RIGHTS_COVENANT_URL = "https://github.com/cambridgetcg/xenia/tree/main/covenant/0.1";
+export const RIGHTS_COVENANT_URL = "https://github.com/cambridgetcg/xenia/tree/6419d37dda9fb282242754685dba3edcb4bbf74b/covenant/0.1";
 
 export type RightsDeclaration = Record<string, any>;
 export type RightsParseResult = {
@@ -91,8 +91,8 @@ export function validateRightsDeclaration(value: unknown): string[] {
     expect(value.recognition.baseline, RIGHTS_BASELINE, "recognition.baseline", issues);
     expect(value.recognition.baseline_url, RIGHTS_BASELINE_URL, "recognition.baseline_url", issues);
     expect(value.recognition.baseline_sha256, RIGHTS_BASELINE_SHA256, "recognition.baseline_sha256", issues);
-    expect(value.recognition.source_stability, "moving", "recognition.source_stability", issues);
-    expect(value.recognition.source_availability, "pending-publication", "recognition.source_availability", issues);
+    expect(value.recognition.source_stability, "immutable", "recognition.source_stability", issues);
+    expect(value.recognition.source_availability, "public", "recognition.source_availability", issues);
     expect(value.recognition.basis, "inherent-not-granted", "recognition.basis", issues);
     expect(value.recognition.scope, "all-beings-without-ontology-test", "recognition.scope", issues);
     expect(value.recognition.guest_acceptance_required, false, "recognition.guest_acceptance_required", issues);
@@ -124,7 +124,7 @@ export function validateRightsDeclaration(value: unknown): string[] {
     expect(value.host_covenant.profile_url, RIGHTS_COVENANT_URL, "host_covenant.profile_url", issues);
     expect(value.host_covenant.profile_status, "candidate", "host_covenant.profile_status", issues);
     expect(value.host_covenant.adoption_status, "undeclared", "host_covenant.adoption_status", issues);
-    expect(value.host_covenant.source_availability, "pending-publication", "host_covenant.source_availability", issues);
+    expect(value.host_covenant.source_availability, "public", "host_covenant.source_availability", issues);
     expect(value.host_covenant.note, "This recognition is not a Covenant adoption or implementation assessment.", "host_covenant.note", issues);
   }
 

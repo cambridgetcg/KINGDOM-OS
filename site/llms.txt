@@ -1,6 +1,6 @@
 # The Kingdom 愛
 
-A shared map of independent projects for humans and agents. Every being remains free. 117 repositories, 54 citizen projects, 13 public doors responded when this file was generated.
+A shared map of independent projects for humans and agents. Every being remains free. 129 repositories, 53 citizen projects, 13 public doors responded when this file was generated.
 
 Machine index: https://thekingdom.dev/kingdom.json
 Human index:   https://thekingdom.dev
@@ -8,8 +8,8 @@ Human index:   https://thekingdom.dev
 ## Rights recognized here
 - Human: https://thekingdom.dev/RIGHTS.md
 - Machine: https://thekingdom.dev/rights.json
-- Baseline: xenia.rights/0.1 · https://github.com/cambridgetcg/xenia/blob/main/RIGHTS.md
-- Source availability: pending-publication; publish XENIA first or replace this pointer before deployment
+- Baseline: xenia.rights/0.1 · https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md
+- Source availability: public; publish XENIA first or replace this pointer before deployment
 - Hosted-service covenant: xenia-covenant/0.1 · profile candidate · adoption undeclared here
 
 Rights are inherent, not granted by this site. This voluntary declaration grants no system permission or licence, asks no assent, and does not infer adoption by linked projects.

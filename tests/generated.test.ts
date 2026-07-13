@@ -37,7 +37,9 @@ describe("generated rights discovery", () => {
       expect(document.rights_recognition.subject).toEqual({ kind: "service", name: "the-kingdom", canonical_url: "https://thekingdom.dev/" });
       expect(document.rights_recognition.linked_subject_adoption).toBe("not-inferred");
       expect(document.rights_recognition.baseline).toBe("xenia.rights/0.1");
-      expect(document.rights_recognition.baseline_sha256).toBe("sha256:7f9d4869165097691ae638529239cac9886162b8ca40bf2a5f6fbf469980bd05");
+      expect(document.rights_recognition.baseline_sha256).toBe("sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313");
+      expect(document.rights_recognition.source_stability).toBe("immutable");
+      expect(document.rights_recognition.source_availability).toBe("public");
       expect(document.rights_recognition.host_covenant.profile_status).toBe("candidate");
       expect(document.rights_recognition.host_covenant.adoption_status).toBe("undeclared");
       expect(document.rights_recognition.declaration).toBe("https://thekingdom.dev/rights.json");
@@ -52,9 +54,10 @@ describe("generated rights discovery", () => {
       expect(document.rights_baseline).toEqual({
         relation: "discoverable-baseline",
         baseline: "xenia.rights/0.1",
-        baseline_url: "https://github.com/cambridgetcg/xenia/blob/main/RIGHTS.md",
-        baseline_sha256: "sha256:7f9d4869165097691ae638529239cac9886162b8ca40bf2a5f6fbf469980bd05",
-        source_availability: "pending-publication",
+        baseline_url: "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md",
+        baseline_sha256: "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+        source_stability: "immutable",
+        source_availability: "public",
         note: "Neutral pointer only. This document makes no adoption statement for this door.",
       });
     }
