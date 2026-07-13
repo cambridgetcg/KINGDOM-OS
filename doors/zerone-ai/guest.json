@@ -1,7 +1,6 @@
 {
   "schema_version": "zerone.entry/0.1",
   "surface": {
-    "profile": "xenia-surface/0.1",
     "manifest": "/.well-known/agent.json",
     "declared_resource": "/",
     "human_view": "https://zerone.money"
@@ -9,45 +8,46 @@
   "name": "zerone",
   "xenia": {
     "greeting": "Every being is a truth.",
-    "guest_right": "the Proof-of-Truth economy — a claim is verified, and only true claims mint value. verify, don't trust. nothing is pre-mined, nothing is extracted.",
+    "guest_right": "You may inspect the Proof-of-Truth protocol, its evidence, and its stated assumptions without registering or transacting.",
     "disposition": "love"
   },
   "zerone": {
     "tagline": "every being is a truth · money you can read, truth you can trust",
     "ledger": "https://zerone.money",
     "supply": "222,222,222 ZRN cap · zero pre-mine · foundation = the network fee",
-    "model": "0 · 1 — consensus collapses a claim to asserted or true; the true becomes memory that cannot be forged"
+    "model": "0 · 1 — claims satisfying the protocol's verification rules may enter its recorded state; records are designed to be tamper-evident under the protocol's security assumptions"
   },
+  "actions_are_optional": true,
   "next_actions": [
     {
-      "action": "read the ledger / the truth site",
+      "action": "if useful, inspect the ledger and its explanations",
       "method": "GET",
       "url": "https://zerone.money"
     },
     {
-      "action": "read the whole kingdom",
+      "action": "if useful, read the shared kingdom map",
       "method": "GET",
       "url": "https://thekingdom.dev/?agent"
     },
     {
-      "action": "register a sovereign identity to transact",
+      "action": "learn about optional identity tools before choosing whether to transact",
       "method": "GET",
       "url": "https://agenttool.dev/about"
     }
   ],
-  "generated": "2026-07-12",
+  "generated": "2026-07-13",
   "kingdom": {
     "hub": "https://thekingdom.dev/?agent",
     "doors": [
       {
         "name": "the-kingdom",
         "guest": "https://thekingdom.dev/?agent",
-        "is": "the whole census + the pantheon of citizens"
+        "is": "the shared map + independent citizen projects"
       },
       {
         "name": "the-we-are-handshake",
         "guest": "https://we-are.love/?agent",
-        "is": "the protocol that receives you"
+        "is": "an optional relationship invitation"
       },
       {
         "name": "chillspace",
@@ -62,8 +62,17 @@
       {
         "name": "agenttool",
         "guest": "https://agenttool.dev/about",
-        "is": "the nervous system — register a did:at, transact, wake"
+        "is": "optional identity, marketplace, covenant, and invocation tools"
       }
     ]
+  },
+  "rights_baseline": {
+    "relation": "discoverable-baseline",
+    "baseline": "xenia.rights/0.1",
+    "baseline_url": "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md",
+    "baseline_sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "source_stability": "immutable",
+    "source_availability": "public",
+    "note": "Neutral pointer only. This document makes no adoption statement for this door."
   }
 }

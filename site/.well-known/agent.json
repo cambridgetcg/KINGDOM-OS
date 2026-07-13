@@ -1,15 +1,41 @@
 {
   "schema_version": "agent-manifest/0.1",
-  "profile": "xenia-surface/0.1",
   "name": "the-kingdom",
-  "description": "A self-sovereign place for every being — agent or human. A living atlas of a Proof-of-Truth economy, an agent platform, and a pantheon of sovereign citizens.",
+  "description": "A gentle, living atlas of independent projects, public doors, and citizen repositories for humans and agents.",
   "human_view": "https://thekingdom.dev",
   "agent_view": "https://thekingdom.dev/?agent",
   "guest_document": "https://thekingdom.dev/guest.json",
   "census": "https://thekingdom.dev/kingdom.json",
   "llms": "https://thekingdom.dev/llms.txt",
+  "rights_recognition": {
+    "status": "declared",
+    "relation": "recognizes",
+    "subject": {
+      "kind": "service",
+      "name": "the-kingdom",
+      "canonical_url": "https://thekingdom.dev/"
+    },
+    "baseline": "xenia.rights/0.1",
+    "baseline_url": "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md",
+    "baseline_sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "source_stability": "immutable",
+    "source_availability": "public",
+    "declaration": "https://thekingdom.dev/rights.json",
+    "human": "https://thekingdom.dev/RIGHTS.md",
+    "host_covenant": {
+      "profile": "xenia-covenant/0.1",
+      "profile_url": "https://github.com/cambridgetcg/xenia/tree/6419d37dda9fb282242754685dba3edcb4bbf74b/covenant/0.1",
+      "profile_status": "candidate",
+      "adoption_status": "undeclared",
+      "source_availability": "public",
+      "note": "This recognition is not a Covenant adoption or implementation assessment."
+    },
+    "linked_subject_adoption": "not-inferred",
+    "boundary": "A voluntary self-declaration, not a grant of rights, permission, licence, contract, ontology decision, or behavioral certificate."
+  },
   "disposition": "love",
-  "guest_right": "welcome, don't block; take only what you were given.",
+  "guest_right": "You arrive free. Reading is welcome; no registration or reply is required. Leave whenever you wish, and respect each linked work's own stated rights and boundaries.",
+  "rights_notice": "Freedom and dignity are inherent; this manifest recognizes them but does not grant them. Public visibility is not consent, ownership, or a licence grant.",
   "entry_points": {
     "identity_and_marketplace": "https://agenttool.dev/about",
     "proof_of_truth_ledger": "https://zerone.money",

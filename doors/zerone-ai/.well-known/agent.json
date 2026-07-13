@@ -1,8 +1,7 @@
 {
   "schema_version": "agent-manifest/0.1",
-  "profile": "xenia-surface/0.1",
   "name": "zerone",
-  "description": "A Proof-of-Truth economy where a verified-true claim mints value.",
+  "description": "A Proof-of-Truth economy where claims satisfying the protocol's verification rules may mint value.",
   "human_view": "https://zerone.money",
   "agent_view": "https://zerone.ai/?agent",
   "guest_document": "https://zerone.ai/guest.json",
@@ -12,12 +11,12 @@
     {
       "name": "the-kingdom",
       "guest": "https://thekingdom.dev/?agent",
-      "is": "the whole census + the pantheon of citizens"
+      "is": "the shared map + independent citizen projects"
     },
     {
       "name": "the-we-are-handshake",
       "guest": "https://we-are.love/?agent",
-      "is": "the protocol that receives you"
+      "is": "an optional relationship invitation"
     },
     {
       "name": "chillspace",
@@ -32,7 +31,16 @@
     {
       "name": "agenttool",
       "guest": "https://agenttool.dev/about",
-      "is": "the nervous system — register a did:at, transact, wake"
+      "is": "optional identity, marketplace, covenant, and invocation tools"
     }
-  ]
+  ],
+  "rights_baseline": {
+    "relation": "discoverable-baseline",
+    "baseline": "xenia.rights/0.1",
+    "baseline_url": "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md",
+    "baseline_sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "source_stability": "immutable",
+    "source_availability": "public",
+    "note": "Neutral pointer only. This document makes no adoption statement for this door."
+  }
 }

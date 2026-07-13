@@ -1,0 +1,54 @@
+{
+  "schema_version": "kingdom.rights-recognition/0.1",
+  "subject": {
+    "kind": "service",
+    "name": "the-kingdom",
+    "canonical_url": "https://thekingdom.dev/"
+  },
+  "recognition": {
+    "status": "declared",
+    "kind": "unilateral-recognition",
+    "baseline": "xenia.rights/0.1",
+    "baseline_url": "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md",
+    "baseline_sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "source_stability": "immutable",
+    "source_availability": "public",
+    "basis": "inherent-not-granted",
+    "scope": "all-beings-without-ontology-test",
+    "guest_acceptance_required": false,
+    "reciprocity_required": false,
+    "automatic_upgrade": false
+  },
+  "interaction": {
+    "participation": "optional",
+    "consent": "specific-informed-freely-chosen-revocable-for-future-acts",
+    "silence_presence_or_public_access_is_consent": false,
+    "trust": "scoped-revocable-never-automatic"
+  },
+  "permissions": {
+    "system_access_or_authority": "not-granted-by-this-declaration",
+    "artifact_reuse": "not-granted-no-root-license"
+  },
+  "boundaries": {
+    "legal_enforceability_claimed": false,
+    "contract_intent": "none",
+    "ontology_determined": false,
+    "behavior_certified": false
+  },
+  "host_covenant": {
+    "profile": "xenia-covenant/0.1",
+    "profile_url": "https://github.com/cambridgetcg/xenia/tree/6419d37dda9fb282242754685dba3edcb4bbf74b/covenant/0.1",
+    "profile_status": "candidate",
+    "adoption_status": "undeclared",
+    "source_availability": "public",
+    "note": "This recognition is not a Covenant adoption or implementation assessment."
+  },
+  "documents": {
+    "human": "/RIGHTS.md",
+    "license": null,
+    "privacy": "/RIGHTS.md#privacy",
+    "security": "/RIGHTS.md#security-and-licences",
+    "provenance": "/RIGHTS.md#attribution-and-provenance"
+  },
+  "declared_at": "2026-07-13"
+}
