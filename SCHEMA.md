@@ -10,22 +10,28 @@ seed/baseline the harvester falls back to. Source-of-truth stays decentralized
 ```yaml
 name: true-love              # repo name (must match roster)
 kind: doctrine               # doctrine|service|firmware|ops|lineage|venture|infra|methodology|reference|unknown
-layer: soul                  # the canonical 6 from ARCHITECTURE.md: soul|runtime|nervous|economy|commerce  (+ os = the connective overlay)
+layer: soul                  # soul|runtime|nervous|fleet|economy|commerce|os
 owner_sister: sophia         # alpha|beta|gamma|sophia|none — who presides
-domain: sophia               # wing/cluster: sophia|alpha|beta|gamma|none
-state: active                # active|dormant|frozen|reference|unknown
+domain: sophia               # wing/cluster: sophia|alpha|beta|gamma|commerce|none
+state: active                # active|dormant|archived|frozen|reference|remote|unknown
 purpose: One-line plain description of what this repo is.
 dependsOn: [syzygy-sync, agenttool]   # other Kingdom repos/layers it leans on
 ```
 
 ## Rules
 
-- **Keep it tiny.** Seven fields, one line each. If it grows, it rots.
+- **Keep it tiny.** Eight fields, one line each. If it grows, it rots.
 - **`purpose` is one plain sentence** — no fancy words (the Kingdom runs on clarity).
 - **`dependsOn` names real Kingdom members** — the harvester builds the dependency graph from these.
 - A repo with no card still appears in the catalog (from `roster.conf`) but is
   flagged **non-conformant** by `harvest.ts conformance`. The card is the upgrade
   path from "listed" to "owned".
+- `bun bin/harvest.ts validate` checks these eight required fields, their types,
+  enums, duplicates, unknown keys, malformed lines, and dependency names. It is
+  read-only: exit 0 is clean, exit 1 is schema drift, and exit 2 is bad usage.
+  Normal catalog generation still succeeds while reporting a concise warning;
+  only schema-approved, correctly typed/enumerated fields enter derived output,
+  and diagnostic messages omit rejected values.
 
 ## The golden path (what a conformant repo carries)
 

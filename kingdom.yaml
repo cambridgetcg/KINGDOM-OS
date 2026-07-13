@@ -1,6 +1,6 @@
 name: kingdom-os
 kind: ops
-layer: registry
+layer: os
 owner_sister: none
 domain: none
 state: active
