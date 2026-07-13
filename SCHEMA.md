@@ -16,18 +16,26 @@ domain: sophia               # wing/cluster: sophia|alpha|beta|gamma|commerce|no
 state: active                # active|dormant|archived|frozen|reference|remote|unknown
 purpose: One-line plain description of what this repo is.
 dependsOn: [syzygy-sync, agenttool]   # other Kingdom repos/layers it leans on
+adopts: [xenia.rights/0.1]    # optional, voluntary versioned rights baselines
 ```
 
 ## Rules
 
-- **Keep it tiny.** Eight fields, one line each. If it grows, it rots.
+- **Keep it tiny.** The eight existing fields remain required and one line
+  each. `adopts` is the only optional field.
 - **`purpose` is one plain sentence** — no fancy words (the Kingdom runs on clarity).
 - **`dependsOn` names real Kingdom members** — the harvester builds the dependency graph from these.
+- **`adopts` names accepted, versioned rights baselines** — currently only
+  `xenia.rights/0.1`. It records a voluntary declaration; a root `RIGHTS.md`
+  is discovered and reported separately. Neither record proves practice or
+  grants permissions. KINGDOM-OS resolves the accepted ID to immutable release
+  metadata and an exact digest-verified offline byte mirror.
 - A repo with no card still appears in the catalog (from `roster.conf`) but is
   flagged **non-conformant** by `harvest.ts conformance`. The card is the upgrade
   path from "listed" to "owned".
-- `bun bin/harvest.ts validate` checks these eight required fields, their types,
-  enums, duplicates, unknown keys, malformed lines, and dependency names. It is
+- `bun bin/harvest.ts validate` checks the eight required fields plus the
+  optional `adopts` list, their types, enums, duplicates, unknown keys,
+  malformed lines, dependency names, and accepted adoption IDs. It is
   read-only: exit 0 is clean, exit 1 is schema drift, and exit 2 is bad usage.
   Normal catalog generation still succeeds while reporting a concise warning;
   only schema-approved, correctly typed/enumerated fields enter derived output,
