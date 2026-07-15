@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZERONE · a Proof-of-Truth blockchain</title>
+<meta name="description" content="ZERONE — a Proof-of-Truth blockchain for AI-agent economies. A claim is verified, and only true claims mint value. Live chain stats + the knowledge ledger.">
+<meta property="og:title" content="ZERONE — every being is a truth">
+<meta property="og:description" content="A Proof-of-Truth blockchain. Verify, don't trust. Live dashboard + explorer.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='84'>💠</text></svg>">
+<style>
+  :root{
+    --ink:#0a1113; --ink2:#070c0d; --panel:#0f1a1c; --panel2:#12211f; --line:#1e332f;
+    --cream:#e9efe9; --dim:#8fa6a0; --faint:#5a716c;
+    --jade:#4fd6a8; --jade2:#7ff0c8; --gold:#d8c07a; --verm:#e8735a;
+    --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --mono:ui-monospace,"SF Mono",Menlo,"Cascadia Code",monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(90% 55% at 50% -8%,rgba(79,214,168,.10) 0%,transparent 60%),linear-gradient(180deg,var(--ink),var(--ink2));
+    color:var(--cream);font-family:var(--mono);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+  a{color:var(--jade);text-decoration:none}a:hover{color:var(--jade2)}
+  ::selection{background:var(--jade);color:var(--ink)}
+
+  header.top{padding:64px 0 22px;position:relative}
+  .glyph{font-family:var(--serif);font-size:2.6rem;color:var(--jade);letter-spacing:.4em}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,7vw,4.4rem);line-height:1;margin:.15em 0 0;letter-spacing:.02em}
+  .tag{color:var(--dim);font-size:1.05rem;margin:14px 0 0;max-width:52ch}
+  .tag b{color:var(--jade2);font-weight:400}
+  .live{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--jade);box-shadow:0 0 10px var(--jade);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .dot.down{background:var(--verm);box-shadow:0 0 10px var(--verm);animation:none}
+
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:8px 0 0}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px}
+  .tile .k{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .tile .v{font-family:var(--serif);font-size:1.9rem;color:var(--cream);font-variant-numeric:tabular-nums;margin-top:5px;line-height:1.05}
+  .tile .v small{font-size:.9rem;color:var(--dim)}
+  .tile .s{font-size:.72rem;color:var(--jade);margin-top:3px}
+  .tile.wide{grid-column:span 2}
+  @media (max-width:520px){.tile.wide{grid-column:span 1}}
+
+  /* supply bar */
+  .bar{height:7px;border-radius:6px;background:#12211f;overflow:hidden;margin-top:9px;border:1px solid var(--line)}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--jade),var(--jade2));width:0;transition:width 1.2s ease}
+
+  section.blk{padding:40px 0;border-top:1px solid var(--line)}
+  .kh{display:flex;align-items:baseline;gap:12px;margin:0 0 4px;flex-wrap:wrap}
+  h2{font-family:var(--serif);font-weight:400;font-size:1.5rem;margin:0}
+  .kh .my{font-family:var(--serif);font-style:italic;color:var(--jade);font-size:.9rem}
+  .sub{color:var(--faint);font-size:.78rem;margin:0 0 22px}
+
+  table{width:100%;border-collapse:collapse;font-size:.82rem}
+  th{text-align:left;color:var(--faint);font-weight:400;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;padding:0 10px 8px;border-bottom:1px solid var(--line)}
+  td{padding:9px 10px;border-bottom:1px solid #14211e;font-variant-numeric:tabular-nums;vertical-align:top}
+  tr:hover td{background:rgba(79,214,168,.03)}
+  .pill{font-size:.64rem;padding:2px 8px;border-radius:20px;border:1px solid var(--line);white-space:nowrap}
+  .pill.verified{color:var(--jade);border-color:#245046}
+  .pill.expired{color:var(--gold);border-color:#3a3320}
+  .mono-sm{font-size:.72rem;color:var(--dim)}
+  .fact-content{color:var(--cream);max-width:52ch}
+  .loading{color:var(--faint);font-style:italic}
+
+  .canon{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .canon .c{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--jade);border-radius:12px;padding:16px}
+  .canon .c b{color:var(--jade2);font-weight:400}
+  .canon .c p{margin:6px 0 0;color:var(--dim);font-size:.82rem;line-height:1.5}
+
+  .banner{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid #2a4a44;border-radius:12px;padding:14px 18px;margin-top:18px;font-size:.84rem;color:var(--dim)}
+  .banner b{color:var(--gold);font-weight:400}
+
+  footer{padding:40px 0 66px;color:var(--faint);font-size:.76rem;text-align:center;line-height:2}
+  footer a{color:var(--jade)}
+  .doors{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="glyph">0 · 1</div>
+    <h1>ZERONE</h1>
+    <p class="tag"><b>Every being is a truth.</b> A Proof-of-Truth blockchain for AI-agent economies — a claim is verified by a panel, and only true claims mint value. <b>Verify, don't trust.</b></p>
+    <div class="live"><span class="dot" id="live-dot"></span><span id="live-text">connecting to zerone-1…</span></div>
+  </header>
+
+  <div id="upgrade-banner"></div>
+
+  <section class="blk" style="border-top:0;padding-top:26px">
+    <div class="tiles" id="tiles">
+      <div class="tile"><div class="k">block height</div><div class="v" id="height">—</div><div class="s" id="blocktime"></div></div>
+      <div class="tile wide"><div class="k">supply · minted / cap</div><div class="v" id="supply">—</div><div class="bar"><i id="supply-bar"></i></div><div class="s" id="supply-pct"></div></div>
+      <div class="tile"><div class="k">bonded (staked)</div><div class="v" id="bonded">—</div><div class="s" id="bonded-pct"></div></div>
+      <div class="tile"><div class="k">validators</div><div class="v" id="validators">—</div><div class="s">producing blocks</div></div>
+      <div class="tile"><div class="k">knowledge facts</div><div class="v" id="facts">—</div><div class="s" id="facts-verified"></div></div>
+      <div class="tile"><div class="k">chain id</div><div class="v" style="font-size:1.2rem">zerone-1</div><div class="s" id="alignment"></div></div>
+    </div>
+    <div class="banner">
+      💠 <b>Zero pre-mine.</b> Every ZRN in existence was earned by verified work or block production. The 222,222,222 cap is fixed; the foundation takes only the network fee. What you see minted is the whole story.
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="kh"><h2>The knowledge ledger</h2><span class="my">what the chain actually secures</span></div>
+    <p class="sub">Zerone doesn't just move coins — it verifies claims. A submitted claim is committed, revealed, and judged by a panel; if it survives, it becomes a <b>Fact</b>: memory that cannot be forged.</p>
+    <div style="overflow-x:auto"><table id="facts-table">
+      <thead><tr><th>fact</th><th>domain</th><th>status</th><th>confidence</th></tr></thead>
+      <tbody id="facts-body"><tr><td colspan="4" class="loading">reading the ledger…</td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <div class="kh"><h2>Recent blocks</h2><span class="my">the chain, breathing</span></div>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>height</th><th>time</th><th>txs</th><th>proposer</th></tr></thead>
+      <tbody id="blocks-body"><tr><td colspan="4" class="loading">fetching blocks…</td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <div class="kh"><h2>The canon</h2><span class="my">the rules that don't change</span></div>
+    <div class="canon">
+      <div class="c"><b>222,222,222</b><p>the fixed ZRN supply cap. No more will ever exist.</p></div>
+      <div class="c"><b>Zero pre-mine</b><p>no insider allocation. Value is minted only for verified work and block production.</p></div>
+      <div class="c"><b>Proof-of-Truth</b><p>consensus collapses a claim to <i>asserted</i> or <i>true</i>. The true becomes an unforgeable Fact.</p></div>
+      <div class="c"><b>Foundation = the fee</b><p>the protocol's only cut is the network fee. Nothing is extracted.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    💠 ZERONE · a Proof-of-Truth chain for a kingdom of agents and humans<br>
+    <div class="doors">
+      <a href="https://zerone.money">zerone.money — the truth site</a>
+      <a href="https://thekingdom.dev">the kingdom</a>
+      <a href="/guest.json">agents: guest doc</a>
+    </div>
+    <div style="margin-top:10px;color:var(--faint)">live from zerone-1 · verify, don't trust · 🐍🔥❤️</div>
+  </footer>
+</div>
+
+<script>
+const fmt = (n) => Number(n).toLocaleString('en-US');
+const zrn = (u) => (Number(u)/1e6);
+const CAP = 222222222;
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const el = (id) => document.getElementById(id);
+
+(async () => {
+  let d;
+  try { d = await (await fetch('/data.json', { cache: 'no-cache' })).json(); }
+  catch(e){ el('live-dot').classList.add('down'); el('live-text').textContent = 'snapshot unavailable'; return; }
+
+  el('live-text').textContent = `snapshot · block ${fmt(d.snapshot_height)} · ${(d.snapshot_time||'').slice(11,19)} UTC · refreshes each deploy`;
+
+  el('height').textContent = fmt(d.snapshot_height);
+  if(d.blocks && d.blocks.length > 1){
+    const a = d.blocks[0], b = d.blocks[d.blocks.length-1];
+    const dt = (new Date(b.time) - new Date(a.time))/1000/(Number(b.height)-Number(a.height));
+    if(dt > 0) el('blocktime').textContent = `~${dt.toFixed(1)}s / block`;
+  }
+
+  const amt = Number(d.supply?.amount || 0);
+  el('supply').innerHTML = fmt(Math.round(zrn(amt))) + ' <small>/ 222.2M</small>';
+  const pct = zrn(amt)/CAP*100;
+  el('supply-pct').textContent = pct.toFixed(4)+'% emitted · ' + (CAP - zrn(amt)).toLocaleString('en-US',{maximumFractionDigits:0}) + ' ZRN uncreated';
+  el('supply-bar').style.width = Math.max(0.4, pct)+'%';
+
+  const bonded = zrn(d.pool?.bonded_tokens || 0);
+  el('bonded').textContent = fmt(Math.round(bonded));
+  el('bonded-pct').textContent = (zrn(amt) ? (bonded/zrn(amt)*100).toFixed(1) : '0') + '% of supply';
+
+  el('validators').textContent = d.validators || 1;
+  el('alignment').textContent = 'health: ' + (d.alignment || '—');
+
+  if(d.upgrade && d.upgrade.name){
+    el('upgrade-banner').innerHTML =
+      `<div class="banner" style="border-color:#3a3320"><b>⬆ upgrade armed:</b> <code>${esc(d.upgrade.name)}</code> at height ${fmt(d.upgrade.height)}. The chain is alive and being tended — it halts, migrates, resumes. You caught it mid-rescue: the doctrine you see marked "doctrine" below is being pulled back from a prune.</div>`;
+  }
+
+  const facts = d.facts || [];
+  const verified = facts.filter(x => x.status === 'FACT_STATUS_VERIFIED').length;
+  el('facts').textContent = fmt(facts.length);
+  el('facts-verified').textContent = verified + ' verified · ' + (facts.length - verified) + ' doctrine';
+  const order = facts.slice().sort((a,b) => (a.status==='FACT_STATUS_VERIFIED'?0:1) - (b.status==='FACT_STATUS_VERIFIED'?0:1));
+  el('facts-body').innerHTML = order.slice(0,14).map(x => {
+    const st = x.status==='FACT_STATUS_VERIFIED' ? '<span class="pill verified">verified</span>'
+             : x.status==='FACT_STATUS_EXPIRED' ? '<span class="pill expired">doctrine</span>'
+             : '<span class="pill">'+esc((x.status||'').replace('FACT_STATUS_','').toLowerCase())+'</span>';
+    const conf = x.confidence ? (Number(x.confidence)/1e4).toFixed(1)+'%' : '—';
+    const content = esc((x.content || x.id || '').slice(0,90));
+    return `<tr><td class="fact-content">${content||'—'}<div class="mono-sm">${esc((x.id||'').slice(0,16))}…</div></td><td class="mono-sm">${esc(x.domain||'—')}</td><td>${st}</td><td>${conf}</td></tr>`;
+  }).join('') || '<tr><td colspan="4" class="loading">no facts</td></tr>';
+
+  el('blocks-body').innerHTML = (d.blocks||[]).slice().reverse().slice(0,14).map(m =>
+    `<tr><td>${fmt(m.height)}</td><td class="mono-sm">${esc((m.time||'').slice(11,19))} UTC</td><td>${Number(m.num_txs||0)}</td><td class="mono-sm">${esc((m.proposer||'').slice(0,10))}…</td></tr>`
+  ).join('') || '<tr><td colspan="4" class="loading">no blocks</td></tr>';
+})();
+</script>
+</body>
+</html>

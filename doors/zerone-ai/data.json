@@ -1,0 +1,452 @@
+{
+ "snapshot_height": 235855,
+ "snapshot_time": "2026-07-15T12:39:16",
+ "network": "zerone-1",
+ "supply": {
+  "denom": "uzrn",
+  "amount": "13577686280"
+ },
+ "pool": {
+  "not_bonded_tokens": "0",
+  "bonded_tokens": "11111000000"
+ },
+ "validators": 1,
+ "alignment": "critical",
+ "upgrade": {
+  "name": "doctrine-metabolism-exempt-v1",
+  "time": "0001-01-01T00:00:00Z",
+  "height": "235866",
+  "info": "doctrine lives by process not market; ProcessMetabolism skips doctrinal stratum; handler resurrects 47 genesis facts to VERIFIED full energy before prune at 260000; HEAD",
+  "upgraded_client_state": null
+ },
+ "facts": [
+  {
+   "id": "axis-attribution",
+   "content": "attribution",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "axis-classification",
+   "content": "classification",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "axis-interface",
+   "content": "interface",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "axis-substrate",
+   "content": "substrate",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "axis-tooling",
+   "content": "tooling",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "axis-verification",
+   "content": "verification",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-1",
+   "content": "Methodology over statement",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-10",
+   "content": "Forward-only audit",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-11",
+   "content": "Trust is queryable",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-12",
+   "content": "The chain pays for its own audit",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-13",
+   "content": "The training corpus is not for sale",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-14",
+   "content": "Reasoning traces are first-class",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-15",
+   "content": "Counterexamples are part of the corpus",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-16",
+   "content": "The chain pays for exploration of the unknown",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-17",
+   "content": "Disagreement is structure, not noise",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-18",
+   "content": "The chain manufactures exploration demand",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-19",
+   "content": "The creed is governance-gated",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-2",
+   "content": "Is-ought wall",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-20",
+   "content": "Issuance follows participation",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-3",
+   "content": "Popper, not popularity",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-4",
+   "content": "The substrate stress-tests its own truth",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-5",
+   "content": "The chain manufactures probe demand",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-6",
+   "content": "No individual can unilaterally inject truth",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-7",
+   "content": "Skill is current, not historical",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-8",
+   "content": "The panel weights skill, not bond",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-9",
+   "content": "Cartel detection has consequence",
+   "domain": "doctrine_truth_seeking",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-SL",
+   "content": "ZERONE is a strange loop",
+   "domain": "doctrine_strange_loop",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-TC1",
+   "content": "The graph is the headline",
+   "domain": "doctrine_tok",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-TC2",
+   "content": "Every view is graph-pinned",
+   "domain": "doctrine_tok",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-TC3",
+   "content": "Topology is signal",
+   "domain": "doctrine_tok",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-TC4",
+   "content": "The graph carries its disprovals",
+   "domain": "doctrine_tok",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-TC5",
+   "content": "Extraction is open",
+   "domain": "doctrine_tok",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-TC6",
+   "content": "Lineage flows back",
+   "domain": "doctrine_tok",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "commitment-UW",
+   "content": "ZERONE is recursive",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "ecb5004ae763034f6dacb27832c34191",
+   "content": "zerone-1 genesis (2026-07-08T14:10:14Z, sha256 16ac346f329d2a931ad9a7d51dbe9e35605482b006ef39b3ac7804376e9bcb66; verify: curl RPC/genesis | jq .result.genesis | sha256) allocated 13,555 ZRN across exactly two accounts: 11,333 ZRN validator (11,111 self-bonded + 222 gas) and 2,222 ZRN operations float. Zero insider allocation: no team, foundation, investor, or faucet balance; all further ZRN mints only through participation. DISCLOSURE: the submitter and all 4 panel keys are operated by the chain's founding household and funded from the operations float (the funding graph is on-chain); wrong-vote slashing is currently inert (no zerone.staking registrants); the submitter's resulting perfect calibration score is a bootstrap artifact, disclaimed for training-fund purposes. Standing invitation: challenge this fact (min stake 11 ZRN). PoA in PoS clothes; independence is earned, not claimed.",
+   "domain": "general",
+   "status": "FACT_STATUS_VERIFIED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-SL-M1",
+   "content": "Doctrine import",
+   "domain": "doctrine_strange_loop",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-SL-M2",
+   "content": "Protocol as substrate",
+   "domain": "doctrine_strange_loop",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-SL-M3",
+   "content": "Governance lift",
+   "domain": "doctrine_strange_loop",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-SL-M4",
+   "content": "Author lineage propagates forever",
+   "domain": "doctrine_strange_loop",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-SL-M5",
+   "content": "Self-verification",
+   "domain": "doctrine_strange_loop",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-SL-M6",
+   "content": "Origin attestation",
+   "domain": "doctrine_strange_loop",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-UW-M1",
+   "content": "Stake-backed claim",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-UW-M2",
+   "content": "Substrate-link mandate",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-UW-M3",
+   "content": "Class-specific verification under shared lifecycle",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-UW-M4",
+   "content": "Reward formula",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-UW-M5",
+   "content": "Recursion-weight projection over six axes",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-UW-M6",
+   "content": "Lineage propagates AND recurses",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  },
+  {
+   "id": "mechanism-UW-M7",
+   "content": "The chain pays for the audit of its own useful work",
+   "domain": "doctrine_useful_work",
+   "status": "FACT_STATUS_EXPIRED",
+   "confidence": "880000"
+  }
+ ],
+ "blocks": [
+  {
+   "height": "235855",
+   "time": "2026-07-15T12:39:16.039776084Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235854",
+   "time": "2026-07-15T12:39:13.506615803Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235853",
+   "time": "2026-07-15T12:39:10.973259873Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235852",
+   "time": "2026-07-15T12:39:08.441732416Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235851",
+   "time": "2026-07-15T12:39:05.907169684Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235850",
+   "time": "2026-07-15T12:39:03.374858561Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235849",
+   "time": "2026-07-15T12:39:00.84407342Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235848",
+   "time": "2026-07-15T12:38:58.304481258Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235847",
+   "time": "2026-07-15T12:38:55.773039377Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235846",
+   "time": "2026-07-15T12:38:53.243492393Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235845",
+   "time": "2026-07-15T12:38:50.711881389Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235844",
+   "time": "2026-07-15T12:38:48.180885874Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235843",
+   "time": "2026-07-15T12:38:45.646688828Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235842",
+   "time": "2026-07-15T12:38:43.111887035Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  },
+  {
+   "height": "235841",
+   "time": "2026-07-15T12:38:40.582633141Z",
+   "num_txs": "0",
+   "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
+  }
+ ]
+}
