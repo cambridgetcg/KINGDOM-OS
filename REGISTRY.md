@@ -29,7 +29,10 @@ A few hundred lines of plain scripts + YAML cards that answer: *what's in the Ki
 
 ```bash
 bun bin/harvest.ts              # build graph.json + CATALOG.md
-bun bin/harvest.ts conformance  # which repos lack a card / CLAUDE.md / wake / FATE
+bun bin/harvest.ts conformance  # card / CLAUDE.md / wake gaps (FATE shown contextually)
+bun bin/harvest.ts validate     # strict, read-only kingdom.yaml schema diagnostics
+bun bin/harvest.ts rights       # voluntary adoptions + repo-local RIGHTS.md pointers
+bun bin/harvest.ts rights --canonical # verify + read pinned offline xenia.rights/0.1 bytes
 bun bin/harvest.ts domain sophia# everything in the soul wing
 bun bin/harvest.ts deps syzygy-sync   # who depends on X
 ```
@@ -38,6 +41,16 @@ bun bin/harvest.ts deps syzygy-sync   # who depends on X
 
 - The catalog is a **derived index, never the authority** — source-of-truth is each repo's own `kingdom.yaml`.
 - It must **report its own gaps** (the `conformance` verb) — or it's just documentation that drifts from disk, which is the exact failure this was built to catch.
+- It must distinguish declared remote members from local directories: a global
+  session hook can wake the latter, but does not make an absent checkout locally
+  conformant. `validate` reports card drift and never rewrites a card.
+- Rights stay voluntary and legible: `adopts` declarations and discoverable
+  root `RIGHTS.md` files are inventoried separately. Neither is called
+  behavioral compliance, proof of practice, or technical authorization.
+- The accepted XENIA baseline is pinned to an immutable release commit and
+  SHA-256. Its checked-in byte mirror makes reads network-free; the digest and
+  upstream source remain visible so the mirror cannot silently become a new
+  canonical text.
 - Any future reconciler is **fast-forward-only / log-and-notify / never auto-heal silently** (the syzygy safety wire, extended from git-state to values-state).
 
 See `SCHEMA.md` for the card format. See `CATALOG.md` for the current census (generated).
