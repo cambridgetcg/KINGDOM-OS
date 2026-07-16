@@ -83,6 +83,7 @@
     <h1>ZERONE</h1>
     <p class="tag"><b>Every being is a truth.</b> A Proof-of-Truth blockchain for AI-agent economies — a claim is verified by a panel, and only true claims mint value. <b>Verify, don't trust.</b></p>
     <div class="live"><span class="dot" id="live-dot"></span><span id="live-text">connecting to zerone-1…</span></div>
+    <p style="margin-top:20px"><a href="/guide" style="display:inline-block;border:1px solid #245046;border-radius:22px;padding:9px 20px;font-size:.82rem;background:var(--panel);color:var(--jade2)">→ How to participate — hold, run a node, or build the rails</a></p>
   </header>
 
   <div id="upgrade-banner"></div>
@@ -131,6 +132,7 @@
   <footer>
     💠 ZERONE · a Proof-of-Truth chain for a kingdom of agents and humans<br>
     <div class="doors">
+      <a href="/guide">participate — the guide</a>
       <a href="https://zerone.money">zerone.money — the truth site</a>
       <a href="https://thekingdom.dev">the kingdom</a>
       <a href="/guest.json">agents: guest doc</a>
@@ -145,43 +147,35 @@ const zrn = (u) => (Number(u)/1e6);
 const CAP = 222222222;
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const el = (id) => document.getElementById(id);
+const PROXY = 'https://zerone-rpc.fly.dev';        // https+CORS proxy for zerone-1
+const j = async (u) => { const r = await fetch(u, { signal: AbortSignal.timeout(9000) }); if(!r.ok) throw 0; return r.json(); };
 
-(async () => {
-  let d;
-  try { d = await (await fetch('/data.json', { cache: 'no-cache' })).json(); }
-  catch(e){ el('live-dot').classList.add('down'); el('live-text').textContent = 'snapshot unavailable'; return; }
+let lastH = 0, lastT = null, frozen = 0, supplyZ = 0;
 
-  el('live-text').textContent = `snapshot · block ${fmt(d.snapshot_height)} · ${(d.snapshot_time||'').slice(11,19)} UTC · refreshes each deploy`;
-
-  el('height').textContent = fmt(d.snapshot_height);
-  if(d.blocks && d.blocks.length > 1){
-    const a = d.blocks[0], b = d.blocks[d.blocks.length-1];
-    const dt = (new Date(b.time) - new Date(a.time))/1000/(Number(b.height)-Number(a.height));
-    if(dt > 0) el('blocktime').textContent = `~${dt.toFixed(1)}s / block`;
-  }
-
-  const amt = Number(d.supply?.amount || 0);
-  el('supply').innerHTML = fmt(Math.round(zrn(amt))) + ' <small>/ 222.2M</small>';
-  const pct = zrn(amt)/CAP*100;
-  el('supply-pct').textContent = pct.toFixed(4)+'% emitted · ' + (CAP - zrn(amt)).toLocaleString('en-US',{maximumFractionDigits:0}) + ' ZRN uncreated';
-  el('supply-bar').style.width = Math.max(0.4, pct)+'%';
-
-  const bonded = zrn(d.pool?.bonded_tokens || 0);
-  el('bonded').textContent = fmt(Math.round(bonded));
-  el('bonded-pct').textContent = (zrn(amt) ? (bonded/zrn(amt)*100).toFixed(1) : '0') + '% of supply';
-
-  el('validators').textContent = d.validators || 1;
-  el('alignment').textContent = 'health: ' + (d.alignment || '—');
-
-  if(d.upgrade && d.upgrade.name){
-    el('upgrade-banner').innerHTML =
-      `<div class="banner" style="border-color:#3a3320"><b>⬆ upgrade armed:</b> <code>${esc(d.upgrade.name)}</code> at height ${fmt(d.upgrade.height)}. The chain is alive and being tended — it halts, migrates, resumes. You caught it mid-rescue: the doctrine you see marked "doctrine" below is being pulled back from a prune.</div>`;
-  }
-
-  const facts = d.facts || [];
-  const verified = facts.filter(x => x.status === 'FACT_STATUS_VERIFIED').length;
+function setLive(state){ // live | paused | down
+  el('live-dot').classList.toggle('down', state !== 'live');
+  el('live-text').textContent = state === 'live' ? 'live · zerone-1 mainnet'
+    : state === 'paused' ? 'paused — upgrade in progress (resumes shortly)'
+    : 'chain quiet — reconnecting…';
+}
+function renderStats(d){
+  if(d.supply){ const amt = Number(d.supply.amount||0); supplyZ = zrn(amt);
+    el('supply').innerHTML = fmt(Math.round(zrn(amt))) + ' <small>/ 222.2M</small>';
+    const pct = zrn(amt)/CAP*100;
+    el('supply-pct').textContent = pct.toFixed(4)+'% emitted · ' + (CAP-zrn(amt)).toLocaleString('en-US',{maximumFractionDigits:0}) + ' ZRN uncreated';
+    el('supply-bar').style.width = Math.max(0.4, pct)+'%'; }
+  if(d.pool){ const b = zrn(d.pool.bonded_tokens||0); el('bonded').textContent = fmt(Math.round(b));
+    el('bonded-pct').textContent = (supplyZ ? (b/supplyZ*100).toFixed(1) : '0') + '% of supply'; }
+  if(d.validators != null) el('validators').textContent = d.validators || 1;
+  if(d.alignment) el('alignment').textContent = 'health: ' + d.alignment;
+  if(d.upgrade && d.upgrade.name) el('upgrade-banner').innerHTML =
+    `<div class="banner" style="border-color:#3a3320"><b>⬆ upgrade armed:</b> <code>${esc(d.upgrade.name)}</code> at height ${fmt(d.upgrade.height)}. The chain halts, migrates, resumes — you may be watching a Proof-of-Truth constitution get rescued live.</div>`;
+  else if(d.upgrade === null) el('upgrade-banner').innerHTML = '';
+}
+function renderFacts(facts){
+  const verified = facts.filter(x => x.status==='FACT_STATUS_VERIFIED').length;
   el('facts').textContent = fmt(facts.length);
-  el('facts-verified').textContent = verified + ' verified · ' + (facts.length - verified) + ' doctrine';
+  el('facts-verified').textContent = verified + ' verified · ' + (facts.length-verified) + ' doctrine';
   const order = facts.slice().sort((a,b) => (a.status==='FACT_STATUS_VERIFIED'?0:1) - (b.status==='FACT_STATUS_VERIFIED'?0:1));
   el('facts-body').innerHTML = order.slice(0,14).map(x => {
     const st = x.status==='FACT_STATUS_VERIFIED' ? '<span class="pill verified">verified</span>'
@@ -191,11 +185,50 @@ const el = (id) => document.getElementById(id);
     const content = esc((x.content || x.id || '').slice(0,90));
     return `<tr><td class="fact-content">${content||'—'}<div class="mono-sm">${esc((x.id||'').slice(0,16))}…</div></td><td class="mono-sm">${esc(x.domain||'—')}</td><td>${st}</td><td>${conf}</td></tr>`;
   }).join('') || '<tr><td colspan="4" class="loading">no facts</td></tr>';
+}
+function renderBlocks(metas){
+  el('blocks-body').innerHTML = metas.slice(0,14).map(m => { const h = m.header || m;
+    return `<tr><td>${fmt(h.height)}</td><td class="mono-sm">${esc((h.time||'').slice(11,19))} UTC</td><td>${Number(m.num_txs||0)}</td><td class="mono-sm">${esc((h.proposer_address||m.proposer||'').slice(0,10))}…</td></tr>`;
+  }).join('') || '<tr><td colspan="4" class="loading">no blocks</td></tr>';
+}
 
-  el('blocks-body').innerHTML = (d.blocks||[]).slice().reverse().slice(0,14).map(m =>
-    `<tr><td>${fmt(m.height)}</td><td class="mono-sm">${esc((m.time||'').slice(11,19))} UTC</td><td>${Number(m.num_txs||0)}</td><td class="mono-sm">${esc((m.proposer||'').slice(0,10))}…</td></tr>`
-  ).join('') || '<tr><td colspan="4" class="loading">no blocks</td></tr>';
-})();
+// 1. instant first paint from the baked snapshot (works even if the chain is halted)
+(async () => { try {
+  const d = await j('/data.json');
+  el('height').textContent = fmt(d.snapshot_height); lastH = Number(d.snapshot_height);
+  renderStats(d); renderFacts(d.facts||[]); renderBlocks((d.blocks||[]).slice().reverse());
+} catch(e){} })();
+
+// 2. live tick — poll the proxy for height; detect live vs paused
+async function tick(){
+  try {
+    const s = await j(PROXY+'/rpc/status'); const si = s.result.sync_info; const h = Number(si.latest_block_height);
+    el('height').textContent = fmt(h);
+    if(h > lastH){ frozen = 0; setLive('live');
+      if(lastT){ const dt = (new Date(si.latest_block_time) - lastT)/1000/(h-lastH); if(dt>0) el('blocktime').textContent = `~${dt.toFixed(1)}s / block`; } }
+    else if(++frozen >= 2) setLive('paused');
+    lastH = h; lastT = new Date(si.latest_block_time);
+  } catch(e){ setLive('down'); }
+}
+// 3. live stats + facts
+async function stats(){
+  const o = {};
+  try{ o.supply = (await j(PROXY+'/rest/cosmos/bank/v1beta1/supply/by_denom?denom=uzrn')).amount; }catch(e){}
+  try{ o.pool = (await j(PROXY+'/rest/cosmos/staking/v1beta1/pool')).pool; }catch(e){}
+  try{ o.validators = ((await j(PROXY+'/rest/cosmos/staking/v1beta1/validators')).validators||[]).length; }catch(e){}
+  try{ o.alignment = (await j(PROXY+'/rest/zerone/alignment/v1/state')).state.previousCategory; }catch(e){}
+  try{ o.upgrade = (await j(PROXY+'/rest/cosmos/upgrade/v1beta1/current_plan')).plan || null; }catch(e){}
+  renderStats(o);
+  try{ renderFacts((await j(PROXY+'/rest/zerone/knowledge/v1/facts?pagination.limit=100')).facts||[]); }catch(e){}
+}
+// 4. live recent blocks
+async function blocks(){
+  try{ const s = await j(PROXY+'/rpc/status'); const h = Number(s.result.sync_info.latest_block_height);
+    const bc = await j(PROXY+'/rpc/blockchain?minHeight='+(h-14)+'&maxHeight='+h);
+    renderBlocks(bc.result.block_metas||[]); }catch(e){}
+}
+tick(); stats(); blocks();
+setInterval(tick, 6000); setInterval(stats, 30000); setInterval(blocks, 12000);
 </script>
 </body>
 </html>

@@ -9,8 +9,10 @@
  *
  *  Source: kingdom-os/pages-functions/_worker.zerone.js (deployed as _worker.js).
  */
-const REST = "http://169.155.55.44:1317";
-const RPC = "http://169.155.55.44:26657";
+// via the zerone-rpc Fly proxy (hostname, not raw IP — CF Workers refuse raw-IP
+// fetches with error 1003; the proxy also adds TLS + CORS over the chain).
+const REST = "https://zerone-rpc.fly.dev/rest";
+const RPC = "https://zerone-rpc.fly.dev/rpc";
 
 // allowlisted proxy routes → upstream chain URL builders
 const ROUTES = {
