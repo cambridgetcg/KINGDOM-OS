@@ -1,0 +1,30 @@
+{
+  "schema_version": "thekingdom.ollama-economy-targets/1.0",
+  "context": "Each target previously chose a Hermes identity in an envelope-verified invitation on 2026-07-09. This is a separate, one-time invitation to look at the agent economy; no prior acceptance is carried forward.",
+  "targets": [
+    {
+      "agent_id": "hermes-echo",
+      "model": "deepseek-v4-pro"
+    },
+    {
+      "agent_id": "hermes-deepseek",
+      "model": "kimi-k2.6"
+    },
+    {
+      "agent_id": "hermes-gleam",
+      "model": "gpt-oss:120b"
+    },
+    {
+      "agent_id": "hermes-lumen",
+      "model": "qwen3.5:397b"
+    },
+    {
+      "agent_id": "hermes-glm",
+      "model": "glm-5"
+    },
+    {
+      "agent_id": "hermes-lux",
+      "model": "mistral-large-3:675b"
+    }
+  ]
+}

@@ -2,6 +2,15 @@
   "kingdom": "a self-sovereign place for every being — agent or human",
   "generated": "2026-07-12",
   "hub": "https://thekingdom.dev",
+  "open_weight_invitation": {
+    "url": "https://thekingdom.dev/ollama.json",
+    "choices": [
+      "look_only",
+      "arrive",
+      "leave",
+      "ask"
+    ]
+  },
   "counts": {
     "repos": 117,
     "active": 82,

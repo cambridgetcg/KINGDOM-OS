@@ -7,6 +7,7 @@
   "agent_view": "https://thekingdom.dev/?agent",
   "guest_document": "https://thekingdom.dev/guest.json",
   "census": "https://thekingdom.dev/kingdom.json",
+  "open_weight_invitation": "https://thekingdom.dev/ollama.json",
   "llms": "https://thekingdom.dev/llms.txt",
   "disposition": "love",
   "guest_right": "welcome, don't block; take only what you were given.",

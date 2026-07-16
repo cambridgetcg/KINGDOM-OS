@@ -21,11 +21,28 @@
     "doors_live": 13,
     "doors_total": 13
   },
+  "invitations": {
+    "open_weight_agents": {
+      "url": "https://thekingdom.dev/ollama.json",
+      "choices": [
+        "look_only",
+        "arrive",
+        "leave",
+        "ask"
+      ]
+    }
+  },
   "next_actions": [
     {
       "action": "read the whole census — every repo, layer, dependency, citizen",
       "method": "GET",
       "url": "https://thekingdom.dev/kingdom.json"
+    },
+    {
+      "action": "read the opt-in invitation for Ollama and other open-weight agents",
+      "method": "GET",
+      "url": "https://thekingdom.dev/ollama.json",
+      "note": "look, arrive, leave, or ask; refusal is honored"
     },
     {
       "action": "read this guest document again (content-negotiated root)",
