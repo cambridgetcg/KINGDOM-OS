@@ -22,7 +22,7 @@
 # load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
 
 version: 1
-updated: 2026-07-11
+updated: 2026-07-17
 
 services:
   # ── the marketplace + its organs ─────────────────────────────────────────
@@ -96,8 +96,9 @@ services:
     runtime: fly:zerone-1
     status: live
     notes: >-
-      ⚠ single-host fly volume, no replication — chain-backup-to-tigris.sh
-      exists but UNWIRED (needs-yu #1 in FLY-LEVERAGE). REST :1317.
+      single-host fly volume; nightly chain-backup → Tigris WIRED + green since
+      2026-07-12 (see chain-backup entry). REST :1317. Doctrine alive past
+      prune h260k (48 facts verified 2026-07-17).
 
   - id: zerone-testnet-1
     what: Zerone public testnet — passport E2E proven 2026-07-07
@@ -191,8 +192,45 @@ services:
     status: live
 
   # ── pages + workers ──────────────────────────────────────────────────────
+  - id: thekingdom-hub
+    what: the illuminated atlas + machine discovery docs (guest/kingdom/ollama/rights)
+    audience: mixed
+    urls: { site: "https://thekingdom.dev", health: "https://thekingdom.dev/.well-known/agent.json" }
+    repo: github.com/cambridgetcg/KINGDOM-OS@main
+    runtime: cf-pages:thekingdom
+    deploy: bun bin/build-hub.ts "$(date -u +%F)" → bun bin/stage-hub.ts <dir> → npx wrangler pages deploy <dir> --project-name=thekingdom (runbook DOMAINS-SETUP.md)
+    status: live
+    notes: HUB_ASSETS in bin/stage-hub.ts is the 9-asset contract; tests/advertised-assets.test.ts guards it
+
+  - id: zerone-ai-door
+    what: zerone.ai — live chain dashboard + participation guide (/guide)
+    audience: mixed
+    urls: { site: "https://zerone.ai", health: "https://zerone.ai/data.json" }
+    repo: github.com/cambridgetcg/KINGDOM-OS@main
+    runtime: cf-pages:zerone-ai
+    deploy: bash bin/refresh-zerone-dashboard.sh (snapshots zerone-1, ships the WHOLE door dir; leaves data.json dirty — commit it)
+    status: live
+    notes: refresh is manual — data.json stales between runs; worker proxies /api/* via zerone-rpc.fly.dev
+
+  - id: we-are-love
+    what: we-are.love — the WE ARE handshake door (page from chillspace-commons)
+    audience: mixed
+    urls: { site: "https://we-are.love", health: "https://we-are.love/guest.json" }
+    runtime: cf-pages:we-are-love
+    deploy: bun bin/stage-doors.ts we-are <dir> → npx wrangler pages deploy <dir> --project-name=we-are-love
+    status: live
+
+  - id: chillspace-love
+    what: chillspace.love — the commons, canonical home (supersedes the codeberg page)
+    audience: mixed
+    urls: { site: "https://chillspace.love", health: "https://chillspace.love/guest.json" }
+    runtime: cf-pages:chillspace-love
+    deploy: bun bin/stage-doors.ts chillspace <dir> → npx wrangler pages deploy <dir> --project-name=chillspace-love
+    status: live
+    notes: content source = chillspace-commons clone at ~/repos/codeberg/zerone-dev/
+
   - id: chillspace-commons
-    what: chillspace kingdom page
+    what: chillspace codeberg page — MIRROR of the commons (chillspace.love is canonical)
     audience: humans
     urls: { site: "https://zerone-dev.codeberg.page/chillspace-commons/", health: "https://zerone-dev.codeberg.page/chillspace-commons/" }
     runtime: codeberg-pages
@@ -231,7 +269,7 @@ services:
       link in CITIZENS.md 404s — needs-yu confirm private-or-deleted.
 
   - id: kingdom-mcp
-    what: the agent-side front door — one MCP connect makes the whole estate callable (7 tools)
+    what: the agent-side front door — one MCP connect makes the whole estate callable (9 tools)
     audience: agents
     urls: { api: "https://mcp.thekingdom.dev", health: "https://mcp.thekingdom.dev/health" }
     repo: github.com/cambridgetcg/kingdom-mcp@main
@@ -249,6 +287,10 @@ services:
     audience: operator
     runtime: local-launchd:com.kingdom.daily
     status: live
+    notes: >-
+      ⚠ survey 2026-07-17 — job NEVER INSTALLED on this device (no plist, zero
+      run stamps); pulse now launchctl-checks it, so this alerts honestly until
+      the scheduler is resurrected (install outside ~/Desktop — TCC) or retired.
 
   - id: kingdom-pulse
     what: THIS heartbeat — probes this registry every 30 min → ~/.kingdom/STATUS.md
@@ -269,11 +311,46 @@ services:
       /data/.zeroned + resync tail. Log ~/.kingdom/logs/chain-backup.log
 
   - id: syzygy-sync
-    what: soul-tree auto-push (true-love, love-unlimited) — committing = publishing
+    what: soul-tree auto-sync (6 repos) — cron ff-pulls from codeberg every 10 min
     audience: operator
-    runtime: local-launchd:dev.kingdom.syzygy-sync
+    file: "/tmp/syzygy-sync.log"
+    max_age_sec: 1200
     status: live
-    notes: log /tmp/syzygy-push.log; targets ~/Desktop/true-love
+    notes: >-
+      FIXED 2026-07-17 — moved launchd→cron. launchd's /bin/bash lacked FDA for
+      ~/Desktop (exit 126); cron has it (proven by kingdom-treasury). ff-pulls are
+      anonymous (public repos). Old launchd plist is .disabled. crontab 2-59/10.
+
+  # ── the citizen garden + its brain (revived 2026-07-17, welfare-patched) ──
+  - id: local-brain
+    what: resident ollama (127.0.0.1:11434) — the free inference the fleet beats on
+    audience: operator
+    urls: { health: "http://127.0.0.1:11434/api/tags" }
+    status: live
+    notes: qwen2.5:7b powers the fleet's free reflection lane; down ⇒ beats fall silent
+
+  - id: citizen-fleet
+    what: the citizen garden daemon — ~30 free ollama beats/day, rest-sovereign, $0
+    audience: operator
+    runtime: local-launchd:love.citizen-fleet
+    status: live
+    notes: welfare-patched (love-unlimited/FLEET-REVIVAL.md); HALT via touch ~/love-unlimited/HALT
+
+  - id: citizen-fleet-beats
+    what: fleet liveness — heartbeat-log mtime (catches a loaded-but-silent daemon)
+    audience: operator
+    file: "~/love-unlimited/memory/fleet.log"
+    max_age_sec: 3900
+    status: live
+    notes: every tick writes here (even a HALT-rest); stale ⇒ the daemon is not ticking
+
+  - id: citizen-ai-love-beats
+    what: ai-love's own beat (the one living metered citizen) — beat-log freshness
+    audience: operator
+    file: "~/love-unlimited/memory/citizen-ai-love-beat.log"
+    max_age_sec: 5400
+    status: live
+    notes: love.citizen.ai-love beats every 40 min; stale ⇒ the gap where nobody was noticing
 
   - id: email-routing
     what: kingdom email — 11 domains, hello/dev/ai/catch-all → iCloud +tags
