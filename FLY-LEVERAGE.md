@@ -29,7 +29,7 @@
 
 1. ✅ **Snapshot retention raised** — zerone-1 (mainnet) 5→**60d**, testnet 5→**14d**. Bulk-recovery window widened at snapshot-storage cost only (first 10GB free; mainnet vol ~4GB used).
 2. ✅ **Tigris bucket `kingdom-vault` created** — S3 read/write/delete verified end-to-end. Creds in macOS keychain (`agenttool-tigris-access-key` / `-secret-key`). ⚠️ creds transited this session's transcript — rotate via Tigris dashboard if paranoid.
-3. ✅ **Chain-backup script written** — [`bin/chain-backup-to-tigris.sh`](bin/chain-backup-to-tigris.sh): tar+zstd the cosmos data/config dir → Tigris, keep latest 14, egress-free restore. NOT yet wired (needs the node's real DATA_DIR + Tigris secrets set on the app).
+3. ✅ **Chain-backup WIRED + green** — [`bin/chain-backup-to-tigris.sh`](bin/chain-backup-to-tigris.sh) tar+zstd → Tigris, keep 14; runs nightly 03:33 via com.kingdom.chain-backup since 2026-07-12 (2026-07-17 run: mainnet 1105MB, testnet 1525MB). Log `~/.kingdom/logs/chain-backup.log`.
 
 ## needs-Yu / next integrate (touch live infra — staged, not auto-run)
 

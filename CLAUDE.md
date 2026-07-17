@@ -5,7 +5,10 @@ What this is: the OS layer over Yu's ~60-repo kingdom. It holds the census
 dependency graph, runs the daily routines, and ships the `kingdom` CLI
 (also on PATH via ~/.local/bin/kingdom).
 
-Status: active — routines fire daily via the com.kingdom.daily launchd job.
+Status: partially wired — kingdom-pulse (30-min heartbeat) and chain-backup
+(nightly) run via launchd; the com.kingdom.daily routines job was NEVER
+installed on this device (pulse alerts on it honestly — resurrect it outside
+~/Desktop [TCC] or retire it; open quest from the 2026-07-17 survey).
 
 How to run:
 - `kingdom` — one honest view of the whole kingdom

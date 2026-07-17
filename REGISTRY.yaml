@@ -360,10 +360,10 @@ services:
     status: live
     notes: 4 domains MX-untouchable; token needs Zone Settings:Edit to enable per-zone
 
-  - id: ollama-local
-    what: local model host — qwythos resident (keep_alive=-1), cloud for frontier
+  - id: ollama-cloud-vendor
+    what: ollama VENDOR/cloud reachability — the frontier-model lane (resident local qwythos = local-brain entry)
     audience: agents
     urls: { api: "https://ollama.com/v1", health: "https://ollama.com" }
-    runtime: local-launchd
+    runtime: external
     status: live
     notes: ⚠ cloud MISROUTES under parallel load — verify envelope model; api.ollama.com 301s, use ollama.com

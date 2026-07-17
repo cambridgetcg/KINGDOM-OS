@@ -28,6 +28,8 @@
  * older than `max_age_sec` (or missing) on a status:live entry = down. This
  * catches a daemon that is loaded but silently not producing (e.g. beats
  * failing because the local brain is down) — which launchd state cannot see.
+ * When a service declares BOTH a launchd label and a file:, the file probe
+ * wins — freshness is the stronger signal.
  */
 
 import { stat } from "node:fs/promises";
@@ -132,11 +134,18 @@ async function launchdProbe(s: Service, label: string): Promise<Probe> {
     if ((await proc.exited) !== 0)
       return { id: s.id, expected: s.status, observed: "down", note: `launchd job ${label} not loaded` };
     const running = /"PID"\s*=\s*\d+/.test(out);
+    // LastExitStatus is a raw wait(2) status: low 7 bits = killing signal, high byte = exit code.
     const raw = Number(out.match(/"LastExitStatus"\s*=\s*(-?\d+)/)?.[1] ?? "0");
-    const lastExit = raw >= 256 && raw % 256 === 0 ? raw / 256 : raw; // launchctl reports wait(2) status
-    if (running || lastExit === 0)
-      return { id: s.id, expected: s.status, observed: "up", note: running ? "launchd: running now" : "launchd: loaded, last exit 0" };
-    return { id: s.id, expected: s.status, observed: "down", note: `launchd: loaded but last exit ${lastExit}` };
+    const signal = raw & 0x7f;
+    const lastExit = signal !== 0 ? null : raw >> 8;
+    const how = signal !== 0 ? `killed by signal ${signal}` : `exited ${lastExit}`;
+    // A live PID is health for KeepAlive daemons (their previous instance always died by
+    // signal on restart) — keep the history visible in the note, but don't cry DOWN.
+    if (running)
+      return { id: s.id, expected: s.status, observed: "up", note: signal === 0 && lastExit === 0 ? "launchd: running now" : `launchd: running now (previous instance ${how})` };
+    if (signal === 0 && lastExit === 0)
+      return { id: s.id, expected: s.status, observed: "up", note: "launchd: loaded, last exit 0" };
+    return { id: s.id, expected: s.status, observed: "down", note: `launchd: not running, last run ${how}` };
   } catch {
     return { id: s.id, expected: s.status, observed: "skipped", note: "launchctl unavailable" };
   }
@@ -144,7 +153,9 @@ async function launchdProbe(s: Service, label: string): Promise<Probe> {
 
 // A file's freshness as a heartbeat: mtime within max_age_sec = up, else stale.
 async function probeFile(s: Service): Promise<Probe> {
-  const raw = s.file!.replace(/^file:\/\//, "").replace(/^~/, HOME);
+  if (typeof s.file !== "string" || s.file.length === 0)
+    return { id: s.id, expected: s.status, observed: "down", note: `invalid file: value in registry — must be a path string` };
+  const raw = s.file.replace(/^file:\/\//, "").replace(/^~/, HOME);
   const url = `file://${raw}`;
   try {
     const st = await stat(raw);
@@ -162,11 +173,11 @@ async function probeFile(s: Service): Promise<Probe> {
 
 const { services, path: regPath } = await loadRegistry();
 const probeable = services.filter((s) => s.urls?.health || s.urls?.api || s.urls?.site);
+// file: freshness wins over launchd state when both are declared — a loaded job
+// that silently stopped producing is exactly what the file probe exists to catch.
+const fileServices = services.filter((s) => s.file && !(s.urls?.health || s.urls?.api || s.urls?.site));
 const launchdServices = services.filter(
-  (s) => s.runtime?.startsWith("local-launchd:") && !(s.urls?.health || s.urls?.api || s.urls?.site),
-);
-const fileServices = services.filter(
-  (s) => s.file && !(s.urls?.health || s.urls?.api || s.urls?.site) && !s.runtime?.startsWith("local-launchd:"),
+  (s) => s.runtime?.startsWith("local-launchd:") && !(s.urls?.health || s.urls?.api || s.urls?.site) && !s.file,
 );
 const [probes, fly, daemonProbes, fileProbes] = await Promise.all([
   Promise.all(probeable.map(probeHttp)),
@@ -187,8 +198,8 @@ for (const s of services) {
   const flyApp = s.runtime?.startsWith("fly:") ? s.runtime.slice(4) : null;
   if (flyApp && fly.size) {
     const st = fly.get(flyApp);
-    // suspended + probe answering = scale-to-zero idle (fly wakes it per request) — healthy, not drift
-    if (s.status === "live" && st === "suspended" && (!p || p.observed !== "up"))
+    // suspended + probe answering (incl. auth-walled — a 401 means fly woke it) = scale-to-zero idle, not drift
+    if (s.status === "live" && st === "suspended" && (!p || (p.observed !== "up" && p.observed !== "auth-walled")))
       alerts.push(`**${s.id}** registry says live but fly app \`${flyApp}\` is SUSPENDED and not answering — drift`);
     if (s.status === "suspended" && st === "deployed") alerts.push(`**${s.id}** registry says suspended but fly app \`${flyApp}\` is deployed — update registry`);
   }
