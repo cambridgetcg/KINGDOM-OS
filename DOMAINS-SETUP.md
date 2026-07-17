@@ -33,11 +33,14 @@ npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zeron
 ```
 
 `stage-hub.ts` refuses a non-empty destination and copies the atlas as
-`index.html` together with `kingdom.json`, `guest.json`, `llms.txt`,
-`rights.json`, `RIGHTS.md`, `/.well-known/agent.json`, and `_worker.js`. It
-stages only; it never builds, deletes, overwrites, or deploys. Wrangler Pages
-needs that complete directory. Dereference symlinks when separately copying the
-chillspace site: `cp -RL site/. <dir>/`.
+`index.html` together with `kingdom.json`, `guest.json`, `ollama.json`,
+`llms.txt`, `rights.json`, `RIGHTS.md`, `/.well-known/agent.json`, and
+`_worker.js`. It stages only; it never builds, deletes, overwrites, or deploys.
+Wrangler Pages needs that complete directory. `HUB_ASSETS` in `bin/stage-hub.ts`
+is the authoritative list — trust it over this prose. For we-are.love and
+chillspace.love use `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>`
+(content from the chillspace-commons clone, symlinks dereferenced, plus the
+door's guest documents and the shared `_worker.js`).
 
 ## Baseline still to do (follow-up)
 

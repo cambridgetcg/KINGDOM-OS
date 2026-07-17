@@ -41,7 +41,7 @@
     }
   ],
   "implementation_boundary": "This guest document asks for no credentials. Hosting and linked services may still process ordinary request metadata under their own policies.",
-  "generated": "2026-07-13",
+  "generated": "2026-07-17",
   "kingdom": {
     "hub": "https://thekingdom.dev/?agent",
     "doors": [

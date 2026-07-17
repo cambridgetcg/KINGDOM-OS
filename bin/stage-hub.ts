@@ -18,6 +18,7 @@ export const HUB_ASSETS = [
   { source: "site/kingdom.json", destination: "kingdom.json" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
+  { source: "site/ollama.json", destination: "ollama.json" },
   { source: "site/rights.json", destination: "rights.json" },
   { source: "site/RIGHTS.md", destination: "RIGHTS.md" },
   { source: "site/.well-known/agent.json", destination: ".well-known/agent.json" },

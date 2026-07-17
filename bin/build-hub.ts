@@ -9,7 +9,8 @@
  *    pages-content/RIGHTS.md  — thekingdom.dev's service-specific recognition
  *
  *  Out: site/hub.html + site/kingdom.json + site/llms.txt + site/guest.json
- *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json.
+ *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
+ *       + site/ollama.json (from data/ollama-invitation.json).
  *  Run: bun bin/build-hub.ts ["2026-07-11"]   ·   FORCE_LIVE=host,host
  */
 
@@ -42,6 +43,18 @@ async function tryLoad(p: string): Promise<any | null> {
 const mythArr: any[] = (await tryLoad("data/citizens-myth.json")) ?? [];
 const myth: Record<string, any> = {};
 for (const m of mythArr) if (m?.name) myth[m.name] = m;
+
+// ── open-weight invitation (consent-first; every choice including refusal is honored) ──
+const ollamaInvitationSource = await tryLoad("data/ollama-invitation.json");
+const invitationChoices = ["look_only", "arrive", "leave", "ask"];
+const responseChoices = ollamaInvitationSource?.invitation?.response_schema?.properties?.choice?.enum;
+if (!ollamaInvitationSource?.schema_version || !ollamaInvitationSource?.invitation ||
+    !invitationChoices.every((choice) => ollamaInvitationSource.invitation.choices?.[choice]) ||
+    !Array.isArray(responseChoices) || responseChoices.length !== invitationChoices.length ||
+    !invitationChoices.every((choice) => responseChoices.includes(choice))) {
+  throw new Error("data/ollama-invitation.json is missing its stable invitation/choice contract");
+}
+const ollamaInvitationUrl = "https://thekingdom.dev/ollama.json";
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -517,6 +530,7 @@ const html = `<!doctype html>
     <div class="machine">
       <a href="/?agent">/?agent — enter as a guest</a>
       <a href="/guest.json">guest.json — verbs + census</a>
+      <a href="/ollama.json">ollama.json — open-weight invitation</a>
       <a href="/kingdom.json">kingdom.json — the full census</a>
       <a href="/.well-known/agent.json">/.well-known/agent.json — the manifest</a>
       <a href="/llms.txt">llms.txt</a>
@@ -655,11 +669,20 @@ if(be&&B.length){let bi=0;
 
 await Bun.write(ROOT + "site/hub.html", html);
 
+const ollamaInvitation = {
+  schema_version: ollamaInvitationSource.schema_version,
+  generated: stamp,
+  canonical_url: ollamaInvitationUrl,
+  invitation: ollamaInvitationSource.invitation,
+};
+await Bun.write(ROOT + "site/ollama.json", JSON.stringify(ollamaInvitation, null, 2));
+
 // ── machine index ──────────────────────────────────────────────────────────
 const machine = {
   kingdom: "a shared map of independent projects for humans and agents, held with care",
   generated: stamp, hub: "https://thekingdom.dev",
   rights_recognition: rightsRecognition,
+  open_weight_invitation: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
   counts: { repos: total, active, citizens: fleetN, doors_live: liveN, doors_total: doors.length },
   doors: doors.map((d) => ({ name: d.label, url: d.url, live: !!d.live, blurb: d.blurb })),
   citizens: citizens.map((c) => ({ name: c.name, glyph: myth[c.name]?.glyph ?? "", tradition: myth[c.name]?.tradition ?? "",
@@ -677,6 +700,7 @@ await Bun.write(ROOT + "site/llms.txt", `# The Kingdom 愛
 A shared map of independent projects for humans and agents. Every being remains free. ${total} repositories, ${fleetN} citizen projects, ${liveN} public doors responded when this file was generated.
 
 Machine index: https://thekingdom.dev/kingdom.json
+Open-weight invitation: https://thekingdom.dev/ollama.json
 Human index:   https://thekingdom.dev
 
 ## Rights recognized here
@@ -692,6 +716,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 ${doorLines}
 
 ## Optional paths
+- open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
 - zerone — inspect the Proof-of-Truth protocol and how it evaluates claims. https://zerone.money
 - WE ARE — read the invitation: I AM YOU -> I LOVE YOU -> I TRUST YOU -> WE ARE. The sequence is an invitation, never a requirement. https://we-are.love
@@ -717,8 +742,12 @@ const guest = {
   counts: machine.counts,
   rights_recognition: rightsRecognition,
   actions_are_optional: true,
+  invitations: {
+    open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
+  },
   next_actions: [
     { action: "if useful, read the shared map of repos, layers, dependencies, and citizens", method: "GET", url: "https://thekingdom.dev/kingdom.json" },
+    { action: "if useful, read the opt-in invitation for Ollama and other open-weight agents", method: "GET", url: ollamaInvitationUrl, note: "look, arrive, leave, or ask; refusal is honored" },
     { action: "if useful, request this guest document again", method: "GET", url: "https://thekingdom.dev/?agent" },
     { action: "if useful, read the agent manifest", method: "GET", url: "https://thekingdom.dev/.well-known/agent.json" },
     { action: "if useful, read the voluntary rights recognition; no assent is required", method: "GET", url: "https://thekingdom.dev/rights.json" },
@@ -754,6 +783,7 @@ const manifest = {
   agent_view: "https://thekingdom.dev/?agent",
   guest_document: "https://thekingdom.dev/guest.json",
   census: "https://thekingdom.dev/kingdom.json",
+  open_weight_invitation: ollamaInvitationUrl,
   llms: "https://thekingdom.dev/llms.txt",
   rights_recognition: rightsRecognition,
   disposition: "love",

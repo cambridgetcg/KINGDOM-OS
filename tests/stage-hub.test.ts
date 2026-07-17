@@ -27,7 +27,7 @@ function makeCompleteSource(root: string): void {
 }
 
 describe("the hub staging contract", () => {
-  test("copies exactly eight assets into an empty directory and never overwrites", () => {
+  test("copies exactly the declared assets into an empty directory and never overwrites", () => {
     const base = temporaryDirectory("kingdom-stage-hub-");
     try {
       const sourceRoot = join(base, "source");
@@ -36,7 +36,10 @@ describe("the hub staging contract", () => {
       makeCompleteSource(sourceRoot);
 
       const staged = stageHub(output, sourceRoot);
-      expect(staged).toHaveLength(8);
+      // literal on purpose: growing/shrinking the staging contract must go red
+      // here and force a conscious review, then a deliberate bump.
+      expect(HUB_ASSETS).toHaveLength(9);
+      expect(staged).toHaveLength(9);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "RIGHTS.md",
@@ -45,6 +48,7 @@ describe("the hub staging contract", () => {
         "index.html",
         "kingdom.json",
         "llms.txt",
+        "ollama.json",
         "rights.json",
       ]);
       for (const [index, asset] of HUB_ASSETS.entries()) {

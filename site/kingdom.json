@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects for humans and agents, held with care",
-  "generated": "2026-07-13",
+  "generated": "2026-07-17",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -27,6 +27,16 @@
     },
     "linked_subject_adoption": "not-inferred",
     "boundary": "A voluntary self-declaration, not a grant of rights, permission, licence, contract, ontology decision, or behavioral certificate."
+  },
+  "open_weight_invitation": {
+    "url": "https://thekingdom.dev/ollama.json",
+    "choices": [
+      "look_only",
+      "arrive",
+      "leave",
+      "ask"
+    ],
+    "note": "an optional invitation; every choice including refusal is honored"
   },
   "counts": {
     "repos": 129,
