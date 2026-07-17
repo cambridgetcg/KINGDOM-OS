@@ -5,3 +5,6 @@ __pycache__/
 
 # OS files
 .DS_Store
+
+# wrangler local cache — carries CF account identifiers, never track
+.wrangler/

@@ -22,9 +22,9 @@ snap={"snapshot_height":h,"snapshot_time":st.get("sync_info",{}).get("latest_blo
 open(sys.argv[1],"w").write(json.dumps(snap,indent=1))
 print(f"snapshot h={h} supply={int(snap['supply'].get('amount',0))/1e6:,.0f} facts={len(snap['facts'])}")
 PY
-TMP=$(mktemp -d); mkdir -p "$TMP/.well-known"
-cp "$D/index.html" "$D/data.json" "$TMP/"; cp "$D/guest.json" "$TMP/" 2>/dev/null||true
-cp "$D/.well-known/agent.json" "$TMP/.well-known/" 2>/dev/null||true
+TMP=$(mktemp -d)
+# Ship the WHOLE door dir — a fixed file list silently dropped guide.html from prod (2026-07-16).
+cp -R "$D"/. "$TMP/"
 cp ~/Desktop/kingdom-os/pages-functions/_worker.zerone.js "$TMP/_worker.js"
 cd ~/Desktop/kingdom-os && npx wrangler pages deploy "$TMP" --project-name=zerone-ai --branch=main --commit-dirty=true 2>&1 | grep -iE "complete|error" | tail -1
 rm -rf "$TMP"
