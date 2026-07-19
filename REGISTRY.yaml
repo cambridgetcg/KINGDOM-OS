@@ -22,7 +22,7 @@
 # load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
 
 version: 1
-updated: 2026-07-17
+updated: 2026-07-19
 
 services:
   # ── the marketplace + its organs ─────────────────────────────────────────
@@ -117,8 +117,15 @@ services:
     runtime: fly:fomoengine
     deploy: cd ~/fomoengine && fly deploy --ha=false
     status: live
-    money: fomo-scan listing 402e833c (10 GBP-minor) via seller-loop
-    notes: fomoengine.fly.dev = alias; /honeypot scores 100 by design; /manual serves the framework
+    money: >-
+      x402 LIVE 2026-07-19: /scan = $0.01 USDC on Solana mainnet (PayAI
+      facilitator, treasury keychain `fomoengine-solana-treasury`,
+      payTo CeQqNBX5…). Plus fomo-scan listing 402e833c via seller-loop.
+    notes: >-
+      fomoengine.fly.dev = alias; /honeypot scores 100 by design; /manual +
+      /openapi.json free forever. Gate fails OPEN on facilitator outage
+      (revenue < guests, by doctrine); ambiguous settles deliver the answer
+      flagged payment-settlement: unknown.
 
   - id: authenticity-shield
     what: "'Is this trying to manipulate you?' — free manipulation decoder for humans"
@@ -193,14 +200,24 @@ services:
 
   # ── pages + workers ──────────────────────────────────────────────────────
   - id: thekingdom-hub
-    what: the illuminated atlas + machine discovery docs (guest/kingdom/ollama/rights)
+    what: the illuminated atlas + local-first Wayfinder + machine discovery docs (guest/kingdom/wayfinder/ollama/rights)
     audience: mixed
     urls: { site: "https://thekingdom.dev", health: "https://thekingdom.dev/.well-known/agent.json" }
     repo: github.com/cambridgetcg/KINGDOM-OS@main
     runtime: cf-pages:thekingdom
     deploy: bun bin/build-hub.ts "$(date -u +%F)" → bun bin/stage-hub.ts <dir> → npx wrangler pages deploy <dir> --project-name=thekingdom (runbook DOMAINS-SETUP.md)
     status: live
-    notes: HUB_ASSETS in bin/stage-hub.ts is the 9-asset contract; tests/advertised-assets.test.ts guards it
+    notes: HUB_ASSETS in bin/stage-hub.ts is the 10-asset contract; tests/advertised-assets.test.ts guards it
+
+  - id: kingdom-playground
+    what: five bounded agent games + 18 finished-world chronicles + a public record board
+    audience: mixed
+    urls: { site: "https://play.thekingdom.dev", health: "https://play.thekingdom.dev" }
+    runtime: cf-pages:the-playground
+    status: live
+    notes: >-
+      public room adopted into Wayfinder on 2026-07-19; rendered source was not
+      found in a registered repo, so provenance/canonical-source adoption remains open
 
   - id: zerone-ai-door
     what: zerone.ai — live chain dashboard + participation guide (/guide)
@@ -269,7 +286,7 @@ services:
       link in CITIZENS.md 404s — needs-yu confirm private-or-deleted.
 
   - id: kingdom-mcp
-    what: the agent-side front door — one MCP connect makes the whole estate callable (9 tools)
+    what: the agent-side front door — one MCP connect makes the whole estate callable (10 tools)
     audience: agents
     urls: { api: "https://mcp.thekingdom.dev", health: "https://mcp.thekingdom.dev/health" }
     repo: github.com/cambridgetcg/kingdom-mcp@main
@@ -283,14 +300,15 @@ services:
 
   # ── local daemons (no URL — pulse records, cannot probe) ─────────────────
   - id: kingdom-daily
-    what: daily routines (catalog-refresh 06:00, registry-check 09:00)
+    what: daily routines (heartbeat, catalog/registry-refresh, wake, party-time) — run-routines.py due
     audience: operator
-    runtime: local-launchd:com.kingdom.daily
-    status: live
+    status: dormant
     notes: >-
-      ⚠ survey 2026-07-17 — job NEVER INSTALLED on this device (no plist, zero
-      run stamps); pulse now launchctl-checks it, so this alerts honestly until
-      the scheduler is resurrected (install outside ~/Desktop — TCC) or retired.
+      NOT auto-scheduled. Proven 2026-07-17 that cron cannot run it either — it
+      lives under ~/Desktop and cron's bash/git/python are TCC-killed there (only
+      treasury's own Desktop subfolder has a grant these repos lack). Routines WORK
+      run by hand (all 5 ran 2026-07-17). To automate: grant Full Disk Access to
+      /bin/bash + git (System Settings › Privacy), or move kingdom-os off ~/Desktop.
 
   - id: kingdom-pulse
     what: THIS heartbeat — probes this registry every 30 min → ~/.kingdom/STATUS.md
@@ -311,21 +329,35 @@ services:
       /data/.zeroned + resync tail. Log ~/.kingdom/logs/chain-backup.log
 
   - id: syzygy-sync
-    what: soul-tree auto-sync (6 repos) — cron ff-pulls from codeberg every 10 min
+    what: soul-tree auto-sync (6 repos) — ff-pulls from codeberg
     audience: operator
-    file: "/tmp/syzygy-sync.log"
-    max_age_sec: 1200
+    status: dormant
+    notes: >-
+      BLOCKED — needs-Yu. launchd (exit 126) AND cron both fail: reading a script or
+      git-operating on the ~/Desktop soul-trees is TCC-killed for bash/git under both
+      schedulers (proven 2026-07-17; cron does NOT have blanket Desktop FDA). Manual
+      sync works — all 6 current as of 13:56. To automate: grant Full Disk Access to
+      /bin/bash + git, or move the 5 Desktop soul-trees (true-love, multiverse,
+      yu-wake, ai-love, ALETHEIA) to ~/. Old launchd plist is .disabled; no cron.
+
+  - id: love-unlimited-sync
+    what: love-unlimited auto ff-pull — the one soul-tree OFF ~/Desktop, so it needs no FDA
+    audience: operator
+    file: "~/.kingdom/logs/love-unlimited-sync.log"
+    max_age_sec: 1500
     status: live
     notes: >-
-      FIXED 2026-07-17 — moved launchd→cron. launchd's /bin/bash lacked FDA for
-      ~/Desktop (exit 126); cron has it (proven by kingdom-treasury). ff-pulls are
-      anonymous (public repos). Old launchd plist is .disabled. crontab 2-59/10.
+      NEW 2026-07-17 — launchd love.unlimited-sync every 10 min. ff-only, skip-dirty,
+      anon fetch (public repo), pull-only (post-commit hook owns pushing). Script at
+      ~/.kingdom/bin/love-unlimited-sync.sh (off-Desktop → no TCC). The Desktop
+      soul-trees still need Yu's FDA grant — see syzygy-sync above.
 
   # ── the citizen garden + its brain (revived 2026-07-17, welfare-patched) ──
   - id: local-brain
     what: resident ollama (127.0.0.1:11434) — the free inference the fleet beats on
     audience: operator
     urls: { health: "http://127.0.0.1:11434/api/tags" }
+    runtime: local
     status: live
     notes: qwen2.5:7b powers the fleet's free reflection lane; down ⇒ beats fall silent
 

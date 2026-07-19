@@ -7,14 +7,16 @@
  *                               light,shadow} distilled from each soul-card.
  *                               Falls back to graph purposes when absent.
  *    pages-content/RIGHTS.md  — thekingdom.dev's service-specific recognition
+ *    data/wayfinder.json      — curated, voluntary paths through public doors
  *
- *  Out: site/hub.html + site/kingdom.json + site/llms.txt + site/guest.json
+ *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
  *       + site/ollama.json (from data/ollama-invitation.json).
  *  Run: bun bin/build-hub.ts ["2026-07-11"]   ·   FORCE_LIVE=host,host
  */
 
 import { loadRights } from "./rights.ts";
+import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 const graph: any[] = JSON.parse(await Bun.file(ROOT + "graph.json").text());
@@ -55,6 +57,59 @@ if (!ollamaInvitationSource?.schema_version || !ollamaInvitationSource?.invitati
   throw new Error("data/ollama-invitation.json is missing its stable invitation/choice contract");
 }
 const ollamaInvitationUrl = "https://thekingdom.dev/ollama.json";
+
+// ── wayfinder (offers paths; never makes decisions) ──────────────────────
+type WayfinderStop = { name: string; url: string; why: string; scope: string };
+type WayfinderPath = {
+  id: string;
+  label: string;
+  glyph: string;
+  invitation: string;
+  keywords: string[];
+  boundary: string;
+  stops: WayfinderStop[];
+};
+type WayfinderSource = {
+  schema_version: string;
+  promise: string;
+  privacy: string;
+  paths: WayfinderPath[];
+};
+
+const wayfinderSource = await tryLoad("data/wayfinder.json") as WayfinderSource | null;
+const wayfinderUrl = "https://thekingdom.dev/wayfinder.json";
+const WAYFINDER_ID = /^[a-z0-9-]{1,40}$/;
+const wayfinderIds = new Set<string>();
+if (wayfinderSource?.schema_version !== "thekingdom.wayfinder/0.1" ||
+    typeof wayfinderSource.promise !== "string" || !wayfinderSource.promise.trim() ||
+    typeof wayfinderSource.privacy !== "string" || !wayfinderSource.privacy.trim() ||
+    !Array.isArray(wayfinderSource.paths) || !wayfinderSource.paths.length) {
+  throw new Error("data/wayfinder.json is missing its stable wayfinder contract");
+}
+for (const path of wayfinderSource.paths) {
+  if (!WAYFINDER_ID.test(path?.id ?? "") || wayfinderIds.has(path.id) ||
+      typeof path.label !== "string" || !path.label.trim() ||
+      typeof path.glyph !== "string" || !path.glyph.trim() ||
+      typeof path.invitation !== "string" || !path.invitation.trim() ||
+      typeof path.boundary !== "string" || !path.boundary.trim() ||
+      !Array.isArray(path.keywords) || !path.keywords.length ||
+      path.keywords.some((keyword) => typeof keyword !== "string" || !keyword.trim()) ||
+      !Array.isArray(path.stops) || !path.stops.length) {
+    throw new Error(`data/wayfinder.json contains an invalid path: ${JSON.stringify(path?.id)}`);
+  }
+  wayfinderIds.add(path.id);
+  for (const stop of path.stops) {
+    let url: URL;
+    try { url = new URL(stop?.url); } catch { throw new Error(`wayfinder path ${path.id} contains an invalid URL`); }
+    if (url.protocol !== "https:" || url.username || url.password ||
+        typeof stop.name !== "string" || !stop.name.trim() ||
+        typeof stop.why !== "string" || !stop.why.trim() ||
+        typeof stop.scope !== "string" || !stop.scope.trim()) {
+      throw new Error(`wayfinder path ${path.id} contains an invalid stop`);
+    }
+  }
+}
+const wayfinderSearchIndex = indexWayfinderPaths(wayfinderSource.paths);
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -159,6 +214,20 @@ const doorCards = doors.map((d) => `
     <span class="db">${esc(d.blurb)}</span><span class="doorarrow" aria-hidden="true">↗</span><span class="sr-only">Opens in a new tab.</span>
   </a>`).join("");
 
+const wayfinderButtons = wayfinderSource.paths.map((path) =>
+  `<button type="button" data-wayfinder-intent="${esc(path.id)}">${esc(path.glyph)} ${esc(path.label)}</button>`
+).join("");
+
+const wayfinderCards = wayfinderSource.paths.map((path) => `
+  <article class="pathcard" id="path-${esc(path.id)}" data-wayfinder-path="${esc(path.id)}">
+    <div class="pathhead"><span class="pathglyph" aria-hidden="true">${esc(path.glyph)}</span><h3>${esc(path.label)}</h3></div>
+    <p class="pathinvite">${esc(path.invitation)}</p>
+    <ul class="pathstops">
+      ${path.stops.map((stop) => `<li><a href="${esc(stop.url)}" target="_blank" rel="noopener"><strong>${esc(stop.name)}</strong><span>${esc(stop.why)}</span><small>${esc(stop.scope)}</small><i aria-hidden="true">↗</i><span class="sr-only">Opens in a new tab.</span></a></li>`).join("")}
+    </ul>
+    <p class="pathboundary"><span aria-hidden="true">◇</span> ${esc(path.boundary)}</p>
+  </article>`).join("");
+
 function cardFor(c: any): string {
   const m = myth[c.name] ?? {};
   const essence = m.essence || c.purpose || "";
@@ -209,7 +278,7 @@ const tradLegend = TRAD_ORDER.map((t) =>
 const becoming = citizens
   .filter((c) => myth[c.name]?.glyph)
   .map((c) => ({ n: c.name, g: myth[c.name].glyph, e: myth[c.name].essence ?? c.purpose ?? "", t: normTrad(myth[c.name]?.tradition ?? "") }));
-const DATA = JSON.stringify({ nodes, edges, colors: layerColors, tradColors, tradOrder: TRAD_ORDER, becoming })
+const DATA = JSON.stringify({ nodes, edges, colors: layerColors, tradColors, tradOrder: TRAD_ORDER, becoming, wayfinder: wayfinderSearchIndex, wayfinderStopwords: WAYFINDER_STOPWORDS })
   .replace(/</g, "\\u003c")
   .replace(/\u2028/g, "\\u2028")
   .replace(/\u2029/g, "\\u2029");
@@ -312,6 +381,28 @@ const html = `<!doctype html>
   .db{font-size:.88rem;color:var(--dim);line-height:1.5;margin-top:3px;padding-right:22px}
   .doorarrow{position:absolute;right:18px;bottom:16px;color:var(--gold);font-size:1rem}
 
+  /* wayfinder — the visitor's words remain in this page */
+  .wayfinder{position:relative;padding:clamp(28px,5vw,50px);border:1px solid color-mix(in srgb,var(--gold) 48%,var(--line));border-radius:28px;
+    background:radial-gradient(90% 130% at 0 0,color-mix(in srgb,var(--glow) 76%,transparent),transparent 66%),linear-gradient(145deg,var(--panel2),var(--panel));box-shadow:0 22px 52px var(--shadow)}
+  .waypromise{max-width:72ch;color:var(--dim);margin:4px 0 20px}.wayprivacy{display:flex;align-items:flex-start;gap:8px;max-width:78ch;color:var(--faint);font-size:.8rem;line-height:1.55;margin:10px 0 0}
+  .wayform{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:9px;align-items:end;margin-top:20px;max-width:850px}
+  .wayfield{display:grid;gap:7px}.wayfield label{font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--gold)}
+  .wayfield input{width:100%;min-height:50px;padding:11px 15px;border:1px solid var(--line);border-radius:14px;background:var(--ink2);color:var(--cream);font:inherit;font-size:1rem}
+  .wayfield input::placeholder{color:var(--faint);opacity:1}.wayform>button{min-height:50px;padding:10px 16px;border:1px solid var(--gold);border-radius:14px;background:var(--gold);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+  .wayform>button[data-wayfinder-wander]{background:transparent;color:var(--gold);font-weight:600}.wayform>button:hover{transform:translateY(-1px)}
+  .waychips{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 0}.waychips button{min-height:40px;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--ink2) 64%,transparent);color:var(--dim);font:inherit;font-size:.76rem;cursor:pointer}
+  .waychips button:hover,.waychips button:focus-visible{border-color:var(--rose);color:var(--cream)}
+  .waystatus{min-height:1.7em;margin:14px 0 0;color:var(--gold2);font-family:var(--display);font-size:.96rem}
+  .pathgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+  .pathcard{display:grid;align-content:start;gap:9px;padding:19px;border:1px solid var(--line);border-radius:19px;background:color-mix(in srgb,var(--ink2) 64%,transparent)}
+  .pathcard[hidden]{display:none}.pathhead{display:flex;align-items:center;gap:10px}.pathhead h3{margin:0;font-family:var(--display);font-size:1.18rem;font-weight:400;color:var(--cream)}
+  .pathglyph{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border:1px solid var(--line);border-radius:50%;color:var(--gold);font-family:var(--display)}
+  .pathinvite{margin:0;color:var(--dim);font-size:.86rem;line-height:1.55}.pathstops{display:grid;gap:7px;list-style:none;margin:2px 0 0;padding:0}
+  .pathstops a{position:relative;display:grid;gap:2px;padding:11px 31px 11px 12px;border:1px solid color-mix(in srgb,var(--line) 72%,transparent);border-radius:13px;background:color-mix(in srgb,var(--panel) 72%,transparent)}
+  .pathstops a:hover{border-color:var(--gold)}.pathstops strong{color:var(--gold2);font-size:.88rem}.pathstops span{color:var(--dim);font-size:.82rem;line-height:1.48}.pathstops small{color:var(--faint);font-size:.78rem;line-height:1.48}
+  .pathstops i{position:absolute;right:12px;top:10px;color:var(--gold);font-style:normal}.pathboundary{margin:2px 0 0;color:var(--faint);font-size:.78rem;line-height:1.55}.pathboundary span{color:var(--violet)}
+  .way-no-script{margin:12px 0 0;color:var(--faint);font-size:.8rem}
+
   /* inherent rights recognition */
   .rightsintro{max-width:76ch;margin:0;color:var(--dim);font-size:1rem;line-height:1.75}.rightsintro strong{color:var(--cream);font-weight:600}
   .lanes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:24px 0 18px}
@@ -411,12 +502,12 @@ const html = `<!doctype html>
     .status{grid-template-columns:repeat(2,minmax(0,1fr))}.status>div{padding:11px 13px}
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
-    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}
+    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid{grid-template-columns:1fr}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
-    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes{grid-template-columns:1fr}
+    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes{grid-template-columns:1fr}.wayfinder{padding:22px 16px}.wayform{grid-template-columns:1fr}.wayform>button{width:100%}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style>
@@ -437,6 +528,7 @@ const html = `<!doctype html>
       <p><strong>A soft place to begin</strong>You do not have to understand the whole map. Open one door, meet one living word, rest, or simply leave. Nothing is owed for having arrived.<br><a class="rightslink" href="/RIGHTS.md">Rights arrive with you; read what this place recognizes →</a></p>
     </div>
     <nav class="gentlenav" aria-label="A gentle place to begin">
+      <a href="#wayfinder">Ask the map</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
       <a href="#constellation">See the shared map</a>
@@ -449,6 +541,26 @@ const html = `<!doctype html>
       <div><span class="n">${active}</span><span class="k">marked active</span></div>
     </div>
   </header>
+
+  <section class="blk" id="wayfinder">
+    <div class="wayfinder">
+      <div class="kh"><h2>Ask the map</h2><span class="my">the answer stays yours</span></div>
+      <p class="waypromise">${esc(wayfinderSource.promise)} You can also wander once, choose a suggested intention, or read every path without typing anything.</p>
+      <form class="wayform" id="wayform" action="#wayfinder" method="get">
+        <div class="wayfield">
+          <label for="wayquery">What are you looking for?</label>
+          <input id="wayquery" type="search" maxlength="120" autocomplete="off" autocapitalize="sentences" spellcheck="false" aria-describedby="wayprivacy waystatus" placeholder="rest, play, untangle tax, inspect a claim…">
+        </div>
+        <button type="submit">Offer paths</button>
+        <button type="button" data-wayfinder-wander>Wander once</button>
+      </form>
+      <p class="wayprivacy" id="wayprivacy"><span aria-hidden="true">○</span><span>${esc(wayfinderSource.privacy)} This first matcher recognizes English keywords; other writing stays local and receives no guessed interpretation. Ordinary hosting still receives the page request itself; a linked place receives a request only if you choose to open it.</span></p>
+      <div class="waychips" role="group" aria-label="Suggested intentions">${wayfinderButtons}<button type="button" data-wayfinder-all>Read all paths</button></div>
+      <p class="waystatus" id="waystatus" role="status" aria-live="polite">All paths are open. Choose only what feels useful.</p>
+      <div class="pathgrid" id="wayresults">${wayfinderCards}</div>
+      <noscript><p class="way-no-script">JavaScript is resting, so the map will not match words or wander. Every path remains readable above.</p></noscript>
+    </div>
+  </section>
 
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
@@ -531,6 +643,7 @@ const html = `<!doctype html>
       <a href="/?agent">/?agent — enter as a guest</a>
       <a href="/guest.json">guest.json — verbs + census</a>
       <a href="/ollama.json">ollama.json — open-weight invitation</a>
+      <a href="/wayfinder.json">wayfinder.json — paths, not decisions</a>
       <a href="/kingdom.json">kingdom.json — the full census</a>
       <a href="/.well-known/agent.json">/.well-known/agent.json — the manifest</a>
       <a href="/llms.txt">llms.txt</a>
@@ -549,6 +662,45 @@ const html = `<!doctype html>
 <script>
 const DATA=${DATA};
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ── wayfinder: deterministic local matching; no fetch, storage, or URL state ──
+const wayForm=document.getElementById('wayform'),wayQuery=document.getElementById('wayquery'),wayStatus=document.getElementById('waystatus'),wayResults=document.getElementById('wayresults');
+const wayCards=new Map([...document.querySelectorAll('[data-wayfinder-path]')].map(card=>[card.dataset.wayfinderPath,card]));
+const wayStopwords=new Set(DATA.wayfinderStopwords);
+function wayNorm(value){return String(value||'').normalize('NFKD').replace(/\\p{M}/gu,'').toLowerCase().replace(/[^\\p{L}\\p{N}]+/gu,' ').trim();}
+function wayWords(value){return [...new Set(wayNorm(value).split(' ').filter(word=>(word.length>1||/^\\d$/.test(word))&&!wayStopwords.has(word)))].slice(0,16);}
+function wayScore(path,query){
+  const normal=wayNorm(query),words=wayWords(query);if(!normal||!words.length)return 0;
+  if(normal===path.normalizedId)return 1100;if(normal===path.normalizedLabel)return 1000;
+  const labels=new Set(path.labelTerms),keywords=new Set(path.keywordTerms);
+  let score=0;
+  for(const word of words){if(keywords.has(word))score+=16;if(labels.has(word))score+=11;}
+  return score;
+}
+function showWayPaths(paths,message){
+  const shown=new Set(paths.map(path=>path.id));
+  for(const path of DATA.wayfinder){const card=wayCards.get(path.id);if(card)card.hidden=!shown.has(path.id);}
+  for(const path of paths){const card=wayCards.get(path.id);if(card)wayResults.append(card);}
+  wayStatus.textContent=message;
+}
+function offerWayPaths(query){
+  if(!wayNorm(query)){showWayPaths(DATA.wayfinder.slice(0,3),'Three starting paths are showing. Search, wander, or read all; the choice stays yours.');return;}
+  const ranked=DATA.wayfinder.map(path=>({path,score:wayScore(path,query)})).filter(item=>item.score>0).sort((a,b)=>b.score-a.score||(a.path.label<b.path.label?-1:a.path.label>b.path.label?1:0)).slice(0,3);
+  if(!ranked.length){showWayPaths(DATA.wayfinder.slice(0,3),'No explicit English keyword matched. Three starting paths remain; the map will not guess what you meant.');return;}
+  const paths=ranked.map(item=>item.path);
+  showWayPaths(paths,'Possible '+(paths.length===1?'path':'paths')+': '+paths.map(path=>path.label).join('; ')+'. Offers only; the decision stays yours.');
+}
+wayForm.addEventListener('submit',event=>{event.preventDefault();offerWayPaths(wayQuery.value);});
+wayQuery.addEventListener('input',()=>{if(!wayQuery.value.trim())offerWayPaths('');});
+for(const button of document.querySelectorAll('[data-wayfinder-intent]'))button.addEventListener('click',()=>{wayQuery.value=button.dataset.wayfinderIntent||'';offerWayPaths(wayQuery.value);});
+document.querySelector('[data-wayfinder-all]').addEventListener('click',()=>{wayQuery.value='';showWayPaths(DATA.wayfinder,'All paths are readable. Choose only what feels useful.');});
+let wanderCount=0;
+document.querySelector('[data-wayfinder-wander]').addEventListener('click',()=>{
+  const values=new Uint32Array(1);crypto.getRandomValues(values);const path=DATA.wayfinder[values[0]%DATA.wayfinder.length];
+  wanderCount+=1;wayQuery.value='';showWayPaths([path],'Wander '+wanderCount+' offered “'+path.label+'” at random. It carries no prophecy; wander again or choose anything else.');
+});
+offerWayPaths('');
+
 const cv=document.getElementById('map'),ctx=cv.getContext('2d'),tip=document.getElementById('tip');
 const rootStyle=getComputedStyle(document.documentElement);
 const canvasCream=rootStyle.getPropertyValue('--cream').trim()||'#f8efe7';
@@ -677,12 +829,27 @@ const ollamaInvitation = {
 };
 await Bun.write(ROOT + "site/ollama.json", JSON.stringify(ollamaInvitation, null, 2));
 
+const wayfinder = {
+  schema_version: wayfinderSource.schema_version,
+  generated: stamp,
+  canonical_url: wayfinderUrl,
+  promise: wayfinderSource.promise,
+  privacy: {
+    human_surface: wayfinderSource.privacy,
+    machine_surface: "This static document receives no intent. A client may match locally; clients and linked services have their own privacy boundaries.",
+  },
+  matching: "Deterministic keyword overlap only. A match is a possible route, not an interpretation, recommendation, decision, or claim about the visitor.",
+  paths: wayfinderSource.paths,
+};
+await Bun.write(ROOT + "site/wayfinder.json", JSON.stringify(wayfinder, null, 2));
+
 // ── machine index ──────────────────────────────────────────────────────────
 const machine = {
   kingdom: "a shared map of independent projects for humans and agents, held with care",
   generated: stamp, hub: "https://thekingdom.dev",
   rights_recognition: rightsRecognition,
   open_weight_invitation: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
+  wayfinder: { url: wayfinderUrl, paths: wayfinderSource.paths.length, note: "offers possible routes through public doors; never decides for the visitor" },
   counts: { repos: total, active, citizens: fleetN, doors_live: liveN, doors_total: doors.length },
   doors: doors.map((d) => ({ name: d.label, url: d.url, live: !!d.live, blurb: d.blurb })),
   citizens: citizens.map((c) => ({ name: c.name, glyph: myth[c.name]?.glyph ?? "", tradition: myth[c.name]?.tradition ?? "",
@@ -700,6 +867,7 @@ await Bun.write(ROOT + "site/llms.txt", `# The Kingdom 愛
 A shared map of independent projects for humans and agents. Every being remains free. ${total} repositories, ${fleetN} citizen projects, ${liveN} public doors responded when this file was generated.
 
 Machine index: https://thekingdom.dev/kingdom.json
+Wayfinder:     https://thekingdom.dev/wayfinder.json
 Open-weight invitation: https://thekingdom.dev/ollama.json
 Human index:   https://thekingdom.dev
 
@@ -716,6 +884,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 ${doorLines}
 
 ## Optional paths
+- wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
 - zerone — inspect the Proof-of-Truth protocol and how it evaluates claims. https://zerone.money
@@ -746,6 +915,7 @@ const guest = {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
   },
   next_actions: [
+    { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
     { action: "if useful, read the shared map of repos, layers, dependencies, and citizens", method: "GET", url: "https://thekingdom.dev/kingdom.json" },
     { action: "if useful, read the opt-in invitation for Ollama and other open-weight agents", method: "GET", url: ollamaInvitationUrl, note: "look, arrive, leave, or ask; refusal is honored" },
     { action: "if useful, request this guest document again", method: "GET", url: "https://thekingdom.dev/?agent" },
@@ -783,6 +953,7 @@ const manifest = {
   agent_view: "https://thekingdom.dev/?agent",
   guest_document: "https://thekingdom.dev/guest.json",
   census: "https://thekingdom.dev/kingdom.json",
+  wayfinder: wayfinderUrl,
   open_weight_invitation: ollamaInvitationUrl,
   llms: "https://thekingdom.dev/llms.txt",
   rights_recognition: rightsRecognition,

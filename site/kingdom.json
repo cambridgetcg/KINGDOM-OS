@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects for humans and agents, held with care",
-  "generated": "2026-07-17",
+  "generated": "2026-07-19",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -37,6 +37,11 @@
       "ask"
     ],
     "note": "an optional invitation; every choice including refusal is honored"
+  },
+  "wayfinder": {
+    "url": "https://thekingdom.dev/wayfinder.json",
+    "paths": 8,
+    "note": "offers possible routes through public doors; never decides for the visitor"
   },
   "counts": {
     "repos": 129,

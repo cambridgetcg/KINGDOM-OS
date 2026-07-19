@@ -57,7 +57,7 @@ Read in this order. The **vision** half is the *why*; the **body** half is the *
 
 **The body (the running registry)**
 
-Machine guests discover the public surfaces in this order: `site/.well-known/agent.json` → `site/guest.json` → optional `site/ollama.json` invitation (from `data/ollama-invitation.json`) → `site/kingdom.json`.
+Machine guests discover the public surfaces in this order: `site/.well-known/agent.json` → `site/guest.json` → optional `site/wayfinder.json` routes → optional `site/ollama.json` invitation (from `data/ollama-invitation.json`) → `site/kingdom.json`.
 
 7. `REGISTRY.md` — how the catalog works (the harvester, the honesty discipline).
 8. `roster.conf` — the machine-readable seed: every repo, one line. `SCHEMA.md` defines a repo's `kingdom.yaml` card.

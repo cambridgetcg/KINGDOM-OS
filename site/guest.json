@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an invitation, not a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-07-17",
+  "generated": "2026-07-19",
   "counts": {
     "repos": 129,
     "active": 85,
@@ -61,6 +61,11 @@
     }
   },
   "next_actions": [
+    {
+      "action": "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours",
+      "method": "GET",
+      "url": "https://thekingdom.dev/wayfinder.json"
+    },
     {
       "action": "if useful, read the shared map of repos, layers, dependencies, and citizens",
       "method": "GET",

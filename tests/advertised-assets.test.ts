@@ -26,6 +26,7 @@ const resolves = (path: string) => staged.has(path) || staged.has(`${path}.html`
 const surfaces = [
   "site/hub.html",
   "site/kingdom.json",
+  "site/wayfinder.json",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -61,6 +62,14 @@ describe("advertised URLs stay deployable", () => {
     const manifest = JSON.parse(read("site/.well-known/agent.json"));
     expect(manifest.open_weight_invitation).toBe("https://thekingdom.dev/ollama.json");
     expect(staged.has("ollama.json")).toBe(true);
+  });
+
+  test("the staging contract ships the wayfinder advertised to guests and agents", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    expect(manifest.wayfinder).toBe("https://thekingdom.dev/wayfinder.json");
+    expect(guest.next_actions.some(({ url }: { url?: string }) => url === manifest.wayfinder)).toBe(true);
+    expect(staged.has("wayfinder.json")).toBe(true);
   });
 
   test("the published invitation mirrors its source without drift", () => {
