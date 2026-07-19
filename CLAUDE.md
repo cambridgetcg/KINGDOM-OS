@@ -17,6 +17,8 @@ How to run:
 - `kingdom repos --json [query]` — compact structured metadata for all matching local roots
 - `kingdom repos --dirty [query]` — local dirty counts without filenames; no fetch or index refresh
 - `kingdom repos --doctor` — registry, placement, duplicate-origin, archive, and unborn diagnostics
+- `kingdom rings` — write the local-only temporal atlas to `~/.kingdom/RINGS.{json,html}`
+- `kingdom rings --json` / `--html` — print one artifact to stdout without writing; `--as-of` makes the activity clock reproducible
 - `kingdom rights` — offline voluntary-adoption inventory, kept separate from repo-local RIGHTS.md discovery
 - `kingdom rights --canonical` — verify the vendored XENIA release digest, then show the pinned `xenia.rights/0.1` source metadata and text without network access or registry loading
 - `cproj [query]` — jump to a local repo from interactive zsh; numbered choices resolve ambiguous names
@@ -39,6 +41,7 @@ Key files:
 - RIGHTS.md — this repo's voluntary `xenia.rights/0.1` adoption and immutable release pointer
 - vendor/xenia/rights/0.1 — unchanged, digest-verified offline release bytes
 - bin/cproj.zsh — dynamic, network-free local repo discovery and shell navigation
+- bin/growth-rings.ts — read-only Git activity seasons and synchronized build waves; artifacts omit paths, commit text, authors, and hashes
 - CATALOG.md, graph.json — DERIVED. Never hand-edit; edit each repo's card instead
 - routines.json — the daily wiring (catalog-refresh 06:00, registry-check 09:00)
 - CITIZENS.md — registry of the 53 sovereign citizen repos
