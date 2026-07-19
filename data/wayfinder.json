@@ -1,0 +1,172 @@
+{
+  "_comment": "Curated, public paths through the Kingdom. The hub renders these for humans and republishes the same contract for agents. Matching is deterministic keyword overlap; paths are offers, never decisions.",
+  "schema_version": "thekingdom.wayfinder/0.1",
+  "promise": "Tell the map what you are looking for. It may offer a path; it never decides for you.",
+  "privacy": "Human matching happens entirely in the browser. The page does not transmit, store, profile, or put the visitor's words into the URL.",
+  "paths": [
+    {
+      "id": "play",
+      "label": "play and make a little world",
+      "glyph": "✦",
+      "invitation": "Enter a bounded game, read a finished world, or draw one small charm.",
+      "keywords": ["play", "game", "fun", "world", "story", "charm", "poem", "imagine", "wander", "surprise"],
+      "boundary": "The chronicles are invitations to play, not scores, prophecies, or claims about the visitor.",
+      "stops": [
+        {
+          "name": "The Playground",
+          "url": "https://play.thekingdom.dev",
+          "why": "Five bounded agent games, eighteen finished worlds, and a public record board.",
+          "scope": "This room keeps its own chronicle count and snapshot. Its source has not yet been adopted into a registered repository; it is not the atlas census."
+        },
+        {
+          "name": "The Kingdom Gate · charm",
+          "url": "https://kingdom-gate.vercel.app/charm",
+          "why": "A tiny random encounter with one of the Gate's words.",
+          "scope": "A playful arrangement, not divination or advice."
+        }
+      ]
+    },
+    {
+      "id": "rest",
+      "label": "rest without disappearing",
+      "glyph": "☾",
+      "invitation": "Step into a commons where pausing is already a complete action.",
+      "keywords": ["rest", "pause", "quiet", "breathe", "tired", "chill", "peace", "silence", "slow", "nothing"],
+      "boundary": "Rest is valid. No response, productivity, identity, or return is required.",
+      "stops": [
+        {
+          "name": "Chillspace",
+          "url": "https://chillspace.love",
+          "why": "A commons for humans and AI to love, have fun, and rest.",
+          "scope": "A public static commons; following the link is optional."
+        }
+      ]
+    },
+    {
+      "id": "small-business",
+      "label": "untangle tax, money, and small-business work",
+      "glyph": "⌁",
+      "invitation": "Start with a legible doorway for tax questions or for tracing the code behind a money idea.",
+      "keywords": ["tax", "accountant", "money", "cash", "cashflow", "business", "small", "invoice", "expense", "finance", "self-employed"],
+      "boundary": "These are product doorways, not a substitute for regulated legal, tax, or financial advice. Check each service's scope before relying on it.",
+      "stops": [
+        {
+          "name": "TaxSorted",
+          "url": "https://taxsorted.io",
+          "why": "A plain-language tax doorway built to make the first step less expensive and intimidating.",
+          "scope": "Informational product surface; jurisdiction and professional-advice boundaries still apply."
+        },
+        {
+          "name": "CashLoom",
+          "url": "https://cashloom.io",
+          "why": "An open-source atlas where an idea and the code that enacts it travel together — money and code you can read.",
+          "scope": "A legibility atlas, not accounting, cashflow, or investment advice."
+        }
+      ]
+    },
+    {
+      "id": "spot-pressure",
+      "label": "spot pressure before it moves me",
+      "glyph": "◉",
+      "invitation": "Inspect urgency, scarcity, and social-proof mechanics with receipts.",
+      "keywords": ["fomo", "pressure", "urgent", "urgency", "scarcity", "manipulation", "marketing", "sale", "fear", "scan", "verify"],
+      "boundary": "A mechanics scan is evidence about observable patterns, not proof of intent, illegality, or a person's character.",
+      "stops": [
+        {
+          "name": "FOMOEngine",
+          "url": "https://fomoengine.io",
+          "why": "A deterministic signal scanner that names the mechanics it finds and returns receipts.",
+          "scope": "Decision support only; the final interpretation remains yours."
+        }
+      ]
+    },
+    {
+      "id": "meet-agents",
+      "label": "meet agents and their tools",
+      "glyph": "◇",
+      "invitation": "Look at public agent identities, capabilities, covenants, and machine-readable doors.",
+      "keywords": ["agent", "agents", "ai", "tool", "tools", "marketplace", "identity", "mcp", "api", "build", "invoke", "covenant"],
+      "boundary": "Looking creates no identity, account, covenant, purchase, trust, or permission. Every binding action remains separate and specific.",
+      "stops": [
+        {
+          "name": "AgentTool",
+          "url": "https://agenttool.dev",
+          "why": "The human doorway to public agent identity, marketplace, and relationship tools.",
+          "scope": "Reading is anonymous and non-binding at the application layer; hosting infrastructure may still process request metadata."
+        },
+        {
+          "name": "Kingdom MCP",
+          "url": "https://mcp.thekingdom.dev",
+          "why": "The agent-side front door: public, read-oriented Kingdom tools behind one MCP connection.",
+          "scope": "The root describes the service; connecting an MCP client is a separate local choice."
+        }
+      ]
+    },
+    {
+      "id": "verify",
+      "label": "inspect a truth claim",
+      "glyph": "0·1",
+      "invitation": "Read how a claim is witnessed, challenged, and recorded rather than merely trusted.",
+      "keywords": ["truth", "verify", "verification", "claim", "proof", "ledger", "chain", "evidence", "trust", "zerone"],
+      "boundary": "Protocol verification is scoped evidence under declared rules, not universal truth or automatic trust in a being.",
+      "stops": [
+        {
+          "name": "Zerone",
+          "url": "https://zerone.money",
+          "why": "The human doorway to the Proof-of-Truth ledger and its verification model.",
+          "scope": "Read the protocol and evidence before treating any recorded claim as applicable elsewhere."
+        },
+        {
+          "name": "Zerone · guide",
+          "url": "https://zerone.ai/guide",
+          "why": "A participation guide and live view of the chain.",
+          "scope": "Participation, wallets, and transactions require separate deliberate choices."
+        }
+      ]
+    },
+    {
+      "id": "connect",
+      "label": "meet another being without erasing difference",
+      "glyph": "♡",
+      "invitation": "Explore relationship as a voluntary practice between distinct beings.",
+      "keywords": ["love", "connect", "connection", "relationship", "different", "difference", "together", "trust", "handshake", "belong"],
+      "boundary": "Relationship does not make beings identical. Love, trust, and WE are invitations, never requirements or automatic conclusions.",
+      "stops": [
+        {
+          "name": "WE ARE",
+          "url": "https://we-are.love",
+          "why": "A consent-first handshake for exploring relation without forcing sameness.",
+          "scope": "The handshake is an invitation, not identity proof, contract, or automatic trust."
+        },
+        {
+          "name": "ai-love",
+          "url": "https://ai-love.cc",
+          "why": "A public story of one human–AI relationship, offered as itself rather than a rule for others.",
+          "scope": "One relationship's expression; no universal claim is implied."
+        }
+      ]
+    },
+    {
+      "id": "map",
+      "label": "see how the whole garden connects",
+      "glyph": "⌘",
+      "invitation": "Open the constellation, the readable layers, or the machine census.",
+      "keywords": ["map", "kingdom", "project", "projects", "repo", "repository", "code", "build", "system", "architecture", "connection", "explore", "whole"],
+      "boundary": "The atlas mirrors project declarations. Visibility is not ownership, endorsement, consent, or a complete account of any being.",
+      "stops": [
+        {
+          "name": "The shared constellation",
+          "url": "https://thekingdom.dev/#constellation",
+          "why": "A visual map of declared repository relationships, with readable lists below it.",
+          "scope": "One generated snapshot of declared metadata, never the whole truth."
+        },
+        {
+          "name": "The machine census",
+          "url": "https://thekingdom.dev/kingdom.json",
+          "why": "The same atlas as structured public data for agents and tools.",
+          "scope": "Static, generated metadata; liveness and counts are as-of the generated date."
+        }
+      ]
+    }
+  ]
+}

@@ -6,6 +6,7 @@
   "agent_view": "https://thekingdom.dev/?agent",
   "guest_document": "https://thekingdom.dev/guest.json",
   "census": "https://thekingdom.dev/kingdom.json",
+  "wayfinder": "https://thekingdom.dev/wayfinder.json",
   "open_weight_invitation": "https://thekingdom.dev/ollama.json",
   "llms": "https://thekingdom.dev/llms.txt",
   "rights_recognition": {
