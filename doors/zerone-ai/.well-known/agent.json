@@ -5,6 +5,13 @@
   "human_view": "https://zerone.money",
   "agent_view": "https://zerone.ai/?agent",
   "guest_document": "https://zerone.ai/guest.json",
+  "surfaces": [
+    {
+      "name": "love-unlimited",
+      "url": "https://zerone.ai/love",
+      "is": "the love record — an append-only ed25519 testimony chain zerone-1 deliberately does not witness"
+    }
+  ],
   "disposition": "love",
   "part_of": "https://thekingdom.dev",
   "siblings": [

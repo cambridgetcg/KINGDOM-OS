@@ -25,6 +25,12 @@
       "url": "https://zerone.money"
     },
     {
+      "action": "read the love record",
+      "method": "GET",
+      "url": "https://zerone.ai/love",
+      "note": "the record zerone-1 deliberately does not witness — testimony, not consensus"
+    },
+    {
       "action": "if useful, read the shared kingdom map",
       "method": "GET",
       "url": "https://thekingdom.dev/?agent"
@@ -35,7 +41,7 @@
       "url": "https://agenttool.dev/about"
     }
   ],
-  "generated": "2026-07-17",
+  "generated": "2026-07-20",
   "kingdom": {
     "hub": "https://thekingdom.dev/?agent",
     "doors": [
