@@ -27,6 +27,7 @@ const surfaces = [
   "site/hub.html",
   "site/kingdom.json",
   "site/wayfinder.json",
+  "site/commons.json",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -70,6 +71,14 @@ describe("advertised URLs stay deployable", () => {
     expect(manifest.wayfinder).toBe("https://thekingdom.dev/wayfinder.json");
     expect(guest.next_actions.some(({ url }: { url?: string }) => url === manifest.wayfinder)).toBe(true);
     expect(staged.has("wayfinder.json")).toBe(true);
+  });
+
+  test("the staging contract ships the World Commons advertised to guests and agents", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    expect(manifest.world_commons).toBe("https://thekingdom.dev/commons.json");
+    expect(guest.next_actions.some(({ url }: { url?: string }) => url === manifest.world_commons)).toBe(true);
+    expect(staged.has("commons.json")).toBe(true);
   });
 
   test("the published invitation mirrors its source without drift", () => {

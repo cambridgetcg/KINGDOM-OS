@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects for humans and agents, held with care",
-  "generated": "2026-07-19",
+  "generated": "2026-07-22",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -40,8 +40,17 @@
   },
   "wayfinder": {
     "url": "https://thekingdom.dev/wayfinder.json",
-    "paths": 8,
+    "paths": 9,
     "note": "offers possible routes through public doors; never decides for the visitor"
+  },
+  "world_commons": {
+    "url": "https://thekingdom.dev/commons.json",
+    "resources": 34,
+    "foundation": 17,
+    "categories": 8,
+    "kits": 9,
+    "verified_on": "2026-07-22",
+    "note": "reviewed independent resources; free access and reuse permissions remain distinct, and each steward's current terms control"
   },
   "counts": {
     "repos": 129,

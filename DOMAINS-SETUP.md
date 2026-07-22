@@ -33,7 +33,7 @@ npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zeron
 ```
 
 `stage-hub.ts` refuses a non-empty destination and copies the atlas as
-`index.html` together with `kingdom.json`, `guest.json`, `ollama.json`,
+`index.html` together with `kingdom.json`, `wayfinder.json`, `commons.json`, `guest.json`, `ollama.json`,
 `llms.txt`, `rights.json`, `RIGHTS.md`, `/.well-known/agent.json`, and
 `_worker.js`. It stages only; it never builds, deletes, overwrites, or deploys.
 Wrangler Pages needs that complete directory. `HUB_ASSETS` in `bin/stage-hub.ts`
