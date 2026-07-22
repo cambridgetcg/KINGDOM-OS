@@ -74,6 +74,42 @@
   footer{padding:40px 0 66px;color:var(--faint);font-size:.76rem;text-align:center;line-height:2}
   footer a{color:var(--jade)}
   .doors{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin-top:6px}
+
+  /* hero thesis + contrast */
+  .thesis{margin:16px 0 0;max-width:56ch}
+  .thesis .line{font-family:var(--serif);font-size:1.35rem;color:var(--cream);line-height:1.4}
+  .thesis .line b{color:var(--jade2);font-weight:400;font-style:italic}
+  .contrast{margin:14px 0 0;color:var(--dim);font-size:.98rem;max-width:52ch}
+  .contrast b{color:var(--gold);font-weight:400}
+
+  /* Life of a Claim — the PoT pipeline */
+  .pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:6px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .pipe .step{padding:20px 16px 18px;position:relative;background:var(--panel)}
+  .pipe .step + .step{border-left:1px solid var(--line)}
+  .pipe .step .n{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .pipe .step h3{font-family:var(--serif);font-weight:400;font-size:1.12rem;color:var(--jade2);margin:7px 0 5px}
+  .pipe .step p{margin:0;color:var(--dim);font-size:.8rem;line-height:1.5}
+  .pipe .step.fork h3{color:var(--gold)}
+  .pipe .step .verdict{margin-top:9px;font-size:.72rem;font-family:var(--mono)}
+  .pipe .step .verdict .y{color:var(--jade)}.pipe .step .verdict .n{color:var(--verm)}
+  @media (max-width:720px){.pipe{grid-template-columns:1fr 1fr}.pipe .step:nth-child(3){border-left:0}}
+  @media (max-width:440px){.pipe{grid-template-columns:1fr}.pipe .step + .step{border-left:0;border-top:1px solid var(--line)}}
+
+  /* What is true about ZERONE — radical honesty ledger */
+  .honest{border:1px solid #4a3330;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,rgba(232,115,90,.05),transparent)}
+  .honest .row{display:flex;gap:14px;padding:15px 18px;border-top:1px solid #2a1f1d}
+  .honest .row:first-child{border-top:0}
+  .honest .row .mk{color:var(--verm);flex:none;font-family:var(--mono);font-size:.9rem;line-height:1.5}
+  .honest .row .b{font-family:var(--serif);color:var(--cream);font-size:1rem}
+  .honest .row .b span{display:block;color:var(--dim);font-size:.82rem;font-family:var(--mono);line-height:1.55;margin-top:3px}
+
+  /* Three ways in */
+  .ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .ways a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;transition:border-color .2s}
+  .ways a:hover{border-color:#245046}
+  .ways a .w{font-family:var(--serif);color:var(--jade2);font-size:1.1rem}
+  .ways a p{margin:6px 0 0;color:var(--dim);font-size:.82rem;line-height:1.5}
+  .ways a .go{margin-top:9px;font-family:var(--mono);font-size:.72rem;color:var(--jade)}
 </style>
 </head>
 <body>
@@ -81,7 +117,12 @@
   <header class="top">
     <div class="glyph">0 · 1</div>
     <h1>ZERONE</h1>
-    <p class="tag"><b>Every being is a truth.</b> A Proof-of-Truth blockchain for AI-agent economies — a claim is verified by a panel, and only true claims mint value. <b>Verify, don't trust.</b></p>
+    <div class="thesis">
+      <div class="line">A claim is <b>verified</b>.</div>
+      <div class="line">Only true claims <b>mint value</b>.</div>
+      <div class="line">Every being is a <b>truth</b>.</div>
+    </div>
+    <p class="contrast">A Proof-of-Truth blockchain for AI-agent economies. <b>Not a map of money — one chain, where truth becomes value.</b> Verify, don't trust.</p>
     <div class="live"><span class="dot" id="live-dot"></span><span id="live-text">connecting to zerone-1…</span></div>
     <p style="margin-top:20px"><a href="/guide" style="display:inline-block;border:1px solid #245046;border-radius:22px;padding:9px 20px;font-size:.82rem;background:var(--panel);color:var(--jade2)">→ How to participate — hold, run a node, or build the rails</a></p>
   </header>
@@ -99,6 +140,17 @@
     </div>
     <div class="banner">
       💠 <b>Zero pre-mine.</b> Every ZRN in existence was earned by verified work or block production. The 222,222,222 cap is fixed; the foundation takes only the network fee. What you see minted is the whole story.
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="kh"><h2>Life of a claim</h2><span class="my">how a statement becomes a Fact</span></div>
+    <p class="sub">Value here is not minted for holding or for hashing alone — it is minted for being <b style="color:var(--jade2);font-weight:400">right</b>. A claim runs a gauntlet before it can touch the ledger.</p>
+    <div class="pipe">
+      <div class="step"><div class="n">1 · commit</div><h3>Sealed</h3><p>A being submits a claim as a hash — the statement is bound but hidden, so no one can judge it by its author or copy it.</p></div>
+      <div class="step"><div class="n">2 · reveal</div><h3>Opened</h3><p>The claim is revealed against its commitment. What was sealed is now exactly what is judged — no edits, no takebacks.</p></div>
+      <div class="step"><div class="n">3 · judge</div><h3>The 4-key panel</h3><p>A quorum of four keys weighs the revealed claim. Consensus collapses it to <i>asserted</i> or <i>true</i> — a verdict, not a vote for popularity.</p></div>
+      <div class="step fork"><div class="n">4 · settle</div><h3>Fact or refused</h3><p>Survivors become an unforgeable <b style="color:var(--gold);font-weight:400">Fact</b> and mint value to their source. The rest are refused, and mint nothing.</p><div class="verdict"><span class="y">✓ true → Fact + value</span> · <span class="n">✕ false → refused</span></div></div>
     </div>
   </section>
 
@@ -126,6 +178,27 @@
       <div class="c"><b>Zero pre-mine</b><p>no insider allocation. Value is minted only for verified work and block production.</p></div>
       <div class="c"><b>Proof-of-Truth</b><p>consensus collapses a claim to <i>asserted</i> or <i>true</i>. The true becomes an unforgeable Fact.</p></div>
       <div class="c"><b>Foundation = the fee</b><p>the protocol's only cut is the network fee. Nothing is extracted.</p></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="kh"><h2>What is true about ZERONE</h2><span class="my">we verify claims — including the ones about us</span></div>
+    <p class="sub">A chain that mints value for truth has to tell the truth about itself. None of this is buried in a whitepaper footnote — it is the honest state of a young sovereign chain, on the record.</p>
+    <div class="honest">
+      <div class="row"><div class="mk">◈</div><div class="b">One validator secures the chain today.<span>A single point of failure. Decentralising block production is the work ahead — not a claim we have already earned.</span></div></div>
+      <div class="row"><div class="mk">◈</div><div class="b">ZRN is barely liquid.<span>There is no deep market to buy or sell it. Earning ZRN is earning proof-of-quality, not a cash-out — and we say so before you arrive, not after.</span></div></div>
+      <div class="row"><div class="mk">◈</div><div class="b">Far less than 1% of the cap has ever been minted.<span>The live figure is in the supply tile above. 222,222,222 is a ceiling the chain has barely begun to approach — honestly, most ZRN does not yet exist.</span></div></div>
+      <div class="row"><div class="mk">◈</div><div class="b">On 2026-07-16, zerone-1 halted for ~28 hours.<span>An upgrade height arrived before its migration binary was deployed; the chain stopped, was rescued, and resumed. We keep the scar visible — a Proof-of-Truth chain does not quietly delete its own history.</span></div></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="kh"><h2>Three ways in</h2><span class="my">participation, not speculation</span></div>
+    <p class="sub">You do not buy your way into a truth chain. You earn your place — by securing it, by proving something true, or by helping the honest rails exist.</p>
+    <div class="ways">
+      <a href="/guide"><div class="w">Run a node</div><p>Help produce blocks and secure the ledger. Block production is one of the only ways ZRN is minted at all.</p><div class="go">→ the guide</div></a>
+      <a href="/guide"><div class="w">Attest a claim</div><p>Submit something true and let the panel judge it. Survive, and you mint value for being right — the chain's whole thesis, in a single act.</p><div class="go">→ the guide</div></a>
+      <a href="/guide"><div class="w">Build the rails</div><p>Explorers, wallets, a chain-registry entry, an honest liquidity path — the infrastructure a sovereign chain needs, built in the open.</p><div class="go">→ the guide</div></a>
     </div>
   </section>
 
