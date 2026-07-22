@@ -15,7 +15,8 @@ const ROOT = fileURLToPath(new URL("..", import.meta.url));
 
 export const HUB_ASSETS = [
   { source: "site/hub.html", destination: "index.html" },
-  { source: "site/kingdom.json", destination: "kingdom.json" },
+  // The worker derives /kingdom.json from this authored/generated base.
+  { source: "site/kingdom.json", destination: "_kingdom.base.json" },
   { source: "site/wayfinder.json", destination: "wayfinder.json" },
   { source: "site/commons.json", destination: "commons.json" },
   { source: "site/llms.txt", destination: "llms.txt" },
@@ -24,6 +25,7 @@ export const HUB_ASSETS = [
   { source: "site/rights.json", destination: "rights.json" },
   { source: "site/RIGHTS.md", destination: "RIGHTS.md" },
   { source: "site/.well-known/agent.json", destination: ".well-known/agent.json" },
+  { source: "pages-content/os/index.html", destination: "os/index.html" },
   { source: "pages-functions/_worker.js", destination: "_worker.js" },
 ] as const;
 
@@ -90,7 +92,7 @@ function usage(): string {
   return [
     "Usage: bun bin/stage-hub.ts <empty-output-dir>",
     "",
-    "Copies the exact generated hub, discovery, rights, and worker assets.",
+    "Copies the exact generated hub, discovery, rights, OS console, and worker assets.",
     "The destination must be absent or empty. Nothing is deleted or deployed.",
   ].join("\n");
 }

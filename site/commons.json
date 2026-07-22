@@ -707,8 +707,8 @@
       ],
       "access": {
         "cost": "free",
-        "account": "varies",
-        "note": "Web and PDF books remain free, but some current chapter pages ask readers to sign in before continuing; access varies by page and format."
+        "account": "none",
+        "note": "Core online and PDF textbooks require no account; optional interactive, student, and instructor resources vary."
       },
       "reuse": {
         "status": "noncommercial",

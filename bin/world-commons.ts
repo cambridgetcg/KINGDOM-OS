@@ -107,11 +107,13 @@ export type WorldCommonsSource = {
 export type PublishedWorldCommons = WorldCommonsSource & { generated: string };
 
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const STOPWORDS = new Set([
-  "a", "am", "an", "and", "are", "as", "at", "be", "by", "can", "do", "for", "from", "help",
-  "how", "i", "if", "in", "is", "it", "me", "my", "of", "on", "or", "please", "the", "this", "to",
-  "want", "we", "with", "you", "your",
-]);
+export const WORLD_COMMONS_STOPWORDS = [
+  "a", "about", "am", "an", "and", "are", "as", "at", "be", "but", "by", "can", "could",
+  "do", "find", "for", "from", "get", "help", "how", "i", "if", "in", "is", "it", "looking",
+  "me", "my", "need", "of", "on", "or", "our", "please", "some", "that", "the", "this", "to",
+  "want", "we", "what", "where", "with", "would", "you", "your",
+] as const;
+const STOPWORDS = new Set<string>(WORLD_COMMONS_STOPWORDS);
 
 const record = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === "object" && !Array.isArray(value);
@@ -150,9 +152,11 @@ function realDate(value: unknown, path: string): asserts value is string {
 function generatedDate(value: unknown, path: string): asserts value is string {
   if (typeof value !== "string") fail(path, "must be an ISO date or timezone-qualified datetime");
   if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return realDate(value, path);
-  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) || Number.isNaN(Date.parse(value))) {
+  const timestamp = /^(\d{4}-\d{2}-\d{2})T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?(?:Z|[+-](?:(?:0\d|1[0-3]):[0-5]\d|14:00))$/.exec(value);
+  if (!timestamp || Number.isNaN(Date.parse(value))) {
     fail(path, "must be an ISO date or timezone-qualified datetime");
   }
+  realDate(timestamp[1], path);
 }
 
 function httpsUrl(value: unknown, path: string): asserts value is string {
@@ -327,17 +331,46 @@ function words(value: string, limit = 24): string[] {
     .filter((word) => (word.length > 1 || /^\d$/.test(word)) && !STOPWORDS.has(word)))].slice(0, limit);
 }
 
-export function worldCommonsSearchIndex(source: WorldCommonsSource): Array<{ id: string; category_ids: string[]; terms: string[] }> {
-  const categories = new Map(source.categories.map((category) => [category.id, category]));
-  return source.resources.map((resource) => ({
+export type WorldCommonsSearchEntry = {
+  id: string;
+  name: string;
+  category_ids: string[];
+  normalized_id: string;
+  normalized_name: string;
+  weights: Array<[term: string, weight: number]>;
+};
+
+export function worldCommonsSearchEntry(resource: WorldCommonsResource): WorldCommonsSearchEntry {
+  const weights = new Map<string, number>();
+  const add = (terms: string[], weight: number) => {
+    for (const term of terms) weights.set(term, (weights.get(term) ?? 0) + weight);
+  };
+  add(words(resource.keywords.join(" "), 96), 16);
+  add(words(`${resource.id} ${resource.name} ${resource.provider}`, 96), 11);
+  add(words(`${resource.description} ${resource.coverage} ${resource.good_for.join(" ")} ${resource.category_ids.join(" ")}`, 128), 4);
+  return {
     id: resource.id,
+    name: resource.name,
     category_ids: resource.category_ids,
-    terms: words([
-      resource.id, resource.name, resource.provider, resource.description, resource.coverage,
-      ...resource.keywords, ...resource.good_for,
-      ...resource.category_ids.flatMap((id) => [id, categories.get(id)?.label ?? ""]),
-    ].join(" "), 96),
-  }));
+    normalized_id: normalizeWorldCommonsText(resource.id),
+    normalized_name: normalizeWorldCommonsText(resource.name),
+    weights: [...weights].sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0),
+  };
+}
+
+export function worldCommonsSearchIndex(source: WorldCommonsSource): WorldCommonsSearchEntry[] {
+  return source.resources.map(worldCommonsSearchEntry);
+}
+
+export function scoreWorldCommonsSearchEntry(entry: WorldCommonsSearchEntry, query: string): number {
+  const normalized = normalizeWorldCommonsText(query);
+  const queryWords = new Set(words(query));
+  if (!normalized || !queryWords.size) return 0;
+  if (normalized === entry.normalized_id) return 2_000;
+  if (normalized === entry.normalized_name) return 1_800;
+  let score = 0;
+  for (const [term, weight] of entry.weights) if (queryWords.has(term)) score += weight;
+  return score;
 }
 
 export function rankWorldCommonsResources(
@@ -345,25 +378,12 @@ export function rankWorldCommonsResources(
   query: string,
   category?: WorldCommonsCategoryId,
 ): Array<{ resource: WorldCommonsResource; score: number }> {
-  const normalized = normalizeWorldCommonsText(query);
-  const queryWords = words(query);
-  if (!normalized || !queryWords.length) return [];
+  if (!normalizeWorldCommonsText(query) || !words(query).length) return [];
   return resources
     .filter((resource) => !category || resource.category_ids.includes(category))
-    .map((resource) => {
-      if (normalized === normalizeWorldCommonsText(resource.id)) return { resource, score: 2_000 };
-      if (normalized === normalizeWorldCommonsText(resource.name)) return { resource, score: 1_800 };
-      const keywordTerms = new Set(words(resource.keywords.join(" "), 96));
-      const nameTerms = new Set(words(`${resource.id} ${resource.name} ${resource.provider}`, 96));
-      const bodyTerms = new Set(words(`${resource.description} ${resource.coverage} ${resource.good_for.join(" ")}`, 128));
-      let score = 0;
-      for (const word of queryWords) {
-        if (keywordTerms.has(word)) score += 16;
-        if (nameTerms.has(word)) score += 11;
-        if (bodyTerms.has(word)) score += 4;
-      }
-      return { resource, score };
-    })
+    .map((resource) => ({ resource, score: scoreWorldCommonsSearchEntry(worldCommonsSearchEntry(resource), query) }))
     .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score || a.resource.name.localeCompare(b.resource.name));
+    .sort((a, b) => b.score - a.score ||
+      (a.resource.name < b.resource.name ? -1 : a.resource.name > b.resource.name ? 1 :
+        a.resource.id < b.resource.id ? -1 : a.resource.id > b.resource.id ? 1 : 0));
 }

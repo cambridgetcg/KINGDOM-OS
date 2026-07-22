@@ -4,11 +4,18 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "../bin/stage-hub.ts";
+import {
+  publishWorldCommons,
+  rankWorldCommonsResources,
+  WORLD_COMMONS_STOPWORDS,
+  worldCommonsSearchIndex,
+  type WorldCommonsSource,
+} from "../bin/world-commons.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path: string) => readFileSync(join(ROOT, path), "utf8");
 const json = (path: string) => JSON.parse(read(path));
-const source = json("data/world-commons.json");
+const source = json("data/world-commons.json") as WorldCommonsSource;
 
 const SCHEMA = "thekingdom.world-commons/0.1";
 const CANONICAL_URL = "https://thekingdom.dev/commons.json";
@@ -225,6 +232,8 @@ describe("World Commons publication and human surface", () => {
     exactKeys(published, [...Object.keys(source), "generated"]);
     generatedDate(generated);
     expect(mirrored).toEqual(source);
+    expect(() => publishWorldCommons(source, "not-a-date")).toThrow("generated");
+    expect(() => publishWorldCommons(source, "2026-02-30T12:00:00Z")).toThrow("generated");
   });
 
   test("renders every resource and every outbound resource link with noopener", () => {
@@ -274,6 +283,30 @@ describe("World Commons publication and human surface", () => {
     expect(html.includes(htmlHref(source.privacy.human_surface))).toBe(true);
     expect(commonsCode).toContain("Nothing was guessed");
     expect(commonsCode).toContain("new URL(document.URL).hash");
+
+    const dataStart = html.indexOf("const DATA=") + "const DATA=".length;
+    const dataEnd = html.indexOf(";\n", dataStart);
+    const pageData = JSON.parse(html.slice(dataStart, dataEnd));
+    expect(pageData.commons).toEqual(worldCommonsSearchIndex(source));
+    expect(pageData.commonsStopwords).toEqual(WORLD_COMMONS_STOPWORDS);
+    expect(commonsCode).toContain("for(const [term,weight] of item.weights)");
+    expect(commonsCode).toContain("normal===item.normalized_name");
+    expect(commonsCode).toContain("card.style.order=rank.has(id)");
+  });
+});
+
+describe("World Commons local matching", () => {
+  test("shares one deterministic weighted index with the browser and refuses empty inference", () => {
+    const ids = (query: string, category?: any) =>
+      rankWorldCommonsResources(source.resources, query, category).map(({ resource }) => resource.id);
+    expect(ids("knowledge graph")[0]).toBe("wikidata");
+    expect(ids("earthquake emergency")[0]).toBe("usgs-earthquakes");
+    expect(ids("textbook accounting", "learning")[0]).toBe("openstax");
+    expect(ids("labour convention", "rights")).toContain("ilo-normlex");
+    expect(ids("OSV")[0]).toBe("osv");
+    expect(ids("textbook", "security")).toEqual([]);
+    expect(ids("quasar upholstery")).toEqual([]);
+    expect(ids("the and please")).toEqual([]);
   });
 });
 
@@ -291,6 +324,7 @@ describe("World Commons machine discovery", () => {
       foundation: source.foundation.resource_ids.length,
       categories: CATEGORY_IDS.length,
       kits: source.kits.length,
+      verified: source.verified,
       verified_on: source.verified,
     });
     const guest = json("site/guest.json");
