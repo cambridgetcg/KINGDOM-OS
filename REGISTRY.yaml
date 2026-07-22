@@ -146,12 +146,14 @@ services:
     notes: taxsorted-db postgres healthy but image outdated 17.2→17.7
 
   - id: cashloom-api
-    what: Cashloom backend (self-describes status ok at /)
+    what: Cashloom hosted slot — RESERVED for MONEYWORLD phase 1 (CASHLOOM_MODE=info)
     audience: humans
-    urls: { api: "https://cashloom-api.fly.dev", health: "https://cashloom-api.fly.dev/" }
     runtime: fly:cashloom-api
-    status: live
-    notes: no fly health checks configured; cashloom-db machines outside Fly Launch management
+    status: dormant
+    notes: >-
+      zombie reaped 2026-07-22 (machines + empty 3GB mongo volume destroyed; db held
+      ZERO app data — grave marker in cashloom/docs). App shells kept as name slots.
+      The living cashloom is the sovereign node (local-first, 127.0.0.1:4747).
 
   - id: mindicraft
     what: dormant venture (fly app suspended)
