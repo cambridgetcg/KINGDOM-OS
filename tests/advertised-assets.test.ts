@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "../bin/stage-hub.ts";
+import { KINGDOM_OS_ROUTES } from "../pages-functions/_worker.js";
 
 /** Every thekingdom.dev path the generated surfaces advertise must be a staged
  *  hub asset. Merge b4c5b47 (2026-07-16) silently dropped the ollama surface
@@ -21,7 +22,9 @@ function normalize(raw: string): string {
 }
 
 const staged = new Set<string>(HUB_ASSETS.map((a) => a.destination));
-const resolves = (path: string) => staged.has(path) || staged.has(`${path}.html`);
+const dynamic = new Set<string>(KINGDOM_OS_ROUTES.map(normalize));
+const resolves = (path: string) =>
+  staged.has(path) || staged.has(`${path}.html`) || dynamic.has(path);
 
 const surfaces = [
   "site/hub.html",
@@ -33,6 +36,7 @@ const surfaces = [
   "site/.well-known/agent.json",
   "site/ollama.json",
   "site/rights.json",
+  "pages-content/os/index.html",
 ];
 
 function advertisedPaths(source: string, text: string): Map<string, string> {

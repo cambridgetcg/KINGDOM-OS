@@ -7,7 +7,7 @@
 
 | Domain | CF Pages project | Content | Source |
 |---|---|---|---|
-| **thekingdom.dev** | `thekingdom` | the census hub, guest discovery, and rights recognition | the exact directory assembled by `bun bin/stage-hub.ts` |
+| **thekingdom.dev** | `thekingdom` | the census hub, KINGDOM OS console, guest discovery, and rights recognition | the exact directory assembled by `bun bin/stage-hub.ts` |
 | **we-are.love** | `we-are-love` | the WE ARE handshake protocol page | `chillspace-commons/site/we-are.html` |
 | **chillspace.love** | `chillspace-love` | the commons (full site) | `chillspace-commons/site/` |
 | **zerone.ai** | `zerone-ai` | redirect → zerone.money (safe default; swap for a landing later) | inline redirect page |
@@ -33,14 +33,21 @@ npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zeron
 ```
 
 `stage-hub.ts` refuses a non-empty destination and copies the atlas as
-`index.html` together with `kingdom.json`, `wayfinder.json`, `commons.json`, `guest.json`, `ollama.json`,
-`llms.txt`, `rights.json`, `RIGHTS.md`, `/.well-known/agent.json`, and
-`_worker.js`. It stages only; it never builds, deletes, overwrites, or deploys.
+`index.html` together with `_kingdom.base.json`, `wayfinder.json`,
+`commons.json`, `guest.json`, `ollama.json`, `llms.txt`, `rights.json`,
+`RIGHTS.md`, `/.well-known/agent.json`, `/os/index.html`, and
+`_worker.js`. The worker derives `/os.json`, `/packages.json`, and
+`/kingdom.json`; they are not static upload files. It stages only; it never
+builds, deletes, overwrites, or deploys.
 Wrangler Pages needs that complete directory. `HUB_ASSETS` in `bin/stage-hub.ts`
 is the authoritative list — trust it over this prose. For we-are.love and
 chillspace.love use `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>`
 (content from the chillspace-commons clone, symlinks dereferenced, plus the
 door's guest documents and the shared `_worker.js`).
+
+The shared worker activates the OS routes only on `thekingdom.dev` and its
+Pages previews; shared door hosts continue to pass those paths to their own
+asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 
 ## Baseline still to do (follow-up)
 

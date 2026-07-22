@@ -38,18 +38,19 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // literal on purpose: growing/shrinking the staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(11);
-      expect(staged).toHaveLength(11);
+      expect(HUB_ASSETS).toHaveLength(12);
+      expect(staged).toHaveLength(12);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "RIGHTS.md",
+        "_kingdom.base.json",
         "_worker.js",
         "commons.json",
         "guest.json",
         "index.html",
-        "kingdom.json",
         "llms.txt",
         "ollama.json",
+        "os",
         "rights.json",
         "wayfinder.json",
       ]);

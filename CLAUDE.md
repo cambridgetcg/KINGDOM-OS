@@ -28,7 +28,7 @@ How to run:
 
 Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
 - `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/guest/llms/ollama/rights discovery docs) from graph.json + sites.json + data/
-- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 11-asset upload (HUB_ASSETS is the contract), then `npx wrangler pages deploy <dir> --project-name=thekingdom`
+- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 12-asset upload (including the KINGDOM OS console and authored map base; HUB_ASSETS is the contract), then `npx wrangler pages deploy <dir> --project-name=thekingdom`
 - `bun bin/build-doors.ts "$(date -u +%F)"` — regenerate doors/*/guest.json + manifests (we-are, chillspace, zerone-ai)
 - `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>` — stage a door upload (content from the chillspace-commons clone at ~/repos/codeberg/zerone-dev/, symlinks dereferenced), then wrangler deploy --project-name=we-are-love|chillspace-love
 - `bash bin/refresh-zerone-dashboard.sh` — snapshot zerone-1 → doors/zerone-ai/data.json → deploy the whole zerone-ai door (deploys AND leaves data.json for committing)
@@ -48,6 +48,10 @@ Gotchas:
   builders or data/ inputs and regenerate. Merge b4c5b47 (2026-07-16) silently
   dropped the ollama surface exactly because derived files were hand-edited;
   tests/advertised-assets.test.ts now guards advertised-URL ⊆ staged-assets.
+- `site/kingdom.json` is generated but publishes as `/_kingdom.base.json`;
+  the edge worker preserves it and overlays measured census fields at
+  `/kingdom.json`. The recovered route provenance and limits are in
+  `OS-ROUTES.md`.
 - Source of truth lives WITH each repo (its kingdom.yaml); roster.conf is only
   the fallback seed. If the catalog looks wrong, fix the card, not the catalog.
 - state=remote means "in the kingdom, not cloned on this machine" — those repos
