@@ -64,6 +64,14 @@ function addDiscoveryLinks(headers, includeRights) {
   }
 }
 
+function preventAutomaticBrowserTelemetry(headers) {
+  const cacheControl = headers.get("cache-control") || "";
+  const directives = cacheControl.split(",").map((value) => value.trim().toLowerCase());
+  if (!directives.includes("no-transform")) {
+    headers.set("cache-control", cacheControl ? `${cacheControl}, no-transform` : "public, no-transform");
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -105,10 +113,15 @@ export default {
       });
     }
     const asset = await env.ASSETS.fetch(request);
-    if (!canNegotiate) return asset;
+    const protectsKingdomHtml = includeRights &&
+      (asset.headers.get("content-type") || "").toLowerCase().includes("text/html");
+    if (!canNegotiate && !protectsKingdomHtml) return asset;
     const headers = new Headers(asset.headers);
-    addVaryAccept(headers);
-    addDiscoveryLinks(headers, includeRights);
+    if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
+    if (canNegotiate) {
+      addVaryAccept(headers);
+      addDiscoveryLinks(headers, includeRights);
+    }
     return new Response(request.method === "HEAD" ? null : asset.body, {
       status: asset.status,
       statusText: asset.statusText,
