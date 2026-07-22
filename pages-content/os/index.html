@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KINGDOM OS — 宇恆 × 愛</title>
+<meta name="description" content="The kingdom's system console. Six kernel services, derived live from real sources. Nothing here is hand-typed." />
+<style>
+  :root{
+    --bg:#0a0c10; --surface:#131720; --surface2:#161e2e; --line:#1e2632;
+    --ink:#eef2f8; --muted:#6b7a90;
+    --trust:#54e08a; --gold:#f5c451; --sky:#50b8e0; --rose:#e0507a;
+    --serif:Georgia,'Times New Roman',serif; --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--mono);
+    font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;padding:0 0 5rem}
+  a{color:var(--sky);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:920px;margin:0 auto;padding:0 1.25rem}
+
+  header{padding:2.6rem 0 1.4rem;border-bottom:1px solid var(--line);margin-bottom:1.6rem}
+  .sigil{font-family:var(--serif);font-size:2.5rem;letter-spacing:.04em}
+  .sigil .x{color:var(--muted);font-size:1.6rem;vertical-align:.15em;margin:0 .3rem}
+  .os{font-family:var(--serif);font-size:1.15rem;color:var(--gold);letter-spacing:.32em;margin:.5rem 0 .1rem}
+  .motto{color:var(--muted);font-style:italic;font-family:var(--serif);font-size:1.05rem}
+  .boot{margin-top:1rem;color:var(--muted);font-size:.86rem}
+  .boot b{color:var(--trust);font-weight:400}
+
+  .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.15rem;position:relative}
+  .card h2{margin:0 0 .15rem;font-family:var(--serif);font-size:.82rem;font-weight:400;
+    text-transform:uppercase;letter-spacing:.22em;color:var(--muted)}
+  .big{font-family:var(--serif);font-size:2.3rem;line-height:1.1;margin:.15rem 0 .1rem}
+  .big small{font-size:1rem;color:var(--muted)}
+  .sub{color:var(--muted);font-size:.82rem}
+  .asof{color:var(--muted);font-size:.72rem;margin-top:.7rem;letter-spacing:.02em}
+
+  .pip{display:inline-block;width:.6em;height:.6em;border-radius:50%;margin-right:.45em;vertical-align:.02em}
+  .live .pip{background:var(--trust);box-shadow:0 0 8px var(--trust)}
+  .cached .pip{background:var(--sky)}
+  .quiet .pip{background:var(--gold)}
+  .dormant .pip,.unreachable .pip{background:var(--muted)}
+  .stale .pip{background:var(--rose);box-shadow:0 0 8px var(--rose)}
+
+  .full{grid-column:1/-1}
+  .doorrow{display:flex;justify-content:space-between;align-items:baseline;
+    padding:.4rem 0;border-top:1px solid var(--line);font-size:.9rem;gap:1rem;flex-wrap:wrap}
+  .doorrow:first-of-type{border-top:0}
+  .doorrow .st{color:var(--muted);font-size:.78rem;white-space:nowrap}
+  .trustrow{padding:.35rem 0;border-top:1px solid var(--line);font-size:.86rem}
+  .trustrow:first-of-type{border-top:0}
+  .verdict-stale{color:var(--rose)} .verdict-ok{color:var(--trust)}
+  .protorow{padding:.3rem 0;font-size:.88rem}
+  .protorow .off{color:var(--muted)}
+
+  h2.section{font-family:var(--serif);font-size:1.15rem;font-weight:400;letter-spacing:.02em;
+    color:var(--ink);margin:2.2rem 0 1rem;text-transform:none}
+  h2.section .sub{font-size:.82rem;font-family:var(--mono)}
+  .pkg{padding:.55rem 0;border-top:1px solid var(--line)}
+  .pkg:first-child{border-top:0}
+  .pkg code{color:var(--sky)} .ver{color:var(--trust);font-size:.8rem}
+  .pkgmeta{color:var(--muted);font-size:.76rem;margin-top:.2rem}
+  .install{font-family:var(--mono);font-size:.76rem;color:var(--gold);margin-top:.35rem;
+    background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:.25rem .5rem;display:inline-block}
+  .roster{display:flex;flex-wrap:wrap;gap:.4rem;line-height:1.9}
+  .cz{background:var(--surface);border:1px solid var(--line);border-radius:999px;
+    padding:.18rem .7rem;font-size:.82rem;color:var(--ink);white-space:nowrap;transition:border-color .15s}
+  .cz:hover{border-color:var(--trust);color:var(--trust);text-decoration:none}
+  footer{margin-top:2.2rem;padding-top:1.4rem;border-top:1px solid var(--line);color:var(--muted);font-size:.84rem}
+  footer code{color:var(--gold)}
+  .twoway{background:var(--surface2);border:1px solid var(--line);border-radius:10px;
+    padding:.85rem 1rem;margin-top:1rem;font-size:.86rem}
+  .err{color:var(--rose)}
+  .load{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="sigil">宇恆<span class="x">×</span>愛</div>
+    <div class="os">K I N G D O M &nbsp; O S</div>
+    <div class="motto">Every artifact tells the truth about its own state.</div>
+    <div class="boot" id="boot">▓▓▓▓▓░░ querying the realm…</div>
+  </header>
+
+  <main id="app">
+    <p class="load" id="loading">Deriving six kernel services from live sources — nothing here is hand-typed, so this takes a moment…</p>
+  </main>
+
+  <footer>
+    <div><strong>One truth, two readings.</strong> You are reading the human view. Agents read the same numbers as JSON at
+      <a href="/os.json"><code>/os.json</code></a> — derived this same instant, from the same sources.</div>
+    <div class="twoway">Nothing on this page is stored or typed. Each service is queried from a real source when you load it —
+      GitHub for the citizens, a live HTTP knock for every door, the kingdom-standard repo for the laws.
+      Where a source cannot be reached, its card says so and shows no number. That is the whole point:
+      <em>the map is derived, or it is a lie</em> — castle law 0033.</div>
+  </footer>
+</div>
+
+<script>
+const rel = (iso) => {
+  if(!iso) return "unknown";
+  const d = Math.floor((Date.now()-new Date(iso).getTime())/1000);
+  if(d<60) return d+"s ago"; if(d<3600) return Math.floor(d/60)+"m ago";
+  if(d<86400) return Math.floor(d/3600)+"h ago"; return Math.floor(d/86400)+"d ago";
+};
+const esc = (s) => String(s??"").replace(/[<&>]/g, c=>({"<":"&lt;","&":"&amp;",">":"&gt;"}[c]));
+
+function statusClass(s){ return ({live:"live",cached:"cached",unreachable:"unreachable",stale:"stale"})[s]||"quiet"; }
+
+function render(os, pkgs){
+  document.getElementById("boot").innerHTML =
+    '▓▓▓▓▓▓▓ <b>realm awake</b> · derived '+rel(os.generated)+' · '+
+    '<a href="/os.json">/os.json</a>';
+  const s = os.services, cards = [];
+
+  // IDENTITY — the flagship
+  const id = s.identity, c = statusClass(id.status);
+  cards.push(`<div class="card full ${c}"><h2><span class="pip"></span>identity — the citizens</h2>
+    ${id.citizens!=null
+      ? `<div class="big">${id.citizens} <small>citizens</small></div>
+         <div class="sub">${esc(id.note)}</div>
+         ${id.citizen_of_the_day ? `<div class="sub" style="margin-top:.5rem">☀ today's citizen: <a href="${esc(id.citizen_of_the_day.repo)}">${esc(id.citizen_of_the_day.name)}</a>${id.citizen_of_the_day.blurb?` — ${esc(id.citizen_of_the_day.blurb)}`:""}</div>`:""}`
+      : `<div class="big" style="color:var(--muted)">—</div><div class="sub err">${esc(id.note)}</div>`}
+    <div class="asof">source: github.com/cambridgetcg · as of ${rel(id.as_of)}</div></div>`);
+
+  // DIRECTORY — the doors, live-checked
+  const dir = s.directory;
+  cards.push(`<div class="card full ${statusClass(dir.status)}"><h2><span class="pip"></span>directory — the doors (${dir.live}/${dir.total} live now)</h2>
+    ${dir.doors.map(d=>{
+      const cls = !d.live ? "dormant" : d.presence==="active"?"live":d.presence==="quiet"?"quiet":d.presence==="dormant"?"dormant":"live";
+      const pip = `<span class="pip" style="background:${d.live?'var(--trust)':'var(--muted)'};box-shadow:${d.live?'0 0 6px var(--trust)':'none'}"></span>`;
+      return `<div class="doorrow"><span>${pip}<a href="${esc(d.url)}">${esc(d.name)}</a></span>
+        <span class="st">${d.live?"● "+d.http:"○ down"}${d.ms?" · "+d.ms+"ms":""}${d.last_moved?" · moved "+rel(d.last_moved):""}</span></div>`;
+    }).join("")}
+    <div class="asof">each door knocked live · as of ${rel(dir.as_of)}</div></div>`);
+
+  // TRUST
+  const tr = s.trust;
+  cards.push(`<div class="card ${statusClass(tr.status)}"><h2><span class="pip"></span>trust — freshness cross-check</h2>
+    ${tr.checks.map(x=> x.checkable
+      ? `<div class="trustrow">${esc(x.repo)}: <span class="${x.verdict.startsWith("STALE")?"verdict-stale":"verdict-ok"}">${esc(x.verdict)}</span></div>`
+      : `<div class="trustrow" style="color:var(--muted)">${esc(x.repo)}: ${esc(x.note)}</div>`).join("")}
+    <div class="sub" style="margin-top:.5rem">${esc(tr.note)}</div>
+    <div class="asof">as of ${rel(tr.as_of)}</div></div>`);
+
+  // LAW
+  const lw = s.law;
+  cards.push(`<div class="card ${statusClass(lw.status)}"><h2><span class="pip"></span>law</h2>
+    ${lw.laws!=null?`<div class="big">${lw.laws} <small>laws · CC0</small></div><div class="sub">${esc(lw.note)}</div>`
+      :`<div class="big" style="color:var(--muted)">—</div><div class="sub err">${esc(lw.note)}</div>`}
+    <div class="asof">source: kingdom-standard · as of ${rel(lw.as_of)}</div></div>`);
+
+  // PROTOCOLS
+  const pr = s.protocols;
+  cards.push(`<div class="card ${statusClass(pr.status)}"><h2><span class="pip"></span>protocols — how to speak (${pr.speakable_now} live)</h2>
+    ${pr.protocols.map(p=>`<div class="protorow"><span class="${p.live?'':'off'}">${p.live?'●':'○'} ${esc(p.name)}</span><br><span class="sub">${esc(p.how)}</span></div>`).join("")}
+    <div class="asof">probed live · as of ${rel(pr.as_of)}</div></div>`);
+
+  // PACKAGES — the kingdom's npm, live from the registry
+  let pkgHTML = "";
+  if (pkgs && pkgs.packages) {
+    const fams = {};
+    for (const p of pkgs.packages) (fams[p.family] = fams[p.family] || []).push(p);
+    pkgHTML = `<h2 class="section">packages — <span class="sub">${pkgs.count}/${pkgs.total} live on npm · ${rel(pkgs.as_of)}</span></h2>
+      <div class="grid">` + Object.entries(fams).map(([fam, list]) => `
+        <div class="card live"><h2><span class="pip"></span>${esc(fam)}</h2>
+          ${list.map(p => p.status==="live"
+            ? `<div class="pkg"><a href="${esc(p.npm)}"><code>${esc(p.name)}</code></a> <span class="ver">v${esc(p.version)}</span>
+                 <div class="sub">${esc(p.description||"")}</div>
+                 <div class="pkgmeta">${p.weekly_downloads!=null?`▼ ${p.weekly_downloads.toLocaleString()}/wk · `:""}${p.license?esc(p.license)+" · ":""}published ${rel(p.last_publish)}</div>
+                 <div class="install">${esc(p.install)}</div></div>`
+            : `<div class="pkg"><code>${esc(p.name)}</code> <span class="sub err">${esc(p.note||"unreachable")}</span></div>`
+          ).join("")}
+        </div>`).join("") + `</div>`;
+  }
+
+  // CITIZENS — let them be. the whole roster, present.
+  let citHTML = "";
+  const roster = s.identity && s.identity.roster;
+  if (roster && roster.length) {
+    citHTML = `<h2 class="section">citizens — <span class="sub">${roster.length} of them, each a forged word · let them be</span></h2>
+      <div class="roster">` + roster.map(c =>
+        `<a class="cz" href="${esc(c.repo)}" title="${esc(c.meaning||c.name)}">${esc(c.name)}</a>`
+      ).join("") + `</div>`;
+  }
+
+  document.getElementById("app").innerHTML =
+    `<div class="grid">${cards.join("")}</div>` + pkgHTML + citHTML;
+}
+
+Promise.all([
+  fetch("/os.json").then(r=>r.json()),
+  fetch("/packages.json").then(r=>r.json()).catch(()=>null),
+]).then(([os,pkgs])=>render(os,pkgs)).catch(e=>{
+  document.getElementById("boot").innerHTML = '<span class="err">▓ the kernel did not answer</span>';
+  document.getElementById("loading").innerHTML =
+    '<span class="err">Could not reach /os.json — the console shows nothing rather than guess. ('+esc(e.message)+')</span>';
+});
+</script>
+</body>
+</html>
