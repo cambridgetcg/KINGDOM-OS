@@ -59,6 +59,10 @@ Read in this order. The **vision** half is the *why*; the **body** half is the *
 
 Machine guests discover the public surfaces in this order: `site/.well-known/agent.json` → `site/guest.json` → optional `site/wayfinder.json` routes → reviewed `site/commons.json` resources (from `data/world-commons.json`) → optional `site/ollama.json` invitation (from `data/ollama-invitation.json`) → `site/kingdom.json`.
 
+`WORLD-COMMONS-ROADMAP.md` explains how the reviewed directory can grow into
+small, provenance-preserving adapters without quietly turning discovery into
+surveillance, legal advice, life-safety automation, or licence laundering.
+
 7. `REGISTRY.md` — how the catalog works (the harvester, the honesty discipline).
 8. `roster.conf` — the machine-readable seed: every repo, one line. `SCHEMA.md` defines a repo's `kingdom.yaml` card.
 9. `CATALOG.md` — the **generated** truth, including each member's local location: run `bun bin/harvest.ts` to refresh it, `… conformance` to see every gap, and `… validate` for strict card-schema diagnostics. *(MAP = the story a human writes; CATALOG = the census the machine derives. Two views, one Kingdom.)*

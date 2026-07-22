@@ -260,7 +260,7 @@
       "coverage": "More than 80 primarily introductory college and school titles; editions and regional fit vary.",
       "keywords": ["textbook", "accounting", "economics", "statistics", "science", "study", "education"],
       "audiences": ["human"],
-      "access": { "cost": "free", "account": "varies", "note": "Web and PDF books remain free, but some current chapter pages ask readers to sign in before continuing; access varies by page and format." },
+      "access": { "cost": "free", "account": "none", "note": "Core online and PDF textbooks require no account; optional interactive, student, and instructor resources vary." },
       "reuse": { "status": "noncommercial", "license": "Usually CC BY-NC-SA for current and newly updated titles", "note": "OpenStax changed its default in 2026; verify the exact title and edition because some books retain earlier licences." },
       "automation": { "status": "human-only", "auth": "not-applicable", "limits": "Current book pages prohibit using OpenStax content to train or ingest into large language models without permission; no bulk extraction API is offered.", "note": "Link people to the exact title and edition. Keep attribution and the exact licence with any permitted human-led adaptation." },
       "links": [

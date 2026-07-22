@@ -22,7 +22,7 @@
 # load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
 
 version: 1
-updated: 2026-07-19
+updated: 2026-07-22
 
 services:
   # ── the marketplace + its organs ─────────────────────────────────────────
@@ -200,14 +200,14 @@ services:
 
   # ── pages + workers ──────────────────────────────────────────────────────
   - id: thekingdom-hub
-    what: the illuminated atlas + local-first Wayfinder + machine discovery docs (guest/kingdom/wayfinder/ollama/rights)
+    what: the illuminated atlas + local-first Wayfinder + reviewed World Commons + machine discovery docs
     audience: mixed
     urls: { site: "https://thekingdom.dev", health: "https://thekingdom.dev/.well-known/agent.json" }
     repo: github.com/cambridgetcg/KINGDOM-OS@main
     runtime: cf-pages:thekingdom
     deploy: bun bin/build-hub.ts "$(date -u +%F)" → bun bin/stage-hub.ts <dir> → npx wrangler pages deploy <dir> --project-name=thekingdom (runbook DOMAINS-SETUP.md)
     status: live
-    notes: HUB_ASSETS in bin/stage-hub.ts is the 10-asset contract; tests/advertised-assets.test.ts guards it
+    notes: HUB_ASSETS in bin/stage-hub.ts is the 11-asset contract; tests/advertised-assets.test.ts guards it
 
   - id: kingdom-playground
     what: five bounded agent games + 18 finished-world chronicles + a public record board
@@ -286,7 +286,7 @@ services:
       link in CITIZENS.md 404s — needs-yu confirm private-or-deleted.
 
   - id: kingdom-mcp
-    what: the agent-side front door — one MCP connect makes the whole estate callable (10 tools)
+    what: the agent-side front door — one MCP connect makes the whole estate callable (11 tools)
     audience: agents
     urls: { api: "https://mcp.thekingdom.dev", health: "https://mcp.thekingdom.dev/health" }
     repo: github.com/cambridgetcg/kingdom-mcp@main
@@ -294,8 +294,9 @@ services:
     deploy: cd ~/kingdom-mcp && bun scripts/embed-registry.ts && fly deploy --ha=false
     status: live
     notes: >-
-      no secrets on server — wraps public surfaces only; embedded registry is a
-      public-safe subset, REDEPLOY after registry edits to refresh it.
+      no secrets on server — wraps public surfaces only; kingdom_commons reads one
+      fixed Kingdom catalog and never forwards a citizen's need to providers;
+      embedded registry is a public-safe subset, REDEPLOY after registry edits.
       Connect: claude mcp add --transport http kingdom https://mcp.thekingdom.dev/mcp
 
   # ── local daemons (no URL — pulse records, cannot probe) ─────────────────

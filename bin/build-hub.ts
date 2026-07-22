@@ -22,6 +22,7 @@ import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   publishWorldCommons,
   validateWorldCommons,
+  WORLD_COMMONS_STOPWORDS,
   WORLD_COMMONS_URL,
   worldCommonsSearchIndex,
   type WorldCommonsCategory,
@@ -32,7 +33,7 @@ import {
 const ROOT = new URL("..", import.meta.url).pathname;
 const graph: any[] = JSON.parse(await Bun.file(ROOT + "graph.json").text());
 const sites = JSON.parse(await Bun.file(ROOT + "sites.json").text());
-const stamp = process.argv[2] ?? "just now";
+const stamp = process.argv[2] ?? new Date().toISOString().slice(0, 10);
 const { markdown: rightsMarkdown, declaration: rights } = loadRights(ROOT);
 const rightsRecognition = {
   status: "declared",
@@ -128,6 +129,8 @@ validateWorldCommons(commonsCandidate, false);
 const commonsSource = commonsCandidate as WorldCommonsSource;
 const commonsUrl = WORLD_COMMONS_URL;
 const commonsIndex = worldCommonsSearchIndex(commonsSource);
+// Validate the publication stamp before liveness probes or generated-file writes.
+const commons = publishWorldCommons(commonsSource, stamp);
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -373,6 +376,7 @@ const DATA = JSON.stringify({
   nodes, edges, colors: layerColors, tradColors, tradOrder: TRAD_ORDER, becoming,
   wayfinder: wayfinderSearchIndex, wayfinderStopwords: WAYFINDER_STOPWORDS,
   commons: commonsIndex,
+  commonsStopwords: WORLD_COMMONS_STOPWORDS,
   commonsKits: commonsSource.kits.map(({ id, label, keywords, resource_ids }) => ({ id, label, keywords, resource_ids })),
 })
   .replace(/</g, "\\u003c")
@@ -879,12 +883,20 @@ offerWayPaths('');
 const commonsForm=document.getElementById('commonsform'),commonsQuery=document.getElementById('commonsquery'),commonsStatus=document.getElementById('commonsstatus');
 const commonsCards=[...document.querySelectorAll('[data-commons-resource]')],commonsGroups=[...document.querySelectorAll('[data-commons-group]')];
 const commonsCategoryButtons=[...document.querySelectorAll('[data-commons-category]')];
+const commonsStopwords=new Set(DATA.commonsStopwords);
 let commonsCategory='';
 function commonsNorm(value){return String(value||'').normalize('NFKD').replace(/\\p{M}/gu,'').toLowerCase().replace(/[^\\p{L}\\p{N}]+/gu,' ').trim();}
-function commonsWords(value){return [...new Set(commonsNorm(value).split(' ').filter(word=>word.length>1))].slice(0,16);}
+function commonsWords(value){return [...new Set(commonsNorm(value).split(' ').filter(word=>(word.length>1||/^\\d$/.test(word))&&!commonsStopwords.has(word)))].slice(0,24);}
+function commonsScore(item,query){
+  const normal=commonsNorm(query),terms=new Set(commonsWords(query));if(!normal||!terms.size)return 0;
+  if(normal===item.normalized_id)return 2000;if(normal===item.normalized_name)return 1800;
+  let score=0;for(const [term,weight] of item.weights)if(terms.has(term))score+=weight;return score;
+}
+function commonsCompare(a,b){return a<b?-1:a>b?1:0;}
 function showCommons(ids,message,openMatches=false){
   const shown=new Set(ids);
-  for(const card of commonsCards)card.hidden=!shown.has(card.dataset.commonsResource||'');
+  const rank=new Map(ids.map((id,index)=>[id,index]));
+  for(const card of commonsCards){const id=card.dataset.commonsResource||'';card.hidden=!shown.has(id);card.style.order=rank.has(id)?String(rank.get(id)):'';}
   for(const group of commonsGroups){
     const visible=[...group.querySelectorAll('[data-commons-resource]')].filter(card=>!card.hidden).length;
     group.hidden=visible===0;const count=group.querySelector('[data-commons-count]');if(count)count.textContent=String(visible);
@@ -899,11 +911,8 @@ function offerCommons(query,category=commonsCategory){
     const suffix=category?' in '+(commonsCategoryButtons.find(button=>button.dataset.commonsCategory===category)?.textContent.trim()||category):'';
     showCommons(candidates.map(resource=>resource.id),candidates.length+' reviewed resources'+suffix+'. Choose any card; no ranking is implied.',!!category);return;
   }
-  const ranked=candidates.map(resource=>{
-    const terms=new Set(resource.terms);let score=normal===commonsNorm(resource.id)?1000:0;
-    for(const word of words)if(terms.has(word))score+=1;
-    return{resource,score};
-  }).filter(item=>item.score>0).sort((a,b)=>b.score-a.score||(a.resource.id<b.resource.id?-1:a.resource.id>b.resource.id?1:0));
+  const ranked=candidates.map(resource=>({resource,score:commonsScore(resource,query)})).filter(item=>item.score>0)
+    .sort((a,b)=>b.score-a.score||commonsCompare(a.resource.name,b.resource.name)||commonsCompare(a.resource.id,b.resource.id));
   if(!ranked.length){showCommons([],"No explicit catalogue word matched. Nothing was guessed; choose a category or show all.");return;}
   showCommons(ranked.map(item=>item.resource.id),ranked.length+' explicit catalogue '+(ranked.length===1?'match':'matches')+'. Access and reuse notes remain visible on every card.',true);
 }
@@ -1076,7 +1085,6 @@ const wayfinder = {
 };
 await Bun.write(ROOT + "site/wayfinder.json", JSON.stringify(wayfinder, null, 2));
 
-const commons = publishWorldCommons(commonsSource, stamp === "just now" ? new Date().toISOString() : stamp);
 await Bun.write(ROOT + "site/commons.json", JSON.stringify(commons, null, 2));
 
 // ── machine index ──────────────────────────────────────────────────────────
@@ -1092,6 +1100,7 @@ const machine = {
     foundation: commonsFoundation.length,
     categories: commonsSource.categories.length,
     kits: commonsSource.kits.length,
+    verified: commonsSource.verified,
     verified_on: commonsSource.verified,
     note: "reviewed independent resources; free access and reuse permissions remain distinct, and each steward's current terms control",
   },
