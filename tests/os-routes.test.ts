@@ -324,6 +324,62 @@ describe("KINGDOM OS edge routes", () => {
     expect(body.services.law).toMatchObject({ status: "live", laws: 3 });
   });
 
+  test("keeps the timeout active until a streamed upstream body is consumed", async () => {
+    const sources = liveSources();
+    let githubSignal: AbortSignal | undefined;
+    const worker = createKingdomWorker({
+      fetchImpl: async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+        const raw = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+        if (!raw.startsWith("https://api.github.com/users/cambridgetcg/repos?")) {
+          return sources.fetchImpl(input, init);
+        }
+
+        githubSignal = init?.signal || undefined;
+        const signal = githubSignal;
+        const body = new ReadableStream<Uint8Array>({
+          start(controller) {
+            controller.enqueue(new TextEncoder().encode("["));
+            signal?.addEventListener("abort", () => {
+              try {
+                controller.error(new DOMException("aborted", "AbortError"));
+              } catch {
+                // A settled test stream needs no further cleanup.
+              }
+            }, { once: true });
+          },
+        });
+        return new Response(body, { headers: { "content-type": "application/json" } });
+      },
+      now: () => new Date(NOW),
+      monotonic: () => Date.now(),
+      timeoutMs: 20,
+    });
+
+    let guard: ReturnType<typeof setTimeout> | undefined;
+    const outcome = await Promise.race([
+      worker.fetch(
+        new Request("https://thekingdom.dev/os.json"),
+        assets(() => new Response("not used")),
+      ),
+      new Promise<"still pending">((resolve) => {
+        guard = setTimeout(() => resolve("still pending"), 250);
+      }),
+    ]);
+    if (guard) clearTimeout(guard);
+
+    expect(outcome).toBeInstanceOf(Response);
+    expect(githubSignal?.aborted).toBe(true);
+    if (!(outcome instanceof Response)) return;
+    const body = await outcome.json();
+    expect(body.services.identity).toMatchObject({
+      status: "unreachable",
+      citizens: null,
+      public_repos_total: null,
+    });
+    expect(body.services.directory).toMatchObject({ status: "live", live: 13, total: 13 });
+    expect(body.services.law).toMatchObject({ status: "live", laws: 3 });
+  });
+
   test("returns an honest 503 when the authored base is missing", async () => {
     const worker = workerWith(async () => {
       throw new Error("offline");

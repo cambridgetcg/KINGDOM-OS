@@ -144,11 +144,12 @@ function isoNow(runtime) {
   return dateNow(runtime).toISOString();
 }
 
-async function timedFetch(runtime, input, init = {}) {
+async function withTimedResponse(runtime, input, init, consume) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), runtime.timeoutMs);
   try {
-    return await runtime.fetchImpl(input, { ...init, signal: controller.signal });
+    const response = await runtime.fetchImpl(input, { ...init, signal: controller.signal });
+    return await consume(response);
   } finally {
     clearTimeout(timer);
   }
@@ -218,13 +219,19 @@ async function fetchGithubRepositories(runtime) {
   for (let page = 1; page <= 10; page += 1) {
     const url =
       `${GITHUB_REPOSITORIES_SOURCE}?per_page=100&page=${page}&type=public&sort=full_name`;
-    const response = await timedFetch(runtime, url, { headers: githubHeaders() });
-    if (!response.ok) {
-      const status = response.status;
-      await discardBody(response);
-      throw new Error(`GitHub repository census returned HTTP ${status}`);
-    }
-    const batch = await boundedJson(response, BODY_LIMITS.githubPage, "GitHub repository page");
+    const batch = await withTimedResponse(
+      runtime,
+      url,
+      { headers: githubHeaders() },
+      async (response) => {
+        if (!response.ok) {
+          const status = response.status;
+          await discardBody(response);
+          throw new Error(`GitHub repository census returned HTTP ${status}`);
+        }
+        return boundedJson(response, BODY_LIMITS.githubPage, "GitHub repository page");
+      },
+    );
     if (!Array.isArray(batch)) throw new Error("GitHub repository census was not an array");
     repositories.push(...batch);
     if (batch.length < 100) return repositories;
@@ -294,13 +301,20 @@ function identityService(runtime, repositories) {
 async function probeDoor(runtime, door) {
   const started = runtime.monotonic();
   try {
-    const response = await timedFetch(runtime, door.url, {
-      method: "GET",
-      headers: { accept: "text/html,application/json;q=0.8,*/*;q=0.1" },
-      redirect: "follow",
-    });
-    const status = response.status;
-    await discardBody(response);
+    const status = await withTimedResponse(
+      runtime,
+      door.url,
+      {
+        method: "GET",
+        headers: { accept: "text/html,application/json;q=0.8,*/*;q=0.1" },
+        redirect: "follow",
+      },
+      async (response) => {
+        const observed = response.status;
+        await discardBody(response);
+        return observed;
+      },
+    );
     return {
       ...door,
       http: status,
@@ -347,15 +361,19 @@ function directoryService(runtime, probes, repositories) {
 }
 
 async function lawService(runtime) {
-  const response = await timedFetch(runtime, KINGDOM_STANDARD_SOURCE, {
-    headers: { accept: "text/markdown,text/plain;q=0.9,*/*;q=0.1" },
-  });
-  if (!response.ok) {
-    const status = response.status;
-    await discardBody(response);
-    throw new Error(`kingdom-standard returned HTTP ${status}`);
-  }
-  const standard = await boundedText(response, BODY_LIMITS.markdown, "kingdom-standard");
+  const standard = await withTimedResponse(
+    runtime,
+    KINGDOM_STANDARD_SOURCE,
+    { headers: { accept: "text/markdown,text/plain;q=0.9,*/*;q=0.1" } },
+    async (response) => {
+      if (!response.ok) {
+        const status = response.status;
+        await discardBody(response);
+        throw new Error(`kingdom-standard returned HTTP ${status}`);
+      }
+      return boundedText(response, BODY_LIMITS.markdown, "kingdom-standard");
+    },
+  );
   const laws = [...standard.matchAll(/^###\s+[A-Z]\d+\.\s+/gm)].length;
   if (!laws) throw new Error("kingdom-standard contained no recognizable laws");
   return {
@@ -383,22 +401,26 @@ async function stateFreshness(runtime, repository) {
   const source =
     `https://raw.githubusercontent.com/${GITHUB_OWNER}/${repository}/main/STATE.md`;
   try {
-    const response = await timedFetch(runtime, source, {
-      headers: { accept: "text/markdown,text/plain;q=0.9,*/*;q=0.1" },
-    });
-    if (response.status === 404) {
-      await discardBody(response);
-      return { repo: repository, exists: false };
-    }
-    if (!response.ok) {
-      const status = response.status;
-      await discardBody(response);
-      throw new Error(`HTTP ${status}`);
-    }
-    const state = await boundedText(response, BODY_LIMITS.markdown, `${repository} STATE.md`);
-    const freshnessLine = state.match(/^freshness:\s*(.+)$/im)?.[1] || "";
-    const declared = freshnessLine.match(/\d{4}-\d{2}-\d{2}/)?.[0] || null;
-    return { repo: repository, exists: true, declared };
+    return await withTimedResponse(
+      runtime,
+      source,
+      { headers: { accept: "text/markdown,text/plain;q=0.9,*/*;q=0.1" } },
+      async (response) => {
+        if (response.status === 404) {
+          await discardBody(response);
+          return { repo: repository, exists: false };
+        }
+        if (!response.ok) {
+          const status = response.status;
+          await discardBody(response);
+          throw new Error(`HTTP ${status}`);
+        }
+        const state = await boundedText(response, BODY_LIMITS.markdown, `${repository} STATE.md`);
+        const freshnessLine = state.match(/^freshness:\s*(.+)$/im)?.[1] || "";
+        const declared = freshnessLine.match(/\d{4}-\d{2}-\d{2}/)?.[0] || null;
+        return { repo: repository, exists: true, declared };
+      },
+    );
   } catch {
     return { repo: repository, exists: null, declared: null };
   }
@@ -461,13 +483,19 @@ async function protocolService(runtime) {
   ];
   const live = await Promise.all(definitions.map(async (protocol) => {
     try {
-      const response = await timedFetch(runtime, protocol.url, {
-        method: "GET",
-        headers: { accept: "application/json,*/*;q=0.1" },
-      });
-      const ok = response.ok;
-      await discardBody(response);
-      return ok;
+      return await withTimedResponse(
+        runtime,
+        protocol.url,
+        {
+          method: "GET",
+          headers: { accept: "application/json,*/*;q=0.1" },
+        },
+        async (response) => {
+          const ok = response.ok;
+          await discardBody(response);
+          return ok;
+        },
+      );
     } catch {
       return false;
     }
@@ -560,18 +588,22 @@ async function packageSnapshot(runtime, descriptor) {
   const npm = `https://www.npmjs.com/package/${descriptor.name}`;
   const install = `npm i ${descriptor.name}`;
   try {
-    const registryResponse = await timedFetch(runtime, `https://registry.npmjs.org/${encoded}`, {
-      headers: { accept: "application/json" },
-    });
-    if (!registryResponse.ok) {
-      const status = registryResponse.status;
-      await discardBody(registryResponse);
-      throw new Error(`npm registry returned HTTP ${status}`);
-    }
-    const registry = await boundedJson(
-      registryResponse,
-      BODY_LIMITS.npmMetadata,
-      `${descriptor.name} npm metadata`,
+    const registry = await withTimedResponse(
+      runtime,
+      `https://registry.npmjs.org/${encoded}`,
+      { headers: { accept: "application/json" } },
+      async (response) => {
+        if (!response.ok) {
+          const status = response.status;
+          await discardBody(response);
+          throw new Error(`npm registry returned HTTP ${status}`);
+        }
+        return boundedJson(
+          response,
+          BODY_LIMITS.npmMetadata,
+          `${descriptor.name} npm metadata`,
+        );
+      },
     );
     const version = registry?.["dist-tags"]?.latest;
     const release = version && registry?.versions?.[version];
@@ -579,21 +611,23 @@ async function packageSnapshot(runtime, descriptor) {
 
     let weeklyDownloads = null;
     try {
-      const downloadsResponse = await timedFetch(
+      const downloads = await withTimedResponse(
         runtime,
         `https://api.npmjs.org/downloads/point/last-week/${encoded}`,
         { headers: { accept: "application/json" } },
+        async (response) => {
+          if (!response.ok) {
+            await discardBody(response);
+            return null;
+          }
+          return boundedJson(
+            response,
+            BODY_LIMITS.smallJson,
+            `${descriptor.name} npm downloads`,
+          );
+        },
       );
-      if (downloadsResponse.ok) {
-        const downloads = await boundedJson(
-          downloadsResponse,
-          BODY_LIMITS.smallJson,
-          `${descriptor.name} npm downloads`,
-        );
-        if (Number.isFinite(downloads?.downloads)) weeklyDownloads = downloads.downloads;
-      } else {
-        await discardBody(downloadsResponse);
-      }
+      if (Number.isFinite(downloads?.downloads)) weeklyDownloads = downloads.downloads;
     } catch {
       // Registry truth remains useful when the optional popularity counter fails.
     }

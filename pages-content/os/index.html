@@ -84,14 +84,14 @@
   </header>
 
   <main id="app">
-    <p class="load" id="loading">Deriving six kernel services from live sources — nothing here is hand-typed, so this takes a moment…</p>
+    <p class="load" id="loading">Deriving six kernel services from live measurements and source-controlled rosters — this takes a moment…</p>
   </main>
 
   <footer>
     <div><strong>One truth, two readings.</strong> You are reading the human view. Agents read the same numbers as JSON at
       <a href="/os.json"><code>/os.json</code></a> — derived this same instant, from the same sources.</div>
-    <div class="twoway">Nothing on this page is stored or typed. Each service is queried from a real source when you load it —
-      GitHub for the citizens, a live HTTP knock for every door, the kingdom-standard repo for the laws.
+    <div class="twoway">Nothing about your visit is stored by this page. Measurements are queried from real sources when you load it —
+      GitHub for the citizens, a live HTTP knock for every door, the kingdom-standard repo for the laws — while the monitored rosters are source-controlled.
       Where a source cannot be reached, its card says so and shows no number. That is the whole point:
       <em>the map is derived, or it is a lie</em> — castle law 0033.</div>
   </footer>
@@ -104,7 +104,7 @@ const rel = (iso) => {
   if(d<60) return d+"s ago"; if(d<3600) return Math.floor(d/60)+"m ago";
   if(d<86400) return Math.floor(d/3600)+"h ago"; return Math.floor(d/86400)+"d ago";
 };
-const esc = (s) => String(s??"").replace(/[<&>]/g, c=>({"<":"&lt;","&":"&amp;",">":"&gt;"}[c]));
+const esc = (s) => String(s??"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
 function statusClass(s){ return ({live:"live",cached:"cached",unreachable:"unreachable",stale:"stale"})[s]||"quiet"; }
 

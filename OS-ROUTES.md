@@ -5,7 +5,7 @@ readings:
 
 | Route | Kind | Contract |
 |---|---|---|
-| `/os/` | staged HTML | Human console; exact recovered artifact |
+| `/os/` | staged HTML | Human console; recovered artifact with reviewed security and truth hardening |
 | `/os.json` | edge JSON | Live identity, door, law, protocol, and trust readings |
 | `/packages.json` | edge JSON | Live npm metadata and weekly downloads for six named packages |
 | `/kingdom.json` | edge JSON | Authored map with measured counts and matching door checks overlaid |
@@ -21,11 +21,21 @@ shared-door hostname still pass to `env.ASSETS`.
 ## Provenance
 
 The dynamic routes were observed on the immutable Cloudflare Pages deployment
-`e8af1f2a.thekingdom.pages.dev` on 2026-07-22. Its `/os/` artifact was
-recovered byte-for-byte into `pages-content/os/index.html`:
+`e8af1f2a.thekingdom.pages.dev` on 2026-07-22. Its `/os/` artifact was first
+recovered byte-for-byte in commit `b494e50`:
 
 ```
-sha256:390f7253ec8c174ee8ca50c6629c2286febb0695970fa68f0fb98780fd2b183d
+recovered sha256:390f7253ec8c174ee8ca50c6629c2286febb0695970fa68f0fb98780fd2b183d
+```
+
+Before republication, the inline HTML encoder was hardened to escape both
+quote characters as well as `&<>`, because live GitHub descriptions also enter
+a quoted title attribute. Copy that claimed nothing was hand-typed was corrected
+to distinguish live measurements from source-controlled monitored rosters. The
+reviewed artifact now staged from `pages-content/os/index.html` is:
+
+```
+hardened sha256:2f50ff6bffd1e0bc830f1e82c95560cda3dae536c3066615d2cd1c6fa707bddc
 ```
 
 The deployed worker bundle was not present in Git and could not be recovered
@@ -80,17 +90,19 @@ an honest JSON 503 rather than atlas HTML or fabricated census data.
 - The response advertises a ten-minute cache lifetime and the worker memoizes
   per isolate. Cloudflare may run multiple isolates, so timestamps are bounded
   by cache policy rather than globally synchronized.
-- Some preserved prose says that nothing is hand-typed. The values are queried,
-  but the historical door, trust, protocol, and package rosters are necessarily
-  source-controlled configuration. The byte-exact recovered HTML retains that
-  prose, while the reconstructed machine document intentionally corrects its
-  note. This is a truth-over-byte-fidelity choice rather than a silent claim.
+- The historical door, trust, protocol, and package rosters are necessarily
+  source-controlled configuration. Both the hardened human console and the
+  reconstructed machine document now say so. The original bytes remain
+  recoverable from `b494e50`; publication chooses security and truthful copy
+  over silent byte fidelity.
 
 ## Verification
 
 `tests/os-routes.test.ts` uses deterministic fake sources to cover all routes,
 content types, derived-field preservation, partial and total upstream failure,
-missing-base 503 behavior, HEAD, the observed method parity, static fallback,
-and shared-host isolation. `tests/stage-hub.test.ts` locks the 12-asset upload
-contract, while `tests/advertised-assets.test.ts` recognizes the three worker
-routes so a dynamic URL cannot be mistaken for a staged file.
+full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
+method parity, static fallback, and shared-host isolation. The console test
+executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
+locks the 12-asset upload contract, while `tests/advertised-assets.test.ts`
+recognizes the three worker routes so a dynamic URL cannot be mistaken for a
+staged file.
