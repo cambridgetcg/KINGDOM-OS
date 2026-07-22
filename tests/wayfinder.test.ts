@@ -21,7 +21,7 @@ describe("the Kingdom Wayfinder", () => {
   });
 
   test("keeps every route voluntary, bounded, and on a public HTTPS door", () => {
-    expect(source.paths).toHaveLength(8);
+    expect(source.paths).toHaveLength(9);
     expect(new Set(source.paths.map(({ id }: { id: string }) => id)).size).toBe(source.paths.length);
 
     for (const path of source.paths) {
@@ -73,6 +73,7 @@ describe("the Kingdom Wayfinder", () => {
     expect(ids("How can you help me with tax?")).toEqual(["small-business"]);
     expect(ids("I am tired and need somewhere quiet")).toEqual(["rest"]);
     expect(ids("play a fun game")).toEqual(["play"]);
+    expect(ids("free offline textbook and public data")).toEqual(["world-commons"]);
     expect(ids("lawyer please")).toEqual([]);
     expect(ids("請幫我休息")).toEqual([]);
     expect(rankWayfinderPaths(source.paths, "truth pressure agent map", 3)).toHaveLength(3);

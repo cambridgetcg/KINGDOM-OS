@@ -147,6 +147,28 @@
       ]
     },
     {
+      "id": "world-commons",
+      "label": "find free knowledge, public data, and open tools",
+      "glyph": "🌍",
+      "invitation": "Begin with a reviewed shelf for learning, health, maps, food, culture, repair, software, and public law.",
+      "keywords": ["free", "resource", "resources", "commons", "learn", "learning", "education", "textbook", "knowledge", "research", "health", "humanitarian", "map", "maps", "data", "food", "climate", "culture", "book", "books", "repair", "software", "offline", "public", "law"],
+      "boundary": "The shelf links to independent stewards. Inclusion is not ownership, endorsement, advice, a guarantee, or a blanket licence; free access and reuse remain separate.",
+      "stops": [
+        {
+          "name": "World Commons",
+          "url": "https://thekingdom.dev/#commons",
+          "why": "A human-readable foundation shelf with access, account, reuse, privacy, limits, and care notes.",
+          "scope": "Reviewed starting doors only; every linked steward and current item-level term remains independent."
+        },
+        {
+          "name": "World Commons · machine map",
+          "url": "https://thekingdom.dev/commons.json",
+          "why": "The same reviewed resource map as structured public data for agents and tools.",
+          "scope": "Static as-of metadata; re-check official terms and service state before relying on it."
+        }
+      ]
+    },
+    {
       "id": "map",
       "label": "see how the whole garden connects",
       "glyph": "⌘",

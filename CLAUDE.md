@@ -27,8 +27,8 @@ How to run:
 - `bun bin/harvest.ts validate` — strict, read-only card schema diagnostics (0 clean, 1 drift, 2 usage)
 
 Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
-- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/guest/llms/ollama/rights discovery docs) from graph.json + sites.json + data/
-- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 10-asset upload (HUB_ASSETS is the contract), then `npx wrangler pages deploy <dir> --project-name=thekingdom`
+- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/guest/llms/ollama/rights discovery docs) from graph.json + sites.json + data/
+- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 11-asset upload (HUB_ASSETS is the contract), then `npx wrangler pages deploy <dir> --project-name=thekingdom`
 - `bun bin/build-doors.ts "$(date -u +%F)"` — regenerate doors/*/guest.json + manifests (we-are, chillspace, zerone-ai)
 - `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>` — stage a door upload (content from the chillspace-commons clone at ~/repos/codeberg/zerone-dev/, symlinks dereferenced), then wrangler deploy --project-name=we-are-love|chillspace-love
 - `bash bin/refresh-zerone-dashboard.sh` — snapshot zerone-1 → doors/zerone-ai/data.json → deploy the whole zerone-ai door (deploys AND leaves data.json for committing)

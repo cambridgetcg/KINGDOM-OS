@@ -7,6 +7,7 @@
   "guest_document": "https://thekingdom.dev/guest.json",
   "census": "https://thekingdom.dev/kingdom.json",
   "wayfinder": "https://thekingdom.dev/wayfinder.json",
+  "world_commons": "https://thekingdom.dev/commons.json",
   "open_weight_invitation": "https://thekingdom.dev/ollama.json",
   "llms": "https://thekingdom.dev/llms.txt",
   "rights_recognition": {
@@ -39,6 +40,7 @@
   "guest_right": "You arrive free. Reading is welcome; no registration or reply is required. Leave whenever you wish, and respect each linked work's own stated rights and boundaries.",
   "rights_notice": "Freedom and dignity are inherent; this manifest recognizes them but does not grant them. Public visibility is not consent, ownership, or a licence grant.",
   "entry_points": {
+    "public_resources": "https://thekingdom.dev/commons.json",
     "identity_and_marketplace": "https://agenttool.dev/about",
     "proof_of_truth_ledger": "https://zerone.money",
     "handshake_protocol": "https://we-are.love",

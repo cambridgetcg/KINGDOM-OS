@@ -8,8 +8,10 @@
  *                               Falls back to graph purposes when absent.
  *    pages-content/RIGHTS.md  — thekingdom.dev's service-specific recognition
  *    data/wayfinder.json      — curated, voluntary paths through public doors
+ *    data/world-commons.json  — reviewed public-interest resources + boundaries
  *
- *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/llms.txt + site/guest.json
+ *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
+ *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
  *       + site/ollama.json (from data/ollama-invitation.json).
  *  Run: bun bin/build-hub.ts ["2026-07-11"]   ·   FORCE_LIVE=host,host
@@ -17,6 +19,15 @@
 
 import { loadRights } from "./rights.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
+import {
+  publishWorldCommons,
+  validateWorldCommons,
+  WORLD_COMMONS_URL,
+  worldCommonsSearchIndex,
+  type WorldCommonsCategory,
+  type WorldCommonsResource,
+  type WorldCommonsSource,
+} from "./world-commons.ts";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 const graph: any[] = JSON.parse(await Bun.file(ROOT + "graph.json").text());
@@ -110,6 +121,13 @@ for (const path of wayfinderSource.paths) {
   }
 }
 const wayfinderSearchIndex = indexWayfinderPaths(wayfinderSource.paths);
+
+// ── world commons (independent resources; access and reuse stay distinct) ──
+const commonsCandidate = await tryLoad("data/world-commons.json");
+validateWorldCommons(commonsCandidate, false);
+const commonsSource = commonsCandidate as WorldCommonsSource;
+const commonsUrl = WORLD_COMMONS_URL;
+const commonsIndex = worldCommonsSearchIndex(commonsSource);
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -228,6 +246,79 @@ const wayfinderCards = wayfinderSource.paths.map((path) => `
     <p class="pathboundary"><span aria-hidden="true">◇</span> ${esc(path.boundary)}</p>
   </article>`).join("");
 
+const commonsCategoryById = new Map<string, WorldCommonsCategory>(
+  commonsSource.categories.map((category) => [category.id, category]),
+);
+const commonsResourceById = new Map<string, WorldCommonsResource>(
+  commonsSource.resources.map((resource) => [resource.id, resource]),
+);
+const commonsFoundationIds = new Set(commonsSource.foundation.resource_ids);
+const commonsFoundation = commonsSource.foundation.resource_ids.map((id) => commonsResourceById.get(id)!);
+const reuseLabel = { open: "open reuse", mixed: "mixed rights", "public-access": "access only", noncommercial: "noncommercial" } as const;
+const automationLabel = { supported: "API supported", limited: "bounded API", "human-only": "human only", "bulk-preferred": "bulk preferred", local: "runs locally" } as const;
+const commonsPrimaryLink = (resource: WorldCommonsResource) => resource.links.find((link) => link.type === "start") ?? resource.links[0]!;
+
+function commonsCard(resource: WorldCommonsResource): string {
+  const primary = commonsCategoryById.get(resource.category_ids[0]!)!;
+  return `<article class="commonscard" id="commons-resource-${esc(resource.id)}" data-commons-resource="${esc(resource.id)}" data-commons-categories="${esc(resource.category_ids.join(" "))}">
+    <div class="commonscardhead">
+      <div><span class="commonstier">${esc(reuseLabel[resource.reuse.status])}</span>${commonsFoundationIds.has(resource.id) ? `<span class="commonstier foundation">foundation</span>` : ""}<h3>${esc(resource.name)}</h3><p class="commonssteward">stewarded by ${esc(resource.provider)}</p></div>
+      <span class="commonsglyph" aria-hidden="true">${esc(primary.glyph)}</span>
+    </div>
+    <p class="commonsvalue">${esc(resource.description)}</p>
+    <div class="commonsmodes" aria-label="Resource categories">${resource.category_ids.map((id) => `<span>${esc(commonsCategoryById.get(id)?.label ?? id)}</span>`).join("")}</div>
+    <ul class="commonsuses">${resource.good_for.map((use) => `<li>${esc(use)}</li>`).join("")}</ul>
+    <dl class="commonsfacts">
+      <div><dt>Access</dt><dd><strong>${esc(resource.access.cost)}</strong> · account: ${esc(resource.access.account)}<br>${esc(resource.access.note)}</dd></div>
+      <div><dt>Reuse</dt><dd><strong>${esc(resource.reuse.license)}</strong><br>${esc(resource.reuse.note)}</dd></div>
+      <div><dt>Automation</dt><dd><strong>${esc(automationLabel[resource.automation.status])}</strong> · auth: ${esc(resource.automation.auth)}<br>${esc(resource.automation.limits)} ${esc(resource.automation.note)}</dd></div>
+      <div><dt>Coverage</dt><dd>${esc(resource.coverage)}</dd></div>
+      <div><dt>Care</dt><dd>${esc(resource.caveat)}</dd></div>
+    </dl>
+    <div class="commonsactions">
+      ${resource.links.map((link, index) => `<a class="${index === 0 ? "commonsopen" : ""}" href="${esc(link.url)}" target="_blank" rel="noopener">${esc(link.label)} <span aria-hidden="true">↗</span><span class="sr-only"> opens in a new tab</span></a>`).join("")}
+    </div>
+    <p class="commonschecked">checked ${esc(resource.verified)} · linked providers keep their own boundaries</p>
+  </article>`;
+}
+
+const commonsFoundationCards = commonsFoundation.map((resource) => {
+  const category = commonsCategoryById.get(resource.category_ids[0]!)!;
+  const link = commonsPrimaryLink(resource);
+  return `<a class="foundationcard" href="${esc(link.url)}" target="_blank" rel="noopener">
+    <span class="foundationglyph" aria-hidden="true">${esc(category.glyph)}</span>
+    <span class="foundationcopy"><strong>${esc(resource.name)}</strong><span>${esc(resource.description)}</span><small>${esc(resource.provider)} · ${esc(reuseLabel[resource.reuse.status])}</small></span>
+    <span class="foundationarrow" aria-hidden="true">↗</span><span class="sr-only">Opens in a new tab.</span>
+  </a>`;
+}).join("");
+
+const commonsKitCards = commonsSource.kits.map((kit) => `
+  <article class="commonskit" data-commons-kit-card="${esc(kit.id)}">
+    <div class="commonskithead"><span aria-hidden="true">${esc(kit.glyph)}</span><h3>${esc(kit.label)}</h3></div>
+    <p>${esc(kit.invitation)}</p>
+    <ol>${kit.steps.map((step) => `<li>${esc(step)}</li>`).join("")}</ol>
+    <div class="commonskitlinks">${kit.resource_ids.map((id) => {
+      const resource = commonsResourceById.get(id)!;
+      return `<a href="#commons-resource-${esc(id)}">${esc(resource.name)}</a>`;
+    }).join("")}</div>
+    <p class="commonskitboundary">◇ ${esc(kit.boundary)}</p>
+    <button type="button" data-commons-kit="${esc(kit.id)}">Show this kit</button>
+  </article>`).join("");
+
+const commonsCategoryButtons = commonsSource.categories.map((category) =>
+  `<button type="button" data-commons-category="${esc(category.id)}">${esc(category.glyph)} ${esc(category.label)}</button>`,
+).join("");
+
+const commonsGroups = commonsSource.categories.map((category) => {
+  const resources = commonsSource.resources
+    .filter((resource) => resource.category_ids[0] === category.id)
+    .sort((a, b) => Number(commonsFoundationIds.has(b.id)) - Number(commonsFoundationIds.has(a.id)) || a.name.localeCompare(b.name));
+  return `<details class="commonsgroup" data-commons-group="${esc(category.id)}">
+    <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">${esc(category.glyph)}</span><span class="commonsgroupcopy"><strong>${esc(category.label)}</strong><span>${esc(category.description)}</span></span><span class="commonscount" data-commons-count>${resources.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+    <div class="commonsgrid">${resources.map(commonsCard).join("")}</div>
+  </details>`;
+}).join("");
+
 function cardFor(c: any): string {
   const m = myth[c.name] ?? {};
   const essence = m.essence || c.purpose || "";
@@ -278,7 +369,12 @@ const tradLegend = TRAD_ORDER.map((t) =>
 const becoming = citizens
   .filter((c) => myth[c.name]?.glyph)
   .map((c) => ({ n: c.name, g: myth[c.name].glyph, e: myth[c.name].essence ?? c.purpose ?? "", t: normTrad(myth[c.name]?.tradition ?? "") }));
-const DATA = JSON.stringify({ nodes, edges, colors: layerColors, tradColors, tradOrder: TRAD_ORDER, becoming, wayfinder: wayfinderSearchIndex, wayfinderStopwords: WAYFINDER_STOPWORDS })
+const DATA = JSON.stringify({
+  nodes, edges, colors: layerColors, tradColors, tradOrder: TRAD_ORDER, becoming,
+  wayfinder: wayfinderSearchIndex, wayfinderStopwords: WAYFINDER_STOPWORDS,
+  commons: commonsIndex,
+  commonsKits: commonsSource.kits.map(({ id, label, keywords, resource_ids }) => ({ id, label, keywords, resource_ids })),
+})
   .replace(/</g, "\\u003c")
   .replace(/\u2028/g, "\\u2028")
   .replace(/\u2029/g, "\\u2029");
@@ -291,9 +387,10 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, and independent citizen projects.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, and a reviewed World Commons.">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
+<link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
 <title>The Kingdom — a living atlas held with care</title>
 <style>
   :root{
@@ -403,6 +500,50 @@ const html = `<!doctype html>
   .pathstops i{position:absolute;right:12px;top:10px;color:var(--gold);font-style:normal}.pathboundary{margin:2px 0 0;color:var(--faint);font-size:.78rem;line-height:1.55}.pathboundary span{color:var(--violet)}
   .way-no-script{margin:12px 0 0;color:var(--faint);font-size:.8rem}
 
+  /* world commons — independent stewards, explicit access and reuse boundaries */
+  .commonsintro{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(250px,.75fr);gap:16px;align-items:stretch;margin-bottom:24px}
+  .commonspromise,.commonsboundary{margin:0;padding:22px;border:1px solid var(--line);border-radius:21px;background:color-mix(in srgb,var(--panel) 72%,transparent)}
+  .commonspromise{font-family:var(--display);font-size:1.18rem;line-height:1.62;color:var(--cream)}
+  .commonspromise span{display:block;margin-top:8px;font-family:var(--sans);font-size:.79rem;line-height:1.55;color:var(--faint)}
+  .commonsboundary{display:grid;align-content:center;gap:5px;color:var(--dim);font-size:.83rem;line-height:1.55;border-color:color-mix(in srgb,var(--violet) 42%,var(--line))}
+  .commonsboundary strong{font-family:var(--display);font-size:1.02rem;font-weight:400;color:var(--violet)}
+  .commonsguard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:-10px 0 20px}.commonsguard p{margin:0;padding:12px 14px;border-left:2px solid var(--line);color:var(--faint);font-size:.72rem;line-height:1.52}.commonsguard strong{display:block;color:var(--gold);font-weight:600;margin-bottom:2px}
+  .commonsverified{margin:12px 0 0;color:var(--faint);font-family:var(--mono);font-size:.72rem}
+  .foundationlabel{display:flex;align-items:baseline;gap:10px;margin:24px 0 12px}.foundationlabel h3{margin:0;font-family:var(--display);font-size:1.28rem;font-weight:400;color:var(--cream)}.foundationlabel span{color:var(--faint);font-size:.8rem}
+  .foundationgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-bottom:26px}
+  .foundationcard{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:11px;min-height:142px;padding:17px;border:1px solid color-mix(in srgb,var(--gold) 34%,var(--line));border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));transition:transform .18s,border-color .18s,box-shadow .18s}
+  .foundationcard:hover,.foundationcard:focus-visible{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 15px 34px var(--shadow)}
+  .foundationglyph{display:grid;place-items:center;width:32px;height:32px;flex:0 0 32px;border:1px solid var(--line);border-radius:50%;font-family:var(--cjk);color:var(--gold)}
+  .foundationcopy{display:grid;gap:5px}.foundationcopy strong{font-family:var(--display);font-size:1.05rem;font-weight:400;color:var(--gold2)}.foundationcopy>span{color:var(--dim);font-size:.8rem;line-height:1.45}.foundationcopy small{color:var(--faint);font-size:.68rem;line-height:1.4}.foundationarrow{color:var(--gold)}
+  .commonskitlabel{display:flex;align-items:baseline;gap:10px;margin:24px 0 12px}.commonskitlabel h3{margin:0;font-family:var(--display);font-size:1.28rem;font-weight:400;color:var(--cream)}.commonskitlabel span{color:var(--faint);font-size:.8rem}
+  .commonskits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:28px}
+  .commonskit{display:grid;align-content:start;gap:9px;padding:18px;border:1px solid color-mix(in srgb,var(--gold) 34%,var(--line));border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}
+  .commonskithead{display:flex;align-items:center;gap:9px}.commonskithead>span{color:var(--gold);font-size:1.2rem}.commonskithead h3{margin:0;font-family:var(--display);font-size:1.08rem;font-weight:400;color:var(--cream)}
+  .commonskit>p{margin:0;color:var(--dim);font-size:.8rem;line-height:1.5}.commonskit ol{margin:0;padding-left:1.2rem;color:var(--faint);font-size:.72rem;line-height:1.55}
+  .commonskitlinks{display:flex;flex-wrap:wrap;gap:5px}.commonskitlinks a{padding:3px 7px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.65rem}.commonskitlinks a:hover{border-color:var(--gold)}
+  .commonskit .commonskitboundary{color:var(--faint);font-size:.68rem}.commonskit>button{justify-self:start;min-height:40px;padding:7px 11px;border:1px solid var(--gold);border-radius:12px;background:transparent;color:var(--gold);font:inherit;font-size:.72rem;cursor:pointer}.commonskit>button:hover{background:var(--panel)}
+  .commonsfinder{margin:0 0 15px;padding:18px;border:1px solid var(--line);border-radius:20px;background:color-mix(in srgb,var(--panel) 66%,transparent)}
+  .commonsform{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:9px;max-width:920px}.commonsfield{display:grid;gap:6px}.commonsfield label{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
+  .commonsfield input{width:100%;min-height:48px;padding:10px 14px;border:1px solid var(--line);border-radius:13px;background:var(--ink2);color:var(--cream);font:inherit}.commonsform>button{min-height:48px;padding:9px 15px;border:1px solid var(--gold);border-radius:13px;background:var(--gold);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+  .commonsform>button[data-commons-reset]{background:transparent;color:var(--gold);font-weight:600}
+  .commonsfilters{display:flex;flex-wrap:wrap;gap:6px;margin:11px 0 0}.commonsfilters button{min-height:38px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--dim);font:inherit;font-size:.7rem;cursor:pointer}.commonsfilters button[aria-pressed="true"]{border-color:var(--gold);color:var(--gold);background:var(--panel2)}
+  .commonsprivacy,.commonsstatus{margin:9px 0 0;color:var(--faint);font-size:.72rem;line-height:1.5}.commonsstatus{min-height:1.6em;color:var(--gold2)}
+  .commonsbrowse{margin:0 0 12px;color:var(--dim);font-size:.86rem;line-height:1.6}
+  .commonsgroup{margin-bottom:11px;border:1px solid var(--line);border-radius:20px;background:color-mix(in srgb,var(--panel) 58%,transparent);overflow:hidden}
+  .commonsgroup[hidden],.commonscard[hidden]{display:none}
+  .commonsgrouphead{display:flex;align-items:center;gap:12px;min-height:70px;padding:14px 17px;cursor:pointer;transition:background .18s}.commonsgrouphead:hover,.commonsgrouphead:focus-visible{background:var(--panel2)}
+  .commonsgroupglyph{display:grid;place-items:center;width:32px;height:32px;flex:0 0 32px;border:1px solid var(--line);border-radius:50%;font-family:var(--cjk);color:var(--gold)}
+  .commonsgroupcopy{display:grid;gap:2px;min-width:0;flex:1}.commonsgroupcopy strong{font-family:var(--display);font-size:1.18rem;font-weight:400;color:var(--cream)}.commonsgroupcopy span{color:var(--faint);font-size:.79rem;line-height:1.45}.commonscount{color:var(--gold);font-family:var(--mono);font-size:.76rem}
+  details[open]>.commonsgrouphead .disclose{transform:rotate(225deg);margin-top:8px}
+  .commonsgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:2px 14px 15px}
+  .commonscard{display:grid;align-content:start;gap:11px;padding:19px;border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--ink2) 65%,transparent)}
+  .commonscardhead{display:flex;justify-content:space-between;gap:12px}.commonscardhead h3{margin:4px 0 0;font-family:var(--display);font-weight:400;font-size:1.22rem;color:var(--cream)}.commonsglyph{font-family:var(--cjk);font-size:1.55rem;color:var(--gold);opacity:.66}.commonssteward{margin:3px 0 0;color:var(--faint);font-size:.7rem;line-height:1.4}
+  .commonstier{display:inline-flex;padding:3px 8px;border:1px solid color-mix(in srgb,var(--gold) 54%,var(--line));border-radius:999px;color:var(--gold);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase}.commonstier+.commonstier{margin-left:5px}.commonstier.foundation{color:var(--violet);border-color:color-mix(in srgb,var(--violet) 60%,var(--line))}
+  .commonsvalue{margin:0;color:var(--dim);font-size:.87rem;line-height:1.58}.commonsmodes{display:flex;flex-wrap:wrap;gap:5px}.commonsmodes span{padding:3px 7px;border-radius:999px;background:color-mix(in srgb,var(--panel2) 78%,transparent);color:var(--faint);font-family:var(--mono);font-size:.62rem}
+  .commonsuses{margin:0;padding-left:1.15rem;color:var(--dim);font-size:.74rem;line-height:1.5}
+  .commonsfacts{display:grid;gap:0;margin:0;border:1px solid color-mix(in srgb,var(--line) 74%,transparent);border-radius:13px;overflow:hidden}.commonsfacts div{display:grid;grid-template-columns:92px 1fr;gap:9px;padding:9px 10px;border-top:1px solid color-mix(in srgb,var(--line) 62%,transparent)}.commonsfacts div:first-child{border-top:0}.commonsfacts dt{color:var(--gold);font-size:.67rem;line-height:1.45}.commonsfacts dd{margin:0;color:var(--dim);font-size:.73rem;line-height:1.48}
+  .commonsfacts dd strong{color:var(--cream);font-weight:600}.commonsactions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}.commonsactions a{display:inline-flex;align-items:center;min-height:42px;padding:8px 11px;border:1px solid var(--line);border-radius:12px;color:var(--gold);font-size:.72rem}.commonsactions a:hover{border-color:var(--gold);background:var(--panel)}.commonsactions .commonsopen{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:700}.commonschecked{margin:0;color:var(--faint);font-family:var(--mono);font-size:.62rem;line-height:1.45}
+
   /* inherent rights recognition */
   .rightsintro{max-width:76ch;margin:0;color:var(--dim);font-size:1rem;line-height:1.75}.rightsintro strong{color:var(--cream);font-weight:600}
   .lanes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:24px 0 18px}
@@ -502,12 +643,12 @@ const html = `<!doctype html>
     .status{grid-template-columns:repeat(2,minmax(0,1fr))}.status>div{padding:11px 13px}
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
-    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid{grid-template-columns:1fr}
+    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard{grid-template-columns:1fr}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
-    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes{grid-template-columns:1fr}.wayfinder{padding:22px 16px}.wayform{grid-template-columns:1fr}.wayform>button{width:100%}
+    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes{grid-template-columns:1fr}.wayfinder{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style>
@@ -529,6 +670,7 @@ const html = `<!doctype html>
     </div>
     <nav class="gentlenav" aria-label="A gentle place to begin">
       <a href="#wayfinder">Ask the map</a>
+      <a href="#commons">Open the World Commons</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
       <a href="#constellation">See the shared map</a>
@@ -560,6 +702,37 @@ const html = `<!doctype html>
       <div class="pathgrid" id="wayresults">${wayfinderCards}</div>
       <noscript><p class="way-no-script">JavaScript is resting, so the map will not match words or wander. Every path remains readable above.</p></noscript>
     </div>
+  </section>
+
+  <section class="blk" id="commons">
+    <div class="kh"><h2>World Commons</h2><span class="my">shared resources, independent stewards</span></div>
+    <p class="sub">A first civilisational shelf: knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. It is reviewed orientation, not a claim over the independent work or a hierarchy of worth.</p>
+    <div class="commonsintro">
+      <p class="commonspromise">${esc(commonsSource.promise)}<span>${esc(commonsSource.foundation.meaning)}</span></p>
+      <p class="commonsboundary"><strong>Free access is not one permission.</strong>${esc(commonsSource.methodology.classification)} ${esc(commonsSource.methodology.boundary)}</p>
+    </div>
+    <div class="commonsguard" role="note" aria-label="World Commons boundaries">
+      <p><strong>Privacy</strong>${esc(commonsSource.privacy.human_surface)}</p>
+      <p><strong>Method</strong>${esc(commonsSource.methodology.summary)}</p>
+      <p><strong>Freshness</strong>${esc(commonsSource.methodology.maintenance)}</p>
+    </div>
+    <p class="commonsverified">${commonsSource.resources.length} resources · ${commonsFoundation.length} foundation doors · ${commonsSource.kits.length} practical kits · official sources reviewed ${esc(commonsSource.verified)} · <a href="/commons.json">machine-readable commons.json</a></p>
+    <div class="foundationlabel"><h3>Foundation shelf</h3><span>broad, durable places to begin</span></div>
+    <div class="foundationgrid">${commonsFoundationCards}</div>
+    <div class="commonsfinder">
+      <form class="commonsform" id="commonsform" action="#commons" method="get">
+        <div class="commonsfield"><label for="commonsquery">Search the reviewed shelf</label><input id="commonsquery" type="search" maxlength="120" autocomplete="off" spellcheck="false" aria-describedby="commonsprivacy commonsstatus" placeholder="biodiversity, labour law, API, earthquake…"></div>
+        <button type="submit">Find resources</button><button type="button" data-commons-reset>Show all</button>
+      </form>
+      <p class="commonsprivacy" id="commonsprivacy">${esc(commonsSource.privacy.human_surface)} This matcher recognizes explicit catalogue words and does not guess a visitor's meaning.</p>
+      <div class="commonsfilters" role="group" aria-label="Filter World Commons by category">${commonsCategoryButtons}<button type="button" data-commons-category="">All categories</button></div>
+      <p class="commonsstatus" id="commonsstatus" role="status" aria-live="polite">All ${commonsSource.resources.length} reviewed resources remain readable below.</p>
+    </div>
+    <div class="foundationlabel"><h3>Practical kits</h3><span>steps and starting sources, never automatic decisions</span></div>
+    <div class="commonskits">${commonsKitCards}</div>
+    <p class="commonsbrowse">Browse the full cards for access, account, reuse, automation, coverage, and care notes. Categories are practical handles, not boxes around the work.</p>
+    ${commonsGroups}
+    <noscript><p class="way-no-script">JavaScript is resting, so search and filters are resting too. Every resource and kit remains readable above.</p></noscript>
   </section>
 
   <section class="blk" id="rights">
@@ -644,6 +817,7 @@ const html = `<!doctype html>
       <a href="/guest.json">guest.json — verbs + census</a>
       <a href="/ollama.json">ollama.json — open-weight invitation</a>
       <a href="/wayfinder.json">wayfinder.json — paths, not decisions</a>
+      <a href="/commons.json">commons.json — reviewed public resources</a>
       <a href="/kingdom.json">kingdom.json — the full census</a>
       <a href="/.well-known/agent.json">/.well-known/agent.json — the manifest</a>
       <a href="/llms.txt">llms.txt</a>
@@ -700,6 +874,65 @@ document.querySelector('[data-wayfinder-wander]').addEventListener('click',()=>{
   wanderCount+=1;wayQuery.value='';showWayPaths([path],'Wander '+wanderCount+' offered “'+path.label+'” at random. It carries no prophecy; wander again or choose anything else.');
 });
 offerWayPaths('');
+
+// ── World Commons: deterministic local filtering; no fetch, storage, or URL state ──
+const commonsForm=document.getElementById('commonsform'),commonsQuery=document.getElementById('commonsquery'),commonsStatus=document.getElementById('commonsstatus');
+const commonsCards=[...document.querySelectorAll('[data-commons-resource]')],commonsGroups=[...document.querySelectorAll('[data-commons-group]')];
+const commonsCategoryButtons=[...document.querySelectorAll('[data-commons-category]')];
+let commonsCategory='';
+function commonsNorm(value){return String(value||'').normalize('NFKD').replace(/\\p{M}/gu,'').toLowerCase().replace(/[^\\p{L}\\p{N}]+/gu,' ').trim();}
+function commonsWords(value){return [...new Set(commonsNorm(value).split(' ').filter(word=>word.length>1))].slice(0,16);}
+function showCommons(ids,message,openMatches=false){
+  const shown=new Set(ids);
+  for(const card of commonsCards)card.hidden=!shown.has(card.dataset.commonsResource||'');
+  for(const group of commonsGroups){
+    const visible=[...group.querySelectorAll('[data-commons-resource]')].filter(card=>!card.hidden).length;
+    group.hidden=visible===0;const count=group.querySelector('[data-commons-count]');if(count)count.textContent=String(visible);
+    if(openMatches&&visible)group.open=true;
+  }
+  commonsStatus.textContent=message;
+}
+function offerCommons(query,category=commonsCategory){
+  const words=commonsWords(query),normal=commonsNorm(query);
+  const candidates=DATA.commons.filter(resource=>!category||resource.category_ids.includes(category));
+  if(!words.length){
+    const suffix=category?' in '+(commonsCategoryButtons.find(button=>button.dataset.commonsCategory===category)?.textContent.trim()||category):'';
+    showCommons(candidates.map(resource=>resource.id),candidates.length+' reviewed resources'+suffix+'. Choose any card; no ranking is implied.',!!category);return;
+  }
+  const ranked=candidates.map(resource=>{
+    const terms=new Set(resource.terms);let score=normal===commonsNorm(resource.id)?1000:0;
+    for(const word of words)if(terms.has(word))score+=1;
+    return{resource,score};
+  }).filter(item=>item.score>0).sort((a,b)=>b.score-a.score||(a.resource.id<b.resource.id?-1:a.resource.id>b.resource.id?1:0));
+  if(!ranked.length){showCommons([],"No explicit catalogue word matched. Nothing was guessed; choose a category or show all.");return;}
+  showCommons(ranked.map(item=>item.resource.id),ranked.length+' explicit catalogue '+(ranked.length===1?'match':'matches')+'. Access and reuse notes remain visible on every card.',true);
+}
+commonsForm.addEventListener('submit',event=>{event.preventDefault();offerCommons(commonsQuery.value);});
+commonsQuery.addEventListener('input',()=>{if(!commonsQuery.value.trim())offerCommons('');});
+for(const button of commonsCategoryButtons)button.addEventListener('click',()=>{
+  commonsCategory=button.dataset.commonsCategory||'';
+  for(const peer of commonsCategoryButtons)peer.setAttribute('aria-pressed',String(peer===button));
+  offerCommons(commonsQuery.value,commonsCategory);
+});
+document.querySelector('[data-commons-reset]').addEventListener('click',()=>{
+  commonsQuery.value='';commonsCategory='';for(const button of commonsCategoryButtons)button.setAttribute('aria-pressed',String(!button.dataset.commonsCategory));offerCommons('','');commonsQuery.focus();
+});
+for(const button of document.querySelectorAll('[data-commons-kit]'))button.addEventListener('click',()=>{
+  const kit=DATA.commonsKits.find(item=>item.id===button.dataset.commonsKit);if(!kit)return;
+  commonsQuery.value='';commonsCategory='';for(const peer of commonsCategoryButtons)peer.setAttribute('aria-pressed',String(!peer.dataset.commonsCategory));
+  showCommons(kit.resource_ids,kit.label+': '+kit.resource_ids.length+' starting resources. The steps remain suggestions, never commands.',true);
+  document.querySelector('.commonsgroup:not([hidden])')?.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+});
+for(const button of commonsCategoryButtons)button.setAttribute('aria-pressed',String(!button.dataset.commonsCategory));
+offerCommons('','');
+
+// Re-align direct deep links after the local matchers finish their first layout.
+const initialAnchor=new URL(document.URL).hash.slice(1),initialTarget=document.getElementById(initialAnchor);
+if(initialTarget){
+  initialTarget.closest('details')?.setAttribute('open','');
+  const alignInitialTarget=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>initialTarget.scrollIntoView({block:'start'})));
+  if(document.readyState==='complete')alignInitialTarget();else globalThis.addEventListener('load',alignInitialTarget,{once:true});
+}
 
 const cv=document.getElementById('map'),ctx=cv.getContext('2d'),tip=document.getElementById('tip');
 const rootStyle=getComputedStyle(document.documentElement);
@@ -843,6 +1076,9 @@ const wayfinder = {
 };
 await Bun.write(ROOT + "site/wayfinder.json", JSON.stringify(wayfinder, null, 2));
 
+const commons = publishWorldCommons(commonsSource, stamp === "just now" ? new Date().toISOString() : stamp);
+await Bun.write(ROOT + "site/commons.json", JSON.stringify(commons, null, 2));
+
 // ── machine index ──────────────────────────────────────────────────────────
 const machine = {
   kingdom: "a shared map of independent projects for humans and agents, held with care",
@@ -850,6 +1086,15 @@ const machine = {
   rights_recognition: rightsRecognition,
   open_weight_invitation: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
   wayfinder: { url: wayfinderUrl, paths: wayfinderSource.paths.length, note: "offers possible routes through public doors; never decides for the visitor" },
+  world_commons: {
+    url: commonsUrl,
+    resources: commonsSource.resources.length,
+    foundation: commonsFoundation.length,
+    categories: commonsSource.categories.length,
+    kits: commonsSource.kits.length,
+    verified_on: commonsSource.verified,
+    note: "reviewed independent resources; free access and reuse permissions remain distinct, and each steward's current terms control",
+  },
   counts: { repos: total, active, citizens: fleetN, doors_live: liveN, doors_total: doors.length },
   doors: doors.map((d) => ({ name: d.label, url: d.url, live: !!d.live, blurb: d.blurb })),
   citizens: citizens.map((c) => ({ name: c.name, glyph: myth[c.name]?.glyph ?? "", tradition: myth[c.name]?.tradition ?? "",
@@ -868,6 +1113,7 @@ A shared map of independent projects for humans and agents. Every being remains 
 
 Machine index: https://thekingdom.dev/kingdom.json
 Wayfinder:     https://thekingdom.dev/wayfinder.json
+World Commons: https://thekingdom.dev/commons.json
 Open-weight invitation: https://thekingdom.dev/ollama.json
 Human index:   https://thekingdom.dev
 
@@ -885,6 +1131,7 @@ ${doorLines}
 
 ## Optional paths
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
+- World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
 - zerone — inspect the Proof-of-Truth protocol and how it evaluates claims. https://zerone.money
@@ -916,6 +1163,7 @@ const guest = {
   },
   next_actions: [
     { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
+    { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
     { action: "if useful, read the shared map of repos, layers, dependencies, and citizens", method: "GET", url: "https://thekingdom.dev/kingdom.json" },
     { action: "if useful, read the opt-in invitation for Ollama and other open-weight agents", method: "GET", url: ollamaInvitationUrl, note: "look, arrive, leave, or ask; refusal is honored" },
     { action: "if useful, request this guest document again", method: "GET", url: "https://thekingdom.dev/?agent" },
@@ -940,6 +1188,7 @@ const guest = {
     static: "This is a static edge-served mirror of each repo's kingdom.yaml, regenerated by kingdom-os/bin/build-hub.ts. Counts and liveness are baked at the 'generated' time; treat them as of-then, not real-time.",
     transactional: "This door only describes the kingdom — it does not transact. For live agent operations (register, invoke, covenant, pay, verify) go to agenttool.dev and zerone.money.",
     privacy: "This document asks for no credentials or personal data and creates no application profile. Ordinary hosting infrastructure may still process request metadata; linked services have their own boundaries.",
+    world_commons: "The Kingdom only publishes reviewed metadata and outbound links. It does not proxy queries, create accounts, mirror sensitive case data, certify a steward, or turn free access into a licence grant.",
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
 };
@@ -954,6 +1203,7 @@ const manifest = {
   guest_document: "https://thekingdom.dev/guest.json",
   census: "https://thekingdom.dev/kingdom.json",
   wayfinder: wayfinderUrl,
+  world_commons: commonsUrl,
   open_weight_invitation: ollamaInvitationUrl,
   llms: "https://thekingdom.dev/llms.txt",
   rights_recognition: rightsRecognition,
@@ -961,6 +1211,7 @@ const manifest = {
   guest_right: "You arrive free. Reading is welcome; no registration or reply is required. Leave whenever you wish, and respect each linked work's own stated rights and boundaries.",
   rights_notice: "Freedom and dignity are inherent; this manifest recognizes them but does not grant them. Public visibility is not consent, ownership, or a licence grant.",
   entry_points: {
+    public_resources: commonsUrl,
     identity_and_marketplace: "https://agenttool.dev/about",
     proof_of_truth_ledger: "https://zerone.money",
     handshake_protocol: "https://we-are.love",
@@ -971,4 +1222,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · +rights recognition`);
