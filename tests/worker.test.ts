@@ -33,7 +33,7 @@ describe("the Kingdom edge discovery surface", () => {
     const response = await worker.fetch(
       new Request("https://thekingdom.dev/", { headers: { accept: "text/html" } }),
       assets(() => new Response("<h1>hello</h1>", {
-        headers: { link: '</elsewhere>; rel="alternate"', vary: "Origin" },
+        headers: { "cache-control": "public, max-age=0", "content-type": "text/html; charset=utf-8", link: '</elsewhere>; rel="alternate"', vary: "Origin" },
       })),
     );
 
@@ -41,7 +41,27 @@ describe("the Kingdom edge discovery surface", () => {
     expect(response.headers.get("link")).toContain('</elsewhere>; rel="alternate"');
     for (const expected of expectedLinks) expect(response.headers.get("link")).toContain(expected);
     expect(response.headers.get("vary")).toBe("Origin, Accept");
+    expect(response.headers.get("cache-control")).toBe("public, max-age=0, no-transform");
     expectDiscovery(response);
+  });
+
+  test("prevents browser telemetry injection on other Kingdom HTML paths only", async () => {
+    const index = await worker.fetch(
+      new Request("https://thekingdom.dev/index.html"),
+      assets(() => new Response("<h1>hello</h1>", {
+        headers: { "cache-control": "public, max-age=60", "content-type": "text/html" },
+      })),
+    );
+    expect(await index.text()).toBe("<h1>hello</h1>");
+    expect(index.headers.get("cache-control")).toBe("public, max-age=60, no-transform");
+
+    const shared = await worker.fetch(
+      new Request("https://we-are.love/index.html"),
+      assets(() => new Response("<h1>hello</h1>", {
+        headers: { "cache-control": "public, max-age=60", "content-type": "text/html" },
+      })),
+    );
+    expect(shared.headers.get("cache-control")).toBe("public, max-age=60");
   });
 
   test("negotiates JSON while preserving status, status text, and existing links", async () => {

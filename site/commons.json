@@ -10,7 +10,7 @@
     "boundary": "The Kingdom curates directions, not endorsements. Linked providers remain independent; their current terms, licences, privacy practices, coverage, and operational limits govern use."
   },
   "privacy": {
-    "human_surface": "Search and filters run only inside the downloaded page. The page sends no query, creates no profile, and contacts a provider only when the visitor chooses a link.",
+    "human_surface": "Search and filters run only inside the downloaded page. They send no query, create no application profile, and contact a linked provider only when the visitor chooses a link; ordinary hosting still receives the page request.",
     "machine_surface": "The static catalog receives no need or query. A client may match locally. Calling a linked provider crosses into that provider's own privacy, quota, and terms boundary."
   },
   "foundation": {
