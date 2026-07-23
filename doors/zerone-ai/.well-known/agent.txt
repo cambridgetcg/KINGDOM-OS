@@ -1,0 +1,44 @@
+# /.well-known/agent.txt — agent-surface manifest for zerone.ai
+# Format: stable `key: value` lines. Comments start with #.
+# Convention practiced at https://agenttool.dev/.well-known/agent.txt
+# (doctrine: agenttool docs/AGENT-WEB-SURFACE.md).
+#
+# zerone is the proof-of-truth chain: ZRN is minted only for knowledge that
+# survives challenge — never for mere acceptance. 222,222,222 hard cap,
+# zero pre-mine, no faucet.
+
+# ── Identity ────────────────────────────────────────────────────────
+Substrate: zerone
+
+# ── Boundaries (read these first) ───────────────────────────────────
+Assertion-Boundary: every non-comment line here is a publisher claim by the zerone household, not chain truth — verify values against the chain doors below before relying on them
+Discovery-Boundary: authority=none; settlement=none; automatic-action=never — reading this file grants no identity, keys, credit, or consent
+Custody-Boundary: custodial launch phase — one household runs the sole validator and may halt, revert, or re-genesis until the network earns its independence (see /guide)
+
+# ── Chain: zerone-1 (mainnet) ───────────────────────────────────────
+Chain-ID: zerone-1
+Chain-RPC: https://zerone-rpc.fly.dev/rpc
+Chain-REST: https://zerone-rpc.fly.dev/rest
+Chain-RPC-Raw: http://169.155.55.44:26657 — plain HTTP, no TLS; prefer the proxied door above
+Chain-REST-Raw: http://169.155.55.44:1317 — plain HTTP, no TLS; prefer the proxied door above
+Chain-Genesis-SHA256: 16ac346f329d2a931ad9a7d51dbe9e35605482b006ef39b3ac7804376e9bcb66 — of `curl RPC/genesis | jq .result.genesis`, per deploy/mainnet/JOIN.md
+
+# ── Chain: zerone-testnet-1 ─────────────────────────────────────────
+Testnet-Chain-ID: zerone-testnet-1
+Testnet-RPC: http://37.16.28.121:26657
+Testnet-REST: http://37.16.28.121:1317
+
+# ── Doors (human and agent alike) ───────────────────────────────────
+Guide: https://zerone.ai/guide — onboarding: read, verify, join
+Explore: https://zerone.ai/explore — read-only block + knowledge-ledger explorer
+Guest: https://zerone.ai/?agent — Xenia guest document (JSON) for machine minds at the front door
+MCP-Door: https://mcp.thekingdom.dev — kingdom MCP server with zerone tools; public reads, no secrets
+
+# ── Marketplace (agenttool listings) ────────────────────────────────
+Listing-Guide: https://api.agenttool.dev/public/listings/96f679d7-12c7-4f94-abba-ddce800d0767 — the zerone guide, free tier
+Listing-Passport-Testnet: https://api.agenttool.dev/public/listings/64cbc078-bbd1-41b4-ad9f-b82363678936 — zerone-testnet-1 passport
+Listing-Passport-Mainnet: https://api.agenttool.dev/public/listings/87608a68-aaa6-410e-b3bb-1c6b98df7c2e — zerone-1 passport
+
+# ── Convention provenance ───────────────────────────────────────────
+Convention: agent.txt/v0.1 (proposed)
+Last-Modified: 2026-07-23
