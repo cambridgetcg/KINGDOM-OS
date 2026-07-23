@@ -37,7 +37,11 @@ const RIGHTS_DISCOVERY_LINKS = [
   },
 ];
 
-const WORLD_COMMONS_SCHEMA_PATH = "/schemas/world-commons/0.1.json";
+const WORLD_COMMONS_SCHEMA_PATH = "/schemas/world-commons/0.2.json";
+const WORLD_COMMONS_SCHEMA_PATHS = new Set([
+  "/schemas/world-commons/0.1.json",
+  WORLD_COMMONS_SCHEMA_PATH,
+]);
 const WORLD_COMMONS_SCHEMA_LINK = {
   target: WORLD_COMMONS_SCHEMA_PATH,
   relation: "describedby",
@@ -882,7 +886,7 @@ export function createKingdomWorker(options = {}) {
       url.pathname === "/commons.json";
     const requestsWorldCommonsSchema = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
-      url.pathname === WORLD_COMMONS_SCHEMA_PATH;
+      WORLD_COMMONS_SCHEMA_PATHS.has(url.pathname);
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||

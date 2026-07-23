@@ -13,7 +13,7 @@
     "tool": "kingdom_commons",
     "complete_catalog_resource": "kingdom://commons/catalog"
   },
-  "world_commons_schema": "https://thekingdom.dev/schemas/world-commons/0.1.json",
+  "world_commons_schema": "https://thekingdom.dev/schemas/world-commons/0.2.json",
   "mcp": {
     "endpoint": "https://mcp.thekingdom.dev/mcp",
     "transport": "streamable-http",
@@ -64,7 +64,7 @@
   "entry_points": {
     "public_resources": "https://thekingdom.dev/commons.json",
     "public_resource_matcher": "https://mcp.thekingdom.dev/mcp",
-    "public_resources_schema": "https://thekingdom.dev/schemas/world-commons/0.1.json",
+    "public_resources_schema": "https://thekingdom.dev/schemas/world-commons/0.2.json",
     "public_resources_mcp": "https://mcp.thekingdom.dev/mcp",
     "identity_and_marketplace": "https://agenttool.dev/about",
     "proof_of_truth_ledger": "https://zerone.money",

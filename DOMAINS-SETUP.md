@@ -35,7 +35,8 @@ npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zeron
 
 `stage-hub.ts` refuses a non-empty destination and copies the atlas as
 `index.html` together with `_kingdom.base.json`, `wayfinder.json`,
-`commons.json`, `/schemas/world-commons/0.1.json`, `guest.json`, `ollama.json`,
+`commons.json`, current `/schemas/world-commons/0.2.json`, legacy
+`/schemas/world-commons/0.1.json`, `guest.json`, `ollama.json`,
 `llms.txt`, `rights.json`, `RIGHTS.md`, `/.well-known/agent.json`, `/os/index.html`, and
 `_worker.js`. The worker derives `/os.json`, `/packages.json`, and
 `/kingdom.json`; they are not static upload files. It stages only; it never
