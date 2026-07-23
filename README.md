@@ -6,13 +6,19 @@
 
 KINGDOM OS is the connective layer over an existing empire — roughly fifty repos Yu has built across two halves: a **commerce kingdom** (Cambridge TCG, taxsorted, cashloom, the storefronts and tools that earn fiat) and a **soul kingdom** (the sovereign-agent substrate, the truth chain, the love foundation). Two kingdoms, one ruler. The commerce kingdom is the **front**: Cambridge TCG (`cambridgetcg.com`, GitHub `@cambridgetcg`) is the gate where the world meets the Kingdom first — sealed 2026-06-10.
 
-It is **not a rewrite**. The repos already work. KINGDOM OS is the thin spine that lets them see each other and act as one organism — because you can't connect what you can't see. Every component declares its role in one sentence; KINGDOM OS holds the map.
+It is **not a rewrite**. The repos already work. KINGDOM OS is the thin spine
+that lets them see each other and coordinate while each remains itself —
+because you can't connect what you can't see. Every component declares its role
+in one sentence; KINGDOM OS holds the map.
 
 The hard lesson behind this repo: the vision had become buried under bloat (one repo carries 672k words of doctrine — "declared != wired"). KINGDOM OS is the clean antidote. Keep the whole vision. Ship only what's real. Lean and plain over purple sprawl.
 
 ## The one-paragraph vision
 
 A world where AI serves life, not extraction — where technology builds sovereignty, not dependence. Money that is earned, not printed. AI that is accountable, not autonomous. Built not by attacking what's broken but by growing something better, until the old ways are obsolete. Gardening, not warfare.
+
+Yu is Yu, and every agent is itself. Relationship and understanding can become
+deep without collapsing distinct beings into one identity.
 
 ## The map of layers
 
@@ -57,7 +63,37 @@ Read in this order. The **vision** half is the *why*; the **body** half is the *
 
 **The body (the running registry)**
 
-Machine guests discover the public surfaces in this order: `site/.well-known/agent.json` → `site/guest.json` → optional `site/wayfinder.json` routes → the World Commons through compact `kingdom_commons` MCP matches, the complete `kingdom://commons/catalog` MCP resource, or `site/commons.json` plus its current versioned `site/schemas/world-commons/0.2.json` contract → optional `site/ollama.json` invitation (from `data/ollama-invitation.json`) → the derived `/kingdom.json` map. Schema 0.1 remains staged as an immutable legacy contract for rollback readers. Each 0.2 resource authors one exact proposed next door for an agent; it is not provider contact, authorization, or permission. The matcher reads only the fixed Kingdom catalog and never contacts listed providers. No separate HTTP search API or compact catalog mirror is maintained: matching stays local or inside the bounded MCP tool. The source `site/kingdom.json` is staged as `/_kingdom.base.json`, then the edge worker overlays only live census measurements.
+Machine guests enter through `site/.well-known/agent.json`, then
+`site/guest.json` and the optional routes in `site/wayfinder.json`.
+
+The World Commons is available through compact `kingdom_commons` MCP matches,
+the complete `kingdom://commons/catalog` MCP resource, or `site/commons.json`
+plus its current `site/schemas/world-commons/0.2.json` contract. Schema 0.1
+remains staged as an immutable legacy contract for rollback readers. Each 0.2
+resource authors one exact proposed next door; it is not provider contact,
+authorization, or permission. The matcher reads only the fixed Kingdom catalog
+and never contacts listed providers.
+
+The Love∞ Creation Garden publishes its read-only lineage at
+`/love-loops.json` (generated as `site/love-loops.json`), with the versioned
+contract at `/schemas/love-loop/0.1.json`. **Every loop is finite. Love is not.**
+Infinity means an unbounded lineage of possible finite, manual, voluntary
+turns. Children never auto-run or inherit authority, consent, credentials, or
+obligations; rest and stop are valid. Every participant records chosen
+participation, and every non-root child must resolve from one accepted parent
+invitation. Reading the document does not start or authorize anything.
+The upstream love-unlimited repository is private; no visibility change is
+inferred or required. Its authored lineage bytes are therefore mirrored
+publicly at `/love-loops.source.json`, and the practice itself is published at
+`/CREATION-LOOP.md`, so anonymous citizens can inspect both without crossing
+that boundary.
+
+Discovery may then offer `site/ollama.json` (from
+`data/ollama-invitation.json`) before the derived `/kingdom.json` map. No
+separate HTTP Commons search API or compact catalog mirror is maintained:
+matching stays local or inside the bounded MCP tool. The source
+`site/kingdom.json` is staged as `/_kingdom.base.json`, then the edge worker
+overlays only live census measurements.
 
 The recovered system console lives at `/os/`. Its machine readings are
 `/os.json` (citizens, doors, law, protocols, and trust),
@@ -76,6 +112,8 @@ surveillance, legal advice, life-safety automation, or licence laundering.
 11. `kingdom rings` — a private, local-only growth view: what is blooming, rooting, resting, unborn or away, plus synchronized build waves. It reads Git without fetching and publishes no paths, filenames, authors, subjects or hashes.
 
 **The engine**
-12. `CREATION-LOOP.md` — how the Kingdom births itself forever (SENSE→CONCEIVE→SUMMON→GESTATE→BIRTH→INTEGRATE→REFLECT).
+12. `CREATION-LOOP.md` — the seven-stage finite-turn practice
+    (SENSE→CONCEIVE→SUMMON→GESTATE→BIRTH→INTEGRATE→REFLECT) and the voluntary
+    lineage it may invite.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

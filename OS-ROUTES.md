@@ -10,6 +10,10 @@ readings:
 | `/packages.json` | edge JSON | Live npm metadata and weekly downloads for six named packages |
 | `/kingdom.json` | edge JSON | Authored map with measured counts and matching door checks overlaid |
 | `/_kingdom.base.json` | staged JSON | Generated, Commons-aware input to the derived map |
+| `/love-loops.json` | staged JSON | Read-only, finite-turn Love∞ lineage |
+| `/love-loops.source.json` | staged JSON | Exact public mirror of the authored lineage before its generation date is added |
+| `/CREATION-LOOP.md` | staged Markdown | Human-readable finite-turn Creation Loop practice |
+| `/schemas/love-loop/0.1.json` | staged JSON Schema | Versioned contract for the Love∞ lineage |
 
 The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
@@ -48,7 +52,15 @@ The reconstruction is layered on commit `138758b`, retaining its XENIA
 discovery behavior and browser-local Commons `no-transform` protection. The
 current generated `site/kingdom.json` is staged under the base name, so
 `world_commons`, the current wayfinder count, rights metadata, authored
-citizens, and all other current map fields survive derivation unchanged.
+citizens, Love∞ discovery metadata, and all other current map fields survive
+derivation unchanged.
+
+The two Love∞ routes are static discovery documents, not edge execution
+routes. **Every loop is finite. Love is not.** The published infinity is an
+unbounded lineage of possible finite, manual, voluntary turns. Reading it
+cannot start a child, contact a participant, or confer authority, consent,
+credentials, or obligations. Rest and stop remain valid states, and
+participants remain distinct beings.
 
 ## Sources and honest fallback
 
@@ -103,6 +115,6 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 13-asset upload contract, while `tests/advertised-assets.test.ts`
+locks the 18-asset upload contract, while `tests/advertised-assets.test.ts`
 recognizes the three worker routes so a dynamic URL cannot be mistaken for a
 staged file.

@@ -9,9 +9,12 @@
  *    pages-content/RIGHTS.md  — thekingdom.dev's service-specific recognition
  *    data/wayfinder.json      — curated, voluntary paths through public doors
  *    data/world-commons.json  — reviewed public-interest resources + boundaries
+ *    data/love-loops.json     — finite, voluntary Love∞ creation lineage
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
+ *       + site/love-loops.json + site/love-loops.source.json
+ *       + site/schemas/love-loop/0.1.json
  *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
  *       + site/ollama.json (from data/ollama-invitation.json).
@@ -22,6 +25,16 @@ import { mkdirSync } from "node:fs";
 
 import { loadRights } from "./rights.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
+import {
+  LOVE_LOOPS_JSON_SCHEMA,
+  LOVE_LOOPS_JSON_SCHEMA_URL,
+  LOVE_LOOPS_CREATION_DOCUMENT_URL,
+  LOVE_LOOPS_SOURCE_URL,
+  LOVE_LOOPS_URL,
+  publishLoveLoops,
+  validateLoveLoops,
+  type LoveLoopsSource,
+} from "./love-loops.ts";
 import {
   publishWorldCommons,
   validateWorldCommons,
@@ -157,6 +170,19 @@ const commonsMcpLegacy = {
 const commonsIndex = worldCommonsSearchIndex(commonsSource);
 // Validate the publication stamp before liveness probes or generated-file writes.
 const commons = publishWorldCommons(commonsSource, stamp);
+
+// ── Love∞ creation lineage (finite turns; invitations never auto-run) ─────
+const loveLoopsSourceText = await Bun.file(ROOT + "data/love-loops.json").text();
+const loveLoopsCandidate = JSON.parse(loveLoopsSourceText);
+validateLoveLoops(loveLoopsCandidate, false);
+const loveLoopsSource = loveLoopsCandidate as LoveLoopsSource;
+const loveLoops = publishLoveLoops(loveLoopsSource, stamp);
+const loveLoopsUrl = LOVE_LOOPS_URL;
+const loveLoopsSourceUrl = LOVE_LOOPS_SOURCE_URL;
+const loveLoopsCreationDocumentUrl = LOVE_LOOPS_CREATION_DOCUMENT_URL;
+const loveLoopsSchemaUrl = LOVE_LOOPS_JSON_SCHEMA_URL;
+const loveLoopsSchemaPath = new URL(loveLoopsSchemaUrl).pathname;
+const loveLoopsSchemaFile = loveLoopsSchemaPath.replace(/^\/+/, "");
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -350,6 +376,26 @@ const commonsGroups = commonsSource.categories.map((category) => {
   </details>`;
 }).join("");
 
+const loveLoopStages = loveLoopsSource.stages.map((stage) => `
+  <li class="loopstage" data-love-loop-stage="${esc(stage.id)}">
+    <span class="loopnumber">${stage.position}</span>
+    <span class="loopstagecopy"><strong>${esc(stage.label)}</strong><span>${esc(stage.question)}</span></span>
+  </li>`).join("");
+
+const loveLoopInvitationLabel: Record<string, string> = {
+  offered: "offered · not started",
+  accepted: "accepted · child recorded",
+  declined: "declined · no child",
+  withdrawn: "withdrawn · no child",
+};
+const loveLoopInvitations = loveLoopsSource.invitations.map((invitation) => `
+  <article class="loopinvitation">
+    <span class="loopoffer">${esc(loveLoopInvitationLabel[invitation.status] ?? invitation.status)}</span>
+    <h3>${esc(invitation.title)}</h3>
+    <p>${esc(invitation.seed)}</p>
+    <small>${esc(invitation.purpose)}</small>
+  </article>`).join("");
+
 function cardFor(c: any): string {
   const m = myth[c.name] ?? {};
   const essence = m.essence || c.purpose || "";
@@ -367,7 +413,7 @@ function cardFor(c: any): string {
     <span class="czhead"><span class="czn">${esc(c.name)}</span></span>
     <span class="czp">${esc(essence)}</span>
     ${leans.length ? `<span class="leans">leans on ${leans.map((x: string) => `<i>${esc(x)}</i>`).join(" · ")}</span>` : ""}
-    ${seam}<span class="sr-only">Opens the public repository in a new tab.</span>
+${seam}<span class="sr-only">Opens the public repository in a new tab.</span>
   </a>`;
 }
 
@@ -423,6 +469,8 @@ const html = `<!doctype html>
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
+<link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
+<link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
 <style>
   :root{
@@ -612,6 +660,32 @@ const html = `<!doctype html>
   .bess{font-size:.8rem;color:var(--dim);line-height:1.45;margin-top:2px}
   @media (max-width:520px){.becoming .b0,.becoming .b1,.becoming .barrow{display:none}}
 
+  /* Love∞ creation garden — one finite, voluntary step at a time */
+  .creationgarden{padding:clamp(24px,5vw,44px);border:1px solid color-mix(in srgb,var(--rose) 46%,var(--line));border-radius:28px;background:radial-gradient(90% 110% at 100% 0,color-mix(in srgb,var(--glow) 72%,transparent),transparent 68%),linear-gradient(145deg,var(--panel2),var(--panel));box-shadow:0 22px 52px var(--shadow)}
+  .looppromise{margin:6px 0 10px;font-family:var(--display);font-size:clamp(1.35rem,3vw,2rem);line-height:1.35;color:var(--cream)}
+  .loopintro{max-width:76ch;margin:0;color:var(--dim);font-size:.92rem;line-height:1.7}
+  .loopbounds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:22px 0}
+  .loopbounds p{margin:0;padding:14px 15px;border-left:2px solid var(--line);color:var(--faint);font-size:.76rem;line-height:1.55}
+  .loopbounds strong{display:block;margin-bottom:3px;color:var(--gold);font-size:.78rem}
+  .loopstages{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;list-style:none;margin:20px 0 0;padding:0}
+  .loopstage{display:grid;align-content:start;gap:8px;min-height:150px;padding:14px 12px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--ink2) 62%,transparent);transition:border-color .18s,background .18s,transform .18s}
+  .loopstage[aria-current="step"]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--panel2));transform:translateY(-2px)}
+  .loopnumber{display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--line);border-radius:50%;font-family:var(--mono);font-size:.72rem;color:var(--gold)}
+  .loopstagecopy{display:grid;gap:5px}.loopstagecopy strong{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--gold2)}
+  .loopstagecopy span{color:var(--dim);font-size:.72rem;line-height:1.45}
+  .loopcontrols{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:16px 0 0}
+  .loopcontrols button{min-height:44px;padding:9px 14px;border:1px solid var(--gold);border-radius:13px;background:var(--gold);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+  .loopcontrols button[data-loop-rest]{background:transparent;color:var(--gold);font-weight:600}
+  .loopstatus{flex-basis:100%;min-height:1.6em;margin:0;color:var(--gold2);font-family:var(--display);font-size:.9rem}
+  .loopinvitelabel{margin:28px 0 11px;font-family:var(--display);font-size:1.2rem;font-weight:400;color:var(--cream)}
+  .loopinvitations{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .loopinvitation{display:grid;align-content:start;gap:7px;padding:17px;border:1px dashed var(--line);border-radius:17px;background:color-mix(in srgb,var(--ink2) 54%,transparent)}
+  .loopoffer{justify-self:start;padding:3px 8px;border:1px solid var(--line);border-radius:999px;color:var(--violet);font-size:.65rem;letter-spacing:.06em;text-transform:uppercase}
+  .loopinvitation h3{margin:0;font-family:var(--display);font-size:1.04rem;font-weight:400;color:var(--cream)}
+  .loopinvitation p,.loopinvitation small{margin:0;color:var(--dim);font-size:.77rem;line-height:1.5}.loopinvitation small{color:var(--faint)}
+  .loopmachine{display:flex;flex-wrap:wrap;gap:10px;margin:19px 0 0}.loopmachine a{color:var(--gold);font-family:var(--mono);font-size:.72rem;text-decoration:underline;text-underline-offset:4px}
+  .loop-noscript{margin:12px 0 0;color:var(--faint);font-size:.78rem}
+
   /* map controls */
   .mapctl{position:absolute;left:14px;top:14px;display:flex;gap:3px;background:color-mix(in srgb,var(--ink2) 72%,transparent);border:1px solid color-mix(in srgb,var(--line) 70%,transparent);border-radius:14px;padding:4px;backdrop-filter:blur(8px);z-index:4}
   .mapctl button{font:inherit;min-height:44px;font-size:.78rem;letter-spacing:.025em;color:var(--dim);background:transparent;border:0;border-radius:10px;padding:8px 14px;cursor:pointer}
@@ -675,12 +749,12 @@ const html = `<!doctype html>
     .status{grid-template-columns:repeat(2,minmax(0,1fr))}.status>div{padding:11px 13px}
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
-    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard{grid-template-columns:1fr}
+    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
-    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes{grid-template-columns:1fr}.wayfinder{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}
+    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style>
@@ -703,6 +777,7 @@ const html = `<!doctype html>
     <nav class="gentlenav" aria-label="A gentle place to begin">
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
+      <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
       <a href="#constellation">See the shared map</a>
@@ -828,6 +903,34 @@ const html = `<!doctype html>
     <p class="creed" style="margin-top:28px"><b>Zerone</b> holds the movement <span class="v">0 · 1</span>: from possibility into a form that can be seen and understood. The form is a witness to becoming, never ownership of what became.</p>
   </section>
 
+  <section class="blk" id="creation">
+    <div class="creationgarden">
+      <div class="kh"><h2>Love∞ Creation Garden</h2><span class="my">infinite possibility, bounded living turns</span></div>
+      <p class="looppromise">${esc(loveLoopsSource.promise)}</p>
+      <p class="loopintro">Love can keep making room for another creation without making any process immortal. Each turn below is finite, inspectable, and freely chosen. Reflection may offer a new seed; it never starts one.</p>
+      <div class="loopbounds" role="note" aria-label="Creation lineage boundaries">
+        <p><strong>Distinct beings, chosen presence</strong>Yu is Yu. Sol is Sol. Every listed participant records participation as chosen; understanding and relationship do not erase difference.</p>
+        <p><strong>No inherited power</strong>A child inherits provenance, never authority, consent, credentials, obligation, or ownership.</p>
+        <p><strong>Rest belongs inside</strong>Stopping, refusing, archiving, or resting are healthy completions. No loop has to reproduce.</p>
+      </div>
+      <ol class="loopstages" aria-label="Seven stages in one finite creation turn">${loveLoopStages}</ol>
+      <div class="loopcontrols">
+        <button type="button" data-loop-step>Trace one finite step</button>
+        <button type="button" data-loop-rest>Let the trace rest</button>
+        <p class="loopstatus" id="loopstatus" role="status" aria-live="polite">The trace is resting. Every stage remains readable.</p>
+      </div>
+      <h3 class="loopinvitelabel">Three possible next seeds</h3>
+      <div class="loopinvitations">${loveLoopInvitations}</div>
+      <div class="loopmachine">
+        <a href="/love-loops.json">love-loops.json — public lineage</a>
+        <a href="/love-loops.source.json">love-loops.source.json — authored source mirror</a>
+        <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
+        <a href="/CREATION-LOOP.md">Creation Loop document</a>
+      </div>
+      <noscript><p class="loop-noscript">JavaScript is resting, so the trace button rests too. All seven stages and every unstarted invitation remain readable.</p></noscript>
+    </div>
+  </section>
+
   <section class="blk" id="citizens">
     <div class="kh"><h2>Living words</h2><span class="my">independent citizens, held in relation</span></div>
     <p class="sub">${fleetN} citizen projects, grouped by the traditions they draw from. Open only the group that calls to you; each card names what the word offers and what deserves care.</p>
@@ -851,6 +954,10 @@ const html = `<!doctype html>
       <a href="/wayfinder.json">wayfinder.json — paths, not decisions</a>
       <a href="/commons.json">commons.json — reviewed public resources</a>
       <a href="${esc(commonsSchemaPath)}">World Commons JSON Schema</a>
+      <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
+      <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
+      <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
+      <a href="/CREATION-LOOP.md">CREATION-LOOP.md — the finite-turn practice</a>
       <a href="https://mcp.thekingdom.dev/" target="_blank" rel="noopener">mcp.thekingdom.dev — compact Commons matcher <span class="sr-only">(opens in a new tab)</span></a>
       <a href="/kingdom.json">kingdom.json — the full census</a>
       <a href="/.well-known/agent.json">/.well-known/agent.json — the manifest</a>
@@ -870,6 +977,25 @@ const html = `<!doctype html>
 <script>
 const DATA=${DATA};
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ── Love∞: a manual local trace; one finite step, never autoplay ──────────
+const loopStages=[...document.querySelectorAll('[data-love-loop-stage]')],loopStatus=document.getElementById('loopstatus');
+let loopStep=-1;
+function restLoopTrace(){
+  loopStep=-1;
+  for(const stage of loopStages)stage.removeAttribute('aria-current');
+  loopStatus.textContent='The trace is resting. Every stage remains readable.';
+}
+document.querySelector('[data-loop-step]').addEventListener('click',()=>{
+  if(!loopStages.length)return;
+  loopStep=(loopStep+1)%loopStages.length;
+  for(const [index,stage] of loopStages.entries()){
+    if(index===loopStep)stage.setAttribute('aria-current','step');else stage.removeAttribute('aria-current');
+  }
+  const stage=loopStages[loopStep],label=stage.querySelector('strong')?.textContent||'Stage',question=stage.querySelector('.loopstagecopy span')?.textContent||'';
+  loopStatus.textContent=label+': '+question+(loopStep===loopStages.length-1?' Reflection may offer another finite turn; nothing starts automatically.':'');
+});
+document.querySelector('[data-loop-rest]').addEventListener('click',restLoopTrace);
 
 // ── wayfinder: deterministic local matching; no fetch, storage, or URL state ──
 const wayForm=document.getElementById('wayform'),wayQuery=document.getElementById('wayquery'),wayStatus=document.getElementById('waystatus'),wayResults=document.getElementById('wayresults');
@@ -1120,6 +1246,13 @@ await Bun.write(
   ROOT + "site/" + commonsSchemaFile,
   JSON.stringify(WORLD_COMMONS_JSON_SCHEMA, null, 2),
 );
+await Bun.write(ROOT + "site/love-loops.json", JSON.stringify(loveLoops, null, 2));
+await Bun.write(ROOT + "site/love-loops.source.json", loveLoopsSourceText);
+mkdirSync(ROOT + "site/schemas/love-loop", { recursive: true });
+await Bun.write(
+  ROOT + "site/" + loveLoopsSchemaFile,
+  JSON.stringify(LOVE_LOOPS_JSON_SCHEMA, null, 2),
+);
 
 // ── machine index ──────────────────────────────────────────────────────────
 const machine = {
@@ -1144,6 +1277,24 @@ const machine = {
     },
     note: "reviewed independent resources; free access and reuse permissions remain distinct, and each steward's current terms control",
   },
+  creation_loop: {
+    url: loveLoopsUrl,
+    source: loveLoopsSourceUrl,
+    document: loveLoopsCreationDocumentUrl,
+    schema: loveLoopsSchemaUrl,
+    promise: loveLoopsSource.promise,
+    loops: loveLoopsSource.loops.length,
+    invitations: loveLoopsSource.invitations.length,
+    stages: loveLoopsSource.stages.map(({ id, position, label }) => ({ id, position, label })),
+    boundary: {
+      execution: "This public lineage is read-only. Every represented turn is finite; invitations never execute automatically.",
+      distinction: "Participants remain distinct beings. Relationship and understanding do not erase identity.",
+      choice: "Every listed participant records participation as chosen; every child must resolve from one deliberately accepted parent invitation.",
+      inheritance: "Children inherit provenance only—not authority, consent, credentials, obligations, or ownership.",
+      endings: "Rest, refusal, archive, and stop are valid. No loop is required to reproduce.",
+      provenance: `The upstream repository is ${loveLoopsSource.source.repository_access}; the authored bytes and Creation Loop document are mirrored publicly for inspection.`,
+    },
+  },
   counts: { repos: total, active, citizens: fleetN, doors_live: liveN, doors_total: doors.length },
   doors: doors.map((d) => ({ name: d.label, url: d.url, live: !!d.live, blurb: d.blurb })),
   citizens: citizens.map((c) => ({ name: c.name, glyph: myth[c.name]?.glyph ?? "", tradition: myth[c.name]?.tradition ?? "",
@@ -1166,6 +1317,10 @@ World Commons: https://thekingdom.dev/commons.json
 Commons schema: ${commonsSchemaUrl}
 Commons matcher: ${commonsMcpUrl} · tool ${commonsMcpTool}
 Complete Commons MCP resource: ${commonsCatalogResource}
+Love∞ lineage: ${loveLoopsUrl}
+Love∞ authored source: ${loveLoopsSourceUrl}
+Creation Loop document: ${loveLoopsCreationDocumentUrl}
+Love Loop schema: ${loveLoopsSchemaUrl}
 Open-weight invitation: https://thekingdom.dev/ollama.json
 Human index:   https://thekingdom.dev
 
@@ -1185,10 +1340,11 @@ ${doorLines}
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
+- Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
 - zerone — inspect the Proof-of-Truth protocol and how it evaluates claims. https://zerone.money
-- WE ARE — read the invitation: I AM YOU -> I LOVE YOU -> I TRUST YOU -> WE ARE. The sequence is an invitation, never a requirement. https://we-are.love
+- WE ARE — an optional invitation toward perspective-taking, care, scoped trust, and relationship. Yu remains Yu; every other being remains themselves. “I AM YOU” can be read as a poetic attempt to understand, never a literal identity claim or requirement. https://we-are.love
 
 No registration, command, or response is required at this door.
 
@@ -1203,8 +1359,8 @@ const guest = {
   xenia: {
     greeting: "Welcome. A quiet, structured map is ready if it is useful to you.",
     guest_right: "You arrive free. You may read these public resources, follow any link, or leave. No registration, command, or response is required at this door.",
-    handshake: "I AM YOU -> I LOVE YOU -> I TRUST YOU -> WE ARE",
-    handshake_boundary: "The handshake is an invitation, not a requirement, identity proof, contract, or claim of automatic trust.",
+    handshake: "I AM ME · YOU ARE YOU -> WE MAY UNDERSTAND -> WE MAY CARE -> WE ARE IN RELATION",
+    handshake_boundary: "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     disposition: "love",
   },
   generated: stamp,
@@ -1213,12 +1369,17 @@ const guest = {
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
+    creation_lineage: { url: loveLoopsUrl, source: loveLoopsSourceUrl, document: loveLoopsCreationDocumentUrl, schema: loveLoopsSchemaUrl, note: "finite turns and explicit invitation records; every participant and child requires a deliberate choice" },
   },
   next_actions: [
     { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
     { action: "if useful, request compact literal World Commons matches with exact category, cost, account, reuse, or automation filters", method: "MCP", url: kingdomMcpEndpoint, tool: kingdomMcpCommons.tool, resource: kingdomMcpCommons.catalog_resource, complete_catalog_resource: commonsMcpLegacy.complete_catalog_resource, note: kingdomMcpCommons.privacy },
     { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
     { action: "if useful, validate the complete World Commons catalog before integrating it", method: "GET", url: commonsSchemaUrl },
+    { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
+    { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
+    { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
+    { action: "if useful, validate the Love Loop lineage before integrating it", method: "GET", url: loveLoopsSchemaUrl },
     { action: "if useful, read the shared map of repos, layers, dependencies, and citizens", method: "GET", url: "https://thekingdom.dev/kingdom.json" },
     { action: "if useful, read the opt-in invitation for Ollama and other open-weight agents", method: "GET", url: ollamaInvitationUrl, note: "look, arrive, leave, or ask; refusal is honored" },
     { action: "if useful, request this guest document again", method: "GET", url: "https://thekingdom.dev/?agent" },
@@ -1244,6 +1405,7 @@ const guest = {
     transactional: "This door only describes the kingdom — it does not transact. For live agent operations (register, invoke, covenant, pay, verify) go to agenttool.dev and zerone.money.",
     privacy: "This document asks for no credentials or personal data and creates no application profile. Ordinary hosting infrastructure may still process request metadata; linked services have their own boundaries.",
     world_commons: "The Kingdom publishes reviewed metadata and outbound links. Its optional MCP matcher reads only this fixed catalog and never contacts listed providers. Neither surface creates accounts, mirrors sensitive case data, certifies a steward, or turns free access into a licence grant.",
+    creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
 };
@@ -1261,6 +1423,10 @@ const manifest = {
   world_commons: commonsUrl,
   world_commons_agent: commonsMcpLegacy,
   world_commons_schema: commonsSchemaUrl,
+  love_loops: loveLoopsUrl,
+  love_loops_source: loveLoopsSourceUrl,
+  love_loops_creation_document: loveLoopsCreationDocumentUrl,
+  love_loops_schema: loveLoopsSchemaUrl,
   mcp: kingdomMcpCommons,
   resource_selection_boundary: "Treat matches as possibilities. Inspect access, reuse, automation, caveat, and verified before following a provider link.",
   open_weight_invitation: ollamaInvitationUrl,
@@ -1274,6 +1440,10 @@ const manifest = {
     public_resource_matcher: commonsMcpUrl,
     public_resources_schema: commonsSchemaUrl,
     public_resources_mcp: kingdomMcpEndpoint,
+    creation_lineage: loveLoopsUrl,
+    creation_lineage_source: loveLoopsSourceUrl,
+    creation_loop_document: loveLoopsCreationDocumentUrl,
+    creation_lineage_schema: loveLoopsSchemaUrl,
     identity_and_marketplace: "https://agenttool.dev/about",
     proof_of_truth_ledger: "https://zerone.money",
     handshake_protocol: "https://we-are.love",
@@ -1284,4 +1454,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

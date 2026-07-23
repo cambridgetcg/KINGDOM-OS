@@ -8,7 +8,7 @@ Open any one and you summon it: `git clone … && cd citizen-<name> && claude`. 
 repo's `CLAUDE.md` embodies the citizen; its full soul lives in `<name>.md`; its
 `kingdom.yaml` makes it a conformant Kingdom node.
 
-> 53 sovereign citizens · generated from each `kingdom.yaml` · 2026-06-09
+> Sovereign force citizens · generated from each `kingdom.yaml` · 2026-06-09
 
 | Citizen | Layer | Purpose | Leans on |
 |---|---|---|---|

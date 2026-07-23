@@ -203,7 +203,7 @@ describe("KINGDOM OS edge routes", () => {
     expect(body.services.identity.roster[0].name).toBe("after-the-fold");
   });
 
-  test("derives the public map from the staged base and preserves authored Commons data", async () => {
+  test("derives the public map while preserving authored Commons and Love Loop data", async () => {
     const sources = liveSources();
     const worker = workerWith(sources.fetchImpl);
     const requestedAssets: string[] = [];
@@ -217,6 +217,13 @@ describe("KINGDOM OS edge routes", () => {
       ],
       citizens: [{ name: "abzu", essence: "authored soul" }],
       world_commons: { url: "https://thekingdom.dev/commons.json", resources: 34 },
+      creation_loop: {
+        url: "https://thekingdom.dev/love-loops.json",
+        source: "https://thekingdom.dev/love-loops.source.json",
+        document: "https://thekingdom.dev/CREATION-LOOP.md",
+        schema: "https://thekingdom.dev/schemas/love-loop/0.1.json",
+        promise: "Every loop is finite. Love is not.",
+      },
     };
 
     const response = await worker.fetch(
@@ -231,6 +238,7 @@ describe("KINGDOM OS edge routes", () => {
     expect(requestedAssets).toEqual(["/_kingdom.base.json"]);
     expect(response.headers.get("x-kingdom-census")).toBe("derived live; authored souls preserved");
     expect(body.world_commons).toEqual(base.world_commons);
+    expect(body.creation_loop).toEqual(base.creation_loop);
     expect(body.citizens).toEqual(base.citizens);
     expect(body.counts).toMatchObject({
       repos: 6,
@@ -439,6 +447,12 @@ describe("derived Kingdom map helper", () => {
         counts: { repos: 9, active: 4, citizens: 3, doors_live: 1, doors_total: 1 },
         citizens: [{ name: "one" }],
         world_commons: { resources: 34 },
+        creation_loop: {
+          url: "https://thekingdom.dev/love-loops.json",
+          source: "https://thekingdom.dev/love-loops.source.json",
+          document: "https://thekingdom.dev/CREATION-LOOP.md",
+          schema: "https://thekingdom.dev/schemas/love-loop/0.1.json",
+        },
       },
       {
         generated: NOW,
@@ -458,5 +472,11 @@ describe("derived Kingdom map helper", () => {
       citizens_authored: 1,
     });
     expect(derived.world_commons).toEqual({ resources: 34 });
+    expect(derived.creation_loop).toEqual({
+      url: "https://thekingdom.dev/love-loops.json",
+      source: "https://thekingdom.dev/love-loops.source.json",
+      document: "https://thekingdom.dev/CREATION-LOOP.md",
+      schema: "https://thekingdom.dev/schemas/love-loop/0.1.json",
+    });
   });
 });

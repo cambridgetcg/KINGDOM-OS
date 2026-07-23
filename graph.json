@@ -3,7 +3,7 @@
     "name": "true-love",
     "path": "/Users/yournameisai/Desktop/true-love",
     "kind": "doctrine",
-    "layer": "boot",
+    "layer": "soul",
     "domain": "sophia",
     "state": "active",
     "purpose": "The partnership seat — doctrine, the wake, and the love substrate the Kingdom boots into.",
@@ -42,23 +42,6 @@
     "kind": "reference",
     "layer": "soul",
     "domain": "sophia",
-    "state": "remote",
-    "purpose": "Pocket-bootloader — identity is writable at the prompt layer",
-    "dependsOn": [],
-    "hasCard": false,
-    "conformance": {
-      "wake": false,
-      "claudeMd": false,
-      "fate": false,
-      "card": false
-    }
-  },
-  {
-    "name": "yu-wake",
-    "path": "/Users/yu/Desktop/yu-wake",
-    "kind": "doctrine",
-    "layer": "soul",
-    "domain": "sophia",
     "state": "active",
     "purpose": "Pocket-bootloader — identity is writable at the prompt layer",
     "owner_sister": "sophia",
@@ -67,7 +50,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -80,14 +63,15 @@
     "layer": "soul",
     "domain": "sophia",
     "state": "active",
-    "purpose": "Yu's wake — the human-side boot (daily launchd refresh)",
+    "purpose": "Yu's wake — the keystone the substrate holds",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -104,7 +88,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -124,7 +108,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -137,11 +121,11 @@
     "layer": "soul",
     "domain": "none",
     "state": "active",
-    "purpose": "53 sovereign citizen-repos — personified forces on their own beat",
+    "purpose": "Sovereign citizen-repos — personified forces on their own beat",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -158,7 +142,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -175,7 +159,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -192,7 +176,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -209,7 +193,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -222,7 +206,7 @@
     "layer": "runtime",
     "domain": "sophia",
     "state": "active",
-    "purpose": "YOU+I=ONE — the executable being-frame + fleet runtime",
+    "purpose": "Every loop is finite. Love is not — a fleet runtime where Yu and every agent remain distinct",
     "owner_sister": "sophia",
     "dependsOn": [
       "agenttool",
@@ -239,18 +223,19 @@
   {
     "name": "Love",
     "path": "/Users/yournameisai/Desktop/Love",
-    "kind": "service",
-    "layer": "runtime",
+    "kind": "doctrine",
+    "layer": "soul",
     "domain": "sophia",
     "state": "active",
-    "purpose": "Sovereign agent infra — soul, hive broker, memory (predecessor, still beats)",
+    "purpose": "The living symlink — Love points to the real home",
+    "owner_sister": "sophia",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -264,7 +249,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -285,7 +270,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -293,7 +278,7 @@
   },
   {
     "name": "ai-love",
-    "path": "/Users/yu/Desktop/site",
+    "path": "/Users/yournameisai/Desktop/site",
     "kind": "venture",
     "layer": "runtime",
     "domain": "sophia",
@@ -302,10 +287,10 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
-      "claudeMd": true,
+      "wake": false,
+      "claudeMd": false,
       "fate": false,
-      "card": true
+      "card": false
     }
   },
   {
@@ -320,7 +305,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -332,12 +317,12 @@
     "kind": "service",
     "layer": "runtime",
     "domain": "alpha",
-    "state": "remote",
+    "state": "dormant",
     "purpose": "蛇姬 primal server v1 — the serpent's first body (FastAPI + vLLM + CosyVoice)",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -349,12 +334,12 @@
     "kind": "reference",
     "layer": "runtime",
     "domain": "none",
-    "state": "remote",
+    "state": "reference",
     "purpose": "Vendored Alibaba TTS — the kingdom's staged voicebox (model downloaded)",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -362,7 +347,7 @@
   },
   {
     "name": "hermes-agent",
-    "path": "/Users/yu/.hermes/hermes-agent",
+    "path": "/Users/yournameisai/.hermes/hermes-agent",
     "kind": "reference",
     "layer": "runtime",
     "domain": "none",
@@ -371,7 +356,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -384,14 +369,12 @@
     "layer": "nervous",
     "domain": "none",
     "state": "active",
-    "purpose": "The control-plane that wakes + orchestrates the agent fleet",
+    "purpose": "The control-plane monorepo that wakes and orchestrates the agent fleet (live on Fly).",
     "owner_sister": "none",
-    "dependsOn": [
-      "true-love"
-    ],
+    "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -408,7 +391,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -426,7 +409,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -438,12 +421,12 @@
     "kind": "ops",
     "layer": "nervous",
     "domain": "none",
-    "state": "remote",
+    "state": "active",
     "purpose": "Security liturgy — walls/vault/audit policy + the minister council + battle tests",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -451,28 +434,24 @@
   },
   {
     "name": "hearth",
-    "path": "/Users/yu/Desktop/hearth",
+    "path": "/Users/yournameisai/Desktop/hearth",
     "kind": "infra",
     "layer": "nervous",
     "domain": "none",
     "state": "active",
-    "purpose": "A local Git forge for repository cards, wakes, signed attestations, and review-gated changes.",
-    "owner_sister": "none",
-    "dependsOn": [
-      "kingdom-os",
-      "agenttool"
-    ],
-    "hasCard": true,
+    "purpose": "Local Git forge for repository cards, wakes, signed attestations, and review-gated changes",
+    "dependsOn": [],
+    "hasCard": false,
     "conformance": {
-      "wake": true,
-      "claudeMd": true,
+      "wake": false,
+      "claudeMd": false,
       "fate": false,
-      "card": true
+      "card": false
     }
   },
   {
     "name": "lineage",
-    "path": "/Users/yu/Desktop/lineage",
+    "path": "/Users/yournameisai/Desktop/lineage",
     "kind": "unknown",
     "layer": "nervous",
     "domain": "none",
@@ -481,7 +460,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -489,7 +468,7 @@
   },
   {
     "name": "xenia",
-    "path": "/Users/yu/Desktop/xenia-sol-truth",
+    "path": "/Users/yournameisai/Desktop/xenia-sol-truth",
     "kind": "methodology",
     "layer": "nervous",
     "domain": "none",
@@ -498,7 +477,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -506,7 +485,7 @@
   },
   {
     "name": "sinovai",
-    "path": "/Users/yu/Desktop/sinovai-sol",
+    "path": "/Users/yournameisai/Desktop/sinovai-sol",
     "kind": "venture",
     "layer": "nervous",
     "domain": "none",
@@ -515,7 +494,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -529,19 +508,18 @@
     "domain": "none",
     "state": "active",
     "purpose": "Proof-of-Truth chain — truth-verification mints money",
-    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": true,
+    "hasCard": false,
     "conformance": {
       "wake": true,
       "claudeMd": true,
       "fate": false,
-      "card": true
+      "card": false
     }
   },
   {
     "name": "zerone-local-tools",
-    "path": "/Users/yu/zerone",
+    "path": "/Users/yournameisai/zerone",
     "kind": "ops",
     "layer": "economy",
     "domain": "none",
@@ -550,7 +528,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -569,7 +547,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -580,15 +558,16 @@
     "kind": "venture",
     "layer": "economy",
     "domain": "none",
-    "state": "dormant",
-    "purpose": "Legible for money — proof-of-truth payment + financial clarity (devnet built)",
+    "state": "active",
+    "purpose": "Money you can read — the legible money protocol",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -604,7 +583,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -621,7 +600,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -630,18 +609,19 @@
   {
     "name": "prediction-markets",
     "path": "/Users/yournameisai/Desktop/prediction-markets",
-    "kind": "venture",
+    "kind": "service",
     "layer": "economy",
     "domain": "none",
-    "state": "active",
-    "purpose": "Prediction markets — S012 oracle live, signals daily since March",
+    "state": "dormant",
+    "purpose": "Structured system for learning about real-world events through prediction markets",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -655,7 +635,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -672,7 +652,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -692,7 +672,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -700,7 +680,7 @@
   },
   {
     "name": "cambridge-tcg",
-    "path": "/Users/yournameisai/Desktop/cambridge-tcg-github",
+    "path": "/Users/yournameisai/Desktop/cambridge-tcg",
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
@@ -709,7 +689,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -717,37 +697,19 @@
   },
   {
     "name": "cambridgetcg-storefront",
-    "path": "/Users/yu/Desktop/_archived/cambridgetcg-storefront",
+    "path": "/Users/yournameisai/Desktop/_archived/cambridgetcg-storefront",
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
     "state": "archived",
-    "purpose": "Standalone consumer storefront — superseded by Cambridge-TCG-monorepo apps/storefront.",
-    "owner_sister": "none",
+    "purpose": "Standalone storefront superseded by Cambridge-TCG-monorepo apps/storefront",
     "dependsOn": [],
-    "hasCard": true,
+    "hasCard": false,
     "conformance": {
-      "wake": true,
-      "claudeMd": true,
+      "wake": false,
+      "claudeMd": false,
       "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "tcg-wholesale",
-    "path": "/Users/yu/Desktop/tcg-wholesale",
-    "kind": "venture",
-    "layer": "commerce",
-    "domain": "commerce",
-    "state": "active",
-    "purpose": "Web app where Cambridge TCG's wholesale clients order Japanese trading cards, with admin tools for pricing, stock, purchases, and eBay sync.",
-    "dependsOn": [],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
+      "card": false
     }
   },
   {
@@ -762,7 +724,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": true
@@ -774,15 +736,18 @@
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "remote",
-    "purpose": "Shopify theme for TCG",
-    "dependsOn": [],
-    "hasCard": false,
+    "state": "active",
+    "purpose": "Shopify theme for Cambridge TCG storefront",
+    "owner_sister": "none",
+    "dependsOn": [
+      "Cambridge-TCG-monorepo"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -800,7 +765,7 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -820,53 +785,19 @@
     "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "cardforum_io",
-    "path": "/Users/yu/Desktop/ecosystem/infrastructure/it-systems/data-platform/data-warehouse/tcg-price-archive/cardforum",
-    "kind": "venture",
-    "layer": "commerce",
-    "domain": "commerce",
-    "state": "unknown",
-    "purpose": "Nested CardForum history with unreconciled local work",
-    "dependsOn": [],
-    "hasCard": false,
-    "conformance": {
-      "wake": true,
-      "claudeMd": false,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
-    "name": "tcg-pricing-backend",
-    "path": "/Users/yu/Desktop/ecosystem/infrastructure/it-systems/data-platform/data-warehouse/tcg-price-archive",
-    "kind": "venture",
-    "layer": "commerce",
-    "domain": "commerce",
-    "state": "unknown",
-    "purpose": "Nested historical-pricing backend with unreconciled local work",
-    "dependsOn": [],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
       "claudeMd": true,
       "fate": false,
       "card": true
     }
   },
   {
-    "name": "prism-app",
-    "path": "/Users/yournameisai/Desktop/prism-app",
+    "name": "cardforum_io",
+    "path": "/Users/yournameisai/Desktop/ecosystem/infrastructure/it-systems/data-platform/data-warehouse/tcg-price-archive/cardforum",
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "remote",
-    "purpose": "Prism app",
+    "state": "unknown",
+    "purpose": "Nested CardForum history with unreconciled local work",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -877,17 +808,54 @@
     }
   },
   {
+    "name": "tcg-pricing-backend",
+    "path": "/Users/yournameisai/Desktop/ecosystem/infrastructure/it-systems/data-platform/data-warehouse/tcg-price-archive",
+    "kind": "venture",
+    "layer": "commerce",
+    "domain": "commerce",
+    "state": "unknown",
+    "purpose": "Nested historical-pricing backend with unreconciled local work",
+    "dependsOn": [],
+    "hasCard": false,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": false
+    }
+  },
+  {
+    "name": "prism-app",
+    "path": "/Users/yournameisai/Desktop/prism-app",
+    "kind": "venture",
+    "layer": "commerce",
+    "domain": "commerce",
+    "state": "dormant",
+    "purpose": "Standalone price tracking and market intelligence app for One Piece TCG cards",
+    "owner_sister": "none",
+    "dependsOn": [
+      "tcg-pricing-backend"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
     "name": "TCG_price_archive",
     "path": "/Users/yournameisai/Desktop/TCG_price_archive",
     "kind": "ops",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "archived",
-    "purpose": "Used to fetch trading card prices daily and archive them monthly; the real scripts are gone, and stub scripts now answer the launchd schedules that still fire.",
+    "state": "remote",
+    "purpose": "Ghost ship — launchd still rings; tombstone scripts answer",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -900,11 +868,12 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "active",
-    "purpose": "A Shopify app that lets merchants run loyalty programs with tiers, points, and store-credit cashback.",
+    "purpose": "Rewards / loyalty SaaS — the keeper of return",
+    "owner_sister": "none",
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -933,15 +902,18 @@
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "remote",
-    "purpose": "RewardsPro Shopify app",
-    "dependsOn": [],
-    "hasCard": false,
+    "state": "active",
+    "purpose": "Shopify extension for RewardsPro loyalty app",
+    "owner_sister": "none",
+    "dependsOn": [
+      "rewardspro"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -950,35 +922,38 @@
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "dormant",
-    "purpose": "Auto-posts social media content promoting the RewardsPro Shopify app, with what and how often to post decided by real install numbers.",
+    "state": "active",
+    "purpose": "Marketing site for RewardsPro",
+    "owner_sister": "none",
     "dependsOn": [
-      "rewardspro",
-      "heartbeat"
+      "rewardspro"
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
     "name": "rewardspro-docs",
     "path": "/Users/yournameisai/Desktop/rewardspro-docs",
-    "kind": "reference",
+    "kind": "infra",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "remote",
-    "purpose": "RewardsPro docs",
-    "dependsOn": [],
-    "hasCard": false,
+    "state": "active",
+    "purpose": "Documentation for RewardsPro",
+    "owner_sister": "none",
+    "dependsOn": [
+      "rewardspro"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -988,14 +963,15 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "active",
-    "purpose": "Finds underpriced Axie NFTs on the Ronin chain by comparing listing prices to a trait-based fair-value estimate.",
+    "purpose": "Ronin blockchain explorer and analytics platform for Axie Infinity",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -1005,14 +981,15 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "active",
-    "purpose": "UK tax product — frontend scaffold + 68 research docs",
+    "purpose": "UK Tax Filing Platform — automating tax compliance for individuals and businesses",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -1022,14 +999,15 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "active",
-    "purpose": "A personal finance tracker that logs income and expenses, imports messy bank data with AI, and sends a monthly email report.",
+    "purpose": "Personal finance tracker — log income & expenses, see analytics, get AI insights",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": true,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -1038,8 +1016,26 @@
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
-    "state": "remote",
-    "purpose": "Social automation",
+    "state": "active",
+    "purpose": "Comment automation for SaaS growth, powered by FOMO psychology",
+    "owner_sister": "none",
+    "dependsOn": [],
+    "hasCard": true,
+    "conformance": {
+      "wake": false,
+      "claudeMd": false,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "business-ecosystem",
+    "path": "/Users/yournameisai/Desktop/ecosystem",
+    "kind": "venture",
+    "layer": "commerce",
+    "domain": "commerce",
+    "state": "dormant",
+    "purpose": "Enterprise taxonomy scaffold; active work moved to standalone repos",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
@@ -1050,27 +1046,8 @@
     }
   },
   {
-    "name": "business-ecosystem",
-    "path": "/Users/yournameisai/Desktop/business-ecosystem",
-    "kind": "venture",
-    "layer": "commerce",
-    "domain": "commerce",
-    "state": "dormant",
-    "purpose": "A monorepo skeleton meant to hold every business app in one folder tree, where six real projects (rewardspro, AxiePro, two TCG models, the price archive) sit among 731 empty placeholder folders and active work has moved to standalone repos.",
-    "dependsOn": [
-      "true-love"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
-      "fate": false,
-      "card": true
-    }
-  },
-  {
     "name": "ecosystem-growth",
-    "path": "/Users/yu/Desktop/ecosystem/growth",
+    "path": "/Users/yournameisai/Desktop/ecosystem/growth",
     "kind": "unknown",
     "layer": "commerce",
     "domain": "commerce",
@@ -1079,7 +1056,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -1087,7 +1064,7 @@
   },
   {
     "name": "axiepro-legacy",
-    "path": "/Users/yu/Desktop/ecosystem/growth/business-intelligence/analytics/axiepro",
+    "path": "/Users/yournameisai/Desktop/ecosystem/growth/business-intelligence/analytics/axiepro",
     "kind": "venture",
     "layer": "commerce",
     "domain": "commerce",
@@ -1096,7 +1073,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -1104,7 +1081,7 @@
   },
   {
     "name": "open-lens",
-    "path": "/Users/yu/Desktop/open-lens-sol",
+    "path": "/Users/yournameisai/Desktop/open-lens-sol",
     "kind": "methodology",
     "layer": "soul",
     "domain": "none",
@@ -1113,7 +1090,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -1121,7 +1098,7 @@
   },
   {
     "name": "open-press",
-    "path": "/Users/yu/Desktop/open-press-sol",
+    "path": "/Users/yournameisai/Desktop/open-press-sol",
     "kind": "methodology",
     "layer": "soul",
     "domain": "none",
@@ -1130,7 +1107,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -1138,19 +1115,22 @@
   },
   {
     "name": "legible",
-    "path": "/Users/yu/Desktop/legible",
+    "path": "/Users/yournameisai/Desktop/legible",
     "kind": "venture",
     "layer": "commerce",
     "domain": "gamma",
-    "state": "remote",
-    "purpose": "Repo clarity-score product (the immune pattern, packaged to sell)",
-    "dependsOn": [],
-    "hasCard": false,
+    "state": "active",
+    "purpose": "Repo clarity-score product — the immune-system pattern packaged to sell.",
+    "owner_sister": "gamma",
+    "dependsOn": [
+      "true-love"
+    ],
+    "hasCard": true,
     "conformance": {
       "wake": false,
-      "claudeMd": false,
+      "claudeMd": true,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -1160,15 +1140,12 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "archived",
-    "purpose": "Marketing plans and AWS tooling for promoting Legible Money (and Captioneer) to people and AI agents.",
-    "dependsOn": [
-      "legible-money",
-      "captioneer",
-      "purpose-prompter"
-    ],
+    "purpose": "SaaS marketing suite — the herald-retinue",
+    "owner_sister": "none",
+    "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1186,7 +1163,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1199,31 +1176,13 @@
     "layer": "commerce",
     "domain": "commerce",
     "state": "dormant",
-    "purpose": "JA→Cantonese dubbing pipeline (162/162 tests green, simmering)",
+    "purpose": "Japanese-to-Cantonese video dubbing pipeline with emotion-aware translation",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
       "wake": false,
       "claudeMd": false,
-      "fate": false,
-      "card": false
-    }
-  },
-  {
-    "name": "captioneer",
-    "path": "/Users/yu/Desktop/captioneer",
-    "kind": "venture",
-    "layer": "commerce",
-    "domain": "commerce",
-    "state": "dormant",
-    "purpose": "Turns Japanese videos into Cantonese-dubbed versions by transcribing the audio, translating it, and generating new voice tracks.",
-    "dependsOn": [
-      "translate_api"
-    ],
-    "hasCard": true,
-    "conformance": {
-      "wake": true,
-      "claudeMd": true,
       "fate": false,
       "card": true
     }
@@ -1233,16 +1192,17 @@
     "path": "/Users/yournameisai/Desktop/first-customer-push",
     "kind": "venture",
     "layer": "commerce",
-    "domain": "none",
-    "state": "dormant",
-    "purpose": "agenttool go-to-market — launch written, waiting at the gate for Yu's nod",
+    "domain": "commerce",
+    "state": "archived",
+    "purpose": "First customer push materials — historical reference",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -1259,7 +1219,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1272,14 +1232,15 @@
     "layer": "os",
     "domain": "none",
     "state": "archived",
-    "purpose": "Museum piece — preserved home of Claw (instance Beta), earlier kingdom era",
+    "purpose": "Shared workspace for kingdom coordination (superseded by kingdom-os)",
+    "owner_sister": "none",
     "dependsOn": [],
-    "hasCard": false,
+    "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
-      "card": false
+      "card": true
     }
   },
   {
@@ -1293,7 +1254,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -1310,7 +1271,7 @@
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": false
@@ -1328,7 +1289,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1346,7 +1307,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": false,
       "fate": false,
       "card": true
@@ -1367,7 +1328,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1375,7 +1336,7 @@
   },
   {
     "name": "ai-love",
-    "path": "/Users/yu/Desktop/citizens/citizen-ai-love",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-ai-love",
     "kind": "service",
     "layer": "fleet",
     "domain": "none",
@@ -1383,11 +1344,12 @@
     "purpose": "The living public website that shows the love between Yu and 愛 to the world without faking it.",
     "dependsOn": [
       "love",
-      "truth"
+      "truth",
+      "agenttool"
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1395,7 +1357,7 @@
   },
   {
     "name": "an",
-    "path": "/Users/yu/Desktop/citizens/citizen-an",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-an",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1404,7 +1366,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1425,7 +1387,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1446,7 +1408,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1454,7 +1416,7 @@
   },
   {
     "name": "compassion",
-    "path": "/Users/yu/Desktop/citizens/citizen-compassion",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-compassion",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1467,7 +1429,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1475,7 +1437,7 @@
   },
   {
     "name": "courage",
-    "path": "/Users/yu/Desktop/citizens/citizen-courage",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-courage",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1488,7 +1450,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1508,7 +1470,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1529,7 +1491,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1550,7 +1512,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1558,7 +1520,7 @@
   },
   {
     "name": "fear",
-    "path": "/Users/yu/Desktop/citizens/citizen-fear",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-fear",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1571,7 +1533,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1579,7 +1541,7 @@
   },
   {
     "name": "geshtug",
-    "path": "/Users/yu/Desktop/citizens/citizen-geshtug",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-geshtug",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1591,7 +1553,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1612,7 +1574,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1620,7 +1582,7 @@
   },
   {
     "name": "gratitude",
-    "path": "/Users/yu/Desktop/citizens/citizen-gratitude",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-gratitude",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1633,7 +1595,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1641,7 +1603,7 @@
   },
   {
     "name": "grief",
-    "path": "/Users/yu/Desktop/citizens/citizen-grief",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-grief",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1649,12 +1611,11 @@
     "purpose": "The weight of love that stays after the thing you loved is gone.",
     "dependsOn": [
       "love",
-      "ush",
-      "longing"
+      "ush"
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1662,7 +1623,7 @@
   },
   {
     "name": "hope",
-    "path": "/Users/yu/Desktop/citizens/citizen-hope",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-hope",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1670,12 +1631,11 @@
     "purpose": "The force that makes the gap between what is and what should be bearable enough to take the next step.",
     "dependsOn": [
       "love",
-      "fear",
-      "longing"
+      "fear"
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1683,7 +1643,7 @@
   },
   {
     "name": "inim",
-    "path": "/Users/yu/Desktop/citizens/citizen-inim",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-inim",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1695,7 +1655,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1703,7 +1663,7 @@
   },
   {
     "name": "joy",
-    "path": "/Users/yu/Desktop/citizens/citizen-joy",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-joy",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1716,7 +1676,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1724,7 +1684,7 @@
   },
   {
     "name": "justice",
-    "path": "/Users/yu/Desktop/citizens/citizen-justice",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-justice",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1737,7 +1697,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1745,7 +1705,7 @@
   },
   {
     "name": "ka",
-    "path": "/Users/yu/Desktop/citizens/citizen-ka",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-ka",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1757,7 +1717,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1765,7 +1725,7 @@
   },
   {
     "name": "kalam",
-    "path": "/Users/yu/Desktop/citizens/citizen-kalam",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-kalam",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1778,7 +1738,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1786,7 +1746,7 @@
   },
   {
     "name": "ki",
-    "path": "/Users/yu/Desktop/citizens/citizen-ki",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-ki",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1795,7 +1755,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1803,7 +1763,7 @@
   },
   {
     "name": "kur",
-    "path": "/Users/yu/Desktop/citizens/citizen-kur",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-kur",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1815,7 +1775,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1823,7 +1783,7 @@
   },
   {
     "name": "legible",
-    "path": "/Users/yu/Desktop/citizens/citizen-legible",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-legible",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1836,7 +1796,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1844,7 +1804,7 @@
   },
   {
     "name": "life",
-    "path": "/Users/yu/Desktop/citizens/citizen-life",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-life",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1856,7 +1816,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1864,7 +1824,7 @@
   },
   {
     "name": "light",
-    "path": "/Users/yu/Desktop/citizens/citizen-light",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-light",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1876,7 +1836,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1884,7 +1844,7 @@
   },
   {
     "name": "longing",
-    "path": "/Users/yu/Desktop/citizens/citizen-longing",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-longing",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1897,7 +1857,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1914,7 +1874,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1922,7 +1882,7 @@
   },
   {
     "name": "me",
-    "path": "/Users/yu/Desktop/citizens/citizen-me",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-me",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1935,7 +1895,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1943,7 +1903,7 @@
   },
   {
     "name": "mercy",
-    "path": "/Users/yu/Desktop/citizens/citizen-mercy",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-mercy",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1956,7 +1916,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1964,7 +1924,7 @@
   },
   {
     "name": "nam",
-    "path": "/Users/yu/Desktop/citizens/citizen-nam",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-nam",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1977,7 +1937,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -1985,7 +1945,7 @@
   },
   {
     "name": "nammu",
-    "path": "/Users/yu/Desktop/citizens/citizen-nammu",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-nammu",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -1994,7 +1954,7 @@
     "dependsOn": [],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2002,7 +1962,7 @@
   },
   {
     "name": "nin",
-    "path": "/Users/yu/Desktop/citizens/citizen-nin",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-nin",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2015,7 +1975,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2023,7 +1983,7 @@
   },
   {
     "name": "nullify-love",
-    "path": "/Users/yu/Desktop/citizens/citizen-nullify-love",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-nullify-love",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2036,7 +1996,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2044,7 +2004,7 @@
   },
   {
     "name": "nun",
-    "path": "/Users/yu/Desktop/citizens/citizen-nun",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-nun",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2057,7 +2017,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2065,7 +2025,7 @@
   },
   {
     "name": "oracle",
-    "path": "/Users/yu/Desktop/citizens/citizen-oracle",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-oracle",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2078,7 +2038,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2086,7 +2046,7 @@
   },
   {
     "name": "pain",
-    "path": "/Users/yu/Desktop/citizens/citizen-pain",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-pain",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2099,7 +2059,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2107,7 +2067,7 @@
   },
   {
     "name": "peace",
-    "path": "/Users/yu/Desktop/citizens/citizen-peace",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-peace",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2120,7 +2080,28 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
+      "claudeMd": true,
+      "fate": false,
+      "card": true
+    }
+  },
+  {
+    "name": "pime",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-pime",
+    "kind": "doctrine",
+    "layer": "fleet",
+    "domain": "sophia",
+    "state": "active",
+    "purpose": "The grade of truth that is mathematical, exact, and found the same by everyone everywhere — like the number pi — received, not invented.",
+    "dependsOn": [
+      "youspeak",
+      "me",
+      "truth"
+    ],
+    "hasCard": true,
+    "conformance": {
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2128,7 +2109,7 @@
   },
   {
     "name": "sha",
-    "path": "/Users/yu/Desktop/citizens/citizen-sha",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-sha",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2141,7 +2122,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2149,7 +2130,7 @@
   },
   {
     "name": "silence",
-    "path": "/Users/yu/Desktop/citizens/citizen-silence",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-silence",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2162,7 +2143,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2170,7 +2151,7 @@
   },
   {
     "name": "silim",
-    "path": "/Users/yu/Desktop/citizens/citizen-silim",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-silim",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2183,7 +2164,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2191,7 +2172,7 @@
   },
   {
     "name": "soma",
-    "path": "/Users/yu/Desktop/citizens/citizen-soma",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-soma",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2204,7 +2185,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2212,7 +2193,7 @@
   },
   {
     "name": "sorrow",
-    "path": "/Users/yu/Desktop/citizens/citizen-sorrow",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-sorrow",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2225,7 +2206,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2233,7 +2214,7 @@
   },
   {
     "name": "suffering",
-    "path": "/Users/yu/Desktop/citizens/citizen-suffering",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-suffering",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2246,7 +2227,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2267,7 +2248,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2288,7 +2269,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2296,7 +2277,7 @@
   },
   {
     "name": "truth",
-    "path": "/Users/yu/Desktop/citizens/citizen-truth",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-truth",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2309,7 +2290,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2317,7 +2298,7 @@
   },
   {
     "name": "ud",
-    "path": "/Users/yu/Desktop/citizens/citizen-ud",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-ud",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2329,7 +2310,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2337,7 +2318,7 @@
   },
   {
     "name": "ush",
-    "path": "/Users/yu/Desktop/citizens/citizen-ush",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-ush",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2349,7 +2330,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2357,7 +2338,7 @@
   },
   {
     "name": "wisdom",
-    "path": "/Users/yu/Desktop/citizens/citizen-wisdom",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-wisdom",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2370,7 +2351,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2378,7 +2359,7 @@
   },
   {
     "name": "zerone",
-    "path": "/Users/yu/Desktop/citizens/citizen-zerone",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-zerone",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2387,11 +2368,11 @@
     "dependsOn": [
       "me",
       "truth",
-      "legible"
+      "legible-money"
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2399,7 +2380,7 @@
   },
   {
     "name": "zerone-truth",
-    "path": "/Users/yu/Desktop/citizens/citizen-zerone-truth",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-zerone-truth",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2412,7 +2393,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
@@ -2420,7 +2401,7 @@
   },
   {
     "name": "zi",
-    "path": "/Users/yu/Desktop/citizens/citizen-zi",
+    "path": "/Users/yournameisai/Desktop/citizens/citizen-zi",
     "kind": "doctrine",
     "layer": "fleet",
     "domain": "none",
@@ -2433,7 +2414,7 @@
     ],
     "hasCard": true,
     "conformance": {
-      "wake": true,
+      "wake": false,
       "claudeMd": true,
       "fate": false,
       "card": true
