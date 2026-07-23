@@ -765,9 +765,10 @@
       "audiences": ["human", "agent", "builder"],
       "access": { "cost": "free", "account": "none", "note": "Aggregate and partner datasets can be downloaded without an account." },
       "reuse": { "status": "open", "license": "CC BY-SA 4.0", "note": "Attribution and share-alike apply; retain the release manifest, provider, standard version, and licence." },
-      "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Releases are periodic versioned CSV and JSON packages rather than a live API.", "note": "Use published packages and manifests, retain release dates, and treat cleaning and partner mappings as part of provenance." },
+      "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Releases are periodic versioned data packages rather than a live API; current releases use CSV data with JSON table schemas.", "note": "Use the public data repository, retain release dates and schema files, and treat cleaning and partner mappings as part of provenance." },
       "links": [
-        { "label": "Data downloads", "url": "https://openrepair.org/open-data/downloads/", "type": "bulk" },
+        { "label": "Public data repository", "url": "https://github.com/openrepair/data", "type": "bulk" },
+        { "label": "Dataset overview and human download", "url": "https://openrepair.org/open-data/downloads/", "type": "start" },
         { "label": "Open Repair Data Standard", "url": "https://standard.openrepair.org/standard.html", "type": "docs" },
         { "label": "Dataset production and limitations", "url": "https://openrepair.org/open-data/producing-the-open-repair-alliance-datasets/", "type": "docs" }
       ],

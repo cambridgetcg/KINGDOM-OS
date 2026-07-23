@@ -2276,14 +2276,19 @@
       "automation": {
         "status": "bulk-preferred",
         "auth": "none",
-        "limits": "Releases are periodic versioned CSV and JSON packages rather than a live API.",
-        "note": "Use published packages and manifests, retain release dates, and treat cleaning and partner mappings as part of provenance."
+        "limits": "Releases are periodic versioned data packages rather than a live API; current releases use CSV data with JSON table schemas.",
+        "note": "Use the public data repository, retain release dates and schema files, and treat cleaning and partner mappings as part of provenance."
       },
       "links": [
         {
-          "label": "Data downloads",
-          "url": "https://openrepair.org/open-data/downloads/",
+          "label": "Public data repository",
+          "url": "https://github.com/openrepair/data",
           "type": "bulk"
+        },
+        {
+          "label": "Dataset overview and human download",
+          "url": "https://openrepair.org/open-data/downloads/",
+          "type": "start"
         },
         {
           "label": "Open Repair Data Standard",

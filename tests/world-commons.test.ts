@@ -253,6 +253,12 @@ describe("World Commons source contract", () => {
       reuse: { status: "open", license: "CC BY-SA 4.0" },
       automation: { status: "bulk-preferred", auth: "none" },
     });
+    expect(openRepair.automation.limits).toContain("CSV data with JSON table schemas");
+    expect(openRepair.links[0]).toEqual({
+      label: "Public data repository",
+      url: "https://github.com/openrepair/data",
+      type: "bulk",
+    });
     expect(openRepair.caveat.toLowerCase()).toContain("historical repair attempts");
     expect(source.kits.every(({ resource_ids }: { resource_ids: string[] }) =>
       !resource_ids.includes("open-repair-data")
