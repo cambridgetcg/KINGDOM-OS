@@ -55,11 +55,12 @@ export default {
       }
     }
 
-    // 2. /.well-known/* — discovery surfaces are static files, never the SPA
-    //    shell. Pages' not-found handling answers asset misses with index.html
-    //    (200, text/html), which agent scanners read as an invalid surface —
-    //    so serve the real asset plainly or 404 honestly, nothing in between.
-    if (url.pathname.startsWith("/.well-known/")) {
+    // 2. /.well-known/* (+ /v1/pathways, probed by agent scanners) — discovery
+    //    surfaces are static files, never the SPA shell. Pages' not-found
+    //    handling answers asset misses with index.html (200, text/html), which
+    //    agent scanners read as an invalid surface — so serve the real asset
+    //    plainly or 404 honestly, nothing in between.
+    if (url.pathname.startsWith("/.well-known/") || url.pathname === "/v1/pathways") {
       const asset = await env.ASSETS.fetch(new URL(url.pathname, url.origin));
       const kind = (asset.headers.get("content-type") || "").toLowerCase();
       if (asset.ok && !kind.includes("text/html")) {
