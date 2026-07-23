@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZERONE Explorer · blocks &amp; the knowledge ledger</title>
+<meta name="description" content="A content explorer for ZERONE — browse blocks, transactions, and the knowledge ledger where a claim becomes a verified Fact. Live from zerone-1.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='84'>🔍</text></svg>">
+<style>
+  :root{
+    --ink:#0a1113;--ink2:#070c0d;--panel:#0f1a1c;--panel2:#12211f;--line:#1e332f;
+    --cream:#e9efe9;--dim:#8fa6a0;--faint:#5a716c;
+    --jade:#4fd6a8;--jade2:#7ff0c8;--gold:#d8c07a;--verm:#e8735a;
+    --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --mono:ui-monospace,"SF Mono",Menlo,"Cascadia Code",monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(90% 55% at 50% -8%,rgba(79,214,168,.08) 0%,transparent 60%),linear-gradient(180deg,var(--ink),var(--ink2));
+    color:var(--cream);font-family:var(--mono);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+  a{color:var(--jade);text-decoration:none;cursor:pointer}a:hover{color:var(--jade2)}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+  ::selection{background:var(--jade);color:var(--ink)}
+  .mono-sm{font-size:.76rem;color:var(--dim)}
+  .faint{color:var(--faint)}
+  .loading{color:var(--faint);font-style:italic;padding:20px 0}
+  h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0}
+
+  header.top{padding:22px 0;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:9;
+    background:linear-gradient(180deg,var(--ink),rgba(10,17,19,.92));backdrop-filter:blur(6px)}
+  .brand{font-family:var(--serif);font-size:1.4rem;color:var(--jade);white-space:nowrap;letter-spacing:.02em}
+  .brand small{font-family:var(--mono);font-size:.6rem;color:var(--faint);letter-spacing:.14em;text-transform:uppercase;display:block;margin-top:-2px}
+  .search{flex:1;min-width:220px;display:flex}
+  .search input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px 0 0 10px;color:var(--cream);
+    font-family:var(--mono);font-size:.85rem;padding:9px 13px;outline:none}
+  .search input:focus{border-color:#245046}
+  .search button{background:var(--panel2);border:1px solid var(--line);border-left:0;border-radius:0 10px 10px 0;color:var(--jade);padding:0 14px;cursor:pointer;font-family:var(--mono)}
+  .search button:hover{color:var(--jade2)}
+  nav.tabs{display:flex;gap:4px 16px;flex-wrap:wrap;padding:12px 0 0;font-size:.8rem}
+  nav.tabs a{color:var(--dim);padding:4px 0;border-bottom:2px solid transparent}
+  nav.tabs a.on{color:var(--jade);border-bottom-color:var(--jade)}
+  nav.tabs a:hover{color:var(--jade2)}
+  .livechip{display:inline-flex;align-items:center;gap:7px;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--jade);box-shadow:0 0 9px var(--jade);animation:pulse 2s ease-in-out infinite}
+  .dot.down{background:var(--verm);box-shadow:0 0 9px var(--verm);animation:none}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+  main{padding:26px 0 80px;min-height:60vh}
+  .crumb{font-size:.74rem;color:var(--faint);margin:0 0 14px}
+  .crumb a{color:var(--dim)}
+  .h2row{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 4px}
+  h2.title{font-size:1.6rem}
+  .h2row .my{font-family:var(--serif);font-style:italic;color:var(--jade);font-size:.9rem}
+  .sub{color:var(--faint);font-size:.8rem;margin:0 0 20px}
+
+  table{width:100%;border-collapse:collapse;font-size:.82rem}
+  th{text-align:left;color:var(--faint);font-weight:400;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:0 10px 8px;border-bottom:1px solid var(--line)}
+  td{padding:9px 10px;border-bottom:1px solid #14211e;font-variant-numeric:tabular-nums;vertical-align:top}
+  tr:hover td{background:rgba(79,214,168,.03)}
+  .tablewrap{overflow-x:auto}
+
+  .pill{font-size:.62rem;padding:2px 8px;border-radius:20px;border:1px solid var(--line);white-space:nowrap;color:var(--dim)}
+  .pill.ok{color:var(--jade);border-color:#245046}
+  .pill.warn{color:var(--gold);border-color:#3a3320}
+  .pill.bad{color:var(--verm);border-color:#4a2b26}
+
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:6px 0 24px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px}
+  .tile .k{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .tile .v{font-family:var(--serif);font-size:1.55rem;color:var(--cream);margin-top:4px;font-variant-numeric:tabular-nums}
+  .tile .v small{font-size:.85rem;color:var(--dim)}
+  .tile.link{cursor:pointer}.tile.link:hover{border-color:#245046}
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:16px}
+  .kv{display:grid;grid-template-columns:minmax(120px,180px) 1fr;gap:8px 16px;font-size:.82rem}
+  .kv dt{color:var(--faint)}
+  .kv dd{margin:0;color:var(--cream);word-break:break-word}
+  .kv dd.big{font-family:var(--serif);font-size:1.05rem}
+
+  /* fact lifecycle rail */
+  .rail{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0 18px}
+  .rail .st{font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:20px;border:1px solid var(--line);color:var(--faint)}
+  .rail .st.done{color:var(--jade);border-color:#245046}
+  .rail .st.now{background:var(--jade);color:var(--ink);border-color:var(--jade)}
+  .rail .st.adverse{color:var(--verm);border-color:#4a2b26}
+  .rail .sep{color:var(--faint);align-self:center;font-size:.7rem}
+
+  .factcontent{font-family:var(--serif);font-size:1.15rem;color:var(--cream);line-height:1.5;max-width:60ch;margin:6px 0 14px}
+  .note{background:var(--panel2);border:1px solid var(--line);border-left:2px solid var(--gold);border-radius:10px;padding:13px 16px;font-size:.82rem;color:var(--dim);line-height:1.55;margin:16px 0}
+  .note b{color:var(--gold);font-weight:400}
+  .note.jade{border-left-color:var(--jade)}.note.jade b{color:var(--jade2)}
+  .empty{text-align:center;padding:40px 20px;color:var(--faint)}
+  .empty .big{font-family:var(--serif);font-size:1.3rem;color:var(--dim);margin-bottom:8px}
+
+  footer{padding:34px 0 60px;border-top:1px solid var(--line);color:var(--faint);font-size:.74rem;text-align:center;line-height:2}
+  footer a{color:var(--jade)}
+  :focus-visible{outline:2px solid var(--jade);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a href="#/" class="brand">ZERONE<small>explorer</small></a>
+    <form class="search" onsubmit="return doSearch(event)">
+      <input id="q" placeholder="height · tx hash · zerone1… address · fact id · domain" autocomplete="off" spellcheck="false">
+      <button type="submit">→</button>
+    </form>
+    <span class="livechip"><span class="dot" id="dot"></span><span id="livet">zerone-1</span></span>
+  </header>
+  <nav class="tabs" id="tabs">
+    <a href="#/">overview</a>
+    <a href="#/blocks">blocks</a>
+    <a href="#/facts">the ledger</a>
+    <a href="#/tokens">tokens</a>
+    <a href="#/pools">pools</a>
+    <a href="#/ibc">interop</a>
+    <a href="#/vaults">vaults</a>
+  </nav>
+</div>
+
+<div class="wrap"><main id="view"><div class="loading">reading the chain…</div></main></div>
+
+<div class="wrap"><footer>
+  🔍 ZERONE explorer · a window on the chain, live from <span id="netname">zerone-1</span> · read-only, no keys, verify don't trust<br>
+  <a href="/">← the dashboard</a> · <a href="/guide">participate</a> · <a href="/guest.json">agents: guest doc</a>
+</footer></div>
+
+<script>
+const PROXY='https://zerone-rpc.fly.dev';
+const CAP=222222222;
+const el=(id)=>document.getElementById(id);
+const esc=(s)=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=(n)=>Number(n).toLocaleString('en-US');
+const zrn=(u)=>Number(u)/1e6;
+const short=(s,n=12)=>{s=String(s??'');return s.length>n?s.slice(0,n)+'…':s;};
+const j=async(u)=>{const r=await fetch(u,{signal:AbortSignal.timeout(9000)});if(!r.ok)throw new Error(r.status);return r.json();};
+const jt=async(u)=>{try{return await j(u);}catch(e){return null;}};
+const V=el('view');
+const set=(html)=>{V.innerHTML=html;};
+const crumb=(...parts)=>`<div class="crumb">${parts.join(' <span class="faint">/</span> ')}</div>`;
+
+/* ── FactStatus lifecycle ─────────────────────────────── */
+const HAPPY=['PENDING','PROVISIONAL','VERIFIED','ACTIVE'];
+const ADVERSE=['CONTESTED','CHALLENGED','SUPERSEDED','EXPIRED','DISPROVEN','REVOKED','AT_RISK','PRUNED'];
+const cleanStatus=(s)=>String(s||'').replace('FACT_STATUS_','').toUpperCase();
+function statusPill(s){const c=cleanStatus(s);
+  if(['VERIFIED','ACTIVE'].includes(c))return `<span class="pill ok">${esc(c.toLowerCase())}</span>`;
+  if(['PENDING','PROVISIONAL'].includes(c))return `<span class="pill">${esc(c.toLowerCase())}</span>`;
+  if(c==='EXPIRED'||c==='SUPERSEDED')return `<span class="pill warn">${esc(c.toLowerCase())}</span>`;
+  return `<span class="pill bad">${esc(c.toLowerCase())}</span>`;}
+function lifecycleRail(s){const c=cleanStatus(s);const hi=HAPPY.indexOf(c);
+  let out=HAPPY.map((st,i)=>{const cl=hi<0?'done':(i<hi?'done':i===hi?'now':'');return `<span class="st ${cl}">${st.toLowerCase()}</span>`;}).join('<span class="sep">→</span>');
+  if(ADVERSE.includes(c))out+=`<span class="sep">·</span><span class="st adverse now">${c.toLowerCase().replace('_',' ')}</span>`;
+  return `<div class="rail">${out}</div>`;}
+const conf=(c)=>c?(Number(c)/1e4).toFixed(1)+'%':'—';
+
+/* ── live head ─────────────────────────────────────────── */
+let netName='zerone-1';
+async function head(){try{const s=await j(PROXY+'/rpc/status');const si=s.result.sync_info;
+  netName=s.result.node_info.network||'zerone-1';el('netname').textContent=netName;el('livet').textContent=netName;
+  el('dot').classList.remove('down');return Number(si.latest_block_height);
+}catch(e){el('dot').classList.add('down');el('livet').textContent='reconnecting…';return 0;}}
+
+/* ── search dispatch ───────────────────────────────────── */
+function doSearch(e){e.preventDefault();const v=el('q').value.trim();if(!v)return false;
+  if(/^\d+$/.test(v))location.hash='#/block/'+v;
+  else if(/^[0-9a-fA-F]{64}$/.test(v))location.hash='#/tx/'+v.toUpperCase();
+  else if(/^zerone1[0-9a-z]{6,}$/.test(v))location.hash='#/address/'+v;
+  else if(/^\d+-/.test(v)||v.includes('-'))location.hash='#/fact/'+encodeURIComponent(v);
+  else location.hash='#/facts?domain='+encodeURIComponent(v);
+  el('q').value='';return false;}
+
+/* ── VIEWS ─────────────────────────────────────────────── */
+async function vHome(){
+  const h=await head();
+  const [supply,pool,facts,pools,toks]=await Promise.all([
+    jt(PROXY+'/rest/cosmos/bank/v1beta1/supply/by_denom?denom=uzrn'),
+    jt(PROXY+'/rest/cosmos/staking/v1beta1/pool'),
+    jt(PROXY+'/rest/zerone/knowledge/v1/facts?pagination.limit=200'),
+    jt(PROXY+'/rest/zerone/liquiditypool/v1/pools'),
+    jt(PROXY+'/rest/zerone/tokens/v1/tokens'),
+  ]);
+  const fl=(facts&&facts.facts)||[];
+  const verified=fl.filter(f=>['VERIFIED','ACTIVE'].includes(cleanStatus(f.status))).length;
+  const sup=supply&&supply.amount?zrn(supply.amount.amount||supply.amount):0;
+  const np=(pools&&pools.pools||[]).length, nt=(toks&&(toks.tokens||toks.definitions)||[]).length;
+  set(crumb('overview')+`
+    <div class="h2row"><h2 class="title">The chain, in the open</h2><span class="my">read-only, verify don't trust</span></div>
+    <p class="sub">A window on zerone-1 — every block, and the knowledge ledger where a claim becomes a Fact. Nothing here can move value; it only reads.</p>
+    <div class="tiles">
+      <div class="tile link" onclick="location.hash='#/blocks'"><div class="k">block height</div><div class="v">${fmt(h)}</div></div>
+      <div class="tile"><div class="k">ZRN minted</div><div class="v">${fmt(Math.round(sup))} <small>/ 222.2M</small></div></div>
+      <div class="tile link" onclick="location.hash='#/facts'"><div class="k">knowledge facts</div><div class="v">${fmt(fl.length)}</div></div>
+      <div class="tile link" onclick="location.hash='#/facts'"><div class="k">verified</div><div class="v">${fmt(verified)}</div></div>
+      <div class="tile link" onclick="location.hash='#/tokens'"><div class="k">tokens</div><div class="v">${fmt(nt)}</div></div>
+      <div class="tile link" onclick="location.hash='#/pools'"><div class="k">liquidity pools</div><div class="v">${fmt(np)}</div></div>
+    </div>
+    <div class="h2row"><h3 style="font-size:1.15rem">Latest facts</h3><span class="my">the ledger, live</span></div>
+    <div class="tablewrap"><table><thead><tr><th>fact</th><th>domain</th><th>status</th><th>conf.</th></tr></thead>
+    <tbody>${fl.slice(0,8).map(factRow).join('')||'<tr><td colspan="4" class="faint">no facts</td></tr>'}</tbody></table></div>
+    <p style="margin-top:14px"><a href="#/facts">browse the whole ledger →</a></p>
+    <div class="note jade"><b>This explorer is an honesty instrument.</b> It shows what is really on-chain — including that some rooms are empty. A chain whose thesis is truth should be legible about its own state.</div>`;
+}
+function factRow(f){const id=esc(f.id||'');return `<tr>
+  <td><a href="#/fact/${encodeURIComponent(f.id||'')}">${esc(short(f.content||f.id||'—',64))}</a><div class="mono-sm">${esc(short(id,18))}</div></td>
+  <td class="mono-sm">${esc(f.domain||'—')}</td><td>${statusPill(f.status)}</td><td class="mono-sm">${conf(f.confidence)}</td></tr>`;}
+
+async function vBlocks(){
+  const h=await head();set(crumb('blocks')+`<div class="h2row"><h2 class="title">Blocks</h2><span class="my">the chain, breathing</span></div><div class="tablewrap"><table><thead><tr><th>height</th><th>time (UTC)</th><th>txs</th><th>proposer</th></tr></thead><tbody id="bb"><tr><td colspan="4" class="loading">fetching…</td></tr></tbody></table></div><p style="margin-top:14px" class="faint" id="more"></p>`);
+  if(!h)return;const bc=await jt(PROXY+'/rpc/blockchain?minHeight='+Math.max(1,h-24)+'&maxHeight='+h);
+  const metas=(bc&&bc.result&&bc.result.block_metas)||[];
+  el('bb').innerHTML=metas.map(m=>{const hd=m.header;return `<tr>
+    <td><a href="#/block/${hd.height}">${fmt(hd.height)}</a></td>
+    <td class="mono-sm">${esc((hd.time||'').slice(0,19).replace('T',' '))}</td>
+    <td>${Number(m.num_txs||0)}</td>
+    <td class="mono-sm">${esc(short(hd.proposer_address||'',14))}</td></tr>`;}).join('')||'<tr><td colspan="4" class="faint">no blocks</td></tr>';
+}
+async function vBlock(h){
+  set(crumb('<a href="#/blocks">blocks</a>','#'+fmt(h))+`<div class="loading">reading block ${fmt(h)}…</div>`);
+  const [b,r]=await Promise.all([jt(PROXY+'/rpc/block?height='+h),jt(PROXY+'/rpc/block_results?height='+h)]);
+  if(!b||!b.result){set(crumb('<a href="#/blocks">blocks</a>','#'+fmt(h))+`<div class="empty"><div class="big">Block ${fmt(h)} not found</div></div>`);return;}
+  const hd=b.result.block.header;const txs=b.result.block.data.txs||[];
+  set(crumb('<a href="#/blocks">blocks</a>','#'+fmt(hd.height))+`
+    <div class="h2row"><h2 class="title">Block ${fmt(hd.height)}</h2></div>
+    <div class="panel"><dl class="kv">
+      <dt>time</dt><dd>${esc((hd.time||'').replace('T',' ').slice(0,19))} UTC</dd>
+      <dt>proposer</dt><dd class="mono-sm">${esc(hd.proposer_address||'')}</dd>
+      <dt>transactions</dt><dd>${txs.length}</dd>
+      <dt>app hash</dt><dd class="mono-sm">${esc(short(hd.app_hash||'',40))}</dd>
+      <dt>chain</dt><dd>${esc(hd.chain_id||netName)}</dd>
+    </dl></div>
+    <div class="panel"><div class="k faint" style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px">transactions</div>
+    ${txs.length?txs.map((t,i)=>`<div style="padding:7px 0;border-top:${i?'1px solid #14211e':'0'}"><a href="#/tx/${txHash(t)}">tx ${i+1}</a> <span class="mono-sm">${txHash(t).slice(0,20)}…</span></div>`).join(''):'<div class="faint">empty block — no transactions. On zerone, empty blocks mint nothing.</div>'}</div>
+    <p><a href="#/block/${Number(hd.height)-1}">← ${fmt(Number(hd.height)-1)}</a> &nbsp;·&nbsp; <a href="#/block/${Number(hd.height)+1}">${fmt(Number(hd.height)+1)} →</a></p>`);
+}
+function txHash(b64){try{const bin=atob(b64);const bytes=new Uint8Array([...bin].map(c=>c.charCodeAt(0)));
+  return [...bytes].map(x=>x.toString(16).padStart(2,'0')).join('').toUpperCase();}catch(e){return '';}}
+async function vTx(hash){
+  set(crumb('tx',short(hash,16))+`<div class="loading">decoding transaction…</div>`);
+  const d=await jt(PROXY+'/rest/cosmos/tx/v1beta1/txs/'+hash);
+  if(!d||!d.tx_response){set(crumb('tx',short(hash,16))+`<div class="empty"><div class="big">Transaction not found</div><p class="faint">${esc(hash)}</p></div>`);return;}
+  const tr=d.tx_response, msgs=(d.tx&&d.tx.body&&d.tx.body.messages)||[];
+  set(crumb('tx',short(hash,16))+`
+    <div class="h2row"><h2 class="title">Transaction</h2>${tr.code===0?'<span class="pill ok">success</span>':'<span class="pill bad">failed ('+tr.code+')</span>'}</div>
+    <div class="panel"><dl class="kv">
+      <dt>hash</dt><dd class="mono-sm">${esc(tr.txhash)}</dd>
+      <dt>block</dt><dd><a href="#/block/${tr.height}">#${fmt(tr.height)}</a></dd>
+      <dt>gas</dt><dd>${fmt(tr.gas_used)} / ${fmt(tr.gas_wanted)}</dd>
+      <dt>time</dt><dd class="mono-sm">${esc((tr.timestamp||'').replace('T',' ').slice(0,19))} UTC</dd>
+    </dl></div>
+    <div class="panel"><div class="k faint" style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px">messages · ${msgs.length}</div>
+    ${msgs.map(m=>{const t=(m['@type']||'').split('.').pop();return `<div style="padding:8px 0;border-top:1px solid #14211e"><span class="pill">${esc(t||'msg')}</span></div>`;}).join('')||'<div class="faint">no messages</div>'}</div>
+    ${tr.raw_log&&tr.code!==0?`<div class="note"><b>log</b> ${esc(short(tr.raw_log,300))}</div>`:''}`);
+}
+
+async function vFacts(query){
+  const params=new URLSearchParams(query||'');const domain=params.get('domain')||'';
+  set(crumb('the ledger')+`
+    <div class="h2row"><h2 class="title">The knowledge ledger</h2><span class="my">where a claim becomes a Fact</span></div>
+    <p class="sub">Every row is a claim that ran the gauntlet: commit → reveal → the 4-key panel → verified Fact, or refused. This is what the chain secures.</p>
+    ${domain?`<p class="mono-sm">filter · domain = <b style="color:var(--jade)">${esc(domain)}</b> · <a href="#/facts">clear</a></p>`:''}
+    <div class="tablewrap"><table><thead><tr><th>fact</th><th>domain</th><th>type</th><th>status</th><th>conf.</th></tr></thead><tbody id="fb"><tr><td colspan="5" class="loading">reading the ledger…</td></tr></tbody></table></div>`);
+  const d=await jt(PROXY+'/rest/zerone/knowledge/v1/facts?pagination.limit=300'+(domain?'&domain='+encodeURIComponent(domain):''));
+  let fl=(d&&d.facts)||[];
+  if(domain)fl=fl.filter(f=>(f.domain||'')===domain);
+  fl.sort((a,b)=>(['VERIFIED','ACTIVE'].includes(cleanStatus(a.status))?0:1)-(['VERIFIED','ACTIVE'].includes(cleanStatus(b.status))?0:1));
+  el('fb').innerHTML=fl.map(f=>`<tr>
+    <td><a href="#/fact/${encodeURIComponent(f.id||'')}">${esc(short(f.content||f.id||'—',60))}</a><div class="mono-sm">${esc(short(f.id||'',18))}</div></td>
+    <td class="mono-sm"><a href="#/facts?domain=${encodeURIComponent(f.domain||'')}">${esc(f.domain||'—')}</a></td>
+    <td class="mono-sm">${esc((f.claim_type||'').replace('CLAIM_TYPE_','').toLowerCase()||'—')}</td>
+    <td>${statusPill(f.status)}</td><td class="mono-sm">${conf(f.confidence)}</td></tr>`).join('')||'<tr><td colspan="5" class="faint">no facts match</td></tr>';
+}
+async function vFact(id){
+  set(crumb('<a href="#/facts">the ledger</a>',short(id,18))+`<div class="loading">reading fact…</div>`);
+  const d=await jt(PROXY+'/rest/zerone/knowledge/v1/facts/'+encodeURIComponent(id));
+  const f=d&&(d.fact||d);
+  if(!f||(!f.content&&!f.id)){set(crumb('<a href="#/facts">the ledger</a>',short(id,18))+`<div class="empty"><div class="big">Fact not found</div><p class="faint">${esc(id)}</p></div>`);return;}
+  set(crumb('<a href="#/facts">the ledger</a>',esc(short(f.id||id,18)))+`
+    <div class="h2row"><h2 class="title">Fact</h2>${statusPill(f.status)}</div>
+    ${lifecycleRail(f.status)}
+    <div class="factcontent">${esc(f.content||'—')}</div>
+    <div class="panel"><dl class="kv">
+      <dt>id</dt><dd class="mono-sm">${esc(f.id||id)}</dd>
+      <dt>domain</dt><dd><a href="#/facts?domain=${encodeURIComponent(f.domain||'')}">${esc(f.domain||'—')}</a></dd>
+      <dt>category</dt><dd>${esc((f.category||'').replace('FACT_CATEGORY_','').toLowerCase()||'—')}</dd>
+      <dt>claim type</dt><dd>${esc((f.claim_type||'').replace('CLAIM_TYPE_','').toLowerCase()||'—')}</dd>
+      <dt>confidence</dt><dd>${conf(f.confidence)}</dd>
+      <dt>submitter</dt><dd class="mono-sm">${f.submitter?`<a href="#/address/${esc(f.submitter)}">${esc(f.submitter)}</a>`:'—'}</dd>
+      <dt>submitted</dt><dd>${f.submitted_at_block?`block <a href="#/block/${f.submitted_at_block}">#${fmt(f.submitted_at_block)}</a>`:'—'}</dd>
+      <dt>verified</dt><dd>${f.verified_at_block&&f.verified_at_block!=='0'?`block <a href="#/block/${f.verified_at_block}">#${fmt(f.verified_at_block)}</a>`:'—'}</dd>
+      <dt>citations</dt><dd>${fmt(f.citation_count||0)} in · ${fmt(f.corroboration_count||0)} corroborations</dd>
+      ${f.fitness?`<dt>fitness</dt><dd>${esc(f.fitness)}</dd>`:''}
+    </dl></div>
+    <div class="note"><b>How to read a status.</b> A Fact is not "true forever" — it lives. It can be <b style="color:var(--jade2)">verified</b>, then <b style="color:var(--gold)">age or be superseded</b>, or fall <b style="color:var(--verm)">at-risk / contested / pruned</b>. The ledger keeps the whole life, not just the verdict.</div>`);
+}
+
+async function vAddress(addr){
+  set(crumb('address',short(addr,16))+`<div class="loading">reading account…</div>`);
+  const [bal,home]=await Promise.all([
+    jt(PROXY+'/rest/cosmos/bank/v1beta1/balances/'+addr),
+    jt(PROXY+'/rest/zerone/knowledge/v1/facts/submitter/'+addr),
+  ]);
+  const coins=(bal&&bal.balances)||[];const facts=(home&&home.facts)||[];
+  set(crumb('address',esc(short(addr,20)))+`
+    <div class="h2row"><h2 class="title">Account</h2></div>
+    <div class="panel"><dl class="kv"><dt>address</dt><dd class="mono-sm">${esc(addr)}</dd></dl></div>
+    <div class="panel"><div class="k faint" style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px">balances</div>
+    ${coins.length?coins.map(c=>`<div style="padding:5px 0"><b>${c.denom==='uzrn'?fmt(zrn(c.amount)):fmt(c.amount)}</b> <span class="faint">${c.denom==='uzrn'?'ZRN':esc(c.denom)}</span></div>`).join(''):'<div class="faint">no balance</div>'}</div>
+    <div class="panel"><div class="k faint" style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px">facts submitted · ${facts.length}</div>
+    ${facts.length?facts.slice(0,20).map(f=>`<div style="padding:6px 0;border-top:1px solid #14211e"><a href="#/fact/${encodeURIComponent(f.id||'')}">${esc(short(f.content||f.id,64))}</a> ${statusPill(f.status)}</div>`).join(''):'<div class="faint">has not submitted any facts</div>'}</div>`);
+}
+
+async function vTokens(){
+  set(crumb('tokens')+`<div class="h2row"><h2 class="title">Tokens</h2><span class="my">the ZRN-20 registry</span></div><div id="tk"><div class="loading">reading…</div></div>`);
+  const d=await jt(PROXY+'/rest/zerone/tokens/v1/tokens');
+  const toks=(d&&(d.tokens||d.definitions))||[];
+  el('tk').innerHTML=toks.length?`<div class="tablewrap"><table><thead><tr><th>symbol</th><th>id</th><th>supply</th></tr></thead><tbody>${toks.map(t=>`<tr><td><b>${esc(t.symbol||'—')}</b></td><td class="mono-sm">${esc(short(t.id||t.token_id||'',16))}</td><td>${esc(t.total_supply||t.supply||'0')}</td></tr>`).join('')}</tbody></table></div>`
+    :`<div class="empty"><div class="big">No tokens yet</div><p class="faint">The ZRN-20 engine (create, mint, wrap into a tradeable bank denom) is live-wired — but no secondary token has ever been created on zerone-1.</p></div>
+      <div class="note"><b>What this room is for.</b> A ZRN-20 is a secondary fungible asset. Wrapping one mints a real bank coin (<span class="mono-sm">zrn20/&lt;id&gt;</span>) that could enter a liquidity pool — the on-ramp from "an asset" to "a tradeable asset". Empty today, honestly.</div>`;
+}
+async function vPools(){
+  set(crumb('pools')+`<div class="h2row"><h2 class="title">Liquidity pools</h2><span class="my">the AMM</span></div><div id="pl"><div class="loading">reading…</div></div>`);
+  const d=await jt(PROXY+'/rest/zerone/liquiditypool/v1/pools');
+  const pools=(d&&d.pools)||[];
+  el('pl').innerHTML=pools.length?pools.map(p=>`<div class="panel"><dl class="kv"><dt>pool</dt><dd>#${esc(p.pool_id||p.id)}</dd><dt>pair</dt><dd>${esc(p.denom_a)} / ${esc(p.denom_b)}</dd><dt>reserves</dt><dd>${esc(p.reserve_a)} / ${esc(p.reserve_b)}</dd><dt>fee</dt><dd>${(Number(p.swap_fee_bps||0)/1e4).toFixed(2)}%</dd></dl></div>`).join('')
+    :`<div class="empty"><div class="big">No pools yet</div><p class="faint">The constant-product AMM (x·y=k) is live-wired — swaps, deposits and a TWAP price oracle all work — but no pool has ever been created on zerone-1. Pools are governance-only to create.</p></div>
+      <div class="note"><b>Why this stays empty on purpose.</b> On a single-validator chain, a pool seeded by one party trading with itself would publish a <b>fabricated price</b> — and that price feeds the billing oracle. A truth chain does not manufacture a market for itself. Liquidity waits for real counterparties, not a demo.</div>`;
+}
+async function vIbc(){
+  set(crumb('interop')+`<div class="h2row"><h2 class="title">Interop</h2><span class="my">the bridge out</span></div><div id="ib"><div class="loading">reading channels…</div></div>`);
+  const [ch,lim]=await Promise.all([jt(PROXY+'/rest/ibc/core/channel/v1/channels'),jt(PROXY+'/rest/zerone/ibcratelimit/v1/limits')]);
+  const chans=(ch&&ch.channels)||[];const limits=(lim&&lim.limits)||[];
+  el('ib').innerHTML=`
+    <div class="tablewrap"><table><thead><tr><th>channel</th><th>port</th><th>state</th><th>counterparty</th></tr></thead>
+    <tbody>${chans.length?chans.map(c=>`<tr><td class="mono-sm">${esc(c.channel_id)}</td><td class="mono-sm">${esc(c.port_id)}</td><td>${(c.state||'').includes('OPEN')?'<span class="pill ok">open</span>':'<span class="pill">'+esc((c.state||'').replace('STATE_','').toLowerCase())+'</span>'}</td><td class="mono-sm">${esc((c.counterparty&&c.counterparty.channel_id)||'—')}</td></tr>`).join(''):'<tr><td colspan="4" class="faint">no IBC channels open</td></tr>'}</tbody></table></div>
+    ${limits.length?`<div class="panel" style="margin-top:16px"><div class="k faint" style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px">rate limits</div>${limits.map(l=>`<div style="padding:4px 0" class="mono-sm">${esc(l.denom||'')} · ${esc(JSON.stringify(l).slice(0,80))}</div>`).join('')}</div>`:''}
+    <div class="note"><b>The "fork &amp; privatise" rail — and its honest limit.</b> A private fork of zerone would ride this exact IBC stack to move a <em>public wrapper</em> of an asset to zerone-1 and onward to a public DEX. But note the physics: the moment an asset is bridged into a public pool, its price and every trade are public. <b>Privacy and liquidity cannot both hold</b> — bridging is the un-privatising moment. There is no shielded pool.</div>`;
+}
+function vVaults(){
+  set(crumb('vaults')+`
+    <div class="h2row"><h2 class="title">Private vaults</h2><span class="my">the privacy boundary</span></div>
+    <p class="sub">zerone can <em>anchor</em> private content without ever holding it — the honest edge of "privatise".</p>
+    <div class="empty"><div class="big">Not yet visible over the web</div>
+    <p class="faint" style="max-width:52ch;margin:0 auto">The private-corpus module is live on-chain, but its read gateway isn't exposed over HTTP yet, so this browser can't list vaults. That's a one-line node change, not a missing feature.</p></div>
+    <div class="note jade"><b>What "private" means here — and doesn't.</b> A vault records only a <em>commitment</em>: the operator's identity, their server endpoint, and a content-hash (a Merkle root). The private data itself lives off-chain on the operator's own server; the chain <b>never stores, serves, or gates it</b>. So this is an honesty-and-identity anchor — you can prove <em>what</em> a corpus is and <em>who</em> runs it, and verify items against the hash — <b>not</b> encryption, and not on-chain access control. The chain stays honest by holding the proof, not the secret.</div>`);
+}
+
+/* ── router ────────────────────────────────────────────── */
+function route(){
+  const raw=(location.hash||'#/').slice(1);const [path,query]=raw.split('?');
+  const seg=path.split('/').filter(Boolean); // e.g. ['fact','1-abc']
+  document.querySelectorAll('nav.tabs a').forEach(a=>{const t=a.getAttribute('href').slice(1).split('/')[1]||'';
+    a.classList.toggle('on',('/'+(seg[0]||''))===('/'+t));});
+  window.scrollTo(0,0);
+  const k=seg[0]||'';
+  try{
+    if(!k)return vHome();
+    if(k==='blocks')return vBlocks();
+    if(k==='block')return vBlock(seg[1]);
+    if(k==='tx')return vTx(seg[1]);
+    if(k==='facts')return vFacts(query);
+    if(k==='fact')return vFact(decodeURIComponent(seg.slice(1).join('/')));
+    if(k==='address')return vAddress(seg[1]);
+    if(k==='tokens')return vTokens();
+    if(k==='pools')return vPools();
+    if(k==='ibc')return vIbc();
+    if(k==='vaults')return vVaults();
+    set(`<div class="empty"><div class="big">Not found</div><p><a href="#/">← overview</a></p></div>`);
+  }catch(e){set(`<div class="empty"><div class="big">Something went wrong</div><p class="faint">${esc(e.message||e)}</p><p><a href="#/">← overview</a></p></div>`);}
+}
+window.addEventListener('hashchange',route);
+head();route();setInterval(head,12000);
+</script>
+</body>
+</html>

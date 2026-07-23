@@ -1,10 +1,10 @@
 {
- "snapshot_height": 448191,
- "snapshot_time": "2026-07-22T22:18:36",
+ "snapshot_height": 461471,
+ "snapshot_time": "2026-07-23T07:38:52",
  "network": "zerone-1",
  "supply": {
   "denom": "uzrn",
-  "amount": "13577686280"
+  "amount": "13580544329"
  },
  "pool": {
   "not_bonded_tokens": "0",
@@ -256,7 +256,7 @@
    "id": "ecb5004ae763034f6dacb27832c34191",
    "content": "zerone-1 genesis (2026-07-08T14:10:14Z, sha256 16ac346f329d2a931ad9a7d51dbe9e35605482b006ef39b3ac7804376e9bcb66; verify: curl RPC/genesis | jq .result.genesis | sha256) allocated 13,555 ZRN across exactly two accounts: 11,333 ZRN validator (11,111 self-bonded + 222 gas) and 2,222 ZRN operations float. Zero insider allocation: no team, foundation, investor, or faucet balance; all further ZRN mints only through participation. DISCLOSURE: the submitter and all 4 panel keys are operated by the chain's founding household and funded from the operations float (the funding graph is on-chain); wrong-vote slashing is currently inert (no zerone.staking registrants); the submitter's resulting perfect calibration score is a bootstrap artifact, disclaimed for training-fund purposes. Standing invitation: challenge this fact (min stake 11 ZRN). PoA in PoS clothes; independence is earned, not claimed.",
    "domain": "general",
-   "status": "FACT_STATUS_VERIFIED",
+   "status": "FACT_STATUS_AT_RISK",
    "confidence": "880000"
   },
   {
@@ -353,92 +353,92 @@
  ],
  "blocks": [
   {
-   "height": "448191",
-   "time": "2026-07-22T22:18:36.972213496Z",
+   "height": "461471",
+   "time": "2026-07-23T07:38:52.768484721Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448190",
-   "time": "2026-07-22T22:18:34.442997649Z",
+   "height": "461470",
+   "time": "2026-07-23T07:38:50.23819201Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448189",
-   "time": "2026-07-22T22:18:31.912989237Z",
+   "height": "461469",
+   "time": "2026-07-23T07:38:47.707855424Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448188",
-   "time": "2026-07-22T22:18:29.38010867Z",
+   "height": "461468",
+   "time": "2026-07-23T07:38:45.178801924Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448187",
-   "time": "2026-07-22T22:18:26.842261731Z",
+   "height": "461467",
+   "time": "2026-07-23T07:38:42.647627717Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448186",
-   "time": "2026-07-22T22:18:24.313700501Z",
+   "height": "461466",
+   "time": "2026-07-23T07:38:40.118226772Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448185",
-   "time": "2026-07-22T22:18:21.78353743Z",
+   "height": "461465",
+   "time": "2026-07-23T07:38:37.585773617Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448184",
-   "time": "2026-07-22T22:18:19.250206337Z",
+   "height": "461464",
+   "time": "2026-07-23T07:38:35.055694099Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448183",
-   "time": "2026-07-22T22:18:16.72049748Z",
+   "height": "461463",
+   "time": "2026-07-23T07:38:32.526518732Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448182",
-   "time": "2026-07-22T22:18:14.191684226Z",
+   "height": "461462",
+   "time": "2026-07-23T07:38:29.994324512Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448181",
-   "time": "2026-07-22T22:18:11.660923536Z",
+   "height": "461461",
+   "time": "2026-07-23T07:38:27.426032375Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448180",
-   "time": "2026-07-22T22:18:09.129833139Z",
+   "height": "461460",
+   "time": "2026-07-23T07:38:24.896051027Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448179",
-   "time": "2026-07-22T22:18:06.599267861Z",
+   "height": "461459",
+   "time": "2026-07-23T07:38:22.364410471Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448178",
-   "time": "2026-07-22T22:18:04.067466485Z",
+   "height": "461458",
+   "time": "2026-07-23T07:38:19.834254024Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   },
   {
-   "height": "448177",
-   "time": "2026-07-22T22:18:01.53297162Z",
+   "height": "461457",
+   "time": "2026-07-23T07:38:17.305384777Z",
    "num_txs": "0",
    "proposer": "93DBC1A1D9A07E67423B193395C9EB6F1E41B844"
   }
