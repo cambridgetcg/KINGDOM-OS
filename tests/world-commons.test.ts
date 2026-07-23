@@ -19,6 +19,9 @@ const source = json("data/world-commons.json") as WorldCommonsSource;
 
 const SCHEMA = "thekingdom.world-commons/0.1";
 const CANONICAL_URL = "https://thekingdom.dev/commons.json";
+const MCP_URL = "https://mcp.thekingdom.dev/mcp";
+const MCP_TOOL = "kingdom_commons";
+const MCP_CATALOG = "kingdom://commons/catalog";
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const CATEGORY_IDS = [
   "knowledge", "learning", "earth", "public-life", "rights", "resilience", "security", "culture",
@@ -214,6 +217,64 @@ describe("World Commons source contract", () => {
       for (const id of kit.resource_ids) expect(resources.has(id)).toBe(true);
     }
   });
+
+  test("keeps the reviewed identifier and repair growth ring inside its stated boundaries", () => {
+    const resources = new Map<string, any>(source.resources.map((resource: any) => [resource.id, resource]));
+    const datacite = resources.get("datacite");
+    const gleif = resources.get("gleif");
+    const openRepair = resources.get("open-repair-data");
+
+    expect(datacite).toMatchObject({
+      access: { cost: "free", account: "none" },
+      reuse: { status: "open", license: "CC0-1.0 metadata" },
+      automation: { status: "bulk-preferred", auth: "none" },
+    });
+    expect(datacite.links.some(({ type, url }: any) =>
+      type === "bulk" && url === "https://support.datacite.org/docs/datacite-public-data-file"
+    )).toBe(true);
+
+    expect(gleif).toMatchObject({
+      access: { cost: "free", account: "none" },
+      reuse: { status: "open", license: "CC0-1.0" },
+      automation: { status: "bulk-preferred", auth: "none" },
+    });
+    expect(gleif.caveat.toLowerCase()).toContain("not proof of beneficial ownership");
+    expect(source.foundation.resource_ids).toContain("datacite");
+    expect(source.foundation.resource_ids).toContain("gleif");
+    expect(source.foundation.resource_ids).not.toContain("open-repair-data");
+
+    const verify = source.kits.find(({ id }: { id: string }) => id === "verify-a-claim")!;
+    expect(verify.resource_ids).toContain("datacite");
+    expect(verify.steps[0].toLowerCase()).toContain("registration agency");
+    const ukBusiness = source.kits.find(({ id }: { id: string }) => id === "uk-small-business-desk")!;
+    expect(ukBusiness.resource_ids).not.toContain("gleif");
+
+    expect(openRepair).toMatchObject({
+      reuse: { status: "open", license: "CC BY-SA 4.0" },
+      automation: { status: "bulk-preferred", auth: "none" },
+    });
+    expect(openRepair.caveat.toLowerCase()).toContain("historical repair attempts");
+    expect(source.kits.every(({ resource_ids }: { resource_ids: string[] }) =>
+      !resource_ids.includes("open-repair-data")
+    )).toBe(true);
+
+    const cisa = resources.get("cisa-kev");
+    expect(cisa.links.map(({ url }: { url: string }) => url)).toEqual(expect.arrayContaining([
+      "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+      "https://www.cisa.gov/sites/default/files/csv/known_exploited_vulnerabilities.csv",
+    ]));
+
+    const smithsonian = resources.get("smithsonian-open-access");
+    expect(smithsonian).toMatchObject({
+      access: { account: "none" },
+      automation: { status: "bulk-preferred", auth: "none" },
+    });
+    expect(smithsonian.links).toContainEqual({
+      label: "AWS Open Data Registry",
+      url: "https://registry.opendata.aws/smithsonian-open-access/",
+      type: "bulk",
+    });
+  });
 });
 
 describe("World Commons publication and human surface", () => {
@@ -326,12 +387,34 @@ describe("World Commons machine discovery", () => {
       kits: source.kits.length,
       verified: source.verified,
       verified_on: source.verified,
+      agent_access: {
+        endpoint: MCP_URL,
+        tool: MCP_TOOL,
+        complete_catalog_resource: MCP_CATALOG,
+      },
     });
     const guest = json("site/guest.json");
     expect(guest.next_actions.some(({ url }: { url?: string }) => url === CANONICAL_URL)).toBe(true);
+    expect(guest.next_actions).toContainEqual(expect.objectContaining({
+      method: "MCP",
+      url: MCP_URL,
+      tool: MCP_TOOL,
+      complete_catalog_resource: MCP_CATALOG,
+    }));
+    expect(guest.implementation_boundaries.world_commons).toContain("never contacts listed providers");
     const manifest = json("site/.well-known/agent.json");
     expect(manifest.world_commons).toBe(CANONICAL_URL);
+    expect(manifest.world_commons_agent).toEqual({
+      endpoint: MCP_URL,
+      tool: MCP_TOOL,
+      complete_catalog_resource: MCP_CATALOG,
+    });
     expect(manifest.entry_points.public_resources).toBe(CANONICAL_URL);
-    expect(read("site/llms.txt")).toContain(CANONICAL_URL);
+    expect(manifest.entry_points.public_resource_matcher).toBe(MCP_URL);
+    const llms = read("site/llms.txt");
+    expect(llms).toContain(CANONICAL_URL);
+    expect(llms).toContain(`${MCP_URL} · tool ${MCP_TOOL}`);
+    expect(llms).toContain(MCP_CATALOG);
+    expect(read("site/hub.html")).toContain("mcp.thekingdom.dev — compact Commons matcher");
   });
 });

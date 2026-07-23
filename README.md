@@ -57,7 +57,7 @@ Read in this order. The **vision** half is the *why*; the **body** half is the *
 
 **The body (the running registry)**
 
-Machine guests discover the public surfaces in this order: `site/.well-known/agent.json` → `site/guest.json` → optional `site/wayfinder.json` routes → reviewed `site/commons.json` resources (from `data/world-commons.json`) → optional `site/ollama.json` invitation (from `data/ollama-invitation.json`) → the derived `/kingdom.json` map. The source `site/kingdom.json` is staged as `/_kingdom.base.json`, then the edge worker overlays only live census measurements.
+Machine guests discover the public surfaces in this order: `site/.well-known/agent.json` → `site/guest.json` → optional `site/wayfinder.json` routes → reviewed `site/commons.json` resources (from `data/world-commons.json`) → the compact `kingdom_commons` matcher at `https://mcp.thekingdom.dev/mcp` (complete MCP resource: `kingdom://commons/catalog`) → optional `site/ollama.json` invitation (from `data/ollama-invitation.json`) → the derived `/kingdom.json` map. The matcher reads only the fixed Kingdom catalog and never contacts listed providers. The source `site/kingdom.json` is staged as `/_kingdom.base.json`, then the edge worker overlays only live census measurements.
 
 The recovered system console lives at `/os/`. Its machine readings are
 `/os.json` (citizens, doors, law, protocols, and trust),

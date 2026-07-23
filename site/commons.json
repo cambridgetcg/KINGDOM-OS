@@ -1,6 +1,6 @@
 {
   "schema_version": "thekingdom.world-commons/0.1",
-  "verified": "2026-07-22",
+  "verified": "2026-07-23",
   "canonical_url": "https://thekingdom.dev/commons.json",
   "promise": "A curated doorway to useful world resources. It names access, reuse, automation, and uncertainty separately; it never turns a free doorway into a claim of ownership, safety, truth, or unlimited service.",
   "methodology": {
@@ -25,6 +25,7 @@
     "resource_ids": [
       "wikidata",
       "crossref",
+      "datacite",
       "software-heritage",
       "openstax",
       "kiwix",
@@ -34,6 +35,7 @@
       "gbif",
       "biodiversity-heritage-library",
       "world-bank-indicators",
+      "gleif",
       "faostat",
       "who-data",
       "ohchr-uhri",
@@ -111,12 +113,13 @@
       "resource_ids": [
         "wikidata",
         "crossref",
+        "datacite",
         "openalex",
         "europe-pmc"
       ],
       "boundary": "Metadata can locate evidence; it cannot establish that a claim is true or that a paper is sound.",
       "steps": [
-        "Resolve the entity or DOI.",
+        "Identify the DOI registration agency, then resolve the entity or DOI through the matching registry.",
         "Compare independent indexes and references.",
         "Open the primary source and retain its identifier, version, and licence."
       ]
@@ -416,7 +419,7 @@
         }
       ],
       "caveat": "Community assertions are not automatically authoritative. Keep references and qualifiers, and do not infer sensitive identity attributes from gaps or graph proximity.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "crossref",
@@ -475,7 +478,77 @@
         }
       ],
       "caveat": "A DOI record locates a work; it is not a quality judgment, and metadata can be incomplete or stale.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
+    },
+    {
+      "id": "datacite",
+      "name": "DataCite REST API and Public Data File",
+      "provider": "DataCite",
+      "category_ids": [
+        "knowledge"
+      ],
+      "description": "Public DOI metadata for research outputs including datasets, software, images, instruments, workflows, and scholarly works.",
+      "good_for": [
+        "Resolving DataCite DOIs",
+        "Finding citable datasets and software",
+        "Building versioned DOI metadata shelves"
+      ],
+      "coverage": "Findable DataCite DOI records; draft and Registered-state records are not public, and completeness varies by depositor.",
+      "keywords": [
+        "doi",
+        "dataset",
+        "software",
+        "research",
+        "metadata",
+        "citation",
+        "identifier",
+        "datacite"
+      ],
+      "audiences": [
+        "human",
+        "agent",
+        "builder"
+      ],
+      "access": {
+        "cost": "free",
+        "account": "none",
+        "note": "The public REST API and annual public data files are available without authentication."
+      },
+      "reuse": {
+        "status": "open",
+        "license": "CC0-1.0 metadata",
+        "note": "DataCite's public data-file metadata is CC0; linked research objects and landing pages keep their own rights."
+      },
+      "automation": {
+        "status": "bulk-preferred",
+        "auth": "none",
+        "limits": "Published API rate limits differ for unidentified, identified, and authenticated clients.",
+        "note": "Seed systematic use from an annual public data file, retrieve later changes through the API, identify the client, cache, and back off."
+      },
+      "links": [
+        {
+          "label": "Public REST API",
+          "url": "https://support.datacite.org/docs/api",
+          "type": "api"
+        },
+        {
+          "label": "Public data files",
+          "url": "https://support.datacite.org/docs/datacite-public-data-file",
+          "type": "bulk"
+        },
+        {
+          "label": "API rate limits",
+          "url": "https://support.datacite.org/docs/rate-limit",
+          "type": "terms"
+        },
+        {
+          "label": "DOI states",
+          "url": "https://support.datacite.org/docs/doi-states",
+          "type": "docs"
+        }
+      ],
+      "caveat": "A DOI metadata record identifies and locates an output; it does not establish quality, truth, availability, or permission to reuse the linked object.",
+      "verified": "2026-07-23"
     },
     {
       "id": "openalex",
@@ -539,7 +612,7 @@
         }
       ],
       "caveat": "Do not mistake graph rank, citation count, or automated entity resolution for importance, identity, or truth. Full-text rights are separate.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "europe-pmc",
@@ -599,7 +672,7 @@
         }
       ],
       "caveat": "Literature search is not diagnosis or medical advice. Check study design, publication status, date, and independent evidence.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "software-heritage",
@@ -677,7 +750,7 @@
         }
       ],
       "caveat": "Archived code is unvetted and may be unsafe to execute. Developer names or emails may be present; profiling, solicitation, and privacy-harming reuse are forbidden. Automated licence detection is not legal assurance.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "openstax",
@@ -739,7 +812,7 @@
         }
       ],
       "caveat": "Free access does not mean commercial reuse or AI ingestion is permitted, and a textbook edition may not reflect the newest research or local curriculum.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "mit-ocw",
@@ -798,7 +871,7 @@
         }
       ],
       "caveat": "OCW offers materials, not enrolment, instructor access, credit, certification, or an MIT qualification.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "project-gutenberg",
@@ -863,7 +936,7 @@
         }
       ],
       "caveat": "A work believed public domain in the United States may still be protected where the reader or reuser lives.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "kiwix",
@@ -941,7 +1014,7 @@
         }
       ],
       "caveat": "Offline snapshots can be old, incomplete, or too large for a device. Source accuracy and content rights remain separate, and a stored copy must not be mistaken for current emergency, medical, or legal information.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "openstreetmap",
@@ -1011,7 +1084,7 @@
         }
       ],
       "caveat": "Do not treat OSM alone as safety-critical routing, cadastral truth, an official address register, or a neutral settlement of disputed borders.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "natural-earth",
@@ -1071,7 +1144,7 @@
         }
       ],
       "caveat": "Generalized geometry is not suitable for navigation, parcel boundaries, local analysis, or definitive legal borders.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "gbif",
@@ -1136,7 +1209,7 @@
         }
       ],
       "caveat": "Absence of records is not evidence of species absence. Coordinates can be uncertain or sensitive and need ecological and ethical review.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "biodiversity-heritage-library",
@@ -1219,7 +1292,7 @@
         }
       ],
       "caveat": "OCR, metadata, historical taxonomy, and recorded distributions can be wrong or outdated, and US public-domain status may not carry across borders. BHL completed a major infrastructure-host transition in June 2026; re-check availability before depending on live services.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "usgs-earthquakes",
@@ -1279,7 +1352,7 @@
         }
       ],
       "caveat": "Events can be revised. Never use this source alone as an evacuation trigger; follow current local emergency authorities.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "world-bank-indicators",
@@ -1339,7 +1412,7 @@
         }
       ],
       "caveat": "Indicators are constructed measures, often lagged and revised. Do not turn them into simplistic rankings or real-time financial advice.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "faostat",
@@ -1406,7 +1479,7 @@
         }
       ],
       "caveat": "Always preserve flags that distinguish official, estimated, and imputed values; different releases can revise the past.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "who-data",
@@ -1471,7 +1544,7 @@
         }
       ],
       "caveat": "WHO estimates can differ from national figures. Show methodology and vintage, and never turn an indicator lookup into diagnosis or medical advice.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "eurostat",
@@ -1536,7 +1609,7 @@
         }
       ],
       "caveat": "Keep the dataset code, geography, unit, time, flags, and retrieval date; latest-value APIs are not revision archives.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "uk-ons",
@@ -1597,7 +1670,7 @@
         }
       ],
       "caveat": "A beta interface may break, and an official statistic still needs its definition, revision status, and confidence information.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "companies-house",
@@ -1656,7 +1729,78 @@
         }
       ],
       "caveat": "Registration is not endorsement, solvency, trustworthiness, beneficial-ownership certainty, or a substitute for due diligence.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
+    },
+    {
+      "id": "gleif",
+      "name": "GLEIF Global LEI Index",
+      "provider": "Global Legal Entity Identifier Foundation",
+      "category_ids": [
+        "public-life",
+        "knowledge"
+      ],
+      "description": "The authoritative global directory of Legal Entity Identifiers and standardized legal-entity reference data.",
+      "good_for": [
+        "Resolving legal entities across jurisdictions",
+        "Linking regulatory and financial records",
+        "Following LEI status and reported accounting-parent relationships"
+      ],
+      "coverage": "Legal entities that have obtained an LEI; this is not a universal register, and parent relationships can be unavailable or reported as exceptions.",
+      "keywords": [
+        "lei",
+        "legal entity",
+        "company",
+        "organization",
+        "identifier",
+        "registry",
+        "finance",
+        "gleif"
+      ],
+      "audiences": [
+        "human",
+        "agent",
+        "builder"
+      ],
+      "access": {
+        "cost": "free",
+        "account": "none",
+        "note": "Public search, the API, and downloadable files are available without an account."
+      },
+      "reuse": {
+        "status": "open",
+        "license": "CC0-1.0",
+        "note": "GLEIF provides the Global LEI Index data under CC0; retain identifiers, record status, dates, and source context."
+      },
+      "automation": {
+        "status": "bulk-preferred",
+        "auth": "none",
+        "limits": "Use Golden Copy files for a full local base and provider-issued delta files for bounded updates.",
+        "note": "Use the API for narrow lookup, preserve LEI lifecycle status and reporting exceptions, and never infer a missing relationship."
+      },
+      "links": [
+        {
+          "label": "GLEIF open data",
+          "url": "https://www.gleif.org/en/about/open-data/",
+          "type": "start"
+        },
+        {
+          "label": "Golden Copy and delta files",
+          "url": "https://www.gleif.org/en/lei-data/gleif-golden-copy/download-the-golden-copy",
+          "type": "bulk"
+        },
+        {
+          "label": "GLEIF API",
+          "url": "https://www.gleif.org/en/lei-data/gleif-api",
+          "type": "api"
+        },
+        {
+          "label": "LEI data terms",
+          "url": "https://www.gleif.org/en/meta/lei-data-terms-of-use",
+          "type": "terms"
+        }
+      ],
+      "caveat": "An LEI record is not proof of beneficial ownership, solvency, identity assurance, trustworthiness, fitness, or endorsement; status can lapse and relationships can be absent.",
+      "verified": "2026-07-23"
     },
     {
       "id": "uk-trade-tariff",
@@ -1717,7 +1861,7 @@
         }
       ],
       "caveat": "A search result is not a binding customs classification or tax answer. Consequential classifications need full facts and qualified review.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "ohchr-uhri",
@@ -1781,7 +1925,7 @@
         }
       ],
       "caveat": "Recommendations are contextual official records, not allegations, verdicts, or inputs for automated country scoring.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "ilo-normlex",
@@ -1836,7 +1980,7 @@
         }
       ],
       "caveat": "An instrument's existence does not establish that it is ratified, in force, directly applicable, or determinative in a particular dispute.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "eur-lex-cellar",
@@ -1902,7 +2046,7 @@
         }
       ],
       "caveat": "Legal texts require jurisdiction, date, amendments, authenticity, and applicability checks; this doorway is not legal advice.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "wipo-lex",
@@ -1961,7 +2105,7 @@
         }
       ],
       "caveat": "Database access is not legal advice, an official translation guarantee, or permission to automate the service.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "reliefweb",
@@ -2021,7 +2165,7 @@
         }
       ],
       "caveat": "Reports can be partial, delayed, or contested and do not replace local emergency instructions or direct community knowledge.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "gdacs",
@@ -2087,7 +2231,73 @@
         }
       ],
       "caveat": "Alerts are automated or semi-automated and may be delayed or wrong. They never override national or local warnings.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
+    },
+    {
+      "id": "open-repair-data",
+      "name": "Open Repair Data",
+      "provider": "Open Repair Alliance",
+      "category_ids": [
+        "public-life",
+        "resilience"
+      ],
+      "description": "Versioned open records of repair attempts, faults, barriers, and outcomes contributed by participating community-repair organisations.",
+      "good_for": [
+        "Studying common repair barriers and outcomes",
+        "Comparing product-category repair evidence",
+        "Building attributed historical repair datasets"
+      ],
+      "coverage": "Periodic partner-contributed repair-event releases, currently weighted toward electrical and electronic equipment and the places represented by participating groups.",
+      "keywords": [
+        "repair",
+        "reuse",
+        "circular economy",
+        "electronics",
+        "fault",
+        "outcome",
+        "product",
+        "open data"
+      ],
+      "audiences": [
+        "human",
+        "agent",
+        "builder"
+      ],
+      "access": {
+        "cost": "free",
+        "account": "none",
+        "note": "Aggregate and partner datasets can be downloaded without an account."
+      },
+      "reuse": {
+        "status": "open",
+        "license": "CC BY-SA 4.0",
+        "note": "Attribution and share-alike apply; retain the release manifest, provider, standard version, and licence."
+      },
+      "automation": {
+        "status": "bulk-preferred",
+        "auth": "none",
+        "limits": "Releases are periodic versioned CSV and JSON packages rather than a live API.",
+        "note": "Use published packages and manifests, retain release dates, and treat cleaning and partner mappings as part of provenance."
+      },
+      "links": [
+        {
+          "label": "Data downloads",
+          "url": "https://openrepair.org/open-data/downloads/",
+          "type": "bulk"
+        },
+        {
+          "label": "Open Repair Data Standard",
+          "url": "https://standard.openrepair.org/standard.html",
+          "type": "docs"
+        },
+        {
+          "label": "Dataset production and limitations",
+          "url": "https://openrepair.org/open-data/producing-the-open-repair-alliance-datasets/",
+          "type": "docs"
+        }
+      ],
+      "caveat": "These are historical repair attempts, not a live repair booking, parts inventory, available object, product-safety certification, or instruction that a repair is safe.",
+      "verified": "2026-07-23"
     },
     {
       "id": "osv",
@@ -2152,7 +2362,7 @@
         }
       ],
       "caveat": "No match does not prove a dependency safe. Package identity, version ranges, reachability, and remediation still need verification.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "cisa-kev",
@@ -2204,10 +2414,20 @@
           "label": "KEV catalog",
           "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
           "type": "start"
+        },
+        {
+          "label": "KEV JSON",
+          "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+          "type": "bulk"
+        },
+        {
+          "label": "KEV CSV",
+          "url": "https://www.cisa.gov/sites/default/files/csv/known_exploited_vulnerabilities.csv",
+          "type": "bulk"
         }
       ],
       "caveat": "Not being listed does not mean a vulnerability is unexploited or low risk; combine KEV with broader advisory and asset context.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "owasp-cheat-sheets",
@@ -2267,7 +2487,7 @@
         }
       ],
       "caveat": "A checklist is guidance, not a threat model, penetration test, compliance audit, or certification.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "lets-encrypt",
@@ -2331,7 +2551,7 @@
         }
       ],
       "caveat": "Issued certificates and domain names enter public Certificate Transparency logs, and issuance requests create service logs. A valid certificate protects transport and domain authentication; it does not prove that a site, claim, operator, or application is safe.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "library-of-congress",
@@ -2392,7 +2612,7 @@
         }
       ],
       "caveat": "A digitized item's visibility does not mean it is public domain or clear of privacy, publicity, cultural, or trademark concerns.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "smithsonian-open-access",
@@ -2426,8 +2646,8 @@
       ],
       "access": {
         "cost": "free",
-        "account": "free-account",
-        "note": "Human access is public; API access uses a free api.data.gov key."
+        "account": "none",
+        "note": "Human discovery and the AWS bulk dataset are public without an account; the optional API uses a free api.data.gov key."
       },
       "reuse": {
         "status": "mixed",
@@ -2436,9 +2656,9 @@
       },
       "automation": {
         "status": "bulk-preferred",
-        "auth": "free-key",
-        "limits": "The API key normally carries an hourly quota; current bulk distribution should be preferred for systematic use.",
-        "note": "Filter on the Open Access designation and retain item ID, institution, title, creator, and source URL."
+        "auth": "none",
+        "limits": "The Registry of Open Data on AWS provides unauthenticated bulk metadata; the optional API uses a free key and its own quota.",
+        "note": "Prefer the current AWS bulk distribution for systematic use; filter on Open Access and retain item ID, institution, title, creator, and source URL."
       },
       "links": [
         {
@@ -2447,13 +2667,23 @@
           "type": "start"
         },
         {
-          "label": "Open Access FAQ and API",
-          "url": "https://www.si.edu/openaccess/faq",
+          "label": "AWS Open Data Registry",
+          "url": "https://registry.opendata.aws/smithsonian-open-access/",
+          "type": "bulk"
+        },
+        {
+          "label": "Developer tools",
+          "url": "https://www.si.edu/openaccess/devtools",
           "type": "api"
+        },
+        {
+          "label": "Open Access FAQ",
+          "url": "https://www.si.edu/openaccess/faq",
+          "type": "terms"
         }
       ],
       "caveat": "Only assets explicitly marked CC0 carry the Open Access reuse grant; other legal and ethical rights can remain even for a CC0 file.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     },
     {
       "id": "europeana",
@@ -2519,8 +2749,8 @@
         }
       ],
       "caveat": "CC0 metadata does not make the depicted or linked object CC0. Check every object's rights badge and originating record.",
-      "verified": "2026-07-22"
+      "verified": "2026-07-23"
     }
   ],
-  "generated": "2026-07-22"
+  "generated": "2026-07-23"
 }

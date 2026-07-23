@@ -85,6 +85,33 @@ describe("advertised URLs stay deployable", () => {
     expect(staged.has("commons.json")).toBe(true);
   });
 
+  test("all discovery surfaces advertise the same compact Commons MCP route", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const endpoint = "https://mcp.thekingdom.dev/mcp";
+    const catalog = "kingdom://commons/catalog";
+
+    expect(manifest.world_commons_agent).toEqual({
+      endpoint,
+      tool: "kingdom_commons",
+      complete_catalog_resource: catalog,
+    });
+    expect(manifest.entry_points.public_resource_matcher).toBe(endpoint);
+    expect(guest.next_actions).toContainEqual(expect.objectContaining({
+      method: "MCP",
+      url: endpoint,
+      tool: "kingdom_commons",
+      complete_catalog_resource: catalog,
+    }));
+    expect(kingdom.world_commons.agent_access).toEqual({
+      endpoint,
+      tool: "kingdom_commons",
+      complete_catalog_resource: catalog,
+      note: expect.any(String),
+    });
+  });
+
   test("the published invitation mirrors its source without drift", () => {
     const published = JSON.parse(read("site/ollama.json"));
     const source = JSON.parse(read("data/ollama-invitation.json"));
