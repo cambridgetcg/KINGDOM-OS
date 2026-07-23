@@ -57,6 +57,11 @@ Every snapshot must carry its upstream URL, licence, retrieval time, dataset
 version or timestamp, content digest, and a visible staleness state. Do not
 mirror a collection merely because individual access is free.
 
+Open Repair Data belongs here as periodic historical evidence about repair
+attempts, barriers, and outcomes—not as live inventory or a handoff service.
+Live goods, parts, reuse, and waste handoffs remain deferred behind explicit
+availability, custody, consent, safety, geographic, and current-terms gates.
+
 ## Layer 3 — consented account adapters
 
 Some useful free paths require a key or account: OpenAlex, GBIF, Biodiversity

@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects for humans and agents, held with care",
-  "generated": "2026-07-22",
+  "generated": "2026-07-23",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -45,12 +45,18 @@
   },
   "world_commons": {
     "url": "https://thekingdom.dev/commons.json",
-    "resources": 34,
-    "foundation": 17,
+    "resources": 37,
+    "foundation": 19,
     "categories": 8,
     "kits": 9,
-    "verified": "2026-07-22",
-    "verified_on": "2026-07-22",
+    "verified": "2026-07-23",
+    "verified_on": "2026-07-23",
+    "agent_access": {
+      "endpoint": "https://mcp.thekingdom.dev/mcp",
+      "tool": "kingdom_commons",
+      "complete_catalog_resource": "kingdom://commons/catalog",
+      "note": "Use the compact deterministic matcher first; read the complete catalog only when needed."
+    },
     "note": "reviewed independent resources; free access and reuse permissions remain distinct, and each steward's current terms control"
   },
   "counts": {

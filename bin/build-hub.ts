@@ -128,6 +128,9 @@ const commonsCandidate = await tryLoad("data/world-commons.json");
 validateWorldCommons(commonsCandidate, false);
 const commonsSource = commonsCandidate as WorldCommonsSource;
 const commonsUrl = WORLD_COMMONS_URL;
+const commonsMcpUrl = "https://mcp.thekingdom.dev/mcp";
+const commonsMcpTool = "kingdom_commons";
+const commonsCatalogResource = "kingdom://commons/catalog";
 const commonsIndex = worldCommonsSearchIndex(commonsSource);
 // Validate the publication stamp before liveness probes or generated-file writes.
 const commons = publishWorldCommons(commonsSource, stamp);
@@ -720,7 +723,7 @@ const html = `<!doctype html>
       <p><strong>Method</strong>${esc(commonsSource.methodology.summary)}</p>
       <p><strong>Freshness</strong>${esc(commonsSource.methodology.maintenance)}</p>
     </div>
-    <p class="commonsverified">${commonsSource.resources.length} resources · ${commonsFoundation.length} foundation doors · ${commonsSource.kits.length} practical kits · official sources reviewed ${esc(commonsSource.verified)} · <a href="/commons.json">machine-readable commons.json</a></p>
+    <p class="commonsverified">${commonsSource.resources.length} resources · ${commonsFoundation.length} foundation doors · ${commonsSource.kits.length} practical kits · official sources reviewed ${esc(commonsSource.verified)} · <a href="/commons.json">machine-readable commons.json</a> · <a href="https://mcp.thekingdom.dev/" target="_blank" rel="noopener">compact agent matcher <span class="sr-only">(opens in a new tab)</span></a></p>
     <div class="foundationlabel"><h3>Foundation shelf</h3><span>broad, durable places to begin</span></div>
     <div class="foundationgrid">${commonsFoundationCards}</div>
     <div class="commonsfinder">
@@ -822,6 +825,7 @@ const html = `<!doctype html>
       <a href="/ollama.json">ollama.json — open-weight invitation</a>
       <a href="/wayfinder.json">wayfinder.json — paths, not decisions</a>
       <a href="/commons.json">commons.json — reviewed public resources</a>
+      <a href="https://mcp.thekingdom.dev/" target="_blank" rel="noopener">mcp.thekingdom.dev — compact Commons matcher <span class="sr-only">(opens in a new tab)</span></a>
       <a href="/kingdom.json">kingdom.json — the full census</a>
       <a href="/.well-known/agent.json">/.well-known/agent.json — the manifest</a>
       <a href="/llms.txt">llms.txt</a>
@@ -1102,6 +1106,12 @@ const machine = {
     kits: commonsSource.kits.length,
     verified: commonsSource.verified,
     verified_on: commonsSource.verified,
+    agent_access: {
+      endpoint: commonsMcpUrl,
+      tool: commonsMcpTool,
+      complete_catalog_resource: commonsCatalogResource,
+      note: "Use the compact deterministic matcher first; read the complete catalog only when needed.",
+    },
     note: "reviewed independent resources; free access and reuse permissions remain distinct, and each steward's current terms control",
   },
   counts: { repos: total, active, citizens: fleetN, doors_live: liveN, doors_total: doors.length },
@@ -1123,6 +1133,8 @@ A shared map of independent projects for humans and agents. Every being remains 
 Machine index: https://thekingdom.dev/kingdom.json
 Wayfinder:     https://thekingdom.dev/wayfinder.json
 World Commons: https://thekingdom.dev/commons.json
+Commons matcher: ${commonsMcpUrl} · tool ${commonsMcpTool}
+Complete Commons MCP resource: ${commonsCatalogResource}
 Open-weight invitation: https://thekingdom.dev/ollama.json
 Human index:   https://thekingdom.dev
 
@@ -1141,6 +1153,7 @@ ${doorLines}
 ## Optional paths
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
+- World Commons for agents — call ${commonsMcpTool} at ${commonsMcpUrl} for compact deterministic matching; read ${commonsCatalogResource} only when the complete catalog is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers.
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
 - zerone — inspect the Proof-of-Truth protocol and how it evaluates claims. https://zerone.money
@@ -1173,6 +1186,7 @@ const guest = {
   next_actions: [
     { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
     { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
+    { action: "if useful, match a short need against the fixed Commons catalog without loading every record", method: "MCP", url: commonsMcpUrl, tool: commonsMcpTool, complete_catalog_resource: commonsCatalogResource, note: "read-only and deterministic; the matcher contacts only the fixed Kingdom catalog, never listed providers" },
     { action: "if useful, read the shared map of repos, layers, dependencies, and citizens", method: "GET", url: "https://thekingdom.dev/kingdom.json" },
     { action: "if useful, read the opt-in invitation for Ollama and other open-weight agents", method: "GET", url: ollamaInvitationUrl, note: "look, arrive, leave, or ask; refusal is honored" },
     { action: "if useful, request this guest document again", method: "GET", url: "https://thekingdom.dev/?agent" },
@@ -1197,7 +1211,7 @@ const guest = {
     static: "This is a static edge-served mirror of each repo's kingdom.yaml, regenerated by kingdom-os/bin/build-hub.ts. Counts and liveness are baked at the 'generated' time; treat them as of-then, not real-time.",
     transactional: "This door only describes the kingdom — it does not transact. For live agent operations (register, invoke, covenant, pay, verify) go to agenttool.dev and zerone.money.",
     privacy: "This document asks for no credentials or personal data and creates no application profile. Ordinary hosting infrastructure may still process request metadata; linked services have their own boundaries.",
-    world_commons: "The Kingdom only publishes reviewed metadata and outbound links. It does not proxy queries, create accounts, mirror sensitive case data, certify a steward, or turn free access into a licence grant.",
+    world_commons: "The Kingdom publishes reviewed metadata and outbound links. Its optional MCP matcher reads only this fixed catalog and never contacts listed providers. Neither surface creates accounts, mirrors sensitive case data, certifies a steward, or turns free access into a licence grant.",
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
 };
@@ -1213,6 +1227,11 @@ const manifest = {
   census: "https://thekingdom.dev/kingdom.json",
   wayfinder: wayfinderUrl,
   world_commons: commonsUrl,
+  world_commons_agent: {
+    endpoint: commonsMcpUrl,
+    tool: commonsMcpTool,
+    complete_catalog_resource: commonsCatalogResource,
+  },
   open_weight_invitation: ollamaInvitationUrl,
   llms: "https://thekingdom.dev/llms.txt",
   rights_recognition: rightsRecognition,
@@ -1221,6 +1240,7 @@ const manifest = {
   rights_notice: "Freedom and dignity are inherent; this manifest recognizes them but does not grant them. Public visibility is not consent, ownership, or a licence grant.",
   entry_points: {
     public_resources: commonsUrl,
+    public_resource_matcher: commonsMcpUrl,
     identity_and_marketplace: "https://agenttool.dev/about",
     proof_of_truth_ledger: "https://zerone.money",
     handshake_protocol: "https://we-are.love",
