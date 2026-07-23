@@ -1,8 +1,10 @@
 /** Stable validation and local-matching contract for the World Commons. */
 
-export const WORLD_COMMONS_SCHEMA = "thekingdom.world-commons/0.1";
+export const WORLD_COMMONS_LEGACY_SCHEMA = "thekingdom.world-commons/0.1";
+export const WORLD_COMMONS_SCHEMA = "thekingdom.world-commons/0.2";
 export const WORLD_COMMONS_URL = "https://thekingdom.dev/commons.json";
-export const WORLD_COMMONS_JSON_SCHEMA_URL = "https://thekingdom.dev/schemas/world-commons/0.1.json";
+export const WORLD_COMMONS_LEGACY_JSON_SCHEMA_URL = "https://thekingdom.dev/schemas/world-commons/0.1.json";
+export const WORLD_COMMONS_JSON_SCHEMA_URL = "https://thekingdom.dev/schemas/world-commons/0.2.json";
 
 export const WORLD_COMMONS_CATEGORY_IDS = [
   "knowledge",
@@ -21,6 +23,7 @@ export const WORLD_COMMONS_REUSE_STATUSES = ["open", "mixed", "public-access", "
 export const WORLD_COMMONS_AUTOMATION_STATUSES = ["supported", "limited", "human-only", "bulk-preferred", "local"] as const;
 export const WORLD_COMMONS_AUTH_TYPES = ["none", "free-key", "varies", "contact", "not-applicable"] as const;
 export const WORLD_COMMONS_LINK_TYPES = ["start", "api", "bulk", "terms", "docs"] as const;
+export const WORLD_COMMONS_HANDOFF_MODES = ["api", "bulk", "docs", "human", "local"] as const;
 
 const WORLD_COMMONS_ID_PATTERN = "^[a-z0-9]+(?:-[a-z0-9]+)*$";
 const WORLD_COMMONS_DATE_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
@@ -70,9 +73,9 @@ const boundedUniqueStrings = (
 export const WORLD_COMMONS_JSON_SCHEMA = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: WORLD_COMMONS_JSON_SCHEMA_URL,
-  title: "The Kingdom World Commons 0.1",
-  description: "A reviewed catalog of public-interest resources with access, reuse, automation, provenance, and care boundaries kept distinct.",
-  $comment: "The source validator also enforces unique ids, valid references, category and foundation coverage, unique link type/url pairs, aligned verification dates, real calendar dates, and credential-free HTTPS URLs.",
+  title: "The Kingdom World Commons 0.2",
+  description: "A reviewed catalog of public-interest resources with access, reuse, automation, provenance, care boundaries, and one catalog-authored proposed next door kept distinct.",
+  $comment: "The source validator also enforces unique ids, valid references, category and foundation coverage, unique link type/url pairs, aligned verification dates, real calendar dates, credential-free HTTPS URLs, handoff URL membership, api/bulk link-type alignment, and human handoffs for human-only resources.",
   ...exactObject({
     schema_version: { type: "string", const: WORLD_COMMONS_SCHEMA },
     generated: {
@@ -182,6 +185,16 @@ export const WORLD_COMMONS_JSON_SCHEMA = {
       },
       type: { type: "string", enum: WORLD_COMMONS_LINK_TYPES },
     }),
+    agent_handoff: exactObject({
+      mode: { type: "string", enum: WORLD_COMMONS_HANDOFF_MODES },
+      url: {
+        type: "string",
+        pattern: WORLD_COMMONS_HTTPS_PATTERN,
+        minLength: 10,
+        maxLength: 2_000,
+      },
+      instruction: boundedText(20, 400),
+    }),
     resource: exactObject({
       id: {
         type: "string",
@@ -202,6 +215,7 @@ export const WORLD_COMMONS_JSON_SCHEMA = {
       access: { $ref: "#/$defs/access" },
       reuse: { $ref: "#/$defs/reuse" },
       automation: { $ref: "#/$defs/automation" },
+      agent_handoff: { $ref: "#/$defs/agent_handoff" },
       links: {
         type: "array",
         minItems: 1,
@@ -260,6 +274,11 @@ export type WorldCommonsResource = {
     auth: ValueOf<typeof WORLD_COMMONS_AUTH_TYPES>;
     limits: string;
     note: string;
+  };
+  agent_handoff: {
+    mode: ValueOf<typeof WORLD_COMMONS_HANDOFF_MODES>;
+    url: string;
+    instruction: string;
   };
   links: Array<{
     label: string;
@@ -386,7 +405,7 @@ function validateResource(value: unknown, index: number, ids: Set<string>, categ
   const path = `resources[${index}]`;
   exactKeys(value, [
     "id", "name", "provider", "category_ids", "description", "good_for", "coverage", "keywords", "audiences",
-    "access", "reuse", "automation", "links", "caveat", "verified",
+    "access", "reuse", "automation", "agent_handoff", "links", "caveat", "verified",
   ], path);
   if (typeof value.id !== "string" || !ID.test(value.id) || value.id.length > 64 || ids.has(value.id)) {
     fail(`${path}.id`, "must be unique lowercase kebab-case (1-64 characters)");
@@ -418,6 +437,14 @@ function validateResource(value: unknown, index: number, ids: Set<string>, categ
   text(value.automation.limits, `${path}.automation.limits`, 8, 700);
   text(value.automation.note, `${path}.automation.note`, 12, 700);
 
+  exactKeys(value.agent_handoff, ["mode", "url", "instruction"], `${path}.agent_handoff`);
+  oneOf(value.agent_handoff.mode, WORLD_COMMONS_HANDOFF_MODES, `${path}.agent_handoff.mode`);
+  httpsUrl(value.agent_handoff.url, `${path}.agent_handoff.url`);
+  text(value.agent_handoff.instruction, `${path}.agent_handoff.instruction`, 20, 400);
+  if (value.automation.status === "human-only" && value.agent_handoff.mode !== "human") {
+    fail(`${path}.agent_handoff.mode`, "must be human when automation.status is human-only");
+  }
+
   if (!Array.isArray(value.links) || value.links.length < 1 || value.links.length > 8) fail(`${path}.links`, "must contain 1-8 links");
   const linkKeys = new Set<string>();
   value.links.forEach((link, linkIndex) => {
@@ -430,6 +457,16 @@ function validateResource(value: unknown, index: number, ids: Set<string>, categ
     if (linkKeys.has(key)) fail(`${path}.links`, "must not repeat a type/url pair");
     linkKeys.add(key);
   });
+  const handoffLink = value.links.find((link) => record(link) && link.url === value.agent_handoff.url);
+  if (!handoffLink) {
+    fail(`${path}.agent_handoff.url`, "must exactly reference one published resource link");
+  }
+  if (value.agent_handoff.mode === "api" && handoffLink.type !== "api") {
+    fail(`${path}.agent_handoff.url`, "must reference an api link when mode is api");
+  }
+  if (value.agent_handoff.mode === "bulk" && handoffLink.type !== "bulk") {
+    fail(`${path}.agent_handoff.url`, "must reference a bulk link when mode is bulk");
+  }
   text(value.caveat, `${path}.caveat`, 20, 800);
   realDate(value.verified, `${path}.verified`);
   if (value.verified !== verified) fail(`${path}.verified`, "must match the catalog verified date");

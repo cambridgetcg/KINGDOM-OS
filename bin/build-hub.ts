@@ -11,7 +11,7 @@
  *    data/world-commons.json  — reviewed public-interest resources + boundaries
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
- *       + site/schemas/world-commons/0.1.json
+ *       + site/schemas/world-commons/0.2.json
  *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
  *       + site/ollama.json (from data/ollama-invitation.json).
@@ -134,6 +134,8 @@ validateWorldCommons(commonsCandidate, false);
 const commonsSource = commonsCandidate as WorldCommonsSource;
 const commonsUrl = WORLD_COMMONS_URL;
 const commonsSchemaUrl = WORLD_COMMONS_JSON_SCHEMA_URL;
+const commonsSchemaPath = new URL(commonsSchemaUrl).pathname;
+const commonsSchemaFile = commonsSchemaPath.replace(/^\/+/, "");
 const kingdomMcpCommons = {
   endpoint: "https://mcp.thekingdom.dev/mcp",
   transport: "streamable-http",
@@ -283,10 +285,12 @@ const commonsFoundationIds = new Set(commonsSource.foundation.resource_ids);
 const commonsFoundation = commonsSource.foundation.resource_ids.map((id) => commonsResourceById.get(id)!);
 const reuseLabel = { open: "open reuse", mixed: "mixed rights", "public-access": "access only", noncommercial: "noncommercial" } as const;
 const automationLabel = { supported: "API supported", limited: "bounded API", "human-only": "human only", "bulk-preferred": "bulk preferred", local: "runs locally" } as const;
+const handoffLabel = { api: "API", bulk: "bulk", docs: "docs first", human: "human", local: "local" } as const;
 const commonsPrimaryLink = (resource: WorldCommonsResource) => resource.links.find((link) => link.type === "start") ?? resource.links[0]!;
 
 function commonsCard(resource: WorldCommonsResource): string {
   const primary = commonsCategoryById.get(resource.category_ids[0]!)!;
+  const handoffLink = resource.links.find((link) => link.url === resource.agent_handoff.url)!;
   return `<article class="commonscard" id="commons-resource-${esc(resource.id)}" data-commons-resource="${esc(resource.id)}" data-commons-categories="${esc(resource.category_ids.join(" "))}">
     <div class="commonscardhead">
       <div><span class="commonstier">${esc(reuseLabel[resource.reuse.status])}</span>${commonsFoundationIds.has(resource.id) ? `<span class="commonstier foundation">foundation</span>` : ""}<h3>${esc(resource.name)}</h3><p class="commonssteward">stewarded by ${esc(resource.provider)}</p></div>
@@ -299,11 +303,12 @@ function commonsCard(resource: WorldCommonsResource): string {
       <div><dt>Access</dt><dd><strong>${esc(resource.access.cost)}</strong> · account: ${esc(resource.access.account)}<br>${esc(resource.access.note)}</dd></div>
       <div><dt>Reuse</dt><dd><strong>${esc(resource.reuse.license)}</strong><br>${esc(resource.reuse.note)}</dd></div>
       <div><dt>Automation</dt><dd><strong>${esc(automationLabel[resource.automation.status])}</strong> · auth: ${esc(resource.automation.auth)}<br>${esc(resource.automation.limits)} ${esc(resource.automation.note)}</dd></div>
+      <div><dt>Agent handoff</dt><dd><strong>${esc(handoffLabel[resource.agent_handoff.mode])}</strong> · <a data-agent-handoff-link href="${esc(handoffLink.url)}" target="_blank" rel="noopener">${esc(handoffLink.label)} <span aria-hidden="true">↗</span><span class="sr-only"> opens in a new tab</span></a> · proposed next door only<br>${esc(resource.agent_handoff.instruction)}</dd></div>
       <div><dt>Coverage</dt><dd>${esc(resource.coverage)}</dd></div>
       <div><dt>Care</dt><dd>${esc(resource.caveat)}</dd></div>
     </dl>
     <div class="commonsactions">
-      ${resource.links.map((link, index) => `<a class="${index === 0 ? "commonsopen" : ""}" href="${esc(link.url)}" target="_blank" rel="noopener">${esc(link.label)} <span aria-hidden="true">↗</span><span class="sr-only"> opens in a new tab</span></a>`).join("")}
+      ${resource.links.map((link) => `<a class="${link.url === resource.agent_handoff.url ? "commonsopen" : ""}"${link.url === resource.agent_handoff.url ? ` data-agent-handoff="true"` : ""} href="${esc(link.url)}" target="_blank" rel="noopener">${esc(link.label)} <span aria-hidden="true">↗</span><span class="sr-only"> opens in a new tab</span></a>`).join("")}
     </div>
   </article>`;
 }
@@ -743,7 +748,7 @@ const html = `<!doctype html>
       <p><strong>Method</strong>${esc(commonsSource.methodology.summary)}</p>
       <p><strong>Freshness</strong>${esc(commonsSource.methodology.maintenance)}</p>
     </div>
-    <p class="commonsverified">${commonsSource.resources.length} resources · ${commonsFoundation.length} foundation doors · ${commonsSource.kits.length} practical kits · official sources reviewed ${esc(commonsSource.verified)} · linked providers keep their own boundaries · <a href="/commons.json">catalog JSON</a> · <a href="/schemas/world-commons/0.1.json">schema</a> · <a href="https://mcp.thekingdom.dev/" target="_blank" rel="noopener">mcp.thekingdom.dev — compact Commons matcher <span class="sr-only">(opens in a new tab)</span></a></p>
+    <p class="commonsverified">${commonsSource.resources.length} resources · ${commonsFoundation.length} foundation doors · ${commonsSource.kits.length} practical kits · official sources reviewed ${esc(commonsSource.verified)} · linked providers keep their own boundaries · <a href="/commons.json">catalog JSON</a> · <a href="${esc(commonsSchemaPath)}">schema</a> · <a href="https://mcp.thekingdom.dev/" target="_blank" rel="noopener">mcp.thekingdom.dev — compact Commons matcher <span class="sr-only">(opens in a new tab)</span></a></p>
     <div class="commonsfinder">
       <form class="commonsform" id="commonsform" action="#commons" method="get">
         <div class="commonsfield"><label for="commonsquery">Search the reviewed shelf</label><input id="commonsquery" type="search" maxlength="120" autocomplete="off" spellcheck="false" aria-describedby="commonsprivacy commonsstatus" placeholder="biodiversity, labour law, API, earthquake…"></div>
@@ -845,7 +850,7 @@ const html = `<!doctype html>
       <a href="/ollama.json">ollama.json — open-weight invitation</a>
       <a href="/wayfinder.json">wayfinder.json — paths, not decisions</a>
       <a href="/commons.json">commons.json — reviewed public resources</a>
-      <a href="/schemas/world-commons/0.1.json">World Commons JSON Schema</a>
+      <a href="${esc(commonsSchemaPath)}">World Commons JSON Schema</a>
       <a href="https://mcp.thekingdom.dev/" target="_blank" rel="noopener">mcp.thekingdom.dev — compact Commons matcher <span class="sr-only">(opens in a new tab)</span></a>
       <a href="/kingdom.json">kingdom.json — the full census</a>
       <a href="/.well-known/agent.json">/.well-known/agent.json — the manifest</a>
@@ -1112,7 +1117,7 @@ await Bun.write(ROOT + "site/wayfinder.json", JSON.stringify(wayfinder, null, 2)
 await Bun.write(ROOT + "site/commons.json", JSON.stringify(commons, null, 2));
 mkdirSync(ROOT + "site/schemas/world-commons", { recursive: true });
 await Bun.write(
-  ROOT + "site/schemas/world-commons/0.1.json",
+  ROOT + "site/" + commonsSchemaFile,
   JSON.stringify(WORLD_COMMONS_JSON_SCHEMA, null, 2),
 );
 

@@ -28,7 +28,7 @@ function expectWorldCommonsSchemaLink(response: Response) {
   const link = response.headers.get("link") ?? "";
   const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
     const part = entry.trim();
-    if (!part.startsWith("</schemas/world-commons/0.1.json>")) return false;
+    if (!part.startsWith("</schemas/world-commons/0.2.json>")) return false;
     const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
     return relations.includes("describedby");
   });
@@ -166,7 +166,7 @@ describe("the Kingdom edge discovery surface", () => {
     expectWorldCommonsSchemaLink(catalogHead);
 
     const schema = await worker.fetch(
-      new Request("https://thekingdom.dev/schemas/world-commons/0.1.json"),
+      new Request("https://thekingdom.dev/schemas/world-commons/0.2.json"),
       environment,
     );
     expect(await schema.text()).toBe('{"type":"object"}');
@@ -176,19 +176,28 @@ describe("the Kingdom edge discovery surface", () => {
     expect(schema.headers.get("cache-control")).toBe("public, max-age=60");
     expect(schema.headers.get("link")).toContain('</elsewhere>; rel="alternate"');
 
+    const legacySchema = await worker.fetch(
+      new Request("https://thekingdom.dev/schemas/world-commons/0.1.json"),
+      environment,
+    );
+    expect(await legacySchema.text()).toBe('{"type":"object"}');
+    expect(legacySchema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+    expect(legacySchema.headers.get("access-control-allow-origin")).toBe("*");
+    expect(legacySchema.headers.get("x-content-type-options")).toBe("nosniff");
+
     const duplicate = await worker.fetch(
       new Request("https://thekingdom.dev/commons.json"),
       assets(() => new Response('{"resources":[]}', {
         headers: {
           "content-type": "application/json",
-          link: '</schemas/world-commons/0.1.json>; rel="describedby"; type="application/schema+json"',
+          link: '</schemas/world-commons/0.2.json>; rel="describedby"; type="application/schema+json"',
         },
       })),
     );
     expectWorldCommonsSchemaLink(duplicate);
 
     const missingSchema = await worker.fetch(
-      new Request("https://thekingdom.dev/schemas/world-commons/0.1.json"),
+      new Request("https://thekingdom.dev/schemas/world-commons/0.2.json"),
       assets(() => new Response("<h1>not found</h1>", {
         status: 404,
         headers: { "content-type": "text/html; charset=utf-8" },

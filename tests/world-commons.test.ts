@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -13,6 +14,7 @@ import {
   WORLD_COMMONS_AUTH_TYPES,
   WORLD_COMMONS_AUTOMATION_STATUSES,
   WORLD_COMMONS_CATEGORY_IDS,
+  WORLD_COMMONS_HANDOFF_MODES,
   WORLD_COMMONS_JSON_SCHEMA,
   WORLD_COMMONS_JSON_SCHEMA_URL,
   WORLD_COMMONS_LINK_TYPES,
@@ -27,7 +29,7 @@ const read = (path: string) => readFileSync(join(ROOT, path), "utf8");
 const json = (path: string) => JSON.parse(read(path));
 const source = json("data/world-commons.json") as WorldCommonsSource;
 
-const SCHEMA = "thekingdom.world-commons/0.1";
+const SCHEMA = "thekingdom.world-commons/0.2";
 const CANONICAL_URL = "https://thekingdom.dev/commons.json";
 const MCP_URL = "https://mcp.thekingdom.dev/mcp";
 const MCP_TOOL = "kingdom_commons";
@@ -42,6 +44,7 @@ const REUSE_STATUSES = ["open", "mixed", "public-access", "noncommercial"];
 const AUTOMATION_STATUSES = ["supported", "limited", "human-only", "bulk-preferred", "local"];
 const AUTH_TYPES = ["none", "free-key", "varies", "contact", "not-applicable"];
 const LINK_TYPES = ["start", "api", "bulk", "terms", "docs"];
+const HANDOFF_MODES = ["api", "bulk", "docs", "human", "local"];
 
 function exactKeys(value: Record<string, unknown>, keys: string[]): void {
   expect(Object.keys(value).sort()).toEqual([...keys].sort());
@@ -127,7 +130,7 @@ describe("World Commons source contract", () => {
     for (const resource of source.resources) {
       exactKeys(resource, [
         "id", "name", "provider", "category_ids", "description", "good_for", "coverage", "keywords",
-        "audiences", "access", "reuse", "automation", "links", "caveat", "verified",
+        "audiences", "access", "reuse", "automation", "agent_handoff", "links", "caveat", "verified",
       ]);
       expect(resource.id).toMatch(ID);
       expect(resource.id.length).toBeLessThanOrEqual(64);
@@ -174,6 +177,44 @@ describe("World Commons source contract", () => {
     expect(new Set(source.resources.map(({ reuse }: any) => reuse.status))).toEqual(new Set(REUSE_STATUSES));
   });
 
+  test("authors one exact, non-authorizing agent handoff through an existing link", () => {
+    for (const resource of source.resources) {
+      exactKeys(resource.agent_handoff, ["mode", "url", "instruction"]);
+      expect(HANDOFF_MODES).toContain(resource.agent_handoff.mode);
+      credentialFreeHttps(resource.agent_handoff.url);
+      nonempty(resource.agent_handoff.instruction, 20);
+      expect(resource.agent_handoff.instruction.length).toBeLessThanOrEqual(400);
+      const handoffLink = resource.links.find(({ url }: { url: string }) => url === resource.agent_handoff.url);
+      expect(handoffLink).toBeDefined();
+      if (resource.agent_handoff.mode === "api") expect(handoffLink.type).toBe("api");
+      if (resource.agent_handoff.mode === "bulk") expect(handoffLink.type).toBe("bulk");
+      if (resource.automation.status === "human-only") expect(resource.agent_handoff.mode).toBe("human");
+    }
+    expect(source.methodology.boundary).toContain("not provider contact, authorization, or permission");
+
+    const detached = structuredClone(source) as any;
+    detached.resources[0].agent_handoff.url = "https://example.com/not-a-published-link";
+    expect(() => publishWorldCommons(detached, source.verified))
+      .toThrow("must exactly reference one published resource link");
+
+    const automatedHumanOnly = structuredClone(source) as any;
+    automatedHumanOnly.resources.find(({ automation }: any) =>
+      automation.status === "human-only").agent_handoff.mode = "api";
+    expect(() => publishWorldCommons(automatedHumanOnly, source.verified)).toThrow("must be human");
+
+    const mismatchedApiDoor = structuredClone(source) as any;
+    mismatchedApiDoor.resources.find(({ agent_handoff }: any) =>
+      agent_handoff.mode === "bulk").agent_handoff.mode = "api";
+    expect(() => publishWorldCommons(mismatchedApiDoor, source.verified))
+      .toThrow("must reference an api link");
+
+    const mismatchedBulkDoor = structuredClone(source) as any;
+    mismatchedBulkDoor.resources.find(({ agent_handoff }: any) =>
+      agent_handoff.mode === "api").agent_handoff.mode = "bulk";
+    expect(() => publishWorldCommons(mismatchedBulkDoor, source.verified))
+      .toThrow("must reference a bulk link");
+  });
+
   test("uses aligned real review dates and only credential-free HTTPS links", () => {
     realIsoDate(source.verified);
     credentialFreeHttps(source.canonical_url);
@@ -193,6 +234,7 @@ describe("World Commons source contract", () => {
         expect(seen.has(key)).toBe(false);
         seen.add(key);
       }
+      expect(seen.size).toBeGreaterThan(0);
     }
   });
 
@@ -242,6 +284,7 @@ describe("World Commons source contract", () => {
     expect(datacite.links.some(({ type, url }: any) =>
       type === "bulk" && url === "https://support.datacite.org/docs/datacite-public-data-file"
     )).toBe(true);
+    expect(datacite.agent_handoff.instruction).toContain("use the API for later changes");
 
     expect(gleif).toMatchObject({
       access: { cost: "free", account: "none" },
@@ -249,6 +292,8 @@ describe("World Commons source contract", () => {
       automation: { status: "bulk-preferred", auth: "none" },
     });
     expect(gleif.caveat.toLowerCase()).toContain("not proof of beneficial ownership");
+    expect(gleif.agent_handoff.instruction).toContain("lifecycle status");
+    expect(gleif.agent_handoff.instruction).toContain("never infer missing relationships");
     expect(source.foundation.resource_ids).toContain("datacite");
     expect(source.foundation.resource_ids).toContain("gleif");
     expect(source.foundation.resource_ids).not.toContain("open-repair-data");
@@ -270,6 +315,7 @@ describe("World Commons source contract", () => {
       type: "bulk",
     });
     expect(openRepair.caveat.toLowerCase()).toContain("historical repair attempts");
+    expect(openRepair.agent_handoff.instruction).toContain("product-safety certification");
     expect(source.kits.every(({ resource_ids }: { resource_ids: string[] }) =>
       !resource_ids.includes("open-repair-data")
     )).toBe(true);
@@ -290,6 +336,7 @@ describe("World Commons source contract", () => {
       url: "https://registry.opendata.aws/smithsonian-open-access/",
       type: "bulk",
     });
+    expect(smithsonian.agent_handoff.instruction).toContain("designated CC0");
   });
 });
 
@@ -327,7 +374,17 @@ describe("World Commons publication and human surface", () => {
         expect(matching.length).toBeGreaterThan(0);
         expect(matching.every(isSafeExternalAnchor)).toBe(true);
       }
+      expect(html.includes(resource.agent_handoff.instruction)).toBe(true);
+      const handoffHref = `href="${htmlHref(resource.agent_handoff.url)}"`;
+      expect(anchors.some((tag) =>
+        tag.includes("data-agent-handoff-link") && tag.includes(handoffHref))).toBe(true);
+      expect(anchors.some((tag) =>
+        tag.includes('data-agent-handoff="true"') &&
+        tag.includes('class="commonsopen"') &&
+        tag.includes(handoffHref))).toBe(true);
     }
+    expect(html).toContain("Agent handoff");
+    expect(html).toContain("proposed next door only");
 
     for (const kit of source.kits) {
       expect(html.includes(`data-commons-kit-card="${kit.id}"`)).toBe(true);
@@ -386,7 +443,7 @@ describe("World Commons publication and human surface", () => {
 
 describe("World Commons portable JSON Schema", () => {
   test("publishes the generated schema exactly at its stable id", () => {
-    const schema = json("site/schemas/world-commons/0.1.json");
+    const schema = json("site/schemas/world-commons/0.2.json");
     expect(schema).toEqual(WORLD_COMMONS_JSON_SCHEMA);
     expect(schema.$schema).toBe("https://json-schema.org/draft/2020-12/schema");
     expect(schema.$id).toBe(WORLD_COMMONS_JSON_SCHEMA_URL);
@@ -398,6 +455,13 @@ describe("World Commons portable JSON Schema", () => {
     ]);
     expect(schema.properties.schema_version.const).toBe(SCHEMA);
     expect(schema.properties.canonical_url.const).toBe(CANONICAL_URL);
+    expect(schema.$defs.resource.required).toContain("agent_handoff");
+    expect(schema.$defs.agent_handoff.required).toEqual(["mode", "url", "instruction"]);
+  });
+
+  test("keeps the already-published 0.1 schema byte-stable beside current 0.2", () => {
+    expect(createHash("sha256").update(read("site/schemas/world-commons/0.1.json")).digest("hex"))
+      .toBe("1c6dbee953e2b406d6be313c44fedbaeeaa57d8485af03ae2a2f59377cb20692");
   });
 
   test("keeps every machine enum and collection bound aligned with the validator", () => {
@@ -414,6 +478,16 @@ describe("World Commons portable JSON Schema", () => {
     expect(schema.$defs.automation.properties.status.enum).toEqual([...WORLD_COMMONS_AUTOMATION_STATUSES]);
     expect(schema.$defs.automation.properties.auth.enum).toEqual([...WORLD_COMMONS_AUTH_TYPES]);
     expect(schema.$defs.link.properties.type.enum).toEqual([...WORLD_COMMONS_LINK_TYPES]);
+    expect(schema.$defs.agent_handoff.properties.mode.enum).toEqual([...WORLD_COMMONS_HANDOFF_MODES]);
+    expect(schema.$defs.agent_handoff.properties.url).toMatchObject({
+      pattern: "^https://",
+      minLength: 10,
+      maxLength: 2_000,
+    });
+    expect(schema.$defs.agent_handoff.properties.instruction).toMatchObject({
+      minLength: 20,
+      maxLength: 400,
+    });
   });
 
   test("aligns trimmed Unicode string lengths across the schema and runtime validator", () => {

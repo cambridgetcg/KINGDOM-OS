@@ -1,5 +1,5 @@
 {
-  "schema_version": "thekingdom.world-commons/0.1",
+  "schema_version": "thekingdom.world-commons/0.2",
   "verified": "2026-07-23",
   "canonical_url": "https://thekingdom.dev/commons.json",
   "promise": "A curated doorway to useful world resources. It names access, reuse, automation, and uncertainty separately; it never turns a free doorway into a claim of ownership, safety, truth, or unlimited service.",
@@ -7,7 +7,7 @@
     "summary": "Resources are selected for broad civic value, credible stewardship, a usable free path, and an official source that explains access or terms.",
     "classification": "Free to access, openly reusable, and safe to automate are different questions. Every card answers all three and keeps provider-specific limits visible.",
     "maintenance": "Each entry carries a checked date. Re-check the linked official terms before material, commercial, high-volume, medical, legal, or emergency use.",
-    "boundary": "The Kingdom curates directions, not endorsements. Linked providers remain independent; their current terms, licences, privacy practices, coverage, and operational limits govern use."
+    "boundary": "The Kingdom curates directions, not endorsements. An agent handoff is one reviewed next door, not provider contact, authorization, or permission. Linked providers remain independent; their current terms, licences, privacy practices, coverage, and operational limits govern use."
   },
   "privacy": {
     "human_surface": "Search and filters run only inside the downloaded page. They send no query, create no application profile, and contact a linked provider only when the visitor chooses a link; ordinary hosting still receives the page request.",
@@ -160,6 +160,7 @@
       "access": { "cost": "free", "account": "none", "note": "Public pages, query service, APIs, and dumps are available without payment; identified clients receive higher API tiers." },
       "reuse": { "status": "open", "license": "CC0-1.0", "note": "Structured Wikidata data is dedicated to the public domain; referenced source material keeps its own rights." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "API tiers and concurrency limits apply; WDQS uses separate dynamic limits.", "note": "Use a descriptive User-Agent, narrow live queries, cache, back off, and use dumps for bulk extraction." },
+      "agent_handoff": {"mode":"bulk","url":"https://www.wikidata.org/wiki/Wikidata:Database_download","instruction":"Use database dumps for bulk extraction; retain references and qualifiers, and do not infer sensitive identity attributes."},
       "links": [
         { "label": "Data access", "url": "https://www.wikidata.org/wiki/Wikidata:Data_access", "type": "start" },
         { "label": "Database downloads", "url": "https://www.wikidata.org/wiki/Wikidata:Database_download", "type": "bulk" },
@@ -181,6 +182,7 @@
       "access": { "cost": "free", "account": "none", "note": "The public REST API needs no signup; a contact email opts requests into the polite pool." },
       "reuse": { "status": "mixed", "license": "Record and field specific", "note": "Bibliographic facts are broadly reusable, but deposited abstracts and other content may remain copyrighted." },
       "automation": { "status": "supported", "auth": "none", "limits": "Respect current rate-limit headers; public and polite pools have separate rates and concurrency limits.", "note": "Identify the client, include mailto, cache results, and back off on 429 responses." },
+      "agent_handoff": {"mode":"api","url":"https://www.crossref.org/documentation/retrieve-metadata/rest-api/","instruction":"Identify the client with mailto, cache responses, back off on 429, and treat DOI metadata as a locator rather than a quality judgment."},
       "links": [
         { "label": "REST API documentation", "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/", "type": "api" },
         { "label": "Access and authentication", "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/", "type": "terms" }
@@ -201,6 +203,7 @@
       "access": { "cost": "free", "account": "none", "note": "The public REST API and annual public data files are available without authentication." },
       "reuse": { "status": "open", "license": "CC0-1.0 metadata", "note": "DataCite's public data-file metadata is CC0; linked research objects and landing pages keep their own rights." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Published API rate limits differ for unidentified, identified, and authenticated clients.", "note": "Seed systematic use from an annual public data file, retrieve later changes through the API, identify the client, cache, and back off." },
+      "agent_handoff": {"mode":"bulk","url":"https://support.datacite.org/docs/datacite-public-data-file","instruction":"Seed systematic DOI metadata work from the annual public data file, retain the file date and DOI, then use the API for later changes; do not infer quality, availability, or reuse permission."},
       "links": [
         { "label": "Public REST API", "url": "https://support.datacite.org/docs/api", "type": "api" },
         { "label": "Public data files", "url": "https://support.datacite.org/docs/datacite-public-data-file", "type": "bulk" },
@@ -223,6 +226,7 @@
       "access": { "cost": "free-tier", "account": "free-account", "note": "The API has a small anonymous budget and a larger daily free-key budget; quarterly snapshots are free to download." },
       "reuse": { "status": "open", "license": "CC0-1.0 dataset", "note": "OpenAlex presents the complete dataset as CC0; linked full text and source records retain their own rights." },
       "automation": { "status": "bulk-preferred", "auth": "free-key", "limits": "API calls have query-dependent cost and daily credit budgets; the full snapshot is large.", "note": "Use the snapshot for systematic analysis and the API for bounded discovery; retain canonical work identifiers." },
+      "agent_handoff": {"mode":"bulk","url":"https://developers.openalex.org/download/overview","instruction":"Use the snapshot for systematic analysis, retain canonical work identifiers, and do not treat graph rank or citation count as truth."},
       "links": [
         { "label": "Developer documentation", "url": "https://developers.openalex.org/", "type": "docs" },
         { "label": "API authentication and free budget", "url": "https://developers.openalex.org/guides/authentication", "type": "terms" },
@@ -244,6 +248,7 @@
       "access": { "cost": "free", "account": "none", "note": "The REST API and supported bulk channels are publicly accessible." },
       "reuse": { "status": "mixed", "license": "Article and record specific", "note": "Metadata, abstracts, and full text do not share one blanket licence; retain each article's rights statement." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Use REST, OAI, or FTP channels and reasonable bounded requests.", "note": "Do not crawl the human website; filter for open-access content and preserve article-level licences." },
+      "agent_handoff": {"mode":"bulk","url":"https://europepmc.org/downloads/openaccess","instruction":"Use open-access downloads for corpus work, preserve article-level licences, and do not treat literature results as medical advice."},
       "links": [
         { "label": "REST web service", "url": "https://europepmc.org/RestfulWebService", "type": "api" },
         { "label": "Open-access downloads", "url": "https://europepmc.org/downloads/openaccess", "type": "bulk" }
@@ -264,6 +269,7 @@
       "access": { "cost": "free", "account": "varies", "note": "Archive browsing and pointwise public API access are free; an optional account can receive higher API quotas." },
       "reuse": { "status": "mixed", "license": "Factual archive metadata is reusable; source artifacts retain upstream rights", "note": "Provenance and computed factual metadata may be used subject to privacy rules. Every archived file keeps its own copyright, licence, patent, and trademark obligations." },
       "automation": { "status": "limited", "auth": "varies", "limits": "The public API is for point queries, save requests, and individual Vault bundles; mass extraction is not authorised through it and quotas can change.", "note": "Use SWHIDs and documented APIs, cache point results, and arrange bulk access or a mirror for significant extraction." },
+      "agent_handoff": {"mode":"docs","url":"https://docs.softwareheritage.org/user/using_data/index.html","instruction":"Read the data-use guide and terms before point API access; arrange separate bulk access for significant extraction and treat archived code as unvetted."},
       "links": [
         { "label": "Browse the archive", "url": "https://archive.softwareheritage.org/", "type": "start" },
         { "label": "Using Software Heritage data", "url": "https://docs.softwareheritage.org/user/using_data/index.html", "type": "docs" },
@@ -287,6 +293,7 @@
       "access": { "cost": "free", "account": "none", "note": "Core online and PDF textbooks require no account; optional interactive, student, and instructor resources vary." },
       "reuse": { "status": "noncommercial", "license": "Usually CC BY-NC-SA for current and newly updated titles", "note": "OpenStax changed its default in 2026; verify the exact title and edition because some books retain earlier licences." },
       "automation": { "status": "human-only", "auth": "not-applicable", "limits": "Current book pages prohibit using OpenStax content to train or ingest into large language models without permission; no bulk extraction API is offered.", "note": "Link people to the exact title and edition. Keep attribution and the exact licence with any permitted human-led adaptation." },
+      "agent_handoff": {"mode":"human","url":"https://openstax.org/blog/openstax-licensing","instruction":"Use human-led title and edition selection; do not ingest content into an LLM without permission, and retain the exact licence and attribution for any permitted adaptation."},
       "links": [
         { "label": "OpenStax subjects", "url": "https://openstax.org/subjects", "type": "start" },
         { "label": "2026 licensing update", "url": "https://openstax.org/blog/openstax-licensing", "type": "terms" },
@@ -308,6 +315,7 @@
       "access": { "cost": "free", "account": "none", "note": "Materials can be read and many courses downloaded without registration." },
       "reuse": { "status": "noncommercial", "license": "CC BY-NC-SA 4.0, with exclusions", "note": "Attribution and share-alike apply; MIT names, marks, privacy/publicity rights, and third-party content are excluded." },
       "automation": { "status": "limited", "auth": "not-applicable", "limits": "Use offered course downloads rather than aggressive crawling.", "note": "Retain course provenance, notices, and excluded-content markings." },
+      "agent_handoff": {"mode":"local","url":"https://ocw.mit.edu/pages/get-started/","instruction":"Use offered course downloads for local access, retaining provenance, notices, and excluded-content markings; do not imply enrolment, credit, or certification."},
       "links": [
         { "label": "Get started", "url": "https://ocw.mit.edu/pages/get-started/", "type": "start" },
         { "label": "Terms of use", "url": "https://ocw.mit.edu/pages/privacy-and-terms-of-use/", "type": "terms" }
@@ -328,6 +336,7 @@
       "access": { "cost": "free", "account": "none", "note": "Ebooks and catalog feeds are available without an account." },
       "reuse": { "status": "mixed", "license": "Mostly US public domain; Project Gutenberg terms and trademark conditions also apply", "note": "Copyright can still subsist outside the United States, and individual items or formats can carry notices." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Automation should use supported mirrors, feeds, and bulk channels rather than scraping the main site.", "note": "Follow the robot-access policy and keep item identifiers and notices." },
+      "agent_handoff": {"mode":"bulk","url":"https://www.gutenberg.org/policy/robot_access.html","instruction":"Use supported mirrors, feeds, or bulk channels instead of scraping the main site, and retain item identifiers and notices while checking local public-domain status."},
       "links": [
         { "label": "Book catalog", "url": "https://www.gutenberg.org/ebooks/", "type": "start" },
         { "label": "Robot and bulk access", "url": "https://www.gutenberg.org/policy/robot_access.html", "type": "bulk" },
@@ -349,6 +358,7 @@
       "access": { "cost": "free", "account": "none", "note": "Public readers, server software, catalog browsing, and community ZIM downloads need no paid account; optional hardware and custom services are separate." },
       "reuse": { "status": "mixed", "license": "GPL-3.0 software; source-specific ZIM content licences", "note": "Kiwix software is GPL-3.0, while every packaged library follows the licence and rights of its independent content source." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Catalog results are paginated and ZIM files can be very large; public mirrors remain shared infrastructure.", "note": "Use the documented OPDS v2 catalog and official download mirrors, expose language, date, size, and licence before transfer, and do not create service accounts by bot." },
+      "agent_handoff": {"mode":"bulk","url":"https://hub.kiwix.org/downloads/","instruction":"Use official ZIM mirrors, showing language, date, size, and licence before transfer; treat offline snapshots as potentially stale or incomplete."},
       "links": [
         { "label": "Kiwix applications", "url": "https://get.kiwix.org/en/solutions/applications/", "type": "start" },
         { "label": "Downloads and ZIM catalog", "url": "https://hub.kiwix.org/downloads/", "type": "bulk" },
@@ -372,6 +382,7 @@
       "access": { "cost": "free", "account": "none", "note": "The database and planet extracts are public; community-hosted tiles and search services are scarce shared infrastructure, not unlimited APIs." },
       "reuse": { "status": "open", "license": "ODbL-1.0", "note": "Attribution is required and share-alike obligations can apply to derived databases." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Public Nominatim is at most one request per second; public tiles forbid bulk or offline scraping and have no SLA.", "note": "Use extracts or self-hosted/provider services for production and high volume; identify clients and cache user-triggered lookups." },
+      "agent_handoff": {"mode":"bulk","url":"https://planet.openstreetmap.org/","instruction":"Use planet extracts or a self-hosted or provider service for volume, identify clients and cache lookups, and do not treat the data as safety-critical or cadastral truth."},
       "links": [
         { "label": "Copyright and licence", "url": "https://www.openstreetmap.org/copyright", "type": "terms" },
         { "label": "Planet dumps", "url": "https://planet.openstreetmap.org/", "type": "bulk" },
@@ -394,6 +405,7 @@
       "access": { "cost": "free", "account": "none", "note": "Static downloads need no account, key, or hosted API." },
       "reuse": { "status": "open", "license": "Public domain", "note": "Commercial and noncommercial reuse is allowed; attribution is appreciated." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Download and cache the versioned static packages rather than repeatedly fetching them.", "note": "Record dataset name, scale, and release date for reproducibility." },
+      "agent_handoff": {"mode":"bulk","url":"https://www.naturalearthdata.com/downloads/","instruction":"Download and cache a versioned package with dataset name, scale, and release date; do not use generalized geometry for navigation or legal boundaries."},
       "links": [
         { "label": "Downloads", "url": "https://www.naturalearthdata.com/downloads/", "type": "bulk" },
         { "label": "Terms of use", "url": "https://www.naturalearthdata.com/about/terms-of-use/", "type": "terms" }
@@ -414,6 +426,7 @@
       "access": { "cost": "free", "account": "varies", "note": "Public search and GET APIs are open; asynchronous downloads require a free account." },
       "reuse": { "status": "mixed", "license": "Record-level CC0, CC BY, or CC BY-NC", "note": "Retain publisher, dataset, DOI, and the licence attached to each record or download." },
       "automation": { "status": "bulk-preferred", "auth": "varies", "limits": "API rates are dynamic and may return 429; use the download service for large occurrence sets.", "note": "Cache taxonomy resolution and preserve download DOIs for reproducibility and attribution." },
+      "agent_handoff": {"mode":"api","url":"https://techdocs.gbif.org/en/openapi/","instruction":"Use bounded API queries and the download service for large occurrence sets, preserving download DOIs and treating missing records or uncertain coordinates cautiously."},
       "links": [
         { "label": "GBIF search", "url": "https://www.gbif.org/", "type": "start" },
         { "label": "API documentation", "url": "https://techdocs.gbif.org/en/openapi/", "type": "api" },
@@ -435,6 +448,7 @@
       "access": { "cost": "free", "account": "varies", "note": "Browsing and offered file downloads are free without an account; API v3 uses a free key while OAI and bulk exports provide other routes." },
       "reuse": { "status": "mixed", "license": "CC0 metadata; item-specific public-domain or Creative Commons content", "note": "BHL metadata is CC0. Scans, images, and OCR keep volume-level rights: much is US public domain, while in-copyright contributions are often CC BY-NC-SA." },
       "automation": { "status": "bulk-preferred", "auth": "varies", "limits": "Use API v3, OAI-PMH, or published bulk exports; API access requires a free key and service capacity is shared.", "note": "Prefer monthly exports for corpus-scale work, retain holding institution and item rights, and record the retrieval date and source identifier." },
+      "agent_handoff": {"mode":"bulk","url":"https://smithsonian.figshare.com/projects/Biodiversity_Heritage_Library_Open_Data_Collection/151911","instruction":"Prefer monthly exports for corpus-scale work, retaining source identifiers, institutions, item rights, and retrieval date; re-check availability after the 2026 host transition."},
       "links": [
         { "label": "Biodiversity Heritage Library", "url": "https://www.biodiversitylibrary.org/", "type": "start" },
         { "label": "Developer and data tools", "url": "https://about.biodiversitylibrary.org/tools-and-services/developer-and-data-tools/", "type": "docs" },
@@ -459,6 +473,7 @@
       "access": { "cost": "free", "account": "none", "note": "Real-time GeoJSON feeds and FDSN queries require no key." },
       "reuse": { "status": "open", "license": "US government public-domain data, subject to source notices", "note": "Credit USGS and preserve source metadata and update status." },
       "automation": { "status": "supported", "auth": "none", "limits": "FDSN queries cap results at 20,000; 429 may apply and feeds are preferred for current events.", "note": "Use the provided real-time feeds, cache briefly, and record event update and review status." },
+      "agent_handoff": {"mode":"api","url":"https://earthquake.usgs.gov/earthquakes/feed/v1.0/","instruction":"Use the real-time feeds for current events, cache briefly, and record event update and review status; never use them alone as an evacuation trigger."},
       "links": [
         { "label": "Real-time feeds", "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/", "type": "api" },
         { "label": "FDSN event API", "url": "https://earthquake.usgs.gov/fdsnws/event/1/", "type": "api" }
@@ -479,6 +494,7 @@
       "access": { "cost": "free", "account": "none", "note": "The V2 Indicators API does not require an API key." },
       "reuse": { "status": "mixed", "license": "World Bank-produced open datasets generally CC BY 4.0; dataset-specific terms control", "note": "Some indicators incorporate third-party data or restrictions; inspect the dataset record." },
       "automation": { "status": "supported", "auth": "none", "limits": "No fixed numeric quota is published; paginate, cache, and avoid unbounded queries.", "note": "Retain indicator code, definition, source organization, date, and retrieved vintage." },
+      "agent_handoff": {"mode":"api","url":"https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation","instruction":"Paginate and cache bounded requests, retaining indicator code, definition, source, date, and vintage; do not turn indicators into real-time financial advice."},
       "links": [
         { "label": "Indicators API documentation", "url": "https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation", "type": "api" },
         { "label": "Dataset terms", "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets", "type": "terms" }
@@ -499,6 +515,7 @@
       "access": { "cost": "free", "account": "free-account", "note": "The web database is free; the new developer API uses an account-issued token." },
       "reuse": { "status": "mixed", "license": "CC BY 4.0 by default, with additional FAO database terms and third-party exceptions", "note": "The added terms restrict use connected to promoting a commercial enterprise, product, or service; attribution, non-misrepresentation, and item-specific notices also apply." },
       "automation": { "status": "limited", "auth": "free-key", "limits": "The new API does not publish one stable numeric quota; old endpoints should not be relied on.", "note": "Use the current developer portal, cache responses, and preserve official status flags and dataset revision." },
+      "agent_handoff": {"mode":"api","url":"https://www.fao.org/faostat/en/#developer-portal","instruction":"Use the current developer portal with a free key, cache responses, and preserve official status flags and dataset revision because releases can revise history."},
       "links": [
         { "label": "FAOSTAT", "url": "https://www.fao.org/faostat/en/#data", "type": "start" },
         { "label": "Developer portal", "url": "https://www.fao.org/faostat/en/#developer-portal", "type": "api" },
@@ -520,6 +537,7 @@
       "access": { "cost": "free", "account": "none", "note": "The data portal and offered downloads are public." },
       "reuse": { "status": "mixed", "license": "Generally CC BY 4.0 with WHO data terms and third-party exceptions", "note": "Additional conditions cover attribution, non-endorsement, non-de-anonymization, and third-party material." },
       "automation": { "status": "limited", "auth": "varies", "limits": "The legacy GHO OData service was scheduled for retirement and successor API documentation remains in transition.", "note": "Use current portal downloads and source links; do not hard-code the deprecated legacy endpoint." },
+      "agent_handoff": {"mode":"docs","url":"https://www.who.int/data/gho/legacy","instruction":"Follow the transition notice and current portal downloads or source links rather than hard-coding the deprecated GHO endpoint; preserve methodology and vintage."},
       "links": [
         { "label": "WHO Data", "url": "https://data.who.int/", "type": "start" },
         { "label": "Data terms", "url": "https://data.who.int/about/data/terms-and-conditions", "type": "terms" },
@@ -541,6 +559,7 @@
       "access": { "cost": "free", "account": "none", "note": "Public data and APIs are available without an API key." },
       "reuse": { "status": "mixed", "license": "EU-owned statistical content generally CC BY 4.0; exceptions apply", "note": "Third-party material and some trade data can carry different conditions." },
       "automation": { "status": "supported", "auth": "none", "limits": "Services update regularly and expose current versions; large requests should be split and cached.", "note": "Persist raw snapshots and dataset codes because later revisions can replace earlier values." },
+      "agent_handoff": {"mode":"api","url":"https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access/api-introduction","instruction":"Split and cache large requests, persist raw snapshots and dataset codes, and retain geography, unit, time, flags, and retrieval date."},
       "links": [
         { "label": "Eurostat data", "url": "https://ec.europa.eu/eurostat/data/database", "type": "start" },
         { "label": "API introduction", "url": "https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access/api-introduction", "type": "api" },
@@ -562,6 +581,7 @@
       "access": { "cost": "free", "account": "none", "note": "The public API needs no key." },
       "reuse": { "status": "open", "license": "Open Government Licence where stated", "note": "Retain ONS attribution and inspect dataset notices for third-party content." },
       "automation": { "status": "supported", "auth": "none", "limits": "Published bot limits include 120 requests per 10 seconds and 200 per minute; the API is beta.", "note": "Cache and pin dataset edition, version, dimensions, and retrieval timestamp." },
+      "agent_handoff": {"mode":"api","url":"https://developer.ons.gov.uk/","instruction":"Stay within published bot limits, cache results, and pin dataset edition, version, dimensions, retrieval time, and revision context."},
       "links": [
         { "label": "ONS developer hub", "url": "https://developer.ons.gov.uk/", "type": "api" },
         { "label": "Bot and rate limits", "url": "https://developer.ons.gov.uk/bots/", "type": "terms" }
@@ -582,6 +602,7 @@
       "access": { "cost": "free", "account": "free-account", "note": "API access uses a free Companies House account and API key; the public register is free to search." },
       "reuse": { "status": "public-access", "license": "Register and field specific", "note": "Public availability is not blanket permission over every field or person; check Crown copyright, OGL, and personal-data duties." },
       "automation": { "status": "supported", "auth": "free-key", "limits": "Default limit is 600 requests per five minutes.", "note": "Cache stable records, avoid unnecessary personal-data collection, and retain filing dates and source links." },
+      "agent_handoff": {"mode":"api","url":"https://developer.company-information.service.gov.uk/developer-guidelines/","instruction":"Use a free key within 600 requests per five minutes, cache stable records, minimize personal-data collection, and do not treat registration as endorsement or due diligence."},
       "links": [
         { "label": "Find company information", "url": "https://find-and-update.company-information.service.gov.uk/", "type": "start" },
         { "label": "Developer guidelines", "url": "https://developer.company-information.service.gov.uk/developer-guidelines/", "type": "api" }
@@ -602,6 +623,7 @@
       "access": { "cost": "free", "account": "none", "note": "Public search, the API, and downloadable files are available without an account." },
       "reuse": { "status": "open", "license": "CC0-1.0", "note": "GLEIF provides the Global LEI Index data under CC0; retain identifiers, record status, dates, and source context." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Use Golden Copy files for a full local base and provider-issued delta files for bounded updates.", "note": "Use the API for narrow lookup, preserve LEI lifecycle status and reporting exceptions, and never infer a missing relationship." },
+      "agent_handoff": {"mode":"bulk","url":"https://www.gleif.org/en/lei-data/gleif-golden-copy/download-the-golden-copy","instruction":"Use the Golden Copy and delta files for systematic LEI work, retain file version, lifecycle status, and reporting exceptions, and never infer missing relationships or beneficial ownership."},
       "links": [
         { "label": "GLEIF open data", "url": "https://www.gleif.org/en/about/open-data/", "type": "start" },
         { "label": "Golden Copy and delta files", "url": "https://www.gleif.org/en/lei-data/gleif-golden-copy/download-the-golden-copy", "type": "bulk" },
@@ -624,6 +646,7 @@
       "access": { "cost": "free", "account": "free-account", "note": "The public service is free; developer keys are being introduced for authenticated rate-limit tiers." },
       "reuse": { "status": "public-access", "license": "UK government source and endpoint terms", "note": "Retain the official measure, legal base, date, and source; do not imply HMRC endorsement." },
       "automation": { "status": "limited", "auth": "free-key", "limits": "Further rate limiting is planned for Q4 2026; adopt the developer portal and keys rather than relying on anonymous behavior.", "note": "Cache dated measures and require contextual review of classification, origin, valuation, and procedure." },
+      "agent_handoff": {"mode":"api","url":"https://hub.trade-tariff.service.gov.uk/","instruction":"Use the developer portal and key, cache dated measures, and route consequential classifications for qualified review with origin, valuation, and procedure context."},
       "links": [
         { "label": "Trade Tariff developer hub", "url": "https://hub.trade-tariff.service.gov.uk/", "type": "api" },
         { "label": "Rate-limit transition", "url": "https://www.trade-tariff.service.gov.uk/news/stories/uk-trade-tariff-developer-portal", "type": "docs" }
@@ -644,6 +667,7 @@
       "access": { "cost": "free", "account": "none", "note": "The human index is free; API access is described through provider contact/onboarding." },
       "reuse": { "status": "mixed", "license": "OHCHR site terms and source-document rights; no single open dataset licence confirmed", "note": "UHRI's data page encourages sharing while its terms assert proprietary rights. Link or export for research, keep provenance, and confirm permission before wholesale republication." },
       "automation": { "status": "limited", "auth": "contact", "limits": "No stable public rate limit is published and advertised export URLs were not reliable when checked.", "note": "Use the human index now; automate only after OHCHR confirms a current endpoint and conditions." },
+      "agent_handoff": {"mode":"human","url":"https://uhri.ohchr.org/en","instruction":"Use the human index; automate only after OHCHR confirms a current endpoint and conditions, and never turn recommendations into allegations or country scores."},
       "links": [
         { "label": "Universal Human Rights Index", "url": "https://uhri.ohchr.org/en", "type": "start" },
         { "label": "Data and API information", "url": "https://uhri.ohchr.org/assets/our-data-api", "type": "api" },
@@ -665,6 +689,7 @@
       "access": { "cost": "free", "account": "none", "note": "The official NORMLEX search interface is publicly accessible." },
       "reuse": { "status": "public-access", "license": "ILO and document-specific terms", "note": "Public reading does not create a blanket redistribution licence; retain official document identifiers and notices." },
       "automation": { "status": "human-only", "auth": "not-applicable", "limits": "No general public automation contract is cataloged here.", "note": "Use the official human interface and source links; seek a documented data channel before systematic extraction." },
+      "agent_handoff": {"mode":"human","url":"https://normlex.ilo.org/","instruction":"Use the official human interface and source links, and seek a documented data channel before systematic extraction; verify ratification, force, and applicability."},
       "links": [
         { "label": "NORMLEX", "url": "https://normlex.ilo.org/", "type": "start" }
       ],
@@ -684,6 +709,7 @@
       "access": { "cost": "free", "account": "none", "note": "EUR-Lex and CELLAR public discovery and query channels are accessible without payment." },
       "reuse": { "status": "mixed", "license": "EU-owned content generally CC BY 4.0 unless marked; third-party rights remain", "note": "Only the Official Journal edition is legally authentic; retain identifiers, version, language, and source." },
       "automation": { "status": "supported", "auth": "none", "limits": "No single numeric public quota is promised; queries should be bounded, cached, and retried gently.", "note": "Prefer persistent CELEX or ELI identifiers and record whether a text is original, amended, or consolidated." },
+      "agent_handoff": {"mode":"api","url":"https://op.europa.eu/en/web/cellar/cellar-data","instruction":"Use bounded, cached CELLAR queries with persistent CELEX or ELI identifiers, recording version status and checking jurisdiction, date, authenticity, and applicability."},
       "links": [
         { "label": "EUR-Lex", "url": "https://eur-lex.europa.eu/", "type": "start" },
         { "label": "CELLAR data", "url": "https://op.europa.eu/en/web/cellar/cellar-data", "type": "api" },
@@ -705,6 +731,7 @@
       "access": { "cost": "free", "account": "none", "note": "Human search access is free." },
       "reuse": { "status": "noncommercial", "license": "WIPO Lex terms and source-specific rights", "note": "Noncommercial reproduction conditions and third-party/source rights apply; official texts remain controlling." },
       "automation": { "status": "human-only", "auth": "not-applicable", "limits": "Automated queries and scraping are prohibited; the terms also cap rapid search activity.", "note": "Link citizens to the human interface and never build an automated scraper against it." },
+      "agent_handoff": {"mode":"human","url":"https://www.wipo.int/wipolex/en/","instruction":"Route lookup through the human interface; automated queries and scraping are prohibited, and results require legal-context review."},
       "links": [
         { "label": "WIPO Lex", "url": "https://www.wipo.int/wipolex/en/", "type": "start" },
         { "label": "Terms of use", "url": "https://www.wipo.int/web/wipolex/info/terms-of-use", "type": "terms" }
@@ -725,6 +752,7 @@
       "access": { "cost": "free", "account": "contact", "note": "The human service is public; API callers need a preapproved appname." },
       "reuse": { "status": "mixed", "license": "Partner and item specific", "note": "ReliefWeb indexes material from many publishers; link to reports and keep source, date, and item rights." },
       "automation": { "status": "limited", "auth": "contact", "limits": "The API allows up to 1,000 entries per call and 1,000 calls per day for an approved appname.", "note": "Use metadata and outbound source links rather than mirroring partner reports." },
+      "agent_handoff": {"mode":"docs","url":"https://apidoc.reliefweb.int/","instruction":"Review the API contract and obtain an approved appname before automation; use metadata and outbound source links rather than mirroring partner reports."},
       "links": [
         { "label": "ReliefWeb", "url": "https://reliefweb.int/", "type": "start" },
         { "label": "API documentation", "url": "https://apidoc.reliefweb.int/", "type": "api" }
@@ -745,6 +773,7 @@
       "access": { "cost": "free", "account": "none", "note": "The public site and API can be read without payment or authentication." },
       "reuse": { "status": "mixed", "license": "GDACS attribution plus source-product rights", "note": "Credit GDACS and retain the licence and source attached to each underlying product." },
       "automation": { "status": "supported", "auth": "none", "limits": "Collections are paginated and no permanent numeric service quota is promised.", "note": "Poll gently, deduplicate event identifiers, and store source time and update time." },
+      "agent_handoff": {"mode":"api","url":"https://www.gdacs.org/gdacsapi/swagger/index.html","instruction":"Poll paginated collections gently, deduplicate event identifiers, and store source and update times; never let GDACS override national or local warnings."},
       "links": [
         { "label": "GDACS", "url": "https://www.gdacs.org/", "type": "start" },
         { "label": "API explorer", "url": "https://www.gdacs.org/gdacsapi/swagger/index.html", "type": "api" },
@@ -766,6 +795,7 @@
       "access": { "cost": "free", "account": "none", "note": "Aggregate and partner datasets can be downloaded without an account." },
       "reuse": { "status": "open", "license": "CC BY-SA 4.0", "note": "Attribution and share-alike apply; retain the release manifest, provider, standard version, and licence." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Releases are periodic versioned data packages rather than a live API; current releases use CSV data with JSON table schemas.", "note": "Use the public data repository, retain release dates and schema files, and treat cleaning and partner mappings as part of provenance." },
+      "agent_handoff": {"mode":"bulk","url":"https://github.com/openrepair/data","instruction":"Use the public data repository for versioned historical repair evidence, retain release and schema versions, and do not treat records as live inventory, product-safety certification, or evidence that a repair is safe."},
       "links": [
         { "label": "Public data repository", "url": "https://github.com/openrepair/data", "type": "bulk" },
         { "label": "Dataset overview and human download", "url": "https://openrepair.org/open-data/downloads/", "type": "start" },
@@ -788,6 +818,7 @@
       "access": { "cost": "free", "account": "none", "note": "The public API currently needs no key and ecosystem dumps are available." },
       "reuse": { "status": "mixed", "license": "OSV service and upstream advisory-source licences", "note": "Preserve advisory aliases, source database, references, and upstream licence/provenance." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "No current request rate limit is published; HTTP response-size limits apply and bulk dumps suit systematic scans.", "note": "Batch package queries, cache advisory IDs, use dumps for fleet-wide checks, and back off on service errors." },
+      "agent_handoff": {"mode":"bulk","url":"https://google.github.io/osv.dev/data/","instruction":"Use dumps for fleet-wide checks, cache advisory IDs, and verify package identity, version ranges, reachability, and remediation rather than treating no match as safe."},
       "links": [
         { "label": "API documentation", "url": "https://google.github.io/osv.dev/api/", "type": "api" },
         { "label": "API quickstart", "url": "https://google.github.io/osv.dev/quickstart/", "type": "docs" },
@@ -809,6 +840,7 @@
       "access": { "cost": "free", "account": "none", "note": "The catalog and JSON/CSV downloads are public and unauthenticated." },
       "reuse": { "status": "open", "license": "CC0-1.0", "note": "The catalog is offered under CC0; retain CISA as source and the catalog date for operational clarity." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Use the published static JSON or CSV and refresh on a bounded schedule.", "note": "Join by CVE and record date added, due date, action, and ransomware-use fields without inventing risk scores." },
+      "agent_handoff": {"mode":"bulk","url":"https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json","instruction":"Refresh the published static JSON on a bounded schedule, join by CVE, and retain catalog fields without inventing risk scores or treating absence as low risk."},
       "links": [
         { "label": "KEV catalog", "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog", "type": "start" },
         { "label": "KEV JSON", "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json", "type": "bulk" },
@@ -830,6 +862,7 @@
       "access": { "cost": "free", "account": "none", "note": "The web series and source repository are public." },
       "reuse": { "status": "open", "license": "CC BY-SA 4.0", "note": "Attribution and share-alike apply to adapted content." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "Clone or download the public repository for repeated local use rather than scraping pages.", "note": "Pin the source revision and retain attribution when turning guidance into derived checklists." },
+      "agent_handoff": {"mode":"local","url":"https://github.com/OWASP/CheatSheetSeries","instruction":"Clone or download the repository for repeated local use, pin the revision and attribution, and treat derived checklists as guidance rather than an audit."},
       "links": [
         { "label": "Cheat Sheet Series", "url": "https://owasp.org/www-project-cheat-sheets/", "type": "start" },
         { "label": "Source repository", "url": "https://github.com/OWASP/CheatSheetSeries", "type": "bulk" }
@@ -850,6 +883,7 @@
       "access": { "cost": "free", "account": "free-account", "note": "Certificates are issued without a fee through an ACME account key after domain-control validation." },
       "reuse": { "status": "public-access", "license": "Subscriber agreement and certificate-policy terms", "note": "This is a public service, not a reusable dataset licence; subscribers accept the current agreement." },
       "automation": { "status": "supported", "auth": "free-key", "limits": "An ACME account key, domain-control challenges, issuance rate limits, and the published certificate-lifetime schedule apply.", "note": "Use an ACME client, protect the account key, automate renewal with margin, monitor failures, and stage bulk issuance changes." },
+      "agent_handoff": {"mode":"docs","url":"https://letsencrypt.org/getting-started/","instruction":"Review ACME setup and rate limits before any issuance; protect the account key, use domain-control challenges, and stage renewal changes."},
       "links": [
         { "label": "Getting started", "url": "https://letsencrypt.org/getting-started/", "type": "start" },
         { "label": "Rate limits", "url": "https://letsencrypt.org/docs/rate-limits/", "type": "terms" },
@@ -871,6 +905,7 @@
       "access": { "cost": "free", "account": "none", "note": "JSON and YAML API representations require no key." },
       "reuse": { "status": "mixed", "license": "Item-specific rights statements", "note": "The Library does not own all collection rights; carry the rights-and-access statement from each item." },
       "automation": { "status": "supported", "auth": "none", "limits": "The published limit is 20 requests per minute; excessive use can be temporarily blocked.", "note": "Cache results, paginate gently, and store the canonical item URL and rights statement." },
+      "agent_handoff": {"mode":"api","url":"https://www.loc.gov/apis/","instruction":"Stay within 20 requests per minute, cache and paginate gently, and store canonical item URLs and rights statements; visibility does not establish public-domain status."},
       "links": [
         { "label": "API overview", "url": "https://www.loc.gov/apis/", "type": "api" },
         { "label": "Working within limits", "url": "https://www.loc.gov/apis/json-and-yaml/working-within-limits/", "type": "terms" }
@@ -891,6 +926,7 @@
       "access": { "cost": "free", "account": "none", "note": "Human discovery and the AWS bulk dataset are public without an account; the optional API uses a free api.data.gov key." },
       "reuse": { "status": "mixed", "license": "CC0 only for assets explicitly designated Open Access", "note": "Non-CC0 items and privacy, publicity, trademark, cultural, and donor restrictions remain separate." },
       "automation": { "status": "bulk-preferred", "auth": "none", "limits": "The Registry of Open Data on AWS provides unauthenticated bulk metadata; the optional API uses a free key and its own quota.", "note": "Prefer the current AWS bulk distribution for systematic use; filter on Open Access and retain item ID, institution, title, creator, and source URL." },
+      "agent_handoff": {"mode":"bulk","url":"https://registry.opendata.aws/smithsonian-open-access/","instruction":"Use the AWS Open Data distribution for systematic work, retain item provenance, and reuse only assets explicitly designated CC0 while checking remaining legal and ethical rights."},
       "links": [
         { "label": "Open Access", "url": "https://www.si.edu/openaccess", "type": "start" },
         { "label": "AWS Open Data Registry", "url": "https://registry.opendata.aws/smithsonian-open-access/", "type": "bulk" },
@@ -913,6 +949,7 @@
       "access": { "cost": "free", "account": "free-account", "note": "Human discovery is public; API use requires a free key and production projects can be reviewed." },
       "reuse": { "status": "mixed", "license": "Europeana metadata CC0; digital-object rights are item specific", "note": "Always retain and obey the rights statement attached to the linked object." },
       "automation": { "status": "limited", "auth": "free-key", "limits": "Reasonable-use limits apply and production access can be reviewed or constrained.", "note": "Filter by rights statement, cache metadata, and link back to both Europeana and the contributing institution." },
+      "agent_handoff": {"mode":"api","url":"https://www.europeana.eu/en/how-to-register-for-and-manage-an-api-key","instruction":"Use the API only with a free key and within reasonable-use limits; check each object rights badge and link to Europeana and the contributing institution."},
       "links": [
         { "label": "Europeana collections", "url": "https://www.europeana.eu/en/collections", "type": "start" },
         { "label": "API key registration", "url": "https://www.europeana.eu/en/how-to-register-for-and-manage-an-api-key", "type": "api" },

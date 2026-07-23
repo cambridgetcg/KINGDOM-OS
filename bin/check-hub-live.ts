@@ -16,10 +16,14 @@ import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "./stage-hub.ts";
 import {
+  validateWorldCommons,
   WORLD_COMMONS_ACCESS_COSTS,
   WORLD_COMMONS_ACCOUNT_TYPES,
   WORLD_COMMONS_AUTOMATION_STATUSES,
   WORLD_COMMONS_CATEGORY_IDS,
+  WORLD_COMMONS_HANDOFF_MODES,
+  WORLD_COMMONS_JSON_SCHEMA_URL,
+  WORLD_COMMONS_LEGACY_JSON_SCHEMA_URL,
   WORLD_COMMONS_REUSE_STATUSES,
   WORLD_COMMONS_SCHEMA,
   WORLD_COMMONS_URL,
@@ -35,6 +39,8 @@ if (origin.protocol !== "https:" || origin.username || origin.password || origin
 
 const cacheBust = Date.now().toString(36);
 const TIMEOUT_MS = 20_000;
+const commonsSchemaPath = new URL(WORLD_COMMONS_JSON_SCHEMA_URL).pathname;
+const commonsLegacySchemaPath = new URL(WORLD_COMMONS_LEGACY_JSON_SCHEMA_URL).pathname;
 
 function url(path: string, extra: Record<string, string> = {}): URL {
   const target = new URL(path, origin);
@@ -156,18 +162,20 @@ try {
   });
   const catalogLink = catalogHead.headers.get("link") || "";
   if (!catalogHead.ok ||
-      !hasLinkRelation(catalogLink, "/schemas/world-commons/0.1.json", "describedby")) {
+      !hasLinkRelation(catalogLink, commonsSchemaPath, "describedby")) {
     throw new Error("commons.json does not advertise its versioned schema");
   }
 
-  const schemaHead = await fetch(url("/schemas/world-commons/0.1.json"), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  if (!schemaHead.ok || !(schemaHead.headers.get("content-type") || "").toLowerCase()
-    .startsWith("application/schema+json")) {
-    throw new Error("World Commons schema is not served as application/schema+json");
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath]) {
+    const schemaHead = await fetch(url(path), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!schemaHead.ok || !(schemaHead.headers.get("content-type") || "").toLowerCase()
+      .startsWith("application/schema+json")) {
+      throw new Error(`${path} is not served as application/schema+json`);
+    }
   }
 
   const manifest: any = JSON.parse(readFileSync(join(ROOT, "site/.well-known/agent.json"), "utf8"));
@@ -188,6 +196,7 @@ try {
   const commonsTool = toolList.tools?.find((tool: any) => tool?.name === manifest.mcp.tool);
   if (!commonsTool) throw new Error(`MCP does not publish ${manifest.mcp.tool}`);
   const input = commonsTool.inputSchema?.properties || {};
+  const outputHandoff = commonsTool.outputSchema?.properties?.matches?.items?.properties?.agent_handoff;
   const filterNames = Object.keys(input).filter((name) => !["need", "detail", "limit"].includes(name));
   if (!sameStrings(filterNames, manifest.mcp.exact_filters) ||
       input.detail?.default !== manifest.mcp.default_detail ||
@@ -196,7 +205,9 @@ try {
       !sameStrings(input.cost?.enum, WORLD_COMMONS_ACCESS_COSTS) ||
       !sameStrings(input.account?.enum, WORLD_COMMONS_ACCOUNT_TYPES) ||
       !sameStrings(input.reuse?.enum, WORLD_COMMONS_REUSE_STATUSES) ||
-      !sameStrings(input.automation?.enum, WORLD_COMMONS_AUTOMATION_STATUSES)) {
+      !sameStrings(input.automation?.enum, WORLD_COMMONS_AUTOMATION_STATUSES) ||
+      !sameStrings(outputHandoff?.properties?.mode?.enum, WORLD_COMMONS_HANDOFF_MODES) ||
+      !sameStrings(outputHandoff?.required, ["mode", "url", "instruction"])) {
     throw new Error("MCP World Commons tool schema drifted from the advertised contract");
   }
 
@@ -210,13 +221,19 @@ try {
     arguments: { need: "offline learning", limit: 1 },
   });
   const selection = commonsCall.structuredContent;
+  const compatibilityText = commonsCall.content?.[0]?.text;
   const published = JSON.parse(readFileSync(join(ROOT, "site/commons.json"), "utf8"));
+  validateWorldCommons(published, true);
   if (commonsCall.isError || selection?.detail !== manifest.mcp.default_detail ||
       selection?.catalog_resource !== manifest.mcp.catalog_resource ||
       selection?.source?.url !== WORLD_COMMONS_URL ||
       selection?.source?.schema_version !== WORLD_COMMONS_SCHEMA ||
       selection?.source?.generated !== published.generated ||
-      !Array.isArray(selection?.matches) || selection.matches.length !== 1) {
+      !Array.isArray(selection?.matches) || selection.matches.length !== 1 ||
+      !selection.matches[0]?.agent_handoff ||
+      typeof compatibilityText !== "string" ||
+      !compatibilityText.includes(selection.matches[0].agent_handoff.url) ||
+      !compatibilityText.includes(selection.matches[0].agent_handoff.instruction)) {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 

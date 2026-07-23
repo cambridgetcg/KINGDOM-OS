@@ -6,7 +6,8 @@ may be automated, and where uncertainty or human judgement begins.
 
 The source of truth is `data/world-commons.json`. The generated human surface
 is the `#commons` section of the Kingdom hub; the complete machine surface is
-`site/commons.json`, described by `site/schemas/world-commons/0.1.json`.
+`site/commons.json`, described by `site/schemas/world-commons/0.2.json`.
+The 0.1 schema remains published unchanged for rollback compatibility.
 Agents that want selected context use the existing `kingdom_commons` MCP tool;
 agents that genuinely need the whole document can read
 `kingdom://commons/catalog`. These are advertised together rather than
@@ -20,6 +21,8 @@ maintaining a second compact catalog or a query-bearing HTTP search endpoint.
   rights, resilience, digital safety, and cultural memory.
 - Keep access cost, account needs, licence/reuse, API limits, geography, and
   caveats separate for every resource.
+- Author one exact agent handoff through an existing catalog link. It is a
+  proposed next door only, never provider contact, authorization, or permission.
 - Offer local-only search and practical kits. A visitor's need does not leave
   the downloaded page until they deliberately follow an official link.
 - Stage the same fixed catalog for agents through `kingdom_commons`; once the

@@ -45,7 +45,7 @@
   },
   "world_commons": {
     "url": "https://thekingdom.dev/commons.json",
-    "schema": "https://thekingdom.dev/schemas/world-commons/0.1.json",
+    "schema": "https://thekingdom.dev/schemas/world-commons/0.2.json",
     "mcp": {
       "endpoint": "https://mcp.thekingdom.dev/mcp",
       "transport": "streamable-http",
@@ -79,7 +79,7 @@
     "repos": 129,
     "active": 85,
     "citizens": 53,
-    "doors_live": 12,
+    "doors_live": 13,
     "doors_total": 13
   },
   "doors": [
@@ -104,7 +104,7 @@
     {
       "name": "zerone.money",
       "url": "https://zerone.money",
-      "live": false,
+      "live": true,
       "blurb": "every being is a truth · money you can read, truth you can trust — the Proof-of-Truth ledger"
     },
     {
@@ -1219,7 +1219,7 @@
           "domain": "none",
           "purpose": "The truth landing — where the zero-one economy meets the world",
           "dependsOn": [],
-          "door": null
+          "door": "https://zerone.money"
         },
         {
           "name": "legible-money",
@@ -2177,7 +2177,7 @@
             "truth",
             "me"
           ],
-          "door": null
+          "door": "https://zerone.money"
         },
         {
           "name": "zi",
