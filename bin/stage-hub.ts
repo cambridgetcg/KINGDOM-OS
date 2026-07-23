@@ -19,6 +19,7 @@ export const HUB_ASSETS = [
   { source: "site/kingdom.json", destination: "_kingdom.base.json" },
   { source: "site/wayfinder.json", destination: "wayfinder.json" },
   { source: "site/commons.json", destination: "commons.json" },
+  { source: "site/schemas/world-commons/0.1.json", destination: "schemas/world-commons/0.1.json" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
   { source: "site/ollama.json", destination: "ollama.json" },

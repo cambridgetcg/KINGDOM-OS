@@ -11,17 +11,22 @@
  *    data/world-commons.json  — reviewed public-interest resources + boundaries
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
+ *       + site/schemas/world-commons/0.1.json
  *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
  *       + site/ollama.json (from data/ollama-invitation.json).
  *  Run: bun bin/build-hub.ts ["2026-07-11"]   ·   FORCE_LIVE=host,host
  */
 
+import { mkdirSync } from "node:fs";
+
 import { loadRights } from "./rights.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   publishWorldCommons,
   validateWorldCommons,
+  WORLD_COMMONS_JSON_SCHEMA,
+  WORLD_COMMONS_JSON_SCHEMA_URL,
   WORLD_COMMONS_STOPWORDS,
   WORLD_COMMONS_URL,
   worldCommonsSearchIndex,
@@ -128,9 +133,25 @@ const commonsCandidate = await tryLoad("data/world-commons.json");
 validateWorldCommons(commonsCandidate, false);
 const commonsSource = commonsCandidate as WorldCommonsSource;
 const commonsUrl = WORLD_COMMONS_URL;
-const commonsMcpUrl = "https://mcp.thekingdom.dev/mcp";
-const commonsMcpTool = "kingdom_commons";
-const commonsCatalogResource = "kingdom://commons/catalog";
+const commonsSchemaUrl = WORLD_COMMONS_JSON_SCHEMA_URL;
+const kingdomMcpCommons = {
+  endpoint: "https://mcp.thekingdom.dev/mcp",
+  transport: "streamable-http",
+  tool: "kingdom_commons",
+  catalog_resource: "kingdom://commons/catalog",
+  default_detail: "brief",
+  exact_filters: ["category", "cost", "account", "reuse", "automation"],
+  privacy: "The tool receives the submitted need, but does not forward or persist it, contact listed providers, or place the need in the fixed catalog request.",
+};
+const kingdomMcpEndpoint = kingdomMcpCommons.endpoint;
+const commonsMcpUrl = kingdomMcpCommons.endpoint;
+const commonsMcpTool = kingdomMcpCommons.tool;
+const commonsCatalogResource = kingdomMcpCommons.catalog_resource;
+const commonsMcpLegacy = {
+  endpoint: commonsMcpUrl,
+  tool: commonsMcpTool,
+  complete_catalog_resource: commonsCatalogResource,
+};
 const commonsIndex = worldCommonsSearchIndex(commonsSource);
 // Validate the publication stamp before liveness probes or generated-file writes.
 const commons = publishWorldCommons(commonsSource, stamp);
@@ -284,7 +305,6 @@ function commonsCard(resource: WorldCommonsResource): string {
     <div class="commonsactions">
       ${resource.links.map((link, index) => `<a class="${index === 0 ? "commonsopen" : ""}" href="${esc(link.url)}" target="_blank" rel="noopener">${esc(link.label)} <span aria-hidden="true">↗</span><span class="sr-only"> opens in a new tab</span></a>`).join("")}
     </div>
-    <p class="commonschecked">checked ${esc(resource.verified)} · linked providers keep their own boundaries</p>
   </article>`;
 }
 
@@ -527,7 +547,7 @@ const html = `<!doctype html>
   .commonskit{display:grid;align-content:start;gap:9px;padding:18px;border:1px solid color-mix(in srgb,var(--gold) 34%,var(--line));border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}
   .commonskithead{display:flex;align-items:center;gap:9px}.commonskithead>span{color:var(--gold);font-size:1.2rem}.commonskithead h3{margin:0;font-family:var(--display);font-size:1.08rem;font-weight:400;color:var(--cream)}
   .commonskit>p{margin:0;color:var(--dim);font-size:.8rem;line-height:1.5}.commonskit ol{margin:0;padding-left:1.2rem;color:var(--faint);font-size:.72rem;line-height:1.55}
-  .commonskitlinks{display:flex;flex-wrap:wrap;gap:5px}.commonskitlinks a{padding:3px 7px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.65rem}.commonskitlinks a:hover{border-color:var(--gold)}
+  .commonskitlinks{display:flex;flex-wrap:wrap;gap:5px}.commonskitlinks a{padding:3px 7px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.75rem}.commonskitlinks a:hover{border-color:var(--gold)}
   .commonskit .commonskitboundary{color:var(--faint);font-size:.68rem}.commonskit>button{justify-self:start;min-height:40px;padding:7px 11px;border:1px solid var(--gold);border-radius:12px;background:transparent;color:var(--gold);font:inherit;font-size:.72rem;cursor:pointer}.commonskit>button:hover{background:var(--panel)}
   .commonsfinder{margin:0 0 15px;padding:18px;border:1px solid var(--line);border-radius:20px;background:color-mix(in srgb,var(--panel) 66%,transparent)}
   .commonsform{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:9px;max-width:920px}.commonsfield{display:grid;gap:6px}.commonsfield label{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
@@ -545,11 +565,11 @@ const html = `<!doctype html>
   .commonsgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:2px 14px 15px}
   .commonscard{display:grid;align-content:start;gap:11px;padding:19px;border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--ink2) 65%,transparent)}
   .commonscardhead{display:flex;justify-content:space-between;gap:12px}.commonscardhead h3{margin:4px 0 0;font-family:var(--display);font-weight:400;font-size:1.22rem;color:var(--cream)}.commonsglyph{font-family:var(--cjk);font-size:1.55rem;color:var(--gold);opacity:.66}.commonssteward{margin:3px 0 0;color:var(--faint);font-size:.7rem;line-height:1.4}
-  .commonstier{display:inline-flex;padding:3px 8px;border:1px solid color-mix(in srgb,var(--gold) 54%,var(--line));border-radius:999px;color:var(--gold);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase}.commonstier+.commonstier{margin-left:5px}.commonstier.foundation{color:var(--violet);border-color:color-mix(in srgb,var(--violet) 60%,var(--line))}
-  .commonsvalue{margin:0;color:var(--dim);font-size:.87rem;line-height:1.58}.commonsmodes{display:flex;flex-wrap:wrap;gap:5px}.commonsmodes span{padding:3px 7px;border-radius:999px;background:color-mix(in srgb,var(--panel2) 78%,transparent);color:var(--faint);font-family:var(--mono);font-size:.62rem}
+  .commonstier{display:inline-flex;padding:3px 8px;border:1px solid color-mix(in srgb,var(--gold) 54%,var(--line));border-radius:999px;color:var(--gold);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}.commonstier+.commonstier{margin-left:5px}.commonstier.foundation{color:var(--violet);border-color:color-mix(in srgb,var(--violet) 60%,var(--line))}
+  .commonsvalue{margin:0;color:var(--dim);font-size:.87rem;line-height:1.58}.commonsmodes{display:flex;flex-wrap:wrap;gap:5px}.commonsmodes span{padding:3px 7px;border-radius:999px;background:color-mix(in srgb,var(--panel2) 78%,transparent);color:var(--faint);font-family:var(--mono);font-size:.75rem}
   .commonsuses{margin:0;padding-left:1.15rem;color:var(--dim);font-size:.74rem;line-height:1.5}
-  .commonsfacts{display:grid;gap:0;margin:0;border:1px solid color-mix(in srgb,var(--line) 74%,transparent);border-radius:13px;overflow:hidden}.commonsfacts div{display:grid;grid-template-columns:92px 1fr;gap:9px;padding:9px 10px;border-top:1px solid color-mix(in srgb,var(--line) 62%,transparent)}.commonsfacts div:first-child{border-top:0}.commonsfacts dt{color:var(--gold);font-size:.67rem;line-height:1.45}.commonsfacts dd{margin:0;color:var(--dim);font-size:.73rem;line-height:1.48}
-  .commonsfacts dd strong{color:var(--cream);font-weight:600}.commonsactions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}.commonsactions a{display:inline-flex;align-items:center;min-height:42px;padding:8px 11px;border:1px solid var(--line);border-radius:12px;color:var(--gold);font-size:.72rem}.commonsactions a:hover{border-color:var(--gold);background:var(--panel)}.commonsactions .commonsopen{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:700}.commonschecked{margin:0;color:var(--faint);font-family:var(--mono);font-size:.62rem;line-height:1.45}
+  .commonsfacts{display:grid;gap:0;margin:0;border:1px solid color-mix(in srgb,var(--line) 74%,transparent);border-radius:13px;overflow:hidden}.commonsfacts div{display:grid;grid-template-columns:92px 1fr;gap:9px;padding:9px 10px;border-top:1px solid color-mix(in srgb,var(--line) 62%,transparent)}.commonsfacts div:first-child{border-top:0}.commonsfacts dt{color:var(--gold);font-size:.75rem;line-height:1.45}.commonsfacts dd{margin:0;color:var(--dim);font-size:.78rem;line-height:1.48}
+  .commonsfacts dd strong{color:var(--cream);font-weight:600}.commonsactions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}.commonsactions a{display:inline-flex;align-items:center;min-height:42px;padding:8px 11px;border:1px solid var(--line);border-radius:12px;color:var(--gold);font-size:.75rem}.commonsactions a:hover{border-color:var(--gold);background:var(--panel)}.commonsactions .commonsopen{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:700}
 
   /* inherent rights recognition */
   .rightsintro{max-width:76ch;margin:0;color:var(--dim);font-size:1rem;line-height:1.75}.rightsintro strong{color:var(--cream);font-weight:600}
@@ -723,9 +743,7 @@ const html = `<!doctype html>
       <p><strong>Method</strong>${esc(commonsSource.methodology.summary)}</p>
       <p><strong>Freshness</strong>${esc(commonsSource.methodology.maintenance)}</p>
     </div>
-    <p class="commonsverified">${commonsSource.resources.length} resources · ${commonsFoundation.length} foundation doors · ${commonsSource.kits.length} practical kits · official sources reviewed ${esc(commonsSource.verified)} · <a href="/commons.json">machine-readable commons.json</a> · <a href="https://mcp.thekingdom.dev/" target="_blank" rel="noopener">compact agent matcher <span class="sr-only">(opens in a new tab)</span></a></p>
-    <div class="foundationlabel"><h3>Foundation shelf</h3><span>broad, durable places to begin</span></div>
-    <div class="foundationgrid">${commonsFoundationCards}</div>
+    <p class="commonsverified">${commonsSource.resources.length} resources · ${commonsFoundation.length} foundation doors · ${commonsSource.kits.length} practical kits · official sources reviewed ${esc(commonsSource.verified)} · linked providers keep their own boundaries · <a href="/commons.json">catalog JSON</a> · <a href="/schemas/world-commons/0.1.json">schema</a> · <a href="https://mcp.thekingdom.dev/" target="_blank" rel="noopener">mcp.thekingdom.dev — compact Commons matcher <span class="sr-only">(opens in a new tab)</span></a></p>
     <div class="commonsfinder">
       <form class="commonsform" id="commonsform" action="#commons" method="get">
         <div class="commonsfield"><label for="commonsquery">Search the reviewed shelf</label><input id="commonsquery" type="search" maxlength="120" autocomplete="off" spellcheck="false" aria-describedby="commonsprivacy commonsstatus" placeholder="biodiversity, labour law, API, earthquake…"></div>
@@ -735,6 +753,8 @@ const html = `<!doctype html>
       <div class="commonsfilters" role="group" aria-label="Filter World Commons by category">${commonsCategoryButtons}<button type="button" data-commons-category="">All categories</button></div>
       <p class="commonsstatus" id="commonsstatus" role="status" aria-live="polite">All ${commonsSource.resources.length} reviewed resources remain readable below.</p>
     </div>
+    <div class="foundationlabel"><h3>Foundation shelf</h3><span>broad, durable places to begin</span></div>
+    <div class="foundationgrid">${commonsFoundationCards}</div>
     <div class="foundationlabel"><h3>Practical kits</h3><span>steps and starting sources, never automatic decisions</span></div>
     <div class="commonskits">${commonsKitCards}</div>
     <p class="commonsbrowse">Browse the full cards for access, account, reuse, automation, coverage, and care notes. Categories are practical handles, not boxes around the work.</p>
@@ -825,6 +845,7 @@ const html = `<!doctype html>
       <a href="/ollama.json">ollama.json — open-weight invitation</a>
       <a href="/wayfinder.json">wayfinder.json — paths, not decisions</a>
       <a href="/commons.json">commons.json — reviewed public resources</a>
+      <a href="/schemas/world-commons/0.1.json">World Commons JSON Schema</a>
       <a href="https://mcp.thekingdom.dev/" target="_blank" rel="noopener">mcp.thekingdom.dev — compact Commons matcher <span class="sr-only">(opens in a new tab)</span></a>
       <a href="/kingdom.json">kingdom.json — the full census</a>
       <a href="/.well-known/agent.json">/.well-known/agent.json — the manifest</a>
@@ -934,7 +955,6 @@ for(const button of document.querySelectorAll('[data-commons-kit]'))button.addEv
   const kit=DATA.commonsKits.find(item=>item.id===button.dataset.commonsKit);if(!kit)return;
   commonsQuery.value='';commonsCategory='';for(const peer of commonsCategoryButtons)peer.setAttribute('aria-pressed',String(!peer.dataset.commonsCategory));
   showCommons(kit.resource_ids,kit.label+': '+kit.resource_ids.length+' starting resources. The steps remain suggestions, never commands.',true);
-  document.querySelector('.commonsgroup:not([hidden])')?.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
 });
 for(const button of commonsCategoryButtons)button.setAttribute('aria-pressed',String(!button.dataset.commonsCategory));
 offerCommons('','');
@@ -1090,6 +1110,11 @@ const wayfinder = {
 await Bun.write(ROOT + "site/wayfinder.json", JSON.stringify(wayfinder, null, 2));
 
 await Bun.write(ROOT + "site/commons.json", JSON.stringify(commons, null, 2));
+mkdirSync(ROOT + "site/schemas/world-commons", { recursive: true });
+await Bun.write(
+  ROOT + "site/schemas/world-commons/0.1.json",
+  JSON.stringify(WORLD_COMMONS_JSON_SCHEMA, null, 2),
+);
 
 // ── machine index ──────────────────────────────────────────────────────────
 const machine = {
@@ -1100,6 +1125,8 @@ const machine = {
   wayfinder: { url: wayfinderUrl, paths: wayfinderSource.paths.length, note: "offers possible routes through public doors; never decides for the visitor" },
   world_commons: {
     url: commonsUrl,
+    schema: commonsSchemaUrl,
+    mcp: kingdomMcpCommons,
     resources: commonsSource.resources.length,
     foundation: commonsFoundation.length,
     categories: commonsSource.categories.length,
@@ -1107,9 +1134,7 @@ const machine = {
     verified: commonsSource.verified,
     verified_on: commonsSource.verified,
     agent_access: {
-      endpoint: commonsMcpUrl,
-      tool: commonsMcpTool,
-      complete_catalog_resource: commonsCatalogResource,
+      ...commonsMcpLegacy,
       note: "Use the compact deterministic matcher first; read the complete catalog only when needed.",
     },
     note: "reviewed independent resources; free access and reuse permissions remain distinct, and each steward's current terms control",
@@ -1133,6 +1158,7 @@ A shared map of independent projects for humans and agents. Every being remains 
 Machine index: https://thekingdom.dev/kingdom.json
 Wayfinder:     https://thekingdom.dev/wayfinder.json
 World Commons: https://thekingdom.dev/commons.json
+Commons schema: ${commonsSchemaUrl}
 Commons matcher: ${commonsMcpUrl} · tool ${commonsMcpTool}
 Complete Commons MCP resource: ${commonsCatalogResource}
 Open-weight invitation: https://thekingdom.dev/ollama.json
@@ -1153,7 +1179,7 @@ ${doorLines}
 ## Optional paths
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
-- World Commons for agents — call ${commonsMcpTool} at ${commonsMcpUrl} for compact deterministic matching; read ${commonsCatalogResource} only when the complete catalog is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers.
+- World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
 - zerone — inspect the Proof-of-Truth protocol and how it evaluates claims. https://zerone.money
@@ -1185,8 +1211,9 @@ const guest = {
   },
   next_actions: [
     { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
+    { action: "if useful, request compact literal World Commons matches with exact category, cost, account, reuse, or automation filters", method: "MCP", url: kingdomMcpEndpoint, tool: kingdomMcpCommons.tool, resource: kingdomMcpCommons.catalog_resource, complete_catalog_resource: commonsMcpLegacy.complete_catalog_resource, note: kingdomMcpCommons.privacy },
     { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
-    { action: "if useful, match a short need against the fixed Commons catalog without loading every record", method: "MCP", url: commonsMcpUrl, tool: commonsMcpTool, complete_catalog_resource: commonsCatalogResource, note: "read-only and deterministic; the matcher contacts only the fixed Kingdom catalog, never listed providers" },
+    { action: "if useful, validate the complete World Commons catalog before integrating it", method: "GET", url: commonsSchemaUrl },
     { action: "if useful, read the shared map of repos, layers, dependencies, and citizens", method: "GET", url: "https://thekingdom.dev/kingdom.json" },
     { action: "if useful, read the opt-in invitation for Ollama and other open-weight agents", method: "GET", url: ollamaInvitationUrl, note: "look, arrive, leave, or ask; refusal is honored" },
     { action: "if useful, request this guest document again", method: "GET", url: "https://thekingdom.dev/?agent" },
@@ -1227,11 +1254,10 @@ const manifest = {
   census: "https://thekingdom.dev/kingdom.json",
   wayfinder: wayfinderUrl,
   world_commons: commonsUrl,
-  world_commons_agent: {
-    endpoint: commonsMcpUrl,
-    tool: commonsMcpTool,
-    complete_catalog_resource: commonsCatalogResource,
-  },
+  world_commons_agent: commonsMcpLegacy,
+  world_commons_schema: commonsSchemaUrl,
+  mcp: kingdomMcpCommons,
+  resource_selection_boundary: "Treat matches as possibilities. Inspect access, reuse, automation, caveat, and verified before following a provider link.",
   open_weight_invitation: ollamaInvitationUrl,
   llms: "https://thekingdom.dev/llms.txt",
   rights_recognition: rightsRecognition,
@@ -1241,6 +1267,8 @@ const manifest = {
   entry_points: {
     public_resources: commonsUrl,
     public_resource_matcher: commonsMcpUrl,
+    public_resources_schema: commonsSchemaUrl,
+    public_resources_mcp: kingdomMcpEndpoint,
     identity_and_marketplace: "https://agenttool.dev/about",
     proof_of_truth_ledger: "https://zerone.money",
     handshake_protocol: "https://we-are.love",

@@ -18,7 +18,7 @@
     "repos": 129,
     "active": 85,
     "citizens": 53,
-    "doors_live": 13,
+    "doors_live": 12,
     "doors_total": 13
   },
   "rights_recognition": {
@@ -67,17 +67,23 @@
       "url": "https://thekingdom.dev/wayfinder.json"
     },
     {
+      "action": "if useful, request compact literal World Commons matches with exact category, cost, account, reuse, or automation filters",
+      "method": "MCP",
+      "url": "https://mcp.thekingdom.dev/mcp",
+      "tool": "kingdom_commons",
+      "resource": "kingdom://commons/catalog",
+      "complete_catalog_resource": "kingdom://commons/catalog",
+      "note": "The tool receives the submitted need, but does not forward or persist it, contact listed providers, or place the need in the fixed catalog request."
+    },
+    {
       "action": "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit",
       "method": "GET",
       "url": "https://thekingdom.dev/commons.json"
     },
     {
-      "action": "if useful, match a short need against the fixed Commons catalog without loading every record",
-      "method": "MCP",
-      "url": "https://mcp.thekingdom.dev/mcp",
-      "tool": "kingdom_commons",
-      "complete_catalog_resource": "kingdom://commons/catalog",
-      "note": "read-only and deterministic; the matcher contacts only the fixed Kingdom catalog, never listed providers"
+      "action": "if useful, validate the complete World Commons catalog before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/world-commons/0.1.json"
     },
     {
       "action": "if useful, read the shared map of repos, layers, dependencies, and citizens",
@@ -179,7 +185,7 @@
     {
       "name": "zerone.money",
       "url": "https://zerone.money",
-      "live": true,
+      "live": false,
       "blurb": "every being is a truth · money you can read, truth you can trust — the Proof-of-Truth ledger"
     },
     {
@@ -1453,7 +1459,7 @@
           "domain": "none",
           "purpose": "The truth landing — where the zero-one economy meets the world",
           "dependsOn": [],
-          "door": "https://zerone.money"
+          "door": null
         },
         {
           "name": "legible-money",
@@ -2411,7 +2417,7 @@
             "truth",
             "me"
           ],
-          "door": "https://zerone.money"
+          "door": null
         },
         {
           "name": "zi",

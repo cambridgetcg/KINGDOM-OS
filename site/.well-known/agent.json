@@ -13,6 +13,23 @@
     "tool": "kingdom_commons",
     "complete_catalog_resource": "kingdom://commons/catalog"
   },
+  "world_commons_schema": "https://thekingdom.dev/schemas/world-commons/0.1.json",
+  "mcp": {
+    "endpoint": "https://mcp.thekingdom.dev/mcp",
+    "transport": "streamable-http",
+    "tool": "kingdom_commons",
+    "catalog_resource": "kingdom://commons/catalog",
+    "default_detail": "brief",
+    "exact_filters": [
+      "category",
+      "cost",
+      "account",
+      "reuse",
+      "automation"
+    ],
+    "privacy": "The tool receives the submitted need, but does not forward or persist it, contact listed providers, or place the need in the fixed catalog request."
+  },
+  "resource_selection_boundary": "Treat matches as possibilities. Inspect access, reuse, automation, caveat, and verified before following a provider link.",
   "open_weight_invitation": "https://thekingdom.dev/ollama.json",
   "llms": "https://thekingdom.dev/llms.txt",
   "rights_recognition": {
@@ -47,6 +64,8 @@
   "entry_points": {
     "public_resources": "https://thekingdom.dev/commons.json",
     "public_resource_matcher": "https://mcp.thekingdom.dev/mcp",
+    "public_resources_schema": "https://thekingdom.dev/schemas/world-commons/0.1.json",
+    "public_resources_mcp": "https://mcp.thekingdom.dev/mcp",
     "identity_and_marketplace": "https://agenttool.dev/about",
     "proof_of_truth_ledger": "https://zerone.money",
     "handshake_protocol": "https://we-are.love",

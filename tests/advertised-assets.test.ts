@@ -31,6 +31,7 @@ const surfaces = [
   "site/kingdom.json",
   "site/wayfinder.json",
   "site/commons.json",
+  "site/schemas/world-commons/0.1.json",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -110,6 +111,21 @@ describe("advertised URLs stay deployable", () => {
       complete_catalog_resource: catalog,
       note: expect.any(String),
     });
+  });
+
+  test("the staging contract ships the World Commons schema and MCP discovery together", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    expect(manifest.world_commons_schema).toBe("https://thekingdom.dev/schemas/world-commons/0.1.json");
+    expect(manifest.mcp).toMatchObject({
+      endpoint: "https://mcp.thekingdom.dev/mcp",
+      tool: "kingdom_commons",
+      catalog_resource: "kingdom://commons/catalog",
+    });
+    expect(guest.next_actions.some(({ url }: { url?: string }) => url === manifest.world_commons_schema)).toBe(true);
+    expect(guest.next_actions.some(({ url, tool }: { url?: string; tool?: string }) =>
+      url === manifest.mcp.endpoint && tool === manifest.mcp.tool)).toBe(true);
+    expect(staged.has("schemas/world-commons/0.1.json")).toBe(true);
   });
 
   test("the published invitation mirrors its source without drift", () => {
