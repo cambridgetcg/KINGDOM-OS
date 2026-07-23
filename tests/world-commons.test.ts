@@ -7,6 +7,16 @@ import { HUB_ASSETS } from "../bin/stage-hub.ts";
 import {
   publishWorldCommons,
   rankWorldCommonsResources,
+  validateWorldCommons,
+  WORLD_COMMONS_ACCESS_COSTS,
+  WORLD_COMMONS_ACCOUNT_TYPES,
+  WORLD_COMMONS_AUTH_TYPES,
+  WORLD_COMMONS_AUTOMATION_STATUSES,
+  WORLD_COMMONS_CATEGORY_IDS,
+  WORLD_COMMONS_JSON_SCHEMA,
+  WORLD_COMMONS_JSON_SCHEMA_URL,
+  WORLD_COMMONS_LINK_TYPES,
+  WORLD_COMMONS_REUSE_STATUSES,
   WORLD_COMMONS_STOPWORDS,
   worldCommonsSearchIndex,
   type WorldCommonsSource,
@@ -360,6 +370,69 @@ describe("World Commons publication and human surface", () => {
     expect(commonsCode).toContain("normal===item.normalized_name");
     expect(commonsCode).toContain("card.style.order=rank.has(id)");
   });
+
+  test("puts finding before the duplicate foundation shelf and keeps kit filtering in place", () => {
+    const html = read("site/hub.html");
+    const commons = html.slice(html.indexOf('<section class="blk" id="commons">'));
+    expect(commons.indexOf('id="commonsform"')).toBeGreaterThan(-1);
+    expect(commons.indexOf('id="commonsform"')).toBeLessThan(commons.indexOf("Foundation shelf"));
+
+    const script = html.slice(html.indexOf("<script>"), html.lastIndexOf("</script>"));
+    const kitStart = script.indexOf("for(const button of document.querySelectorAll('[data-commons-kit]'))");
+    const kitEnd = script.indexOf("// Re-align direct deep links", kitStart);
+    expect(script.slice(kitStart, kitEnd)).not.toContain("scrollIntoView");
+  });
+});
+
+describe("World Commons portable JSON Schema", () => {
+  test("publishes the generated schema exactly at its stable id", () => {
+    const schema = json("site/schemas/world-commons/0.1.json");
+    expect(schema).toEqual(WORLD_COMMONS_JSON_SCHEMA);
+    expect(schema.$schema).toBe("https://json-schema.org/draft/2020-12/schema");
+    expect(schema.$id).toBe(WORLD_COMMONS_JSON_SCHEMA_URL);
+    expect(schema.type).toBe("object");
+    expect(schema.additionalProperties).toBe(false);
+    expect(schema.required).toEqual([
+      "schema_version", "generated", "verified", "canonical_url", "promise", "methodology",
+      "privacy", "foundation", "categories", "kits", "resources",
+    ]);
+    expect(schema.properties.schema_version.const).toBe(SCHEMA);
+    expect(schema.properties.canonical_url.const).toBe(CANONICAL_URL);
+  });
+
+  test("keeps every machine enum and collection bound aligned with the validator", () => {
+    const schema: any = WORLD_COMMONS_JSON_SCHEMA;
+    expect(schema.properties.categories.minItems).toBe(WORLD_COMMONS_CATEGORY_IDS.length);
+    expect(schema.properties.categories.maxItems).toBe(WORLD_COMMONS_CATEGORY_IDS.length);
+    expect(schema.properties.categories.prefixItems.map((item: any) => item.allOf[1].properties.id.const))
+      .toEqual([...WORLD_COMMONS_CATEGORY_IDS]);
+    expect(schema.properties.kits).toMatchObject({ minItems: 1, maxItems: 32 });
+    expect(schema.properties.resources).toMatchObject({ minItems: 8, maxItems: 128 });
+    expect(schema.$defs.access.properties.cost.enum).toEqual([...WORLD_COMMONS_ACCESS_COSTS]);
+    expect(schema.$defs.access.properties.account.enum).toEqual([...WORLD_COMMONS_ACCOUNT_TYPES]);
+    expect(schema.$defs.reuse.properties.status.enum).toEqual([...WORLD_COMMONS_REUSE_STATUSES]);
+    expect(schema.$defs.automation.properties.status.enum).toEqual([...WORLD_COMMONS_AUTOMATION_STATUSES]);
+    expect(schema.$defs.automation.properties.auth.enum).toEqual([...WORLD_COMMONS_AUTH_TYPES]);
+    expect(schema.$defs.link.properties.type.enum).toEqual([...WORLD_COMMONS_LINK_TYPES]);
+  });
+
+  test("aligns trimmed Unicode string lengths across the schema and runtime validator", () => {
+    const schema: any = WORLD_COMMONS_JSON_SCHEMA;
+    const promisePattern = new RegExp(schema.properties.promise.pattern, "u");
+    const namePattern = new RegExp(schema.$defs.resource.properties.name.pattern, "u");
+    expect(promisePattern.test(" ".repeat(20))).toBe(false);
+    expect(promisePattern.test("x".repeat(20))).toBe(true);
+    expect(namePattern.test("😀")).toBe(false);
+    expect(namePattern.test("😀a")).toBe(true);
+
+    const blankPromise = structuredClone(source) as any;
+    blankPromise.promise = " ".repeat(20);
+    expect(() => validateWorldCommons(blankPromise, false)).toThrow("promise");
+
+    const oneCodePointName = structuredClone(source) as any;
+    oneCodePointName.resources[0].name = "😀";
+    expect(() => validateWorldCommons(oneCodePointName, false)).toThrow("resources[0].name");
+  });
 });
 
 describe("World Commons local matching", () => {
@@ -415,10 +488,23 @@ describe("World Commons machine discovery", () => {
       tool: MCP_TOOL,
       complete_catalog_resource: MCP_CATALOG,
     });
-    expect(manifest.entry_points.public_resources).toBe(CANONICAL_URL);
     expect(manifest.entry_points.public_resource_matcher).toBe(MCP_URL);
+    expect(manifest.world_commons_schema).toBe(WORLD_COMMONS_JSON_SCHEMA_URL);
+    expect(manifest.mcp).toMatchObject({
+      endpoint: MCP_URL,
+      transport: "streamable-http",
+      tool: MCP_TOOL,
+      catalog_resource: MCP_CATALOG,
+      default_detail: "brief",
+    });
+    expect(manifest.entry_points.public_resources).toBe(CANONICAL_URL);
+    expect(manifest.entry_points.public_resources_schema).toBe(WORLD_COMMONS_JSON_SCHEMA_URL);
+    expect(manifest.entry_points.public_resources_mcp).toBe(MCP_URL);
+    expect(guest.next_actions.some(({ url, tool }: { url?: string; tool?: string }) =>
+      url === manifest.mcp.endpoint && tool === manifest.mcp.tool)).toBe(true);
     const llms = read("site/llms.txt");
     expect(llms).toContain(CANONICAL_URL);
+    expect(llms).toContain(WORLD_COMMONS_JSON_SCHEMA_URL);
     expect(llms).toContain(`${MCP_URL} · tool ${MCP_TOOL}`);
     expect(llms).toContain(MCP_CATALOG);
     expect(read("site/hub.html")).toContain("mcp.thekingdom.dev — compact Commons matcher");

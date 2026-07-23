@@ -27,6 +27,7 @@ bun bin/build-hub.ts "$(date -u +%F)"
 stage_dir="$(mktemp -d)"
 bun bin/stage-hub.ts "$stage_dir"
 npx wrangler pages deploy "$stage_dir" --project-name=thekingdom
+bun bin/check-hub-live.ts
 
 # others:
 npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zerone-ai
@@ -34,8 +35,8 @@ npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zeron
 
 `stage-hub.ts` refuses a non-empty destination and copies the atlas as
 `index.html` together with `_kingdom.base.json`, `wayfinder.json`,
-`commons.json`, `guest.json`, `ollama.json`, `llms.txt`, `rights.json`,
-`RIGHTS.md`, `/.well-known/agent.json`, `/os/index.html`, and
+`commons.json`, `/schemas/world-commons/0.1.json`, `guest.json`, `ollama.json`,
+`llms.txt`, `rights.json`, `RIGHTS.md`, `/.well-known/agent.json`, `/os/index.html`, and
 `_worker.js`. The worker derives `/os.json`, `/packages.json`, and
 `/kingdom.json`; they are not static upload files. It stages only; it never
 builds, deletes, overwrites, or deploys.
@@ -48,6 +49,9 @@ door's guest documents and the shared `_worker.js`).
 The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
+`check-hub-live.ts` then compares every public staged body as one release and
+checks the worker-owned negotiation, privacy, and Commons-schema behavior; a
+split-generation deployment fails instead of looking partially healthy.
 
 ## Baseline still to do (follow-up)
 

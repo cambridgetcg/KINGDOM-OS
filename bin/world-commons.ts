@@ -2,6 +2,7 @@
 
 export const WORLD_COMMONS_SCHEMA = "thekingdom.world-commons/0.1";
 export const WORLD_COMMONS_URL = "https://thekingdom.dev/commons.json";
+export const WORLD_COMMONS_JSON_SCHEMA_URL = "https://thekingdom.dev/schemas/world-commons/0.1.json";
 
 export const WORLD_COMMONS_CATEGORY_IDS = [
   "knowledge",
@@ -20,6 +21,198 @@ export const WORLD_COMMONS_REUSE_STATUSES = ["open", "mixed", "public-access", "
 export const WORLD_COMMONS_AUTOMATION_STATUSES = ["supported", "limited", "human-only", "bulk-preferred", "local"] as const;
 export const WORLD_COMMONS_AUTH_TYPES = ["none", "free-key", "varies", "contact", "not-applicable"] as const;
 export const WORLD_COMMONS_LINK_TYPES = ["start", "api", "bulk", "terms", "docs"] as const;
+
+const WORLD_COMMONS_ID_PATTERN = "^[a-z0-9]+(?:-[a-z0-9]+)*$";
+const WORLD_COMMONS_DATE_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
+const WORLD_COMMONS_DATE_TIME_PATTERN =
+  "^\\d{4}-\\d{2}-\\d{2}T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-](?:(?:0\\d|1[0-3]):[0-5]\\d|14:00))$";
+const WORLD_COMMONS_HTTPS_PATTERN = "^https://";
+
+const exactObject = (
+  properties: Record<string, unknown>,
+  required = Object.keys(properties),
+): Record<string, unknown> => ({
+  type: "object",
+  additionalProperties: false,
+  required,
+  properties,
+});
+
+const boundedText = (minLength: number, maxLength: number): Record<string, unknown> => {
+  const trimmedMinimum = minLength === 1
+    ? "^\\s*\\S(?:[\\s\\S]*\\S)?\\s*$"
+    : `^\\s*\\S[\\s\\S]{${minLength - 2},}\\S\\s*$`;
+  return {
+    type: "string",
+    minLength,
+    maxLength,
+    pattern: trimmedMinimum,
+  };
+};
+
+const boundedUniqueStrings = (
+  minItems: number,
+  maxItems: number,
+  item: Record<string, unknown> = boundedText(1, 400),
+): Record<string, unknown> => ({
+  type: "array",
+  minItems,
+  maxItems,
+  uniqueItems: true,
+  items: item,
+});
+
+/**
+ * Portable structural contract for clients that consume commons.json without
+ * importing this validator. The runtime validator below remains authoritative
+ * for cross-record invariants that JSON Schema cannot express cleanly.
+ */
+export const WORLD_COMMONS_JSON_SCHEMA = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: WORLD_COMMONS_JSON_SCHEMA_URL,
+  title: "The Kingdom World Commons 0.1",
+  description: "A reviewed catalog of public-interest resources with access, reuse, automation, provenance, and care boundaries kept distinct.",
+  $comment: "The source validator also enforces unique ids, valid references, category and foundation coverage, unique link type/url pairs, aligned verification dates, real calendar dates, and credential-free HTTPS URLs.",
+  ...exactObject({
+    schema_version: { type: "string", const: WORLD_COMMONS_SCHEMA },
+    generated: {
+      oneOf: [
+        { type: "string", pattern: WORLD_COMMONS_DATE_PATTERN },
+        { type: "string", pattern: WORLD_COMMONS_DATE_TIME_PATTERN },
+      ],
+    },
+    verified: { type: "string", pattern: WORLD_COMMONS_DATE_PATTERN },
+    canonical_url: { type: "string", const: WORLD_COMMONS_URL },
+    promise: boundedText(20, 1_000),
+    methodology: { $ref: "#/$defs/methodology" },
+    privacy: { $ref: "#/$defs/privacy" },
+    foundation: { $ref: "#/$defs/foundation" },
+    categories: {
+      type: "array",
+      minItems: WORLD_COMMONS_CATEGORY_IDS.length,
+      maxItems: WORLD_COMMONS_CATEGORY_IDS.length,
+      prefixItems: WORLD_COMMONS_CATEGORY_IDS.map((id) => ({
+        allOf: [
+          { $ref: "#/$defs/category" },
+          { type: "object", properties: { id: { const: id } } },
+        ],
+      })),
+      items: false,
+    },
+    kits: {
+      type: "array",
+      minItems: 1,
+      maxItems: 32,
+      items: { $ref: "#/$defs/kit" },
+    },
+    resources: {
+      type: "array",
+      minItems: 8,
+      maxItems: 128,
+      items: { $ref: "#/$defs/resource" },
+    },
+  }),
+  $defs: {
+    methodology: exactObject({
+      summary: boundedText(20, 1_000),
+      classification: boundedText(20, 1_000),
+      maintenance: boundedText(20, 1_000),
+      boundary: boundedText(20, 1_000),
+    }),
+    privacy: exactObject({
+      human_surface: boundedText(20, 1_000),
+      machine_surface: boundedText(20, 1_000),
+    }),
+    foundation: exactObject({
+      meaning: boundedText(30, 1_000),
+      criteria: boundedUniqueStrings(3, 12),
+      resource_ids: boundedUniqueStrings(4, 32, {
+        type: "string",
+        pattern: WORLD_COMMONS_ID_PATTERN,
+        maxLength: 64,
+      }),
+    }),
+    category: exactObject({
+      id: { type: "string", enum: WORLD_COMMONS_CATEGORY_IDS },
+      label: boundedText(2, 120),
+      glyph: boundedText(1, 20),
+      description: boundedText(12, 500),
+    }),
+    kit: exactObject({
+      id: {
+        type: "string",
+        pattern: WORLD_COMMONS_ID_PATTERN,
+        maxLength: 64,
+      },
+      label: boundedText(2, 160),
+      glyph: boundedText(1, 20),
+      invitation: boundedText(20, 800),
+      keywords: boundedUniqueStrings(2, 24),
+      resource_ids: boundedUniqueStrings(1, 12, {
+        type: "string",
+        pattern: WORLD_COMMONS_ID_PATTERN,
+        maxLength: 64,
+      }),
+      boundary: boundedText(20, 800),
+      steps: boundedUniqueStrings(1, 8),
+    }),
+    access: exactObject({
+      cost: { type: "string", enum: WORLD_COMMONS_ACCESS_COSTS },
+      account: { type: "string", enum: WORLD_COMMONS_ACCOUNT_TYPES },
+      note: boundedText(12, 700),
+    }),
+    reuse: exactObject({
+      status: { type: "string", enum: WORLD_COMMONS_REUSE_STATUSES },
+      license: boundedText(2, 300),
+      note: boundedText(12, 700),
+    }),
+    automation: exactObject({
+      status: { type: "string", enum: WORLD_COMMONS_AUTOMATION_STATUSES },
+      auth: { type: "string", enum: WORLD_COMMONS_AUTH_TYPES },
+      limits: boundedText(8, 700),
+      note: boundedText(12, 700),
+    }),
+    link: exactObject({
+      label: boundedText(2, 120),
+      url: {
+        type: "string",
+        pattern: WORLD_COMMONS_HTTPS_PATTERN,
+        minLength: 10,
+        maxLength: 2_000,
+      },
+      type: { type: "string", enum: WORLD_COMMONS_LINK_TYPES },
+    }),
+    resource: exactObject({
+      id: {
+        type: "string",
+        pattern: WORLD_COMMONS_ID_PATTERN,
+        maxLength: 64,
+      },
+      name: boundedText(2, 160),
+      provider: boundedText(2, 240),
+      category_ids: boundedUniqueStrings(1, 4, {
+        type: "string",
+        enum: WORLD_COMMONS_CATEGORY_IDS,
+      }),
+      description: boundedText(20, 800),
+      good_for: boundedUniqueStrings(1, 8),
+      coverage: boundedText(12, 700),
+      keywords: boundedUniqueStrings(2, 24),
+      audiences: boundedUniqueStrings(1, 8),
+      access: { $ref: "#/$defs/access" },
+      reuse: { $ref: "#/$defs/reuse" },
+      automation: { $ref: "#/$defs/automation" },
+      links: {
+        type: "array",
+        minItems: 1,
+        maxItems: 8,
+        items: { $ref: "#/$defs/link" },
+      },
+      caveat: boundedText(20, 800),
+      verified: { type: "string", pattern: WORLD_COMMONS_DATE_PATTERN },
+    }),
+  },
+} as const;
 
 type ValueOf<T extends readonly string[]> = T[number];
 export type WorldCommonsCategoryId = ValueOf<typeof WORLD_COMMONS_CATEGORY_IDS>;
@@ -132,7 +325,7 @@ function exactKeys(value: unknown, expected: readonly string[], path: string): a
 }
 
 function text(value: unknown, path: string, minimum = 1, maximum = 2_000): asserts value is string {
-  if (typeof value !== "string" || value.trim().length < minimum || value.length > maximum) {
+  if (typeof value !== "string" || [...value.trim()].length < minimum || [...value].length > maximum) {
     fail(path, `must be a ${minimum}-${maximum} character string`);
   }
 }

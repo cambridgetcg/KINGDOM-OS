@@ -37,6 +37,13 @@ const RIGHTS_DISCOVERY_LINKS = [
   },
 ];
 
+const WORLD_COMMONS_SCHEMA_PATH = "/schemas/world-commons/0.1.json";
+const WORLD_COMMONS_SCHEMA_LINK = {
+  target: WORLD_COMMONS_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${WORLD_COMMONS_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
   return host === "thekingdom.dev" ||
@@ -63,6 +70,11 @@ function addDiscoveryLinks(headers, includeRights) {
   for (const link of links) {
     if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
   }
+}
+
+function addWorldCommonsSchemaLink(headers) {
+  const link = WORLD_COMMONS_SCHEMA_LINK;
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
 function preventAutomaticBrowserTelemetry(headers) {
@@ -865,9 +877,25 @@ export function createKingdomWorker(options = {}) {
     const asset = await env.ASSETS.fetch(request);
     const protectsKingdomHtml = includeRights &&
       (asset.headers.get("content-type") || "").toLowerCase().includes("text/html");
-    if (!canNegotiate && !protectsKingdomHtml) return asset;
+    const describesWorldCommons = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === "/commons.json";
+    const requestsWorldCommonsSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === WORLD_COMMONS_SCHEMA_PATH;
+    const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
+    const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons && !servesWorldCommonsSchema) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
+    if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
+    if (servesWorldCommonsSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
     if (canNegotiate) {
       addVaryAccept(headers);
       addDiscoveryLinks(headers, includeRights);

@@ -5,8 +5,12 @@ own. Its first duty is legibility: say what is free, what may be reused, what
 may be automated, and where uncertainty or human judgement begins.
 
 The source of truth is `data/world-commons.json`. The generated human surface
-is the `#commons` section of the Kingdom hub; the generated machine surface is
-`site/commons.json`.
+is the `#commons` section of the Kingdom hub; the complete machine surface is
+`site/commons.json`, described by `site/schemas/world-commons/0.1.json`.
+Agents that want selected context use the existing `kingdom_commons` MCP tool;
+agents that genuinely need the whole document can read
+`kingdom://commons/catalog`. These are advertised together rather than
+maintaining a second compact catalog or a query-bearing HTTP search endpoint.
 
 ## Layer 0 — reviewed doorway
 

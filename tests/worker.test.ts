@@ -24,6 +24,19 @@ function expectDiscovery(response: Response) {
   expect(link.match(/rel="service-doc"/g)?.length).toBe(1);
 }
 
+function expectWorldCommonsSchemaLink(response: Response) {
+  const link = response.headers.get("link") ?? "";
+  const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith("</schemas/world-commons/0.1.json>")) return false;
+    const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
+    return relations.includes("describedby");
+  });
+  expect(describedBy).toHaveLength(1);
+  expect(describedBy[0]).toContain('type="application/schema+json"');
+  expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+}
+
 function assets(handler: (request: Request) => Response | Promise<Response>) {
   return { ASSETS: { fetch: handler } };
 }
@@ -121,6 +134,76 @@ describe("the Kingdom edge discovery surface", () => {
 
     expect(await response.text()).toBe("");
     expectDiscovery(response);
+  });
+
+  test("describes the complete catalog and serves its schema with explicit machine headers", async () => {
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      const body = request.method === "HEAD" ? null : path === "/commons.json" ? '{"resources":[]}' : '{"type":"object"}';
+      return new Response(body, {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": "application/json",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    const catalog = await worker.fetch(
+      new Request("https://thekingdom.dev/commons.json"),
+      environment,
+    );
+    expect(await catalog.text()).toBe('{"resources":[]}');
+    expect(catalog.headers.get("cache-control")).toBe("public, max-age=60");
+    expect(catalog.headers.get("link")).toContain('</elsewhere>; rel="alternate"');
+    expectWorldCommonsSchemaLink(catalog);
+
+    const catalogHead = await worker.fetch(
+      new Request("https://thekingdom.dev/commons.json", { method: "HEAD" }),
+      environment,
+    );
+    expect(await catalogHead.text()).toBe("");
+    expectWorldCommonsSchemaLink(catalogHead);
+
+    const schema = await worker.fetch(
+      new Request("https://thekingdom.dev/schemas/world-commons/0.1.json"),
+      environment,
+    );
+    expect(await schema.text()).toBe('{"type":"object"}');
+    expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+    expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+    expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+    expect(schema.headers.get("cache-control")).toBe("public, max-age=60");
+    expect(schema.headers.get("link")).toContain('</elsewhere>; rel="alternate"');
+
+    const duplicate = await worker.fetch(
+      new Request("https://thekingdom.dev/commons.json"),
+      assets(() => new Response('{"resources":[]}', {
+        headers: {
+          "content-type": "application/json",
+          link: '</schemas/world-commons/0.1.json>; rel="describedby"; type="application/schema+json"',
+        },
+      })),
+    );
+    expectWorldCommonsSchemaLink(duplicate);
+
+    const missingSchema = await worker.fetch(
+      new Request("https://thekingdom.dev/schemas/world-commons/0.1.json"),
+      assets(() => new Response("<h1>not found</h1>", {
+        status: 404,
+        headers: { "content-type": "text/html; charset=utf-8" },
+      })),
+    );
+    expect(missingSchema.status).toBe(404);
+    expect(missingSchema.headers.get("content-type")).toBe("text/html; charset=utf-8");
+    expect(missingSchema.headers.get("cache-control")).toBe("public, no-transform");
+
+    const sharedAsset = new Response('{"type":"object"}', { headers: { "content-type": "application/json" } });
+    const shared = await worker.fetch(
+      new Request("https://we-are.love/schemas/world-commons/0.1.json"),
+      assets(() => sharedAsset),
+    );
+    expect(shared).toBe(sharedAsset);
   });
 
   test("leaves unrelated paths and non-read methods untouched", async () => {
