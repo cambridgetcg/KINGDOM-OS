@@ -95,6 +95,7 @@ services:
     repo: codeberg.org/zerone-dev/zerone (core)
     runtime: fly:zerone-1
     status: live
+    block_max_age_sec: 300  # halt-detection: no new block in 5 min = HALTED, not "up 200"
     notes: >-
       single-host fly volume; nightly chain-backup → Tigris WIRED + green since
       2026-07-12 (see chain-backup entry). REST :1317. Doctrine alive past
@@ -106,6 +107,7 @@ services:
     urls: { api: "http://37.16.28.121:26657", health: "http://37.16.28.121:26657/status" }
     runtime: fly:zerone-testnet-1
     status: live
+    block_max_age_sec: 300  # halt-detection: no new block in 5 min = HALTED
     notes: REST :1317; resettable play-value
 
   # ── fomoengine estate ────────────────────────────────────────────────────

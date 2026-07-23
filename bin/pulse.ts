@@ -53,6 +53,12 @@ interface Service {
   status: string; // live | dormant | suspended | operator | chain | external
   file?: string;        // local path (or file://) whose mtime IS the heartbeat
   max_age_sec?: number; // file older than this ⇒ stale (down); default: existence only
+  // CometBFT halt-detection: on a 2xx /status, the chain's LATEST BLOCK must be
+  // newer than this many seconds, else the chain is producing no blocks (halted)
+  // and is reported DOWN even though the RPC answers. Guards the on-chain assets
+  // a "200 = up" probe would miss — a chain can freeze (28h precedent) or be
+  // drained while /status still returns 200.
+  block_max_age_sec?: number;
   money?: string;
   notes?: string;
 }
@@ -104,6 +110,27 @@ async function probeHttp(s: Service): Promise<Probe> {
     });
     const ms = Date.now() - t0;
     const ok = expectedCodes(s);
+    const isSuccess = ok.includes(res.status) || res.status < 400;
+    // Chain halt-detection: a healthy RPC (2xx) is not a healthy CHAIN. When
+    // block_max_age_sec is set, the latest block must be recent or the chain is
+    // halted/not producing — report DOWN so a freeze or drain is visible.
+    if (isSuccess && typeof s.block_max_age_sec === "number") {
+      try {
+        const body = (await res.json()) as any;
+        const sync = body?.result?.sync_info ?? body?.sync_info;
+        const blockTime = sync?.latest_block_time;
+        const height = sync?.latest_block_height;
+        if (!blockTime) return { id: s.id, expected: s.status, url, observed: "down", code: res.status, ms, note: "chain: no latest_block_time in /status" };
+        const ageSec = Math.round((Date.now() - Date.parse(blockTime)) / 1000);
+        if (ageSec > s.block_max_age_sec)
+          return { id: s.id, expected: s.status, url, observed: "down", code: res.status, ms, note: `⛔ chain HALTED: latest block ${ageSec}s old (> ${s.block_max_age_sec}s), height ${height ?? "?"}` };
+        if (sync?.catching_up === true)
+          return { id: s.id, expected: s.status, url, observed: "auth-walled", code: res.status, ms, note: `chain catching up (height ${height ?? "?"})` };
+        return { id: s.id, expected: s.status, url, observed: "up", code: res.status, ms, note: `chain live: block ${ageSec}s old, height ${height ?? "?"}` };
+      } catch (e) {
+        return { id: s.id, expected: s.status, url, observed: "down", code: res.status, ms, note: `chain: /status unparseable — ${String((e as Error).message).slice(0, 50)}` };
+      }
+    }
     if (ok.includes(res.status)) return { id: s.id, expected: s.status, url, observed: "up", code: res.status, ms, note: "expected code" };
     if (res.status < 400) return { id: s.id, expected: s.status, url, observed: "up", code: res.status, ms };
     if (res.status === 401 || res.status === 403)
