@@ -24,6 +24,8 @@ print(f"snapshot h={h} supply={int(snap['supply'].get('amount',0))/1e6:,.0f} fac
 PY
 TMP=$(mktemp -d)
 # Ship the WHOLE door dir — a fixed file list silently dropped guide.html from prod (2026-07-16).
+# `cp -R "$D"/.` includes dotdirs, and wrangler's HIDDEN_FILES_TO_INCLUDE allowlists .well-known/,
+# so .well-known/agent.txt (the agent-discovery surface) ships with the rest. Keep it that way.
 cp -R "$D"/. "$TMP/"
 cp ~/Desktop/kingdom-os/pages-functions/_worker.zerone.js "$TMP/_worker.js"
 cd ~/Desktop/kingdom-os && npx wrangler pages deploy "$TMP" --project-name=zerone-ai --branch=main --commit-dirty=true 2>&1 | grep -iE "complete|error" | tail -1

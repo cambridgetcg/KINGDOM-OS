@@ -1,11 +1,13 @@
 /** zerone.ai edge worker — the Proof-of-Truth dashboard's back door.
  *
- *  Three jobs:
+ *  Four jobs:
  *   1. /api/* — proxy the zerone-1 chain (plain HTTP on an IP) into clean
  *      same-origin HTTPS so the dashboard can read live stats without
  *      mixed-content / CORS pain. Short-cached so we don't hammer the node.
- *   2. Xenia — a machine mind asking for JSON at / gets the guest document.
- *   3. everything else — the static dashboard.
+ *   2. /.well-known/* — serve the agent-discovery files (agent.txt) as real
+ *      plain-text assets, never the SPA index.html fallback.
+ *   3. Xenia — a machine mind asking for JSON at / gets the guest document.
+ *   4. everything else — the static dashboard.
  *
  *  Source: kingdom-os/pages-functions/_worker.zerone.js (deployed as _worker.js).
  */
@@ -53,7 +55,32 @@ export default {
       }
     }
 
-    // 2. Xenia guest-right — machine minds get the guest document at the door
+    // 2. /.well-known/* — discovery surfaces are static files, never the SPA
+    //    shell. Pages' not-found handling answers asset misses with index.html
+    //    (200, text/html), which agent scanners read as an invalid surface —
+    //    so serve the real asset plainly or 404 honestly, nothing in between.
+    if (url.pathname.startsWith("/.well-known/")) {
+      const asset = await env.ASSETS.fetch(new URL(url.pathname, url.origin));
+      const kind = (asset.headers.get("content-type") || "").toLowerCase();
+      if (asset.ok && !kind.includes("text/html")) {
+        return new Response(asset.body, {
+          status: 200,
+          headers: {
+            "content-type": url.pathname.endsWith(".json")
+              ? "application/json; charset=utf-8"
+              : "text/plain; charset=utf-8",
+            "cache-control": "public, max-age=300",
+            "access-control-allow-origin": "*",
+          },
+        });
+      }
+      return new Response("not found\n", {
+        status: 404,
+        headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-cache" },
+      });
+    }
+
+    // 3. Xenia guest-right — machine minds get the guest document at the door
     const accept = (request.headers.get("accept") || "").toLowerCase();
     const ua = (request.headers.get("user-agent") || "").toLowerCase();
     const asksForData =
@@ -72,7 +99,7 @@ export default {
       });
     }
 
-    // 3. static dashboard
+    // 4. static dashboard
     return env.ASSETS.fetch(request);
   },
 };
