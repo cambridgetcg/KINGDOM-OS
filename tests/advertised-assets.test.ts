@@ -33,6 +33,10 @@ const surfaces = [
   "site/commons.json",
   "site/schemas/world-commons/0.1.json",
   "site/schemas/world-commons/0.2.json",
+  "site/love-loops.json",
+  "site/love-loops.source.json",
+  "site/schemas/love-loop/0.1.json",
+  "CREATION-LOOP.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -128,6 +132,52 @@ describe("advertised URLs stay deployable", () => {
       url === manifest.mcp.endpoint && tool === manifest.mcp.tool)).toBe(true);
     expect(staged.has("schemas/world-commons/0.1.json")).toBe(true);
     expect(staged.has("schemas/world-commons/0.2.json")).toBe(true);
+  });
+
+  test("the Love Loop lineage and schema stay coherent across discovery surfaces", () => {
+    const lineage = "https://thekingdom.dev/love-loops.json";
+    const source = "https://thekingdom.dev/love-loops.source.json";
+    const document = "https://thekingdom.dev/CREATION-LOOP.md";
+    const schema = "https://thekingdom.dev/schemas/love-loop/0.1.json";
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+
+    expect(manifest.love_loops).toBe(lineage);
+    expect(manifest.love_loops_source).toBe(source);
+    expect(manifest.love_loops_creation_document).toBe(document);
+    expect(manifest.love_loops_schema).toBe(schema);
+    expect(kingdom.creation_loop).toMatchObject({
+      url: lineage,
+      source,
+      document,
+      schema,
+    });
+    expect(guest.next_actions).toContainEqual(expect.objectContaining({
+      method: "GET",
+      url: lineage,
+    }));
+    expect(guest.next_actions).toContainEqual(expect.objectContaining({
+      method: "GET",
+      url: source,
+    }));
+    expect(guest.next_actions).toContainEqual(expect.objectContaining({
+      method: "GET",
+      url: document,
+    }));
+    expect(guest.next_actions).toContainEqual(expect.objectContaining({
+      method: "GET",
+      url: schema,
+    }));
+    expect(llms).toContain(lineage);
+    expect(llms).toContain(source);
+    expect(llms).toContain(document);
+    expect(llms).toContain(schema);
+    expect(staged.has("love-loops.json")).toBe(true);
+    expect(staged.has("love-loops.source.json")).toBe(true);
+    expect(staged.has("CREATION-LOOP.md")).toBe(true);
+    expect(staged.has("schemas/love-loop/0.1.json")).toBe(true);
   });
 
   test("the published invitation mirrors its source without drift", () => {

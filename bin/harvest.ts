@@ -268,7 +268,9 @@ function discoverFleet(): Repo[] {
 function build(): Repo[] {
   const fromRoster = parseRoster().map((base) => {
     const loadedCard = loadCard(base.path) ?? {}
-    const { adopts: _adopts, ...card } = loadedCard
+    // A card describes the roster member at this path; it cannot silently
+    // rename that member. SCHEMA.md requires the card name to match the seed.
+    const { adopts: _adopts, name: _cardName, ...card } = loadedCard
     const conformance = checkConformance(base.path)
     return {
       ...base,
@@ -279,7 +281,15 @@ function build(): Repo[] {
       conformance,
     }
   })
-  return [...fromRoster, ...discoverFleet()]
+  const repos = [...fromRoster, ...discoverFleet()]
+  const knownNames = new Set(repos.map((repo) => repo.name.toLowerCase()))
+  return repos.map((repo) => ({
+    ...repo,
+    // Validation reports unknown dependencies; derived output omits them, as
+    // promised by SCHEMA.md, so an invalid card cannot create dangling edges.
+    dependsOn: repo.dependsOn.filter((dependency) =>
+      knownNames.has(dependency.toLowerCase())),
+  }))
 }
 
 // ── card schema validation (read-only) ──────────────────────────
@@ -294,6 +304,7 @@ type DiagnosticCode =
   | 'malformed-line'
   | 'invalid-type'
   | 'invalid-enum'
+  | 'name-mismatch'
   | 'unknown-dependency'
   | 'unsupported-adoption'
 
@@ -340,7 +351,11 @@ function parseCardArray(value: string): string[] | null {
     .filter(Boolean)
 }
 
-function validateCard(cardPath: string, knownNames: Set<string>): CardDiagnostic[] {
+function validateCard(
+  cardPath: string,
+  knownNames: Set<string>,
+  expectedName?: string,
+): CardDiagnostic[] {
   const diagnostics: CardDiagnostic[] = []
   const seen = new Set<string>()
   const text = readTextFile(cardPath)
@@ -448,6 +463,15 @@ function validateCard(cardPath: string, knownNames: Set<string>): CardDiagnostic
     }
 
     const value = unquote(raw)
+    if (typedField === 'name' && expectedName !== undefined && value !== expectedName) {
+      diagnostics.push({
+        cardPath,
+        line,
+        field,
+        code: 'name-mismatch',
+        message: 'name must match its roster seed; actual value omitted',
+      })
+    }
     const allowed = CARD_ENUMS[typedField]
     if (allowed && !allowed.includes(value)) {
       diagnostics.push({
@@ -557,12 +581,15 @@ function validateCards(repos: Repo[]): SchemaReport {
   const knownNames = new Set(
     repos.flatMap((repo) => typeof repo.name === 'string' ? [repo.name.toLowerCase()] : []),
   )
-  const cardPaths = [...new Set(
-    repos
-      .filter((repo) => repo.conformance.card)
-      .map((repo) => join(repo.path, 'kingdom.yaml')),
-  )]
-  const diagnostics = cardPaths.flatMap((cardPath) => validateCard(cardPath, knownNames))
+  const cardNames = new Map<string, string>()
+  for (const repo of repos) {
+    if (!repo.conformance.card) continue
+    const cardPath = join(repo.path, 'kingdom.yaml')
+    if (!cardNames.has(cardPath)) cardNames.set(cardPath, repo.name)
+  }
+  const cardPaths = [...cardNames.keys()]
+  const diagnostics = cardPaths.flatMap((cardPath) =>
+    validateCard(cardPath, knownNames, cardNames.get(cardPath)))
   diagnostics.sort((a, b) => {
     const pathOrder = compareText(displayPath(a.cardPath), displayPath(b.cardPath))
     if (pathOrder !== 0) return pathOrder

@@ -34,8 +34,8 @@ adopts: [xenia.rights/0.1]    # optional, voluntary versioned rights baselines
   flagged **non-conformant** by `harvest.ts conformance`. The card is the upgrade
   path from "listed" to "owned".
 - `bun bin/harvest.ts validate` checks the eight required fields plus the
-  optional `adopts` list, their types, enums, duplicates, unknown keys,
-  malformed lines, dependency names, and accepted adoption IDs. It is
+  optional `adopts` list, their types, enums, name-to-roster match, duplicates,
+  unknown keys, malformed lines, dependency names, and accepted adoption IDs. It is
   read-only: exit 0 is clean, exit 1 is schema drift, and exit 2 is bad usage.
   Normal catalog generation still succeeds while reporting a concise warning;
   only schema-approved, correctly typed/enumerated fields enter derived output,

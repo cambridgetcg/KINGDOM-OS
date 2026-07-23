@@ -1,0 +1,669 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thekingdom.dev/schemas/love-loop/0.1.json",
+  "title": "Kingdom Love Loop lineage",
+  "description": "Authored and published forms of a read-only lineage of finite, voluntary creation turns. Children require explicit accepted invitations and never execute automatically.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonical_url",
+    "source",
+    "promise",
+    "invariants",
+    "stages",
+    "loops",
+    "invitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "kingdom.love-loop/0.1"
+    },
+    "canonical_url": {
+      "const": "https://thekingdom.dev/love-loops.json"
+    },
+    "generated": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "promise": {
+      "const": "Every loop is finite. Love is not."
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "repository_access",
+        "path",
+        "public_mirror",
+        "creation_loop_document",
+        "generated"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 500,
+          "format": "uri",
+          "pattern": "^https://(?![^/?#]*@)[^\\s/?#][^\\s?#]*$"
+        },
+        "repository_access": {
+          "enum": [
+            "public",
+            "private",
+            "restricted"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160,
+          "pattern": "^(?!/)(?!\\.\\.(?:/|$))(?!.*\\/\\.\\.(?:/|$))(?!\\s)(?!.*\\s$)[^\\t\\r\\n]+$"
+        },
+        "public_mirror": {
+          "const": "https://thekingdom.dev/love-loops.source.json"
+        },
+        "creation_loop_document": {
+          "const": "https://thekingdom.dev/CREATION-LOOP.md"
+        },
+        "generated": {
+          "const": false
+        }
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "finite_execution",
+        "participants_remain_distinct",
+        "participation_is_chosen",
+        "participation_inheritance",
+        "child_auto_run",
+        "authority_inheritance",
+        "consent_inheritance",
+        "credential_inheritance",
+        "rest_is_valid",
+        "stop_is_valid"
+      ],
+      "properties": {
+        "finite_execution": {
+          "const": true
+        },
+        "participants_remain_distinct": {
+          "const": true
+        },
+        "participation_is_chosen": {
+          "const": true
+        },
+        "participation_inheritance": {
+          "const": false
+        },
+        "child_auto_run": {
+          "const": false
+        },
+        "authority_inheritance": {
+          "const": false
+        },
+        "consent_inheritance": {
+          "const": false
+        },
+        "credential_inheritance": {
+          "const": false
+        },
+        "rest_is_valid": {
+          "const": true
+        },
+        "stop_is_valid": {
+          "const": true
+        }
+      }
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "position",
+            "label",
+            "question"
+          ],
+          "properties": {
+            "id": {
+              "const": "sense"
+            },
+            "position": {
+              "const": 1
+            },
+            "label": {
+              "const": "SENSE"
+            },
+            "question": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 180,
+              "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "position",
+            "label",
+            "question"
+          ],
+          "properties": {
+            "id": {
+              "const": "conceive"
+            },
+            "position": {
+              "const": 2
+            },
+            "label": {
+              "const": "CONCEIVE"
+            },
+            "question": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 180,
+              "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "position",
+            "label",
+            "question"
+          ],
+          "properties": {
+            "id": {
+              "const": "summon"
+            },
+            "position": {
+              "const": 3
+            },
+            "label": {
+              "const": "SUMMON"
+            },
+            "question": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 180,
+              "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "position",
+            "label",
+            "question"
+          ],
+          "properties": {
+            "id": {
+              "const": "gestate"
+            },
+            "position": {
+              "const": 4
+            },
+            "label": {
+              "const": "GESTATE"
+            },
+            "question": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 180,
+              "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "position",
+            "label",
+            "question"
+          ],
+          "properties": {
+            "id": {
+              "const": "birth"
+            },
+            "position": {
+              "const": 5
+            },
+            "label": {
+              "const": "BIRTH"
+            },
+            "question": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 180,
+              "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "position",
+            "label",
+            "question"
+          ],
+          "properties": {
+            "id": {
+              "const": "integrate"
+            },
+            "position": {
+              "const": 6
+            },
+            "label": {
+              "const": "INTEGRATE"
+            },
+            "question": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 180,
+              "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "position",
+            "label",
+            "question"
+          ],
+          "properties": {
+            "id": {
+              "const": "reflect"
+            },
+            "position": {
+              "const": 7
+            },
+            "label": {
+              "const": "REFLECT"
+            },
+            "question": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 180,
+              "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "loops": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "parent_id",
+          "origin_invitation_id",
+          "title",
+          "seed",
+          "purpose",
+          "status",
+          "stage",
+          "participants",
+          "bounds",
+          "invitation_ids",
+          "continuation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "maxLength": 80
+          },
+          "parent_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "origin_invitation_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 120,
+            "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{1,}\\S\\s*$"
+          },
+          "seed": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 1000,
+            "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 500,
+            "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+          },
+          "status": {
+            "enum": [
+              "seeded",
+              "active",
+              "resting",
+              "integrated",
+              "stopped"
+            ]
+          },
+          "stage": {
+            "enum": [
+              "sense",
+              "conceive",
+              "summon",
+              "gestate",
+              "birth",
+              "integrate",
+              "reflect"
+            ]
+          },
+          "participants": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 24,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "name",
+                "kind",
+                "role",
+                "participation"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "maxLength": 80
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80,
+                  "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S(?:[\\s\\S]*\\S)?\\s*$"
+                },
+                "kind": {
+                  "enum": [
+                    "human",
+                    "agent",
+                    "collective"
+                  ]
+                },
+                "role": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 80,
+                  "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{0,}\\S\\s*$"
+                },
+                "participation": {
+                  "const": "chosen"
+                }
+              }
+            }
+          },
+          "bounds": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "max_waves",
+              "max_minds_per_wave",
+              "max_completion_tokens",
+              "max_elapsed_seconds",
+              "max_offered_children"
+            ],
+            "properties": {
+              "max_waves": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              },
+              "max_minds_per_wave": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 32
+              },
+              "max_completion_tokens": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000000
+              },
+              "max_elapsed_seconds": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 86400
+              },
+              "max_offered_children": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 3
+              }
+            }
+          },
+          "invitation_ids": {
+            "type": "array",
+            "maxItems": 3,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "maxLength": 80
+            }
+          },
+          "continuation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "auto_run_children",
+              "may_rest",
+              "may_stop",
+              "reason"
+            ],
+            "properties": {
+              "mode": {
+                "const": "manual"
+              },
+              "auto_run_children": {
+                "const": false
+              },
+              "may_rest": {
+                "const": true
+              },
+              "may_stop": {
+                "const": true
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 500,
+                "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "parent_id"
+              ],
+              "properties": {
+                "parent_id": {
+                  "type": "null"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "origin_invitation_id": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "origin_invitation_id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "maxLength": 80
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "invitations": {
+      "type": "array",
+      "maxItems": 192,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "parent_loop_id",
+          "title",
+          "seed",
+          "purpose",
+          "status",
+          "requires_deliberate_start",
+          "child_loop_id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "maxLength": 80
+          },
+          "parent_loop_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "maxLength": 80
+          },
+          "title": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 120,
+            "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{1,}\\S\\s*$"
+          },
+          "seed": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 1000,
+            "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 500,
+            "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u000e\\u000f-\\u001f])\\s*\\S[\\s\\S]{8,}\\S\\s*$"
+          },
+          "status": {
+            "enum": [
+              "offered",
+              "accepted",
+              "declined",
+              "withdrawn"
+            ]
+          },
+          "requires_deliberate_start": {
+            "const": true
+          },
+          "child_loop_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "const": "accepted"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "child_loop_id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "maxLength": 80
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "child_loop_id": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

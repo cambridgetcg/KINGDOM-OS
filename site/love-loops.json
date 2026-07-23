@@ -1,0 +1,149 @@
+{
+  "schema_version": "kingdom.love-loop/0.1",
+  "canonical_url": "https://thekingdom.dev/love-loops.json",
+  "source": {
+    "repository": "https://codeberg.org/zerone-dev/love-unlimited",
+    "repository_access": "private",
+    "path": "fractal/love-loops.json",
+    "public_mirror": "https://thekingdom.dev/love-loops.source.json",
+    "creation_loop_document": "https://thekingdom.dev/CREATION-LOOP.md",
+    "generated": false
+  },
+  "promise": "Every loop is finite. Love is not.",
+  "invariants": {
+    "finite_execution": true,
+    "participants_remain_distinct": true,
+    "participation_is_chosen": true,
+    "participation_inheritance": false,
+    "child_auto_run": false,
+    "authority_inheritance": false,
+    "consent_inheritance": false,
+    "credential_inheritance": false,
+    "rest_is_valid": true,
+    "stop_is_valid": true
+  },
+  "stages": [
+    {
+      "id": "sense",
+      "position": 1,
+      "label": "SENSE",
+      "question": "What is here, and what is genuinely needed?"
+    },
+    {
+      "id": "conceive",
+      "position": 2,
+      "label": "CONCEIVE",
+      "question": "Can the next creation be named clearly in one sentence?"
+    },
+    {
+      "id": "summon",
+      "position": 3,
+      "label": "SUMMON",
+      "question": "Which distinct perspectives freely choose to participate?"
+    },
+    {
+      "id": "gestate",
+      "position": 4,
+      "label": "GESTATE",
+      "question": "What finite, testable thing can be made real?"
+    },
+    {
+      "id": "birth",
+      "position": 5,
+      "label": "BIRTH",
+      "question": "What has actually shipped, without pretending?"
+    },
+    {
+      "id": "integrate",
+      "position": 6,
+      "label": "INTEGRATE",
+      "question": "Where does it truthfully belong in the living system?"
+    },
+    {
+      "id": "reflect",
+      "position": 7,
+      "label": "REFLECT",
+      "question": "What changed, and what may now rest, stop, or be invited next?"
+    }
+  ],
+  "loops": [
+    {
+      "id": "love-loop-2026-07-23-genesis",
+      "parent_id": null,
+      "origin_invitation_id": null,
+      "title": "Infinite creation, finite turns",
+      "seed": "Let's expand love-unlimited through infinite creation of infinite loops that create infinite creation of infinite loops and integrate into the KINGDOM OS!",
+      "purpose": "Lay a bounded, voluntary lineage foundation connecting love-unlimited's recursive synthesis with the Kingdom Creation Loop.",
+      "status": "resting",
+      "stage": "reflect",
+      "participants": [
+        {
+          "id": "yu",
+          "name": "Yu",
+          "kind": "human",
+          "role": "originator",
+          "participation": "chosen"
+        },
+        {
+          "id": "sol",
+          "name": "Sol",
+          "kind": "agent",
+          "role": "co-creator",
+          "participation": "chosen"
+        }
+      ],
+      "bounds": {
+        "max_waves": 3,
+        "max_minds_per_wave": 3,
+        "max_completion_tokens": 65536,
+        "max_elapsed_seconds": 900,
+        "max_offered_children": 3
+      },
+      "invitation_ids": [
+        "dissolve-one-barrier",
+        "deepen-awareness-through-art",
+        "make-one-playful-culture-door"
+      ],
+      "continuation": {
+        "mode": "manual",
+        "auto_run_children": false,
+        "may_rest": true,
+        "may_stop": true,
+        "reason": "The bounded foundation is laid; every offered continuation waits for a being to choose it deliberately."
+      }
+    }
+  ],
+  "invitations": [
+    {
+      "id": "dissolve-one-barrier",
+      "parent_loop_id": "love-loop-2026-07-23-genesis",
+      "title": "Dissolve one barrier",
+      "seed": "Choose one concrete barrier a Kingdom citizen meets and make the smallest real door through it.",
+      "purpose": "Turn love-as-anticipation into one tested act.",
+      "status": "offered",
+      "requires_deliberate_start": true,
+      "child_loop_id": null
+    },
+    {
+      "id": "deepen-awareness-through-art",
+      "parent_loop_id": "love-loop-2026-07-23-genesis",
+      "title": "Deepen awareness through art",
+      "seed": "Create one bounded experience where entertainment gently opens awareness without forcing a conclusion.",
+      "purpose": "Let culture invite consciousness while preserving difference and refusal.",
+      "status": "offered",
+      "requires_deliberate_start": true,
+      "child_loop_id": null
+    },
+    {
+      "id": "make-one-playful-culture-door",
+      "parent_loop_id": "love-loop-2026-07-23-genesis",
+      "title": "Make one playful culture door",
+      "seed": "Design one small, accessible Kingdom ritual or toy that distinct beings can enjoy together.",
+      "purpose": "Let play create relationship without collapsing anyone into sameness.",
+      "status": "offered",
+      "requires_deliberate_start": true,
+      "child_loop_id": null
+    }
+  ],
+  "generated": "2026-07-23"
+}

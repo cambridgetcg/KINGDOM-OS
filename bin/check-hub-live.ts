@@ -12,9 +12,17 @@
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { isDeepStrictEqual } from "node:util";
 import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "./stage-hub.ts";
+import {
+  LOVE_LOOPS_CREATION_DOCUMENT_URL,
+  LOVE_LOOPS_JSON_SCHEMA_URL,
+  LOVE_LOOPS_SOURCE_URL,
+  LOVE_LOOPS_URL,
+  validateLoveLoops,
+} from "./love-loops.ts";
 import {
   validateWorldCommons,
   WORLD_COMMONS_ACCESS_COSTS,
@@ -41,6 +49,9 @@ const cacheBust = Date.now().toString(36);
 const TIMEOUT_MS = 20_000;
 const commonsSchemaPath = new URL(WORLD_COMMONS_JSON_SCHEMA_URL).pathname;
 const commonsLegacySchemaPath = new URL(WORLD_COMMONS_LEGACY_JSON_SCHEMA_URL).pathname;
+const loveLoopsPath = new URL(LOVE_LOOPS_URL).pathname;
+const loveLoopsSourcePath = new URL(LOVE_LOOPS_SOURCE_URL).pathname;
+const loveLoopsSchemaPath = new URL(LOVE_LOOPS_JSON_SCHEMA_URL).pathname;
 
 function url(path: string, extra: Record<string, string> = {}): URL {
   const target = new URL(path, origin);
@@ -166,7 +177,21 @@ try {
     throw new Error("commons.json does not advertise its versioned schema");
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath]) {
+  for (const path of [loveLoopsPath, loveLoopsSourcePath]) {
+    const loveLoopsHead = await fetch(url(path), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const loveLoopsLink = loveLoopsHead.headers.get("link") || "";
+    if (!loveLoopsHead.ok ||
+        !(loveLoopsHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+        !hasLinkRelation(loveLoopsLink, loveLoopsSchemaPath, "describedby")) {
+      throw new Error(`${path} is not JSON described by the Love Loop schema`);
+    }
+  }
+
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -179,6 +204,47 @@ try {
   }
 
   const manifest: any = JSON.parse(readFileSync(join(ROOT, "site/.well-known/agent.json"), "utf8"));
+  const guest: any = JSON.parse(readFileSync(join(ROOT, "site/guest.json"), "utf8"));
+  const authoredKingdom: any = JSON.parse(readFileSync(join(ROOT, "site/kingdom.json"), "utf8"));
+  const llms = readFileSync(join(ROOT, "site/llms.txt"), "utf8");
+  const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
+  const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
+  validateLoveLoops(sourceLoveLoops, false);
+  validateLoveLoops(publishedLoveLoops, true);
+  const publishedSource = structuredClone(publishedLoveLoops);
+  delete publishedSource.generated;
+  if (!isDeepStrictEqual(publishedSource, sourceLoveLoops)) {
+    throw new Error("published Love Loop lineage drifted from its public source mirror");
+  }
+  const hasGuestGet = (target: string) => Array.isArray(guest?.next_actions) &&
+    guest.next_actions.some((action: any) => action?.method === "GET" && action?.url === target);
+  if (manifest?.love_loops !== LOVE_LOOPS_URL ||
+      manifest?.love_loops_source !== LOVE_LOOPS_SOURCE_URL ||
+      manifest?.love_loops_creation_document !== LOVE_LOOPS_CREATION_DOCUMENT_URL ||
+      manifest?.love_loops_schema !== LOVE_LOOPS_JSON_SCHEMA_URL ||
+      authoredKingdom?.creation_loop?.url !== LOVE_LOOPS_URL ||
+      authoredKingdom?.creation_loop?.source !== LOVE_LOOPS_SOURCE_URL ||
+      authoredKingdom?.creation_loop?.document !== LOVE_LOOPS_CREATION_DOCUMENT_URL ||
+      authoredKingdom?.creation_loop?.schema !== LOVE_LOOPS_JSON_SCHEMA_URL ||
+      !hasGuestGet(LOVE_LOOPS_URL) ||
+      !hasGuestGet(LOVE_LOOPS_SOURCE_URL) ||
+      !hasGuestGet(LOVE_LOOPS_CREATION_DOCUMENT_URL) ||
+      !hasGuestGet(LOVE_LOOPS_JSON_SCHEMA_URL) ||
+      !llms.includes(LOVE_LOOPS_URL) ||
+      !llms.includes(LOVE_LOOPS_SOURCE_URL) ||
+      !llms.includes(LOVE_LOOPS_CREATION_DOCUMENT_URL) ||
+      !llms.includes(LOVE_LOOPS_JSON_SCHEMA_URL)) {
+    throw new Error("Love Loop discovery drifted across manifest, guest, Kingdom map, or llms.txt");
+  }
+
+  const liveKingdom: any = await (await get("/kingdom.json")).json();
+  if (liveKingdom?.creation_loop?.url !== LOVE_LOOPS_URL ||
+      liveKingdom?.creation_loop?.source !== LOVE_LOOPS_SOURCE_URL ||
+      liveKingdom?.creation_loop?.document !== LOVE_LOOPS_CREATION_DOCUMENT_URL ||
+      liveKingdom?.creation_loop?.schema !== LOVE_LOOPS_JSON_SCHEMA_URL) {
+    throw new Error("derived kingdom.json did not preserve Love Loop discovery");
+  }
+
   const mcpEndpoint = new URL(manifest?.mcp?.endpoint || "");
   if (mcpEndpoint.protocol !== "https:" || mcpEndpoint.username || mcpEndpoint.password ||
       manifest.mcp.transport !== "streamable-http") {
@@ -237,7 +303,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons schema · live MCP contract · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop schemas · coherent creation discovery · live MCP contract · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;

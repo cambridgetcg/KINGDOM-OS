@@ -36,7 +36,9 @@ npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zeron
 `stage-hub.ts` refuses a non-empty destination and copies the atlas as
 `index.html` together with `_kingdom.base.json`, `wayfinder.json`,
 `commons.json`, current `/schemas/world-commons/0.2.json`, legacy
-`/schemas/world-commons/0.1.json`, `guest.json`, `ollama.json`,
+`/schemas/world-commons/0.1.json`, `love-loops.json`,
+`love-loops.source.json`, `CREATION-LOOP.md`,
+`/schemas/love-loop/0.1.json`, `guest.json`, `ollama.json`,
 `llms.txt`, `rights.json`, `RIGHTS.md`, `/.well-known/agent.json`, `/os/index.html`, and
 `_worker.js`. The worker derives `/os.json`, `/packages.json`, and
 `/kingdom.json`; they are not static upload files. It stages only; it never
@@ -51,8 +53,9 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks the worker-owned negotiation, privacy, and Commons-schema behavior; a
-split-generation deployment fails instead of looking partially healthy.
+checks the worker-owned negotiation, privacy, and Commons + Love Loop schema
+behavior; a split-generation deployment fails instead of looking partially
+healthy.
 
 ## Baseline still to do (follow-up)
 

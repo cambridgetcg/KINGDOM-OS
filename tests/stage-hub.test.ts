@@ -38,10 +38,11 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // literal on purpose: growing/shrinking the staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(14);
-      expect(staged).toHaveLength(14);
+      expect(HUB_ASSETS).toHaveLength(18);
+      expect(staged).toHaveLength(18);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
+        "CREATION-LOOP.md",
         "RIGHTS.md",
         "_kingdom.base.json",
         "_worker.js",
@@ -49,12 +50,15 @@ describe("the hub staging contract", () => {
         "guest.json",
         "index.html",
         "llms.txt",
+        "love-loops.json",
+        "love-loops.source.json",
         "ollama.json",
         "os",
         "rights.json",
         "schemas",
         "wayfinder.json",
       ]);
+      expect(readdirSync(join(output, "schemas/love-loop")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/world-commons")).sort()).toEqual(["0.1.json", "0.2.json"]);
       for (const [index, asset] of HUB_ASSETS.entries()) {
         expect(readFileSync(join(output, asset.destination))).toEqual(Buffer.from([index, 0, 255, 10]));

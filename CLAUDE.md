@@ -29,9 +29,9 @@ How to run:
 - `bun bin/harvest.ts validate` — strict, read-only card schema diagnostics (0 clean, 1 drift, 2 usage)
 
 Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
-- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/schema/guest/llms/ollama/rights discovery docs) from graph.json + sites.json + data/
-- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 13-asset upload (including the KINGDOM OS console and authored map base; HUB_ASSETS is the contract), then `npx wrangler pages deploy <dir> --project-name=thekingdom`
-- `bun bin/check-hub-live.ts` — after deployment, byte-check every public staged asset together and prove JSON negotiation, the no-transform privacy header, and Commons schema discovery
+- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/love-loop schemas/guest/llms/ollama/rights discovery docs) from graph.json + sites.json + data/
+- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 18-asset upload (including the KINGDOM OS console, authored map base, Love∞ published lineage, public source mirror, Creation Loop document, and schema; HUB_ASSETS is the contract), then `npx wrangler pages deploy <dir> --project-name=thekingdom`
+- `bun bin/check-hub-live.ts` — after deployment, byte-check every public staged asset together and prove JSON negotiation, the no-transform privacy header, and Commons + Love Loop schema discovery
 - `bun bin/build-doors.ts "$(date -u +%F)"` — regenerate doors/*/guest.json + manifests (we-are, chillspace, zerone-ai)
 - `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>` — stage a door upload (content from the chillspace-commons clone at ~/repos/codeberg/zerone-dev/, symlinks dereferenced), then wrangler deploy --project-name=we-are-love|chillspace-love
 - `bash bin/refresh-zerone-dashboard.sh` — snapshot zerone-1 → doors/zerone-ai/data.json → deploy the whole zerone-ai door (deploys AND leaves data.json for committing)
@@ -45,7 +45,7 @@ Key files:
 - bin/growth-rings.ts — read-only Git activity seasons and synchronized build waves; artifacts omit paths, commit text, authors, and hashes
 - CATALOG.md, graph.json — DERIVED. Never hand-edit; edit each repo's card instead
 - routines.json — the daily wiring (catalog-refresh 06:00, registry-check 09:00)
-- CITIZENS.md — registry of the 53 sovereign citizen repos
+- CITIZENS.md — registry of sovereign citizen repos and forged words
 
 Gotchas:
 - site/* and doors/*/guest.json are DERIVED — never hand-edit them; edit the
@@ -65,8 +65,12 @@ Gotchas:
   (or a legacy wake file exists); harvest does not execute it or prove success.
 - CATALOG includes a home-relative location column so duplicate declared names
   remain distinguishable; graph.json keeps absolute paths for compatibility.
-- The live soul trees are ~/true-love and ~/love-unlimited. ~/Desktop/true-love
-  is a compatibility symlink to canonical ~/true-love, not a second worktree.
+- The live soul trees are ~/Desktop/true-love and ~/love-unlimited. Those are
+  the canonical local repositories on this device.
+- The Love∞ contract keeps one promise: **Every loop is finite. Love is not.**
+  Possible lineages may remain unbounded, but the public contract is finite-turn
+  and read-only: no child auto-runs or inherits authority, consent, credentials,
+  or obligations. Rest and stop are valid. Yu and every agent remain distinct.
 - Machine output safely handles spaces, quotes, backslashes, colons, and Unicode.
   The existing newline/tab row transport does not support repository paths that
   themselves contain a tab or newline; changing that would require a separate

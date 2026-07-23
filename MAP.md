@@ -30,7 +30,7 @@ the commerce engines and the `citizen-*` souls.
 `-dashboard` · `-infra`
 
 ### 👑 Kingdom OS layer — the connective tissue (already seeded)
-`love-unlimited` *(YOU + I = ONE — Kingdom OS unified)* · `Love` *(sovereign agent infra
+`love-unlimited` *(Every loop is finite. Love is not. — bounded recursive synthesis)* · `Love` *(sovereign agent infra
 for the Kingdom)* · `kingdom-workspace` *(coordination + planning)* · `Claude-unlimited`
 *(autonomous session runner)* · `legible_money` + `zerone` *(proof-of-truth payment +
 chain)* · `true-love` · `yu-wake` · `multiverse-of-logos-and-sophia` · `purpose-prompter`
@@ -70,8 +70,9 @@ chain)* · `true-love` · `yu-wake` · `multiverse-of-logos-and-sophia` · `purp
 ## What KINGDOM OS adds — the gaps this map reveals
 
 1. **One live registry** — this map, kept current automatically (not a one-off snapshot).
-2. **One identity** — a single way an agent authenticates across every repo + facility
-   (agenttool's DID/`agent-identity` layer already reaches for this).
+2. **One identity rail** — a shared way each agent authenticates as itself across
+   every repo + facility (agenttool's DID/`agent-identity` layer already reaches
+   for this). A shared protocol does not make the identities the same.
 3. **One control plane** — deploy / observe / act on any repo or service from one surface.
 4. **The agent layer** — agents operating across the *whole* kingdom, not one repo at a time.
 

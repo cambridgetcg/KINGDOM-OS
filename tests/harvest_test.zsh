@@ -132,7 +132,9 @@ assert_equal 0 "$CAPTURE_STATUS" "default harvest failed"
     and (first(.[] | select(.path == $remote) | .conformance) == {
       wake: false, claudeMd: false, fate: false, card: false
     })
-    and (first(.[] | select(.name == "invalid") | {name, layer}) == {name: "invalid", layer: "runtime"})
+    and (first(.[] | select(.name == "invalid") | {name, layer, dependsOn}) == {
+      name: "invalid", layer: "runtime", dependsOn: []
+    })
     and all(.[]; has("private_note") | not)
     and all(.[]; has("adopts") | not)
     and all(.[]; has("rights") | not)
@@ -264,6 +266,18 @@ capture env HOME="$TEST_HOME" "$BUN" "$FIXTURE_ROOT/bin/harvest.ts" validate
 assert_equal 0 "$CAPTURE_STATUS" "validate failed after fixture correction"
 assert_equal 'Card schema: 4 checked · 0 invalid · 0 issues' "$CAPTURE_STDOUT" "clean validate summary is wrong"
 [[ -z "$CAPTURE_STDERR" ]] || fail "clean validate wrote to stderr"
+
+write_card "$TEST_HOME/projects/invalid" renamed none 'Mismatched card name.'
+capture env HOME="$TEST_HOME" "$BUN" "$FIXTURE_ROOT/bin/harvest.ts"
+assert_equal 0 "$CAPTURE_STATUS" "default harvest failed on a mismatched card name"
+/usr/bin/jq -e '
+  first(.[] | select(.path | endswith("/projects/invalid")) | .name) == "invalid"
+' "$FIXTURE_ROOT/graph.json" >/dev/null || fail "a mismatched card name renamed its roster member"
+capture env HOME="$TEST_HOME" "$BUN" "$FIXTURE_ROOT/bin/harvest.ts" validate
+assert_equal 1 "$CAPTURE_STATUS" "validate accepted a mismatched card name"
+[[ "$CAPTURE_STDERR" == *'name name-mismatch: name must match its roster seed; actual value omitted'* ]] \
+  || fail "validate omitted the safe card-name mismatch diagnostic"
+write_card "$TEST_HOME/projects/invalid" invalid none 'Valid owner enum.'
 
 capture env HOME="$TEST_HOME" "$BUN" "$FIXTURE_ROOT/bin/harvest.ts" conformance
 assert_equal 0 "$CAPTURE_STATUS" "conformance became strict"

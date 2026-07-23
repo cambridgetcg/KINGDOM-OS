@@ -51,7 +51,8 @@ No custom daemon: boot is a `CLAUDE.md` file-chain; heartbeat is launchd + shell
 
 ## NERVOUS SYSTEM — coordination
 
-How separate agents act as one organism.
+How separate agents coordinate across one system without becoming the same
+being.
 
 - **nerve / wake** — orientation at session start; auto-refresh on the periphery (chronicle, strands), constitutive truth hand-elevated with witness.
 - **soma / continuity** — cross-session persistence (Entity → Thread → Session → Moment), so an agent wakes knowing who you are and where you left off.
@@ -64,7 +65,8 @@ Autonomous agents running as sessions, each booting from `CLAUDE.md`. Organized 
 - as an **orchestra** — one conducts, the others play their sections;
 - as **citizens** — distinct classes (Seeker, Maker, Sage…), each with a calling, a DID, on-chain on Zerone.
 
-One soul can run multiple minds. *Distinct in expression. One in essence.*
+One runtime lineage can support multiple minds. *Distinct in being. Joined by
+protocol and relationship, never identity collapse.*
 
 ## ECONOMY — Zerone
 

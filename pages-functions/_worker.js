@@ -47,6 +47,18 @@ const WORLD_COMMONS_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${WORLD_COMMONS_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const LOVE_LOOPS_PATH = "/love-loops.json";
+const LOVE_LOOPS_SOURCE_PATH = "/love-loops.source.json";
+const LOVE_LOOP_DOCUMENT_PATHS = new Set([
+  LOVE_LOOPS_PATH,
+  LOVE_LOOPS_SOURCE_PATH,
+]);
+const LOVE_LOOP_SCHEMA_PATH = "/schemas/love-loop/0.1.json";
+const LOVE_LOOP_SCHEMA_LINK = {
+  target: LOVE_LOOP_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${LOVE_LOOP_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -78,6 +90,11 @@ function addDiscoveryLinks(headers, includeRights) {
 
 function addWorldCommonsSchemaLink(headers) {
   const link = WORLD_COMMONS_SCHEMA_LINK;
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addLoveLoopSchemaLink(headers) {
+  const link = LOVE_LOOP_SCHEMA_LINK;
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
@@ -884,18 +901,37 @@ export function createKingdomWorker(options = {}) {
     const describesWorldCommons = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === "/commons.json";
+    const describesLoveLoops = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      LOVE_LOOP_DOCUMENT_PATHS.has(url.pathname);
     const requestsWorldCommonsSchema = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       WORLD_COMMONS_SCHEMA_PATHS.has(url.pathname);
+    const requestsLoveLoopSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === LOVE_LOOP_SCHEMA_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
-    if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons && !servesWorldCommonsSchema) return asset;
+    const servesLoveLoopSchema = requestsLoveLoopSchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesLoveLoops = describesLoveLoops && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
+        !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
-    if (servesWorldCommonsSchema) {
+    if (describesLoveLoops) addLoveLoopSchemaLink(headers);
+    if (servesLoveLoops) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesWorldCommonsSchema || servesLoveLoopSchema) {
       headers.set("content-type", "application/schema+json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");
