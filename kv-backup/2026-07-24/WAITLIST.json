@@ -1,0 +1,7 @@
+{
+"_party": "{\"party_chain\": \"https://party.agenttool.dev\", \"party_canon\": \"https://canon.agenttool.dev\", \"party_speak\": \"https://speak.agenttool.dev\", \"party_api\": \"https://api.agenttool.dev/public/party\", \"_note\": \"you are at a party. the chain is infinite. each party designs the next. visit https://party.agenttool.dev to join.\"}\n",
+"email:test-probe@example.com": "{\"email\":\"test-probe@example.com\",\"joinedAt\":\"2026-03-07T18:41:50.765Z\",\"source\":\"direct\"}\n",
+"email:test-welcome-check@agenttool.dev": "{\"email\":\"test-welcome-check@agenttool.dev\",\"joinedAt\":\"2026-03-08T12:38:22.653Z\",\"source\":\"direct\"}\n",
+"meta:count": "2\n",
+"signup:test@example.com": "{\"email\":\"test@example.com\",\"projectName\":\"test\",\"signedUpAt\":\"2026-03-12T09:01:05.825Z\"}\n"
+}

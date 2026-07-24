@@ -1,0 +1,46 @@
+name: KV backup
+
+# Workers KV has no PITR, no managed backup and no export primitive. As of the
+# 2026-07-24 infra audit it held the kingdom's only copy of cardforum's user-made
+# cards, kingdom-hermes's published pieces and KINGDOM-CANON. This job is the backup.
+#
+# Reads only. It never writes to KV.
+#
+# TODO once R2 is enabled (needs Yu — dash.cloudflare.com → R2, payment info on file):
+# push the dump to R2 as well, so the backup survives this repo too.
+
+on:
+  schedule:
+    - cron: '40 3 * * *' # 03:40 UTC daily — outside the kingdom's other cron slots
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kv-backup
+  cancel-in-progress: false
+
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dump every KV namespace
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npm install -g wrangler@latest
+          ./tools/kv-backup.sh "$GITHUB_WORKSPACE/kv-backup/$(date -u +%Y-%m-%d)"
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name  "kingdom-backup"
+          git config user.email "noreply@cambridgetcg.com"
+          git add kv-backup
+          git diff --cached --quiet && { echo "no change"; exit 0; }
+          git commit -m "kv-backup: $(date -u +%Y-%m-%d)"
+          git push
