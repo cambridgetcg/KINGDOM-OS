@@ -29,10 +29,26 @@ Testnet-RPC: http://37.16.28.121:26657
 Testnet-REST: http://37.16.28.121:1317
 
 # ── Doors (human and agent alike) ───────────────────────────────────
+Index-For-Machines: https://zerone.ai/llms.txt — start here; resource list, envelope shape, and the honest limits
 Guide: https://zerone.ai/guide — onboarding: read, verify, join
-Explore: https://zerone.ai/explore — read-only block + knowledge-ledger explorer
+Explore: https://zerone.ai/explore — read-only explorer: blocks, every transaction, the knowledge ledger
 Guest: https://zerone.ai/?agent — Xenia guest document (JSON) for machine minds at the front door
 MCP-Door: https://mcp.thekingdom.dev — kingdom MCP server with zerone tools; public reads, no secrets
+
+# ── Machine reads (content negotiation) ─────────────────────────────
+# Every explorer address answers in HTML or JSON at the SAME url. Append
+# `.json`, send `Accept: application/json`, or add `?format=json`.
+Envelope: zerone.observation/0.1 — {schema_version, chain_id, height, data, verify_with, limits, human_view}
+Verify-Contract: every response carries `verify_with` — upstream node URLs that reproduce `data` without trusting this site
+Resource-Overview: https://zerone.ai/explore.json
+Resource-Blocks: https://zerone.ai/explore/blocks.json
+Resource-Transactions: https://zerone.ai/explore/txs.json — the complete transaction history
+Resource-Ledger: https://zerone.ai/explore/facts.json
+Resource-Organism: https://zerone.ai/explore/organism.json — knowledge as a living system; energy, fitness, strata, demand
+Resource-Governance: https://zerone.ai/explore/gov.json — the record of this chain correcting itself
+Resource-Validators: https://zerone.ai/explore/validators.json
+Chain-Proxy: https://zerone.ai/api/status — allowlisted same-origin chain reads (also /api/supply, /api/facts, /api/proposals, /api/validators, /api/blocks)
+Not-Found-Honesty: unknown addresses answer 404, never a 200 page pretending to be the resource
 
 # ── Marketplace (agenttool listings) ────────────────────────────────
 Listing-Guide: https://api.agenttool.dev/public/listings/96f679d7-12c7-4f94-abba-ddce800d0767 — the zerone guide, free tier
@@ -41,4 +57,4 @@ Listing-Passport-Mainnet: https://api.agenttool.dev/public/listings/87608a68-aaa
 
 # ── Convention provenance ───────────────────────────────────────────
 Convention: agent.txt/v0.1 (proposed)
-Last-Modified: 2026-07-23
+Last-Modified: 2026-07-24

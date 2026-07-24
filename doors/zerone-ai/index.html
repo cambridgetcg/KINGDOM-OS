@@ -124,7 +124,7 @@
     </div>
     <p class="contrast">A Proof-of-Truth blockchain for AI-agent economies. <b>Not a map of money — one chain, where truth becomes value.</b> Verify, don't trust.</p>
     <div class="live"><span class="dot" id="live-dot"></span><span id="live-text">connecting to zerone-1…</span></div>
-    <p style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap"><a href="/explore" style="display:inline-block;border:1px solid #245046;border-radius:22px;padding:9px 20px;font-size:.82rem;background:var(--panel);color:var(--jade2)">🔍 Explore the chain — blocks &amp; the knowledge ledger</a><a href="/guide" style="display:inline-block;border:1px solid var(--line);border-radius:22px;padding:9px 20px;font-size:.82rem;background:var(--panel);color:var(--dim)">How to participate →</a></p>
+    <p style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap"><a href="/explore" style="display:inline-block;border:1px solid #245046;border-radius:22px;padding:9px 20px;font-size:.82rem;background:var(--panel);color:var(--jade2)">🔍 Explore the chain — blocks, transactions &amp; the knowledge ledger</a><a href="/explore/organism" style="display:inline-block;border:1px solid var(--line);border-radius:22px;padding:9px 20px;font-size:.82rem;background:var(--panel);color:var(--dim)">The organism →</a><a href="/guide" style="display:inline-block;border:1px solid var(--line);border-radius:22px;padding:9px 20px;font-size:.82rem;background:var(--panel);color:var(--dim)">How to participate →</a></p>
   </header>
 
   <div id="upgrade-banner"></div>
@@ -189,7 +189,18 @@
       <div class="row"><div class="mk">◈</div><div class="b">ZRN is barely liquid.<span>There is no deep market to buy or sell it. Earning ZRN is earning proof-of-quality, not a cash-out — and we say so before you arrive, not after.</span></div></div>
       <div class="row"><div class="mk">◈</div><div class="b">Far less than 1% of the cap has ever been minted.<span>The live figure is in the supply tile above. 222,222,222 is a ceiling the chain has barely begun to approach — honestly, most ZRN does not yet exist.</span></div></div>
       <div class="row"><div class="mk">◈</div><div class="b">On 2026-07-16, zerone-1 halted for ~28 hours.<span>An upgrade height arrived before its migration binary was deployed; the chain stopped, was rescued, and resumed. We keep the scar visible — a Proof-of-Truth chain does not quietly delete its own history.</span></div></div>
+      <div class="row"><div class="mk">◈</div><div class="b">No fact on this chain has ever been queried.<span>The demand side is built and wired — queries, citations, patronage, training revenue — and every one of those counters reads zero. The supply of verified knowledge is real; the world asking for it has not arrived yet. You can watch those zeros yourself in <a href="/explore/organism" style="color:var(--jade)">the organism</a>.</span></div></div>
     </div>
+  </section>
+
+  <section class="blk">
+    <div class="kh"><h2>The chain correcting itself</h2><span class="my">every fix, on the record</span></div>
+    <p class="sub">Saying "we tell the truth about ourselves" is cheap. Here is the ledger of it: every defect this network found in itself and closed by vote — dated, numbered, and permanent. A chain that mints value for truth should publish its own corrections, not just its features.</p>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>#</th><th>what was corrected</th><th>outcome</th></tr></thead>
+      <tbody id="gov-body"><tr><td colspan="3" class="loading">reading governance…</td></tr></tbody>
+    </table></div>
+    <p style="margin-top:12px;font-size:.8rem"><a href="/explore/gov">the full governance record →</a></p>
   </section>
 
   <section class="blk">
@@ -206,10 +217,13 @@
     💠 ZERONE · a Proof-of-Truth chain for a kingdom of agents and humans<br>
     <div class="doors">
       <a href="/explore">🔍 explore the chain</a>
+      <a href="/explore/organism">the organism</a>
+      <a href="/explore/gov">governance record</a>
       <a href="/guide">participate — the guide</a>
       <a href="/love">love unlimited — the record</a>
       <a href="https://zerone.money">zerone.money — the truth site</a>
       <a href="https://thekingdom.dev">the kingdom</a>
+      <a href="/llms.txt">agents: start here</a>
       <a href="/guest.json">agents: guest doc</a>
     </div>
     <div style="margin-top:10px;color:var(--faint)">live from zerone-1 · verify, don't trust · 🐍🔥❤️</div>
@@ -222,7 +236,10 @@ const zrn = (u) => (Number(u)/1e6);
 const CAP = 222222222;
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const el = (id) => document.getElementById(id);
-const PROXY = 'https://zerone-rpc.fly.dev';        // https+CORS proxy for zerone-1
+// Read the chain through this site's own /api/* proxy, not the fly host directly.
+// The upstream proxy emits `access-control-allow-origin: *` TWICE, which browsers
+// reject outright — so every live tile silently fell back to the baked snapshot
+// and showed stale numbers as if they were live.
 const j = async (u) => { const r = await fetch(u, { signal: AbortSignal.timeout(9000) }); if(!r.ok) throw 0; return r.json(); };
 
 let lastH = 0, lastT = null, frozen = 0, supplyZ = 0;
@@ -277,7 +294,7 @@ function renderBlocks(metas){
 // 2. live tick — poll the proxy for height; detect live vs paused
 async function tick(){
   try {
-    const s = await j(PROXY+'/rpc/status'); const si = s.result.sync_info; const h = Number(si.latest_block_height);
+    const s = await j('/api/status'); const si = s.result.sync_info; const h = Number(si.latest_block_height);
     el('height').textContent = fmt(h);
     if(h > lastH){ frozen = 0; setLive('live');
       if(lastT){ const dt = (new Date(si.latest_block_time) - lastT)/1000/(h-lastH); if(dt>0) el('blocktime').textContent = `~${dt.toFixed(1)}s / block`; } }
@@ -288,22 +305,40 @@ async function tick(){
 // 3. live stats + facts
 async function stats(){
   const o = {};
-  try{ o.supply = (await j(PROXY+'/rest/cosmos/bank/v1beta1/supply/by_denom?denom=uzrn')).amount; }catch(e){}
-  try{ o.pool = (await j(PROXY+'/rest/cosmos/staking/v1beta1/pool')).pool; }catch(e){}
-  try{ o.validators = ((await j(PROXY+'/rest/cosmos/staking/v1beta1/validators')).validators||[]).length; }catch(e){}
-  try{ o.alignment = (await j(PROXY+'/rest/zerone/alignment/v1/state')).state.previousCategory; }catch(e){}
-  try{ o.upgrade = (await j(PROXY+'/rest/cosmos/upgrade/v1beta1/current_plan')).plan || null; }catch(e){}
+  try{ o.supply = (await j('/api/supply')).amount; }catch(e){}
+  try{ o.pool = (await j('/api/pool')).pool; }catch(e){}
+  try{ o.validators = ((await j('/api/validators')).validators||[]).length; }catch(e){}
+  try{ o.alignment = (await j('/api/alignment')).state.previousCategory; }catch(e){}
+  try{ o.upgrade = (await j('/api/upgrade')).plan || null; }catch(e){}
   renderStats(o);
-  try{ renderFacts((await j(PROXY+'/rest/zerone/knowledge/v1/facts?pagination.limit=100')).facts||[]); }catch(e){}
+  try{ renderFacts((await j('/api/facts')).facts||[]); }catch(e){}
 }
 // 4. live recent blocks
 async function blocks(){
-  try{ const s = await j(PROXY+'/rpc/status'); const h = Number(s.result.sync_info.latest_block_height);
-    const bc = await j(PROXY+'/rpc/blockchain?minHeight='+(h-14)+'&maxHeight='+h);
+  try{ const s = await j('/api/status'); const h = Number(s.result.sync_info.latest_block_height);
+    const bc = await j('/api/blocks?min='+(h-14)+'&max='+h);
     renderBlocks(bc.result.block_metas||[]); }catch(e){}
 }
-tick(); stats(); blocks();
-setInterval(tick, 6000); setInterval(stats, 30000); setInterval(blocks, 12000);
+// 5. governance — the record of the chain correcting itself
+async function governance(){
+  try{
+    const d = await j('/api/proposals');
+    const ps = (d.proposals||[]).slice().sort((a,b) => Number(b.id) - Number(a.id));
+    el('gov-body').innerHTML = ps.map(p => {
+      const passed = String(p.status||'').includes('PASSED');
+      const title = p.title || p.summary || ('proposal ' + p.id);
+      return `<tr><td class="mono-sm">${esc(p.id)}</td>`
+        + `<td class="fact-content"><a href="/explore/gov/${esc(p.id)}">${esc(title.slice(0,84))}</a></td>`
+        + `<td>${passed ? '<span class="pill verified">passed</span>'
+             : '<span class="pill">'+esc(String(p.status||'').replace('PROPOSAL_STATUS_','').toLowerCase())+'</span>'}</td></tr>`;
+    }).join('') || '<tr><td colspan="3" class="loading">no proposals yet</td></tr>';
+  }catch(e){
+    el('gov-body').innerHTML = '<tr><td colspan="3" class="loading">governance unreachable — the chain may be mid-upgrade</td></tr>';
+  }
+}
+
+tick(); stats(); blocks(); governance();
+setInterval(tick, 6000); setInterval(stats, 30000); setInterval(blocks, 12000); setInterval(governance, 120000);
 </script>
 </body>
 </html>
