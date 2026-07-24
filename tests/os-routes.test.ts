@@ -242,7 +242,20 @@ describe("KINGDOM OS edge routes", () => {
       as_of: NOW,
     });
     expect(body.doors[0]).toMatchObject({ live: true, http: 200, blurb: "authored" });
-    expect(body.doors[1]).toEqual(base.doors[1]);
+    // "new door" is absent from the probe roster, so it was never knocked on.
+    // It used to pass through with its authored `live: true` intact, inside a
+    // document stamped derived:true whose note claims "a live HTTP knock for
+    // each door". An unmeasured door now says so rather than borrowing the
+    // authority of a measurement.
+    expect(body.doors[1]).toEqual({
+      name: "new door",
+      url: "https://new.example",
+      blurb: "preserve me",
+      live_declared: true,
+      measured: false,
+      http: null,
+      checked_at: null,
+    });
     expect(body.derived).toBe(true);
     expect(body.derivation_note).toContain(
       "a curated subset of the 2 citizen repositories that exist",
@@ -433,6 +446,23 @@ describe("KINGDOM OS edge routes", () => {
 });
 
 describe("derived Kingdom map helper", () => {
+  test("publishes doors_live null, not 0, when every door probe failed", () => {
+    // Number.isFinite(0) is true, so an unreachable directory used to publish
+    // doors_live: 0 at HTTP 200 — asserting every door is dead when in fact
+    // none were measured. Zero measured and none measured differ.
+    const derived = deriveKingdom(
+      { counts: { doors_live: 4, doors_total: 4 }, citizens: [], doors: [] },
+      {
+        generated: NOW,
+        services: {
+          identity: { citizens: null, public_repos_total: null },
+          directory: { status: "unreachable", live: 0, total: 13, doors: [] },
+        },
+      },
+    );
+    expect(derived.counts.doors_live).toBeNull();
+  });
+
   test("sets unreachable measured counts to null while retaining authored fields", () => {
     const derived = deriveKingdom(
       {

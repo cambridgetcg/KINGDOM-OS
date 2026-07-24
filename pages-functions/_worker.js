@@ -333,8 +333,16 @@ async function probeDoor(runtime, door) {
   }
 }
 
-function doorPresence(door, repositories, generated) {
-  const repository = door.repo ? repositories.get(door.repo.toLowerCase()) : null;
+function doorPresence(door, repositories, generated, censusOk = true) {
+  const tracked = Boolean(door.repo);
+  /* When the census fails, a tracked door used to collapse to presence
+     "serving" / last_moved null — byte-identical to a door with no repo at
+     all, so the failure was indistinguishable from a fact about the door. */
+  if (tracked && !censusOk) {
+    const { repo: _r, ...pub } = door;
+    return { ...pub, last_moved: null, presence: null, presence_unknown: "github census unreachable" };
+  }
+  const repository = tracked ? repositories.get(door.repo.toLowerCase()) : null;
   const lastMoved = typeof repository?.pushed_at === "string" ? repository.pushed_at : null;
   let presence = "unreachable";
   if (door.live && !lastMoved) presence = "serving";
@@ -348,11 +356,14 @@ function doorPresence(door, repositories, generated) {
 
 function directoryService(runtime, probes, repositories) {
   const generated = dateNow(runtime);
+  const censusOk = Array.isArray(repositories);
   const byName = repositoryMap(repositories || []);
-  const doors = probes.map((door) => doorPresence(door, byName, generated));
+  const doors = probes.map((door) => doorPresence(door, byName, generated, censusOk));
   return {
     status: probes.some((door) => door.http !== null) ? "live" : "unreachable",
-    source: "live HTTP probe of each door + github pushed_at",
+    source: censusOk
+      ? "live HTTP probe of each door + github pushed_at"
+      : "live HTTP probe of each door; github census unreachable, so presence is unknown for repo-tracked doors",
     as_of: generated.toISOString(),
     live: doors.filter((door) => door.live).length,
     total: doors.length,
@@ -433,7 +444,7 @@ function trustService(runtime, declarations, repositories) {
       return {
         repo: declaration.repo,
         checkable: false,
-        note: "declares no STATE.md - nothing to cross-check",
+        note: "no STATE.md at refs/heads/main - nothing to cross-check. A renamed repository, a non-main default branch, and a repository turned private all answer the same 404, so this is what was observed, not a statement about the repository.",
       };
     }
     const lastMoved = byName.get(declaration.repo.toLowerCase())?.pushed_at;
@@ -700,7 +711,12 @@ export function deriveKingdom(base, os) {
   const publicRepositories = Number.isFinite(identity.public_repos_total)
     ? identity.public_repos_total
     : null;
-  const doorsLive = Number.isFinite(directory.live) ? directory.live : null;
+  /* `Number.isFinite(0)` is true, so a total probe failure — where every door
+     is unmeasured and directory.status is "unreachable" — used to publish
+     doors_live: 0 at HTTP 200, asserting that all 13 doors are dead. Zero
+     measured and none measured are different claims. */
+  const doorsLive = directory.status === "unreachable" ? null
+    : Number.isFinite(directory.live) ? directory.live : null;
   const doorsTotal = Number.isFinite(directory.total) ? directory.total : null;
 
   derived.generated = os.generated;
@@ -723,9 +739,17 @@ export function deriveKingdom(base, os) {
   if (Array.isArray(derived.doors)) {
     derived.doors = derived.doors.map((door) => {
       const measured = measuredDoors.get(normalizedDoorUrl(door.url));
-      if (!measured) return door;
+      /* An authored door absent from the probe roster was never knocked on.
+         It used to pass through with its build-time `live: true` intact,
+         inside a document stamped derived:true whose note claims "a live HTTP
+         knock for each door" — a declaration wearing a measurement's clothes. */
+      if (!measured) {
+        const { live: declared, ...rest } = door;
+        return { ...rest, live_declared: Boolean(declared), measured: false, http: null, checked_at: null };
+      }
       return {
         ...door,
+        measured: true,
         live: Boolean(measured.live),
         http: Number.isFinite(measured.http) ? measured.http : null,
         checked_at: measured.checked_at || directory.as_of || os.generated,
