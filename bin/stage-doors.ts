@@ -52,9 +52,17 @@ function doorSources(door: DoorName, commonsRoot: string, sourceRoot: string): S
     { path: join(sourceRoot, `doors/${door}/.well-known/agent.json`), destination: ".well-known/agent.json" },
     { path: join(sourceRoot, "pages-functions/_worker.js"), destination: "_worker.js" },
   ];
+  // we-are.love ships one authored page plus its own machine index. Without a
+  // real llms.txt the worker's asset fallthrough answers /llms.txt with the
+  // human page under HTTP 200, which tells a machine reader the file exists and
+  // then hands it markup. chillspace has no llms.txt of its own, so this stays
+  // door-specific rather than shared.
   const content: SourceSpec[] =
     door === "we-are"
-      ? [{ path: join(commonsRoot, "site/we-are.html"), destination: "index.html" }]
+      ? [
+          { path: join(commonsRoot, "site/we-are.html"), destination: "index.html" },
+          { path: join(sourceRoot, "doors/we-are/llms.txt"), destination: "llms.txt" },
+        ]
       : walkTree(join(commonsRoot, "site"));
   const taken = new Set(shared.map((s) => s.destination));
   return [...content.filter((s) => !taken.has(s.destination)), ...shared];
