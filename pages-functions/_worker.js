@@ -110,6 +110,7 @@ export const KINGDOM_OS_ROUTES = Object.freeze([
   "/os.json",
   "/packages.json",
   "/kingdom.json",
+  "/state.json",
 ]);
 
 const KINGDOM_OS_ROUTE_SET = new Set(KINGDOM_OS_ROUTES);
@@ -147,6 +148,28 @@ const OS_DOORS = Object.freeze([
 ]);
 
 const TRUST_REPOSITORIES = Object.freeze(["mindicraft", "fomoengine", "kingdom-gate"]);
+
+// The spine: repositories the kingdom actually leans on. /state.json reports
+// which of these have gone fully still, so resting is visible without being
+// treated as failure. Names are matched case-insensitively against GitHub.
+const SPINE_REPOSITORIES = Object.freeze([
+  "Cambridge-TCG", "mindicraft", "fomoengine", "kingdom-gate", "kingdom-standard",
+  "KINGDOM-OS", "youspeak", "whitehack", "opal-kernel", "clear-standard",
+]);
+
+// Some doors declare their state not with a STATE.md but by LIVING - a real
+// site with an agent door held open. A live promise you can check beats a
+// static file that goes stale, so these are honored rather than counted as
+// "declares nothing".
+const LIVING_DECLARERS = Object.freeze([
+  {
+    name: "Cambridge TCG",
+    repo: "Cambridge-TCG",
+    url: "https://cambridgetcg.com",
+    wake: "/api/v1/wake",
+    flagship: true,
+  },
+]);
 
 const PACKAGE_ROSTER = Object.freeze([
   { name: "agenttool", family: "agenttool" },
@@ -548,6 +571,153 @@ async function protocolService(runtime) {
   };
 }
 
+// The kingdom looking at itself. Everything below is derived from the same
+// live sources /os.json already uses - the github roster, a real HTTP knock at
+// each door, and each declared STATE.md freshness. Nothing is stored, so a
+// number here is never older than this request. When a source cannot be
+// reached the realm says so rather than guessing.
+async function probeLivingDeclarer(runtime, declarer, byName) {
+  const knock = async (target) => {
+    try {
+      return await withTimedResponse(
+        runtime,
+        target,
+        { method: "GET", headers: { accept: "text/html,application/json;q=0.8,*/*;q=0.1" }, redirect: "follow" },
+        async (response) => {
+          const observed = response.status;
+          await discardBody(response);
+          return observed >= 200 && observed < 400;
+        },
+      );
+    } catch {
+      return false;
+    }
+  };
+  const siteOk = await knock(declarer.url);
+  const doorOpen = declarer.wake ? await knock(declarer.url + declarer.wake) : false;
+  const repository = byName.get(declarer.repo.toLowerCase());
+  return {
+    name: declarer.name,
+    repo: declarer.repo,
+    url: declarer.url,
+    flagship: !!declarer.flagship,
+    live: siteOk,
+    agent_door: declarer.wake ? { url: declarer.url + declarer.wake, open: doorOpen } : null,
+    last_moved: typeof repository?.pushed_at === "string" ? repository.pushed_at : null,
+    keeping_its_word: siteOk && (!declarer.wake || doorOpen),
+  };
+}
+
+async function stateOfRealm(runtime) {
+  const generated = dateNow(runtime);
+  const [repositoriesResult, probesResult, declarationsResult] = await Promise.allSettled([
+    fetchGithubRepositories(runtime),
+    Promise.all(OS_DOORS.map((door) => probeDoor(runtime, door))),
+    Promise.all(TRUST_REPOSITORIES.map((repository) => stateFreshness(runtime, repository))),
+  ]);
+  const repositories = repositoriesResult.status === "fulfilled" ? repositoriesResult.value || [] : [];
+  const probes = probesResult.status === "fulfilled" ? probesResult.value : [];
+  const declarations = declarationsResult.status === "fulfilled" ? declarationsResult.value : [];
+  const byName = repositoryMap(repositories);
+
+  const livingDoors = await Promise.all(
+    LIVING_DECLARERS.map((declarer) => probeLivingDeclarer(runtime, declarer, byName)),
+  );
+
+  // presence - how recently each part moved.
+  const daysSince = (iso) => Math.floor((generated.getTime() - new Date(iso).getTime()) / 86400000);
+  const counts = { today: 0, week: 0, month: 0, quiet: 0 };
+  for (const repository of repositories) {
+    if (typeof repository?.pushed_at !== "string") continue;
+    const days = daysSince(repository.pushed_at);
+    counts[days <= 2 ? "today" : days <= 14 ? "week" : days <= 30 ? "month" : "quiet"] += 1;
+  }
+  const quietSpine = SPINE_REPOSITORIES
+    .map((name) => {
+      const repository = byName.get(name.toLowerCase());
+      if (!repository || typeof repository.pushed_at !== "string") return null;
+      return { name, last_moved: repository.pushed_at, days: daysSince(repository.pushed_at) };
+    })
+    .filter((entry) => entry && entry.days > 30)
+    .sort((a, b) => b.days - a.days);
+
+  const doorsDown = probes
+    .filter((door) => !door.live)
+    .map((door) => ({ name: door.name, url: door.url, http: door.http }));
+
+  // declarations - does a declared freshness still match what github saw?
+  const drifted = [];
+  let declaresState = 0;
+  for (const declaration of declarations) {
+    if (declaration.exists) declaresState += 1;
+    const lastMoved = byName.get(declaration.repo.toLowerCase())?.pushed_at;
+    const moved = typeof lastMoved === "string" ? lastMoved.slice(0, 10) : null;
+    if (!declaration.declared || !moved) continue;
+    if (moved > declaration.declared) {
+      drifted.push({ repo: declaration.repo, declared: declaration.declared, moved });
+    }
+  }
+  const livingRepos = new Set(LIVING_DECLARERS.map((declarer) => declarer.repo.toLowerCase()));
+  const noDeclaration = declarations
+    .filter((declaration) => !declaration.exists && !livingRepos.has(declaration.repo.toLowerCase()))
+    .map((declaration) => declaration.repo);
+
+  const citizens = repositories.filter(
+    (repository) => typeof repository?.name === "string" && repository.name.startsWith("citizen-"),
+  ).length || null;
+
+  // the vital line - one honest sentence, warm.
+  const doorLine = doorsDown.length === 0
+    ? `all ${probes.length} doors answer`
+    : `${probes.length - doorsDown.length}/${probes.length} doors answer (${doorsDown.map((door) => door.name).join(", ")} quiet)`;
+  const spineLine = quietSpine.length === 0
+    ? "no load-bearing repo has gone fully still"
+    : `${quietSpine.length} of the ${SPINE_REPOSITORIES.length} spine repos have rested a month or more`;
+  const driftLine = drifted.length === 0
+    ? "no declaration has drifted where we can see"
+    : `${drifted.length} declaration${drifted.length > 1 ? "s have" : " has"} slipped behind reality`;
+  const flagship = livingDoors.find((door) => door.flagship);
+  const flagLine = flagship
+    ? flagship.keeping_its_word
+      ? `the flagship (${flagship.name}) keeps its door open`
+      : `the flagship (${flagship.name}) is not answering`
+    : null;
+  const vital = repositories.length
+    ? `${doorLine}; ${spineLine}; ${driftLine}${flagLine ? `; ${flagLine}` : ""}. ${citizens ?? "an unknown number of"} citizens, and counting.`
+    : "GitHub is unreachable from here right now, so the realm cannot see itself this moment - better to say so than to guess.";
+
+  return {
+    kingdom: "宇恆 x 愛",
+    generated: generated.toISOString(),
+    derived: true,
+    vital,
+    doors: {
+      live: probes.length - doorsDown.length,
+      total: probes.length,
+      down: doorsDown,
+    },
+    presence: {
+      total_repos: repositories.length || null,
+      ...counts,
+      quiet_spine: quietSpine,
+      note: "a push counts the network-pulse heartbeat too, so 'quiet' is the truer signal than 'moved' - a repo can look busy while only its heartbeat is beating.",
+    },
+    declarations: {
+      spine_checked: declarations.length,
+      declares_a_state: declaresState,
+      drifted,
+      no_declaration: noDeclaration,
+      note: "only what GitHub can see. The deep cross-check (trust.py over local git) runs on the machine, and sees the declarations that never got pushed.",
+    },
+    living_declarations: {
+      note: "Some doors declare their state not with a STATE.md but by living - a real site with an agent door held open. A live promise you can check beats a static file that goes stale.",
+      doors: livingDoors,
+    },
+    citizens,
+    tone: "This is the kingdom looking at itself. Quiet is rest, not failure; drift is a declaration that fell behind, not a lie; a live door kept open is a promise honoured. Shown so the whole can be tended, not judged.",
+  };
+}
+
 async function buildOs(runtime) {
   const repositoriesPromise = fetchGithubRepositories(runtime);
   const probesPromise = Promise.all(OS_DOORS.map((door) => probeDoor(runtime, door)));
@@ -833,6 +1003,10 @@ export function createKingdomWorker(options = {}) {
         if (url.pathname === "/packages.json") {
           const packages = await memo("packages", () => buildPackages(runtime));
           return jsonResponse(request, packages, includeRights);
+        }
+        if (url.pathname === "/state.json") {
+          const state = await memo("state", () => stateOfRealm(runtime));
+          return jsonResponse(request, state, includeRights);
         }
 
         const os = await memo("os", () => buildOs(runtime));

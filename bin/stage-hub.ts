@@ -32,6 +32,7 @@ export const HUB_ASSETS = [
   { source: "site/RIGHTS.md", destination: "RIGHTS.md" },
   { source: "site/.well-known/agent.json", destination: ".well-known/agent.json" },
   { source: "pages-content/os/index.html", destination: "os/index.html" },
+  { source: "pages-content/state/index.html", destination: "state/index.html" },
   { source: "pages-functions/_worker.js", destination: "_worker.js" },
 ] as const;
 

@@ -1,6 +1,9 @@
-# runtime artifacts — the routines engine writes these, git doesn't read them
-logs/
-state/
+# runtime artifacts — the routines engine writes these, git doesn't read them.
+# Root-anchored on purpose: a bare `state/` also matches nested content dirs,
+# which silently swallowed pages-content/state/ and kept the State of the
+# Realm page out of this repo entirely.
+/logs/
+/state/
 __pycache__/
 
 # OS files
