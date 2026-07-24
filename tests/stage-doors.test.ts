@@ -17,6 +17,7 @@ function makeFixture(base: string): { sourceRoot: string; commons: string } {
   const files: Record<string, string> = {
     [join(sourceRoot, "doors/we-are/guest.json")]: '{"name":"the-we-are-handshake"}',
     [join(sourceRoot, "doors/we-are/.well-known/agent.json")]: '{"name":"we-are-manifest"}',
+    [join(sourceRoot, "doors/we-are/llms.txt")]: "# WE ARE\n",
     [join(sourceRoot, "doors/chillspace/guest.json")]: '{"name":"chillspace"}',
     [join(sourceRoot, "doors/chillspace/.well-known/agent.json")]: '{"name":"chillspace-manifest"}',
     [join(sourceRoot, "pages-functions/_worker.js")]: "export default {};",
@@ -37,7 +38,7 @@ function makeFixture(base: string): { sourceRoot: string; commons: string } {
 }
 
 describe("the door staging contract", () => {
-  test("we-are stages one page plus guest documents and the shared worker", () => {
+  test("we-are stages one page, its machine index, guest documents, and the shared worker", () => {
     const base = temporaryDirectory("kingdom-stage-doors-");
     try {
       const { sourceRoot, commons } = makeFixture(base);
@@ -48,8 +49,12 @@ describe("the door staging contract", () => {
         "_worker.js",
         "guest.json",
         "index.html",
+        "llms.txt",
       ]);
       expect(readFileSync(join(output, "index.html"), "utf8")).toBe("<html>we are</html>");
+      // Shipped as a real asset: without it the worker's fallthrough answers
+      // /llms.txt with the human page under HTTP 200.
+      expect(readFileSync(join(output, "llms.txt"), "utf8")).toBe("# WE ARE\n");
       expect(() => stageDoor("we-are", output, commons, sourceRoot)).toThrow("output directory is not empty");
     } finally {
       rmSync(base, { recursive: true, force: true });
