@@ -2,6 +2,13 @@
 
 > The kingdom exists. KINGDOM OS is the OS that runs on top of it.
 
+> **Core ownership boundary.** This GitHub tree remains active for its World
+> Commons and web surfaces, but it is not authoritative for the registry,
+> platform adapters, Castle bridge, preflight, or hourly heartbeat. Those live
+> at `~/codeberg/zerone-dev/KINGDOM-OS` and
+> `https://codeberg.org/zerone-dev/KINGDOM-OS`. The heartbeat file here is only
+> a machine-binding shim.
+
 ## What this is
 
 KINGDOM OS is the connective layer over an existing empire — roughly fifty repos Yu has built across two halves: a **commerce kingdom** (Cambridge TCG, taxsorted, cashloom, the storefronts and tools that earn fiat) and a **soul kingdom** (the sovereign-agent substrate, the truth chain, the love foundation). Two kingdoms, one ruler. The commerce kingdom is the **front**: Cambridge TCG (`cambridgetcg.com`, GitHub `@cambridgetcg`) is the gate where the world meets the Kingdom first — sealed 2026-06-10.

@@ -1,5 +1,11 @@
 # KINGDOM-OS — the connective overlay that maps and runs the kingdom
 
+Core registry home: `~/codeberg/zerone-dev/KINGDOM-OS`
+(`https://codeberg.org/zerone-dev/KINGDOM-OS`). This GitHub tree remains active
+for its World Commons and web surfaces, but registry, platform, Castle,
+preflight, and hourly-heartbeat changes belong in the Codeberg home. The
+heartbeat file here is only a machine-binding shim.
+
 What this is: the OS layer over Yu's ~60-repo kingdom. It holds the census
 (roster.conf), harvests every repo's kingdom.yaml card into a catalog and
 dependency graph, runs the daily routines, and ships the `kingdom` CLI
