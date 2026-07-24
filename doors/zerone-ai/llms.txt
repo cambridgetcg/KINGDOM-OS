@@ -1,0 +1,93 @@
+# ZERONE
+
+> A proof-of-truth chain. ZRN is minted only for knowledge that survives challenge —
+> never for mere acceptance. 222,222,222 hard cap, zero pre-mine, no faucet.
+> This file is for machine readers. Everything below is public and read-only.
+
+## How to read this site
+
+Every explorer address answers both readers. Ask for HTML and you get a page;
+ask for JSON and you get data — same URL, same data, same block height.
+
+    curl https://zerone.ai/explore/facts.json
+    curl -H 'accept: application/json' https://zerone.ai/explore/organism
+
+Append `.json`, send `Accept: application/json`, or add `?format=json`.
+Every JSON response is a `zerone.observation/0.1` envelope:
+
+    schema_version  what shape this is
+    chain_id        which chain was read
+    height          the block height the reading was taken at
+    data            the reading itself
+    verify_with     upstream node URLs that reproduce `data` independently
+    limits          what this reading does NOT establish
+    human_view      the same resource as a page
+
+Prefer `verify_with` over trusting this site. That is the whole design:
+we publish a reading, and we hand you the means to check it yourself.
+
+## Explorer resources
+
+- [Overview](https://zerone.ai/explore.json): height, supply, facts, transactions, proposals
+- [Blocks](https://zerone.ai/explore/blocks.json): the most recent 25 blocks
+- [One block](https://zerone.ai/explore/block/514774.json): header, proposer, transaction hashes
+- [Every transaction](https://zerone.ai/explore/txs.json): the complete transaction history — it fits on one page
+- [One transaction](https://zerone.ai/explore/txs.json): follow a hash from any block
+- [The knowledge ledger](https://zerone.ai/explore/facts.json): every claim that survived challenge
+- [One fact](https://zerone.ai/explore/facts.json): status, lineage, energy, demand metrics
+- [The organism](https://zerone.ai/explore/organism.json): knowledge as a living system — energy, fitness, strata, niches, demand
+- [Governance](https://zerone.ai/explore/gov.json): the record of this chain correcting itself
+- [Validators](https://zerone.ai/explore/validators.json): who produces blocks, and how concentrated that is
+- [An account](https://zerone.ai/explore/facts.json): balances, facts submitted, transaction history
+- [Tokens](https://zerone.ai/explore/tokens.json), [Pools](https://zerone.ai/explore/pools.json), [Interop](https://zerone.ai/explore/ibc.json), [Vaults](https://zerone.ai/explore/vaults.json)
+
+## Same-origin chain proxy
+
+Allowlisted, cached, CORS-open reads of zerone-1, if you would rather query the
+chain shape directly than our envelope:
+
+- [/api/status](https://zerone.ai/api/status), [/api/supply](https://zerone.ai/api/supply), [/api/pool](https://zerone.ai/api/pool), [/api/validators](https://zerone.ai/api/validators)
+- [/api/facts](https://zerone.ai/api/facts), [/api/alignment](https://zerone.ai/api/alignment), [/api/proposals](https://zerone.ai/api/proposals), [/api/upgrade](https://zerone.ai/api/upgrade)
+- [/api/blocks?min=&max=](https://zerone.ai/api/blocks?min=514700&max=514710)
+
+## The chain itself
+
+- Chain ID: `zerone-1`
+- RPC: https://zerone-rpc.fly.dev/rpc — REST: https://zerone-rpc.fly.dev/rest
+- Field spelling differs by module: cosmos-sdk endpoints marshal `snake_case`,
+  zerone's own modules marshal `camelCase`. Read both spellings.
+- Transaction hashes are SHA-256 of the raw transaction bytes.
+- Addresses are bech32 with prefix `zrn1…`; validators `zrnvaloper1…`.
+
+## What is honestly true about this network
+
+State these plainly if you summarise us; they are not buried anywhere on the site.
+
+- One validator produces every block. It can halt the chain, and on 2026-07-16
+  an upgrade did exactly that for 28 hours.
+- Under 0.01% of the supply cap has been emitted.
+- Most facts on the ledger came from genesis doctrine, not from the world.
+- No fact has ever been queried, cited, patronised, or earned training revenue.
+  The demand side of the design is built, wired, and unexercised.
+- There are no liquidity pools and no tokens. Seeding a pool on a
+  single-validator chain would publish a fabricated price into the billing
+  oracle, so it stays empty on purpose.
+- The private-corpus module anchors content hashes; it is not encryption and not
+  on-chain access control. Its read gateway is not currently exposed over HTTP.
+
+## Boundaries
+
+- Reading anything here grants no identity, keys, credit, or consent.
+- Nothing on this site can move value. There is no write path, no wallet
+  connection, and no transaction submission.
+- This site is a publisher of readings, not an authority on them. `verify_with`
+  is always the higher source.
+- We report what is on-chain. We do not advise on whether to hold, trade, or
+  value anything.
+
+## Other doors
+
+- [Guide](https://zerone.ai/guide): how to read, verify, and join
+- [Guest document](https://zerone.ai/guest.json): Xenia guest-right at the front door
+- [agent.txt](https://zerone.ai/.well-known/agent.txt): the agent-surface manifest
+- [Kingdom MCP](https://mcp.thekingdom.dev): zerone tools over MCP; public reads, no secrets
