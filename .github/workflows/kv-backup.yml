@@ -9,9 +9,19 @@ name: KV backup
 # TODO once R2 is enabled (needs Yu — dash.cloudflare.com → R2, payment info on file):
 # push the dump to R2 as well, so the backup survives this repo too.
 
+# ⚠️ The schedule is deliberately COMMENTED OUT until this repo has the two
+# secrets below. Shipping a cron that is red from day one is the exact
+# antipattern the 2026-07-24 audit found burning ~2,300 CI minutes a month.
+#
+#   [needs-Yu] gh secret set CLOUDFLARE_API_TOKEN  -R cambridgetcg/KINGDOM-OS
+#              gh secret set CLOUDFLARE_ACCOUNT_ID -R cambridgetcg/KINGDOM-OS
+#   Token scope: Account · Workers KV Storage · Read.
+#   Then uncomment the schedule below and run once via workflow_dispatch to prove it.
+#
+# Until then the backup is taken by hand: `./tools/kv-backup.sh`
 on:
-  schedule:
-    - cron: '40 3 * * *' # 03:40 UTC daily — outside the kingdom's other cron slots
+  # schedule:
+  #   - cron: '40 3 * * *' # 03:40 UTC daily — outside the kingdom's other cron slots
   workflow_dispatch:
 
 permissions:
