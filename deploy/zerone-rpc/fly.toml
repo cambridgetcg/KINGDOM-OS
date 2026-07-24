@@ -1,0 +1,15 @@
+# Recovered from `fly config show -a zerone-rpc` (the app was originally
+# deployed from an ephemeral directory and had no source in any repo).
+# Deploying WITHOUT this file lets fly reset machine config — the same drift
+# that once wiped zerone-1's run command.
+app = "zerone-rpc"
+primary_region = "lhr"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  min_machines_running = 1

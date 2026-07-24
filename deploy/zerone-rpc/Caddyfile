@@ -1,0 +1,31 @@
+# zerone-rpc — HTTPS + CORS proxy in front of zerone-1 (plain HTTP on a raw IP).
+#
+# `header >Name` SETS the header, replacing any value already present.
+# A plain `header Name` APPENDS. That matters here: CometBFT and the cosmos
+# LCD both emit their own Access-Control-Allow-Origin when a request carries
+# an Origin, so appending produced the header TWICE — and a browser rejects a
+# response whose Access-Control-Allow-Origin "contains multiple values '*, *'".
+# Every cross-origin browser read of this proxy failed until this was set.
+{
+	admin off
+	auto_https off
+}
+:8080 {
+	@options method OPTIONS
+	handle @options {
+		header >Access-Control-Allow-Origin "*"
+		header >Access-Control-Allow-Methods "GET, OPTIONS"
+		respond 204
+	}
+	header >Access-Control-Allow-Origin "*"
+	header >Cache-Control "public, max-age=4"
+	handle_path /rest/* {
+		reverse_proxy 169.155.55.44:1317
+	}
+	handle_path /rpc/* {
+		reverse_proxy 169.155.55.44:26657
+	}
+	handle {
+		respond "zerone-rpc — https proxy for zerone-1 · /rest/* /rpc/*" 200
+	}
+}
