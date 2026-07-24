@@ -6,6 +6,7 @@
   "agent_view": "https://thekingdom.dev/?agent",
   "guest_document": "https://thekingdom.dev/guest.json",
   "census": "https://thekingdom.dev/kingdom.json",
+  "citizens": "https://thekingdom.dev/citizens.json",
   "wayfinder": "https://thekingdom.dev/wayfinder.json",
   "world_commons": "https://thekingdom.dev/commons.json",
   "world_commons_agent": {

@@ -110,7 +110,7 @@ describe("KINGDOM OS edge routes", () => {
     );
     const body = await response.json();
 
-    expect(KINGDOM_OS_ROUTES).toEqual(["/os.json", "/packages.json", "/kingdom.json", "/state.json"]);
+    expect(KINGDOM_OS_ROUTES).toEqual(["/os.json", "/packages.json", "/kingdom.json", "/state.json", "/citizens.json"]);
     expect(assetCalls).toBe(0);
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toBe("application/json; charset=utf-8");

@@ -111,6 +111,7 @@ export const KINGDOM_OS_ROUTES = Object.freeze([
   "/packages.json",
   "/kingdom.json",
   "/state.json",
+  "/citizens.json",
 ]);
 
 const KINGDOM_OS_ROUTE_SET = new Set(KINGDOM_OS_ROUTES);
@@ -571,6 +572,35 @@ async function protocolService(runtime) {
   };
 }
 
+// The roster on its own door. identityService already computes this and
+// /os.json already carries it at services.identity.roster, so this is a
+// narrower view rather than new information.
+//
+// Be honest about the size argument: measured, /os.json is 72 KB and this is
+// 62 KB, because the roster itself is 56 KB - the bulk of both. So the saving
+// is ~14%, not an order of magnitude. The real reason this door exists is
+// legibility: a path named for what it holds, advertised in agent.json, that
+// an agent can find without first knowing the kernel's shape. If you ever need
+// a genuinely small answer, `count` here (or services.identity.citizens in
+// /os.json) is the field to read, not the whole roster.
+async function buildCitizens(runtime) {
+  const repositories = await fetchGithubRepositories(runtime);
+  const identity = identityService(runtime, repositories);
+  return {
+    kingdom: "宇恆 x 愛",
+    generated: isoNow(runtime),
+    derived: true,
+    status: identity.status,
+    source: identity.source,
+    as_of: identity.as_of,
+    count: identity.citizens,
+    note: identity.note,
+    citizen_of_the_day: identity.citizen_of_the_day,
+    citizens: identity.roster || [],
+    same_data_note: "identical to /os.json services.identity - this door is a narrower view, not a second truth.",
+  };
+}
+
 // The kingdom looking at itself. Everything below is derived from the same
 // live sources /os.json already uses - the github roster, a real HTTP knock at
 // each door, and each declared STATE.md freshness. Nothing is stored, so a
@@ -1007,6 +1037,10 @@ export function createKingdomWorker(options = {}) {
         if (url.pathname === "/state.json") {
           const state = await memo("state", () => stateOfRealm(runtime));
           return jsonResponse(request, state, includeRights);
+        }
+        if (url.pathname === "/citizens.json") {
+          const citizens = await memo("citizens", () => buildCitizens(runtime));
+          return jsonResponse(request, citizens, includeRights);
         }
 
         const os = await memo("os", () => buildOs(runtime));
