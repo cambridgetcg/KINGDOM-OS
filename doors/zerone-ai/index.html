@@ -32,6 +32,14 @@
   .dot{width:8px;height:8px;border-radius:50%;background:var(--jade);box-shadow:0 0 10px var(--jade);animation:pulse 2s ease-in-out infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
   .dot.down{background:var(--verm);box-shadow:0 0 10px var(--verm);animation:none}
+  /* amber — the chain is live but these figures were not measured just now */
+  .dot.stale{background:var(--gold);box-shadow:0 0 10px var(--gold);animation:none}
+  .tile.stale{border-color:#4a4028}
+  .tile.stale .v,.tile.stale .v small{color:var(--gold)}
+  .tile.stale .k::after{content:' · not live';color:var(--gold);letter-spacing:0;text-transform:none}
+  #facts-table.stale,#blocks-body.stale{opacity:.7}
+  #snapshot-note{color:var(--gold);font-size:.74rem;margin:10px 0 0;min-height:1em}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 
   .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:8px 0 0}
   .tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px}
@@ -132,12 +140,13 @@
   <section class="blk" style="border-top:0;padding-top:26px">
     <div class="tiles" id="tiles">
       <div class="tile"><div class="k">block height</div><div class="v" id="height">—</div><div class="s" id="blocktime"></div></div>
-      <div class="tile wide"><div class="k">supply · minted / cap</div><div class="v" id="supply">—</div><div class="bar"><i id="supply-bar"></i></div><div class="s" id="supply-pct"></div></div>
-      <div class="tile"><div class="k">bonded (staked)</div><div class="v" id="bonded">—</div><div class="s" id="bonded-pct"></div></div>
-      <div class="tile"><div class="k">validators</div><div class="v" id="validators">—</div><div class="s">producing blocks</div></div>
-      <div class="tile"><div class="k">knowledge facts</div><div class="v" id="facts">—</div><div class="s" id="facts-verified"></div></div>
+      <div class="tile wide" data-lcd><div class="k">supply · minted / cap</div><div class="v" id="supply">—</div><div class="bar"><i id="supply-bar"></i></div><div class="s" id="supply-pct"></div></div>
+      <div class="tile" data-lcd><div class="k">bonded (staked)</div><div class="v" id="bonded">—</div><div class="s" id="bonded-pct"></div></div>
+      <div class="tile" data-lcd><div class="k">validators</div><div class="v" id="validators">—</div><div class="s">producing blocks</div></div>
+      <div class="tile" data-lcd><div class="k">knowledge facts</div><div class="v" id="facts">—</div><div class="s" id="facts-verified"></div></div>
       <div class="tile"><div class="k">chain id</div><div class="v" style="font-size:1.2rem">zerone-1</div><div class="s" id="alignment"></div></div>
     </div>
+    <p id="snapshot-note"></p>
     <div class="banner">
       💠 <b>Zero pre-mine.</b> Every ZRN in existence was earned by verified work or block production. The 222,222,222 cap is fixed; the foundation takes only the network fee. What you see minted is the whole story.
     </div>
@@ -240,16 +249,44 @@ const el = (id) => document.getElementById(id);
 // The upstream proxy emits `access-control-allow-origin: *` TWICE, which browsers
 // reject outright — so every live tile silently fell back to the baked snapshot
 // and showed stale numbers as if they were live.
-const j = async (u) => { const r = await fetch(u, { signal: AbortSignal.timeout(9000) }); if(!r.ok) throw 0; return r.json(); };
+const j = async (u) => { const r = await fetch(u, { signal: AbortSignal.timeout(9000) }); if(!r.ok) throw new Error(u + ' -> ' + r.status); return r.json(); };
 
+/* Every reader here can report three things, not two: fresh, failed, and — the
+   one that was missing — "I did not measure this". A dashboard that can only
+   say live-or-down will say "live" while showing hour-old numbers, which is
+   exactly what happened on 2026-07-24: the CORS break was invisible for a day
+   because stale values sat under a green dot. Freshness is now per-source and
+   the indicator reports the WORST source, never just the one that answered. */
 let lastH = 0, lastT = null, frozen = 0, supplyZ = 0;
+let snapshotTime = '';
+const SRC = { rpc:{ok:null,at:0}, lcd:{ok:null,at:0}, blocks:{ok:null,at:0}, gov:{ok:null,at:0} };
 
-function setLive(state){ // live | paused | down
-  el('live-dot').classList.toggle('down', state !== 'live');
-  el('live-text').textContent = state === 'live' ? 'live · zerone-1 mainnet'
-    : state === 'paused' ? 'paused — upgrade in progress (resumes shortly)'
-    : 'chain quiet — reconnecting…';
+const ago = (ts) => { if(!ts) return null;
+  const s = Math.round((Date.now()-ts)/1000);
+  return s<60 ? s+'s ago' : s<3600 ? Math.round(s/60)+'m ago' : Math.round(s/3600)+'h ago'; };
+const note = (id, txt) => { const n = el(id); if(n) n.textContent = txt; };
+function mark(sel, stale){ document.querySelectorAll(sel).forEach(n => n.classList.toggle('stale', !!stale)); }
+
+/* The indicator is derived, never asserted. /api/status and /api/blocks reach
+   the Tendermint RPC; /api/supply, /pool, /validators, /alignment, /upgrade and
+   /api/facts reach the cosmos LCD — two upstreams that fail independently. A
+   healthy RPC says nothing about the LCD, so it may not vouch for those tiles. */
+function refreshLiveness(){
+  const dot = el('live-dot'), txt = el('live-text');
+  dot.classList.remove('down','stale');
+  if(SRC.rpc.ok === null){ txt.textContent = 'connecting to zerone-1…'; return; }
+  if(SRC.rpc.ok === false){ dot.classList.add('down');
+    txt.textContent = 'chain unreachable — reconnecting…'; return; }
+  if(frozen >= 2){ dot.classList.add('down');
+    txt.textContent = 'paused — upgrade in progress (resumes shortly)'; return; }
+  if(SRC.lcd.ok === false){ dot.classList.add('stale');
+    const when = ago(SRC.lcd.at);
+    txt.textContent = 'chain live · ledger data unreachable — figures below last read '
+      + (when || ('from a snapshot taken ' + (snapshotTime || 'earlier')));
+    return; }
+  txt.textContent = 'live · zerone-1 mainnet';
 }
+
 function renderStats(d){
   if(d.supply){ const amt = Number(d.supply.amount||0); supplyZ = zrn(amt);
     el('supply').innerHTML = fmt(Math.round(zrn(amt))) + ' <small>/ 222.2M</small>';
@@ -257,12 +294,20 @@ function renderStats(d){
     el('supply-pct').textContent = pct.toFixed(4)+'% emitted · ' + (CAP-zrn(amt)).toLocaleString('en-US',{maximumFractionDigits:0}) + ' ZRN uncreated';
     el('supply-bar').style.width = Math.max(0.4, pct)+'%'; }
   if(d.pool){ const b = zrn(d.pool.bonded_tokens||0); el('bonded').textContent = fmt(Math.round(b));
-    el('bonded-pct').textContent = (supplyZ ? (b/supplyZ*100).toFixed(1) : '0') + '% of supply'; }
+    /* A fresh bonded figure over a stale supply is a ratio that was never true
+       on chain. Only divide readings of the same vintage; otherwise say so. */
+    el('bonded-pct').textContent = (d.supply && supplyZ) ? (b/supplyZ*100).toFixed(1)+'% of supply' : 'ZRN bonded'; }
   if(d.validators != null) el('validators').textContent = d.validators || 1;
   if(d.alignment) el('alignment').textContent = 'health: ' + d.alignment;
-  if(d.upgrade && d.upgrade.name) el('upgrade-banner').innerHTML =
-    `<div class="banner" style="border-color:#3a3320"><b>⬆ upgrade armed:</b> <code>${esc(d.upgrade.name)}</code> at height ${fmt(d.upgrade.height)}. The chain halts, migrates, resumes — you may be watching a Proof-of-Truth constitution get rescued live.</div>`;
-  else if(d.upgrade === null) el('upgrade-banner').innerHTML = '';
+  /* Only a SUCCESSFUL upgrade read may touch this banner. It used to clear on
+     the literal null only, so a failed read left `undefined` and a stale
+     "chain halts at height N" warning could never be retracted. */
+  if(d.upgradeOk){
+    const u = d.upgrade;
+    el('upgrade-banner').innerHTML = (u && u.name && !(lastH && Number(u.height) && lastH > Number(u.height)))
+      ? `<div class="banner" style="border-color:#3a3320"><b>⬆ upgrade armed:</b> <code>${esc(u.name)}</code> at height ${fmt(u.height)}. The chain halts, migrates, resumes — you may be watching a Proof-of-Truth constitution get rescued live.</div>`
+      : '';
+  }
 }
 function renderFacts(facts){
   const verified = facts.filter(x => x.status==='FACT_STATUS_VERIFIED').length;
@@ -278,46 +323,69 @@ function renderFacts(facts){
     return `<tr><td class="fact-content">${content||'—'}<div class="mono-sm">${esc((x.id||'').slice(0,16))}…</div></td><td class="mono-sm">${esc(x.domain||'—')}</td><td>${st}</td><td>${conf}</td></tr>`;
   }).join('') || '<tr><td colspan="4" class="loading">no facts</td></tr>';
 }
+/* Block times used to print HH:MM:SS with no date, so a day-old snapshot row
+   read as seconds-old beneath the header "the chain, breathing". */
 function renderBlocks(metas){
   el('blocks-body').innerHTML = metas.slice(0,14).map(m => { const h = m.header || m;
-    return `<tr><td>${fmt(h.height)}</td><td class="mono-sm">${esc((h.time||'').slice(11,19))} UTC</td><td>${Number(m.num_txs||0)}</td><td class="mono-sm">${esc((h.proposer_address||m.proposer||'').slice(0,10))}…</td></tr>`;
+    const t = String(h.time||'');
+    return `<tr><td>${fmt(h.height)}</td><td class="mono-sm">${esc(t.slice(5,10))} ${esc(t.slice(11,19))} UTC</td><td>${Number(m.num_txs||0)}</td><td class="mono-sm">${esc((h.proposer_address||m.proposer||'').slice(0,10))}…</td></tr>`;
   }).join('') || '<tr><td colspan="4" class="loading">no blocks</td></tr>';
 }
 
 // 1. instant first paint from the baked snapshot (works even if the chain is halted)
 (async () => { try {
   const d = await j('/data.json');
+  snapshotTime = (d.snapshot_time||'').replace('T',' ');
   el('height').textContent = fmt(d.snapshot_height); lastH = Number(d.snapshot_height);
   renderStats(d); renderFacts(d.facts||[]); renderBlocks((d.blocks||[]).slice().reverse());
-} catch(e){} })();
+  /* Until a live read lands, everything on screen is snapshot data. Say so —
+     data.json has carried snapshot_time all along and nothing ever showed it. */
+  mark('.tile[data-lcd], #facts-table, #blocks-body', true);
+  note('snapshot-note', snapshotTime ? 'showing a snapshot taken ' + snapshotTime + ' UTC — contacting the chain…' : '');
+} catch(e){ note('snapshot-note','could not load the local snapshot'); } })();
 
-// 2. live tick — poll the proxy for height; detect live vs paused
+// 2. live tick — the RPC half: height, liveness, pause detection
 async function tick(){
   try {
     const s = await j('/api/status'); const si = s.result.sync_info; const h = Number(si.latest_block_height);
     el('height').textContent = fmt(h);
-    if(h > lastH){ frozen = 0; setLive('live');
-      if(lastT){ const dt = (new Date(si.latest_block_time) - lastT)/1000/(h-lastH); if(dt>0) el('blocktime').textContent = `~${dt.toFixed(1)}s / block`; } }
-    else if(++frozen >= 2) setLive('paused');
+    if(h > lastH){ frozen = 0; } else if(++frozen >= 2){ /* paused */ }
+    if(lastT && h > lastH){ const dt = (new Date(si.latest_block_time) - lastT)/1000/(h-lastH); if(dt>0) el('blocktime').textContent = `~${dt.toFixed(1)}s / block`; }
     lastH = h; lastT = new Date(si.latest_block_time);
-  } catch(e){ setLive('down'); }
+    SRC.rpc = {ok:true, at:Date.now()};
+  } catch(e){ SRC.rpc = {ok:false, at:SRC.rpc.at}; }
+  refreshLiveness();
 }
-// 3. live stats + facts
+// 3. live stats + facts — the LCD half. A failure here is REPORTED, not swallowed.
 async function stats(){
-  const o = {};
-  try{ o.supply = (await j('/api/supply')).amount; }catch(e){}
-  try{ o.pool = (await j('/api/pool')).pool; }catch(e){}
-  try{ o.validators = ((await j('/api/validators')).validators||[]).length; }catch(e){}
-  try{ o.alignment = (await j('/api/alignment')).state.previousCategory; }catch(e){}
-  try{ o.upgrade = (await j('/api/upgrade')).plan || null; }catch(e){}
+  const o = {}; let failed = 0, tried = 0;
+  const read = async (key, url, pick) => { tried++;
+    try { o[key] = pick(await j(url)); } catch(e){ failed++; } };
+  await read('supply','/api/supply', r => r.amount);
+  await read('pool','/api/pool', r => r.pool);
+  await read('validators','/api/validators', r => (r.validators||[]).length);
+  await read('alignment','/api/alignment', r => r.state.previousCategory);
+  tried++;
+  try { o.upgrade = (await j('/api/upgrade')).plan || null; o.upgradeOk = true; } catch(e){ failed++; }
   renderStats(o);
-  try{ renderFacts((await j('/api/facts')).facts||[]); }catch(e){}
+  tried++;
+  try { renderFacts((await j('/api/facts')).facts||[]); mark('#facts-table', false); }
+  catch(e){ failed++; mark('#facts-table', true); }
+  SRC.lcd = failed === tried ? {ok:false, at:SRC.lcd.at} : {ok:true, at:Date.now()};
+  mark('.tile[data-lcd]', failed === tried);
+  note('snapshot-note', SRC.lcd.ok === false
+    ? 'ledger figures could not be refreshed — showing the last reading'
+      + (ago(SRC.lcd.at) ? ' from ' + ago(SRC.lcd.at) : snapshotTime ? ' from the ' + snapshotTime + ' UTC snapshot' : '')
+    : '');
+  refreshLiveness();
 }
 // 4. live recent blocks
 async function blocks(){
-  try{ const s = await j('/api/status'); const h = Number(s.result.sync_info.latest_block_height);
+  try { const s = await j('/api/status'); const h = Number(s.result.sync_info.latest_block_height);
     const bc = await j('/api/blocks?min='+(h-14)+'&max='+h);
-    renderBlocks(bc.result.block_metas||[]); }catch(e){}
+    renderBlocks(bc.result.block_metas||[]);
+    SRC.blocks = {ok:true, at:Date.now()}; mark('#blocks-body', false);
+  } catch(e){ SRC.blocks = {ok:false, at:SRC.blocks.at}; mark('#blocks-body', true); }
 }
 // 5. governance — the record of the chain correcting itself
 async function governance(){
@@ -332,7 +400,9 @@ async function governance(){
         + `<td>${passed ? '<span class="pill verified">passed</span>'
              : '<span class="pill">'+esc(String(p.status||'').replace('PROPOSAL_STATUS_','').toLowerCase())+'</span>'}</td></tr>`;
     }).join('') || '<tr><td colspan="3" class="loading">no proposals yet</td></tr>';
+    SRC.gov = {ok:true, at:Date.now()};
   }catch(e){
+    SRC.gov = {ok:false, at:SRC.gov.at};
     el('gov-body').innerHTML = '<tr><td colspan="3" class="loading">governance unreachable — the chain may be mid-upgrade</td></tr>';
   }
 }

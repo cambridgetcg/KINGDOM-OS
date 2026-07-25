@@ -31,14 +31,14 @@ we publish a reading, and we hand you the means to check it yourself.
 - [Overview](https://zerone.ai/explore.json): height, supply, facts, transactions, proposals
 - [Blocks](https://zerone.ai/explore/blocks.json): the most recent 25 blocks
 - [One block](https://zerone.ai/explore/block/514774.json): header, proposer, transaction hashes
-- [Every transaction](https://zerone.ai/explore/txs.json): the complete transaction history — it fits on one page
-- [One transaction](https://zerone.ai/explore/txs.json): follow a hash from any block
+- [Transactions](https://zerone.ai/explore/txs.json): the 60 most recent of 78 ever submitted; `total` and `shown` are both in the envelope
+- [One transaction](https://zerone.ai/explore/tx/156ED0826910E333BD2D6099CE1E6959630BF96235AC4FCF87AE7DAEEF465A46.json): `/explore/tx/<HASH>.json` — result, gas, signer, and the zerone.* ledger events it emitted
 - [The knowledge ledger](https://zerone.ai/explore/facts.json): every claim that survived challenge
-- [One fact](https://zerone.ai/explore/facts.json): status, lineage, energy, demand metrics
+- [One fact](https://zerone.ai/explore/fact/054411ba90bbee700703c04caa811881.json): `/explore/fact/<id>.json` — status, lineage, energy, demand metrics
 - [The organism](https://zerone.ai/explore/organism.json): knowledge as a living system — energy, fitness, strata, niches, demand
 - [Governance](https://zerone.ai/explore/gov.json): the record of this chain correcting itself
 - [Validators](https://zerone.ai/explore/validators.json): who produces blocks, and how concentrated that is
-- [An account](https://zerone.ai/explore/facts.json): balances, facts submitted, transaction history
+- [An account](https://zerone.ai/explore/address/zrn1la2g8yzqtpj546x2x9rq42erc6zpj4jqktkhaz.json): `/explore/address/<zrn1…>.json` — balances, facts submitted, transaction history
 - [Tokens](https://zerone.ai/explore/tokens.json), [Pools](https://zerone.ai/explore/pools.json), [Interop](https://zerone.ai/explore/ibc.json), [Vaults](https://zerone.ai/explore/vaults.json)
 
 ## Same-origin chain proxy
@@ -57,6 +57,8 @@ chain shape directly than our envelope:
 - Field spelling differs by module: cosmos-sdk endpoints marshal `snake_case`,
   zerone's own modules marshal `camelCase`. Read both spellings.
 - Transaction hashes are SHA-256 of the raw transaction bytes.
+- Unknown addresses answer 404, never a 200 page standing in for the resource.
+  An address that is not valid bech32 is refused rather than described as an empty account.
 - Addresses are bech32 with prefix `zrn1…`; validators `zrnvaloper1…`.
 
 ## What is honestly true about this network

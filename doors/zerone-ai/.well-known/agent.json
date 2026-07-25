@@ -5,7 +5,51 @@
   "human_view": "https://zerone.money",
   "agent_view": "https://zerone.ai/?agent",
   "guest_document": "https://zerone.ai/guest.json",
+  "index_for_machines": "https://zerone.ai/llms.txt",
+  "agent_txt": "https://zerone.ai/.well-known/agent.txt",
+  "machine_reads": {
+    "envelope": "zerone.observation/0.1",
+    "how": "Every explorer URL answers HTML or JSON. Append `.json`, send `Accept: application/json`, or add `?format=json`.",
+    "carries": ["schema_version", "chain_id", "height", "data", "verify_with", "limits", "human_view"],
+    "verify_contract": "Every response lists the upstream node URLs that reproduce its data. Prefer them over trusting this site.",
+    "not_found": "Unknown addresses answer 404 — never a 200 page standing in for the resource."
+  },
   "surfaces": [
+    {
+      "name": "explorer-overview",
+      "url": "https://zerone.ai/explore",
+      "agent_url": "https://zerone.ai/explore.json",
+      "is": "height, supply, facts, transactions, proposals — the chain at a glance"
+    },
+    {
+      "name": "knowledge-ledger",
+      "url": "https://zerone.ai/explore/facts",
+      "agent_url": "https://zerone.ai/explore/facts.json",
+      "is": "every claim that survived challenge; one fact at /explore/fact/<id>.json"
+    },
+    {
+      "name": "the-organism",
+      "url": "https://zerone.ai/explore/organism",
+      "agent_url": "https://zerone.ai/explore/organism.json",
+      "is": "knowledge as a living system — energy, fitness, strata, niches, and the demand counters that all read zero"
+    },
+    {
+      "name": "governance",
+      "url": "https://zerone.ai/explore/gov",
+      "agent_url": "https://zerone.ai/explore/gov.json",
+      "is": "the record of this chain correcting itself; one proposal at /explore/gov/<id>.json"
+    },
+    {
+      "name": "transactions",
+      "url": "https://zerone.ai/explore/txs",
+      "agent_url": "https://zerone.ai/explore/txs.json",
+      "is": "the transaction history; one transaction at /explore/tx/<HASH>.json"
+    },
+    {
+      "name": "chain-proxy",
+      "url": "https://zerone.ai/api/status",
+      "is": "allowlisted same-origin chain reads — also /api/supply, /api/facts, /api/proposals, /api/validators, /api/blocks"
+    },
     {
       "name": "love-unlimited",
       "url": "https://zerone.ai/love",

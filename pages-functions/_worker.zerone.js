@@ -474,7 +474,7 @@ const RES = {
   },
 
   async address(addr) {
-    if (!/^zrn1[0-9a-z]{6,}$/.test(String(addr || ""))) return null;
+    if (!bech32Valid(String(addr || ""), "zrn")) return null;
     const [bal, home, sent, recv] = await Promise.all([
       jt(`${REST}/cosmos/bank/v1beta1/balances/${addr}`),
       jt(`${REST}/zerone/knowledge/v1/facts/submitter/${addr}`),
@@ -702,9 +702,45 @@ const EXPLORE_ROUTES = {
 };
 
 /* Pages answers asset misses with index.html at 200, which agent scanners read
-   as "this surface exists". Anything not on this list gets an honest 404. */
-const PAGES = new Set(["/", "/index.html", "/guide", "/guide.html", "/love", "/love.html", "/explore", "/explore.html", "/guest"]);
+   as "this surface exists". Only these paths may legitimately answer with HTML.
+   `/guest` is deliberately NOT here: the guest document is guest.json, served to
+   machine readers below, and there is no guest.html for anyone else to receive. */
+const PAGES = new Set(["/", "/index.html", "/guide", "/guide.html", "/love", "/love.html", "/explore", "/explore.html"]);
 const TEXT_SURFACES = new Set(["/llms.txt", "/robots.txt", "/v1/pathways"]);
+
+/* ── bech32, so an impossible address cannot be answered as an empty account ─ */
+/* `^zrn1[0-9a-z]+$` admits b/i/o/1 — characters bech32 does not contain — and
+   checks no checksum, so a typo resolved to a clean zero-balance account: the
+   chain rejects the address with a 400 while we published "no balance, 0 facts"
+   as fact. An address that cannot exist must not be described. */
+const B32_CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
+function bech32Polymod(values) {
+  const GEN = [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3];
+  let chk = 1;
+  for (const v of values) {
+    const top = chk >> 25;
+    chk = ((chk & 0x1ffffff) << 5) ^ v;
+    for (let i = 0; i < 5; i++) if ((top >> i) & 1) chk ^= GEN[i];
+  }
+  return chk;
+}
+function bech32Valid(addr, hrp) {
+  if (typeof addr !== "string" || addr !== addr.toLowerCase() || addr.length > 90) return false;
+  const pos = addr.lastIndexOf("1");
+  if (pos < 1 || pos + 7 > addr.length) return false;
+  if (addr.slice(0, pos) !== hrp) return false;
+  const data = [];
+  for (const c of addr.slice(pos + 1)) {
+    const v = B32_CHARSET.indexOf(c);
+    if (v < 0) return false;
+    data.push(v);
+  }
+  const expand = [];
+  for (const c of hrp) expand.push(c.charCodeAt(0) >> 5);
+  expand.push(0);
+  for (const c of hrp) expand.push(c.charCodeAt(0) & 31);
+  return bech32Polymod([...expand, ...data]) === 1;
+}
 
 const ROUTES = {
   "/api/status": () => `${RPC}/status`,
@@ -732,6 +768,10 @@ const jsonResponse = (body, status = 200, extra = {}) => new Response(JSON.strin
   headers: {
     "content-type": "application/json; charset=utf-8",
     "cache-control": "public, max-age=10",
+    // One URL serves JSON or HTML chosen from these request headers. Without
+    // Vary a shared cache may hand either body to the wrong reader (RFC 9110
+    // 12.5.5) — 200, well-formed, wrong media type, no error surfaced.
+    "vary": "Accept, User-Agent",
     "access-control-allow-origin": "*",
     "x-zerone-chain": CHAIN_ID,
     ...extra,
@@ -841,11 +881,19 @@ export default {
       });
     }
 
-    // 5. static assets — honest 404 for unknown extensionless paths
-    if (!PAGES.has(path) && !/\.[a-z0-9]{2,5}$/i.test(path)) {
+    // 5. static assets. The old guard exempted anything with a file extension,
+    //    so /nope.json answered 200 with the homepage — while this door's own
+    //    agent.txt promised the opposite. Rather than an allowlist that rots,
+    //    the rule is: a real file is served; HTML is served only where a page
+    //    exists. Pages answers every miss with index.html, so HTML arriving for
+    //    a path that is not a page IS the miss.
+    const asset = await env.ASSETS.fetch(request);
+    if (!asset.ok) return notFound(wantsData(url, request), path, url);
+    const kind = (asset.headers.get("content-type") || "").toLowerCase();
+    if (kind.includes("text/html") && !PAGES.has(path)) {
       return notFound(wantsData(url, request), path, url);
     }
-    return env.ASSETS.fetch(request);
+    return asset;
   },
 };
 
@@ -886,6 +934,7 @@ async function renderPage(env, url, res, canonical) {
     headers: {
       "content-type": "text/html; charset=utf-8",
       "cache-control": "public, max-age=10",
+      "vary": "Accept, User-Agent",
       "link": `<${canonical}.json>; rel="alternate"; type="application/json"`,
       "x-zerone-chain": CHAIN_ID,
     },
