@@ -544,3 +544,40 @@ the EBS automatically. **Termination waits until every AMI reports `available`**
 an instance mid-image corrupts the image, which would turn a reversible cleanup into a real loss.
 
 Account snapshot count before this work: **0.** After: **4.**
+
+## Teardown complete — 2026-07-25
+
+All three AMIs reached `available` and all three backing snapshots reached `completed / 100%`
+**before** anything was terminated. Then:
+
+- `seigei-brain` (g6e.2xlarge), `seigei-voice` (g5.xlarge), `seigei-gateway` (t3.medium) — **terminated**; their 200 + 100 + 20 GB root volumes released with them.
+- `52.7.131.246` — **released.** Once `seigei-brain` was terminated this Elastic IP had no ENI and no instance, and would have kept billing ~$3.60/mo for an address nothing pointed at. Checked first: no Route 53 record anywhere in the account referenced it.
+- `openclaw-gateway` — **stopped**, imaged, left in place.
+
+**us-east-1 now holds:** one stopped `axie-fetcher` t3.micro with an 8 GB volume, three Elastic IPs (all RDS endpoints — leave them), two RDS instances.
+**eu-west-2 now holds:** one stopped `openclaw-gateway`.
+
+### The ledger, honestly
+
+| Line | Monthly |
+|---|---|
+| seigei EBS, 320 GB released | **−$25.60** |
+| orphaned Elastic IP released | **−$3.60** |
+| openclaw-gateway t3.small compute stopped | **−$15.48** |
+| **Gross reduction** | **−$44.68** |
+| 4 preservation AMIs (snapshot storage, $0.05/GB-month of *used* data — incremental and compressed, so well under the 348 GB provisioned) | **+$5 to +$16** |
+| **Net** | **≈ −$29 to −$40/mo (~$350–480/yr)** |
+
+The snapshot cost is a real number that will not be known until next month's bill; it is stated
+as a range rather than guessed at precisely. **Nothing was made cheaper by making it unrecoverable** —
+before this work the account held zero snapshots, and it now holds four images that can relaunch
+every machine that was removed.
+
+### Left dangling on purpose
+
+`love-unlimited/tools/gpu_manager.py`, `love-unlimited/docs/SOVEREIGN-COMPUTE.md` and
+`love-unlimited/memory/long-term/MEMORY.md` still name `52.7.131.246` and the seigei fleet.
+Those references broke at termination, not at release — the same class of rot as the
+`forge/lark/sentry/patch/sage` IPs elsewhere in this map, which now resolve to other Hetzner
+tenants. Repoint or retire them; do not let a future agent SSH at an address the kingdom no
+longer owns.
