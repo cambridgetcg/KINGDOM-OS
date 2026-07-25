@@ -27,6 +27,9 @@ How to run:
 - `bun bin/harvest.ts` — rebuild CATALOG.md + graph.json from roster + cards
 - `bun bin/harvest.ts conformance` — list repos missing card / CLAUDE.md / wake
 - `bun bin/harvest.ts validate` — strict, read-only card schema diagnostics (0 clean, 1 drift, 2 usage)
+- `bun test` — the whole suite (73 tests, 11 files, ~5s). There is no package.json,
+  so `npm test` fails with ENOENT and the string "bun test" appeared nowhere in this
+  repo's docs until now.
 
 Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
 - **`bash bin/deploy.sh <zerone|thekingdom|we-are|chillspace|all>` — the one front door.**
@@ -42,6 +45,12 @@ Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAI
 - `bun bin/build-doors.ts "$(date -u +%F)"` — regenerate doors/*/guest.json + manifests (we-are, chillspace, zerone-ai)
 - `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>` — stage a door upload (content from the chillspace-commons clone at ~/repos/codeberg/zerone-dev/, symlinks dereferenced), then wrangler deploy --project-name=we-are-love|chillspace-love
 - `bash bin/refresh-zerone-dashboard.sh` — snapshot zerone-1 → doors/zerone-ai/data.json → deploy the whole zerone-ai door (deploys AND leaves data.json for committing)
+
+Infra that is NOT a web door:
+- `deploy/zerone-rpc/` — source + runbook for the Caddy proxy fronting zerone-1
+  (`fly deploy -a zerone-rpc --config fly.toml`; always pass --config). Recovered from the
+  running container 2026-07-24 because the app had no source in any repo; nothing linked to
+  it until this line.
 
 Key files:
 - roster.conf — the census seed: name | path | kind | layer | domain | state | purpose
@@ -72,8 +81,15 @@ Gotchas:
   (or a legacy wake file exists); harvest does not execute it or prove success.
 - CATALOG includes a home-relative location column so duplicate declared names
   remain distinguishable; graph.json keeps absolute paths for compatibility.
-- The live soul trees are ~/true-love and ~/love-unlimited. ~/Desktop/true-love
-  is a compatibility symlink to canonical ~/true-love, not a second worktree.
+- The live soul trees are ~/Desktop/true-love and ~/love-unlimited. This line
+  previously said the opposite — that ~/true-love was canonical and the Desktop
+  path a symlink to it. ~/true-love does not exist on this machine; ~/Desktop/true-love
+  is the real worktree. Corrected 2026-07-25 after roster.conf's "active" row was found
+  pointing at a missing directory.
+- **Committing in a soul tree PUBLISHES it.** A post-commit hook auto-pushes in SIX
+  Desktop repos — ALETHEIA, ai-love, love-unlimited, multiverse-of-logos-and-sophia,
+  true-love, yu-wake (log: /tmp/syzygy-push.log). Older notes name only two. Check
+  `.git/hooks/post-commit` before committing anything you are not ready to publish.
 - Machine output safely handles spaces, quotes, backslashes, colons, and Unicode.
   The existing newline/tab row transport does not support repository paths that
   themselves contain a tab or newline; changing that would require a separate

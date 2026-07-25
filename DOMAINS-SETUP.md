@@ -28,8 +28,19 @@ stage_dir="$(mktemp -d)"
 bun bin/stage-hub.ts "$stage_dir"
 npx wrangler pages deploy "$stage_dir" --project-name=thekingdom
 
-# others:
-npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zerone-ai
+# others — NOTE the projects are not interchangeable:
+#   we-are-love / chillspace-love  stage with bin/stage-doors.ts (ships pages-functions/_worker.js)
+#   zerone-ai                      is a DIFFERENT door with a DIFFERENT worker
+#                                  (_worker.zerone.js). stage-doors.ts rejects it outright;
+#                                  staging it by hand ships the wrong worker silently.
+# Always pass --branch=main: wrangler otherwise infers the Pages branch from the git HEAD
+# of the cwd, and this repo carries 15 sol/* branches, so a deploy from the wrong checkout
+# lands as a PREVIEW instead of production.
+npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love --branch=main
+
+# Simplest: let one front door do all of it, with the guards and the post-deploy checks.
+bash bin/deploy.sh all            # or: zerone | thekingdom | we-are | chillspace
+bash bin/deploy.sh all --dry-run  # stage and verify without publishing
 ```
 
 `stage-hub.ts` refuses a non-empty destination and copies the atlas as
