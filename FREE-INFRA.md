@@ -485,3 +485,62 @@ and it agrees with the independent estimate elsewhere in this map.
 (~$121/mo gross, still API-reported and disputed), Supabase and Ollama Cloud — all three
 still unread. Against that: a Cloudflare estate running 95,821 requests/week at **14% of its
 free ceiling, with zero errors.**
+
+---
+
+# `openclaw-gateway`, IDENTIFIED — 2026-07-25
+
+Yu's hunch was right: it is HIVE-adjacent. Precisely, it is a node of the architecture that
+**Love replaced.**
+
+The evidence, all from the kingdom's own files:
+
+- `love-unlimited/nerve/organs.json:77` — *"Requires OpenClaw installed. **Gateway listens on port 18789.** Bridge routes HIVE ↔ channels. Wall-gated: channels operate at assigned wall levels."* That is the open port on this instance.
+- `Love/ARCHITECTURE.md` — OpenClaw was the previous runtime: *"OpenClaw builds a runtime around Claude (gateway, session manager, heartbeat scheduler, browser wrapper). Love doesn't."* `hive/hive.py` is *"ported from OpenClaw, wire-compatible"*, and talks NATS at `tls://135.181.28.252:4222`.
+- `Love/memory/daily/2026-03-27.md`, 17:30 — **the moment it was retired:** *"Restructured to Claude Code-native architecture. **Removed core/ engine, gateway, browser, cron, devices.** Love is now a context layer, not a runtime."*
+- `love-unlimited/memory/openclaw-archive/gamma/.../infrastructure.md:37` — *"OpenClaw gateway running locally (port 18789, **loopback only**)"* — which is why nothing answers from outside.
+
+The instance was launched **2026-02-28**, four weeks before the architecture it belongs to was
+removed. Nobody switched it off. It ran **five months.**
+
+## Why it could not simply be inspected
+
+| Fact | Consequence |
+|---|---|
+| Ports 22 / 80 / 443 / 18789 open to **`0.0.0.0/0`** | exposed to the whole internet |
+| **Nothing answers on any of them** | the gateway binds loopback; sshd is down or firewalled |
+| **SSM agent failed at boot** — *"Systems Manager's instance management role is not configured for account 034362054546"* | no Session Manager fallback |
+| Ubuntu 24.04, untouched since February | five months unpatched |
+| CPU **20–42% daily, peaks to 100%**; `NetworkIn` 0.1–2.2 MB/day; `NetworkOut` **0** | busy with something internal; the inbound is internet background scan noise it never replies to |
+| t3 `unlimited` credit mode | sustained CPU above baseline can bill surplus (none charged in the last week) |
+
+**Nobody can get into this machine, and nobody can say what is using the CPU.** That is not an
+accusation of compromise — it is the honest statement that compromise cannot be ruled out from
+outside, on an unpatched box with four ports open to the world and no management channel.
+
+## What was done
+
+1. **Stopped** — `i-0a4a35d280de1e58e`, eu-west-2. Fully reversible (`aws ec2 start-instances`). Kills the ~$15/mo compute charge and the exposure in one move.
+2. **Imaged after stopping** — `ami-01936c00263b0e26c` (`openclaw-gateway-forensic-20260725`). Taken *after* the stop, so it is a clean image rather than a crash-consistent one. The disk is preserved exactly as it was; whatever was burning CPU is still in there to be read.
+3. **Not terminated.** The forensic value outweighs the remaining $1.60/mo of EBS, and this is Yu's call, not the chronicler's.
+
+To look inside without ever starting it again: launch the AMI into a private subnet with no
+inbound rules, or attach a copy of its volume to a throwaway instance and mount it read-only.
+
+# SEIGEI TEARDOWN — in progress 2026-07-25
+
+Yu authorised snapshot-then-destroy. **AMIs were chosen over bare volume snapshots** — same cost
+(an AMI is snapshots plus a launch template), but an AMI can relaunch the exact machine, which
+a loose volume snapshot cannot.
+
+| Instance | AMI | Backing snapshot |
+|---|---|---|
+| `seigei-brain` g6e.2xlarge, 200 GB | `ami-0cf6fba5b99854ebc` | `snap-0736ae640f136295b` |
+| `seigei-voice` g5.xlarge, 100 GB | `ami-045f3ac0415b03927` | `snap-010abe11c69d9eff0` |
+| `seigei-gateway` t3.medium, 20 GB | `ami-07ac6aeb26dd9a529` | `snap-0bffae8e6cc0c649d` ✅ |
+
+All three root volumes carry `DeleteOnTermination: true`, so terminating the instances releases
+the EBS automatically. **Termination waits until every AMI reports `available`** — terminating
+an instance mid-image corrupts the image, which would turn a reversible cleanup into a real loss.
+
+Account snapshot count before this work: **0.** After: **4.**
