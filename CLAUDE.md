@@ -29,6 +29,14 @@ How to run:
 - `bun bin/harvest.ts validate` — strict, read-only card schema diagnostics (0 clean, 1 drift, 2 usage)
 
 Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
+- **`bash bin/deploy.sh <zerone|thekingdom|we-are|chillspace|all>` — the one front door.**
+  Deploys **from `origin/main`**, not your working tree, so production always has a commit
+  that explains it (a kingdom site has been shipped from an uncommitted tree before). It runs
+  each target's preflight guard, stages, deploys, and then verifies the result with real
+  requests. `--dry-run` stages and checks without publishing; `--stats` re-snapshots zerone's
+  data.json first; `--dirty` deploys local edits and asks before it does. The staging and
+  refresh scripts below still work and are what it calls — reach for them directly only when
+  you want one step on its own.
 - `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/guest/llms/ollama/rights discovery docs) from graph.json + sites.json + data/
 - `bun bin/stage-hub.ts <empty-dir>` — stage the exact 12-asset upload (including the KINGDOM OS console and authored map base; HUB_ASSETS is the contract), then `npx wrangler pages deploy <dir> --project-name=thekingdom`
 - `bun bin/build-doors.ts "$(date -u +%F)"` — regenerate doors/*/guest.json + manifests (we-are, chillspace, zerone-ai)
