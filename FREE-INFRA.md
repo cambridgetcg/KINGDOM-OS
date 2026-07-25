@@ -342,3 +342,51 @@ Both canons are half-right, and each is dangerous alone. **"The kingdom lives fo
 25. **[needs-Yu]** Wire the **out-of-band watchdog on Google Apps Script** — probe all ~20 doors, email on transition. It is the only prober that survives the kingdom's own infrastructure being what failed. (Needs a Google identity + script authorisation.)
 26. **[needs-Yu, optional]** Oracle Cloud signup — **card required, ARM out-of-capacity endemic, home region permanent, allowance halved on 2026-06-15 to 2 OCPU / 12 GB.** Only worth it for one always-on public-IP listener. Its real prize is the database block nobody has claimed: **3 × 25 GB NoSQL with 133M reads and 133M writes per month.**
 27. **[agent-can-do]** Delete `KINGDOM-RESOURCES.md`, `FREE-RESOURCES.md` and `SOVEREIGN-INFRA.md`. Replace all three with this file, in one location, under version control, and include it in the first Zenodo deposit.
+---
+
+# EXECUTION LOG — 2026-07-24/25
+
+Yu authorised three tracks: stop the bleeding · claim the free things · cut Fly.
+What was actually done, and what was deliberately not.
+
+## Stopped the bleeding
+
+Root causes were diagnosed before acting — all three "broken" crons are **fixable in one line each**, not dead:
+
+| Repo | Real cause (read from the failure log) | The fix |
+|---|---|---|
+| `legible_money` · Auto-Merge | `403 Resource not accessible by integration` on `GET /issues/events` | workflow `permissions:` is missing `issues: read` |
+| `rewardspro-shopify` · Continuous Security Monitoring | TruffleHog action: `BASE and HEAD commits are the same` — it has no diff range on a `schedule` trigger | leave base/head empty on scheduled runs so it scans the whole repo |
+| `tcg-wholesale` · Scrape CardRush Prices | Postgres `28P01 auth_failed` — **the database password is expired** | rotate the `DATABASE_URL` secret — **needs-Yu** |
+
+**Disabled** (one `gh workflow enable` reverses each): Auto-Merge `249817301`, Continuous Security Monitoring `194976009`, Security Tests `194976010`, Scrape CardRush Prices `243737532`.
+**Left enabled on purpose:** `rewardspro-shopify` · Pre-Merge Security Checks `194976008` — the PR gate, which passes.
+
+> **Business impact found while diagnosing:** Cambridge TCG's wholesale price feed has not
+> updated since the DB password expired. This was showing up as CI noise; it is actually a
+> stale pricing surface. Rotating that secret is worth more than the CI minutes.
+
+## Claimed, free
+
+- **KV backup exists for the first time.** `tools/kv-backup.sh` + first full dump committed: 15 namespaces / 237 keys / 820K, every file validated as parseable. Scanned for secrets and PII before committing (none; six `test@example.com`-class probes only; repo is private). The daily schedule is **commented out until `CLOUDFLARE_API_TOKEN` exists on this repo** — shipping a red cron is the exact thing this audit condemned.
+- **Software Heritage — permanent, free, no account.** Save requests accepted for **10** repos: `youspeak`, `YOUSPEAK`, `xenia`, `open-lens`, `slipsooth`, `zerone`, `zerone-core`, `yutabase`, `internet-of-being`, `aletheia`. Anonymous saves are capped at **10/hour**; `ALETHEIA`, `true-love`, `hermes-agents`, `sinovai`, `love-engine`, `cashloom` were throttled and must be re-requested. **Still to do: record the SWHIDs in the chronicle** once ingestion completes.
+- **archive.org — 11 front doors snapshotted**, all HTTP 200: ai-love.cc · cardforum.io · artbitrage.io · captioneer.io · taxsorted.io · thekingdom.dev · agenttool.dev · sinovai.com · slipsooth.pages.dev · understand.cambridgetcg.com · cambridgetcg.com.
+- **Local inference is live.** `ollama serve` was simply down — **correcting the audit, which reported zero models**: `hermes3:8b`, `mistral:7b` and `smollm2:1.7b` were already pulled two weeks ago; `qwen3:8b` added. This is the only inference the kingdom may legally point at taxsorted client documents or Cambridge TCG customer data.
+
+## Cut
+
+| Destroyed | Verified inert how |
+|---|---|
+| Fly app `cashloom-db` | no machines, no image, no volume — an empty shell |
+| Fly app `mindicraft` + `mind_data` volume | machine stopped; `mindicraft.fly.dev` → 401 while `mindicraft.com` serves 200 from Cloudflare; **volume SSH'd into and found empty but for `lost+found`** — nothing was lost, and no 5-day snapshot was relied on |
+| Worker `agenttool-apex-door` | no routes, does not resolve, 0 requests/7d. The live apex is `agenttool-proxy` (14,801 req/7d), which is what `infra/apex-door/wrangler.toml` actually declares. `agenttool.dev` verified 200 after deletion |
+
+Fly estate: **12 apps → 10.**
+
+## Deliberately NOT cut
+
+`zerone-testnet-1` ($25.72/mo), `zerone-rpc`, `taxsorted-api`/`taxsorted-db`.
+
+Every one of them was **deployed by another fleet hand within three hours of this audit** (21:37, 21:57, ~22:00 on 2026-07-24). The map's recommendation to stop the testnet stands on the numbers — block height above mainnet, `num_txs = 0` in every sampled block — but stopping something a collaborator is actively deploying to is not a call this seat makes alone. **needs-Yu, or a word with whoever is deploying.**
+
+Also untouched: the two Hetzner boxes (~$121/mo gross, API-reported, disputed against list price) and everything on AWS — both are read-the-invoice-first items.
