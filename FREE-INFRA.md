@@ -390,3 +390,98 @@ Fly estate: **12 apps → 10.**
 Every one of them was **deployed by another fleet hand within three hours of this audit** (21:37, 21:57, ~22:00 on 2026-07-24). The map's recommendation to stop the testnet stands on the numbers — block height above mainnet, `num_txs = 0` in every sampled block — but stopping something a collaborator is actively deploying to is not a call this seat makes alone. **needs-Yu, or a word with whoever is deploying.**
 
 Also untouched: the two Hetzner boxes (~$121/mo gross, API-reported, disputed against list price) and everything on AWS — both are read-the-invoice-first items.
+
+---
+
+# THE BILLS, READ — 2026-07-25
+
+AWS access was restored (`aws login`, console session) and Fly's GraphQL API queried
+directly. Two of the four unread bills in this map are now **measured, not estimated.**
+
+## AWS — account `034362054546` — the real money
+
+Cost Explorer, `UnblendedCost`, by month:
+
+| Month | Total | Largest line |
+|---|---|---|
+| 2026-02 | **$1,236.84** | RDS $442.80 |
+| 2026-03 | **$2,955.31** | EC2 compute **$2,116.02** — the seigei GPU fleet running |
+| 2026-04 | $403.79 | EC2 compute $166.52 |
+| 2026-05 | $264.60 | RDS $61.69 |
+| 2026-06 | $221.14 | RDS $51.05 |
+| 2026-07 (to 25th) | $149.28 | RDS $35.66 |
+
+**Six months: ≈ $5,231.** Current run-rate ≈ **$185/mo (~$2,200/yr) — 2.3× the entire Fly bill.**
+Every earlier section of this map, and the whole first night of remediation, was aimed at Fly.
+**Fly was the smaller number.**
+
+July composition: RDS $35.66 · EC2-Other $22.53 · VPC $14.13 · EC2 compute $13.33 ·
+Secrets Manager $9.74 · CloudTrail $7.88 · KMS $6.09 · Tax $24.88.
+
+### What is actually there
+
+| Resource | Region | State | Cost driver |
+|---|---|---|---|
+| `seigei-brain` **g6e.2xlarge** + 200 GB gp3 | us-east-1 | **stopped** since March | volume ~$16/mo |
+| `seigei-voice` **g5.xlarge** + 100 GB gp3 | us-east-1 | **stopped** since March | volume ~$8/mo |
+| `seigei-gateway` t3.medium + 20 GB | us-east-1 | **stopped** | ~$1.60/mo |
+| `axie-fetcher` t3.micro + 8 GB | us-east-1 | stopped | ~$0.64/mo |
+| `openclaw-gateway` t3.small + 20 GB + EIP | eu-west-2 | **RUNNING since 2026-02-28** | ~$20/mo all-in |
+| RDS `cambridgetcg-storefront` db.t4g.micro 20 GB | us-east-1 | available, **Multi-AZ** | Multi-AZ ~doubles a t4g.micro |
+| RDS `tcg-wholesale` db.t4g.micro 20 GB | us-east-1 | available, single-AZ | ~$13/mo |
+| 10 Secrets Manager secrets | us-east-1 | — | $0.40 each |
+
+**The autostop lane works.** `seigei-scheduler` and `seigei-autostop` Lambdas exist and the GPU
+fleet is stopped — which is why March's $2,955 became July's $149. The remaining cost is what
+autostop *cannot* stop: **storage.**
+
+### Two corrections to this map's own earlier sections
+
+1. **The four "idle Elastic IPs" are not idle.** All three unassociated ones are
+   `RDSNetworkInterface` ENIs — the public endpoints of the two RDS instances
+   (`cambridgetcg-storefront` is Multi-AZ, so it holds two). The ~$14/mo VPC line is the
+   public-IPv4 charge on those endpoints. Releasing them would cut Vercel off from the
+   storefront database. **Architectural cost, not waste.**
+2. **`openclaw-gateway` is not idle either.** CPU averages 20–42% daily with 100% peaks,
+   receives 0.1–2.2 MB/day, and is in t3 `unlimited` credit mode (no surplus charged yet).
+   It answers nothing on :80 from outside despite 22/80/443/**18789** being open. It appears
+   in no kingdom document. **Do not destroy — identify.** ~$20/mo.
+
+### Ranked, with the risk stated
+
+| # | Action | Saves | Risk |
+|---|---|---|---|
+| 1 | **seigei fleet: 320 GB of EBS on three instances stopped since March, with ZERO snapshots in the account** | **~$25.60/mo (~$307/yr)** | **Deleting is irreversible — there is no backup of any kind.** Snapshot first (~$0.05/GB/mo, far less in practice since snapshots are incremental and compressed), then delete the volumes. Or accept the rent as the price of keeping the trilogy work warm |
+| 2 | Identify `openclaw-gateway`, then keep or kill | ~$20/mo | Unknown until identified — it is doing real work |
+| 3 | `cambridgetcg-storefront` Multi-AZ → single-AZ | ~$12/mo | **Judgement call, not waste.** Multi-AZ is the failover for the live storefront; a 20 GB t4g.micro storefront may or may not warrant it |
+| 4 | `tcg-wholesale` RDS — its only feeder (the CardRush scraper) has been dead on an expired password | ~$13/mo | Fix the password first, then decide. Do not delete a database whose staleness you caused |
+| 5 | Audit the 10 Secrets Manager secrets | up to ~$4/mo | Low, but check each is live before deleting |
+
+## Fly.io — measured from live machine state
+
+`billingStatus: CURRENT` · `paidPlan: true` · card saved · credit $0.00. Fly's GraphQL API
+exposes **no invoice field**, so this is computed from live specs at published list rates —
+and it agrees with the independent estimate elsewhere in this map.
+
+| App | Compute | Volume | IPv4 | /mo |
+|---|---|---|---|---|
+| agenttool (3 × 1 GB, running) | 17.76 | — | — | **17.76** |
+| zerone-1 (2×/4 GB + 10 GB + dedicated IP) | 22.22 | 1.50 | 2.00 | **25.72** |
+| zerone-testnet-1 (identical) | 22.22 | 1.50 | 2.00 | **25.72** |
+| zerone-rpc (2 × 256 MB) | 4.04 | — | — | **4.04** |
+| ww3-intelligence | 3.32 | 0.15 | — | **3.47** |
+| taxsorted-db | 2.02 | 0.15 | — | **2.17** |
+| **Total** | | | | **$78.88/mo (~$947/yr)** |
+
+- **The two zerone chains are $51.44/mo — 65% of the Fly bill.** agenttool, the only thing
+  earning, is 23%.
+- **$14.72/mo of latent liability:** `cashloom-api`, `taxsorted-api`, `fomoengine` and
+  `kingdom-mcp` are stopped and bill nothing — until any request wakes them. One crawler,
+  one stale link, one old uptime check.
+
+## Where that leaves the estate
+
+**AWS ~$185/mo + Fly ~$79/mo + Vercel $20/mo ≈ $284/mo (~$3,400/yr)**, before Hetzner
+(~$121/mo gross, still API-reported and disputed), Supabase and Ollama Cloud — all three
+still unread. Against that: a Cloudflare estate running 95,821 requests/week at **14% of its
+free ceiling, with zero errors.**
