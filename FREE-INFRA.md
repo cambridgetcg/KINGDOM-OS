@@ -581,3 +581,75 @@ Those references broke at termination, not at release — the same class of rot 
 `forge/lark/sentry/patch/sage` IPs elsewhere in this map, which now resolve to other Hetzner
 tenants. Repoint or retire them; do not let a future agent SSH at an address the kingdom no
 longer owns.
+
+---
+
+# HETZNER, OPENED — 2026-07-26
+
+Access: `hcloud` CLI with the token in the macOS keychain (`hetzner-api-token`), and root SSH
+via `~/.ssh/id_ed25519`, which is the account's registered `macair-claude` key.
+
+## The price dispute is settled — against us
+
+This map previously flagged Hetzner's API-reported $50.49/server as *"~4× the public ccx13 list
+price"* and told Yu to read the invoice because *"both cannot be right."* **That flag was wrong.**
+It confused the **CCX** line (dedicated vCPU) with the cheaper CX/CPX shared line. Hetzner's own
+pricing API, queried for this account:
+
+```
+ccx13 — 2 dedicated vCPU, 8 GB RAM, 80 GB disk
+  fsn1   monthly net $50.49   gross $60.59   (currency USD, VAT 20%)
+```
+
+**Two ccx13 = $121.18/mo gross = ~$1,454/yr.** That makes Hetzner the kingdom's **second-largest
+bill after AWS — larger than the entire Fly estate.** No invoice needed; the API is the price list.
+
+## What the two boxes actually do
+
+Both created 2026-06-10, both up 38 days, both `ccx13`, both in fsn1.
+
+### `Yu-and-Ai` — 167.233.120.173, rDNS `mail.cambridgetcg.com`
+
+Two things run: **Stalwart** (mail) and **`nats-server` with JetStream** (the HIVE bus).
+
+**The mail server cannot send and cannot receive.**
+- `dig MX cambridgetcg.com` → **all five records point at Google Workspace** (`aspmx.l.google.com` et al). Nothing is routed here.
+- Outbound `:25` to `gmail-smtp-in.l.google.com` — **BLOCKED** (Hetzner's default block, never lifted).
+- `journalctl -u stalwart --since '7 days ago'` → **1 line.** The last real entries are from 2026-06-18, the day it was installed.
+- It is nonetheless correctly built: valid certs, listening on 25 / 465 / 993 / 995 / 4190 / 443 / 8080. **Real work, in no mail path.**
+
+**The HIVE bus has had a life, and is now nearly silent.**
+- 38-day uptime, **8,864 messages in / 6,263 out, 3,686 connections ever** — this was genuinely carrying traffic.
+- **Right now: one connection, from `127.0.0.1`, up 14h44m, 2 messages total.** No alpha, no beta, no gamma. The remote nodes are gone.
+- Note the drift: `Love/hive/hive.py` still hardcodes `tls://135.181.28.252:4222` — a *different, older* Hetzner address. The bus moved here; the client config never followed.
+
+### `My-Love` — 167.233.125.57
+
+**Runs nothing.** `ss -lntp` shows only sshd and systemd-resolved; the only non-stock service is
+`atd`. Load average 0.05. 3.7 GB used of 75 GB.
+
+But `/root` is staged: **`hive.py` (68 KB), `hermes.py`, `hive-bridge.py`, `.openclaw/`,
+`.nats.conf`, `forge/`, `shared/`** — placed 2026-06-18 and **never started.** It is a HIVE node
+that was prepared and then left. Same lineage as the AWS `openclaw-gateway`: infrastructure built
+for an architecture that moved on.
+
+### Also billing
+
+- Volume `volume-fsn1-1`, 10 GB, **unattached for 46 days** — $0.77/mo.
+- Four primary IPs at $0.60/mo net each.
+
+## Preserved before any decision
+
+| Snapshot | Of | Size |
+|---|---|---|
+| `412977569` | `Yu-and-Ai` | 2.17 GB |
+| `412977577` | `My-Love` | 2.31 GB |
+
+Together about **$0.06/mo** to keep. Both servers can be rebuilt from these exactly, so destroying
+either is now reversible in the way that matters.
+
+## The shape of it
+
+**$1,454/year is being spent to keep one message bus alive that currently has a single
+localhost client**, plus a mail server standing outside the mail path, plus a machine that has
+never run anything.
