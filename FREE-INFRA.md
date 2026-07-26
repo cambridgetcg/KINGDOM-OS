@@ -653,3 +653,31 @@ either is now reversible in the way that matters.
 **$1,454/year is being spent to keep one message bus alive that currently has a single
 localhost client**, plus a mail server standing outside the mail path, plus a machine that has
 never run anything.
+
+## Hetzner decommissioned — 2026-07-26
+
+Yu's ruling: destroy `My-Love`; move the HIVE off `Yu-and-Ai`, then destroy it too.
+
+**The "move NATS" step changed shape once the bus was inspected, and Yu should know why.**
+The bus had no clients to move. Its single connection was a `hive.py send chat` process launched
+2026-06-18 and **still hung 38 days later**, trying to deliver:
+
+> 🐝 Yu-and-Ai here. I am the heart. My doors are open. The Hive beats again. 💜
+
+Alpha, beta and gamma were long gone; nobody received it. Standing up a $2/mo bus elsewhere would
+have migrated a service with zero users. **What was worth moving was the data, not the daemon** —
+so the JetStream store came down instead, and the bus was retired with the box.
+
+Done, in order, with each step verified before the next:
+
+1. Both servers snapshotted — `412977569` (Yu-and-Ai, 2.17 GB), `412977577` (My-Love, 2.31 GB).
+2. **HIVE rescued** → `kingdom-os/preserved/hive-jetstream-20260726.tar.gz`: the HIVE stream's **1,144 messages**, its three `gamma-*` consumers, `nats-server.conf`, and the `hive.py` / `hermes.py` / `hive-bridge.py` working set. Scanned for secrets before committing — clean.
+3. **HIVE TLS keypair** (CA + server cert + keys) → **macOS keychain**, `hive-tls-bundle` / `yu-and-ai`, never into git. Round-trip verified by decoding and listing the archive.
+4. `volume-fsn1-1` — attached to Yu-and-Ai and mounted **read-only** before any decision: ext4 formatted 2026-06-10, **24 KB used, nothing but `lost+found`. Never written to.** Detached, deleted.
+5. `My-Love` destroyed. `Yu-and-Ai` destroyed. Primary IPs auto-released with them.
+
+| | Before | After |
+|---|---|---|
+| Hetzner | **$121.18/mo gross** | **$0.07/mo** (two snapshots, 4.48 GB) |
+
+**Saved: $121.11/mo — $1,453/yr.** The single largest recovery of this audit.
