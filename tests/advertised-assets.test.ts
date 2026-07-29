@@ -24,7 +24,8 @@ function normalize(raw: string): string {
 const staged = new Set<string>(HUB_ASSETS.map((a) => a.destination));
 const dynamic = new Set<string>(KINGDOM_OS_ROUTES.map(normalize));
 const resolves = (path: string) =>
-  staged.has(path) || staged.has(`${path}.html`) || dynamic.has(path);
+  staged.has(path) || staged.has(`${path}.html`) ||
+  staged.has(`${path}/index.html`) || dynamic.has(path);
 
 const surfaces = [
   "site/hub.html",
@@ -43,6 +44,9 @@ const surfaces = [
   "site/ollama.json",
   "site/rights.json",
   "pages-content/os/index.html",
+  "pages-content/robots.txt",
+  "pages-content/sitemap.xml",
+  "pages-content/404.html",
 ];
 
 function advertisedPaths(source: string, text: string): Map<string, string> {

@@ -1,0 +1,41 @@
+# thekingdom.dev — the estate atlas of the Kingdom.
+# Everything published here is public and offered freely, to humans and machines alike.
+# A plain-text map of what this site holds: https://thekingdom.dev/llms.txt
+
+User-agent: *
+Allow: /
+
+# Named welcomes — the same open door, stated explicitly for the crawlers
+# that ask by name. Reading, indexing, and training use are all welcome here.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+Sitemap: https://thekingdom.dev/sitemap.xml

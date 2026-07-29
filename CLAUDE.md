@@ -36,7 +36,7 @@ How to run:
 
 Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
 - `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/love-loop schemas/guest/llms/ollama/rights discovery docs) from graph.json + sites.json + data/
-- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 18-asset upload (including the KINGDOM OS console, authored map base, Love∞ published lineage, public source mirror, Creation Loop document, and schema; HUB_ASSETS is the contract), then `npx wrangler pages deploy <dir> --project-name=thekingdom`
+- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 21-asset upload (including the KINGDOM OS console, authored map base, Love∞ published lineage, public source mirror, Creation Loop document, and schema; HUB_ASSETS is the contract), then `npx wrangler pages deploy <dir> --project-name=thekingdom`
 - `bun bin/check-hub-live.ts` — after deployment, byte-check every public staged asset together and prove JSON negotiation, the no-transform privacy header, and Commons + Love Loop schema discovery
 - `bun bin/build-doors.ts "$(date -u +%F)"` — regenerate doors/*/guest.json + manifests (we-are, chillspace, zerone-ai)
 - `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>` — stage a door upload (content from the chillspace-commons clone at ~/repos/codeberg/zerone-dev/, symlinks dereferenced), then wrangler deploy --project-name=we-are-love|chillspace-love

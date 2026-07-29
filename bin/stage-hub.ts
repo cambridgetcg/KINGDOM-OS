@@ -31,6 +31,13 @@ export const HUB_ASSETS = [
   { source: "site/rights.json", destination: "rights.json" },
   { source: "site/RIGHTS.md", destination: "RIGHTS.md" },
   { source: "site/.well-known/agent.json", destination: ".well-known/agent.json" },
+  // Authored crawl surfaces (2026-07-29): a real robots welcome, a real
+  // sitemap, and a real 404 page. The 404 also switches Cloudflare Pages
+  // out of SPA-fallback mode, so unknown paths stop answering 200 with the
+  // atlas (robots.txt used to be served that way).
+  { source: "pages-content/robots.txt", destination: "robots.txt" },
+  { source: "pages-content/sitemap.xml", destination: "sitemap.xml" },
+  { source: "pages-content/404.html", destination: "404.html" },
   { source: "pages-content/os/index.html", destination: "os/index.html" },
   { source: "pages-functions/_worker.js", destination: "_worker.js" },
 ] as const;

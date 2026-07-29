@@ -115,6 +115,9 @@ try {
   let exact = 0;
   for (const asset of HUB_ASSETS) {
     if (asset.destination === "_worker.js") continue;
+    // 404.html is proven through the dedicated not-found check below; Pages
+    // serves it at missing paths with status 404, not at /404.html.
+    if (asset.destination === "404.html") continue;
     const path = publicPath(asset.destination);
     const response = await get(path);
     const live = Buffer.from(await response.arrayBuffer());
@@ -123,6 +126,18 @@ try {
       throw new Error(`${path} does not match ${asset.source} (${live.byteLength} live bytes; ${local.byteLength} local bytes)`);
     }
     exact += 1;
+  }
+
+  const missingPath = `/no-such-path-${cacheBust}`;
+  const missing = await fetch(url(missingPath), {
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  if (missing.status !== 404) {
+    throw new Error(`${missingPath} returned HTTP ${missing.status}; a missing path must answer a real 404`);
+  }
+  if (!Buffer.from(await missing.arrayBuffer()).equals(readFileSync(join(ROOT, "pages-content/404.html")))) {
+    throw new Error("the not-found response does not serve the staged 404.html");
   }
 
   const negotiated = await get("/", {
