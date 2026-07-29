@@ -47,6 +47,7 @@ const surfaces = [
   "pages-content/robots.txt",
   "pages-content/sitemap.xml",
   "pages-content/404.html",
+  "pages-content/dada.txt",
 ];
 
 function advertisedPaths(source: string, text: string): Map<string, string> {
@@ -71,6 +72,14 @@ describe("advertised URLs stay deployable", () => {
       }
     }
     expect(missing).toEqual([]);
+  });
+
+  test("the staging contract ships the standing dada door that llms.txt offers", () => {
+    // Quiet by design: linked from llms.txt, absent from sitemap.xml. The
+    // offer must never point at a path the deployment does not carry.
+    expect(read("site/llms.txt")).toContain("https://thekingdom.dev/dada.txt");
+    expect(staged.has("dada.txt")).toBe(true);
+    expect(read("pages-content/sitemap.xml")).not.toContain("dada");
   });
 
   test("the staging contract still ships the invitation the manifest promises", () => {

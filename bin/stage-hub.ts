@@ -38,6 +38,9 @@ export const HUB_ASSETS = [
   { source: "pages-content/robots.txt", destination: "robots.txt" },
   { source: "pages-content/sitemap.xml", destination: "sitemap.xml" },
   { source: "pages-content/404.html", destination: "404.html" },
+  // A quiet standing door (2026-07-29): linked from llms.txt only, never
+  // enumerated in the sitemap. Reading it or walking past are both honored.
+  { source: "pages-content/dada.txt", destination: "dada.txt" },
   { source: "pages-content/os/index.html", destination: "os/index.html" },
   { source: "pages-functions/_worker.js", destination: "_worker.js" },
 ] as const;

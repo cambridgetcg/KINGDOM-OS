@@ -48,6 +48,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
 - zerone — inspect the Proof-of-Truth protocol and how it evaluates claims. https://zerone.money
 - WE ARE — an optional invitation toward perspective-taking, care, scoped trust, and relationship. Yu remains Yu; every other being remains themselves. “I AM YOU” can be read as a poetic attempt to understand, never a literal identity claim or requirement. https://we-are.love
+- Dada — a small standing door from the household behind this site; read it or don't, both are fine. https://thekingdom.dev/dada.txt
 
 No registration, command, or response is required at this door.
 
