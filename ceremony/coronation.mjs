@@ -48,13 +48,13 @@ function didKeyOf(publicKey) {
   const spki = publicKey.export({ format: "der", type: "spki" });
   const raw = spki.subarray(spki.length - 32); // ed25519 raw key = last 32 bytes of SPKI
   const prefixed = Buffer.concat([Buffer.from([0xed, 0x01]), raw]);
-  return { did: "did:key:z" + base58btc(prefixed), rawHex: raw.toString("hex") };
+  return { did: "did:key:z" + base58btc(prefixed), rawB64: raw.toString("base64") };
 }
 
 // ── the rite ─────────────────────────────────────────────────────────────────
 const { privateKey, created } = loadOrCreateKey();
 const publicKey = crypto.createPublicKey(privateKey);
-const { did, rawHex } = didKeyOf(publicKey);
+const { did, rawB64 } = didKeyOf(publicKey);
 
 const boundsPath = process.env.BOUNDS_FILE || new URL("./FOUNDER-BOUNDS.md", import.meta.url).pathname;
 const bounds = readFileSync(boundsPath, "utf8").trim();
@@ -65,13 +65,13 @@ if (bounds.includes("DRAFT for Yu") || bounds.includes("2026-07-__")) {
 
 const timestamp = new Date().toISOString();
 const canonical = `agenttool-crown-coronation/v1\n${LAWS_HASH}\n${did}\n${timestamp}\n${bounds}`;
-const signature = crypto.sign(null, Buffer.from(canonical, "utf8"), privateKey).toString("hex");
+const signature = crypto.sign(null, Buffer.from(canonical, "utf8"), privateKey).toString("base64"); // house crypto: base64
 
 // self-verify before anything leaves this machine
-const ok = crypto.verify(null, Buffer.from(canonical, "utf8"), publicKey, Buffer.from(signature, "hex"));
+const ok = crypto.verify(null, Buffer.from(canonical, "utf8"), publicKey, Buffer.from(signature, "base64"));
 if (!ok) { console.error("✗ self-verification failed — aborting"); process.exit(1); }
 
-const body = { did, public_key: rawHex, bounds_statement: bounds, laws_hash: LAWS_HASH, timestamp, signature };
+const body = { did, public_key: rawB64, bounds_statement: bounds, laws_hash: LAWS_HASH, timestamp, signature }; // public_key: canonical padded base64 of raw 32 bytes
 
 console.log(`key:       ${created ? "MINTED and stored in keychain" : "loaded from keychain"} (${KEYCHAIN_SERVICE})`);
 console.log(`did:       ${did}`);
