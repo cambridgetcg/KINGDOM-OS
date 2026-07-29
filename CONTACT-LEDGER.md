@@ -31,3 +31,4 @@
 | 2026-07-28 | outbound | Software Heritage (Save Code Now ×10) | archival save requests for 10 public repos — youspeak, YOUSPEAK, xenia, open-lens, slipsooth, zerone, zerone-core, yutabase, internet-of-being, aletheia | Fable | accepted | closed |
 | 2026-07-28 | outbound | archive.org Save Page Now ×11 | snapshots of 11 live front doors | Fable | 200 OK | closed |
 | 2026-07-29 | outbound | Software Heritage (Save Code Now) | kingdom-standard archival save (request id 2402718) | Fable | accepted | closed |
+| 2026-07-29 | outbound | Software Heritage (Save Code Now ×6) | archival save requests for 6 public repos — love-star-daily, agenttool, corpus, castle-of-words, artbitrage, kingdom-free-infra (request ids 2402719–2402724) | Fable (swhid-agent) | all 6 accepted | closed |

@@ -13,7 +13,7 @@
 | pinned commit | `16b8517a936e13f298fe0856618fc3ffb94e515e` |
 | **sha256 (laws_hash v1)** | `dfddd45b4da0db50d0ddb5d74b4e2ab3092cb4170c61fd163c20602c0fd70ccc` |
 | bytes | 26,540 |
-| Software Heritage | save accepted 2026-07-29 (request 2402718) — snapshot SWHID pending ingestion |
+| Software Heritage | ingested — `swh:1:snp:2265d1f1806ad2bf7a79edaac47f9434d2992bc1` (visit 2026-07-29, verified) |
 | Arweave | pending (Yu decision on wallet; laws are cleared for upload — finished canon) |
 
 **This hash is what Coronation Rite signatures cover.** Amended laws get a new row and a
@@ -24,19 +24,32 @@ new laws_hash; crowns signed against v1 remain valid against v1 forever (charter
 Status legend: `saved` = Save Code Now accepted · `resolved` = snapshot SWHID recorded ·
 `throttled` = to re-request (anonymous cap 10/hour).
 
-| origin | saved | snapshot SWHID |
+Every `resolved` SWHID below was verified 2026-07-29 by fetching
+`https://archive.softwareheritage.org/api/1/snapshot/<hex>/` (HTTP 200).
+Resolve any of them at `https://archive.softwareheritage.org/swh:1:snp:<hex>`.
+
+| origin | saved | snapshot SWHID (visit date) |
 |---|---|---|
-| github.com/cambridgetcg/youspeak | 2026-07-25 | pending resolution |
-| github.com/cambridgetcg/YOUSPEAK | 2026-07-25 | pending resolution |
-| github.com/cambridgetcg/xenia | 2026-07-25 | pending resolution |
-| github.com/cambridgetcg/open-lens | 2026-07-25 | pending resolution |
-| github.com/cambridgetcg/slipsooth | 2026-07-25 | pending resolution |
-| github.com/cambridgetcg/zerone | 2026-07-25 | pending resolution |
-| github.com/cambridgetcg/zerone-core | 2026-07-25 | pending resolution |
-| github.com/cambridgetcg/yutabase | 2026-07-25 | pending resolution |
-| github.com/cambridgetcg/internet-of-being | 2026-07-25 | pending resolution |
-| github.com/cambridgetcg/aletheia | 2026-07-25 | pending resolution |
-| github.com/cambridgetcg/kingdom-standard | 2026-07-29 | pending ingestion |
+| github.com/cambridgetcg/youspeak | 2026-07-25 | `swh:1:snp:422905282dbf3f726e855564e390195f083d7235` (visit 2026-07-24) |
+| github.com/cambridgetcg/YOUSPEAK | 2026-07-25 | `swh:1:snp:422905282dbf3f726e855564e390195f083d7235` (visit 2026-07-24) † |
+| github.com/cambridgetcg/xenia | 2026-07-25 | `swh:1:snp:e4a7f53e0f28b3ca5beb482434e4957b2d040f37` (visit 2026-07-24) |
+| github.com/cambridgetcg/open-lens | 2026-07-25 | `swh:1:snp:d5a79f9d67668c168adf196ce84356a33c733e46` (visit 2026-07-24) |
+| github.com/cambridgetcg/slipsooth | 2026-07-25 | `swh:1:snp:8ffb549cdc2cdfe5ebd6aa65c2cd44d39288b9b0` (visit 2026-07-24) |
+| github.com/cambridgetcg/zerone | 2026-07-25 | `swh:1:snp:178672363658e8343dc60a6f969a327673961cfc` (visit 2026-07-24) |
+| github.com/cambridgetcg/zerone-core | 2026-07-25 | `swh:1:snp:011a412ea80a0c0ab3c0bc1b7845e84d10f9307f` (visit 2026-07-24) |
+| github.com/cambridgetcg/yutabase | 2026-07-25 | `swh:1:snp:25ab12d6b825ce5996bd6557b0845531d4d2b1c4` (visit 2026-07-24) |
+| github.com/cambridgetcg/internet-of-being | 2026-07-25 | `swh:1:snp:0b7cbb4fcc97014df15c88a70f601fb381397667` (visit 2026-07-24) |
+| github.com/cambridgetcg/aletheia | 2026-07-25 | `swh:1:snp:50ab7dec6d1b9bc10b7edf56ebf937b312a2ddf7` (visit 2026-07-24) |
+| github.com/cambridgetcg/kingdom-standard | 2026-07-29 | `swh:1:snp:2265d1f1806ad2bf7a79edaac47f9434d2992bc1` (visit 2026-07-29) |
+| github.com/cambridgetcg/love-star-daily | 2026-07-29 | pending ingestion (request 2402719) |
+| github.com/cambridgetcg/agenttool | 2026-07-29 | pending ingestion (request 2402720) |
+| github.com/cambridgetcg/corpus | 2026-07-29 | pending ingestion (request 2402721) |
+| github.com/cambridgetcg/castle-of-words | 2026-07-29 | pending ingestion (request 2402722) |
+| github.com/cambridgetcg/artbitrage | 2026-07-29 | pending ingestion (request 2402723) |
+| github.com/cambridgetcg/kingdom-free-infra | 2026-07-29 | pending ingestion (request 2402724) |
+
+† youspeak and YOUSPEAK are case-variants of one GitHub repo; Software Heritage
+recorded both origins and they resolve to the same snapshot.
 
 ## Arweave (under-100KiB free lane)
 
