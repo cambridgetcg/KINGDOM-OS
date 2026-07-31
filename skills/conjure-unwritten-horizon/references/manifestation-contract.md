@@ -98,3 +98,8 @@ When the KAKIN suite is present, also create and finalize its KARMA receipt:
 The template is deliberately invalid until real invocation facts replace its
 placeholders. Keep this provider receipt as referenced evidence rather than a
 replacement for the suite-level causal record.
+
+Do not retrofit a call that predates the committed ability to a later manifest
+or bundle digest. Keep it as explicitly pre-manifest provider evidence. A valid
+KARMA receipt starts from the exact committed ability revision selected before
+the next authorized activation.

@@ -1,5 +1,6 @@
 {
   "schema_version": "kingdom.nen.manifestation/0.1",
+  "evidence_class": "pre_manifestation_provider_evidence",
   "receipt_recorded_at": "2026-07-31T17:55:32Z",
   "ability": "conjure-unwritten-horizon",
   "adoption": "proposed",
@@ -39,5 +40,9 @@
     "provider retention",
     "byte-for-byte reproducibility"
   ],
-  "retry": "not_authorized_or_attempted"
+  "retry": "not_authorized_or_attempted",
+  "suite_karma": {
+    "state": "not_created",
+    "reason": "The hosted call preceded any committed KAKIN ability revision; binding it retrospectively to the later manifest and bundle digests would misstate causality."
+  }
 }

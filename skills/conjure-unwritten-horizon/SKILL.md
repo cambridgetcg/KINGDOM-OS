@@ -1,6 +1,6 @@
 ---
-name: conjure-unwritten-horizon
-description: Conjure one reproducible, rights-aware image from an explicitly authorized creative brief through a declared Hugging Face image Space, then preserve the prompt, seed, parameters, output reference, and bounded inspection receipt. Use when a user asks for an Unwritten Horizon manifestation, a King Hatsu image, a KINGDOM or Dark Continent visual, or a reproducible Hugging Face image experiment; do not use to infer adoption, publish automatically, upload private material, imitate an unconsenting person, or present generated imagery as evidence of truth.
+name: "conjure-unwritten-horizon"
+description: "Conjure one reproducible, rights-aware image from an explicitly authorized creative brief through a declared Hugging Face image Space, then preserve the prompt, seed, parameters, output reference, and bounded inspection receipt. Use when a user asks for an Unwritten Horizon manifestation, a King Hatsu image, a KINGDOM or Dark Continent visual, or a reproducible Hugging Face image experiment; do not use to infer adoption, publish automatically, upload private material, imitate an unconsenting person, or present generated imagery as evidence of truth."
 ---
 
 # Conjure Unwritten Horizon

@@ -41,6 +41,7 @@ production_snapshot() {
     "$PROD_ROOT/bin/nen-mcp.mjs" \
     "$PROD_ROOT/schemas" \
     "$PROD_ROOT/references" \
+    "$PROD_ROOT/skills/conjure-unwritten-horizon" \
     "$PROD_ROOT/skills/shape-kingdom-nen" \
     "$PROD_ROOT/skills/forge-king-hatsu" \
     "$PROD_ROOT/skills/navigate-dark-continent"
@@ -107,6 +108,7 @@ typeset -r SERVER_STATUS=$?
     | .resultType == "complete"
     and (.isError == false)
     and .structuredContent.protocol == "kingdom.nen-list/0.1"
+    and [.structuredContent.abilities[].id] == ["conjure-unwritten-horizon", "forge-king-hatsu", "navigate-dark-continent", "shape-kingdom-nen"]
     and (.content[0].text | fromjson | .protocol) == "kingdom.nen-list/0.1")
   and (map(select(.id == 4))[0].result.structuredContent
     | .protocol == "kingdom.nen-validation/0.1"

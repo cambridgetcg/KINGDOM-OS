@@ -679,5 +679,7 @@ test("Unwritten Horizon fails closed and preserves a bounded receipt", async () 
   assert.equal(receipt.result.status, "failed");
   assert.equal(receipt.result.failure.code, "mcp_tools_call_timeout");
   assert.equal(receipt.retry, "not_authorized_or_attempted");
+  assert.equal(receipt.evidence_class, "pre_manifestation_provider_evidence");
+  assert.equal(receipt.suite_karma.state, "not_created");
   assert.deepEqual(receipt.external_effects, ["hosted_image_inference_request_submitted"]);
 });
