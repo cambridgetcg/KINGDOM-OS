@@ -55,6 +55,22 @@ named question, a bounded charter, and a route home.
 7. Stop on budget exhaustion, connector drift, unexpected mutation, missing
    cancellation, unclear billing, or a request to exceed the charter.
 
+## Route phase-aware training treasure
+
+When the question concerns overlooked datasets or artifacts at a particular
+training or research phase, follow the
+[HF training-atlas route](references/hf-training-atlas.md). Resolve AgentTool
+through `./kingdom repos --path agenttool`; never hard-code its device path.
+
+Keep Scout's canonical research catalog, the Dark Continent training atlas,
+its proposal-only KG artifacts, and this skill's invocation receipt as four
+distinct formats. Match records only by exact repository kind, ID, and full
+revision; retain both sources' native phase, evidence, admission, and boundary
+fields instead of translating or merging them. The default passage is local
+metadata inspection. Hub refreshes, content reads, downloads, gate acceptance,
+execution, graph application, publication, and deployment remain separately
+classified effects with their own authority and budgets.
+
 ## Return with KARMA
 
 Report:
