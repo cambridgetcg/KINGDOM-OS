@@ -31,6 +31,12 @@ Source declaration / observed pattern / inference: user authorized construction 
 
 Space: `mcp-tools/Qwen-Image`
 
+Space HEAD observed after the first timed-out call on 2026-07-31:
+`45ebb974244167be1dbe6a6f11b9ddb87b2a32d3`. This post-call observation does
+not prove which revision, if any, executed the timed-out request. Re-read HEAD
+and runtime parameters before a future activation, then bind the new receipt to
+the values observed before that call.
+
 Parameters observed on 2026-07-31 through the authenticated Hugging Face MCP
 connector:
 
