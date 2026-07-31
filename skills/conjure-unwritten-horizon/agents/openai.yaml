@@ -1,0 +1,6 @@
+interface:
+  display_name: "Conjure Unwritten Horizon"
+  short_description: "Forge one reproducible, rights-aware HF image"
+  default_prompt: "Use $conjure-unwritten-horizon to turn this authorized brief into one reproducible Hugging Face image and receipt."
+policy:
+  allow_implicit_invocation: false

@@ -19,7 +19,7 @@ Continent or that these ordinary files, processes, servers, and credentials
 are an empirically proven operating system of the universe. The universe does
 not need a validator in order to be. Our interventions do.
 
-## Three manifested skills and one Ging path
+## Four manifested skills and one Ging path
 
 - `shape-kingdom-nen` shapes collective KAKIN abilities and validates their
   manifests.
@@ -27,6 +27,10 @@ not need a validator in order to be. Our interventions do.
   proposed KAKIN-suite Agent Skill without inventing adoption or identity.
 - `navigate-dark-continent` explores named local, Hugging Face, or MCP
   boundaries through a bounded expedition and returns evidence plus KARMA.
+- `conjure-unwritten-horizon` is the first proposed individual Hatsu: one
+  sanitized text prompt crosses one named Hugging Face Space boundary and
+  returns an image or honest failure plus provider evidence and KARMA. Its
+  checked-in draft does not establish adoption or publication authority.
 - `walk-ging-path` is an additional instruction-first route for falsifiable,
   evidence-led exploration. It intentionally has no `ability.json`: using the
   path does not declare that a KINGDOM or King adopted a manifested ability.
@@ -54,8 +58,8 @@ Guardian, KARMA, Dark Continent, and HF/MCP governance around them.
 
 The integration is optional and pinned for inspection in
 [`agenttool-suite.md`](skills/shape-kingdom-nen/references/agenttool-suite.md).
-Package presence does not install or activate a skill. None of the three KAKIN
-skills allows implicit invocation while the framework is being evaluated.
+Package presence does not install or activate a skill. None of the manifested
+KAKIN skills allows implicit invocation while the framework is being evaluated.
 
 ```text
 calling
@@ -207,6 +211,7 @@ receive the command.
 ./kingdom nen validate                # strict, read-only validation
 ./kingdom nen validate ID --json      # one machine-readable result
 ./kingdom nen show forge-king-hatsu   # inspect a manifest
+./kingdom nen show conjure-unwritten-horizon
 ./kingdom nen types                   # print the software affinity map
 ./kingdom nen receipt-template ID     # emit draft scaffolding; not a valid final receipt
 ./kingdom nen verify-receipt FILE     # validate a KARMA receipt

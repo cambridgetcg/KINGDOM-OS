@@ -649,3 +649,35 @@ test("MCP effect declaration matches the application-effect boundary", async () 
   );
   assert.doesNotMatch(sources.join("\n"), /node:(?:fs|net|http|https|child_process)/);
 });
+
+test("Unwritten Horizon fails closed and preserves a bounded receipt", async () => {
+  const abilityRoot = join(REPO_ROOT, "skills", "conjure-unwritten-horizon");
+  const [skill, sidecar, ability, receipt] = await Promise.all([
+    readFile(join(abilityRoot, "SKILL.md"), "utf8"),
+    readFile(join(abilityRoot, "agents", "openai.yaml"), "utf8"),
+    readFile(join(abilityRoot, "ability.json"), "utf8").then(JSON.parse),
+    readFile(join(abilityRoot, "assets", "first-manifestation-20260731.json"), "utf8").then(
+      JSON.parse,
+    ),
+  ]);
+  const normalizedSkill = skill.replace(/\s+/g, " ");
+
+  assert.match(skill, /Invoke exactly one hosted generation call/);
+  assert.match(skill, /do not silently switch providers/i);
+  assert.match(normalizedSkill, /provider deleted its own logs, caches, or retained data/i);
+  assert.match(sidecar, /allow_implicit_invocation: false/);
+  assert.equal(ability.protocol, "kingdom.nen/0.1");
+  assert.equal(ability.bearer.adoption, "proposed");
+  assert.equal(ability.status, "draft");
+  assert.equal(ability.authority.grants_permissions, false);
+  assert.match(ability.vows[0].promise, /at most one/i);
+  assert.equal(receipt.ability, "conjure-unwritten-horizon");
+  assert.equal(receipt.adoption, "proposed");
+  assert.equal(receipt.authorization.publication, "not_granted");
+  assert.equal(receipt.request.seed, 7312026);
+  assert.equal(receipt.request.randomize_seed, false);
+  assert.equal(receipt.result.status, "failed");
+  assert.equal(receipt.result.failure.code, "mcp_tools_call_timeout");
+  assert.equal(receipt.retry, "not_authorized_or_attempted");
+  assert.deepEqual(receipt.external_effects, ["hosted_image_inference_request_submitted"]);
+});
