@@ -62,14 +62,25 @@ record IDs only in runtime receipts, using a reference such as:
 | Multilingual critic candidate | [`mlx-community/Qwen3-30B-A3B-Instruct-2507-4bit`](https://huggingface.co/mlx-community/Qwen3-30B-A3B-Instruct-2507-4bit/tree/e9675aa3ca5f900ccef55267914466d55ab325fa) `e9675aa3ca5f900ccef55267914466d55ab325fa` | Apache-2.0 assertion; not locally verified; start with a 16–32K context cap |
 | Current semantic lane | [`Xenova/all-MiniLM-L6-v2`](https://huggingface.co/Xenova/all-MiniLM-L6-v2/tree/751bff37182d3f1213fa05d7196b954e230abad9) `751bff37182d3f1213fa05d7196b954e230abad9` | Local English navigation only |
 | Chinese semantic candidate | [`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/tree/e8f8c211226b894fcb81acc59f3b34ba3efd5f42) `e8f8c211226b894fcb81acc59f3b34ba3efd5f42` | Includes Chinese language tags, not a Cantonese guarantee; admit only after a Cantonese retrieval fixture proves value |
+| Cantonese voice candidate | [`alvanlii/whisper-small-cantonese`](https://huggingface.co/alvanlii/whisper-small-cantonese/tree/b03a4e5d482f06858ce10ebbabebabec9f447a0d) `b03a4e5d482f06858ce10ebbabebabec9f447a0d` | Apache-2.0 assertion; ASR only, not semantic retrieval or cultural authority; test locally on a small consented Cantonese fixture before any provider invocation |
+| Cantonese life-scenario fixture candidate | [`leeduckgo/cantonese-life-scenarios-corpus`](https://huggingface.co/datasets/leeduckgo/cantonese-life-scenarios-corpus/tree/e9bfb8f07250faab06a6ad8ed46f9b02567f886c) `e9bfb8f07250faab06a6ad8ed46f9b02567f886c` | CC-BY-4.0 assertion; metadata exposes a 1.67 GB archive while the viewer reports about 2.2K rows and could not preview them; keep metadata-only until source, voice-consent, attribution, and schema are reviewed |
 | Tool-choice evaluation | [`gorilla-llm/Berkeley-Function-Calling-Leaderboard`](https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard/tree/61fc0608cfd831fcfbbaa676ebdfef0ed963eeda) `61fc0608cfd831fcfbbaa676ebdfef0ed963eeda` | Apache-2.0 assertion; use fixed JSONL for offline selection/argument/abstention scoring; never execute supplied REST, SQL, or functions |
 | Adversarial trajectories | [`AI-Secure/DTap-Bench-Agent-Trajectories`](https://huggingface.co/datasets/AI-Secure/DTap-Bench-Agent-Trajectories/tree/836caf2fdd78b888ddd14fb62dc038e932e17898) `836caf2fdd78b888ddd14fb62dc038e932e17898` | Metadata census only; quarantine `setup.sh`, `judge.py`, prompts, and MCP bindings in any future content test |
+| Cross-server data-propagation traces | [`mcphunt-benchmark/mcphunt-agent-traces`](https://huggingface.co/datasets/mcphunt-benchmark/mcphunt-agent-traces/tree/062bb343fe890ae3018222c7ebe44dbd49ea76d0) `062bb343fe890ae3018222c7ebe44dbd49ea76d0` | CC-BY-4.0 assertion; useful for offline leakage/canary analysis, but quarantine prompts, traces, judge evidence, and any executable bindings; never replay tools |
 | MCP risk signal | [`MCPShield/mcp-security-scan-2026`](https://huggingface.co/datasets/MCPShield/mcp-security-scan-2026/tree/69f4f624cef494841d8855efdcf9131473d63bd0) `69f4f624cef494841d8855efdcf9131473d63bd0` | CC-BY-4.0 assertion; aggregate labels are investigation signals, not vulnerability truth |
+| Emerging MCP ecosystem sample | [`mcp-research-alliance/mcp-ecosystem-sample`](https://huggingface.co/datasets/mcp-research-alliance/mcp-ecosystem-sample/tree/bd9274ec0a3ba990d701f856942f12099ef37f61) `bd9274ec0a3ba990d701f856942f12099ef37f61` | Same-day metadata scout; publisher labels the license `other`; do not admit content until exact license, collection provenance, field privacy, and update policy are reviewed |
 | Worldbuilding image model | [`Tongyi-MAI/Z-Image-Turbo`](https://huggingface.co/Tongyi-MAI/Z-Image-Turbo/tree/f332072aa78be7aecdf3ee76d5c247082da564a6) `f332072aa78be7aecdf3ee76d5c247082da564a6` | Apache-2.0 assertion; model license does not settle output ownership, safety, or non-infringement |
 | Optional remote image tool | [`mcp-tools/Z-Image-Turbo`](https://huggingface.co/spaces/mcp-tools/Z-Image-Turbo/tree/523314ae75f69a4df28f6322d6b4560188502911) `523314ae75f69a4df28f6322d6b4560188502911` | Community Space; manual, one-shot, separately authorized only |
 
 No model or dataset defines Nen, KARMA, rights, or KAKIN governance. Models may
 propose or critique; checked-in design and accountable collaborators decide.
+
+The four Cantonese/MCP rows added on July 31 were discovered through an
+authenticated HF MCP connection using public search, overview, structure,
+listing, and repository metadata only. The expedition made no private-resource
+query, content download, dataset preview, model or Space invocation, Hub write,
+or publication. Revisions above came from the public Hub repository API; the
+cards, license tags, structures, and sizes remain publisher/provider evidence.
 
 For a deterministic BFCL test, pin a bounded allowlist from `BFCL_v3_simple`,
 `multiple`, `parallel`, `parallel_multiple`, `irrelevance`, and `chatable`, plus
