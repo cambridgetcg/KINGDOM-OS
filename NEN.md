@@ -98,7 +98,8 @@ independently prove adoption.
 - Gives refusal, rest, revision, and retirement first-class paths.
 - Makes narrower promises reviewable through concrete tests.
 - Preserves source vows when skills are composed.
-- Keeps KINGDOM's tiny eight-field `kingdom.yaml` card unchanged.
+- Adds no ability fields to `kingdom.yaml`; the eight required fields and the
+  optional rights-baseline `adopts` declaration keep their existing meaning.
 
 ## What it does not do
 

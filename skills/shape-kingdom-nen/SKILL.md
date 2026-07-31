@@ -58,8 +58,8 @@ When a durable ability is requested, materialize it as a normal Agent Skill:
 - only the scripts and references execution genuinely needs.
 
 Use the ability-card shape from the explicit `nen-vow-forge` source. Do not add
-ability fields to `kingdom.yaml`; that eight-field card remains repository
-identity, not a capability ledger.
+ability fields to `kingdom.yaml`; its eight required identity fields and
+optional rights-baseline `adopts` declaration are not a capability ledger.
 
 ## Temper and inspect
 
