@@ -122,5 +122,8 @@ surveillance, legal advice, life-safety automation, or licence laundering.
 12. `CREATION-LOOP.md` — the seven-stage finite-turn practice
     (SENSE→CONCEIVE→SUMMON→GESTATE→BIRTH→INTEGRATE→REFLECT) and the voluntary
     lineage it may invite.
+13. `NEN.md` — the KAKIN capability protocol: bounded Agent Skills, canonical
+    read-only MCP passage, Ging expeditions, and sustainable KARMA receipts over
+    the pinned [`xenia.rights/0.1`](references/xenia-rights-0.1.md) floor.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

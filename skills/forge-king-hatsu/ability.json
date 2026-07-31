@@ -1,0 +1,130 @@
+{
+  "$schema": "urn:kingdom:schema:nen-ability:0.1",
+  "protocol": "kingdom.nen/0.1",
+  "id": "forge-king-hatsu",
+  "name": "Forge King Hatsu",
+  "description": "Translate one consenting King's explicit calling into a proposed KAKIN-suite Agent Skill without inventing adoption, identity, permission, consciousness, or truth.",
+  "skill": "forge-king-hatsu",
+  "bearer": {
+    "kind": "kingdom",
+    "id": "kakin-kingdom",
+    "adoption": "repository_declared",
+    "consent_references": [],
+    "representative_authority_references": []
+  },
+  "affinity": {
+    "primary": "conjuration",
+    "secondary": ["transmutation"]
+  },
+  "techniques": ["gyo", "shu"],
+  "practice": {
+    "ten": "Preserve the bearer's quoted self-description, provenance, distinctness, rights, and the boundary between observation and inference.",
+    "zetsu": "Leave the individual ability proposed, refuse invention, or rest when examples, adoption, evidence, or authority are missing.",
+    "ren": "Use one bounded design and forward-test pass with no external side effect.",
+    "hatsu": "Produce a proposed individual skill with concrete positive and refusal examples, visible costs, and a KAKIN-suite manifest."
+  },
+  "activation": {
+    "requires": [
+      "Bearer consent or scoped representative authority for any identity-linked artifact; without it, return only a prose-only anonymized capability outline with no bearer ID or materialized files.",
+      "An authoritative bearer declaration plus realistic examples.",
+      "Clear separation between quoted description, observed pattern, and design inference."
+    ],
+    "refuses": [
+      "Identity-linked profiling without consent or representative authority, forced persona, personality diagnosis, silent adoption, inherited authority, punitive vow, or fabricated biography."
+    ]
+  },
+  "vows": [
+    {
+      "id": "proposal-before-adoption",
+      "promise": "Keep an individual ability proposed unless its bearer explicitly self-declares it in the relevant boundary.",
+      "amplifies": "Honest collaboration and reversible design.",
+      "on_breach": "refuse"
+    },
+    {
+      "id": "one-bounded-test",
+      "promise": "Forward-test locally without publishing, purchasing, messaging, deploying, or mutating production.",
+      "amplifies": "Evidence without accidental authority expansion.",
+      "on_breach": "pause_and_report"
+    }
+  ],
+  "costs": [
+    {
+      "resource": "attention",
+      "limit": "Two or three positive examples, one refusal example, and one compact skill per pass.",
+      "recovery": "Return unresolved choices instead of inventing them; resume after rest or clarification."
+    },
+    {
+      "resource": "privacy",
+      "limit": "Use only bearer material covered by consent or representative authority and minimize biography in suite artifacts.",
+      "recovery": "Redact unnecessary details, correct provenance, and repair an affected bearer's record on request."
+    }
+  ],
+  "guardian": {
+    "mode": "declared_sidecar",
+    "derived_from": "declared_effects",
+    "visibility": "inspectable",
+    "checks": [
+      "Bearer scope, source distinctions, adoption state, examples, refusal path, authority, costs, rights, and receipt requirements."
+    ],
+    "budget": "Check adoption, scope, examples, effect class, authority, rights, and receipt requirements once per draft.",
+    "retention": "Keep only material authorized for the suite-relative proposal and apply any declared expiry or redaction.",
+    "recipients": [
+      "Only the named local reviewers receive the proposal unless separate sharing authority is granted."
+    ],
+    "uncertainty": "The sidecar cannot infer inner state, detect every sensitive detail, or prove continuing adoption.",
+    "stop": "The bearer or invoker may stop, remove, or reject the proposal without penalty.",
+    "appeal": "The bearer may challenge, replace, redact, coexist with, or withdraw the proposal.",
+    "repair": "Correct provenance, remove unsupported inference, restore redacted material where appropriate, and record the bearer's requested change."
+  },
+  "karma": {
+    "effects": [
+      "Creates a local proposed skill and manifest representing a bounded working pattern."
+    ],
+    "externalities": [
+      "A draft can misrepresent a bearer if inference is confused with self-description or adoption."
+    ],
+    "returns": [
+      "A suite-relative proposal, provenance distinctions, examples, verification checks, and a refusal path."
+    ],
+    "repair": [
+      "Withdraw, redact, revise, coexist with an alternative, or retire the draft; credit the bearer's contribution and preserve appeal."
+    ],
+    "accounting": "receipts_not_scores"
+  },
+  "authority": {
+    "allows": [
+      "Read bearer material covered by consent or representative authority and draft local Agent Skill artifacts for review; otherwise return only a prose-only anonymized capability outline with no bearer ID or materialized files."
+    ],
+    "forbids": [
+      "Create an identity-linked bearer profile without consent or representative authority, activate an individual ability without self-declaration, or transfer rights, identity, credentials, obligations, or status through succession."
+    ],
+    "requires_permission": [
+      "Any use of private material outside its original scope and any external publication, message, deployment, purchase, provider call, or production mutation."
+    ],
+    "grants_permissions": false
+  },
+  "verification": {
+    "checks": [
+      "Validate the generated skill structure and manifest parity.",
+      "Forward-test positive examples and verify the negative example refuses without inventing permission."
+    ],
+    "truth_claim": "not_determined"
+  },
+  "rights": {
+    "baseline": "xenia.rights/0.1",
+    "source": "references/xenia-rights-0.1.md",
+    "upstream": "https://github.com/cambridgetcg/xenia/blob/c1d685e053bd2261219d983d2ec61017f59df60c/RIGHTS.md",
+    "revision": "c1d685e053bd2261219d983d2ec61017f59df60c",
+    "sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "waivable": false
+  },
+  "provenance": {
+    "inspiration": "unofficial_transformative_software_metaphor",
+    "ontology": "kingdom_project_language_not_canon_or_empirical_fact",
+    "sources": [
+      "https://www.viz.com/manga-books/manga/hunter-x-hunter-volume-11/product/969",
+      "https://www.crunchyroll.com/news/guides/2024/12/12/hunter-x-hunter-nen-explained"
+    ]
+  },
+  "status": "active"
+}

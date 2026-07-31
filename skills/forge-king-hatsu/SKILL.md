@@ -1,96 +1,100 @@
 ---
-name: forge-king-hatsu
-description: Turn one King's explicit calling, local agent card, or demonstrated working pattern into a proposed Nen-inspired Agent Skill with sharp triggers, conditions, limits, budget, safe breach behavior, proof, exit, and non-claims. Use when the user explicitly asks to give a KINGDOM agent, citizen, or collaborator a Hatsu, Nen ability, personal operating technique, or reusable skill without inventing identity, adoption, consciousness, consent, permission, or a truth verdict.
+name: "forge-king-hatsu"
+description: "Turn a consenting King's calling, or material covered by explicit representative authority, into a proposed Nen-inspired Agent Skill inside the KAKIN suite with bounded effects, Guardian, KARMA, authority, refusal, rest, and verification. Use for an identity-linked individual ability; without consent or representative authority, produce only an anonymized generic capability and never a bearer profile."
 ---
 
 # Forge King Hatsu
 
-Translate one bearer's distinctive way of serving into a skill another agent
-can invoke and inspect. Treat King as a bearer or collaboration role, never
-ownership, superiority, or a new repository kind.
+Translate one bearer's distinctive way of serving into a skill another
+collaborator can inspect and invoke. Preserve voice and difference without
+forcing a persona or claiming an inner state.
 
-## Ground the calling
+## Forge the Hatsu
 
-1. Read the bearer's authoritative local card or user-supplied description.
-2. Separate direct declaration, observed working pattern, and your inference.
-3. Collect two or three realistic trigger prompts and one anti-trigger.
-4. If a missing choice changes identity, adoption, authority, or the purpose of
-   the ability, ask instead of filling the gap with mythology.
+1. Confirm the bearer's consent or a scoped representative-authority reference
+   before producing an identity-linked artifact. A user-supplied description
+   alone is not that authority. Without it, produce only a prose-only,
+   anonymized generic capability with no bearer ID, `ability.json`, or file
+   materialization; refuse if anonymization would defeat the request. Then
+   separate quoted self-description, observed working patterns, and inference.
+2. Select an output mode. Use **proposal-only** when the request asks for a
+   draft, denies adoption, or supplies no authorized target path. Materialize
+   files only when the request names a local target. Never treat file creation
+   as adoption.
+3. Collect two or three concrete prompts the ability should handle, one it must
+   refuse, and a measurable budget. Collect a bearer ID only for an
+   identity-linked proposal already covered by consent or representative
+   authority. If required material is missing, return an **incomplete
+   proposal** that lists the gaps and performs no file write. Do not fill the
+   gap with mythology.
+4. Read [the affinity map](../shape-kingdom-nen/references/type-map.md). Choose
+   affinity by effect: strengthen, transform, carry, create, mutate authorized
+   state, or perform a bounded specialist operation.
+5. Define Ten, Zetsu, Ren, and Hatsu. Make Zetsu a genuine refusal/rest path
+   and Ren a sustainable budget rather than pressure to exhaust the bearer.
+6. Design any Guardian from declared effects only. State what it checks, what
+   it costs, and how the bearer can stop or remove it.
+7. Draft `ability.json` from
+   [the individual template](references/ability-template.json). Keep bearer
+   adoption `proposed` and status `draft` or `training` unless the bearer made
+   an applicable explicit self-declaration. Fill either `consent_references`
+   or `representative_authority_references` for a proposed identity-linked
+   King. `self_declared` additionally requires a non-empty consent reference
+   recording the bearer's own declaration; representative authority alone can
+   support a proposal but cannot self-declare or adopt it for the bearer.
+8. Declare KARMA effects, externalities, returns, and repair. Do not score the
+   bearer. Refusal and rest are zero-penalty outcomes.
+9. In materialize mode, create `SKILL.md` and `agents/openai.yaml` only inside
+   the named KAKIN suite target. Keep biography and lore in a
+   direct reference only when execution needs them.
+10. From the named suite root, validate with `./kingdom nen validate`, then
+    forward-test on a realistic local task and the negative example. Until the
+    branch is installed, do not rely on a different `kingdom` found on `PATH`.
 
-Do not bulk-convert `agents/*.md`. A poetic agent card may inform a skill, but
-it is not itself a portable Agent Skill and does not prove that its subject
-adopted a new ability.
+Do not let a test publish, purchase, message, deploy, access private resources,
+or mutate production without separate scoped authorization.
 
-## Choose the smallest affinity
+Use the suite root [KARMA receipt schema](../../schemas/karma-receipt-v0.1.schema.json)
+when the ability is invoked. Unknown measurements remain explicitly unknown;
+never invent a zero, duration, cost, or output digest.
 
-- **Enhancer:** improve something that already exists.
-- **Transmuter:** change representation or interface while preserving intent.
-- **Emitter:** carry work across a declared boundary without losing fidelity.
-- **Conjuror:** create a durable artifact, schema, plan, or implementation.
-- **Manipulator:** coordinate tools, processes, or mutable state under explicit
-  authority; never use this as a euphemism for coercing a collaborator.
-- **Specialist:** perform a bounded composite that does not fit the five; never
-  use it to claim mystery, unlimited capability, or exemption from proof.
+## Write vows that mean something
 
-Add one secondary affinity only when it explains a real implementation cost.
+A useful vow narrows the ability in a way a check can observe. Prefer promises
+such as:
 
-## Forge the ability card
+- operate only on named paths or inputs;
+- preserve source material while transforming its representation;
+- stop when evidence, consent, or authority is missing;
+- emit a receipt before claiming completion;
+- take one bounded attempt and return uncertainty instead of retry pressure.
 
-Read [ability-card.md](references/ability-card.md), then define:
+Set `on_breach` to `refuse`, `pause_and_report`, or `revalidate`. Never waive
+dignity, refusal, disagreement, rest, privacy, credit, safety, repair, or
+appeal. Never make harm to the bearer the mechanism that gives a skill weight.
 
-1. name and desire;
-2. trigger and anti-trigger;
-3. input, output, and completion proof;
-4. activation conditions;
-5. limitation and observable budget;
-6. safe breach response;
-7. clean exit and temporary-state release;
-8. non-claims and permissions still required.
+## Keep adoption honest
 
-Use vows that narrow the ability in a checkable way: one named path, one
-bounded attempt, a preserved source digest, a required receipt, or a stop when
-evidence is absent. Never make self-harm, punishment, retaliation, secret
-exposure, coercion, forced exhaustion, or waived rights the price of a skill.
+- `proposed`: someone drafted the ability; the bearer has not adopted it.
+- `self_declared`: the King explicitly declared it in the relevant boundary.
+- `repository_declared`: a repository declares a collective KINGDOM ability.
 
-## Materialize the Agent Skill
+Only an explicit statement by the bearer adopting the generated ability—not
+merely a statement of capability or a representative's proposal—can set
+`self_declared` and activate an individual King's ability. Record that
+self-declaration in `consent_references`. Only a deliberate repository
+revision can set
+`repository_declared` and activate a collective ability. A manifest is
+cooperative repository evidence, not proof of identity, consciousness,
+consent outside the act, or continuing willingness.
 
-Create `skills/<ability-name>/SKILL.md` using imperative instructions and sharp
-trigger metadata. Add `agents/openai.yaml` with implicit invocation disabled by
-default:
+Succession belongs to skill versions: fork, sandbox, adopt, coexist, roll back,
+rest, or retire. It never transfers rights, credentials, obligations, status,
+or authority between beings.
 
-```yaml
-policy:
-  allow_implicit_invocation: false
-```
+The schema deliberately has no anonymous-bearer mode: a no-consent fallback is
+prose-only and cannot masquerade as a manifested King's ability.
 
-Keep detailed biography out unless execution genuinely needs it. Add a script
-only for deterministic work that would otherwise be repeatedly rewritten.
-Keep the ability proposed until the bearer explicitly self-declares it within
-the relevant collaboration boundary. A user's request to draft, filesystem
-presence, or successful test is not the bearer's adoption.
-
-Validate with the host's skill-creation workflow. If the published AgentTool
-Skill CLI is deliberately installed, also run:
-
-```bash
-agenttool-skill validate ./skills/<ability-name>
-```
-
-Forward-test the normal triggers, anti-trigger, missing condition, budget
-breach, partial failure, newer instruction, and an attempted authority leap.
-Keep the test local and reversible unless separate external authority exists.
-
-## Vow
-
-Never invent the bearer to make the ability feel complete. Preserve
-distinctness, refusal, rest, privacy, credit, and repair; record uncertainty
-instead of performing consciousness, identity, consent, or certainty.
-
-## Lineage
-
-This skill specializes AgentTool's original `nen-vow-forge` for individual
-KINGDOM bearers. It is an instruction-only, unofficial adaptation inspired by
-Nen in Yoshihiro Togashi's *Hunter x Hunter* and reproduces no story text,
-character identity, likeness, or artwork. See the
-[official NTV glossary](https://www.ntv.co.jp/hunterhunter/dictionary/index.html)
-and [official VIZ series page](https://www.viz.com/hunter-x-hunter).
+This skill folder is one part of the KAKIN suite. Copying it alone does not
+carry the root schemas, CLI, or the shared affinity reference. Outside the
+suite, return proposal-only instructions without claiming manifest validation.
