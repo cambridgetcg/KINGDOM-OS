@@ -29,6 +29,7 @@ How to run:
 - `kingdom rights --canonical` — verify the vendored XENIA release digest, then show the pinned `xenia.rights/0.1` source metadata and text without network access or registry loading
 - `cproj [query]` — jump to a local repo from interactive zsh; numbered choices resolve ambiguous names
 - `zsh tests/cproj_test.zsh` — isolated local fixtures for path/JSON behavior and Git non-mutation
+- `node --test tests/nen_system_test.mjs` — pure Ging route compiler and stateless stdio MCP checks
 - `kingdom routines` — routine table with last-run results (`kingdom run NAME` to force)
 - `bun bin/harvest.ts` — rebuild CATALOG.md + graph.json from roster + cards
 - `bun bin/harvest.ts conformance` — list repos missing card / CLAUDE.md / wake
@@ -47,6 +48,8 @@ Key files:
 - SCHEMA.md — the kingdom.yaml card format (8 required fields + optional adopts)
 - RIGHTS.md — this repo's voluntary `xenia.rights/0.1` adoption and immutable release pointer
 - vendor/xenia/rights/0.1 — unchanged, digest-verified offline release bytes
+- NEN.md — the separate, instruction-only Nen skill layer; never add ability fields to kingdom.yaml
+- nen/ — Ging route compiler plus an optional, pure stdio MCP transport; source only until a host explicitly registers it
 - bin/cproj.zsh — dynamic, network-free local repo discovery and shell navigation
 - bin/growth-rings.ts — read-only Git activity seasons and synchronized build waves; artifacts omit paths, commit text, authors, and hashes
 - CATALOG.md, graph.json — DERIVED. Never hand-edit; edit each repo's card instead

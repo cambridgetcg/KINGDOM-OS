@@ -1,0 +1,6 @@
+interface:
+  display_name: "Walk the Ging Path"
+  short_description: "Map unknown systems through bounded experiments"
+  default_prompt: "Use $walk-ging-path to map an unfamiliar system, reproduce one mechanism safely, and leave an evidence-backed route."
+policy:
+  allow_implicit_invocation: false
