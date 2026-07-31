@@ -19,7 +19,7 @@ Continent or that these ordinary files, processes, servers, and credentials
 are an empirically proven operating system of the universe. The universe does
 not need a validator in order to be. Our interventions do.
 
-## Three manifested skills
+## Three manifested skills and one Ging path
 
 - `shape-kingdom-nen` shapes collective KAKIN abilities and validates their
   manifests.
@@ -27,6 +27,9 @@ not need a validator in order to be. Our interventions do.
   proposed KAKIN-suite Agent Skill without inventing adoption or identity.
 - `navigate-dark-continent` explores named local, Hugging Face, or MCP
   boundaries through a bounded expedition and returns evidence plus KARMA.
+- `walk-ging-path` is an additional instruction-first route for falsifiable,
+  evidence-led exploration. It intentionally has no `ability.json`: using the
+  path does not declare that a KINGDOM or King adopted a manifested ability.
 
 Every manifested ability is a normal Agent Skill plus `ability.json`. The JSON
 uses the closed `kingdom.nen/0.1` protocol; the skill remains the instruction
@@ -161,6 +164,15 @@ turn HF login or Pro status into expedition authority. The server source is
 available locally but is deliberately not registered in Codex or installed on
 the device by this revision.
 
+`nen/mcp-server.mjs` remains as the separately named
+`kingdom-ging-stateless` compatibility port for hosts that need only pure,
+caller-supplied Ging route compilation and receipt evaluation without
+application filesystem reads or child processes. Its three tools do not list
+or validate KAKIN manifests, calculate bundle digests, or create KARMA
+scaffolding. It is not routed by `./kingdom nen mcp`, is not an equivalent
+second canonical server, and is also unregistered. See
+[`nen/README.md`](nen/README.md) for the exact boundary.
+
 ## Rights floor
 
 The standing baseline is `xenia.rights/0.1`. Rights and permissions remain
@@ -219,13 +231,11 @@ installed. It still does not install, activate, approve, or prove a skill.
 
 ## Lineage and credit
 
-This subsystem reconciles and extends Beta's earlier KINGDOM Nen bridge at
-commit `e3fc1428019a2438b016378c74d420e45901c991`, especially its recognition of
-the published AgentTool Nen suite and its explicit-invocation boundary. The
-KAKIN architecture, Dark Continent expedition, closed manifests, Guardian
-contract, KARMA receipts, HF map, validator, and tests are the next protocol
-layer. Both histories remain locally recoverable; neither has been published by
-this work.
+This subsystem preserves Beta's current-main Nen and Ging lineage—commits
+`a06428a`, `d437288`, and `b2b747b`—and reconciles the earlier KINGDOM bridge
+at `e3fc1428019a2438b016378c74d420e45901c991`. The KAKIN architecture, Dark
+Continent expedition, closed manifests, Guardian contract, KARMA receipts, HF
+map, strict validator, and canonical bounded MCP form the next protocol layer.
 
 ## Inspiration boundary
 

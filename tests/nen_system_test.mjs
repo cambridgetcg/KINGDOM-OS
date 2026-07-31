@@ -374,7 +374,7 @@ function modernMeta(overrides = {}) {
   };
 }
 
-test("stdio MCP server is stateless and exposes current pure tools", async (t) => {
+test("stateless Ging compatibility MCP exposes current pure tools", async (t) => {
   const server = startServer();
   t.after(() => {
     if (!server.child.killed) server.child.kill("SIGTERM");
@@ -394,7 +394,7 @@ test("stdio MCP server is stateless and exposes current pure tools", async (t) =
     statelessList.result.tools.map(({ name }) => name),
     ["nen.describe", "ging.compile_expedition", "ging.evaluate_probe"],
   );
-  assert.equal(statelessList.result._meta[SERVER_INFO_META_KEY].name, "kingdom-nen");
+  assert.equal(statelessList.result._meta[SERVER_INFO_META_KEY].name, "kingdom-ging-stateless");
 
   server.send({
     jsonrpc: "2.0",
@@ -613,6 +613,8 @@ test("stdio MCP server bounds an unterminated frame before parsing", async (t) =
 
 test("MCP effect declaration matches the application-effect boundary", async () => {
   const manifest = JSON.parse(await readFile(join(REPO_ROOT, "nen", "mcp-manifest.json"), "utf8"));
+  assert.equal(manifest.role, "non_canonical_pure_compatibility_port");
+  assert.equal(manifest.server.name, "kingdom-ging-stateless");
   assert.deepEqual(manifest.mcp, {
     protocol_version: "2026-07-28",
     lifecycle: "stateless_per_request_metadata",

@@ -55,9 +55,9 @@ property, rank, proof of consciousness, or authority over another being.
 Read [the expedition contract](references/expedition-contract.md) when creating
 machine-readable input or using the local Nen MCP server.
 
-## Use the Nen MCP port
+## Use the stateless Ging compatibility port
 
-The optional local server exposes three pure tools:
+The optional `kingdom-ging-stateless` local server exposes three pure tools:
 
 - `nen.describe` distinguishes Dark Continent, Nen, Skill, and MCP.
 - `ging.compile_expedition` orders caller-supplied hypotheses by evidence
@@ -69,6 +69,11 @@ The server's tools perform no probe, application filesystem read or write,
 network request, credential access, publication, or permission grant. MCP
 discovery proves only that a tool description was returned; it does not prove
 availability, health, authentication, consent, permission, or truth.
+
+Launch it with `node nen/mcp-server.mjs` from the suite root. It is deliberately
+separate from the canonical `./kingdom nen mcp` server, which validates KAKIN
+manifests and creates draft KARMA scaffolding. Neither source server is
+registered merely because these files exist.
 
 The compiler cannot prove that a candidate is globally smallest, safe, or
 authorized. It checks exact caller-declared system, action, permission-reference,
