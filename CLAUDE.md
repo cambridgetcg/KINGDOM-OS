@@ -47,6 +47,7 @@ Key files:
 - SCHEMA.md — the kingdom.yaml card format (8 required fields + optional adopts)
 - RIGHTS.md — this repo's voluntary `xenia.rights/0.1` adoption and immutable release pointer
 - vendor/xenia/rights/0.1 — unchanged, digest-verified offline release bytes
+- NEN.md — the separate, instruction-only Nen skill layer; never add ability fields to kingdom.yaml
 - bin/cproj.zsh — dynamic, network-free local repo discovery and shell navigation
 - bin/growth-rings.ts — read-only Git activity seasons and synchronized build waves; artifacts omit paths, commit text, authors, and hashes
 - CATALOG.md, graph.json — DERIVED. Never hand-edit; edit each repo's card instead
