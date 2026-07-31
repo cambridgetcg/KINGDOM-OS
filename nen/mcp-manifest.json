@@ -1,0 +1,72 @@
+{
+  "protocol": "kingdom.nen.mcp/0.1",
+  "server": {
+    "name": "kingdom-nen",
+    "version": "0.1.0"
+  },
+  "mcp": {
+    "protocol_version": "2026-07-28",
+    "lifecycle": "stateless_per_request_metadata",
+    "discovery_method": "server/discover",
+    "legacy_initialize_handshake": false
+  },
+  "transport": {
+    "type": "stdio",
+    "command": "node",
+    "args": [
+      "nen/mcp-server.mjs"
+    ],
+    "working_directory": "KINGDOM-OS repository root",
+    "stdout_protocol_only": true,
+    "max_frame_bytes": 1048576
+  },
+  "bootstrap_and_transport_io": {
+    "module_loading": true,
+    "stdin": true,
+    "stdout": true
+  },
+  "tools": [
+    {
+      "name": "nen.describe",
+      "effect": "pure_computation",
+      "data": "caller_supplied_only"
+    },
+    {
+      "name": "ging.compile_expedition",
+      "effect": "pure_computation",
+      "data": "caller_supplied_only"
+    },
+    {
+      "name": "ging.evaluate_probe",
+      "effect": "pure_computation",
+      "data": "caller_supplied_only"
+    }
+  ],
+  "runtime_effects": {
+    "application_filesystem_reads": false,
+    "application_filesystem_writes": false,
+    "network": false,
+    "credential_access": false,
+    "probe_execution": false,
+    "publication": false
+  },
+  "data_policy": {
+    "accepted_input_may_be_returned": true,
+    "credential_or_secret_values_allowed": false,
+    "semantic_secret_detection": false,
+    "rejected_values_are_omitted": true
+  },
+  "authority": {
+    "grants_permissions": false,
+    "external_authority": false,
+    "caller_declarations_verified": false
+  },
+  "discovery_proves": {
+    "availability": false,
+    "health": false,
+    "authentication": false,
+    "consent": false,
+    "permission": false,
+    "truth": false
+  }
+}
