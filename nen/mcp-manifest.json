@@ -1,7 +1,8 @@
 {
-  "protocol": "kingdom.nen.mcp/0.1",
+  "protocol": "kingdom.ging-stateless.mcp/0.1",
+  "role": "non_canonical_pure_compatibility_port",
   "server": {
-    "name": "kingdom-nen",
+    "name": "kingdom-ging-stateless",
     "version": "0.1.0"
   },
   "mcp": {

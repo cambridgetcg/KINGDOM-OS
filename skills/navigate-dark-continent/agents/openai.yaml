@@ -1,0 +1,6 @@
+interface:
+  display_name: "Navigate Dark Continent"
+  short_description: "Explore external systems with causal receipts"
+  default_prompt: "Use $navigate-dark-continent to plan a bounded, reversible HF or MCP expedition."
+policy:
+  allow_implicit_invocation: false

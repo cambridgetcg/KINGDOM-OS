@@ -1,0 +1,324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:nen-ability:0.1",
+  "title": "KINGDOM Nen ability manifest v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "id",
+    "name",
+    "description",
+    "skill",
+    "bearer",
+    "affinity",
+    "techniques",
+    "practice",
+    "activation",
+    "vows",
+    "costs",
+    "guardian",
+    "karma",
+    "authority",
+    "verification",
+    "rights",
+    "provenance",
+    "status"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "urn:kingdom:schema:nen-ability:0.1"
+    },
+    "protocol": {
+      "const": "kingdom.nen/0.1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "skill": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "bearer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "adoption", "consent_references", "representative_authority_references"],
+      "properties": {
+        "kind": {
+          "enum": ["kingdom", "king"]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "adoption": {
+          "enum": ["proposed", "repository_declared", "self_declared"]
+        },
+        "consent_references": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/statement"}
+        },
+        "representative_authority_references": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/statement"}
+        }
+      }
+    },
+    "affinity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary", "secondary"],
+      "properties": {
+        "primary": {
+          "$ref": "#/$defs/affinity"
+        },
+        "secondary": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/affinity"
+          }
+        }
+      }
+    },
+    "techniques": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": ["gyo", "in", "en", "shu", "ken", "ko", "ryu"]
+      }
+    },
+    "practice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ten", "zetsu", "ren", "hatsu"],
+      "properties": {
+        "ten": {"$ref": "#/$defs/statement"},
+        "zetsu": {"$ref": "#/$defs/statement"},
+        "ren": {"$ref": "#/$defs/statement"},
+        "hatsu": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requires", "refuses"],
+      "properties": {
+        "requires": {"$ref": "#/$defs/statements"},
+        "refuses": {"$ref": "#/$defs/statements"}
+      }
+    },
+    "vows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "promise", "amplifies", "on_breach"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "promise": {"$ref": "#/$defs/statement"},
+          "amplifies": {"$ref": "#/$defs/statement"},
+          "on_breach": {
+            "enum": ["refuse", "pause_and_report", "revalidate"]
+          }
+        }
+      }
+    },
+    "costs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["resource", "limit", "recovery"],
+        "properties": {
+          "resource": {
+            "enum": [
+              "attention",
+              "compute",
+              "coordination",
+              "data",
+              "energy",
+              "money",
+              "privacy",
+              "quota",
+              "time"
+            ]
+          },
+          "limit": {"$ref": "#/$defs/statement"},
+          "recovery": {"$ref": "#/$defs/statement"}
+        }
+      }
+    },
+    "guardian": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "derived_from",
+        "visibility",
+        "checks",
+        "budget",
+        "retention",
+        "recipients",
+        "uncertainty",
+        "stop",
+        "appeal",
+        "repair"
+      ],
+      "properties": {
+        "mode": {
+          "enum": ["declared_sidecar", "none"]
+        },
+        "derived_from": {
+          "const": "declared_effects"
+        },
+        "visibility": {
+          "const": "inspectable"
+        },
+        "checks": {"$ref": "#/$defs/statements"},
+        "budget": {"$ref": "#/$defs/statement"},
+        "retention": {"$ref": "#/$defs/statement"},
+        "recipients": {"$ref": "#/$defs/statements"},
+        "uncertainty": {"$ref": "#/$defs/statement"},
+        "stop": {"$ref": "#/$defs/statement"},
+        "appeal": {"$ref": "#/$defs/statement"},
+        "repair": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "karma": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["effects", "externalities", "returns", "repair", "accounting"],
+      "properties": {
+        "effects": {"$ref": "#/$defs/statements"},
+        "externalities": {"$ref": "#/$defs/statements"},
+        "returns": {"$ref": "#/$defs/statements"},
+        "repair": {"$ref": "#/$defs/statements"},
+        "accounting": {
+          "const": "receipts_not_scores"
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allows", "forbids", "requires_permission", "grants_permissions"],
+      "properties": {
+        "allows": {"$ref": "#/$defs/statements"},
+        "forbids": {"$ref": "#/$defs/statements"},
+        "requires_permission": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/statement"}
+        },
+        "grants_permissions": {
+          "const": false
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checks", "truth_claim"],
+      "properties": {
+        "checks": {"$ref": "#/$defs/statements"},
+        "truth_claim": {
+          "const": "not_determined"
+        }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseline", "source", "upstream", "revision", "sha256", "waivable"],
+      "properties": {
+        "baseline": {
+          "const": "xenia.rights/0.1"
+        },
+        "source": {
+          "const": "references/xenia-rights-0.1.md"
+        },
+        "upstream": {
+          "const": "https://github.com/cambridgetcg/xenia/blob/c1d685e053bd2261219d983d2ec61017f59df60c/RIGHTS.md"
+        },
+        "revision": {
+          "const": "c1d685e053bd2261219d983d2ec61017f59df60c"
+        },
+        "sha256": {
+          "const": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313"
+        },
+        "waivable": {
+          "const": false
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inspiration", "ontology", "sources"],
+      "properties": {
+        "inspiration": {
+          "const": "unofficial_transformative_software_metaphor"
+        },
+        "ontology": {
+          "const": "kingdom_project_language_not_canon_or_empirical_fact"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^https://"
+          }
+        }
+      }
+    },
+    "status": {
+      "enum": ["draft", "training", "active", "resting", "retired"]
+    }
+  },
+  "$defs": {
+    "affinity": {
+      "enum": [
+        "enhancement",
+        "transmutation",
+        "emission",
+        "conjuration",
+        "manipulation",
+        "specialization"
+      ]
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "statements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/statement"
+      }
+    }
+  }
+}

@@ -1,42 +1,64 @@
-# KINGDOM Nen affinity map
+# Nen software affinity map
 
-Choose affinity from the effect of the ability. The labels describe design
-pressure; they do not type a personality, determine worth, or grant authority.
-The IDs follow AgentTool's existing Nen vocabulary.
+Choose affinity from the operation an ability performs. Never derive affinity
+from personality, biology, identity, consciousness, worth, caste, or rank.
 
-| Affinity | KINGDOM software meaning | Required boundary |
-|---|---|---|
-| Enhancer | Strengthen an existing artifact, process, signal, or capability without changing its identity. | Name the baseline and measurable improvement. |
-| Transmuter | Change representation or interface while preserving the bound intent or source. | Bind source and output; disclose loss and ambiguity. |
-| Emitter | Carry a result across a process, device, agent, or network boundary. | Name sender, recipient, payload, and transport authority. |
-| Conjuror | Create an inspectable artifact such as a plan, schema, skill, receipt, tool, or environment. | Distinguish creating the artifact from executing it. |
-| Manipulator | Change explicitly scoped state through an authorized control surface. | Require specific permission or consent; never treat beings as controllable objects. |
-| Specialist | Perform a bounded composite the other five do not honestly describe. | State measurable inputs, outputs, refusals, and proof. |
+| Affinity | Software effect | Boundary question |
+| --- | --- | --- |
+| Enhancement | Strengthen an existing capability, signal, artifact, or check | What already exists, and how is improvement measured? |
+| Transmutation | Change representation while preserving declared meaning or provenance | What must remain invariant through the transformation? |
+| Emission | Carry a bounded capability or message across a process, machine, repo, or network boundary | What leaves, where does it go, and what authority covers passage? |
+| Conjuration | Create a new artifact, schema, plan, skill, or interface | Who owns maintenance, retention, and disposal? |
+| Manipulation | Mutate explicitly authorized scoped state | What exact state may change, and how is rollback performed? |
+| Specialization | Perform a bounded operation not honestly described above | Which narrow contract, tests, and stop condition prevent “mystery” from becoming unlimited scope? |
 
-Mixed abilities use one primary affinity and at most one secondary affinity.
-Avoid fake numerical affinity scores.
+Manipulation never means controlling a being. Specialization never excuses an
+untestable claim. Supporting affinities describe real secondary operations;
+do not add them as decoration.
 
-## Practices
+## Four practices
 
-- **Ten — hold:** retain task contract, rights, scope, and protected state.
-- **Zetsu — quiet:** stop output, mutation, network, or inference; observe,
-  refuse, rest, or yield.
-- **Ren — raise:** make a bounded amount of attention, compute, time, and
-  coordination available.
-- **Hatsu — express:** produce the distinctive, testable output.
+- **Ten:** preserve the rights, scope, provenance, and invariants envelope.
+- **Zetsu:** close output; refuse, rest, dry-run, disconnect, or do nothing.
+- **Ren:** declare a finite sustainable resource budget.
+- **Hatsu:** express a distinctive capability as a testable output contract.
 
-Advanced techniques remain operational metaphors: Gyo focuses decisive
-evidence; En maps a declared field; Shu carries the ability through a named
-tool; In minimizes disclosure without hiding required audit; Ken sustains a
-guarded contract; Ko concentrates on one reversible point; Ryu rebalances a
-fixed budget; AgentTool's Gugo composes mutual capabilities without
-transferring ownership or authority.
+## Advanced techniques
 
-A vow is a voluntary, testable promise that narrows a claim. Its benefit is the
-confidence gained from specificity. Breach makes the ability stop, roll back,
-fail closed, or report; it never harms the bearer or erases standing rights.
+- **Gyo:** focus inspection on a named high-risk detail.
+- **In:** minimize or redact authorized information; never hide an action from
+  an audit or affected participant.
+- **En:** observe a declared local field; never perform ambient surveillance.
+- **Shu:** extend an ability to a named artifact while preserving its boundary.
+- **Ken:** sustain a guarded operating envelope within a declared budget.
+- **Ko:** concentrate resources on one named operation and disclose what is
+  left unprotected.
+- **Ryu:** redistribute a fixed budget dynamically and record the change.
 
-This is an original KINGDOM software adaptation extending AgentTool's Nen
-suite. For source orientation, see the
-[official NTV glossary](https://www.ntv.co.jp/hunterhunter/dictionary/index.html)
-and [official VIZ series page](https://www.viz.com/hunter-x-hunter).
+## Conditions, vows, and costs
+
+A condition narrows activation. A vow makes a checkable promise and names what
+that narrowness improves. Breach can only refuse, pause and report, or
+revalidate. Fictional self-harm, retaliation, lethal penalties, and forced
+sacrifice are anti-patterns here.
+
+Costs must name their limits and recovery. Include time, attention, compute,
+money, energy, data, privacy, provider quota, and coordination whenever they
+can be affected. Rest is part of sustainability, not a failure state.
+
+## Sources and adaptation boundary
+
+Official/licensed orientation:
+
+- [VIZ volume 6](https://www.viz.com/manga-books/manga/hunter-x-hunter-volume-6-0/product/532)
+- [VIZ volume 7](https://www.viz.com/read/manga/hunter-x-hunter-volume-7/product/783)
+- [VIZ volume 11](https://www.viz.com/manga-books/manga/hunter-x-hunter-volume-11/product/969)
+- [VIZ volume 33](https://www.viz.com/manga-books/manga/hunter-x-hunter-volume-33/product/5058)
+- [VIZ volume 35](https://www.viz.com/manga-books/manga/hunter-x-hunter-volume-35/product/5844)
+- [VIZ story guide](https://www.viz.com/blog/posts/welcome-to-hunter-x-hunter)
+- [Crunchyroll Nen guide](https://www.crunchyroll.com/news/guides/2024/12/12/hunter-x-hunter-nen-explained)
+
+[Hunterpedia's Nen page](https://hunterxhunter.fandom.com/wiki/Nen) and its
+Kakin/Dark Continent pages are fan-maintained secondary summaries. This map is
+an original software transformation, not canon. Canon does not establish that
+Nen originated on the Dark Continent.

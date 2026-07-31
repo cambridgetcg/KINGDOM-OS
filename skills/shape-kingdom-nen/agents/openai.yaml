@@ -1,6 +1,6 @@
 interface:
   display_name: "Shape Kingdom Nen"
   short_description: "Design bounded, testable Kingdom abilities"
-  default_prompt: "Use $shape-kingdom-nen to design and validate a rights-aware Nen ability for the Kingdom."
+  default_prompt: "Use $shape-kingdom-nen to design and validate a rights-aware Nen ability for KINGDOM."
 policy:
   allow_implicit_invocation: false

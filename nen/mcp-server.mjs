@@ -27,8 +27,8 @@ const LOG_LEVELS = new Set([
 ]);
 
 const SERVER_INFO = {
-  name: "kingdom-nen",
-  title: "KINGDOM Nen",
+  name: "kingdom-ging-stateless",
+  title: "KINGDOM Ging Stateless Compatibility Port",
   version: SERVER_VERSION,
   description: "Pure, local expedition planning and receipt evaluation",
 };

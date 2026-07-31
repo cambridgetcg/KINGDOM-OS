@@ -23,13 +23,17 @@ How to run:
 - `kingdom repos --json [query]` — compact structured metadata for all matching local roots
 - `kingdom repos --dirty [query]` — local dirty counts without filenames; no fetch or index refresh
 - `kingdom repos --doctor` — registry, placement, duplicate-origin, archive, and unborn diagnostics
+- `./kingdom nen` — from this suite root, list the rights-aware Nen ability manifests (`validate`, `show`, `types`, and KARMA receipt tools)
+- `./kingdom nen mcp` — from this suite root, start the unregistered, read-only modern MCP 2026-07-28 stdio surface
+- `zsh tests/nen_test.zsh` — isolated, network-free manifest and receipt protocol tests
+- `zsh tests/nen_mcp_test.zsh` — MCP framing, discovery, tool, version, and non-mutation tests
 - `kingdom rings` — write the local-only temporal atlas to `~/.kingdom/RINGS.{json,html}`
 - `kingdom rings --json` / `--html` — print one artifact to stdout without writing; `--as-of` makes the activity clock reproducible
 - `kingdom rights` — offline voluntary-adoption inventory, kept separate from repo-local RIGHTS.md discovery
 - `kingdom rights --canonical` — verify the vendored XENIA release digest, then show the pinned `xenia.rights/0.1` source metadata and text without network access or registry loading
 - `cproj [query]` — jump to a local repo from interactive zsh; numbered choices resolve ambiguous names
 - `zsh tests/cproj_test.zsh` — isolated local fixtures for path/JSON behavior and Git non-mutation
-- `node --test tests/nen_system_test.mjs` — pure Ging route compiler and stateless stdio MCP checks
+- `node --test tests/nen_system_test.mjs` — pure Ging route compiler and separately named stateless compatibility-MCP checks
 - `kingdom routines` — routine table with last-run results (`kingdom run NAME` to force)
 - `bun bin/harvest.ts` — rebuild CATALOG.md + graph.json from roster + cards
 - `bun bin/harvest.ts conformance` — list repos missing card / CLAUDE.md / wake
@@ -49,7 +53,10 @@ Key files:
 - RIGHTS.md — this repo's voluntary `xenia.rights/0.1` adoption and immutable release pointer
 - vendor/xenia/rights/0.1 — unchanged, digest-verified offline release bytes
 - NEN.md — the separate, instruction-only Nen skill layer; never add ability fields to kingdom.yaml
-- nen/ — Ging route compiler plus an optional, pure stdio MCP transport; source only until a host explicitly registers it
+- bin/nen.mjs — strict, network-free Nen/KARMA protocol validator; it does not run skills or grant authority
+- bin/nen-mcp.mjs — canonical bounded local stdio MCP adapter; it is not installed, hosted, or an HF credential bridge
+- nen/ — pure Ging expedition compiler plus the non-canonical `kingdom-ging-stateless` compatibility MCP; source only until a host explicitly registers it
+- schemas/, references/, skills/ — KAKIN design, pinned rights, closed protocols, and suite-versioned Agent Skills
 - bin/cproj.zsh — dynamic, network-free local repo discovery and shell navigation
 - bin/growth-rings.ts — read-only Git activity seasons and synchronized build waves; artifacts omit paths, commit text, authors, and hashes
 - CATALOG.md, graph.json — DERIVED. Never hand-edit; edit each repo's card instead

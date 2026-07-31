@@ -12,6 +12,7 @@
 #   kingdom repos --dirty [Q] | --doctor   opt-in local hygiene checks
 #   kingdom rings [--json|--html]           local temporal atlas (no network)
 #   kingdom rights [--canonical|ID]        voluntary adoption inventory / local text
+#   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom routines   list daily routines  (kingdom routines run <name> | due)
 #   kingdom run NAME   force-run a routine now
 #   kingdom ask Q      ask Claude (via Claude Code, or ANTHROPIC_API_KEY)
@@ -33,6 +34,10 @@ case "$cmd" in
   repos)    exec zsh "$SELF_DIR/bin/cproj.zsh" "${@:2}" ;;
   rings)    exec bun "$SELF_DIR/bin/growth-rings.ts" "${@:2}" ;;
   rights)   exec bun "$SELF_DIR/bin/harvest.ts" rights "${@:2}" ;;
+  nen)      if [[ "${2:-}" == "mcp" && $# -eq 2 ]]; then
+              exec bun "$SELF_DIR/bin/nen-mcp.mjs"
+            fi
+            exec bun "$SELF_DIR/bin/nen.mjs" "${@:2}" ;;
   roast)    # unlisted; the jester needs no herald
             beats="${BEATS_DIR:-$HOME/Desktop/heartbeat/beats}"
             beat=$(ls "$beats"/* 2>/dev/null | sort -R | head -1)

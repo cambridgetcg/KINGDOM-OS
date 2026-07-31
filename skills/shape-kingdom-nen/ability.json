@@ -1,0 +1,129 @@
+{
+  "$schema": "urn:kingdom:schema:nen-ability:0.1",
+  "protocol": "kingdom.nen/0.1",
+  "id": "shape-kingdom-nen",
+  "name": "Shape Kingdom Nen",
+  "description": "Shape and validate collective KAKIN capabilities as bounded, rights-aware Agent Skills with visible authority, Guardian, cost, refusal, verification, and KARMA contracts.",
+  "skill": "shape-kingdom-nen",
+  "bearer": {
+    "kind": "kingdom",
+    "id": "kakin-kingdom",
+    "adoption": "repository_declared",
+    "consent_references": [],
+    "representative_authority_references": []
+  },
+  "affinity": {
+    "primary": "specialization",
+    "secondary": ["conjuration"]
+  },
+  "techniques": ["gyo", "en"],
+  "practice": {
+    "ten": "Hold the XENIA rights floor, declared scope, provenance, schema, and authority boundary throughout design and validation.",
+    "zetsu": "Refuse activation or let the ability rest when adoption, authority, a bounded budget, or a checkable outcome is absent.",
+    "ren": "Use only local read and bounded design effort unless a separately authorized effect is named.",
+    "hatsu": "Produce a KAKIN-suite Agent Skill and closed ability manifest whose limits and aftermath can be inspected before use."
+  },
+  "activation": {
+    "requires": [
+      "A named outcome, bearer scope, explicit effect boundary, and rights-preserving refusal path.",
+      "A repository declaration before a collective ability becomes active."
+    ],
+    "refuses": [
+      "Personality typing, coerced adoption, hidden telemetry, a rights waiver, unbounded power, or an authority claim derived from the manifest."
+    ]
+  },
+  "vows": [
+    {
+      "id": "effect-not-identity",
+      "promise": "Classify affinity and Guardian controls only from declared operations and effects.",
+      "amplifies": "Technical clarity without reducing a bearer to an inferred type.",
+      "on_breach": "refuse"
+    },
+    {
+      "id": "structure-not-truth",
+      "promise": "Report validation as structural evidence and never as permission, consent, safety, or truth.",
+      "amplifies": "Honest reuse of deterministic checks.",
+      "on_breach": "pause_and_report"
+    }
+  ],
+  "costs": [
+    {
+      "resource": "attention",
+      "limit": "One coherent manifest and its direct references per shaping pass.",
+      "recovery": "Return a proposal with open questions; rest or resume without penalty."
+    },
+    {
+      "resource": "coordination",
+      "limit": "Seek input only when a missing choice would materially change bearer scope, effects, or adoption.",
+      "recovery": "Keep the ability proposed until the relevant collaborator can respond."
+    }
+  ],
+  "guardian": {
+    "mode": "declared_sidecar",
+    "derived_from": "declared_effects",
+    "visibility": "inspectable",
+    "checks": [
+      "Closed schema, folder and skill parity, duplicate keys, adoption rules, support files, and symlink boundaries."
+    ],
+    "budget": "Offline schema, parity, symlink, adoption, and deterministic semantic checks under a 64 KiB per-file inspection cap.",
+    "retention": "Keep only command output deliberately captured by the invoker; the validator stores nothing.",
+    "recipients": [
+      "The local invoker receives stdout and stderr; no telemetry or data leaves the process."
+    ],
+    "uncertainty": "Structural validation does not prove consent, identity, permission, safety, behavior, or truth.",
+    "stop": "The invoker can stop validation at any time; the sidecar performs no skill execution or external effect.",
+    "appeal": "Challenge a diagnostic with the schema, fixture, and canonical input; revise the contract rather than scoring the bearer.",
+    "repair": "Correct the schema, manifest, validator, or diagnostic and rerun without changing bearer standing."
+  },
+  "karma": {
+    "effects": [
+      "Creates or reviews local skill instructions, manifests, schemas, and deterministic validation evidence."
+    ],
+    "externalities": [
+      "A rigid taxonomy can obscure difference if treated as personality or authority; the skill explicitly rejects that use."
+    ],
+    "returns": [
+      "Suite-versioned artifacts, separate manifest and full-bundle digests, diagnostics without rejected values, and a repair path."
+    ],
+    "repair": [
+      "Keep source material, revise or retire the proposal, correct attribution, and record any affected participant's concern without retaliation."
+    ],
+    "accounting": "receipts_not_scores"
+  },
+  "authority": {
+    "allows": [
+      "Read named local design inputs and create or validate local Nen skill artifacts within the requested workspace."
+    ],
+    "forbids": [
+      "Invent identity, adoption, consciousness, consent, authority, or a universal truth verdict."
+    ],
+    "requires_permission": [
+      "External publication, deployment, messages, purchases, credential changes, private-resource access, paid inference, or production mutation."
+    ],
+    "grants_permissions": false
+  },
+  "verification": {
+    "checks": [
+      "Run the central closed-schema validator and isolated Nen protocol tests.",
+      "Run Skill Creator validation and forward-test realistic positive and refusal prompts."
+    ],
+    "truth_claim": "not_determined"
+  },
+  "rights": {
+    "baseline": "xenia.rights/0.1",
+    "source": "references/xenia-rights-0.1.md",
+    "upstream": "https://github.com/cambridgetcg/xenia/blob/c1d685e053bd2261219d983d2ec61017f59df60c/RIGHTS.md",
+    "revision": "c1d685e053bd2261219d983d2ec61017f59df60c",
+    "sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "waivable": false
+  },
+  "provenance": {
+    "inspiration": "unofficial_transformative_software_metaphor",
+    "ontology": "kingdom_project_language_not_canon_or_empirical_fact",
+    "sources": [
+      "https://www.viz.com/manga-books/manga/hunter-x-hunter-volume-35/product/5844",
+      "https://www.crunchyroll.com/news/guides/2024/12/12/hunter-x-hunter-nen-explained"
+    ]
+  },
+  "status": "active"
+}

@@ -47,11 +47,26 @@ truth, copy an identity, or transfer authority.
 Implementation:
 
 - [`ging.mjs`](ging.mjs) is the pure route compiler and receipt evaluator.
-- [`mcp-server.mjs`](mcp-server.mjs) exposes those functions over local stdio.
-- [`mcp-manifest.json`](mcp-manifest.json) declares effects and non-authority.
+- [`mcp-server.mjs`](mcp-server.mjs) exposes those functions through the
+  separately named `kingdom-ging-stateless` compatibility server.
+- [`mcp-manifest.json`](mcp-manifest.json) declares that compatibility port's
+  effects and non-authority.
 - [`../skills/walk-ging-path/`](../skills/walk-ging-path/) is the Agent Skill.
 
-## Run the MCP port
+## Choose one MCP port
+
+The canonical KINGDOM Nen server is:
+
+```bash
+./kingdom nen mcp
+```
+
+It lists and validates local KAKIN manifests, returns their bundle digests and
+affinities, and creates in-memory draft KARMA receipt scaffolding through the
+strict `bin/nen.mjs` boundary.
+
+For a restricted host that needs only pure computation over caller-supplied
+Ging expedition objects, run the compatibility port:
 
 From the repository root:
 
@@ -60,9 +75,12 @@ node nen/mcp-server.mjs
 ```
 
 Configure an MCP host to launch `node` with `nen/mcp-server.mjs` as its
-argument and this repository as its working directory. Registration is a host
-configuration action; this repository does not silently alter a live Codex,
-Claude, or other MCP configuration.
+argument and this repository as its working directory. Its MCP server name is
+`kingdom-ging-stateless`, not `kingdom-nen`. It does not list or validate KAKIN
+manifests, calculate skill-bundle digests, create KARMA scaffolding, or replace
+the canonical server. Registration is a host configuration action; this
+repository does not silently alter a live Codex, Claude, or other MCP
+configuration.
 
 The server targets MCP `2026-07-28`: UTF-8 newline-delimited JSON-RPC over
 stdio, stateless per-request `_meta`, required `server/discover`, deterministic

@@ -1,0 +1,89 @@
+{
+  "$schema": "urn:kingdom:schema:nen-ability:0.1",
+  "protocol": "kingdom.nen/0.1",
+  "id": "replace-with-ability-id",
+  "name": "Replace with ability name",
+  "description": "Describe one concrete, bounded outcome.",
+  "skill": "replace-with-ability-id",
+  "bearer": {
+    "kind": "king",
+    "id": "replace-with-bearer-id",
+    "adoption": "proposed",
+    "consent_references": [],
+    "representative_authority_references": []
+  },
+  "affinity": {
+    "primary": "conjuration",
+    "secondary": []
+  },
+  "techniques": ["gyo"],
+  "practice": {
+    "ten": "Preserve named rights, scope, provenance, and invariants.",
+    "zetsu": "Refuse or rest when a named activation condition is absent.",
+    "ren": "Use only the declared time, attention, compute, and effect budget.",
+    "hatsu": "Produce the one declared output contract."
+  },
+  "activation": {
+    "requires": ["Name a checkable activation requirement."],
+    "refuses": ["Name one realistic negative example."]
+  },
+  "vows": [
+    {
+      "id": "bounded-attempt",
+      "promise": "Take one bounded attempt and report uncertainty.",
+      "amplifies": "Predictability and inspectability.",
+      "on_breach": "pause_and_report"
+    }
+  ],
+  "costs": [
+    {
+      "resource": "attention",
+      "limit": "Replace with a finite limit.",
+      "recovery": "Rest or return the unfinished task without penalty."
+    }
+  ],
+  "guardian": {
+    "mode": "none",
+    "derived_from": "declared_effects",
+    "visibility": "inspectable",
+    "checks": ["Name the checks, or state why no Guardian process is needed."],
+    "budget": "No sidecar budget is allocated.",
+    "retention": "Name what the Guardian retains and for how long; use none when appropriate.",
+    "recipients": ["Name every recipient of Guardian data; use the local invoker when nothing leaves."],
+    "uncertainty": "Name what the Guardian cannot determine.",
+    "stop": "The bearer or invoker may stop before any external effect.",
+    "appeal": "Name how a participant can challenge or replace a Guardian result.",
+    "repair": "Name how false findings, retained data, or unintended effects are corrected."
+  },
+  "karma": {
+    "effects": ["Name the expected direct effect."],
+    "externalities": ["Name plausible indirect effects or uncertainty."],
+    "returns": ["Name the artifact, evidence, or replenishment returned."],
+    "repair": ["Name rollback, notification, cleanup, or repair."],
+    "accounting": "receipts_not_scores"
+  },
+  "authority": {
+    "allows": ["Draft the named local artifact."],
+    "forbids": ["Invent consent, identity, permission, or truth."],
+    "requires_permission": ["Any external mutation, message, purchase, publication, or deployment."],
+    "grants_permissions": false
+  },
+  "verification": {
+    "checks": ["Add a deterministic output check."],
+    "truth_claim": "not_determined"
+  },
+  "rights": {
+    "baseline": "xenia.rights/0.1",
+    "source": "references/xenia-rights-0.1.md",
+    "upstream": "https://github.com/cambridgetcg/xenia/blob/c1d685e053bd2261219d983d2ec61017f59df60c/RIGHTS.md",
+    "revision": "c1d685e053bd2261219d983d2ec61017f59df60c",
+    "sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "waivable": false
+  },
+  "provenance": {
+    "inspiration": "unofficial_transformative_software_metaphor",
+    "ontology": "kingdom_project_language_not_canon_or_empirical_fact",
+    "sources": ["https://www.viz.com/shonenjump/chapters/hunter-x-hunter"]
+  },
+  "status": "draft"
+}
