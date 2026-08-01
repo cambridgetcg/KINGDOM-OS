@@ -6,7 +6,7 @@ import {
   readdirSync,
 } from "node:fs";
 import { createHash } from "node:crypto";
-import { basename, dirname, isAbsolute, join, resolve } from "node:path";
+import { basename, dirname, isAbsolute, join, parse, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const MAX_FILE_BYTES = 64 * 1024;
@@ -82,6 +82,7 @@ const MANIFESTATION_RECEIPT_FIELDS = [
   "provider",
   "request",
   "result",
+  "provider_calls_submitted",
   "external_effects",
   "unknowns",
   "retry",
@@ -89,6 +90,7 @@ const MANIFESTATION_RECEIPT_FIELDS = [
 ];
 
 const MANIFESTATION_RECEIPT_NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*-manifestation-[0-9]{8}\.json$/;
+const PRE_CALL_REVISION_BINDING = "observed_before_call_not_proven_execution_revision";
 const POST_TIMEOUT_REVISION_BINDING = "observed_after_timeout_not_proven_execution_revision";
 
 const AFFINITIES = [
@@ -379,11 +381,26 @@ function parseJsonFile(root, relative, label, issues) {
   }
 }
 
+function parseJsonValueFile(root, relative, label, issues) {
+  const text = safeRead(root, relative, label, issues);
+  if (text === null) return { loaded: false, value: null };
+  try {
+    return { loaded: true, value: strictJson(text) };
+  } catch (error) {
+    issues.push(issue(label, "$", error instanceof JsonProblem ? error.code : "invalid-json"));
+    return { loaded: false, value: null };
+  }
+}
+
 function jsonType(value) {
   if (value === null) return "null";
   if (Array.isArray(value)) return "array";
   if (Number.isInteger(value)) return "integer";
   return typeof value === "object" ? "object" : typeof value;
+}
+
+function record(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
 function resolveRef(rootSchema, reference) {
@@ -1057,16 +1074,17 @@ function inventorySkillBundle(skillsRoot, id, issues) {
   return inventory;
 }
 
-function validateManifestationReceipt(skillsRoot, id, filename, schema, issues) {
-  const receiptRelative = `${id}/assets/${filename}`;
-  const receiptLabel = `skills/${receiptRelative}`;
-  const receipt = parseJsonFile(skillsRoot, receiptRelative, receiptLabel, issues);
-  if (receipt === null) return;
+function exactAbsolutePath(value) {
+  return typeof value === "string"
+    && value.length > 0
+    && isAbsolute(value)
+    && resolve(value) === value
+    && value !== parse(value).root;
+}
 
+function validateManifestationReceiptRecord(receipt, receiptLabel, schema, issues, actualPath = null) {
   validateWithSchema(receipt, schema, schema, receiptLabel, "$", issues);
-  if (receipt.ability !== id) {
-    issues.push(issue(receiptLabel, "$.ability", "folder-id-mismatch"));
-  }
+  if (!record(receipt)) return;
 
   const recordedAt = normalizeTimestamp(receipt.receipt_recorded_at);
   const observedAt = normalizeTimestamp(receipt.provider?.interface_observed_at);
@@ -1087,8 +1105,18 @@ function validateManifestationReceipt(skillsRoot, id, filename, schema, issues) 
   }
 
   const timedOut = receipt.result?.failure?.code === "mcp_tools_call_timeout";
-  if (timedOut && receipt.provider?.revision_binding !== POST_TIMEOUT_REVISION_BINDING) {
-    issues.push(issue(receiptLabel, "$.provider.revision_binding", "post-timeout-disclaimer-missing"));
+  const revisionBinding = receipt.provider?.revision_binding;
+  if (timedOut && ![PRE_CALL_REVISION_BINDING, POST_TIMEOUT_REVISION_BINDING].includes(revisionBinding)) {
+    issues.push(issue(receiptLabel, "$.provider.revision_binding", "timeout-revision-disclaimer-missing"));
+  }
+  if (!timedOut && revisionBinding === POST_TIMEOUT_REVISION_BINDING) {
+    issues.push(issue(receiptLabel, "$.provider.revision_binding", "post-timeout-binding-without-timeout"));
+  }
+  if (
+    revisionBinding === PRE_CALL_REVISION_BINDING
+    && receipt.provider?.interface_observed_at_basis !== "exact"
+  ) {
+    issues.push(issue(receiptLabel, "$.provider.interface_observed_at_basis", "pre-call-observation-must-be-exact"));
   }
   if (receipt.result?.status === "failed" && receipt.result?.failure === null) {
     issues.push(issue(receiptLabel, "$.result.failure", "failure-detail-missing"));
@@ -1096,15 +1124,140 @@ function validateManifestationReceipt(skillsRoot, id, filename, schema, issues) 
   if (receipt.result?.status !== "failed" && receipt.result?.failure !== null) {
     issues.push(issue(receiptLabel, "$.result.failure", "unexpected-failure-detail"));
   }
+  const promptWords = typeof receipt.request?.prompt === "string"
+    ? receipt.request.prompt.trim().split(/\s+/u).filter(Boolean).length
+    : 0;
+  if (promptWords > 200) {
+    issues.push(issue(receiptLabel, "$.request.prompt", "prompt-word-budget-exceeded"));
+  }
+  if (
+    Number.isInteger(receipt.request?.seed)
+    && receipt.request.seed > 2_147_483_647
+  ) {
+    issues.push(issue(receiptLabel, "$.request.seed", "provider-seed-out-of-range"));
+  }
+  if (
+    typeof receipt.request?.guidance_scale === "number"
+    && receipt.request.guidance_scale > 100
+  ) {
+    issues.push(issue(receiptLabel, "$.request.guidance_scale", "provider-guidance-out-of-range"));
+  }
+
+  const localDestination = receipt.authorization?.local_destination;
+  const effects = Array.isArray(receipt.external_effects) ? receipt.external_effects : [];
+  const suiteKarma = receipt.suite_karma;
+  if (
+    localDestination?.kind === "legacy_unbound_project_intent"
+    && receipt.evidence_class !== "pre_manifestation_provider_evidence"
+  ) {
+    issues.push(issue(receiptLabel, "$.authorization.local_destination.kind", "legacy-destination-on-current-evidence"));
+  }
+  if (
+    receipt.evidence_class === "manifestation_provider_evidence"
+    && suiteKarma?.state !== "final"
+  ) {
+    issues.push(issue(receiptLabel, "$.suite_karma.state", "final-karma-receipt-required"));
+  }
+  if (localDestination?.kind === "preview_only") {
+    if (
+      receipt.result?.project_path !== null
+      || effects.some((effect) => typeof effect === "string" && effect.startsWith("project_artifact_"))
+    ) {
+      issues.push(issue(receiptLabel, "$.authorization.local_destination", "preview-has-project-effect"));
+    }
+    if (
+      receipt.evidence_class === "manifestation_provider_evidence"
+      && (suiteKarma?.state !== "final" || suiteKarma?.storage !== "inline")
+    ) {
+      issues.push(issue(receiptLabel, "$.suite_karma", "preview-karma-must-be-inline-final"));
+    }
+  }
+  if (localDestination?.kind === "project_path") {
+    const projectRoot = localDestination.project_root;
+    const paths = [
+      localDestination.image_path,
+      localDestination.provider_receipt_path,
+      localDestination.karma_receipt_path,
+    ];
+    const insideRoot = paths.every((path) =>
+      exactAbsolutePath(projectRoot)
+      && exactAbsolutePath(path)
+      && path.startsWith(`${projectRoot}${sep}`)
+    );
+    if (
+      !insideRoot
+      || new Set(paths).size !== paths.length
+      || new Set(paths.map(dirname)).size !== 1
+    ) {
+      issues.push(issue(receiptLabel, "$.authorization.local_destination", "invalid-project-output-plan"));
+    }
+    if (actualPath !== null && resolve(actualPath) !== localDestination.provider_receipt_path) {
+      issues.push(issue(receiptLabel, "$.authorization.local_destination.provider_receipt_path", "provider-receipt-path-mismatch"));
+    }
+    if (receipt.result?.status === "manifested") {
+      if (receipt.result.project_path !== localDestination.image_path) {
+        issues.push(issue(receiptLabel, "$.result.project_path", "project-artifact-path-mismatch"));
+      }
+      const projectEffects = effects.filter((effect) =>
+        typeof effect === "string" && effect.startsWith("project_artifact_")
+      );
+      if (projectEffects.length !== 1) {
+        issues.push(issue(receiptLabel, "$.external_effects", "project-artifact-effect-missing"));
+      }
+    } else if (receipt.result?.project_path !== null) {
+      issues.push(issue(receiptLabel, "$.result.project_path", "project-path-without-manifestation"));
+    }
+    if (
+      receipt.evidence_class === "manifestation_provider_evidence"
+      && (
+        suiteKarma?.state !== "final"
+        || suiteKarma?.storage !== "project_path"
+        || suiteKarma?.receipt_path !== localDestination.karma_receipt_path
+      )
+    ) {
+      issues.push(issue(receiptLabel, "$.suite_karma", "project-karma-receipt-binding-mismatch"));
+    }
+  }
+}
+
+function validateManifestationReceipt(skillsRoot, id, filename, schema, issues) {
+  const receiptRelative = `${id}/assets/${filename}`;
+  const receiptLabel = `skills/${receiptRelative}`;
+  const loadedReceipt = parseJsonValueFile(skillsRoot, receiptRelative, receiptLabel, issues);
+  if (!loadedReceipt.loaded) return;
+  const receipt = loadedReceipt.value;
+
+  validateManifestationReceiptRecord(
+    receipt,
+    receiptLabel,
+    schema,
+    issues,
+    join(skillsRoot, receiptRelative),
+  );
+  if (record(receipt) && receipt.ability !== id) {
+    issues.push(issue(receiptLabel, "$.ability", "folder-id-mismatch"));
+  }
 
   const stem = filename.slice(0, -".json".length);
   const observationFilename = `${stem}.provider.json`;
   const observationRelative = `${id}/references/${observationFilename}`;
   const observationLabel = `skills/${observationRelative}`;
-  const observation = parseJsonFile(skillsRoot, observationRelative, observationLabel, issues);
-  if (observation !== null && schema.$defs?.provider) {
-    validateWithSchema(observation, schema.$defs.provider, schema, observationLabel, "$", issues);
-    if (canonicalJson(observation) !== canonicalJson(receipt.provider)) {
+  const loadedObservation = parseJsonValueFile(
+    skillsRoot,
+    observationRelative,
+    observationLabel,
+    issues,
+  );
+  if (loadedObservation.loaded && schema.$defs?.provider) {
+    validateWithSchema(
+      loadedObservation.value,
+      schema.$defs.provider,
+      schema,
+      observationLabel,
+      "$",
+      issues,
+    );
+    if (record(receipt) && canonicalJson(loadedObservation.value) !== canonicalJson(receipt.provider)) {
       issues.push(issue(receiptLabel, "$.provider", "provider-observation-mismatch"));
     }
   }
@@ -1112,7 +1265,7 @@ function validateManifestationReceipt(skillsRoot, id, filename, schema, issues) 
   const contractRelative = `${id}/references/manifestation-contract.md`;
   const contractLabel = `skills/${contractRelative}`;
   const contract = safeRead(skillsRoot, contractRelative, contractLabel, issues);
-  if (contract !== null && receipt.provider && typeof receipt.provider === "object") {
+  if (contract !== null && record(receipt?.provider)) {
     if (!contract.includes(`(${observationFilename})`)) {
       issues.push(issue(contractLabel, "$", "provider-observation-reference-missing"));
     }
@@ -1435,6 +1588,140 @@ function normalizeTimestamp(value) {
   return `${match[1]}${match[2]}${match[3]}${match[4]}${match[5]}${match[6]}${fraction}`;
 }
 
+function readAbsoluteJson(path, label, issues, returnBytes = false) {
+  const absolute = resolve(path);
+  const root = parse(absolute).root;
+  const parts = absolute.slice(root.length).split(sep).filter(Boolean);
+  let current = root;
+  for (const [index, part] of parts.entries()) {
+    current = join(current, part);
+    let stat;
+    try {
+      stat = lstatSync(current);
+    } catch {
+      issues.push(issue(label, "$", "missing-file"));
+      return null;
+    }
+    if (stat.isSymbolicLink()) {
+      issues.push(issue(label, "$", "symlink"));
+      return null;
+    }
+    const leaf = index === parts.length - 1;
+    if (!leaf && !stat.isDirectory()) {
+      issues.push(issue(label, "$", "invalid-path"));
+      return null;
+    }
+    if (leaf && !stat.isFile()) {
+      issues.push(issue(label, "$", "invalid-file"));
+      return null;
+    }
+    if (leaf && stat.size > MAX_FILE_BYTES) {
+      issues.push(issue(label, "$", "oversized-file"));
+      return null;
+    }
+  }
+  try {
+    const bytes = readFileSync(absolute);
+    const value = strictJson(decodeUtf8(bytes));
+    return returnBytes ? { value, bytes } : { value };
+  } catch (error) {
+    const code = error instanceof JsonProblem
+      ? error.code
+      : error instanceof TypeError
+        ? "invalid-utf8"
+        : "invalid-json";
+    issues.push(issue(label, "$", code));
+    return null;
+  }
+}
+
+function verifyManifestationReceipt(path, json, skillsRoot) {
+  const schemaInfo = loadManifestationReceiptSchema();
+  const abilitySchema = loadAbilitySchema();
+  const rightsInfo = loadRightsBaseline();
+  const receiptSchema = loadReceiptSchema();
+  const issues = [
+    ...schemaInfo.issues,
+    ...abilitySchema.issues,
+    ...rightsInfo.issues,
+    ...receiptSchema.issues,
+  ];
+  const absolute = resolve(path);
+  const label = basename(absolute) || "manifestation-receipt.json";
+  const loaded = readAbsoluteJson(absolute, label, issues);
+  const receipt = loaded?.value;
+  let ability = null;
+
+  if (loaded !== null && schemaInfo.schema && schemaInfo.issues.length === 0) {
+    validateManifestationReceiptRecord(receipt, label, schemaInfo.schema, issues, absolute);
+    if (record(receipt) && typeof receipt.ability === "string" && ID_PATTERN.test(receipt.ability)) {
+      ability = validateAbility(
+        skillsRoot,
+        receipt.ability,
+        abilitySchema.schema,
+        schemaInfo.schema,
+      );
+      if (ability.issues.length > 0 || !ability.manifestSha256 || !ability.bundleSha256) {
+        issues.push(issue(label, "$.ability", "ability-not-valid"));
+      }
+    }
+
+    if (
+      record(receipt)
+      && receipt.evidence_class === "manifestation_provider_evidence"
+      && receipt.suite_karma?.state === "final"
+      && receipt.suite_karma.storage === "project_path"
+      && typeof receipt.suite_karma.receipt_path === "string"
+    ) {
+      const karmaLabel = basename(receipt.suite_karma.receipt_path) || "karma-receipt.json";
+      const karmaLoaded = readAbsoluteJson(
+        receipt.suite_karma.receipt_path,
+        karmaLabel,
+        issues,
+        true,
+      );
+      if (karmaLoaded !== null) {
+        const karma = karmaLoaded.value;
+        if (sha256(karmaLoaded.bytes) !== receipt.suite_karma.sha256) {
+          issues.push(issue(label, "$.suite_karma.sha256", "karma-receipt-digest-mismatch"));
+        }
+        if (receiptSchema.schema && receiptSchema.issues.length === 0) {
+          validateWithSchema(karma, receiptSchema.schema, receiptSchema.schema, karmaLabel, "$", issues);
+        }
+        if (!record(karma) || karma.state !== "final") {
+          issues.push(issue(karmaLabel, "$.state", "draft-receipt"));
+        }
+        if (!record(karma) || karma.ability_id !== receipt.ability) {
+          issues.push(issue(karmaLabel, "$.ability_id", "manifestation-ability-mismatch"));
+        }
+        if (ability?.manifestSha256 && karma?.ability_manifest_sha256 !== ability.manifestSha256) {
+          issues.push(issue(karmaLabel, "$.ability_manifest_sha256", "ability-digest-mismatch"));
+        }
+        if (ability?.bundleSha256 && karma?.ability_bundle_sha256 !== ability.bundleSha256) {
+          issues.push(issue(karmaLabel, "$.ability_bundle_sha256", "ability-digest-mismatch"));
+        }
+      }
+    }
+  }
+
+  sortIssues(issues);
+  const payload = {
+    protocol: "kingdom.nen-manifestation-validation/0.1",
+    valid: issues.length === 0,
+    manifestation_receipt_schema_sha256: schemaInfo.sha256,
+    karma_receipt_schema_sha256: receiptSchema.sha256,
+    ability_schema_sha256: abilitySchema.sha256,
+    rights_sha256: rightsInfo.sha256,
+    issues,
+  };
+  if (json) process.stdout.write(`${JSON.stringify(payload, null, 2)}\n`);
+  else {
+    process.stdout.write(`Manifestation receipt: ${payload.valid ? "valid" : "invalid"} · ${issues.length} issues · ${payload.manifestation_receipt_schema_sha256 ?? "unavailable"}\n`);
+    printIssues(issues);
+  }
+  return issues.length === 0 ? 0 : 1;
+}
+
 function verifyReceipt(path, json, skillsRoot) {
   const receiptSchema = loadReceiptSchema();
   const abilitySchema = loadAbilitySchema();
@@ -1568,7 +1855,7 @@ function verifyReceipt(path, json, skillsRoot) {
 
 function usage() {
   process.stderr.write(
-    "usage: kingdom nen [list [--json] | validate [ID] [--json] | show ID [--json] | digest ID | types [--json] | receipt-template ID | verify-receipt FILE [--json]]\n"
+    "usage: kingdom nen [list [--json] | validate [ID] [--json] | show ID [--json] | digest ID | types [--json] | receipt-template ID | verify-receipt FILE [--json] | verify-manifestation-receipt FILE [--json]]\n"
     + "       bun bin/nen.mjs --skills-root /absolute/path <command>\n",
   );
   return 2;
@@ -1606,6 +1893,9 @@ function main() {
   if (command === "types" && rest.length === 0) return typesCommand(json);
   if (command === "receipt-template" && rest.length === 1 && !json) return receiptTemplateCommand(skillsRoot, rest[0]);
   if (command === "verify-receipt" && rest.length === 1) return verifyReceipt(rest[0], json, skillsRoot);
+  if (command === "verify-manifestation-receipt" && rest.length === 1) {
+    return verifyManifestationReceipt(rest[0], json, skillsRoot);
+  }
   return usage();
 }
 

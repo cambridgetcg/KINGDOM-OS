@@ -14,6 +14,7 @@
     "provider",
     "request",
     "result",
+    "provider_calls_submitted",
     "external_effects",
     "unknowns",
     "retry",
@@ -39,10 +40,8 @@
         "hosted_inference": {
           "enum": ["not_confirmed", "confirmed_for_one_call"]
         },
-        "local_destination": {"$ref": "#/$defs/statement"},
-        "publication": {
-          "enum": ["not_granted", "granted_for_named_target"]
-        }
+        "local_destination": {"$ref": "#/$defs/local_destination"},
+        "publication": {"$ref": "#/$defs/publication"}
       }
     },
     "provider": {"$ref": "#/$defs/provider"},
@@ -94,7 +93,7 @@
       "required": ["provider_reference", "project_path", "inspection", "status", "failure"],
       "properties": {
         "provider_reference": {"$ref": "#/$defs/nullable_statement"},
-        "project_path": {"$ref": "#/$defs/nullable_statement"},
+        "project_path": {"$ref": "#/$defs/nullable_absolute_path"},
         "inspection": {"$ref": "#/$defs/statement"},
         "status": {
           "enum": ["not_run", "refused", "manifested", "failed"]
@@ -117,6 +116,10 @@
           ]
         }
       }
+    },
+    "provider_calls_submitted": {
+      "type": "integer",
+      "enum": [0, 1, 2]
     },
     "external_effects": {
       "type": "array",
@@ -142,15 +145,176 @@
     "suite_karma": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["state", "reason"],
+      "required": ["state", "storage", "receipt_path", "sha256", "reason"],
       "properties": {
         "state": {
           "enum": ["not_created", "draft", "final"]
         },
+        "storage": {
+          "enum": ["none", "inline", "project_path"]
+        },
+        "receipt_path": {"$ref": "#/$defs/nullable_absolute_path"},
+        "sha256": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          ]
+        },
         "reason": {"$ref": "#/$defs/statement"}
-      }
+      },
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["state", "storage", "receipt_path", "sha256"],
+          "properties": {
+            "state": {"enum": ["not_created", "draft"]},
+            "storage": {"const": "none"},
+            "receipt_path": {"type": "null"},
+            "sha256": {"type": "null"}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["state", "storage", "receipt_path", "sha256"],
+          "properties": {
+            "state": {"const": "final"},
+            "storage": {"const": "inline"},
+            "receipt_path": {"type": "null"},
+            "sha256": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["state", "storage", "receipt_path", "sha256"],
+          "properties": {
+            "state": {"const": "final"},
+            "storage": {"const": "project_path"},
+            "receipt_path": {"$ref": "#/$defs/absolute_path"},
+            "sha256": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          }
+        }
+      ]
     }
   },
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["result", "provider_calls_submitted", "external_effects", "retry"],
+      "properties": {
+        "result": {
+          "type": "object",
+          "required": ["provider_reference", "project_path", "status", "failure"],
+          "properties": {
+            "provider_reference": {"type": "null"},
+            "project_path": {"type": "null"},
+            "status": {"enum": ["not_run", "refused"]},
+            "failure": {"type": "null"}
+          }
+        },
+        "provider_calls_submitted": {"const": 0},
+        "external_effects": {"const": []},
+        "retry": {"const": "not_authorized_or_attempted"}
+      }
+    },
+    {
+      "type": "object",
+      "required": ["authorization", "result", "provider_calls_submitted", "external_effects", "retry"],
+      "properties": {
+        "authorization": {
+          "type": "object",
+          "required": ["hosted_inference"],
+          "properties": {
+            "hosted_inference": {"const": "confirmed_for_one_call"}
+          }
+        },
+        "result": {
+          "type": "object",
+          "required": ["provider_reference", "project_path", "status", "failure"],
+          "properties": {
+            "provider_reference": {"type": "null"},
+            "project_path": {"type": "null"},
+            "status": {"const": "failed"},
+            "failure": {"$ref": "#/$defs/failure_detail"}
+          }
+        },
+        "external_effects": {"const": ["hosted_image_inference_request_submitted"]}
+      },
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["provider_calls_submitted", "retry"],
+          "properties": {
+            "provider_calls_submitted": {"const": 1},
+            "retry": {"enum": ["not_authorized_or_attempted", "authorized_not_attempted"]}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["provider_calls_submitted", "retry"],
+          "properties": {
+            "provider_calls_submitted": {"const": 2},
+            "retry": {"const": "attempted_once"}
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "required": ["authorization", "result", "provider_calls_submitted", "external_effects", "retry"],
+      "properties": {
+        "authorization": {
+          "type": "object",
+          "required": ["hosted_inference"],
+          "properties": {
+            "hosted_inference": {"const": "confirmed_for_one_call"}
+          }
+        },
+        "result": {
+          "type": "object",
+          "required": ["provider_reference", "status", "failure"],
+          "properties": {
+            "provider_reference": {"$ref": "#/$defs/statement"},
+            "status": {"const": "manifested"},
+            "failure": {"type": "null"}
+          }
+        },
+        "external_effects": {
+          "oneOf": [
+            {"const": ["hosted_image_inference_request_submitted", "hosted_image_inference_result_received"]},
+            {"const": ["hosted_image_inference_request_submitted", "hosted_image_inference_result_received", "project_artifact_created"]},
+            {"const": ["hosted_image_inference_request_submitted", "hosted_image_inference_result_received", "project_artifact_replaced"]}
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["provider_calls_submitted", "retry"],
+          "properties": {
+            "provider_calls_submitted": {"const": 1},
+            "retry": {"enum": ["not_authorized_or_attempted", "authorized_not_attempted"]}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["provider_calls_submitted", "retry"],
+          "properties": {
+            "provider_calls_submitted": {"const": 2},
+            "retry": {"const": "attempted_once"}
+          }
+        }
+      ]
+    }
+  ],
   "$defs": {
     "ability_id": {
       "type": "string",
@@ -174,6 +338,131 @@
         {"type": "null"},
         {"$ref": "#/$defs/statement"}
       ]
+    },
+    "absolute_path": {
+      "type": "string",
+      "pattern": "^/[^\\u0000]+$",
+      "minLength": 2,
+      "maxLength": 4096
+    },
+    "nullable_absolute_path": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/absolute_path"}
+      ]
+    },
+    "authority_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": {"enum": ["user_request", "scoped_delegation"]},
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9:._/-]{0,199}$"
+        }
+      }
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "target"],
+      "properties": {
+        "state": {"enum": ["not_granted", "granted_for_named_target"]},
+        "target": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["service", "account", "audience", "authority_reference"],
+              "properties": {
+                "service": {"$ref": "#/$defs/statement"},
+                "account": {"$ref": "#/$defs/statement"},
+                "audience": {"$ref": "#/$defs/statement"},
+                "authority_reference": {"$ref": "#/$defs/authority_reference"}
+              }
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["state", "target"],
+          "properties": {
+            "state": {"const": "not_granted"},
+            "target": {"type": "null"}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["state", "target"],
+          "properties": {
+            "state": {"const": "granted_for_named_target"},
+            "target": {"type": "object"}
+          }
+        }
+      ]
+    },
+    "local_destination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "project_root", "image_path", "provider_receipt_path", "karma_receipt_path"],
+      "properties": {
+        "kind": {"enum": ["preview_only", "project_path", "legacy_unbound_project_intent"]},
+        "project_root": {"$ref": "#/$defs/nullable_absolute_path"},
+        "image_path": {"$ref": "#/$defs/nullable_absolute_path"},
+        "provider_receipt_path": {"$ref": "#/$defs/nullable_absolute_path"},
+        "karma_receipt_path": {"$ref": "#/$defs/nullable_absolute_path"}
+      },
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind", "project_root", "image_path", "provider_receipt_path", "karma_receipt_path"],
+          "properties": {
+            "kind": {"const": "preview_only"},
+            "project_root": {"type": "null"},
+            "image_path": {"type": "null"},
+            "provider_receipt_path": {"type": "null"},
+            "karma_receipt_path": {"type": "null"}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "project_root", "image_path", "provider_receipt_path", "karma_receipt_path"],
+          "properties": {
+            "kind": {"const": "legacy_unbound_project_intent"},
+            "project_root": {"type": "null"},
+            "image_path": {"type": "null"},
+            "provider_receipt_path": {"type": "null"},
+            "karma_receipt_path": {"type": "null"}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "project_root", "image_path", "provider_receipt_path", "karma_receipt_path"],
+          "properties": {
+            "kind": {"const": "project_path"},
+            "project_root": {"$ref": "#/$defs/absolute_path"},
+            "image_path": {"$ref": "#/$defs/absolute_path"},
+            "provider_receipt_path": {"$ref": "#/$defs/absolute_path"},
+            "karma_receipt_path": {"$ref": "#/$defs/absolute_path"}
+          }
+        }
+      ]
+    },
+    "failure_detail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "observed_after_seconds"],
+      "properties": {
+        "code": {"$ref": "#/$defs/id"},
+        "observed_after_seconds": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
     },
     "timestamp": {
       "type": "string",

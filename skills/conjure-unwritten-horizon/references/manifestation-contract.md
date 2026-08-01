@@ -15,13 +15,13 @@ Primary affinity: Conjuror
 Secondary affinity: Emitter, because the prompt crosses a hosted boundary
 Trigger prompts: "manifest this vision"; "forge a Nen image"; "run this through Hugging Face with a fixed seed"
 Anti-trigger: "publish this everywhere" without named publication authority
-Input -> output: authorized sanitized text brief -> one image + receipt
-Conditions: explicit hosted-call authorization; preview-only or an exact destination that passes the local lstat gate; safe data classification; current Space parameters observed
-Limitation and observable budget: one image-generation call; no implicit retry or overwrite
+Input -> output: authorized sanitized text brief -> one image or failure + provider and KARMA receipts
+Conditions: structured authority bound to the exact provider request; preview-only or one project root with distinct image/provider-receipt/KARMA-receipt paths whose full ancestor and leaf chains pass lstat; safe data classification; exact current Space revision and fields observed
+Limitation and observable budget: one image-generation call; no implicit retry, overage, or replacement
 Safe breach response: enter Zetsu before the call or preserve a failed receipt after it
-Completion proof: viewable artifact, exact parameters, and bounded visual inspection
+Completion proof: viewable artifact or honest failure, exact parameters, causally consistent provider receipt, final suite KARMA receipt, and bounded visual inspection
 Exit and temporary-state cleanup: retain only requested project artifacts; disclose provider-retention unknowns
-Permissions still required: rights to described source material; hosted inference; local write destination; separate exact-path authority for any overwrite or symlink replacement; any separately named publication or deployment
+Permissions still required: rights to described source material; hosted inference; all three local output paths; separate exact-role authority for any overwrite or symlink replacement; any separately named publication or deployment
 Non-claims: no adoption, identity, paid-tier, provenance, uniqueness, copyright, safety, truth, or publication proof
 Rest or retirement path: decline activation, archive or remove the proposed skill through a separately authorized change
 Source declaration / observed pattern / inference: user authorized construction and a first manifestation; bearer adoption remains unasserted
@@ -62,31 +62,43 @@ Model revisions, runtime changes, and nondeterministic infrastructure can alter
 an output even when the seed matches. Record reproducibility inputs, not a
 guarantee of identical bytes.
 
-## Destination gate before provider interaction
+## Request and output gate before provider interaction
 
-Finish authority, input, cost, and destination checks before provider discovery
-or inference. `scripts/activation-preflight.mjs` is the read-only reference gate:
+Finish structured request-bound authority, input, source-rights, one-call
+no-overage cost, and output checks before provider discovery or inference.
+`scripts/activation-preflight.mjs` is the read-only reference gate. Its hosted
+authority accepts only a `user_request` or `scoped_delegation` reference bound
+to the SHA-256 fingerprint of every exact provider request field; login, Pro,
+and MCP state cannot satisfy it.
 
 - preview-only requires no local path;
-- a new project artifact requires one exact absolute path that does not exist;
-- an existing regular file requires separate explicit authority naming that
-  exact overwrite;
-- a destination symlink requires separate explicit authority and may only be
-  atomically replaced as a link, never followed to its target;
-- an existing directory, special file, unreadable path, or ambiguous authority
-  remains Zetsu.
+- a project-bound attempt names one existing non-symlink project root and three
+  distinct absolute paths in one directory: image, provider receipt, and KARMA
+  receipt;
+- every ancestor from the filesystem root through each parent is inspected with
+  `lstat`; a missing parent, symlink ancestor, non-directory ancestor, unreadable
+  path, or path outside the exact project root remains Zetsu;
+- an absent output leaf uses create-exclusive semantics;
+- each existing regular file or symlink needs its own authority naming the exact
+  output role and path; an authorized symlink replacement replaces the link
+  itself atomically and never follows its target;
+- directories, special-file leaves, surplus/mismatched authorities, and
+  ambiguous request parameters remain Zetsu.
 
 Only `provider_discovery_permitted: true` permits current-interface discovery.
 After that observation, rerun the gate and require
 `provider_call_permitted: true` before inference. The second pass rechecks the
-destination to narrow the time-of-check boundary. Creation is exclusive. An
-authorized regular-file replacement is atomic.
+three destinations to narrow the time-of-check boundary. Creation is exclusive.
+An authorized replacement is same-directory atomic. Actual writers must recheck
+and use no-follow/create-exclusive primitives; preflight is a decision gate, not
+a lock against later filesystem races.
 
 ## Receipt shape
 
 The closed schema is
-`schemas/nen-manifestation-receipt-v0.1.schema.json`. Checked receipts are
-validated with `./kingdom nen validate`; a schema-valid receipt is still
+`schemas/nen-manifestation-receipt-v0.1.schema.json`. Repository fixture
+receipts are validated with `./kingdom nen validate`; project-side receipts use
+`./kingdom nen verify-manifestation-receipt FILE`. A valid receipt is still
 evidence rather than provider authentication or authority.
 
 ```json
@@ -98,8 +110,17 @@ evidence rather than provider authentication or authority.
   "adoption": "proposed",
   "authorization": {
     "hosted_inference": "confirmed_for_one_call",
-    "local_destination": "preview_only_or_exact_preflighted_path",
-    "publication": "not_granted"
+    "local_destination": {
+      "kind": "project_path",
+      "project_root": "/absolute/project",
+      "image_path": "/absolute/project/assets/horizon.png",
+      "provider_receipt_path": "/absolute/project/assets/horizon.provider.json",
+      "karma_receipt_path": "/absolute/project/assets/horizon.karma.json"
+    },
+    "publication": {
+      "state": "not_granted",
+      "target": null
+    }
   },
   "provider": {
     "space": "mcp-tools/Qwen-Image",
@@ -127,17 +148,21 @@ evidence rather than provider authentication or authority.
       "observed_after_seconds": 300
     }
   },
+  "provider_calls_submitted": 1,
   "external_effects": ["hosted_image_inference_request_submitted"],
   "unknowns": ["provider retention", "byte-for-byte reproducibility"],
   "retry": "not_authorized_or_attempted",
   "suite_karma": {
     "state": "final",
-    "reason": "Exact suite receipt reference or bounded explanation"
+    "storage": "project_path",
+    "receipt_path": "/absolute/project/assets/horizon.karma.json",
+    "sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "reason": "Exact final suite receipt bound to this activation"
   }
 }
 ```
 
-For a timed-out historical call, the provider observation companion uses the
+For the checked timed-out historical call, the provider observation companion uses the
 same basename as the receipt: `assets/NAME.json` binds to
 `references/NAME.provider.json`. The provider objects must match byte-for-byte
 after canonical JSON ordering. Both timestamps must be real UTC RFC3339
@@ -147,20 +172,36 @@ timestamp as a disclosed upper bound with
 `upper_bound_from_receipt_recorded_at`; do not invent more precise observation
 time.
 
+For a future call, observe the exact interface before submission and use
+`observed_before_call_not_proven_execution_revision`, including when that later
+call times out. The historical
+`observed_after_timeout_not_proven_execution_revision` value is reserved for an
+observation actually made after a timeout. Neither value proves which revision
+executed.
+
 Do not add hashes unless computed from the saved bytes. A digest proves only
 that later bytes match those bytes; it does not authenticate the provider or
 the image's origin.
 
-When the KAKIN suite is present, also create and finalize its KARMA receipt:
+Create and finalize the KAKIN suite receipt without shell redirection to a
+project path:
 
 ```bash
-./kingdom nen receipt-template conjure-unwritten-horizon > receipt.json
-./kingdom nen verify-receipt receipt.json
+./kingdom nen receipt-template conjure-unwritten-horizon
+./kingdom nen verify-receipt /absolute/preflighted/horizon.karma.json
+./kingdom nen verify-manifestation-receipt /absolute/preflighted/horizon.provider.json
 ```
 
-The template is deliberately invalid until real invocation facts replace its
-placeholders. Keep this provider receipt as referenced evidence rather than a
-replacement for the suite-level causal record.
+The first command writes only to stdout and its template is deliberately invalid
+until real invocation facts replace its placeholders. Do not use `>` or another
+path-following redirect for either receipt. Construct the two final JSON records
+in memory or an exclusively created private staging file, validate them, then
+create each absent preflighted leaf exclusively or atomically replace only a
+separately authorized exact leaf. Keep the provider receipt as referenced
+evidence rather than a replacement for the suite-level causal record. The
+standalone provider verifier checks its closed schema and causal relationships,
+the actual provider-receipt path, and a project-bound KARMA schema/digest/ability
+binding; run `verify-receipt` as the full suite-level semantic check.
 
 Do not retrofit a call that predates the committed ability to a later manifest
 or bundle digest. Keep it as explicitly pre-manifest provider evidence. A valid

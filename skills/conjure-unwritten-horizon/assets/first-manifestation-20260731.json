@@ -6,8 +6,17 @@
   "adoption": "proposed",
   "authorization": {
     "hosted_inference": "confirmed_for_one_call",
-    "local_destination": "skill_assets_if_manifested",
-    "publication": "not_granted"
+    "local_destination": {
+      "kind": "legacy_unbound_project_intent",
+      "project_root": null,
+      "image_path": null,
+      "provider_receipt_path": null,
+      "karma_receipt_path": null
+    },
+    "publication": {
+      "state": "not_granted",
+      "target": null
+    }
   },
   "provider": {
     "space": "mcp-tools/Qwen-Image",
@@ -35,6 +44,7 @@
       "observed_after_seconds": 300
     }
   },
+  "provider_calls_submitted": 1,
   "external_effects": [
     "hosted_image_inference_request_submitted"
   ],
@@ -46,6 +56,9 @@
   "retry": "not_authorized_or_attempted",
   "suite_karma": {
     "state": "not_created",
+    "storage": "none",
+    "receipt_path": null,
+    "sha256": null,
     "reason": "The hosted call preceded any committed KAKIN ability revision; binding it retrospectively to the later manifest and bundle digests would misstate causality."
   }
 }

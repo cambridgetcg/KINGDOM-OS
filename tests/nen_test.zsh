@@ -157,13 +157,22 @@ assert_equal 1 "$CAPTURE_STATUS" "receipt and companion revision drift escaped c
 
 reset_fixture
 manifestation_receipt="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/assets/first-manifestation-20260731.json"
-"$JQ" '.provider.revision_binding = "observed_before_call_not_proven_execution_revision"' \
+provider_observation="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/references/first-manifestation-20260731.provider.json"
+"$JQ" '
+  .provider.revision_binding = "observed_before_call_not_proven_execution_revision"
+  | .provider.interface_observed_at_basis = "exact"
+  | .provider.interface_observed_at = "2026-07-31T17:55:31Z"
+' \
   "$manifestation_receipt" >| "$manifestation_receipt.next" \
   && command mv "$manifestation_receipt.next" "$manifestation_receipt"
+"$JQ" '
+  .revision_binding = "observed_before_call_not_proven_execution_revision"
+  | .interface_observed_at_basis = "exact"
+  | .interface_observed_at = "2026-07-31T17:55:31Z"
+' "$provider_observation" >| "$provider_observation.next" \
+  && command mv "$provider_observation.next" "$provider_observation"
 capture run_fixture validate conjure-unwritten-horizon
-assert_equal 1 "$CAPTURE_STATUS" "timed-out receipt lost its mandatory disclaimer"
-[[ "$CAPTURE_STDERR" == *'post-timeout-disclaimer-missing'* ]] \
-  || fail "post-timeout disclaimer diagnostic is absent"
+assert_equal 0 "$CAPTURE_STATUS" "exact pre-call revision evidence was rejected after a timeout"
 
 reset_fixture
 manifestation_receipt="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/assets/first-manifestation-20260731.json"
@@ -176,6 +185,65 @@ capture run_fixture validate conjure-unwritten-horizon
 assert_equal 1 "$CAPTURE_STATUS" "date-only provider observation was accepted as a timestamp"
 [[ "$CAPTURE_STDERR" == *'invalid-timestamp'* && "$CAPTURE_STDERR" == *'invalid-pattern'* ]] \
   || fail "RFC3339 timestamp diagnostics are incomplete"
+
+reset_fixture
+manifestation_receipt="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/assets/first-manifestation-20260731.json"
+capture run_fixture verify-manifestation-receipt "$manifestation_receipt" --json
+assert_equal 0 "$CAPTURE_STATUS" "standalone historical manifestation receipt validation failed"
+print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
+  .valid and .issues == [] and .protocol == "kingdom.nen-manifestation-validation/0.1"
+' >/dev/null || fail "standalone manifestation validation payload is wrong"
+
+"$JQ" '
+  .result.status = "refused"
+  | .result.failure = null
+  | .provider_calls_submitted = 2
+  | .retry = "attempted_once"
+  | .external_effects = [
+      "hosted_image_inference_request_submitted",
+      "hosted_image_inference_result_received",
+      "project_artifact_replaced"
+    ]
+  | .authorization.publication = {
+      state: "granted_for_named_target",
+      target: {
+        service: "fixture service",
+        account: "fixture account",
+        audience: "fixture audience",
+        authority_reference: {kind: "user_request", id: "user-request:fixture-publication"}
+      }
+    }
+' "$manifestation_receipt" >| "$TEST_ROOT/manifestation-contradictory.json"
+capture run_fixture verify-manifestation-receipt "$TEST_ROOT/manifestation-contradictory.json" --json
+assert_equal 1 "$CAPTURE_STATUS" "contradictory no-call manifestation receipt was accepted"
+print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
+  (.valid == false) and any(.issues[]; .code == "invalid-one-of")
+' >/dev/null || fail "cross-field manifestation schema diagnostic is absent"
+
+"$JQ" '
+  .authorization.publication = {state: "granted_for_named_target", target: null}
+' "$manifestation_receipt" >| "$TEST_ROOT/manifestation-unnamed-publication.json"
+capture run_fixture verify-manifestation-receipt "$TEST_ROOT/manifestation-unnamed-publication.json"
+assert_equal 1 "$CAPTURE_STATUS" "unnamed publication target was accepted"
+[[ "$CAPTURE_STDERR" == *'invalid-one-of'* ]] \
+  || fail "named publication target diagnostic is absent"
+
+command ln -s "$manifestation_receipt" "$TEST_ROOT/manifestation-symlink.json"
+capture run_fixture verify-manifestation-receipt "$TEST_ROOT/manifestation-symlink.json"
+assert_equal 1 "$CAPTURE_STATUS" "standalone manifestation verifier followed a symlink"
+[[ "$CAPTURE_STDERR" == *'symlink'* ]] || fail "manifestation symlink diagnostic is absent"
+
+print -r -- 'null' >| "$TEST_ROOT/manifestation-null.json"
+capture run_fixture verify-manifestation-receipt "$TEST_ROOT/manifestation-null.json"
+assert_equal 1 "$CAPTURE_STATUS" "standalone manifestation verifier accepted JSON null"
+[[ "$CAPTURE_STDERR" == *'invalid-type'* ]] || fail "null manifestation diagnostic is absent"
+
+reset_fixture
+manifestation_receipt="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/assets/first-manifestation-20260731.json"
+print -r -- 'null' >| "$manifestation_receipt"
+capture run_fixture validate conjure-unwritten-horizon
+assert_equal 1 "$CAPTURE_STATUS" "skill validation accepted a null manifestation receipt"
+[[ "$CAPTURE_STDERR" == *'invalid-type'* ]] || fail "skill null manifestation diagnostic is absent"
 
 reset_fixture
 print -r -- '{"protocol":"kingdom.nen/0.1","protocol":"kingdom.nen/0.1"}' \
