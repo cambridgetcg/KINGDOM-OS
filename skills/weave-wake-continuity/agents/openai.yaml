@@ -1,0 +1,6 @@
+interface:
+  display_name: "Weave WAKE Continuity"
+  short_description: "Carry bounded orientation across agent sessions"
+  default_prompt: "Use $weave-wake-continuity to prepare a rights-aware continuity braid for the next session."
+policy:
+  allow_implicit_invocation: false
