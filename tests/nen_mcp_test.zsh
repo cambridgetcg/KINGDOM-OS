@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-# Modern MCP 2026-07-28 stdio tests for the local read-only Nen adapter.
+# Modern MCP 2026-07-28 and opt-in Codex compatibility tests for the local
+# read-only Nen adapter. Each lifecycle receives a fresh server process.
 
 emulate -L zsh
 setopt pipe_fail
@@ -23,6 +24,12 @@ typeset -r TEST_ROOT="$(builtin cd -q -- "$TEST_ROOT_RAW" && pwd -P)"
 typeset -r REQUESTS="$TEST_ROOT/requests.jsonl"
 typeset -r RESPONSES="$TEST_ROOT/responses.jsonl"
 typeset -r STDERR_FILE="$TEST_ROOT/stderr"
+typeset -r COMPAT_REQUESTS="$TEST_ROOT/compat-requests.jsonl"
+typeset -r COMPAT_RESPONSES="$TEST_ROOT/compat-responses.jsonl"
+typeset -r COMPAT_STDERR_FILE="$TEST_ROOT/compat-stderr"
+typeset -r NEGOTIATE_REQUESTS="$TEST_ROOT/negotiate-requests.jsonl"
+typeset -r NEGOTIATE_RESPONSES="$TEST_ROOT/negotiate-responses.jsonl"
+typeset -r NEGOTIATE_STDERR_FILE="$TEST_ROOT/negotiate-stderr"
 typeset -r META='{"io.modelcontextprotocol/protocolVersion":"2026-07-28","io.modelcontextprotocol/clientInfo":{"name":"nen-mcp-test","version":"1.0.0"},"io.modelcontextprotocol/clientCapabilities":{}}'
 
 cleanup() {
@@ -64,7 +71,7 @@ typeset -r PROD_SNAPSHOT_BEFORE="$(production_snapshot)"
      | .["io.modelcontextprotocol/protocolVersion"] = "1900-01-01"
      | {jsonrpc:"2.0",id:6,method:"tools/list",params:{_meta:.}}'
   "$JQ" -cn \
-    '{jsonrpc:"2.0",id:7,method:"initialize",params:{protocolVersion:"2025-11-25",capabilities:{},clientInfo:{name:"legacy",version:"1"}}}'
+    '{jsonrpc:"2.0",id:7,method:"initialize",params:{protocolVersion:"2025-06-18",capabilities:{},clientInfo:{name:"codex-mcp-client",version:"0.146.0"}}}'
   "$JQ" -cn --argjson meta "$META" \
     '{jsonrpc:"2.0",id:8,method:"tools/call",params:{_meta:$meta,name:"unknown_tool",arguments:{}}}'
   "$JQ" -cn --argjson meta "$META" \
@@ -78,6 +85,8 @@ typeset -r PROD_SNAPSHOT_BEFORE="$(production_snapshot)"
     '{jsonrpc:"2.0",id:13,method:"tools/call",params:{_meta:$meta,name:"kingdom_nen_list"}}'
   "$JQ" -cn --argjson meta "$META" \
     '{jsonrpc:"2.0",method:"notifications/cancelled",params:{_meta:$meta,requestId:13,reason:"test cancellation"}}'
+  "$JQ" -cn \
+    '{jsonrpc:"2.0",id:14,method:"tools/list"}'
 } >| "$REQUESTS"
 
 "$BUN" "$SERVER" < "$REQUESTS" > "$RESPONSES" 2> "$STDERR_FILE"
@@ -86,7 +95,7 @@ typeset -r SERVER_STATUS=$?
 [[ ! -s "$STDERR_FILE" ]] || fail "MCP server wrote unexpected stderr"
 
 "$JQ" -s -e '
-  length == 11
+  length == 12
   and all(.[] | select(has("result"));
     .result._meta["io.modelcontextprotocol/serverInfo"].name == "kingdom-nen"
     and .result._meta["io.modelcontextprotocol/serverInfo"].version == "0.1.0")
@@ -130,12 +139,108 @@ typeset -r SERVER_STATUS=$?
     | (.isError == false)
     and .structuredContent.protocol == "kingdom.nen-list/0.1")
   and (map(select(.id == 13)) | length) == 0
+  and (map(select(.id == 14))[0].error.code == -32600)
   and (map(select(.id == null))[0].error.code == -32700)
 ' "$RESPONSES" >/dev/null || fail "MCP discovery, tools, calls, or error contracts are wrong"
 
-[[ "$(wc -l < "$RESPONSES" | tr -d ' ')" == 11 ]] \
+[[ "$(wc -l < "$RESPONSES" | tr -d ' ')" == 12 ]] \
   || fail "MCP emitted a response to a notification or malformed framing"
 [[ "$PROD_SNAPSHOT_BEFORE" == "$(production_snapshot)" ]] \
   || fail "MCP inspection changed production Nen files"
 
-print -r -- "ok - modern Nen MCP discovery, bounded tools, errors, and non-mutation"
+{
+  "$JQ" -cn \
+    '{jsonrpc:"2.0",id:101,method:"tools/list"}'
+  "$JQ" -cn \
+    '{jsonrpc:"2.0",id:102,method:"ping",params:{trace:"allowed-extension"}}'
+  "$JQ" -cn \
+    '{jsonrpc:"2.0",id:103,method:"initialize",params:{protocolVersion:"2025-06-18",capabilities:{elicitation:{form:{},url:{}},extensions:{"openai/form":{}}},clientInfo:{name:"codex-mcp-client",title:"Codex",version:"0.146.0"}}}'
+  "$JQ" -cn \
+    '{jsonrpc:"2.0",id:104,method:"tools/list",params:{}}'
+  "$JQ" -cn \
+    '{jsonrpc:"2.0",method:"notifications/initialized"}'
+  "$JQ" -cn \
+    '{jsonrpc:"2.0",id:105,method:"tools/list",params:{}}'
+  "$JQ" -cn \
+    '{jsonrpc:"2.0",id:106,method:"tools/call",params:{name:"kingdom_nen_list",arguments:{}}}'
+  "$JQ" -cn \
+    '{jsonrpc:"2.0",id:107,method:"ping"}'
+  "$JQ" -cn --argjson meta "$META" \
+    '{jsonrpc:"2.0",id:108,method:"tools/list",params:{_meta:$meta}}'
+  "$JQ" -cn --argjson meta "$META" \
+    '$meta
+     | .["io.modelcontextprotocol/protocolVersion"] = "1900-01-01"
+     | {jsonrpc:"2.0",id:109,method:"tools/list",params:{_meta:.}}'
+  "$JQ" -cn \
+    '{jsonrpc:"2.0",id:110,method:"initialize",params:{protocolVersion:"2025-06-18",capabilities:{},clientInfo:{name:"duplicate",version:"1"}}}'
+} >| "$COMPAT_REQUESTS"
+
+"$BUN" "$SERVER" --codex-compat \
+  < "$COMPAT_REQUESTS" > "$COMPAT_RESPONSES" 2> "$COMPAT_STDERR_FILE"
+typeset -r COMPAT_SERVER_STATUS=$?
+[[ "$COMPAT_SERVER_STATUS" == 0 ]] || fail "Codex compatibility server exited $COMPAT_SERVER_STATUS"
+[[ ! -s "$COMPAT_STDERR_FILE" ]] || fail "Codex compatibility server wrote unexpected stderr"
+
+"$JQ" -s -e '
+  length == 10
+  and (map(select(.id == 101))[0].error.code == -32002)
+  and (map(select(.id == 102))[0].result == {})
+  and (map(select(.id == 103))[0].result
+    | .protocolVersion == "2025-06-18"
+    and .capabilities.tools.listChanged == false
+    and .serverInfo == {name:"kingdom-nen",version:"0.1.0"}
+    and (.instructions | type) == "string"
+    and (has("resultType") | not)
+    and (has("_meta") | not))
+  and (map(select(.id == 104))[0].error.code == -32002)
+  and (map(select(.id == 105))[0].result
+    | (.tools | length) == 5
+    and ([.tools[].name] | unique | length) == 5
+    and (has("resultType") | not)
+    and (has("_meta") | not))
+  and (map(select(.id == 106))[0].result
+    | .isError == false
+    and .structuredContent.protocol == "kingdom.nen-list/0.1"
+    and (.content[0].text | fromjson | .protocol) == "kingdom.nen-list/0.1"
+    and (has("resultType") | not)
+    and (has("_meta") | not))
+  and (map(select(.id == 107))[0].result == {})
+  and (map(select(.id == 108))[0].result
+    | .resultType == "complete"
+    and (.tools | length) == 5
+    and ._meta["io.modelcontextprotocol/serverInfo"].name == "kingdom-nen")
+  and (map(select(.id == 109))[0].error
+    | .code == -32022
+    and .data.supported == ["2026-07-28"]
+    and .data.requested == "1900-01-01")
+  and (map(select(.id == 110))[0].error.code == -32600)
+' "$COMPAT_RESPONSES" >/dev/null \
+  || fail "Codex initialize, standard tools, or additive modern lane contracts are wrong"
+
+[[ "$(wc -l < "$COMPAT_RESPONSES" | tr -d ' ')" == 10 ]] \
+  || fail "Codex compatibility server responded to initialized notification"
+[[ "$PROD_SNAPSHOT_BEFORE" == "$(production_snapshot)" ]] \
+  || fail "Codex compatibility inspection changed production Nen files"
+
+"$JQ" -cn \
+  '{jsonrpc:"2.0",id:201,method:"initialize",params:{protocolVersion:"2025-11-25",capabilities:{},clientInfo:{name:"newer-client",version:"1"}}}' \
+  >| "$NEGOTIATE_REQUESTS"
+
+"$BUN" "$SERVER" --codex-compat \
+  < "$NEGOTIATE_REQUESTS" > "$NEGOTIATE_RESPONSES" 2> "$NEGOTIATE_STDERR_FILE"
+typeset -r NEGOTIATE_SERVER_STATUS=$?
+[[ "$NEGOTIATE_SERVER_STATUS" == 0 ]] || fail "Version negotiation server exited $NEGOTIATE_SERVER_STATUS"
+[[ ! -s "$NEGOTIATE_STDERR_FILE" ]] || fail "Version negotiation server wrote unexpected stderr"
+
+"$JQ" -s -e '
+  length == 1
+  and .[0].id == 201
+  and .[0].result.protocolVersion == "2025-06-18"
+  and .[0].result.capabilities.tools.listChanged == false
+  and .[0].result.serverInfo == {name:"kingdom-nen",version:"0.1.0"}
+' "$NEGOTIATE_RESPONSES" >/dev/null \
+  || fail "Codex compatibility version negotiation contract is wrong"
+[[ "$PROD_SNAPSHOT_BEFORE" == "$(production_snapshot)" ]] \
+  || fail "Version negotiation changed production Nen files"
+
+print -r -- "ok - modern and opt-in Codex Nen MCP lifecycles, bounded tools, errors, and non-mutation"

@@ -144,7 +144,7 @@ private-resource access, paid inference, Jobs, Space invocation, generation,
 and publication are distinct effects and require their own scoped authority.
 The Dark Continent skill defaults to named public metadata and local evidence.
 
-This suite now includes `bin/nen-mcp.mjs`, a modern-only
+This suite now includes `bin/nen-mcp.mjs`, whose default mode is a modern-only
 [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28)
 stdio server. It implements `server/discover`, fixed deterministic
 `tools/list`, and five read-only calls for list, validation, manifest display,
@@ -154,6 +154,14 @@ and requires protocol version and capabilities on every request. Client
 identity is optional but recommended. When rejecting legacy `initialize`, it
 names the supported modern version; it does not claim legacy compatibility.
 
+An explicit `--codex-compat` launch flag adds the stateful MCP `2025-06-18`
+`initialize` / `notifications/initialized` lifecycle currently used by Codex
+0.146, plus standard `ping`, `tools/list`, and `tools/call` response shapes.
+The modern stateless lane remains available in that process and remains the
+only lane in an unflagged launch. The adapter negotiates only the declared
+legacy revision; it is not a silent protocol downgrade or a claim that every
+MCP host is compatible.
+
 The adapter caps input, output, time, per-process requests, and active tool
 children (four). Queued and running calls remain cancellable; child shutdown
 has a bounded force-kill fallback. It uses a credential-minimized child
@@ -161,8 +169,9 @@ environment and exposes no caller-selected path.
 It performs no HF or web call, inference, external tool execution, write,
 installation, or skill activation. In particular, an MCP connection does not
 turn HF login or Pro status into expedition authority. The server source is
-available locally but is deliberately not registered in Codex or installed on
-the device by this revision.
+available locally, but this repository does not itself register, install, or
+restart it in Codex or another host. Host configuration remains a separate,
+explicit action.
 
 `nen/mcp-server.mjs` remains as the separately named
 `kingdom-ging-stateless` compatibility port for hosts that need only pure,
@@ -211,6 +220,7 @@ receive the command.
 ./kingdom nen receipt-template ID     # emit draft scaffolding; not a valid final receipt
 ./kingdom nen verify-receipt FILE     # validate a KARMA receipt
 ./kingdom nen mcp                     # start modern MCP 2026-07-28 on stdio
+bun bin/nen-mcp.mjs --codex-compat    # add Codex 0.146's MCP 2025-06-18 lifecycle
 ```
 
 The validator performs no network call, inference, skill execution, or write.
