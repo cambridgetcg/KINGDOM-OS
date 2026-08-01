@@ -1,0 +1,6 @@
+interface:
+  display_name: "Conjure Unwritten Horizon"
+  short_description: "Forge one rights-aware, parameter-bound HF request"
+  default_prompt: "Use $conjure-unwritten-horizon to turn this authorized brief into one parameter-bound Hugging Face image attempt and receipt."
+policy:
+  allow_implicit_invocation: false

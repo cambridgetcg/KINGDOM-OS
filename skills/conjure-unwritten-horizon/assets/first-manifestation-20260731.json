@@ -1,0 +1,64 @@
+{
+  "schema_version": "kingdom.nen.manifestation/0.1",
+  "evidence_class": "pre_manifestation_provider_evidence",
+  "receipt_recorded_at": "2026-07-31T17:55:32Z",
+  "ability": "conjure-unwritten-horizon",
+  "adoption": "proposed",
+  "authorization": {
+    "hosted_inference": "confirmed_for_one_call",
+    "local_destination": {
+      "kind": "legacy_unbound_project_intent",
+      "project_root": null,
+      "image_path": null,
+      "provider_receipt_path": null,
+      "karma_receipt_path": null
+    },
+    "publication": {
+      "state": "not_granted",
+      "target": null
+    }
+  },
+  "provider": {
+    "space": "mcp-tools/Qwen-Image",
+    "interface_observed_at": "2026-07-31T17:55:32Z",
+    "interface_observed_at_basis": "upper_bound_from_receipt_recorded_at",
+    "space_revision": "45ebb974244167be1dbe6a6f11b9ddb87b2a32d3",
+    "revision_binding": "observed_after_timeout_not_proven_execution_revision"
+  },
+  "request": {
+    "prompt": "Use case: stylized-concept\nAsset type: KINGDOM Nen website hero candidate\nPrimary request: an original cosmic cartography scene where a luminous living horizon emerges from an unbounded dark ocean of possibility\nScene/backdrop: vast obsidian-indigo expanse with faint topographic currents and distant untouched islands of light\nSubject: one open circular threshold woven from fine golden and cyan threads, with eight subtle orbiting nodes and a quiet path approaching it; no people\nStyle/medium: cinematic painterly science-fantasy concept art, refined and original\nComposition/framing: wide 16:9 panorama, threshold near center, deep scale, generous calm negative space\nLighting/mood: soft bioluminescence, mysterious but welcoming, contemplative rather than ominous\nColor palette: obsidian, midnight indigo, aurora cyan, restrained warm gold\nConstraints: no text, no watermark, no logos, no crowns, no recognizable franchise characters or symbols\nAvoid: horror, weapons, busy interface graphics, anime character likenesses",
+    "negative_prompt": "text, watermark, signature, logo, copyright character, recognizable anime character, blurry, low resolution, horror, weapon, crown, clutter",
+    "seed": 7312026,
+    "randomize_seed": false,
+    "aspect_ratio": "16:9",
+    "guidance_scale": 4,
+    "num_inference_steps": 16
+  },
+  "result": {
+    "provider_reference": null,
+    "project_path": null,
+    "inspection": "No image or result reference returned before the MCP tools/call timeout; visual inspection was unavailable.",
+    "status": "failed",
+    "failure": {
+      "code": "mcp_tools_call_timeout",
+      "observed_after_seconds": 300
+    }
+  },
+  "provider_calls_submitted": 1,
+  "external_effects": [
+    "hosted_image_inference_request_submitted"
+  ],
+  "unknowns": [
+    "whether the provider completed work after the caller timed out",
+    "provider retention",
+    "byte-for-byte reproducibility"
+  ],
+  "retry": "not_authorized_or_attempted",
+  "suite_karma": {
+    "state": "not_created",
+    "storage": "none",
+    "receipt_path": null,
+    "sha256": null,
+    "reason": "The hosted call preceded any committed KAKIN ability revision; binding it retrospectively to the later manifest and bundle digests would misstate causality."
+  }
+}

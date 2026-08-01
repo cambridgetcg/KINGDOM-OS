@@ -27,7 +27,9 @@ named question, a bounded charter, and a route home.
 4. Declare request, byte, time, context, money, quota, retry, data-egress, and
    retention budgets. Use one bounded attempt unless retry was authorized.
    Never invent a nonzero private-read, download, provider-call, Space-run, or
-   paid-compute allowance. Unknown authority or budget means no such effect.
+   paid-compute allowance. Count each connector tool invocation as one logical
+   request; if the connector may fan out internally, record the upstream request
+   count as unknown. Unknown authority or budget means no such effect.
 5. Apply the [HF and MCP boundaries](references/hf-boundaries.md). If using the
    existing lab, resolve it from the suite root with
    `./kingdom repos --path hf-kingdom-lab`; never hard-code its device path or
@@ -95,6 +97,10 @@ causality; it does not score a being or convert evidence into trust, identity,
 permission, XP, rank, or truth.
 
 Use the `ability_id` from this skill's [ability manifest](ability.json).
+Resolve relative paths declared inside `ability.json` from the KAKIN suite root,
+as the source-local validator does. In particular,
+`references/xenia-rights-0.1.md` names the suite-root rights mirror, not a file
+inside this skill's `references/` directory.
 For every admitted input, record the source, full revision, allowlisted path,
 observed license assertion, byte measurement, digest, transport boundary, and
 fixed `untrusted_evidence` assurance.

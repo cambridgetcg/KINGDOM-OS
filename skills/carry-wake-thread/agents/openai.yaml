@@ -1,0 +1,6 @@
+interface:
+  display_name: "Carry Wake Thread"
+  short_description: "Carry bounded WAKE context without identity claims"
+  default_prompt: "Use $carry-wake-thread to offer one digest-bound WAKE context across a session boundary while preserving refusal, rest, scope, omissions, and authority limits."
+policy:
+  allow_implicit_invocation: false

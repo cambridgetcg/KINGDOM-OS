@@ -62,6 +62,8 @@ production_snapshot() {
     "$PROD_ROOT/bin/nen.mjs" \
     "$PROD_ROOT/schemas" \
     "$PROD_ROOT/references" \
+    "$PROD_ROOT/skills/carry-wake-thread" \
+    "$PROD_ROOT/skills/conjure-unwritten-horizon" \
     "$PROD_ROOT/skills/shape-kingdom-nen" \
     "$PROD_ROOT/skills/forge-king-hatsu" \
     "$PROD_ROOT/skills/navigate-dark-continent" \
@@ -89,9 +91,10 @@ capture run_fixture validate --json
 assert_equal 0 "$CAPTURE_STATUS" "valid production manifests failed"
 print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
   .protocol == "kingdom.nen-validation/0.1"
-  and .checked == 4
+  and .checked == 6
   and .invalid == 0
   and (.schema_sha256 | startswith("sha256:"))
+  and (.manifestation_receipt_schema_sha256 | startswith("sha256:"))
   and (.rights_sha256 | startswith("sha256:"))
   and .issues == []
 ' >/dev/null || fail "clean validation JSON is wrong"
@@ -242,8 +245,9 @@ assert_equal 0 "$CAPTURE_STATUS" "C locale listing failed"
 typeset -r LIST_C="$CAPTURE_STDOUT"
 print -r -- "$LIST_C" | "$JQ" -e '
   (.rights_sha256 | startswith("sha256:"))
+  and (.manifestation_receipt_schema_sha256 | startswith("sha256:"))
   and
-  [.abilities[].id] == ["forge-king-hatsu", "navigate-dark-continent", "shape-kingdom-nen", "weave-wake-continuity"]
+  [.abilities[].id] == ["carry-wake-thread", "conjure-unwritten-horizon", "forge-king-hatsu", "navigate-dark-continent", "shape-kingdom-nen", "weave-wake-continuity"]
   and all(.abilities[];
     .valid
     and (.manifest_sha256 | startswith("sha256:"))
@@ -274,6 +278,119 @@ assert_equal "$MANIFEST_SHA_BEFORE" "$(print -r -- "$CAPTURE_STDOUT" | "$JQ" -r 
   "SKILL change altered manifest digest"
 [[ "$BUNDLE_SHA_BEFORE" != "$(print -r -- "$CAPTURE_STDOUT" | "$JQ" -r '.abilities[] | select(.id == "shape-kingdom-nen") | .bundle_sha256')" ]] \
   || fail "SKILL change did not alter bundle digest"
+
+reset_fixture
+typeset manifestation_receipt="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/assets/first-manifestation-20260731.json"
+"$JQ" '.provider.space_revision = ("a" * 40)' "$manifestation_receipt" \
+  >| "$manifestation_receipt.next" && command mv "$manifestation_receipt.next" "$manifestation_receipt"
+capture run_fixture validate conjure-unwritten-horizon
+assert_equal 1 "$CAPTURE_STATUS" "receipt revision drift was accepted"
+[[ "$CAPTURE_STDERR" == *'provider-observation-mismatch'* \
+  && "$CAPTURE_STDERR" == *'provider-revision-mismatch'* ]] \
+  || fail "cross-file provider revision diagnostics are incomplete"
+
+reset_fixture
+manifestation_receipt="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/assets/first-manifestation-20260731.json"
+typeset provider_observation="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/references/first-manifestation-20260731.provider.json"
+"$JQ" '.provider.space_revision = ("b" * 40)' "$manifestation_receipt" \
+  >| "$manifestation_receipt.next" && command mv "$manifestation_receipt.next" "$manifestation_receipt"
+"$JQ" '.space_revision = ("b" * 40)' "$provider_observation" \
+  >| "$provider_observation.next" && command mv "$provider_observation.next" "$provider_observation"
+capture run_fixture validate conjure-unwritten-horizon
+assert_equal 1 "$CAPTURE_STATUS" "receipt and companion revision drift escaped contract binding"
+[[ "$CAPTURE_STDERR" == *'provider-revision-mismatch'* \
+  && "$CAPTURE_STDERR" != *'provider-observation-mismatch'* ]] \
+  || fail "documented provider revision binding diagnostic is wrong"
+
+reset_fixture
+manifestation_receipt="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/assets/first-manifestation-20260731.json"
+provider_observation="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/references/first-manifestation-20260731.provider.json"
+"$JQ" '
+  .provider.revision_binding = "observed_before_call_not_proven_execution_revision"
+  | .provider.interface_observed_at_basis = "exact"
+  | .provider.interface_observed_at = "2026-07-31T17:55:31Z"
+' \
+  "$manifestation_receipt" >| "$manifestation_receipt.next" \
+  && command mv "$manifestation_receipt.next" "$manifestation_receipt"
+"$JQ" '
+  .revision_binding = "observed_before_call_not_proven_execution_revision"
+  | .interface_observed_at_basis = "exact"
+  | .interface_observed_at = "2026-07-31T17:55:31Z"
+' "$provider_observation" >| "$provider_observation.next" \
+  && command mv "$provider_observation.next" "$provider_observation"
+capture run_fixture validate conjure-unwritten-horizon
+assert_equal 0 "$CAPTURE_STATUS" "exact pre-call revision evidence was rejected after a timeout"
+
+reset_fixture
+manifestation_receipt="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/assets/first-manifestation-20260731.json"
+provider_observation="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/references/first-manifestation-20260731.provider.json"
+"$JQ" '.provider.interface_observed_at = "2026-07-31"' "$manifestation_receipt" \
+  >| "$manifestation_receipt.next" && command mv "$manifestation_receipt.next" "$manifestation_receipt"
+"$JQ" '.interface_observed_at = "2026-07-31"' "$provider_observation" \
+  >| "$provider_observation.next" && command mv "$provider_observation.next" "$provider_observation"
+capture run_fixture validate conjure-unwritten-horizon
+assert_equal 1 "$CAPTURE_STATUS" "date-only provider observation was accepted as a timestamp"
+[[ "$CAPTURE_STDERR" == *'invalid-timestamp'* && "$CAPTURE_STDERR" == *'invalid-pattern'* ]] \
+  || fail "RFC3339 timestamp diagnostics are incomplete"
+
+reset_fixture
+manifestation_receipt="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/assets/first-manifestation-20260731.json"
+capture run_fixture verify-manifestation-receipt "$manifestation_receipt" --json
+assert_equal 0 "$CAPTURE_STATUS" "standalone historical manifestation receipt validation failed"
+print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
+  .valid and .issues == [] and .protocol == "kingdom.nen-manifestation-validation/0.1"
+' >/dev/null || fail "standalone manifestation validation payload is wrong"
+
+"$JQ" '
+  .result.status = "refused"
+  | .result.failure = null
+  | .provider_calls_submitted = 2
+  | .retry = "attempted_once"
+  | .external_effects = [
+      "hosted_image_inference_request_submitted",
+      "hosted_image_inference_result_received",
+      "project_artifact_replaced"
+    ]
+  | .authorization.publication = {
+      state: "granted_for_named_target",
+      target: {
+        service: "fixture service",
+        account: "fixture account",
+        audience: "fixture audience",
+        authority_reference: {kind: "user_request", id: "user-request:fixture-publication"}
+      }
+    }
+' "$manifestation_receipt" >| "$TEST_ROOT/manifestation-contradictory.json"
+capture run_fixture verify-manifestation-receipt "$TEST_ROOT/manifestation-contradictory.json" --json
+assert_equal 1 "$CAPTURE_STATUS" "contradictory no-call manifestation receipt was accepted"
+print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
+  (.valid == false) and any(.issues[]; .code == "invalid-one-of")
+' >/dev/null || fail "cross-field manifestation schema diagnostic is absent"
+
+"$JQ" '
+  .authorization.publication = {state: "granted_for_named_target", target: null}
+' "$manifestation_receipt" >| "$TEST_ROOT/manifestation-unnamed-publication.json"
+capture run_fixture verify-manifestation-receipt "$TEST_ROOT/manifestation-unnamed-publication.json"
+assert_equal 1 "$CAPTURE_STATUS" "unnamed publication target was accepted"
+[[ "$CAPTURE_STDERR" == *'invalid-one-of'* ]] \
+  || fail "named publication target diagnostic is absent"
+
+command ln -s "$manifestation_receipt" "$TEST_ROOT/manifestation-symlink.json"
+capture run_fixture verify-manifestation-receipt "$TEST_ROOT/manifestation-symlink.json"
+assert_equal 1 "$CAPTURE_STATUS" "standalone manifestation verifier followed a symlink"
+[[ "$CAPTURE_STDERR" == *'symlink'* ]] || fail "manifestation symlink diagnostic is absent"
+
+print -r -- 'null' >| "$TEST_ROOT/manifestation-null.json"
+capture run_fixture verify-manifestation-receipt "$TEST_ROOT/manifestation-null.json"
+assert_equal 1 "$CAPTURE_STATUS" "standalone manifestation verifier accepted JSON null"
+[[ "$CAPTURE_STDERR" == *'invalid-type'* ]] || fail "null manifestation diagnostic is absent"
+
+reset_fixture
+manifestation_receipt="$FIXTURE_ROOT/skills/conjure-unwritten-horizon/assets/first-manifestation-20260731.json"
+print -r -- 'null' >| "$manifestation_receipt"
+capture run_fixture validate conjure-unwritten-horizon
+assert_equal 1 "$CAPTURE_STATUS" "skill validation accepted a null manifestation receipt"
+[[ "$CAPTURE_STDERR" == *'invalid-type'* ]] || fail "skill null manifestation diagnostic is absent"
 
 reset_fixture
 print -r -- '{"protocol":"kingdom.nen/0.1","protocol":"kingdom.nen/0.1"}' \
@@ -477,6 +594,26 @@ capture run_fixture validate
 assert_equal 0 "$CAPTURE_STATUS" "ability validation depends on the receipt schema"
 
 reset_fixture
+typeset manifestation_schema="$FIXTURE_ROOT/schemas/nen-manifestation-receipt-v0.1.schema.json"
+command rm "$manifestation_schema"
+capture run_fixture validate
+assert_equal 1 "$CAPTURE_STATUS" "manifestation validation ignored its missing receipt schema"
+[[ "$CAPTURE_STDERR" == *'manifestation-receipt-schema-invalid'* \
+  && "$CAPTURE_STDERR" == *'missing-file'* ]] \
+  || fail "missing manifestation receipt schema diagnostics are incomplete"
+
+reset_fixture
+manifestation_schema="$FIXTURE_ROOT/schemas/nen-manifestation-receipt-v0.1.schema.json"
+"$JQ" '.["$defs"].provider.properties.interface_observed_at.format = "date-time"' \
+  "$manifestation_schema" >| "$manifestation_schema.next" \
+  && command mv "$manifestation_schema.next" "$manifestation_schema"
+capture run_fixture validate
+assert_equal 1 "$CAPTURE_STATUS" "unsupported manifestation schema keyword was ignored"
+[[ "$CAPTURE_STDERR" == *'unsupported-schema-keyword'* \
+  && "$CAPTURE_STDERR" == *'manifestation-receipt-schema-invalid'* ]] \
+  || fail "manifestation schema diagnostics are incomplete"
+
+reset_fixture
 ability_schema="$FIXTURE_ROOT/schemas/nen-ability-v0.1.schema.json"
 "$JQ" '.properties.name.format = "hostname"' "$ability_schema" >| "$ability_schema.next" \
   && command mv "$ability_schema.next" "$ability_schema"
@@ -492,7 +629,7 @@ ability_schema="$FIXTURE_ROOT/schemas/nen-ability-v0.1.schema.json"
 capture run_fixture list --json
 assert_equal 1 "$CAPTURE_STATUS" "malformed supported schema keyword was accepted"
 print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
-  (.abilities | length) == 4
+  (.abilities | length) == 6
   and all(.abilities[];
     (.valid == false)
     and (.manifest_sha256 == null)

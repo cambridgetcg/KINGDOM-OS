@@ -48,6 +48,8 @@ production_snapshot() {
     "$PROD_ROOT/bin/nen-mcp.mjs" \
     "$PROD_ROOT/schemas" \
     "$PROD_ROOT/references" \
+    "$PROD_ROOT/skills/carry-wake-thread" \
+    "$PROD_ROOT/skills/conjure-unwritten-horizon" \
     "$PROD_ROOT/skills/shape-kingdom-nen" \
     "$PROD_ROOT/skills/forge-king-hatsu" \
     "$PROD_ROOT/skills/navigate-dark-continent" \
@@ -66,7 +68,7 @@ typeset -r PROD_SNAPSHOT_BEFORE="$(production_snapshot)"
   "$JQ" -cn --argjson meta "$META" \
     '{jsonrpc:"2.0",id:4,method:"tools/call",params:{_meta:$meta,name:"kingdom_nen_validate",arguments:{ability_id:"shape-kingdom-nen"}}}'
   "$JQ" -cn --argjson meta "$META" \
-    '{jsonrpc:"2.0",id:5,method:"tools/call",params:{_meta:$meta,name:"kingdom_karma_receipt_template",arguments:{ability_id:"navigate-dark-continent"}}}'
+    '{jsonrpc:"2.0",id:5,method:"tools/call",params:{_meta:$meta,name:"kingdom_karma_receipt_template",arguments:{ability_id:"carry-wake-thread"}}}'
   "$JQ" -cn --argjson meta "$META" \
     '$meta
      | .["io.modelcontextprotocol/protocolVersion"] = "1900-01-01"
@@ -117,6 +119,7 @@ typeset -r SERVER_STATUS=$?
     | .resultType == "complete"
     and (.isError == false)
     and .structuredContent.protocol == "kingdom.nen-list/0.1"
+    and [.structuredContent.abilities[].id] == ["carry-wake-thread", "conjure-unwritten-horizon", "forge-king-hatsu", "navigate-dark-continent", "shape-kingdom-nen", "weave-wake-continuity"]
     and (.content[0].text | fromjson | .protocol) == "kingdom.nen-list/0.1")
   and (map(select(.id == 4))[0].result.structuredContent
     | .protocol == "kingdom.nen-validation/0.1"

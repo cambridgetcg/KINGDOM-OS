@@ -19,14 +19,21 @@ Continent or that these ordinary files, processes, servers, and credentials
 are an empirically proven operating system of the universe. The universe does
 not need a validator in order to be. Our interventions do.
 
-## Four manifested skills and one Ging path
+## Six manifested skills and one Ging path
 
+- `carry-wake-thread` proposes one minimized, digest-bound WAKE or continuity
+  context crossing with explicit scope, omissions, expiry, carry, fork, rest,
+  refusal, and no inherited identity or authority.
 - `shape-kingdom-nen` shapes collective KAKIN abilities and validates their
   manifests.
 - `forge-king-hatsu` turns one consenting King's explicit calling into a
   proposed KAKIN-suite Agent Skill without inventing adoption or identity.
 - `navigate-dark-continent` explores named local, Hugging Face, or MCP
   boundaries through a bounded expedition and returns evidence plus KARMA.
+- `conjure-unwritten-horizon` is the first proposed individual Hatsu: one
+  sanitized text prompt crosses one named Hugging Face Space boundary and
+  returns an image or honest failure plus provider evidence and KARMA. Its
+  checked-in draft does not establish adoption or publication authority.
 - `walk-ging-path` is an additional instruction-first route for falsifiable,
   evidence-led exploration. It intentionally has no `ability.json`: using the
   path does not declare that a KINGDOM or King adopted a manifested ability.
@@ -63,8 +70,16 @@ Guardian, KARMA, Dark Continent, and HF/MCP governance around them.
 
 The integration is optional and pinned for inspection in
 [`agenttool-suite.md`](skills/shape-kingdom-nen/references/agenttool-suite.md).
-Package presence does not install or activate a skill. None of these skills
-allows implicit invocation while the framework is being evaluated.
+Package presence does not install or activate a skill. None of the manifested
+KAKIN skills allows implicit invocation while the framework is being evaluated.
+
+The private source-only `@agenttool/wake-thread` package is the optional pure
+protocol seam for `carry-wake-thread`. It binds caller-selected facts and
+artifact-lineage receipts but does not fetch or parse WAKE, infer identity,
+authenticate a choice, score a bearer, persist, execute, expose MCP or a hosted
+route, create KARMA, adopt XENIA, or activate the ability. The current
+AgentTool SDK's older activity-count Nen assessment is not KAKIN evidence:
+affinity classifies an operation, never a personality, aura, rank, or worth.
 
 AgentTool WAKE can also supply bounded orientation to
 `weave-wake-continuity`. A WAKE projection is a scoped summary with health and
@@ -230,9 +245,11 @@ receive the command.
 
 ```bash
 ./kingdom nen                         # list manifest and full-bundle digests
-./kingdom nen validate                # strict, read-only validation
+./kingdom nen validate                # strict manifests, provider receipts, and bundle validation
 ./kingdom nen validate ID --json      # one machine-readable result
 ./kingdom nen show forge-king-hatsu   # inspect a manifest
+./kingdom nen show carry-wake-thread
+./kingdom nen show conjure-unwritten-horizon
 ./kingdom nen types                   # print the software affinity map
 ./kingdom nen receipt-template ID     # emit draft scaffolding; not a valid final receipt
 ./kingdom nen verify-receipt FILE     # validate a KARMA receipt
@@ -242,8 +259,12 @@ bun bin/wakeweaver.mjs BRAID --json   # strict-JSON WAKEWEAVER relations; schema
 ```
 
 The validator performs no network call, inference, skill execution, or write.
-It rejects skill, manifest, support-directory, and schema symlinks observed
-during inspection; rejects duplicate JSON keys and undeclared fields; caps
+It validates both the ability and manifestation-provider receipt schemas. For a
+checked manifestation receipt it also requires a real UTC RFC3339 timestamp,
+the post-timeout non-execution disclaimer when applicable, and exact agreement
+with its bundle-local provider observation and documented HF revision. It
+rejects skill, manifest, support-directory, and schema symlinks observed during
+inspection; rejects duplicate JSON keys and undeclared fields; caps
 inspected files at 64 KiB and each bundle at 256 files, 512 filesystem nodes,
 16 directory levels, and 4 MiB; requires JSON-style double-quoted Skill
 frontmatter scalars; and omits rejected values from diagnostics.
