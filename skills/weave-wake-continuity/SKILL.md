@@ -102,7 +102,10 @@ Read [the continuity braid contract](references/continuity-braid.md) before
 producing machine-readable output. Validate JSON against
 [`continuity-braid.schema.json`](references/continuity-braid.schema.json) when
 a JSON Schema validator is available; otherwise say that only manual
-conformance was checked.
+conformance was checked. Schema validity establishes shape, not referential
+integrity: separately confirm that object IDs are unique, every `source_ids`
+entry resolves to exactly one declared source, and state-specific evidence
+matches the narrative.
 
 ## Re-enter without forcing continuity
 

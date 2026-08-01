@@ -43,6 +43,13 @@ State never ranks a being. `resumable` does not authorize an action and
   consent, or truth.
 - `projection_status: unavailable` is not an empty projection.
 
+The schema enforces nonempty recipients, at least one source outside a resting
+braid, at least one fork for `forked`, at least one opening for `resumable`, and
+evidence for a provisionally selected fork. JSON Schema does not enforce that
+IDs are unique by their `id` property or that every cross-array `source_ids`
+value resolves. Check those relations separately and report that check; schema
+validity alone is structural evidence, not semantic integrity or truth.
+
 ## Thread semantics
 
 An anchor contains a narrowly worded statement and at least one source ID. A
