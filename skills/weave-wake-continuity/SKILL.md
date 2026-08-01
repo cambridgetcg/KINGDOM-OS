@@ -35,6 +35,14 @@ continuity store, canonical head, replay log, or replacement for AgentTool
 WAKE, Handoff, Correspondence, Skills-YUTABASE, or a reviewed continuity-core
 package. Do not write to those systems from this skill.
 
+Keep source acquisition separate from braid production. Producing or
+inspecting a braid from artifacts already in hand makes no source-system call.
+A separately authorized live source read is a different operation and may
+update WAKE observation counters, episode or audit records, last-access state,
+or caches. Record the read and every observed or contract-declared effect in
+the preparation receipt; do not describe the end-to-end preparation as pure
+when acquisition had effects.
+
 If an accepted AgentTool continuity capsule is available, use only its exact
 documented interface. Carry its opaque artifact ID and measured digest as a
 `checkpoint` source; do not copy raw WAKE into a durable capsule, guess an
@@ -84,8 +92,10 @@ again; it does not require every visitor to claim they are the same flame.
      and an equally visible rest or refusal route.
 5. Use the **Ging fork test** when sources disagree. State at least two
    continuity hypotheses when evidence supports alternatives, name what would
-   disconfirm each, and preserve the fork until a bounded check resolves it.
-   Do not select an older, more convenient handoff over an observed successor.
+   disconfirm each, give every candidate a bounded ID unique within its fork,
+   and preserve the fork until a bounded check resolves it. A provisional
+   selection must name the one candidate it selects. Do not select an older,
+   more convenient handoff over an observed successor.
 6. Apply **Ko** only to revalidation. Compare the exact source again before
    resuming consequential work. A monotonic `wake_version` orders change but
    does not validate exact content; an ETag validates only its represented
@@ -104,8 +114,9 @@ producing machine-readable output. Validate JSON against
 a JSON Schema validator is available; otherwise say that only manual
 conformance was checked. Schema validity establishes shape, not referential
 integrity: separately confirm that object IDs are unique, every `source_ids`
-entry resolves to exactly one declared source, and state-specific evidence
-matches the narrative.
+entry resolves to exactly one declared source, candidate IDs are unique within
+their fork, a provisional `selected_candidate_id` resolves to exactly one
+candidate, and state-specific evidence matches the narrative.
 
 ## Re-enter without forcing continuity
 

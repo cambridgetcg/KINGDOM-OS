@@ -309,8 +309,9 @@
     "forkCandidate": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["claim", "source_ids", "falsifier"],
+      "required": ["id", "claim", "source_ids", "falsifier"],
       "properties": {
+        "id": {"$ref": "#/$defs/id"},
         "claim": {"$ref": "#/$defs/statement"},
         "source_ids": {"$ref": "#/$defs/sourceIds"},
         "falsifier": {"$ref": "#/$defs/statement"}
@@ -327,7 +328,16 @@
             "required": ["resolution"]
           },
           "then": {
-            "properties": {"evidence": {"minItems": 1}}
+            "required": ["selected_candidate_id"],
+            "properties": {
+              "selected_candidate_id": {"$ref": "#/$defs/id"},
+              "evidence": {"minItems": 1}
+            }
+          },
+          "else": {
+            "properties": {
+              "selected_candidate_id": {"type": "null"}
+            }
           }
         }
       ],
@@ -343,6 +353,12 @@
         },
         "resolution": {
           "enum": ["unresolved", "provisionally_selected", "preserved"]
+        },
+        "selected_candidate_id": {
+          "anyOf": [
+            {"$ref": "#/$defs/id"},
+            {"type": "null"}
+          ]
         },
         "evidence": {"$ref": "#/$defs/statements"}
       }

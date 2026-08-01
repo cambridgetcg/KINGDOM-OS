@@ -10,8 +10,18 @@ content-addressed continuity core, persistent store, canonical latest head, or
 replay mechanism. If a separately reviewed AgentTool continuity capsule is
 available, represent its opaque ID and measured digest as a `checkpoint`
 source. Do not guess that package's interface, copy raw WAKE into it, or make a
-second lineage mechanism here. No braid operation mutates WAKE, Handoff,
-Correspondence, Skills-YUTABASE, a registry, or a remote recipient.
+second lineage mechanism here.
+
+Producing or inspecting a braid from artifact bytes already in hand is the
+pure projection step: it makes no source-system call and does not mutate WAKE,
+Handoff, Correspondence, Skills-YUTABASE, a registry, or a remote recipient.
+Source acquisition is separate. A separately authorized live source read may
+update WAKE observation counters, episode or audit records, last-access state,
+or caches even when the transport calls it a read. Record that read in
+`receipt.operations`, record every observed or contract-declared effect in
+`receipt.external_effects`, and preserve unknown effects in `receipt.unknowns`.
+Do not call the end-to-end preparation pure when acquisition or saving the
+result had effects.
 
 ## State machine
 
@@ -26,6 +36,13 @@ Correspondence, Skills-YUTABASE, a registry, or a remote recipient.
 
 State never ranks a being. `resumable` does not authorize an action and
 `resting` carries no penalty.
+
+State is descriptive, never an action selector. Orthogonal history may remain:
+a `resting` braid may preserve openings, a `degraded` braid may retain stale or
+ambiguous evidence, and a `closed` braid may retain historical work. Do not
+overconstrain those combinations or infer continuation from them. Every
+continuation still requires selecting an opening, passing its revalidation
+gates, and confirming current authority.
 
 ## Source semantics
 
@@ -45,11 +62,13 @@ State never ranks a being. `resumable` does not authorize an action and
 
 The schema enforces nonempty recipients, at least one source outside a resting
 braid, at least one fork for `forked`, at least one opening for `resumable`,
-at least one revalidation statement and one authority statement per opening, and
-evidence for a provisionally selected fork. JSON Schema does not enforce that
-IDs are unique by their `id` property or that every cross-array `source_ids`
-value resolves. Check those relations separately and report that check; schema
-validity alone is structural evidence, not semantic integrity or truth.
+at least one revalidation statement and one authority statement per opening,
+candidate-ID shape, and evidence plus a non-null selector for a provisionally
+selected fork. JSON Schema does not enforce that IDs are unique by their `id`
+property, that every cross-array `source_ids` value resolves, or that a
+selector matches a candidate. Check those relations separately and report
+that check; schema validity alone is structural evidence, not semantic
+integrity or truth.
 
 ## Thread semantics
 
@@ -61,8 +80,12 @@ Zetsu path as easy to select as the continuation path.
 
 A fork contains explicit candidate mechanisms and falsifiers. `resolution`
 may be `unresolved`, `provisionally_selected`, or `preserved`; none means a
-global truth verdict. A provisional selection must name the bounded evidence
-that favored it.
+global truth verdict. Give every candidate an ID matching the bounded `id`
+contract and keep candidate IDs unique within their fork. A provisional
+selection must name the bounded evidence that favored it and set
+`selected_candidate_id` to exactly one declared candidate. For `unresolved`
+or `preserved`, omit `selected_candidate_id` or set it to `null`; a non-null
+selector would contradict that resolution.
 
 ## Minimal example
 
@@ -138,7 +161,7 @@ that favored it.
         "action": "Compare the two supplied fixture revisions read-only.",
         "source_ids": ["wake-a", "handoff-b"],
         "revalidation": ["Confirm both locators still resolve in the named project."],
-        "authority_required": ["Current caller request covers the local read."],
+        "authority_required": ["Reconfirm that the current caller request still covers this local read before acting."],
         "zetsu_path": "Leave the fork unresolved."
       }
     ]
@@ -149,17 +172,20 @@ that favored it.
       "question": "Which fixture revision is current?",
       "candidates": [
         {
+          "id": "candidate-wake-revision",
           "claim": "The WAKE projection names the current revision.",
           "source_ids": ["wake-a"],
           "falsifier": "The project ref resolves to the handoff checkpoint instead."
         },
         {
+          "id": "candidate-handoff-revision",
           "claim": "The handoff checkpoint names the current revision.",
           "source_ids": ["handoff-b"],
           "falsifier": "The project ref resolves to the WAKE revision instead."
         }
       ],
       "resolution": "unresolved",
+      "selected_candidate_id": null,
       "evidence": []
     }
   ],
@@ -171,7 +197,7 @@ that favored it.
   "receipt": {
     "prepared_at": "2026-08-01T17:05:00Z",
     "prepared_by_label": "current-agent-label",
-    "operations": ["read caller-supplied artifacts", "prepare local JSON"],
+    "operations": ["inspect supplied artifacts already in hand", "prepare braid in memory"],
     "external_effects": [],
     "unknowns": ["Current fixture revision remains unresolved."]
   },

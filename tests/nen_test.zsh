@@ -10,8 +10,13 @@ typeset -r PROD_ROOT="${0:A:h:h}"
 typeset -r SUBJECT="$PROD_ROOT/bin/nen.mjs"
 typeset -r BUN="$(command -v bun)"
 typeset -r JQ="$(command -v jq)"
-[[ -n "$BUN" && -n "$JQ" ]] || {
-  print -u2 -r -- "not ok - bun and jq are required"
+typeset -r PYTHON="$(command -v python3)"
+[[ -n "$BUN" && -n "$JQ" && -n "$PYTHON" ]] || {
+  print -u2 -r -- "not ok - bun, jq, and python3 are required"
+  exit 1
+}
+"$PYTHON" -c 'import jsonschema' >/dev/null 2>&1 || {
+  print -u2 -r -- "not ok - python jsonschema is required"
   exit 1
 }
 
@@ -91,6 +96,113 @@ print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
   and .issues == []
 ' >/dev/null || fail "clean validation JSON is wrong"
 [[ -z "$CAPTURE_STDERR" ]] || fail "clean JSON validation wrote to stderr"
+
+"$PYTHON" - "$PROD_ROOT" <<'PY' || fail "Wakeweaver schema regression failed"
+from copy import deepcopy
+import json
+from pathlib import Path
+import re
+import sys
+
+from jsonschema import Draft202012Validator, FormatChecker
+
+root = Path(sys.argv[1])
+skill = (root / "skills/weave-wake-continuity/SKILL.md").read_text(encoding="utf-8")
+contract = (root / "skills/weave-wake-continuity/references/continuity-braid.md").read_text(encoding="utf-8")
+schema = json.loads((root / "skills/weave-wake-continuity/references/continuity-braid.schema.json").read_text(encoding="utf-8"))
+match = re.search(r"## Minimal example\n\n```json\n(.*?)\n```", contract, re.DOTALL)
+assert match is not None, "documented braid example is missing"
+example = json.loads(match.group(1))
+
+Draft202012Validator.check_schema(schema)
+validator = Draft202012Validator(schema, format_checker=FormatChecker())
+
+def valid(value):
+    return not list(validator.iter_errors(value))
+
+def relation_errors(value):
+    errors = []
+    for fork in value.get("forks", []):
+        candidate_ids = [candidate.get("id") for candidate in fork.get("candidates", [])]
+        if len(candidate_ids) != len(set(candidate_ids)):
+            errors.append("duplicate-candidate-id")
+        selected = fork.get("selected_candidate_id")
+        if fork.get("resolution") == "provisionally_selected":
+            if candidate_ids.count(selected) != 1:
+                errors.append("selected-candidate-not-exactly-one")
+        elif selected is not None:
+            errors.append("selector-without-provisional-resolution")
+    return errors
+
+assert valid(example), "documented braid example does not validate"
+assert relation_errors(example) == [], "documented braid relations are invalid"
+assert "Keep source acquisition separate from braid production" in skill
+assert "selected_candidate_id" in skill
+assert "pure projection step" in contract
+assert "Source acquisition is separate" in contract
+assert "receipt.external_effects" in contract
+assert "State is descriptive, never an action selector" in contract
+assert "Reconfirm" in example["threads"]["openings"][0]["authority_required"][0]
+assert "before acting" in example["threads"]["openings"][0]["authority_required"][0]
+
+provisional = deepcopy(example)
+fork = provisional["forks"][0]
+fork["resolution"] = "provisionally_selected"
+fork["selected_candidate_id"] = fork["candidates"][0]["id"]
+fork["evidence"] = ["A bounded local comparison currently favors this candidate."]
+assert valid(provisional)
+assert relation_errors(provisional) == []
+
+missing_candidate_id = deepcopy(example)
+del missing_candidate_id["forks"][0]["candidates"][0]["id"]
+assert not valid(missing_candidate_id)
+
+oversized_candidate_id = deepcopy(example)
+oversized_candidate_id["forks"][0]["candidates"][0]["id"] = "a" * 65
+assert not valid(oversized_candidate_id)
+
+missing_selector = deepcopy(provisional)
+del missing_selector["forks"][0]["selected_candidate_id"]
+assert not valid(missing_selector)
+
+null_selector = deepcopy(provisional)
+null_selector["forks"][0]["selected_candidate_id"] = None
+assert not valid(null_selector)
+
+empty_provisional_evidence = deepcopy(provisional)
+empty_provisional_evidence["forks"][0]["evidence"] = []
+assert not valid(empty_provisional_evidence)
+
+unresolved_selector = deepcopy(example)
+unresolved_selector["forks"][0]["selected_candidate_id"] = unresolved_selector["forks"][0]["candidates"][0]["id"]
+assert not valid(unresolved_selector)
+
+preserved_selector = deepcopy(example)
+preserved_selector["forks"][0]["resolution"] = "preserved"
+preserved_selector["forks"][0]["selected_candidate_id"] = preserved_selector["forks"][0]["candidates"][0]["id"]
+assert not valid(preserved_selector)
+
+omitted_unresolved_selector = deepcopy(example)
+del omitted_unresolved_selector["forks"][0]["selected_candidate_id"]
+assert valid(omitted_unresolved_selector)
+
+unknown_selector = deepcopy(provisional)
+unknown_selector["forks"][0]["selected_candidate_id"] = "candidate-not-declared"
+assert valid(unknown_selector), "shape validation must not pretend to resolve references"
+assert relation_errors(unknown_selector) == ["selected-candidate-not-exactly-one"]
+
+duplicate_candidate_id = deepcopy(example)
+duplicate_candidate_id["forks"][0]["candidates"][1]["id"] = duplicate_candidate_id["forks"][0]["candidates"][0]["id"]
+assert valid(duplicate_candidate_id), "shape validation must not pretend to enforce keyed uniqueness"
+assert relation_errors(duplicate_candidate_id) == ["duplicate-candidate-id"]
+
+for descriptive_state in ("resting", "degraded", "closed"):
+    retained_history = deepcopy(example)
+    retained_history["state"] = descriptive_state
+    assert retained_history["threads"]["openings"]
+    assert retained_history["threads"]["carry"]
+    assert valid(retained_history), f"{descriptive_state} wrongly discarded orthogonal history"
+PY
 
 capture env LC_ALL=C "$BUN" "$FIXTURE_ROOT/bin/nen.mjs" list --json
 assert_equal 0 "$CAPTURE_STATUS" "C locale listing failed"
