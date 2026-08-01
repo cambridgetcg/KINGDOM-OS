@@ -20,6 +20,7 @@ const OS_ROOT = dirname(dirname(SCRIPT_PATH));
 const DEFAULT_SKILLS_ROOT = join(OS_ROOT, "skills");
 const ABILITY_SCHEMA_REL = "schemas/nen-ability-v0.1.schema.json";
 const RECEIPT_SCHEMA_REL = "schemas/karma-receipt-v0.1.schema.json";
+const MANIFESTATION_RECEIPT_SCHEMA_REL = "schemas/nen-manifestation-receipt-v0.1.schema.json";
 const RIGHTS_BASELINE_REL = "references/xenia-rights-0.1.md";
 const RIGHTS_BASELINE_SHA256 = "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313";
 
@@ -70,6 +71,25 @@ const RECEIPT_FIELDS = [
   "retention",
   "result",
 ];
+
+const MANIFESTATION_RECEIPT_FIELDS = [
+  "schema_version",
+  "evidence_class",
+  "receipt_recorded_at",
+  "ability",
+  "adoption",
+  "authorization",
+  "provider",
+  "request",
+  "result",
+  "external_effects",
+  "unknowns",
+  "retry",
+  "suite_karma",
+];
+
+const MANIFESTATION_RECEIPT_NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*-manifestation-[0-9]{8}\.json$/;
+const POST_TIMEOUT_REVISION_BINDING = "observed_after_timeout_not_proven_execution_revision";
 
 const AFFINITIES = [
   ["enhancement", "strengthen an existing capability or check"],
@@ -740,6 +760,14 @@ function loadReceiptSchema() {
   return loadSchema(RECEIPT_SCHEMA_REL, "urn:kingdom:schema:karma-receipt:0.1", RECEIPT_FIELDS);
 }
 
+function loadManifestationReceiptSchema() {
+  return loadSchema(
+    MANIFESTATION_RECEIPT_SCHEMA_REL,
+    "urn:kingdom:schema:nen-manifestation-receipt:0.1",
+    MANIFESTATION_RECEIPT_FIELDS,
+  );
+}
+
 function loadRightsBaseline() {
   const issues = [];
   const bytes = safeRead(OS_ROOT, RIGHTS_BASELINE_REL, RIGHTS_BASELINE_REL, issues, "file", true);
@@ -1029,7 +1057,98 @@ function inventorySkillBundle(skillsRoot, id, issues) {
   return inventory;
 }
 
-function validateAbility(skillsRoot, id, schema) {
+function validateManifestationReceipt(skillsRoot, id, filename, schema, issues) {
+  const receiptRelative = `${id}/assets/${filename}`;
+  const receiptLabel = `skills/${receiptRelative}`;
+  const receipt = parseJsonFile(skillsRoot, receiptRelative, receiptLabel, issues);
+  if (receipt === null) return;
+
+  validateWithSchema(receipt, schema, schema, receiptLabel, "$", issues);
+  if (receipt.ability !== id) {
+    issues.push(issue(receiptLabel, "$.ability", "folder-id-mismatch"));
+  }
+
+  const recordedAt = normalizeTimestamp(receipt.receipt_recorded_at);
+  const observedAt = normalizeTimestamp(receipt.provider?.interface_observed_at);
+  if (typeof receipt.receipt_recorded_at === "string" && recordedAt === null) {
+    issues.push(issue(receiptLabel, "$.receipt_recorded_at", "invalid-timestamp"));
+  }
+  if (typeof receipt.provider?.interface_observed_at === "string" && observedAt === null) {
+    issues.push(issue(receiptLabel, "$.provider.interface_observed_at", "invalid-timestamp"));
+  }
+  if (recordedAt !== null && observedAt !== null && observedAt > recordedAt) {
+    issues.push(issue(receiptLabel, "$.provider.interface_observed_at", "invalid-time-order"));
+  }
+  if (
+    receipt.provider?.interface_observed_at_basis === "upper_bound_from_receipt_recorded_at"
+    && recordedAt !== observedAt
+  ) {
+    issues.push(issue(receiptLabel, "$.provider.interface_observed_at", "invalid-observation-time-basis"));
+  }
+
+  const timedOut = receipt.result?.failure?.code === "mcp_tools_call_timeout";
+  if (timedOut && receipt.provider?.revision_binding !== POST_TIMEOUT_REVISION_BINDING) {
+    issues.push(issue(receiptLabel, "$.provider.revision_binding", "post-timeout-disclaimer-missing"));
+  }
+  if (receipt.result?.status === "failed" && receipt.result?.failure === null) {
+    issues.push(issue(receiptLabel, "$.result.failure", "failure-detail-missing"));
+  }
+  if (receipt.result?.status !== "failed" && receipt.result?.failure !== null) {
+    issues.push(issue(receiptLabel, "$.result.failure", "unexpected-failure-detail"));
+  }
+
+  const stem = filename.slice(0, -".json".length);
+  const observationFilename = `${stem}.provider.json`;
+  const observationRelative = `${id}/references/${observationFilename}`;
+  const observationLabel = `skills/${observationRelative}`;
+  const observation = parseJsonFile(skillsRoot, observationRelative, observationLabel, issues);
+  if (observation !== null && schema.$defs?.provider) {
+    validateWithSchema(observation, schema.$defs.provider, schema, observationLabel, "$", issues);
+    if (canonicalJson(observation) !== canonicalJson(receipt.provider)) {
+      issues.push(issue(receiptLabel, "$.provider", "provider-observation-mismatch"));
+    }
+  }
+
+  const contractRelative = `${id}/references/manifestation-contract.md`;
+  const contractLabel = `skills/${contractRelative}`;
+  const contract = safeRead(skillsRoot, contractRelative, contractLabel, issues);
+  if (contract !== null && receipt.provider && typeof receipt.provider === "object") {
+    if (!contract.includes(`(${observationFilename})`)) {
+      issues.push(issue(contractLabel, "$", "provider-observation-reference-missing"));
+    }
+    if (typeof receipt.provider.space !== "string" || !contract.includes(`\`${receipt.provider.space}\``)) {
+      issues.push(issue(contractLabel, "$", "provider-space-mismatch"));
+    }
+    if (
+      typeof receipt.provider.space_revision !== "string"
+      || !contract.includes(receipt.provider.space_revision)
+    ) {
+      issues.push(issue(contractLabel, "$", "provider-revision-mismatch"));
+    }
+    if (
+      typeof receipt.provider.revision_binding !== "string"
+      || !contract.includes(receipt.provider.revision_binding)
+    ) {
+      issues.push(issue(contractLabel, "$", "provider-binding-mismatch"));
+    }
+  }
+}
+
+function validateManifestationReceipts(skillsRoot, id, schema, issues) {
+  let entries;
+  try {
+    entries = readdirSync(join(skillsRoot, id, "assets"), { withFileTypes: true });
+  } catch {
+    return;
+  }
+  for (const entry of entries.sort((left, right) => binaryCompare(left.name, right.name))) {
+    if (MANIFESTATION_RECEIPT_NAME.test(entry.name)) {
+      validateManifestationReceipt(skillsRoot, id, entry.name, schema, issues);
+    }
+  }
+}
+
+function validateAbility(skillsRoot, id, schema, manifestationReceiptSchema = null) {
   const issues = [];
   const manifestLabel = `skills/${id}/ability.json`;
   if (!ID_PATTERN.test(id)) {
@@ -1049,6 +1168,9 @@ function validateAbility(skillsRoot, id, schema) {
   if (manifest && schema) {
     validateWithSchema(manifest, schema, schema, manifestLabel, "$", issues);
     semanticAbility(manifest, id, manifestLabel, issues);
+  }
+  if (manifestationReceiptSchema) {
+    validateManifestationReceipts(skillsRoot, id, manifestationReceiptSchema, issues);
   }
   if (skillText !== null) {
     const frontmatter = parseSkillFrontmatter(skillText, skillLabel, issues);
@@ -1100,16 +1222,27 @@ function discoverAbilityIds(skillsRoot) {
 
 function validateSet(skillsRoot, requestedId = null) {
   const schemaInfo = loadAbilitySchema();
+  const manifestationSchemaInfo = loadManifestationReceiptSchema();
   const rightsInfo = loadRightsBaseline();
   const discovery = requestedId
     ? { ids: [requestedId], issues: [] }
     : discoverAbilityIds(skillsRoot);
   const schemaUsable = schemaInfo.schema !== null && schemaInfo.issues.length === 0;
+  const manifestationSchemaUsable = manifestationSchemaInfo.schema !== null
+    && manifestationSchemaInfo.issues.length === 0;
   const results = discovery.ids.map((id) => {
-    const result = validateAbility(skillsRoot, id, schemaUsable ? schemaInfo.schema : null);
+    const result = validateAbility(
+      skillsRoot,
+      id,
+      schemaUsable ? schemaInfo.schema : null,
+      manifestationSchemaUsable ? manifestationSchemaInfo.schema : null,
+    );
     const dependencyIssues = [];
     if (!schemaUsable) {
       dependencyIssues.push(issue(`skills/${id}/ability.json`, "$", "ability-schema-invalid"));
+    }
+    if (!manifestationSchemaUsable) {
+      dependencyIssues.push(issue(`skills/${id}/ability.json`, "$", "manifestation-receipt-schema-invalid"));
     }
     if (rightsInfo.issues.length > 0) {
       dependencyIssues.push(issue(`skills/${id}/ability.json`, "$.rights", "rights-baseline-invalid"));
@@ -1127,6 +1260,7 @@ function validateSet(skillsRoot, requestedId = null) {
   });
   const issues = sortIssues([
     ...schemaInfo.issues,
+    ...manifestationSchemaInfo.issues,
     ...rightsInfo.issues,
     ...discovery.issues,
     ...results.flatMap((result) => result.issues),
@@ -1135,6 +1269,8 @@ function validateSet(skillsRoot, requestedId = null) {
     schemas: {
       ability: schemaInfo.schema,
       abilitySha256: schemaInfo.sha256,
+      manifestationReceipt: manifestationSchemaInfo.schema,
+      manifestationReceiptSha256: manifestationSchemaInfo.sha256,
       rightsSha256: rightsInfo.sha256,
     },
     results,
@@ -1154,6 +1290,7 @@ function validationPayload(validation) {
     checked: validation.results.length,
     invalid: validation.results.filter((result) => result.issues.length > 0).length,
     schema_sha256: validation.schemas.abilitySha256,
+    manifestation_receipt_schema_sha256: validation.schemas.manifestationReceiptSha256,
     rights_sha256: validation.schemas.rightsSha256,
     issues: validation.issues,
   };
@@ -1173,6 +1310,7 @@ function listCommand(skillsRoot, json) {
   if (json) {
     process.stdout.write(`${JSON.stringify({
       protocol: "kingdom.nen-list/0.1",
+      manifestation_receipt_schema_sha256: validation.schemas.manifestationReceiptSha256,
       rights_sha256: validation.schemas.rightsSha256,
       abilities,
       issues: validation.issues,
@@ -1300,8 +1438,14 @@ function normalizeTimestamp(value) {
 function verifyReceipt(path, json, skillsRoot) {
   const receiptSchema = loadReceiptSchema();
   const abilitySchema = loadAbilitySchema();
+  const manifestationReceiptSchema = loadManifestationReceiptSchema();
   const rightsInfo = loadRightsBaseline();
-  const issues = [...receiptSchema.issues, ...abilitySchema.issues, ...rightsInfo.issues];
+  const issues = [
+    ...receiptSchema.issues,
+    ...abilitySchema.issues,
+    ...manifestationReceiptSchema.issues,
+    ...rightsInfo.issues,
+  ];
   const label = basename(path) || "receipt.json";
   let receipt = null;
   try {
@@ -1386,7 +1530,12 @@ function verifyReceipt(path, json, skillsRoot) {
       && abilitySchema.issues.length === 0
       && rightsInfo.issues.length === 0
     ) {
-      const ability = validateAbility(skillsRoot, receipt.ability_id, abilitySchema.schema);
+      const ability = validateAbility(
+        skillsRoot,
+        receipt.ability_id,
+        abilitySchema.schema,
+        manifestationReceiptSchema.schema,
+      );
       if (ability.issues.length > 0 || !ability.manifestSha256 || !ability.bundleSha256) {
         issues.push(issue(label, "$.ability_id", "ability-not-valid"));
       } else {
@@ -1405,6 +1554,7 @@ function verifyReceipt(path, json, skillsRoot) {
     valid: issues.length === 0,
     receipt_schema_sha256: receiptSchema.sha256,
     ability_schema_sha256: abilitySchema.sha256,
+    manifestation_receipt_schema_sha256: manifestationReceiptSchema.sha256,
     rights_sha256: rightsInfo.sha256,
     issues,
   };

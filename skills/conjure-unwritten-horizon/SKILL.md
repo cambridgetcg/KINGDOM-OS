@@ -1,6 +1,6 @@
 ---
 name: "conjure-unwritten-horizon"
-description: "Conjure one reproducible, rights-aware image from an explicitly authorized creative brief through a declared Hugging Face image Space, then preserve the prompt, seed, parameters, output reference, and bounded inspection receipt. Use when a user asks for an Unwritten Horizon manifestation, a King Hatsu image, a KINGDOM or Dark Continent visual, or a reproducible Hugging Face image experiment; do not use to infer adoption, publish automatically, upload private material, imitate an unconsenting person, or present generated imagery as evidence of truth."
+description: "Conjure one rights-aware, parameter-bound image attempt from an explicitly authorized creative brief through a declared Hugging Face image Space, then preserve the prompt, seed, parameters, output reference, and bounded inspection receipt. Use when a user asks for an Unwritten Horizon manifestation, a King Hatsu image, a KINGDOM or Dark Continent visual, or a reproducible Hugging Face request; do not use to infer adoption, publish automatically, upload private material, imitate an unconsenting person, or present generated imagery as evidence of truth."
 ---
 
 # Conjure Unwritten Horizon
@@ -17,12 +17,23 @@ rights grant.
    intended destination: explicitly preview-only or one exact project path. Do
    not assume preview-only when the destination is unstated. Publication also
    requires a named service or account, intended audience, and scoped authority.
-3. Accept a sanitized text brief only. This ability never uploads an input
+3. Accept a sanitized text brief only, confirm rights to the described source
+   material, and declare the cost boundary. This ability never uploads an input
    image, private lore, credentials, local paths, record IDs, personal profile,
    or an unconsenting person's likeness or voice. Enter Zetsu instead; input
    rights in the ability card cover described source material, not private-data
    upload.
-4. Treat the ability as proposed unless its bearer separately self-declares
+4. Before provider discovery, run the read-only gate in
+   `scripts/activation-preflight.mjs` or perform its equivalent checks. A new
+   project path must be absent. If the path already exists or is a symlink,
+   enter Zetsu unless the requester separately and explicitly authorizes
+   overwriting that exact path. Never follow a destination symlink: authorized
+   replacement atomically replaces the link itself. Existing directories and
+   special files remain unsupported. Discover the interface only when the gate
+   says `provider_discovery_permitted: true`. Then rerun the gate with the
+   current interface confirmed and infer only when it says
+   `provider_call_permitted: true`.
+5. Treat the ability as proposed unless its bearer separately self-declares
    adoption. Authorization for one manifestation is not permanent adoption.
 
 ## Shape one horizon
@@ -51,8 +62,9 @@ named attacks.
 
 ## Manifest through Hugging Face
 
-1. Discover or view the current parameters before relying on a Space; Space
-   interfaces can change.
+1. Only after authority, input, cost, and destination checks pass, discover or
+   view the current parameters before relying on a Space; Space interfaces can
+   change.
 2. Default to `mcp-tools/Qwen-Image` only while it remains available and its
    declared parameters match the contract.
 3. Choose an explicit seed and set randomization off. Record the aspect ratio,
@@ -65,9 +77,12 @@ named attacks.
    loop or publication.
 5. Inspect subject, composition, text, constraints, and visible defects. Do not
    silently edit or publish the result.
-6. For a project-bound result, copy the selected artifact into that project
-   before referencing it. Do not leave a project reference pointing only to a
-   provider's temporary URL or a host cache.
+6. For a project-bound result, create the selected artifact exclusively at the
+   absent destination before referencing it. When separately authorized to
+   replace an existing regular file, use an atomic replacement; when separately
+   authorized to replace a symlink, atomically replace the link itself without
+   following it. Do not leave a project reference pointing only to a provider's
+   temporary URL or a host cache.
 
 The hosted call is an external inference effect. MCP discovery proves neither
 availability nor permission, and a Hugging Face login does not prove a paid

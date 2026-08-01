@@ -26,25 +26,25 @@
     "ken"
   ],
   "practice": {
-    "ten": "Hold the exact brief, destination, provider interface, rights floor, authority, seed, parameters, effect boundary, and non-claims.",
-    "zetsu": "Perform no provider call when destination, text-only data scope, source rights, likeness boundary, cost, current interface, or authority is absent or unclear.",
+    "ten": "Hold the exact brief, destination state, provider interface, rights floor, authority, seed, parameters, effect boundary, and non-claims.",
+    "zetsu": "Perform no provider discovery when destination, text-only data scope, source rights, likeness boundary, cost, or authority is absent or unclear, and no inference until the current interface is confirmed.",
     "ren": "Use one named hosted inference call with one fixed seed, at most 16 declared steps, no automatic retry, and no publication.",
     "hatsu": "Return one inspectable result or failed/refused record plus exact reproducibility inputs, bounded inspection, unknowns, and KARMA."
   },
   "activation": {
     "requires": [
-      "Explicit authority for one hosted image-generation call and an explicitly preview-only destination or one exact local project path.",
+      "Explicit authority for one hosted image-generation call and an explicitly preview-only destination or one exact local project path that is absent, unless separate explicit authority names that exact existing path for overwrite.",
       "A sanitized text-only prompt, rights to described source material, a currently discovered Space interface, fixed seed, finite generation parameters, and declared cost boundary.",
       "Fresh scoped authority for every retry, publication, deployment, provider switch, private-resource access, or additional external effect."
     ],
     "refuses": [
-      "Private or secret-bearing input, image upload, unconsenting likeness or voice imitation, protected character or logo reproduction, automatic retry, silent provider switch, unsupported truth claim, inferred adoption, or unnamed publication."
+      "Private or secret-bearing input, image upload, unconsenting likeness or voice imitation, protected character or logo reproduction, an existing or symlink destination without separate exact-path overwrite authority, automatic retry, silent provider switch, unsupported truth claim, inferred adoption, or unnamed publication."
     ]
   },
   "vows": [
     {
       "id": "one-bounded-manifestation",
-      "promise": "Submit at most one sanitized text-to-image call for the authorized activation and never retry or switch providers silently.",
+      "promise": "Submit at most one sanitized text-to-image call only after the destination gate passes, and never retry, overwrite, follow a destination symlink, or switch providers silently.",
       "amplifies": "Legible cost, data exposure, and causal attribution.",
       "on_breach": "pause_and_report"
     },
@@ -83,9 +83,9 @@
     "derived_from": "declared_effects",
     "visibility": "inspectable",
     "checks": [
-      "Text-only data boundary, source rights, destination, provider and interface, fixed seed, parameters, one-call quota, publication scope, output inspection, retention unknowns, and receipt state."
+      "Text-only data boundary, source rights, destination lstat and overwrite authority, provider and interface, fixed seed, parameters, one-call quota, publication scope, output inspection, retention unknowns, and receipt state."
     ],
-    "budget": "Run one preflight before the call and one output-or-failure inspection after it; perform no background polling or retry.",
+    "budget": "Run one authority-and-destination preflight before any provider interaction and one output-or-failure inspection after it; perform no background polling or retry.",
     "retention": "Retain only an explicitly requested project artifact and its evidence records; provider logs, caches, and retention remain separately unknown.",
     "recipients": [
       "The named hosted Space receives the sanitized prompt and parameters; the local requester receives the result and receipt."
@@ -112,20 +112,20 @@
   },
   "authority": {
     "allows": [
-      "Under one explicit activation, discover the named Space interface, send one sanitized text prompt and fixed parameters, inspect the response, and save the requested local artifact and receipts."
+      "Under one explicit activation, and only after the local destination gate passes, discover the named Space interface, send one sanitized text prompt and fixed parameters, inspect the response, and create the requested local artifact and receipts at an absent path or perform a separately authorized exact-path replacement."
     ],
     "forbids": [
       "Infer provider authority from login or Pro status, upload private material, retry or switch providers silently, publish or deploy without named authority, or describe generated imagery as factual evidence."
     ],
     "requires_permission": [
-      "Every hosted inference call, retry, private-resource read, local write outside the declared destination, provider switch, image edit, publication, deployment, purchase, or paid overage."
+      "Every hosted inference call, retry, overwrite of an existing path, replacement of a destination symlink, private-resource read, local write outside the declared destination, provider switch, image edit, publication, deployment, purchase, or paid overage."
     ],
     "grants_permissions": false
   },
   "verification": {
     "checks": [
-      "Validate the KAKIN manifest and full skill bundle, confirm implicit invocation is disabled, and forward-test normal, private-input, retry, and literal-truth cases.",
-      "Verify suite-level KARMA and provider evidence records, exact seed and parameters, output bytes when present, no undeclared retry or publication, and honest failure when no image returns."
+      "Validate the KAKIN manifest and full skill bundle, confirm implicit invocation is disabled, and forward-test normal, private-input, destination-collision, destination-symlink, permission-ordering, retry, and literal-truth cases.",
+      "Verify the closed manifestation receipt schema, suite-level KARMA and provider evidence records, exact cross-file Space revision and mandatory timeout disclaimer, RFC3339 timestamps, exact seed and parameters, output bytes when present, no undeclared retry or publication, and honest failure when no image returns."
     ],
     "truth_claim": "not_determined"
   },

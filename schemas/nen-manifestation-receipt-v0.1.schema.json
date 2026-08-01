@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:nen-manifestation-receipt:0.1",
+  "title": "KINGDOM Nen manifestation provider receipt v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_class",
+    "receipt_recorded_at",
+    "ability",
+    "adoption",
+    "authorization",
+    "provider",
+    "request",
+    "result",
+    "external_effects",
+    "unknowns",
+    "retry",
+    "suite_karma"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "kingdom.nen.manifestation/0.1"
+    },
+    "evidence_class": {
+      "enum": ["pre_manifestation_provider_evidence", "manifestation_provider_evidence"]
+    },
+    "receipt_recorded_at": {"$ref": "#/$defs/timestamp"},
+    "ability": {"$ref": "#/$defs/ability_id"},
+    "adoption": {
+      "enum": ["proposed", "repository_declared", "self_declared"]
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hosted_inference", "local_destination", "publication"],
+      "properties": {
+        "hosted_inference": {
+          "enum": ["not_confirmed", "confirmed_for_one_call"]
+        },
+        "local_destination": {"$ref": "#/$defs/statement"},
+        "publication": {
+          "enum": ["not_granted", "granted_for_named_target"]
+        }
+      }
+    },
+    "provider": {"$ref": "#/$defs/provider"},
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prompt",
+        "negative_prompt",
+        "seed",
+        "randomize_seed",
+        "aspect_ratio",
+        "guidance_scale",
+        "num_inference_steps"
+      ],
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "negative_prompt": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "randomize_seed": {
+          "const": false
+        },
+        "aspect_ratio": {
+          "enum": ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+        },
+        "guidance_scale": {
+          "type": "number",
+          "minimum": 0
+        },
+        "num_inference_steps": {
+          "enum": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider_reference", "project_path", "inspection", "status", "failure"],
+      "properties": {
+        "provider_reference": {"$ref": "#/$defs/nullable_statement"},
+        "project_path": {"$ref": "#/$defs/nullable_statement"},
+        "inspection": {"$ref": "#/$defs/statement"},
+        "status": {
+          "enum": ["not_run", "refused", "manifested", "failed"]
+        },
+        "failure": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["code", "observed_after_seconds"],
+              "properties": {
+                "code": {"$ref": "#/$defs/id"},
+                "observed_after_seconds": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "external_effects": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "hosted_image_inference_request_submitted",
+          "hosted_image_inference_result_received",
+          "project_artifact_created",
+          "project_artifact_replaced"
+        ]
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/statement"}
+    },
+    "retry": {
+      "enum": ["not_authorized_or_attempted", "authorized_not_attempted", "attempted_once"]
+    },
+    "suite_karma": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "reason"],
+      "properties": {
+        "state": {
+          "enum": ["not_created", "draft", "final"]
+        },
+        "reason": {"$ref": "#/$defs/statement"}
+      }
+    }
+  },
+  "$defs": {
+    "ability_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[-._][a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "nullable_statement": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/statement"}
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "space",
+        "interface_observed_at",
+        "interface_observed_at_basis",
+        "space_revision",
+        "revision_binding"
+      ],
+      "properties": {
+        "space": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]+/[A-Za-z0-9._-]+$",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "interface_observed_at": {"$ref": "#/$defs/timestamp"},
+        "interface_observed_at_basis": {
+          "enum": ["exact", "upper_bound_from_receipt_recorded_at"]
+        },
+        "space_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "revision_binding": {
+          "enum": [
+            "observed_before_call_not_proven_execution_revision",
+            "observed_after_timeout_not_proven_execution_revision"
+          ]
+        }
+      }
+    }
+  }
+}

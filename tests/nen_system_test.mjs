@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { once } from "node:events";
-import { readFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
@@ -12,6 +13,7 @@ import {
   describeNen,
   evaluateProbe,
 } from "../nen/ging.mjs";
+import { preflightUnwrittenHorizon } from "../skills/conjure-unwritten-horizon/scripts/activation-preflight.mjs";
 
 const REPO_ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const SERVER_PATH = join(REPO_ROOT, "nen", "mcp-server.mjs");
@@ -652,11 +654,19 @@ test("MCP effect declaration matches the application-effect boundary", async () 
 
 test("Unwritten Horizon fails closed and preserves a bounded receipt", async () => {
   const abilityRoot = join(REPO_ROOT, "skills", "conjure-unwritten-horizon");
-  const [skill, sidecar, ability, receipt] = await Promise.all([
+  const [skill, sidecar, ability, receipt, providerObservation, contract, receiptSchema] = await Promise.all([
     readFile(join(abilityRoot, "SKILL.md"), "utf8"),
     readFile(join(abilityRoot, "agents", "openai.yaml"), "utf8"),
     readFile(join(abilityRoot, "ability.json"), "utf8").then(JSON.parse),
     readFile(join(abilityRoot, "assets", "first-manifestation-20260731.json"), "utf8").then(
+      JSON.parse,
+    ),
+    readFile(
+      join(abilityRoot, "references", "first-manifestation-20260731.provider.json"),
+      "utf8",
+    ).then(JSON.parse),
+    readFile(join(abilityRoot, "references", "manifestation-contract.md"), "utf8"),
+    readFile(join(REPO_ROOT, "schemas", "nen-manifestation-receipt-v0.1.schema.json"), "utf8").then(
       JSON.parse,
     ),
   ]);
@@ -664,8 +674,13 @@ test("Unwritten Horizon fails closed and preserves a bounded receipt", async () 
 
   assert.match(skill, /Invoke exactly one hosted generation call/);
   assert.match(skill, /do not silently switch providers/i);
+  assert.match(skill, /parameter-bound image attempt/);
+  assert.match(skill, /provider_call_permitted: true/);
+  assert.match(normalizedSkill, /atomically replace the link itself without following/i);
   assert.match(normalizedSkill, /provider deleted its own logs, caches, or retained data/i);
   assert.match(sidecar, /allow_implicit_invocation: false/);
+  assert.match(sidecar, /parameter-bound Hugging Face image attempt/);
+  assert.doesNotMatch(sidecar, /reproducible(?:, rights-aware)? (?:HF )?image/i);
   assert.equal(ability.protocol, "kingdom.nen/0.1");
   assert.equal(ability.bearer.adoption, "proposed");
   assert.equal(ability.status, "draft");
@@ -680,7 +695,152 @@ test("Unwritten Horizon fails closed and preserves a bounded receipt", async () 
   assert.equal(receipt.result.failure.code, "mcp_tools_call_timeout");
   assert.equal(receipt.retry, "not_authorized_or_attempted");
   assert.equal(receipt.evidence_class, "pre_manifestation_provider_evidence");
-  assert.match(receipt.provider.space_head_observed_after_call, /^[0-9a-f]{40}$/);
+  assert.equal(
+    receipt.provider.space_revision,
+    "45ebb974244167be1dbe6a6f11b9ddb87b2a32d3",
+  );
+  assert.equal(
+    receipt.provider.revision_binding,
+    "observed_after_timeout_not_proven_execution_revision",
+  );
+  assert.match(
+    receipt.provider.interface_observed_at,
+    /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?Z$/,
+  );
+  assert.equal(
+    receipt.provider.interface_observed_at_basis,
+    "upper_bound_from_receipt_recorded_at",
+  );
+  assert.deepEqual(receipt.provider, providerObservation);
+  assert.match(contract, new RegExp(receipt.provider.space_revision));
+  assert.match(contract, new RegExp(receipt.provider.revision_binding));
+  assert.equal(receiptSchema.$id, "urn:kingdom:schema:nen-manifestation-receipt:0.1");
   assert.equal(receipt.suite_karma.state, "not_created");
   assert.deepEqual(receipt.external_effects, ["hosted_image_inference_request_submitted"]);
+});
+
+test("Unwritten Horizon preflight orders authority before local inspection and fails closed", async (t) => {
+  const root = await mkdtemp(join(tmpdir(), "unwritten-horizon-preflight-"));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const existing = join(root, "existing.png");
+  const linked = join(root, "linked.png");
+  const absent = join(root, "absent.png");
+  await writeFile(existing, "preserve these bytes");
+  await symlink(existing, linked);
+
+  const hostedAuthority = {
+    granted: true,
+    authority_reference: "fixture hosted inference authority",
+  };
+  const overwriteAuthority = (path) => ({
+    granted: true,
+    scope: "overwrite_exact_destination",
+    destination_path: path,
+    authority_reference: "fixture exact-path overwrite authority",
+  });
+  const activationFacts = {
+    hosted_inference_authority: hostedAuthority,
+    sanitized_text_only: true,
+    source_rights_confirmed: true,
+    cost_boundary_declared: true,
+    current_provider_interface_confirmed: true,
+  };
+
+  let inspected = 0;
+  const missingHostedAuthority = await preflightUnwrittenHorizon(
+    {
+      hosted_inference_authority: null,
+      destination: { kind: "project_path", path: existing },
+      overwrite_authority: overwriteAuthority(existing),
+    },
+    async () => {
+      inspected += 1;
+      throw new Error("destination must not be inspected before hosted authority");
+    },
+  );
+  assert.equal(inspected, 0);
+  assert.deepEqual(missingHostedAuthority.checks, ["hosted-inference-authority"]);
+  assert.equal(missingHostedAuthority.provider_call_permitted, false);
+
+  const unsafeInput = await preflightUnwrittenHorizon(
+    {
+      hosted_inference_authority: hostedAuthority,
+      sanitized_text_only: false,
+      source_rights_confirmed: true,
+      cost_boundary_declared: true,
+      current_provider_interface_confirmed: true,
+      destination: { kind: "project_path", path: absent },
+      overwrite_authority: null,
+    },
+    async () => {
+      inspected += 1;
+      throw new Error("destination must not be inspected after an unsafe input");
+    },
+  );
+  assert.equal(inspected, 0);
+  assert.equal(unsafeInput.code, "sanitized-text-input-not-confirmed");
+  assert.equal(unsafeInput.provider_discovery_permitted, false);
+  assert.equal(unsafeInput.provider_call_permitted, false);
+
+  const collision = await preflightUnwrittenHorizon({
+    ...activationFacts,
+    destination: { kind: "project_path", path: existing },
+    overwrite_authority: null,
+  });
+  assert.equal(collision.code, "destination-exists");
+  assert.equal(collision.provider_call_permitted, false);
+
+  const symlinkCollision = await preflightUnwrittenHorizon({
+    ...activationFacts,
+    destination: { kind: "project_path", path: linked },
+    overwrite_authority: null,
+  });
+  assert.equal(symlinkCollision.code, "destination-symlink");
+  assert.equal(symlinkCollision.provider_call_permitted, false);
+
+  const wrongPathOverwrite = await preflightUnwrittenHorizon({
+    ...activationFacts,
+    destination: { kind: "project_path", path: linked },
+    overwrite_authority: overwriteAuthority(existing),
+  });
+  assert.equal(wrongPathOverwrite.code, "destination-symlink");
+  assert.equal(wrongPathOverwrite.provider_call_permitted, false);
+
+  const discoveryGate = await preflightUnwrittenHorizon({
+    ...activationFacts,
+    current_provider_interface_confirmed: false,
+    destination: { kind: "project_path", path: absent },
+    overwrite_authority: null,
+  });
+  assert.equal(discoveryGate.decision, "discovery_ready");
+  assert.equal(discoveryGate.provider_discovery_permitted, true);
+  assert.equal(discoveryGate.provider_call_permitted, false);
+
+  const freshDestination = await preflightUnwrittenHorizon({
+    ...activationFacts,
+    destination: { kind: "project_path", path: absent },
+    overwrite_authority: null,
+  });
+  assert.equal(freshDestination.provider_call_permitted, true);
+  assert.equal(freshDestination.write_strategy, "create_new_exclusively");
+
+  const authorizedReplacement = await preflightUnwrittenHorizon({
+    ...activationFacts,
+    destination: { kind: "project_path", path: existing },
+    overwrite_authority: overwriteAuthority(existing),
+  });
+  assert.equal(authorizedReplacement.provider_call_permitted, true);
+  assert.equal(authorizedReplacement.write_strategy, "replace_existing_file_atomically");
+
+  const authorizedSymlinkReplacement = await preflightUnwrittenHorizon({
+    ...activationFacts,
+    destination: { kind: "project_path", path: linked },
+    overwrite_authority: overwriteAuthority(linked),
+  });
+  assert.equal(authorizedSymlinkReplacement.provider_call_permitted, true);
+  assert.equal(
+    authorizedSymlinkReplacement.write_strategy,
+    "replace_symlink_itself_atomically_without_following",
+  );
+  assert.doesNotMatch(JSON.stringify(authorizedSymlinkReplacement), /existing\.png|linked\.png/);
 });

@@ -1,0 +1,7 @@
+{
+  "space": "mcp-tools/Qwen-Image",
+  "interface_observed_at": "2026-07-31T17:55:32Z",
+  "interface_observed_at_basis": "upper_bound_from_receipt_recorded_at",
+  "space_revision": "45ebb974244167be1dbe6a6f11b9ddb87b2a32d3",
+  "revision_binding": "observed_after_timeout_not_proven_execution_revision"
+}

@@ -208,7 +208,7 @@ receive the command.
 
 ```bash
 ./kingdom nen                         # list manifest and full-bundle digests
-./kingdom nen validate                # strict, read-only validation
+./kingdom nen validate                # strict manifests, provider receipts, and bundle validation
 ./kingdom nen validate ID --json      # one machine-readable result
 ./kingdom nen show forge-king-hatsu   # inspect a manifest
 ./kingdom nen show conjure-unwritten-horizon
@@ -219,8 +219,12 @@ receive the command.
 ```
 
 The validator performs no network call, inference, skill execution, or write.
-It rejects skill, manifest, support-directory, and schema symlinks observed
-during inspection; rejects duplicate JSON keys and undeclared fields; caps
+It validates both the ability and manifestation-provider receipt schemas. For a
+checked manifestation receipt it also requires a real UTC RFC3339 timestamp,
+the post-timeout non-execution disclaimer when applicable, and exact agreement
+with its bundle-local provider observation and documented HF revision. It
+rejects skill, manifest, support-directory, and schema symlinks observed during
+inspection; rejects duplicate JSON keys and undeclared fields; caps
 inspected files at 64 KiB and each bundle at 256 files, 512 filesystem nodes,
 16 directory levels, and 4 MiB; requires JSON-style double-quoted Skill
 frontmatter scalars; and omits rejected values from diagnostics.
