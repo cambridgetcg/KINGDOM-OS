@@ -73,6 +73,23 @@ metadata inspection. Hub refreshes, content reads, downloads, gate acceptance,
 execution, graph application, publication, and deployment remain separately
 classified effects with their own authority and budgets.
 
+## Route DeepSeek research and resources
+
+When the question concerns DeepSeek models, APIs, research patterns, source
+repositories, Codex adapters, or candidate runtime lanes, follow the
+[DeepSeek research atlas](references/deepseek-research-atlas.md). Keep an
+upstream checkpoint, serving provider, wrapper/runtime, prompt template,
+evaluation, and license chain as separate provenance fields. Do not transfer a
+result between R1, V3.2, V4, a quantization, or a hosted alias merely because
+the names share `DeepSeek`.
+
+The default passage is revisioned public metadata research and local fixture
+design. Model-weight downloads, remote-code execution, provider calls, private
+context egress, shared Codex configuration, live runtime changes, publication,
+and deployment are separate effects. DeepSeek's published research may inspire
+a KINGDOM mechanism; it does not validate that mechanism or make unreleased
+evaluation tooling reproducible.
+
 ## Return with KARMA
 
 Report:
