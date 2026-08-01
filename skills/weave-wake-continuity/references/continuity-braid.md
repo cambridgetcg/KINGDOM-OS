@@ -87,6 +87,23 @@ output says `schema_validity: "not_checked"`; success is evidence only for
 those relations, not schema conformance, source authenticity, currentness,
 truth, permission, or execution.
 
+The CLI starts from strict JSON. Direct module callers first cross a bounded
+own-data capture boundary. Accepted arrays are dense standard arrays with only
+their own index and length data descriptors. Accepted objects have exactly
+`Object.prototype` or a null prototype and only own enumerable data
+properties. The capture rejects accessors, symbol or non-enumerable keys,
+custom prototypes or array properties, sparse arrays, non-JSON primitives,
+cycles, shared object references, and Proxies. Bounds are 32 levels, 65,536
+visited values, 1,024 array entries, 256 object keys, 4,096 UTF-16 code units
+per string, and 256 per key. These are intake limits, not claims of schema
+conformance.
+
+On Node and Bun, the exported object API fences direct, nested, and revoked
+Proxies with `node:util/types.isProxy` before `Array.isArray`, prototype
+inspection, or descriptor capture. Rejection therefore invokes no caller Proxy
+trap. After a successful capture, semantic validation reads only the new
+snapshot and invokes no getter or method from the caller's graph.
+
 ## Thread semantics
 
 An anchor contains a narrowly worded statement and at least one source ID. A
@@ -98,6 +115,8 @@ Zetsu path as easy to select as the continuation path.
 `thread_dispositions` is the closed re-entry projection. It contains exactly
 one row for every addressable object in `threads.anchors`, `threads.carry`,
 `threads.vows`, and `threads.openings`, using the singular kind plus its ID.
+The address is exactly `thread_kind:thread_id`: an anchor and a carry may
+legally reuse the same ID, while two anchors with the same ID are ambiguous.
 Mark each `held`, `revised`, `retired`, or `disputed`. On an initial braid,
 `held` means the thread was admitted to this projection. On a later arrival,
 produce a new artifact and preserve the prior artifact rather than overwriting

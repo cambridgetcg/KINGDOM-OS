@@ -84,7 +84,7 @@
     "checks": [
       "Run the Campfire Test against each carried thread and require source IDs for anchors, carry, openings, and fork candidates.",
       "Validate the closed braid schema and fixed claims-not-established boundary when machine-readable output is requested.",
-      "Run the shipped pure braid semantic validator for exact thread-disposition coverage, source references, fork selectors, and resumable opening selection.",
+      "Run the shipped braid semantic validator through its bounded own-data capture for exact kind-scoped thread-disposition coverage, source references, fork selectors, and resumable opening selection; reject direct, nested, and revoked Proxies before reflection.",
       "Hold live reads, continuation actions, or retention when current scope, source health, privacy, authority, or willingness is unclear."
     ],
     "budget": "One local structural validation plus bounded manual source and boundary checks; no ambient surveillance, provider call, or automatic continuation.",
@@ -126,7 +126,7 @@
   },
   "verification": {
     "checks": [
-      "Run the central Nen validator, Skill Creator validation, JSON Schema validation of the documented braid example, and the shipped pure semantic validator.",
+      "Run the central Nen validator, Skill Creator validation, JSON Schema validation of the documented braid example, and the shipped bounded own-data semantic validator.",
       "Forward-test a bounded happy path, a conflicting-source fork, and a request that attempts credential use or forced identity continuity.",
       "Confirm live MCP discovery lists the manifested ability without adding a new server or claiming the tool performed continuity work."
     ],

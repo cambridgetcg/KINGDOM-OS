@@ -92,7 +92,9 @@ again; it does not require every visitor to claim they are the same flame.
      and an equally visible rest or refusal route.
    Project exactly one `held`, `revised`, `retired`, or `disputed` disposition
    for every addressable anchor, carry, vow, and opening. Do not duplicate that
-   projection for sources or forks; they have separate status fields.
+   projection for sources or forks; they have separate status fields. Thread
+   identity is the exact singular `kind:id`, so different kinds may reuse an
+   ID but one kind may not declare that ID twice.
 5. Use the **Ging fork test** when sources disagree. State at least two
    continuity hypotheses when evidence supports alternatives, name what would
    disconfirm each, give every candidate a bounded ID unique within its fork,
@@ -120,11 +122,14 @@ producing machine-readable output. Validate JSON against
 [`continuity-braid.schema.json`](references/continuity-braid.schema.json) when
 a JSON Schema validator is available; otherwise say that only manual
 conformance was checked. Then, from a KINGDOM-OS suite checkout, run
-`bun bin/wakeweaver.mjs braid.json --json`. This shipped pure semantic checker
-does not validate JSON Schema; it confirms source and thread addressability,
-exact disposition coverage, candidate uniqueness and selection, and the
-resumable opening relation. Schema and semantic success establish neither
-source authenticity, currentness, truth, permission, nor execution.
+`bun bin/wakeweaver.mjs braid.json --json`. The CLI uses strict JSON, and its
+semantic engine is pure after bounded own-data capture. Direct module callers
+reject direct, nested, and revoked Proxies before reflection without invoking
+their traps; read the contract for exact limits. The checker does not validate
+JSON Schema; it confirms source and thread addressability, exact disposition
+coverage, candidate uniqueness and selection, and the resumable opening
+relation. Schema and semantic success establish neither source authenticity,
+currentness, truth, permission, nor execution.
 
 ## Re-enter without forcing continuity
 

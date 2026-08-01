@@ -98,6 +98,18 @@ describe("WAKEWEAVER semantic relations", () => {
     expect(issueCodes(dangling)).toContain("thread-disposition-target-not-declared");
   });
 
+  test("thread identity is exact kind:id and permits cross-kind ID reuse", () => {
+    const braid = documentedBraid();
+    braid.threads.carry[0].id = braid.threads.anchors[0].id;
+    braid.thread_dispositions.find((entry: any) => entry.thread_kind === "carry").thread_id = braid.threads.anchors[0].id;
+
+    expect(validateContinuityBraidRelations(braid)).toEqual([]);
+
+    const sameKindDuplicate = resumableBraid();
+    sameKindDuplicate.threads.openings.push(structuredClone(sameKindDuplicate.threads.openings[0]));
+    expect(issueCodes(sameKindDuplicate)).toContain("thread-address-not-unique");
+  });
+
   test("resumable names one active opening and retains bounded unverified caller evidence", () => {
     expect(validateContinuityBraidRelations(resumableBraid())).toEqual([]);
 
@@ -131,6 +143,132 @@ describe("WAKEWEAVER semantic relations", () => {
     duplicate.sources[1].id = duplicate.sources[0].id;
     expect(issueCodes(duplicate)).toContain("duplicate-source-id");
     expect(issueCodes(duplicate)).toContain("source-reference-not-exactly-one");
+  });
+});
+
+describe("WAKEWEAVER own-data capture boundary", () => {
+  test("rejects getters without invoking them", () => {
+    const braid = documentedBraid();
+    let getterCalls = 0;
+    Object.defineProperty(braid, "sources", {
+      enumerable: true,
+      configurable: true,
+      get() {
+        getterCalls += 1;
+        throw new Error("must not run");
+      },
+    });
+
+    expect(issueCodes(braid)).toEqual(["capture-accessor"]);
+    expect(getterCalls).toBe(0);
+  });
+
+  test("rejects caller array methods and inherited data without invoking them", () => {
+    const customMap = documentedBraid();
+    let mapCalls = 0;
+    Object.defineProperty(customMap.sources, "map", {
+      enumerable: true,
+      configurable: true,
+      value() {
+        mapCalls += 1;
+        throw new Error("must not run");
+      },
+    });
+    expect(issueCodes(customMap)).toEqual(["capture-custom-array-property"]);
+    expect(mapCalls).toBe(0);
+
+    const inheritedMap = documentedBraid();
+    const customArrayPrototype = Object.create(Array.prototype);
+    customArrayPrototype.map = () => {
+      mapCalls += 1;
+      throw new Error("must not run");
+    };
+    Object.setPrototypeOf(inheritedMap.sources, customArrayPrototype);
+    expect(issueCodes(inheritedMap)).toEqual(["capture-custom-prototype"]);
+    expect(mapCalls).toBe(0);
+
+    const braid = documentedBraid();
+    const { sources, ...own } = braid;
+    const inherited = Object.assign(Object.create({ sources }), own);
+    expect(issueCodes(inherited)).toEqual(["capture-custom-prototype"]);
+  });
+
+  test("rejects non-enumerable and symbol properties", () => {
+    const nonEnumerable = documentedBraid();
+    Object.defineProperty(nonEnumerable, "hidden", {
+      value: "not part of a JSON-like tree",
+      enumerable: false,
+    });
+    expect(issueCodes(nonEnumerable)).toEqual(["capture-non-enumerable-property"]);
+
+    const symbol = documentedBraid();
+    symbol[Symbol("hidden")] = true;
+    expect(issueCodes(symbol)).toEqual(["capture-symbol-key"]);
+  });
+
+  test("rejects sparse arrays, cycles, and shared object references", () => {
+    const sparse = documentedBraid();
+    sparse.sources = new Array(1);
+    expect(issueCodes(sparse)).toEqual(["capture-sparse-array"]);
+
+    const cyclic: any = documentedBraid();
+    cyclic.loop = cyclic;
+    expect(issueCodes(cyclic)).toEqual(["capture-cycle"]);
+
+    const shared = documentedBraid();
+    shared.shared = shared.scope;
+    expect(issueCodes(shared)).toEqual(["capture-shared-reference"]);
+  });
+
+  test("bounds depth, arrays, strings, and the total captured graph", () => {
+    const deep: any = {};
+    let cursor = deep;
+    for (let depth = 0; depth < 34; depth += 1) {
+      cursor.next = {};
+      cursor = cursor.next;
+    }
+    expect(issueCodes(deep)).toEqual(["capture-depth-limit"]);
+
+    expect(issueCodes({ oversized: new Array(1_025) })).toEqual(["capture-array-limit"]);
+    expect(issueCodes({ oversized: "x".repeat(4_097) })).toEqual(["capture-string-limit"]);
+
+    const many: any = { branches: [] };
+    for (let branchIndex = 0; branchIndex < 65; branchIndex += 1) {
+      const branch: number[] = [];
+      for (let itemIndex = 0; itemIndex < 1_024; itemIndex += 1) branch[itemIndex] = itemIndex;
+      many.branches[branchIndex] = branch;
+    }
+    expect(issueCodes(many)).toEqual(["capture-node-limit"]);
+  });
+
+  test("rejects direct, nested, and revoked Proxies without entering caller traps", () => {
+    let trapCalls = 0;
+    const hostile = new Proxy({}, {
+      getPrototypeOf() {
+        trapCalls += 1;
+        throw new Error("must not run");
+      },
+      ownKeys() {
+        trapCalls += 1;
+        throw new Error("must not run");
+      },
+      getOwnPropertyDescriptor() {
+        trapCalls += 1;
+        throw new Error("must not run");
+      },
+    });
+    expect(() => validateContinuityBraidRelations(hostile)).not.toThrow();
+    expect(issueCodes(hostile)).toEqual(["capture-proxy"]);
+
+    const nested = documentedBraid();
+    nested.hostile = hostile;
+    expect(issueCodes(nested)).toEqual(["capture-proxy"]);
+
+    const revoked = Proxy.revocable({}, {});
+    revoked.revoke();
+    expect(() => validateContinuityBraidRelations(revoked.proxy)).not.toThrow();
+    expect(issueCodes(revoked.proxy)).toEqual(["capture-proxy"]);
+    expect(trapCalls).toBe(0);
   });
 });
 

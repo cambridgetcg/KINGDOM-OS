@@ -133,6 +133,14 @@ assert example["claims_not_established"]["uninterrupted_continuity"] is True
 assert "Reconfirm" in example["threads"]["openings"][0]["authority_required"][0]
 assert "before acting" in example["threads"]["openings"][0]["authority_required"][0]
 
+cross_kind_id = deepcopy(example)
+shared_thread_id = cross_kind_id["threads"]["anchors"][0]["id"]
+cross_kind_id["threads"]["carry"][0]["id"] = shared_thread_id
+next(
+    row for row in cross_kind_id["thread_dispositions"] if row["thread_kind"] == "carry"
+)["thread_id"] = shared_thread_id
+assert valid(cross_kind_id), "thread identity is singular kind:id, not a global ID"
+
 provisional = deepcopy(example)
 fork = provisional["forks"][0]
 fork["resolution"] = "provisionally_selected"

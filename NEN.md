@@ -238,7 +238,7 @@ receive the command.
 ./kingdom nen verify-receipt FILE     # validate a KARMA receipt
 ./kingdom nen mcp                     # start modern MCP 2026-07-28 on stdio
 bun bin/nen-mcp.mjs --codex-compat    # add Codex 0.146's MCP 2025-06-18 lifecycle
-bun bin/wakeweaver.mjs BRAID --json   # pure WAKEWEAVER relation checks; schema separate
+bun bin/wakeweaver.mjs BRAID --json   # strict-JSON WAKEWEAVER relations; schema separate
 ```
 
 The validator performs no network call, inference, skill execution, or write.
@@ -259,6 +259,11 @@ coverage, fork selection, and resumable opening selection. It intentionally
 reports JSON Schema validity as `not_checked`; validate the braid against the
 checked-in continuity schema as a separate step. Neither pass authenticates a
 source or establishes currentness, truth, permission, identity, or execution.
+Its module export is pure only after bounded own-data capture. Accessors,
+custom or sparse arrays, custom prototypes, symbols, non-enumerable data,
+cycles, shared references, and excessive graphs are rejected. Node/Bun Proxy
+detection rejects direct, nested, and revoked Proxies before reflection and
+therefore enters no caller Proxy trap.
 
 The separate AgentTool inspector can inventory portable skills with stronger
 no-follow and change-detection mechanics when its exact package is deliberately
