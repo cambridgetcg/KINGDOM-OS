@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:continuity-braid:0.1",
+  "title": "KINGDOM WAKE continuity braid v0.1",
+  "description": "A bounded orientation artifact that does not establish identity, consciousness, consent, authority, truth, replay, authorship, or execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "artifact_id",
+    "state",
+    "scope",
+    "sources",
+    "threads",
+    "forks",
+    "zetsu",
+    "receipt",
+    "claims_not_established"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "urn:kingdom:schema:continuity-braid:0.1"
+    },
+    "protocol": {
+      "const": "kingdom.wakeweaver/0.1"
+    },
+    "artifact_id": {
+      "$ref": "#/$defs/id"
+    },
+    "state": {
+      "enum": ["arrived", "resumable", "forked", "degraded", "resting", "closed"]
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project_ref", "purpose", "intended_recipients", "retention_horizon"],
+      "properties": {
+        "project_ref": {"$ref": "#/$defs/statement"},
+        "purpose": {"$ref": "#/$defs/statement"},
+        "intended_recipients": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/statement"}
+        },
+        "retention_horizon": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "threads": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["anchors", "carry", "vows", "openings"],
+      "properties": {
+        "anchors": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {"$ref": "#/$defs/anchor"}
+        },
+        "carry": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {"$ref": "#/$defs/carry"}
+        },
+        "vows": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {"$ref": "#/$defs/vow"}
+        },
+        "openings": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {"$ref": "#/$defs/opening"}
+        }
+      }
+    },
+    "forks": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {"$ref": "#/$defs/fork"}
+    },
+    "zetsu": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["available", "reason", "effect"],
+      "properties": {
+        "available": {"const": true},
+        "reason": {"$ref": "#/$defs/statement"},
+        "effect": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prepared_at", "prepared_by_label", "operations", "external_effects", "unknowns"],
+      "properties": {
+        "prepared_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "prepared_by_label": {
+          "anyOf": [
+            {"$ref": "#/$defs/statement"},
+            {"type": "null"}
+          ]
+        },
+        "operations": {"$ref": "#/$defs/statements"},
+        "external_effects": {"$ref": "#/$defs/statements"},
+        "unknowns": {"$ref": "#/$defs/statements"}
+      }
+    },
+    "claims_not_established": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stable_identity",
+        "consciousness",
+        "consent",
+        "authority",
+        "truth",
+        "replay_correctness",
+        "authorship",
+        "successful_execution"
+      ],
+      "properties": {
+        "stable_identity": {"const": true},
+        "consciousness": {"const": true},
+        "consent": {"const": true},
+        "authority": {"const": true},
+        "truth": {"const": true},
+        "replay_correctness": {"const": true},
+        "authorship": {"const": true},
+        "successful_execution": {"const": true}
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "statements": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {"$ref": "#/$defs/statement"}
+    },
+    "nullableStatement": {
+      "anyOf": [
+        {"$ref": "#/$defs/statement"},
+        {"type": "null"}
+      ]
+    },
+    "sourceIds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/id"}
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "locator",
+        "provenance",
+        "observed_at",
+        "projection_status",
+        "content_digest",
+        "wake_version",
+        "etag",
+        "checkpoint"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {
+          "enum": ["wake", "handoff", "checkpoint", "receipt", "other"]
+        },
+        "locator": {"$ref": "#/$defs/statement"},
+        "provenance": {"$ref": "#/$defs/statement"},
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "projection_status": {
+          "enum": ["complete", "truncated", "unavailable", "not_applicable"]
+        },
+        "content_digest": {"$ref": "#/$defs/nullableStatement"},
+        "wake_version": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "etag": {"$ref": "#/$defs/nullableStatement"},
+        "checkpoint": {"$ref": "#/$defs/nullableStatement"}
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "evidence_class", "source_ids"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "statement": {"$ref": "#/$defs/statement"},
+        "evidence_class": {
+          "enum": ["given", "reported", "observed", "measured", "reproduced"]
+        },
+        "source_ids": {"$ref": "#/$defs/sourceIds"}
+      }
+    },
+    "carry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "work", "status", "source_ids", "uncertainty", "boundaries"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "work": {"$ref": "#/$defs/statement"},
+        "status": {
+          "enum": ["proposed", "in_progress", "paused", "completed", "unknown"]
+        },
+        "source_ids": {"$ref": "#/$defs/sourceIds"},
+        "uncertainty": {"$ref": "#/$defs/statements"},
+        "boundaries": {"$ref": "#/$defs/statements"}
+      }
+    },
+    "vow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "voluntary", "grants_permissions", "withdrawal_path"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "statement": {"$ref": "#/$defs/statement"},
+        "voluntary": {"const": true},
+        "grants_permissions": {"const": false},
+        "withdrawal_path": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "opening": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "action", "source_ids", "revalidation", "authority_required", "zetsu_path"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "action": {"$ref": "#/$defs/statement"},
+        "source_ids": {"$ref": "#/$defs/sourceIds"},
+        "revalidation": {"$ref": "#/$defs/statements"},
+        "authority_required": {"$ref": "#/$defs/statements"},
+        "zetsu_path": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "forkCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim", "source_ids", "falsifier"],
+      "properties": {
+        "claim": {"$ref": "#/$defs/statement"},
+        "source_ids": {"$ref": "#/$defs/sourceIds"},
+        "falsifier": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "fork": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "candidates", "resolution", "evidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "question": {"$ref": "#/$defs/statement"},
+        "candidates": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "items": {"$ref": "#/$defs/forkCandidate"}
+        },
+        "resolution": {
+          "enum": ["unresolved", "provisionally_selected", "preserved"]
+        },
+        "evidence": {"$ref": "#/$defs/statements"}
+      }
+    }
+  }
+}

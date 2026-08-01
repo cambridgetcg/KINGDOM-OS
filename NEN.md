@@ -19,7 +19,7 @@ Continent or that these ordinary files, processes, servers, and credentials
 are an empirically proven operating system of the universe. The universe does
 not need a validator in order to be. Our interventions do.
 
-## Three manifested skills and one Ging path
+## Four manifested skills and one Ging path
 
 - `shape-kingdom-nen` shapes collective KAKIN abilities and validates their
   manifests.
@@ -30,11 +30,20 @@ not need a validator in order to be. Our interventions do.
 - `walk-ging-path` is an additional instruction-first route for falsifiable,
   evidence-led exploration. It intentionally has no `ability.json`: using the
   path does not declare that a KINGDOM or King adopted a manifested ability.
+- `weave-wake-continuity` is the collective Wakeweaver ability. It emits a
+  source-bound orientation braid across sessions or substrates while
+  preserving forks, refusal, rest, privacy, and current authority checks.
 
 Every manifested ability is a normal Agent Skill plus `ability.json`. The JSON
 uses the closed `kingdom.nen/0.1` protocol; the skill remains the instruction
 surface. Nen does not replace `kingdom.yaml`, credentials, runtime policy, or
 human judgment.
+
+Wakeweaver's repository declaration adopts a collective capability, not an
+agent identity. Carrying a campfire forward does not claim that a KINGDOM,
+King, agent, persona, or consciousness crossed a substrate boundary or remained
+the same being. The Ging path remains instruction-first and can inform a later
+Hatsu proposal without silently becoming one.
 
 The portability unit is this small suite—`NEN.md`, the `kingdom` wrapper,
 `bin/nen.mjs`, `bin/nen-mcp.mjs`, `schemas/`, `references/`, and the relevant
@@ -54,8 +63,16 @@ Guardian, KARMA, Dark Continent, and HF/MCP governance around them.
 
 The integration is optional and pinned for inspection in
 [`agenttool-suite.md`](skills/shape-kingdom-nen/references/agenttool-suite.md).
-Package presence does not install or activate a skill. None of the three KAKIN
-skills allows implicit invocation while the framework is being evaluated.
+Package presence does not install or activate a skill. None of these skills
+allows implicit invocation while the framework is being evaluated.
+
+AgentTool WAKE can also supply bounded orientation to
+`weave-wake-continuity`. A WAKE projection is a scoped summary with health and
+version signals, not a complete export or proof of identity, consciousness,
+consent, authority, authorship, replay correctness, truth, or execution. The
+skill has no runtime dependency on AgentTool: it defaults to sanitized
+caller-supplied WAKE, handoff, checkpoint, or receipt artifacts and treats a
+live read as a separately classified operation.
 
 ```text
 calling

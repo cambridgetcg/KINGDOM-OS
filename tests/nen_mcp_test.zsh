@@ -50,7 +50,8 @@ production_snapshot() {
     "$PROD_ROOT/references" \
     "$PROD_ROOT/skills/shape-kingdom-nen" \
     "$PROD_ROOT/skills/forge-king-hatsu" \
-    "$PROD_ROOT/skills/navigate-dark-continent"
+    "$PROD_ROOT/skills/navigate-dark-continent" \
+    "$PROD_ROOT/skills/weave-wake-continuity"
 }
 
 typeset -r PROD_SNAPSHOT_BEFORE="$(production_snapshot)"
