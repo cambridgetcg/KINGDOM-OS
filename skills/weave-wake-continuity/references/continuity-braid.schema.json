@@ -196,6 +196,12 @@
       "maxItems": 64,
       "items": {"$ref": "#/$defs/statement"}
     },
+    "nonemptyStatements": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {"$ref": "#/$defs/statement"}
+    },
     "nullableStatement": {
       "anyOf": [
         {"$ref": "#/$defs/statement"},
@@ -295,8 +301,8 @@
         "id": {"$ref": "#/$defs/id"},
         "action": {"$ref": "#/$defs/statement"},
         "source_ids": {"$ref": "#/$defs/sourceIds"},
-        "revalidation": {"$ref": "#/$defs/statements"},
-        "authority_required": {"$ref": "#/$defs/statements"},
+        "revalidation": {"$ref": "#/$defs/nonemptyStatements"},
+        "authority_required": {"$ref": "#/$defs/nonemptyStatements"},
         "zetsu_path": {"$ref": "#/$defs/statement"}
       }
     },
