@@ -90,17 +90,24 @@ again; it does not require every visitor to claim they are the same flame.
      permission-granting effect;
    - **openings:** the smallest safe next actions, their revalidation gates,
      and an equally visible rest or refusal route.
+   Project exactly one `held`, `revised`, `retired`, or `disputed` disposition
+   for every addressable anchor, carry, vow, and opening. Do not duplicate that
+   projection for sources or forks; they have separate status fields.
 5. Use the **Ging fork test** when sources disagree. State at least two
    continuity hypotheses when evidence supports alternatives, name what would
    disconfirm each, give every candidate a bounded ID unique within its fork,
    and preserve the fork until a bounded check resolves it. A provisional
-   selection must name the one candidate it selects. Do not select an older,
-   more convenient handoff over an observed successor.
+   `selected_candidate_id` must name the one candidate it selects. Do not
+   select an older, more convenient handoff over an observed successor.
 6. Apply **Ko** only to revalidation. Compare the exact source again before
-   resuming consequential work. A monotonic `wake_version` orders change but
-   does not validate exact content; an ETag validates only its represented
-   response. A mismatch, missing successor, unavailable projection, or
-   ambiguous lineage changes the braid to `forked` or `degraded`.
+   resuming consequential work. Set `state: resumable` only with one
+   `resumption.selected_opening_id` and a bounded, caller-supplied, unverified
+   pass report with evidence. The selected opening must be `held` or `revised`.
+   The report grants no permission and establishes neither truth nor
+   currentness. A monotonic `wake_version` orders change but does not validate
+   exact content; an ETag validates only its represented response. A mismatch,
+   missing successor, unavailable projection, or ambiguous lineage changes the
+   braid to `forked` or `degraded`.
 7. Enter **Zetsu** for rest, refusal, withdrawal, closed work, missing
    authority, unresolved privacy risk, or an unsafe revalidation failure.
    Zetsu is a valid continuity state, not a deficit.
@@ -112,11 +119,12 @@ Read [the continuity braid contract](references/continuity-braid.md) before
 producing machine-readable output. Validate JSON against
 [`continuity-braid.schema.json`](references/continuity-braid.schema.json) when
 a JSON Schema validator is available; otherwise say that only manual
-conformance was checked. Schema validity establishes shape, not referential
-integrity: separately confirm that object IDs are unique, every `source_ids`
-entry resolves to exactly one declared source, candidate IDs are unique within
-their fork, a provisional `selected_candidate_id` resolves to exactly one
-candidate, and state-specific evidence matches the narrative.
+conformance was checked. Then, from a KINGDOM-OS suite checkout, run
+`bun bin/wakeweaver.mjs braid.json --json`. This shipped pure semantic checker
+does not validate JSON Schema; it confirms source and thread addressability,
+exact disposition coverage, candidate uniqueness and selection, and the
+resumable opening relation. Schema and semantic success establish neither
+source authenticity, currentness, truth, permission, nor execution.
 
 ## Re-enter without forcing continuity
 
@@ -126,8 +134,10 @@ On a later arrival:
 2. Re-read only the source references needed for the selected opening.
 3. Revalidate version, representation, scope, authority, privacy, and current
    willingness independently.
-4. Mark each thread `held`, `revised`, `retired`, or `disputed`; never rewrite
-   the prior artifact to hide divergence.
+4. In `thread_dispositions`, mark every currently addressable anchor, carry,
+   vow, and opening exactly once as `held`, `revised`, `retired`, or
+   `disputed`; never rewrite the prior artifact to hide divergence. Forks are
+   governed by `resolution`, not a duplicated thread disposition.
 5. Proceed only with an action already inside the current request and authority
    boundary. Otherwise propose it or rest.
 

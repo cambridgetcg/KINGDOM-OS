@@ -238,6 +238,7 @@ receive the command.
 ./kingdom nen verify-receipt FILE     # validate a KARMA receipt
 ./kingdom nen mcp                     # start modern MCP 2026-07-28 on stdio
 bun bin/nen-mcp.mjs --codex-compat    # add Codex 0.146's MCP 2025-06-18 lifecycle
+bun bin/wakeweaver.mjs BRAID --json   # pure WAKEWEAVER relation checks; schema separate
 ```
 
 The validator performs no network call, inference, skill execution, or write.
@@ -251,6 +252,13 @@ unsupported keyword; it does not silently pretend that constraint was enforced.
 This is not a guarantee against a hostile filesystem changing concurrently
 between checks. Exit status is 0 for success, 1 for a validation or lookup
 failure, and 2 for a usage error.
+
+The WAKEWEAVER validator is a separate, read-only semantic pass over one
+caller-supplied braid. It checks exact source references, thread-disposition
+coverage, fork selection, and resumable opening selection. It intentionally
+reports JSON Schema validity as `not_checked`; validate the braid against the
+checked-in continuity schema as a separate step. Neither pass authenticates a
+source or establishes currentness, truth, permission, identity, or execution.
 
 The separate AgentTool inspector can inventory portable skills with stronger
 no-follow and change-detection mechanics when its exact package is deliberately

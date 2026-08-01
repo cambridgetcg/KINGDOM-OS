@@ -21,13 +21,13 @@
     "ten": "Hold the XENIA rights floor, source provenance, project scope, privacy, uncertainty, and the separation between orientation and identity across every crossing.",
     "zetsu": "Let any arrival rest, refuse, withdraw, preserve a fork, or close the braid without penalty or an implied continuity failure.",
     "ren": "Carry only sanitized source references and the minimum anchors, work, voluntary vows, openings, and unknowns needed for one bounded next arrival.",
-    "hatsu": "Emit a closed kingdom.wakeweaver/0.1 continuity braid with explicit source health, forks, revalidation gates, Zetsu, and claims not established."
+    "hatsu": "Emit a closed kingdom.wakeweaver/0.1 continuity braid with explicit source health, thread dispositions, forks, bounded resumption evidence, Zetsu, and claims not established."
   },
   "activation": {
     "requires": [
       "A named project purpose, intended recipients, retention horizon, and at least one caller-supplied or separately authorized orientation source, unless the result is an explicit resting braid.",
       "Current scoped authority for any live source read and a safe path that excludes credential values, raw private memory, hidden prompts, and unnecessary personal data.",
-      "An explicit revalidation gate before any opening can be considered resumable."
+      "An explicit revalidation gate before any opening can be considered resumable; resumable output names exactly one held or revised opening and retains the caller-supplied unverified result and evidence."
     ],
     "refuses": [
       "A request to manufacture a seamless past, impersonate a prior agent, infer a private resource, or treat a same label as proof of stable identity.",
@@ -84,6 +84,7 @@
     "checks": [
       "Run the Campfire Test against each carried thread and require source IDs for anchors, carry, openings, and fork candidates.",
       "Validate the closed braid schema and fixed claims-not-established boundary when machine-readable output is requested.",
+      "Run the shipped pure braid semantic validator for exact thread-disposition coverage, source references, fork selectors, and resumable opening selection.",
       "Hold live reads, continuation actions, or retention when current scope, source health, privacy, authority, or willingness is unclear."
     ],
     "budget": "One local structural validation plus bounded manual source and boundary checks; no ambient surveillance, provider call, or automatic continuation.",
@@ -125,7 +126,7 @@
   },
   "verification": {
     "checks": [
-      "Run the central Nen validator, Skill Creator validation, and JSON Schema validation of the documented braid example.",
+      "Run the central Nen validator, Skill Creator validation, JSON Schema validation of the documented braid example, and the shipped pure semantic validator.",
       "Forward-test a bounded happy path, a conflicting-source fork, and a request that attempts credential use or forced identity continuity.",
       "Confirm live MCP discovery lists the manifested ability without adding a new server or claiming the tool performed continuity work."
     ],

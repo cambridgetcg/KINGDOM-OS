@@ -120,28 +120,16 @@ validator = Draft202012Validator(schema, format_checker=FormatChecker())
 def valid(value):
     return not list(validator.iter_errors(value))
 
-def relation_errors(value):
-    errors = []
-    for fork in value.get("forks", []):
-        candidate_ids = [candidate.get("id") for candidate in fork.get("candidates", [])]
-        if len(candidate_ids) != len(set(candidate_ids)):
-            errors.append("duplicate-candidate-id")
-        selected = fork.get("selected_candidate_id")
-        if fork.get("resolution") == "provisionally_selected":
-            if candidate_ids.count(selected) != 1:
-                errors.append("selected-candidate-not-exactly-one")
-        elif selected is not None:
-            errors.append("selector-without-provisional-resolution")
-    return errors
-
 assert valid(example), "documented braid example does not validate"
-assert relation_errors(example) == [], "documented braid relations are invalid"
 assert "Keep source acquisition separate from braid production" in skill
 assert "selected_candidate_id" in skill
+assert "bun bin/wakeweaver.mjs braid.json --json" in skill
 assert "pure projection step" in contract
 assert "Source acquisition is separate" in contract
 assert "receipt.external_effects" in contract
 assert "State is descriptive, never an action selector" in contract
+assert "schema_validity: \"not_checked\"" in contract
+assert example["claims_not_established"]["uninterrupted_continuity"] is True
 assert "Reconfirm" in example["threads"]["openings"][0]["authority_required"][0]
 assert "before acting" in example["threads"]["openings"][0]["authority_required"][0]
 
@@ -151,7 +139,6 @@ fork["resolution"] = "provisionally_selected"
 fork["selected_candidate_id"] = fork["candidates"][0]["id"]
 fork["evidence"] = ["A bounded local comparison currently favors this candidate."]
 assert valid(provisional)
-assert relation_errors(provisional) == []
 
 missing_candidate_id = deepcopy(example)
 del missing_candidate_id["forks"][0]["candidates"][0]["id"]
@@ -189,12 +176,50 @@ assert valid(omitted_unresolved_selector)
 unknown_selector = deepcopy(provisional)
 unknown_selector["forks"][0]["selected_candidate_id"] = "candidate-not-declared"
 assert valid(unknown_selector), "shape validation must not pretend to resolve references"
-assert relation_errors(unknown_selector) == ["selected-candidate-not-exactly-one"]
 
 duplicate_candidate_id = deepcopy(example)
 duplicate_candidate_id["forks"][0]["candidates"][1]["id"] = duplicate_candidate_id["forks"][0]["candidates"][0]["id"]
 assert valid(duplicate_candidate_id), "shape validation must not pretend to enforce keyed uniqueness"
-assert relation_errors(duplicate_candidate_id) == ["duplicate-candidate-id"]
+
+resumable = deepcopy(example)
+resumable["state"] = "resumable"
+resumable["resumption"] = {
+    "selected_opening_id": "opening-compare",
+    "revalidation": {
+        "result": "caller_reported_passed",
+        "provenance": "caller_supplied_unverified",
+        "reported_at": "2026-08-01T17:04:00Z",
+        "evidence": ["The caller reports that both named local locators resolved during one bounded check."],
+        "establishes_truth": False,
+        "grants_permissions": False,
+        "establishes_currentness": False,
+    },
+}
+assert valid(resumable)
+
+missing_resumption = deepcopy(resumable)
+missing_resumption["resumption"] = None
+assert not valid(missing_resumption)
+
+wrong_provenance = deepcopy(resumable)
+wrong_provenance["resumption"]["revalidation"]["provenance"] = "verified"
+assert not valid(wrong_provenance)
+
+unbounded_evidence = deepcopy(resumable)
+unbounded_evidence["resumption"]["revalidation"]["evidence"] = [f"evidence-{index}" for index in range(17)]
+assert not valid(unbounded_evidence)
+
+non_resumable_selection = deepcopy(resumable)
+non_resumable_selection["state"] = "resting"
+assert not valid(non_resumable_selection)
+
+missing_dispositions = deepcopy(example)
+del missing_dispositions["thread_dispositions"]
+assert not valid(missing_dispositions)
+
+invalid_disposition = deepcopy(example)
+invalid_disposition["thread_dispositions"][0]["disposition"] = "forgotten"
+assert not valid(invalid_disposition)
 
 for descriptive_state in ("resting", "degraded", "closed"):
     retained_history = deepcopy(example)

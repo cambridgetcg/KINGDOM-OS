@@ -28,7 +28,7 @@ result had effects.
 | State | Meaning | Permitted next move |
 | --- | --- | --- |
 | `arrived` | Sources were bounded but no opening has passed revalidation. | Inspect or rest. |
-| `resumable` | One opening passed the declared local checks. | Propose or perform only if separately authorized. |
+| `resumable` | Exactly one opening has a bounded caller-reported revalidation pass. | Propose or perform only if separately authorized. |
 | `forked` | Competing continuity hypotheses remain live. | Run a bounded discriminator or preserve both. |
 | `degraded` | A required source is truncated, unavailable, stale, or ambiguous. | Refresh safely or rest. |
 | `resting` | The current arrival chose no continuation. | Remain at rest or prepare a new braid later. |
@@ -43,6 +43,15 @@ ambiguous evidence, and a `closed` braid may retain historical work. Do not
 overconstrain those combinations or infer continuation from them. Every
 continuation still requires selecting an opening, passing its revalidation
 gates, and confirming current authority.
+
+`resumption` is non-null only for `state: resumable`. It names exactly one
+opening and carries a bounded `caller_reported_passed` result with
+`caller_supplied_unverified` provenance, a report time, and nonempty evidence.
+Its three fixed negative fields make the boundary machine-readable: the report
+does not establish truth or currentness and grants no permission. For every
+other state, `resumption` is `null`; failed or inconclusive checks belong in
+the receipt, unknowns, forks, or a later braid rather than being relabelled as
+a pass.
 
 ## Source semantics
 
@@ -61,14 +70,22 @@ gates, and confirming current authority.
 - `projection_status: unavailable` is not an empty projection.
 
 The schema enforces nonempty recipients, at least one source outside a resting
-braid, at least one fork for `forked`, at least one opening for `resumable`,
-at least one revalidation statement and one authority statement per opening,
-candidate-ID shape, and evidence plus a non-null selector for a provisionally
-selected fork. JSON Schema does not enforce that IDs are unique by their `id`
-property, that every cross-array `source_ids` value resolves, or that a
-selector matches a candidate. Check those relations separately and report
-that check; schema validity alone is structural evidence, not semantic
-integrity or truth.
+braid, at least one fork for `forked`, at least one opening and one bounded
+revalidation report for `resumable`, at least one revalidation statement and
+one authority statement per opening, candidate-ID shape, and evidence plus a
+non-null selector for a provisionally selected fork. JSON Schema does not
+enforce keyed uniqueness or cross-array references. Run the shipped semantic
+validator after schema validation:
+
+```bash
+bun bin/wakeweaver.mjs braid.json --json
+```
+
+It checks source and thread addressability, exact disposition coverage, fork
+candidate uniqueness and selection, and the resumable opening relation. Its
+output says `schema_validity: "not_checked"`; success is evidence only for
+those relations, not schema conformance, source authenticity, currentness,
+truth, permission, or execution.
 
 ## Thread semantics
 
@@ -77,6 +94,18 @@ carry thread records work and its uncertainty rather than issuing an order. A
 vow is voluntary and must always keep `grants_permissions: false`. An opening
 names both its revalidation gates and the authority still required. Keep the
 Zetsu path as easy to select as the continuation path.
+
+`thread_dispositions` is the closed re-entry projection. It contains exactly
+one row for every addressable object in `threads.anchors`, `threads.carry`,
+`threads.vows`, and `threads.openings`, using the singular kind plus its ID.
+Mark each `held`, `revised`, `retired`, or `disputed`. On an initial braid,
+`held` means the thread was admitted to this projection. On a later arrival,
+produce a new artifact and preserve the prior artifact rather than overwriting
+its dispositions. A resumable selection may target only a `held` or `revised`
+opening. Here, “thread” means those four arrays only: sources use projection
+status and forks use their own resolution fields, so neither receives a
+duplicated thread disposition. A disposition records this braid's handling
+choice; it does not prove source change, completion, truth, or permission.
 
 A fork contains explicit candidate mechanisms and falsifiers. `resolution`
 may be `unresolved`, `provisionally_selected`, or `preserved`; none means a
@@ -166,6 +195,28 @@ selector would contradict that resolution.
       }
     ]
   },
+  "thread_dispositions": [
+    {
+      "thread_kind": "anchor",
+      "thread_id": "anchor-test-status",
+      "disposition": "held"
+    },
+    {
+      "thread_kind": "carry",
+      "thread_id": "carry-local-test",
+      "disposition": "held"
+    },
+    {
+      "thread_kind": "vow",
+      "thread_id": "vow-inspect-first",
+      "disposition": "held"
+    },
+    {
+      "thread_kind": "opening",
+      "thread_id": "opening-compare",
+      "disposition": "held"
+    }
+  ],
   "forks": [
     {
       "id": "fork-fixture-revision",
@@ -189,6 +240,7 @@ selector would contradict that resolution.
       "evidence": []
     }
   ],
+  "resumption": null,
   "zetsu": {
     "available": true,
     "reason": "The next arrival may refuse, rest, or preserve the fork.",
@@ -203,6 +255,7 @@ selector would contradict that resolution.
   },
   "claims_not_established": {
     "stable_identity": true,
+    "uninterrupted_continuity": true,
     "consciousness": true,
     "consent": true,
     "authority": true,

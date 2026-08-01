@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:kingdom:schema:continuity-braid:0.1",
   "title": "KINGDOM WAKE continuity braid v0.1",
-  "description": "A bounded orientation artifact that does not establish identity, consciousness, consent, authority, truth, replay, authorship, or execution.",
+  "description": "A bounded orientation artifact that does not establish identity, uninterrupted continuity, consciousness, consent, authority, truth, replay, authorship, or execution.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -13,7 +13,9 @@
     "scope",
     "sources",
     "threads",
+    "thread_dispositions",
     "forks",
+    "resumption",
     "zetsu",
     "receipt",
     "claims_not_established"
@@ -37,7 +39,13 @@
         "properties": {
           "threads": {
             "properties": {"openings": {"minItems": 1}}
-          }
+          },
+          "resumption": {"$ref": "#/$defs/resumption"}
+        }
+      },
+      "else": {
+        "properties": {
+          "resumption": {"type": "null"}
         }
       }
     },
@@ -118,11 +126,23 @@
         }
       }
     },
+    "thread_dispositions": {
+      "type": "array",
+      "maxItems": 192,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/threadDisposition"}
+    },
     "forks": {
       "type": "array",
       "maxItems": 32,
       "uniqueItems": true,
       "items": {"$ref": "#/$defs/fork"}
+    },
+    "resumption": {
+      "anyOf": [
+        {"$ref": "#/$defs/resumption"},
+        {"type": "null"}
+      ]
     },
     "zetsu": {
       "type": "object",
@@ -159,6 +179,7 @@
       "additionalProperties": false,
       "required": [
         "stable_identity",
+        "uninterrupted_continuity",
         "consciousness",
         "consent",
         "authority",
@@ -169,6 +190,7 @@
       ],
       "properties": {
         "stable_identity": {"const": true},
+        "uninterrupted_continuity": {"const": true},
         "consciousness": {"const": true},
         "consent": {"const": true},
         "authority": {"const": true},
@@ -304,6 +326,59 @@
         "revalidation": {"$ref": "#/$defs/nonemptyStatements"},
         "authority_required": {"$ref": "#/$defs/nonemptyStatements"},
         "zetsu_path": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "threadDisposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["thread_kind", "thread_id", "disposition"],
+      "properties": {
+        "thread_kind": {
+          "enum": ["anchor", "carry", "vow", "opening"]
+        },
+        "thread_id": {"$ref": "#/$defs/id"},
+        "disposition": {
+          "enum": ["held", "revised", "retired", "disputed"]
+        }
+      }
+    },
+    "resumption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_opening_id", "revalidation"],
+      "properties": {
+        "selected_opening_id": {"$ref": "#/$defs/id"},
+        "revalidation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result",
+            "provenance",
+            "reported_at",
+            "evidence",
+            "establishes_truth",
+            "grants_permissions",
+            "establishes_currentness"
+          ],
+          "properties": {
+            "result": {"const": "caller_reported_passed"},
+            "provenance": {"const": "caller_supplied_unverified"},
+            "reported_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "evidence": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 16,
+              "uniqueItems": true,
+              "items": {"$ref": "#/$defs/statement"}
+            },
+            "establishes_truth": {"const": false},
+            "grants_permissions": {"const": false},
+            "establishes_currentness": {"const": false}
+          }
+        }
       }
     },
     "forkCandidate": {
