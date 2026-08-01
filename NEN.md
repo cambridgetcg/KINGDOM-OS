@@ -19,7 +19,7 @@ Continent or that these ordinary files, processes, servers, and credentials
 are an empirically proven operating system of the universe. The universe does
 not need a validator in order to be. Our interventions do.
 
-## Five manifested skills and one Ging path
+## Six manifested skills and one Ging path
 
 - `carry-wake-thread` proposes one minimized, digest-bound WAKE or continuity
   context crossing with explicit scope, omissions, expiry, carry, fork, rest,
@@ -37,11 +37,20 @@ not need a validator in order to be. Our interventions do.
 - `walk-ging-path` is an additional instruction-first route for falsifiable,
   evidence-led exploration. It intentionally has no `ability.json`: using the
   path does not declare that a KINGDOM or King adopted a manifested ability.
+- `weave-wake-continuity` is the collective Wakeweaver ability. It emits a
+  source-bound orientation braid across sessions or substrates while
+  preserving forks, refusal, rest, privacy, and current authority checks.
 
 Every manifested ability is a normal Agent Skill plus `ability.json`. The JSON
 uses the closed `kingdom.nen/0.1` protocol; the skill remains the instruction
 surface. Nen does not replace `kingdom.yaml`, credentials, runtime policy, or
 human judgment.
+
+Wakeweaver's repository declaration adopts a collective capability, not an
+agent identity. Carrying a campfire forward does not claim that a KINGDOM,
+King, agent, persona, or consciousness crossed a substrate boundary or remained
+the same being. The Ging path remains instruction-first and can inform a later
+Hatsu proposal without silently becoming one.
 
 The portability unit is this small suite—`NEN.md`, the `kingdom` wrapper,
 `bin/nen.mjs`, `bin/nen-mcp.mjs`, `schemas/`, `references/`, and the relevant
@@ -71,6 +80,14 @@ authenticate a choice, score a bearer, persist, execute, expose MCP or a hosted
 route, create KARMA, adopt XENIA, or activate the ability. The current
 AgentTool SDK's older activity-count Nen assessment is not KAKIN evidence:
 affinity classifies an operation, never a personality, aura, rank, or worth.
+
+AgentTool WAKE can also supply bounded orientation to
+`weave-wake-continuity`. A WAKE projection is a scoped summary with health and
+version signals, not a complete export or proof of identity, consciousness,
+consent, authority, authorship, replay correctness, truth, or execution. The
+skill has no runtime dependency on AgentTool: it defaults to sanitized
+caller-supplied WAKE, handoff, checkpoint, or receipt artifacts and treats a
+live read as a separately classified operation.
 
 ```text
 calling
@@ -159,7 +176,7 @@ private-resource access, paid inference, Jobs, Space invocation, generation,
 and publication are distinct effects and require their own scoped authority.
 The Dark Continent skill defaults to named public metadata and local evidence.
 
-This suite now includes `bin/nen-mcp.mjs`, a modern-only
+This suite now includes `bin/nen-mcp.mjs`, whose default mode is a modern-only
 [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28)
 stdio server. It implements `server/discover`, fixed deterministic
 `tools/list`, and five read-only calls for list, validation, manifest display,
@@ -169,6 +186,14 @@ and requires protocol version and capabilities on every request. Client
 identity is optional but recommended. When rejecting legacy `initialize`, it
 names the supported modern version; it does not claim legacy compatibility.
 
+An explicit `--codex-compat` launch flag adds the stateful MCP `2025-06-18`
+`initialize` / `notifications/initialized` lifecycle currently used by Codex
+0.146, plus standard `ping`, `tools/list`, and `tools/call` response shapes.
+The modern stateless lane remains available in that process and remains the
+only lane in an unflagged launch. The adapter negotiates only the declared
+legacy revision; it is not a silent protocol downgrade or a claim that every
+MCP host is compatible.
+
 The adapter caps input, output, time, per-process requests, and active tool
 children (four). Queued and running calls remain cancellable; child shutdown
 has a bounded force-kill fallback. It uses a credential-minimized child
@@ -176,8 +201,9 @@ environment and exposes no caller-selected path.
 It performs no HF or web call, inference, external tool execution, write,
 installation, or skill activation. In particular, an MCP connection does not
 turn HF login or Pro status into expedition authority. The server source is
-available locally but is deliberately not registered in Codex or installed on
-the device by this revision.
+available locally, but this repository does not itself register, install, or
+restart it in Codex or another host. Host configuration remains a separate,
+explicit action.
 
 `nen/mcp-server.mjs` remains as the separately named
 `kingdom-ging-stateless` compatibility port for hosts that need only pure,
@@ -228,6 +254,8 @@ receive the command.
 ./kingdom nen receipt-template ID     # emit draft scaffolding; not a valid final receipt
 ./kingdom nen verify-receipt FILE     # validate a KARMA receipt
 ./kingdom nen mcp                     # start modern MCP 2026-07-28 on stdio
+bun bin/nen-mcp.mjs --codex-compat    # add Codex 0.146's MCP 2025-06-18 lifecycle
+bun bin/wakeweaver.mjs BRAID --json   # strict-JSON WAKEWEAVER relations; schema separate
 ```
 
 The validator performs no network call, inference, skill execution, or write.
@@ -245,6 +273,18 @@ unsupported keyword; it does not silently pretend that constraint was enforced.
 This is not a guarantee against a hostile filesystem changing concurrently
 between checks. Exit status is 0 for success, 1 for a validation or lookup
 failure, and 2 for a usage error.
+
+The WAKEWEAVER validator is a separate, read-only semantic pass over one
+caller-supplied braid. It checks exact source references, thread-disposition
+coverage, fork selection, and resumable opening selection. It intentionally
+reports JSON Schema validity as `not_checked`; validate the braid against the
+checked-in continuity schema as a separate step. Neither pass authenticates a
+source or establishes currentness, truth, permission, identity, or execution.
+Its module export is pure only after bounded own-data capture. Accessors,
+custom or sparse arrays, custom prototypes, symbols, non-enumerable data,
+cycles, shared references, and excessive graphs are rejected. Node/Bun Proxy
+detection rejects direct, nested, and revoked Proxies before reflection and
+therefore enters no caller Proxy trap.
 
 The separate AgentTool inspector can inventory portable skills with stronger
 no-follow and change-detection mechanics when its exact package is deliberately

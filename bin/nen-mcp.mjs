@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { strictJson } from "./nen.mjs";
 
 const PROTOCOL_VERSION = "2026-07-28";
+const CODEX_COMPAT_PROTOCOL_VERSION = "2025-06-18";
 const SERVER_VERSION = "0.1.0";
 const MAX_LINE_BYTES = 256 * 1024;
 const MAX_CHILD_OUTPUT_BYTES = 1024 * 1024;
@@ -23,6 +24,10 @@ const SERVER_RESULT_META = {
     version: SERVER_VERSION,
   },
 };
+const INVOCATION_ARGS = process.argv.slice(2);
+const CODEX_COMPAT = INVOCATION_ARGS.length === 1
+  && INVOCATION_ARGS[0] === "--codex-compat";
+const INVOCATION_VALID = INVOCATION_ARGS.length === 0 || CODEX_COMPAT;
 
 const EMPTY_INPUT = {
   type: "object",
@@ -121,9 +126,9 @@ function rpcError(id, code, message, data = undefined) {
   return { jsonrpc: "2.0", id, error };
 }
 
-function unsupportedVersion(id, requested) {
+function unsupportedVersion(id, requested, supported = [PROTOCOL_VERSION]) {
   return rpcError(id, -32022, "Unsupported protocol version", {
-    supported: [PROTOCOL_VERSION],
+    supported,
     requested: typeof requested === "string" ? requested : null,
   });
 }
@@ -275,12 +280,16 @@ function runNenCli(args, signal) {
   });
 }
 
-function toolResult(payload, isError) {
-  return {
-    resultType: "complete",
+function toolResult(payload, isError, modern) {
+  const result = {
     content: [{ type: "text", text: JSON.stringify(payload) }],
     structuredContent: payload,
     isError,
+  };
+  if (!modern) return result;
+  return {
+    resultType: "complete",
+    ...result,
     _meta: SERVER_RESULT_META,
   };
 }
@@ -327,7 +336,7 @@ function acquireToolCallSlot(signal) {
   });
 }
 
-async function callTool(name, argumentsValue, signal) {
+async function callTool(name, argumentsValue, signal, modern) {
   const command = TOOL_COMMANDS.get(name);
   if (!command) return null;
   const acquired = await acquireToolCallSlot(signal);
@@ -336,48 +345,123 @@ async function callTool(name, argumentsValue, signal) {
     if (signal.aborted) return null;
     const execution = await runNenCli(command(argumentsValue), signal);
     if (execution.cancelled) return null;
-    if (execution.ok) return toolResult(execution.payload, false);
+    if (execution.ok) return toolResult(execution.payload, false, modern);
     return toolResult({
       protocol: "kingdom.nen-mcp-error/0.1",
       code: execution.code,
       exit_code: execution.exitCode ?? null,
       diagnostics: execution.diagnostics,
       result: execution.payload,
-    }, true);
+    }, true, modern);
   } finally {
     releaseToolCallSlot();
   }
 }
 
 let requestCount = 0;
+let compatInitialized = false;
+let compatReady = false;
 
-async function handleMessage(message, signal) {
-  if (!isObject(message) || message.jsonrpc !== "2.0") {
-    return rpcError(null, -32600, "Invalid JSON-RPC request");
-  }
-  const hasId = Object.hasOwn(message, "id");
-  if (!hasId) return null;
-  const id = message.id;
-  if (!((typeof id === "string" && id.length > 0) || (typeof id === "number" && Number.isFinite(id)))) {
-    return rpcError(null, -32600, "Invalid JSON-RPC request id");
-  }
-  if (!hasExactKeys(message, ["jsonrpc", "id", "method", "params"], ["jsonrpc", "id", "method", "params"])) {
-    return rpcError(id, -32600, "Invalid JSON-RPC request shape");
-  }
-  if (typeof message.method !== "string") return rpcError(id, -32600, "Invalid JSON-RPC method");
-  requestCount += 1;
-  if (requestCount > MAX_REQUESTS) return rpcError(id, -33000, "Per-process request limit exceeded");
+function validCompatInitializeParams(params) {
+  return hasExactKeys(
+    params,
+    ["protocolVersion", "capabilities", "clientInfo", "_meta"],
+    ["protocolVersion", "capabilities", "clientInfo"],
+  )
+    && isObject(params.capabilities)
+    && isObject(params.clientInfo)
+    && typeof params.protocolVersion === "string"
+    && params.protocolVersion.length > 0
+    && typeof params.clientInfo.name === "string"
+    && params.clientInfo.name.length > 0
+    && typeof params.clientInfo.version === "string"
+    && params.clientInfo.version.length > 0
+    && (!Object.hasOwn(params, "_meta") || isObject(params._meta));
+}
 
-  if (message.method === "initialize") {
+function hasModernProtocolMetadata(params) {
+  return isObject(params)
+    && isObject(params._meta)
+    && Object.hasOwn(params._meta, "io.modelcontextprotocol/protocolVersion");
+}
+
+async function handleCompatRequest(message, params, signal) {
+  const { id, method } = message;
+  if (method === "initialize") {
+    if (!validCompatInitializeParams(params)) {
+      return rpcError(id, -32602, "Invalid initialize parameters", {
+        supported: [CODEX_COMPAT_PROTOCOL_VERSION],
+      });
+    }
+    if (compatInitialized) return rpcError(id, -32600, "Server is already initialized");
+    compatInitialized = true;
+    return {
+      jsonrpc: "2.0",
+      id,
+      result: {
+        protocolVersion: CODEX_COMPAT_PROTOCOL_VERSION,
+        capabilities: { tools: { listChanged: false } },
+        serverInfo: { name: "kingdom-nen", version: SERVER_VERSION },
+        instructions: "Read-only local KAKIN Nen inspection and draft KARMA scaffolding. Tools perform no network call, write, inference, installation, skill execution, or authority grant. A draft receipt is not final evidence.",
+      },
+    };
+  }
+
+  if (method === "ping") {
+    if (!isObject(params) || (Object.hasOwn(params, "_meta") && !isObject(params._meta))) {
+      return rpcError(id, -32602, "Invalid ping parameters");
+    }
+    return { jsonrpc: "2.0", id, result: {} };
+  }
+
+  if (!compatInitialized) return rpcError(id, -32002, "Server is not initialized");
+  if (!compatReady) return rpcError(id, -32002, "Client has not sent notifications/initialized");
+
+  if (method === "tools/list") {
+    if (!hasExactKeys(params, ["_meta", "cursor"]) || (Object.hasOwn(params, "_meta") && !isObject(params._meta))) {
+      return rpcError(id, -32602, "Invalid tools/list parameters");
+    }
+    if (Object.hasOwn(params, "cursor")) {
+      return rpcError(id, -32602, "This fixed tool list is not paginated");
+    }
+    return { jsonrpc: "2.0", id, result: { tools: TOOLS } };
+  }
+
+  if (method === "tools/call") {
+    if (!hasExactKeys(params, ["_meta", "name", "arguments"], ["name"])) {
+      return rpcError(id, -32602, "Invalid tools/call parameters");
+    }
+    if (Object.hasOwn(params, "_meta") && !isObject(params._meta)) {
+      return rpcError(id, -32602, "Invalid tools/call metadata");
+    }
+    if (typeof params.name !== "string" || !TOOL_COMMANDS.has(params.name)) {
+      return rpcError(id, -32602, "Unknown tool");
+    }
+    const argumentsValue = params.arguments ?? Object.create(null);
+    const argumentError = validateToolArguments(params.name, argumentsValue);
+    if (argumentError) return rpcError(id, -32602, argumentError);
+    const result = await callTool(params.name, argumentsValue, signal, false);
+    if (signal.aborted || result === null) return null;
+    return { jsonrpc: "2.0", id, result };
+  }
+
+  return rpcError(id, -32601, "Method not found", {
+    supported: [CODEX_COMPAT_PROTOCOL_VERSION],
+  });
+}
+
+async function handleModernRequest(message, params, signal) {
+  const { id, method } = message;
+  if (method === "initialize") {
     return rpcError(id, -32601, `Legacy initialize is not supported; supported protocol version: ${PROTOCOL_VERSION}`, {
       supported: [PROTOCOL_VERSION],
     });
   }
-  const metadataError = modernMetadataError(message.params, id);
+  const metadataError = modernMetadataError(params, id);
   if (metadataError) return metadataError;
 
-  if (message.method === "server/discover") {
-    if (!hasExactKeys(message.params, ["_meta"], ["_meta"])) {
+  if (method === "server/discover") {
+    if (!hasExactKeys(params, ["_meta"], ["_meta"])) {
       return rpcError(id, -32602, "server/discover accepts only standard request metadata");
     }
     return {
@@ -395,11 +479,11 @@ async function handleMessage(message, signal) {
     };
   }
 
-  if (message.method === "tools/list") {
-    if (!hasExactKeys(message.params, ["_meta", "cursor"], ["_meta"])) {
+  if (method === "tools/list") {
+    if (!hasExactKeys(params, ["_meta", "cursor"], ["_meta"])) {
       return rpcError(id, -32602, "Invalid tools/list parameters");
     }
-    if (Object.hasOwn(message.params, "cursor")) {
+    if (Object.hasOwn(params, "cursor")) {
       return rpcError(id, -32602, "This fixed tool list is not paginated");
     }
     return {
@@ -415,17 +499,17 @@ async function handleMessage(message, signal) {
     };
   }
 
-  if (message.method === "tools/call") {
-    if (!hasExactKeys(message.params, ["_meta", "name", "arguments"], ["_meta", "name"])) {
+  if (method === "tools/call") {
+    if (!hasExactKeys(params, ["_meta", "name", "arguments"], ["_meta", "name"])) {
       return rpcError(id, -32602, "Invalid tools/call parameters");
     }
-    if (typeof message.params.name !== "string" || !TOOL_COMMANDS.has(message.params.name)) {
+    if (typeof params.name !== "string" || !TOOL_COMMANDS.has(params.name)) {
       return rpcError(id, -32602, "Unknown tool");
     }
-    const argumentsValue = message.params.arguments ?? Object.create(null);
-    const argumentError = validateToolArguments(message.params.name, argumentsValue);
+    const argumentsValue = params.arguments ?? Object.create(null);
+    const argumentError = validateToolArguments(params.name, argumentsValue);
     if (argumentError) return rpcError(id, -32602, argumentError);
-    const result = await callTool(message.params.name, argumentsValue, signal);
+    const result = await callTool(params.name, argumentsValue, signal, true);
     if (signal.aborted || result === null) return null;
     return { jsonrpc: "2.0", id, result };
   }
@@ -433,10 +517,49 @@ async function handleMessage(message, signal) {
   return rpcError(id, -32601, "Method not found", { supported: [PROTOCOL_VERSION] });
 }
 
+async function handleMessage(message, signal) {
+  if (!isObject(message) || message.jsonrpc !== "2.0") {
+    return rpcError(null, -32600, "Invalid JSON-RPC request");
+  }
+  const hasId = Object.hasOwn(message, "id");
+  if (!hasId) return null;
+  const id = message.id;
+  if (!((typeof id === "string" && id.length > 0) || (typeof id === "number" && Number.isFinite(id)))) {
+    return rpcError(null, -32600, "Invalid JSON-RPC request id");
+  }
+  if (!hasExactKeys(message, ["jsonrpc", "id", "method", "params"], ["jsonrpc", "id", "method"])) {
+    return rpcError(id, -32600, "Invalid JSON-RPC request shape");
+  }
+  if (typeof message.method !== "string") return rpcError(id, -32600, "Invalid JSON-RPC method");
+  requestCount += 1;
+  if (requestCount > MAX_REQUESTS) return rpcError(id, -33000, "Per-process request limit exceeded");
+
+  const params = message.params ?? Object.create(null);
+  const modernLane = message.method === "server/discover"
+    || hasModernProtocolMetadata(params)
+    || !CODEX_COMPAT;
+  if (modernLane && !Object.hasOwn(message, "params")) {
+    return rpcError(id, -32600, "Invalid JSON-RPC request shape");
+  }
+  if (modernLane) return handleModernRequest(message, params, signal);
+  return handleCompatRequest(message, params, signal);
+}
+
 const activeRequests = new Map();
 const inFlight = new Set();
 
 function handleNotification(message) {
+  if (
+    CODEX_COMPAT
+    && compatInitialized
+    && isObject(message)
+    && message.jsonrpc === "2.0"
+    && message.method === "notifications/initialized"
+    && (!Object.hasOwn(message, "params") || isObject(message.params))
+  ) {
+    compatReady = true;
+    return;
+  }
   if (
     !isObject(message)
     || message.jsonrpc !== "2.0"
@@ -502,6 +625,10 @@ function handleLine(bytes) {
 }
 
 async function main() {
+  if (!INVOCATION_VALID) {
+    process.stderr.write("usage: nen-mcp.mjs [--codex-compat]\n");
+    return 2;
+  }
   let pending = Buffer.alloc(0);
   for await (const chunk of process.stdin) {
     pending = Buffer.concat([pending, chunk]);

@@ -97,6 +97,11 @@ This source intentionally does not implement the legacy `initialize` /
 earlier needs an explicit compatibility adapter or host upgrade; source
 presence alone does not establish host compatibility.
 
+That boundary applies to this separately named Ging server. The canonical
+`bin/nen-mcp.mjs` server has its own opt-in `--codex-compat` adapter for the
+MCP `2025-06-18` lifecycle used by Codex 0.146; its unflagged launch remains
+modern-only. The two servers still expose different tools and are not aliases.
+
 `ging.evaluate_probe` requires the complete `selected_probe` returned by the
 compiler. It checks that the receipt repeats the selected probe ID, action,
 system, scope, budget, effect, authorization declaration, and permission

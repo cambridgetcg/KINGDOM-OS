@@ -25,6 +25,7 @@ How to run:
 - `kingdom repos --doctor` — registry, placement, duplicate-origin, archive, and unborn diagnostics
 - `./kingdom nen` — from this suite root, list the rights-aware Nen ability manifests (`validate`, `show`, `types`, and KARMA receipt tools)
 - `./kingdom nen mcp` — from this suite root, start the unregistered, read-only modern MCP 2026-07-28 stdio surface
+- `bun bin/wakeweaver.mjs BRAID.json --json` — strict-JSON WAKEWEAVER cross-reference and resumability checks; JSON Schema validation remains separate
 - `zsh tests/nen_test.zsh` — isolated, network-free manifest and receipt protocol tests
 - `zsh tests/nen_mcp_test.zsh` — MCP framing, discovery, tool, version, and non-mutation tests
 - `kingdom rings` — write the local-only temporal atlas to `~/.kingdom/RINGS.{json,html}`
@@ -54,6 +55,7 @@ Key files:
 - vendor/xenia/rights/0.1 — unchanged, digest-verified offline release bytes
 - NEN.md — the separate, instruction-only Nen skill layer; never add ability fields to kingdom.yaml
 - bin/nen.mjs — strict, network-free Nen/KARMA protocol validator; it does not run skills or grant authority
+- bin/wakeweaver.mjs — bounded own-data, read-only continuity-braid semantic validator; it rejects Proxies before reflection and does not validate JSON Schema, read live sources, or authorize resumption
 - bin/nen-mcp.mjs — canonical bounded local stdio MCP adapter; it is not installed, hosted, or an HF credential bridge
 - nen/ — pure Ging expedition compiler plus the non-canonical `kingdom-ging-stateless` compatibility MCP; source only until a host explicitly registers it
 - schemas/, references/, skills/ — KAKIN design, pinned rights, closed protocols, and suite-versioned Agent Skills

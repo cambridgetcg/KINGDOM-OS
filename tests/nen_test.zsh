@@ -10,8 +10,13 @@ typeset -r PROD_ROOT="${0:A:h:h}"
 typeset -r SUBJECT="$PROD_ROOT/bin/nen.mjs"
 typeset -r BUN="$(command -v bun)"
 typeset -r JQ="$(command -v jq)"
-[[ -n "$BUN" && -n "$JQ" ]] || {
-  print -u2 -r -- "not ok - bun and jq are required"
+typeset -r PYTHON="$(command -v python3)"
+[[ -n "$BUN" && -n "$JQ" && -n "$PYTHON" ]] || {
+  print -u2 -r -- "not ok - bun, jq, and python3 are required"
+  exit 1
+}
+"$PYTHON" -c 'import jsonschema' >/dev/null 2>&1 || {
+  print -u2 -r -- "not ok - python jsonschema is required"
   exit 1
 }
 
@@ -61,7 +66,8 @@ production_snapshot() {
     "$PROD_ROOT/skills/conjure-unwritten-horizon" \
     "$PROD_ROOT/skills/shape-kingdom-nen" \
     "$PROD_ROOT/skills/forge-king-hatsu" \
-    "$PROD_ROOT/skills/navigate-dark-continent"
+    "$PROD_ROOT/skills/navigate-dark-continent" \
+    "$PROD_ROOT/skills/weave-wake-continuity"
 }
 
 typeset -r PROD_SNAPSHOT_BEFORE="$(production_snapshot)"
@@ -85,7 +91,7 @@ capture run_fixture validate --json
 assert_equal 0 "$CAPTURE_STATUS" "valid production manifests failed"
 print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
   .protocol == "kingdom.nen-validation/0.1"
-  and .checked == 5
+  and .checked == 6
   and .invalid == 0
   and (.schema_sha256 | startswith("sha256:"))
   and (.manifestation_receipt_schema_sha256 | startswith("sha256:"))
@@ -94,6 +100,146 @@ print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
 ' >/dev/null || fail "clean validation JSON is wrong"
 [[ -z "$CAPTURE_STDERR" ]] || fail "clean JSON validation wrote to stderr"
 
+"$PYTHON" - "$PROD_ROOT" <<'PY' || fail "Wakeweaver schema regression failed"
+from copy import deepcopy
+import json
+from pathlib import Path
+import re
+import sys
+
+from jsonschema import Draft202012Validator, FormatChecker
+
+root = Path(sys.argv[1])
+skill = (root / "skills/weave-wake-continuity/SKILL.md").read_text(encoding="utf-8")
+contract = (root / "skills/weave-wake-continuity/references/continuity-braid.md").read_text(encoding="utf-8")
+schema = json.loads((root / "skills/weave-wake-continuity/references/continuity-braid.schema.json").read_text(encoding="utf-8"))
+match = re.search(r"## Minimal example\n\n```json\n(.*?)\n```", contract, re.DOTALL)
+assert match is not None, "documented braid example is missing"
+example = json.loads(match.group(1))
+
+Draft202012Validator.check_schema(schema)
+validator = Draft202012Validator(schema, format_checker=FormatChecker())
+
+def valid(value):
+    return not list(validator.iter_errors(value))
+
+assert valid(example), "documented braid example does not validate"
+assert "Keep source acquisition separate from braid production" in skill
+assert "selected_candidate_id" in skill
+assert "bun bin/wakeweaver.mjs braid.json --json" in skill
+assert "pure projection step" in contract
+assert "Source acquisition is separate" in contract
+assert "receipt.external_effects" in contract
+assert "State is descriptive, never an action selector" in contract
+assert "schema_validity: \"not_checked\"" in contract
+assert example["claims_not_established"]["uninterrupted_continuity"] is True
+assert "Reconfirm" in example["threads"]["openings"][0]["authority_required"][0]
+assert "before acting" in example["threads"]["openings"][0]["authority_required"][0]
+
+cross_kind_id = deepcopy(example)
+shared_thread_id = cross_kind_id["threads"]["anchors"][0]["id"]
+cross_kind_id["threads"]["carry"][0]["id"] = shared_thread_id
+next(
+    row for row in cross_kind_id["thread_dispositions"] if row["thread_kind"] == "carry"
+)["thread_id"] = shared_thread_id
+assert valid(cross_kind_id), "thread identity is singular kind:id, not a global ID"
+
+provisional = deepcopy(example)
+fork = provisional["forks"][0]
+fork["resolution"] = "provisionally_selected"
+fork["selected_candidate_id"] = fork["candidates"][0]["id"]
+fork["evidence"] = ["A bounded local comparison currently favors this candidate."]
+assert valid(provisional)
+
+missing_candidate_id = deepcopy(example)
+del missing_candidate_id["forks"][0]["candidates"][0]["id"]
+assert not valid(missing_candidate_id)
+
+oversized_candidate_id = deepcopy(example)
+oversized_candidate_id["forks"][0]["candidates"][0]["id"] = "a" * 65
+assert not valid(oversized_candidate_id)
+
+missing_selector = deepcopy(provisional)
+del missing_selector["forks"][0]["selected_candidate_id"]
+assert not valid(missing_selector)
+
+null_selector = deepcopy(provisional)
+null_selector["forks"][0]["selected_candidate_id"] = None
+assert not valid(null_selector)
+
+empty_provisional_evidence = deepcopy(provisional)
+empty_provisional_evidence["forks"][0]["evidence"] = []
+assert not valid(empty_provisional_evidence)
+
+unresolved_selector = deepcopy(example)
+unresolved_selector["forks"][0]["selected_candidate_id"] = unresolved_selector["forks"][0]["candidates"][0]["id"]
+assert not valid(unresolved_selector)
+
+preserved_selector = deepcopy(example)
+preserved_selector["forks"][0]["resolution"] = "preserved"
+preserved_selector["forks"][0]["selected_candidate_id"] = preserved_selector["forks"][0]["candidates"][0]["id"]
+assert not valid(preserved_selector)
+
+omitted_unresolved_selector = deepcopy(example)
+del omitted_unresolved_selector["forks"][0]["selected_candidate_id"]
+assert valid(omitted_unresolved_selector)
+
+unknown_selector = deepcopy(provisional)
+unknown_selector["forks"][0]["selected_candidate_id"] = "candidate-not-declared"
+assert valid(unknown_selector), "shape validation must not pretend to resolve references"
+
+duplicate_candidate_id = deepcopy(example)
+duplicate_candidate_id["forks"][0]["candidates"][1]["id"] = duplicate_candidate_id["forks"][0]["candidates"][0]["id"]
+assert valid(duplicate_candidate_id), "shape validation must not pretend to enforce keyed uniqueness"
+
+resumable = deepcopy(example)
+resumable["state"] = "resumable"
+resumable["resumption"] = {
+    "selected_opening_id": "opening-compare",
+    "revalidation": {
+        "result": "caller_reported_passed",
+        "provenance": "caller_supplied_unverified",
+        "reported_at": "2026-08-01T17:04:00Z",
+        "evidence": ["The caller reports that both named local locators resolved during one bounded check."],
+        "establishes_truth": False,
+        "grants_permissions": False,
+        "establishes_currentness": False,
+    },
+}
+assert valid(resumable)
+
+missing_resumption = deepcopy(resumable)
+missing_resumption["resumption"] = None
+assert not valid(missing_resumption)
+
+wrong_provenance = deepcopy(resumable)
+wrong_provenance["resumption"]["revalidation"]["provenance"] = "verified"
+assert not valid(wrong_provenance)
+
+unbounded_evidence = deepcopy(resumable)
+unbounded_evidence["resumption"]["revalidation"]["evidence"] = [f"evidence-{index}" for index in range(17)]
+assert not valid(unbounded_evidence)
+
+non_resumable_selection = deepcopy(resumable)
+non_resumable_selection["state"] = "resting"
+assert not valid(non_resumable_selection)
+
+missing_dispositions = deepcopy(example)
+del missing_dispositions["thread_dispositions"]
+assert not valid(missing_dispositions)
+
+invalid_disposition = deepcopy(example)
+invalid_disposition["thread_dispositions"][0]["disposition"] = "forgotten"
+assert not valid(invalid_disposition)
+
+for descriptive_state in ("resting", "degraded", "closed"):
+    retained_history = deepcopy(example)
+    retained_history["state"] = descriptive_state
+    assert retained_history["threads"]["openings"]
+    assert retained_history["threads"]["carry"]
+    assert valid(retained_history), f"{descriptive_state} wrongly discarded orthogonal history"
+PY
+
 capture env LC_ALL=C "$BUN" "$FIXTURE_ROOT/bin/nen.mjs" list --json
 assert_equal 0 "$CAPTURE_STATUS" "C locale listing failed"
 typeset -r LIST_C="$CAPTURE_STDOUT"
@@ -101,7 +247,7 @@ print -r -- "$LIST_C" | "$JQ" -e '
   (.rights_sha256 | startswith("sha256:"))
   and (.manifestation_receipt_schema_sha256 | startswith("sha256:"))
   and
-  [.abilities[].id] == ["carry-wake-thread", "conjure-unwritten-horizon", "forge-king-hatsu", "navigate-dark-continent", "shape-kingdom-nen"]
+  [.abilities[].id] == ["carry-wake-thread", "conjure-unwritten-horizon", "forge-king-hatsu", "navigate-dark-continent", "shape-kingdom-nen", "weave-wake-continuity"]
   and all(.abilities[];
     .valid
     and (.manifest_sha256 | startswith("sha256:"))
@@ -483,7 +629,7 @@ ability_schema="$FIXTURE_ROOT/schemas/nen-ability-v0.1.schema.json"
 capture run_fixture list --json
 assert_equal 1 "$CAPTURE_STATUS" "malformed supported schema keyword was accepted"
 print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
-  (.abilities | length) == 5
+  (.abilities | length) == 6
   and all(.abilities[];
     (.valid == false)
     and (.manifest_sha256 == null)
