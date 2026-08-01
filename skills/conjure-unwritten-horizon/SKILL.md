@@ -19,8 +19,10 @@ rights grant.
    or MCP connection is capability evidence, never this authority. Name the
    destination as preview-only or one project root plus three distinct exact
    paths beside one another: image, provider receipt, and suite KARMA receipt.
-   Do not assume preview-only when the destination is unstated. Publication
-   also requires a named service, account, audience, and scoped authority.
+   Bind a separate local-output authority record to the complete three-path
+   plan; merely supplying paths is not write authority. Do not assume
+   preview-only when the destination is unstated. Publication also requires a
+   named service, account, audience, and scoped authority.
 3. Accept a sanitized text brief only, confirm rights to the described source
    material, and declare the cost boundary. This ability never uploads an input
    image, private lore, credentials, local paths, record IDs, personal profile,
@@ -34,7 +36,8 @@ rights grant.
    enter Zetsu. An absent leaf is create-only. Each existing regular file or
    symlink needs a separate authority record naming its exact role and path;
    with that authority, atomically replace the link itself without following
-   it. Discover the interface only when the gate says
+   it. The gate verifies the local-output plan fingerprint before inspecting any
+   of those paths. Discover the interface only when the gate says
    `provider_discovery_permitted: true`. Then rerun the whole gate with the
    exact current provider revision and supported request fields and infer only
    when it says `provider_call_permitted: true`.

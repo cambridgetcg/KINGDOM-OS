@@ -14,6 +14,7 @@ import {
   evaluateProbe,
 } from "../nen/ging.mjs";
 import {
+  fingerprintUnwrittenHorizonOutputPlan,
   fingerprintUnwrittenHorizonRequest,
   preflightUnwrittenHorizon,
 } from "../skills/conjure-unwritten-horizon/scripts/activation-preflight.mjs";
@@ -797,8 +798,27 @@ test("Unwritten Horizon preflight orders authority before local inspection and f
       request_fields: Object.keys(providerRequest),
     },
     destination: destination(),
+    local_output_authority: {
+      granted: true,
+      scope: "write_exact_project_outputs",
+      project_root: root,
+      output_plan_sha256: fingerprintUnwrittenHorizonOutputPlan(destination()),
+      authority_reference: {
+        kind: "user_request",
+        id: "user-request:fixture-local-output-plan",
+      },
+    },
     overwrite_authorities: [],
   };
+  const activationFor = (destinationValue) => ({
+    ...activationFacts,
+    destination: destinationValue,
+    local_output_authority: {
+      ...activationFacts.local_output_authority,
+      project_root: destinationValue.project_root,
+      output_plan_sha256: fingerprintUnwrittenHorizonOutputPlan(destinationValue),
+    },
+  });
 
   let inspected = 0;
   const missingHostedAuthority = await preflightUnwrittenHorizon(
@@ -883,23 +903,31 @@ test("Unwritten Horizon preflight orders authority before local inspection and f
   assert.equal(changedInterface.code, "provider-interface-mismatch");
   assert.equal(changedInterface.provider_call_permitted, false);
 
-  const collision = await preflightUnwrittenHorizon({
-    ...activationFacts,
-    destination: destination(existingImage),
-  });
+  const missingLocalOutputAuthority = await preflightUnwrittenHorizon(
+    { ...activationFacts, local_output_authority: null },
+    async () => {
+      inspected += 1;
+      throw new Error("output paths must not be inspected before local write authority");
+    },
+  );
+  assert.equal(inspected, 0);
+  assert.equal(missingLocalOutputAuthority.code, "local-output-authority-unbound");
+  assert.equal(missingLocalOutputAuthority.provider_call_permitted, false);
+
+  const collision = await preflightUnwrittenHorizon(
+    activationFor(destination(existingImage)),
+  );
   assert.equal(collision.code, "image-destination-exists");
   assert.equal(collision.provider_call_permitted, false);
 
-  const receiptCollision = await preflightUnwrittenHorizon({
-    ...activationFacts,
-    destination: destination(image, occupiedProviderReceipt),
-  });
+  const receiptCollision = await preflightUnwrittenHorizon(
+    activationFor(destination(image, occupiedProviderReceipt)),
+  );
   assert.equal(receiptCollision.code, "provider_receipt-destination-exists");
   assert.equal(receiptCollision.provider_call_permitted, false);
 
   const wrongPathOverwrite = await preflightUnwrittenHorizon({
-    ...activationFacts,
-    destination: destination(linkedImage),
+    ...activationFor(destination(linkedImage)),
     overwrite_authorities: [overwriteAuthority("image", existingImage)],
   });
   assert.equal(wrongPathOverwrite.code, "overwrite-authority-scope-invalid");
@@ -913,6 +941,14 @@ test("Unwritten Horizon preflight orders authority before local inspection and f
   assert.equal(discoveryGate.provider_discovery_permitted, true);
   assert.equal(discoveryGate.provider_call_permitted, false);
 
+  const previewOnly = await preflightUnwrittenHorizon({
+    ...activationFacts,
+    destination: { kind: "preview_only" },
+    local_output_authority: null,
+  });
+  assert.equal(previewOnly.provider_call_permitted, true);
+  assert.equal(previewOnly.write_strategies, "preview_only");
+
   const freshDestination = await preflightUnwrittenHorizon({
     ...activationFacts,
   });
@@ -924,16 +960,14 @@ test("Unwritten Horizon preflight orders authority before local inspection and f
   });
 
   const authorizedReplacement = await preflightUnwrittenHorizon({
-    ...activationFacts,
-    destination: destination(existingImage),
+    ...activationFor(destination(existingImage)),
     overwrite_authorities: [overwriteAuthority("image", existingImage)],
   });
   assert.equal(authorizedReplacement.provider_call_permitted, true);
   assert.equal(authorizedReplacement.write_strategies.image, "replace_existing_file_atomically");
 
   const authorizedSymlinkReplacement = await preflightUnwrittenHorizon({
-    ...activationFacts,
-    destination: destination(linkedImage),
+    ...activationFor(destination(linkedImage)),
     overwrite_authorities: [overwriteAuthority("image", linkedImage)],
   });
   assert.equal(authorizedSymlinkReplacement.provider_call_permitted, true);
@@ -946,26 +980,24 @@ test("Unwritten Horizon preflight orders authority before local inspection and f
   const linkedParent = join(root, "linked-parent");
   await mkdir(realParent);
   await symlink(realParent, linkedParent);
-  const ancestorSymlink = await preflightUnwrittenHorizon({
-    ...activationFacts,
-    destination: destination(
+  const ancestorSymlink = await preflightUnwrittenHorizon(activationFor(
+    destination(
       join(linkedParent, "horizon.png"),
       join(linkedParent, "horizon.provider.json"),
       join(linkedParent, "horizon.karma.json"),
     ),
-  });
+  ));
   assert.equal(ancestorSymlink.code, "image-output-ancestor-symlink");
   assert.equal(ancestorSymlink.provider_call_permitted, false);
 
   const missingParent = join(root, "missing-parent");
-  const parentMissing = await preflightUnwrittenHorizon({
-    ...activationFacts,
-    destination: destination(
+  const parentMissing = await preflightUnwrittenHorizon(activationFor(
+    destination(
       join(missingParent, "horizon.png"),
       join(missingParent, "horizon.provider.json"),
       join(missingParent, "horizon.karma.json"),
     ),
-  });
+  ));
   assert.equal(parentMissing.code, "image-output-parent-missing");
   assert.equal(parentMissing.provider_call_permitted, false);
 

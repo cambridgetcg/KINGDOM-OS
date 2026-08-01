@@ -33,7 +33,7 @@
   },
   "activation": {
     "requires": [
-      "Structured authority bound to one exact provider request and an explicitly preview-only destination or one exact project-root output plan naming distinct image, provider-receipt, and KARMA-receipt paths; every path and ancestor must pass the no-symlink gate, and every existing leaf needs separate exact-role overwrite authority.",
+      "Structured hosted authority bound to one exact provider request and either an explicitly preview-only destination or a separate local-write authority bound to one exact project-root output plan naming distinct image, provider-receipt, and KARMA-receipt paths; every path and ancestor must pass the no-symlink gate, and every existing leaf needs separate exact-role overwrite authority.",
       "A sanitized text-only prompt, rights to described source material, an exact observed Space revision and interface field set, fixed seed, randomization off, finite generation parameters, and a one-call no-overage cost boundary.",
       "Fresh scoped authority for every retry, publication, deployment, provider switch, private-resource access, or additional external effect."
     ],
@@ -83,7 +83,7 @@
     "derived_from": "declared_effects",
     "visibility": "inspectable",
     "checks": [
-      "Text-only data boundary, source rights, structured request-bound authority, every image/provider-receipt/KARMA-receipt ancestor and leaf, exact-role overwrite authority, provider revision and interface fields, fixed seed, parameters, one-call quota, named publication scope, output inspection, retention unknowns, and causally consistent receipt state."
+      "Text-only data boundary, source rights, structured request-bound hosted authority, local-output-plan fingerprint and authority, every image/provider-receipt/KARMA-receipt ancestor and leaf, exact-role overwrite authority, provider revision and interface fields, fixed seed, parameters, one-call quota, named publication scope, output inspection, retention unknowns, and causally consistent receipt state."
     ],
     "budget": "Run one authority-and-destination preflight before any provider interaction and one output-or-failure inspection after it; perform no background polling or retry.",
     "retention": "Retain only an explicitly requested project artifact and its evidence records; provider logs, caches, and retention remain separately unknown.",
@@ -112,7 +112,7 @@
   },
   "authority": {
     "allows": [
-      "Under one explicit request-bound activation, and only after every declared local output passes the ancestor-and-leaf gate, discover the named Space interface, send the bound sanitized text prompt and fixed parameters, inspect the response, and create the requested local artifact and receipts exclusively or perform a separately authorized exact-role replacement."
+      "Under one explicit request-bound activation, and only after a separate authority is bound to the complete local output plan and every declared output passes the ancestor-and-leaf gate, discover the named Space interface, send the bound sanitized text prompt and fixed parameters, inspect the response, and create the requested local artifact and receipts exclusively or perform a separately authorized exact-role replacement."
     ],
     "forbids": [
       "Infer provider authority from login or Pro status, upload private material, retry or switch providers silently, publish or deploy without named authority, or describe generated imagery as factual evidence."

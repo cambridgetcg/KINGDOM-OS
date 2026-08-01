@@ -16,7 +16,7 @@ Secondary affinity: Emitter, because the prompt crosses a hosted boundary
 Trigger prompts: "manifest this vision"; "forge a Nen image"; "run this through Hugging Face with a fixed seed"
 Anti-trigger: "publish this everywhere" without named publication authority
 Input -> output: authorized sanitized text brief -> one image or failure + provider and KARMA receipts
-Conditions: structured authority bound to the exact provider request; preview-only or one project root with distinct image/provider-receipt/KARMA-receipt paths whose full ancestor and leaf chains pass lstat; safe data classification; exact current Space revision and fields observed
+Conditions: structured hosted authority bound to the exact provider request; preview-only or separate local-write authority bound to one project root with distinct image/provider-receipt/KARMA-receipt paths whose full ancestor and leaf chains pass lstat; safe data classification; exact current Space revision and fields observed
 Limitation and observable budget: one image-generation call; no implicit retry, overage, or replacement
 Safe breach response: enter Zetsu before the call or preserve a failed receipt after it
 Completion proof: viewable artifact or honest failure, exact parameters, causally consistent provider receipt, final suite KARMA receipt, and bounded visual inspection
@@ -69,7 +69,9 @@ no-overage cost, and output checks before provider discovery or inference.
 `scripts/activation-preflight.mjs` is the read-only reference gate. Its hosted
 authority accepts only a `user_request` or `scoped_delegation` reference bound
 to the SHA-256 fingerprint of every exact provider request field; login, Pro,
-and MCP state cannot satisfy it.
+and MCP state cannot satisfy it. For project output, a second authority record
+must carry `write_exact_project_outputs` and the SHA-256 fingerprint of the
+entire project root, role, and path plan. Paths alone never authorize writes.
 
 - preview-only requires no local path;
 - a project-bound attempt names one existing non-symlink project root and three

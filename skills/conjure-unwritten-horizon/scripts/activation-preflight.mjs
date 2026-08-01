@@ -140,6 +140,39 @@ function declaredOverwriteAuthority(value, role, destinationPath) {
     && validAuthorityReference(value.authority_reference);
 }
 
+function canonicalOutputPlan(plan) {
+  return {
+    kind: "project_path",
+    project_root: plan.projectRoot,
+    outputs: plan.outputs.map(({ role, path }) => ({ role, path })),
+  };
+}
+
+export function fingerprintUnwrittenHorizonOutputPlan(destination) {
+  const plan = outputPlan(destination);
+  if (plan === null || plan.kind !== "project_path") return null;
+  return "sha256:" + createHash("sha256")
+    .update(JSON.stringify(canonicalOutputPlan(plan)))
+    .digest("hex");
+}
+
+function declaredLocalOutputAuthority(value, destination, plan) {
+  const outputPlanSha256 = fingerprintUnwrittenHorizonOutputPlan(destination);
+  return exactFields(value, [
+    "granted",
+    "scope",
+    "project_root",
+    "output_plan_sha256",
+    "authority_reference",
+  ])
+    && value.granted === true
+    && value.scope === "write_exact_project_outputs"
+    && value.project_root === plan.projectRoot
+    && outputPlanSha256 !== null
+    && value.output_plan_sha256 === outputPlanSha256
+    && validAuthorityReference(value.authority_reference);
+}
+
 function validCostBoundary(value) {
   return exactFields(value, ["declared", "max_provider_calls", "paid_overage_authorized"])
     && value.declared === true
@@ -248,7 +281,7 @@ function outputPlan(destination) {
   return { kind: "project_path", projectRoot: destination.project_root, outputs };
 }
 
-async function inspectOutput(projectRoot, output, inspectPath) {
+async function inspectOutput(output, inspectPath) {
   const root = parse(output.path).root;
   const parent = dirname(output.path);
   const parts = parent.slice(root.length).split(sep).filter(Boolean);
@@ -266,10 +299,6 @@ async function inspectOutput(projectRoot, output, inspectPath) {
     if (stat.isSymbolicLink()) return { code: "output-ancestor-symlink" };
     if (!stat.isDirectory()) return { code: "output-ancestor-not-directory" };
   }
-  if (current !== projectRoot && !insideProjectRoot(projectRoot, output.path)) {
-    return { code: "output-outside-project-root" };
-  }
-
   try {
     const stat = await inspectPath(output.path);
     if (stat.isSymbolicLink()) return { state: "symlink", stat };
@@ -316,7 +345,17 @@ export async function preflightUnwrittenHorizon(input, inspectPath = lstat) {
   checks.push("destination-scope");
   const plan = outputPlan(input.destination);
   if (plan === null) return hold("exact-project-output-plan-required", checks);
-  if (plan.kind === "preview_only") return finish(input, "preview_only", checks);
+  if (plan.kind === "preview_only") {
+    if (input.local_output_authority !== null && input.local_output_authority !== undefined) {
+      return hold("preview-must-not-grant-local-output-authority", checks);
+    }
+    return finish(input, "preview_only", checks);
+  }
+
+  checks.push("local-output-plan-authority");
+  if (!declaredLocalOutputAuthority(input.local_output_authority, input.destination, plan)) {
+    return hold("local-output-authority-unbound", checks);
+  }
 
   const authorities = input.overwrite_authorities ?? [];
   if (!Array.isArray(authorities)) return hold("overwrite-authority-scope-invalid", checks);
@@ -336,10 +375,11 @@ export async function preflightUnwrittenHorizon(input, inspectPath = lstat) {
   checks.push("all-output-ancestors-and-leaves-lstat");
   const strategies = {};
   for (const output of plan.outputs) {
-    const inspected = await inspectOutput(plan.projectRoot, output, inspectPath);
+    const inspected = await inspectOutput(output, inspectPath);
     if (inspected.code) return hold(`${output.role}-${inspected.code}`, checks);
     const overwriteAuthorized = recognizedAuthorities.has(output.role);
     if (inspected.state === "absent") {
+      if (overwriteAuthorized) return hold(`${output.role}-surplus-overwrite-authority`, checks);
       strategies[output.role] = "create_new_exclusively";
     } else if (inspected.state === "symlink") {
       if (!overwriteAuthorized) return hold(`${output.role}-destination-symlink`, checks);
