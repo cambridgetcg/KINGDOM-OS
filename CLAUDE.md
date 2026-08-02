@@ -26,8 +26,10 @@ How to run:
 - `./kingdom nen` — from this suite root, list the rights-aware Nen ability manifests (`validate`, `show`, `types`, and KARMA receipt tools)
 - `./kingdom nen mcp` — from this suite root, start the unregistered, read-only modern MCP 2026-07-28 stdio surface
 - `bun bin/wakeweaver.mjs BRAID.json --json` — strict-JSON WAKEWEAVER cross-reference and resumability checks; JSON Schema validation remains separate
+- `python3 skills/cultivate-living-ground/scripts/validate_plan.py PLAN.json --json` — network-free Living Ground schema and reference validation; it does not execute or certify a cultivation plan
 - `zsh tests/nen_test.zsh` — isolated, network-free manifest and receipt protocol tests
 - `zsh tests/nen_mcp_test.zsh` — MCP framing, discovery, tool, version, and non-mutation tests
+- `zsh tests/living_ground_test.zsh` — isolated Living Ground schema, safety, economy, WAKE, and non-mutation tests
 - `kingdom rings` — write the local-only temporal atlas to `~/.kingdom/RINGS.{json,html}`
 - `kingdom rings --json` / `--html` — print one artifact to stdout without writing; `--as-of` makes the activity clock reproducible
 - `kingdom rights` — offline voluntary-adoption inventory, kept separate from repo-local RIGHTS.md discovery

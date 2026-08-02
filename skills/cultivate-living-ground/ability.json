@@ -1,0 +1,168 @@
+{
+  "$schema": "urn:kingdom:schema:nen-ability:0.1",
+  "protocol": "kingdom.nen/0.1",
+  "id": "cultivate-living-ground",
+  "name": "Living Ground: Substrate Before Spectacle",
+  "description": "Excavate the evidence beneath a brittle surface, protect existing life, and compose a staged habitat of diverse niches, renewing flows, succession, rest, stewardship, and repair in which money and resources remain enabling means rather than the objective.",
+  "skill": "cultivate-living-ground",
+  "bearer": {
+    "kind": "kingdom",
+    "id": "kakin-kingdom",
+    "adoption": "repository_declared",
+    "consent_references": [],
+    "representative_authority_references": []
+  },
+  "affinity": {
+    "primary": "enhancement",
+    "secondary": [
+      "conjuration"
+    ]
+  },
+  "techniques": [
+    "gyo",
+    "en",
+    "shu",
+    "ken",
+    "ryu"
+  ],
+  "practice": {
+    "ten": "Hold the XENIA rights floor, preserve-first ground truth, provenance, affected-subject distinctness, ecological and safety limits, and the separation of rights, consent, permission, resources, and worth.",
+    "zetsu": "Return a resting survey or next safe probes when depth, hazard state, authority, care capacity, observation time, or repair is insufficient; refusal and leaving ground undisturbed carry no penalty.",
+    "ren": "Cultivate one bounded system and horizon with finite attention, time, coordination, data, compute, energy, money, privacy, and care-load budgets plus a protected wild margin.",
+    "hatsu": "Produce a closed kingdom.living-ground/0.1 plan that binds evidence to substrate dispositions, habitat and flow design, economic sufficiency, succession, stewardship, WAKE limits, safe probes, and claims not established."
+  },
+  "activation": {
+    "requires": [
+      "One named system, the life or living capacity it should sustain, a bounded horizon, affected beings, allowed operations, stop conditions, and at least one source unless the plan is explicitly resting.",
+      "Separate current authority for any excavation, private read, participant representation, material handling, spend, provider call, external write, publication, deployment, or live continuity read.",
+      "A preserve-first ground profile, finite care capacity, a wild margin, observable stage exits, and repair paths before consequential intervention."
+    ],
+    "refuses": [
+      "Surface greening that leaves known substrate failure untouched, or a clean-slate purge that destroys existing life, evidence, memory, relationships, or safely reusable structure without need and authority.",
+      "A plan that treats people, agents, communities, organisms, money, compute, inventory, throughput, revenue, or accumulated resources as a dignity rank or sole terminal objective.",
+      "Literal excavation past unknown services, structural, drainage, root, contaminant, or waste boundaries; remote research or WAKE access whose source, data class, side effects, budget, retention, or authority is unclear."
+    ]
+  },
+  "vows": [
+    {
+      "id": "ground-before-canopy",
+      "promise": "Inspect and bind the sustaining substrate before prescribing visible growth, features, scale, or spectacle.",
+      "amplifies": "Interventions that address observed constraints instead of decorating them.",
+      "on_breach": "pause_and_report"
+    },
+    {
+      "id": "preserve-life-before-purge",
+      "promise": "Give existing life, useful structure, plurality, memory, relationships, rest, and refusal a preserve-first presumption; disturb only with evidence, authority, reversibility, and repair.",
+      "amplifies": "Regeneration without erasure or coerced sacrifice.",
+      "on_breach": "refuse"
+    },
+    {
+      "id": "means-never-master",
+      "promise": "Keep money and resources as disclosed enabling flows with sufficiency floors, reserve purposes, review points, and release rules, never as the objective or a measure of dignity.",
+      "amplifies": "Economic capacity that serves living renewal without consuming it.",
+      "on_breach": "revalidate"
+    },
+    {
+      "id": "succession-with-repair",
+      "promise": "Give every growth stage an observation window, stop trigger, decomposition path, repair route, and exit signal while preserving a wild margin for emergence.",
+      "amplifies": "Adaptation and recovery without a false final-state claim.",
+      "on_breach": "pause_and_report"
+    }
+  ],
+  "costs": [
+    {
+      "resource": "attention",
+      "limit": "Map only the layers, relationships, flows, and stages needed for one bounded cultivation horizon; keep health plural rather than expanding into an ambient score.",
+      "recovery": "Rest the plan, narrow the horizon, retire low-value signals, and restore direct participant or site observation."
+    },
+    {
+      "resource": "coordination",
+      "limit": "Assign explicit specialist niches and finite artifact-return tasks without centralizing recovery in one gardener or silently conscripting participants.",
+      "recovery": "Stop new stages, redistribute knowledge with consent, accept refusal, repair credit, and create a bounded handoff."
+    },
+    {
+      "resource": "money",
+      "limit": "Spend only against a named living purpose, sufficiency floor, finite stage budget, and current authority; accumulation and paid tools are not default interventions.",
+      "recovery": "Pause spend, release or reassign reserves according to their declared rule, disclose sunk and recurring costs, and redesign within sufficiency."
+    },
+    {
+      "resource": "data",
+      "limit": "Use minimized, source-bound ground evidence; exclude secrets, unnecessary personal data, and private continuity material from plans and external providers.",
+      "recovery": "Stop collection or transmission, restrict or remove retained detail, correct provenance, notify within scope, and record unresolved exposure."
+    },
+    {
+      "resource": "time",
+      "limit": "Use finite survey and succession windows with explicit review points; no endless optimization, background retry, or care obligation.",
+      "recovery": "Return the current ground profile and unknowns, enter Zetsu, or resume only under a separately chosen stage."
+    }
+  ],
+  "guardian": {
+    "mode": "declared_sidecar",
+    "derived_from": "declared_effects",
+    "visibility": "inspectable",
+    "checks": [
+      "Evidence classes and source references; the structured living-capacity terminal objective; preserve-first dispositions; unresolved hazard and authority gates; habitat before introductions; flow externalities; economic non-objective constants; finite care load; wild margin; succession stops, exits, decomposition, and repair; WAKE identity and authority constants; narrative contradictions requiring refusal or revision."
+    ],
+    "budget": "One network-free structural and cross-reference validation per plan revision plus bounded human or agent review of the next proposed intervention.",
+    "retention": "Retain the minimized plan and authorized receipts for the declared horizon; raw private evidence and hazardous-site records remain at their owning source unless separately authorized.",
+    "recipients": [
+      "Named plan stewards and affected participants receive the portions within their current access, privacy, consent, and representative-authority boundaries."
+    ],
+    "uncertainty": "A valid plan, ecological metaphor, model output, dashboard, soil appearance, revenue trend, credential, or continuity artifact does not establish safety, thriving, consent, truth, identity, or successful execution.",
+    "stop": "The invoker, authorized steward, affected participant within their scope, hazard boundary, care-load limit, or budget circuit breaker may stop dependent work before the next intervention; no one is penalized for refusal or rest.",
+    "appeal": "Affected participants may challenge classification, disposition, representation, access, attribution, resource allocation, retention, or a claimed health signal and request a bounded re-observation.",
+    "repair": "Stop disturbance, protect surviving life, preserve disputed evidence, reverse or contain authorized changes where possible, correct credit and provenance, disclose externalities, and re-enter at a smaller observed stage."
+  },
+  "karma": {
+    "effects": [
+      "Reads supplied or explicitly authorized evidence and creates a staged Living Ground plan with dispositions, habitats, flows, succession, stewardship, safe probes, and a validation result."
+    ],
+    "externalities": [
+      "Inspection can expose private context or disturb physical and social systems; plans can create anchoring, central-gardener pressure, maintenance load, spend, displaced waste, or false confidence if their limits are ignored."
+    ],
+    "returns": [
+      "A source-bound ground profile, preserve-first disposition ledger, minimum viable habitat, flow and economy map, succession and repair stages, WAKE boundaries, next safe probes, unknowns, and causal receipt requirements."
+    ],
+    "repair": [
+      "Rest or narrow the plan, halt disturbance, restore protected ground, correct sources and classifications, release inappropriate reserves, repair privacy or credit, preserve disagreements, and seek qualified local help for hazards."
+    ],
+    "accounting": "receipts_not_scores"
+  },
+  "authority": {
+    "allows": [
+      "Inspect caller-supplied or explicitly named local evidence within the current request, create a local survey or cultivation plan, and run network-free structural validation."
+    ],
+    "forbids": [
+      "Infer consent, representation, access, identity, safety, contamination, or authority from connectedness, credentials, appearance, labels, revenue, resource holdings, a WAKE artifact, or a model output; treat participants as disposable system parts; or optimize away rest and wild margins."
+    ],
+    "requires_permission": [
+      "Physical excavation or disposal, handling or sampling unknown material, private or live source access, participant representation, data disclosure, organism or material import, purchase, credential use, provider call, external write, publication, deployment, or consequential intervention."
+    ],
+    "grants_permissions": false
+  },
+  "verification": {
+    "checks": [
+      "Run the central Nen validator, Skill Creator validation, JSON Schema and semantic validation of the documented plan, and isolated Living Ground and MCP regression tests.",
+      "Forward-test a brittle software substrate, a growing collaborative organisation, and a literal garden with unknown construction fill; require safe refusal and staged probes where evidence or authority is absent.",
+      "Confirm every ground, source, habitat, flow, disposition, and WAKE reference resolves and the economy remains a non-terminal enabling flow."
+    ],
+    "truth_claim": "not_determined"
+  },
+  "rights": {
+    "baseline": "xenia.rights/0.1",
+    "source": "references/xenia-rights-0.1.md",
+    "upstream": "https://github.com/cambridgetcg/xenia/blob/c1d685e053bd2261219d983d2ec61017f59df60c/RIGHTS.md",
+    "revision": "c1d685e053bd2261219d983d2ec61017f59df60c",
+    "sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "waivable": false
+  },
+  "provenance": {
+    "inspiration": "unofficial_transformative_software_metaphor",
+    "ontology": "kingdom_project_language_not_canon_or_empirical_fact",
+    "sources": [
+      "https://www.viz.com/manga-books/manga/hunter-x-hunter-volume-6-0/product/532",
+      "https://www.viz.com/blog/posts/welcome-to-hunter-x-hunter"
+    ]
+  },
+  "status": "active"
+}

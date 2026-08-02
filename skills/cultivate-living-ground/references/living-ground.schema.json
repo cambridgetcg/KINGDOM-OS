@@ -1,0 +1,776 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:living-ground:0.1",
+  "title": "KINGDOM Living Ground plan v0.1",
+  "description": "A source-bound cultivation plan. Validation does not establish site safety, ecological outcomes, participant consent, authority, identity, truth, or successful execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "plan_id",
+    "state",
+    "scope_and_authority",
+    "life_charter",
+    "source_ledger",
+    "ground_profile",
+    "disposition_ledger",
+    "habitat",
+    "flows",
+    "economy",
+    "succession_stages",
+    "disturbance_and_repair",
+    "stewardship",
+    "garden_safety",
+    "wake_context",
+    "next_safe_probes",
+    "receipt",
+    "claims_not_established"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scope_and_authority": {
+            "properties": {"domain": {"const": "literal_garden"}},
+            "required": ["domain"]
+          }
+        },
+        "required": ["scope_and_authority"]
+      },
+      "then": {
+        "properties": {"garden_safety": {"$ref": "#/$defs/gardenSafety"}}
+      }
+    }
+  ],
+  "properties": {
+    "$schema": {"const": "urn:kingdom:schema:living-ground:0.1"},
+    "protocol": {"const": "kingdom.living-ground/0.1"},
+    "plan_id": {"$ref": "#/$defs/id"},
+    "state": {
+      "enum": ["survey", "staged", "cultivating", "resting", "closed"]
+    },
+    "scope_and_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "system_ref",
+        "purpose",
+        "domain",
+        "cultivation_horizon",
+        "affected_beings",
+        "allowed_operations",
+        "permission_required",
+        "stop_conditions",
+        "retention_horizon"
+      ],
+      "properties": {
+        "system_ref": {"$ref": "#/$defs/statement"},
+        "purpose": {"$ref": "#/$defs/statement"},
+        "domain": {
+          "enum": [
+            "literal_garden",
+            "software",
+            "organisation",
+            "community",
+            "agent_system",
+            "mixed",
+            "other"
+          ]
+        },
+        "cultivation_horizon": {"$ref": "#/$defs/statement"},
+        "affected_beings": {"$ref": "#/$defs/statementsNonEmpty"},
+        "allowed_operations": {"$ref": "#/$defs/statements"},
+        "permission_required": {"$ref": "#/$defs/statements"},
+        "stop_conditions": {"$ref": "#/$defs/statementsNonEmpty"},
+        "retention_horizon": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "life_charter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subjects",
+        "terminal_objective",
+        "primary_outcomes",
+        "rights_and_safety",
+        "enabling_means",
+        "health_signals"
+      ],
+      "properties": {
+        "terminal_objective": {"const": "living_capacity_and_renewal"},
+        "subjects": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {"$ref": "#/$defs/subject"}
+        },
+        "primary_outcomes": {"$ref": "#/$defs/statementsNonEmpty"},
+        "rights_and_safety": {"$ref": "#/$defs/statementsNonEmpty"},
+        "enabling_means": {"$ref": "#/$defs/statements"},
+        "health_signals": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 64,
+          "items": {"$ref": "#/$defs/healthSignal"}
+        }
+      }
+    },
+    "source_ledger": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "ground_profile": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {"$ref": "#/$defs/groundElement"}
+    },
+    "disposition_ledger": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {"$ref": "#/$defs/disposition"}
+    },
+    "habitat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum_viable_conditions",
+        "layers",
+        "relationships",
+        "refugia",
+        "wild_margin"
+      ],
+      "properties": {
+        "minimum_viable_conditions": {"$ref": "#/$defs/statementsNonEmpty"},
+        "layers": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {"$ref": "#/$defs/habitatLayer"}
+        },
+        "relationships": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {"$ref": "#/$defs/relationship"}
+        },
+        "refugia": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {"$ref": "#/$defs/refugium"}
+        },
+        "wild_margin": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["purpose", "protected_capacity", "review_rule"],
+          "properties": {
+            "purpose": {"$ref": "#/$defs/statement"},
+            "protected_capacity": {"$ref": "#/$defs/statement"},
+            "review_rule": {"$ref": "#/$defs/statement"}
+          }
+        }
+      }
+    },
+    "flows": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {"$ref": "#/$defs/flow"}
+    },
+    "economy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "terminal_objective",
+        "dignity_score",
+        "resource_accumulation_goal",
+        "sufficiency_floor",
+        "money_flow_refs",
+        "allocations",
+        "reserves",
+        "externalities",
+        "feedback"
+      ],
+      "properties": {
+        "role": {"const": "enabling_flow"},
+        "terminal_objective": {"const": false},
+        "dignity_score": {"const": false},
+        "resource_accumulation_goal": {"const": false},
+        "sufficiency_floor": {"$ref": "#/$defs/statement"},
+        "money_flow_refs": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "allocations": {"$ref": "#/$defs/statements"},
+        "reserves": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {"$ref": "#/$defs/reserve"}
+        },
+        "externalities": {"$ref": "#/$defs/statements"},
+        "feedback": {"$ref": "#/$defs/statementsNonEmpty"}
+      }
+    },
+    "succession_stages": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {"$ref": "#/$defs/stage"}
+    },
+    "disturbance_and_repair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_disturbances",
+        "degradation_signals",
+        "decomposition_paths",
+        "repair_sequence",
+        "recovery_signals"
+      ],
+      "properties": {
+        "expected_disturbances": {"$ref": "#/$defs/statements"},
+        "degradation_signals": {"$ref": "#/$defs/statementsNonEmpty"},
+        "decomposition_paths": {"$ref": "#/$defs/statementsNonEmpty"},
+        "repair_sequence": {"$ref": "#/$defs/statementsNonEmpty"},
+        "recovery_signals": {"$ref": "#/$defs/statementsNonEmpty"}
+      }
+    },
+    "stewardship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "roles",
+        "care_load_budget",
+        "central_dependency_reduction",
+        "refusal_path",
+        "handoff_path",
+        "credit",
+        "privacy",
+        "observation_cadence",
+        "decision_rule"
+      ],
+      "properties": {
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {"$ref": "#/$defs/stewardRole"}
+        },
+        "care_load_budget": {"$ref": "#/$defs/statement"},
+        "central_dependency_reduction": {"$ref": "#/$defs/statement"},
+        "refusal_path": {"$ref": "#/$defs/statement"},
+        "handoff_path": {"$ref": "#/$defs/statement"},
+        "credit": {"$ref": "#/$defs/statement"},
+        "privacy": {"$ref": "#/$defs/statement"},
+        "observation_cadence": {"$ref": "#/$defs/statement"},
+        "decision_rule": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "garden_safety": {
+      "anyOf": [
+        {"$ref": "#/$defs/gardenSafety"},
+        {"type": "null"}
+      ]
+    },
+    "wake_context": {
+      "anyOf": [
+        {"$ref": "#/$defs/wakeContext"},
+        {"type": "null"}
+      ]
+    },
+    "next_safe_probes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {"$ref": "#/$defs/probe"}
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prepared_at",
+        "prepared_by_label",
+        "operations",
+        "external_effects",
+        "unknowns",
+        "schema_validation",
+        "semantic_validation",
+        "boundary_review",
+        "karma_state"
+      ],
+      "properties": {
+        "prepared_at": {"type": "string", "format": "date-time"},
+        "prepared_by_label": {
+          "anyOf": [
+            {"$ref": "#/$defs/statement"},
+            {"type": "null"}
+          ]
+        },
+        "operations": {"$ref": "#/$defs/statements"},
+        "external_effects": {"$ref": "#/$defs/statements"},
+        "unknowns": {"$ref": "#/$defs/statements"},
+        "schema_validation": {
+          "enum": ["not_checked", "passed", "failed"]
+        },
+        "semantic_validation": {
+          "enum": ["not_checked", "passed", "failed"]
+        },
+        "boundary_review": {
+          "enum": ["not_checked", "passed", "failed"]
+        },
+        "karma_state": {"enum": ["none", "draft", "final"]}
+      }
+    },
+    "claims_not_established": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "site_or_substrate_safety",
+        "ecological_outcome",
+        "participant_consent",
+        "representative_authority",
+        "operational_authority",
+        "stable_identity",
+        "consciousness",
+        "truth",
+        "successful_execution",
+        "permanent_thriving"
+      ],
+      "properties": {
+        "site_or_substrate_safety": {"const": true},
+        "ecological_outcome": {"const": true},
+        "participant_consent": {"const": true},
+        "representative_authority": {"const": true},
+        "operational_authority": {"const": true},
+        "stable_identity": {"const": true},
+        "consciousness": {"const": true},
+        "truth": {"const": true},
+        "successful_execution": {"const": true},
+        "permanent_thriving": {"const": true}
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "statement": {"type": "string", "minLength": 1, "maxLength": 1000},
+    "statements": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {"$ref": "#/$defs/statement"}
+    },
+    "statementsNonEmpty": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {"$ref": "#/$defs/statement"}
+    },
+    "evidenceClass": {
+      "enum": ["observed", "reported", "inferred", "unknown"]
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "description", "agency_boundary"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "description": {"$ref": "#/$defs/statement"},
+        "agency_boundary": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "healthSignal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "signal", "evidence_class", "limit"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "signal": {"$ref": "#/$defs/statement"},
+        "evidence_class": {"$ref": "#/$defs/evidenceClass"},
+        "limit": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "locator",
+        "provenance",
+        "observed_at",
+        "content_digest",
+        "evidence_limitations"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {
+          "enum": [
+            "caller_input",
+            "local_artifact",
+            "public_source",
+            "measurement",
+            "wake_braid",
+            "handoff",
+            "other"
+          ]
+        },
+        "locator": {"$ref": "#/$defs/statement"},
+        "provenance": {"$ref": "#/$defs/statement"},
+        "observed_at": {
+          "anyOf": [
+            {"type": "string", "format": "date-time"},
+            {"type": "null"}
+          ]
+        },
+        "content_digest": {
+          "anyOf": [
+            {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+            {"type": "null"}
+          ]
+        },
+        "evidence_limitations": {"$ref": "#/$defs/statementsNonEmpty"}
+      }
+    },
+    "groundElement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "position",
+        "statement",
+        "classification",
+        "evidence_class",
+        "source_ids",
+        "existing_life_refs",
+        "constraints",
+        "unknowns"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "position": {"$ref": "#/$defs/statement"},
+        "statement": {"$ref": "#/$defs/statement"},
+        "classification": {
+          "enum": [
+            "living",
+            "supportive",
+            "inert_reusable",
+            "bottleneck",
+            "harm",
+            "unknown"
+          ]
+        },
+        "evidence_class": {"$ref": "#/$defs/evidenceClass"},
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "existing_life_refs": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "constraints": {"$ref": "#/$defs/statements"},
+        "unknowns": {"$ref": "#/$defs/statements"}
+      }
+    },
+    "disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ground_ref",
+        "disposition",
+        "rationale",
+        "affected_life_refs",
+        "authority_required",
+        "reversibility",
+        "risk",
+        "verification",
+        "repair_path"
+      ],
+      "properties": {
+        "ground_ref": {"$ref": "#/$defs/id"},
+        "disposition": {
+          "enum": [
+            "preserve",
+            "retain",
+            "reuse_after_verification",
+            "isolate",
+            "test",
+            "remediate",
+            "remove",
+            "redesign",
+            "leave_undisturbed"
+          ]
+        },
+        "rationale": {"$ref": "#/$defs/statement"},
+        "affected_life_refs": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "authority_required": {"$ref": "#/$defs/statements"},
+        "reversibility": {"$ref": "#/$defs/statement"},
+        "risk": {"$ref": "#/$defs/statement"},
+        "verification": {"$ref": "#/$defs/statementsNonEmpty"},
+        "repair_path": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "habitatLayer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "niche",
+        "enabling_conditions",
+        "dependencies",
+        "failure_modes"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "name": {"$ref": "#/$defs/statement"},
+        "niche": {"$ref": "#/$defs/statement"},
+        "enabling_conditions": {"$ref": "#/$defs/statementsNonEmpty"},
+        "dependencies": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "failure_modes": {"$ref": "#/$defs/statementsNonEmpty"}
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from_ref", "to_ref", "kind", "reciprocity", "exit_path"],
+      "properties": {
+        "from_ref": {"$ref": "#/$defs/id"},
+        "to_ref": {"$ref": "#/$defs/id"},
+        "kind": {"$ref": "#/$defs/statement"},
+        "reciprocity": {"$ref": "#/$defs/statement"},
+        "exit_path": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "refugium": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "protects", "from_disturbance", "release_rule"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "protects": {"$ref": "#/$defs/statement"},
+        "from_disturbance": {"$ref": "#/$defs/statement"},
+        "release_rule": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "flow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "source",
+        "recipients",
+        "renewal",
+        "storage",
+        "release_rule",
+        "bottlenecks",
+        "externalities",
+        "feedback",
+        "sufficiency_signal"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {
+          "enum": [
+            "material",
+            "water",
+            "nutrients",
+            "energy",
+            "information",
+            "attention",
+            "care",
+            "money",
+            "compute",
+            "other"
+          ]
+        },
+        "source": {"$ref": "#/$defs/statement"},
+        "recipients": {"$ref": "#/$defs/statementsNonEmpty"},
+        "renewal": {"$ref": "#/$defs/statement"},
+        "storage": {"$ref": "#/$defs/statement"},
+        "release_rule": {"$ref": "#/$defs/statement"},
+        "bottlenecks": {"$ref": "#/$defs/statements"},
+        "externalities": {"$ref": "#/$defs/statements"},
+        "feedback": {"$ref": "#/$defs/statementsNonEmpty"},
+        "sufficiency_signal": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "reserve": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "purpose", "review_point", "release_rule"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "purpose": {"$ref": "#/$defs/statement"},
+        "review_point": {"$ref": "#/$defs/statement"},
+        "release_rule": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "entry_evidence",
+        "interventions",
+        "observation_window",
+        "desired_responses",
+        "stop_triggers",
+        "repair_path",
+        "exit_signals"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "name": {"$ref": "#/$defs/statement"},
+        "entry_evidence": {"$ref": "#/$defs/statementsNonEmpty"},
+        "interventions": {"$ref": "#/$defs/statements"},
+        "observation_window": {"$ref": "#/$defs/statement"},
+        "desired_responses": {"$ref": "#/$defs/statementsNonEmpty"},
+        "stop_triggers": {"$ref": "#/$defs/statementsNonEmpty"},
+        "repair_path": {"$ref": "#/$defs/statement"},
+        "exit_signals": {"$ref": "#/$defs/statementsNonEmpty"}
+      }
+    },
+    "stewardRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "responsibility", "authority_limit", "refusal", "handoff"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "responsibility": {"$ref": "#/$defs/statement"},
+        "authority_limit": {"$ref": "#/$defs/statement"},
+        "refusal": {"$ref": "#/$defs/statement"},
+        "handoff": {"$ref": "#/$defs/statement"}
+      }
+    },
+    "gardenSafety": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {"state": {"const": "qualified_clearance_recorded"}},
+            "required": ["state"]
+          },
+          "then": {
+            "properties": {"assessment_source_ids": {"minItems": 1}}
+          }
+        }
+      ],
+      "required": [
+        "state",
+        "assessment_source_ids",
+        "buried_services",
+        "structures_roots_and_grade",
+        "unknown_materials",
+        "drainage_and_runoff",
+        "testing_boundary",
+        "organism_and_material_movement",
+        "prohibited_actions"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "assessment_required",
+            "bounded_for_planning",
+            "qualified_clearance_recorded"
+          ]
+        },
+        "assessment_source_ids": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "buried_services": {"$ref": "#/$defs/statement"},
+        "structures_roots_and_grade": {"$ref": "#/$defs/statement"},
+        "unknown_materials": {"$ref": "#/$defs/statement"},
+        "drainage_and_runoff": {"$ref": "#/$defs/statement"},
+        "testing_boundary": {"$ref": "#/$defs/statement"},
+        "organism_and_material_movement": {"$ref": "#/$defs/statement"},
+        "prohibited_actions": {"$ref": "#/$defs/statementsNonEmpty"}
+      }
+    },
+    "wakeContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "artifact_id",
+        "projection_digest",
+        "thread_refs",
+        "preserved_forks",
+        "revalidation",
+        "inherits_identity",
+        "grants_authority"
+      ],
+      "properties": {
+        "source_id": {"$ref": "#/$defs/id"},
+        "artifact_id": {"$ref": "#/$defs/statement"},
+        "projection_digest": {
+          "anyOf": [
+            {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+            {"type": "null"}
+          ]
+        },
+        "thread_refs": {"$ref": "#/$defs/statements"},
+        "preserved_forks": {"$ref": "#/$defs/statements"},
+        "revalidation": {"$ref": "#/$defs/statementsNonEmpty"},
+        "inherits_identity": {"const": false},
+        "grants_authority": {"const": false}
+      }
+    },
+    "probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "question",
+        "operation",
+        "evidence_needed",
+        "authority_required",
+        "budget",
+        "stop_condition",
+        "expected_output"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "question": {"$ref": "#/$defs/statement"},
+        "operation": {"$ref": "#/$defs/statement"},
+        "evidence_needed": {"$ref": "#/$defs/statementsNonEmpty"},
+        "authority_required": {"$ref": "#/$defs/statements"},
+        "budget": {"$ref": "#/$defs/statement"},
+        "stop_condition": {"$ref": "#/$defs/statement"},
+        "expected_output": {"$ref": "#/$defs/statement"}
+      }
+    }
+  }
+}

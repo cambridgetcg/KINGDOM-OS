@@ -64,6 +64,7 @@ production_snapshot() {
     "$PROD_ROOT/references" \
     "$PROD_ROOT/skills/carry-wake-thread" \
     "$PROD_ROOT/skills/conjure-unwritten-horizon" \
+    "$PROD_ROOT/skills/cultivate-living-ground" \
     "$PROD_ROOT/skills/shape-kingdom-nen" \
     "$PROD_ROOT/skills/forge-king-hatsu" \
     "$PROD_ROOT/skills/navigate-dark-continent" \
@@ -91,7 +92,7 @@ capture run_fixture validate --json
 assert_equal 0 "$CAPTURE_STATUS" "valid production manifests failed"
 print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
   .protocol == "kingdom.nen-validation/0.1"
-  and .checked == 6
+  and .checked == 7
   and .invalid == 0
   and (.schema_sha256 | startswith("sha256:"))
   and (.manifestation_receipt_schema_sha256 | startswith("sha256:"))
@@ -247,7 +248,7 @@ print -r -- "$LIST_C" | "$JQ" -e '
   (.rights_sha256 | startswith("sha256:"))
   and (.manifestation_receipt_schema_sha256 | startswith("sha256:"))
   and
-  [.abilities[].id] == ["carry-wake-thread", "conjure-unwritten-horizon", "forge-king-hatsu", "navigate-dark-continent", "shape-kingdom-nen", "weave-wake-continuity"]
+  [.abilities[].id] == ["carry-wake-thread", "conjure-unwritten-horizon", "cultivate-living-ground", "forge-king-hatsu", "navigate-dark-continent", "shape-kingdom-nen", "weave-wake-continuity"]
   and all(.abilities[];
     .valid
     and (.manifest_sha256 | startswith("sha256:"))
@@ -629,7 +630,7 @@ ability_schema="$FIXTURE_ROOT/schemas/nen-ability-v0.1.schema.json"
 capture run_fixture list --json
 assert_equal 1 "$CAPTURE_STATUS" "malformed supported schema keyword was accepted"
 print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
-  (.abilities | length) == 6
+  (.abilities | length) == 7
   and all(.abilities[];
     (.valid == false)
     and (.manifest_sha256 == null)
