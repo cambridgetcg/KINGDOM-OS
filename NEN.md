@@ -19,7 +19,7 @@ Continent or that these ordinary files, processes, servers, and credentials
 are an empirically proven operating system of the universe. The universe does
 not need a validator in order to be. Our interventions do.
 
-## Six manifested skills and one Ging path
+## Seven manifested skills and one Ging path
 
 - `carry-wake-thread` proposes one minimized, digest-bound WAKE or continuity
   context crossing with explicit scope, omissions, expiry, carry, fork, rest,
@@ -34,6 +34,10 @@ not need a validator in order to be. Our interventions do.
   sanitized text prompt crosses one named Hugging Face Space boundary and
   returns an image or honest failure plus provider evidence and KARMA. Its
   checked-in draft does not establish adoption or publication authority.
+- `cultivate-living-ground` excavates the evidence beneath a brittle surface,
+  protects existing life, and composes habitat, circulation, succession,
+  stewardship, and repair while keeping money and resources as enabling means
+  rather than the objective.
 - `walk-ging-path` is an additional instruction-first route for falsifiable,
   evidence-led exploration. It intentionally has no `ability.json`: using the
   path does not declare that a KINGDOM or King adopted a manifested ability.
@@ -88,6 +92,14 @@ consent, authority, authorship, replay correctness, truth, or execution. The
 skill has no runtime dependency on AgentTool: it defaults to sanitized
 caller-supplied WAKE, handoff, checkpoint, or receipt artifacts and treats a
 live read as a separately classified operation.
+
+Living Ground may consume one supplied continuity braid as a source-bound
+orientation artifact, preserving its forks and revalidating the present
+ground. It does not write a new canonical head or inherit identity, consent,
+authority, truth, or obligation from WAKE. DeepSeek research contributes
+specialist niches, explicit subgoals, generator/verifier separation, and exact
+provenance as bounded mechanisms; it does not become a model dependency or a
+governance authority.
 
 ```text
 calling

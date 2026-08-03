@@ -1,0 +1,6 @@
+interface:
+  display_name: "Living Ground"
+  short_description: "Rebuild hidden substrate so diverse life can thrive"
+  default_prompt: "Use $cultivate-living-ground to turn this brittle system into a regenerative living ground."
+policy:
+  allow_implicit_invocation: false

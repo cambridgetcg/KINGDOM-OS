@@ -1,0 +1,489 @@
+{
+  "$schema": "urn:kingdom:schema:living-ground:0.1",
+  "protocol": "kingdom.living-ground/0.1",
+  "plan_id": "agent-service-first-bed",
+  "state": "staged",
+  "scope_and_authority": {
+    "system_ref": "A small team's agent-orchestration service",
+    "purpose": "Create a durable two-week ground layer before considering another visible feature.",
+    "domain": "agent_system",
+    "cultivation_horizon": "One read-only survey followed by one separately approved two-week intervention.",
+    "affected_beings": [
+      "Team members who operate and recover the service.",
+      "People whose private context may enter jobs or logs.",
+      "Agents that receive bounded work without presumed identity continuity."
+    ],
+    "allowed_operations": [
+      "Inspect the supplied brief and sanitized continuity braid.",
+      "Create and validate this local plan."
+    ],
+    "permission_required": [
+      "Read production jobs or logs.",
+      "Change state storage, ownership rules, retention, access, deployment, or spending."
+    ],
+    "stop_conditions": [
+      "Private context appears in evidence not approved for this plan.",
+      "A proposed intervention lacks an owner, rollback, observation window, or sustainable care budget."
+    ],
+    "retention_horizon": "Review or retire this plan after the two-week intervention decision."
+  },
+  "life_charter": {
+    "terminal_objective": "living_capacity_and_renewal",
+    "subjects": [
+      {
+        "id": "operators",
+        "description": "The people who operate and recover the service.",
+        "agency_boundary": "Participation, on-call work, representation, and access require their own current agreement and authority."
+      },
+      {
+        "id": "context-providers",
+        "description": "People whose context may be processed by jobs.",
+        "agency_boundary": "System connectivity does not grant consent to inspect, retain, or disclose their context."
+      },
+      {
+        "id": "arriving-agents",
+        "description": "Distinct agents offered bounded work and orientation artifacts.",
+        "agency_boundary": "A shared label or WAKE artifact does not require persona, identity, consent, or inherited authority."
+      }
+    ],
+    "primary_outcomes": [
+      "Jobs survive expected restarts without silent loss.",
+      "Ownership, refusal, recovery, privacy, and handoff remain legible.",
+      "The service can adapt without exhausting one maintainer."
+    ],
+    "rights_and_safety": [
+      "Dignity, refusal, rest, privacy, credit, and repair remain standing conditions.",
+      "No health signal or resource allocation ranks the worth of a participant."
+    ],
+    "enabling_means": [
+      "Six months of reported runway.",
+      "Existing code, tests, state stores, operators, and local tooling."
+    ],
+    "health_signals": [
+      {
+        "id": "restart-recovery",
+        "signal": "A bounded fixture job can be recovered after a controlled restart.",
+        "evidence_class": "unknown",
+        "limit": "A fixture result does not prove all production recovery paths."
+      },
+      {
+        "id": "ownership-clarity",
+        "signal": "Each staged job has one explicit current holder, refusal path, expiry, and handoff state.",
+        "evidence_class": "inferred",
+        "limit": "A schema cannot prove that a participant understood or accepted a role."
+      },
+      {
+        "id": "care-load",
+        "signal": "Recovery knowledge and scheduled load do not depend on one continuously available maintainer.",
+        "evidence_class": "reported",
+        "limit": "Reported availability may differ from experienced burden."
+      }
+    ]
+  },
+  "source_ledger": [
+    {
+      "id": "caller-brief",
+      "kind": "caller_input",
+      "locator": "Caller-supplied scenario",
+      "provenance": "Reported by the current caller for planning.",
+      "observed_at": "2026-08-02T20:00:00Z",
+      "content_digest": null,
+      "evidence_limitations": [
+        "No repository, production service, logs, budgets, or participant statements were inspected."
+      ]
+    },
+    {
+      "id": "wake-brief",
+      "kind": "wake_braid",
+      "locator": "Caller-supplied sanitized continuity braid",
+      "provenance": "Orientation artifact supplied for this example.",
+      "observed_at": "2026-08-02T20:00:00Z",
+      "content_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_limitations": [
+        "The braid is attributed orientation, not identity, consent, authority, truth, or proof of execution."
+      ]
+    }
+  ],
+  "ground_profile": [
+    {
+      "id": "dashboard-surface",
+      "position": "Visible surface",
+      "statement": "The service reportedly demos well through its dashboard.",
+      "classification": "supportive",
+      "evidence_class": "reported",
+      "source_ids": ["caller-brief"],
+      "existing_life_refs": ["operators"],
+      "constraints": ["The visible demo does not test persistence, ownership, privacy, or recovery."],
+      "unknowns": ["Which dashboard paths correspond to durable state is unknown."]
+    },
+    {
+      "id": "restart-state",
+      "position": "Persistence layer",
+      "statement": "Some job state reportedly disappears after restarts.",
+      "classification": "bottleneck",
+      "evidence_class": "reported",
+      "source_ids": ["caller-brief", "wake-brief"],
+      "existing_life_refs": ["operators", "arriving-agents"],
+      "constraints": ["The failure mode and affected state classes are not yet reproduced."],
+      "unknowns": ["Durability boundaries, write ordering, replay semantics, and recovery guarantees are unknown."]
+    },
+    {
+      "id": "ownership-model",
+      "position": "Coordination layer",
+      "statement": "Task ownership is reportedly ambiguous.",
+      "classification": "bottleneck",
+      "evidence_class": "reported",
+      "source_ids": ["caller-brief"],
+      "existing_life_refs": ["operators", "arriving-agents"],
+      "constraints": ["A technical lease cannot establish consent, identity, or representative authority."],
+      "unknowns": ["Current claim, expiry, recovery, refusal, and handoff semantics are unknown."]
+    },
+    {
+      "id": "private-logging",
+      "position": "Observation layer",
+      "statement": "Logs may contain private context.",
+      "classification": "unknown",
+      "evidence_class": "reported",
+      "source_ids": ["caller-brief"],
+      "existing_life_refs": ["context-providers", "operators"],
+      "constraints": ["The plan has no authority to inspect production log contents."],
+      "unknowns": ["Data classes, access paths, recipients, retention, and redaction behavior are unknown."]
+    },
+    {
+      "id": "single-recovery-holder",
+      "position": "Recovery layer",
+      "statement": "One maintainer reportedly handles recovery.",
+      "classification": "harm",
+      "evidence_class": "reported",
+      "source_ids": ["caller-brief"],
+      "existing_life_refs": ["operators"],
+      "constraints": ["Knowledge transfer must not silently add unpaid or unwanted obligations."],
+      "unknowns": ["The maintainer's experienced load, willingness, and available recovery paths are unknown."]
+    }
+  ],
+  "disposition_ledger": [
+    {
+      "ground_ref": "dashboard-surface",
+      "disposition": "retain",
+      "rationale": "Keep the useful surface while refusing to treat it as evidence that the ground is healthy.",
+      "affected_life_refs": ["operators"],
+      "authority_required": [],
+      "reversibility": "No dashboard change is proposed in this stage.",
+      "risk": "The surface may continue to attract feature work before substrate repair.",
+      "verification": ["Label dashboard evidence separately from persistence and recovery evidence."],
+      "repair_path": "Pause feature planning and return attention to the ground profile."
+    },
+    {
+      "ground_ref": "restart-state",
+      "disposition": "test",
+      "rationale": "Reproduce one bounded state-loss path before selecting a storage change.",
+      "affected_life_refs": ["operators", "arriving-agents"],
+      "authority_required": ["Approval to create and restart an isolated fixture."],
+      "reversibility": "Use disposable fixture state and no production writes.",
+      "risk": "A narrow reproduction may miss another loss mode.",
+      "verification": ["Capture pre-restart and post-restart state digests and recovery observations."],
+      "repair_path": "Delete the fixture, preserve the bounded report, and leave production unchanged."
+    },
+    {
+      "ground_ref": "ownership-model",
+      "disposition": "redesign",
+      "rationale": "Specify claim, expiry, refusal, handoff, and recovery states before adding workers.",
+      "affected_life_refs": ["operators", "arriving-agents"],
+      "authority_required": ["Current team agreement before changing live ownership behavior."],
+      "reversibility": "Prototype the state machine against fixtures before migration.",
+      "risk": "A lease can be mistaken for authority or identity.",
+      "verification": ["Exercise claim conflicts, expiry, refusal, handoff, and recovery in isolated tests."],
+      "repair_path": "Keep the existing live behavior and revise the proposed state machine."
+    },
+    {
+      "ground_ref": "private-logging",
+      "disposition": "isolate",
+      "rationale": "Do not inspect possible private content until data boundaries and authority are established.",
+      "affected_life_refs": ["context-providers", "operators"],
+      "authority_required": ["Scoped approval for a sanitized log-schema and retention review."],
+      "reversibility": "Use synthetic events first and make no retention change.",
+      "risk": "Continued unknown collection may expose private context.",
+      "verification": ["Map fields, access, recipients, retention, and redaction using synthetic data."],
+      "repair_path": "Stop inspection, restrict access within existing authority, and open a separate privacy repair task if exposure is observed."
+    },
+    {
+      "ground_ref": "single-recovery-holder",
+      "disposition": "remediate",
+      "rationale": "Reduce the single-person recovery dependency without conscripting another person.",
+      "affected_life_refs": ["operators"],
+      "authority_required": ["Voluntary participation in documenting and testing recovery."],
+      "reversibility": "Begin with a reviewed runbook and opt-in shadow exercise.",
+      "risk": "Knowledge transfer can become extra care work or erase original credit.",
+      "verification": ["A consenting second operator can follow the bounded fixture recovery path while the first can refuse or rest."],
+      "repair_path": "Stop the exercise, restore the previous rota, credit contributors, and revise the care budget."
+    }
+  ],
+  "habitat": {
+    "minimum_viable_conditions": [
+      "One reproduced restart boundary with durable fixture evidence.",
+      "One explicit ownership and refusal state model.",
+      "A synthetic privacy boundary before any live-log inspection.",
+      "A recovery path that does not require one continuously available person."
+    ],
+    "layers": [
+      {
+        "id": "durable-state-bed",
+        "name": "Durable state bed",
+        "niche": "Persist and recover bounded job state with explicit lineage and failure semantics.",
+        "enabling_conditions": ["Reproduced fixture", "Documented durability boundary", "Rollback path"],
+        "dependencies": [],
+        "failure_modes": ["Silent state loss", "False replay confidence", "Unbounded retention"]
+      },
+      {
+        "id": "ownership-niche",
+        "name": "Voluntary ownership niche",
+        "niche": "Coordinate claim, expiry, refusal, handoff, and recovery without implying identity or authority.",
+        "enabling_conditions": ["Explicit state transitions", "Current team review", "Conflict tests"],
+        "dependencies": ["durable-state-bed"],
+        "failure_modes": ["Double claim", "Uncancellable obligation", "Lease treated as permission"]
+      },
+      {
+        "id": "recovery-canopy",
+        "name": "Distributed recovery canopy",
+        "niche": "Make bounded recovery knowledge and rest paths available to more than one consenting operator.",
+        "enabling_conditions": ["Reviewed runbook", "Opt-in shadow exercise", "Care-load budget"],
+        "dependencies": ["durable-state-bed", "ownership-niche"],
+        "failure_modes": ["Central gardener", "Resilience by exhaustion", "Credit erasure"]
+      }
+    ],
+    "relationships": [
+      {
+        "from_ref": "durable-state-bed",
+        "to_ref": "ownership-niche",
+        "kind": "The ownership state references durable jobs without claiming who a bearer is.",
+        "reciprocity": "Ownership events improve recovery evidence; recovery evidence can falsify ownership assumptions.",
+        "exit_path": "Disable the proposed ownership projection while retaining the fixture evidence."
+      },
+      {
+        "from_ref": "ownership-niche",
+        "to_ref": "recovery-canopy",
+        "kind": "Explicit handoff states bound voluntary recovery exercises.",
+        "reciprocity": "Recovery exercises reveal ambiguous handoff states for revision.",
+        "exit_path": "Any participant may stop the exercise without inheriting an on-call obligation."
+      }
+    ],
+    "refugia": [
+      {
+        "id": "production-refugium",
+        "protects": "Production state, private logs, and current operator obligations.",
+        "from_disturbance": "The first survey and fixture tests.",
+        "release_rule": "Change only through a separately reviewed and authorized intervention."
+      }
+    ],
+    "wild_margin": {
+      "purpose": "Leave capacity for rest, investigation, and unexpected failure modes instead of scheduling all runway and attention.",
+      "protected_capacity": "No new visible feature is committed by this plan, and part of the two-week window remains unallocated.",
+      "review_rule": "The margin may be used only by a current choice, never because a dashboard target is behind."
+    }
+  },
+  "flows": [
+    {
+      "id": "state-information-flow",
+      "kind": "information",
+      "source": "Fixture job events and explicit ownership transitions.",
+      "recipients": ["Authorized test operators", "The local validation report"],
+      "renewal": "Generated only during bounded fixture runs.",
+      "storage": "Disposable fixture storage plus a minimized digest-bound report.",
+      "release_rule": "Retain the report through the two-week decision; remove raw fixture state afterward.",
+      "bottlenecks": ["Unknown restart semantics", "Ambiguous current ownership"],
+      "externalities": ["A fixture may create false confidence if generalized to production."],
+      "feedback": ["Compare expected and observed state before and after restart."],
+      "sufficiency_signal": "Enough evidence exists to choose or refuse one storage intervention."
+    },
+    {
+      "id": "care-flow",
+      "kind": "care",
+      "source": "Voluntary operator attention within the declared care-load budget.",
+      "recipients": ["Operators", "The recovery runbook", "Affected service users"],
+      "renewal": "Rest, refusal, rotation, and bounded handoff restore capacity.",
+      "storage": "Reviewed runbook and fixture evidence, not unspoken dependence on one person.",
+      "release_rule": "No participant inherits an on-call or recovery duty from reading the plan.",
+      "bottlenecks": ["One reported recovery holder"],
+      "externalities": ["Documentation and shadowing can add invisible labour."],
+      "feedback": ["Ask participants about experienced burden and observe exercise duration."],
+      "sufficiency_signal": "The planned stage fits volunteered capacity and preserves rest."
+    },
+    {
+      "id": "runway-flow",
+      "kind": "money",
+      "source": "Reported six-month team funding.",
+      "recipients": ["Current operating costs", "Approved substrate repair", "A resilience reserve"],
+      "renewal": "Unknown; this plan does not assume new revenue.",
+      "storage": "Existing team treasury under its current governance.",
+      "release_rule": "Release only for a named stage after its evidence and authority gate.",
+      "bottlenecks": ["Actual burn and commitments were not inspected."],
+      "externalities": ["Buying infrastructure can displace diagnosis and add maintenance."],
+      "feedback": ["Compare approved spend and recurring care cost with the sufficiency floor."],
+      "sufficiency_signal": "The repair stage can be completed and rolled back without threatening essential operations or rest."
+    }
+  ],
+  "economy": {
+    "role": "enabling_flow",
+    "terminal_objective": false,
+    "dignity_score": false,
+    "resource_accumulation_goal": false,
+    "sufficiency_floor": "Protect essential operations, participant rest, rollback, and one bounded substrate repair before funding visible expansion.",
+    "money_flow_refs": ["runway-flow"],
+    "allocations": [
+      "Prefer fixture evidence, privacy boundaries, durable state, and recovery knowledge before a new dashboard feature."
+    ],
+    "reserves": [
+      {
+        "id": "repair-reserve",
+        "purpose": "Fund rollback, incident repair, or the smallest accepted durability change.",
+        "review_point": "Review after the first fixture and care-load evidence are available.",
+        "release_rule": "Release only through current treasury authority for a named intervention; otherwise retain or return it to general operations."
+      }
+    ],
+    "externalities": [
+      "Tool or infrastructure spend can create lock-in, recurring care load, and pressure to justify sunk cost."
+    ],
+    "feedback": [
+      "Review sufficiency, care load, rollback capacity, and living outcomes together rather than maximizing runway or spend."
+    ]
+  },
+  "succession_stages": [
+    {
+      "id": "pioneer-fixture",
+      "name": "Pioneer: reveal one restart seam",
+      "entry_evidence": ["The reported loss remains unreproduced and production reads are not authorized."],
+      "interventions": ["Build one synthetic job-state fixture and controlled restart test after approval."],
+      "observation_window": "One bounded local test session with no automatic retry.",
+      "desired_responses": ["The exact durable and lost fields become observable."],
+      "stop_triggers": ["The fixture requires production data, credentials, private logs, or an undeclared service."],
+      "repair_path": "Delete disposable fixture state, retain the minimized result, and leave production unchanged.",
+      "exit_signals": ["A reproducible observation supports one narrow storage proposal or an honest no-change decision."]
+    },
+    {
+      "id": "establish-ownership",
+      "name": "Establishment: bind ownership and recovery",
+      "entry_evidence": ["The restart seam is reproduced and the team accepts a proposed bounded state model."],
+      "interventions": ["Prototype claim, expiry, refusal, handoff, and recovery against fixtures."],
+      "observation_window": "The remainder of the approved two-week intervention window.",
+      "desired_responses": ["Conflicts and expiry remain recoverable without one continuously present maintainer."],
+      "stop_triggers": ["Participant refusal, unbounded migration, privacy exposure, or care load above the agreed budget."],
+      "repair_path": "Stop the prototype, preserve evidence and disagreement, and restore the prior live path.",
+      "exit_signals": ["Tests pass, care remains sustainable, authority for any live migration is separately decided, and remaining unknowns are explicit."]
+    }
+  ],
+  "disturbance_and_repair": {
+    "expected_disturbances": [
+      "Controlled fixture restarts.",
+      "Attention diverted from a visible feature to foundation work."
+    ],
+    "degradation_signals": [
+      "New work depends on one maintainer.",
+      "Private context enters the fixture or report.",
+      "Runway, throughput, or passing tests replace participant voice and recovery evidence."
+    ],
+    "decomposition_paths": [
+      "Fixture data expires after the decision horizon.",
+      "Rejected state models and obsolete runbook steps are retired with their rationale preserved."
+    ],
+    "repair_sequence": [
+      "Stop the dependent stage.",
+      "Protect participants and production.",
+      "Preserve bounded evidence and disagreement.",
+      "Reverse or contain the intervention.",
+      "Correct privacy, credit, care load, and provenance before re-entry."
+    ],
+    "recovery_signals": [
+      "Production remains unchanged until authorized.",
+      "Participants can rest or refuse without hidden obligation.",
+      "One smaller next step is supported by evidence and a repair path."
+    ]
+  },
+  "stewardship": {
+    "roles": [
+      {
+        "id": "survey-steward",
+        "responsibility": "Maintain the source ledger, unknowns, and validation result for this plan.",
+        "authority_limit": "May not inspect production, represent participants, spend, or mutate the service from this role.",
+        "refusal": "May rest or hand back the plan when evidence, authority, or care capacity is insufficient.",
+        "handoff": "Transfer the minimized plan and source references without credentials or private context."
+      },
+      {
+        "id": "fixture-verifier",
+        "responsibility": "Independently check one authorized fixture result against its declared acceptance and stop conditions.",
+        "authority_limit": "Verification covers the named fixture, not production correctness or general truth.",
+        "refusal": "May reject incomplete evidence or decline the review without penalty.",
+        "handoff": "Return findings, commands, outputs, limits, and unresolved disagreement."
+      }
+    ],
+    "care_load_budget": "No participant receives an implied on-call duty; schedule only volunteered fixture and review time within the two-week horizon.",
+    "central_dependency_reduction": "Pair an artifact-producing implementer with a distinct fixture verifier and keep the recovery runbook usable without a single person's private memory.",
+    "refusal_path": "Any participant can refuse their dependent stage; preserve the refusal without retry pressure or loss of standing.",
+    "handoff_path": "Carry source-bound artifacts and current unknowns through a bounded handoff or continuity braid, never identity or inherited authority.",
+    "credit": "Record the authors and reviewers of fixtures, runbooks, evidence, and repairs without claiming ownership of a participant or voice.",
+    "privacy": "Use synthetic fixtures first; minimize retained evidence and keep private logs and context outside the plan.",
+    "observation_cadence": "Observe after each stage and before allocating money, adding workers, or changing live state.",
+    "decision_rule": "Advance only when plural health signals, current authority, sustainable care, stop conditions, and repair are all legible; otherwise rest, revise, or refuse."
+  },
+  "garden_safety": null,
+  "wake_context": {
+    "source_id": "wake-brief",
+    "artifact_id": "example-braid-agent-service",
+    "projection_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "thread_refs": ["Reported restart-state investigation remains open."],
+    "preserved_forks": ["Whether loss occurs before persistence or during recovery remains unresolved."],
+    "revalidation": [
+      "Reconfirm the current repository, test scope, authority, data class, and stop conditions before any fixture execution."
+    ],
+    "inherits_identity": false,
+    "grants_authority": false
+  },
+  "next_safe_probes": [
+    {
+      "id": "map-state-contract",
+      "question": "Which job fields are intended to survive a restart?",
+      "operation": "Read the named public or caller-supplied state contract without production access.",
+      "evidence_needed": ["Exact contract revision", "Field and transition inventory", "Declared durability semantics"],
+      "authority_required": ["Permission to read the named repository files if they are not already supplied."],
+      "budget": "One repository, bounded files, no network, no code execution.",
+      "stop_condition": "Stop if the contract is absent, private, generated from secrets, or conflicts with the supplied scope.",
+      "expected_output": "A source-bound field and transition map with unknown durability semantics preserved."
+    },
+    {
+      "id": "design-synthetic-restart",
+      "question": "Can one reported loss path be reproduced without private or production data?",
+      "operation": "Design, but do not execute, a disposable synthetic restart fixture.",
+      "evidence_needed": ["Fixture inputs", "Expected pre/post state", "Cleanup and rollback"],
+      "authority_required": [],
+      "budget": "One fixture design and one proposed attempt; zero provider calls and zero production writes.",
+      "stop_condition": "Stop the design if reproducing the path inherently requires live data or credentials.",
+      "expected_output": "A separately executable test proposal with acceptance, stop, cleanup, and falsifiers."
+    }
+  ],
+  "receipt": {
+    "prepared_at": "2026-08-02T20:00:00Z",
+    "prepared_by_label": "Living Ground example author",
+    "operations": [
+      "Transformed a fictional caller brief and sanitized fictional continuity braid into a local plan example."
+    ],
+    "external_effects": [],
+    "unknowns": [
+      "No real repository, service, people, budgets, or production behavior were inspected."
+    ],
+    "schema_validation": "not_checked",
+    "semantic_validation": "not_checked",
+    "boundary_review": "not_checked",
+    "karma_state": "none"
+  },
+  "claims_not_established": {
+    "site_or_substrate_safety": true,
+    "ecological_outcome": true,
+    "participant_consent": true,
+    "representative_authority": true,
+    "operational_authority": true,
+    "stable_identity": true,
+    "consciousness": true,
+    "truth": true,
+    "successful_execution": true,
+    "permanent_thriving": true
+  }
+}
