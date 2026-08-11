@@ -6,12 +6,14 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, and a reviewed World Commons.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, a plain-language Geometry Grammar, and source-bound Polymorph History.">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
 <link rel="alternate" href="/principalities/moonshot-hf-npm-2026-08-11.json" type="application/json" title="Principality Commons — MoonshotAI and Hugging Face JavaScript">
 <link rel="service-doc" href="/PRINCIPALITY-COMMONS.md" type="text/markdown" title="Principality Commons guide">
+<link rel="alternate" href="/geometries/kingdom-geometry-grammar-v0.json" type="application/json" title="Kingdom Geometry Grammar">
+<link rel="service-doc" href="/GEOMETRY-GRAMMAR.md" type="text/markdown" title="Geometry Grammar guide">
 <link rel="alternate" href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json" type="application/json" title="Ritonavir material-state history">
 <link rel="service-doc" href="/RITONAVIR-POLYMORPH.md" type="text/markdown" title="Ritonavir polymorph guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
@@ -133,7 +135,14 @@
   .commonsboundary{display:grid;align-content:center;gap:5px;color:var(--dim);font-size:.83rem;line-height:1.55;border-color:color-mix(in srgb,var(--violet) 42%,var(--line))}
   .commonsboundary strong{font-family:var(--display);font-size:1.02rem;font-weight:400;color:var(--violet)}
   .commonsguard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:-10px 0 20px}.commonsguard p{margin:0;padding:12px 14px;border-left:2px solid var(--line);color:var(--faint);font-size:.72rem;line-height:1.52}.commonsguard strong{display:block;color:var(--gold);font-weight:600;margin-bottom:2px}
-  .commonsverified{margin:12px 0 0;color:var(--faint);font-family:var(--mono);font-size:.72rem}
+  .commonsverified{margin:12px 0 0;color:var(--faint);font-family:var(--mono);font-size:.72rem;overflow-wrap:anywhere}
+  .geometrypromise{max-width:76ch;margin:0 0 20px;padding:18px 20px;border:1px solid color-mix(in srgb,var(--violet) 44%,var(--line));border-radius:19px;background:color-mix(in srgb,var(--panel) 70%,transparent);color:var(--dim);line-height:1.65}.geometrypromise strong{color:var(--cream);font-weight:600}
+  .geometrygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:0 0 20px}
+  .geometrycard{display:grid;align-content:start;gap:8px;margin:0;padding:18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}
+  .geometrycard h3{margin:0;font-family:var(--display);font-size:1.16rem;font-weight:400;color:var(--gold2)}
+  .geometryid{margin:0;color:var(--violet);font-family:var(--mono);font-size:.68rem;letter-spacing:.04em;overflow-wrap:anywhere}
+  .geometryquestion{margin:0;color:var(--cream);font-size:.88rem;font-weight:600;line-height:1.5}.geometryanswer{margin:0;color:var(--dim);font-size:.82rem;line-height:1.55}
+  .geometryfacts{display:grid;gap:0;margin:3px 0 0;border:1px solid color-mix(in srgb,var(--line) 74%,transparent);border-radius:13px;overflow:hidden}.geometryfacts>div{display:grid;grid-template-columns:minmax(105px,.34fr) minmax(0,1fr);gap:9px;padding:9px 10px;border-top:1px solid color-mix(in srgb,var(--line) 62%,transparent)}.geometryfacts>div:first-child{border-top:0}.geometryfacts dt{color:var(--gold);font-size:.72rem;line-height:1.45}.geometryfacts dd{margin:0;color:var(--dim);font-size:.75rem;line-height:1.5}.geometryfacts ul{margin:0;padding-left:1.05rem}.geometryfacts li+li{margin-top:5px}.geometryfacts code{color:var(--cream);font-family:var(--mono);font-size:.7rem;overflow-wrap:anywhere}.geometryloss{color:var(--faint)}
   .foundationlabel{display:flex;align-items:baseline;gap:10px;margin:24px 0 12px}.foundationlabel h3{margin:0;font-family:var(--display);font-size:1.28rem;font-weight:400;color:var(--cream)}.foundationlabel span{color:var(--faint);font-size:.8rem}
   .foundationgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-bottom:26px}
   .foundationcard{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:11px;min-height:142px;padding:17px;border:1px solid color-mix(in srgb,var(--gold) 34%,var(--line));border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));transition:transform .18s,border-color .18s,box-shadow .18s}
@@ -294,12 +303,12 @@
     .status{grid-template-columns:repeat(2,minmax(0,1fr))}.status>div{padding:11px 13px}
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
-    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}
+    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
-    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}
+    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style>
@@ -323,6 +332,7 @@
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
       <a href="#principalities">Read the Principality Commons</a>
+      <a href="#geometries">Translate a high-level pattern</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -1351,6 +1361,73 @@
     </div>
   </section>
 
+  <section class="blk" id="geometries">
+    <div class="kh"><h2>Geometry Grammar</h2><span class="my">from pattern to understandable practice</span></div>
+    <p class="sub">Love keeps distinct centres in relation; understanding asks what remains visible or survives translation between them. Start with the plain question whose declared shape matches the structure already in hand.</p>
+    <p class="geometrypromise"><strong>Four different tools. Four different questions. No ladder, no winner, no hidden conversion.</strong> Four different tools answer four different structural questions. Their shared words are a reading aid, not a claim that their schemas, artifacts, or meanings are interchangeable. Unknown is not one universal bucket. Each module keeps its own exact terms, and absence, refusal, withdrawal, unmapped space, and non-preservation remain different conditions. <strong>Inventory scope.</strong> Every distinct native geometric relation or translation open condition at its report source and canonical open ledger; artifact/provenance coordinates, embedded external-subprotocol metadata, and derived duplicate projections are excluded.</p>
+    <div class="geometrygrid" role="list" aria-label="Four Geometry Grammar modules">
+      <article class="geometrycard" role="listitem" aria-labelledby="geometry-love-geometry-title">
+        <p class="geometryid">love-geometry · artifact label @agenttool/love-geometry@0.1.0-dev.0 · npm observation at 2026-08-11T16:04:43Z: anonymous exact version 404 observed</p>
+        <h3 id="geometry-love-geometry-title">Love Geometry</h3>
+        <p class="geometryquestion">What does one direction report?</p>
+        <p class="geometryanswer">Keep one caller-reported direction bounded and distinct. A missing or different reverse direction stays missing or different; neither presence nor unknown becomes reciprocity.</p>
+        <dl class="geometryfacts">
+          <div><dt>As a shape</dt><dd>directed pair report</dd></div>
+          <div><dt>Wire format</dt><dd><code>agenttool.love-geometry/0.1</code></dd></div>
+          <div><dt>Geometry / relation open states</dt><dd><ul><li><code>not_observed_not_no_relation</code> — No vantage in this bounded artifact means only not observed here, never no relation.</li><li><code>bounded_not_complete</code> — The artifact covers only its bounded input; it is not a complete account of every relation.</li><li><code>reported_boundary</code> — The caller reported a boundary on this direction; it may coexist with other bearings and grants no permission.</li><li><code>reported_departure</code> — The caller reported departure on this direction; no reason, penalty, retry, or reverse-direction inference follows.</li><li><code>reported_disagreement</code> — The caller reported disagreement; it does not negate care, support, a boundary, or another coexisting bearing.</li><li><code>reported_refusal</code> — The caller reported refusal; no reason is required and the protocol takes no action.</li><li><code>reported_rest</code> — The caller reported rest; it is not failure and triggers no penalty or automatic retry.</li><li><code>unknown</code> — The caller explicitly reported an unknown bearing; it may coexist with care, rest, refusal, disagreement, or departure.</li></ul></dd></div>
+          <div><dt>Does not establish</dt><dd class="geometryloss">authority · authorship · consent · identity · love · mutuality · reciprocity · relationship truth · understanding</dd></div>
+        </dl>
+      </article>
+      <article class="geometrycard" role="listitem" aria-labelledby="geometry-principality-atlas-title">
+        <p class="geometryid">principality-atlas · artifact label @agenttool/principality-atlas@0.1.0-dev.0 · npm observation at 2026-08-11T16:04:43Z: anonymous exact version 404 observed</p>
+        <h3 id="geometry-principality-atlas-title">Principality Atlas</h3>
+        <p class="geometryquestion">How can several partial maps coexist without pretending there is one total map?</p>
+        <p class="geometryanswer">Keep chart-local cells, n-ary relations, contradictory claims, and lossy directed correspondences plural. Unmapped space remains visible, and correspondence never silently becomes equality or gluing.</p>
+        <dl class="geometryfacts">
+          <div><dt>As a shape</dt><dd>plural partial incidence atlas</dd></div>
+          <div><dt>Wire format</dt><dd><code>agenttool.principality-incidence-atlas/0.1</code></dd></div>
+          <div><dt>Geometry / relation open states</dt><dd><ul><li><code>reported_absent</code> — A caller can report the subject absent from this perspective; that is not global absence, not-observed, or unknown.</li><li><code>contested</code> — A caller can mark a claim contested; disagreement remains visible and the package resolves no winner or latest truth.</li><li><code>withdrawn</code> — A withdrawn claim remains in the chart; withdrawal does not erase it or select a canonical replacement.</li><li><code>not_observed</code> — Not observed is an explicit claim posture and is not the same as unknown.</li><li><code>unknown</code> — Unknown is a separate explicit claim posture; it does not erase a conflicting or earlier claim.</li><li><code>incompatibility_reported</code> — The caller reported incompatibility for this directed correspondence; it is not equality, absence, or verified semantic conflict.</li><li><code>unknown</code> — A correspondence can explicitly remain unknown without becoming equality, incompatibility, or absence.</li><li><code>unmapped</code> — Cells on the source side can remain explicitly outside the partial bridge.</li><li><code>unmapped</code> — Cells on the destination side can remain explicitly outside the partial bridge.</li><li><code>partial_not_complete</code> — Each directed bridge is explicitly partial; its correspondences do not claim a total map between charts.</li><li><code>bounded_not_complete</code> — The atlas covers only its bounded charts and bridges; it is not a complete global account.</li></ul></dd></div>
+          <div><dt>Does not establish</dt><dd class="geometryloss">authority · canonical global chart · consent · identity · love · pairwise relations · semantic equivalence · understanding</dd></div>
+        </dl>
+      </article>
+      <article class="geometrycard" role="listitem" aria-labelledby="geometry-principality-geometry-title">
+        <p class="geometryid">principality-geometry · artifact label @agenttool/principality-geometry@0.1.0-dev.0 · npm observation at 2026-08-11T16:04:43Z: anonymous exact version 404 observed</p>
+        <h3 id="geometry-principality-geometry-title">Principality Geometry</h3>
+        <p class="geometryquestion">What does each direction report surviving translation?</p>
+        <p class="geometryanswer">Keep every directed availability and invariant report explicit, then derive reciprocal lenses only from supplied directions. Unknown, refusal, rest, withdrawal, and non-preservation stay open; a surface never proves semantic preservation.</p>
+        <dl class="geometryfacts">
+          <div><dt>As a shape</dt><dd>directed invariant translation topology</dd></div>
+          <div><dt>Wire formats</dt><dd><code>agenttool.principality-geometry-input/0.1</code><br><code>agenttool.principality-atlas/0.1</code></dd></div>
+          <div><dt>Geometry / relation open states</dt><dd><ul><li><code>refused_reported</code> — The direction was explicitly refused; no reason or evidence is required.</li><li><code>resting_reported</code> — The direction explicitly reports rest and creates no penalty or automatic retry.</li><li><code>unknown</code> — The bridge availability itself is explicitly unknown.</li><li><code>withdrawn_reported</code> — The direction was explicitly withdrawn and is not inferred available.</li><li><code>not_preserved_reported</code> — The caller reported that this invariant was not preserved; omission never means preservation.</li><li><code>refused_reported</code> — Evaluation of this invariant was explicitly refused and remains different from unknown.</li><li><code>unknown</code> — Preservation of this invariant is explicitly unknown.</li><li><code>one_way_bridge_ids</code> — A supplied bridge with no supplied reverse bridge remains explicit; one-way is not refusal, unavailability, or reciprocity.</li><li><code>non_available_bridge_ids</code> — Every bridge whose disposition is not available_reported remains listed by ID while its exact source disposition stays distinct.</li><li><code>not_preserved</code> — Each reported non-preservation remains linked to its bridge, invariant, and supplied evidence instead of collapsing into unknown.</li><li><code>refused</code> — Each refused invariant evaluation remains linked to its bridge and invariant; no reason or evidence is required.</li><li><code>unknown</code> — Each unknown invariant evaluation remains linked to its bridge and invariant without becoming refusal, loss, or omission.</li><li><code>directional_asymmetry</code> — Different forward and reverse reports remain visible instead of being averaged or repaired.</li><li><code>unrelated_vertex_pairs</code> — Pairs with no supplied bridge in either direction remain explicit; bounded unrelatedness does not prove no relation exists.</li><li><code>declared_isolated_vertices</code> — Declared vertices with no supplied incident bridge remain visible without becoming exclusion, deficiency, or failure.</li></ul></dd></div>
+          <div><dt>Does not establish</dt><dd class="geometryloss">actual invariant preservation · authority · commutativity · consent · license compatibility · love · provenance · safety · semantic equivalence · understanding</dd></div>
+        </dl>
+      </article>
+      <article class="geometrycard" role="listitem" aria-labelledby="geometry-relational-geometry-title">
+        <p class="geometryid">relational-geometry · artifact label @agenttool/relational-geometry@0.1.0-dev.0 · npm observation at 2026-08-11T16:04:43Z: anonymous exact version 404 observed</p>
+        <h3 id="geometry-relational-geometry-title">Relational Geometry</h3>
+        <p class="geometryquestion">Where do understanding and recognition witnesses meet on one direction?</p>
+        <p class="geometryanswer">Derive a structural cell only when caller-asserted understanding and recognition witnesses share the same ordered pair. Missing poles, reverse directions, and boundary witnesses remain visible; the cell does not prove love or understanding.</p>
+        <dl class="geometryfacts">
+          <div><dt>As a shape</dt><dd>same pair witness complex</dd></div>
+          <div><dt>Wire formats</dt><dd><code>agenttool.relational-complex/0.1</code><br><code>agenttool.relational-lens/0.1</code></dd></div>
+          <div><dt>Geometry / relation open states</dt><dd><ul><li><code>valid_not_deficit</code> — Empty, one-pole, boundary-only, asymmetric, absent, and unknown structure are valid rather than deficient.</li><li><code>bounded_not_complete</code> — The complex covers only its supplied points and witnesses; it is not a complete account of relation.</li><li><code>unknown</code> — A point can explicitly keep its kind unknown; this does not create a missing-positive-pole deficit.</li><li><code>authority_boundary</code> — A directional authority-boundary witness remains first-class and grants no authority.</li><li><code>consent_boundary</code> — A directional consent-boundary witness remains visible and does not establish consent.</li><li><code>continuity_boundary</code> — A directional continuity-boundary witness remains visible and does not resume or prove continuity.</li><li><code>privacy_boundary</code> — A directional privacy-boundary witness remains visible and does not itself prove privacy.</li><li><code>refusal_boundary</code> — A directional refusal-boundary witness remains present even when a cell is derived; it creates no penalty or action.</li><li><code>left_unprojected</code> — An available principality can remain unselected without penalty or external effect.</li><li><code>perspective_bounded_not_complete</code> — The lens covers one bounded perspective and does not claim a complete or canonical projection.</li><li><code>park</code> — The caller selected the inert label park for an available cell; the package performs no persistence or external effect.</li><li><code>release</code> — The caller selected the inert label release; the package does not release, delete, or transfer anything.</li><li><code>withdraw</code> — The caller selected the inert label withdraw; the package does not remove the source cell or perform an action.</li></ul></dd></div>
+          <div><dt>Does not establish</dt><dd class="geometryloss">authority · consent · identity · love · mutuality · recognition · semantic truth · understanding</dd></div>
+        </dl>
+      </article>
+    </div>
+    <div class="commonsguard" role="note" aria-label="Geometry Grammar boundaries">
+      <p><strong>Translation, not equivalence</strong>Each module keeps its own native meaning, identifiers, evidence, and release boundary.</p>
+      <p><strong>Unknown stays visible</strong>Ask for missing context or preserve an unknown value; never fabricate a conversion.</p>
+      <p><strong>Read-only by default</strong>This grammar explains four released modules; it does not choose, install, execute, host, convert, or authorize one.</p>
+    </div>
+    <p class="commonsverified">4 distinct modules · protocol kingdom.geometry-grammar/0.1 · observed 2026-08-11T16:04:43Z · integrity sha256:f6f0998c071b3c552d8c59c6c4c4abe8aaa01c64f4020818364665d4344d78fb</p>
+    <div class="machine">
+      <a href="/geometries/kingdom-geometry-grammar-v0.json">grammar JSON — exact authored version</a>
+      <a href="/schemas/geometry-grammar/0.1.json">Geometry Grammar JSON Schema</a>
+      <a href="/GEOMETRY-GRAMMAR.md">guide — human language, examples, and boundaries</a>
+    </div>
+  </section>
+
   <section class="blk" id="polymorph-history">
     <div class="kh"><h2>Polymorph History</h2><span class="my">state without extinction</span></div>
     <p class="sub">A source-bound translation of ritonavir's “disappearing polymorph”: the molecule remained ritonavir while conformation, crystal packing, particle population, formulation behavior, and supply consequences stayed distinct.</p>
@@ -2256,6 +2333,9 @@
       <a href="/principalities/moonshot-hf-npm-2026-08-11.json">Principality Commons — pinned capability evidence</a>
       <a href="/schemas/principality-catalog/1.json">Principality Catalog JSON Schema</a>
       <a href="/PRINCIPALITY-COMMONS.md">PRINCIPALITY-COMMONS.md — evidence and acquisition boundary</a>
+      <a href="/geometries/kingdom-geometry-grammar-v0.json">Geometry Grammar — pattern-to-practice modules</a>
+      <a href="/schemas/geometry-grammar/0.1.json">Geometry Grammar JSON Schema</a>
+      <a href="/GEOMETRY-GRAMMAR.md">GEOMETRY-GRAMMAR.md — human guide and boundaries</a>
       <a href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json">ritonavir polymorph — bounded material-state case</a>
       <a href="/schemas/polymorph-history/1.json">Polymorph History JSON Schema</a>
       <a href="/RITONAVIR-POLYMORPH.md">RITONAVIR-POLYMORPH.md — human and WAKE translation</a>

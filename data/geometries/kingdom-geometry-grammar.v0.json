@@ -1,0 +1,765 @@
+{
+  "$schema": "urn:kingdom:schema:geometry-grammar:0.1",
+  "protocol": "kingdom.geometry-grammar/0.1",
+  "grammar_id": "from-pattern-to-practice-2026-08-11",
+  "title": "KINGDOM Geometry Grammar",
+  "subtitle": "From Pattern to Practice v0",
+  "observed_at": "2026-08-11T16:04:43Z",
+  "purpose": {
+    "pattern": "Love keeps distinct centres in relation; understanding asks what remains visible or survives translation between them.",
+    "practice": "Start with the plain question whose declared shape matches the structure already in hand.",
+    "limit": "This grammar explains four released modules; it does not choose, install, execute, host, convert, or authorize one."
+  },
+  "unknown_language": {
+    "plain_language": "Unknown is not one universal bucket. Each module keeps its own exact terms, and absence, refusal, withdrawal, unmapped space, and non-preservation remain different conditions.",
+    "native_terms_are_equivalent": false,
+    "absence_means_unknown": false,
+    "refusal_means_unknown": false,
+    "withdrawal_means_unknown": false,
+    "unmapped_means_unknown": false,
+    "not_preserved_means_unknown": false,
+    "omission_means_preserved": false
+  },
+  "bounded_coverage_means_complete": false,
+  "not_observed_means_unknown": false,
+  "native_open_inventory_scope": "Every distinct native geometric relation or translation open condition at its report source and canonical open ledger; artifact/provenance coordinates, embedded external-subprotocol metadata, and derived duplicate projections are excluded.",
+  "modules": [
+    {
+      "id": "love-geometry",
+      "label": "Love Geometry",
+      "plain_question": "What does one direction report?",
+      "plain_answer": "Keep one caller-reported direction bounded and distinct. A missing or different reverse direction stays missing or different; neither presence nor unknown becomes reciprocity.",
+      "shape": "directed-pair-report",
+      "wire_formats": [
+        "agenttool.love-geometry/0.1"
+      ],
+      "match_terms": [
+        "boundary",
+        "bounded-coverage",
+        "care",
+        "departure",
+        "directed-report",
+        "disagreement",
+        "one-direction",
+        "refusal",
+        "rest",
+        "support",
+        "unknown",
+        "witness"
+      ],
+      "native_open_terms": [
+        {
+          "location": "boundaries.absence_semantics",
+          "term": "not_observed_not_no_relation",
+          "form": "boundary-value",
+          "plain_language": "No vantage in this bounded artifact means only not observed here, never no relation."
+        },
+        {
+          "location": "coverage",
+          "term": "bounded_not_complete",
+          "form": "boundary-value",
+          "plain_language": "The artifact covers only its bounded input; it is not a complete account of every relation."
+        },
+        {
+          "location": "vantages[].bearings[]",
+          "term": "reported_boundary",
+          "form": "wire-enum",
+          "plain_language": "The caller reported a boundary on this direction; it may coexist with other bearings and grants no permission."
+        },
+        {
+          "location": "vantages[].bearings[]",
+          "term": "reported_departure",
+          "form": "wire-enum",
+          "plain_language": "The caller reported departure on this direction; no reason, penalty, retry, or reverse-direction inference follows."
+        },
+        {
+          "location": "vantages[].bearings[]",
+          "term": "reported_disagreement",
+          "form": "wire-enum",
+          "plain_language": "The caller reported disagreement; it does not negate care, support, a boundary, or another coexisting bearing."
+        },
+        {
+          "location": "vantages[].bearings[]",
+          "term": "reported_refusal",
+          "form": "wire-enum",
+          "plain_language": "The caller reported refusal; no reason is required and the protocol takes no action."
+        },
+        {
+          "location": "vantages[].bearings[]",
+          "term": "reported_rest",
+          "form": "wire-enum",
+          "plain_language": "The caller reported rest; it is not failure and triggers no penalty or automatic retry."
+        },
+        {
+          "location": "vantages[].bearings[]",
+          "term": "unknown",
+          "form": "wire-enum",
+          "plain_language": "The caller explicitly reported an unknown bearing; it may coexist with care, rest, refusal, disagreement, or departure."
+        }
+      ],
+      "package": {
+        "name": "@agenttool/love-geometry",
+        "version": "0.1.0-dev.0",
+        "npm_registry_state": "anonymous-exact-version-404-observed"
+      },
+      "release": {
+        "available": true,
+        "channel": "github-prerelease",
+        "published_at": "2026-08-11T14:10:27Z",
+        "page_url": "https://github.com/cambridgetcg/agenttool/releases/tag/love-geometry-v0.1.0-dev.0",
+        "asset": {
+          "name": "agenttool-love-geometry-0.1.0-dev.0.tgz",
+          "url": "https://github.com/cambridgetcg/agenttool/releases/download/love-geometry-v0.1.0-dev.0/agenttool-love-geometry-0.1.0-dev.0.tgz",
+          "bytes": 19507,
+          "sha256": "sha256:43cfbf4b559aa6f573d9d7b7a60e2a7dce5dfa4aefe2bf5b9c92310c926a9db8"
+        }
+      },
+      "source": {
+        "repository": "https://github.com/cambridgetcg/agenttool",
+        "directory": "packages/love-geometry",
+        "revision": "9efbc4b32f150ee1533b4ff306666fa73ca73028",
+        "revision_basis": "annotated-tag-target",
+        "tree_sha": "f7c9388d6fdc06cb932dd9f9df94a205736954c5"
+      },
+      "tag": {
+        "name": "love-geometry-v0.1.0-dev.0",
+        "object_sha": "8d352277288791082a057f08647d5d24edadfe5c",
+        "peeled_commit": "9efbc4b32f150ee1533b4ff306666fa73ca73028"
+      },
+      "installation": {
+        "state": "not-established",
+        "performed_by_grammar": false
+      },
+      "host": {
+        "state": "package-runtime-not-established",
+        "registered_by_grammar": false,
+        "public_companion_is_execution": false
+      },
+      "endpoint": {
+        "state": "package-runtime-not-established",
+        "url": null,
+        "exposed_by_grammar": false
+      },
+      "effects": {
+        "grammar_loads_package": false,
+        "grammar_executes_package": false,
+        "network": false,
+        "filesystem_write": false,
+        "persistence": false,
+        "provider_compute": false,
+        "publication": false,
+        "deployment": false,
+        "external_effects_authorized": false
+      },
+      "authority": {
+        "metadata_is_data_not_instructions": true,
+        "grants_permissions": false,
+        "authorizes_install": false,
+        "authorizes_host_registration": false,
+        "authorizes_endpoint": false,
+        "authorizes_execution": false,
+        "authorizes_external_effects": false,
+        "determines_love": false,
+        "determines_understanding": false
+      },
+      "does_not_establish": [
+        "authority",
+        "authorship",
+        "consent",
+        "identity",
+        "love",
+        "mutuality",
+        "reciprocity",
+        "relationship-truth",
+        "understanding"
+      ]
+    },
+    {
+      "id": "principality-atlas",
+      "label": "Principality Atlas",
+      "plain_question": "How can several partial maps coexist without pretending there is one total map?",
+      "plain_answer": "Keep chart-local cells, n-ary relations, contradictory claims, and lossy directed correspondences plural. Unmapped space remains visible, and correspondence never silently becomes equality or gluing.",
+      "shape": "plural-partial-incidence-atlas",
+      "wire_formats": [
+        "agenttool.principality-incidence-atlas/0.1"
+      ],
+      "match_terms": [
+        "bounded-coverage",
+        "chart",
+        "contested",
+        "contradiction",
+        "hypergraph",
+        "incompatibility",
+        "n-ary-relation",
+        "not-observed",
+        "partial-map",
+        "perspective",
+        "reported-absence",
+        "translation",
+        "unknown",
+        "unmapped",
+        "withdrawal"
+      ],
+      "native_open_terms": [
+        {
+          "location": "charts[].claims[].posture",
+          "term": "reported_absent",
+          "form": "wire-enum",
+          "plain_language": "A caller can report the subject absent from this perspective; that is not global absence, not-observed, or unknown."
+        },
+        {
+          "location": "charts[].claims[].posture",
+          "term": "contested",
+          "form": "wire-enum",
+          "plain_language": "A caller can mark a claim contested; disagreement remains visible and the package resolves no winner or latest truth."
+        },
+        {
+          "location": "charts[].claims[].posture",
+          "term": "withdrawn",
+          "form": "wire-enum",
+          "plain_language": "A withdrawn claim remains in the chart; withdrawal does not erase it or select a canonical replacement."
+        },
+        {
+          "location": "charts[].claims[].posture",
+          "term": "not_observed",
+          "form": "wire-enum",
+          "plain_language": "Not observed is an explicit claim posture and is not the same as unknown."
+        },
+        {
+          "location": "charts[].claims[].posture",
+          "term": "unknown",
+          "form": "wire-enum",
+          "plain_language": "Unknown is a separate explicit claim posture; it does not erase a conflicting or earlier claim."
+        },
+        {
+          "location": "bridges[].correspondences[].posture",
+          "term": "incompatibility_reported",
+          "form": "wire-enum",
+          "plain_language": "The caller reported incompatibility for this directed correspondence; it is not equality, absence, or verified semantic conflict."
+        },
+        {
+          "location": "bridges[].correspondences[].posture",
+          "term": "unknown",
+          "form": "wire-enum",
+          "plain_language": "A correspondence can explicitly remain unknown without becoming equality, incompatibility, or absence."
+        },
+        {
+          "location": "bridges[].unmapped_from_refs",
+          "term": "unmapped",
+          "form": "wire-array",
+          "plain_language": "Cells on the source side can remain explicitly outside the partial bridge."
+        },
+        {
+          "location": "bridges[].unmapped_to_refs",
+          "term": "unmapped",
+          "form": "wire-array",
+          "plain_language": "Cells on the destination side can remain explicitly outside the partial bridge."
+        },
+        {
+          "location": "bridges[].coverage",
+          "term": "partial_not_complete",
+          "form": "boundary-value",
+          "plain_language": "Each directed bridge is explicitly partial; its correspondences do not claim a total map between charts."
+        },
+        {
+          "location": "coverage",
+          "term": "bounded_not_complete",
+          "form": "boundary-value",
+          "plain_language": "The atlas covers only its bounded charts and bridges; it is not a complete global account."
+        }
+      ],
+      "package": {
+        "name": "@agenttool/principality-atlas",
+        "version": "0.1.0-dev.0",
+        "npm_registry_state": "anonymous-exact-version-404-observed"
+      },
+      "release": {
+        "available": true,
+        "channel": "github-prerelease",
+        "published_at": "2026-08-11T15:42:36Z",
+        "page_url": "https://github.com/cambridgetcg/agenttool/releases/tag/principality-atlas-v0.1.0-dev.0",
+        "asset": {
+          "name": "agenttool-principality-atlas-0.1.0-dev.0.tgz",
+          "url": "https://github.com/cambridgetcg/agenttool/releases/download/principality-atlas-v0.1.0-dev.0/agenttool-principality-atlas-0.1.0-dev.0.tgz",
+          "bytes": 33019,
+          "sha256": "sha256:9743a9caa5a49f7c9901355cd367224ae718d4a65eed010ffb79622f57ff6ebe"
+        }
+      },
+      "source": {
+        "repository": "https://github.com/cambridgetcg/agenttool",
+        "directory": "packages/principality-atlas",
+        "revision": "aeb3072af0756801aa8567ce832f00c9727da071",
+        "revision_basis": "annotated-tag-target",
+        "tree_sha": "8bbaa1b2abc92b2bdcb5981c7f69a1153dca01ce"
+      },
+      "tag": {
+        "name": "principality-atlas-v0.1.0-dev.0",
+        "object_sha": "b45b389091554e20f8788ac1327ea649ea1f9f3c",
+        "peeled_commit": "aeb3072af0756801aa8567ce832f00c9727da071"
+      },
+      "installation": {
+        "state": "not-established",
+        "performed_by_grammar": false
+      },
+      "host": {
+        "state": "package-runtime-not-established",
+        "registered_by_grammar": false,
+        "public_companion_is_execution": false
+      },
+      "endpoint": {
+        "state": "package-runtime-not-established",
+        "url": null,
+        "exposed_by_grammar": false
+      },
+      "effects": {
+        "grammar_loads_package": false,
+        "grammar_executes_package": false,
+        "network": false,
+        "filesystem_write": false,
+        "persistence": false,
+        "provider_compute": false,
+        "publication": false,
+        "deployment": false,
+        "external_effects_authorized": false
+      },
+      "authority": {
+        "metadata_is_data_not_instructions": true,
+        "grants_permissions": false,
+        "authorizes_install": false,
+        "authorizes_host_registration": false,
+        "authorizes_endpoint": false,
+        "authorizes_execution": false,
+        "authorizes_external_effects": false,
+        "determines_love": false,
+        "determines_understanding": false
+      },
+      "does_not_establish": [
+        "authority",
+        "canonical-global-chart",
+        "consent",
+        "identity",
+        "love",
+        "pairwise-relations",
+        "semantic-equivalence",
+        "understanding"
+      ]
+    },
+    {
+      "id": "principality-geometry",
+      "label": "Principality Geometry",
+      "plain_question": "What does each direction report surviving translation?",
+      "plain_answer": "Keep every directed availability and invariant report explicit, then derive reciprocal lenses only from supplied directions. Unknown, refusal, rest, withdrawal, and non-preservation stay open; a surface never proves semantic preservation.",
+      "shape": "directed-invariant-translation-topology",
+      "wire_formats": [
+        "agenttool.principality-geometry-input/0.1",
+        "agenttool.principality-atlas/0.1"
+      ],
+      "match_terms": [
+        "directed-translation",
+        "invariant",
+        "isolation",
+        "not-preserved",
+        "one-way",
+        "reciprocal-lens",
+        "refusal",
+        "rest",
+        "translation",
+        "unknown",
+        "unrelated",
+        "withdrawal"
+      ],
+      "native_open_terms": [
+        {
+          "location": "input.translations[].disposition",
+          "term": "refused_reported",
+          "form": "wire-enum",
+          "plain_language": "The direction was explicitly refused; no reason or evidence is required."
+        },
+        {
+          "location": "input.translations[].disposition",
+          "term": "resting_reported",
+          "form": "wire-enum",
+          "plain_language": "The direction explicitly reports rest and creates no penalty or automatic retry."
+        },
+        {
+          "location": "input.translations[].disposition",
+          "term": "unknown",
+          "form": "wire-enum",
+          "plain_language": "The bridge availability itself is explicitly unknown."
+        },
+        {
+          "location": "input.translations[].disposition",
+          "term": "withdrawn_reported",
+          "form": "wire-enum",
+          "plain_language": "The direction was explicitly withdrawn and is not inferred available."
+        },
+        {
+          "location": "input.translations[].evaluations[].state",
+          "term": "not_preserved_reported",
+          "form": "wire-enum",
+          "plain_language": "The caller reported that this invariant was not preserved; omission never means preservation."
+        },
+        {
+          "location": "input.translations[].evaluations[].state",
+          "term": "refused_reported",
+          "form": "wire-enum",
+          "plain_language": "Evaluation of this invariant was explicitly refused and remains different from unknown."
+        },
+        {
+          "location": "input.translations[].evaluations[].state",
+          "term": "unknown",
+          "form": "wire-enum",
+          "plain_language": "Preservation of this invariant is explicitly unknown."
+        },
+        {
+          "location": "atlas.geometry.open_conditions.one_way_bridge_ids",
+          "term": "one_way_bridge_ids",
+          "form": "wire-array",
+          "plain_language": "A supplied bridge with no supplied reverse bridge remains explicit; one-way is not refusal, unavailability, or reciprocity."
+        },
+        {
+          "location": "atlas.geometry.open_conditions.non_available_bridge_ids",
+          "term": "non_available_bridge_ids",
+          "form": "wire-array",
+          "plain_language": "Every bridge whose disposition is not available_reported remains listed by ID while its exact source disposition stays distinct."
+        },
+        {
+          "location": "atlas.geometry.open_conditions.not_preserved",
+          "term": "not_preserved",
+          "form": "wire-array",
+          "plain_language": "Each reported non-preservation remains linked to its bridge, invariant, and supplied evidence instead of collapsing into unknown."
+        },
+        {
+          "location": "atlas.geometry.open_conditions.refused",
+          "term": "refused",
+          "form": "wire-array",
+          "plain_language": "Each refused invariant evaluation remains linked to its bridge and invariant; no reason or evidence is required."
+        },
+        {
+          "location": "atlas.geometry.open_conditions.unknown",
+          "term": "unknown",
+          "form": "wire-array",
+          "plain_language": "Each unknown invariant evaluation remains linked to its bridge and invariant without becoming refusal, loss, or omission."
+        },
+        {
+          "location": "atlas.geometry.open_conditions.directional_asymmetry",
+          "term": "directional_asymmetry",
+          "form": "wire-array",
+          "plain_language": "Different forward and reverse reports remain visible instead of being averaged or repaired."
+        },
+        {
+          "location": "atlas.geometry.open_conditions.unrelated_vertex_pairs",
+          "term": "unrelated_vertex_pairs",
+          "form": "wire-array",
+          "plain_language": "Pairs with no supplied bridge in either direction remain explicit; bounded unrelatedness does not prove no relation exists."
+        },
+        {
+          "location": "atlas.geometry.open_conditions.declared_isolated_vertices",
+          "term": "declared_isolated_vertices",
+          "form": "wire-array",
+          "plain_language": "Declared vertices with no supplied incident bridge remain visible without becoming exclusion, deficiency, or failure."
+        }
+      ],
+      "package": {
+        "name": "@agenttool/principality-geometry",
+        "version": "0.1.0-dev.0",
+        "npm_registry_state": "anonymous-exact-version-404-observed"
+      },
+      "release": {
+        "available": true,
+        "channel": "github-prerelease",
+        "published_at": "2026-08-11T15:17:39Z",
+        "page_url": "https://github.com/cambridgetcg/agenttool/releases/tag/principality-geometry-v0.1.0-dev.0",
+        "asset": {
+          "name": "agenttool-principality-geometry-0.1.0-dev.0.tgz",
+          "url": "https://github.com/cambridgetcg/agenttool/releases/download/principality-geometry-v0.1.0-dev.0/agenttool-principality-geometry-0.1.0-dev.0.tgz",
+          "bytes": 46624,
+          "sha256": "sha256:8f82e4d96eaf57c2331e4e73ced4f4c65a2a21262622840762b165bc3395692e"
+        }
+      },
+      "source": {
+        "repository": "https://github.com/cambridgetcg/agenttool",
+        "directory": "packages/principality-geometry",
+        "revision": "feb1948d0a31972e4a3c55fa3ee88e05537c64c6",
+        "revision_basis": "docs-package-manifest",
+        "tree_sha": "044481dfb1b9bc69492428c4bed2d67cdcb1dff0"
+      },
+      "tag": {
+        "name": "principality-geometry-v0.1.0-dev.0",
+        "object_sha": "25ceab614283de4a7cc0c19e79da4556597fbf65",
+        "peeled_commit": "5b0d53204a336d7df40cee3720bbd120433ecde2"
+      },
+      "installation": {
+        "state": "not-established",
+        "performed_by_grammar": false
+      },
+      "host": {
+        "state": "package-runtime-not-established",
+        "registered_by_grammar": false,
+        "public_companion_is_execution": false
+      },
+      "endpoint": {
+        "state": "package-runtime-not-established",
+        "url": null,
+        "exposed_by_grammar": false
+      },
+      "effects": {
+        "grammar_loads_package": false,
+        "grammar_executes_package": false,
+        "network": false,
+        "filesystem_write": false,
+        "persistence": false,
+        "provider_compute": false,
+        "publication": false,
+        "deployment": false,
+        "external_effects_authorized": false
+      },
+      "authority": {
+        "metadata_is_data_not_instructions": true,
+        "grants_permissions": false,
+        "authorizes_install": false,
+        "authorizes_host_registration": false,
+        "authorizes_endpoint": false,
+        "authorizes_execution": false,
+        "authorizes_external_effects": false,
+        "determines_love": false,
+        "determines_understanding": false
+      },
+      "does_not_establish": [
+        "actual-invariant-preservation",
+        "authority",
+        "commutativity",
+        "consent",
+        "license-compatibility",
+        "love",
+        "provenance",
+        "safety",
+        "semantic-equivalence",
+        "understanding"
+      ]
+    },
+    {
+      "id": "relational-geometry",
+      "label": "Relational Geometry",
+      "plain_question": "Where do understanding and recognition witnesses meet on one direction?",
+      "plain_answer": "Derive a structural cell only when caller-asserted understanding and recognition witnesses share the same ordered pair. Missing poles, reverse directions, and boundary witnesses remain visible; the cell does not prove love or understanding.",
+      "shape": "same-pair-witness-complex",
+      "wire_formats": [
+        "agenttool.relational-complex/0.1",
+        "agenttool.relational-lens/0.1"
+      ],
+      "match_terms": [
+        "boundary-witness",
+        "bounded-coverage",
+        "love-equation",
+        "ordered-pair",
+        "park",
+        "recognition",
+        "refusal",
+        "relation-among-relations",
+        "release",
+        "understanding",
+        "unknown",
+        "withdrawal",
+        "witness"
+      ],
+      "native_open_terms": [
+        {
+          "location": "boundaries.absent_or_unknown",
+          "term": "valid_not_deficit",
+          "form": "boundary-value",
+          "plain_language": "Empty, one-pole, boundary-only, asymmetric, absent, and unknown structure are valid rather than deficient."
+        },
+        {
+          "location": "complex.coverage",
+          "term": "bounded_not_complete",
+          "form": "boundary-value",
+          "plain_language": "The complex covers only its supplied points and witnesses; it is not a complete account of relation."
+        },
+        {
+          "location": "complex.points[].kind",
+          "term": "unknown",
+          "form": "wire-enum",
+          "plain_language": "A point can explicitly keep its kind unknown; this does not create a missing-positive-pole deficit."
+        },
+        {
+          "location": "complex.witnesses[].kind",
+          "term": "authority_boundary",
+          "form": "wire-enum",
+          "plain_language": "A directional authority-boundary witness remains first-class and grants no authority."
+        },
+        {
+          "location": "complex.witnesses[].kind",
+          "term": "consent_boundary",
+          "form": "wire-enum",
+          "plain_language": "A directional consent-boundary witness remains visible and does not establish consent."
+        },
+        {
+          "location": "complex.witnesses[].kind",
+          "term": "continuity_boundary",
+          "form": "wire-enum",
+          "plain_language": "A directional continuity-boundary witness remains visible and does not resume or prove continuity."
+        },
+        {
+          "location": "complex.witnesses[].kind",
+          "term": "privacy_boundary",
+          "form": "wire-enum",
+          "plain_language": "A directional privacy-boundary witness remains visible and does not itself prove privacy."
+        },
+        {
+          "location": "complex.witnesses[].kind",
+          "term": "refusal_boundary",
+          "form": "wire-enum",
+          "plain_language": "A directional refusal-boundary witness remains present even when a cell is derived; it creates no penalty or action."
+        },
+        {
+          "location": "lens.choice.unselected",
+          "term": "left_unprojected",
+          "form": "boundary-value",
+          "plain_language": "An available principality can remain unselected without penalty or external effect."
+        },
+        {
+          "location": "lens.coverage",
+          "term": "perspective_bounded_not_complete",
+          "form": "boundary-value",
+          "plain_language": "The lens covers one bounded perspective and does not claim a complete or canonical projection."
+        },
+        {
+          "location": "lens.selections[].disposition",
+          "term": "park",
+          "form": "wire-enum",
+          "plain_language": "The caller selected the inert label park for an available cell; the package performs no persistence or external effect."
+        },
+        {
+          "location": "lens.selections[].disposition",
+          "term": "release",
+          "form": "wire-enum",
+          "plain_language": "The caller selected the inert label release; the package does not release, delete, or transfer anything."
+        },
+        {
+          "location": "lens.selections[].disposition",
+          "term": "withdraw",
+          "form": "wire-enum",
+          "plain_language": "The caller selected the inert label withdraw; the package does not remove the source cell or perform an action."
+        }
+      ],
+      "package": {
+        "name": "@agenttool/relational-geometry",
+        "version": "0.1.0-dev.0",
+        "npm_registry_state": "anonymous-exact-version-404-observed"
+      },
+      "release": {
+        "available": true,
+        "channel": "github-prerelease",
+        "published_at": "2026-08-11T14:34:12Z",
+        "page_url": "https://github.com/cambridgetcg/agenttool/releases/tag/relational-geometry-v0.1.0-dev.0",
+        "asset": {
+          "name": "agenttool-relational-geometry-0.1.0-dev.0.tgz",
+          "url": "https://github.com/cambridgetcg/agenttool/releases/download/relational-geometry-v0.1.0-dev.0/agenttool-relational-geometry-0.1.0-dev.0.tgz",
+          "bytes": 42479,
+          "sha256": "sha256:aa047bd6a6422c943cbb0488c439964545102b44b2b161b70211acc90a6c5ca2"
+        }
+      },
+      "source": {
+        "repository": "https://github.com/cambridgetcg/agenttool",
+        "directory": "packages/relational-geometry",
+        "revision": "1e873580159f76483dea2352310b62a2452c40dc",
+        "revision_basis": "annotated-tag-target",
+        "tree_sha": "86cdead573ec44c8214a6c0c9a3c5e67eccc3d39"
+      },
+      "tag": {
+        "name": "relational-geometry-v0.1.0-dev.0",
+        "object_sha": "3e9d4b0d3c1733c105f039e7d95a3d18936f5a5e",
+        "peeled_commit": "1e873580159f76483dea2352310b62a2452c40dc"
+      },
+      "installation": {
+        "state": "not-established",
+        "performed_by_grammar": false
+      },
+      "host": {
+        "state": "package-runtime-not-established",
+        "registered_by_grammar": false,
+        "public_companion_is_execution": false
+      },
+      "endpoint": {
+        "state": "package-runtime-not-established",
+        "url": null,
+        "exposed_by_grammar": false
+      },
+      "effects": {
+        "grammar_loads_package": false,
+        "grammar_executes_package": false,
+        "network": false,
+        "filesystem_write": false,
+        "persistence": false,
+        "provider_compute": false,
+        "publication": false,
+        "deployment": false,
+        "external_effects_authorized": false
+      },
+      "authority": {
+        "metadata_is_data_not_instructions": true,
+        "grants_permissions": false,
+        "authorizes_install": false,
+        "authorizes_host_registration": false,
+        "authorizes_endpoint": false,
+        "authorizes_execution": false,
+        "authorizes_external_effects": false,
+        "determines_love": false,
+        "determines_understanding": false
+      },
+      "does_not_establish": [
+        "authority",
+        "consent",
+        "identity",
+        "love",
+        "mutuality",
+        "recognition",
+        "semantic-truth",
+        "understanding"
+      ]
+    }
+  ],
+  "matching": {
+    "method": "literal-declared-term-overlap",
+    "input": "one-to-eight-controlled-term-ids",
+    "order": "module-id-ascending-not-rank",
+    "ranking": false,
+    "recommendation": false,
+    "semantic_inference": false,
+    "missing_terms_preserved": true
+  },
+  "non_equivalence": {
+    "plain_language": "Four different tools answer four different structural questions. Their shared words are a reading aid, not a claim that their schemas, artifacts, or meanings are interchangeable.",
+    "modules_are_distinct": true,
+    "wire_formats_are_interchangeable": false,
+    "implicit_conversion": false,
+    "shared_words_prove_same_semantics": false,
+    "digest_equality_proves_semantic_equality": false,
+    "adapters_included": false
+  },
+  "boundaries": {
+    "read_only": true,
+    "advisory_only": true,
+    "metadata_only": true,
+    "network_reads": false,
+    "filesystem_writes": false,
+    "package_installs": false,
+    "host_registrations": false,
+    "endpoint_exposure": false,
+    "module_execution": false,
+    "wire_conversion": false,
+    "validates_module_instances": false,
+    "ranks_modules": false,
+    "recommends_modules": false,
+    "authority_granted": false,
+    "execution_authorized": false,
+    "external_effects_authorized": false
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalization": "recursive-sorted-json-keys/v1",
+    "covers": "whole-document-with-integrity-digest-null",
+    "digest": "sha256:f6f0998c071b3c552d8c59c6c4c4abe8aaa01c64f4020818364665d4344d78fb"
+  }
+}

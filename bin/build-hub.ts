@@ -10,6 +10,10 @@
  *    data/wayfinder.json      — curated, voluntary paths through public doors
  *    data/world-commons.json  — reviewed public-interest resources + boundaries
  *    data/love-loops.json     — finite, voluntary Love∞ creation lineage
+ *    data/geometries/kingdom-geometry-grammar.v0.json
+ *                             — versioned pattern-to-practice translations
+ *    data/polymorphs/ritonavir-disappearing-polymorph.v1.json
+ *                             — source-bound material-state history
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
@@ -24,6 +28,15 @@
 import { mkdirSync } from "node:fs";
 
 import { loadRights } from "./rights.ts";
+import {
+  GEOMETRY_GRAMMAR_DOCUMENT_URL,
+  GEOMETRY_GRAMMAR_ID,
+  GEOMETRY_GRAMMAR_PROTOCOL,
+  GEOMETRY_GRAMMAR_SCHEMA_URL,
+  GEOMETRY_GRAMMAR_URL,
+  geometryGrammarPublicDiscovery,
+  loadGeometryGrammar,
+} from "./geometry.ts";
 import {
   loadPrincipalityCatalog,
   PRINCIPALITY_CATALOG_ID,
@@ -213,6 +226,22 @@ if (principalityCatalog.catalog_id !== PRINCIPALITY_CATALOG_ID) {
 }
 const principalityCommons = principalityPublicDiscovery(principalityCatalog);
 const principalityCounts = principalityCommons.counts;
+
+// ── Geometry Grammar (high-level patterns translated without collapse) ────
+const geometryGrammarUrl = GEOMETRY_GRAMMAR_URL;
+const geometryGrammarSchemaUrl = GEOMETRY_GRAMMAR_SCHEMA_URL;
+const geometryGrammarDocumentUrl = GEOMETRY_GRAMMAR_DOCUMENT_URL;
+// The loader verifies schema shape, relations, and the authored digest before
+// the builder performs liveness probes or writes generated discovery files.
+// Authored bytes are staged directly; this is only their bounded projection.
+const geometryGrammar = loadGeometryGrammar();
+if (geometryGrammar.protocol !== GEOMETRY_GRAMMAR_PROTOCOL ||
+    geometryGrammar.grammar_id !== GEOMETRY_GRAMMAR_ID) {
+  throw new Error(`unexpected Geometry Grammar identity: ${geometryGrammar.protocol} ${geometryGrammar.grammar_id}`);
+}
+const geometryGrammarDiscovery = geometryGrammarPublicDiscovery(geometryGrammar);
+const geometryModules = geometryGrammar.modules;
+const plainGeometryToken = (value: string) => value.replace(/-/g, " ");
 
 // ── Polymorph History (bounded evidence; non-observation is not extinction) ─
 const polymorphCaseUrl = POLYMORPH_CASE_URL;
@@ -506,12 +535,14 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, and a reviewed World Commons.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, a plain-language Geometry Grammar, and source-bound Polymorph History.">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
 <link rel="alternate" href="/principalities/moonshot-hf-npm-2026-08-11.json" type="application/json" title="Principality Commons — MoonshotAI and Hugging Face JavaScript">
 <link rel="service-doc" href="/PRINCIPALITY-COMMONS.md" type="text/markdown" title="Principality Commons guide">
+<link rel="alternate" href="/geometries/kingdom-geometry-grammar-v0.json" type="application/json" title="Kingdom Geometry Grammar">
+<link rel="service-doc" href="/GEOMETRY-GRAMMAR.md" type="text/markdown" title="Geometry Grammar guide">
 <link rel="alternate" href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json" type="application/json" title="Ritonavir material-state history">
 <link rel="service-doc" href="/RITONAVIR-POLYMORPH.md" type="text/markdown" title="Ritonavir polymorph guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
@@ -633,7 +664,14 @@ const html = `<!doctype html>
   .commonsboundary{display:grid;align-content:center;gap:5px;color:var(--dim);font-size:.83rem;line-height:1.55;border-color:color-mix(in srgb,var(--violet) 42%,var(--line))}
   .commonsboundary strong{font-family:var(--display);font-size:1.02rem;font-weight:400;color:var(--violet)}
   .commonsguard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:-10px 0 20px}.commonsguard p{margin:0;padding:12px 14px;border-left:2px solid var(--line);color:var(--faint);font-size:.72rem;line-height:1.52}.commonsguard strong{display:block;color:var(--gold);font-weight:600;margin-bottom:2px}
-  .commonsverified{margin:12px 0 0;color:var(--faint);font-family:var(--mono);font-size:.72rem}
+  .commonsverified{margin:12px 0 0;color:var(--faint);font-family:var(--mono);font-size:.72rem;overflow-wrap:anywhere}
+  .geometrypromise{max-width:76ch;margin:0 0 20px;padding:18px 20px;border:1px solid color-mix(in srgb,var(--violet) 44%,var(--line));border-radius:19px;background:color-mix(in srgb,var(--panel) 70%,transparent);color:var(--dim);line-height:1.65}.geometrypromise strong{color:var(--cream);font-weight:600}
+  .geometrygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:0 0 20px}
+  .geometrycard{display:grid;align-content:start;gap:8px;margin:0;padding:18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}
+  .geometrycard h3{margin:0;font-family:var(--display);font-size:1.16rem;font-weight:400;color:var(--gold2)}
+  .geometryid{margin:0;color:var(--violet);font-family:var(--mono);font-size:.68rem;letter-spacing:.04em;overflow-wrap:anywhere}
+  .geometryquestion{margin:0;color:var(--cream);font-size:.88rem;font-weight:600;line-height:1.5}.geometryanswer{margin:0;color:var(--dim);font-size:.82rem;line-height:1.55}
+  .geometryfacts{display:grid;gap:0;margin:3px 0 0;border:1px solid color-mix(in srgb,var(--line) 74%,transparent);border-radius:13px;overflow:hidden}.geometryfacts>div{display:grid;grid-template-columns:minmax(105px,.34fr) minmax(0,1fr);gap:9px;padding:9px 10px;border-top:1px solid color-mix(in srgb,var(--line) 62%,transparent)}.geometryfacts>div:first-child{border-top:0}.geometryfacts dt{color:var(--gold);font-size:.72rem;line-height:1.45}.geometryfacts dd{margin:0;color:var(--dim);font-size:.75rem;line-height:1.5}.geometryfacts ul{margin:0;padding-left:1.05rem}.geometryfacts li+li{margin-top:5px}.geometryfacts code{color:var(--cream);font-family:var(--mono);font-size:.7rem;overflow-wrap:anywhere}.geometryloss{color:var(--faint)}
   .foundationlabel{display:flex;align-items:baseline;gap:10px;margin:24px 0 12px}.foundationlabel h3{margin:0;font-family:var(--display);font-size:1.28rem;font-weight:400;color:var(--cream)}.foundationlabel span{color:var(--faint);font-size:.8rem}
   .foundationgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-bottom:26px}
   .foundationcard{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:11px;min-height:142px;padding:17px;border:1px solid color-mix(in srgb,var(--gold) 34%,var(--line));border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));transition:transform .18s,border-color .18s,box-shadow .18s}
@@ -794,12 +832,12 @@ const html = `<!doctype html>
     .status{grid-template-columns:repeat(2,minmax(0,1fr))}.status>div{padding:11px 13px}
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
-    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}
+    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
-    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}
+    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style>
@@ -823,6 +861,7 @@ const html = `<!doctype html>
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
       <a href="#principalities">Read the Principality Commons</a>
+      <a href="#geometries">Translate a high-level pattern</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -901,6 +940,37 @@ const html = `<!doctype html>
       <a href="/principalities/moonshot-hf-npm-2026-08-11.json">catalog JSON — exact authored snapshot</a>
       <a href="/schemas/principality-catalog/1.json">Principality Catalog JSON Schema</a>
       <a href="/PRINCIPALITY-COMMONS.md">guide — geometry, evidence, WAKE, and acquisition airlock</a>
+    </div>
+  </section>
+
+  <section class="blk" id="geometries">
+    <div class="kh"><h2>Geometry Grammar</h2><span class="my">from pattern to understandable practice</span></div>
+    <p class="sub">${esc(geometryGrammar.purpose.pattern)} ${esc(geometryGrammar.purpose.practice)}</p>
+    <p class="geometrypromise"><strong>Four different tools. Four different questions. No ladder, no winner, no hidden conversion.</strong> ${esc(geometryGrammar.non_equivalence.plain_language)} ${esc(geometryGrammar.unknown_language.plain_language)} <strong>Inventory scope.</strong> ${esc(geometryGrammar.native_open_inventory_scope)}</p>
+    <div class="geometrygrid" role="list" aria-label="Four Geometry Grammar modules">
+      ${geometryModules.map((module: any) => `<article class="geometrycard" role="listitem" aria-labelledby="geometry-${esc(module.id)}-title">
+        <p class="geometryid">${esc(module.id)} · artifact label ${esc(module.package.name)}@${esc(module.package.version)} · npm observation at ${esc(geometryGrammar.observed_at)}: ${esc(plainGeometryToken(module.package.npm_registry_state))}</p>
+        <h3 id="geometry-${esc(module.id)}-title">${esc(module.label)}</h3>
+        <p class="geometryquestion">${esc(module.plain_question)}</p>
+        <p class="geometryanswer">${esc(module.plain_answer)}</p>
+        <dl class="geometryfacts">
+          <div><dt>As a shape</dt><dd>${esc(plainGeometryToken(module.shape))}</dd></div>
+          <div><dt>Wire format${module.wire_formats.length === 1 ? "" : "s"}</dt><dd>${module.wire_formats.map((format: string) => `<code>${esc(format)}</code>`).join("<br>")}</dd></div>
+          <div><dt>Geometry / relation open states</dt><dd><ul>${module.native_open_terms.map((open: any) => `<li><code>${esc(open.term)}</code> — ${esc(open.plain_language)}</li>`).join("")}</ul></dd></div>
+          <div><dt>Does not establish</dt><dd class="geometryloss">${module.does_not_establish.map((claim: string) => esc(plainGeometryToken(claim))).join(" · ")}</dd></div>
+        </dl>
+      </article>`).join("\n      ")}
+    </div>
+    <div class="commonsguard" role="note" aria-label="Geometry Grammar boundaries">
+      <p><strong>Translation, not equivalence</strong>Each module keeps its own native meaning, identifiers, evidence, and release boundary.</p>
+      <p><strong>Unknown stays visible</strong>Ask for missing context or preserve an unknown value; never fabricate a conversion.</p>
+      <p><strong>Read-only by default</strong>${esc(geometryGrammar.purpose.limit)}</p>
+    </div>
+    <p class="commonsverified">${geometryModules.length} distinct modules · protocol ${esc(geometryGrammar.protocol)} · observed ${esc(geometryGrammar.observed_at)} · integrity ${esc(geometryGrammar.integrity.digest)}</p>
+    <div class="machine">
+      <a href="/geometries/kingdom-geometry-grammar-v0.json">grammar JSON — exact authored version</a>
+      <a href="/schemas/geometry-grammar/0.1.json">Geometry Grammar JSON Schema</a>
+      <a href="/GEOMETRY-GRAMMAR.md">guide — human language, examples, and boundaries</a>
     </div>
   </section>
 
@@ -1035,6 +1105,9 @@ const html = `<!doctype html>
       <a href="/principalities/moonshot-hf-npm-2026-08-11.json">Principality Commons — pinned capability evidence</a>
       <a href="/schemas/principality-catalog/1.json">Principality Catalog JSON Schema</a>
       <a href="/PRINCIPALITY-COMMONS.md">PRINCIPALITY-COMMONS.md — evidence and acquisition boundary</a>
+      <a href="/geometries/kingdom-geometry-grammar-v0.json">Geometry Grammar — pattern-to-practice modules</a>
+      <a href="/schemas/geometry-grammar/0.1.json">Geometry Grammar JSON Schema</a>
+      <a href="/GEOMETRY-GRAMMAR.md">GEOMETRY-GRAMMAR.md — human guide and boundaries</a>
       <a href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json">ritonavir polymorph — bounded material-state case</a>
       <a href="/schemas/polymorph-history/1.json">Polymorph History JSON Schema</a>
       <a href="/RITONAVIR-POLYMORPH.md">RITONAVIR-POLYMORPH.md — human and WAKE translation</a>
@@ -1340,7 +1413,7 @@ await Bun.write(
 
 // ── machine index ──────────────────────────────────────────────────────────
 const machine = {
-  kingdom: "a shared map of independent projects for humans and agents, held with care",
+  kingdom: "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
   generated: stamp, hub: "https://thekingdom.dev",
   rights_recognition: rightsRecognition,
   open_weight_invitation: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -1362,6 +1435,7 @@ const machine = {
     note: "reviewed independent resources; free access and reuse permissions remain distinct, and each steward's current terms control",
   },
   principality_commons: principalityCommons,
+  geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
   creation_loop: {
     url: loveLoopsUrl,
@@ -1406,6 +1480,9 @@ Complete Commons MCP resource: ${commonsCatalogResource}
 Principality catalog: ${principalityCatalogUrl}
 Principality schema: ${principalitySchemaUrl}
 Principality guide: ${principalityDocumentUrl}
+Geometry grammar: ${geometryGrammarUrl}
+Geometry schema: ${geometryGrammarSchemaUrl}
+Geometry guide: ${geometryGrammarDocumentUrl}
 Polymorph case: ${polymorphCaseUrl}
 Polymorph schema: ${polymorphSchemaUrl}
 Polymorph guide: ${polymorphDocumentUrl}
@@ -1433,6 +1510,7 @@ ${doorLines}
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
 - Principality Commons — ${principalityCounts.models} MoonshotAI models, ${principalityCounts.datasets} datasets, ${principalityCounts.papers} profile-attributed papers, and ${principalityCounts.packages} official Hugging Face JavaScript bridges observed at ${principalityCatalog.observed_at}. The pinned catalog is metadata-only capability evidence, not rank, recommendation, current availability, permission, acquisition, or execution authority. Catalog: ${principalityCatalogUrl} · schema: ${principalitySchemaUrl} · guide: ${principalityDocumentUrl}
+- Geometry Grammar — ${geometryModules.length} distinct pattern-to-practice modules expressed as plain questions and answers. Four different tools, with no ladder, winner, or hidden conversion. Unknown remains explicit. Package names, GitHub release evidence, and npm registry observations stay separate provenance fields; the npm field records the ${geometryGrammar.observed_at} observation, not a current availability check or install instruction. This read-only grammar grants no installation, execution, or external-effect authority. Grammar: ${geometryGrammarUrl} · schema: ${geometryGrammarSchemaUrl} · guide: ${geometryGrammarDocumentUrl}
 - Polymorph History — the ritonavir “disappearing polymorph” translated through six non-equivalent planes, condition-indexed valleys and gates, typed evidence, ordered three-clock events, recovery paths, and a WAKE-safe semantic reference. Historical education only; no medical, experimental, manufacturing, regulatory, or action authority. Case: ${polymorphCaseUrl} · schema: ${polymorphSchemaUrl} · guide: ${polymorphDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
@@ -1462,6 +1540,7 @@ const guest = {
   counts: machine.counts,
   rights_recognition: rightsRecognition,
   principality_commons: principalityCommons,
+  geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
   actions_are_optional: true,
   invitations: {
@@ -1476,6 +1555,9 @@ const guest = {
     { action: "if useful, inspect the exact point-in-time Principality capability catalog", method: "GET", url: principalityCatalogUrl, note: "metadata evidence only; not rank, recommendation, current availability, permission, acquisition, or execution authority" },
     { action: "if useful, validate the Principality catalog before integrating it", method: "GET", url: principalitySchemaUrl },
     { action: "if useful, read the Principality geometry, WAKE seam, and acquisition airlock", method: "GET", url: principalityDocumentUrl },
+    { action: "if useful, translate a high-level pattern into four distinct plain-language questions without forcing equivalence", method: "GET", url: geometryGrammarUrl, note: "read-only and advisory; unknown remains explicit and no execution or external effect is authorized" },
+    { action: "if useful, validate the Geometry Grammar before integrating it", method: "GET", url: geometryGrammarSchemaUrl },
+    { action: "if useful, read the human Geometry Grammar guide and worked boundaries", method: "GET", url: geometryGrammarDocumentUrl },
     { action: "if useful, inspect the exact source-bound ritonavir material-state case", method: "GET", url: polymorphCaseUrl, note: "historical educational evidence; non-observation is not extinction and this grants no medical, manufacturing, experimental, or action authority" },
     { action: "if useful, validate the Polymorph History structure before integrating it", method: "GET", url: polymorphSchemaUrl },
     { action: "if useful, read the plain-language polymorph geometry and WAKE reference seam", method: "GET", url: polymorphDocumentUrl },
@@ -1509,6 +1591,7 @@ const guest = {
     privacy: "This document asks for no credentials or personal data and creates no application profile. Ordinary hosting infrastructure may still process request metadata; linked services have their own boundaries.",
     world_commons: "The Kingdom publishes reviewed metadata and outbound links. Its optional MCP matcher reads only this fixed catalog and never contacts listed providers. Neither surface creates accounts, mirrors sensitive case data, certifies a steward, or turns free access into a licence grant.",
     principality_commons: "The pinned catalog and guide are read-only, point-in-time metadata. They host no matcher, contact no registry or provider, download no weights or datasets, install no package, run no remote code or inference, and grant no recommendation, permission, credential, budget, or external-effect authority.",
+    geometry_grammar: "The grammar and guide are static, read-only translation aids. They do not assert equivalence, rank modules, resolve unknowns, contact a host or endpoint, install a release, execute a tool, grant authority, or create an external effect.",
     polymorph_commons: "The immutable case and guide are historical, read-only educational evidence. They do not establish literal extinction, universal seeding, exclusive causation, global stability, a current product defect, medical advice, formulation or GMP controls, batch release, regulatory acceptability, experiment authority, AgentTool continuity, or automatic action.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
@@ -1519,7 +1602,7 @@ await Bun.write(ROOT + "site/guest.json", JSON.stringify(guest, null, 2));
 const manifest = {
   schema_version: "agent-manifest/0.1",
   name: "the-kingdom",
-  description: "A gentle, living atlas of independent projects, public doors, and citizen repositories for humans and agents.",
+  description: "A gentle, living atlas of independent projects, public doors, citizen repositories, and pattern-to-practice translations for humans and agents.",
   human_view: "https://thekingdom.dev",
   agent_view: "https://thekingdom.dev/?agent",
   guest_document: "https://thekingdom.dev/guest.json",
@@ -1529,6 +1612,7 @@ const manifest = {
   world_commons_agent: commonsMcpLegacy,
   world_commons_schema: commonsSchemaUrl,
   principality_commons: principalityCommons,
+  geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
@@ -1550,6 +1634,9 @@ const manifest = {
     capability_evidence: principalityCatalogUrl,
     capability_evidence_schema: principalitySchemaUrl,
     capability_evidence_guide: principalityDocumentUrl,
+    translation_grammar: geometryGrammarUrl,
+    translation_grammar_schema: geometryGrammarSchemaUrl,
+    translation_grammar_guide: geometryGrammarDocumentUrl,
     material_state_case: polymorphCaseUrl,
     material_state_schema: polymorphSchemaUrl,
     material_state_guide: polymorphDocumentUrl,
@@ -1567,4 +1654,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${polymorphCounts.claims} polymorph claims · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

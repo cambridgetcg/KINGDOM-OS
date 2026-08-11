@@ -17,6 +17,13 @@ import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "./stage-hub.ts";
 import {
+  GEOMETRY_GRAMMAR_DOCUMENT_URL,
+  GEOMETRY_GRAMMAR_SCHEMA_URL,
+  GEOMETRY_GRAMMAR_URL,
+  geometryGrammarPublicDiscovery,
+  loadGeometryGrammar,
+} from "./geometry.ts";
+import {
   LOVE_LOOPS_CREATION_DOCUMENT_URL,
   LOVE_LOOPS_JSON_SCHEMA_URL,
   LOVE_LOOPS_SOURCE_URL,
@@ -69,6 +76,9 @@ const loveLoopsSchemaPath = new URL(LOVE_LOOPS_JSON_SCHEMA_URL).pathname;
 const principalityCatalogPath = new URL(PRINCIPALITY_CATALOG_URL).pathname;
 const principalitySchemaPath = new URL(PRINCIPALITY_SCHEMA_URL).pathname;
 const principalityDocumentPath = new URL(PRINCIPALITY_DOCUMENT_URL).pathname;
+const geometryGrammarPath = new URL(GEOMETRY_GRAMMAR_URL).pathname;
+const geometryGrammarSchemaPath = new URL(GEOMETRY_GRAMMAR_SCHEMA_URL).pathname;
+const geometryGrammarDocumentPath = new URL(GEOMETRY_GRAMMAR_DOCUMENT_URL).pathname;
 const polymorphCasePath = new URL(POLYMORPH_CASE_URL).pathname;
 const polymorphSchemaPath = new URL(POLYMORPH_SCHEMA_URL).pathname;
 const polymorphDocumentPath = new URL(POLYMORPH_DOCUMENT_URL).pathname;
@@ -252,6 +262,32 @@ try {
     throw new Error(`${principalityDocumentPath} is not served as public Markdown`);
   }
 
+  const geometryGrammarHead = await fetch(url(geometryGrammarPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  const geometryGrammarLink = geometryGrammarHead.headers.get("link") || "";
+  if (!geometryGrammarHead.ok ||
+      !(geometryGrammarHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+      geometryGrammarHead.headers.get("access-control-allow-origin") !== "*" ||
+      (geometryGrammarHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+      !hasLinkRelation(geometryGrammarLink, geometryGrammarSchemaPath, "describedby")) {
+    throw new Error(`${geometryGrammarPath} is not public JSON described by the Geometry Grammar schema`);
+  }
+
+  const geometryGrammarDocumentHead = await fetch(url(geometryGrammarDocumentPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  if (!geometryGrammarDocumentHead.ok ||
+      !(geometryGrammarDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+      geometryGrammarDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+      (geometryGrammarDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+    throw new Error(`${geometryGrammarDocumentPath} is not served as public Markdown`);
+  }
+
   const polymorphHead = await fetch(url(polymorphCasePath), {
     method: "HEAD",
     redirect: "error",
@@ -278,7 +314,7 @@ try {
     throw new Error(`${polymorphDocumentPath} is not served as public Markdown`);
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, polymorphSchemaPath]) {
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -298,6 +334,8 @@ try {
   const llms = readFileSync(join(ROOT, "site/llms.txt"), "utf8");
   const principalityCatalog = loadPrincipalityCatalog();
   const expectedPrincipality = principalityPublicDiscovery(principalityCatalog);
+  const geometryGrammar = loadGeometryGrammar();
+  const expectedGeometryGrammar = geometryGrammarPublicDiscovery(geometryGrammar);
   const polymorphHistory = loadPolymorphHistory();
   const expectedPolymorph = polymorphPublicDiscovery(polymorphHistory);
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
@@ -354,6 +392,27 @@ try {
     throw new Error("Principality discovery or negative authority drifted across public surfaces");
   }
 
+  const geometryBoundary = expectedGeometryGrammar.boundary;
+  if (!isDeepStrictEqual(manifest?.geometry_grammar, expectedGeometryGrammar) ||
+      !isDeepStrictEqual(guest?.geometry_grammar, expectedGeometryGrammar) ||
+      !isDeepStrictEqual(authoredKingdom?.geometry_grammar, expectedGeometryGrammar) ||
+      !hasGuestGet(GEOMETRY_GRAMMAR_URL) ||
+      !hasGuestGet(GEOMETRY_GRAMMAR_SCHEMA_URL) ||
+      !hasGuestGet(GEOMETRY_GRAMMAR_DOCUMENT_URL) ||
+      !llms.includes(GEOMETRY_GRAMMAR_URL) ||
+      !llms.includes(GEOMETRY_GRAMMAR_SCHEMA_URL) ||
+      !llms.includes(GEOMETRY_GRAMMAR_DOCUMENT_URL) ||
+      expectedGeometryGrammar.counts.modules !== 4 ||
+      geometryBoundary.read_only !== true ||
+      geometryBoundary.advisory_only !== true ||
+      geometryBoundary.authority_granted !== false ||
+      geometryBoundary.execution_authorized !== false ||
+      geometryBoundary.external_effects_authorized !== false ||
+      "mcp" in expectedGeometryGrammar || "matcher" in expectedGeometryGrammar ||
+      "execute" in expectedGeometryGrammar) {
+    throw new Error("Geometry Grammar discovery or negative authority drifted across public surfaces");
+  }
+
   const polymorphBoundary = expectedPolymorph.boundary;
   if (!isDeepStrictEqual(manifest?.polymorph_commons, expectedPolymorph) ||
       !isDeepStrictEqual(guest?.polymorph_commons, expectedPolymorph) ||
@@ -386,6 +445,9 @@ try {
   }
   if (!isDeepStrictEqual(liveKingdom?.principality_commons, expectedPrincipality)) {
     throw new Error("derived kingdom.json did not preserve Principality discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.geometry_grammar, expectedGeometryGrammar)) {
+    throw new Error("derived kingdom.json did not preserve Geometry Grammar discovery");
   }
   if (!isDeepStrictEqual(liveKingdom?.polymorph_commons, expectedPolymorph)) {
     throw new Error("derived kingdom.json did not preserve Polymorph History discovery");
@@ -449,7 +511,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Polymorph schemas · coherent creation + Principality + Polymorph discovery · live MCP contract · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph schemas · coherent creation + Principality + Geometry Grammar + Polymorph discovery · live MCP contract · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;

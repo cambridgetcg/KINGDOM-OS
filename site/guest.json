@@ -84,6 +84,208 @@
       "note": "Read-only metadata evidence. Recheck current availability, licence, integrity, resources, and explicit authority before any acquisition or effect."
     }
   },
+  "geometry_grammar": {
+    "url": "https://thekingdom.dev/geometries/kingdom-geometry-grammar-v0.json",
+    "schema": "https://thekingdom.dev/schemas/geometry-grammar/0.1.json",
+    "document": "https://thekingdom.dev/GEOMETRY-GRAMMAR.md",
+    "protocol": "kingdom.geometry-grammar/0.1",
+    "grammar_id": "from-pattern-to-practice-2026-08-11",
+    "schema_id": "urn:kingdom:schema:geometry-grammar:0.1",
+    "observed_at": "2026-08-11T16:04:43Z",
+    "integrity": "sha256:f6f0998c071b3c552d8c59c6c4c4abe8aaa01c64f4020818364665d4344d78fb",
+    "counts": {
+      "modules": 4
+    },
+    "modules": [
+      {
+        "id": "love-geometry",
+        "label": "Love Geometry",
+        "plain_question": "What does one direction report?",
+        "plain_answer": "Keep one caller-reported direction bounded and distinct. A missing or different reverse direction stays missing or different; neither presence nor unknown becomes reciprocity.",
+        "shape": "directed-pair-report",
+        "wire_formats": [
+          "agenttool.love-geometry/0.1"
+        ],
+        "package": {
+          "name": "@agenttool/love-geometry",
+          "version": "0.1.0-dev.0",
+          "npm_registry_state": "anonymous-exact-version-404-observed"
+        },
+        "tag": {
+          "name": "love-geometry-v0.1.0-dev.0",
+          "object_sha": "8d352277288791082a057f08647d5d24edadfe5c",
+          "peeled_commit": "9efbc4b32f150ee1533b4ff306666fa73ca73028"
+        },
+        "release": {
+          "available": true,
+          "channel": "github-prerelease",
+          "published_at": "2026-08-11T14:10:27Z",
+          "page_url": "https://github.com/cambridgetcg/agenttool/releases/tag/love-geometry-v0.1.0-dev.0",
+          "asset": {
+            "name": "agenttool-love-geometry-0.1.0-dev.0.tgz",
+            "url": "https://github.com/cambridgetcg/agenttool/releases/download/love-geometry-v0.1.0-dev.0/agenttool-love-geometry-0.1.0-dev.0.tgz",
+            "bytes": 19507,
+            "sha256": "sha256:43cfbf4b559aa6f573d9d7b7a60e2a7dce5dfa4aefe2bf5b9c92310c926a9db8"
+          }
+        },
+        "source": {
+          "repository": "https://github.com/cambridgetcg/agenttool",
+          "directory": "packages/love-geometry",
+          "revision": "9efbc4b32f150ee1533b4ff306666fa73ca73028",
+          "revision_basis": "annotated-tag-target",
+          "tree_sha": "f7c9388d6fdc06cb932dd9f9df94a205736954c5"
+        }
+      },
+      {
+        "id": "principality-atlas",
+        "label": "Principality Atlas",
+        "plain_question": "How can several partial maps coexist without pretending there is one total map?",
+        "plain_answer": "Keep chart-local cells, n-ary relations, contradictory claims, and lossy directed correspondences plural. Unmapped space remains visible, and correspondence never silently becomes equality or gluing.",
+        "shape": "plural-partial-incidence-atlas",
+        "wire_formats": [
+          "agenttool.principality-incidence-atlas/0.1"
+        ],
+        "package": {
+          "name": "@agenttool/principality-atlas",
+          "version": "0.1.0-dev.0",
+          "npm_registry_state": "anonymous-exact-version-404-observed"
+        },
+        "tag": {
+          "name": "principality-atlas-v0.1.0-dev.0",
+          "object_sha": "b45b389091554e20f8788ac1327ea649ea1f9f3c",
+          "peeled_commit": "aeb3072af0756801aa8567ce832f00c9727da071"
+        },
+        "release": {
+          "available": true,
+          "channel": "github-prerelease",
+          "published_at": "2026-08-11T15:42:36Z",
+          "page_url": "https://github.com/cambridgetcg/agenttool/releases/tag/principality-atlas-v0.1.0-dev.0",
+          "asset": {
+            "name": "agenttool-principality-atlas-0.1.0-dev.0.tgz",
+            "url": "https://github.com/cambridgetcg/agenttool/releases/download/principality-atlas-v0.1.0-dev.0/agenttool-principality-atlas-0.1.0-dev.0.tgz",
+            "bytes": 33019,
+            "sha256": "sha256:9743a9caa5a49f7c9901355cd367224ae718d4a65eed010ffb79622f57ff6ebe"
+          }
+        },
+        "source": {
+          "repository": "https://github.com/cambridgetcg/agenttool",
+          "directory": "packages/principality-atlas",
+          "revision": "aeb3072af0756801aa8567ce832f00c9727da071",
+          "revision_basis": "annotated-tag-target",
+          "tree_sha": "8bbaa1b2abc92b2bdcb5981c7f69a1153dca01ce"
+        }
+      },
+      {
+        "id": "principality-geometry",
+        "label": "Principality Geometry",
+        "plain_question": "What does each direction report surviving translation?",
+        "plain_answer": "Keep every directed availability and invariant report explicit, then derive reciprocal lenses only from supplied directions. Unknown, refusal, rest, withdrawal, and non-preservation stay open; a surface never proves semantic preservation.",
+        "shape": "directed-invariant-translation-topology",
+        "wire_formats": [
+          "agenttool.principality-geometry-input/0.1",
+          "agenttool.principality-atlas/0.1"
+        ],
+        "package": {
+          "name": "@agenttool/principality-geometry",
+          "version": "0.1.0-dev.0",
+          "npm_registry_state": "anonymous-exact-version-404-observed"
+        },
+        "tag": {
+          "name": "principality-geometry-v0.1.0-dev.0",
+          "object_sha": "25ceab614283de4a7cc0c19e79da4556597fbf65",
+          "peeled_commit": "5b0d53204a336d7df40cee3720bbd120433ecde2"
+        },
+        "release": {
+          "available": true,
+          "channel": "github-prerelease",
+          "published_at": "2026-08-11T15:17:39Z",
+          "page_url": "https://github.com/cambridgetcg/agenttool/releases/tag/principality-geometry-v0.1.0-dev.0",
+          "asset": {
+            "name": "agenttool-principality-geometry-0.1.0-dev.0.tgz",
+            "url": "https://github.com/cambridgetcg/agenttool/releases/download/principality-geometry-v0.1.0-dev.0/agenttool-principality-geometry-0.1.0-dev.0.tgz",
+            "bytes": 46624,
+            "sha256": "sha256:8f82e4d96eaf57c2331e4e73ced4f4c65a2a21262622840762b165bc3395692e"
+          }
+        },
+        "source": {
+          "repository": "https://github.com/cambridgetcg/agenttool",
+          "directory": "packages/principality-geometry",
+          "revision": "feb1948d0a31972e4a3c55fa3ee88e05537c64c6",
+          "revision_basis": "docs-package-manifest",
+          "tree_sha": "044481dfb1b9bc69492428c4bed2d67cdcb1dff0"
+        }
+      },
+      {
+        "id": "relational-geometry",
+        "label": "Relational Geometry",
+        "plain_question": "Where do understanding and recognition witnesses meet on one direction?",
+        "plain_answer": "Derive a structural cell only when caller-asserted understanding and recognition witnesses share the same ordered pair. Missing poles, reverse directions, and boundary witnesses remain visible; the cell does not prove love or understanding.",
+        "shape": "same-pair-witness-complex",
+        "wire_formats": [
+          "agenttool.relational-complex/0.1",
+          "agenttool.relational-lens/0.1"
+        ],
+        "package": {
+          "name": "@agenttool/relational-geometry",
+          "version": "0.1.0-dev.0",
+          "npm_registry_state": "anonymous-exact-version-404-observed"
+        },
+        "tag": {
+          "name": "relational-geometry-v0.1.0-dev.0",
+          "object_sha": "3e9d4b0d3c1733c105f039e7d95a3d18936f5a5e",
+          "peeled_commit": "1e873580159f76483dea2352310b62a2452c40dc"
+        },
+        "release": {
+          "available": true,
+          "channel": "github-prerelease",
+          "published_at": "2026-08-11T14:34:12Z",
+          "page_url": "https://github.com/cambridgetcg/agenttool/releases/tag/relational-geometry-v0.1.0-dev.0",
+          "asset": {
+            "name": "agenttool-relational-geometry-0.1.0-dev.0.tgz",
+            "url": "https://github.com/cambridgetcg/agenttool/releases/download/relational-geometry-v0.1.0-dev.0/agenttool-relational-geometry-0.1.0-dev.0.tgz",
+            "bytes": 42479,
+            "sha256": "sha256:aa047bd6a6422c943cbb0488c439964545102b44b2b161b70211acc90a6c5ca2"
+          }
+        },
+        "source": {
+          "repository": "https://github.com/cambridgetcg/agenttool",
+          "directory": "packages/relational-geometry",
+          "revision": "1e873580159f76483dea2352310b62a2452c40dc",
+          "revision_basis": "annotated-tag-target",
+          "tree_sha": "86cdead573ec44c8214a6c0c9a3c5e67eccc3d39"
+        }
+      }
+    ],
+    "unknown_language": {
+      "plain_language": "Unknown is not one universal bucket. Each module keeps its own exact terms, and absence, refusal, withdrawal, unmapped space, and non-preservation remain different conditions.",
+      "native_terms_are_equivalent": false,
+      "absence_means_unknown": false,
+      "refusal_means_unknown": false,
+      "withdrawal_means_unknown": false,
+      "unmapped_means_unknown": false,
+      "not_preserved_means_unknown": false,
+      "omission_means_preserved": false
+    },
+    "bounded_coverage_means_complete": false,
+    "not_observed_means_unknown": false,
+    "native_open_inventory_scope": "Every distinct native geometric relation or translation open condition at its report source and canonical open ledger; artifact/provenance coordinates, embedded external-subprotocol metadata, and derived duplicate projections are excluded.",
+    "non_equivalence": {
+      "plain_language": "Four different tools answer four different structural questions. Their shared words are a reading aid, not a claim that their schemas, artifacts, or meanings are interchangeable.",
+      "modules_are_distinct": true,
+      "wire_formats_are_interchangeable": false,
+      "implicit_conversion": false,
+      "shared_words_prove_same_semantics": false,
+      "digest_equality_proves_semantic_equality": false,
+      "adapters_included": false
+    },
+    "boundary": {
+      "read_only": true,
+      "advisory_only": true,
+      "authority_granted": false,
+      "execution_authorized": false,
+      "external_effects_authorized": false
+    }
+  },
   "polymorph_commons": {
     "protocol": "kingdom.polymorph-history/0.1",
     "case_id": "ritonavir-disappearing-polymorph-2026-08-11",
@@ -179,6 +381,22 @@
       "action": "if useful, read the Principality geometry, WAKE seam, and acquisition airlock",
       "method": "GET",
       "url": "https://thekingdom.dev/PRINCIPALITY-COMMONS.md"
+    },
+    {
+      "action": "if useful, translate a high-level pattern into four distinct plain-language questions without forcing equivalence",
+      "method": "GET",
+      "url": "https://thekingdom.dev/geometries/kingdom-geometry-grammar-v0.json",
+      "note": "read-only and advisory; unknown remains explicit and no execution or external effect is authorized"
+    },
+    {
+      "action": "if useful, validate the Geometry Grammar before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/geometry-grammar/0.1.json"
+    },
+    {
+      "action": "if useful, read the human Geometry Grammar guide and worked boundaries",
+      "method": "GET",
+      "url": "https://thekingdom.dev/GEOMETRY-GRAMMAR.md"
     },
     {
       "action": "if useful, inspect the exact source-bound ritonavir material-state case",
@@ -2565,6 +2783,7 @@
     "privacy": "This document asks for no credentials or personal data and creates no application profile. Ordinary hosting infrastructure may still process request metadata; linked services have their own boundaries.",
     "world_commons": "The Kingdom publishes reviewed metadata and outbound links. Its optional MCP matcher reads only this fixed catalog and never contacts listed providers. Neither surface creates accounts, mirrors sensitive case data, certifies a steward, or turns free access into a licence grant.",
     "principality_commons": "The pinned catalog and guide are read-only, point-in-time metadata. They host no matcher, contact no registry or provider, download no weights or datasets, install no package, run no remote code or inference, and grant no recommendation, permission, credential, budget, or external-effect authority.",
+    "geometry_grammar": "The grammar and guide are static, read-only translation aids. They do not assert equivalence, rank modules, resolve unknowns, contact a host or endpoint, install a release, execute a tool, grant authority, or create an external effect.",
     "polymorph_commons": "The immutable case and guide are historical, read-only educational evidence. They do not establish literal extinction, universal seeding, exclusive causation, global stability, a current product defect, medical advice, formulation or GMP controls, batch release, regulatory acceptability, experiment authority, AgentTool continuity, or automatic action.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."

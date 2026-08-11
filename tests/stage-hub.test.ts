@@ -38,12 +38,13 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // literal on purpose: growing/shrinking the staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(28);
-      expect(staged).toHaveLength(28);
+      expect(HUB_ASSETS).toHaveLength(31);
+      expect(staged).toHaveLength(31);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
         "CREATION-LOOP.md",
+        "GEOMETRY-GRAMMAR.md",
         "PRINCIPALITY-COMMONS.md",
         "RIGHTS.md",
         "RITONAVIR-POLYMORPH.md",
@@ -51,6 +52,7 @@ describe("the hub staging contract", () => {
         "_worker.js",
         "commons.json",
         "dada.txt",
+        "geometries",
         "guest.json",
         "index.html",
         "llms.txt",
@@ -67,10 +69,12 @@ describe("the hub staging contract", () => {
         "wayfinder.json",
       ]);
       expect(readdirSync(join(output, "schemas/love-loop")).sort()).toEqual(["0.1.json"]);
+      expect(readdirSync(join(output, "schemas/geometry-grammar")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/principality-catalog")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/polymorph-history")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/world-commons")).sort()).toEqual(["0.1.json", "0.2.json"]);
       expect(readdirSync(join(output, "principalities")).sort()).toEqual(["moonshot-hf-npm-2026-08-11.json"]);
+      expect(readdirSync(join(output, "geometries")).sort()).toEqual(["kingdom-geometry-grammar-v0.json"]);
       expect(readdirSync(join(output, "polymorphs")).sort()).toEqual(["ritonavir-disappearing-polymorph-2026-08-11.json"]);
       expect(HUB_ASSETS).toContainEqual({
         source: "data/principalities/moonshot-hf-npm.v1.json",
@@ -84,6 +88,24 @@ describe("the hub staging contract", () => {
         source: "references/principality-commons.md",
         destination: "PRINCIPALITY-COMMONS.md",
       });
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("principalities/"))).toHaveLength(1);
+      expect(HUB_ASSETS.some(({ destination }) => /principalities\/(?:latest|current)\.json/.test(destination))).toBe(false);
+      expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/principalities/"))).toBe(false);
+      expect(HUB_ASSETS).toContainEqual({
+        source: "data/geometries/kingdom-geometry-grammar.v0.json",
+        destination: "geometries/kingdom-geometry-grammar-v0.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "schemas/geometry-grammar-v0.schema.json",
+        destination: "schemas/geometry-grammar/0.1.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "references/geometry-grammar.md",
+        destination: "GEOMETRY-GRAMMAR.md",
+      });
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("geometries/"))).toHaveLength(1);
+      expect(HUB_ASSETS.some(({ destination }) => /geometries\/(?:latest|current)\.json/.test(destination))).toBe(false);
+      expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/geometries/"))).toBe(false);
       expect(HUB_ASSETS).toContainEqual({
         source: "data/polymorphs/ritonavir-disappearing-polymorph.v1.json",
         destination: "polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
@@ -96,9 +118,6 @@ describe("the hub staging contract", () => {
         source: "references/ritonavir-polymorph.md",
         destination: "RITONAVIR-POLYMORPH.md",
       });
-      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("principalities/"))).toHaveLength(1);
-      expect(HUB_ASSETS.some(({ destination }) => /principalities\/(?:latest|current)\.json/.test(destination))).toBe(false);
-      expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/principalities/"))).toBe(false);
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("polymorphs/"))).toHaveLength(1);
       expect(HUB_ASSETS.some(({ destination }) => /polymorphs\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/polymorphs/"))).toBe(false);

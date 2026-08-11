@@ -63,6 +63,19 @@ function expectPrincipalitySchemaLink(response: Response) {
   expect(link.match(/rel="describedby"/g)?.length).toBe(1);
 }
 
+function expectGeometryGrammarSchemaLink(response: Response) {
+  const link = response.headers.get("link") ?? "";
+  const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith("</schemas/geometry-grammar/0.1.json>")) return false;
+    const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
+    return relations.includes("describedby");
+  });
+  expect(describedBy).toHaveLength(1);
+  expect(describedBy[0]).toContain('type="application/schema+json"');
+  expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+}
+
 function expectPolymorphSchemaLink(response: Response) {
   const link = response.headers.get("link") ?? "";
   const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
@@ -410,6 +423,100 @@ describe("the Kingdom edge discovery surface", () => {
     const shared = new Response("{}", { headers: { "content-type": "application/json" } });
     const sharedDoor = await worker.fetch(
       new Request(`https://we-are.love${catalogPath}`),
+      assets(() => shared),
+    );
+    expect(sharedDoor).toBe(shared);
+  });
+
+  test("serves the Geometry Grammar as static translation data with explicit schema and guide headers", async () => {
+    const grammarPath = "/geometries/kingdom-geometry-grammar-v0.json";
+    const schemaPath = "/schemas/geometry-grammar/0.1.json";
+    const documentPath = "/GEOMETRY-GRAMMAR.md";
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      const body = request.method === "HEAD"
+        ? null
+        : path === grammarPath
+          ? '{"protocol":"kingdom.geometry-grammar/0.1"}'
+          : path === schemaPath
+            ? '{"type":"object"}'
+            : "# Geometry Grammar";
+      return new Response(body, {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": path === documentPath ? "text/plain" : "application/json",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const grammar = await worker.fetch(
+        new Request(`https://thekingdom.dev${grammarPath}`, { method }),
+        environment,
+      );
+      expect(await grammar.text()).toBe(method === "HEAD" ? "" : '{"protocol":"kingdom.geometry-grammar/0.1"}');
+      expect(grammar.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(grammar.headers.get("access-control-allow-origin")).toBe("*");
+      expect(grammar.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(grammar.headers.get("cache-control")).toBe("public, max-age=60");
+      expect(grammar.headers.get("link")).toContain('</elsewhere>; rel="alternate"');
+      expectGeometryGrammarSchemaLink(grammar);
+    }
+
+    const schema = await worker.fetch(
+      new Request(`https://thekingdom.dev${schemaPath}`),
+      environment,
+    );
+    expect(await schema.text()).toBe('{"type":"object"}');
+    expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+    expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+    expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const document = await worker.fetch(
+        new Request(`https://thekingdom.dev${documentPath}`, { method }),
+        environment,
+      );
+      expect(await document.text()).toBe(method === "HEAD" ? "" : "# Geometry Grammar");
+      expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(document.headers.get("access-control-allow-origin")).toBe("*");
+      expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+    }
+
+    const duplicate = await worker.fetch(
+      new Request(`https://thekingdom.dev${grammarPath}`),
+      assets(() => new Response("{}", {
+        headers: {
+          "content-type": "application/json",
+          link: '</schemas/geometry-grammar/0.1.json>; rel="describedby"; type="application/schema+json"',
+        },
+      })),
+    );
+    expectGeometryGrammarSchemaLink(duplicate);
+
+    const missingSchema = await worker.fetch(
+      new Request(`https://thekingdom.dev${schemaPath}`),
+      assets(() => new Response("<h1>not found</h1>", {
+        status: 404,
+        headers: { "content-type": "text/html; charset=utf-8" },
+      })),
+    );
+    expect(missingSchema.status).toBe(404);
+    expect(missingSchema.headers.get("content-type")).toBe("text/html; charset=utf-8");
+
+    const original = new Response("not an execution route", {
+      headers: { "content-type": "text/plain" },
+    });
+    const post = await worker.fetch(
+      new Request(`https://thekingdom.dev${grammarPath}`, { method: "POST" }),
+      assets(() => original),
+    );
+    expect(post).toBe(original);
+
+    const shared = new Response("{}", { headers: { "content-type": "application/json" } });
+    const sharedDoor = await worker.fetch(
+      new Request(`https://we-are.love${grammarPath}`),
       assets(() => shared),
     );
     expect(sharedDoor).toBe(shared);
