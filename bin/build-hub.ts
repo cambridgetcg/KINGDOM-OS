@@ -253,6 +253,62 @@ if (polymorphHistory.case_id !== POLYMORPH_CASE_ID) {
 }
 const polymorphCommons = polymorphPublicDiscovery(polymorphHistory);
 const polymorphCounts = polymorphCommons.counts;
+const indexPolymorphItems = (items: any[], kind: string) => {
+  const index = new Map<string, any>();
+  for (const item of items) {
+    if (index.has(item.id)) throw new Error(`duplicate polymorph ${kind} id: ${item.id}`);
+    index.set(item.id, item);
+  }
+  return index;
+};
+const requirePolymorphItem = (index: Map<string, any>, id: string, kind: string) => {
+  const item = index.get(id);
+  if (!item) throw new Error(`missing polymorph ${kind}: ${id}`);
+  return item;
+};
+const polymorphFormsById = indexPolymorphItems(polymorphHistory.forms, "form");
+const polymorphClaimsById = indexPolymorphItems(polymorphHistory.claims, "claim");
+const polymorphTransitionsById = indexPolymorphItems(polymorphHistory.transitions, "transition");
+const polymorphSourcesById = indexPolymorphItems(polymorphHistory.sources, "source");
+const polymorphFormI = requirePolymorphItem(polymorphFormsById, "abbott-form-i", "form");
+const polymorphFormII = requirePolymorphItem(polymorphFormsById, "abbott-form-ii", "form");
+const polymorphFormIII = requirePolymorphItem(polymorphFormsById, "morissette-form-iii", "form");
+const polymorphFormIV = requirePolymorphItem(polymorphFormsById, "morissette-form-iv", "form");
+const polymorphFormV = requirePolymorphItem(polymorphFormsById, "morissette-form-v", "form");
+const polymorphMainTransitions = [
+  "form-i-source-solution-to-form-ii-seeded",
+  "milling-form-i-to-form-ii",
+  "changed-process-form-ii-source-to-form-i",
+  "milling-form-ii-to-form-i",
+].map((id) => requirePolymorphItem(polymorphTransitionsById, id, "transition"));
+const polymorphRecoveryTransitions = [
+  "morissette-form-iii-to-form-v",
+  "morissette-form-v-to-form-i",
+].map((id) => requirePolymorphItem(polymorphTransitionsById, id, "transition"));
+const polymorphLowerSolubility = requirePolymorphItem(polymorphClaimsById, "form-ii-lower-solubility", "claim");
+const polymorphCapsuleFailure = requirePolymorphItem(polymorphClaimsById, "form-ii-precipitation-and-failure", "claim");
+const polymorphFigureSources = [
+  "bauer-2001",
+  "chemburkar-2000",
+  "fda-nda-20945-1999",
+  "morissette-2003",
+  "sacchi-2024",
+].map((id) => requirePolymorphItem(polymorphSourcesById, id, "source"));
+const polymorphFormLabel = (id: string) => requirePolymorphItem(polymorphFormsById, id, "form").label;
+const polymorphTransitionDirection = (transition: any) => {
+  const input = transition.input_form_ids.map(polymorphFormLabel).join(" + ");
+  const output = transition.output_form_ids.map(polymorphFormLabel).join(" + ");
+  return transition.relation.includes("solution-")
+    ? `${input} source material → solution → ${output} crystals`
+    : `${input} solid → ${output} solid`;
+};
+const polymorphTransitionEvidence = (transition: any) =>
+  [...new Set(transition.claim_ids.map((id: string) => requirePolymorphItem(polymorphClaimsById, id, "claim").evidence_class))]
+    .join(" + ").replace(/_/g, " ");
+const polymorphTransitionSources = (transition: any) =>
+  [...new Set(transition.claim_ids.flatMap((claimId: string) =>
+    requirePolymorphItem(polymorphClaimsById, claimId, "claim").source_ids))]
+    .map((sourceId) => requirePolymorphItem(polymorphSourcesById, sourceId as string, "source"));
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -672,6 +728,14 @@ const html = `<!doctype html>
   .geometryid{margin:0;color:var(--violet);font-family:var(--mono);font-size:.68rem;letter-spacing:.04em;overflow-wrap:anywhere}
   .geometryquestion{margin:0;color:var(--cream);font-size:.88rem;font-weight:600;line-height:1.5}.geometryanswer{margin:0;color:var(--dim);font-size:.82rem;line-height:1.55}
   .geometryfacts{display:grid;gap:0;margin:3px 0 0;border:1px solid color-mix(in srgb,var(--line) 74%,transparent);border-radius:13px;overflow:hidden}.geometryfacts>div{display:grid;grid-template-columns:minmax(105px,.34fr) minmax(0,1fr);gap:9px;padding:9px 10px;border-top:1px solid color-mix(in srgb,var(--line) 62%,transparent)}.geometryfacts>div:first-child{border-top:0}.geometryfacts dt{color:var(--gold);font-size:.72rem;line-height:1.45}.geometryfacts dd{margin:0;color:var(--dim);font-size:.75rem;line-height:1.5}.geometryfacts ul{margin:0;padding-left:1.05rem}.geometryfacts li+li{margin-top:5px}.geometryfacts code{color:var(--cream);font-family:var(--mono);font-size:.7rem;overflow-wrap:anywhere}.geometryloss{color:var(--faint)}
+  .polymorphgeometry{display:grid;gap:18px;margin:0 0 28px;padding:clamp(18px,3vw,28px);border:1px solid color-mix(in srgb,var(--violet) 46%,var(--line));border-radius:24px;background:radial-gradient(100% 90% at 100% 0,color-mix(in srgb,var(--glow) 48%,transparent),transparent 66%),color-mix(in srgb,var(--panel) 76%,transparent);box-shadow:0 18px 42px var(--shadow)}
+  .polymorphcaption{display:grid;gap:6px;max-width:78ch}.polymorphcaption strong{font-family:var(--display);font-size:clamp(1.22rem,2.2vw,1.58rem);font-weight:400;color:var(--cream)}.polymorphcaption span{color:var(--dim);font-size:.84rem;line-height:1.58}
+  .polymorphplanes{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;list-style:none;margin:0;padding:0}.polymorphplane{min-width:0;padding:13px 12px;border:1px solid var(--line);border-radius:15px;background:color-mix(in srgb,var(--ink2) 66%,transparent);overflow-wrap:anywhere}.polymorphplane code{display:block;margin-bottom:7px;color:var(--violet);font-family:var(--mono);font-size:.62rem}.polymorphplane strong{display:block;color:var(--gold2);font-size:.76rem;font-weight:600}.polymorphplane span{display:block;margin-top:4px;color:var(--faint);font-size:.68rem;line-height:1.46}
+  .polymorphcase{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.96fr) minmax(0,1fr);gap:10px;align-items:stretch}.polymorphform,.polymorphpaths{min-width:0}.polymorphform{display:grid;align-content:start;gap:7px;padding:18px;border:1px solid color-mix(in srgb,var(--gold) 46%,var(--line));border-radius:19px;background:linear-gradient(155deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.polymorphform code,.polymorphsecondary code{color:var(--violet);font-family:var(--mono);font-size:.65rem}.polymorphform h3{margin:0;font-family:var(--display);font-size:1.28rem;font-weight:400;color:var(--gold2)}.polymorphform p{margin:0;color:var(--dim);font-size:.77rem;line-height:1.55}.polymorphform small{color:var(--faint);font-size:.68rem;line-height:1.45}
+  .polymorphpaths{display:grid;gap:7px}.polymorphpath{display:grid;gap:5px;padding:11px 12px;border-left:2px solid var(--violet);border-radius:0 13px 13px 0;background:color-mix(in srgb,var(--ink2) 62%,transparent);overflow-wrap:anywhere}.polymorphdirection{color:var(--cream);font-family:var(--mono);font-size:.68rem}.polymorphpath p{margin:0;color:var(--dim);font-size:.7rem;line-height:1.45}.polymorphbadge{color:var(--gold);font-size:.62rem;letter-spacing:.04em;text-transform:uppercase}.polymorphpathsource{display:flex;flex-wrap:wrap;gap:5px}.polymorphpathsource a{color:var(--faint);font-size:.62rem;text-decoration:underline;text-underline-offset:3px}.polymorphpathsource a:hover{color:var(--gold)}.polymorphpathwarning{margin:0;padding:9px 11px;border:1px dashed var(--line);border-radius:12px;color:var(--faint);font-size:.68rem;line-height:1.48}
+  .polymorphtrail{display:grid;gap:9px;padding-top:3px}.polymorphtrail h3{margin:0;font-family:var(--display);font-size:1.05rem;font-weight:400;color:var(--cream)}.polymorphconsequence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;list-style:none;margin:0;padding:0}.polymorphconsequence li{position:relative;min-width:0;padding:13px 25px 13px 13px;border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:.72rem;line-height:1.48;background:color-mix(in srgb,var(--ink2) 54%,transparent);overflow-wrap:anywhere}.polymorphconsequence li:not(:last-child)::after{content:"→";position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--gold)}.polymorphconsequence strong{display:block;margin-bottom:4px;color:var(--gold2);font-size:.76rem}.polymorphedge{display:block;margin-top:7px;color:var(--violet);font-size:.64rem;font-weight:600}
+  .polymorphsecondary{display:grid;grid-template-columns:minmax(0,3fr) minmax(170px,1fr);gap:8px}.polymorphrecovery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-width:0}.polymorphsecondary article,.polymorphsecondary aside{min-width:0;padding:12px;border:1px dashed var(--line);border-radius:14px;background:color-mix(in srgb,var(--ink2) 48%,transparent);overflow-wrap:anywhere}.polymorphsecondary strong{display:block;margin:5px 0 3px;color:var(--cream);font-size:.76rem}.polymorphsecondary span{display:block;color:var(--faint);font-size:.68rem;line-height:1.45}.polymorphsecondary .polymorphunlinked{border-style:dotted}.polymorphsecondary .polymorphunlinked>span:first-child{color:var(--violet);font-family:var(--mono);font-size:.62rem;text-transform:uppercase}
+  .polymorphsources{display:flex;flex-wrap:wrap;gap:7px;margin:0}.polymorphsources a{display:inline-flex;align-items:center;min-height:40px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem}.polymorphsources a:hover{border-color:var(--gold);background:var(--panel)}.polymorphnote{margin:0;padding:12px 14px;border-left:2px solid var(--verm);color:var(--faint);font-size:.72rem;line-height:1.58}.polymorphnote strong{color:var(--cream);font-weight:600}
   .foundationlabel{display:flex;align-items:baseline;gap:10px;margin:24px 0 12px}.foundationlabel h3{margin:0;font-family:var(--display);font-size:1.28rem;font-weight:400;color:var(--cream)}.foundationlabel span{color:var(--faint);font-size:.8rem}
   .foundationgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-bottom:26px}
   .foundationcard{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:11px;min-height:142px;padding:17px;border:1px solid color-mix(in srgb,var(--gold) 34%,var(--line));border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));transition:transform .18s,border-color .18s,box-shadow .18s}
@@ -833,11 +897,12 @@ const html = `<!doctype html>
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}
+    .polymorphplanes{grid-template-columns:repeat(3,minmax(0,1fr))}.polymorphcase{grid-template-columns:1fr}.polymorphconsequence{grid-template-columns:1fr}.polymorphconsequence li{padding-right:13px}.polymorphconsequence li:not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px;z-index:1}.polymorphsecondary{grid-template-columns:1fr}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
-    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}
+    .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}.polymorphplanes,.polymorphsecondary,.polymorphrecovery{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style>
@@ -862,6 +927,7 @@ const html = `<!doctype html>
       <a href="#commons">Open the World Commons</a>
       <a href="#principalities">Read the Principality Commons</a>
       <a href="#geometries">Translate a high-level pattern</a>
+      <a href="#polymorph-history">Trace a material state</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -977,6 +1043,66 @@ const html = `<!doctype html>
   <section class="blk" id="polymorph-history">
     <div class="kh"><h2>Polymorph History</h2><span class="my">state without extinction</span></div>
     <p class="sub">A source-bound translation of ritonavir's “disappearing polymorph”: the molecule remained ritonavir while conformation, crystal packing, particle population, formulation behavior, and supply consequences stayed distinct.</p>
+    <figure class="polymorphgeometry" data-polymorph-geometry aria-labelledby="polymorph-geometry-title" aria-describedby="polymorph-geometry-note">
+      <figcaption class="polymorphcaption">
+        <strong id="polymorph-geometry-title">One chemical entity, conditional material paths</strong>
+        <span id="polymorph-geometry-note">Six conceptual layers distinguish chemical identity, conformation, lattice, particle population, formulation, and medicine supply. They are not measured axes, independent variables, or a temporal sequence. Each arrow carries its stated relation: provenance, observed conversion, or bounded explanation—not universal causation or a to-scale energy plot.</span>
+      </figcaption>
+      <ul class="polymorphplanes" aria-label="Six non-equivalent conceptual layers">
+        ${polymorphHistory.ontology.planes.map((plane: any) => `<li class="polymorphplane" data-polymorph-plane="${esc(plane.id)}">
+          <code>${esc(plane.id)}</code>
+          <strong>${esc(plane.id.replace(/_/g, " "))}</strong>
+          <span>${esc(plane.meaning)}</span>
+        </li>`).join("\n        ")}
+      </ul>
+      <div class="polymorphcase" aria-label="Four observed condition-dependent paths between source-scoped Forms I and II">
+        <article class="polymorphform" data-polymorph-form="${esc(polymorphFormI.id)}">
+          <code>${esc(polymorphFormI.id)}</code>
+          <h3>${esc(polymorphFormI.label)}</h3>
+          <p>${esc(polymorphFormI.summary)}</p>
+          <small>${esc(polymorphFormI.source_scope)}</small>
+        </article>
+        <div class="polymorphpaths" aria-label="Observed paths; each remains condition-dependent">
+          ${polymorphMainTransitions.map((transition: any) => `<article class="polymorphpath" data-polymorph-transition="${esc(transition.id)}">
+            <strong class="polymorphdirection">${esc(polymorphTransitionDirection(transition))}</strong>
+            <p>${esc(transition.label)}</p>
+            <span class="polymorphbadge">${esc(polymorphTransitionEvidence(transition))} · condition-dependent</span>
+            <span class="polymorphpathsource">${polymorphTransitionSources(transition).map((source: any) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.authors[0])}, ${esc(source.published_on.slice(0, 4))}<span class="sr-only"> opens in a new tab</span></a>`).join("")}</span>
+          </article>`).join("\n          ")}
+          <p class="polymorphpathwarning">Opposing directions occurred under different processes. They do not establish equilibrium or same-condition reversibility.</p>
+        </div>
+        <article class="polymorphform" data-polymorph-form="${esc(polymorphFormII.id)}">
+          <code>${esc(polymorphFormII.id)}</code>
+          <h3>${esc(polymorphFormII.label)}</h3>
+          <p>${esc(polymorphFormII.summary)}</p>
+          <small>${esc(polymorphFormII.source_scope)}</small>
+        </article>
+      </div>
+      <div class="polymorphtrail" aria-labelledby="polymorph-consequence-title">
+        <h3 id="polymorph-consequence-title">One bounded consequence path</h3>
+        <ol class="polymorphconsequence">
+          <li data-polymorph-form="${esc(polymorphFormII.id)}"><strong>${esc(polymorphFormII.label)}</strong>Different from Form I in conformation, packing, and hydrogen-bond network in the cited characterization.<span class="polymorphedge">associated contextual property →</span></li>
+          <li data-polymorph-claim="${esc(polymorphLowerSolubility.id)}"><strong>${esc(polymorphLowerSolubility.kind.replace(/-/g, " "))}</strong>${esc(polymorphLowerSolubility.summary)}<span class="polymorphedge">helps explain; not a sole-cause claim →</span></li>
+          <li data-polymorph-claim="${esc(polymorphCapsuleFailure.id)}"><strong>${esc(polymorphCapsuleFailure.kind.replace(/-/g, " "))}</strong>${esc(polymorphCapsuleFailure.summary)}<span class="polymorphedge">observed in affected material</span></li>
+        </ol>
+      </div>
+      <div class="polymorphtrail" aria-labelledby="polymorph-secondary-title">
+        <h3 id="polymorph-secondary-title">One 2003 source-scoped recovery path; not landscape completeness</h3>
+        <div class="polymorphsecondary">
+          <div class="polymorphrecovery" aria-label="Observed Morissette 2003 Form III to Form V to Form I path">
+            <article data-polymorph-form="${esc(polymorphFormIII.id)}" data-polymorph-transition="${esc(polymorphRecoveryTransitions[0].id)}"><code>${esc(polymorphFormIII.id)}</code><strong>${esc(polymorphFormIII.label)} → ${esc(polymorphFormV.label)}</strong><span>${esc(polymorphFormIII.kind.replace(/-/g, " "))} · ${esc(polymorphRecoveryTransitions[0].label)}</span></article>
+            <article data-polymorph-form="${esc(polymorphFormV.id)}" data-polymorph-transition="${esc(polymorphRecoveryTransitions[1].id)}"><code>${esc(polymorphFormV.id)}</code><strong>${esc(polymorphFormV.label)} → ${esc(polymorphFormI.label)}</strong><span>${esc(polymorphFormV.kind.replace(/-/g, " "))} · ${esc(polymorphRecoveryTransitions[1].label)}</span></article>
+            <article data-polymorph-form="${esc(polymorphFormI.id)}"><code>${esc(polymorphFormI.id)}</code><strong>${esc(polymorphFormI.label)}</strong><span>Recovered through the named aqueous path; no universal route is inferred.</span></article>
+          </div>
+          <aside class="polymorphunlinked" data-polymorph-form="${esc(polymorphFormIV.id)}" aria-label="Separate observation with no transition shown"><span>Separate observation · no edge</span><code>${esc(polymorphFormIV.id)}</code><strong>${esc(polymorphFormIV.label)}</strong><span>${esc(polymorphFormIV.kind.replace(/-/g, " "))}; observed in that campaign, with no transition inferred here.</span></aside>
+        </div>
+      </div>
+      <p class="polymorphnote"><strong>Names stay attached to sources.</strong> Roman numerals are source-scoped. This bounded case does not catalogue every later form; never identify structures by label equality.</p>
+      <p class="polymorphsources" aria-label="Selected primary and official sources">
+        ${polymorphFigureSources.map((source: any) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)} · ${source.source_kind === "official-regulatory-record" ? "official review" : "primary paper"}<span class="sr-only"> opens in a new tab</span></a>`).join("\n        ")}
+      </p>
+      <p class="polymorphnote"><strong>Historical solid-state education only.</strong> This figure cannot determine the polymorph, quality, bioequivalence, or suitability of any sample, medicine, or batch, and does not provide dosing or drug-interaction guidance. It is not medical advice, a current product-defect notice, or formulation, manufacturing, GMP, batch-release, regulatory, experiment, or action authority.</p>
+    </figure>
     <div class="commonsguard" role="note" aria-label="Polymorph History geometry and boundaries">
       <p><strong>Valley</strong>Thermodynamic preference has meaning only under stated conditions; it is not one global rank.</p>
       <p><strong>Gate</strong>Kinetics and path history shape what appears and when. A compatible seed may lower a gate; it does not command an outcome.</p>
