@@ -38,8 +38,8 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // literal on purpose: growing/shrinking the staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(31);
-      expect(staged).toHaveLength(31);
+      expect(HUB_ASSETS).toHaveLength(34);
+      expect(staged).toHaveLength(34);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -47,6 +47,7 @@ describe("the hub staging contract", () => {
         "GEOMETRY-GRAMMAR.md",
         "PRINCIPALITY-COMMONS.md",
         "RIGHTS.md",
+        "RITONAVIR-MECHANISM-LANDSCAPE.md",
         "RITONAVIR-POLYMORPH.md",
         "_kingdom.base.json",
         "_worker.js",
@@ -72,10 +73,14 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "schemas/geometry-grammar")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/principality-catalog")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/polymorph-history")).sort()).toEqual(["1.json"]);
+      expect(readdirSync(join(output, "schemas/ritonavir-mechanism-landscape")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/world-commons")).sort()).toEqual(["0.1.json", "0.2.json"]);
       expect(readdirSync(join(output, "principalities")).sort()).toEqual(["moonshot-hf-npm-2026-08-11.json"]);
       expect(readdirSync(join(output, "geometries")).sort()).toEqual(["kingdom-geometry-grammar-v0.json"]);
-      expect(readdirSync(join(output, "polymorphs")).sort()).toEqual(["ritonavir-disappearing-polymorph-2026-08-11.json"]);
+      expect(readdirSync(join(output, "polymorphs")).sort()).toEqual([
+        "ritonavir-disappearing-polymorph-2026-08-11.json",
+        "ritonavir-mechanism-landscape-2026-08-11.json",
+      ]);
       expect(HUB_ASSETS).toContainEqual({
         source: "data/principalities/moonshot-hf-npm.v1.json",
         destination: "principalities/moonshot-hf-npm-2026-08-11.json",
@@ -118,7 +123,19 @@ describe("the hub staging contract", () => {
         source: "references/ritonavir-polymorph.md",
         destination: "RITONAVIR-POLYMORPH.md",
       });
-      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("polymorphs/"))).toHaveLength(1);
+      expect(HUB_ASSETS).toContainEqual({
+        source: "data/polymorphs/ritonavir-mechanism-landscape.v1.json",
+        destination: "polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "schemas/ritonavir-mechanism-landscape-v1.schema.json",
+        destination: "schemas/ritonavir-mechanism-landscape/1.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "references/ritonavir-mechanism-landscape.md",
+        destination: "RITONAVIR-MECHANISM-LANDSCAPE.md",
+      });
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("polymorphs/"))).toHaveLength(2);
       expect(HUB_ASSETS.some(({ destination }) => /polymorphs\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/polymorphs/"))).toBe(false);
       for (const [index, asset] of HUB_ASSETS.entries()) {

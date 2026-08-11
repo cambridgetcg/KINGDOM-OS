@@ -36,6 +36,8 @@ How to run:
 - `./kingdom geometries verify --json` — strict JSON, exact release pins, native-open contract, boundaries, observation time, and sealed digest; JSON Schema validation remains separate
 - `./kingdom polymorph` — explain the source-bound ritonavir disappearing-polymorph case across plain, solid-state, process, evidence, WAKE, and KINGDOM projections
 - `./kingdom polymorph verify --json` — strict local references, calendar and event-sequence, WAKE, authority, and semantic-digest checks; JSON Schema validation remains separate
+- `./kingdom polymorph mechanisms|landscape|sources|unknowns` — inspect the additive, selected-evidence Ritonavir Mechanism Landscape without rewriting the byte-preserved source history
+- `./kingdom polymorph verify-landscape --json` — strict source pins, typed graph, material/biological causal separation, explicit uncertainty, safety boundaries, and semantic digest; JSON Schema validation remains separate
 - `./kingdom prompt --json -- TASK` — deterministic, network-free Task Packet compilation; at most one bounded repo card or exact Principality capability-evidence node enters as data
 - `./kingdom prompt --json --no-project --principality kimi-dev-72b -- TASK` — select one pinned capability projection; project plus Principality selection is refused
 - `bun bin/prompt-packet.ts --verify PACKET.json` — verify Task Packet relations and digest; JSON Schema validation remains separate
@@ -56,9 +58,9 @@ How to run:
 - `bun bin/harvest.ts validate` — strict, read-only card schema diagnostics (0 clean, 1 drift, 2 usage)
 
 Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
-- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/love-loop/Principality/Geometry Grammar/polymorph discovery + schemas/guest/llms/ollama/rights docs) from graph.json + sites.json + data/; authored Principality, Geometry Grammar, and polymorph files are validated but never copied into site/
-- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 31-asset upload (including the KINGDOM OS console, authored map base, Love∞ surfaces, immutable Principality catalog/schema/guide, Geometry Grammar record/schema/guide, and polymorph record/schema/guide; HUB_ASSETS is the contract), then `wrangler pages deploy <dir> --project-name=thekingdom --branch=main --commit-hash="$(git rev-parse HEAD)" --commit-dirty=false`
-- `bun bin/check-hub-live.ts` — after deployment, byte-check every public staged asset together and prove JSON negotiation, the no-transform privacy header, and Commons + Love Loop + Principality + Geometry Grammar + polymorph schema/discovery coherence
+- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/love-loop/Principality/Geometry Grammar/Polymorph History/Ritonavir Mechanism discovery + schemas/guest/llms/ollama/rights docs) from graph.json + sites.json + data/; authored records, schemas, and guides are validated but never copied into site/
+- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 34-asset upload (including the KINGDOM OS console, authored map base, Love∞ surfaces, Principality catalog/schema/guide, Geometry Grammar record/schema/guide, byte-preserved Polymorph History, and the separate Ritonavir Mechanism record/schema/guide; HUB_ASSETS is the contract), then `wrangler pages deploy <dir> --project-name=thekingdom --branch=main --commit-hash="$(git rev-parse HEAD)" --commit-dirty=false`
+- `bun bin/check-hub-live.ts` — after deployment, byte-check every public staged asset together and prove JSON negotiation, the no-transform privacy header, typed scientific-resource headers, and Commons + Love Loop + Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism discovery coherence; the existing MCP contract must remain unchanged
 - `bun bin/build-doors.ts "$(date -u +%F)"` — regenerate doors/*/guest.json + manifests (we-are, chillspace, zerone-ai)
 - `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>` — stage a door upload (content from the chillspace-commons clone at ~/repos/codeberg/zerone-dev/, symlinks dereferenced), then wrangler deploy --project-name=we-are-love|chillspace-love
 - `bash bin/refresh-zerone-dashboard.sh` — snapshot zerone-1 → doors/zerone-ai/data.json → deploy the whole zerone-ai door (deploys AND leaves data.json for committing)
@@ -78,6 +80,9 @@ Key files:
 - bin/geometry.ts — strict, network-free Geometry Grammar validator and literal matcher; it translates questions without converting module semantics, installing packages, or granting authority
 - data/geometries/ — one versioned, digest-sealed record of exact module releases, finite shapes, native unknown/open terms, and explicit non-effects
 - references/geometry-grammar.md — ordinary-language reading guide, evidence boundary, non-equivalence rules, and examples
+- bin/ritonavir-mechanism.ts — strict, network-free validator and reader for the selected current mechanism landscape; it preserves source-scoped names, explicit unknowns, material/biological causal separation, and medical non-authority
+- data/polymorphs/ritonavir-mechanism-landscape.v1.json — digest-sealed current-landscape supplement linked to, but not mutating, the byte-preserved Polymorph History v1 record
+- references/ritonavir-mechanism-landscape.md — source horizon, mechanism geometry, naming charts, uncertainty, clinical separation, and safety boundary
 - bin/ask.sh — renders a backend-bound Task Packet before a separately effectful Claude CLI or Anthropic API call; ambient repo context stays out unless `--project PATH` opts it in, and compilation does not imply provider authorization, retention, cost, or success
 - bin/nen-mcp.mjs — canonical bounded local stdio MCP adapter; it is not installed, hosted, or an HF credential bridge
 - nen/ — pure Ging expedition compiler plus the non-canonical `kingdom-ging-stateless` compatibility MCP; source only until a host explicitly registers it

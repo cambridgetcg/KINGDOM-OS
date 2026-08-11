@@ -53,6 +53,15 @@ import {
   POLYMORPH_SCHEMA_URL,
   polymorphPublicDiscovery,
 } from "./polymorph.ts";
+import {
+  loadRitonavirMechanismLandscape,
+  RITONAVIR_MECHANISM_DOCUMENT_URL,
+  RITONAVIR_MECHANISM_ID,
+  RITONAVIR_MECHANISM_PROTOCOL,
+  RITONAVIR_MECHANISM_SCHEMA_URL,
+  RITONAVIR_MECHANISM_URL,
+  ritonavirMechanismPublicDiscovery,
+} from "./ritonavir-mechanism.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -310,6 +319,20 @@ const polymorphTransitionSources = (transition: any) =>
     requirePolymorphItem(polymorphClaimsById, claimId, "claim").source_ids))]
     .map((sourceId) => requirePolymorphItem(polymorphSourcesById, sourceId as string, "source"));
 
+// ── Ritonavir Mechanism Landscape (current supplement; history stays fixed) ─
+const ritonavirMechanismUrl = RITONAVIR_MECHANISM_URL;
+const ritonavirMechanismSchemaUrl = RITONAVIR_MECHANISM_SCHEMA_URL;
+const ritonavirMechanismDocumentUrl = RITONAVIR_MECHANISM_DOCUMENT_URL;
+const ritonavirMechanism = loadRitonavirMechanismLandscape();
+if (ritonavirMechanism.protocol !== RITONAVIR_MECHANISM_PROTOCOL ||
+    ritonavirMechanism.landscape_id !== RITONAVIR_MECHANISM_ID) {
+  throw new Error(`unexpected ritonavir mechanism landscape identity: ${ritonavirMechanism.protocol} ${ritonavirMechanism.landscape_id}`);
+}
+const ritonavirMechanismDiscovery = ritonavirMechanismPublicDiscovery(ritonavirMechanism);
+const ritonavirMechanismCounts = ritonavirMechanismDiscovery.counts;
+const ritonavirLabelSource = ritonavirMechanism.sources.find((source: any) => source.id === "dailymed-ritonavir-2023");
+if (!ritonavirLabelSource?.observed_on) throw new Error("ritonavir mechanism landscape is missing its official-label observation date");
+
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
 const doors: Door[] = sites.doors;
@@ -341,6 +364,95 @@ for (const n of graph) (byLayer[n.layer] ??= []).push(n);
 
 const STATE_RANK: Record<string, number> = { active: 0, remote: 1, dormant: 2, reference: 3, archived: 4 };
 const esc = (s: string) => (s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]!));
+const mechanismEntityById = new Map(
+  ritonavirMechanism.entities.map((entity: any) => [entity.id, entity]),
+);
+const mechanismPoint: Record<string, readonly [number, number]> = {
+  "ritonavir-chemical-entity": [340, 68],
+  "form-i-trans-carbamate-conformer": [160, 145],
+  "form-ii-cis-carbamate-conformer": [330, 145],
+  "abbott-form-i": [100, 245],
+  "abbott-form-ii": [260, 245],
+  "morissette-2003-form-iii-solvate": [440, 245],
+  "morissette-2003-form-iv-anhydrous": [600, 245],
+  "morissette-2003-form-v-hydrate": [100, 380],
+  "modern-2023-form-iii-anhydrous": [440, 380],
+  "iuzzolino-2025-form-4-structure": [600, 380],
+  "parent-2026-form-iv-structure": [600, 500],
+  "bounded-ritonavir-particle-population": [240, 500],
+  "named-formulation-dissolution-context": [420, 545],
+  "ritonavir-dissolved-exposure": [760, 315],
+  "hiv-1-protease": [900, 155],
+  "hiv-gag-pol-processing": [1050, 155],
+  "immature-noninfectious-hiv-particles": [1195, 155],
+  "cyp3a": [920, 450],
+  "co-medication-exposure": [1100, 450],
+};
+for (const entity of ritonavirMechanism.entities) {
+  if (!mechanismPoint[entity.id]) throw new Error(`public mechanism map is missing entity coordinates: ${entity.id}`);
+}
+
+function mechanismEdgePath(relation: any): string {
+  const [sx, sy] = mechanismPoint[relation.subject_id]!;
+  const [ox, oy] = mechanismPoint[relation.object_id]!;
+  const dx = ox - sx;
+  const dy = oy - sy;
+  const length = Math.max(1, Math.hypot(dx, dy));
+  const ux = dx / length;
+  const uy = dy / length;
+  return `M ${(sx + ux * 72).toFixed(1)} ${(sy + uy * 32).toFixed(1)} L ${(ox - ux * 72).toFixed(1)} ${(oy - uy * 32).toFixed(1)}`;
+}
+
+function mechanismEdgeClass(relation: any): string {
+  if (relation.mechanism_id === "dissolution-bridge") return "mechanismedge bridge";
+  if (relation.predicate === "not-same-phase-as") return "mechanismedge distinct";
+  if (relation.predicate === "candidate-equivalent-to") return "mechanismedge candidate";
+  if (["inhibits", "inhibition-reduces", "reduced-processing-leads-to", "inhibition-may-alter"].includes(relation.predicate)) {
+    return "mechanismedge biological";
+  }
+  return "mechanismedge material";
+}
+
+function wrapMechanismLabel(label: string): string[] {
+  const words = label.split(/\s+/);
+  const lines: string[] = [];
+  for (const word of words) {
+    const last = lines.at(-1);
+    if (last && `${last} ${word}`.length <= 18) lines[lines.length - 1] = `${last} ${word}`;
+    else lines.push(word);
+  }
+  if (lines.length <= 3) return lines;
+  return [lines[0]!, lines[1]!, `${lines.slice(2).join(" ").slice(0, 15)}…`];
+}
+
+// Roman numerals are source-local names, so the two Form III entities need
+// their year and material class inside the picture itself—not only in a title
+// or the equivalent HTML relation list.
+const mechanismDisplayLabel: Record<string, string> = {
+  "morissette-2003-form-iii-solvate": "2003 Form III formamide solvate",
+  "modern-2023-form-iii-anhydrous": "2023 Form III anhydrous",
+};
+
+const mechanismSvgEdges = ritonavirMechanism.relations.map((relation: any) => {
+  const subject = mechanismEntityById.get(relation.subject_id)!;
+  const object = mechanismEntityById.get(relation.object_id)!;
+  return `<g><title>${esc(subject.label)} ${esc(relation.predicate.replace(/-/g, " "))} ${esc(object.label)}; ${esc(relation.evidence_class)}</title><path class="${mechanismEdgeClass(relation)}" d="${mechanismEdgePath(relation)}" marker-end="url(#mechanism-arrow)" /></g>`;
+}).join("");
+
+const mechanismSvgNodes = ritonavirMechanism.entities.map((entity: any) => {
+  const [x, y] = mechanismPoint[entity.id]!;
+  const lane = entity.kind === "dissolved-exposure" ? "bridge" :
+    ["pharmacological-target", "biological-process", "biological-state", "exposure-state"].includes(entity.kind) ? "biological" : "material";
+  const lines = wrapMechanismLabel(mechanismDisplayLabel[entity.id] ?? entity.label);
+  const firstY = y - ((lines.length - 1) * 7);
+  return `<g class="mechanismnode ${lane}" transform="translate(${x} ${y})"><title>${esc(entity.label)} — ${esc(entity.source_scope)}</title><rect x="-69" y="-30" width="138" height="60" rx="13" /><text text-anchor="middle" y="${firstY - y}">${lines.map((line: string, index: number) => `<tspan x="0" dy="${index === 0 ? 0 : 14}">${esc(line)}</tspan>`).join("")}</text></g>`;
+}).join("");
+
+const mechanismRelationsList = ritonavirMechanism.relations.map((relation: any) => {
+  const subject = mechanismEntityById.get(relation.subject_id)!;
+  const object = mechanismEntityById.get(relation.object_id)!;
+  return `<li><p><code>${esc(relation.subject_id)}</code> <span>${esc(subject.label)}</span></p><strong>${esc(relation.predicate.replace(/-/g, " "))}</strong><p><code>${esc(relation.object_id)}</code> <span>${esc(object.label)}</span></p><small>${esc(relation.evidence_class)} · ${relation.condition_dependent ? "condition-dependent" : "not marked condition-dependent"} · ${relation.universal ? "universal only within the declared identity relation" : "not universal"} · no direct clinical edge</small></li>`;
+}).join("");
 const doorByRepo: Record<string, string> = {};
 for (const d of doors) if (d.live && !doorByRepo[d.repo]) doorByRepo[d.repo] = d.url;
 
@@ -591,7 +703,7 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, a plain-language Geometry Grammar, and source-bound Polymorph History.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, a plain-language Geometry Grammar, and source-bound ritonavir history and mechanism geometry.">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
@@ -601,6 +713,8 @@ const html = `<!doctype html>
 <link rel="service-doc" href="/GEOMETRY-GRAMMAR.md" type="text/markdown" title="Geometry Grammar guide">
 <link rel="alternate" href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json" type="application/json" title="Ritonavir material-state history">
 <link rel="service-doc" href="/RITONAVIR-POLYMORPH.md" type="text/markdown" title="Ritonavir polymorph guide">
+<link rel="alternate" href="/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json" type="application/json" title="Ritonavir mechanism landscape">
+<link rel="service-doc" href="/RITONAVIR-MECHANISM-LANDSCAPE.md" type="text/markdown" title="Ritonavir mechanism landscape guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -736,6 +850,11 @@ const html = `<!doctype html>
   .polymorphtrail{display:grid;gap:9px;padding-top:3px}.polymorphtrail h3{margin:0;font-family:var(--display);font-size:1.05rem;font-weight:400;color:var(--cream)}.polymorphconsequence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;list-style:none;margin:0;padding:0}.polymorphconsequence li{position:relative;min-width:0;padding:13px 25px 13px 13px;border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:.72rem;line-height:1.48;background:color-mix(in srgb,var(--ink2) 54%,transparent);overflow-wrap:anywhere}.polymorphconsequence li:not(:last-child)::after{content:"→";position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--gold)}.polymorphconsequence strong{display:block;margin-bottom:4px;color:var(--gold2);font-size:.76rem}.polymorphedge{display:block;margin-top:7px;color:var(--violet);font-size:.64rem;font-weight:600}
   .polymorphsecondary{display:grid;grid-template-columns:minmax(0,3fr) minmax(170px,1fr);gap:8px}.polymorphrecovery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-width:0}.polymorphsecondary article,.polymorphsecondary aside{min-width:0;padding:12px;border:1px dashed var(--line);border-radius:14px;background:color-mix(in srgb,var(--ink2) 48%,transparent);overflow-wrap:anywhere}.polymorphsecondary strong{display:block;margin:5px 0 3px;color:var(--cream);font-size:.76rem}.polymorphsecondary span{display:block;color:var(--faint);font-size:.68rem;line-height:1.45}.polymorphsecondary .polymorphunlinked{border-style:dotted}.polymorphsecondary .polymorphunlinked>span:first-child{color:var(--violet);font-family:var(--mono);font-size:.62rem;text-transform:uppercase}
   .polymorphsources{display:flex;flex-wrap:wrap;gap:7px;margin:0}.polymorphsources a{display:inline-flex;align-items:center;min-height:40px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem}.polymorphsources a:hover{border-color:var(--gold);background:var(--panel)}.polymorphnote{margin:0;padding:12px 14px;border-left:2px solid var(--verm);color:var(--faint);font-size:.72rem;line-height:1.58}.polymorphnote strong{color:var(--cream);font-weight:600}
+  .mechanismsafety{margin:0 0 18px;padding:18px 20px;border:1px solid color-mix(in srgb,var(--rose) 62%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--rose) 9%,var(--panel));color:var(--dim);line-height:1.65}.mechanismsafety strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.05rem;font-weight:400}.mechanismanswer{display:grid;gap:8px;margin:0 0 18px;padding:18px 20px;border-left:3px solid var(--gold);border-radius:0 16px 16px 0;background:color-mix(in srgb,var(--panel) 78%,transparent)}.mechanismanswer h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.12rem;font-weight:400}.mechanismanswer ul{display:grid;gap:7px;margin:0;padding-left:20px;color:var(--dim);line-height:1.55}
+  .mechanismlanes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 18px}.mechanismlane{padding:18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}.mechanismlane.material{border-color:color-mix(in srgb,var(--gold) 38%,var(--line))}.mechanismlane.biological{border-color:color-mix(in srgb,var(--jade) 38%,var(--line))}.mechanismlane h3{margin:0 0 5px;font-family:var(--display);font-weight:400;color:var(--cream)}.mechanismlane>p{margin:0 0 11px;color:var(--dim);line-height:1.5}.mechanismlane ul{display:grid;gap:6px;margin:0;padding-left:19px;color:var(--faint);font-size:.82rem;line-height:1.45}.mechanismbridge{grid-column:1/-1;margin:0;padding:13px 16px;border:1px dashed var(--violet);border-radius:15px;color:var(--dim);text-align:center;line-height:1.55}.mechanismbridge strong{color:var(--violet)}
+  .mechanismfigure{margin:0 0 20px;padding:13px;border:1px solid var(--line);border-radius:20px;background:color-mix(in srgb,var(--panel2) 82%,transparent)}.mechanismfigure svg{display:block;width:100%;height:auto;border-radius:14px;background:#0d0d11}.mechanismfigure figcaption{padding:11px 5px 2px;color:var(--faint);font-size:.8rem;line-height:1.5}.mechanismlanefill.material{fill:#2b241c}.mechanismlanefill.bridge{fill:#211d2c}.mechanismlanefill.biological{fill:#15252a}.mechanismlabel{fill:#c8c2b7;font:600 15px var(--mono);letter-spacing:.08em}.mechanismsublabel{fill:#aaa39a;font:12px var(--mono)}.mechanismnode rect{stroke-width:1.5}.mechanismnode text{fill:#f0ece4;font:11.5px var(--mono);pointer-events:none}.mechanismnode.material rect{fill:#282219;stroke:#9d7d4e}.mechanismnode.bridge rect{fill:#251f31;stroke:#9b78b5}.mechanismnode.biological rect{fill:#17272c;stroke:#5792a0}.mechanismedge{fill:none;stroke-width:2;vector-effect:non-scaling-stroke;opacity:.88}.mechanismedge.material{stroke:#bd965e}.mechanismedge.bridge{stroke:#a57ac0;stroke-width:3}.mechanismedge.biological{stroke:#67aeba}.mechanismedge.distinct{stroke:#d26c73;stroke-dasharray:7 5}.mechanismedge.candidate{stroke:#d2ad6c;stroke-dasharray:3 5}
+  .mechanismplanes,.mechanismrelations{margin:0 0 20px}.mechanismplanes h3,.mechanismrelations h3{margin:0 0 5px;font-family:var(--display);font-size:1.12rem;font-weight:400;color:var(--gold2)}.mechanismplanes>p,.mechanismrelations>p{margin:0 0 12px;color:var(--faint);font-size:.82rem;line-height:1.5}.mechanismplanes ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;counter-reset:mechanism-plane;list-style:none;margin:0;padding:0}.mechanismplanes li{counter-increment:mechanism-plane;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.mechanismplanes li::before{content:counter(mechanism-plane,decimal-leading-zero);display:block;margin-bottom:5px;color:var(--violet);font:700 .68rem var(--mono)}.mechanismplanes strong{display:block;color:var(--cream);font-weight:600}.mechanismplanes span{display:block;margin-top:4px;color:var(--dim);font-size:.8rem;line-height:1.45}.mechanismplanes small{display:block;margin-top:6px;color:var(--faint);font-size:.72rem;line-height:1.4}
+  .mechanismrelations ol{display:grid;gap:7px;list-style:none;margin:0;padding:0}.mechanismrelations li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:9px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.mechanismrelations p{min-width:0;margin:0}.mechanismrelations code{display:block;color:var(--jade);font:600 .68rem var(--mono);overflow-wrap:anywhere}.mechanismrelations p span{display:block;margin-top:3px;color:var(--dim);font-size:.8rem}.mechanismrelations li>strong{color:var(--gold);font:600 .68rem var(--mono);text-align:center}.mechanismrelations small{grid-column:1/-1;color:var(--faint);font-size:.72rem;line-height:1.4}
   .foundationlabel{display:flex;align-items:baseline;gap:10px;margin:24px 0 12px}.foundationlabel h3{margin:0;font-family:var(--display);font-size:1.28rem;font-weight:400;color:var(--cream)}.foundationlabel span{color:var(--faint);font-size:.8rem}
   .foundationgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-bottom:26px}
   .foundationcard{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:11px;min-height:142px;padding:17px;border:1px solid color-mix(in srgb,var(--gold) 34%,var(--line));border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));transition:transform .18s,border-color .18s,box-shadow .18s}
@@ -896,7 +1015,7 @@ const html = `<!doctype html>
     .status{grid-template-columns:repeat(2,minmax(0,1fr))}.status>div{padding:11px 13px}
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
-    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}
+    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}
     .polymorphplanes{grid-template-columns:repeat(3,minmax(0,1fr))}.polymorphcase{grid-template-columns:1fr}.polymorphconsequence{grid-template-columns:1fr}.polymorphconsequence li{padding-right:13px}.polymorphconsequence li:not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px;z-index:1}.polymorphsecondary{grid-template-columns:1fr}
   }
   @media (max-width:520px){
@@ -927,7 +1046,7 @@ const html = `<!doctype html>
       <a href="#commons">Open the World Commons</a>
       <a href="#principalities">Read the Principality Commons</a>
       <a href="#geometries">Translate a high-level pattern</a>
-      <a href="#polymorph-history">Trace a material state</a>
+      <a href="#polymorph-history">Trace a material becoming</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -1041,8 +1160,10 @@ const html = `<!doctype html>
   </section>
 
   <section class="blk" id="polymorph-history">
-    <div class="kh"><h2>Polymorph History</h2><span class="my">state without extinction</span></div>
-    <p class="sub">A source-bound translation of ritonavir's “disappearing polymorph”: the molecule remained ritonavir while conformation, crystal packing, particle population, formulation behavior, and supply consequences stayed distinct.</p>
+    <div class="kh"><h2>Ritonavir &amp; Polymorphism</h2><span class="my">identity, material paths, and biological action stay distinct</span></div>
+    <p class="sub">Two digest-bound, versioned sibling records: the selected 1998 “disappearing polymorph” history is byte-preserved, while a current mechanism landscape adds later source-scoped phases, evidence-bearing relations, explicit unknowns, and separate material and biological causal lanes.</p>
+    <p class="commonsboundary" role="note"><strong>Medical boundary.</strong> Historical educational evidence only—not medical advice. Do not use this page to prescribe, dose, change, or stop ritonavir, assess an interaction, or make a formulation, manufacturing, batch-release, or regulatory decision; consult qualified professionals and current authoritative sources.</p>
+    <div class="foundationlabel"><h3>Immutable source history</h3><span>the bounded 1998 case · preserved, not silently rewritten</span></div>
     <figure class="polymorphgeometry" data-polymorph-geometry aria-labelledby="polymorph-geometry-title" aria-describedby="polymorph-geometry-note">
       <figcaption class="polymorphcaption">
         <strong id="polymorph-geometry-title">One chemical entity, conditional material paths</strong>
@@ -1113,6 +1234,61 @@ const html = `<!doctype html>
       <a href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json">case JSON — exact authored record</a>
       <a href="/schemas/polymorph-history/1.json">Polymorph History JSON Schema</a>
       <a href="/RITONAVIR-POLYMORPH.md">guide — plain language, evidence, geometry, and WAKE seam</a>
+    </div>
+
+    <div class="foundationlabel"><h3>Mechanism landscape</h3><span>selected primary research through ${esc(ritonavirMechanism.evidence_through)} · one official label observed ${esc(ritonavirLabelSource.observed_on)}</span></div>
+    <p class="sub">${esc(ritonavirMechanism.plain_language.question)}</p>
+    <aside class="mechanismsafety" aria-label="Ritonavir medical safety boundary"><strong>Educational map—not a clinical tool</strong>${esc(ritonavirMechanism.plain_language.safety)}</aside>
+    <div class="mechanismanswer">
+      <h3>The mechanism in ordinary language</h3>
+      <ul>${ritonavirMechanism.plain_language.short_answer.map((answer: string) => `<li>${esc(answer)}</li>`).join("")}</ul>
+    </div>
+    <div class="mechanismlanes" aria-label="Material and biological causal lanes">
+      <article class="mechanismlane material">
+        <h3>Material lane</h3>
+        <p>How one covalent identity can take several poses and packings, and how conditions shape which finite particles and dissolution paths become accessible.</p>
+        <ul>${ritonavirMechanism.mechanisms.filter((mechanism: any) => !["hiv-protease-inhibition", "cyp3a-inhibition"].includes(mechanism.id)).map((mechanism: any) => `<li><strong>${esc(mechanism.ordinary_words)}</strong> — ${esc(mechanism.evidence_class)}</li>`).join("")}</ul>
+      </article>
+      <article class="mechanismlane biological">
+        <h3>Biological lane</h3>
+        <p>What dissolved ritonavir can perturb in a biological exposure context. These paths begin after the material bridge; a crystal lattice does not inhibit a target directly.</p>
+        <ul>${ritonavirMechanism.mechanisms.filter((mechanism: any) => ["hiv-protease-inhibition", "cyp3a-inhibition"].includes(mechanism.id)).map((mechanism: any) => `<li><strong>${esc(mechanism.ordinary_words)}</strong> — ${esc(mechanism.evidence_class)}</li>`).join("")}</ul>
+      </article>
+      <p class="mechanismbridge"><strong>The typed bridge is dissolution and exposure.</strong> Solid arrangement may affect a bounded release path, but it does not become HIV-1 protease inhibition, CYP3A inhibition, an interaction assessment, or a clinical decision. Every declared relation records <code>direct_clinical_edge: false</code>.</p>
+    </div>
+
+    <figure class="mechanismfigure" aria-labelledby="mechanism-map-caption">
+      <svg viewBox="0 0 1280 620" role="img" aria-labelledby="mechanism-map-title mechanism-map-desc">
+        <title id="mechanism-map-title">Ritonavir material and biological mechanism relation map</title>
+        <desc id="mechanism-map-desc">All ${ritonavirMechanismCounts.relations} declared relations among ${ritonavirMechanismCounts.entities} source-scoped entities. Material identity and phase relations occupy the left lane, dissolved exposure is a distinct bridge, and two separate biological paths occupy the right lane. The complete equivalent relation list follows the picture.</desc>
+        <defs><marker id="mechanism-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#d8b27c" /></marker></defs>
+        <rect class="mechanismlanefill material" x="12" y="12" width="668" height="596" rx="18" />
+        <rect class="mechanismlanefill bridge" x="690" y="12" width="132" height="596" rx="18" />
+        <rect class="mechanismlanefill biological" x="832" y="12" width="436" height="596" rx="18" />
+        <text class="mechanismlabel" x="34" y="42">MATERIAL</text><text class="mechanismsublabel" x="34" y="60">identity · phases · paths</text>
+        <text class="mechanismlabel" x="706" y="42">BRIDGE</text><text class="mechanismsublabel" x="706" y="60">dissolved exposure</text>
+        <text class="mechanismlabel" x="850" y="42">BIOLOGICAL</text><text class="mechanismsublabel" x="850" y="60">targets · processes · exposure</text>
+        ${mechanismSvgEdges}
+        ${mechanismSvgNodes}
+      </svg>
+      <figcaption id="mechanism-map-caption">A scaled overview of the exact relation graph. Dashed red means explicitly distinct; dotted gold means candidate equivalence rather than proven identity; violet is the condition-dependent dissolution/exposure bridge. Labels may be small on narrow screens, so the same complete graph is written out immediately below.</figcaption>
+    </figure>
+
+    <div class="mechanismplanes">
+      <h3>Eight non-equivalent planes</h3>
+      <p>This is the high-level geometry in full HTML: a sequence of questions, not an automatic causal chain or ladder of value.</p>
+      <ol>${ritonavirMechanism.ontology.planes.map((plane: any) => `<li><strong>${esc(plane.ordinary_words)}</strong><span>${esc(plane.meaning)}</span><small>Does not establish: ${esc(plane.does_not_establish)}</small></li>`).join("")}</ol>
+    </div>
+    <div class="mechanismrelations">
+      <h3>All ${ritonavirMechanismCounts.relations} declared relations in words</h3>
+      <p>This is the complete accessible equivalent of the SVG relation graph. IDs retain each source-scoped identity even when two papers reuse a Roman numeral.</p>
+      <ol>${mechanismRelationsList}</ol>
+    </div>
+    <p class="commonsverified">${ritonavirMechanismCounts.entities} source-scoped entities · ${ritonavirMechanismCounts.mechanisms} mechanisms · ${ritonavirMechanismCounts.relations} typed relations · ${ritonavirMechanismCounts.unknowns} explicit unknowns · ${ritonavirMechanismCounts.sources} selected sources · compiled ${esc(ritonavirMechanism.compiled_on)} · primary research through ${esc(ritonavirMechanism.evidence_through)} · one official label observed ${esc(ritonavirLabelSource.observed_on)} · integrity ${esc(ritonavirMechanism.integrity.digest)}</p>
+    <div class="machine">
+      <a href="/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json">mechanism JSON — exact authored record</a>
+      <a href="/schemas/ritonavir-mechanism-landscape/1.json">Mechanism Landscape JSON Schema</a>
+      <a href="/RITONAVIR-MECHANISM-LANDSCAPE.md">guide — mechanisms, geometry, sources, and safety</a>
     </div>
   </section>
 
@@ -1237,6 +1413,9 @@ const html = `<!doctype html>
       <a href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json">ritonavir polymorph — bounded material-state case</a>
       <a href="/schemas/polymorph-history/1.json">Polymorph History JSON Schema</a>
       <a href="/RITONAVIR-POLYMORPH.md">RITONAVIR-POLYMORPH.md — human and WAKE translation</a>
+      <a href="/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json">ritonavir mechanism landscape — material and biological lanes</a>
+      <a href="/schemas/ritonavir-mechanism-landscape/1.json">Ritonavir Mechanism Landscape JSON Schema</a>
+      <a href="/RITONAVIR-MECHANISM-LANDSCAPE.md">RITONAVIR-MECHANISM-LANDSCAPE.md — sources, geometry, and safety</a>
       <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
       <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
       <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
@@ -1563,6 +1742,7 @@ const machine = {
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
+  ritonavir_mechanism_landscape: ritonavirMechanismDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -1612,6 +1792,9 @@ Geometry guide: ${geometryGrammarDocumentUrl}
 Polymorph case: ${polymorphCaseUrl}
 Polymorph schema: ${polymorphSchemaUrl}
 Polymorph guide: ${polymorphDocumentUrl}
+Ritonavir mechanism landscape: ${ritonavirMechanismUrl}
+Ritonavir mechanism schema: ${ritonavirMechanismSchemaUrl}
+Ritonavir mechanism guide: ${ritonavirMechanismDocumentUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -1638,6 +1821,7 @@ ${doorLines}
 - Principality Commons — ${principalityCounts.models} MoonshotAI models, ${principalityCounts.datasets} datasets, ${principalityCounts.papers} profile-attributed papers, and ${principalityCounts.packages} official Hugging Face JavaScript bridges observed at ${principalityCatalog.observed_at}. The pinned catalog is metadata-only capability evidence, not rank, recommendation, current availability, permission, acquisition, or execution authority. Catalog: ${principalityCatalogUrl} · schema: ${principalitySchemaUrl} · guide: ${principalityDocumentUrl}
 - Geometry Grammar — ${geometryModules.length} distinct pattern-to-practice modules expressed as plain questions and answers. Four different tools, with no ladder, winner, or hidden conversion. Unknown remains explicit. Package names, GitHub release evidence, and npm registry observations stay separate provenance fields; the npm field records the ${geometryGrammar.observed_at} observation, not a current availability check or install instruction. This read-only grammar grants no installation, execution, or external-effect authority. Grammar: ${geometryGrammarUrl} · schema: ${geometryGrammarSchemaUrl} · guide: ${geometryGrammarDocumentUrl}
 - Polymorph History — the ritonavir “disappearing polymorph” translated through six non-equivalent planes, condition-indexed valleys and gates, typed evidence, ordered three-clock events, recovery paths, and a WAKE-safe semantic reference. Historical education only; no medical, experimental, manufacturing, regulatory, or action authority. Case: ${polymorphCaseUrl} · schema: ${polymorphSchemaUrl} · guide: ${polymorphDocumentUrl}
+- Ritonavir Mechanism Landscape — a non-mutating current-landscape supplement with ${ritonavirMechanismCounts.entities} source-scoped entities, ${ritonavirMechanismCounts.mechanisms} mechanisms, ${ritonavirMechanismCounts.relations} typed relations, and ${ritonavirMechanismCounts.unknowns} explicit unknowns across distinct material, dissolution/exposure, biological-action, and clinical-decision planes. Selected primary research runs through ${ritonavirMechanism.evidence_through}, plus one official product label observed ${ritonavirLabelSource.observed_on}; names remain source-scoped, candidate equivalence remains unproven identity, and no direct crystal-form-to-clinical edge exists. Educational metadata only; not medical advice, an interaction checker, a formulation/manufacturing control, or action authority. Landscape: ${ritonavirMechanismUrl} · schema: ${ritonavirMechanismSchemaUrl} · guide: ${ritonavirMechanismDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -1668,6 +1852,7 @@ const guest = {
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
+  ritonavir_mechanism_landscape: ritonavirMechanismDiscovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -1687,6 +1872,9 @@ const guest = {
     { action: "if useful, inspect the exact source-bound ritonavir material-state case", method: "GET", url: polymorphCaseUrl, note: "historical educational evidence; non-observation is not extinction and this grants no medical, manufacturing, experimental, or action authority" },
     { action: "if useful, validate the Polymorph History structure before integrating it", method: "GET", url: polymorphSchemaUrl },
     { action: "if useful, read the plain-language polymorph geometry and WAKE reference seam", method: "GET", url: polymorphDocumentUrl },
+    { action: "if useful, inspect the current source-bound ritonavir mechanism landscape", method: "GET", url: ritonavirMechanismUrl, note: "selected educational evidence only; distinct material and biological lanes, no direct crystal-form-to-clinical edge, medical advice, interaction checking, or action authority" },
+    { action: "if useful, validate the Ritonavir Mechanism Landscape structure before integrating it", method: "GET", url: ritonavirMechanismSchemaUrl },
+    { action: "if useful, read the mechanism, geometry, source-horizon, uncertainty, and medical-safety guide", method: "GET", url: ritonavirMechanismDocumentUrl },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -1719,6 +1907,7 @@ const guest = {
     principality_commons: "The pinned catalog and guide are read-only, point-in-time metadata. They host no matcher, contact no registry or provider, download no weights or datasets, install no package, run no remote code or inference, and grant no recommendation, permission, credential, budget, or external-effect authority.",
     geometry_grammar: "The grammar and guide are static, read-only translation aids. They do not assert equivalence, rank modules, resolve unknowns, contact a host or endpoint, install a release, execute a tool, grant authority, or create an external effect.",
     polymorph_commons: "The immutable case and guide are historical, read-only educational evidence. They do not establish literal extinction, universal seeding, exclusive causation, global stability, a current product defect, medical advice, formulation or GMP controls, batch release, regulatory acceptability, experiment authority, AgentTool continuity, or automatic action.",
+    ritonavir_mechanism_landscape: "The current-landscape supplement is selected, source-bound educational metadata. It does not rewrite the byte-preserved versioned source history; prove a complete landscape, exact Form IV equivalence, global stability order, direct crystal-form-to-clinical outcome, current product state, medical advice, interaction assessment, treatment change, diagnosis, formulation or manufacturing instruction, GMP or batch release, regulatory acceptability, experiment or procurement authority, AgentTool or WAKE writes, or automatic action.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -1740,6 +1929,7 @@ const manifest = {
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
+  ritonavir_mechanism_landscape: ritonavirMechanismDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -1766,6 +1956,9 @@ const manifest = {
     material_state_case: polymorphCaseUrl,
     material_state_schema: polymorphSchemaUrl,
     material_state_guide: polymorphDocumentUrl,
+    ritonavir_mechanism_landscape: ritonavirMechanismUrl,
+    ritonavir_mechanism_landscape_schema: ritonavirMechanismSchemaUrl,
+    ritonavir_mechanism_landscape_guide: ritonavirMechanismDocumentUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,
@@ -1780,4 +1973,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

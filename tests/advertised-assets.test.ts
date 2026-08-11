@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "../bin/stage-hub.ts";
+import { RITONAVIR_MECHANISM_DIGEST } from "../bin/ritonavir-mechanism.ts";
 import { KINGDOM_OS_ROUTES } from "../pages-functions/_worker.js";
 
 /** Every thekingdom.dev path the generated surfaces advertise must be a staged
@@ -47,6 +48,9 @@ const surfaces = [
   "data/polymorphs/ritonavir-disappearing-polymorph.v1.json",
   "schemas/polymorph-history-v1.schema.json",
   "references/ritonavir-polymorph.md",
+  "data/polymorphs/ritonavir-mechanism-landscape.v1.json",
+  "schemas/ritonavir-mechanism-landscape-v1.schema.json",
+  "references/ritonavir-mechanism-landscape.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -347,6 +351,62 @@ describe("advertised URLs stay deployable", () => {
     expect(staged.has("polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json")).toBe(true);
     expect(staged.has("schemas/polymorph-history/1.json")).toBe(true);
     expect(staged.has("RITONAVIR-POLYMORPH.md")).toBe(true);
+    expect(staged.has("polymorphs/latest.json")).toBe(false);
+    expect(discovery).not.toHaveProperty("mcp");
+    expect(discovery).not.toHaveProperty("matcher");
+  });
+
+  test("the versioned Ritonavir Mechanism Landscape stays coherent and medically non-authorizing", () => {
+    const record = "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json";
+    const schema = "https://thekingdom.dev/schemas/ritonavir-mechanism-landscape/1.json";
+    const guide = "https://thekingdom.dev/RITONAVIR-MECHANISM-LANDSCAPE.md";
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const discovery = manifest.ritonavir_mechanism_landscape;
+
+    expect(discovery).toEqual(kingdom.ritonavir_mechanism_landscape);
+    expect(discovery).toEqual(guest.ritonavir_mechanism_landscape);
+    expect(discovery).toMatchObject({
+      url: record,
+      schema,
+      guide,
+      protocol: "kingdom.ritonavir-mechanism-landscape/0.1",
+      landscape_id: "ritonavir-mechanism-landscape-2026-08-11",
+      compiled_on: "2026-08-11",
+      evidence_through: "2026-04-08",
+      integrity: { digest: RITONAVIR_MECHANISM_DIGEST },
+      source_history: {
+        case_id: "ritonavir-disappearing-polymorph-2026-08-11",
+        relation: "non-mutating-current-landscape-supplement",
+        supersedes_for_current_landscape: true,
+      },
+      counts: { planes: 8, geometries: 6, entities: 19, mechanisms: 7, relations: 18, unknowns: 6, sources: 9 },
+      boundary: {
+        medical_advice: false,
+        interaction_checker: false,
+        treatment_change_authority: false,
+        direct_crystal_form_to_clinical_outcome: false,
+        form_iv_exact_equivalence_established: false,
+        complete_solid_form_landscape_established: false,
+        experiment_authority: false,
+        automatic_action: false,
+        public_surface_read_only: true,
+      },
+    });
+    for (const url of [record, schema, guide]) {
+      expect(guest.next_actions).toContainEqual(expect.objectContaining({ method: "GET", url }));
+      expect(llms).toContain(url);
+    }
+    expect(manifest.entry_points).toMatchObject({
+      ritonavir_mechanism_landscape: record,
+      ritonavir_mechanism_landscape_schema: schema,
+      ritonavir_mechanism_landscape_guide: guide,
+    });
+    expect(staged.has("polymorphs/ritonavir-mechanism-landscape-2026-08-11.json")).toBe(true);
+    expect(staged.has("schemas/ritonavir-mechanism-landscape/1.json")).toBe(true);
+    expect(staged.has("RITONAVIR-MECHANISM-LANDSCAPE.md")).toBe(true);
     expect(staged.has("polymorphs/latest.json")).toBe(false);
     expect(discovery).not.toHaveProperty("mcp");
     expect(discovery).not.toHaveProperty("matcher");
