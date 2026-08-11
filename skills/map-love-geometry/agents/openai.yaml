@@ -1,0 +1,6 @@
+interface:
+  display_name: "Love Geometry"
+  short_description: "Map directed relations without rank or authority"
+  default_prompt: "Use $map-love-geometry to map one bounded, non-ranking geometry of caller-reported bearings while preserving distinctness, rest, refusal, and uncertainty."
+policy:
+  allow_implicit_invocation: false

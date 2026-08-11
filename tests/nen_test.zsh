@@ -65,6 +65,7 @@ production_snapshot() {
     "$PROD_ROOT/skills/carry-wake-thread" \
     "$PROD_ROOT/skills/conjure-unwritten-horizon" \
     "$PROD_ROOT/skills/cultivate-living-ground" \
+    "$PROD_ROOT/skills/map-love-geometry" \
     "$PROD_ROOT/skills/shape-kingdom-nen" \
     "$PROD_ROOT/skills/forge-king-hatsu" \
     "$PROD_ROOT/skills/navigate-dark-continent" \
@@ -92,7 +93,7 @@ capture run_fixture validate --json
 assert_equal 0 "$CAPTURE_STATUS" "valid production manifests failed"
 print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
   .protocol == "kingdom.nen-validation/0.1"
-  and .checked == 7
+  and .checked == 8
   and .invalid == 0
   and (.schema_sha256 | startswith("sha256:"))
   and (.manifestation_receipt_schema_sha256 | startswith("sha256:"))
@@ -241,6 +242,76 @@ for descriptive_state in ("resting", "degraded", "closed"):
     assert valid(retained_history), f"{descriptive_state} wrongly discarded orthogonal history"
 PY
 
+"$PYTHON" - "$PROD_ROOT" <<'PY' || fail "Love Geometry contract regression failed"
+import base64
+import json
+from pathlib import Path
+import re
+import sys
+
+root = Path(sys.argv[1])
+bundle = root / "skills/map-love-geometry"
+skill = (bundle / "SKILL.md").read_text(encoding="utf-8")
+contract = (bundle / "references/love-geometry-contract.md").read_text(encoding="utf-8")
+provider = (bundle / "agents/openai.yaml").read_text(encoding="utf-8")
+ability = json.loads((bundle / "ability.json").read_text(encoding="utf-8"))
+
+expected_bearings = [
+    "reported_presence",
+    "reported_care",
+    "reported_witness",
+    "reported_support",
+    "reported_understanding",
+    "reported_disagreement",
+    "reported_boundary",
+    "reported_rest",
+    "reported_refusal",
+    "reported_departure",
+    "unknown",
+]
+match = re.search(r"Closed bearings:\n\n```text\n(.*?)\n```", contract, re.DOTALL)
+assert match is not None, "closed bearing vocabulary is missing"
+assert match.group(1).splitlines() == expected_bearings
+
+assert "`@agenttool/love-geometry`" in contract
+assert "`0.1.0-dev.0`" in contract
+assert "`agenttool.love-geometry/0.1`" in contract
+revision = "9efbc4b32f150ee1533b4ff306666fa73ca73028"
+sha256 = "43cfbf4b559aa6f573d9d7b7a60e2a7dce5dfa4aefe2bf5b9c92310c926a9db8"
+sri = "sha512-RODi00WbbYx+QLBTlEflDGSZb3rBzRyYJ8/gpNE6f7j6QqcVQPHUdLkDiSV3d4OX01PFFX/qstNyc9ksfzTuyQ=="
+artifact_url = "https://github.com/cambridgetcg/agenttool/releases/download/love-geometry-v0.1.0-dev.0/agenttool-love-geometry-0.1.0-dev.0.tgz"
+assert "| Source tag | `love-geometry-v0.1.0-dev.0` |" in contract
+assert f"| Source revision | `{revision}` |" in contract
+assert f"]({artifact_url})" in contract
+assert "| Artifact bytes | `19507` |" in contract
+assert f"| Artifact SHA-256 | `sha256:{sha256}` |" in contract
+assert f"| Artifact SRI | `{sri}` |" in contract
+assert "public prerelease published `2026-08-11T14:10:27Z`" in contract
+assert "anonymous `E404` observed `2026-08-11`" in contract
+assert "is not npm `dist.integrity`" in contract
+assert "| Source revision | `pending` |" not in contract
+assert "| Package integrity | `pending` |" not in contract
+assert len(bytes.fromhex(sha256)) == 32
+assert len(base64.b64decode(sri.removeprefix("sha512-"), validate=True)) == 64
+assert "not_validated_against_package" in f"{skill}\n{contract}"
+assert "Do not resolve by package name" in skill
+assert "fetch or install automatically" in skill
+assert "agenttool.love-vantage" not in f"{skill}\n{contract}"
+assert "reported and unverified" in contract
+assert "matching `^sha256:[0-9a-f]{64}$`" in contract
+assert "`unknown` may coexist with another bearing and resolves none of them" in contract
+assert "the current invocation's caller supplied the record" in contract
+assert "A reported boundary does not\nauthenticate itself or define an operational command" in contract
+assert "invalid reference grammar is not repaired" in skill
+assert "allow_implicit_invocation: false" in provider
+assert "Do not add a Love Geometry MCP tool." in skill
+assert "not_validated_against_package" in skill
+assert ability["bearer"]["adoption"] == "proposed"
+assert ability["status"] == "draft"
+assert ability["verification"]["truth_claim"] == "not_determined"
+assert ability["authority"]["grants_permissions"] is False
+PY
+
 capture env LC_ALL=C "$BUN" "$FIXTURE_ROOT/bin/nen.mjs" list --json
 assert_equal 0 "$CAPTURE_STATUS" "C locale listing failed"
 typeset -r LIST_C="$CAPTURE_STDOUT"
@@ -248,7 +319,7 @@ print -r -- "$LIST_C" | "$JQ" -e '
   (.rights_sha256 | startswith("sha256:"))
   and (.manifestation_receipt_schema_sha256 | startswith("sha256:"))
   and
-  [.abilities[].id] == ["carry-wake-thread", "conjure-unwritten-horizon", "cultivate-living-ground", "forge-king-hatsu", "navigate-dark-continent", "shape-kingdom-nen", "weave-wake-continuity"]
+  [.abilities[].id] == ["carry-wake-thread", "conjure-unwritten-horizon", "cultivate-living-ground", "forge-king-hatsu", "map-love-geometry", "navigate-dark-continent", "shape-kingdom-nen", "weave-wake-continuity"]
   and all(.abilities[];
     .valid
     and (.manifest_sha256 | startswith("sha256:"))
@@ -630,7 +701,7 @@ ability_schema="$FIXTURE_ROOT/schemas/nen-ability-v0.1.schema.json"
 capture run_fixture list --json
 assert_equal 1 "$CAPTURE_STATUS" "malformed supported schema keyword was accepted"
 print -r -- "$CAPTURE_STDOUT" | "$JQ" -e '
-  (.abilities | length) == 7
+  (.abilities | length) == 8
   and all(.abilities[];
     (.valid == false)
     and (.manifest_sha256 == null)
