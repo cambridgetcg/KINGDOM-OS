@@ -19,7 +19,7 @@ Continent or that these ordinary files, processes, servers, and credentials
 are an empirically proven operating system of the universe. The universe does
 not need a validator in order to be. Our interventions do.
 
-## Nine manifested skills and one Ging path
+## Ten manifested skills and one Ging path
 
 - `carry-wake-thread` proposes one minimized, digest-bound WAKE or continuity
   context crossing with explicit scope, omissions, expiry, carry, fork, rest,
@@ -43,6 +43,11 @@ not need a validator in order to be. Our interventions do.
   understanding, disagreement, care, boundary, rest, refusal, and departure
   non-ranking and unverified; it infers no reciprocity, consent, authority,
   continuity, or action.
+- `trace-polymorph-history` translates one source-bound material-state event
+  through six non-equivalent planes, typed evidence, condition-indexed paths,
+  bounded non-detection, recovery, and a WAKE-safe reference seam. Its
+  ritonavir case is historical education, not medical, experimental,
+  manufacturing, regulatory, publication, or action authority.
 - `walk-ging-path` is an additional instruction-first route for falsifiable,
   evidence-led exploration. It intentionally has no `ability.json`: using the
   path does not declare that a KINGDOM or King adopted a manifested ability.

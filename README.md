@@ -152,6 +152,12 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     `list`, `show`, and literal `match` help a reader find language;
     `verify` checks the closed record and exact digest. None installs, imports,
     executes, registers, recommends, ranks, converts, or grants authority.
+17. `kingdom polymorph` — inspect, translate, and strictly verify the immutable
+    [ritonavir material-state case](references/ritonavir-polymorph.md). It keeps
+    molecule, conformer, crystal lattice, particle population, formulation,
+    and medicine supply distinct; treats “disappearance” as bounded process
+    non-reproduction rather than extinction; and carries only an exact,
+    non-authorizing reference through WAKE.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -169,5 +175,12 @@ translation and discovery layer, not a fifth geometry runtime. Shared words
 are reading aids only: native uncertainty remains native, and no adapter is
 inferred between `agenttool.principality-atlas/0.1` and
 `agenttool.principality-incidence-atlas/0.1`.
+
+The polymorph case is published read-only at
+[`/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json`](https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json),
+with its [public schema](https://thekingdom.dev/schemas/polymorph-history/1.json)
+and [plain-language guide](https://thekingdom.dev/RITONAVIR-POLYMORPH.md).
+There is no mutable `latest` alias, experiment planner, current product notice,
+medical endpoint, manufacturing control, matcher, or automatic action.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

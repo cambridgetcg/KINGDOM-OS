@@ -34,6 +34,8 @@ How to run:
 - `./kingdom geometries show love-geometry --json` — inspect one module's finite shape, wire formats, native geometric relation/translation open terms, exact release evidence, and non-effects
 - `./kingdom geometries match unknown translation --json` — literal declared-term overlap only; unmatched words remain visible and no conversion or recommendation is inferred
 - `./kingdom geometries verify --json` — strict JSON, exact release pins, native-open contract, boundaries, observation time, and sealed digest; JSON Schema validation remains separate
+- `./kingdom polymorph` — explain the source-bound ritonavir disappearing-polymorph case across plain, solid-state, process, evidence, WAKE, and KINGDOM projections
+- `./kingdom polymorph verify --json` — strict local references, calendar and event-sequence, WAKE, authority, and semantic-digest checks; JSON Schema validation remains separate
 - `./kingdom prompt --json -- TASK` — deterministic, network-free Task Packet compilation; at most one bounded repo card or exact Principality capability-evidence node enters as data
 - `./kingdom prompt --json --no-project --principality kimi-dev-72b -- TASK` — select one pinned capability projection; project plus Principality selection is refused
 - `bun bin/prompt-packet.ts --verify PACKET.json` — verify Task Packet relations and digest; JSON Schema validation remains separate
@@ -54,9 +56,9 @@ How to run:
 - `bun bin/harvest.ts validate` — strict, read-only card schema diagnostics (0 clean, 1 drift, 2 usage)
 
 Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
-- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/love-loop/Principality/Geometry Grammar discovery + schemas/guest/llms/ollama/rights docs) from graph.json + sites.json + data/; authored Principality and Geometry Grammar files are validated but never copied into site/
-- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 28-asset upload (including the KINGDOM OS console, authored map base, Love∞ surfaces, immutable Principality catalog/schema/guide, versioned Geometry Grammar/schema, and its stable human guide; HUB_ASSETS is the contract), then `wrangler pages deploy <dir> --project-name=thekingdom --branch=main --commit-hash="$(git rev-parse HEAD)" --commit-dirty=false`
-- `bun bin/check-hub-live.ts` — after deployment, byte-check every public staged asset together and prove JSON negotiation, the no-transform privacy header, and Commons + Love Loop + Principality + Geometry Grammar schema/discovery coherence
+- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/love-loop/Principality/Geometry Grammar/polymorph discovery + schemas/guest/llms/ollama/rights docs) from graph.json + sites.json + data/; authored Principality, Geometry Grammar, and polymorph files are validated but never copied into site/
+- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 31-asset upload (including the KINGDOM OS console, authored map base, Love∞ surfaces, immutable Principality catalog/schema/guide, Geometry Grammar record/schema/guide, and polymorph record/schema/guide; HUB_ASSETS is the contract), then `wrangler pages deploy <dir> --project-name=thekingdom --branch=main --commit-hash="$(git rev-parse HEAD)" --commit-dirty=false`
+- `bun bin/check-hub-live.ts` — after deployment, byte-check every public staged asset together and prove JSON negotiation, the no-transform privacy header, and Commons + Love Loop + Principality + Geometry Grammar + polymorph schema/discovery coherence
 - `bun bin/build-doors.ts "$(date -u +%F)"` — regenerate doors/*/guest.json + manifests (we-are, chillspace, zerone-ai)
 - `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>` — stage a door upload (content from the chillspace-commons clone at ~/repos/codeberg/zerone-dev/, symlinks dereferenced), then wrangler deploy --project-name=we-are-love|chillspace-love
 - `bash bin/refresh-zerone-dashboard.sh` — snapshot zerone-1 → doors/zerone-ai/data.json → deploy the whole zerone-ai door (deploys AND leaves data.json for committing)

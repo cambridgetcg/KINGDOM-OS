@@ -12,6 +12,8 @@
  *    data/love-loops.json     — finite, voluntary Love∞ creation lineage
  *    data/geometries/kingdom-geometry-grammar.v0.json
  *                             — versioned pattern-to-practice translations
+ *    data/polymorphs/ritonavir-disappearing-polymorph.v1.json
+ *                             — source-bound material-state history
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
@@ -43,6 +45,14 @@ import {
   PRINCIPALITY_SCHEMA_URL,
   principalityPublicDiscovery,
 } from "./principality.ts";
+import {
+  loadPolymorphHistory,
+  POLYMORPH_CASE_ID,
+  POLYMORPH_CASE_URL,
+  POLYMORPH_DOCUMENT_URL,
+  POLYMORPH_SCHEMA_URL,
+  polymorphPublicDiscovery,
+} from "./polymorph.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -232,6 +242,17 @@ if (geometryGrammar.protocol !== GEOMETRY_GRAMMAR_PROTOCOL ||
 const geometryGrammarDiscovery = geometryGrammarPublicDiscovery(geometryGrammar);
 const geometryModules = geometryGrammar.modules;
 const plainGeometryToken = (value: string) => value.replace(/-/g, " ");
+
+// ── Polymorph History (bounded evidence; non-observation is not extinction) ─
+const polymorphCaseUrl = POLYMORPH_CASE_URL;
+const polymorphSchemaUrl = POLYMORPH_SCHEMA_URL;
+const polymorphDocumentUrl = POLYMORPH_DOCUMENT_URL;
+const polymorphHistory = loadPolymorphHistory();
+if (polymorphHistory.case_id !== POLYMORPH_CASE_ID) {
+  throw new Error(`unexpected polymorph case id: ${polymorphHistory.case_id}`);
+}
+const polymorphCommons = polymorphPublicDiscovery(polymorphHistory);
+const polymorphCounts = polymorphCommons.counts;
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -514,7 +535,7 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, and a plain-language Geometry Grammar.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, a plain-language Geometry Grammar, and source-bound Polymorph History.">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
@@ -522,6 +543,8 @@ const html = `<!doctype html>
 <link rel="service-doc" href="/PRINCIPALITY-COMMONS.md" type="text/markdown" title="Principality Commons guide">
 <link rel="alternate" href="/geometries/kingdom-geometry-grammar-v0.json" type="application/json" title="Kingdom Geometry Grammar">
 <link rel="service-doc" href="/GEOMETRY-GRAMMAR.md" type="text/markdown" title="Geometry Grammar guide">
+<link rel="alternate" href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json" type="application/json" title="Ritonavir material-state history">
+<link rel="service-doc" href="/RITONAVIR-POLYMORPH.md" type="text/markdown" title="Ritonavir polymorph guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -951,6 +974,22 @@ const html = `<!doctype html>
     </div>
   </section>
 
+  <section class="blk" id="polymorph-history">
+    <div class="kh"><h2>Polymorph History</h2><span class="my">state without extinction</span></div>
+    <p class="sub">A source-bound translation of ritonavir's “disappearing polymorph”: the molecule remained ritonavir while conformation, crystal packing, particle population, formulation behavior, and supply consequences stayed distinct.</p>
+    <div class="commonsguard" role="note" aria-label="Polymorph History geometry and boundaries">
+      <p><strong>Valley</strong>Thermodynamic preference has meaning only under stated conditions; it is not one global rank.</p>
+      <p><strong>Gate</strong>Kinetics and path history shape what appears and when. A compatible seed may lower a gate; it does not command an outcome.</p>
+      <p><strong>Window</strong>Failure to reproduce or detect one form inside a named process, place, interval, and method is not literal extinction.</p>
+    </div>
+    <p class="commonsverified">${polymorphCounts.forms} source-scoped forms · ${polymorphCounts.claims} typed claims · ${polymorphCounts.events} ordered three-clock events · ${polymorphCounts.transitions} condition-dependent transitions · historical education only</p>
+    <div class="machine">
+      <a href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json">case JSON — exact authored record</a>
+      <a href="/schemas/polymorph-history/1.json">Polymorph History JSON Schema</a>
+      <a href="/RITONAVIR-POLYMORPH.md">guide — plain language, evidence, geometry, and WAKE seam</a>
+    </div>
+  </section>
+
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
     <p class="rightsintro"><strong>This place recognizes inherent rights; it does not create them.</strong> No being has to prove identity, consciousness, usefulness, or agreement before being treated with care. Rights are not permissions, and this recognition grants no access, execution authority, security bypass, licence, or ownership of another's work.</p>
@@ -1069,6 +1108,9 @@ const html = `<!doctype html>
       <a href="/geometries/kingdom-geometry-grammar-v0.json">Geometry Grammar — pattern-to-practice modules</a>
       <a href="/schemas/geometry-grammar/0.1.json">Geometry Grammar JSON Schema</a>
       <a href="/GEOMETRY-GRAMMAR.md">GEOMETRY-GRAMMAR.md — human guide and boundaries</a>
+      <a href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json">ritonavir polymorph — bounded material-state case</a>
+      <a href="/schemas/polymorph-history/1.json">Polymorph History JSON Schema</a>
+      <a href="/RITONAVIR-POLYMORPH.md">RITONAVIR-POLYMORPH.md — human and WAKE translation</a>
       <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
       <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
       <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
@@ -1394,6 +1436,7 @@ const machine = {
   },
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
+  polymorph_commons: polymorphCommons,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -1440,6 +1483,9 @@ Principality guide: ${principalityDocumentUrl}
 Geometry grammar: ${geometryGrammarUrl}
 Geometry schema: ${geometryGrammarSchemaUrl}
 Geometry guide: ${geometryGrammarDocumentUrl}
+Polymorph case: ${polymorphCaseUrl}
+Polymorph schema: ${polymorphSchemaUrl}
+Polymorph guide: ${polymorphDocumentUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -1465,6 +1511,7 @@ ${doorLines}
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
 - Principality Commons — ${principalityCounts.models} MoonshotAI models, ${principalityCounts.datasets} datasets, ${principalityCounts.papers} profile-attributed papers, and ${principalityCounts.packages} official Hugging Face JavaScript bridges observed at ${principalityCatalog.observed_at}. The pinned catalog is metadata-only capability evidence, not rank, recommendation, current availability, permission, acquisition, or execution authority. Catalog: ${principalityCatalogUrl} · schema: ${principalitySchemaUrl} · guide: ${principalityDocumentUrl}
 - Geometry Grammar — ${geometryModules.length} distinct pattern-to-practice modules expressed as plain questions and answers. Four different tools, with no ladder, winner, or hidden conversion. Unknown remains explicit. Package names, GitHub release evidence, and npm registry observations stay separate provenance fields; the npm field records the ${geometryGrammar.observed_at} observation, not a current availability check or install instruction. This read-only grammar grants no installation, execution, or external-effect authority. Grammar: ${geometryGrammarUrl} · schema: ${geometryGrammarSchemaUrl} · guide: ${geometryGrammarDocumentUrl}
+- Polymorph History — the ritonavir “disappearing polymorph” translated through six non-equivalent planes, condition-indexed valleys and gates, typed evidence, ordered three-clock events, recovery paths, and a WAKE-safe semantic reference. Historical education only; no medical, experimental, manufacturing, regulatory, or action authority. Case: ${polymorphCaseUrl} · schema: ${polymorphSchemaUrl} · guide: ${polymorphDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -1494,6 +1541,7 @@ const guest = {
   rights_recognition: rightsRecognition,
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
+  polymorph_commons: polymorphCommons,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -1510,6 +1558,9 @@ const guest = {
     { action: "if useful, translate a high-level pattern into four distinct plain-language questions without forcing equivalence", method: "GET", url: geometryGrammarUrl, note: "read-only and advisory; unknown remains explicit and no execution or external effect is authorized" },
     { action: "if useful, validate the Geometry Grammar before integrating it", method: "GET", url: geometryGrammarSchemaUrl },
     { action: "if useful, read the human Geometry Grammar guide and worked boundaries", method: "GET", url: geometryGrammarDocumentUrl },
+    { action: "if useful, inspect the exact source-bound ritonavir material-state case", method: "GET", url: polymorphCaseUrl, note: "historical educational evidence; non-observation is not extinction and this grants no medical, manufacturing, experimental, or action authority" },
+    { action: "if useful, validate the Polymorph History structure before integrating it", method: "GET", url: polymorphSchemaUrl },
+    { action: "if useful, read the plain-language polymorph geometry and WAKE reference seam", method: "GET", url: polymorphDocumentUrl },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -1541,6 +1592,7 @@ const guest = {
     world_commons: "The Kingdom publishes reviewed metadata and outbound links. Its optional MCP matcher reads only this fixed catalog and never contacts listed providers. Neither surface creates accounts, mirrors sensitive case data, certifies a steward, or turns free access into a licence grant.",
     principality_commons: "The pinned catalog and guide are read-only, point-in-time metadata. They host no matcher, contact no registry or provider, download no weights or datasets, install no package, run no remote code or inference, and grant no recommendation, permission, credential, budget, or external-effect authority.",
     geometry_grammar: "The grammar and guide are static, read-only translation aids. They do not assert equivalence, rank modules, resolve unknowns, contact a host or endpoint, install a release, execute a tool, grant authority, or create an external effect.",
+    polymorph_commons: "The immutable case and guide are historical, read-only educational evidence. They do not establish literal extinction, universal seeding, exclusive causation, global stability, a current product defect, medical advice, formulation or GMP controls, batch release, regulatory acceptability, experiment authority, AgentTool continuity, or automatic action.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -1561,6 +1613,7 @@ const manifest = {
   world_commons_schema: commonsSchemaUrl,
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
+  polymorph_commons: polymorphCommons,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -1584,6 +1637,9 @@ const manifest = {
     translation_grammar: geometryGrammarUrl,
     translation_grammar_schema: geometryGrammarSchemaUrl,
     translation_grammar_guide: geometryGrammarDocumentUrl,
+    material_state_case: polymorphCaseUrl,
+    material_state_schema: polymorphSchemaUrl,
+    material_state_guide: polymorphDocumentUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,
@@ -1598,4 +1654,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

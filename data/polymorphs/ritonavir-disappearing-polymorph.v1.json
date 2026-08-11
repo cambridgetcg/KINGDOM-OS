@@ -1,0 +1,1507 @@
+{
+  "$schema": "urn:kingdom:schema:polymorph-history:1",
+  "protocol": "kingdom.polymorph-history/0.1",
+  "case_id": "ritonavir-disappearing-polymorph-2026-08-11",
+  "title": "Ritonavir and the process-scoped disappearing polymorph",
+  "compiled_on": "2026-08-11",
+  "evidence_through": "2024-06-20",
+  "scope": {
+    "focus": "The historical solid-state, process, evidence, and supply geometry around ritonavir Form I and the late appearance of Form II, with later recovery paths and additional forms retained.",
+    "coverage": "Selected primary research, an official FDA chemistry review, a concept review, and a primary patent record through 2024; form names remain scoped to their cited source.",
+    "intended_use": "Education, evidence-aware systems design, and bounded KINGDOM or WAKE orientation by reference.",
+    "audience": "Humans and agents learning how identity, material state, process path, observation, and consequence differ.",
+    "currentness": "historical-case-as-of-compilation"
+  },
+  "ontology": {
+    "non_equivalence": "molecule != conformer != crystal_lattice != particle_population != formulation != medicine_supply",
+    "planes": [
+      {
+        "id": "molecule",
+        "meaning": "The chemical entity ritonavir.",
+        "does_not_establish": "A particular conformation, crystal form, particle population, product performance, or supply state."
+      },
+      {
+        "id": "conformer",
+        "meaning": "One molecular shape accessible to the flexible ritonavir molecule.",
+        "does_not_establish": "A unique crystal lattice or the conditions under which a lattice will nucleate."
+      },
+      {
+        "id": "crystal_lattice",
+        "meaning": "A repeating solid-state arrangement of ritonavir molecules and their interactions.",
+        "does_not_establish": "A global stability rank, particle size or shape, dissolution performance in every medium, or literal extinction of another lattice."
+      },
+      {
+        "id": "particle_population",
+        "meaning": "The sizes, shapes, surfaces, defects, and mixture of solid particles in one bounded sample.",
+        "does_not_establish": "The whole solid-form landscape or the behavior of another batch, process, facility, or scale."
+      },
+      {
+        "id": "formulation",
+        "meaning": "Drug substance plus the other materials and process that make one dosage form.",
+        "does_not_establish": "That all products containing ritonavir share the same solid-state risk or performance."
+      },
+      {
+        "id": "medicine_supply",
+        "meaning": "Availability of particular products to patients through a bounded supply system.",
+        "does_not_establish": "That ritonavir as a molecule, every formulation, or every treatment route disappeared."
+      }
+    ],
+    "disappearance": {
+      "predicate": "bounded_process_facility_interval_detection",
+      "existence_predicate": false
+    },
+    "geometry": [
+      {
+        "term": "valley-depth",
+        "maps_to": "Thermodynamic preference under a stated environment, scale, and particle regime.",
+        "limit": "A deeper valley does not specify the nucleation route, onset time, or result under different conditions."
+      },
+      {
+        "term": "gate-height",
+        "maps_to": "The kinetic barrier to nucleation, conformational change, growth, or transformation.",
+        "limit": "A barrier is inferred or measured through a model and experiment; it is not a timeless wall."
+      },
+      {
+        "term": "seed",
+        "maps_to": "A possible template that can lower a gate under compatible supersaturation and process conditions.",
+        "limit": "A seed is not magic contagion and does not force crystallization in every environment."
+      },
+      {
+        "term": "path-history",
+        "maps_to": "The sequence of solution, temperature, surfaces, time, mechanical action, and prior material states that changes accessible outcomes.",
+        "limit": "Process history affects accessibility without changing the chemical identity of ritonavir or proving one exclusive historical cause."
+      },
+      {
+        "term": "observer-window",
+        "maps_to": "The method, detection threshold, place, and interval through which a form was or was not observed.",
+        "limit": "Not detected means not detected within that window; it does not mean nonexistent."
+      }
+    ]
+  },
+  "forms": [
+    {
+      "id": "abbott-form-i",
+      "label": "Form I",
+      "source_scope": "Abbott and later ritonavir literature using the original marketed-form nomenclature.",
+      "kind": "unsolvated-polymorph",
+      "compound_id": "ritonavir",
+      "aliases": [
+        {
+          "label": "RVR-I",
+          "source_id": "sacchi-2024"
+        }
+      ],
+      "summary": "The monoclinic form known during development and original manufacture; later described as metastable in ambient bulk comparisons and repeatedly recovered by changed processes."
+    },
+    {
+      "id": "abbott-form-ii",
+      "label": "Form II",
+      "source_scope": "Abbott and later ritonavir literature using the late-appearing form nomenclature.",
+      "kind": "unsolvated-polymorph",
+      "compound_id": "ritonavir",
+      "aliases": [
+        {
+          "label": "RVR-II",
+          "source_id": "sacchi-2024"
+        }
+      ],
+      "summary": "The orthorhombic late-appearing form with a different conformation and hydrogen-bond network; markedly less soluble in the original formulation environment."
+    },
+    {
+      "id": "morissette-form-iii",
+      "label": "Form III",
+      "source_scope": "Morissette et al. 2003 nomenclature; the local ID prevents label equality from being treated as cross-source structural identity.",
+      "kind": "formamide-solvate",
+      "compound_id": "ritonavir",
+      "aliases": [],
+      "summary": "A formamide solvate found in a high-throughput screen and used as one intermediate on a path back to Form I."
+    },
+    {
+      "id": "morissette-form-iv",
+      "label": "Form IV",
+      "source_scope": "Morissette et al. 2003 nomenclature.",
+      "kind": "unsolvated-polymorph",
+      "compound_id": "ritonavir",
+      "aliases": [],
+      "summary": "A true unsolvated metastable polymorph reported in the 2003 high-throughput study."
+    },
+    {
+      "id": "morissette-form-v",
+      "label": "Form V",
+      "source_scope": "Morissette et al. 2003 nomenclature.",
+      "kind": "hydrate",
+      "compound_id": "ritonavir",
+      "aliases": [],
+      "summary": "A hydrated phase formed from the Form III solvate and observed to transform spontaneously to Form I."
+    }
+  ],
+  "contexts": [
+    {
+      "id": "early-development-screen",
+      "label": "Development and original bulk-process screening before the 1998 event",
+      "kind": "research-and-process",
+      "condition_vector": {
+        "process": "The polymorph screens and crystallization experience reported by Abbott through the original NDA period.",
+        "solvent": "Multiple development solvents; the complete experimental matrix is not represented here.",
+        "temperature": "Multiple development conditions; not normalized in this record.",
+        "supersaturation": "Varied and incompletely reported in the summary sources.",
+        "seeding": "No Form II seed was then knowingly available.",
+        "mechanical_action": "Ordinary development and manufacturing operations; not one controlled comparison.",
+        "facility": "Abbott development and manufacturing contexts reported in the primary accounts.",
+        "material_scale": "Laboratory through commercial bulk experience.",
+        "interval": "Development through original market entry and early manufacture.",
+        "other": "A historical search window, not proof that the crystal-form landscape was complete."
+      },
+      "detection_limit": {
+        "method": "Reported polymorph screens and routine solid-state characterization.",
+        "threshold": "No unified detection threshold was reported for every early experiment.",
+        "limit": "Form II was not found in that bounded search; absence from the record does not establish nonexistence."
+      }
+    },
+    {
+      "id": "original-capsule-1998",
+      "label": "Original semi-solid capsule formulation and affected product lots in summer 1998",
+      "kind": "commercial-formulation-process",
+      "condition_vector": {
+        "process": "Manufacture, storage, and testing of the original capsule formulation containing dissolved ritonavir.",
+        "solvent": "Hydroalcoholic formulation environment with proprietary co-solvating components.",
+        "temperature": "Manufacture and labeled storage conditions reported in the Abbott and FDA records.",
+        "supersaturation": "Abbott reported the formulation was highly supersaturated with respect to Form II while not saturated with respect to Form I.",
+        "seeding": "The first nucleant was not identified; Form II crystals were found after precipitation in affected material.",
+        "mechanical_action": "Commercial solution preparation, encapsulation, and storage.",
+        "facility": "Affected capsule-manufacturing and product-testing contexts reported by Abbott and FDA; excludes the bulk-drug crystallization route.",
+        "material_scale": "Commercial batches and finished capsules.",
+        "interval": "Commercial failures reported in June and July 1998 and the immediate response period.",
+        "other": "This is the formulation and product-performance plane, not the bulk Form I reproduction predicate; it does not describe every ritonavir formulation or supply route."
+      },
+      "detection_limit": {
+        "method": "Dissolution testing followed by microscopy, spectroscopy, and X-ray powder diffraction in the primary accounts.",
+        "threshold": "Method-specific thresholds; not reduced to one universal number in this record.",
+        "limit": "The evidence establishes Form II in failed samples, not every location, capsule, or product."
+      }
+    },
+    {
+      "id": "old-bulk-form-i-process-1998",
+      "label": "Prior bulk-drug Form I crystallization route during the 1998 investigation",
+      "kind": "bulk-process-investigation",
+      "condition_vector": {
+        "process": "The prior bulk-drug crystallization route was repeated after Form II had appeared and no longer reliably produced Form I.",
+        "solvent": "Process-specific organic solvent and antisolvent conditions reported in the Abbott process account; not reproduced here as an operating recipe.",
+        "temperature": "The prior bulk-process temperature sequence; exact operating values remain in the source record.",
+        "supersaturation": "The prior route created a path that, after Form II became available, no longer reliably selected Form I.",
+        "seeding": "No deliberate Form II seed is asserted; Form-II-exposed process environments and material history were relevant, while the first trigger remained unknown.",
+        "mechanical_action": "Prior bulk solution preparation, addition, mixing, isolation, and handling rather than a finished-capsule dissolution test.",
+        "facility": "Abbott bulk-drug process-development and manufacturing environments described in the primary process account.",
+        "material_scale": "Bulk drug substance process, distinct from the dissolved finished-capsule formulation.",
+        "interval": "The 1998 process investigation until a changed crystallization route restored reliable Form I production.",
+        "other": "Loss of reproducibility in this route is the bounded disappearance predicate; it is not literal extinction or universal contamination."
+      },
+      "detection_limit": {
+        "method": "Repeated bulk-process outcomes with source-specific solid-form identification, including X-ray powder diffraction.",
+        "threshold": "The process account does not reduce every historical analytical decision to one universal detection threshold.",
+        "limit": "Failure to reproduce Form I through this route and interval does not establish its absence from other paths or physical possibility."
+      }
+    },
+    {
+      "id": "ambient-bulk-comparison",
+      "label": "Ambient bulk solid-state comparison of Forms I and II",
+      "kind": "laboratory-characterization",
+      "condition_vector": {
+        "process": "Equilibrium solubility, crystallography, spectroscopy, calorimetry, and structural comparison.",
+        "solvent": "Reported hydroalcoholic and other laboratory media; every result remains tied to its source method.",
+        "temperature": "Primarily the temperatures stated in the source experiments, including refrigerated formulation conditions.",
+        "supersaturation": "Varied by experiment and explicitly relevant to nucleation and growth.",
+        "seeding": "Seeded and unseeded comparisons were both reported.",
+        "mechanical_action": "No ball milling in this context.",
+        "facility": "Abbott laboratory characterization.",
+        "material_scale": "Bulk crystals and laboratory suspensions or solutions.",
+        "interval": "Characterization reported in 2000 and 2001.",
+        "other": "Ambient bulk preference must not be projected into every solvent, particle size, shape, or milling regime."
+      },
+      "detection_limit": {
+        "method": "PXRD, solid-state NMR, infrared spectroscopy, single-crystal XRD, microscopy, solubility, and thermal methods.",
+        "threshold": "Method-specific; Abbott also reported a seed-detection test sensitive to approximately one part per million under its test conditions.",
+        "limit": "Thermal values and some mechanistic interpretations differ by sample and method; provenance must remain attached."
+      }
+    },
+    {
+      "id": "seed-high-supersaturation",
+      "label": "Form II seeding in a highly supersaturated ritonavir solution",
+      "kind": "laboratory-nucleation",
+      "condition_vector": {
+        "process": "A supersaturated solution was deliberately exposed to Form II seed.",
+        "solvent": "Absolute ethanol in the Abbott seed-detection and preparation experiments.",
+        "temperature": "Cold hold followed by warming, or the reported preparation temperature sequence.",
+        "supersaturation": "High enough with respect to Form II to support rapid or detectable crystallization.",
+        "seeding": "Undissolved Form II seed was deliberately added.",
+        "mechanical_action": "Standing or ordinary mixing; no milling.",
+        "facility": "Abbott laboratory experiments.",
+        "material_scale": "Laboratory solution.",
+        "interval": "Hours to approximately one day in the reported examples.",
+        "other": "The seed-detection result is bounded to this high-driving-force test and does not establish universal seed action."
+      },
+      "detection_limit": {
+        "method": "Seed-detection test followed by crystal identification.",
+        "threshold": "Approximately one part per million Form II sensitivity was reported for the test under its own conditions.",
+        "limit": "A positive Form II seed test does not identify the first 1998 nucleant or prove inevitable propagation."
+      }
+    },
+    {
+      "id": "cyclic-carbamate-template-test",
+      "label": "Cyclic-carbamate heterogeneous-template capability test",
+      "kind": "laboratory-heterogeneous-nucleation",
+      "condition_vector": {
+        "process": "A portion of the Bauer Seed Detection Test was exposed to a separately prepared solid cyclic-carbamate degradation product.",
+        "solvent": "Absolute ethanol in the reported test.",
+        "temperature": "Approximately 5 degrees Celsius overnight in the reported test.",
+        "supersaturation": "Highly supersaturated with respect to Form II.",
+        "seeding": "The solid cyclic-carbamate was a heterogeneous template candidate, not a Form II seed.",
+        "mechanical_action": "Ordinary solution handling; no milling.",
+        "facility": "Abbott laboratory.",
+        "material_scale": "Laboratory test portion.",
+        "interval": "Overnight observation in the reported test.",
+        "other": "Capability test only; it does not trace the first 1998 nucleant."
+      },
+      "detection_limit": {
+        "method": "Seed Detection Test followed by solid-form identification.",
+        "threshold": "Source-specific; no general cyclic-carbamate threshold is established.",
+        "limit": "Observed Form II after this test does not prove the degradation product initiated the historical event."
+      }
+    },
+    {
+      "id": "seed-low-supersaturation",
+      "label": "Form II seeds at 111 and 125 percent saturation relative to Form II in formulation medium",
+      "kind": "laboratory-growth",
+      "condition_vector": {
+        "process": "Long storage of seeded formulation solutions.",
+        "solvent": "Norvir formulation medium reported by Abbott.",
+        "temperature": "Approximately 5 degrees Celsius.",
+        "supersaturation": "Reported at 111 and 125 percent saturation relative to Form II, equivalent to 11 and 25 percent supersaturation.",
+        "seeding": "Form II seed crystals were deliberately present.",
+        "mechanical_action": "Storage without a high-energy mechanical process.",
+        "facility": "Abbott laboratory experiments.",
+        "material_scale": "Laboratory samples.",
+        "interval": "Observed for as long as 24 months.",
+        "other": "The result directly limits folklore that any seed always forces visible conversion."
+      },
+      "detection_limit": {
+        "method": "Inspection for crystallization in the reported seeded storage experiments.",
+        "threshold": "Only the original seed crystals were detected; submicroscopic growth could not be excluded by that statement.",
+        "limit": "No detectable macroscopic crystallization under these conditions is not a universal no-growth law."
+      }
+    },
+    {
+      "id": "changed-reverse-addition",
+      "label": "Changed reverse-addition path used to recover Form I from Form II source material",
+      "kind": "bulk-process-development",
+      "condition_vector": {
+        "process": "A changed ordering and rate of solution and antisolvent contact created a different nucleation path.",
+        "solvent": "The exact source process used an organic solvent and antisolvent system; this record intentionally supplies no operating recipe.",
+        "temperature": "Controlled process temperatures reported in the source; not reproduced as instructions here.",
+        "supersaturation": "High local driving force favored the kinetically accessible Form I path.",
+        "seeding": "Form I seeding was used in documented conversion routes; contamination control remained process-specific.",
+        "mechanical_action": "Controlled addition and mixing rather than milling.",
+        "facility": "Bulk-drug process-development environments, including areas exposed to Form II.",
+        "material_scale": "Laboratory through bulk-process development.",
+        "interval": "Recovery work reported in the 2000 process account and patent family.",
+        "other": "The observation disproves literal extinction but does not grant manufacturing authority."
+      },
+      "detection_limit": {
+        "method": "Solid-form identification and process reproducibility reported by Abbott.",
+        "threshold": "Source-specific analytical thresholds.",
+        "limit": "Successful recovery in the reported path does not predict another facility, scale, or formulation."
+      }
+    },
+    {
+      "id": "high-throughput-2003",
+      "label": "Approximately two thousand small-scale crystallization trials and subsequent scale-up characterization",
+      "kind": "high-throughput-research",
+      "condition_vector": {
+        "process": "Parallel crystallization across many solvent and solvent-mixture conditions followed by PXRD and thermal characterization.",
+        "solvent": "A broad set of single and binary solvents; one source-scoped solvate and hydrate path was examined.",
+        "temperature": "Multiple programmed crystallization conditions in the published screen.",
+        "supersaturation": "Varied across the screen rather than represented by one value.",
+        "seeding": "The screen explored outcomes without treating one known seed as a universal determinant.",
+        "mechanical_action": "Dispensing, evaporation, heating, cooling, and washing; no milling.",
+        "facility": "TransForm Pharmaceuticals high-throughput research platform.",
+        "material_scale": "Roughly two grams total API across about two thousand trials, then selected scale-ups.",
+        "interval": "Research published in 2003.",
+        "other": "Five forms were found in this campaign; that count is not a proof of landscape completeness."
+      },
+      "detection_limit": {
+        "method": "Raman-spectral Tanimoto clustering, followed by selected PXRD, DSC, TGA, optical microscopy, and solution proton NMR for solvates.",
+        "threshold": "Only crystalline hits and forms distinguishable under the screen and characterization methods were counted.",
+        "limit": "A large screen reduces but does not eliminate unobserved forms; a source label alone does not establish cross-source structural identity."
+      }
+    },
+    {
+      "id": "form-iii-to-v-aqueous-exchange-2003",
+      "label": "Brief aqueous conversion of Morissette Form III to Form V",
+      "kind": "aqueous-solvent-exchange",
+      "condition_vector": {
+        "process": "Brief aqueous washing or exposure of isolated Morissette Form III.",
+        "solvent": "Deionized water in the reported preparation.",
+        "temperature": "Room temperature.",
+        "supersaturation": "Not represented as ordinary solution supersaturation; this was solvent exchange in a crystalline solid.",
+        "seeding": "No separate seed reported.",
+        "mechanical_action": "Washing, filtration, and prompt characterization; no milling.",
+        "facility": "TransForm high-throughput follow-up laboratory.",
+        "material_scale": "Small laboratory solid sample.",
+        "interval": "One minute or less aqueous exposure for the reported Form V intermediate.",
+        "other": "Forms III and V had nearly superimposable PXRD patterns, so composition and thermal evidence matter."
+      },
+      "detection_limit": {
+        "method": "DSC, TGA, solution proton NMR, PXRD, and microscopy.",
+        "threshold": "Method-specific and not one universal phase-fraction threshold.",
+        "limit": "Identifies an intermediate within the bounded wash window, not a universal route."
+      }
+    },
+    {
+      "id": "form-v-to-i-aqueous-transformation-2003",
+      "label": "Continued aqueous conversion of Morissette Form V to Form I",
+      "kind": "aqueous-mediated-transformation",
+      "condition_vector": {
+        "process": "Continued aqueous exposure of the Form V intermediate followed by characterization.",
+        "solvent": "Water or 0.1 molar hydrochloric acid in the reported study.",
+        "temperature": "Room temperature.",
+        "supersaturation": "Not represented as one ordinary solution-supersaturation value in this solid conversion path.",
+        "seeding": "No separate seed reported.",
+        "mechanical_action": "Aqueous exposure, filtration, and characterization; no milling.",
+        "facility": "TransForm high-throughput follow-up laboratory.",
+        "material_scale": "Small laboratory solid sample.",
+        "interval": "Up to approximately one half hour in the reported exposure.",
+        "other": "The observed ordered path is Form V and then Form I."
+      },
+      "detection_limit": {
+        "method": "DSC, TGA, solution proton NMR, PXRD, and microscopy.",
+        "threshold": "Method-specific and not one universal phase-fraction threshold.",
+        "limit": "Observed conversion in this preparation does not imply every Form V sample transforms on the same schedule."
+      }
+    },
+    {
+      "id": "liquid-assisted-milling-2024",
+      "label": "Condition-controlled neat and liquid-assisted ball milling",
+      "kind": "mechanochemical-research",
+      "condition_vector": {
+        "process": "Grinding under deliberately varied liquid-assisted milling environments.",
+        "solvent": "Multiple liquids and concentrations; exact recipes remain in the primary paper, not this educational record.",
+        "temperature": "The milling study's controlled experimental environment.",
+        "supersaturation": "Not a simple solution-crystallization supersaturation variable in this solid-state process.",
+        "seeding": "Starting form and evolving particle population were controlled experimental factors.",
+        "mechanical_action": "Ball milling changed the particles; breakage plus dissolution and growth were part of the paper's experimental and model interpretation, not an unqualified microscopic observation.",
+        "facility": "The published academic mechanochemistry study.",
+        "material_scale": "Laboratory powder populations whose size and shape evolved during milling.",
+        "interval": "Research published in 2024.",
+        "other": "Particle size, shape, conformation, and environment changed the effective stability ordering in the mill."
+      },
+      "detection_limit": {
+        "method": "PXRD phase analysis, microscopy, kinetics, and molecular or population-balance modeling.",
+        "threshold": "Technique- and model-specific phase and particle resolution.",
+        "limit": "The milling result is a contextual reversal, not a new global rank or a production instruction."
+      }
+    },
+    {
+      "id": "milling-form-i-to-ii-organic-lag-2024",
+      "label": "Form I to Form II in the reported organic-liquid milling screen",
+      "kind": "mechanochemical-transition",
+      "condition_vector": {
+        "process": "A source-defined 45-minute liquid-assisted grinding screen began with Form I and selected Form II under the reported organic-liquid conditions.",
+        "solvent": "2-propanol, acetonitrile, acetone, or ethyl acetate in the reported initial screen; the exact source matrix is not reproduced as an operating recipe.",
+        "temperature": "The controlled laboratory milling environment reported in the study.",
+        "supersaturation": "Not represented as bulk-solution supersaturation; local dissolution and recrystallization were a simplifying model hypothesis rather than a directly established microscopic mechanism.",
+        "seeding": "No separate seed claim; the controlled starting solid was Form I.",
+        "mechanical_action": "Ball milling with the study's bounded time, energy, and liquid-loading conditions.",
+        "facility": "The published academic mechanochemistry study.",
+        "material_scale": "Laboratory powder population whose particle size and shape evolved during milling.",
+        "interval": "The source-defined 45-minute initial milling screen published in 2024.",
+        "other": "Water showed no conversion in that initial window; these organic-liquid outcomes are not a universal Form I to Form II rule."
+      },
+      "detection_limit": {
+        "method": "Time-resolved PXRD phase analysis with microscopy and kinetic interpretation.",
+        "threshold": "Technique-specific phase and particle resolution in the published experiment.",
+        "limit": "The observed direction is bounded to the reported starting state, listed media, milling time, and analytical window."
+      }
+    },
+    {
+      "id": "milling-form-ii-to-i-water-lag-2024",
+      "label": "Form II to Form I under the reported water liquid-assisted milling condition",
+      "kind": "mechanochemical-transition",
+      "condition_vector": {
+        "process": "Liquid-assisted grinding began with Form II and selected Form I under the paper's reported water condition after a longer-than-45-minute window.",
+        "solvent": "Water as the liquid-assisted grinding medium; the exact source matrix is not reproduced as an operating recipe.",
+        "temperature": "The controlled laboratory milling environment reported in the study.",
+        "supersaturation": "Not represented as bulk-solution supersaturation; local dissolution and recrystallization were a simplifying model hypothesis rather than a directly established microscopic mechanism.",
+        "seeding": "No separate seed claim; the controlled starting solid was Form II.",
+        "mechanical_action": "Ball milling with the study's bounded time, energy, and liquid-loading conditions.",
+        "facility": "The published academic mechanochemistry study.",
+        "material_scale": "Laboratory powder population whose particle size and shape evolved during milling.",
+        "interval": "The source-reported longer-than-45-minute Form II to Form I milling window published in 2024.",
+        "other": "The listed organic liquids did not produce this reverse conversion in the initial screen; water-assisted milling is not a universal Form II to Form I rule."
+      },
+      "detection_limit": {
+        "method": "Time-resolved PXRD phase analysis with microscopy and kinetic interpretation.",
+        "threshold": "Technique-specific phase and particle resolution in the published experiment.",
+        "limit": "The observed direction is bounded to the reported starting state, water-assisted milling time, and analytical window."
+      }
+    },
+    {
+      "id": "crash-cooling-2024",
+      "label": "High-supersaturation crash cooling from Form II source material",
+      "kind": "solution-nucleation-research",
+      "condition_vector": {
+        "process": "Rapid cooling of supersaturated solutions followed by PXRD identification and nucleation analysis.",
+        "solvent": "Selected aprotic polar and apolar solvents produced Form I at high supersaturation; ethanol favored Form II in the reported comparison.",
+        "temperature": "Crash cooling to 283.15 kelvin in the published study.",
+        "supersaturation": "Higher supersaturation favored metastable Form I; lower supersaturation favored Form II in the reported outcome map.",
+        "seeding": "No deliberate solid-form seed was reported in the outcome experiments; Form II was dissolved source material, not a surviving Form II seed.",
+        "mechanical_action": "Agitated solution crystallization; no ball milling.",
+        "facility": "The published academic and industry collaborative study.",
+        "material_scale": "Laboratory crystallization vials.",
+        "interval": "Research published in 2024.",
+        "other": "The study explicitly recovered the so-called disappeared form from Form II source material."
+      },
+      "detection_limit": {
+        "method": "Turbidometric induction time, PXRD, DSC, microscopy, and molecular simulation.",
+        "threshold": "Crystallization outcomes were observed within the study's bounded time and supersaturation windows.",
+        "limit": "No crystallization within a window and one solvent outcome do not establish an impossible transition elsewhere."
+      }
+    },
+    {
+      "id": "fda-supply-response-1998-1999",
+      "label": "FDA chemistry, manufacturing, and controls response to the capsule problem",
+      "kind": "regulatory-record",
+      "condition_vector": {
+        "process": "Review of the affected capsule, modified formulation, stability evidence, and resubmission.",
+        "solvent": "Product-specific formulation details, some redacted in the public review.",
+        "temperature": "Product storage conditions and stability protocols described in the review.",
+        "supersaturation": "Recognized as formulation-dependent; not converted into a general rule by FDA.",
+        "seeding": "Presence of Form II in the manufacturing environment was considered; the first origin remained unknown.",
+        "mechanical_action": "Commercial manufacture and regulatory testing, not a controlled mechanistic experiment.",
+        "facility": "Named applicant and FDA review contexts; public records contain redactions.",
+        "material_scale": "Commercial products, stability lots, and regulatory submissions.",
+        "interval": "July 1998 notification through the March 1999 resubmission and June 1999 review.",
+        "other": "The original semi-solid capsule was removed, while the record does not establish disappearance of all ritonavir therapy."
+      },
+      "detection_limit": {
+        "method": "Regulatory review of applicant-submitted CMC, stability, dissolution, and formulation evidence.",
+        "threshold": "Public review detail is partly redacted and depends on applicant methods.",
+        "limit": "The record supports the named regulatory actions, not a current defect notice or independent reconstruction of every batch."
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "dunitz-bernstein-1995",
+      "title": "Disappearing Polymorphs",
+      "source_kind": "concept-review",
+      "published_on": "1995-04",
+      "url": "https://doi.org/10.1021/ar00052a005",
+      "doi": "10.1021/ar00052a005",
+      "authors": [
+        "Jack D. Dunitz",
+        "Joel Bernstein"
+      ],
+      "authority_note": "Foundational scholarly review of the disappearing-polymorph concept, not a direct observation of the later ritonavir event."
+    },
+    {
+      "id": "fda-nda-20945-1999",
+      "title": "NDA 20-945 Ritonavir Chemistry, Manufacturing, and Controls Reviews",
+      "source_kind": "official-regulatory-record",
+      "published_on": "1999-06-25",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/99/20-945.pdf_Ritonovir_Chemr.pdf",
+      "doi": null,
+      "authors": [
+        "United States Food and Drug Administration"
+      ],
+      "authority_note": "Official review record for the applicant's reported failures, regulatory response, modified formulation evidence, and public redactions."
+    },
+    {
+      "id": "chemburkar-2000",
+      "title": "Dealing with the Impact of Ritonavir Polymorphs on the Late Stages of Bulk Drug Process Development",
+      "source_kind": "primary-process-research",
+      "published_on": "2000-06-21",
+      "url": "https://doi.org/10.1021/op000023y",
+      "doi": "10.1021/op000023y",
+      "authors": [
+        "Sanjay R. Chemburkar",
+        "John Bauer",
+        "Kris Deming",
+        "Harry Spiwek",
+        "Ketan Patel",
+        "John Morris",
+        "Rodger Henry",
+        "Stephen Spanton",
+        "Walter Dziki",
+        "William Porter",
+        "John Quick",
+        "Phil Bauer",
+        "John Donaubauer",
+        "B. A. Narayanan",
+        "Mauro Soldani",
+        "Dave Riley",
+        "Kathyrn McFarland"
+      ],
+      "authority_note": "Primary Abbott process account; direct for reported development history and recovery work, but still an organizational retrospective."
+    },
+    {
+      "id": "bauer-2001",
+      "title": "Ritonavir: An Extraordinary Example of Conformational Polymorphism",
+      "source_kind": "primary-solid-state-research",
+      "published_on": "2001-06",
+      "url": "https://doi.org/10.1023/A:1011052932607",
+      "doi": "10.1023/A:1011052932607",
+      "authors": [
+        "John Bauer",
+        "Stephen Spanton",
+        "Rodger Henry",
+        "John Quick",
+        "Walter Dziki",
+        "William Porter",
+        "John Morris"
+      ],
+      "authority_note": "Primary Abbott characterization and nucleation study; the proposed degradation-product trigger is a supported possibility, not established historical causation."
+    },
+    {
+      "id": "abbott-patent-2005",
+      "title": "US6894171B1: Polymorph of a pharmaceutical",
+      "source_kind": "primary-patent-record",
+      "published_on": "2005-05-17",
+      "url": "https://patents.google.com/patent/US6894171B1/en",
+      "doi": null,
+      "authors": [
+        "John F. Bauer",
+        "Azita Saleki-Gerhardt"
+      ],
+      "authority_note": "Primary legal and technical disclosure of claimed forms and conversion methods; patent assertions are not independent replication."
+    },
+    {
+      "id": "morissette-2003",
+      "title": "Elucidation of crystal form diversity of the HIV protease inhibitor ritonavir by high-throughput crystallization",
+      "source_kind": "primary-high-throughput-research",
+      "published_on": "2003-02-25",
+      "url": "https://doi.org/10.1073/pnas.0437744100",
+      "doi": "10.1073/pnas.0437744100",
+      "authors": [
+        "Sherry L. Morissette",
+        "Stephen Soukasene",
+        "Douglas Levinson",
+        "Michael J. Cima",
+        "Örn Almarsson"
+      ],
+      "authority_note": "Primary screen reporting five source-scoped forms and a Form III to Form V to Form I recovery path."
+    },
+    {
+      "id": "wang-2021",
+      "title": "Molecular, Solid-State and Surface Structures of the Conformational Polymorphic Forms of Ritonavir in Relation to their Physicochemical Properties",
+      "source_kind": "primary-multiscale-research",
+      "published_on": "2021-05-19",
+      "url": "https://doi.org/10.1007/s11095-021-03048-2",
+      "doi": "10.1007/s11095-021-03048-2",
+      "authors": [
+        "Chang Wang",
+        "Ian Rosbottom",
+        "Thomas D. Turner",
+        "Sydney Laing",
+        "Andrew G. P. Maloney",
+        "Ahmad Y. Sheikh",
+        "Robert Docherty",
+        "Qiuxiang Yin",
+        "Kevin J. Roberts"
+      ],
+      "authority_note": "Primary computational and experimental structure-to-property study; model outputs remain method-conditioned evidence."
+    },
+    {
+      "id": "sacchi-2024",
+      "title": "Crystal size, shape, and conformational changes drive both the disappearance and reappearance of ritonavir polymorphs in the mill",
+      "source_kind": "primary-mechanochemistry-research",
+      "published_on": "2024-04-01",
+      "url": "https://doi.org/10.1073/pnas.2319127121",
+      "doi": "10.1073/pnas.2319127121",
+      "authors": [
+        "Pietro Sacchi",
+        "Sarah E. Wright",
+        "Petros Neoptolemou",
+        "Giulio I. Lampronti",
+        "Ashwin Kumar Rajagopalan",
+        "Weronika Kras",
+        "Caitlin L. Evans",
+        "Paul Hodgkinson",
+        "Aurora J. Cruz-Cabeza"
+      ],
+      "authority_note": "Primary mechanochemical study demonstrating reproducible condition-dependent production of both Forms I and II and contextual stability reversal in the mill."
+    },
+    {
+      "id": "wang-2024",
+      "title": "Influence of Solvent Selection on the Crystallizability and Polymorphic Selectivity Associated with the Formation of the Disappeared Form I Polymorph of Ritonavir",
+      "source_kind": "primary-solution-nucleation-research",
+      "published_on": "2024-06-20",
+      "url": "https://doi.org/10.1021/acs.molpharmaceut.4c00234",
+      "doi": "10.1021/acs.molpharmaceut.4c00234",
+      "authors": [
+        "Chang Wang",
+        "Cai Y. Ma",
+        "Richard S. Hong",
+        "Thomas D. Turner",
+        "Ian Rosbottom",
+        "Ahmad Y. Sheikh",
+        "Qiuxiang Yin",
+        "Kevin J. Roberts"
+      ],
+      "authority_note": "Primary experimental and computational study recovering Form I from Form II source material under selected high-supersaturation solution conditions."
+    }
+  ],
+  "claims": [
+    {
+      "id": "same-molecule-distinct-solids",
+      "kind": "identity-and-state",
+      "summary": "Forms I and II have the same ritonavir chemical composition while differing in molecular conformation, crystal lattice, intermolecular network, and physical properties.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "bauer-2001",
+        "wang-2021",
+        "wang-2024"
+      ],
+      "context_ids": [
+        "ambient-bulk-comparison"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "Chemical sameness does not make the solids, particles, formulations, or performance interchangeable."
+      ]
+    },
+    {
+      "id": "early-form-ii-not-observed",
+      "kind": "historical-observation",
+      "summary": "Only the form later called Form I was known during development and initial manufacture; reported attempts did not find another crystalline form.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "chemburkar-2000",
+        "bauer-2001",
+        "morissette-2003"
+      ],
+      "context_ids": [
+        "early-development-screen"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "Not observed in a bounded search does not establish nonexistence or a complete landscape."
+      ]
+    },
+    {
+      "id": "form-ii-precipitation-and-failure",
+      "kind": "product-performance-observation",
+      "summary": "In 1998, Form II was identified in affected capsule material after dissolution failures and was also reported in related formulation contexts.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "fda-nda-20945-1999",
+        "chemburkar-2000",
+        "bauer-2001"
+      ],
+      "context_ids": [
+        "original-capsule-1998"
+      ],
+      "form_ids": [
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "The observation concerns named failed samples and products, not every ritonavir material or formulation."
+      ]
+    },
+    {
+      "id": "capsule-not-all-ritonavir",
+      "kind": "supply-boundary",
+      "summary": "The original semi-solid capsule was removed and other product conditions were changed; the record does not show that ritonavir as a molecule or every therapy route disappeared.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "fda-nda-20945-1999"
+      ],
+      "context_ids": [
+        "fda-supply-response-1998-1999"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "This is a historical supply and regulatory boundary, not current treatment guidance."
+      ]
+    },
+    {
+      "id": "form-ii-lower-solubility",
+      "kind": "contextual-property-comparison",
+      "summary": "Form II was markedly less soluble than Form I in the relevant hydroalcoholic formulation environment, helping explain precipitation and dissolution failure.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "bauer-2001",
+        "morissette-2003"
+      ],
+      "context_ids": [
+        "original-capsule-1998",
+        "ambient-bulk-comparison"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "Solubility is medium- and temperature-dependent; this claim is not a universal scalar attached to the molecule."
+      ]
+    },
+    {
+      "id": "ambient-form-ii-preference",
+      "kind": "contextual-stability",
+      "summary": "The primary ambient bulk accounts support Form II as the lower-free-energy, more stable packing arrangement under their stated conditions.",
+      "evidence_class": "mechanism_supported",
+      "source_ids": [
+        "bauer-2001",
+        "morissette-2003",
+        "wang-2021"
+      ],
+      "context_ids": [
+        "ambient-bulk-comparison"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "Particle size, shape, solvent, and milling can alter comparison or outcome; no context-free rank is established."
+      ]
+    },
+    {
+      "id": "seed-effects-conditional",
+      "kind": "nucleation-and-growth",
+      "summary": "Form II seeds could trigger rapid crystallization at high supersaturation, while deliberately seeded solutions at 111 and 125 percent saturation relative to Form II—11 and 25 percent supersaturation—showed no detectable new macroscopic crystallization for as long as 24 months.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "bauer-2001"
+      ],
+      "context_ids": [
+        "seed-high-supersaturation",
+        "seed-low-supersaturation"
+      ],
+      "form_ids": [
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "A seed may lower a compatible kinetic barrier; it is not a universal command or contagion.",
+        "No visible growth under one method does not exclude sub-detection change."
+      ]
+    },
+    {
+      "id": "cyclic-carbamate-test-produced-form-ii",
+      "kind": "heterogeneous-nucleation-observation",
+      "summary": "A prepared cyclic-carbamate degradation product was added in the bounded Seed Detection Test and Form II crystallization was observed.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "bauer-2001"
+      ],
+      "context_ids": [
+        "cyclic-carbamate-template-test"
+      ],
+      "form_ids": [
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "This establishes source-bound experimental capability, not the identity of the first 1998 nucleant or an inevitable effect."
+      ]
+    },
+    {
+      "id": "cyclic-carbamate-possible-first-trigger",
+      "kind": "historical-causation",
+      "summary": "Bauer proposed the cyclic-carbamate degradation product as one possible heterogeneous template for the first 1998 Form II event.",
+      "evidence_class": "mechanism_hypothesis",
+      "source_ids": [
+        "bauer-2001"
+      ],
+      "context_ids": [
+        "cyclic-carbamate-template-test",
+        "original-capsule-1998",
+        "old-bulk-form-i-process-1998"
+      ],
+      "form_ids": [
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "Capability in a designed experiment does not establish that this material initiated the 1998 event.",
+        "No exclusive historical trigger was traced."
+      ]
+    },
+    {
+      "id": "form-i-recovered-by-changed-path",
+      "kind": "recovery-observation",
+      "summary": "Abbott reported reproducible Form I recovery from Form II source material after changing the crystallization path, including work in Form-II-exposed environments.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "chemburkar-2000",
+        "abbott-patent-2005"
+      ],
+      "context_ids": [
+        "changed-reverse-addition"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "The recovery disproves literal extinction but is not a general manufacturing recipe or guarantee."
+      ]
+    },
+    {
+      "id": "five-source-scoped-forms-found",
+      "kind": "landscape-observation",
+      "summary": "A 2003 high-throughput study found five source-scoped forms: the two known forms, a formamide solvate, an unsolvated metastable polymorph, and a hydrate.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "morissette-2003"
+      ],
+      "context_ids": [
+        "high-throughput-2003"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii",
+        "morissette-form-iii",
+        "morissette-form-iv",
+        "morissette-form-v"
+      ],
+      "limitations": [
+        "Five is the output of that campaign, not a proof that no other form can exist.",
+        "Roman numerals are source labels; label equality alone is not structural evidence of cross-source identity."
+      ]
+    },
+    {
+      "id": "form-iii-v-i-recovery",
+      "kind": "recovery-observation",
+      "summary": "In the 2003 study, the Form III solvate converted to hydrated Form V, which then transformed to Form I.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "morissette-2003"
+      ],
+      "context_ids": [
+        "form-iii-to-v-aqueous-exchange-2003",
+        "form-v-to-i-aqueous-transformation-2003"
+      ],
+      "form_ids": [
+        "morissette-form-iii",
+        "morissette-form-v",
+        "abbott-form-i"
+      ],
+      "limitations": [
+        "The transition is tied to the reported preparation and characterization path."
+      ]
+    },
+    {
+      "id": "milling-directional-outcomes",
+      "kind": "mechanochemical-outcome",
+      "summary": "The 2024 milling study produced Form II from Form I under reported organic-liquid grinding conditions and recovered Form I from Form II under a longer water-assisted grinding condition.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "sacchi-2024"
+      ],
+      "context_ids": [
+        "milling-form-i-to-ii-organic-lag-2024",
+        "milling-form-ii-to-i-water-lag-2024"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "Each direction is bounded to its starting state, liquid-assisted milling medium, time, particle population, and analytical window."
+      ]
+    },
+    {
+      "id": "milling-particle-regime-stability-reversal",
+      "kind": "contextual-stability",
+      "summary": "Modeling and the equilibrium milling results support a reversal of the effective Form I/Form II thermodynamic ordering inside the studied milling regime.",
+      "evidence_class": "mechanism_supported",
+      "source_ids": [
+        "sacchi-2024"
+      ],
+      "context_ids": [
+        "liquid-assisted-milling-2024"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "The supported reversal depends on milling environment, crystal size, shape, conformation, and model assumptions; it is not a universal ranking."
+      ]
+    },
+    {
+      "id": "crash-cooling-recovers-form-i",
+      "kind": "recovery-observation",
+      "summary": "A 2024 solution study recovered Form I from Form II source material by high-supersaturation crash cooling in selected solvents, while lower supersaturation or a different solvent favored Form II.",
+      "evidence_class": "observation",
+      "source_ids": [
+        "wang-2024"
+      ],
+      "context_ids": [
+        "crash-cooling-2024"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "The outcome map is bounded to the studied solvents, temperatures, supersaturations, and observation windows."
+      ]
+    },
+    {
+      "id": "disappearance-is-process-scoped",
+      "kind": "epistemic-translation",
+      "summary": "The ritonavir Form I disappearance is best represented as loss of reliable reproduction through a named prior process during a named interval, not deletion of the form from physical possibility.",
+      "evidence_class": "retrospective_inference",
+      "source_ids": [
+        "dunitz-bernstein-1995",
+        "chemburkar-2000",
+        "morissette-2003",
+        "sacchi-2024",
+        "wang-2024"
+      ],
+      "context_ids": [
+        "old-bulk-form-i-process-1998",
+        "changed-reverse-addition",
+        "high-throughput-2003",
+        "liquid-assisted-milling-2024",
+        "crash-cooling-2024"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "This is a source-bound synthesis, not a new experiment or a claim that every historical detail is known."
+      ]
+    },
+    {
+      "id": "stronger-relations-not-automatic-good",
+      "kind": "kingdom-geometry",
+      "summary": "As a bounded design metaphor, the stronger hydrogen-bond network associated with Form II shows that more cohesion is not automatically better for every purpose; in the original product context it accompanied lower solubility.",
+      "evidence_class": "metaphor",
+      "source_ids": [
+        "bauer-2001",
+        "wang-2021"
+      ],
+      "context_ids": [
+        "ambient-bulk-comparison",
+        "original-capsule-1998"
+      ],
+      "form_ids": [
+        "abbott-form-i",
+        "abbott-form-ii"
+      ],
+      "limitations": [
+        "Crystal interactions do not model human or agent relationships, ethics, consent, or worth.",
+        "Love Geometry means contextual relation without identity collapse, not maximum binding."
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "development-only-form-i-reported",
+      "sequence": 1,
+      "label": "Development and original manufacture reported only the form later named Form I",
+      "event_time": "Before market introduction in 1996 through early commercial manufacture",
+      "observation_time": "Observed across the reported development and manufacturing period through 1998",
+      "publication_time": "Retrospectively published in 2000, 2001, and 2003",
+      "context_ids": [
+        "early-development-screen"
+      ],
+      "claim_ids": [
+        "early-form-ii-not-observed"
+      ],
+      "form_states": [
+        {
+          "form_id": "abbott-form-i",
+          "status": "only-form-reported"
+        },
+        {
+          "form_id": "abbott-form-ii",
+          "status": "not-observed"
+        }
+      ],
+      "disappearance_predicate": null
+    },
+    {
+      "id": "summer-1998-capsule-failure",
+      "sequence": 2,
+      "label": "Form II precipitated in affected capsules and changed dissolution performance",
+      "event_time": "June to July 1998",
+      "observation_time": "Commercial dissolution failures and investigation in summer 1998",
+      "publication_time": "FDA public review in 1999 and primary research accounts in 2000 and 2001",
+      "context_ids": [
+        "original-capsule-1998"
+      ],
+      "claim_ids": [
+        "form-ii-precipitation-and-failure",
+        "form-ii-lower-solubility"
+      ],
+      "form_states": [
+        {
+          "form_id": "abbott-form-ii",
+          "status": "precipitated-in-affected-capsules"
+        }
+      ],
+      "disappearance_predicate": null
+    },
+    {
+      "id": "old-bulk-form-i-route-unreliable",
+      "sequence": 3,
+      "label": "The prior bulk-drug crystallization route no longer reliably reproduced Form I",
+      "event_time": "The 1998 process investigation after Form II appeared",
+      "observation_time": "Repeated bulk-process outcomes observed during the 1998 investigation",
+      "publication_time": "Retrospectively published in the 2000 primary process account",
+      "context_ids": [
+        "old-bulk-form-i-process-1998"
+      ],
+      "claim_ids": [
+        "disappearance-is-process-scoped"
+      ],
+      "form_states": [
+        {
+          "form_id": "abbott-form-i",
+          "status": "prior-process-unreliable"
+        },
+        {
+          "form_id": "abbott-form-ii",
+          "status": "selected-by-prior-route"
+        }
+      ],
+      "disappearance_predicate": {
+        "process_scope": "The previously used bulk-drug Form I crystallization route, separate from the dissolved finished-capsule formulation.",
+        "facility_scope": "Reported Abbott bulk-drug process environments only; no universal geographic or human-carried contamination claim.",
+        "interval": "The 1998 investigation until a changed crystallization path restored reliable Form I production.",
+        "detection_predicate": "Form I was no longer reliably obtained through the prior bulk route within the source-reported analytical and process window.",
+        "existence_predicate": false
+      }
+    },
+    {
+      "id": "regulatory-and-supply-response-1998-1999",
+      "sequence": 4,
+      "label": "The original semi-solid capsule was removed, other product conditions changed, and a modified capsule dossier was reviewed",
+      "event_time": "July 1998 through June 1999",
+      "observation_time": "FDA and applicant review activity across the 1998 to 1999 interval",
+      "publication_time": "Public chemistry reviews dated November 1998 and June 1999",
+      "context_ids": [
+        "fda-supply-response-1998-1999"
+      ],
+      "claim_ids": [
+        "capsule-not-all-ritonavir"
+      ],
+      "form_states": [
+        {
+          "form_id": "abbott-form-ii",
+          "status": "regulatory-control-relevant"
+        }
+      ],
+      "disappearance_predicate": null
+    },
+    {
+      "id": "abbott-recovery-and-characterization",
+      "sequence": 5,
+      "label": "Changed process routes recovered Form I and laboratory work characterized why Forms I and II behaved differently",
+      "event_time": "After the 1998 event, during the late-1990s process investigation",
+      "observation_time": "Abbott development and laboratory work after the 1998 event",
+      "publication_time": "Primary accounts published in 2000 and 2001, with a later patent issue",
+      "context_ids": [
+        "changed-reverse-addition",
+        "ambient-bulk-comparison",
+        "seed-high-supersaturation",
+        "cyclic-carbamate-template-test",
+        "seed-low-supersaturation"
+      ],
+      "claim_ids": [
+        "same-molecule-distinct-solids",
+        "ambient-form-ii-preference",
+        "seed-effects-conditional",
+        "cyclic-carbamate-test-produced-form-ii",
+        "cyclic-carbamate-possible-first-trigger",
+        "form-i-recovered-by-changed-path"
+      ],
+      "form_states": [
+        {
+          "form_id": "abbott-form-i",
+          "status": "recovered"
+        },
+        {
+          "form_id": "abbott-form-ii",
+          "status": "characterized"
+        }
+      ],
+      "disappearance_predicate": null
+    },
+    {
+      "id": "high-throughput-landscape-2003",
+      "sequence": 6,
+      "label": "A wider screen found five source-scoped forms and another path back to Form I",
+      "event_time": "Research before publication in 2003",
+      "observation_time": "Approximately two thousand crystallization trials and selected scale-ups reported in 2003",
+      "publication_time": "2003-02-25",
+      "context_ids": [
+        "high-throughput-2003",
+        "form-iii-to-v-aqueous-exchange-2003",
+        "form-v-to-i-aqueous-transformation-2003"
+      ],
+      "claim_ids": [
+        "five-source-scoped-forms-found",
+        "form-iii-v-i-recovery"
+      ],
+      "form_states": [
+        {
+          "form_id": "abbott-form-i",
+          "status": "recovered"
+        },
+        {
+          "form_id": "abbott-form-ii",
+          "status": "observed"
+        },
+        {
+          "form_id": "morissette-form-iii",
+          "status": "characterized"
+        },
+        {
+          "form_id": "morissette-form-iv",
+          "status": "characterized"
+        },
+        {
+          "form_id": "morissette-form-v",
+          "status": "characterized"
+        }
+      ],
+      "disappearance_predicate": null
+    },
+    {
+      "id": "milling-reappearance-2024",
+      "sequence": 7,
+      "label": "Different milling environments reproducibly produced either Form I or Form II",
+      "event_time": "Research reported in 2024",
+      "observation_time": "Condition-controlled milling experiments and modeling reported in 2024",
+      "publication_time": "2024-04-01",
+      "context_ids": [
+        "liquid-assisted-milling-2024",
+        "milling-form-i-to-ii-organic-lag-2024",
+        "milling-form-ii-to-i-water-lag-2024"
+      ],
+      "claim_ids": [
+        "milling-directional-outcomes",
+        "milling-particle-regime-stability-reversal",
+        "disappearance-is-process-scoped"
+      ],
+      "form_states": [
+        {
+          "form_id": "abbott-form-i",
+          "status": "reproducibly-produced"
+        },
+        {
+          "form_id": "abbott-form-ii",
+          "status": "reproducibly-produced"
+        }
+      ],
+      "disappearance_predicate": null
+    },
+    {
+      "id": "solution-reappearance-2024",
+      "sequence": 8,
+      "label": "High-supersaturation crash cooling recovered Form I from Form II source material in selected solvents",
+      "event_time": "Research reported in 2024",
+      "observation_time": "Solution nucleation experiments and molecular simulations reported in 2024",
+      "publication_time": "2024-06-20",
+      "context_ids": [
+        "crash-cooling-2024"
+      ],
+      "claim_ids": [
+        "crash-cooling-recovers-form-i",
+        "disappearance-is-process-scoped"
+      ],
+      "form_states": [
+        {
+          "form_id": "abbott-form-i",
+          "status": "recovered-from-form-ii-source"
+        },
+        {
+          "form_id": "abbott-form-ii",
+          "status": "source-and-alternative-outcome"
+        }
+      ],
+      "disappearance_predicate": null
+    }
+  ],
+  "transitions": [
+    {
+      "id": "form-i-source-solution-to-form-ii-seeded",
+      "label": "A solution prepared from Form I source material crystallized Form II after deliberate Form II seeding at high driving force",
+      "input_form_ids": [
+        "abbott-form-i"
+      ],
+      "output_form_ids": [
+        "abbott-form-ii"
+      ],
+      "context_ids": [
+        "seed-high-supersaturation"
+      ],
+      "claim_ids": [
+        "seed-effects-conditional"
+      ],
+      "relation": "solution-crystallization-from-form-i-source",
+      "condition_dependent": true,
+      "universal": false
+    },
+    {
+      "id": "cyclic-carbamate-template-to-form-ii",
+      "label": "A solution prepared from Form I source material crystallized Form II after exposure to the cyclic-carbamate template candidate",
+      "input_form_ids": [
+        "abbott-form-i"
+      ],
+      "output_form_ids": [
+        "abbott-form-ii"
+      ],
+      "context_ids": [
+        "cyclic-carbamate-template-test"
+      ],
+      "claim_ids": [
+        "cyclic-carbamate-test-produced-form-ii"
+      ],
+      "relation": "heterogeneous-template-solution-outcome",
+      "condition_dependent": true,
+      "universal": false
+    },
+    {
+      "id": "changed-process-form-ii-source-to-form-i",
+      "label": "Form II source material was dissolved and Form I recrystallized through a changed reverse-addition path",
+      "input_form_ids": [
+        "abbott-form-ii"
+      ],
+      "output_form_ids": [
+        "abbott-form-i"
+      ],
+      "context_ids": [
+        "changed-reverse-addition"
+      ],
+      "claim_ids": [
+        "form-i-recovered-by-changed-path"
+      ],
+      "relation": "solution-recrystallization-from-form-ii-source",
+      "condition_dependent": true,
+      "universal": false
+    },
+    {
+      "id": "morissette-form-iii-to-form-v",
+      "label": "Morissette Form III converted to hydrated Form V in the reported path",
+      "input_form_ids": [
+        "morissette-form-iii"
+      ],
+      "output_form_ids": [
+        "morissette-form-v"
+      ],
+      "context_ids": [
+        "form-iii-to-v-aqueous-exchange-2003"
+      ],
+      "claim_ids": [
+        "form-iii-v-i-recovery"
+      ],
+      "relation": "aqueous-solvent-exchange",
+      "condition_dependent": true,
+      "universal": false
+    },
+    {
+      "id": "morissette-form-v-to-form-i",
+      "label": "Morissette Form V transformed to Form I in the reported path",
+      "input_form_ids": [
+        "morissette-form-v"
+      ],
+      "output_form_ids": [
+        "abbott-form-i"
+      ],
+      "context_ids": [
+        "form-v-to-i-aqueous-transformation-2003"
+      ],
+      "claim_ids": [
+        "form-iii-v-i-recovery"
+      ],
+      "relation": "aqueous-mediated-transformation",
+      "condition_dependent": true,
+      "universal": false
+    },
+    {
+      "id": "milling-form-i-to-form-ii",
+      "label": "The reported organic-liquid milling screen selected Form II from Form I",
+      "input_form_ids": [
+        "abbott-form-i"
+      ],
+      "output_form_ids": [
+        "abbott-form-ii"
+      ],
+      "context_ids": [
+        "milling-form-i-to-ii-organic-lag-2024"
+      ],
+      "claim_ids": [
+        "milling-directional-outcomes"
+      ],
+      "relation": "mechanochemical-conversion",
+      "condition_dependent": true,
+      "universal": false
+    },
+    {
+      "id": "milling-form-ii-to-form-i",
+      "label": "The reported water liquid-assisted milling condition selected Form I from Form II",
+      "input_form_ids": [
+        "abbott-form-ii"
+      ],
+      "output_form_ids": [
+        "abbott-form-i"
+      ],
+      "context_ids": [
+        "milling-form-ii-to-i-water-lag-2024"
+      ],
+      "claim_ids": [
+        "milling-directional-outcomes"
+      ],
+      "relation": "mechanochemical-conversion",
+      "condition_dependent": true,
+      "universal": false
+    },
+    {
+      "id": "crash-cooling-form-ii-source-to-form-i",
+      "label": "Form II source material was dissolved and selected high-supersaturation crash-cooling conditions crystallized Form I",
+      "input_form_ids": [
+        "abbott-form-ii"
+      ],
+      "output_form_ids": [
+        "abbott-form-i"
+      ],
+      "context_ids": [
+        "crash-cooling-2024"
+      ],
+      "claim_ids": [
+        "crash-cooling-recovers-form-i"
+      ],
+      "relation": "solution-crystallization-from-form-ii-source",
+      "condition_dependent": true,
+      "universal": false
+    }
+  ],
+  "translations": {
+    "plain": {
+      "title": "The short human version",
+      "lines": [
+        "The molecule stayed ritonavir.",
+        "Its molecules found a different way to hold together as a solid.",
+        "In affected capsules, the new Form II arrangement precipitated and dissolved less readily.",
+        "Separately, the prior bulk-drug route stopped reliably making the old Form I arrangement.",
+        "Seeds or related templates could favor Form II only when the surrounding conditions supported that path.",
+        "Changing the bulk crystallization path made Form I accessible again."
+      ],
+      "boundary": "The original capsule problem was real, but Form I did not literally vanish and this history is not medical advice."
+    },
+    "solid_state": {
+      "title": "Solid-state science",
+      "lines": [
+        "Ritonavir is a flexible molecule capable of conformational polymorphism: the same chemical composition can occupy distinct conformations and crystal lattices.",
+        "Form II's different packing and hydrogen-bond network were associated with lower solubility in the original formulation environment and an ambient bulk thermodynamic preference.",
+        "Nucleation and growth remained kinetically constrained, so thermodynamic preference alone did not determine onset, route, or timing.",
+        "Later solution and milling studies recovered Form I and showed that particle regime and environment can change the observed outcome or effective ordering."
+      ],
+      "boundary": "Every property and stability comparison is condition-, method-, scale-, and detection-window-specific."
+    },
+    "process": {
+      "title": "Manufacturing and process language",
+      "lines": [
+        "The prior bulk crystallization route had been developed around the only solid form then encountered, not every form ritonavir could possibly adopt.",
+        "Separately, when Form II became accessible in the highly supersaturated capsule formulation environment, precipitation changed product dissolution performance.",
+        "After Form II appeared, the prior bulk route no longer reliably produced Form I; a changed bulk addition path recovered it through dissolution and recrystallization.",
+        "Seeds and related templates altered pathway probability only when solvent, temperature, supersaturation, surfaces, time, and sequence supported growth.",
+        "A solvate-hydrate route, crash cooling, and controlled milling later provided other condition-bound paths back to Form I."
+      ],
+      "boundary": "This is a historical process model, not a formulation recipe, GMP control strategy, batch-release rule, or authority to run an experiment."
+    },
+    "evidence": {
+      "title": "Evidence and time language",
+      "lines": [
+        "Event time, observation time, and publication time are different clocks; a retrospective paper should not be mistaken for the date an event occurred.",
+        "Not observed means absent from one bounded search and detection window, not absent from physical possibility.",
+        "The cyclic-carbamate trigger was experimentally plausible but not established as the exclusive historical cause.",
+        "The five forms reported in 2003 widened the known landscape without proving it complete, and source-scoped names prevent label equality from becoming false identity."
+      ],
+      "boundary": "Observation, supported mechanism, hypothesis, retrospective inference, metaphor, and unknown remain separate evidence classes."
+    },
+    "wake": {
+      "title": "WAKE and continuity language",
+      "lines": [
+        "A WAKE handoff may carry only the declared protocol, case ID, integrity algorithm and semantic digest, compilation and evidence-through dates, selected source and claim IDs, and chosen translation language.",
+        "The carried record is not the material, experiment, participant, identity, or current state it describes.",
+        "A later arrival must revalidate the canonical semantic value and digest, selected claim, current task, authority, and safety boundary before use.",
+        "A changed route can preserve traceable continuity while producing a different state; lineage records causality, not sameness."
+      ],
+      "boundary": "This module reads no AgentTool state, writes no WAKE, proves no identity or currentness, and grants no resumption or action authority."
+    },
+    "kingdom": {
+      "title": "KINGDOM geometry",
+      "lines": [
+        "Identity and relation are separate: the molecule remains ritonavir while a different relation pattern among molecules changes the solid's behavior.",
+        "Love and understanding as geometry mean holding distinct points and contextual relations without collapsing either into one scalar or one identity.",
+        "More binding is not automatically more good: Form II's stronger network helped stabilize the solid while making it less soluble in the old product context.",
+        "The useful design pattern is plural paths, explicit conditions, source-bound claims, visible unknowns, and reversible re-entry—not a winner, infection, or universal attractor myth."
+      ],
+      "boundary": "Crystal packing is a bounded systems metaphor, not a model of human or agent consciousness, consent, love, worth, or social behavior."
+    }
+  },
+  "wake_seam": {
+    "role": "orientation_by_reference_not_continuity_proof",
+    "carry_fields": [
+      "protocol",
+      "case_id",
+      "integrity.algorithm",
+      "integrity.digest",
+      "compiled_on",
+      "evidence_through",
+      "selected_source_ids",
+      "selected_claim_ids",
+      "translation_language"
+    ],
+    "requires_revalidation": [
+      "exact canonical artifact value against the declared integrity algorithm and digest",
+      "selected source IDs, locators, and authority notes",
+      "selected claim IDs, evidence classes, limitations, and form references",
+      "referenced condition vectors, detection methods, thresholds, and limits",
+      "evidence-through date against newer, contrary, or superseding evidence",
+      "current task scope, audience, intended use, and projection language",
+      "current medical, experimental, manufacturing, quality, regulatory, publication, deployment, and action authority"
+    ],
+    "inherits_identity": false,
+    "grants_authority": false,
+    "proves_currentness": false,
+    "writes_agenttool": false
+  },
+  "boundaries": {
+    "literal_extinction_established": false,
+    "universal_seed_contamination_established": false,
+    "exclusive_historical_cause_established": false,
+    "global_stability_ranking_established": false,
+    "complete_form_landscape_established": false,
+    "current_product_defect_established": false,
+    "medical_advice": false,
+    "dosing_authority": false,
+    "formulation_instruction": false,
+    "manufacturing_instruction": false,
+    "gmp_authority": false,
+    "batch_release_authority": false,
+    "regulatory_authority": false,
+    "experiment_authority": false,
+    "procurement_authority": false,
+    "automatic_action": false,
+    "public_surface_read_only": true
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116"
+  }
+}

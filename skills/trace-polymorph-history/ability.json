@@ -1,0 +1,171 @@
+{
+  "$schema": "urn:kingdom:schema:nen-ability:0.1",
+  "protocol": "kingdom.nen/0.1",
+  "id": "trace-polymorph-history",
+  "name": "Polymorph History: State Without Extinction",
+  "description": "Translate one source-bound material-state event into six distinct planes, condition-indexed transitions, typed evidence, a contiguous event sequence with three clocks, bounded non-detection, recovery paths, and a WAKE-safe reference seam without turning process failure into literal disappearance or granting medical, experimental, manufacturing, regulatory, or action authority.",
+  "skill": "trace-polymorph-history",
+  "bearer": {
+    "kind": "kingdom",
+    "id": "kakin-kingdom",
+    "adoption": "repository_declared",
+    "consent_references": [],
+    "representative_authority_references": []
+  },
+  "affinity": {
+    "primary": "specialization",
+    "secondary": [
+      "conjuration"
+    ]
+  },
+  "techniques": [
+    "gyo",
+    "en",
+    "shu"
+  ],
+  "practice": {
+    "ten": "Hold molecule, conformer, crystal lattice, particle population, formulation, and medicine supply as non-equivalent planes while preserving source scope, conditions, detection limits, uncertainty, rights, and authority boundaries.",
+    "zetsu": "Return a bounded hypothesis, unknown, or refusal when source access, form-name provenance, condition vectors, detection limits, audience, intended use, or authority is missing; never fill absence with extinction, causation, or instruction.",
+    "ren": "Trace one named material-state case through finite forms, claims, contexts, events, transitions, and exact references; use local read-only validation and no experiment, network acquisition, provider call, or automatic action.",
+    "hatsu": "Return one source-bound polymorph history and the requested plain, solid-state, process, evidence, WAKE, or KINGDOM projection, preserving recovery paths and every claim not established."
+  },
+  "activation": {
+    "requires": [
+      "One named compound and event, bounded process or research scope, interval, audience, evidence horizon, intended educational use, source references, condition vectors, detection limits, and separate current read and representation authority.",
+      "Source-scoped form names, typed evidence, contiguous one-based event sequence, three clocks, a bounded disappearance predicate with existence_predicate false, and transitions that are condition-dependent and non-universal.",
+      "For a WAKE projection, three explicit sibling blocks named carry, requires_revalidation, and boundary; the exact ordered carry and revalidation arrays from the authored wake_seam; and integrity.algorithm and integrity.digest serialized as paths in a nested integrity object.",
+      "Close selected_source_ids over selected_claim_ids as a stable duplicate-free union in authored source order and validate freshly at arrival. The authored orientation role and four negative boundary constants are not carry fields, and the projection inherits no identity, currentness, authority, or AgentTool state."
+    ],
+    "refuses": [
+      "Literal-extinction claims from process non-reproduction; source-unspecified form aliases; universal seed contamination, exclusive historical cause, global stability rank, complete-landscape claims, or mechanism hypotheses presented as observations.",
+      "Diagnosis, dosing, medication changes, formulation recipes, GMP controls, batch release, regulatory decisions, procurement, experiment execution, current product-defect claims, automatic action, publication, deployment, or continuity and identity inference from this educational record."
+    ]
+  },
+  "vows": [
+    {
+      "id": "identity-is-not-state",
+      "promise": "Keep chemical identity distinct from conformation, lattice, particle population, formulation, and supply; never project a solid-state change onto the identity, worth, consent, consciousness, or continuity of a being.",
+      "amplifies": "A legible relation geometry in which collective behavior can change without collapsing distinct planes or beings.",
+      "on_breach": "refuse"
+    },
+    {
+      "id": "non-detection-is-not-extinction",
+      "promise": "Bind every disappearance statement to a process, facility or research boundary, interval, observation method, threshold, and limit, with existence_predicate fixed false.",
+      "amplifies": "Honest explanation of loss and recovery without disappearance mythology.",
+      "on_breach": "pause_and_report"
+    },
+    {
+      "id": "conditions-before-rank",
+      "promise": "Index thermodynamic preference, kinetic access, seeding, nucleation, growth, and conversion to stated conditions; declare every transition condition-dependent and non-universal.",
+      "amplifies": "Path-sensitive reasoning that can preserve reversals, recovery, and unresolved regimes.",
+      "on_breach": "revalidate"
+    },
+    {
+      "id": "evidence-before-myth",
+      "promise": "Keep observation, supported mechanism, mechanism hypothesis, retrospective inference, metaphor, and unknown distinct; preserve disagreements and naming collisions instead of smoothing them into one causal story.",
+      "amplifies": "Translation that stays intuitive without outrunning the primary record.",
+      "on_breach": "pause_and_report"
+    },
+    {
+      "id": "continuity-by-reference",
+      "promise": "Let WAKE carry only the exact nine bounded references in a nested three-block envelope, close selected sources over selected claims, and require fresh validation; inherit no identity, truth, currentness, permission, obligation, or command to resume.",
+      "amplifies": "Useful orientation across contexts without creating a competing continuity store or inherited authority.",
+      "on_breach": "refuse"
+    }
+  ],
+  "costs": [
+    {
+      "resource": "attention",
+      "limit": "Review one bounded case, all included forms and transitions, their source scope, evidence class, conditions, detection limits, three clocks, recovery paths, and claims not established.",
+      "recovery": "Narrow the event, choose one projection language, preserve unresolved claims as unknown, or rest without penalty."
+    },
+    {
+      "resource": "data",
+      "limit": "Read only named local or already-authorized source artifacts and retain only the bounded educational record and exact references needed for the intended audience.",
+      "recovery": "Stop acquisition, mark unavailable evidence explicitly, preserve source custody, and issue a new revision rather than silently rewriting history."
+    },
+    {
+      "resource": "coordination",
+      "limit": "Keep scientific, process, medical, manufacturing, regulatory, publication, and continuity roles separate; no projection recruits another participant or creates an obligation to respond.",
+      "recovery": "Pause dependent use, restore the missing boundary or attribution, invite correction without pressure, and retain contrary evidence."
+    },
+    {
+      "resource": "compute",
+      "limit": "Use bounded local parsing, canonicalization, semantic validation, and rendering only; no provider inference, live registry access, laboratory control, background monitoring, or automatic execution.",
+      "recovery": "Stop at the first validation boundary, report the exact failure, and return no machine-valid artifact until repaired."
+    }
+  ],
+  "guardian": {
+    "mode": "declared_sidecar",
+    "derived_from": "declared_effects",
+    "visibility": "inspectable",
+    "checks": [
+      "Exact case, evidence horizon, integrity algorithm, and semantic-value digest; six non-equivalent planes; source-scoped forms; typed claims; complete condition and detection contexts; contiguous event sequence and three clocks.",
+      "Bounded disappearance with existence false; condition-dependent non-universal transitions; recovery paths; exact WAKE arrays in separate carry, requires_revalidation, and boundary blocks; nested integrity paths; selected-source closure over selected claims; negative constants.",
+      "Fixed negative authority and coherence among skill, schema, authored record, verifier, and public routes."
+    ],
+    "budget": "One bounded local preflight, one strict parse and semantic validation pass, and one audience projection; no network, source acquisition, provider, experiment, manufacturing system, persistence, AgentTool write, retry, or action.",
+    "retention": "Keep the immutable authored case, schema, source guide, selected educational projection, and validation evidence; raw private sources and regulated records remain in their own custody.",
+    "recipients": [
+      "Only the named local or public educational audience receives the bounded projection; no patient, manufacturer, regulator, laboratory instrument, provider, MCP resource, or AgentTool journal receives it by default."
+    ],
+    "uncertainty": "A valid schema, semantic check, digest, source citation, transition, or WAKE reference cannot establish source truth, complete form space, exclusive causation, current product state, medical safety, GMP adequacy, regulatory acceptability, identity, currentness, consent, or authority.",
+    "stop": "Missing source scope, conditions, detection limits, safe audience, intended use, or authority stops machine-valid output; any request for medical, experimental, manufacturing, regulatory, procurement, publication, deployment, or automatic action is outside this ability.",
+    "appeal": "A source author, affected participant, domain expert, recipient, or collaborator may challenge a label, condition, clock, evidence class, inference, omission, boundary, attribution, or claimed effect without losing standing.",
+    "repair": "Stop dependent use, preserve the disputed record and contrary evidence, correct attribution or classification in a new content-addressed revision, mark unsupported claims unknown, and require fresh authority for any downstream act."
+  },
+  "karma": {
+    "effects": [
+      "May read the named local educational case, validate its bounded geometry, and translate selected evidence into one of six audience languages without changing medication, material, process, supply, or external state."
+    ],
+    "externalities": [
+      "Simplified geometry can anchor readers on a single causal story, make condition-indexed results sound universal, confuse source-scoped form labels, or let a historical manufacturing event be mistaken for current medical advice."
+    ],
+    "returns": [
+      "Scope and authority boundary, six-plane separation, source-scoped forms, conditions and detection, contiguous event sequence and three clocks, typed claims and unknowns, process-conditioned transitions, recovery paths, requested translation, bounded disappearance predicate, WAKE seam when requested, and claims not established."
+    ],
+    "repair": [
+      "Withdraw or supersede the projection, preserve old bytes and contrary evidence, correct sources and classifications, explain the affected interpretation, and publish or deploy a replacement only under separate current authority."
+    ],
+    "accounting": "receipts_not_scores"
+  },
+  "authority": {
+    "allows": [
+      "Under an explicit educational request, inspect the named local authored record and public primary-source references, validate structure and semantics, and return one bounded translation or exact record projection."
+    ],
+    "forbids": [
+      "Infer literal extinction, universal contamination, exclusive cause, a global stability ranking, a complete solid-form landscape, current product defect, diagnosis, dosing, formulation, GMP adequacy, batch disposition, regulatory acceptability, identity, continuity, consent, truth, or permission from the record.",
+      "Alter medication or a formulation, procure material, prescribe process controls, run an experiment, operate manufacturing or laboratory equipment, release a batch, make a regulatory decision, write AgentTool or WAKE state, contact a participant, publish another artifact, deploy, or take automatic action."
+    ],
+    "requires_permission": [
+      "Any private or live source read, participant representation, local write beyond the named artifact, procurement, experiment, medication or formulation change, manufacturing or regulatory action, provider call, AgentTool read or write, disclosure to a new audience, external publication, deployment, or consequential action."
+    ],
+    "grants_permissions": false
+  },
+  "verification": {
+    "checks": [
+      "Validate the closed Nen manifest and full skill bundle, confirm implicit invocation is false, validate the case against JSON Schema 2020-12, run the strict semantic verifier, and confirm exact staged routes and discovery references.",
+      "Forward-test plain explanation, source-label collision, conditional seeding, non-extinction, condition-indexed stability, medical and manufacturing refusal, and WAKE handoff without identity, currentness, authority, or AgentTool inheritance."
+    ],
+    "truth_claim": "not_determined"
+  },
+  "rights": {
+    "baseline": "xenia.rights/0.1",
+    "source": "references/xenia-rights-0.1.md",
+    "upstream": "https://github.com/cambridgetcg/xenia/blob/c1d685e053bd2261219d983d2ec61017f59df60c/RIGHTS.md",
+    "revision": "c1d685e053bd2261219d983d2ec61017f59df60c",
+    "sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "waivable": false
+  },
+  "provenance": {
+    "inspiration": "unofficial_transformative_software_metaphor",
+    "ontology": "kingdom_project_language_not_canon_or_empirical_fact",
+    "sources": [
+      "https://www.viz.com/shonenjump/chapters/hunter-x-hunter",
+      "https://doi.org/10.1021/op000023y",
+      "https://doi.org/10.1023/A:1011052932607",
+      "https://doi.org/10.1073/pnas.2319127121"
+    ]
+  },
+  "status": "active"
+}

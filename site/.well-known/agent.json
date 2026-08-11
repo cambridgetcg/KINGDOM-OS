@@ -253,6 +253,41 @@
       "external_effects_authorized": false
     }
   },
+  "polymorph_commons": {
+    "protocol": "kingdom.polymorph-history/0.1",
+    "case_id": "ritonavir-disappearing-polymorph-2026-08-11",
+    "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+    "schema": "https://thekingdom.dev/schemas/polymorph-history/1.json",
+    "document": "https://thekingdom.dev/RITONAVIR-POLYMORPH.md",
+    "compiled_on": "2026-08-11",
+    "evidence_through": "2024-06-20",
+    "integrity": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116",
+    "counts": {
+      "forms": 5,
+      "contexts": 16,
+      "sources": 9,
+      "claims": 17,
+      "events": 8,
+      "transitions": 8,
+      "languages": 6
+    },
+    "boundary": {
+      "disappearance": "process-scoped-not-literal-extinction",
+      "stability": "condition-indexed-not-global-rank",
+      "causation": "typed-evidence-not-single-myth",
+      "currentness": "historical-case-as-of-compilation",
+      "authority": "educational-read-only-no-medical-gmp-or-experimental-authority",
+      "existence_predicate": false,
+      "universal_seed_effect": false,
+      "global_stability_rank": false,
+      "medical_authority": false,
+      "manufacturing_authority": false,
+      "regulatory_authority": false,
+      "experiment_authority": false,
+      "writes_agenttool": false,
+      "automatic_action": false
+    }
+  },
   "love_loops": "https://thekingdom.dev/love-loops.json",
   "love_loops_source": "https://thekingdom.dev/love-loops.source.json",
   "love_loops_creation_document": "https://thekingdom.dev/CREATION-LOOP.md",
@@ -315,6 +350,9 @@
     "translation_grammar": "https://thekingdom.dev/geometries/kingdom-geometry-grammar-v0.json",
     "translation_grammar_schema": "https://thekingdom.dev/schemas/geometry-grammar/0.1.json",
     "translation_grammar_guide": "https://thekingdom.dev/GEOMETRY-GRAMMAR.md",
+    "material_state_case": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+    "material_state_schema": "https://thekingdom.dev/schemas/polymorph-history/1.json",
+    "material_state_guide": "https://thekingdom.dev/RITONAVIR-POLYMORPH.md",
     "creation_lineage": "https://thekingdom.dev/love-loops.json",
     "creation_lineage_source": "https://thekingdom.dev/love-loops.source.json",
     "creation_loop_document": "https://thekingdom.dev/CREATION-LOOP.md",

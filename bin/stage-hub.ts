@@ -31,12 +31,16 @@ export const HUB_ASSETS = [
   { source: "data/principalities/moonshot-hf-npm.v1.json", destination: "principalities/moonshot-hf-npm-2026-08-11.json" },
   { source: "schemas/principality-catalog-v1.schema.json", destination: "schemas/principality-catalog/1.json" },
   { source: "references/principality-commons.md", destination: "PRINCIPALITY-COMMONS.md" },
-  // Stage all three authored resources directly. The grammar and schema use
-  // versioned routes; the guide remains the stable human entry point. The
-  // grammar digest covers only the grammar JSON, not the schema or guide.
+  // Stage all three authored Geometry Grammar resources directly. The record
+  // and schema use versioned routes; the guide is its stable human entry.
   { source: "data/geometries/kingdom-geometry-grammar.v0.json", destination: "geometries/kingdom-geometry-grammar-v0.json" },
   { source: "schemas/geometry-grammar-v0.schema.json", destination: "schemas/geometry-grammar/0.1.json" },
   { source: "references/geometry-grammar.md", destination: "GEOMETRY-GRAMMAR.md" },
+  // Historical material-state evidence is likewise staged from authored,
+  // digest-bound files. There is deliberately no mutable latest alias.
+  { source: "data/polymorphs/ritonavir-disappearing-polymorph.v1.json", destination: "polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json" },
+  { source: "schemas/polymorph-history-v1.schema.json", destination: "schemas/polymorph-history/1.json" },
+  { source: "references/ritonavir-polymorph.md", destination: "RITONAVIR-POLYMORPH.md" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
   { source: "site/ollama.json", destination: "ollama.json" },
