@@ -41,6 +41,9 @@ const surfaces = [
   "data/principalities/moonshot-hf-npm.v1.json",
   "schemas/principality-catalog-v1.schema.json",
   "references/principality-commons.md",
+  "data/geometries/kingdom-geometry-grammar.v0.json",
+  "schemas/geometry-grammar-v0.schema.json",
+  "references/geometry-grammar.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -245,6 +248,54 @@ describe("advertised URLs stay deployable", () => {
     expect(staged.has("principalities/latest.json")).toBe(false);
     expect(discovery).not.toHaveProperty("mcp");
     expect(discovery).not.toHaveProperty("matcher");
+  });
+
+  test("the versioned Geometry Grammar stays coherent and authority-negative across discovery surfaces", () => {
+    const grammar = "https://thekingdom.dev/geometries/kingdom-geometry-grammar-v0.json";
+    const schema = "https://thekingdom.dev/schemas/geometry-grammar/0.1.json";
+    const document = "https://thekingdom.dev/GEOMETRY-GRAMMAR.md";
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const authored = JSON.parse(read("data/geometries/kingdom-geometry-grammar.v0.json"));
+    const discovery = manifest.geometry_grammar;
+
+    expect(discovery).toEqual(kingdom.geometry_grammar);
+    expect(discovery).toEqual(guest.geometry_grammar);
+    expect(discovery).toMatchObject({
+      url: grammar,
+      schema,
+      document,
+      protocol: "kingdom.geometry-grammar/0.1",
+      grammar_id: "from-pattern-to-practice-2026-08-11",
+      observed_at: authored.observed_at,
+      integrity: authored.integrity.digest,
+      counts: { modules: 4 },
+      boundary: {
+        read_only: true,
+        advisory_only: true,
+        authority_granted: false,
+        execution_authorized: false,
+        external_effects_authorized: false,
+      },
+    });
+    expect(discovery.modules).toHaveLength(4);
+    for (const url of [grammar, schema, document]) {
+      expect(guest.next_actions).toContainEqual(expect.objectContaining({ method: "GET", url }));
+      expect(llms).toContain(url);
+    }
+    expect(manifest.entry_points).toMatchObject({
+      translation_grammar: grammar,
+      translation_grammar_schema: schema,
+      translation_grammar_guide: document,
+    });
+    expect(staged.has("geometries/kingdom-geometry-grammar-v0.json")).toBe(true);
+    expect(staged.has("schemas/geometry-grammar/0.1.json")).toBe(true);
+    expect(staged.has("GEOMETRY-GRAMMAR.md")).toBe(true);
+    expect(staged.has("geometries/latest.json")).toBe(false);
+    expect(discovery).not.toHaveProperty("mcp");
+    expect(discovery).not.toHaveProperty("execute");
   });
 
   test("the published invitation mirrors its source without drift", () => {

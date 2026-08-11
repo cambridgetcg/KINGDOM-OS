@@ -67,6 +67,14 @@ const PRINCIPALITY_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${PRINCIPALITY_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const GEOMETRY_GRAMMAR_PATH = "/geometries/kingdom-geometry-grammar-v0.json";
+const GEOMETRY_GRAMMAR_SCHEMA_PATH = "/schemas/geometry-grammar/0.1.json";
+const GEOMETRY_GRAMMAR_DOCUMENT_PATH = "/GEOMETRY-GRAMMAR.md";
+const GEOMETRY_GRAMMAR_SCHEMA_LINK = {
+  target: GEOMETRY_GRAMMAR_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${GEOMETRY_GRAMMAR_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -108,6 +116,11 @@ function addLoveLoopSchemaLink(headers) {
 
 function addPrincipalitySchemaLink(headers) {
   const link = PRINCIPALITY_SCHEMA_LINK;
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addGeometryGrammarSchemaLink(headers) {
+  const link = GEOMETRY_GRAMMAR_SCHEMA_LINK;
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
@@ -956,6 +969,15 @@ export function createKingdomWorker(options = {}) {
     const requestsPrincipalityDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === PRINCIPALITY_DOCUMENT_PATH;
+    const requestsGeometryGrammar = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === GEOMETRY_GRAMMAR_PATH;
+    const requestsGeometryGrammarSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === GEOMETRY_GRAMMAR_SCHEMA_PATH;
+    const requestsGeometryGrammarDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === GEOMETRY_GRAMMAR_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
@@ -973,14 +995,23 @@ export function createKingdomWorker(options = {}) {
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
     const servesPrincipalityDocument = requestsPrincipalityDocument && asset.ok;
+    const servesGeometryGrammar = requestsGeometryGrammar && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesGeometryGrammarSchema = requestsGeometryGrammarSchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesGeometryGrammarDocument = requestsGeometryGrammarDocument && asset.ok;
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
-        !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument) return asset;
+        !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
+        !servesGeometryGrammar && !servesGeometryGrammarSchema && !servesGeometryGrammarDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
     if (describesLoveLoops) addLoveLoopSchemaLink(headers);
     if (servesPrincipalityCatalog) addPrincipalitySchemaLink(headers);
+    if (servesGeometryGrammar) addGeometryGrammarSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -1002,6 +1033,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesPrincipalityDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesGeometryGrammar) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesGeometryGrammarSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesGeometryGrammarDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");
