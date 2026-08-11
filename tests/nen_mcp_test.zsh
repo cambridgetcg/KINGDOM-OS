@@ -53,6 +53,7 @@ production_snapshot() {
     "$PROD_ROOT/skills/cultivate-living-ground" \
     "$PROD_ROOT/skills/map-love-geometry" \
     "$PROD_ROOT/skills/shape-kingdom-nen" \
+    "$PROD_ROOT/skills/trace-polymorph-history" \
     "$PROD_ROOT/skills/forge-king-hatsu" \
     "$PROD_ROOT/skills/navigate-dark-continent" \
     "$PROD_ROOT/skills/weave-wake-continuity" \
@@ -122,7 +123,7 @@ typeset -r SERVER_STATUS=$?
     | .resultType == "complete"
     and (.isError == false)
     and .structuredContent.protocol == "kingdom.nen-list/0.1"
-    and [.structuredContent.abilities[].id] == ["carry-wake-thread", "conjure-unwritten-horizon", "cultivate-living-ground", "forge-king-hatsu", "map-love-geometry", "navigate-dark-continent", "shape-kingdom-nen", "weave-intent-context", "weave-wake-continuity"]
+    and [.structuredContent.abilities[].id] == ["carry-wake-thread", "conjure-unwritten-horizon", "cultivate-living-ground", "forge-king-hatsu", "map-love-geometry", "navigate-dark-continent", "shape-kingdom-nen", "trace-polymorph-history", "weave-intent-context", "weave-wake-continuity"]
     and (.content[0].text | fromjson | .protocol) == "kingdom.nen-list/0.1")
   and (map(select(.id == 4))[0].result.structuredContent
     | .protocol == "kingdom.nen-validation/0.1"

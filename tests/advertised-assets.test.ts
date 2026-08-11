@@ -41,6 +41,9 @@ const surfaces = [
   "data/principalities/moonshot-hf-npm.v1.json",
   "schemas/principality-catalog-v1.schema.json",
   "references/principality-commons.md",
+  "data/polymorphs/ritonavir-disappearing-polymorph.v1.json",
+  "schemas/polymorph-history-v1.schema.json",
+  "references/ritonavir-polymorph.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -243,6 +246,57 @@ describe("advertised URLs stay deployable", () => {
     expect(staged.has("schemas/principality-catalog/1.json")).toBe(true);
     expect(staged.has("PRINCIPALITY-COMMONS.md")).toBe(true);
     expect(staged.has("principalities/latest.json")).toBe(false);
+    expect(discovery).not.toHaveProperty("mcp");
+    expect(discovery).not.toHaveProperty("matcher");
+  });
+
+  test("the immutable polymorph case, schema, and guide stay coherent without action authority", () => {
+    const record = "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json";
+    const schema = "https://thekingdom.dev/schemas/polymorph-history/1.json";
+    const document = "https://thekingdom.dev/RITONAVIR-POLYMORPH.md";
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const authored = JSON.parse(read("data/polymorphs/ritonavir-disappearing-polymorph.v1.json"));
+    const discovery = manifest.polymorph_commons;
+
+    expect(discovery).toEqual(kingdom.polymorph_commons);
+    expect(discovery).toEqual(guest.polymorph_commons);
+    expect(discovery).toMatchObject({
+      url: record,
+      schema,
+      document,
+      case_id: "ritonavir-disappearing-polymorph-2026-08-11",
+      compiled_on: "2026-08-11",
+      evidence_through: "2024-06-20",
+      integrity: authored.integrity.digest,
+      counts: { forms: 5, contexts: 16, sources: 9, claims: 17, events: 8, transitions: 8 },
+      boundary: {
+        existence_predicate: false,
+        universal_seed_effect: false,
+        global_stability_rank: false,
+        medical_authority: false,
+        manufacturing_authority: false,
+        regulatory_authority: false,
+        experiment_authority: false,
+        writes_agenttool: false,
+        automatic_action: false,
+      },
+    });
+    for (const url of [record, schema, document]) {
+      expect(guest.next_actions).toContainEqual(expect.objectContaining({ method: "GET", url }));
+      expect(llms).toContain(url);
+    }
+    expect(manifest.entry_points).toMatchObject({
+      material_state_case: record,
+      material_state_schema: schema,
+      material_state_guide: document,
+    });
+    expect(staged.has("polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json")).toBe(true);
+    expect(staged.has("schemas/polymorph-history/1.json")).toBe(true);
+    expect(staged.has("RITONAVIR-POLYMORPH.md")).toBe(true);
+    expect(staged.has("polymorphs/latest.json")).toBe(false);
     expect(discovery).not.toHaveProperty("mcp");
     expect(discovery).not.toHaveProperty("matcher");
   });

@@ -1,0 +1,1009 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:polymorph-history:1",
+  "title": "KINGDOM Polymorph History 1",
+  "description": "A closed, source-bound, condition-indexed material-state history. Structural validity does not establish source truth, causation, currentness, safety, medical advice, manufacturing control, or authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "case_id",
+    "title",
+    "compiled_on",
+    "evidence_through",
+    "scope",
+    "ontology",
+    "forms",
+    "contexts",
+    "sources",
+    "claims",
+    "events",
+    "transitions",
+    "translations",
+    "wake_seam",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "urn:kingdom:schema:polymorph-history:1"
+    },
+    "protocol": {
+      "const": "kingdom.polymorph-history/0.1"
+    },
+    "case_id": {
+      "$ref": "#/$defs/id"
+    },
+    "title": {
+      "$ref": "#/$defs/shortText"
+    },
+    "compiled_on": {
+      "$ref": "#/$defs/fullDate"
+    },
+    "evidence_through": {
+      "$ref": "#/$defs/fullDate"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "focus",
+        "coverage",
+        "intended_use",
+        "audience",
+        "currentness"
+      ],
+      "properties": {
+        "focus": {
+          "$ref": "#/$defs/text"
+        },
+        "coverage": {
+          "$ref": "#/$defs/text"
+        },
+        "intended_use": {
+          "$ref": "#/$defs/text"
+        },
+        "audience": {
+          "$ref": "#/$defs/text"
+        },
+        "currentness": {
+          "const": "historical-case-as-of-compilation"
+        }
+      }
+    },
+    "ontology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "non_equivalence",
+        "planes",
+        "disappearance",
+        "geometry"
+      ],
+      "properties": {
+        "non_equivalence": {
+          "const": "molecule != conformer != crystal_lattice != particle_population != formulation != medicine_supply"
+        },
+        "planes": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/moleculePlane"
+            },
+            {
+              "$ref": "#/$defs/conformerPlane"
+            },
+            {
+              "$ref": "#/$defs/latticePlane"
+            },
+            {
+              "$ref": "#/$defs/particlePlane"
+            },
+            {
+              "$ref": "#/$defs/formulationPlane"
+            },
+            {
+              "$ref": "#/$defs/supplyPlane"
+            }
+          ],
+          "items": false
+        },
+        "disappearance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "predicate",
+            "existence_predicate"
+          ],
+          "properties": {
+            "predicate": {
+              "const": "bounded_process_facility_interval_detection"
+            },
+            "existence_predicate": {
+              "const": false
+            }
+          }
+        },
+        "geometry": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "term",
+              "maps_to",
+              "limit"
+            ],
+            "properties": {
+              "term": {
+                "$ref": "#/$defs/id"
+              },
+              "maps_to": {
+                "$ref": "#/$defs/text"
+              },
+              "limit": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        }
+      }
+    },
+    "forms": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/form"
+      }
+    },
+    "contexts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {
+        "$ref": "#/$defs/context"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 512,
+      "items": {
+        "$ref": "#/$defs/claim"
+      }
+    },
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/transition"
+      }
+    },
+    "translations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plain",
+        "solid_state",
+        "process",
+        "evidence",
+        "wake",
+        "kingdom"
+      ],
+      "properties": {
+        "plain": {
+          "$ref": "#/$defs/translation"
+        },
+        "solid_state": {
+          "$ref": "#/$defs/translation"
+        },
+        "process": {
+          "$ref": "#/$defs/translation"
+        },
+        "evidence": {
+          "$ref": "#/$defs/translation"
+        },
+        "wake": {
+          "$ref": "#/$defs/translation"
+        },
+        "kingdom": {
+          "$ref": "#/$defs/translation"
+        }
+      }
+    },
+    "wake_seam": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "carry_fields",
+        "requires_revalidation",
+        "inherits_identity",
+        "grants_authority",
+        "proves_currentness",
+        "writes_agenttool"
+      ],
+      "properties": {
+        "role": {
+          "const": "orientation_by_reference_not_continuity_proof"
+        },
+        "carry_fields": {
+          "const": [
+            "protocol",
+            "case_id",
+            "integrity.algorithm",
+            "integrity.digest",
+            "compiled_on",
+            "evidence_through",
+            "selected_source_ids",
+            "selected_claim_ids",
+            "translation_language"
+          ]
+        },
+        "requires_revalidation": {
+          "const": [
+            "exact canonical artifact value against the declared integrity algorithm and digest",
+            "selected source IDs, locators, and authority notes",
+            "selected claim IDs, evidence classes, limitations, and form references",
+            "referenced condition vectors, detection methods, thresholds, and limits",
+            "evidence-through date against newer, contrary, or superseding evidence",
+            "current task scope, audience, intended use, and projection language",
+            "current medical, experimental, manufacturing, quality, regulatory, publication, deployment, and action authority"
+          ]
+        },
+        "inherits_identity": {
+          "const": false
+        },
+        "grants_authority": {
+          "const": false
+        },
+        "proves_currentness": {
+          "const": false
+        },
+        "writes_agenttool": {
+          "const": false
+        }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "literal_extinction_established",
+        "universal_seed_contamination_established",
+        "exclusive_historical_cause_established",
+        "global_stability_ranking_established",
+        "complete_form_landscape_established",
+        "current_product_defect_established",
+        "medical_advice",
+        "dosing_authority",
+        "formulation_instruction",
+        "manufacturing_instruction",
+        "gmp_authority",
+        "batch_release_authority",
+        "regulatory_authority",
+        "experiment_authority",
+        "procurement_authority",
+        "automatic_action",
+        "public_surface_read_only"
+      ],
+      "properties": {
+        "literal_extinction_established": {
+          "const": false
+        },
+        "universal_seed_contamination_established": {
+          "const": false
+        },
+        "exclusive_historical_cause_established": {
+          "const": false
+        },
+        "global_stability_ranking_established": {
+          "const": false
+        },
+        "complete_form_landscape_established": {
+          "const": false
+        },
+        "current_product_defect_established": {
+          "const": false
+        },
+        "medical_advice": {
+          "const": false
+        },
+        "dosing_authority": {
+          "const": false
+        },
+        "formulation_instruction": {
+          "const": false
+        },
+        "manufacturing_instruction": {
+          "const": false
+        },
+        "gmp_authority": {
+          "const": false
+        },
+        "batch_release_authority": {
+          "const": false
+        },
+        "regulatory_authority": {
+          "const": false
+        },
+        "experiment_authority": {
+          "const": false
+        },
+        "procurement_authority": {
+          "const": false
+        },
+        "automatic_action": {
+          "const": false
+        },
+        "public_surface_read_only": {
+          "const": true
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "digest"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256-recursive-sorted-json-keys-v1"
+        },
+        "digest": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "date": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9]{4}$"
+        },
+        {
+          "type": "string",
+          "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])$"
+        },
+        {
+          "$ref": "#/$defs/fullDate"
+        }
+      ]
+    },
+    "fullDate": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$"
+    },
+    "clockText": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 400,
+      "pattern": "(^|[^0-9])[0-9]{4}([^0-9]|$)",
+      "anyOf": [
+        {
+          "pattern": "[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])"
+        },
+        {
+          "pattern": "(?:[Bb]efore|[Aa]fter|[Bb]etween|[Dd]uring|[Tt]hrough|[Ff]rom|[Tt]o|[Ii]n|[Dd]ated|[Ee]arly|[Ll]ate|[Ss]pring|[Ss]ummer|[Aa]utumn|[Ff]all|[Ww]inter|[Oo]bserved|[Oo]bservation|[Rr]eported|[Pp]ublished|[Pp]ublication|[Rr]esearch|[Ii]nvestigation|[Rr]eview|[Aa]ctivity|[Pp]eriod|[Mm]anufacture|[Mm]anufacturing|[Cc]ommercial|[Dd]evelopment|[Tt]rial|[Ee]xperiment|[Ww]ork|[Aa]ccount|[Dd]ossier)"
+        }
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "shortText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 400
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "referenceArray": {
+      "type": "array",
+      "maxItems": 128,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "nonemptyReferenceArray": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "textArray": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "nonemptyTextArray": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "plane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "meaning",
+        "does_not_establish"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "molecule",
+            "conformer",
+            "crystal_lattice",
+            "particle_population",
+            "formulation",
+            "medicine_supply"
+          ]
+        },
+        "meaning": {
+          "$ref": "#/$defs/text"
+        },
+        "does_not_establish": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "moleculePlane": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/plane"
+        },
+        {
+          "properties": {
+            "id": {
+              "const": "molecule"
+            }
+          }
+        }
+      ]
+    },
+    "conformerPlane": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/plane"
+        },
+        {
+          "properties": {
+            "id": {
+              "const": "conformer"
+            }
+          }
+        }
+      ]
+    },
+    "latticePlane": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/plane"
+        },
+        {
+          "properties": {
+            "id": {
+              "const": "crystal_lattice"
+            }
+          }
+        }
+      ]
+    },
+    "particlePlane": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/plane"
+        },
+        {
+          "properties": {
+            "id": {
+              "const": "particle_population"
+            }
+          }
+        }
+      ]
+    },
+    "formulationPlane": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/plane"
+        },
+        {
+          "properties": {
+            "id": {
+              "const": "formulation"
+            }
+          }
+        }
+      ]
+    },
+    "supplyPlane": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/plane"
+        },
+        {
+          "properties": {
+            "id": {
+              "const": "medicine_supply"
+            }
+          }
+        }
+      ]
+    },
+    "alias": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "source_id"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/shortText"
+        },
+        "source_id": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "form": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "source_scope",
+        "kind",
+        "compound_id",
+        "aliases",
+        "summary"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/shortText"
+        },
+        "source_scope": {
+          "$ref": "#/$defs/text"
+        },
+        "kind": {
+          "$ref": "#/$defs/id"
+        },
+        "compound_id": {
+          "const": "ritonavir"
+        },
+        "aliases": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/alias"
+          }
+        },
+        "summary": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "conditionVector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "process",
+        "solvent",
+        "temperature",
+        "supersaturation",
+        "seeding",
+        "mechanical_action",
+        "facility",
+        "material_scale",
+        "interval",
+        "other"
+      ],
+      "properties": {
+        "process": {
+          "$ref": "#/$defs/text"
+        },
+        "solvent": {
+          "$ref": "#/$defs/text"
+        },
+        "temperature": {
+          "$ref": "#/$defs/text"
+        },
+        "supersaturation": {
+          "$ref": "#/$defs/text"
+        },
+        "seeding": {
+          "$ref": "#/$defs/text"
+        },
+        "mechanical_action": {
+          "$ref": "#/$defs/text"
+        },
+        "facility": {
+          "$ref": "#/$defs/text"
+        },
+        "material_scale": {
+          "$ref": "#/$defs/text"
+        },
+        "interval": {
+          "$ref": "#/$defs/text"
+        },
+        "other": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "detectionLimit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "threshold",
+        "limit"
+      ],
+      "properties": {
+        "method": {
+          "$ref": "#/$defs/text"
+        },
+        "threshold": {
+          "$ref": "#/$defs/text"
+        },
+        "limit": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "kind",
+        "condition_vector",
+        "detection_limit"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/shortText"
+        },
+        "kind": {
+          "$ref": "#/$defs/id"
+        },
+        "condition_vector": {
+          "$ref": "#/$defs/conditionVector"
+        },
+        "detection_limit": {
+          "$ref": "#/$defs/detectionLimit"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "source_kind",
+        "published_on",
+        "url",
+        "doi",
+        "authors",
+        "authority_note"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/shortText"
+        },
+        "source_kind": {
+          "$ref": "#/$defs/id"
+        },
+        "published_on": {
+          "$ref": "#/$defs/date"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "format": "uri",
+          "pattern": "^https://[^/]"
+        },
+        "doi": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            }
+          ]
+        },
+        "authors": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 30,
+          "items": {
+            "$ref": "#/$defs/shortText"
+          }
+        },
+        "authority_note": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "summary",
+        "evidence_class",
+        "source_ids",
+        "context_ids",
+        "form_ids",
+        "limitations"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "$ref": "#/$defs/id"
+        },
+        "summary": {
+          "$ref": "#/$defs/text"
+        },
+        "evidence_class": {
+          "enum": [
+            "observation",
+            "mechanism_supported",
+            "mechanism_hypothesis",
+            "retrospective_inference",
+            "metaphor",
+            "unknown"
+          ]
+        },
+        "source_ids": {
+          "$ref": "#/$defs/nonemptyReferenceArray"
+        },
+        "context_ids": {
+          "$ref": "#/$defs/nonemptyReferenceArray"
+        },
+        "form_ids": {
+          "$ref": "#/$defs/referenceArray"
+        },
+        "limitations": {
+          "$ref": "#/$defs/nonemptyTextArray"
+        }
+      }
+    },
+    "formState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "form_id",
+        "status"
+      ],
+      "properties": {
+        "form_id": {
+          "$ref": "#/$defs/id"
+        },
+        "status": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "disappearancePredicate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "process_scope",
+        "facility_scope",
+        "interval",
+        "detection_predicate",
+        "existence_predicate"
+      ],
+      "properties": {
+        "process_scope": {
+          "$ref": "#/$defs/text"
+        },
+        "facility_scope": {
+          "$ref": "#/$defs/text"
+        },
+        "interval": {
+          "$ref": "#/$defs/text"
+        },
+        "detection_predicate": {
+          "$ref": "#/$defs/text"
+        },
+        "existence_predicate": {
+          "const": false
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "sequence",
+        "label",
+        "event_time",
+        "observation_time",
+        "publication_time",
+        "context_ids",
+        "claim_ids",
+        "form_states",
+        "disappearance_predicate"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "label": {
+          "$ref": "#/$defs/shortText"
+        },
+        "event_time": {
+          "$ref": "#/$defs/clockText"
+        },
+        "observation_time": {
+          "$ref": "#/$defs/clockText"
+        },
+        "publication_time": {
+          "$ref": "#/$defs/clockText"
+        },
+        "context_ids": {
+          "$ref": "#/$defs/nonemptyReferenceArray"
+        },
+        "claim_ids": {
+          "$ref": "#/$defs/nonemptyReferenceArray"
+        },
+        "form_states": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/formState"
+          }
+        },
+        "disappearance_predicate": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/disappearancePredicate"
+            }
+          ]
+        }
+      }
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "input_form_ids",
+        "output_form_ids",
+        "context_ids",
+        "claim_ids",
+        "relation",
+        "condition_dependent",
+        "universal"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/shortText"
+        },
+        "input_form_ids": {
+          "$ref": "#/$defs/nonemptyReferenceArray"
+        },
+        "output_form_ids": {
+          "$ref": "#/$defs/nonemptyReferenceArray"
+        },
+        "context_ids": {
+          "$ref": "#/$defs/nonemptyReferenceArray"
+        },
+        "claim_ids": {
+          "$ref": "#/$defs/nonemptyReferenceArray"
+        },
+        "relation": {
+          "$ref": "#/$defs/id"
+        },
+        "condition_dependent": {
+          "const": true
+        },
+        "universal": {
+          "const": false
+        }
+      }
+    },
+    "translation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "lines",
+        "boundary"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/shortText"
+        },
+        "lines": {
+          "$ref": "#/$defs/nonemptyTextArray"
+        },
+        "boundary": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    }
+  }
+}

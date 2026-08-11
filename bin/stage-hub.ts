@@ -31,6 +31,11 @@ export const HUB_ASSETS = [
   { source: "data/principalities/moonshot-hf-npm.v1.json", destination: "principalities/moonshot-hf-npm-2026-08-11.json" },
   { source: "schemas/principality-catalog-v1.schema.json", destination: "schemas/principality-catalog/1.json" },
   { source: "references/principality-commons.md", destination: "PRINCIPALITY-COMMONS.md" },
+  // Historical material-state evidence is likewise staged from authored,
+  // digest-bound files. There is deliberately no mutable latest alias.
+  { source: "data/polymorphs/ritonavir-disappearing-polymorph.v1.json", destination: "polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json" },
+  { source: "schemas/polymorph-history-v1.schema.json", destination: "schemas/polymorph-history/1.json" },
+  { source: "references/ritonavir-polymorph.md", destination: "RITONAVIR-POLYMORPH.md" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
   { source: "site/ollama.json", destination: "ollama.json" },

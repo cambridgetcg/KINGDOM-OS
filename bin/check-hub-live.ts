@@ -31,6 +31,13 @@ import {
   principalityPublicDiscovery,
 } from "./principality.ts";
 import {
+  loadPolymorphHistory,
+  POLYMORPH_CASE_URL,
+  POLYMORPH_DOCUMENT_URL,
+  POLYMORPH_SCHEMA_URL,
+  polymorphPublicDiscovery,
+} from "./polymorph.ts";
+import {
   validateWorldCommons,
   WORLD_COMMONS_ACCESS_COSTS,
   WORLD_COMMONS_ACCOUNT_TYPES,
@@ -62,6 +69,9 @@ const loveLoopsSchemaPath = new URL(LOVE_LOOPS_JSON_SCHEMA_URL).pathname;
 const principalityCatalogPath = new URL(PRINCIPALITY_CATALOG_URL).pathname;
 const principalitySchemaPath = new URL(PRINCIPALITY_SCHEMA_URL).pathname;
 const principalityDocumentPath = new URL(PRINCIPALITY_DOCUMENT_URL).pathname;
+const polymorphCasePath = new URL(POLYMORPH_CASE_URL).pathname;
+const polymorphSchemaPath = new URL(POLYMORPH_SCHEMA_URL).pathname;
+const polymorphDocumentPath = new URL(POLYMORPH_DOCUMENT_URL).pathname;
 
 function url(path: string, extra: Record<string, string> = {}): URL {
   const target = new URL(path, origin);
@@ -242,7 +252,33 @@ try {
     throw new Error(`${principalityDocumentPath} is not served as public Markdown`);
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath]) {
+  const polymorphHead = await fetch(url(polymorphCasePath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  const polymorphLink = polymorphHead.headers.get("link") || "";
+  if (!polymorphHead.ok ||
+      !(polymorphHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+      polymorphHead.headers.get("access-control-allow-origin") !== "*" ||
+      (polymorphHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+      !hasLinkRelation(polymorphLink, polymorphSchemaPath, "describedby")) {
+    throw new Error(`${polymorphCasePath} is not public JSON described by the Polymorph History schema`);
+  }
+
+  const polymorphDocumentHead = await fetch(url(polymorphDocumentPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  if (!polymorphDocumentHead.ok ||
+      !(polymorphDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+      polymorphDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+      (polymorphDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+    throw new Error(`${polymorphDocumentPath} is not served as public Markdown`);
+  }
+
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, polymorphSchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -262,6 +298,8 @@ try {
   const llms = readFileSync(join(ROOT, "site/llms.txt"), "utf8");
   const principalityCatalog = loadPrincipalityCatalog();
   const expectedPrincipality = principalityPublicDiscovery(principalityCatalog);
+  const polymorphHistory = loadPolymorphHistory();
+  const expectedPolymorph = polymorphPublicDiscovery(polymorphHistory);
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
   validateLoveLoops(sourceLoveLoops, false);
@@ -316,6 +354,29 @@ try {
     throw new Error("Principality discovery or negative authority drifted across public surfaces");
   }
 
+  const polymorphBoundary = expectedPolymorph.boundary;
+  if (!isDeepStrictEqual(manifest?.polymorph_commons, expectedPolymorph) ||
+      !isDeepStrictEqual(guest?.polymorph_commons, expectedPolymorph) ||
+      !isDeepStrictEqual(authoredKingdom?.polymorph_commons, expectedPolymorph) ||
+      !hasGuestGet(POLYMORPH_CASE_URL) ||
+      !hasGuestGet(POLYMORPH_SCHEMA_URL) ||
+      !hasGuestGet(POLYMORPH_DOCUMENT_URL) ||
+      !llms.includes(POLYMORPH_CASE_URL) ||
+      !llms.includes(POLYMORPH_SCHEMA_URL) ||
+      !llms.includes(POLYMORPH_DOCUMENT_URL) ||
+      polymorphBoundary.existence_predicate !== false ||
+      polymorphBoundary.universal_seed_effect !== false ||
+      polymorphBoundary.global_stability_rank !== false ||
+      polymorphBoundary.medical_authority !== false ||
+      polymorphBoundary.manufacturing_authority !== false ||
+      polymorphBoundary.regulatory_authority !== false ||
+      polymorphBoundary.experiment_authority !== false ||
+      polymorphBoundary.writes_agenttool !== false ||
+      polymorphBoundary.automatic_action !== false ||
+      "mcp" in expectedPolymorph || "matcher" in expectedPolymorph) {
+    throw new Error("Polymorph History discovery or negative authority drifted across public surfaces");
+  }
+
   const liveKingdom: any = await (await get("/kingdom.json")).json();
   if (liveKingdom?.creation_loop?.url !== LOVE_LOOPS_URL ||
       liveKingdom?.creation_loop?.source !== LOVE_LOOPS_SOURCE_URL ||
@@ -325,6 +386,9 @@ try {
   }
   if (!isDeepStrictEqual(liveKingdom?.principality_commons, expectedPrincipality)) {
     throw new Error("derived kingdom.json did not preserve Principality discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.polymorph_commons, expectedPolymorph)) {
+    throw new Error("derived kingdom.json did not preserve Polymorph History discovery");
   }
 
   const mcpEndpoint = new URL(manifest?.mcp?.endpoint || "");
@@ -385,7 +449,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality schemas · coherent creation + Principality discovery · live MCP contract · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Polymorph schemas · coherent creation + Principality + Polymorph discovery · live MCP contract · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;

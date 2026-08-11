@@ -63,6 +63,19 @@ function expectPrincipalitySchemaLink(response: Response) {
   expect(link.match(/rel="describedby"/g)?.length).toBe(1);
 }
 
+function expectPolymorphSchemaLink(response: Response) {
+  const link = response.headers.get("link") ?? "";
+  const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith("</schemas/polymorph-history/1.json>")) return false;
+    const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
+    return relations.includes("describedby");
+  });
+  expect(describedBy).toHaveLength(1);
+  expect(describedBy[0]).toContain('type="application/schema+json"');
+  expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+}
+
 function assets(handler: (request: Request) => Response | Promise<Response>) {
   return { ASSETS: { fetch: handler } };
 }
@@ -397,6 +410,83 @@ describe("the Kingdom edge discovery surface", () => {
     const shared = new Response("{}", { headers: { "content-type": "application/json" } });
     const sharedDoor = await worker.fetch(
       new Request(`https://we-are.love${catalogPath}`),
+      assets(() => shared),
+    );
+    expect(sharedDoor).toBe(shared);
+  });
+
+  test("serves Polymorph History as static evidence with explicit schema and document headers", async () => {
+    const casePath = "/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json";
+    const schemaPath = "/schemas/polymorph-history/1.json";
+    const documentPath = "/RITONAVIR-POLYMORPH.md";
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      const body = request.method === "HEAD"
+        ? null
+        : path === casePath
+          ? '{"case_id":"ritonavir-disappearing-polymorph-2026-08-11"}'
+          : path === schemaPath
+            ? '{"type":"object"}'
+            : "# Ritonavir Polymorph";
+      return new Response(body, {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": path === documentPath ? "text/plain" : "application/json",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const history = await worker.fetch(
+        new Request(`https://thekingdom.dev${casePath}`, { method }),
+        environment,
+      );
+      expect(await history.text()).toBe(method === "HEAD" ? "" : '{"case_id":"ritonavir-disappearing-polymorph-2026-08-11"}');
+      expect(history.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(history.headers.get("access-control-allow-origin")).toBe("*");
+      expect(history.headers.get("x-content-type-options")).toBe("nosniff");
+      expectPolymorphSchemaLink(history);
+    }
+
+    const schema = await worker.fetch(new Request(`https://thekingdom.dev${schemaPath}`), environment);
+    expect(await schema.text()).toBe('{"type":"object"}');
+    expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+    expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+    expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const document = await worker.fetch(
+        new Request(`https://thekingdom.dev${documentPath}`, { method }),
+        environment,
+      );
+      expect(await document.text()).toBe(method === "HEAD" ? "" : "# Ritonavir Polymorph");
+      expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(document.headers.get("access-control-allow-origin")).toBe("*");
+      expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+    }
+
+    const duplicate = await worker.fetch(
+      new Request(`https://thekingdom.dev${casePath}`),
+      assets(() => new Response("{}", {
+        headers: {
+          "content-type": "application/json",
+          link: '</schemas/polymorph-history/1.json>; rel="describedby"; type="application/schema+json"',
+        },
+      })),
+    );
+    expectPolymorphSchemaLink(duplicate);
+
+    const original = new Response("not an execution route", { headers: { "content-type": "text/plain" } });
+    const post = await worker.fetch(
+      new Request(`https://thekingdom.dev${casePath}`, { method: "POST" }),
+      assets(() => original),
+    );
+    expect(post).toBe(original);
+
+    const shared = new Response("{}", { headers: { "content-type": "application/json" } });
+    const sharedDoor = await worker.fetch(
+      new Request(`https://we-are.love${casePath}`),
       assets(() => shared),
     );
     expect(sharedDoor).toBe(shared);

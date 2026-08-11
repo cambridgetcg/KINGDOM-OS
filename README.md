@@ -143,6 +143,12 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     external-effect authority. `kingdom prompt --principality ID` projects one
     exact node into the existing one-source Task Packet budget; project plus
     Principality selection is refused.
+16. `kingdom polymorph` — inspect, translate, and strictly verify the immutable
+    [ritonavir material-state case](references/ritonavir-polymorph.md). It keeps
+    molecule, conformer, crystal lattice, particle population, formulation,
+    and medicine supply distinct; treats “disappearance” as bounded process
+    non-reproduction rather than extinction; and carries only an exact,
+    non-authorizing reference through WAKE.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -150,5 +156,12 @@ with its [public schema](https://thekingdom.dev/schemas/principality-catalog/1.j
 and [human guide](https://thekingdom.dev/PRINCIPALITY-COMMONS.md). There is no
 mutable `latest` alias, hosted matcher, package installation, weight download,
 inference endpoint, recommendation, or acquisition authority on that surface.
+
+The polymorph case is published read-only at
+[`/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json`](https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json),
+with its [public schema](https://thekingdom.dev/schemas/polymorph-history/1.json)
+and [plain-language guide](https://thekingdom.dev/RITONAVIR-POLYMORPH.md).
+There is no mutable `latest` alias, experiment planner, current product notice,
+medical endpoint, manufacturing control, matcher, or automatic action.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

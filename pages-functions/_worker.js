@@ -67,6 +67,14 @@ const PRINCIPALITY_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${PRINCIPALITY_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const POLYMORPH_CASE_PATH = "/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json";
+const POLYMORPH_SCHEMA_PATH = "/schemas/polymorph-history/1.json";
+const POLYMORPH_DOCUMENT_PATH = "/RITONAVIR-POLYMORPH.md";
+const POLYMORPH_SCHEMA_LINK = {
+  target: POLYMORPH_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${POLYMORPH_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -108,6 +116,11 @@ function addLoveLoopSchemaLink(headers) {
 
 function addPrincipalitySchemaLink(headers) {
   const link = PRINCIPALITY_SCHEMA_LINK;
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addPolymorphSchemaLink(headers) {
+  const link = POLYMORPH_SCHEMA_LINK;
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
@@ -956,6 +969,15 @@ export function createKingdomWorker(options = {}) {
     const requestsPrincipalityDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === PRINCIPALITY_DOCUMENT_PATH;
+    const requestsPolymorphCase = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === POLYMORPH_CASE_PATH;
+    const requestsPolymorphSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === POLYMORPH_SCHEMA_PATH;
+    const requestsPolymorphDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === POLYMORPH_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
@@ -973,14 +995,23 @@ export function createKingdomWorker(options = {}) {
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
     const servesPrincipalityDocument = requestsPrincipalityDocument && asset.ok;
+    const servesPolymorphCase = requestsPolymorphCase && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesPolymorphSchema = requestsPolymorphSchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesPolymorphDocument = requestsPolymorphDocument && asset.ok;
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
-        !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument) return asset;
+        !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
+        !servesPolymorphCase && !servesPolymorphSchema && !servesPolymorphDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
     if (describesLoveLoops) addLoveLoopSchemaLink(headers);
     if (servesPrincipalityCatalog) addPrincipalitySchemaLink(headers);
+    if (servesPolymorphCase) addPolymorphSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -1002,6 +1033,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesPrincipalityDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesPolymorphCase) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesPolymorphSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesPolymorphDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

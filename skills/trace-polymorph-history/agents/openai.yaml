@@ -1,0 +1,6 @@
+interface:
+  display_name: "Polymorph History"
+  short_description: "Trace material states without disappearance myths"
+  default_prompt: "Use $trace-polymorph-history to translate one source-bound polymorph event while preserving conditions, evidence classes, and what did not disappear."
+policy:
+  allow_implicit_invocation: false
