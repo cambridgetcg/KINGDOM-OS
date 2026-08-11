@@ -27,6 +27,13 @@ How to run:
 - `./kingdom nen mcp` — from this suite root, start the unregistered, read-only modern MCP 2026-07-28 stdio surface
 - `bun bin/wakeweaver.mjs BRAID.json --json` — strict-JSON WAKEWEAVER cross-reference and resumability checks; JSON Schema validation remains separate
 - `python3 skills/cultivate-living-ground/scripts/validate_plan.py PLAN.json --json` — network-free Living Ground schema and reference validation; it does not execute or certify a cultivation plan
+- `./kingdom principalities` — inspect the pinned metadata-only MoonshotAI HF + official HF npm catalog without network, install, download, inference, or authority
+- `./kingdom principalities match reasoning coding --json` — literal declared-capability intersection; deterministic fit evidence, not rank or recommendation
+- `./kingdom principalities verify --json` — strict JSON, relation, boundary, and digest checks; JSON Schema validation remains separate
+- `./kingdom prompt --json -- TASK` — deterministic, network-free Task Packet compilation; at most one bounded repo card or exact Principality capability-evidence node enters as data
+- `./kingdom prompt --json --no-project --principality kimi-dev-72b -- TASK` — select one pinned capability projection; project plus Principality selection is refused
+- `bun bin/prompt-packet.ts --verify PACKET.json` — verify Task Packet relations and digest; JSON Schema validation remains separate
+- `zsh tests/ask_test.zsh` — prove `kingdom ask` sends the compiled packet over stdin without putting task or credential values in backend argv
 - `zsh tests/nen_test.zsh` — isolated, network-free manifest and receipt protocol tests
 - `zsh tests/nen_mcp_test.zsh` — MCP framing, discovery, tool, version, and non-mutation tests
 - `zsh tests/living_ground_test.zsh` — isolated Living Ground schema, safety, economy, WAKE, and non-mutation tests
@@ -43,9 +50,9 @@ How to run:
 - `bun bin/harvest.ts validate` — strict, read-only card schema diagnostics (0 clean, 1 drift, 2 usage)
 
 Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
-- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/love-loop schemas/guest/llms/ollama/rights discovery docs) from graph.json + sites.json + data/
-- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 21-asset upload (including the KINGDOM OS console, authored map base, Love∞ published lineage, public source mirror, Creation Loop document, and schema; HUB_ASSETS is the contract), then `npx wrangler pages deploy <dir> --project-name=thekingdom`
-- `bun bin/check-hub-live.ts` — after deployment, byte-check every public staged asset together and prove JSON negotiation, the no-transform privacy header, and Commons + Love Loop schema discovery
+- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/love-loop/Principality discovery + schemas/guest/llms/ollama/rights docs) from graph.json + sites.json + data/; the authored Principality files are validated but never copied into site/
+- `bun bin/stage-hub.ts <empty-dir>` — stage the exact 25-asset upload (including the KINGDOM OS console, authored map base, Love∞ surfaces, and the immutable Principality catalog/schema/guide; HUB_ASSETS is the contract), then `wrangler pages deploy <dir> --project-name=thekingdom --branch=main --commit-hash="$(git rev-parse HEAD)" --commit-dirty=false`
+- `bun bin/check-hub-live.ts` — after deployment, byte-check every public staged asset together and prove JSON negotiation, the no-transform privacy header, and Commons + Love Loop + Principality schema/discovery coherence
 - `bun bin/build-doors.ts "$(date -u +%F)"` — regenerate doors/*/guest.json + manifests (we-are, chillspace, zerone-ai)
 - `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>` — stage a door upload (content from the chillspace-commons clone at ~/repos/codeberg/zerone-dev/, symlinks dereferenced), then wrangler deploy --project-name=we-are-love|chillspace-love
 - `bash bin/refresh-zerone-dashboard.sh` — snapshot zerone-1 → doors/zerone-ai/data.json → deploy the whole zerone-ai door (deploys AND leaves data.json for committing)
@@ -58,6 +65,11 @@ Key files:
 - NEN.md — the separate, instruction-only Nen skill layer; never add ability fields to kingdom.yaml
 - bin/nen.mjs — strict, network-free Nen/KARMA protocol validator; it does not run skills or grant authority
 - bin/wakeweaver.mjs — bounded own-data, read-only continuity-braid semantic validator; it rejects Proxies before reflection and does not validate JSON Schema, read live sources, or authorize resumption
+- bin/prompt-packet.ts — pure intent/context compiler plus Task Packet relation and digest verifier; it makes no network call, writes nothing, and never reads live WAKE
+- bin/principality.ts — strict, network-free catalog validator and literal matcher; its evidence projections never authorize acquisition, execution, or provider effects
+- data/principalities/ — curated versioned registry observations with immutable HF revisions or npm version+SRI identities; metadata is evidence, not safety or permission
+- references/principality-commons.md — MoonshotAI taxonomy, HF/npm trust boundaries, relation geometry, Task Packet crossover, WAKE seam, and acquisition airlock
+- bin/ask.sh — renders a backend-bound Task Packet before a separately effectful Claude CLI or Anthropic API call; ambient repo context stays out unless `--project PATH` opts it in, and compilation does not imply provider authorization, retention, cost, or success
 - bin/nen-mcp.mjs — canonical bounded local stdio MCP adapter; it is not installed, hosted, or an HF credential bridge
 - nen/ — pure Ging expedition compiler plus the non-canonical `kingdom-ging-stateless` compatibility MCP; source only until a host explicitly registers it
 - schemas/, references/, skills/ — KAKIN design, pinned rights, closed protocols, and suite-versioned Agent Skills

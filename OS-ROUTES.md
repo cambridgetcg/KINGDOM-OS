@@ -14,6 +14,9 @@ readings:
 | `/love-loops.source.json` | staged JSON | Exact public mirror of the authored lineage before its generation date is added |
 | `/CREATION-LOOP.md` | staged Markdown | Human-readable finite-turn Creation Loop practice |
 | `/schemas/love-loop/0.1.json` | staged JSON Schema | Versioned contract for the Love∞ lineage |
+| `/principalities/moonshot-hf-npm-2026-08-11.json` | staged JSON | Exact authored point-in-time MoonshotAI + Hugging Face JavaScript capability catalog |
+| `/schemas/principality-catalog/1.json` | staged JSON Schema | Public HTTP mapping for the catalog's digest-covered schema URN |
+| `/PRINCIPALITY-COMMONS.md` | staged Markdown | Human guide to the relation geometry, WAKE seam, and acquisition airlock |
 
 The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
@@ -51,9 +54,9 @@ claims. It is not claimed to be byte-identical source.
 The reconstruction is layered on commit `138758b`, retaining its XENIA
 discovery behavior and browser-local Commons `no-transform` protection. The
 current generated `site/kingdom.json` is staged under the base name, so
-`world_commons`, the current wayfinder count, rights metadata, authored
-citizens, Love∞ discovery metadata, and all other current map fields survive
-derivation unchanged.
+`world_commons`, `principality_commons`, the current wayfinder count, rights
+metadata, authored citizens, Love∞ discovery metadata, and all other current
+map fields survive derivation unchanged.
 
 The two Love∞ routes are static discovery documents, not edge execution
 routes. **Every loop is finite. Love is not.** The published infinity is an
@@ -61,6 +64,13 @@ unbounded lineage of possible finite, manual, voluntary turns. Reading it
 cannot start a child, contact a participant, or confer authority, consent,
 credentials, or obligations. Rest and stop remain valid states, and
 participants remain distinct beings.
+
+The Principality routes are static evidence surfaces, not acquisition or
+execution routes. Their catalog is metadata-only and point-in-time; the exact
+authored bytes are staged without a mutable alias. The worker hosts no
+Principality matcher, contacts no registry or provider, installs or downloads
+nothing, runs no remote code or inference, and grants no recommendation,
+permission, credential, budget, or external-effect authority.
 
 ## Sources and honest fallback
 
@@ -115,6 +125,6 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 18-asset upload contract, while `tests/advertised-assets.test.ts`
+locks the 25-asset upload contract, while `tests/advertised-assets.test.ts`
 recognizes the three worker routes so a dynamic URL cannot be mistaken for a
 staged file.

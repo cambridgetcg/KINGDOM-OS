@@ -126,5 +126,29 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     read-only MCP passage, Ging expeditions, WAKE continuity braids, and
     sustainable KARMA receipts over the pinned
     [`xenia.rights/0.1`](references/xenia-rights-0.1.md) floor.
+14. `kingdom prompt` — compile a deterministic, network-free Task Packet from
+    verbatim intent, one bounded repo card **or** one exact Principality
+    capability-evidence node, an operational posture, negative authority,
+    verification, and optional fresh WAKE reference. Prompt
+    research and the promotion boundary live with the
+    [`weave-intent-context`](skills/weave-intent-context/SKILL.md) skill.
+    `kingdom ask` binds that packet to its Claude transport and transmits no
+    ambient repository card unless `--project PATH` explicitly opts one in.
+15. `kingdom principalities` — inspect and literally match the checked-in,
+    metadata-only [Principality Commons](references/principality-commons.md):
+    all 19 MoonshotAI Hugging Face models, three datasets, 16 profile-attributed
+    papers, and three exact official Hugging Face npm bridges observed on
+    2026-08-11. The CLI is
+    network-free and grants no download, install, inference, remote-code, or
+    external-effect authority. `kingdom prompt --principality ID` projects one
+    exact node into the existing one-source Task Packet budget; project plus
+    Principality selection is refused.
+
+The same evidence is published read-only at the immutable
+[`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
+with its [public schema](https://thekingdom.dev/schemas/principality-catalog/1.json)
+and [human guide](https://thekingdom.dev/PRINCIPALITY-COMMONS.md). There is no
+mutable `latest` alias, hosted matcher, package installation, weight download,
+inference endpoint, recommendation, or acquisition authority on that surface.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

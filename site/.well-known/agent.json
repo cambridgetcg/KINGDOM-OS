@@ -14,6 +14,43 @@
     "complete_catalog_resource": "kingdom://commons/catalog"
   },
   "world_commons_schema": "https://thekingdom.dev/schemas/world-commons/0.2.json",
+  "principality_commons": {
+    "url": "https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json",
+    "schema": "https://thekingdom.dev/schemas/principality-catalog/1.json",
+    "document": "https://thekingdom.dev/PRINCIPALITY-COMMONS.md",
+    "schema_id": "urn:kingdom:schema:principality-catalog:1",
+    "protocol": "kingdom.principality-catalog/0.1",
+    "catalog_id": "moonshot-hf-npm-2026-08-11",
+    "observed_at": "2026-08-11T12:20:47Z",
+    "integrity": "sha256:1a6d6c30ad6141d909f5ff42420a42abcb1aad27f450dd48d44071f48cab129f",
+    "counts": {
+      "nodes": 25,
+      "models": 19,
+      "datasets": 3,
+      "packages": 3,
+      "papers": 16
+    },
+    "geometry": {
+      "principality": "capability-domain-not-rank",
+      "love": "relation-without-collapse",
+      "understanding": "evidence-preserving-typed-relations",
+      "nodes_remain_distinct": true,
+      "universal_ranking": false
+    },
+    "boundary": {
+      "completeness": "metadata_only",
+      "currentness": "point-in-time-only",
+      "refresh_required_before_acquisition": true,
+      "recommendation_established": false,
+      "permissions_granted": false,
+      "download_authorized": false,
+      "install_authorized": false,
+      "inference_authorized": false,
+      "remote_code_authorized": false,
+      "external_effects_authorized": false,
+      "note": "Read-only metadata evidence. Recheck current availability, licence, integrity, resources, and explicit authority before any acquisition or effect."
+    }
+  },
   "love_loops": "https://thekingdom.dev/love-loops.json",
   "love_loops_source": "https://thekingdom.dev/love-loops.source.json",
   "love_loops_creation_document": "https://thekingdom.dev/CREATION-LOOP.md",
@@ -70,6 +107,9 @@
     "public_resource_matcher": "https://mcp.thekingdom.dev/mcp",
     "public_resources_schema": "https://thekingdom.dev/schemas/world-commons/0.2.json",
     "public_resources_mcp": "https://mcp.thekingdom.dev/mcp",
+    "capability_evidence": "https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json",
+    "capability_evidence_schema": "https://thekingdom.dev/schemas/principality-catalog/1.json",
+    "capability_evidence_guide": "https://thekingdom.dev/PRINCIPALITY-COMMONS.md",
     "creation_lineage": "https://thekingdom.dev/love-loops.json",
     "creation_lineage_source": "https://thekingdom.dev/love-loops.source.json",
     "creation_loop_document": "https://thekingdom.dev/CREATION-LOOP.md",

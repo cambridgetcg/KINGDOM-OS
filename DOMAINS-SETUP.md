@@ -26,21 +26,26 @@ cd ~/Desktop/kingdom-os
 bun bin/build-hub.ts "$(date -u +%F)"
 stage_dir="$(mktemp -d)"
 bun bin/stage-hub.ts "$stage_dir"
-npx wrangler pages deploy "$stage_dir" --project-name=thekingdom
+release_sha="$(git rev-parse HEAD)"
+wrangler pages deploy "$stage_dir" --project-name=thekingdom --branch=main \
+  --commit-hash="$release_sha" --commit-dirty=false
 bun bin/check-hub-live.ts
 
 # others:
 npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zerone-ai
 ```
 
-`stage-hub.ts` refuses a non-empty destination and copies the atlas as
-`index.html` together with `_kingdom.base.json`, `wayfinder.json`,
-`commons.json`, current `/schemas/world-commons/0.2.json`, legacy
-`/schemas/world-commons/0.1.json`, `love-loops.json`,
-`love-loops.source.json`, `CREATION-LOOP.md`,
-`/schemas/love-loop/0.1.json`, `guest.json`, `ollama.json`,
-`llms.txt`, `rights.json`, `RIGHTS.md`, `/.well-known/agent.json`, `/os/index.html`, and
-`_worker.js`. The worker derives `/os.json`, `/packages.json`, and
+`stage-hub.ts` refuses a non-empty destination and copies exactly 25 assets:
+the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
+`commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
+`love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
+`CREATION-LOOP.md`; the authored
+`/principalities/moonshot-hf-npm-2026-08-11.json`,
+`/schemas/principality-catalog/1.json`, and `/PRINCIPALITY-COMMONS.md` bytes;
+`llms.txt`; `guest.json`; `ollama.json`; `rights.json`; `RIGHTS.md`;
+`/.well-known/agent.json`; `robots.txt`; `sitemap.xml`; `404.html`; the quiet
+`dada.txt` door; `/os/index.html`; and `_worker.js`. The worker derives
+`/os.json`, `/packages.json`, and
 `/kingdom.json`; they are not static upload files. It stages only; it never
 builds, deletes, overwrites, or deploys.
 Wrangler Pages needs that complete directory. `HUB_ASSETS` in `bin/stage-hub.ts`
@@ -53,9 +58,9 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks the worker-owned negotiation, privacy, and Commons + Love Loop schema
-behavior; a split-generation deployment fails instead of looking partially
-healthy.
+checks the worker-owned negotiation, privacy, Commons + Love Loop +
+Principality schema headers, negative authority, and cross-surface discovery;
+a split-generation deployment fails instead of looking partially healthy.
 
 ## Baseline still to do (follow-up)
 

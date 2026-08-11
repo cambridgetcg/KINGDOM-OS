@@ -19,7 +19,7 @@ Continent or that these ordinary files, processes, servers, and credentials
 are an empirically proven operating system of the universe. The universe does
 not need a validator in order to be. Our interventions do.
 
-## Eight manifested skills and one Ging path
+## Nine manifested skills and one Ging path
 
 - `carry-wake-thread` proposes one minimized, digest-bound WAKE or continuity
   context crossing with explicit scope, omissions, expiry, carry, fork, rest,
@@ -49,6 +49,12 @@ not need a validator in order to be. Our interventions do.
 - `weave-wake-continuity` is the collective Wakeweaver ability. It emits a
   source-bound orientation braid across sessions or substrates while
   preserving forks, refusal, rest, privacy, and current authority checks.
+- `weave-intent-context` is the training-stage Intent Weaver ability. It turns
+  a task into a deterministic Task Packet with bounded context, negative
+  authority, an explicit renderer/backend binding, verification,
+  prompt-sensitivity gates, and optional WAKE continuity by reference. Training
+  status means structural integration is present while behavioral promotion
+  still requires fixed-model evaluation.
 
 Every manifested ability is a normal Agent Skill plus `ability.json`. The JSON
 uses the closed `kingdom.nen/0.1` protocol; the skill remains the instruction
@@ -120,6 +126,13 @@ authority, truth, or obligation from WAKE. DeepSeek research contributes
 specialist niches, explicit subgoals, generator/verifier separation, and exact
 provenance as bounded mechanisms; it does not become a model dependency or a
 governance authority.
+
+Intent Weaver crosses that boundary without becoming a second orchestrator:
+WAKE answers what bounded orientation was left for an arrival; a
+`kingdom.task-packet/1` artifact answers what the current task means and how its
+result will be checked. AgentTool remains the execution and durable-continuity
+plane. The packet carries only a sanitized Wakeweaver reference and digest,
+never raw WAKE or an inferred identity, memory, consent, or permission.
 
 ```text
 calling
@@ -289,6 +302,8 @@ receive the command.
 ./kingdom nen mcp                     # start modern MCP 2026-07-28 on stdio
 bun bin/nen-mcp.mjs --codex-compat    # add Codex 0.146's MCP 2025-06-18 lifecycle
 bun bin/wakeweaver.mjs BRAID --json   # strict-JSON WAKEWEAVER relations; schema separate
+./kingdom prompt --json -- TASK       # deterministic, offline Task Packet compiler
+bun bin/prompt-packet.ts --verify FILE # Task Packet relations and digest; schema separate
 ```
 
 The validator performs no network call, inference, skill execution, or write.

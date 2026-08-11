@@ -1,0 +1,6 @@
+interface:
+  display_name: "Intent Weaver"
+  short_description: "Build evidence-led context contracts"
+  default_prompt: "Use $weave-intent-context to turn this task into a tested, continuity-aware intent contract."
+policy:
+  allow_implicit_invocation: false

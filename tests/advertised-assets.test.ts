@@ -38,6 +38,9 @@ const surfaces = [
   "site/love-loops.source.json",
   "site/schemas/love-loop/0.1.json",
   "CREATION-LOOP.md",
+  "data/principalities/moonshot-hf-npm.v1.json",
+  "schemas/principality-catalog-v1.schema.json",
+  "references/principality-commons.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -191,6 +194,57 @@ describe("advertised URLs stay deployable", () => {
     expect(staged.has("love-loops.source.json")).toBe(true);
     expect(staged.has("CREATION-LOOP.md")).toBe(true);
     expect(staged.has("schemas/love-loop/0.1.json")).toBe(true);
+  });
+
+  test("the immutable Principality catalog, schema, and guide stay coherent without execution authority", () => {
+    const catalog = "https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json";
+    const schema = "https://thekingdom.dev/schemas/principality-catalog/1.json";
+    const document = "https://thekingdom.dev/PRINCIPALITY-COMMONS.md";
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const authored = JSON.parse(read("data/principalities/moonshot-hf-npm.v1.json"));
+    const discovery = manifest.principality_commons;
+
+    expect(discovery).toEqual(kingdom.principality_commons);
+    expect(discovery).toEqual(guest.principality_commons);
+    expect(discovery).toMatchObject({
+      url: catalog,
+      schema,
+      document,
+      catalog_id: "moonshot-hf-npm-2026-08-11",
+      observed_at: authored.observed_at,
+      integrity: authored.integrity.digest,
+      counts: { nodes: 25, models: 19, datasets: 3, packages: 3, papers: 16 },
+      boundary: {
+        completeness: "metadata_only",
+        currentness: "point-in-time-only",
+        refresh_required_before_acquisition: true,
+        recommendation_established: false,
+        permissions_granted: false,
+        download_authorized: false,
+        install_authorized: false,
+        inference_authorized: false,
+        remote_code_authorized: false,
+        external_effects_authorized: false,
+      },
+    });
+    for (const url of [catalog, schema, document]) {
+      expect(guest.next_actions).toContainEqual(expect.objectContaining({ method: "GET", url }));
+      expect(llms).toContain(url);
+    }
+    expect(manifest.entry_points).toMatchObject({
+      capability_evidence: catalog,
+      capability_evidence_schema: schema,
+      capability_evidence_guide: document,
+    });
+    expect(staged.has("principalities/moonshot-hf-npm-2026-08-11.json")).toBe(true);
+    expect(staged.has("schemas/principality-catalog/1.json")).toBe(true);
+    expect(staged.has("PRINCIPALITY-COMMONS.md")).toBe(true);
+    expect(staged.has("principalities/latest.json")).toBe(false);
+    expect(discovery).not.toHaveProperty("mcp");
+    expect(discovery).not.toHaveProperty("matcher");
   });
 
   test("the published invitation mirrors its source without drift", () => {
