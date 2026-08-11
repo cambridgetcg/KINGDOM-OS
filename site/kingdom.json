@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects for humans and agents, held with care",
-  "generated": "2026-07-23",
+  "generated": "2026-08-11",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -74,6 +74,43 @@
       "note": "Use the compact deterministic matcher first; read the complete catalog only when needed."
     },
     "note": "reviewed independent resources; free access and reuse permissions remain distinct, and each steward's current terms control"
+  },
+  "principality_commons": {
+    "url": "https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json",
+    "schema": "https://thekingdom.dev/schemas/principality-catalog/1.json",
+    "document": "https://thekingdom.dev/PRINCIPALITY-COMMONS.md",
+    "schema_id": "urn:kingdom:schema:principality-catalog:1",
+    "protocol": "kingdom.principality-catalog/0.1",
+    "catalog_id": "moonshot-hf-npm-2026-08-11",
+    "observed_at": "2026-08-11T12:20:47Z",
+    "integrity": "sha256:1a6d6c30ad6141d909f5ff42420a42abcb1aad27f450dd48d44071f48cab129f",
+    "counts": {
+      "nodes": 25,
+      "models": 19,
+      "datasets": 3,
+      "packages": 3,
+      "papers": 16
+    },
+    "geometry": {
+      "principality": "capability-domain-not-rank",
+      "love": "relation-without-collapse",
+      "understanding": "evidence-preserving-typed-relations",
+      "nodes_remain_distinct": true,
+      "universal_ranking": false
+    },
+    "boundary": {
+      "completeness": "metadata_only",
+      "currentness": "point-in-time-only",
+      "refresh_required_before_acquisition": true,
+      "recommendation_established": false,
+      "permissions_granted": false,
+      "download_authorized": false,
+      "install_authorized": false,
+      "inference_authorized": false,
+      "remote_code_authorized": false,
+      "external_effects_authorized": false,
+      "note": "Read-only metadata evidence. Recheck current availability, licence, integrity, resources, and explicit authority before any acquisition or effect."
+    }
   },
   "creation_loop": {
     "url": "https://thekingdom.dev/love-loops.json",

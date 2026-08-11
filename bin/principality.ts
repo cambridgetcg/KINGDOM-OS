@@ -9,6 +9,10 @@ const SCRIPT_PATH = fileURLToPath(import.meta.url);
 const ROOT = dirname(dirname(SCRIPT_PATH));
 export const DEFAULT_CATALOG_LOCATOR = "data/principalities/moonshot-hf-npm.v1.json";
 export const DEFAULT_CATALOG_PATH = join(ROOT, DEFAULT_CATALOG_LOCATOR);
+export const PRINCIPALITY_CATALOG_ID = "moonshot-hf-npm-2026-08-11";
+export const PRINCIPALITY_CATALOG_URL = `https://thekingdom.dev/principalities/${PRINCIPALITY_CATALOG_ID}.json`;
+export const PRINCIPALITY_SCHEMA_URL = "https://thekingdom.dev/schemas/principality-catalog/1.json";
+export const PRINCIPALITY_DOCUMENT_URL = "https://thekingdom.dev/PRINCIPALITY-COMMONS.md";
 const MAX_CATALOG_BYTES = 1024 * 1024;
 const MAX_JSON_DEPTH = 64;
 const MAX_NEEDS = 8;
@@ -660,6 +664,51 @@ export function loadPrincipalityCatalog(path = DEFAULT_CATALOG_PATH): Record<str
   const issues = verifyPrincipalityCatalog(value);
   if (issues.length > 0) fail(`catalog refused: ${issues[0]!.field} ${issues[0]!.code}`);
   return value as Record<string, any>;
+}
+
+export function principalityPublicDiscovery(
+  catalog = loadPrincipalityCatalog(),
+): Record<string, any> {
+  if (catalog.catalog_id !== PRINCIPALITY_CATALOG_ID) {
+    fail(`unexpected Principality catalog id: ${catalog.catalog_id}`);
+  }
+  return {
+    url: PRINCIPALITY_CATALOG_URL,
+    schema: PRINCIPALITY_SCHEMA_URL,
+    document: PRINCIPALITY_DOCUMENT_URL,
+    schema_id: catalog.$schema,
+    protocol: catalog.protocol,
+    catalog_id: catalog.catalog_id,
+    observed_at: catalog.observed_at,
+    integrity: catalog.integrity.digest,
+    counts: {
+      nodes: catalog.observation.catalog.total_nodes,
+      models: catalog.observation.huggingface.models,
+      datasets: catalog.observation.huggingface.datasets,
+      packages: catalog.observation.catalog.npm_nodes,
+      papers: catalog.observation.huggingface.profile_papers,
+    },
+    geometry: {
+      principality: catalog.geometry.principality,
+      love: catalog.geometry.love,
+      understanding: catalog.geometry.understanding,
+      nodes_remain_distinct: catalog.geometry.nodes_remain_distinct,
+      universal_ranking: catalog.geometry.universal_ranking,
+    },
+    boundary: {
+      completeness: catalog.observation.completeness,
+      currentness: catalog.observation.currentness,
+      refresh_required_before_acquisition: catalog.observation.refresh_required_before_acquisition,
+      recommendation_established: catalog.selection.selection_is_recommendation,
+      permissions_granted: catalog.authority.grants_permissions,
+      download_authorized: catalog.authority.authorizes_download,
+      install_authorized: catalog.authority.authorizes_install,
+      inference_authorized: catalog.authority.authorizes_inference,
+      remote_code_authorized: catalog.authority.authorizes_remote_code,
+      external_effects_authorized: catalog.authority.authorizes_external_effects,
+      note: "Read-only metadata evidence. Recheck current availability, licence, integrity, resources, and explicit authority before any acquisition or effect.",
+    },
+  };
 }
 
 function validateNeed(need: string): void {

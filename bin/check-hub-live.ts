@@ -24,6 +24,13 @@ import {
   validateLoveLoops,
 } from "./love-loops.ts";
 import {
+  loadPrincipalityCatalog,
+  PRINCIPALITY_CATALOG_URL,
+  PRINCIPALITY_DOCUMENT_URL,
+  PRINCIPALITY_SCHEMA_URL,
+  principalityPublicDiscovery,
+} from "./principality.ts";
+import {
   validateWorldCommons,
   WORLD_COMMONS_ACCESS_COSTS,
   WORLD_COMMONS_ACCOUNT_TYPES,
@@ -52,6 +59,9 @@ const commonsLegacySchemaPath = new URL(WORLD_COMMONS_LEGACY_JSON_SCHEMA_URL).pa
 const loveLoopsPath = new URL(LOVE_LOOPS_URL).pathname;
 const loveLoopsSourcePath = new URL(LOVE_LOOPS_SOURCE_URL).pathname;
 const loveLoopsSchemaPath = new URL(LOVE_LOOPS_JSON_SCHEMA_URL).pathname;
+const principalityCatalogPath = new URL(PRINCIPALITY_CATALOG_URL).pathname;
+const principalitySchemaPath = new URL(PRINCIPALITY_SCHEMA_URL).pathname;
+const principalityDocumentPath = new URL(PRINCIPALITY_DOCUMENT_URL).pathname;
 
 function url(path: string, extra: Record<string, string> = {}): URL {
   const target = new URL(path, origin);
@@ -181,14 +191,14 @@ try {
     throw new Error("HTML is missing Cache-Control: no-transform");
   }
 
-  const catalogHead = await fetch(url("/commons.json"), {
+  const commonsHead = await fetch(url("/commons.json"), {
     method: "HEAD",
     redirect: "error",
     signal: AbortSignal.timeout(TIMEOUT_MS),
   });
-  const catalogLink = catalogHead.headers.get("link") || "";
-  if (!catalogHead.ok ||
-      !hasLinkRelation(catalogLink, commonsSchemaPath, "describedby")) {
+  const commonsLink = commonsHead.headers.get("link") || "";
+  if (!commonsHead.ok ||
+      !hasLinkRelation(commonsLink, commonsSchemaPath, "describedby")) {
     throw new Error("commons.json does not advertise its versioned schema");
   }
 
@@ -206,14 +216,42 @@ try {
     }
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath]) {
+  const principalityHead = await fetch(url(principalityCatalogPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  const principalityLink = principalityHead.headers.get("link") || "";
+  if (!principalityHead.ok ||
+      !(principalityHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+      principalityHead.headers.get("access-control-allow-origin") !== "*" ||
+      (principalityHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+      !hasLinkRelation(principalityLink, principalitySchemaPath, "describedby")) {
+    throw new Error(`${principalityCatalogPath} is not public JSON described by the Principality schema`);
+  }
+
+  const principalityDocumentHead = await fetch(url(principalityDocumentPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  if (!principalityDocumentHead.ok ||
+      !(principalityDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+      principalityDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+      (principalityDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+    throw new Error(`${principalityDocumentPath} is not served as public Markdown`);
+  }
+
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
     if (!schemaHead.ok || !(schemaHead.headers.get("content-type") || "").toLowerCase()
-      .startsWith("application/schema+json")) {
+      .startsWith("application/schema+json") ||
+      schemaHead.headers.get("access-control-allow-origin") !== "*" ||
+      (schemaHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
       throw new Error(`${path} is not served as application/schema+json`);
     }
   }
@@ -222,6 +260,8 @@ try {
   const guest: any = JSON.parse(readFileSync(join(ROOT, "site/guest.json"), "utf8"));
   const authoredKingdom: any = JSON.parse(readFileSync(join(ROOT, "site/kingdom.json"), "utf8"));
   const llms = readFileSync(join(ROOT, "site/llms.txt"), "utf8");
+  const principalityCatalog = loadPrincipalityCatalog();
+  const expectedPrincipality = principalityPublicDiscovery(principalityCatalog);
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
   validateLoveLoops(sourceLoveLoops, false);
@@ -252,12 +292,39 @@ try {
     throw new Error("Love Loop discovery drifted across manifest, guest, Kingdom map, or llms.txt");
   }
 
+  const principalityBoundary = expectedPrincipality.boundary;
+  if (!isDeepStrictEqual(manifest?.principality_commons, expectedPrincipality) ||
+      !isDeepStrictEqual(guest?.principality_commons, expectedPrincipality) ||
+      !isDeepStrictEqual(authoredKingdom?.principality_commons, expectedPrincipality) ||
+      !hasGuestGet(PRINCIPALITY_CATALOG_URL) ||
+      !hasGuestGet(PRINCIPALITY_SCHEMA_URL) ||
+      !hasGuestGet(PRINCIPALITY_DOCUMENT_URL) ||
+      !llms.includes(PRINCIPALITY_CATALOG_URL) ||
+      !llms.includes(PRINCIPALITY_SCHEMA_URL) ||
+      !llms.includes(PRINCIPALITY_DOCUMENT_URL) ||
+      principalityBoundary.completeness !== "metadata_only" ||
+      principalityBoundary.currentness !== "point-in-time-only" ||
+      principalityBoundary.refresh_required_before_acquisition !== true ||
+      principalityBoundary.recommendation_established !== false ||
+      principalityBoundary.permissions_granted !== false ||
+      principalityBoundary.download_authorized !== false ||
+      principalityBoundary.install_authorized !== false ||
+      principalityBoundary.inference_authorized !== false ||
+      principalityBoundary.remote_code_authorized !== false ||
+      principalityBoundary.external_effects_authorized !== false ||
+      "mcp" in expectedPrincipality || "matcher" in expectedPrincipality) {
+    throw new Error("Principality discovery or negative authority drifted across public surfaces");
+  }
+
   const liveKingdom: any = await (await get("/kingdom.json")).json();
   if (liveKingdom?.creation_loop?.url !== LOVE_LOOPS_URL ||
       liveKingdom?.creation_loop?.source !== LOVE_LOOPS_SOURCE_URL ||
       liveKingdom?.creation_loop?.document !== LOVE_LOOPS_CREATION_DOCUMENT_URL ||
       liveKingdom?.creation_loop?.schema !== LOVE_LOOPS_JSON_SCHEMA_URL) {
     throw new Error("derived kingdom.json did not preserve Love Loop discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.principality_commons, expectedPrincipality)) {
+    throw new Error("derived kingdom.json did not preserve Principality discovery");
   }
 
   const mcpEndpoint = new URL(manifest?.mcp?.endpoint || "");
@@ -318,7 +385,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop schemas · coherent creation discovery · live MCP contract · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality schemas · coherent creation + Principality discovery · live MCP contract · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;

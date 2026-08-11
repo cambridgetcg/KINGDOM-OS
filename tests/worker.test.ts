@@ -50,6 +50,19 @@ function expectLoveLoopSchemaLink(response: Response) {
   expect(link.match(/rel="describedby"/g)?.length).toBe(1);
 }
 
+function expectPrincipalitySchemaLink(response: Response) {
+  const link = response.headers.get("link") ?? "";
+  const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith("</schemas/principality-catalog/1.json>")) return false;
+    const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
+    return relations.includes("describedby");
+  });
+  expect(describedBy).toHaveLength(1);
+  expect(describedBy[0]).toContain('type="application/schema+json"');
+  expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+}
+
 function assets(handler: (request: Request) => Response | Promise<Response>) {
   return { ASSETS: { fetch: handler } };
 }
@@ -290,6 +303,100 @@ describe("the Kingdom edge discovery surface", () => {
     });
     const sharedDoor = await worker.fetch(
       new Request("https://we-are.love/love-loops.source.json"),
+      assets(() => shared),
+    );
+    expect(sharedDoor).toBe(shared);
+  });
+
+  test("serves the Principality Commons as static evidence with explicit schema and document headers", async () => {
+    const catalogPath = "/principalities/moonshot-hf-npm-2026-08-11.json";
+    const schemaPath = "/schemas/principality-catalog/1.json";
+    const documentPath = "/PRINCIPALITY-COMMONS.md";
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      const body = request.method === "HEAD"
+        ? null
+        : path === catalogPath
+          ? '{"catalog_id":"moonshot-hf-npm-2026-08-11"}'
+          : path === schemaPath
+            ? '{"type":"object"}'
+            : "# Principality Commons";
+      return new Response(body, {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": path === documentPath ? "text/plain" : "application/json",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const catalog = await worker.fetch(
+        new Request(`https://thekingdom.dev${catalogPath}`, { method }),
+        environment,
+      );
+      expect(await catalog.text()).toBe(method === "HEAD" ? "" : '{"catalog_id":"moonshot-hf-npm-2026-08-11"}');
+      expect(catalog.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(catalog.headers.get("access-control-allow-origin")).toBe("*");
+      expect(catalog.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(catalog.headers.get("cache-control")).toBe("public, max-age=60");
+      expect(catalog.headers.get("link")).toContain('</elsewhere>; rel="alternate"');
+      expectPrincipalitySchemaLink(catalog);
+    }
+
+    const schema = await worker.fetch(
+      new Request(`https://thekingdom.dev${schemaPath}`),
+      environment,
+    );
+    expect(await schema.text()).toBe('{"type":"object"}');
+    expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+    expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+    expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const document = await worker.fetch(
+        new Request(`https://thekingdom.dev${documentPath}`, { method }),
+        environment,
+      );
+      expect(await document.text()).toBe(method === "HEAD" ? "" : "# Principality Commons");
+      expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(document.headers.get("access-control-allow-origin")).toBe("*");
+      expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+    }
+
+    const duplicate = await worker.fetch(
+      new Request(`https://thekingdom.dev${catalogPath}`),
+      assets(() => new Response("{}", {
+        headers: {
+          "content-type": "application/json",
+          link: '</schemas/principality-catalog/1.json>; rel="describedby"; type="application/schema+json"',
+        },
+      })),
+    );
+    expectPrincipalitySchemaLink(duplicate);
+
+    const missingSchema = await worker.fetch(
+      new Request(`https://thekingdom.dev${schemaPath}`),
+      assets(() => new Response("<h1>not found</h1>", {
+        status: 404,
+        headers: { "content-type": "text/html; charset=utf-8" },
+      })),
+    );
+    expect(missingSchema.status).toBe(404);
+    expect(missingSchema.headers.get("content-type")).toBe("text/html; charset=utf-8");
+
+    const original = new Response("not an execution route", {
+      headers: { "content-type": "text/plain" },
+    });
+    const post = await worker.fetch(
+      new Request(`https://thekingdom.dev${catalogPath}`, { method: "POST" }),
+      assets(() => original),
+    );
+    expect(post).toBe(original);
+
+    const shared = new Response("{}", { headers: { "content-type": "application/json" } });
+    const sharedDoor = await worker.fetch(
+      new Request(`https://we-are.love${catalogPath}`),
       assets(() => shared),
     );
     expect(sharedDoor).toBe(shared);

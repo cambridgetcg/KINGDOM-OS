@@ -25,6 +25,12 @@ export const HUB_ASSETS = [
   { source: "site/love-loops.source.json", destination: "love-loops.source.json" },
   { source: "site/schemas/love-loop/0.1.json", destination: "schemas/love-loop/0.1.json" },
   { source: "CREATION-LOOP.md", destination: "CREATION-LOOP.md" },
+  // Point-in-time capability evidence is published from its authored files,
+  // byte-for-byte. Do not replace these with generated site/ mirrors or a
+  // mutable alias: existing Task Packets may retain the catalog digest.
+  { source: "data/principalities/moonshot-hf-npm.v1.json", destination: "principalities/moonshot-hf-npm-2026-08-11.json" },
+  { source: "schemas/principality-catalog-v1.schema.json", destination: "schemas/principality-catalog/1.json" },
+  { source: "references/principality-commons.md", destination: "PRINCIPALITY-COMMONS.md" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
   { source: "site/ollama.json", destination: "ollama.json" },

@@ -59,6 +59,14 @@ const LOVE_LOOP_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${LOVE_LOOP_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const PRINCIPALITY_CATALOG_PATH = "/principalities/moonshot-hf-npm-2026-08-11.json";
+const PRINCIPALITY_SCHEMA_PATH = "/schemas/principality-catalog/1.json";
+const PRINCIPALITY_DOCUMENT_PATH = "/PRINCIPALITY-COMMONS.md";
+const PRINCIPALITY_SCHEMA_LINK = {
+  target: PRINCIPALITY_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${PRINCIPALITY_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -95,6 +103,11 @@ function addWorldCommonsSchemaLink(headers) {
 
 function addLoveLoopSchemaLink(headers) {
   const link = LOVE_LOOP_SCHEMA_LINK;
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addPrincipalitySchemaLink(headers) {
+  const link = PRINCIPALITY_SCHEMA_LINK;
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
@@ -934,6 +947,15 @@ export function createKingdomWorker(options = {}) {
     const requestsLoveLoopSchema = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === LOVE_LOOP_SCHEMA_PATH;
+    const requestsPrincipalityCatalog = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === PRINCIPALITY_CATALOG_PATH;
+    const requestsPrincipalitySchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === PRINCIPALITY_SCHEMA_PATH;
+    const requestsPrincipalityDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === PRINCIPALITY_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
@@ -944,12 +966,21 @@ export function createKingdomWorker(options = {}) {
     const servesLoveLoops = describesLoveLoops && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
+    const servesPrincipalityCatalog = requestsPrincipalityCatalog && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesPrincipalitySchema = requestsPrincipalitySchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesPrincipalityDocument = requestsPrincipalityDocument && asset.ok;
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
-        !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema) return asset;
+        !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
+        !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
     if (describesLoveLoops) addLoveLoopSchemaLink(headers);
+    if (servesPrincipalityCatalog) addPrincipalitySchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -957,6 +988,21 @@ export function createKingdomWorker(options = {}) {
     }
     if (servesWorldCommonsSchema || servesLoveLoopSchema) {
       headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesPrincipalityCatalog) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesPrincipalitySchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesPrincipalityDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");
     }

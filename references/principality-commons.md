@@ -14,6 +14,16 @@ JavaScript packages observed through npm. It contains metadata only: no model
 weights, dataset rows, repository files, package tarballs, README prose,
 prompts, credentials, or inference output.
 
+The reviewed snapshot is also published byte-for-byte at
+[`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json).
+Its digest-covered `$schema` remains the authored
+`urn:kingdom:schema:principality-catalog:1`; the public HTTP mapping is
+[`/schemas/principality-catalog/1.json`](https://thekingdom.dev/schemas/principality-catalog/1.json),
+advertised by discovery metadata and the catalog response's `describedby`
+link. This guide is published at
+[`/PRINCIPALITY-COMMONS.md`](https://thekingdom.dev/PRINCIPALITY-COMMONS.md).
+There is deliberately no mutable catalog alias or hosted execution surface.
+
 ## The geometry
 
 Love is represented as **relation without collapse**. A model, dataset,

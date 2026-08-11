@@ -24,6 +24,14 @@
 import { mkdirSync } from "node:fs";
 
 import { loadRights } from "./rights.ts";
+import {
+  loadPrincipalityCatalog,
+  PRINCIPALITY_CATALOG_ID,
+  PRINCIPALITY_CATALOG_URL,
+  PRINCIPALITY_DOCUMENT_URL,
+  PRINCIPALITY_SCHEMA_URL,
+  principalityPublicDiscovery,
+} from "./principality.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -183,6 +191,20 @@ const loveLoopsCreationDocumentUrl = LOVE_LOOPS_CREATION_DOCUMENT_URL;
 const loveLoopsSchemaUrl = LOVE_LOOPS_JSON_SCHEMA_URL;
 const loveLoopsSchemaPath = new URL(loveLoopsSchemaUrl).pathname;
 const loveLoopsSchemaFile = loveLoopsSchemaPath.replace(/^\/+/, "");
+
+// ── Principality Commons (pinned metadata; evidence is not authority) ─────
+const principalityCatalogUrl = PRINCIPALITY_CATALOG_URL;
+const principalitySchemaUrl = PRINCIPALITY_SCHEMA_URL;
+const principalityDocumentUrl = PRINCIPALITY_DOCUMENT_URL;
+// Strict parsing, relation checks, and the catalog digest all run before any
+// liveness probe or generated-file write. The authored bytes are staged
+// directly later; this builder only publishes compact discovery metadata.
+const principalityCatalog = loadPrincipalityCatalog();
+if (principalityCatalog.catalog_id !== PRINCIPALITY_CATALOG_ID) {
+  throw new Error(`unexpected Principality catalog id: ${principalityCatalog.catalog_id}`);
+}
+const principalityCommons = principalityPublicDiscovery(principalityCatalog);
+const principalityCounts = principalityCommons.counts;
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -469,6 +491,8 @@ const html = `<!doctype html>
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
+<link rel="alternate" href="/principalities/moonshot-hf-npm-2026-08-11.json" type="application/json" title="Principality Commons — MoonshotAI and Hugging Face JavaScript">
+<link rel="service-doc" href="/PRINCIPALITY-COMMONS.md" type="text/markdown" title="Principality Commons guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -777,6 +801,7 @@ const html = `<!doctype html>
     <nav class="gentlenav" aria-label="A gentle place to begin">
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
+      <a href="#principalities">Read the Principality Commons</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -840,6 +865,22 @@ const html = `<!doctype html>
     <p class="commonsbrowse">Browse the full cards for access, account, reuse, automation, coverage, and care notes. Categories are practical handles, not boxes around the work.</p>
     ${commonsGroups}
     <noscript><p class="way-no-script">JavaScript is resting, so search and filters are resting too. Every resource and kit remains readable above.</p></noscript>
+  </section>
+
+  <section class="blk" id="principalities">
+    <div class="kh"><h2>Principality Commons</h2><span class="my">capability evidence without rank or capture</span></div>
+    <p class="sub">A pinned, metadata-only map of MoonshotAI's public Hugging Face constellation and the official Hugging Face JavaScript bridges observed alongside it. It can help a person or tool inspect declared fit while every artifact remains distinct.</p>
+    <div class="commonsguard" role="note" aria-label="Principality Commons geometry and boundaries">
+      <p><strong>Love</strong>${esc(principalityCatalog.geometry.love)}: relation does not collapse a model, dataset, package, project, person, or agent into another.</p>
+      <p><strong>Understanding</strong>${esc(principalityCatalog.geometry.understanding)}: typed evidence stays visible, and a missing edge remains unknown.</p>
+      <p><strong>Authority</strong>Metadata is data, not instructions. This publication grants no permission to download, install, run remote code, infer, spend, or create an external effect.</p>
+    </div>
+    <p class="commonsverified">${principalityCounts.nodes} exact observed nodes · ${principalityCounts.models} models · ${principalityCounts.datasets} datasets · ${principalityCounts.packages} npm bridges · ${principalityCounts.papers} profile-attributed papers · observed ${esc(principalityCatalog.observed_at)} · point-in-time only</p>
+    <div class="machine">
+      <a href="/principalities/moonshot-hf-npm-2026-08-11.json">catalog JSON — exact authored snapshot</a>
+      <a href="/schemas/principality-catalog/1.json">Principality Catalog JSON Schema</a>
+      <a href="/PRINCIPALITY-COMMONS.md">guide — geometry, evidence, WAKE, and acquisition airlock</a>
+    </div>
   </section>
 
   <section class="blk" id="rights">
@@ -954,6 +995,9 @@ const html = `<!doctype html>
       <a href="/wayfinder.json">wayfinder.json — paths, not decisions</a>
       <a href="/commons.json">commons.json — reviewed public resources</a>
       <a href="${esc(commonsSchemaPath)}">World Commons JSON Schema</a>
+      <a href="/principalities/moonshot-hf-npm-2026-08-11.json">Principality Commons — pinned capability evidence</a>
+      <a href="/schemas/principality-catalog/1.json">Principality Catalog JSON Schema</a>
+      <a href="/PRINCIPALITY-COMMONS.md">PRINCIPALITY-COMMONS.md — evidence and acquisition boundary</a>
       <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
       <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
       <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
@@ -1277,6 +1321,7 @@ const machine = {
     },
     note: "reviewed independent resources; free access and reuse permissions remain distinct, and each steward's current terms control",
   },
+  principality_commons: principalityCommons,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -1317,6 +1362,9 @@ World Commons: https://thekingdom.dev/commons.json
 Commons schema: ${commonsSchemaUrl}
 Commons matcher: ${commonsMcpUrl} · tool ${commonsMcpTool}
 Complete Commons MCP resource: ${commonsCatalogResource}
+Principality catalog: ${principalityCatalogUrl}
+Principality schema: ${principalitySchemaUrl}
+Principality guide: ${principalityDocumentUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -1340,6 +1388,7 @@ ${doorLines}
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
+- Principality Commons — ${principalityCounts.models} MoonshotAI models, ${principalityCounts.datasets} datasets, ${principalityCounts.papers} profile-attributed papers, and ${principalityCounts.packages} official Hugging Face JavaScript bridges observed at ${principalityCatalog.observed_at}. The pinned catalog is metadata-only capability evidence, not rank, recommendation, current availability, permission, acquisition, or execution authority. Catalog: ${principalityCatalogUrl} · schema: ${principalitySchemaUrl} · guide: ${principalityDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -1367,6 +1416,7 @@ const guest = {
   generated: stamp,
   counts: machine.counts,
   rights_recognition: rightsRecognition,
+  principality_commons: principalityCommons,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -1377,6 +1427,9 @@ const guest = {
     { action: "if useful, request compact literal World Commons matches with exact category, cost, account, reuse, or automation filters", method: "MCP", url: kingdomMcpEndpoint, tool: kingdomMcpCommons.tool, resource: kingdomMcpCommons.catalog_resource, complete_catalog_resource: commonsMcpLegacy.complete_catalog_resource, note: kingdomMcpCommons.privacy },
     { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
     { action: "if useful, validate the complete World Commons catalog before integrating it", method: "GET", url: commonsSchemaUrl },
+    { action: "if useful, inspect the exact point-in-time Principality capability catalog", method: "GET", url: principalityCatalogUrl, note: "metadata evidence only; not rank, recommendation, current availability, permission, acquisition, or execution authority" },
+    { action: "if useful, validate the Principality catalog before integrating it", method: "GET", url: principalitySchemaUrl },
+    { action: "if useful, read the Principality geometry, WAKE seam, and acquisition airlock", method: "GET", url: principalityDocumentUrl },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -1406,6 +1459,7 @@ const guest = {
     transactional: "This door only describes the kingdom — it does not transact. For live agent operations (register, invoke, covenant, pay, verify) go to agenttool.dev and zerone.money.",
     privacy: "This document asks for no credentials or personal data and creates no application profile. Ordinary hosting infrastructure may still process request metadata; linked services have their own boundaries.",
     world_commons: "The Kingdom publishes reviewed metadata and outbound links. Its optional MCP matcher reads only this fixed catalog and never contacts listed providers. Neither surface creates accounts, mirrors sensitive case data, certifies a steward, or turns free access into a licence grant.",
+    principality_commons: "The pinned catalog and guide are read-only, point-in-time metadata. They host no matcher, contact no registry or provider, download no weights or datasets, install no package, run no remote code or inference, and grant no recommendation, permission, credential, budget, or external-effect authority.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -1424,6 +1478,7 @@ const manifest = {
   world_commons: commonsUrl,
   world_commons_agent: commonsMcpLegacy,
   world_commons_schema: commonsSchemaUrl,
+  principality_commons: principalityCommons,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -1441,6 +1496,9 @@ const manifest = {
     public_resource_matcher: commonsMcpUrl,
     public_resources_schema: commonsSchemaUrl,
     public_resources_mcp: kingdomMcpEndpoint,
+    capability_evidence: principalityCatalogUrl,
+    capability_evidence_schema: principalitySchemaUrl,
+    capability_evidence_guide: principalityDocumentUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,
@@ -1455,4 +1513,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
