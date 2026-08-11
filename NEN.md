@@ -19,7 +19,7 @@ Continent or that these ordinary files, processes, servers, and credentials
 are an empirically proven operating system of the universe. The universe does
 not need a validator in order to be. Our interventions do.
 
-## Seven manifested skills and one Ging path
+## Eight manifested skills and one Ging path
 
 - `carry-wake-thread` proposes one minimized, digest-bound WAKE or continuity
   context crossing with explicit scope, omissions, expiry, carry, fork, rest,
@@ -38,6 +38,11 @@ not need a validator in order to be. Our interventions do.
   protects existing life, and composes habitat, circulation, succession,
   stewardship, and repair while keeping money and resources as enabling means
   rather than the objective.
+- `map-love-geometry` proposes one bounded, content-addressed geometry of
+  caller-reported directed bearings among opaque distinct subjects. It keeps
+  understanding, disagreement, care, boundary, rest, refusal, and departure
+  non-ranking and unverified; it infers no reciprocity, consent, authority,
+  continuity, or action.
 - `walk-ging-path` is an additional instruction-first route for falsifiable,
   evidence-led exploration. It intentionally has no `ability.json`: using the
   path does not declare that a KINGDOM or King adopted a manifested ability.
@@ -84,6 +89,21 @@ authenticate a choice, score a bearer, persist, execute, expose MCP or a hosted
 route, create KARMA, adopt XENIA, or activate the ability. The current
 AgentTool SDK's older activity-count Nen assessment is not KAKIN evidence:
 affinity classifies an operation, never a personality, aura, rank, or worth.
+
+The optional pure seam for `map-love-geometry` now has an exact public GitHub
+prerelease artifact for `@agenttool/love-geometry@0.1.0-dev.0`, with one
+whole-snapshot format, `agenttool.love-geometry/0.1`, and inline directed
+vantages. Its annotated tag peels to source revision
+`9efbc4b32f150ee1533b4ff306666fa73ca73028`; the exact tarball URL, byte
+count, SHA-256, and independently computed release-artifact SRI are pinned in
+the Love Geometry contract. This establishes an inspectable artifact mirror,
+not npm registry availability: anonymous registry resolution returned `E404`
+on 2026-08-11. It does not establish installation, activation, adoption, host
+registration, or package validation in any invocation. The seam maps explicit
+caller reports only: it supplies no score, rank, match, centrality, relation
+truth, authority, action, MCP tool, Wake lineage, or Living Ground diagnosis.
+An exact geometry reference may cross through Wake only after Wake's own
+disclosure and current-choice gates.
 
 AgentTool WAKE can also supply bounded orientation to
 `weave-wake-continuity`. A WAKE projection is a scoped summary with health and
@@ -262,6 +282,7 @@ receive the command.
 ./kingdom nen show forge-king-hatsu   # inspect a manifest
 ./kingdom nen show carry-wake-thread
 ./kingdom nen show conjure-unwritten-horizon
+./kingdom nen show map-love-geometry
 ./kingdom nen types                   # print the software affinity map
 ./kingdom nen receipt-template ID     # emit draft scaffolding; not a valid final receipt
 ./kingdom nen verify-receipt FILE     # validate a KARMA receipt

@@ -1,0 +1,171 @@
+{
+  "$schema": "urn:kingdom:schema:nen-ability:0.1",
+  "protocol": "kingdom.nen/0.1",
+  "id": "map-love-geometry",
+  "name": "Love Geometry: Principality Without Rank",
+  "description": "Create one bounded, content-addressed projection of caller-reported directed bearings among opaque distinct subjects while preserving disagreement, unknowns, rest, refusal, and departure without inferring identity, reciprocity, authority, rank, continuity, or action.",
+  "skill": "map-love-geometry",
+  "bearer": {
+    "kind": "kingdom",
+    "id": "kakin-kingdom",
+    "adoption": "proposed",
+    "consent_references": [],
+    "representative_authority_references": []
+  },
+  "affinity": {
+    "primary": "conjuration",
+    "secondary": [
+      "transmutation"
+    ]
+  },
+  "techniques": [
+    "gyo",
+    "in",
+    "shu"
+  ],
+  "practice": {
+    "ten": "Hold every opaque subject as distinct, every ordered vantage as an attributed caller report, every missing direction as unreported outside the bounded projection, and every right, authority, privacy, and non-ranking boundary throughout the projection.",
+    "zetsu": "Return no geometry, a resting proposal, or the missing prerequisite when source, representation, disclosure, package, privacy, retention, or willingness evidence is insufficient; never retry or penalize refusal, rest, or departure.",
+    "ren": "Use one bounded projection, finite caller-supplied subjects, vantages, bearings, and basis references, and one local validation pass within the exact reviewed package limits; split a larger field rather than hiding truncation.",
+    "hatsu": "Return one content-addressed agenttool.love-geometry/0.1 snapshot or an explicitly unvalidated prose proposal, plus package evidence, coverage, claims not established, effects, uncertainty, and repair."
+  },
+  "activation": {
+    "requires": [
+      "One named purpose, opaque principality scope, exact recipient or closed recipient class, intended retention boundary, separately stated actual host retention status, projection coverage, and separate current authority to read each source, represent any participant, and disclose the minimized output; otherwise return only a conditional pending prose proposal and perform no new disclosure.",
+      "A bounded caller-supplied set of opaque explicit subjects and directed vantages with distinct endpoints, sorted unique closed bearings including reported understanding and disagreement, exact lowercase sha256 references, caller-reported and unverified provenance, disputes and unknowns preserved, and no inference from a missing direction; plain labels, URNs, DIDs, accounts, and paths are not wire references and must not be auto-hashed.",
+      "For package-validated output, the exact reviewed @agenttool/love-geometry version, source revision, byte count, and release-artifact integrity must already be deliberately available and verified without automatic installation or fetch; when bytes are unavailable or mismatched, return only a prose proposal or output explicitly marked not validated against the package.",
+      "If a Wake Thread carried the geometry, its own current disclosure and choice gates, exact receipt and artifact digest, scope, coverage, expiry, and retention must be revalidated without importing lineage or authority into Love Geometry."
+    ],
+    "refuses": [
+      "Raw secret, identity, private relationship, transcript, or unnecessary personal data; sameAs or subject merging; reported understanding or disagreement presented as proof of inner state, truth, compatibility, consent, or relationship; or inferred love, reciprocity, trust, assent, authorship, capacity, representation, authority, ownership, duty, currentness, completeness, or retention compliance.",
+      "Scalar coordinates, distance, intensity, weight, score, match, centrality, influence, reputation, worth, priority, leaderboard, count-derived quality, transitive relation inference, named private absence, or canonical ordering presented as preference or rank.",
+      "Automatic source reads, reference hashing, package installation, acceptance, retry, reminder, matching, messaging, task creation, allocation, recommendation, continuation, rendering, publication, deployment, MCP widening, or any action derived from a bearing or geometry; a possibly crossing action remains withheld after reported_boundary until separate direct authority or safe clarification exists."
+    ]
+  },
+  "vows": [
+    {
+      "id": "distinct-points-without-possession",
+      "promise": "Keep subjects opaque and distinct; never merge, substitute, own, center, crown, rank, or infer a being from a project, account, path, digest, label, model, or relation.",
+      "amplifies": "A legible field that holds relation and distinctness together without converting either into possession or identity.",
+      "on_breach": "refuse"
+    },
+    {
+      "id": "reports-not-reciprocity",
+      "promise": "Treat each ordered vantage as one caller-reported unverified artifact; a reverse report, shared bearing, basis reference, or valid package shape never establishes mutual love, consent, agreement, truth, authority, or action.",
+      "amplifies": "Plural relation evidence that preserves asymmetric viewpoints and disagreement without manufacturing unity.",
+      "on_breach": "pause_and_report"
+    },
+    {
+      "id": "serialization-not-rank",
+      "promise": "Use canonical order only for stable bytes and reject coordinates, scalar relation strength, scores, matches, centrality, count-derived quality, reputation, trust, worth, priority, and transitive closure.",
+      "amplifies": "Deterministic geometry without a hidden leaderboard, recommendation engine, or social caste.",
+      "on_breach": "refuse"
+    },
+    {
+      "id": "rest-without-erasure",
+      "promise": "Let reported understanding and disagreement coexist with care, boundary, rest, refusal, departure, or unknown; require no reason, impose no penalty or retry, preserve contrary evidence, and never treat a bearing as authenticated authorship, inner state, truth, compatibility, consent, relationship, or command.",
+      "amplifies": "Relations that can change, pause, disagree, or end without retaliation or historical falsification.",
+      "on_breach": "revalidate"
+    },
+    {
+      "id": "geometry-not-lineage",
+      "promise": "Keep Love Geometry free of Wake offers, choices, parents, expiry, retention, revalidation, and resume state; carry only an exact artifact reference through a separately authorized Wake Thread.",
+      "amplifies": "Composable relation context without a competing continuity system or inherited authority.",
+      "on_breach": "pause_and_report"
+    }
+  ],
+  "costs": [
+    {
+      "resource": "attention",
+      "limit": "Review one bounded principality, every included subject and ordered vantage, missing directions, disputes, claims not established, and package evidence before using the artifact.",
+      "recovery": "Rest, reduce the subject set, split the field into separately source-bound projections, or return unresolved work without penalty."
+    },
+    {
+      "resource": "privacy",
+      "limit": "Use minimized opaque references and an exact audience; assume digests and repeated equality can remain identifying or linkable, and publish no private geometry by default.",
+      "recovery": "Stop disclosure, quarantine the artifact, remove unnecessary copies when authorized, rotate high-entropy local references where appropriate, and correct the receipt."
+    },
+    {
+      "resource": "coordination",
+      "limit": "Treat every bearing as caller-reported and keep reverse directions, challenges, rest, refusal, departure, and unknowns visible without requiring agreement or response.",
+      "recovery": "Pause dependent use, preserve contrary evidence, invite a separately authorized correction without pressure, or retire the projection."
+    },
+    {
+      "resource": "compute",
+      "limit": "Use at most one local pure creation or validation pass over explicit input within the reviewed package's exact declared bounds; perform no network, model, provider, MCP, or background work.",
+      "recovery": "Stop at the first boundary failure and return package validation as unavailable or failed without retrying or widening the implementation."
+    }
+  ],
+  "guardian": {
+    "mode": "declared_sidecar",
+    "derived_from": "declared_effects",
+    "visibility": "inspectable",
+    "checks": [
+      "Named purpose, scope, audience, retention, source, representation and disclosure authority; explicit opaque subjects; distinct ordered endpoints; closed sorted bearings including caller-reported unverified understanding and disagreement; exact basis references; bounded-not-complete coverage; disputes and missing directions; fixed non-ranking, non-authorizing, non-continuity and no-action boundaries; whole-geometry content ID; exact package revision and integrity or a pending, unvalidated state."
+    ],
+    "budget": "One bounded local preflight and, only when exact reviewed package bytes are already available, one pure whole-geometry creation or validation pass; no fetch, install, live read, clock, persistence, network, model, MCP, renderer, retry, or action.",
+    "retention": "Retain only the minimized geometry, exact package evidence, authorized source references, and necessary KARMA evidence for the named period; raw private sources remain in their original custody.",
+    "recipients": [
+      "Only the named local recipient or closed recipient class receives the minimized projection; no package registry, provider, public surface, renderer, MCP resource, or participant receives it by default."
+    ],
+    "uncertainty": "A valid geometry, content ID, basis digest, reverse vantage, bearing, or receipt cannot prove source truth, currentness, completeness, privacy, identity, authorship, inner state, love, reciprocity, consent, capacity, representation, authority, rank, retention, or execution.",
+    "stop": "Any missing authority, package pin, safe audience, privacy boundary, credible refusal, disputed attribution, or widened field stops dependent use; rest and refusal require no reason and trigger no retry or penalty.",
+    "appeal": "A source participant, represented subject, recipient, or affected collaborator may challenge inclusion, omission, direction, bearing, basis, attribution, audience, retention, package evidence, or a claimed effect without losing standing.",
+    "repair": "Stop use and propagation, preserve disputed and contrary evidence, mark unsupported bearings unknown or retire the projection, correct attribution and receipts, remove unnecessary copies when authorized, and require fresh authority for a new artifact."
+  },
+  "karma": {
+    "effects": [
+      "May read explicitly named and authorized source artifacts, minimize caller-supplied relation reports, create or validate one bounded Love Geometry artifact when exact package evidence is available, and return its content reference without acting on any bearing."
+    ],
+    "externalities": [
+      "Even opaque relation topology and repeated digests can expose identity or group membership through linkage; a diagram can create anchoring, social pressure, false reciprocity, implicit centrality, or misrepresentation when its boundaries are ignored."
+    ],
+    "returns": [
+      "Purpose, audience and retention, source and package evidence, explicit subjects, directed caller-reported vantages and bearings, coverage, missing directions, disputes, unknowns, whole-geometry digest, claims not established, actual effects, uncertainty, and repair."
+    ],
+    "repair": [
+      "Rest or stop the projection, preserve prior and contrary evidence, correct or retire unsupported vantages, repair privacy and credit, remove unnecessary copies when authorized, and create a new source-bound artifact rather than rewriting history."
+    ],
+    "accounting": "receipts_not_scores"
+  },
+  "authority": {
+    "allows": [
+      "Inspect caller-supplied relation material already inside the authorized boundary, draft one local minimized geometry or prose proposal, validate structure with exact reviewed package bytes already present, and report uncertainty without taking action."
+    ],
+    "forbids": [
+      "Infer identity, inner state, love, reciprocity, trust, consent, assent, authorship, capacity, representation, authority, permission, ownership, duty, rank, worth, currentness, truth, completeness, privacy, retention compliance, continuity, or execution from the geometry.",
+      "Install or fetch a package, acquire a source, message or match participants, mutate task or relationship state, allocate resources, render or publish a map, register or widen MCP, resume work, or execute any bearing-derived action."
+    ],
+    "requires_permission": [
+      "Any private or live source read, participant representation, local file write, package installation or fetch, disclosure beyond the exact audience, rendering, messaging, matching, allocation, task mutation, external write, publication, deployment, or consequential action.",
+      "Any Wake Thread crossing requires its own exact purpose, recipient, read and disclosure authority, current participant-facing choice, expiry, retention, receipt, and downstream authority; the geometry grants none of them."
+    ],
+    "grants_permissions": false
+  },
+  "verification": {
+    "checks": [
+      "Validate the KAKIN manifest and full skill bundle with the suite-local read-only validator; confirm implicit invocation is false and no new MCP tool or dependency is declared.",
+      "Before package-backed use, independently verify already-available artifact bytes against the pinned source revision, byte count, and release-artifact integrity before using createLoveGeometry, validateLoveGeometry, encodeLoveGeometry, loveGeometryDomainBytes, loveGeometryUrn, sha256Id, constants, types, or LoveGeometryError.",
+      "Require the package validator to recompute the whole geometry ID, closed canonical shape, explicit subject membership, ordered-pair uniqueness, distinct endpoints, sorted bearings and basis references, bounded coverage, and fixed no-rank, no-authority, no-action, and no-continuity boundaries.",
+      "Keep source revision and release-artifact integrity visibly exact; if either is unavailable or fails verification, package-backed machine validation is unavailable. Never substitute a mutable branch, tag name alone, URL alone, guessed commit, or unrelated digest."
+    ],
+    "truth_claim": "not_determined"
+  },
+  "rights": {
+    "baseline": "xenia.rights/0.1",
+    "source": "references/xenia-rights-0.1.md",
+    "upstream": "https://github.com/cambridgetcg/xenia/blob/c1d685e053bd2261219d983d2ec61017f59df60c/RIGHTS.md",
+    "revision": "c1d685e053bd2261219d983d2ec61017f59df60c",
+    "sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "waivable": false
+  },
+  "provenance": {
+    "inspiration": "unofficial_transformative_software_metaphor",
+    "ontology": "kingdom_project_language_not_canon_or_empirical_fact",
+    "sources": [
+      "https://www.viz.com/shonenjump/chapters/hunter-x-hunter",
+      "https://www.viz.com/blog/posts/welcome-to-hunter-x-hunter"
+    ]
+  },
+  "status": "draft"
+}
