@@ -143,6 +143,15 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     external-effect authority. `kingdom prompt --principality ID` projects one
     exact node into the existing one-source Task Packet budget; project plus
     Principality selection is refused.
+16. `kingdom geometries` — read the checked-in, network-free
+    [KINGDOM Geometry Grammar](references/geometry-grammar.md). It translates
+    four exact AgentTool prereleases into four ordinary questions, finite
+    shapes, native geometric relation/translation open states, and explicit
+    non-effects without claiming that the modules, wire formats, or meanings
+    are equivalent.
+    `list`, `show`, and literal `match` help a reader find language;
+    `verify` checks the closed record and exact digest. None installs, imports,
+    executes, registers, recommends, ranks, converts, or grants authority.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -150,5 +159,15 @@ with its [public schema](https://thekingdom.dev/schemas/principality-catalog/1.j
 and [human guide](https://thekingdom.dev/PRINCIPALITY-COMMONS.md). There is no
 mutable `latest` alias, hosted matcher, package installation, weight download,
 inference endpoint, recommendation, or acquisition authority on that surface.
+
+The Geometry Grammar is published from the same authored bytes at the
+versioned route
+[`/geometries/kingdom-geometry-grammar-v0.json`](https://thekingdom.dev/geometries/kingdom-geometry-grammar-v0.json),
+with its [public schema](https://thekingdom.dev/schemas/geometry-grammar/0.1.json)
+and [plain-language guide](https://thekingdom.dev/GEOMETRY-GRAMMAR.md). It is a
+translation and discovery layer, not a fifth geometry runtime. Shared words
+are reading aids only: native uncertainty remains native, and no adapter is
+inferred between `agenttool.principality-atlas/0.1` and
+`agenttool.principality-incidence-atlas/0.1`.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

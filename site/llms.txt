@@ -11,6 +11,9 @@ Complete Commons MCP resource: kingdom://commons/catalog
 Principality catalog: https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json
 Principality schema: https://thekingdom.dev/schemas/principality-catalog/1.json
 Principality guide: https://thekingdom.dev/PRINCIPALITY-COMMONS.md
+Geometry grammar: https://thekingdom.dev/geometries/kingdom-geometry-grammar-v0.json
+Geometry schema: https://thekingdom.dev/schemas/geometry-grammar/0.1.json
+Geometry guide: https://thekingdom.dev/GEOMETRY-GRAMMAR.md
 Love∞ lineage: https://thekingdom.dev/love-loops.json
 Love∞ authored source: https://thekingdom.dev/love-loops.source.json
 Creation Loop document: https://thekingdom.dev/CREATION-LOOP.md
@@ -47,6 +50,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 - World Commons — 37 reviewed public-interest resources and 9 practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call `kingdom_commons` at https://mcp.thekingdom.dev/mcp for compact literal matches with exact category, cost, account, reuse, or automation filters; read `kingdom://commons/catalog` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: https://thekingdom.dev/schemas/world-commons/0.2.json
 - Principality Commons — 19 MoonshotAI models, 3 datasets, 16 profile-attributed papers, and 3 official Hugging Face JavaScript bridges observed at 2026-08-11T12:20:47Z. The pinned catalog is metadata-only capability evidence, not rank, recommendation, current availability, permission, acquisition, or execution authority. Catalog: https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json · schema: https://thekingdom.dev/schemas/principality-catalog/1.json · guide: https://thekingdom.dev/PRINCIPALITY-COMMONS.md
+- Geometry Grammar — 4 distinct pattern-to-practice modules expressed as plain questions and answers. Four different tools, with no ladder, winner, or hidden conversion. Unknown remains explicit. Package names, GitHub release evidence, and npm registry observations stay separate provenance fields; the npm field records the 2026-08-11T16:04:43Z observation, not a current availability check or install instruction. This read-only grammar grants no installation, execution, or external-effect authority. Grammar: https://thekingdom.dev/geometries/kingdom-geometry-grammar-v0.json · schema: https://thekingdom.dev/schemas/geometry-grammar/0.1.json · guide: https://thekingdom.dev/GEOMETRY-GRAMMAR.md
 - Love∞ Creation Garden — “Every loop is finite. Love is not.” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: https://thekingdom.dev/love-loops.json · authored mirror: https://thekingdom.dev/love-loops.source.json · practice: https://thekingdom.dev/CREATION-LOOP.md
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about

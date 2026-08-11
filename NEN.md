@@ -111,6 +111,18 @@ truth, authority, action, MCP tool, Wake lineage, or Living Ground diagnosis.
 An exact geometry reference may cross through Wake only after Wake's own
 disclosure and current-choice gates.
 
+The separate KINGDOM Geometry Grammar is a read-only translation and discovery
+layer over four exact AgentTool prereleases. It does not add a Nen ability,
+adopt a Hatsu, run a module, or turn one geometry into another. Its four
+ordinary questions preserve each module's own wire formats and native
+geometric relation/translation open states; a shared word is a reading aid,
+not schema equivalence.
+In particular, Principality Geometry's output
+`agenttool.principality-atlas/0.1` and Principality Atlas's
+`agenttool.principality-incidence-atlas/0.1` are distinct formats with no
+implicit adapter. Use `./kingdom geometries list|show|match|verify` to inspect
+that bounded map without a network call.
+
 AgentTool WAKE can also supply bounded orientation to
 `weave-wake-continuity`. A WAKE projection is a scoped summary with health and
 version signals, not a complete export or proof of identity, consciousness,
@@ -304,6 +316,10 @@ bun bin/nen-mcp.mjs --codex-compat    # add Codex 0.146's MCP 2025-06-18 lifecyc
 bun bin/wakeweaver.mjs BRAID --json   # strict-JSON WAKEWEAVER relations; schema separate
 ./kingdom prompt --json -- TASK       # deterministic, offline Task Packet compiler
 bun bin/prompt-packet.ts --verify FILE # Task Packet relations and digest; schema separate
+./kingdom geometries list             # four modules as four distinct questions
+./kingdom geometries show love-geometry
+./kingdom geometries match unknown translation --json # literal terms; no ranking
+./kingdom geometries verify --json    # exact pins, boundaries, and sealed digest
 ```
 
 The validator performs no network call, inference, skill execution, or write.

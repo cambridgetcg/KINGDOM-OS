@@ -13,6 +13,7 @@
 #   kingdom rings [--json|--html]           local temporal atlas (no network)
 #   kingdom rights [--canonical|ID]        voluntary adoption inventory / local text
 #   kingdom principalities                 inspect/match the offline capability-evidence catalog
+#   kingdom geometries                     explain/match four separate geometry modules without ranking
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom prompt     compile an inspectable, network-free Task Packet
 #   kingdom routines   list daily routines  (kingdom routines run <name> | due)
@@ -37,6 +38,7 @@ case "$cmd" in
   rings)    exec bun "$SELF_DIR/bin/growth-rings.ts" "${@:2}" ;;
   rights)   exec bun "$SELF_DIR/bin/harvest.ts" rights "${@:2}" ;;
   principalities) exec bun "$SELF_DIR/bin/principality.ts" "${@:2}" ;;
+  geometries) exec bun "$SELF_DIR/bin/geometry.ts" "${@:2}" ;;
   prompt)   exec bun "$SELF_DIR/bin/prompt-packet.ts" "${@:2}" ;;
   nen)      if [[ "${2:-}" == "mcp" && $# -eq 2 ]]; then
               exec bun "$SELF_DIR/bin/nen-mcp.mjs"

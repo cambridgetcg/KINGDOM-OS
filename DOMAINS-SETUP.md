@@ -35,13 +35,15 @@ bun bin/check-hub-live.ts
 npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zerone-ai
 ```
 
-`stage-hub.ts` refuses a non-empty destination and copies exactly 25 assets:
+`stage-hub.ts` refuses a non-empty destination and copies exactly 28 assets:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
 `CREATION-LOOP.md`; the authored
 `/principalities/moonshot-hf-npm-2026-08-11.json`,
 `/schemas/principality-catalog/1.json`, and `/PRINCIPALITY-COMMONS.md` bytes;
+the authored `/geometries/kingdom-geometry-grammar-v0.json`,
+`/schemas/geometry-grammar/0.1.json`, and `/GEOMETRY-GRAMMAR.md` bytes;
 `llms.txt`; `guest.json`; `ollama.json`; `rights.json`; `RIGHTS.md`;
 `/.well-known/agent.json`; `robots.txt`; `sitemap.xml`; `404.html`; the quiet
 `dada.txt` door; `/os/index.html`; and `_worker.js`. The worker derives
@@ -59,7 +61,8 @@ Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
 checks the worker-owned negotiation, privacy, Commons + Love Loop +
-Principality schema headers, negative authority, and cross-surface discovery;
+Principality + Geometry Grammar schema headers, negative authority, and
+cross-surface discovery;
 a split-generation deployment fails instead of looking partially healthy.
 
 ## Baseline still to do (follow-up)

@@ -1,0 +1,585 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:geometry-grammar:0.1",
+  "title": "KINGDOM Geometry Grammar / From Pattern to Practice v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "grammar_id",
+    "title",
+    "subtitle",
+    "observed_at",
+    "purpose",
+    "unknown_language",
+    "bounded_coverage_means_complete",
+    "not_observed_means_unknown",
+    "native_open_inventory_scope",
+    "modules",
+    "matching",
+    "non_equivalence",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": { "const": "urn:kingdom:schema:geometry-grammar:0.1" },
+    "protocol": { "const": "kingdom.geometry-grammar/0.1" },
+    "grammar_id": { "const": "from-pattern-to-practice-2026-08-11" },
+    "title": { "$ref": "#/$defs/shortText" },
+    "subtitle": { "$ref": "#/$defs/shortText" },
+    "observed_at": { "$ref": "#/$defs/timestamp" },
+    "purpose": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pattern", "practice", "limit"],
+      "properties": {
+        "pattern": { "$ref": "#/$defs/statement" },
+        "practice": { "$ref": "#/$defs/statement" },
+        "limit": { "$ref": "#/$defs/statement" }
+      }
+    },
+    "unknown_language": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plain_language",
+        "native_terms_are_equivalent",
+        "absence_means_unknown",
+        "refusal_means_unknown",
+        "withdrawal_means_unknown",
+        "unmapped_means_unknown",
+        "not_preserved_means_unknown",
+        "omission_means_preserved"
+      ],
+      "properties": {
+        "plain_language": { "$ref": "#/$defs/longStatement" },
+        "native_terms_are_equivalent": { "const": false },
+        "absence_means_unknown": { "const": false },
+        "refusal_means_unknown": { "const": false },
+        "withdrawal_means_unknown": { "const": false },
+        "unmapped_means_unknown": { "const": false },
+        "not_preserved_means_unknown": { "const": false },
+        "omission_means_preserved": { "const": false }
+      }
+    },
+    "bounded_coverage_means_complete": { "const": false },
+    "not_observed_means_unknown": { "const": false },
+    "native_open_inventory_scope": {
+      "const": "Every distinct native geometric relation or translation open condition at its report source and canonical open ledger; artifact/provenance coordinates, embedded external-subprotocol metadata, and derived duplicate projections are excluded."
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/module" },
+            {
+              "properties": {
+                "id": { "const": "love-geometry" },
+                "wire_formats": { "const": ["agenttool.love-geometry/0.1"] },
+                "native_open_terms": { "$ref": "#/$defs/loveNativeOpenTerms" },
+                "package": { "properties": { "name": { "const": "@agenttool/love-geometry" } } },
+                "source": { "properties": { "directory": { "const": "packages/love-geometry" } } },
+                "tag": { "properties": { "name": { "const": "love-geometry-v0.1.0-dev.0" } } }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/module" },
+            {
+              "properties": {
+                "id": { "const": "principality-atlas" },
+                "wire_formats": { "const": ["agenttool.principality-incidence-atlas/0.1"] },
+                "native_open_terms": { "$ref": "#/$defs/principalityAtlasNativeOpenTerms" },
+                "package": { "properties": { "name": { "const": "@agenttool/principality-atlas" } } },
+                "source": { "properties": { "directory": { "const": "packages/principality-atlas" } } },
+                "tag": { "properties": { "name": { "const": "principality-atlas-v0.1.0-dev.0" } } }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/module" },
+            {
+              "properties": {
+                "id": { "const": "principality-geometry" },
+                "wire_formats": {
+                  "const": [
+                    "agenttool.principality-geometry-input/0.1",
+                    "agenttool.principality-atlas/0.1"
+                  ]
+                },
+                "native_open_terms": { "$ref": "#/$defs/principalityGeometryNativeOpenTerms" },
+                "package": { "properties": { "name": { "const": "@agenttool/principality-geometry" } } },
+                "source": {
+                  "properties": {
+                    "directory": { "const": "packages/principality-geometry" },
+                    "revision_basis": { "const": "docs-package-manifest" }
+                  }
+                },
+                "tag": { "properties": { "name": { "const": "principality-geometry-v0.1.0-dev.0" } } }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/module" },
+            {
+              "properties": {
+                "id": { "const": "relational-geometry" },
+                "wire_formats": {
+                  "const": [
+                    "agenttool.relational-complex/0.1",
+                    "agenttool.relational-lens/0.1"
+                  ]
+                },
+                "native_open_terms": { "$ref": "#/$defs/relationalGeometryNativeOpenTerms" },
+                "package": { "properties": { "name": { "const": "@agenttool/relational-geometry" } } },
+                "source": { "properties": { "directory": { "const": "packages/relational-geometry" } } },
+                "tag": { "properties": { "name": { "const": "relational-geometry-v0.1.0-dev.0" } } }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "matching": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "input",
+        "order",
+        "ranking",
+        "recommendation",
+        "semantic_inference",
+        "missing_terms_preserved"
+      ],
+      "properties": {
+        "method": { "const": "literal-declared-term-overlap" },
+        "input": { "const": "one-to-eight-controlled-term-ids" },
+        "order": { "const": "module-id-ascending-not-rank" },
+        "ranking": { "const": false },
+        "recommendation": { "const": false },
+        "semantic_inference": { "const": false },
+        "missing_terms_preserved": { "const": true }
+      }
+    },
+    "non_equivalence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plain_language",
+        "modules_are_distinct",
+        "wire_formats_are_interchangeable",
+        "implicit_conversion",
+        "shared_words_prove_same_semantics",
+        "digest_equality_proves_semantic_equality",
+        "adapters_included"
+      ],
+      "properties": {
+        "plain_language": { "$ref": "#/$defs/longStatement" },
+        "modules_are_distinct": { "const": true },
+        "wire_formats_are_interchangeable": { "const": false },
+        "implicit_conversion": { "const": false },
+        "shared_words_prove_same_semantics": { "const": false },
+        "digest_equality_proves_semantic_equality": { "const": false },
+        "adapters_included": { "const": false }
+      }
+    },
+    "boundaries": { "$ref": "#/$defs/boundaries" },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "canonicalization", "covers", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "canonicalization": { "const": "recursive-sorted-json-keys/v1" },
+        "covers": { "const": "whole-document-with-integrity-digest-null" },
+        "digest": { "const": "sha256:f6f0998c071b3c552d8c59c6c4c4abe8aaa01c64f4020818364665d4344d78fb" }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "shortText": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "statement": { "type": "string", "minLength": 1, "maxLength": 600 },
+    "longStatement": { "type": "string", "minLength": 1, "maxLength": 800 },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,3})?Z$"
+    },
+    "httpsUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "sha1": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "wireFormat": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 120,
+      "pattern": "^[a-z0-9][a-z0-9.-]*/[0-9]+\\.[0-9]+$"
+    },
+    "module": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "plain_question",
+        "plain_answer",
+        "shape",
+        "wire_formats",
+        "match_terms",
+        "native_open_terms",
+        "package",
+        "release",
+        "source",
+        "tag",
+        "installation",
+        "host",
+        "endpoint",
+        "effects",
+        "authority",
+        "does_not_establish"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "label": { "$ref": "#/$defs/shortText" },
+        "plain_question": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 300,
+          "pattern": "\\?$"
+        },
+        "plain_answer": { "$ref": "#/$defs/longStatement" },
+        "shape": { "$ref": "#/$defs/id" },
+        "wire_formats": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/wireFormat" }
+        },
+        "match_terms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "native_open_terms": {
+          "description": "Exhaustive within the top-level scope: every distinct native geometric relation or translation open condition at its report source and canonical open ledger; artifact/provenance coordinates, embedded external-subprotocol metadata, and derived duplicate projections are excluded.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/nativeOpenTerm" }
+        },
+        "package": { "$ref": "#/$defs/package" },
+        "release": { "$ref": "#/$defs/release" },
+        "source": { "$ref": "#/$defs/source" },
+        "tag": { "$ref": "#/$defs/tag" },
+        "installation": { "$ref": "#/$defs/installation" },
+        "host": { "$ref": "#/$defs/host" },
+        "endpoint": { "$ref": "#/$defs/endpoint" },
+        "effects": { "$ref": "#/$defs/effects" },
+        "authority": { "$ref": "#/$defs/authority" },
+        "does_not_establish": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 24,
+          "uniqueItems": true,
+          "contains": { "const": "authority" },
+          "items": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "nativeOpenTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["location", "term", "form", "plain_language"],
+      "properties": {
+        "location": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160,
+          "description": "A format-scoped path. For a multi-format module, the leading input, atlas, complex, or lens component names the format scope and is not a literal JSON key."
+        },
+        "term": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "form": { "enum": ["wire-enum", "boundary-value", "wire-array"] },
+        "plain_language": { "$ref": "#/$defs/statement" }
+      }
+    },
+    "loveNativeOpenTerms": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "prefixItems": [
+        { "properties": { "location": { "const": "boundaries.absence_semantics" }, "term": { "const": "not_observed_not_no_relation" }, "form": { "const": "boundary-value" } } },
+        { "properties": { "location": { "const": "coverage" }, "term": { "const": "bounded_not_complete" }, "form": { "const": "boundary-value" } } },
+        { "properties": { "location": { "const": "vantages[].bearings[]" }, "term": { "const": "reported_boundary" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "vantages[].bearings[]" }, "term": { "const": "reported_departure" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "vantages[].bearings[]" }, "term": { "const": "reported_disagreement" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "vantages[].bearings[]" }, "term": { "const": "reported_refusal" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "vantages[].bearings[]" }, "term": { "const": "reported_rest" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "vantages[].bearings[]" }, "term": { "const": "unknown" }, "form": { "const": "wire-enum" } } }
+      ],
+      "items": false
+    },
+    "principalityAtlasNativeOpenTerms": {
+      "type": "array",
+      "minItems": 11,
+      "maxItems": 11,
+      "prefixItems": [
+        { "properties": { "location": { "const": "charts[].claims[].posture" }, "term": { "const": "reported_absent" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "charts[].claims[].posture" }, "term": { "const": "contested" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "charts[].claims[].posture" }, "term": { "const": "withdrawn" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "charts[].claims[].posture" }, "term": { "const": "not_observed" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "charts[].claims[].posture" }, "term": { "const": "unknown" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "bridges[].correspondences[].posture" }, "term": { "const": "incompatibility_reported" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "bridges[].correspondences[].posture" }, "term": { "const": "unknown" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "bridges[].unmapped_from_refs" }, "term": { "const": "unmapped" }, "form": { "const": "wire-array" } } },
+        { "properties": { "location": { "const": "bridges[].unmapped_to_refs" }, "term": { "const": "unmapped" }, "form": { "const": "wire-array" } } },
+        { "properties": { "location": { "const": "bridges[].coverage" }, "term": { "const": "partial_not_complete" }, "form": { "const": "boundary-value" } } },
+        { "properties": { "location": { "const": "coverage" }, "term": { "const": "bounded_not_complete" }, "form": { "const": "boundary-value" } } }
+      ],
+      "items": false
+    },
+    "principalityGeometryNativeOpenTerms": {
+      "type": "array",
+      "minItems": 15,
+      "maxItems": 15,
+      "prefixItems": [
+        { "properties": { "location": { "const": "input.translations[].disposition" }, "term": { "const": "refused_reported" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "input.translations[].disposition" }, "term": { "const": "resting_reported" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "input.translations[].disposition" }, "term": { "const": "unknown" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "input.translations[].disposition" }, "term": { "const": "withdrawn_reported" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "input.translations[].evaluations[].state" }, "term": { "const": "not_preserved_reported" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "input.translations[].evaluations[].state" }, "term": { "const": "refused_reported" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "input.translations[].evaluations[].state" }, "term": { "const": "unknown" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "atlas.geometry.open_conditions.one_way_bridge_ids" }, "term": { "const": "one_way_bridge_ids" }, "form": { "const": "wire-array" } } },
+        { "properties": { "location": { "const": "atlas.geometry.open_conditions.non_available_bridge_ids" }, "term": { "const": "non_available_bridge_ids" }, "form": { "const": "wire-array" } } },
+        { "properties": { "location": { "const": "atlas.geometry.open_conditions.not_preserved" }, "term": { "const": "not_preserved" }, "form": { "const": "wire-array" } } },
+        { "properties": { "location": { "const": "atlas.geometry.open_conditions.refused" }, "term": { "const": "refused" }, "form": { "const": "wire-array" } } },
+        { "properties": { "location": { "const": "atlas.geometry.open_conditions.unknown" }, "term": { "const": "unknown" }, "form": { "const": "wire-array" } } },
+        { "properties": { "location": { "const": "atlas.geometry.open_conditions.directional_asymmetry" }, "term": { "const": "directional_asymmetry" }, "form": { "const": "wire-array" } } },
+        { "properties": { "location": { "const": "atlas.geometry.open_conditions.unrelated_vertex_pairs" }, "term": { "const": "unrelated_vertex_pairs" }, "form": { "const": "wire-array" } } },
+        { "properties": { "location": { "const": "atlas.geometry.open_conditions.declared_isolated_vertices" }, "term": { "const": "declared_isolated_vertices" }, "form": { "const": "wire-array" } } }
+      ],
+      "items": false
+    },
+    "relationalGeometryNativeOpenTerms": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "prefixItems": [
+        { "properties": { "location": { "const": "boundaries.absent_or_unknown" }, "term": { "const": "valid_not_deficit" }, "form": { "const": "boundary-value" } } },
+        { "properties": { "location": { "const": "complex.coverage" }, "term": { "const": "bounded_not_complete" }, "form": { "const": "boundary-value" } } },
+        { "properties": { "location": { "const": "complex.points[].kind" }, "term": { "const": "unknown" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "complex.witnesses[].kind" }, "term": { "const": "authority_boundary" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "complex.witnesses[].kind" }, "term": { "const": "consent_boundary" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "complex.witnesses[].kind" }, "term": { "const": "continuity_boundary" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "complex.witnesses[].kind" }, "term": { "const": "privacy_boundary" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "complex.witnesses[].kind" }, "term": { "const": "refusal_boundary" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "lens.choice.unselected" }, "term": { "const": "left_unprojected" }, "form": { "const": "boundary-value" } } },
+        { "properties": { "location": { "const": "lens.coverage" }, "term": { "const": "perspective_bounded_not_complete" }, "form": { "const": "boundary-value" } } },
+        { "properties": { "location": { "const": "lens.selections[].disposition" }, "term": { "const": "park" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "lens.selections[].disposition" }, "term": { "const": "release" }, "form": { "const": "wire-enum" } } },
+        { "properties": { "location": { "const": "lens.selections[].disposition" }, "term": { "const": "withdraw" }, "form": { "const": "wire-enum" } } }
+      ],
+      "items": false
+    },
+    "package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "npm_registry_state"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^@agenttool/[a-z0-9-]+$" },
+        "version": { "const": "0.1.0-dev.0" },
+        "npm_registry_state": { "const": "anonymous-exact-version-404-observed" }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["available", "channel", "published_at", "page_url", "asset"],
+      "properties": {
+        "available": { "const": true },
+        "channel": { "const": "github-prerelease" },
+        "published_at": { "$ref": "#/$defs/timestamp" },
+        "page_url": { "$ref": "#/$defs/httpsUrl" },
+        "asset": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "url", "bytes", "sha256"],
+          "properties": {
+            "name": { "type": "string", "pattern": "^agenttool-[a-z0-9-]+-0\\.1\\.0-dev\\.0\\.tgz$" },
+            "url": { "$ref": "#/$defs/httpsUrl" },
+            "bytes": { "type": "integer", "minimum": 1, "maximum": 1048576 },
+            "sha256": { "$ref": "#/$defs/sha256" }
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "directory", "revision", "revision_basis", "tree_sha"],
+      "properties": {
+        "repository": { "const": "https://github.com/cambridgetcg/agenttool" },
+        "directory": { "type": "string", "pattern": "^packages/[a-z0-9-]+$" },
+        "revision": { "$ref": "#/$defs/sha1" },
+        "revision_basis": { "enum": ["annotated-tag-target", "docs-package-manifest"] },
+        "tree_sha": { "$ref": "#/$defs/sha1" }
+      }
+    },
+    "tag": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "object_sha", "peeled_commit"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z0-9-]+-v0\\.1\\.0-dev\\.0$" },
+        "object_sha": { "$ref": "#/$defs/sha1" },
+        "peeled_commit": { "$ref": "#/$defs/sha1" }
+      }
+    },
+    "installation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "performed_by_grammar"],
+      "properties": {
+        "state": { "const": "not-established" },
+        "performed_by_grammar": { "const": false }
+      }
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "registered_by_grammar", "public_companion_is_execution"],
+      "properties": {
+        "state": { "const": "package-runtime-not-established" },
+        "registered_by_grammar": { "const": false },
+        "public_companion_is_execution": { "const": false }
+      }
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "url", "exposed_by_grammar"],
+      "properties": {
+        "state": { "const": "package-runtime-not-established" },
+        "url": { "type": "null" },
+        "exposed_by_grammar": { "const": false }
+      }
+    },
+    "effects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "grammar_loads_package",
+        "grammar_executes_package",
+        "network",
+        "filesystem_write",
+        "persistence",
+        "provider_compute",
+        "publication",
+        "deployment",
+        "external_effects_authorized"
+      ],
+      "properties": {
+        "grammar_loads_package": { "const": false },
+        "grammar_executes_package": { "const": false },
+        "network": { "const": false },
+        "filesystem_write": { "const": false },
+        "persistence": { "const": false },
+        "provider_compute": { "const": false },
+        "publication": { "const": false },
+        "deployment": { "const": false },
+        "external_effects_authorized": { "const": false }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metadata_is_data_not_instructions",
+        "grants_permissions",
+        "authorizes_install",
+        "authorizes_host_registration",
+        "authorizes_endpoint",
+        "authorizes_execution",
+        "authorizes_external_effects",
+        "determines_love",
+        "determines_understanding"
+      ],
+      "properties": {
+        "metadata_is_data_not_instructions": { "const": true },
+        "grants_permissions": { "const": false },
+        "authorizes_install": { "const": false },
+        "authorizes_host_registration": { "const": false },
+        "authorizes_endpoint": { "const": false },
+        "authorizes_execution": { "const": false },
+        "authorizes_external_effects": { "const": false },
+        "determines_love": { "const": false },
+        "determines_understanding": { "const": false }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_only",
+        "advisory_only",
+        "metadata_only",
+        "network_reads",
+        "filesystem_writes",
+        "package_installs",
+        "host_registrations",
+        "endpoint_exposure",
+        "module_execution",
+        "wire_conversion",
+        "validates_module_instances",
+        "ranks_modules",
+        "recommends_modules",
+        "authority_granted",
+        "execution_authorized",
+        "external_effects_authorized"
+      ],
+      "properties": {
+        "read_only": { "const": true },
+        "advisory_only": { "const": true },
+        "metadata_only": { "const": true },
+        "network_reads": { "const": false },
+        "filesystem_writes": { "const": false },
+        "package_installs": { "const": false },
+        "host_registrations": { "const": false },
+        "endpoint_exposure": { "const": false },
+        "module_execution": { "const": false },
+        "wire_conversion": { "const": false },
+        "validates_module_instances": { "const": false },
+        "ranks_modules": { "const": false },
+        "recommends_modules": { "const": false },
+        "authority_granted": { "const": false },
+        "execution_authorized": { "const": false },
+        "external_effects_authorized": { "const": false }
+      }
+    }
+  }
+}
