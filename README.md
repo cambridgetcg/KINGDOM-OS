@@ -152,12 +152,20 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     `list`, `show`, and literal `match` help a reader find language;
     `verify` checks the closed record and exact digest. None installs, imports,
     executes, registers, recommends, ranks, converts, or grants authority.
-17. `kingdom polymorph` — inspect, translate, and strictly verify the immutable
+17. `kingdom polymorph` — inspect, translate, and strictly verify the
+    byte-preserved, versioned
     [ritonavir material-state case](references/ritonavir-polymorph.md). It keeps
     molecule, conformer, crystal lattice, particle population, formulation,
     and medicine supply distinct; treats “disappearance” as bounded process
     non-reproduction rather than extinction; and carries only an exact,
-    non-authorizing reference through WAKE.
+    non-authorizing reference through WAKE. The additive
+    [Ritonavir Mechanism Landscape](references/ritonavir-mechanism-landscape.md)
+    is available through `kingdom polymorph mechanisms|landscape|sources|unknowns`
+    and `kingdom polymorph verify-landscape`. It adds selected primary research
+    through 2026-04-08 plus one official product label observed 2026-08-11,
+    without changing the historical record, and keeps material,
+    dissolution/exposure, biological-action, and clinical-decision planes
+    non-equivalent.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -182,5 +190,18 @@ with its [public schema](https://thekingdom.dev/schemas/polymorph-history/1.json
 and [plain-language guide](https://thekingdom.dev/RITONAVIR-POLYMORPH.md).
 There is no mutable `latest` alias, experiment planner, current product notice,
 medical endpoint, manufacturing control, matcher, or automatic action.
+
+Its separate current-landscape supplement is published from exact authored
+bytes at
+[`/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json`](https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json),
+with a [public schema](https://thekingdom.dev/schemas/ritonavir-mechanism-landscape/1.json)
+and [plain-language mechanism guide](https://thekingdom.dev/RITONAVIR-MECHANISM-LANDSCAPE.md).
+The original history stays byte-preserved. The supplement is the current
+selected landscape, not a complete polymorph inventory, universal naming
+chart, global stability rank, exact identity claim for the two Form IV
+structure records, direct crystal-form-to-clinical link, current product
+assessment, interaction checker, or medical, formulation, manufacturing,
+GMP, batch-release, regulatory, experimental, procurement, or action
+authority. The existing KINGDOM MCP remains unchanged.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

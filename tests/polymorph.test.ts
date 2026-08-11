@@ -309,6 +309,31 @@ describe("Polymorph History", () => {
     expect(() => loadPolymorphHistory(oversized)).toThrow("exceeds 1048576 bytes");
   });
 
+  test("keeps runtime validation aligned with the portable evidence envelope", () => {
+    const futureSource = resignedHistory();
+    futureSource.sources[0].published_on = "2025-01-01";
+    futureSource.integrity.digest = polymorphHistoryDigest(futureSource);
+    expect(verifyPolymorphHistory(futureSource)).toContainEqual({
+      field: "$.sources[0].published_on",
+      code: "source-after-evidence-horizon",
+    });
+
+    const duplicateGeometry = resignedHistory();
+    duplicateGeometry.ontology.geometry[1].term = duplicateGeometry.ontology.geometry[0].term;
+    duplicateGeometry.integrity.digest = polymorphHistoryDigest(duplicateGeometry);
+    expect(issueCodes(duplicateGeometry)).toContain("duplicate-geometry-term");
+
+    const emptyStates = resignedHistory();
+    emptyStates.events[0].form_states = [];
+    emptyStates.integrity.digest = polymorphHistoryDigest(emptyStates);
+    expect(issueCodes(emptyStates)).toContain("invalid-event");
+
+    const emptyLimitations = resignedHistory();
+    emptyLimitations.claims[0].limitations = [];
+    emptyLimitations.integrity.digest = polymorphHistoryDigest(emptyLimitations);
+    expect(issueCodes(emptyLimitations)).toContain("invalid-claim");
+  });
+
   test("validates the authored case against the portable Draft 2020 schema", () => {
     const result = Bun.spawnSync({
       cmd: [

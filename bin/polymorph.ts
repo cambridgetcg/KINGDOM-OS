@@ -214,6 +214,10 @@ export function verifyPolymorphHistory(value: unknown): PolymorphIssue[] {
     add("$.ontology.disappearance", "literal-extinction-boundary-mismatch");
   }
   if (!Array.isArray(value.ontology?.geometry) || value.ontology.geometry.length < 4) add("$.ontology.geometry", "insufficient-geometry");
+  const geometryTerms = arrayOf(value.ontology?.geometry)
+    .map((item) => item?.term)
+    .filter((term): term is string => typeof term === "string");
+  if (!unique(geometryTerms)) add("$.ontology.geometry", "duplicate-geometry-term");
   for (const [index, item] of arrayOf(value.ontology?.geometry).entries()) {
     if (!sameKeys(item, ["term", "maps_to", "limit"]) || !isId(item.term) || !isText(item.maps_to) || !isText(item.limit)) {
       add(`$.ontology.geometry[${index}]`, "invalid-geometry-term");
@@ -270,6 +274,10 @@ export function verifyPolymorphHistory(value: unknown): PolymorphIssue[] {
         !isStringArray(source.authors, 30) || !isText(source.authority_note)) {
       add(`$.sources[${index}]`, "invalid-source");
     }
+    if (isCalendarDate(source?.published_on) && isCalendarDate(value.evidence_through, true) &&
+        source.published_on > value.evidence_through) {
+      add(`$.sources[${index}].published_on`, "source-after-evidence-horizon");
+    }
   }
 
   const references = (path: string, entries: unknown, target: Set<string>, allowEmpty = false) => {
@@ -280,7 +288,7 @@ export function verifyPolymorphHistory(value: unknown): PolymorphIssue[] {
   for (const [index, claim] of arrayOf(value.claims).entries()) {
     if (!sameKeys(claim, ["id", "kind", "summary", "evidence_class", "source_ids", "context_ids", "form_ids", "limitations"]) ||
         !isId(claim.id) || !isId(claim.kind) || !isText(claim.summary) || !EVIDENCE_CLASSES.has(claim.evidence_class) ||
-        !isStringArray(claim.limitations, 16)) add(`$.claims[${index}]`, "invalid-claim");
+        !isStringArray(claim.limitations, 16) || claim.limitations.length === 0) add(`$.claims[${index}]`, "invalid-claim");
     references(`$.claims[${index}].source_ids`, claim.source_ids, sets.sources);
     references(`$.claims[${index}].context_ids`, claim.context_ids, sets.contexts);
     references(`$.claims[${index}].form_ids`, claim.form_ids, sets.forms, true);
@@ -290,7 +298,8 @@ export function verifyPolymorphHistory(value: unknown): PolymorphIssue[] {
     if (!sameKeys(event, ["id", "sequence", "label", "event_time", "observation_time", "publication_time", "context_ids", "claim_ids", "form_states", "disappearance_predicate"]) ||
         !isId(event.id) || !Number.isSafeInteger(event.sequence) || event.sequence < 1 ||
         !isText(event.label, 300) || !isText(event.event_time, 200) ||
-        !isText(event.observation_time, 200) || !isText(event.publication_time, 200) || !Array.isArray(event.form_states)) {
+        !isText(event.observation_time, 200) || !isText(event.publication_time, 200) ||
+        !Array.isArray(event.form_states) || event.form_states.length === 0) {
       add(`$.events[${index}]`, "invalid-event");
     }
     for (const clock of ["event_time", "observation_time", "publication_time"] as const) {

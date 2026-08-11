@@ -83,6 +83,14 @@ const POLYMORPH_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${POLYMORPH_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const RITONAVIR_MECHANISM_PATH = "/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json";
+const RITONAVIR_MECHANISM_SCHEMA_PATH = "/schemas/ritonavir-mechanism-landscape/1.json";
+const RITONAVIR_MECHANISM_DOCUMENT_PATH = "/RITONAVIR-MECHANISM-LANDSCAPE.md";
+const RITONAVIR_MECHANISM_SCHEMA_LINK = {
+  target: RITONAVIR_MECHANISM_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${RITONAVIR_MECHANISM_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -134,6 +142,11 @@ function addGeometryGrammarSchemaLink(headers) {
 
 function addPolymorphSchemaLink(headers) {
   const link = POLYMORPH_SCHEMA_LINK;
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addRitonavirMechanismSchemaLink(headers) {
+  const link = RITONAVIR_MECHANISM_SCHEMA_LINK;
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
@@ -1000,6 +1013,15 @@ export function createKingdomWorker(options = {}) {
     const requestsPolymorphDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === POLYMORPH_DOCUMENT_PATH;
+    const requestsRitonavirMechanism = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === RITONAVIR_MECHANISM_PATH;
+    const requestsRitonavirMechanismSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === RITONAVIR_MECHANISM_SCHEMA_PATH;
+    const requestsRitonavirMechanismDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === RITONAVIR_MECHANISM_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
@@ -1030,12 +1052,24 @@ export function createKingdomWorker(options = {}) {
     const servesPolymorphSchema = requestsPolymorphSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
-    const servesPolymorphDocument = requestsPolymorphDocument && asset.ok;
+    const servesPolymorphDocument = requestsPolymorphDocument && asset.ok &&
+      (schemaAssetType.includes("text/plain") ||
+        schemaAssetType.includes("text/markdown"));
+    const servesRitonavirMechanism = requestsRitonavirMechanism && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesRitonavirMechanismSchema = requestsRitonavirMechanismSchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesRitonavirMechanismDocument = requestsRitonavirMechanismDocument && asset.ok &&
+      (schemaAssetType.includes("text/plain") ||
+        schemaAssetType.includes("text/markdown"));
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
         !servesGeometryGrammar && !servesGeometryGrammarSchema && !servesGeometryGrammarDocument &&
-        !servesPolymorphCase && !servesPolymorphSchema && !servesPolymorphDocument) return asset;
+        !servesPolymorphCase && !servesPolymorphSchema && !servesPolymorphDocument &&
+        !servesRitonavirMechanism && !servesRitonavirMechanismSchema && !servesRitonavirMechanismDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -1043,6 +1077,7 @@ export function createKingdomWorker(options = {}) {
     if (servesPrincipalityCatalog) addPrincipalitySchemaLink(headers);
     if (servesGeometryGrammar) addGeometryGrammarSchemaLink(headers);
     if (servesPolymorphCase) addPolymorphSchemaLink(headers);
+    if (servesRitonavirMechanism) addRitonavirMechanismSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -1094,6 +1129,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesPolymorphDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesRitonavirMechanism) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesRitonavirMechanismSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesRitonavirMechanismDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

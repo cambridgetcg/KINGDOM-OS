@@ -41,6 +41,11 @@ export const HUB_ASSETS = [
   { source: "data/polymorphs/ritonavir-disappearing-polymorph.v1.json", destination: "polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json" },
   { source: "schemas/polymorph-history-v1.schema.json", destination: "schemas/polymorph-history/1.json" },
   { source: "references/ritonavir-polymorph.md", destination: "RITONAVIR-POLYMORPH.md" },
+  // The current mechanism landscape is a separate digest-bound supplement:
+  // it neither mutates nor silently replaces the versioned history bytes.
+  { source: "data/polymorphs/ritonavir-mechanism-landscape.v1.json", destination: "polymorphs/ritonavir-mechanism-landscape-2026-08-11.json" },
+  { source: "schemas/ritonavir-mechanism-landscape-v1.schema.json", destination: "schemas/ritonavir-mechanism-landscape/1.json" },
+  { source: "references/ritonavir-mechanism-landscape.md", destination: "RITONAVIR-MECHANISM-LANDSCAPE.md" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
   { source: "site/ollama.json", destination: "ollama.json" },

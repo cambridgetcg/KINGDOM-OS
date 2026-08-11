@@ -45,6 +45,14 @@ import {
   polymorphPublicDiscovery,
 } from "./polymorph.ts";
 import {
+  loadRitonavirMechanismLandscape,
+  RITONAVIR_MECHANISM_DIGEST,
+  RITONAVIR_MECHANISM_DOCUMENT_URL,
+  RITONAVIR_MECHANISM_SCHEMA_URL,
+  RITONAVIR_MECHANISM_URL,
+  ritonavirMechanismPublicDiscovery,
+} from "./ritonavir-mechanism.ts";
+import {
   validateWorldCommons,
   WORLD_COMMONS_ACCESS_COSTS,
   WORLD_COMMONS_ACCOUNT_TYPES,
@@ -82,6 +90,9 @@ const geometryGrammarDocumentPath = new URL(GEOMETRY_GRAMMAR_DOCUMENT_URL).pathn
 const polymorphCasePath = new URL(POLYMORPH_CASE_URL).pathname;
 const polymorphSchemaPath = new URL(POLYMORPH_SCHEMA_URL).pathname;
 const polymorphDocumentPath = new URL(POLYMORPH_DOCUMENT_URL).pathname;
+const ritonavirMechanismPath = new URL(RITONAVIR_MECHANISM_URL).pathname;
+const ritonavirMechanismSchemaPath = new URL(RITONAVIR_MECHANISM_SCHEMA_URL).pathname;
+const ritonavirMechanismDocumentPath = new URL(RITONAVIR_MECHANISM_DOCUMENT_URL).pathname;
 
 function url(path: string, extra: Record<string, string> = {}): URL {
   const target = new URL(path, origin);
@@ -314,7 +325,33 @@ try {
     throw new Error(`${polymorphDocumentPath} is not served as public Markdown`);
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath]) {
+  const ritonavirMechanismHead = await fetch(url(ritonavirMechanismPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  const ritonavirMechanismLink = ritonavirMechanismHead.headers.get("link") || "";
+  if (!ritonavirMechanismHead.ok ||
+      !(ritonavirMechanismHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+      ritonavirMechanismHead.headers.get("access-control-allow-origin") !== "*" ||
+      (ritonavirMechanismHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+      !hasLinkRelation(ritonavirMechanismLink, ritonavirMechanismSchemaPath, "describedby")) {
+    throw new Error(`${ritonavirMechanismPath} is not public JSON described by the Ritonavir Mechanism Landscape schema`);
+  }
+
+  const ritonavirMechanismDocumentHead = await fetch(url(ritonavirMechanismDocumentPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  if (!ritonavirMechanismDocumentHead.ok ||
+      !(ritonavirMechanismDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+      ritonavirMechanismDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+      (ritonavirMechanismDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+    throw new Error(`${ritonavirMechanismDocumentPath} is not served as public Markdown`);
+  }
+
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -338,6 +375,8 @@ try {
   const expectedGeometryGrammar = geometryGrammarPublicDiscovery(geometryGrammar);
   const polymorphHistory = loadPolymorphHistory();
   const expectedPolymorph = polymorphPublicDiscovery(polymorphHistory);
+  const ritonavirMechanism = loadRitonavirMechanismLandscape();
+  const expectedRitonavirMechanism = ritonavirMechanismPublicDiscovery(ritonavirMechanism);
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
   validateLoveLoops(sourceLoveLoops, false);
@@ -436,6 +475,36 @@ try {
     throw new Error("Polymorph History discovery or negative authority drifted across public surfaces");
   }
 
+  const ritonavirMechanismBoundary = expectedRitonavirMechanism.boundary;
+  if (!isDeepStrictEqual(manifest?.ritonavir_mechanism_landscape, expectedRitonavirMechanism) ||
+      !isDeepStrictEqual(guest?.ritonavir_mechanism_landscape, expectedRitonavirMechanism) ||
+      !isDeepStrictEqual(authoredKingdom?.ritonavir_mechanism_landscape, expectedRitonavirMechanism) ||
+      !hasGuestGet(RITONAVIR_MECHANISM_URL) ||
+      !hasGuestGet(RITONAVIR_MECHANISM_SCHEMA_URL) ||
+      !hasGuestGet(RITONAVIR_MECHANISM_DOCUMENT_URL) ||
+      !llms.includes(RITONAVIR_MECHANISM_URL) ||
+      !llms.includes(RITONAVIR_MECHANISM_SCHEMA_URL) ||
+      !llms.includes(RITONAVIR_MECHANISM_DOCUMENT_URL) ||
+      expectedRitonavirMechanism.integrity.digest !== RITONAVIR_MECHANISM_DIGEST ||
+      expectedRitonavirMechanism.source_history.supersedes_for_current_landscape !== true ||
+      expectedRitonavirMechanism.counts.planes !== 8 ||
+      expectedRitonavirMechanism.counts.entities !== 19 ||
+      expectedRitonavirMechanism.counts.mechanisms !== 7 ||
+      expectedRitonavirMechanism.counts.relations !== 18 ||
+      ritonavirMechanismBoundary.medical_advice !== false ||
+      ritonavirMechanismBoundary.interaction_checker !== false ||
+      ritonavirMechanismBoundary.treatment_change_authority !== false ||
+      ritonavirMechanismBoundary.direct_crystal_form_to_clinical_outcome !== false ||
+      ritonavirMechanismBoundary.form_iv_exact_equivalence_established !== false ||
+      ritonavirMechanismBoundary.complete_solid_form_landscape_established !== false ||
+      ritonavirMechanismBoundary.experiment_authority !== false ||
+      ritonavirMechanismBoundary.automatic_action !== false ||
+      ritonavirMechanismBoundary.public_surface_read_only !== true ||
+      "mcp" in expectedRitonavirMechanism || "matcher" in expectedRitonavirMechanism ||
+      "clinical_decision" in expectedRitonavirMechanism) {
+    throw new Error("Ritonavir Mechanism Landscape discovery, lineage, or negative authority drifted across public surfaces");
+  }
+
   const liveKingdom: any = await (await get("/kingdom.json")).json();
   if (liveKingdom?.creation_loop?.url !== LOVE_LOOPS_URL ||
       liveKingdom?.creation_loop?.source !== LOVE_LOOPS_SOURCE_URL ||
@@ -451,6 +520,9 @@ try {
   }
   if (!isDeepStrictEqual(liveKingdom?.polymorph_commons, expectedPolymorph)) {
     throw new Error("derived kingdom.json did not preserve Polymorph History discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.ritonavir_mechanism_landscape, expectedRitonavirMechanism)) {
+    throw new Error("derived kingdom.json did not preserve Ritonavir Mechanism Landscape discovery");
   }
 
   const mcpEndpoint = new URL(manifest?.mcp?.endpoint || "");
@@ -511,7 +583,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph schemas · coherent creation + Principality + Geometry Grammar + Polymorph discovery · live MCP contract · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism discovery · live MCP contract unchanged · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;

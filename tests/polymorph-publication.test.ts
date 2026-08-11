@@ -31,7 +31,7 @@ describe("Polymorph History publication", () => {
       source: "references/ritonavir-polymorph.md",
       destination: "RITONAVIR-POLYMORPH.md",
     });
-    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("polymorphs/"))).toHaveLength(1);
+    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("polymorphs/"))).toHaveLength(2);
     expect(HUB_ASSETS.some(({ destination }) => /polymorphs\/(?:latest|current)\.json/.test(destination))).toBe(false);
     expect(existsSync(join(ROOT, "site", "polymorphs"))).toBe(false);
   });
@@ -68,6 +68,9 @@ describe("Polymorph History publication", () => {
     expect(guest.polymorph_commons).toEqual(discovery);
     expect(kingdom.polymorph_commons).toEqual(discovery);
     expect(html).toContain('id="polymorph-history"');
+    expect(html).toContain('href="#polymorph-history"');
+    expect(html).toContain("Historical educational evidence only—not medical advice.");
+    expect(html).toContain("Do not use this page to prescribe, dose, change, or stop ritonavir");
     expect(html).toContain('href="/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json"');
     expect(html).toContain('href="/schemas/polymorph-history/1.json"');
     expect(html).toContain('href="/RITONAVIR-POLYMORPH.md"');

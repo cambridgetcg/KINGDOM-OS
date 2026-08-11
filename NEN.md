@@ -48,6 +48,12 @@ not need a validator in order to be. Our interventions do.
   bounded non-detection, recovery, and a WAKE-safe reference seam. Its
   ritonavir case is historical education, not medical, experimental,
   manufacturing, regulatory, publication, or action authority.
+  The separate Ritonavir Mechanism Landscape is a digest-bound
+  current-landscape supplement, not another Nen ability: it adds later
+  source-scoped entities and explicit material→particle→formulation/dissolution
+  →exposure→biological relations without rewriting the byte-preserved history.
+  It grants no medical or interaction authority, does not write WAKE or
+  AgentTool, and is not exposed through the existing KINGDOM MCP.
 - `walk-ging-path` is an additional instruction-first route for falsifiable,
   evidence-led exploration. It intentionally has no `ability.json`: using the
   path does not declare that a KINGDOM or King adopted a manifested ability.

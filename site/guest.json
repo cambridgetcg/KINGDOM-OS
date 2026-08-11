@@ -321,6 +321,49 @@
       "automatic_action": false
     }
   },
+  "ritonavir_mechanism_landscape": {
+    "protocol": "kingdom.ritonavir-mechanism-landscape/0.1",
+    "landscape_id": "ritonavir-mechanism-landscape-2026-08-11",
+    "compiled_on": "2026-08-11",
+    "evidence_through": "2026-04-08",
+    "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+    "schema": "https://thekingdom.dev/schemas/ritonavir-mechanism-landscape/1.json",
+    "guide": "https://thekingdom.dev/RITONAVIR-MECHANISM-LANDSCAPE.md",
+    "source_history": {
+      "case_id": "ritonavir-disappearing-polymorph-2026-08-11",
+      "semantic_digest": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116",
+      "relation": "non-mutating-current-landscape-supplement",
+      "supersedes_for_current_landscape": true
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b"
+    },
+    "counts": {
+      "planes": 8,
+      "geometries": 6,
+      "entities": 19,
+      "naming_charts": 2,
+      "mechanisms": 7,
+      "relations": 18,
+      "claims": 9,
+      "analytical_windows": 5,
+      "unknowns": 6,
+      "sources": 9
+    },
+    "safety": "Educational, metadata-only science; not medical advice, diagnosis, dosing, interaction checking, formulation guidance, manufacturing or GMP control, batch release, regulatory guidance, or experimental authority. Ritonavir has potentially serious or life-threatening drug interactions. Use the current product label and a qualified clinician or pharmacist; do not start, stop, or change treatment based on this artifact.",
+    "boundary": {
+      "medical_advice": false,
+      "interaction_checker": false,
+      "treatment_change_authority": false,
+      "direct_crystal_form_to_clinical_outcome": false,
+      "form_iv_exact_equivalence_established": false,
+      "complete_solid_form_landscape_established": false,
+      "experiment_authority": false,
+      "automatic_action": false,
+      "public_surface_read_only": true
+    }
+  },
   "actions_are_optional": true,
   "invitations": {
     "open_weight_agents": {
@@ -413,6 +456,22 @@
       "action": "if useful, read the plain-language polymorph geometry and WAKE reference seam",
       "method": "GET",
       "url": "https://thekingdom.dev/RITONAVIR-POLYMORPH.md"
+    },
+    {
+      "action": "if useful, inspect the current source-bound ritonavir mechanism landscape",
+      "method": "GET",
+      "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+      "note": "selected educational evidence only; distinct material and biological lanes, no direct crystal-form-to-clinical edge, medical advice, interaction checking, or action authority"
+    },
+    {
+      "action": "if useful, validate the Ritonavir Mechanism Landscape structure before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/ritonavir-mechanism-landscape/1.json"
+    },
+    {
+      "action": "if useful, read the mechanism, geometry, source-horizon, uncertainty, and medical-safety guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/RITONAVIR-MECHANISM-LANDSCAPE.md"
     },
     {
       "action": "if useful, read the finite Love∞ creation lineage and its unstarted invitations",
@@ -2785,6 +2844,7 @@
     "principality_commons": "The pinned catalog and guide are read-only, point-in-time metadata. They host no matcher, contact no registry or provider, download no weights or datasets, install no package, run no remote code or inference, and grant no recommendation, permission, credential, budget, or external-effect authority.",
     "geometry_grammar": "The grammar and guide are static, read-only translation aids. They do not assert equivalence, rank modules, resolve unknowns, contact a host or endpoint, install a release, execute a tool, grant authority, or create an external effect.",
     "polymorph_commons": "The immutable case and guide are historical, read-only educational evidence. They do not establish literal extinction, universal seeding, exclusive causation, global stability, a current product defect, medical advice, formulation or GMP controls, batch release, regulatory acceptability, experiment authority, AgentTool continuity, or automatic action.",
+    "ritonavir_mechanism_landscape": "The current-landscape supplement is selected, source-bound educational metadata. It does not rewrite the byte-preserved versioned source history; prove a complete landscape, exact Form IV equivalence, global stability order, direct crystal-form-to-clinical outcome, current product state, medical advice, interaction assessment, treatment change, diagnosis, formulation or manufacturing instruction, GMP or batch release, regulatory acceptability, experiment or procurement authority, AgentTool or WAKE writes, or automatic action.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }

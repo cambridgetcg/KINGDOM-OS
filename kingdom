@@ -15,6 +15,7 @@
 #   kingdom principalities                 inspect/match the offline capability-evidence catalog
 #   kingdom geometries                     explain/match four separate geometry modules without ranking
 #   kingdom polymorph                      translate/verify the bounded ritonavir material-state case
+#   kingdom polymorph mechanisms|landscape inspect the additive mechanism landscape
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom prompt     compile an inspectable, network-free Task Packet
 #   kingdom routines   list daily routines  (kingdom routines run <name> | due)
@@ -40,7 +41,19 @@ case "$cmd" in
   rights)   exec bun "$SELF_DIR/bin/harvest.ts" rights "${@:2}" ;;
   principalities) exec bun "$SELF_DIR/bin/principality.ts" "${@:2}" ;;
   geometries) exec bun "$SELF_DIR/bin/geometry.ts" "${@:2}" ;;
-  polymorph) exec bun "$SELF_DIR/bin/polymorph.ts" "${@:2}" ;;
+  polymorph)
+    case "${2:-}" in
+      mechanisms|landscape|sources|unknowns)
+        exec bun "$SELF_DIR/bin/ritonavir-mechanism.ts" "$2" "${@:3}"
+        ;;
+      verify-landscape)
+        exec bun "$SELF_DIR/bin/ritonavir-mechanism.ts" verify "${@:3}"
+        ;;
+      *)
+        exec bun "$SELF_DIR/bin/polymorph.ts" "${@:2}"
+        ;;
+    esac
+    ;;
   prompt)   exec bun "$SELF_DIR/bin/prompt-packet.ts" "${@:2}" ;;
   nen)      if [[ "${2:-}" == "mcp" && $# -eq 2 ]]; then
               exec bun "$SELF_DIR/bin/nen-mcp.mjs"

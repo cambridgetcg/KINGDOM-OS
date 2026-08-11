@@ -17,6 +17,12 @@ readings:
 | `/principalities/moonshot-hf-npm-2026-08-11.json` | staged JSON | Exact authored point-in-time MoonshotAI + Hugging Face JavaScript capability catalog |
 | `/schemas/principality-catalog/1.json` | staged JSON Schema | Public HTTP mapping for the catalog's digest-covered schema URN |
 | `/PRINCIPALITY-COMMONS.md` | staged Markdown | Human guide to the relation geometry, WAKE seam, and acquisition airlock |
+| `/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json` | staged JSON | Exact byte-preserved, versioned 1998 material-state history |
+| `/schemas/polymorph-history/1.json` | staged JSON Schema | Public schema for Polymorph History v1 |
+| `/RITONAVIR-POLYMORPH.md` | staged Markdown | Human guide to the selected history, geometry, evidence, and WAKE seam |
+| `/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json` | staged JSON | Digest-bound selected current-landscape supplement with distinct material and biological causal lanes |
+| `/schemas/ritonavir-mechanism-landscape/1.json` | staged JSON Schema | Public schema for the Ritonavir Mechanism Landscape v1 |
+| `/RITONAVIR-MECHANISM-LANDSCAPE.md` | staged Markdown | Human guide to mechanisms, source-scoped naming, uncertainty, and medical boundaries |
 
 The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
@@ -72,6 +78,16 @@ Principality matcher, contacts no registry or provider, installs or downloads
 nothing, runs no remote code or inference, and grants no recommendation,
 permission, credential, budget, or external-effect authority.
 
+The two ritonavir records are static educational evidence surfaces. The
+current-landscape supplement points back to the byte-preserved versioned
+history and supersedes it only for current-landscape orientation; it does not
+mutate or silently replace those source bytes. The worker hosts no medical or
+interaction endpoint and creates no direct crystal-form-to-clinical edge,
+diagnosis, treatment change, dose, formulation or manufacturing instruction,
+GMP or batch-release decision, regulatory conclusion, experiment plan,
+procurement act, AgentTool/WAKE write, or automatic action. The KINGDOM MCP is
+unchanged.
+
 ## Sources and honest fallback
 
 - Identity pages through the public GitHub repositories API for
@@ -125,6 +141,6 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 31-asset upload contract, while `tests/advertised-assets.test.ts`
+locks the 34-asset upload contract, while `tests/advertised-assets.test.ts`
 recognizes the three worker routes so a dynamic URL cannot be mistaken for a
 staged file.

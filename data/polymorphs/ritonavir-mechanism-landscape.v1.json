@@ -1,0 +1,1137 @@
+{
+  "$schema": "urn:kingdom:schema:ritonavir-mechanism-landscape:1",
+  "protocol": "kingdom.ritonavir-mechanism-landscape/0.1",
+  "landscape_id": "ritonavir-mechanism-landscape-2026-08-11",
+  "title": "Ritonavir mechanism landscape: identity, solid form, dissolution, and action",
+  "compiled_on": "2026-08-11",
+  "evidence_through": "2026-04-08",
+  "source_history": {
+    "case_id": "ritonavir-disappearing-polymorph-2026-08-11",
+    "semantic_digest": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116",
+    "public_url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+    "relation": "non-mutating-current-landscape-supplement",
+    "mutates_source_history": false,
+    "supersedes_source_history": false,
+    "supersedes_for_current_landscape": true
+  },
+  "scope": {
+    "focus": "A selected, source-bound map of how ritonavir chemical identity, conformational polymorphism, solid-state accessibility, dissolution, HIV-1 protease inhibition, and CYP3A interaction risk relate without becoming one mechanism.",
+    "coverage": "Selected primary research through 2026-04-08 and one official product label observed 2026-08-11; historical names remain local to their cited source and the solid-form landscape is not claimed complete.",
+    "intended_use": "Scientific education, evidence-aware systems design, and bounded KINGDOM orientation.",
+    "excluded_use": "Diagnosis, treatment, dosing, interaction checking, product-quality decisions, formulation, manufacturing, GMP control, batch release, regulation, procurement, or experiment planning.",
+    "currentness": "selected-evidence-as-of-compilation"
+  },
+  "plain_language": {
+    "question": "How can one molecule keep its chemical identity, take several solid arrangements, and still act through a separate biological mechanism after it dissolves?",
+    "short_answer": [
+      "Ritonavir's covalent molecule can adopt different poses and repeat in different crystal lattices.",
+      "Those lattices can differ in stability, nucleation accessibility, particle behavior, and dissolution under stated conditions.",
+      "A lattice does not inhibit a biological target directly: molecules must first leave the solid and enter a biological exposure path.",
+      "Dissolved ritonavir can inhibit HIV-1 protease; it also inhibits CYP3A and can therefore change exposure to some other medicines.",
+      "The same Roman numeral can name different material in different papers, so every form label must travel with its source chart."
+    ],
+    "safety": "Educational, metadata-only science; not medical advice, diagnosis, dosing, interaction checking, formulation guidance, manufacturing or GMP control, batch release, regulatory guidance, or experimental authority. Ritonavir has potentially serious or life-threatening drug interactions. Use the current product label and a qualified clinician or pharmacist; do not start, stop, or change treatment based on this artifact."
+  },
+  "ontology": {
+    "non_equivalence": "chemical_entity != molecular_conformer != crystal_phase != particle_population != formulation_dissolution != dissolved_exposure != pharmacological_action != clinical_decision",
+    "planes": [
+      {
+        "id": "chemical-entity",
+        "ordinary_words": "which covalent molecule it is",
+        "meaning": "The atom-and-bond identity of ritonavir.",
+        "does_not_establish": "A conformation, solid phase, formulation, exposure, therapeutic outcome, or safe use."
+      },
+      {
+        "id": "molecular-conformer",
+        "ordinary_words": "which pose the flexible molecule takes",
+        "meaning": "A three-dimensional molecular conformation accessible to ritonavir.",
+        "does_not_establish": "A unique lattice, phase stability, or biological exposure."
+      },
+      {
+        "id": "crystal-phase",
+        "ordinary_words": "how many molecules repeat together",
+        "meaning": "A source-identified solid phase with a particular composition, conformation set, packing pattern, and intermolecular network.",
+        "does_not_establish": "Global rank, particle behavior, dissolution in every medium, or clinical outcome."
+      },
+      {
+        "id": "particle-population",
+        "ordinary_words": "the finite crystals actually present",
+        "meaning": "The sizes, shapes, surfaces, defects, and phase mixture in one bounded sample.",
+        "does_not_establish": "The behavior of another sample, scale, process, or complete solid-form landscape."
+      },
+      {
+        "id": "formulation-dissolution",
+        "ordinary_words": "how molecules leave a product and enter solution",
+        "meaning": "The condition-dependent route from a material and formulation through release and dissolution.",
+        "does_not_establish": "Absorption, exposure, target engagement, efficacy, safety, or a formulation recipe."
+      },
+      {
+        "id": "dissolved-exposure",
+        "ordinary_words": "which dissolved molecules reach a biological context",
+        "meaning": "A biological exposure state downstream of formulation, dissolution, absorption, distribution, and metabolism.",
+        "does_not_establish": "A prescribed dose, individual exposure, clinical benefit, or safety."
+      },
+      {
+        "id": "pharmacological-action",
+        "ordinary_words": "which biological process the molecule perturbs",
+        "meaning": "Source-supported molecular interactions such as HIV-1 protease inhibition and CYP3A inhibition.",
+        "does_not_establish": "A treatment recommendation, interaction assessment, patient outcome, or crystal-phase ranking."
+      },
+      {
+        "id": "clinical-decision",
+        "ordinary_words": "what a qualified person decides for one real situation",
+        "meaning": "A current, patient-specific decision using authoritative labeling, medicines, history, and professional judgment.",
+        "does_not_establish": "Anything this static atlas is authorized to decide."
+      }
+    ],
+    "geometry": [
+      {
+        "id": "identity-fiber",
+        "ordinary_words": "one identity, several possible poses and packings",
+        "finite_shape": "A base point for the covalent molecule with source-scoped conformer and phase points above it.",
+        "maps_to": "Chemical identity can remain fixed while conformation and repeating intermolecular relations differ.",
+        "does_not_imply": "That all phases are interchangeable or that a phase creates a new covalent drug."
+      },
+      {
+        "id": "source-chart-atlas",
+        "ordinary_words": "every map keeps its own legend",
+        "finite_shape": "Overlapping naming charts joined only by evidence-bearing crosswalk edges.",
+        "maps_to": "Form numerals are local labels; Morissette 2003 Form III and modern anhydrous Form III are different materials.",
+        "does_not_imply": "That matching numerals prove identity or that different numerals prove difference."
+      },
+      {
+        "id": "conditional-energy-landscape",
+        "ordinary_words": "valley depth depends on the landscape being measured",
+        "finite_shape": "Several wells whose relative depths carry temperature, particle, and method qualifiers.",
+        "maps_to": "Thermodynamic preference and finite-particle energy are conditional comparisons.",
+        "does_not_imply": "A context-free best form or an inevitable crystallization outcome."
+      },
+      {
+        "id": "kinetic-path-graph",
+        "ordinary_words": "the reachable route depends on gates and history",
+        "finite_shape": "A directed multigraph whose edges carry environment, time, seed, surface, and mechanical conditions.",
+        "maps_to": "Nucleation, growth, dissolution, hydration, desolvation, and conversion are path-dependent.",
+        "does_not_imply": "That a seed commands an outcome or that an untraversed path is impossible."
+      },
+      {
+        "id": "observer-cover",
+        "ordinary_words": "each instrument sees one projection",
+        "finite_shape": "Partially overlapping observation windows for diffraction, spectroscopy, thermal analysis, microscopy, chromatography, solubility, and modeling.",
+        "maps_to": "Multiple methods constrain phase identity, composition, structure, transformation, and performance.",
+        "does_not_imply": "That one signature proves the entire structure or that non-detection proves nonexistence."
+      },
+      {
+        "id": "causal-dissolution-bridge",
+        "ordinary_words": "solid arrangement can affect release, but it does not become the drug target",
+        "finite_shape": "A typed bridge from crystal phase through particle and formulation states to dissolved exposure, followed by separate biological edges.",
+        "maps_to": "Solid state may affect a delivery path while target inhibition belongs to dissolved molecular exposure.",
+        "does_not_imply": "A direct crystal-form-to-clinical-outcome edge."
+      }
+    ]
+  },
+  "entities": [
+    {
+      "id": "ritonavir-chemical-entity",
+      "kind": "chemical-entity",
+      "label": "ritonavir",
+      "source_scope": "Covalent chemical identity across the cited solid-state and regulatory sources.",
+      "summary": "The molecule whose chemical identity remains distinct from conformation, phase, product, exposure, and decision."
+    },
+    {
+      "id": "ritonavir-dissolved-exposure",
+      "kind": "dissolved-exposure",
+      "label": "dissolved ritonavir exposure",
+      "source_scope": "Conceptual bridge constrained by the cited official label and solid-state sources.",
+      "summary": "Ritonavir molecules in a biological exposure path after formulation and dissolution steps; no individual concentration is asserted."
+    },
+    {
+      "id": "form-i-trans-carbamate-conformer",
+      "kind": "molecular-conformer",
+      "label": "Form I-associated trans-carbamate conformer",
+      "source_scope": "Bauer et al. 2001 Form I structure analysis.",
+      "summary": "A source-supported ritonavir pose associated with Form I; a conformer is not itself a crystal phase or product."
+    },
+    {
+      "id": "form-ii-cis-carbamate-conformer",
+      "kind": "molecular-conformer",
+      "label": "Form II-associated cis-carbamate conformer",
+      "source_scope": "Bauer et al. 2001 Form II structure analysis.",
+      "summary": "A source-supported ritonavir pose associated with Form II; its lattice relations remain distinct from molecular pose alone."
+    },
+    {
+      "id": "abbott-form-i",
+      "kind": "anhydrous-polymorph",
+      "label": "Form I",
+      "source_scope": "Abbott, Bauer, and later literature using the original marketed-form chart.",
+      "summary": "The original anhydrous polymorph known during development and later recovered under changed, bounded paths."
+    },
+    {
+      "id": "abbott-form-ii",
+      "kind": "anhydrous-polymorph",
+      "label": "Form II",
+      "source_scope": "Abbott, Bauer, and later literature using the late-appearing form chart.",
+      "summary": "The late-appearing anhydrous conformational polymorph that was more stable and less soluble than Form I in the historical reported contexts."
+    },
+    {
+      "id": "morissette-2003-form-iii-solvate",
+      "kind": "formamide-solvate",
+      "label": "Form III",
+      "source_scope": "Morissette et al. 2003 only.",
+      "summary": "A formamide-containing solid phase; this source-local label is not the modern anhydrous Form III."
+    },
+    {
+      "id": "morissette-2003-form-iv-anhydrous",
+      "kind": "anhydrous-polymorph",
+      "label": "Form IV",
+      "source_scope": "Morissette et al. 2003 high-throughput campaign.",
+      "summary": "A metastable unsolvated phase identified by a distinct powder pattern and thermal behavior without a 2003 full structure solution."
+    },
+    {
+      "id": "morissette-2003-form-v-hydrate",
+      "kind": "hydrate",
+      "label": "Form V",
+      "source_scope": "Morissette et al. 2003 only.",
+      "summary": "A hydrated phase observed on an aqueous path from the source-local formamide solvate toward Form I."
+    },
+    {
+      "id": "modern-2023-form-iii-anhydrous",
+      "kind": "anhydrous-polymorph",
+      "label": "Form III",
+      "source_scope": "Yao et al. 2023 and Parent et al. 2023 modern anhydrous-form convention.",
+      "summary": "A melt-grown anhydrous polymorph with a distinct conformation, hydrogen-bonding motif, diffraction pattern, Raman spectrum, and crystal structure."
+    },
+    {
+      "id": "iuzzolino-2025-form-4-structure",
+      "kind": "structure-record",
+      "label": "form 4 structure · CCDC 2411739",
+      "source_scope": "Iuzzolino et al. 2025.",
+      "summary": "A 3D-electron-diffraction, powder-diffraction, and crystal-structure-prediction structure record anchored by that study to the historical high-throughput form 4."
+    },
+    {
+      "id": "parent-2026-form-iv-structure",
+      "kind": "structure-record",
+      "label": "Form IV structure · CCDC 2482055",
+      "source_scope": "Parent et al. 2026.",
+      "summary": "An electron-diffraction structure record for an anhydrous Form IV obtained through desolvation of a reported dichloromethane solvate."
+    },
+    {
+      "id": "bounded-ritonavir-particle-population",
+      "kind": "particle-population",
+      "label": "bounded ritonavir particle population",
+      "source_scope": "Type-level bridge across the cited solid-state evidence; no current sample, batch, or product is represented.",
+      "summary": "A finite, condition-specific population whose phase mixture, size, shape, surface, and history can matter upstream of dissolution."
+    },
+    {
+      "id": "named-formulation-dissolution-context",
+      "kind": "formulation-dissolution-context",
+      "label": "named formulation and dissolution context",
+      "source_scope": "Type-level causal bridge only; no formulation, medium, product, recipe, or patient exposure is asserted.",
+      "summary": "The explicit context required between a particle population and dissolved exposure, including formulation, medium, method, and time."
+    },
+    {
+      "id": "hiv-1-protease",
+      "kind": "pharmacological-target",
+      "label": "HIV-1 protease",
+      "source_scope": "The cited official ritonavir label observed 2026-08-11.",
+      "summary": "The viral protease inhibited by ritonavir according to the official label."
+    },
+    {
+      "id": "hiv-gag-pol-processing",
+      "kind": "biological-process",
+      "label": "HIV Gag-Pol polyprotein processing",
+      "source_scope": "The cited official ritonavir label observed 2026-08-11.",
+      "summary": "A protease-dependent maturation process impaired by HIV-1 protease inhibition."
+    },
+    {
+      "id": "immature-noninfectious-hiv-particles",
+      "kind": "biological-state",
+      "label": "immature noninfectious HIV particles",
+      "source_scope": "The cited official ritonavir label observed 2026-08-11.",
+      "summary": "The labeled downstream viral-particle state associated with impaired Gag-Pol processing."
+    },
+    {
+      "id": "cyp3a",
+      "kind": "pharmacological-target",
+      "label": "cytochrome P450 3A",
+      "source_scope": "The cited official ritonavir label observed 2026-08-11.",
+      "summary": "A drug-metabolizing enzyme family inhibited by ritonavir, creating clinically important interaction potential."
+    },
+    {
+      "id": "co-medication-exposure",
+      "kind": "exposure-state",
+      "label": "exposure to a co-administered medicine",
+      "source_scope": "The cited official ritonavir label observed 2026-08-11; medicine-specific effects require current interaction assessment.",
+      "summary": "A medicine-specific exposure that may change when CYP3A metabolism is inhibited; no particular interaction or dose is evaluated here."
+    }
+  ],
+  "naming_charts": [
+    {
+      "id": "morissette-2003-chart",
+      "title": "Morissette 2003 five-form campaign",
+      "source_ids": [
+        "morissette-2003"
+      ],
+      "entries": [
+        {
+          "label": "Form I",
+          "entity_id": "abbott-form-i"
+        },
+        {
+          "label": "Form II",
+          "entity_id": "abbott-form-ii"
+        },
+        {
+          "label": "Form III",
+          "entity_id": "morissette-2003-form-iii-solvate"
+        },
+        {
+          "label": "Form IV",
+          "entity_id": "morissette-2003-form-iv-anhydrous"
+        },
+        {
+          "label": "Form V",
+          "entity_id": "morissette-2003-form-v-hydrate"
+        }
+      ],
+      "boundary": "Five was the output of that campaign, not a complete landscape or a global naming authority."
+    },
+    {
+      "id": "modern-anhydrous-chart",
+      "title": "Modern anhydrous-polymorph chart",
+      "source_ids": [
+        "yao-2023",
+        "parent-2023",
+        "iuzzolino-2025",
+        "parent-2026"
+      ],
+      "entries": [
+        {
+          "label": "Form I",
+          "entity_id": "abbott-form-i"
+        },
+        {
+          "label": "Form II",
+          "entity_id": "abbott-form-ii"
+        },
+        {
+          "label": "Form III",
+          "entity_id": "modern-2023-form-iii-anhydrous"
+        },
+        {
+          "label": "form 4 · CCDC 2411739",
+          "entity_id": "iuzzolino-2025-form-4-structure"
+        },
+        {
+          "label": "Form IV · CCDC 2482055",
+          "entity_id": "parent-2026-form-iv-structure"
+        }
+      ],
+      "boundary": "The two Form IV structure records are candidate-equivalent source records, not asserted here as an exact same-phase identity."
+    }
+  ],
+  "mechanisms": [
+    {
+      "id": "conformational-polymorphism",
+      "ordinary_words": "the same flexible molecule can pose and pack differently",
+      "finite_shape": "One chemical-identity point connected to several conformer and lattice nodes.",
+      "scientific_mechanism": "Ritonavir conformers participate in distinct repeating crystal packings and hydrogen-bond networks without changing covalent composition.",
+      "evidence_class": "structure-supported",
+      "source_ids": [
+        "bauer-2001",
+        "yao-2023",
+        "parent-2026"
+      ],
+      "limitations": [
+        "The selected phases do not prove a complete solid-form landscape.",
+        "Chemical sameness does not make phases, particles, or formulations interchangeable."
+      ]
+    },
+    {
+      "id": "conditional-thermodynamics",
+      "ordinary_words": "a deeper valley is a conditional preference",
+      "finite_shape": "Qualified energy wells rather than one permanent ladder.",
+      "scientific_mechanism": "Free-energy relations depend on temperature, particle regime, composition, and the measurement or model used.",
+      "evidence_class": "measurement-and-model-supported",
+      "source_ids": [
+        "bauer-2001",
+        "iuzzolino-2025",
+        "parent-2026"
+      ],
+      "limitations": [
+        "Parent 2026 supports Form II as most stable among four studied anhydrous forms under its thermodynamic analysis, not a context-free global rank.",
+        "Crystal-structure-prediction energies and Heat-of-Fusion relations carry model and method assumptions."
+      ]
+    },
+    {
+      "id": "nucleation-and-path-selection",
+      "ordinary_words": "history and gates shape which valley is reached",
+      "finite_shape": "Condition-bearing directed edges between material states.",
+      "scientific_mechanism": "Supersaturation, conformation, surfaces, seeds, time, solvent environment, particle state, and mechanical history can alter nucleation and growth accessibility.",
+      "evidence_class": "observation-and-supported-mechanism",
+      "source_ids": [
+        "kingdom-history-v1",
+        "yao-2023",
+        "bauser-2026"
+      ],
+      "limitations": [
+        "No universal seed effect or exclusive first-1998 nucleant is established.",
+        "A reported process outcome is not a manufacturing or experimental instruction."
+      ]
+    },
+    {
+      "id": "dissolution-bridge",
+      "ordinary_words": "molecules must leave the lattice before biological action",
+      "finite_shape": "A bridge from phase to particles to formulation and dissolution to exposure.",
+      "scientific_mechanism": "Solid-state free energy, surface, particle, medium, and formulation conditions may affect release and dissolution upstream of biological exposure.",
+      "evidence_class": "bounded-synthesis",
+      "source_ids": [
+        "bauer-2001",
+        "kingdom-history-v1",
+        "dailymed-ritonavir-2023"
+      ],
+      "limitations": [
+        "No direct crystal-form-to-clinical-outcome edge is established.",
+        "This atlas makes no product-specific or patient-specific exposure claim."
+      ]
+    },
+    {
+      "id": "hiv-protease-inhibition",
+      "ordinary_words": "ritonavir blocks a viral cutting step needed for maturation",
+      "finite_shape": "Dissolved ritonavir points to HIV-1 protease, then to reduced Gag-Pol processing and immature particles.",
+      "scientific_mechanism": "The official label describes ritonavir as a peptidomimetic HIV-1 protease inhibitor; impaired Gag-Pol processing leads to immature noninfectious particles.",
+      "evidence_class": "official-label",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ],
+      "limitations": [
+        "A labeled mechanism is not a treatment recommendation or patient-specific efficacy prediction.",
+        "This biological path is distinct from the solid-state polymorphism path."
+      ]
+    },
+    {
+      "id": "cyp3a-inhibition",
+      "ordinary_words": "ritonavir can slow an important medicine-metabolism pathway",
+      "finite_shape": "Dissolved ritonavir points to CYP3A inhibition, then conditionally to altered co-medication exposure.",
+      "scientific_mechanism": "The official label identifies ritonavir as a CYP3A inhibitor and warns that exposure to some co-administered medicines may rise, including potentially serious or life-threatening interactions.",
+      "evidence_class": "official-label",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ],
+      "limitations": [
+        "No interaction pair, dose adjustment, or individual risk is evaluated here.",
+        "Current authoritative labeling and qualified clinical or pharmacy review are required."
+      ]
+    },
+    {
+      "id": "complementary-observation",
+      "ordinary_words": "different instruments constrain different parts of the shape",
+      "finite_shape": "Overlapping observation windows rather than one all-seeing detector.",
+      "scientific_mechanism": "Diffraction, spectroscopy, thermal analysis, microscopy, chromatography, solubility measurements, and computational models provide non-equivalent evidence about phase, structure, composition, transformation, and performance.",
+      "evidence_class": "methodological-synthesis",
+      "source_ids": [
+        "morissette-2003",
+        "yao-2023",
+        "iuzzolino-2025",
+        "parent-2026",
+        "bauser-2026"
+      ],
+      "limitations": [
+        "A fingerprint is not automatically a complete three-dimensional structure.",
+        "Non-detection remains bounded by method, threshold, sampling, and time."
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "form-i-same-chemical",
+      "subject_id": "abbott-form-i",
+      "predicate": "same-covalent-entity-as",
+      "object_id": "ritonavir-chemical-entity",
+      "mechanism_id": "conformational-polymorphism",
+      "evidence_class": "structure-supported",
+      "source_ids": [
+        "bauer-2001"
+      ],
+      "condition_dependent": false,
+      "universal": true,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "form-ii-same-chemical",
+      "subject_id": "abbott-form-ii",
+      "predicate": "same-covalent-entity-as",
+      "object_id": "ritonavir-chemical-entity",
+      "mechanism_id": "conformational-polymorphism",
+      "evidence_class": "structure-supported",
+      "source_ids": [
+        "bauer-2001"
+      ],
+      "condition_dependent": false,
+      "universal": true,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "form-i-conformer-of-ritonavir",
+      "subject_id": "form-i-trans-carbamate-conformer",
+      "predicate": "conformer-of",
+      "object_id": "ritonavir-chemical-entity",
+      "mechanism_id": "conformational-polymorphism",
+      "evidence_class": "structure-supported",
+      "source_ids": [
+        "bauer-2001"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "form-ii-conformer-of-ritonavir",
+      "subject_id": "form-ii-cis-carbamate-conformer",
+      "predicate": "conformer-of",
+      "object_id": "ritonavir-chemical-entity",
+      "mechanism_id": "conformational-polymorphism",
+      "evidence_class": "structure-supported",
+      "source_ids": [
+        "bauer-2001"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "form-i-packs-with-conformer",
+      "subject_id": "abbott-form-i",
+      "predicate": "packs-with-conformer",
+      "object_id": "form-i-trans-carbamate-conformer",
+      "mechanism_id": "conformational-polymorphism",
+      "evidence_class": "structure-supported",
+      "source_ids": [
+        "bauer-2001"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "form-ii-packs-with-conformer",
+      "subject_id": "abbott-form-ii",
+      "predicate": "packs-with-conformer",
+      "object_id": "form-ii-cis-carbamate-conformer",
+      "mechanism_id": "conformational-polymorphism",
+      "evidence_class": "structure-supported",
+      "source_ids": [
+        "bauer-2001"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "modern-form-iii-same-chemical",
+      "subject_id": "modern-2023-form-iii-anhydrous",
+      "predicate": "same-covalent-entity-as",
+      "object_id": "ritonavir-chemical-entity",
+      "mechanism_id": "conformational-polymorphism",
+      "evidence_class": "structure-supported",
+      "source_ids": [
+        "yao-2023",
+        "parent-2023"
+      ],
+      "condition_dependent": false,
+      "universal": true,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "form-iii-labels-not-same",
+      "subject_id": "morissette-2003-form-iii-solvate",
+      "predicate": "not-same-phase-as",
+      "object_id": "modern-2023-form-iii-anhydrous",
+      "mechanism_id": "complementary-observation",
+      "evidence_class": "composition-and-structure-supported",
+      "source_ids": [
+        "morissette-2003",
+        "parent-2023",
+        "yao-2023"
+      ],
+      "condition_dependent": false,
+      "universal": true,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "iuzzolino-structure-models-historical-form-iv",
+      "subject_id": "iuzzolino-2025-form-4-structure",
+      "predicate": "structure-model-of",
+      "object_id": "morissette-2003-form-iv-anhydrous",
+      "mechanism_id": "complementary-observation",
+      "evidence_class": "structure-and-pattern-supported",
+      "source_ids": [
+        "morissette-2003",
+        "iuzzolino-2025"
+      ],
+      "condition_dependent": false,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "two-form-iv-records-candidate-equivalent",
+      "subject_id": "iuzzolino-2025-form-4-structure",
+      "predicate": "candidate-equivalent-to",
+      "object_id": "parent-2026-form-iv-structure",
+      "mechanism_id": "complementary-observation",
+      "evidence_class": "strongly-supported-inference",
+      "source_ids": [
+        "iuzzolino-2025",
+        "parent-2026"
+      ],
+      "condition_dependent": false,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "phase-to-particle-bridge",
+      "subject_id": "abbott-form-i",
+      "predicate": "may-compose-under-stated-conditions",
+      "object_id": "bounded-ritonavir-particle-population",
+      "mechanism_id": "dissolution-bridge",
+      "evidence_class": "bounded-synthesis",
+      "source_ids": [
+        "bauer-2001",
+        "kingdom-history-v1"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "particle-to-formulation-dissolution-bridge",
+      "subject_id": "bounded-ritonavir-particle-population",
+      "predicate": "may-enter",
+      "object_id": "named-formulation-dissolution-context",
+      "mechanism_id": "dissolution-bridge",
+      "evidence_class": "bounded-synthesis",
+      "source_ids": [
+        "bauer-2001",
+        "kingdom-history-v1"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "formulation-to-dissolved-exposure-bridge",
+      "subject_id": "named-formulation-dissolution-context",
+      "predicate": "may-produce",
+      "object_id": "ritonavir-dissolved-exposure",
+      "mechanism_id": "dissolution-bridge",
+      "evidence_class": "bounded-synthesis",
+      "source_ids": [
+        "kingdom-history-v1",
+        "dailymed-ritonavir-2023"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "dissolved-ritonavir-inhibits-hiv-protease",
+      "subject_id": "ritonavir-dissolved-exposure",
+      "predicate": "inhibits",
+      "object_id": "hiv-1-protease",
+      "mechanism_id": "hiv-protease-inhibition",
+      "evidence_class": "official-label",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "protease-inhibition-reduces-processing",
+      "subject_id": "hiv-1-protease",
+      "predicate": "inhibition-reduces",
+      "object_id": "hiv-gag-pol-processing",
+      "mechanism_id": "hiv-protease-inhibition",
+      "evidence_class": "official-label",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "reduced-processing-leads-to-immature-particles",
+      "subject_id": "hiv-gag-pol-processing",
+      "predicate": "reduced-processing-leads-to",
+      "object_id": "immature-noninfectious-hiv-particles",
+      "mechanism_id": "hiv-protease-inhibition",
+      "evidence_class": "official-label",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "dissolved-ritonavir-inhibits-cyp3a",
+      "subject_id": "ritonavir-dissolved-exposure",
+      "predicate": "inhibits",
+      "object_id": "cyp3a",
+      "mechanism_id": "cyp3a-inhibition",
+      "evidence_class": "official-label",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    },
+    {
+      "id": "cyp3a-inhibition-may-alter-exposure",
+      "subject_id": "cyp3a",
+      "predicate": "inhibition-may-alter",
+      "object_id": "co-medication-exposure",
+      "mechanism_id": "cyp3a-inhibition",
+      "evidence_class": "official-label",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ],
+      "condition_dependent": true,
+      "universal": false,
+      "direct_clinical_edge": false
+    }
+  ],
+  "claims": [
+    {
+      "id": "same-molecule-distinct-solid-relations",
+      "summary": "Ritonavir's covalent identity can remain constant while molecular conformation, packing, and hydrogen-bond relations differ across anhydrous polymorphs.",
+      "evidence_class": "structure-supported",
+      "source_ids": [
+        "bauer-2001",
+        "yao-2023",
+        "parent-2026"
+      ],
+      "entity_ids": [
+        "ritonavir-chemical-entity",
+        "form-i-trans-carbamate-conformer",
+        "form-ii-cis-carbamate-conformer",
+        "abbott-form-i",
+        "abbott-form-ii",
+        "modern-2023-form-iii-anhydrous"
+      ],
+      "mechanism_ids": [
+        "conformational-polymorphism"
+      ],
+      "limitations": [
+        "This does not make the solids interchangeable or prove a complete landscape."
+      ]
+    },
+    {
+      "id": "modern-form-iii-is-not-morissette-solvate",
+      "summary": "Morissette's 2003 source-local Form III is a formamide solvate, while the modern Form III reported in 2023 is an anhydrous polymorph; the shared numeral does not identify one phase.",
+      "evidence_class": "composition-and-structure-supported",
+      "source_ids": [
+        "morissette-2003",
+        "parent-2023",
+        "yao-2023"
+      ],
+      "entity_ids": [
+        "morissette-2003-form-iii-solvate",
+        "modern-2023-form-iii-anhydrous"
+      ],
+      "mechanism_ids": [
+        "complementary-observation"
+      ],
+      "limitations": [
+        "Every form label remains local to its cited naming chart."
+      ]
+    },
+    {
+      "id": "modern-form-iii-bounded-stability",
+      "summary": "The modern anhydrous Form III was the least stable of Forms I, II, and III in Yao's monotropic analysis, and bounded 2026 flight and control samples retained or generated that assigned phase under the reported hardware and analytical windows.",
+      "evidence_class": "observation-and-analysis",
+      "source_ids": [
+        "yao-2023",
+        "bauser-2026"
+      ],
+      "entity_ids": [
+        "modern-2023-form-iii-anhydrous"
+      ],
+      "mechanism_ids": [
+        "conditional-thermodynamics",
+        "nucleation-and-path-selection"
+      ],
+      "limitations": [
+        "The flight study does not establish a general microgravity law or manufacturing route.",
+        "Metastable does not mean immediately unstable under every storage or process condition."
+      ]
+    },
+    {
+      "id": "form-ii-stability-is-study-scoped",
+      "summary": "Parent 2026 identified Form II as most thermodynamically stable among four studied anhydrous forms; Forms III and IV were enantiotropic with an estimated transition near 99 degrees Celsius, while other studied pairs were monotropic.",
+      "evidence_class": "derived-thermodynamic-analysis",
+      "source_ids": [
+        "parent-2026"
+      ],
+      "entity_ids": [
+        "abbott-form-i",
+        "abbott-form-ii",
+        "modern-2023-form-iii-anhydrous",
+        "parent-2026-form-iv-structure"
+      ],
+      "mechanism_ids": [
+        "conditional-thermodynamics"
+      ],
+      "limitations": [
+        "The Heat-of-Fusion analysis and transition estimate carry experimental and modeling assumptions.",
+        "The comparison is not a universal rank across all possible solid forms, temperatures, particle regimes, or compositions."
+      ]
+    },
+    {
+      "id": "form-iv-identity-remains-candidate-crosswalk",
+      "summary": "Iuzzolino 2025 and Parent 2026 provide separate Form IV structure records with different CCDC depositions; their exact cross-source phase equality is not directly established in either paper.",
+      "evidence_class": "strongly-supported-inference",
+      "source_ids": [
+        "iuzzolino-2025",
+        "parent-2026"
+      ],
+      "entity_ids": [
+        "iuzzolino-2025-form-4-structure",
+        "parent-2026-form-iv-structure"
+      ],
+      "mechanism_ids": [
+        "complementary-observation"
+      ],
+      "limitations": [
+        "The atlas records candidate equivalence, not exact same-phase identity."
+      ]
+    },
+    {
+      "id": "computation-constrains-not-completes-landscape",
+      "summary": "Iuzzolino 2025 used crystal-structure prediction with diffraction evidence to place known forms on a modeled landscape and recover a more-stable Form II risk signal retrospectively.",
+      "evidence_class": "model-supported",
+      "source_ids": [
+        "iuzzolino-2025"
+      ],
+      "entity_ids": [
+        "abbott-form-i",
+        "abbott-form-ii",
+        "iuzzolino-2025-form-4-structure"
+      ],
+      "mechanism_ids": [
+        "conditional-thermodynamics",
+        "complementary-observation"
+      ],
+      "limitations": [
+        "The reported search space excluded structures outside its chosen space groups and one-molecule asymmetric-unit search, and could not have predicted the modern Z-prime-four Form III model.",
+        "Prediction of an energetic possibility does not predict nucleation time or prove landscape completeness."
+      ]
+    },
+    {
+      "id": "solid-state-and-target-action-are-bridged-not-identical",
+      "summary": "Solid-state properties can affect a formulation and dissolution path upstream of exposure, while HIV-1 protease and CYP3A inhibition are separate molecular pharmacology relations.",
+      "evidence_class": "bounded-synthesis",
+      "source_ids": [
+        "bauer-2001",
+        "kingdom-history-v1",
+        "dailymed-ritonavir-2023"
+      ],
+      "entity_ids": [
+        "abbott-form-i",
+        "abbott-form-ii",
+        "bounded-ritonavir-particle-population",
+        "named-formulation-dissolution-context",
+        "ritonavir-dissolved-exposure",
+        "hiv-1-protease",
+        "cyp3a"
+      ],
+      "mechanism_ids": [
+        "dissolution-bridge",
+        "hiv-protease-inhibition",
+        "cyp3a-inhibition"
+      ],
+      "limitations": [
+        "No direct crystal-form-to-clinical-outcome relation is authorized.",
+        "No current product, dose, individual exposure, interaction, benefit, or harm is evaluated."
+      ]
+    },
+    {
+      "id": "hiv-protease-path",
+      "summary": "The official label describes ritonavir inhibition of HIV-1 protease, impaired Gag-Pol polyprotein processing, and production of immature noninfectious HIV particles.",
+      "evidence_class": "official-label",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ],
+      "entity_ids": [
+        "ritonavir-dissolved-exposure",
+        "hiv-1-protease",
+        "hiv-gag-pol-processing",
+        "immature-noninfectious-hiv-particles"
+      ],
+      "mechanism_ids": [
+        "hiv-protease-inhibition"
+      ],
+      "limitations": [
+        "This mechanism description is not treatment advice or a patient-specific outcome prediction."
+      ]
+    },
+    {
+      "id": "cyp3a-path-carries-serious-interaction-boundary",
+      "summary": "The official label identifies ritonavir as a CYP3A inhibitor and warns of potentially serious or life-threatening interactions when exposure to susceptible co-administered medicines changes.",
+      "evidence_class": "official-label",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ],
+      "entity_ids": [
+        "ritonavir-dissolved-exposure",
+        "cyp3a",
+        "co-medication-exposure"
+      ],
+      "mechanism_ids": [
+        "cyp3a-inhibition"
+      ],
+      "limitations": [
+        "The atlas is not an interaction checker and supplies no medicine-pair or dosing instruction.",
+        "Use current official labeling and a qualified clinician or pharmacist."
+      ]
+    }
+  ],
+  "analytical_windows": [
+    {
+      "id": "diffraction-window",
+      "methods": [
+        "powder X-ray diffraction",
+        "single-crystal X-ray diffraction",
+        "three-dimensional electron diffraction",
+        "MicroED"
+      ],
+      "observes": "Periodic fingerprints, unit cells, and structure models at method-dependent resolution.",
+      "does_not_establish": "Complete phase landscapes, universal sample identity, or error-free disorder models."
+    },
+    {
+      "id": "spectroscopy-window",
+      "methods": [
+        "Raman spectroscopy",
+        "near-infrared spectroscopy",
+        "solid-state carbon-13 NMR"
+      ],
+      "observes": "Non-equivalent local-environment and vibrational signatures useful for comparison.",
+      "does_not_establish": "Unique full crystal structure from one spectrum alone."
+    },
+    {
+      "id": "thermal-composition-window",
+      "methods": [
+        "differential scanning calorimetry",
+        "thermogravimetric analysis",
+        "hot-stage microscopy"
+      ],
+      "observes": "Thermal events, mass changes, and visible transformations under a stated program.",
+      "does_not_establish": "One unambiguous mechanism when melting, desolvation, conversion, or decomposition overlap."
+    },
+    {
+      "id": "performance-window",
+      "methods": [
+        "solubility measurement",
+        "dissolution testing",
+        "chromatography",
+        "microscopy"
+      ],
+      "observes": "Context-bound release, dissolved concentration, impurity, morphology, and particle evidence.",
+      "does_not_establish": "Universal bioavailability, clinical outcome, or another product's state."
+    },
+    {
+      "id": "model-window",
+      "methods": [
+        "crystal-structure prediction",
+        "quantum-mechanical energy modeling",
+        "molecular simulation"
+      ],
+      "observes": "Model-conditioned structural possibilities, relative energies, and mechanistic support.",
+      "does_not_establish": "Nucleation timing, experimental realization, exhaustive search, or direct clinical truth."
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "first-1998-nucleant",
+      "question": "What first enabled Form II nucleation in the 1998 event?",
+      "status": "unknown",
+      "why_open": "A cyclic-carbamate material promoted nucleation in a bounded later test, but the exclusive historical trigger was not traced.",
+      "source_ids": [
+        "bauer-2001",
+        "kingdom-history-v1"
+      ]
+    },
+    {
+      "id": "complete-solid-form-landscape",
+      "question": "Have all ritonavir solid forms been found?",
+      "status": "unknown",
+      "why_open": "Every experimental and computational campaign has a bounded search space, detection window, and evidence horizon.",
+      "source_ids": [
+        "morissette-2003",
+        "iuzzolino-2025",
+        "parent-2026"
+      ]
+    },
+    {
+      "id": "two-form-iv-records-exact-equivalence",
+      "question": "Do CCDC 2411739 and CCDC 2482055 represent exactly the same phase model?",
+      "status": "candidate-equivalence-not-proven",
+      "why_open": "The independent papers do not directly compare or identify the other deposited structure record.",
+      "source_ids": [
+        "iuzzolino-2025",
+        "parent-2026"
+      ]
+    },
+    {
+      "id": "nucleation-from-energy-landscape",
+      "question": "Can an energy landscape predict which phase will nucleate and when?",
+      "status": "not-established",
+      "why_open": "Energetic prediction constrains possibilities but nucleation and growth kinetics remain incompletely predictable.",
+      "source_ids": [
+        "iuzzolino-2025"
+      ]
+    },
+    {
+      "id": "current-product-state",
+      "question": "What solid state or quality does any current ritonavir-containing product have?",
+      "status": "outside-scope",
+      "why_open": "The atlas reads no batch, product, manufacturing, storage, release, or current quality data.",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ]
+    },
+    {
+      "id": "individual-clinical-outcome",
+      "question": "What should a person take, stop, change, or expect clinically?",
+      "status": "outside-scope",
+      "why_open": "A static scientific map has no patient context, current medicine list, dose, formulation, clinical authority, or interaction assessment.",
+      "source_ids": [
+        "dailymed-ritonavir-2023"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "kingdom-history-v1",
+      "title": "Ritonavir and the process-scoped disappearing polymorph",
+      "source_kind": "digest-sealed-kingdom-history",
+      "published_on": "2026-08-11",
+      "observed_on": "2026-08-11",
+      "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+      "doi": null,
+      "authority_note": "Immutable selected historical-case record with evidence through 2024-06-20; cited for lineage and bounded synthesis, not as a current landscape or primary experiment."
+    },
+    {
+      "id": "bauer-2001",
+      "title": "Ritonavir: An Extraordinary Example of Conformational Polymorphism",
+      "source_kind": "primary-solid-state-research",
+      "published_on": "2001-06",
+      "observed_on": "2026-08-11",
+      "url": "https://doi.org/10.1023/A:1011052932607",
+      "doi": "10.1023/A:1011052932607",
+      "authority_note": "Primary characterization of Forms I and II, their conformations, intermolecular networks, solubility context, and conditional nucleation observations."
+    },
+    {
+      "id": "morissette-2003",
+      "title": "Elucidation of crystal form diversity of the HIV protease inhibitor ritonavir by high-throughput crystallization",
+      "source_kind": "primary-high-throughput-solid-form-research",
+      "published_on": "2003-02-25",
+      "observed_on": "2026-08-11",
+      "url": "https://doi.org/10.1073/pnas.0437744100",
+      "doi": "10.1073/pnas.0437744100",
+      "authority_note": "Primary campaign reporting five source-local forms, including a Form III formamide solvate, Form IV metastable anhydrous phase, and Form V hydrate."
+    },
+    {
+      "id": "dailymed-ritonavir-2023",
+      "title": "RITONAVIR tablets official structured product label",
+      "source_kind": "official-product-label-observed",
+      "published_on": "2023-02-23",
+      "observed_on": "2026-08-11",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=db633374-6d8e-4622-9fe1-f9d68baa59bb",
+      "doi": null,
+      "authority_note": "DailyMed setid db633374-6d8e-4622-9fe1-f9d68baa59bb, version 2; official source for its labeled HIV-1 protease mechanism and CYP3A interaction risk. It is not claimed to be the only or latest ritonavir label; recheck current labeling before use."
+    },
+    {
+      "id": "yao-2023",
+      "title": "Ritonavir Form III: A New Polymorph After 24 Years",
+      "source_kind": "primary-polymorph-structure-research",
+      "published_on": "2023-01",
+      "observed_on": "2026-08-11",
+      "url": "https://doi.org/10.1016/j.xphs.2022.09.026",
+      "doi": "10.1016/j.xphs.2022.09.026",
+      "authority_note": "Primary report and structure analysis of the modern melt-grown anhydrous Form III."
+    },
+    {
+      "id": "parent-2023",
+      "title": "Ritonavir Form III: A Coincidental Concurrent Discovery",
+      "source_kind": "primary-polymorph-structure-research",
+      "published_on": "2022-12-21",
+      "observed_on": "2026-08-11",
+      "url": "https://doi.org/10.1021/acs.cgd.2c01017",
+      "doi": "10.1021/acs.cgd.2c01017",
+      "authority_note": "Independent primary characterization that explicitly distinguishes the modern anhydrous Form III convention from Morissette's solvated source-local Form III."
+    },
+    {
+      "id": "iuzzolino-2025",
+      "title": "Predicting the ritonavir crisis by revisiting the polymorph landscape with crystal structure prediction and form 4 structure solution",
+      "source_kind": "primary-computational-and-electron-diffraction-research",
+      "published_on": "2025-12-22",
+      "observed_on": "2026-08-11",
+      "url": "https://doi.org/10.1038/s42004-025-01814-6",
+      "doi": "10.1038/s42004-025-01814-6",
+      "authority_note": "Primary CSP, powder-diffraction, and 3D-electron-diffraction study with source-local form 4 structure CCDC 2411739 and explicit search-space limitations."
+    },
+    {
+      "id": "parent-2026",
+      "title": "Crystal Structure of Ritonavir Form IV and Thermodynamic Relationships between Ritonavir Polymorphs",
+      "source_kind": "primary-electron-diffraction-and-thermodynamic-research",
+      "published_on": "2026-01-23",
+      "observed_on": "2026-08-11",
+      "url": "https://doi.org/10.1021/acs.cgd.5c01571",
+      "doi": "10.1021/acs.cgd.5c01571",
+      "authority_note": "Primary electron-diffraction structure CCDC 2482055 and Heat-of-Fusion analysis of four studied anhydrous polymorphs."
+    },
+    {
+      "id": "bauser-2026",
+      "title": "A study on the stability of ritonavir form III processed in orbit and returned to Earth",
+      "source_kind": "primary-bounded-flight-and-control-study",
+      "published_on": "2026-04-08",
+      "observed_on": "2026-08-11",
+      "url": "https://doi.org/10.1038/s41526-026-00594-0",
+      "doi": "10.1038/s41526-026-00594-0",
+      "authority_note": "Primary study of modern Form III generation and retained assigned phases in exact flight, reentry, hardware, control, and analytical conditions; not a general microgravity law."
+    }
+  ],
+  "boundaries": {
+    "phase_name_is_global_identity": false,
+    "form_iv_exact_equivalence_established": false,
+    "complete_solid_form_landscape_established": false,
+    "global_stability_ranking_established": false,
+    "exclusive_1998_cause_established": false,
+    "universal_seed_effect_established": false,
+    "direct_crystal_form_to_clinical_outcome": false,
+    "current_product_defect_established": false,
+    "medical_advice": false,
+    "diagnostic_authority": false,
+    "dosing_authority": false,
+    "interaction_checker": false,
+    "treatment_change_authority": false,
+    "formulation_instruction": false,
+    "manufacturing_instruction": false,
+    "gmp_authority": false,
+    "batch_release_authority": false,
+    "regulatory_authority": false,
+    "experiment_authority": false,
+    "procurement_authority": false,
+    "automatic_action": false,
+    "writes_agenttool": false,
+    "writes_wake": false,
+    "public_surface_read_only": true
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b"
+  }
+}

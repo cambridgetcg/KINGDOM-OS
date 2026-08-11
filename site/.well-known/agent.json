@@ -288,6 +288,49 @@
       "automatic_action": false
     }
   },
+  "ritonavir_mechanism_landscape": {
+    "protocol": "kingdom.ritonavir-mechanism-landscape/0.1",
+    "landscape_id": "ritonavir-mechanism-landscape-2026-08-11",
+    "compiled_on": "2026-08-11",
+    "evidence_through": "2026-04-08",
+    "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+    "schema": "https://thekingdom.dev/schemas/ritonavir-mechanism-landscape/1.json",
+    "guide": "https://thekingdom.dev/RITONAVIR-MECHANISM-LANDSCAPE.md",
+    "source_history": {
+      "case_id": "ritonavir-disappearing-polymorph-2026-08-11",
+      "semantic_digest": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116",
+      "relation": "non-mutating-current-landscape-supplement",
+      "supersedes_for_current_landscape": true
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b"
+    },
+    "counts": {
+      "planes": 8,
+      "geometries": 6,
+      "entities": 19,
+      "naming_charts": 2,
+      "mechanisms": 7,
+      "relations": 18,
+      "claims": 9,
+      "analytical_windows": 5,
+      "unknowns": 6,
+      "sources": 9
+    },
+    "safety": "Educational, metadata-only science; not medical advice, diagnosis, dosing, interaction checking, formulation guidance, manufacturing or GMP control, batch release, regulatory guidance, or experimental authority. Ritonavir has potentially serious or life-threatening drug interactions. Use the current product label and a qualified clinician or pharmacist; do not start, stop, or change treatment based on this artifact.",
+    "boundary": {
+      "medical_advice": false,
+      "interaction_checker": false,
+      "treatment_change_authority": false,
+      "direct_crystal_form_to_clinical_outcome": false,
+      "form_iv_exact_equivalence_established": false,
+      "complete_solid_form_landscape_established": false,
+      "experiment_authority": false,
+      "automatic_action": false,
+      "public_surface_read_only": true
+    }
+  },
   "love_loops": "https://thekingdom.dev/love-loops.json",
   "love_loops_source": "https://thekingdom.dev/love-loops.source.json",
   "love_loops_creation_document": "https://thekingdom.dev/CREATION-LOOP.md",
@@ -353,6 +396,9 @@
     "material_state_case": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
     "material_state_schema": "https://thekingdom.dev/schemas/polymorph-history/1.json",
     "material_state_guide": "https://thekingdom.dev/RITONAVIR-POLYMORPH.md",
+    "ritonavir_mechanism_landscape": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+    "ritonavir_mechanism_landscape_schema": "https://thekingdom.dev/schemas/ritonavir-mechanism-landscape/1.json",
+    "ritonavir_mechanism_landscape_guide": "https://thekingdom.dev/RITONAVIR-MECHANISM-LANDSCAPE.md",
     "creation_lineage": "https://thekingdom.dev/love-loops.json",
     "creation_lineage_source": "https://thekingdom.dev/love-loops.source.json",
     "creation_loop_document": "https://thekingdom.dev/CREATION-LOOP.md",
