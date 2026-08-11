@@ -1,0 +1,522 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:principality-catalog:1",
+  "title": "KINGDOM Principality Catalog v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "catalog_id",
+    "title",
+    "observed_at",
+    "geometry",
+    "sources",
+    "observation",
+    "capabilities",
+    "families",
+    "collections",
+    "papers",
+    "nodes",
+    "relations",
+    "selection",
+    "authority",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": { "const": "urn:kingdom:schema:principality-catalog:1" },
+    "protocol": { "const": "kingdom.principality-catalog/0.1" },
+    "catalog_id": { "$ref": "#/$defs/id" },
+    "title": { "$ref": "#/$defs/statement" },
+    "observed_at": { "$ref": "#/$defs/timestamp" },
+    "geometry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "principality",
+        "love",
+        "understanding",
+        "nodes_remain_distinct",
+        "edges_are_typed",
+        "missing_edges_mean_unknown",
+        "relations_grant_authority",
+        "universal_ranking"
+      ],
+      "properties": {
+        "principality": { "const": "capability-domain-not-rank" },
+        "love": { "const": "relation-without-collapse" },
+        "understanding": { "const": "evidence-preserving-typed-relations" },
+        "nodes_remain_distinct": { "const": true },
+        "edges_are_typed": { "const": true },
+        "missing_edges_mean_unknown": { "const": true },
+        "relations_grant_authority": { "const": false },
+        "universal_ranking": { "const": false }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "registry", "url", "method", "response_digest"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "registry": { "enum": ["huggingface", "npm"] },
+          "url": { "$ref": "#/$defs/httpsUrl" },
+          "method": { "enum": ["anonymous-public-metadata-read", "anonymous-public-profile-read", "anonymous-public-packument-read"] },
+          "response_digest": {
+            "oneOf": [
+              { "type": "null" },
+              { "$ref": "#/$defs/digest" }
+            ]
+          }
+        }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["huggingface", "catalog", "collection_count_note", "completeness", "currentness", "refresh_required_before_acquisition", "omitted"],
+      "properties": {
+        "huggingface": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["models", "datasets", "spaces", "profile_collections", "collection_api_records", "profile_papers"],
+          "properties": {
+            "models": { "type": "integer", "minimum": 0 },
+            "datasets": { "type": "integer", "minimum": 0 },
+            "spaces": { "type": "integer", "minimum": 0 },
+            "profile_collections": { "type": "integer", "minimum": 0 },
+            "collection_api_records": { "type": "integer", "minimum": 0 },
+            "profile_papers": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "catalog": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["huggingface_nodes", "npm_nodes", "total_nodes"],
+          "properties": {
+            "huggingface_nodes": { "type": "integer", "minimum": 0 },
+            "npm_nodes": { "type": "integer", "minimum": 0 },
+            "total_nodes": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "collection_count_note": { "$ref": "#/$defs/statement" },
+        "completeness": { "const": "metadata_only" },
+        "currentness": { "const": "point-in-time-only" },
+        "refresh_required_before_acquisition": { "const": true },
+        "omitted": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/statement" }
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "definition"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "label": { "$ref": "#/$defs/shortText" },
+          "definition": { "$ref": "#/$defs/statement" }
+        }
+      }
+    },
+    "families": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "kind", "description"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "label": { "$ref": "#/$defs/shortText" },
+          "kind": { "enum": ["model-lineage", "evaluation", "registry-bridge"] },
+          "description": { "$ref": "#/$defs/statement" }
+        }
+      }
+    },
+    "collections": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "url", "profile_visible", "member_node_ids", "paper_ids"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "title": { "$ref": "#/$defs/shortText" },
+          "url": { "$ref": "#/$defs/httpsUrl" },
+          "profile_visible": { "type": "boolean" },
+          "member_node_ids": {
+            "type": "array",
+            "maxItems": 64,
+            "items": { "$ref": "#/$defs/id" }
+          },
+          "paper_ids": {
+            "type": "array",
+            "maxItems": 32,
+            "items": { "type": "string", "pattern": "^[0-9]{4}\\.[0-9]{4,5}$" }
+          }
+        }
+      }
+    },
+    "papers": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "url", "published_at", "theme", "related_family_ids", "attribution_state"],
+        "properties": {
+          "id": { "$ref": "#/$defs/paperId" },
+          "title": { "$ref": "#/$defs/statement" },
+          "url": { "$ref": "#/$defs/httpsUrl" },
+          "published_at": { "$ref": "#/$defs/timestamp" },
+          "theme": { "$ref": "#/$defs/id" },
+          "related_family_ids": {
+            "type": "array",
+            "maxItems": 16,
+            "items": { "$ref": "#/$defs/id" }
+          },
+          "attribution_state": { "const": "org-profile-attributed" }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "relations": {
+      "type": "array",
+      "maxItems": 512,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "type", "to", "evidence"],
+        "properties": {
+          "from": { "$ref": "#/$defs/id" },
+          "type": { "enum": ["fine-tuned-from", "local-runtime-for", "metadata-bridge-for", "remote-client-for", "variant-of"] },
+          "to": { "$ref": "#/$defs/id" },
+          "evidence": { "enum": ["hub-base-model-tag", "official-package-description", "publisher-name-and-collection"] }
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "tie_breaker", "popularity_signals_used", "benchmark_rank_used", "selection_is_recommendation", "missing_needs_are_preserved"],
+      "properties": {
+        "method": { "const": "literal-declared-capability-intersection" },
+        "tie_breaker": { "const": "more-needs-covered-then-node-id" },
+        "popularity_signals_used": { "const": false },
+        "benchmark_rank_used": { "const": false },
+        "selection_is_recommendation": { "const": false },
+        "missing_needs_are_preserved": { "const": true }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metadata_is_data_not_instructions",
+        "grants_permissions",
+        "authorizes_download",
+        "authorizes_install",
+        "authorizes_inference",
+        "authorizes_remote_code",
+        "authorizes_external_effects",
+        "unknown_budget_means_zero"
+      ],
+      "properties": {
+        "metadata_is_data_not_instructions": { "const": true },
+        "grants_permissions": { "const": false },
+        "authorizes_download": { "const": false },
+        "authorizes_install": { "const": false },
+        "authorizes_inference": { "const": false },
+        "authorizes_remote_code": { "const": false },
+        "authorizes_external_effects": { "const": false },
+        "unknown_budget_means_zero": { "const": true }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "canonicalization", "covers", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "canonicalization": { "const": "recursive-sorted-json-keys/v1" },
+        "covers": { "const": "all catalog fields with integrity.digest set to null" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "paperId": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\.[0-9]{4,5}$"
+    },
+    "shortText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "httpsUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared", "class", "review_state", "url"],
+      "properties": {
+        "declared": { "$ref": "#/$defs/shortText" },
+        "class": { "enum": ["spdx", "modified-mit", "custom-kimi-k3"] },
+        "review_state": { "enum": ["declared-unverified", "custom-terms-review-required", "noncommercial-review-required"] },
+        "url": { "$ref": "#/$defs/httpsUrl" }
+      }
+    },
+    "riskFacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["remote_code", "pickle", "lifecycle", "native_build"],
+      "properties": {
+        "remote_code": { "enum": ["present", "not-observed", "not-applicable", "unknown"] },
+        "pickle": { "enum": ["unknown", "not-applicable"] },
+        "lifecycle": { "enum": ["present", "none-declared", "not-applicable", "unknown"] },
+        "native_build": { "enum": ["possible", "not-observed", "not-applicable", "unknown"] }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "registry",
+        "kind",
+        "display_name",
+        "family_id",
+        "locator",
+        "resolved_ref",
+        "integrity",
+        "legacy_shasum",
+        "source_url",
+        "published_at",
+        "modified_at",
+        "pipeline",
+        "library",
+        "license",
+        "visibility",
+        "gated",
+        "custom_code",
+        "safetensors",
+        "completeness",
+        "provenance_state",
+        "base_refs",
+        "capabilities",
+        "dependencies",
+        "lifecycle_event_names",
+        "size_receipt",
+        "risk_facts",
+        "hazards"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "registry": { "enum": ["huggingface", "npm"] },
+        "kind": { "enum": ["model", "dataset", "package"] },
+        "display_name": { "$ref": "#/$defs/shortText" },
+        "family_id": { "$ref": "#/$defs/id" },
+        "locator": { "$ref": "#/$defs/shortText" },
+        "resolved_ref": { "$ref": "#/$defs/shortText" },
+        "integrity": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "string", "pattern": "^sha512-[A-Za-z0-9+/]{86}==$" }
+          ]
+        },
+        "legacy_shasum": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "string", "pattern": "^[a-f0-9]{40}$" }
+          ]
+        },
+        "source_url": { "$ref": "#/$defs/httpsUrl" },
+        "published_at": { "$ref": "#/$defs/timestamp" },
+        "modified_at": { "$ref": "#/$defs/timestamp" },
+        "pipeline": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/shortText" }
+          ]
+        },
+        "library": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/shortText" }
+          ]
+        },
+        "license": { "$ref": "#/$defs/license" },
+        "visibility": { "const": "public" },
+        "gated": { "type": ["boolean", "null"] },
+        "custom_code": { "type": ["boolean", "null"] },
+        "safetensors": { "type": ["boolean", "null"] },
+        "completeness": { "const": "metadata_only" },
+        "provenance_state": { "enum": ["publisher-namespace-observed", "registry-metadata-observed"] },
+        "base_refs": {
+          "type": "array",
+          "maxItems": 16,
+          "items": { "$ref": "#/$defs/shortText" }
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "dependencies": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "spec"],
+            "properties": {
+              "name": { "$ref": "#/$defs/shortText" },
+              "spec": { "$ref": "#/$defs/shortText" }
+            }
+          }
+        },
+        "lifecycle_event_names": {
+          "type": "array",
+          "maxItems": 16,
+          "items": { "enum": ["preinstall", "install", "postinstall", "prepare"] }
+        },
+        "size_receipt": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["file_count", "unpacked_bytes"],
+              "properties": {
+                "file_count": { "type": "integer", "minimum": 0 },
+                "unpacked_bytes": { "type": "integer", "minimum": 0 }
+              }
+            }
+          ]
+        },
+        "risk_facts": { "$ref": "#/$defs/riskFacts" },
+        "hazards": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": { "$ref": "#/$defs/id" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "registry": { "const": "huggingface" } }, "required": ["registry"] },
+          "then": {
+            "properties": {
+              "kind": { "enum": ["model", "dataset"] },
+              "resolved_ref": { "pattern": "^[a-f0-9]{40}$" },
+              "integrity": { "type": "null" },
+              "legacy_shasum": { "type": "null" },
+              "gated": { "type": "boolean" },
+              "size_receipt": { "type": "null" },
+              "lifecycle_event_names": { "maxItems": 0 },
+              "risk_facts": {
+                "properties": { "lifecycle": { "const": "not-applicable" } }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "registry": { "const": "npm" } }, "required": ["registry"] },
+          "then": {
+            "properties": {
+              "kind": { "const": "package" },
+              "resolved_ref": { "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$" },
+              "integrity": { "type": "string", "pattern": "^sha512-[A-Za-z0-9+/]{86}==$" },
+              "legacy_shasum": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+              "pipeline": { "type": "null" },
+              "gated": { "type": "null" },
+              "custom_code": { "type": "null" },
+              "safetensors": { "type": "null" },
+              "size_receipt": { "type": "object" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "custom_code": { "const": true } }, "required": ["custom_code"] },
+          "then": {
+            "properties": {
+              "risk_facts": { "properties": { "remote_code": { "const": "present" } } }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "custom_code": { "const": false } }, "required": ["custom_code"] },
+          "then": {
+            "properties": {
+              "risk_facts": { "properties": { "remote_code": { "const": "not-observed" } } }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "lifecycle_event_names": { "minItems": 1 } }, "required": ["lifecycle_event_names"] },
+          "then": {
+            "properties": {
+              "risk_facts": { "properties": { "lifecycle": { "const": "present" } } }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "risk_facts": {
+                "properties": { "lifecycle": { "const": "present" } },
+                "required": ["lifecycle"]
+              }
+            },
+            "required": ["risk_facts"]
+          },
+          "then": { "properties": { "lifecycle_event_names": { "minItems": 1 } } }
+        }
+      ]
+    }
+  }
+}

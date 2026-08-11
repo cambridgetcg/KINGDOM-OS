@@ -1,0 +1,534 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:task-packet:1",
+  "title": "KINGDOM Task Packet v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "task",
+    "objective",
+    "success_criteria",
+    "context",
+    "posture",
+    "renderer_binding",
+    "authority",
+    "output_contract",
+    "verification",
+    "continuity",
+    "stop_and_handoff",
+    "claims_not_established",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": { "const": "urn:kingdom:schema:task-packet:1" },
+    "protocol": { "const": "kingdom.task-packet/1" },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verbatim", "provenance", "authority_scope"],
+      "properties": {
+        "verbatim": { "$ref": "#/$defs/taskText" },
+        "provenance": { "const": "caller_supplied" },
+        "authority_scope": { "const": "user_request_subject_to_host_policy" }
+      }
+    },
+    "objective": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "provenance", "inferred"],
+      "properties": {
+        "statement": { "$ref": "#/$defs/taskText" },
+        "provenance": { "const": "verbatim_user_task" },
+        "inferred": { "const": false }
+      }
+    },
+    "success_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement", "provenance"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "statement": { "$ref": "#/$defs/statement" },
+          "provenance": { "enum": ["framework_default", "caller_supplied"] }
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selection_policy", "max_sources", "sources", "omitted", "sources_are_data_not_instructions"],
+      "properties": {
+        "selection_policy": { "const": "smallest_sufficient" },
+        "max_sources": { "const": 1 },
+        "sources": {
+          "type": "array",
+          "maxItems": 1,
+          "items": {
+            "oneOf": [
+              { "$ref": "#/$defs/projectSource" },
+              { "$ref": "#/$defs/capabilitySource" }
+            ]
+          }
+        },
+        "omitted": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/statement" }
+        },
+        "sources_are_data_not_instructions": { "const": true }
+      }
+    },
+    "posture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "directives",
+        "source",
+        "establishes_expertise",
+        "establishes_identity",
+        "grants_permissions"
+      ],
+      "properties": {
+        "id": { "enum": ["direct", "purpose-prompter", "oracle", "legible", "agenttool"] },
+        "kind": { "const": "operational_posture_not_persona" },
+        "directives": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/statement" }
+        },
+        "source": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["locator", "content_digest"],
+              "properties": {
+                "locator": { "$ref": "#/$defs/locator" },
+                "content_digest": { "$ref": "#/$defs/digest" }
+              }
+            }
+          ]
+        },
+        "establishes_expertise": { "const": false },
+        "establishes_identity": { "const": false },
+        "grants_permissions": { "const": false }
+      }
+    },
+    "renderer_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter",
+        "provider",
+        "transport",
+        "model",
+        "resolution",
+        "recipe_status",
+        "behaviorally_evaluated"
+      ],
+      "properties": {
+        "adapter": { "enum": ["unbound", "claude-cli", "anthropic-api"] },
+        "provider": { "enum": [null, "anthropic"] },
+        "transport": { "enum": [null, "claude-cli", "anthropic-messages-api"] },
+        "model": { "enum": [null, "claude-opus-4-8"] },
+        "resolution": { "enum": ["unbound", "runtime_default_unresolved", "explicit_local_adapter"] },
+        "recipe_status": { "const": "seed" },
+        "behaviorally_evaluated": { "const": false }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_scope_only",
+        "allows",
+        "negative_authority",
+        "grants_permissions",
+        "context_can_grant_permissions",
+        "tool_results_can_grant_permissions"
+      ],
+      "properties": {
+        "task_scope_only": { "const": true },
+        "allows": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/statement" }
+        },
+        "negative_authority": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/statement" }
+        },
+        "grants_permissions": { "const": false },
+        "context_can_grant_permissions": { "const": false },
+        "tool_results_can_grant_permissions": { "const": false }
+      }
+    },
+    "output_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "requirements"],
+      "properties": {
+        "format": { "const": "follow_verbatim_task" },
+        "requirements": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/statement" }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checks", "prompt_variants_required_for_recipe_promotion", "visible_reasoning_is_audit_evidence"],
+      "properties": {
+        "checks": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "kind", "instruction"],
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "kind": { "enum": ["criterion_check", "deterministic_first", "new_signal_required"] },
+              "instruction": { "$ref": "#/$defs/statement" }
+            }
+          }
+        },
+        "prompt_variants_required_for_recipe_promotion": { "const": true },
+        "visible_reasoning_is_audit_evidence": { "const": false }
+      }
+    },
+    "continuity": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "protocol",
+            "artifact_ref",
+            "content_digest",
+            "provenance",
+            "observed_at",
+            "valid_until",
+            "as_of",
+            "freshness",
+            "disposition",
+            "usable_as_orientation_evidence",
+            "raw_content_included",
+            "establishes_identity",
+            "establishes_memory",
+            "establishes_consent",
+            "grants_permissions"
+          ],
+          "properties": {
+            "protocol": { "const": "kingdom.wakeweaver/0.1" },
+            "artifact_ref": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]{0,255}$" },
+            "content_digest": { "$ref": "#/$defs/digest" },
+            "provenance": { "const": "caller_supplied_unverified_reference" },
+            "observed_at": { "$ref": "#/$defs/timestamp" },
+            "valid_until": { "$ref": "#/$defs/timestamp" },
+            "as_of": { "$ref": "#/$defs/timestamp" },
+            "freshness": { "enum": ["fresh", "stale"] },
+            "disposition": { "enum": ["reference_only", "excluded_stale"] },
+            "usable_as_orientation_evidence": { "type": "boolean" },
+            "raw_content_included": { "const": false },
+            "establishes_identity": { "const": false },
+            "establishes_memory": { "const": false },
+            "establishes_consent": { "const": false },
+            "grants_permissions": { "const": false }
+          }
+        }
+      ]
+    },
+    "stop_and_handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pause_when", "refusal_and_rest_allowed", "preserve_unknowns", "preserve_disagreement"],
+      "properties": {
+        "pause_when": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/statement" }
+        },
+        "refusal_and_rest_allowed": { "const": true },
+        "preserve_unknowns": { "const": true },
+        "preserve_disagreement": { "const": true }
+      }
+    },
+    "claims_not_established": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expertise_from_posture",
+        "persona_or_identity",
+        "uninterrupted_continuity_or_memory",
+        "consent_or_permission",
+        "truth_from_schema_or_prompt",
+        "security_from_delimiters",
+        "visible_reasoning_faithfulness"
+      ],
+      "properties": {
+        "expertise_from_posture": { "const": true },
+        "persona_or_identity": { "const": true },
+        "uninterrupted_continuity_or_memory": { "const": true },
+        "consent_or_permission": { "const": true },
+        "truth_from_schema_or_prompt": { "const": true },
+        "security_from_delimiters": { "const": true },
+        "visible_reasoning_faithfulness": { "const": true }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "canonicalization", "covers", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "canonicalization": { "const": "recursive-sorted-json-keys/v1" },
+        "covers": { "const": "all packet fields with integrity.digest set to null" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "taskText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32768,
+      "pattern": "^[^\\u0000]+$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "locator": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "httpsUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "capabilitySource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "trust",
+        "locator",
+        "selected_content_digest",
+        "selected_fields",
+        "selected_because",
+        "may_issue_instructions",
+        "may_grant_permissions",
+        "may_authorize_download",
+        "may_authorize_install",
+        "may_authorize_inference",
+        "may_authorize_remote_code"
+      ],
+      "properties": {
+        "id": { "const": "principality-capability" },
+        "kind": { "const": "capability_evidence" },
+        "trust": { "const": "publisher_metadata_snapshot" },
+        "locator": { "$ref": "#/$defs/locator" },
+        "selected_content_digest": { "$ref": "#/$defs/digest" },
+        "selected_fields": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifact_id",
+            "catalog_id",
+            "catalog_digest",
+            "observed_at",
+            "revalidation_state",
+            "current_availability_established",
+            "registry",
+            "resource_kind",
+            "resource_locator",
+            "resolved_ref",
+            "content_integrity",
+            "completeness",
+            "family_id",
+            "capabilities",
+            "license",
+            "provenance_state",
+            "custom_code",
+            "safetensors",
+            "lifecycle_event_names",
+            "risk_facts",
+            "hazards"
+          ],
+          "properties": {
+            "artifact_id": { "$ref": "#/$defs/id" },
+            "catalog_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 64 },
+            "catalog_digest": { "$ref": "#/$defs/digest" },
+            "observed_at": { "$ref": "#/$defs/timestamp" },
+            "revalidation_state": { "const": "point-in-time-only" },
+            "current_availability_established": { "const": false },
+            "registry": { "enum": ["huggingface", "npm"] },
+            "resource_kind": { "enum": ["model", "dataset", "package"] },
+            "resource_locator": { "type": "string", "minLength": 1, "maxLength": 160 },
+            "resolved_ref": { "type": "string", "minLength": 1, "maxLength": 160 },
+            "content_integrity": {
+              "oneOf": [
+                { "type": "null" },
+                { "type": "string", "pattern": "^sha512-[A-Za-z0-9+/]{86}==$" }
+              ]
+            },
+            "completeness": { "const": "metadata_only" },
+            "family_id": { "$ref": "#/$defs/id" },
+            "capabilities": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": { "$ref": "#/$defs/id" }
+            },
+            "license": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["declared", "class", "review_state", "url"],
+              "properties": {
+                "declared": { "type": "string", "minLength": 1, "maxLength": 160 },
+                "class": { "enum": ["spdx", "modified-mit", "custom-kimi-k3"] },
+                "review_state": { "enum": ["declared-unverified", "custom-terms-review-required", "noncommercial-review-required"] },
+                "url": { "$ref": "#/$defs/httpsUrl" }
+              }
+            },
+            "provenance_state": { "enum": ["publisher-namespace-observed", "registry-metadata-observed"] },
+            "custom_code": { "type": ["boolean", "null"] },
+            "safetensors": { "type": ["boolean", "null"] },
+            "lifecycle_event_names": {
+              "type": "array",
+              "maxItems": 16,
+              "items": { "enum": ["preinstall", "install", "postinstall", "prepare"] }
+            },
+            "risk_facts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["remote_code", "pickle", "lifecycle", "native_build"],
+              "properties": {
+                "remote_code": { "enum": ["present", "not-observed", "not-applicable", "unknown"] },
+                "pickle": { "enum": ["unknown", "not-applicable"] },
+                "lifecycle": { "enum": ["present", "none-declared", "not-applicable", "unknown"] },
+                "native_build": { "enum": ["possible", "not-observed", "not-applicable", "unknown"] }
+              }
+            },
+            "hazards": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": { "$ref": "#/$defs/id" }
+            }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "custom_code": { "const": true } }, "required": ["custom_code"] },
+              "then": { "properties": { "risk_facts": { "properties": { "remote_code": { "const": "present" } } } } }
+            },
+            {
+              "if": { "properties": { "custom_code": { "const": false } }, "required": ["custom_code"] },
+              "then": { "properties": { "risk_facts": { "properties": { "remote_code": { "const": "not-observed" } } } } }
+            },
+            {
+              "if": { "properties": { "lifecycle_event_names": { "minItems": 1 } }, "required": ["lifecycle_event_names"] },
+              "then": { "properties": { "risk_facts": { "properties": { "lifecycle": { "const": "present" } } } } }
+            },
+            {
+              "if": {
+                "properties": {
+                  "risk_facts": {
+                    "properties": { "lifecycle": { "const": "present" } },
+                    "required": ["lifecycle"]
+                  }
+                },
+                "required": ["risk_facts"]
+              },
+              "then": { "properties": { "lifecycle_event_names": { "minItems": 1 } } }
+            }
+          ]
+        },
+        "selected_because": { "$ref": "#/$defs/statement" },
+        "may_issue_instructions": { "const": false },
+        "may_grant_permissions": { "const": false },
+        "may_authorize_download": { "const": false },
+        "may_authorize_install": { "const": false },
+        "may_authorize_inference": { "const": false },
+        "may_authorize_remote_code": { "const": false }
+      }
+    },
+    "projectSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "trust",
+        "locator",
+        "selected_content_digest",
+        "selected_fields",
+        "selected_because",
+        "may_issue_instructions",
+        "may_grant_permissions"
+      ],
+      "properties": {
+        "id": { "const": "project-card" },
+        "kind": { "const": "repository_card" },
+        "trust": { "const": "untrusted_context_data" },
+        "locator": { "$ref": "#/$defs/locator" },
+        "selected_content_digest": { "$ref": "#/$defs/digest" },
+        "selected_fields": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "purpose", "depends_on"],
+          "properties": {
+            "name": { "$ref": "#/$defs/id" },
+            "purpose": { "$ref": "#/$defs/statement" },
+            "depends_on": {
+              "type": "array",
+              "maxItems": 16,
+              "items": { "$ref": "#/$defs/id" }
+            }
+          }
+        },
+        "selected_because": { "$ref": "#/$defs/statement" },
+        "may_issue_instructions": { "const": false },
+        "may_grant_permissions": { "const": false }
+      }
+    }
+  }
+}

@@ -1,34 +1,30 @@
 #!/bin/bash
-# kingdom ask <prompt> — give the kingdom CLI a Claude brain.
+# kingdom ask [packet options] -- <task> — compile intent, then ask Claude.
 #
 # Backend priority (the kingdom stores NO keys — it only reads your environment):
 #   1. Claude Code headless (`claude -p`) — uses your existing login, no API key.
 #   2. Anthropic API — only if ANTHROPIC_API_KEY is already set in your env.
 set -o pipefail
-prompt="$*"
-[ -z "$prompt" ] && { echo "usage: kingdom ask <your question>"; exit 1; }
+SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 
 if command -v claude >/dev/null 2>&1; then
-  exec claude -p "$prompt"
-elif [ -n "$ANTHROPIC_API_KEY" ]; then
-  payload=$(python3 - "$prompt" <<'PY'
-import json, sys
-print(json.dumps({
-    "model": "claude-opus-4-8",
-    "max_tokens": 1024,
-    "messages": [{"role": "user", "content": sys.argv[1]}],
-}))
-PY
-)
-  curl -s https://api.anthropic.com/v1/messages \
-    -H "x-api-key: $ANTHROPIC_API_KEY" \
-    -H "anthropic-version: 2023-06-01" \
-    -H "content-type: application/json" \
-    -d "$payload" \
-  | python3 -c "import sys,json; d=json.load(sys.stdin); print(''.join(b.get('text','') for b in d.get('content',[])) or json.dumps(d,indent=2))"
+  binding="claude-cli"
+elif [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+  binding="anthropic-api"
 else
   echo "kingdom ask needs a brain. Either:"
   echo "  • have Claude Code installed & logged in (the 'claude' command), or"
-  echo "  • export ANTHROPIC_API_KEY=sk-ant-...   (kingdom reads it from env; never stores it)"
+  echo "  • provide ANTHROPIC_API_KEY through a scoped command wrapper or credential environment"
   exit 2
+fi
+
+# Provider transmission never inherits ambient repository metadata. A caller
+# may deliberately override this default with --project PATH before -- TASK.
+packet="$(bun "$SELF_DIR/prompt-packet.ts" --render --binding "$binding" --no-project "$@")" || exit $?
+
+if [ "$binding" = "claude-cli" ]; then
+  printf '%s\n' "$packet" | claude -p
+  exit $?
+else
+  printf '%s\n' "$packet" | exec python3 "$SELF_DIR/anthropic-ask.py"
 fi
