@@ -99,6 +99,14 @@ const CONFORMATIONAL_FEEDBACK_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${CONFORMATIONAL_FEEDBACK_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const FOLD_FEEDBACK_PATH = "/atlases/fold-feedback-atlas-2026-08-12.json";
+const FOLD_FEEDBACK_SCHEMA_PATH = "/schemas/fold-feedback-atlas/1.json";
+const FOLD_FEEDBACK_DOCUMENT_PATH = "/FOLD-FEEDBACK-ATLAS.md";
+const FOLD_FEEDBACK_SCHEMA_LINK = {
+  target: FOLD_FEEDBACK_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${FOLD_FEEDBACK_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -160,6 +168,11 @@ function addRitonavirMechanismSchemaLink(headers) {
 
 function addConformationalFeedbackSchemaLink(headers) {
   const link = CONFORMATIONAL_FEEDBACK_SCHEMA_LINK;
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addFoldFeedbackSchemaLink(headers) {
+  const link = FOLD_FEEDBACK_SCHEMA_LINK;
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
@@ -1044,6 +1057,15 @@ export function createKingdomWorker(options = {}) {
     const requestsConformationalFeedbackDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === CONFORMATIONAL_FEEDBACK_DOCUMENT_PATH;
+    const requestsFoldFeedback = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === FOLD_FEEDBACK_PATH;
+    const requestsFoldFeedbackSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === FOLD_FEEDBACK_SCHEMA_PATH;
+    const requestsFoldFeedbackDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === FOLD_FEEDBACK_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
@@ -1095,6 +1117,15 @@ export function createKingdomWorker(options = {}) {
     const servesConformationalFeedbackDocument = requestsConformationalFeedbackDocument && asset.ok &&
       (schemaAssetType.includes("text/plain") ||
         schemaAssetType.includes("text/markdown"));
+    const servesFoldFeedback = requestsFoldFeedback && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesFoldFeedbackSchema = requestsFoldFeedbackSchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesFoldFeedbackDocument = requestsFoldFeedbackDocument && asset.ok &&
+      (schemaAssetType.includes("text/plain") ||
+        schemaAssetType.includes("text/markdown"));
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
@@ -1102,7 +1133,8 @@ export function createKingdomWorker(options = {}) {
         !servesPolymorphCase && !servesPolymorphSchema && !servesPolymorphDocument &&
         !servesRitonavirMechanism && !servesRitonavirMechanismSchema && !servesRitonavirMechanismDocument &&
         !servesConformationalFeedback && !servesConformationalFeedbackSchema &&
-        !servesConformationalFeedbackDocument) return asset;
+        !servesConformationalFeedbackDocument && !servesFoldFeedback &&
+        !servesFoldFeedbackSchema && !servesFoldFeedbackDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -1112,6 +1144,7 @@ export function createKingdomWorker(options = {}) {
     if (servesPolymorphCase) addPolymorphSchemaLink(headers);
     if (servesRitonavirMechanism) addRitonavirMechanismSchemaLink(headers);
     if (servesConformationalFeedback) addConformationalFeedbackSchemaLink(headers);
+    if (servesFoldFeedback) addFoldFeedbackSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -1193,6 +1226,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesConformationalFeedbackDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesFoldFeedback) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesFoldFeedbackSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesFoldFeedbackDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

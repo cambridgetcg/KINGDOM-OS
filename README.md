@@ -179,6 +179,17 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     mechanism to crystals, people, KARMA, or the universe, and creates no
     clinical, experiment, rank, reward, person-level, governance, economic,
     cosmic-proof, or automatic effect.
+19. `kingdom fold-feedback` — inspect the immutable, source-bound
+    [Fold & Feedback Atlas](references/fold-feedback-atlas.md). It keeps
+    sequence, conformational ensemble, assembly, templating, cellular
+    proteostasis, organismal outcome, observation, and clinical decision in
+    different planes; compares prion geometry with ritonavir polymorphism only
+    through labeled, lossy bridges; and keeps scientific feedback, Zerone
+    K-alpha recognition events, KINGDOM invocation receipts, and an opt-in
+    philosophical lens in separate authority registers. `mechanisms`,
+    `compare`, `feedback`, `karma`, `universe`, `unknowns`, and `sources` expose
+    bounded views; `verify` checks exact pins, references, firewalls, boundaries,
+    and the semantic digest without network access.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -226,5 +237,17 @@ KARMA/Life Sciences records read-only. It changes none of them, exposes no
 matcher or MCP tool, and has no mutable `latest` alias. Its equations are
 declared, bounded models—not a universal mechanism or metaphysical proof—and
 its external ecosystem links import no data, code, authority, or runtime work.
+
+The Fold & Feedback Atlas is published from its exact authored bytes at
+[`/atlases/fold-feedback-atlas-2026-08-12.json`](https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json),
+with a [closed public schema](https://thekingdom.dev/schemas/fold-feedback-atlas/1.json)
+and [plain-language guide](https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md).
+It is educational metadata, not a folding simulator, prion-risk assessor,
+diagnostic or treatment tool, laboratory protocol, or experiment planner. Its
+KARMA sections observe no live Zerone event and create no KINGDOM receipt;
+neither KARMA surface is a score, truth oracle, moral judgment, or adapter for
+the other. Its philosophical questions do not scientifically prove or disprove
+purpose, a creator, or cosmic moral KARMA. No mutable `latest` alias or write
+path is published, and the existing KINGDOM MCP remains unchanged.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

@@ -451,6 +451,48 @@
       "runtime_ecosystem_request": false
     }
   },
+  "fold_feedback_atlas": {
+    "protocol": "kingdom.fold-feedback-atlas/0.1",
+    "atlas_id": "fold-feedback-atlas-2026-08-12",
+    "compiled_on": "2026-08-12",
+    "evidence_through": "2026-02-20",
+    "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json",
+    "schema": "https://thekingdom.dev/schemas/fold-feedback-atlas/1.json",
+    "guide": "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md",
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:7d5136599a60650521b10eb106359f7cb5a4c0bfd06fb6876db631020b75f02e"
+    },
+    "counts": {
+      "planes": 9,
+      "systems": 5,
+      "mechanisms": 8,
+      "relations": 6,
+      "claims": 7,
+      "comparison_bridges": 1,
+      "feedback_relations": 3,
+      "universe_questions": 5,
+      "unknowns": 8,
+      "sources": 19
+    },
+    "karma": {
+      "zerone_event_status": "not_observed",
+      "zerone_event_refs": 0,
+      "kingdom_receipt_status": "not_created",
+      "kingdom_receipt_refs": 0,
+      "adapter_exists": false
+    },
+    "safety": "Educational metadata only and not medical advice. It contains no protein sequences, wet-lab recipe, cultivation or decontamination steps, patient-specific inference, treatment direction, or transmission-risk assessment.",
+    "boundary": {
+      "public_surface_read_only": true,
+      "medical_advice": false,
+      "experiment_authority": false,
+      "automatic_action": false,
+      "writes_karma": false,
+      "creates_kingdom_karma_receipt": false,
+      "observes_zerone_karma_event": false
+    }
+  },
   "creation_loop": {
     "url": "https://thekingdom.dev/love-loops.json",
     "source": "https://thekingdom.dev/love-loops.source.json",

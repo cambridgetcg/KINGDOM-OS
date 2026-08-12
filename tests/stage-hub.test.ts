@@ -38,13 +38,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // literal on purpose: growing/shrinking the staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(37);
-      expect(staged).toHaveLength(37);
+      expect(HUB_ASSETS).toHaveLength(40);
+      expect(staged).toHaveLength(40);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
         "CONFORMATIONAL-FEEDBACK.md",
         "CREATION-LOOP.md",
+        "FOLD-FEEDBACK-ATLAS.md",
         "GEOMETRY-GRAMMAR.md",
         "PRINCIPALITY-COMMONS.md",
         "RIGHTS.md",
@@ -52,6 +53,7 @@ describe("the hub staging contract", () => {
         "RITONAVIR-POLYMORPH.md",
         "_kingdom.base.json",
         "_worker.js",
+        "atlases",
         "commons.json",
         "dada.txt",
         "feedback",
@@ -74,6 +76,7 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "schemas/love-loop")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/conformational-feedback-atlas")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/geometry-grammar")).sort()).toEqual(["0.1.json"]);
+      expect(readdirSync(join(output, "schemas/fold-feedback-atlas")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/principality-catalog")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/polymorph-history")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/ritonavir-mechanism-landscape")).sort()).toEqual(["1.json"]);
@@ -86,6 +89,9 @@ describe("the hub staging contract", () => {
       ]);
       expect(readdirSync(join(output, "feedback")).sort()).toEqual([
         "form-feedback-consequence-2026-08-12.json",
+      ]);
+      expect(readdirSync(join(output, "atlases")).sort()).toEqual([
+        "fold-feedback-atlas-2026-08-12.json",
       ]);
       expect(HUB_ASSETS).toContainEqual({
         source: "data/principalities/moonshot-hf-npm.v1.json",
@@ -159,6 +165,21 @@ describe("the hub staging contract", () => {
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("feedback/"))).toHaveLength(1);
       expect(HUB_ASSETS.some(({ destination }) => /feedback\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/feedback/"))).toBe(false);
+      expect(HUB_ASSETS).toContainEqual({
+        source: "data/fold-feedback/fold-feedback-atlas.v1.json",
+        destination: "atlases/fold-feedback-atlas-2026-08-12.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "schemas/fold-feedback-atlas-v1.schema.json",
+        destination: "schemas/fold-feedback-atlas/1.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "references/fold-feedback-atlas.md",
+        destination: "FOLD-FEEDBACK-ATLAS.md",
+      });
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(1);
+      expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
+      expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
       for (const [index, asset] of HUB_ASSETS.entries()) {
         expect(readFileSync(join(output, asset.destination))).toEqual(Buffer.from([index, 0, 255, 10]));
       }
