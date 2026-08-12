@@ -188,11 +188,17 @@ describe("Fold & Feedback Atlas", () => {
     }
     expect(paths.length).toBeGreaterThan(200);
     for (const value of [null, true, 0, "", [], {}]) expect(() => verifyFoldFeedbackAtlas(value)).not.toThrow();
-    const deeplyNested = authored();
     let nested: any = [];
     for (let index = 0; index < 20_000; index++) nested = [nested];
-    deeplyNested.title = nested;
-    expect(() => verifyFoldFeedbackAtlas(deeplyNested)).not.toThrow();
+    for (const mutate of [
+      (value: any) => { value.title = nested; },
+      (value: any) => { value.compiled_on = nested; },
+      (value: any) => { value.ontology.non_equivalence = nested; },
+      (value: any) => { value.sources[0].observed_on = nested; },
+    ]) {
+      const value = authored(); mutate(value);
+      expect(() => verifyFoldFeedbackAtlas(value)).not.toThrow();
+    }
     const cyclic = authored();
     cyclic.title = cyclic;
     expect(() => verifyFoldFeedbackAtlas(cyclic)).not.toThrow();

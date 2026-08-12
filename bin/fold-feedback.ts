@@ -28,6 +28,7 @@ const SHA256 = /^sha256:[a-f0-9]{64}$/;
 const FULL_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const YEAR_PRECISION = /^\d{4}(?:-\d{2}(?:-\d{2})?)?$/;
 const INTEGRITY_ALGORITHM = "sha256-recursive-sorted-json-keys-v1";
+const NON_EQUIVALENCE = "amino_acid_sequence != conformational_ensemble != supramolecular_assembly != bounded_sample_population != templating_conversion_process != cellular_proteostasis_context != tissue_or_organism_phenotype != experimental_transmission_observation != clinical_decision";
 
 const TOP_KEYS = [
   "$schema", "protocol", "atlas_id", "title", "compiled_on", "evidence_through",
@@ -186,7 +187,7 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
   }
 
   if (!sameKeys(value.ontology, ["non_equivalence", "observation_is_orthogonal", "domain_qualified_terms", "planes", "firewalls"]) ||
-      value.ontology?.observation_is_orthogonal !== true || !String(value.ontology?.non_equivalence).includes("clinical_decision")) add("$.ontology", "ontology-mismatch");
+      value.ontology?.observation_is_orthogonal !== true || value.ontology?.non_equivalence !== NON_EQUIVALENCE) add("$.ontology", "ontology-mismatch");
   if (!exactIds(value.ontology?.planes, PLANE_IDS)) add("$.ontology.planes", "plane-order-or-membership-mismatch");
   for (const [index, plane] of array(value.ontology?.planes).entries()) {
     if (!sameKeys(plane, ["id", "ordinary_words", "meaning", "does_not_establish"]) || !text(plane.ordinary_words) || !text(plane.meaning) || !text(plane.does_not_establish)) add(`$.ontology.planes[${index}]`, "invalid-plane");
@@ -226,7 +227,7 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
   for (const [index, source] of array(value.sources).entries()) {
     if (!sameKeys(source, ["id", "title", "source_kind", "published_on", "observed_on", "url", "doi", "authority_note"]) ||
         !id(source.id) || !text(source.title, 600) || !id(source.source_kind) || typeof source.published_on !== "string" || !YEAR_PRECISION.test(source.published_on) ||
-        !fullDate(source.observed_on) || source.observed_on > value.compiled_on || !isHttps(source.url) ||
+        !fullDate(source.observed_on) || !fullDate(value.compiled_on) || source.observed_on > value.compiled_on || !isHttps(source.url) ||
         !(source.doi === null || text(source.doi, 200)) || !text(source.authority_note)) add(`$.sources[${index}]`, "invalid-source");
   }
   for (const [index, mechanism] of mechanisms.entries()) {
