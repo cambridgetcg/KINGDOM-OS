@@ -59,6 +59,27 @@ const DESIGN_IDS = ["consequence-with-provenance", "challenge-and-repair"] as co
 const UNIVERSE_QUESTION_IDS = ["constraint-and-freedom", "relation-and-identity", "memory-without-narrator", "repair-as-architecture", "design-and-unknown"] as const;
 const UNKNOWN_IDS = ["toxic-species", "in-vivo-rate-balance", "structure-to-phenotype", "clinical-risk-from-atlas", "operational-prion-work", "zerone-event-state", "cross-karma-adapter", "ritonavir-prion-equivalence"] as const;
 const SOURCE_IDS = ["anfinsen-1973", "onuchic-1995", "balchin-2016", "groel-2024", "kocisko-1994", "kraus-2021", "manka-2022", "toyama-2007", "tessier-2007", "sharma-2016", "tornquist-2018", "knowles-2009", "chernoff-1995", "hou-2011", "cdc-prions-2026", "bauer-2001", "zerone-karma-foundation-2026", "zerone-karma-doc-2026", "kingdom-nen-2026"] as const;
+const SOURCE_URLS = [
+  "https://www.nobelprize.org/uploads/2018/06/anfinsen-lecture.pdf",
+  "https://doi.org/10.1073/pnas.92.8.3626",
+  "https://pubmed.ncbi.nlm.nih.gov/27365453/",
+  "https://doi.org/10.1038/s41586-024-07843-w",
+  "https://pubmed.ncbi.nlm.nih.gov/7913989/",
+  "https://doi.org/10.1016/j.molcel.2021.08.011",
+  "https://pubmed.ncbi.nlm.nih.gov/36342968/",
+  "https://doi.org/10.1038/nature06108",
+  "https://doi.org/10.1038/nature05848",
+  "https://pubmed.ncbi.nlm.nih.gov/26565023/",
+  "https://pubmed.ncbi.nlm.nih.gov/30351023/",
+  "https://pubmed.ncbi.nlm.nih.gov/20007899/",
+  "https://doi.org/10.1126/science.7754373",
+  "https://doi.org/10.1016/j.cell.2011.06.041",
+  "https://www.cdc.gov/prions/about/index.html",
+  "https://doi.org/10.1023/A:1011052932607",
+  "https://github.com/cambridgetcg/zerone-core/blob/fae391e371f0ebea2e24eb46c33a4ebd1380154f/dashboard/public/standards/karma-foundation.v1.json",
+  "https://github.com/cambridgetcg/zerone-core/blob/fae391e371f0ebea2e24eb46c33a4ebd1380154f/docs/KARMA.md",
+  "https://github.com/cambridgetcg/KINGDOM-OS/blob/e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212/NEN.md",
+] as const;
 
 const EXPECTED_BINDINGS: ReadonlyArray<readonly [string, string, string, string, string, string]> = [
   ["kingdom-ritonavir-history", "kingdom", "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212", "ritonavir-disappearing-polymorph-2026-08-11", "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116", "immutable-comparison-input"],
@@ -149,11 +170,6 @@ function references(value: unknown, known: Set<string>, allowEmpty = false): boo
   return Array.isArray(value) && value.length <= 24 && (allowEmpty || value.length > 0) &&
     value.every((item) => typeof item === "string" && known.has(item)) && unique(value);
 }
-function isHttps(value: unknown): boolean {
-  if (typeof value !== "string" || !value.startsWith("https://")) return false;
-  try { const parsed = new URL(value); return parsed.protocol === "https:" && !!parsed.hostname && !parsed.username && !parsed.password; } catch { return false; }
-}
-
 export function foldFeedbackDigest(value: Record<string, any>): string {
   const material = structuredClone(value);
   if (!object(material.integrity)) fail("fold-feedback integrity envelope is missing");
@@ -237,7 +253,7 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
   for (const [index, source] of array(value.sources).entries()) {
     if (!sameKeys(source, ["id", "title", "source_kind", "published_on", "observed_on", "url", "doi", "authority_note"]) ||
         !id(source.id) || !text(source.title, 600) || !id(source.source_kind) || typeof source.published_on !== "string" || !YEAR_PRECISION.test(source.published_on) ||
-        !fullDate(source.observed_on) || !fullDate(value.compiled_on) || source.observed_on > value.compiled_on || !isHttps(source.url) ||
+        !fullDate(source.observed_on) || !fullDate(value.compiled_on) || source.observed_on > value.compiled_on || source.url !== SOURCE_URLS[index] ||
         !(source.doi === null || text(source.doi, 200)) || !text(source.authority_note)) add(`$.sources[${index}]`, "invalid-source");
   }
   for (const [index, mechanism] of mechanisms.entries()) {
