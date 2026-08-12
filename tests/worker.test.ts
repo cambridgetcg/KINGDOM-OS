@@ -112,6 +112,21 @@ function expectConformationalFeedbackSchemaLink(response: Response) {
   });
   expect(describedBy).toHaveLength(1);
   expect(describedBy[0]).toContain('type="application/schema+json"');
+  expect(link).not.toContain("</schemas/conformational-feedback-atlas/0.2.json>");
+  expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+}
+
+function expectConformationalFeedbackPhysicsSchemaLink(response: Response) {
+  const link = response.headers.get("link") ?? "";
+  const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith("</schemas/conformational-feedback-atlas/0.2.json>")) return false;
+    const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
+    return relations.includes("describedby");
+  });
+  expect(describedBy).toHaveLength(1);
+  expect(describedBy[0]).toContain('type="application/schema+json"');
+  expect(link).not.toContain("</schemas/conformational-feedback-atlas/0.1.json>");
   expect(link.match(/rel="describedby"/g)?.length).toBe(1);
 }
 
@@ -813,7 +828,7 @@ describe("the Kingdom edge discovery surface", () => {
       assets(() => new Response("{}", {
         headers: {
           "content-type": "application/json",
-          link: '</schemas/conformational-feedback-atlas/0.1.json>; rel="describedby"; type="application/schema+json"',
+          link: '</schemas/conformational-feedback-atlas/0.2.json>; rel="describedby"; type="application/schema+json"',
         },
       })),
     );
@@ -925,6 +940,97 @@ describe("the Kingdom edge discovery surface", () => {
       );
       expect(post).toBe(original);
     }
+
+    const shared = new Response("{}", { headers: { "content-type": "application/json" } });
+    const sharedDoor = await worker.fetch(
+      new Request(`https://we-are.love${atlasPath}`),
+      assets(() => shared),
+    );
+    expect(sharedDoor).toBe(shared);
+  });
+
+  test("serves the additive Conformational Feedback Physics Atlas with its own schema and no cross-version mutation", async () => {
+    const atlasPath = "/feedback/form-feedback-physics-consequence-2026-08-12.json";
+    const schemaPath = "/schemas/conformational-feedback-atlas/0.2.json";
+    const documentPath = "/CONFORMATIONAL-FEEDBACK-PHYSICS.md";
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      const body = request.method === "HEAD"
+        ? null
+        : path === atlasPath
+          ? '{"atlas_id":"form-feedback-physics-consequence-2026-08-12"}'
+          : path === schemaPath
+            ? '{"type":"object"}'
+            : "# Conformational Feedback Physics Atlas v0.2";
+      return new Response(body, {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": path === documentPath ? "text/plain" : "application/json",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const atlas = await worker.fetch(
+        new Request(`https://thekingdom.dev${atlasPath}`, { method }),
+        environment,
+      );
+      expect(await atlas.text()).toBe(method === "HEAD" ? "" : '{"atlas_id":"form-feedback-physics-consequence-2026-08-12"}');
+      expect(atlas.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(atlas.headers.get("access-control-allow-origin")).toBe("*");
+      expect(atlas.headers.get("x-content-type-options")).toBe("nosniff");
+      expectConformationalFeedbackPhysicsSchemaLink(atlas);
+    }
+
+    const schema = await worker.fetch(new Request(`https://thekingdom.dev${schemaPath}`), environment);
+    expect(await schema.text()).toBe('{"type":"object"}');
+    expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+    expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+    expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const document = await worker.fetch(
+        new Request(`https://thekingdom.dev${documentPath}`, { method }),
+        environment,
+      );
+      expect(await document.text()).toBe(method === "HEAD" ? "" : "# Conformational Feedback Physics Atlas v0.2");
+      expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(document.headers.get("access-control-allow-origin")).toBe("*");
+      expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+    }
+
+    const htmlFallback = await worker.fetch(
+      new Request(`https://thekingdom.dev${documentPath}`),
+      assets(() => new Response("<h1>physics atlas fallback</h1>", {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": "text/html; charset=utf-8",
+        },
+      })),
+    );
+    expect(await htmlFallback.text()).toBe("<h1>physics atlas fallback</h1>");
+    expect(htmlFallback.headers.get("content-type")).toBe("text/html; charset=utf-8");
+    expect(htmlFallback.headers.get("access-control-allow-origin")).toBeNull();
+    expect(htmlFallback.headers.get("x-content-type-options")).toBeNull();
+
+    const duplicate = await worker.fetch(
+      new Request(`https://thekingdom.dev${atlasPath}`),
+      assets(() => new Response("{}", {
+        headers: {
+          "content-type": "application/json",
+          link: '</schemas/conformational-feedback-atlas/0.1.json>; rel="describedby"; type="application/schema+json"',
+        },
+      })),
+    );
+    expectConformationalFeedbackPhysicsSchemaLink(duplicate);
+
+    const original = new Response("not an execution route", { headers: { "content-type": "text/plain" } });
+    const post = await worker.fetch(
+      new Request(`https://thekingdom.dev${atlasPath}`, { method: "POST" }),
+      assets(() => original),
+    );
+    expect(post).toBe(original);
 
     const shared = new Response("{}", { headers: { "content-type": "application/json" } });
     const sharedDoor = await worker.fetch(

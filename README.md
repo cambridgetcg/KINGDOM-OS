@@ -166,9 +166,11 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     without changing the historical record, and keeps material,
     dissolution/exposure, biological-action, and clinical-decision planes
     non-equivalent.
-18. `kingdom feedback` — inspect and strictly verify the digest-sealed
+18. `kingdom feedback` — inspect and strictly verify the byte-preserved v0.1
     [Conformational Feedback Atlas](references/conformational-feedback-atlas.md).
-    Four explicit models cover conditional free energy, non-Markovian barrier
+    `kingdom feedback-physics` reads its separately identified, lineage-pinned
+    [v0.2 successor](references/conformational-feedback-atlas-v0.2.md). Four
+    explicit models cover conditional free energy, non-Markovian barrier
     crossing, templated population balance, and local feedback stability while
     preserving their projection and non-transfer limits. Five link-only
     ecosystem bridges point to RCSB PDB, AlphaFold DB, UniProtKB, ModelArchive,
@@ -228,15 +230,21 @@ assessment, interaction checker, or medical, formulation, manufacturing,
 GMP, batch-release, regulatory, experimental, procurement, or action
 authority. The existing KINGDOM MCP remains unchanged.
 
-The Conformational Feedback Atlas is published from exact authored bytes at
+The original Conformational Feedback Atlas v0.1 remains published from its
+exact immutable authored bytes at
 [`/feedback/form-feedback-consequence-2026-08-12.json`](https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json),
 with a [closed public schema](https://thekingdom.dev/schemas/conformational-feedback-atlas/0.1.json)
 and [plain-language guide](https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md).
 It binds the existing Ritonavir Mechanism Landscape and exact public Zerone
-KARMA/Life Sciences records read-only. It changes none of them, exposes no
-matcher or MCP tool, and has no mutable `latest` alias. Its equations are
-declared, bounded models—not a universal mechanism or metaphysical proof—and
-its external ecosystem links import no data, code, authority, or runtime work.
+KARMA/Life Sciences records read-only. The additive v0.2 successor is published
+at [`/feedback/form-feedback-physics-consequence-2026-08-12.json`](https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json),
+with its own [closed schema](https://thekingdom.dev/schemas/conformational-feedback-atlas/0.2.json)
+and [physics guide](https://thekingdom.dev/CONFORMATIONAL-FEEDBACK-PHYSICS.md).
+It pins v0.1 by semantic and byte digest rather than mutating it. Both versions
+change none of their sources, expose no matcher or MCP tool, and have no mutable
+`latest` alias. The successor's equations are declared, bounded models—not a
+universal mechanism or metaphysical proof—and its external ecosystem links
+import no data, code, authority, or runtime work.
 
 The Fold & Feedback Atlas is published from its exact authored bytes at
 [`/atlases/fold-feedback-atlas-2026-08-12.json`](https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json),

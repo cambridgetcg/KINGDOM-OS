@@ -12,6 +12,14 @@ import {
   conformationalFeedbackPublicDiscovery,
   loadConformationalFeedbackAtlas,
 } from "../bin/conformational-feedback.ts";
+import {
+  CONFORMATIONAL_FEEDBACK_PHYSICS_DIGEST,
+  CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL,
+  CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL,
+  CONFORMATIONAL_FEEDBACK_PHYSICS_URL,
+  conformationalFeedbackPhysicsPublicDiscovery,
+  loadConformationalFeedbackPhysicsAtlas,
+} from "../bin/conformational-feedback-physics.ts";
 import { RITONAVIR_MECHANISM_DIGEST } from "../bin/ritonavir-mechanism.ts";
 import { KINGDOM_OS_ROUTES } from "../pages-functions/_worker.js";
 
@@ -62,6 +70,9 @@ const surfaces = [
   "data/feedback/conformational-feedback-atlas.v0.json",
   "schemas/conformational-feedback-atlas-v0.schema.json",
   "references/conformational-feedback-atlas.md",
+  "data/feedback/conformational-feedback-atlas.v0.2.json",
+  "schemas/conformational-feedback-atlas-v0.2.schema.json",
+  "references/conformational-feedback-atlas-v0.2.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -441,6 +452,63 @@ describe("advertised URLs stay deployable", () => {
       schema: CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
       guide: CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
       integrity: { digest: CONFORMATIONAL_FEEDBACK_DIGEST },
+      counts: { registers: 3, geometries: 5, translations: 3, feedback_stages: 4, sources: 11 },
+      boundary: {
+        read_only: true,
+        operational_biology: false,
+        biological_equivalence: false,
+        karma_magnitude: false,
+        karma_rank: false,
+        economic_effect: false,
+        governance_effect: false,
+        person_level_effect: false,
+        cosmic_design_proven: false,
+        scientific_validation_from_analogy: false,
+        automatic_action: false,
+      },
+    });
+    expect(discovery.bindings).toHaveLength(3);
+    expect(discovery.bindings.every(({ authority_imported }: { authority_imported: boolean }) => authority_imported === false)).toBe(true);
+    for (const url of [CONFORMATIONAL_FEEDBACK_URL, CONFORMATIONAL_FEEDBACK_SCHEMA_URL, CONFORMATIONAL_FEEDBACK_DOCUMENT_URL]) {
+      expect(guest.next_actions).toContainEqual(expect.objectContaining({ method: "GET", url }));
+      expect(llms).toContain(url);
+    }
+    expect(manifest.entry_points).toMatchObject({
+      conformational_feedback_atlas: CONFORMATIONAL_FEEDBACK_URL,
+      conformational_feedback_atlas_schema: CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
+      conformational_feedback_atlas_guide: CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
+    });
+    expect(staged.has("feedback/form-feedback-consequence-2026-08-12.json")).toBe(true);
+    expect(staged.has("schemas/conformational-feedback-atlas/0.1.json")).toBe(true);
+    expect(staged.has("CONFORMATIONAL-FEEDBACK.md")).toBe(true);
+    expect(staged.has("feedback/latest.json")).toBe(false);
+    expect(discovery).not.toHaveProperty("mcp");
+    expect(discovery).not.toHaveProperty("matcher");
+    expect(discovery).not.toHaveProperty("execute");
+  });
+
+  test("the additive Conformational Feedback Physics Atlas stays lineage-pinned and authority-negative", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const expected = conformationalFeedbackPhysicsPublicDiscovery(loadConformationalFeedbackPhysicsAtlas());
+    const discovery = manifest.conformational_feedback_physics_atlas;
+
+    expect(discovery).toEqual(expected);
+    expect(discovery).toEqual(guest.conformational_feedback_physics_atlas);
+    expect(discovery).toEqual(kingdom.conformational_feedback_physics_atlas);
+    expect(discovery).toMatchObject({
+      protocol: "kingdom.conformational-feedback-atlas/0.2",
+      atlas_id: "form-feedback-physics-consequence-2026-08-12",
+      url: CONFORMATIONAL_FEEDBACK_PHYSICS_URL,
+      schema: CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL,
+      guide: CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL,
+      predecessor: {
+        relation: "extends-without-mutation",
+        byte_sha256: "sha256:ae15f4f69e488323132ea6fc94d57d338702ca0fa47fd9fbbd41c15a6af230e6",
+      },
+      integrity: { digest: CONFORMATIONAL_FEEDBACK_PHYSICS_DIGEST },
       counts: { registers: 3, physics_and_mathematics: 4, ecosystem_bridges: 5, geometries: 5, translations: 3, feedback_stages: 4, sources: 13 },
       boundary: {
         read_only: true,
@@ -459,18 +527,18 @@ describe("advertised URLs stay deployable", () => {
     });
     expect(discovery.bindings).toHaveLength(3);
     expect(discovery.bindings.every(({ authority_imported }: { authority_imported: boolean }) => authority_imported === false)).toBe(true);
-    for (const url of [CONFORMATIONAL_FEEDBACK_URL, CONFORMATIONAL_FEEDBACK_SCHEMA_URL, CONFORMATIONAL_FEEDBACK_DOCUMENT_URL]) {
+    for (const url of [CONFORMATIONAL_FEEDBACK_PHYSICS_URL, CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL, CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL]) {
       expect(guest.next_actions).toContainEqual(expect.objectContaining({ method: "GET", url }));
       expect(llms).toContain(url);
     }
     expect(manifest.entry_points).toMatchObject({
-      conformational_feedback_atlas: CONFORMATIONAL_FEEDBACK_URL,
-      conformational_feedback_atlas_schema: CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
-      conformational_feedback_atlas_guide: CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
+      conformational_feedback_physics_atlas: CONFORMATIONAL_FEEDBACK_PHYSICS_URL,
+      conformational_feedback_physics_atlas_schema: CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL,
+      conformational_feedback_physics_atlas_guide: CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL,
     });
-    expect(staged.has("feedback/form-feedback-consequence-2026-08-12.json")).toBe(true);
-    expect(staged.has("schemas/conformational-feedback-atlas/0.1.json")).toBe(true);
-    expect(staged.has("CONFORMATIONAL-FEEDBACK.md")).toBe(true);
+    expect(staged.has("feedback/form-feedback-physics-consequence-2026-08-12.json")).toBe(true);
+    expect(staged.has("schemas/conformational-feedback-atlas/0.2.json")).toBe(true);
+    expect(staged.has("CONFORMATIONAL-FEEDBACK-PHYSICS.md")).toBe(true);
     expect(staged.has("feedback/latest.json")).toBe(false);
     expect(discovery).not.toHaveProperty("mcp");
     expect(discovery).not.toHaveProperty("matcher");

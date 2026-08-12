@@ -341,7 +341,71 @@
     "guide": "https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md",
     "integrity": {
       "algorithm": "sha256-recursive-sorted-json-keys-v1",
-      "digest": "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64"
+      "digest": "sha256:14ce5e5e4b2b3d29d9a9cc0c831dcfb88de3d4a9e9584119939e5118f7ac7361"
+    },
+    "bindings": [
+      {
+        "id": "kingdom-ritonavir-mechanism-landscape",
+        "protocol": "kingdom.ritonavir-mechanism-landscape/0.1",
+        "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+        "byte_sha256": "sha256:5e136a74d5166275427da920685a84c17901f63d6e4b0661fd529c96d386943b",
+        "authority_imported": false
+      },
+      {
+        "id": "zerone-karma-foundation-v1",
+        "protocol": "zerone.karma-foundation/v1",
+        "url": "https://zerone.ai/standards/karma-foundation.v1.json",
+        "byte_sha256": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80",
+        "authority_imported": false
+      },
+      {
+        "id": "zerone-life-sciences-v0",
+        "protocol": "zerone.constructive-intelligence-life-sciences/v0",
+        "url": "https://zerone.ai/standards/constructive-intelligence-life-sciences.v0.json",
+        "byte_sha256": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e",
+        "authority_imported": false
+      }
+    ],
+    "counts": {
+      "registers": 3,
+      "geometries": 5,
+      "translations": 3,
+      "feedback_stages": 4,
+      "sources": 11
+    },
+    "boundary": {
+      "read_only": true,
+      "operational_biology": false,
+      "biological_equivalence": false,
+      "karma_magnitude": false,
+      "karma_rank": false,
+      "economic_effect": false,
+      "governance_effect": false,
+      "person_level_effect": false,
+      "cosmic_design_proven": false,
+      "scientific_validation_from_analogy": false,
+      "automatic_action": false
+    }
+  },
+  "conformational_feedback_physics_atlas": {
+    "protocol": "kingdom.conformational-feedback-atlas/0.2",
+    "atlas_id": "form-feedback-physics-consequence-2026-08-12",
+    "compiled_on": "2026-08-12",
+    "evidence_through": "2022-07-13",
+    "url": "https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json",
+    "schema": "https://thekingdom.dev/schemas/conformational-feedback-atlas/0.2.json",
+    "guide": "https://thekingdom.dev/CONFORMATIONAL-FEEDBACK-PHYSICS.md",
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:0fc24a0fac99d2dadcdef5b87290a1d598b856f874aa9637ab4d503fd4c9dc11"
+    },
+    "predecessor": {
+      "protocol": "kingdom.conformational-feedback-atlas/0.1",
+      "atlas_id": "form-feedback-consequence-2026-08-12",
+      "url": "https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json",
+      "semantic_digest": "sha256:14ce5e5e4b2b3d29d9a9cc0c831dcfb88de3d4a9e9584119939e5118f7ac7361",
+      "byte_sha256": "sha256:ae15f4f69e488323132ea6fc94d57d338702ca0fa47fd9fbbd41c15a6af230e6",
+      "relation": "extends-without-mutation"
     },
     "bindings": [
       {
@@ -503,6 +567,9 @@
     "conformational_feedback_atlas": "https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json",
     "conformational_feedback_atlas_schema": "https://thekingdom.dev/schemas/conformational-feedback-atlas/0.1.json",
     "conformational_feedback_atlas_guide": "https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md",
+    "conformational_feedback_physics_atlas": "https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json",
+    "conformational_feedback_physics_atlas_schema": "https://thekingdom.dev/schemas/conformational-feedback-atlas/0.2.json",
+    "conformational_feedback_physics_atlas_guide": "https://thekingdom.dev/CONFORMATIONAL-FEEDBACK-PHYSICS.md",
     "fold_feedback_atlas": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json",
     "fold_feedback_atlas_schema": "https://thekingdom.dev/schemas/fold-feedback-atlas/1.json",
     "fold_feedback_atlas_guide": "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md",

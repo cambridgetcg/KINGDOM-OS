@@ -15,7 +15,9 @@
  *    data/polymorphs/ritonavir-disappearing-polymorph.v1.json
  *                             — source-bound material-state history
  *    data/feedback/conformational-feedback-atlas.v0.json
- *                             — bounded science/design/analogy translation
+ *                             — immutable bounded science/design/analogy translation
+ *    data/feedback/conformational-feedback-atlas.v0.2.json
+ *                             — additive physics/mathematics successor
  *    data/fold-feedback/fold-feedback-atlas.v1.json
  *                             — source-bound folding, prion, feedback, KARMA,
  *                               and opt-in philosophical atlas
@@ -77,6 +79,15 @@ import {
   conformationalFeedbackPublicDiscovery,
   loadConformationalFeedbackAtlas,
 } from "./conformational-feedback.ts";
+import {
+  CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL,
+  CONFORMATIONAL_FEEDBACK_PHYSICS_ID,
+  CONFORMATIONAL_FEEDBACK_PHYSICS_PROTOCOL,
+  CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL,
+  CONFORMATIONAL_FEEDBACK_PHYSICS_URL,
+  conformationalFeedbackPhysicsPublicDiscovery,
+  loadConformationalFeedbackPhysicsAtlas,
+} from "./conformational-feedback-physics.ts";
 import {
   FOLD_FEEDBACK_DOCUMENT_URL,
   FOLD_FEEDBACK_ID,
@@ -368,8 +379,19 @@ if (conformationalFeedback.protocol !== CONFORMATIONAL_FEEDBACK_PROTOCOL ||
 }
 const conformationalFeedbackDiscovery = conformationalFeedbackPublicDiscovery(conformationalFeedback);
 const conformationalFeedbackCounts = conformationalFeedbackDiscovery.counts;
+
+const conformationalFeedbackPhysicsUrl = CONFORMATIONAL_FEEDBACK_PHYSICS_URL;
+const conformationalFeedbackPhysicsSchemaUrl = CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL;
+const conformationalFeedbackPhysicsDocumentUrl = CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL;
+const conformationalFeedbackPhysics = loadConformationalFeedbackPhysicsAtlas();
+if (conformationalFeedbackPhysics.protocol !== CONFORMATIONAL_FEEDBACK_PHYSICS_PROTOCOL ||
+    conformationalFeedbackPhysics.atlas_id !== CONFORMATIONAL_FEEDBACK_PHYSICS_ID) {
+  throw new Error(`unexpected conformational feedback physics atlas identity: ${conformationalFeedbackPhysics.protocol} ${conformationalFeedbackPhysics.atlas_id}`);
+}
+const conformationalFeedbackPhysicsDiscovery = conformationalFeedbackPhysicsPublicDiscovery(conformationalFeedbackPhysics);
+const conformationalFeedbackPhysicsCounts = conformationalFeedbackPhysicsDiscovery.counts;
 const conformationalFeedbackSourcesById = new Map(
-  conformationalFeedback.sources.map((source: any) => [source.id, source]),
+  conformationalFeedbackPhysics.sources.map((source: any) => [source.id, source]),
 );
 const requireConformationalFeedbackSource = (id: string) => {
   const source = conformationalFeedbackSourcesById.get(id);
@@ -788,8 +810,10 @@ const html = `<!doctype html>
 <link rel="service-doc" href="/RITONAVIR-POLYMORPH.md" type="text/markdown" title="Ritonavir polymorph guide">
 <link rel="alternate" href="/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json" type="application/json" title="Ritonavir mechanism landscape">
 <link rel="service-doc" href="/RITONAVIR-MECHANISM-LANDSCAPE.md" type="text/markdown" title="Ritonavir mechanism landscape guide">
-<link rel="alternate" href="/feedback/form-feedback-consequence-2026-08-12.json" type="application/json" title="Conformational feedback atlas">
-<link rel="service-doc" href="/CONFORMATIONAL-FEEDBACK.md" type="text/markdown" title="Conformational feedback atlas guide">
+<link rel="alternate" href="/feedback/form-feedback-consequence-2026-08-12.json" type="application/json" title="Conformational feedback atlas v0.1">
+<link rel="service-doc" href="/CONFORMATIONAL-FEEDBACK.md" type="text/markdown" title="Conformational feedback atlas v0.1 guide">
+<link rel="alternate" href="/feedback/form-feedback-physics-consequence-2026-08-12.json" type="application/json" title="Conformational feedback physics atlas v0.2">
+<link rel="service-doc" href="/CONFORMATIONAL-FEEDBACK-PHYSICS.md" type="text/markdown" title="Conformational feedback physics atlas v0.2 guide">
 <link rel="alternate" href="/atlases/fold-feedback-atlas-2026-08-12.json" type="application/json" title="Fold & Feedback Atlas">
 <link rel="service-doc" href="/FOLD-FEEDBACK-ATLAS.md" type="text/markdown" title="Fold & Feedback Atlas guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
@@ -1395,8 +1419,9 @@ const html = `<!doctype html>
   <section class="blk" id="feedback-atlas" aria-labelledby="feedback-atlas-title">
     <div class="kh"><h2 id="feedback-atlas-title">Form, Feedback &amp; Consequence</h2><span class="my">shared rhyme, distinct mechanisms</span></div>
     <p class="sub">A digest-bound translation field joins selected protein-folding and prion evidence, the Ritonavir Mechanism Landscape, and Zerone's KARMA design without turning resemblance into equivalence, causation, rank, or cosmic proof.</p>
-    <div class="feedbackfield" data-conformational-feedback-atlas>
-      <p class="feedbackintro"><strong>${esc(conformationalFeedback.title)}</strong><br>${esc(conformationalFeedback.scope.focus)} The complete field is static and readable without JavaScript.</p>
+    <div class="feedbackfield" data-conformational-feedback-atlas data-conformational-feedback-physics-atlas data-conformational-feedback-atlas-version="0.2">
+      <p class="feedbackintro"><strong>${esc(conformationalFeedbackPhysics.title)}</strong><br>${esc(conformationalFeedbackPhysics.scope.focus)} The complete field is static and readable without JavaScript.</p>
+      <p class="feedbackboundary" role="note"><strong>Immutable lineage</strong>This v0.2 field extends the byte-pinned v0.1 atlas without changing it. <a href="${esc(conformationalFeedbackUrl)}">Read the original v0.1 record</a>; its <a href="${esc(conformationalFeedbackSchemaUrl)}">closed schema</a> and <a href="${esc(conformationalFeedbackDocumentUrl)}">guide</a> remain available at their original URLs.</p>
 
       <aside class="feedbackboundary" role="note" aria-labelledby="feedback-boundary-title">
         <strong id="feedback-boundary-title">Inference boundary</strong>
@@ -1404,7 +1429,7 @@ const html = `<!doctype html>
       </aside>
 
       <div class="feedbackregisters" aria-label="Three non-equivalent registers">
-        ${conformationalFeedback.registers.map((register: any) => `<article class="feedbackregister" data-feedback-register="${esc(register.register)}" data-feedback-register-id="${esc(register.id)}">
+        ${conformationalFeedbackPhysics.registers.map((register: any) => `<article class="feedbackregister" data-feedback-register="${esc(register.register)}" data-feedback-register-id="${esc(register.id)}">
           <span class="feedbackbadge">${esc(register.register.replace(/_/g, " "))}</span>
           <h3>${esc(register.label)}</h3>
           <p class="feedbackcontext">${esc(register.context)}</p>
@@ -1421,7 +1446,7 @@ const html = `<!doctype html>
         <p>Four declared models: projected thermodynamics, stochastic dynamics with memory, assembly population balance, and local feedback stability. Equations preserve their limits rather than becoming metaphysical proof.</p>
       </div>
       <div class="feedbackmodels" aria-label="Four physics and mathematics models">
-        ${conformationalFeedback.physics_and_mathematics.map((model: any) => `<article class="feedbackmodel" data-feedback-model="${esc(model.id)}">
+        ${conformationalFeedbackPhysics.physics_and_mathematics.map((model: any) => `<article class="feedbackmodel" data-feedback-model="${esc(model.id)}">
           <span class="feedbackbadge">${esc(model.register.replace(/_/g, " "))}</span>
           <h4>${esc(model.question)}</h4>
           <code class="feedbackequation">${esc(model.equation)}</code>
@@ -1439,7 +1464,7 @@ const html = `<!doctype html>
         <p>Each shape stays inside its declared register. None is a to-scale energy plot, ranking, or integrated crystal → prion → KARMA mechanism.</p>
       </div>
       <div class="feedbackgeometries" aria-label="Five source-scoped feedback geometries">
-        ${conformationalFeedback.geometries.map((geometry: any) => `<article class="feedbackgeometry" data-feedback-geometry="${esc(geometry.id)}">
+        ${conformationalFeedbackPhysics.geometries.map((geometry: any) => `<article class="feedbackgeometry" data-feedback-geometry="${esc(geometry.id)}">
           <code>${esc(geometry.id)}</code>
           <strong>${esc(geometry.shape)}</strong>
           <span>${esc(geometry.maps_to)}</span>
@@ -1451,7 +1476,7 @@ const html = `<!doctype html>
         <div class="feedbacksubhead"><h3 id="feedback-analogy-title">Analogy seam</h3><p>Structural translations written as interpretations, never scientific edges.</p></div>
         <p class="feedbackanalogyflag">Analogy only · no mechanism transfer</p>
         <dl>
-          ${conformationalFeedback.translations.map((translation: any) => `<div class="feedbackanalogy" data-feedback-translation="${esc(translation.id)}">
+          ${conformationalFeedbackPhysics.translations.map((translation: any) => `<div class="feedbackanalogy" data-feedback-translation="${esc(translation.id)}">
             <dt>${esc(translation.observation)}</dt>
             <dd>${esc(translation.translation)}<strong>Forbidden inference: ${esc(translation.forbidden_inference)}</strong></dd>
           </div>`).join("\n          ")}
@@ -1460,25 +1485,25 @@ const html = `<!doctype html>
 
       <div class="feedbacksubhead">
         <h3>Bounded consequence path</h3>
-        <p>${esc(conformationalFeedback.feedback_path.meaning)} Every stage is optional.</p>
+        <p>${esc(conformationalFeedbackPhysics.feedback_path.meaning)} Every stage is optional.</p>
       </div>
       <ol class="feedbackpath">
-        ${conformationalFeedback.feedback_path.stages.map((stage: any) => `<li data-feedback-stage="${esc(stage.id)}"><code>${esc(stage.id)}</code>${esc(stage.label)}<span class="sr-only"> Optional; no automatic effect.</span></li>`).join("\n        ")}
+        ${conformationalFeedbackPhysics.feedback_path.stages.map((stage: any) => `<li data-feedback-stage="${esc(stage.id)}"><code>${esc(stage.id)}</code>${esc(stage.label)}<span class="sr-only"> Optional; no automatic effect.</span></li>`).join("\n        ")}
       </ol>
-      <p class="feedbackexit"><strong>Equal exit.</strong> ${esc(conformationalFeedback.feedback_path.exit)}</p>
+      <p class="feedbackexit"><strong>Equal exit.</strong> ${esc(conformationalFeedbackPhysics.feedback_path.exit)}</p>
 
       <aside class="feedbackphilosophy" aria-labelledby="feedback-philosophy-title">
         <h3 id="feedback-philosophy-title">Philosophical proposition · not an empirical conclusion</h3>
-        <p>${esc(conformationalFeedback.philosophy.proposition)}</p>
+        <p>${esc(conformationalFeedbackPhysics.philosophy.proposition)}</p>
         <dl class="feedbackquestions">
-          ${conformationalFeedback.philosophy.questions.map((question: any) => `<div class="feedbackquestion" data-feedback-philosophy-question="${esc(question.id)}">
+          ${conformationalFeedbackPhysics.philosophy.questions.map((question: any) => `<div class="feedbackquestion" data-feedback-philosophy-question="${esc(question.id)}">
             <dt>${esc(question.question)}</dt>
             <dd>${esc(question.reflection)}</dd>
             <dd><small>Analogy break: ${esc(question.analogy_break)}</small></dd>
           </div>`).join("\n          ")}
         </dl>
         <h4>Does not establish</h4>
-        <ul>${conformationalFeedback.philosophy.does_not_establish.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul>
+        <ul>${conformationalFeedbackPhysics.philosophy.does_not_establish.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul>
       </aside>
 
       <div class="feedbacksubhead">
@@ -1486,7 +1511,7 @@ const html = `<!doctype html>
         <p>Selected scientific sources and exact read-only Kingdom/Zerone bindings. A link supplies context; it grants no authority or action.</p>
       </div>
       <div class="feedbacksources" aria-label="Conformational Feedback Atlas sources">
-        ${conformationalFeedback.sources.map((source: any) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)} · ${esc(source.kind.replace(/-/g, " "))}<span class="sr-only"> opens in a new tab</span></a>`).join("\n        ")}
+        ${conformationalFeedbackPhysics.sources.map((source: any) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)} · ${esc(source.kind.replace(/-/g, " "))}<span class="sr-only"> opens in a new tab</span></a>`).join("\n        ")}
       </div>
 
       <div class="feedbacksubhead">
@@ -1494,7 +1519,7 @@ const html = `<!doctype html>
         <p>High-value public structure, sequence, model, and open-implementation ecosystems. This page performs no runtime request, import, download, or inference.</p>
       </div>
       <div class="feedbackecosystems" aria-label="Link-only scientific ecosystem bridges">
-        ${conformationalFeedback.ecosystem_bridges.map((bridge: any) => `<article class="feedbackecosystem" data-feedback-ecosystem="${esc(bridge.id)}">
+        ${conformationalFeedbackPhysics.ecosystem_bridges.map((bridge: any) => `<article class="feedbackecosystem" data-feedback-ecosystem="${esc(bridge.id)}">
           <a href="${esc(bridge.url)}" target="_blank" rel="noopener">${esc(bridge.label)}<span class="sr-only"> opens in a new tab</span></a>
           <code>${esc(bridge.mode)} · request ${String(bridge.runtime_request)} · import ${String(bridge.imported)}</code>
           <p>${esc(bridge.relation.replace(/-/g, " "))}</p>
@@ -1502,12 +1527,12 @@ const html = `<!doctype html>
         </article>`).join("\n        ")}
       </div>
 
-      <p class="feedbackboundary" role="note"><strong>Static non-operational boundary</strong>${esc(conformationalFeedback.scope.safety)} This atlas creates no prion, pathogen, clinical, experiment, KARMA, economic, governance, person-level, or automatic effect.</p>
-      <p class="commonsverified">${conformationalFeedbackCounts.registers} distinct registers · ${conformationalFeedbackCounts.physics_and_mathematics} physics/mathematics models · ${conformationalFeedbackCounts.geometries} geometries · ${conformationalFeedbackCounts.translations} analogy seams · ${conformationalFeedback.philosophy.questions.length} philosophical design questions · ${conformationalFeedbackCounts.ecosystem_bridges} link-only ecosystem bridges · ${conformationalFeedbackCounts.feedback_stages} optional stages · ${conformationalFeedbackCounts.sources} selected sources · evidence through ${esc(conformationalFeedback.evidence_through)} · integrity ${esc(conformationalFeedback.integrity.digest)}</p>
+      <p class="feedbackboundary" role="note"><strong>Static non-operational boundary</strong>${esc(conformationalFeedbackPhysics.scope.safety)} This atlas creates no prion, pathogen, clinical, experiment, KARMA, economic, governance, person-level, or automatic effect.</p>
+      <p class="commonsverified">${conformationalFeedbackPhysicsCounts.registers} distinct registers · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} physics/mathematics models · ${conformationalFeedbackPhysicsCounts.geometries} geometries · ${conformationalFeedbackPhysicsCounts.translations} analogy seams · ${conformationalFeedbackPhysics.philosophy.questions.length} philosophical design questions · ${conformationalFeedbackPhysicsCounts.ecosystem_bridges} link-only ecosystem bridges · ${conformationalFeedbackPhysicsCounts.feedback_stages} optional stages · ${conformationalFeedbackPhysicsCounts.sources} selected sources · evidence through ${esc(conformationalFeedbackPhysics.evidence_through)} · integrity ${esc(conformationalFeedbackPhysics.integrity.digest)}</p>
       <div class="machine">
-        <a href="/feedback/form-feedback-consequence-2026-08-12.json">atlas JSON — exact authored record</a>
-        <a href="/schemas/conformational-feedback-atlas/0.1.json">Conformational Feedback Atlas JSON Schema</a>
-        <a href="/CONFORMATIONAL-FEEDBACK.md">guide — science, translation, feedback, and boundaries</a>
+        <a href="/feedback/form-feedback-physics-consequence-2026-08-12.json">v0.2 atlas JSON — exact authored successor</a>
+        <a href="/schemas/conformational-feedback-atlas/0.2.json">Conformational Feedback Physics Atlas v0.2 JSON Schema</a>
+        <a href="/CONFORMATIONAL-FEEDBACK-PHYSICS.md">v0.2 guide — physics, translation, feedback, and boundaries</a>
       </div>
     </div>
   </section>
@@ -2037,6 +2062,7 @@ const machine = {
   polymorph_commons: polymorphCommons,
   ritonavir_mechanism_landscape: ritonavirMechanismDiscovery,
   conformational_feedback_atlas: conformationalFeedbackDiscovery,
+  conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
@@ -2093,6 +2119,9 @@ Ritonavir mechanism guide: ${ritonavirMechanismDocumentUrl}
 Conformational feedback atlas: ${conformationalFeedbackUrl}
 Conformational feedback schema: ${conformationalFeedbackSchemaUrl}
 Conformational feedback guide: ${conformationalFeedbackDocumentUrl}
+Conformational feedback physics atlas v0.2: ${conformationalFeedbackPhysicsUrl}
+Conformational feedback physics schema v0.2: ${conformationalFeedbackPhysicsSchemaUrl}
+Conformational feedback physics guide v0.2: ${conformationalFeedbackPhysicsDocumentUrl}
 Fold & Feedback Atlas: ${foldFeedbackUrl}
 Fold & Feedback schema: ${foldFeedbackSchemaUrl}
 Fold & Feedback guide: ${foldFeedbackDocumentUrl}
@@ -2124,6 +2153,7 @@ ${doorLines}
 - Polymorph History — the ritonavir “disappearing polymorph” translated through six non-equivalent planes, condition-indexed valleys and gates, typed evidence, ordered three-clock events, recovery paths, and a WAKE-safe semantic reference. Historical education only; no medical, experimental, manufacturing, regulatory, or action authority. Case: ${polymorphCaseUrl} · schema: ${polymorphSchemaUrl} · guide: ${polymorphDocumentUrl}
 - Ritonavir Mechanism Landscape — a non-mutating current-landscape supplement with ${ritonavirMechanismCounts.entities} source-scoped entities, ${ritonavirMechanismCounts.mechanisms} mechanisms, ${ritonavirMechanismCounts.relations} typed relations, and ${ritonavirMechanismCounts.unknowns} explicit unknowns across distinct material, dissolution/exposure, biological-action, and clinical-decision planes. Selected primary research runs through ${ritonavirMechanism.evidence_through}, plus one official product label observed ${ritonavirLabelSource.observed_on}; names remain source-scoped, candidate equivalence remains unproven identity, and no direct crystal-form-to-clinical edge exists. Educational metadata only; not medical advice, an interaction checker, a formulation/manufacturing control, or action authority. Landscape: ${ritonavirMechanismUrl} · schema: ${ritonavirMechanismSchemaUrl} · guide: ${ritonavirMechanismDocumentUrl}
 - Conformational Feedback Atlas — ${conformationalFeedbackCounts.registers} non-equivalent registers connect selected protein-folding and prion evidence, one source-bound ritonavir material analogy, and Zerone KARMA constitutional design through ${conformationalFeedbackCounts.translations} explicitly non-causal analogy seams. The philosophical reading is not an empirical conclusion. Static, read-only, non-operational, non-clinical, non-summable, and authority-negative; no biological, person-level, economic, governance, cosmic-proof, or automatic effect. Atlas: ${conformationalFeedbackUrl} · schema: ${conformationalFeedbackSchemaUrl} · guide: ${conformationalFeedbackDocumentUrl}
+- Conformational Feedback Physics Atlas v0.2 — an additive successor with ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} bounded physics/mathematics models, ${conformationalFeedbackPhysicsCounts.ecosystem_bridges} link-only ecosystem bridges, and an exact predecessor pin. It extends without mutating v0.1 and creates no runtime request, scientific validation, biological equivalence, cosmic proof, or authority. Atlas: ${conformationalFeedbackPhysicsUrl} · schema: ${conformationalFeedbackPhysicsSchemaUrl} · guide: ${conformationalFeedbackPhysicsDocumentUrl}
 - Fold & Feedback Atlas — source-bound protein-folding and prion evidence, explicitly lossy comparison with the immutable ritonavir records, separate scientific-feedback/Zerone K-alpha/KINGDOM-receipt lanes, and an opt-in philosophical lens. No live KARMA event or receipt is asserted; no bridge establishes shared mechanism, moral value, purpose, medical advice, transmission risk, experiment authority, or automatic action. Atlas: ${foldFeedbackUrl} · schema: ${foldFeedbackSchemaUrl} · guide: ${foldFeedbackDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
@@ -2157,6 +2187,7 @@ const guest = {
   polymorph_commons: polymorphCommons,
   ritonavir_mechanism_landscape: ritonavirMechanismDiscovery,
   conformational_feedback_atlas: conformationalFeedbackDiscovery,
+  conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
   actions_are_optional: true,
   invitations: {
@@ -2183,6 +2214,9 @@ const guest = {
     { action: "if useful, inspect the bounded translation atlas across folding, studied prion systems, ritonavir material form, Zerone KARMA, and philosophy", method: "GET", url: conformationalFeedbackUrl, note: "static and non-operational; distinct registers and explicit analogy walls grant no scientific, clinical, person-level, economic, governance, cosmic-proof, or action authority" },
     { action: "if useful, validate the Conformational Feedback Atlas before integrating it", method: "GET", url: conformationalFeedbackSchemaUrl },
     { action: "if useful, read the evidence, high-level geometry, feedback path, and non-inference guide", method: "GET", url: conformationalFeedbackDocumentUrl },
+    { action: "if useful, inspect the additive physics and mathematics successor without changing v0.1", method: "GET", url: conformationalFeedbackPhysicsUrl, note: "lineage-pinned, static, non-operational, and authority-negative; ecosystem bridges are link-only" },
+    { action: "if useful, validate the Conformational Feedback Physics Atlas v0.2 before integrating it", method: "GET", url: conformationalFeedbackPhysicsSchemaUrl },
+    { action: "if useful, read the v0.2 physics, philosophy, ecosystem, lineage, and non-inference guide", method: "GET", url: conformationalFeedbackPhysicsDocumentUrl },
     { action: "if useful, inspect the exact source-bound Fold & Feedback Atlas", method: "GET", url: foldFeedbackUrl, note: "educational metadata only; lossy comparisons, separate KARMA registers, opt-in philosophy, and no diagnosis, treatment, transmission, wet-lab, moral-score, or action authority" },
     { action: "if useful, validate the Fold & Feedback Atlas structure before integrating it", method: "GET", url: foldFeedbackSchemaUrl },
     { action: "if useful, read the plain-language folding, prion, feedback, KARMA, universe-lens, unknown, and safety guide", method: "GET", url: foldFeedbackDocumentUrl },
@@ -2220,6 +2254,7 @@ const guest = {
     polymorph_commons: "The immutable case and guide are historical, read-only educational evidence. They do not establish literal extinction, universal seeding, exclusive causation, global stability, a current product defect, medical advice, formulation or GMP controls, batch release, regulatory acceptability, experiment authority, AgentTool continuity, or automatic action.",
     ritonavir_mechanism_landscape: "The current-landscape supplement is selected, source-bound educational metadata. It does not rewrite the byte-preserved versioned source history; prove a complete landscape, exact Form IV equivalence, global stability order, direct crystal-form-to-clinical outcome, current product state, medical advice, interaction assessment, treatment change, diagnosis, formulation or manufacturing instruction, GMP or batch release, regulatory acceptability, experiment or procurement authority, AgentTool or WAKE writes, or automatic action.",
     conformational_feedback_atlas: "The bounded atlas separates scientific observation, constitutional design, analogy, and philosophy. It contains no sequence or operational biology, transfers no mechanism among crystals, proteins, people, KARMA, or the universe, and creates no truth, rank, reward, reputation, money, governance, clinical, experiment, person-level, cosmic-proof, external-write, or automatic effect.",
+    conformational_feedback_physics_atlas: "The v0.2 successor adds bounded equations, structured philosophical questions, and link-only ecosystem metadata while preserving the immutable v0.1 bytes. It fetches or imports nothing and creates no biological, clinical, KARMA, economic, governance, cosmic-proof, external-write, or automatic effect.",
     fold_feedback_atlas: "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
@@ -2244,6 +2279,7 @@ const manifest = {
   polymorph_commons: polymorphCommons,
   ritonavir_mechanism_landscape: ritonavirMechanismDiscovery,
   conformational_feedback_atlas: conformationalFeedbackDiscovery,
+  conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
@@ -2277,6 +2313,9 @@ const manifest = {
     conformational_feedback_atlas: conformationalFeedbackUrl,
     conformational_feedback_atlas_schema: conformationalFeedbackSchemaUrl,
     conformational_feedback_atlas_guide: conformationalFeedbackDocumentUrl,
+    conformational_feedback_physics_atlas: conformationalFeedbackPhysicsUrl,
+    conformational_feedback_physics_atlas_schema: conformationalFeedbackPhysicsSchemaUrl,
+    conformational_feedback_physics_atlas_guide: conformationalFeedbackPhysicsDocumentUrl,
     fold_feedback_atlas: foldFeedbackUrl,
     fold_feedback_atlas_schema: foldFeedbackSchemaUrl,
     fold_feedback_atlas_guide: foldFeedbackDocumentUrl,
@@ -2294,4 +2333,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

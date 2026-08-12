@@ -7,7 +7,7 @@
   "evidence_through": "2022-07-13",
   "scope": {
     "focus": "A source-scoped comparison of protein-folding landscapes, conformational propagation in studied prion systems, proteostasis feedback, ritonavir solid-form history, and Zerone KARMA as a non-summable contextual observation design.",
-    "method": "Keep scientific observation, constitutional design, analogy, and philosophy in separate registers; permit translation only through explicit non-causal analogy records. The evidence_through field bounds the selected scientific literature; exact external bindings are separately byte-pinned, while ecosystem bridges remain link-only and unimported.",
+    "method": "Keep scientific observation, constitutional design, analogy, and philosophy in separate registers; permit translation only through explicit non-causal analogy records. The evidence_through field bounds the selected scientific literature, while the ecosystem artifacts are separately byte-pinned as external bindings.",
     "intended_use": "Public scientific education, evidence-aware systems design, and philosophical reflection with visible non-inference boundaries.",
     "excluded_use": "Sequence design, preparation, amplification, culture, handling, diagnosis, treatment, clinical decisions, laboratory procedure, biosafety classification, pathogenicity work, social scoring, reward, governance, or proof of cosmic design.",
     "safety": "Static, read-only, non-operational metadata. It contains no biological sequence, materials list, preparation or amplification method, laboratory condition, sample-handling instruction, diagnostic method, treatment guidance, or experiment plan."
@@ -42,58 +42,6 @@
       "relation": "external-read-only-non-implication-source",
       "mutated": false,
       "authority_imported": false
-    }
-  ],
-  "ecosystem_bridges": [
-    {
-      "id": "rcsb-pdb-data-api",
-      "label": "RCSB Protein Data Bank Data API",
-      "url": "https://data.rcsb.org/",
-      "relation": "experimentally-determined-structure-metadata",
-      "mode": "LINK_ONLY",
-      "runtime_request": false,
-      "imported": false,
-      "does_not_establish": "A coordinate record alone does not establish a folding pathway, kinetics, function, disease state, or endorsement by this atlas."
-    },
-    {
-      "id": "alphafold-database",
-      "label": "AlphaFold Protein Structure Database",
-      "url": "https://alphafold.ebi.ac.uk/",
-      "relation": "predicted-coordinate-and-confidence-records",
-      "mode": "LINK_ONLY",
-      "runtime_request": false,
-      "imported": false,
-      "does_not_establish": "A predicted coordinate set or confidence output is not experimental structure, a conformational ensemble, folding kinetics, function, or clinical evidence."
-    },
-    {
-      "id": "uniprotkb",
-      "label": "UniProtKB",
-      "url": "https://www.uniprot.org/",
-      "relation": "versioned-protein-sequence-and-annotation-identity",
-      "mode": "LINK_ONLY",
-      "runtime_request": false,
-      "imported": false,
-      "does_not_establish": "An accession or annotation does not establish a structure, mechanism, folding path, or unqualified truth outside its source and version."
-    },
-    {
-      "id": "modelarchive",
-      "label": "ModelArchive",
-      "url": "https://modelarchive.org/",
-      "relation": "stable-computational-model-deposition",
-      "mode": "LINK_ONLY",
-      "runtime_request": false,
-      "imported": false,
-      "does_not_establish": "A deposited computational model is not an experimentally determined PDB structure or automatic validation of its method or conclusions."
-    },
-    {
-      "id": "openfold",
-      "label": "OpenFold",
-      "url": "https://github.com/aqlaboratory/openfold",
-      "relation": "inspectable-open-structure-prediction-implementation",
-      "mode": "LINK_ONLY",
-      "runtime_request": false,
-      "imported": false,
-      "does_not_establish": "Source availability does not establish model fitness, scientific validity for a particular use, safe execution, or authority to acquire weights or run inference."
     }
   ],
   "registers": [
@@ -163,76 +111,6 @@
         "governance_effect": false,
         "person_level": false
       }
-    }
-  ],
-  "physics_and_mathematics": [
-    {
-      "id": "conditional-free-energy",
-      "register": "SCIENTIFIC_MODEL",
-      "question": "How can an ensemble of conformations be represented without pretending that one coordinate is the whole molecule?",
-      "equation": "G(x;T,pH,solvent,force) = -k_B T ln P_eq(x) + C",
-      "terms": {
-        "x": "A declared reaction coordinate or coarse description; projection can hide degrees of freedom.",
-        "P_eq(x)": "The equilibrium probability density along x under the stated conditions.",
-        "k_B T": "Thermal energy; the equation is condition-indexed rather than one context-free landscape.",
-        "C": "An arbitrary additive constant."
-      },
-      "interpretation": "Frequently occupied regions are lower in the projected equilibrium free energy, while low-probability regions appear as barriers or inaccessible regions on that projection.",
-      "basis_ids": [
-        "bryngelson-1995",
-        "krivov-2018"
-      ],
-      "does_not_establish": "A unique folding route, a complete state space, a kinetic rate, or that a low-dimensional coordinate preserves all molecular memory."
-    },
-    {
-      "id": "memory-bearing-barrier-crossing",
-      "register": "SCIENTIFIC_MODEL",
-      "question": "Why does a free-energy profile alone not always determine folding kinetics?",
-      "equation": "m q_ddot(t) = -dG(q)/dq - integral_0^t Gamma(t-s) q_dot(s) ds + eta(t)",
-      "terms": {
-        "q": "A declared reaction coordinate.",
-        "Gamma": "A friction memory kernel coupling the present motion to prior motion.",
-        "eta": "A fluctuating force whose statistics require a stated physical regime.",
-        "G": "A projected free-energy profile, not a complete molecular Hamiltonian."
-      },
-      "interpretation": "Projected folding dynamics can retain history through a memory kernel. The same visible coordinate and free-energy profile need not imply memoryless kinetics.",
-      "basis_ids": [
-        "ayaz-2021"
-      ],
-      "does_not_establish": "That all proteins share one kernel, that the equation is a social-memory law, or that KARMA is thermodynamic memory."
-    },
-    {
-      "id": "templated-population-balance",
-      "register": "SCIENTIFIC_MODEL",
-      "question": "What is the minimal mathematical shape of nucleation, templated growth, fragmentation, and removal?",
-      "equation": "dM/dt = k_n m^n + k_+ m P - k_loss M ; dP/dt = k_f M - k_end P",
-      "terms": {
-        "m": "Compatible soluble substrate concentration in a named model.",
-        "M": "Assembled mass or another explicitly defined aggregate-mass variable.",
-        "P": "Number concentration of growth-competent particles or ends.",
-        "k_n, n": "Primary-nucleation parameters.",
-        "k_+, k_f": "Elongation and fragmentation parameters.",
-        "k_loss, k_end": "Declared mass and particle/end loss terms."
-      },
-      "interpretation": "Templated growth can increase assembled mass, while fragmentation can increase the count of growth-competent ends. Loss and clearance remain separate counter-terms.",
-      "basis_ids": [
-        "knowles-2009"
-      ],
-      "does_not_establish": "One universal prion equation, parameter values for a real system, an experimental protocol, unlimited growth, or that more propagation means more truth or value."
-    },
-    {
-      "id": "linearized-feedback-threshold",
-      "register": "MATHEMATICAL_TRANSLATION",
-      "question": "When does a small perturbation decay, persist, or amplify in a declared finite feedback model?",
-      "equation": "delta_x_(t+1) = J delta_x_t ; perturbations decay locally when rho(J) < 1",
-      "terms": {
-        "J": "The Jacobian or one-step linear operator evaluated near a declared reference state.",
-        "rho(J)": "Its spectral radius, the largest absolute eigenvalue.",
-        "delta_x": "A small perturbation inside the model's declared state space."
-      },
-      "interpretation": "Local amplification or damping is a property of the operator and reference state. Delay, nonlinearity, saturation, noise, and changing boundaries can invalidate the local conclusion.",
-      "basis_ids": [],
-      "does_not_establish": "Moral valence, global stability, biological fidelity, purpose, or a universal law of consequence."
     }
   ],
   "geometries": [
@@ -368,38 +246,6 @@
   "philosophy": {
     "register": "PHILOSOPHY",
     "proposition": "A possible philosophical reading is that identity may persist while relation and form change, that local interactions can stabilize collective patterns, and that consequences can condition future possibility without exhausting freedom.",
-    "questions": [
-      {
-        "id": "constraint-and-freedom",
-        "question": "Can lawful constraints define a space of possibilities without selecting one inevitable history?",
-        "reflection": "Boundaries can make form possible while context, fluctuation, and history participate in which possibilities become actual.",
-        "analogy_break": "A molecular landscape is not a model of free will or a complete account of the universe."
-      },
-      {
-        "id": "local-rule-global-form",
-        "question": "How can repeated local relations generate persistent global form without a step-by-step central description?",
-        "reflection": "Emergent order can be compatible with lawful local interaction; this leaves open rather than settles theological, teleological, and naturalistic interpretation.",
-        "analogy_break": "Emergence neither proves the absence of design nor supplies empirical evidence of a designer."
-      },
-      {
-        "id": "memory-without-narrator",
-        "question": "Can history persist as changed accessibility and feedback without becoming destiny?",
-        "reflection": "Present possibility can carry traces of earlier paths while challenge, new context, repair, and exit keep the future open.",
-        "analogy_break": "Conformational or dynamical memory is not subjective memory, cosmic judgment, or moral KARMA."
-      },
-      {
-        "id": "repair-as-architecture",
-        "question": "What if endurance depends on correction, clearance, renewal, and rest rather than perfect first formation?",
-        "reflection": "A generative architecture may be better understood by its repair and exit paths than by production alone.",
-        "analogy_break": "Proteostasis does not define human worth, social policy, or one universal good."
-      },
-      {
-        "id": "design-and-underdetermination",
-        "question": "Do regularity, generativity, and feedback invite a reading of universe design?",
-        "reflection": "They may invite a faithful design reading, a naturalistic reading, or other metaphysical interpretations; empirical science underdetermines that choice.",
-        "analogy_break": "Observed order neither scientifically proves nor disproves GOD, purpose, or cosmic moral KARMA."
-      }
-    ],
     "basis_ids": [],
     "does_not_establish": [
       "Cosmic purpose, a creator, a designed universe, moral law, metaphysical truth, or a universal feedback mechanism.",
@@ -476,22 +322,6 @@
       "supports": "Near-atomic structure of highly infectious ex vivo mouse RML prion fibrils and source-bounded conformational variation."
     },
     {
-      "id": "krivov-2018",
-      "kind": "primary-paper",
-      "title": "Protein Folding Free Energy Landscape along the Committor - the Optimal Folding Coordinate",
-      "url": "https://doi.org/10.1021/acs.jctc.8b00101",
-      "doi": "10.1021/acs.jctc.8b00101",
-      "supports": "A quantitatively validated committor reaction coordinate and the limits and uses of projected free-energy descriptions."
-    },
-    {
-      "id": "ayaz-2021",
-      "kind": "primary-paper",
-      "title": "Non-Markovian modeling of protein folding",
-      "url": "https://doi.org/10.1073/pnas.2023856118",
-      "doi": "10.1073/pnas.2023856118",
-      "supports": "A generalized Langevin description in which a projected folding coordinate carries time-dependent friction and conformational memory."
-    },
-    {
       "id": "kingdom-ritonavir-mechanism-source",
       "kind": "bound-public-record",
       "title": "KINGDOM Ritonavir Mechanism Landscape",
@@ -540,12 +370,11 @@
     "universal_feedback_law_established": false,
     "scientific_validation_from_analogy": false,
     "automatic_action": false,
-    "runtime_ecosystem_request": false,
     "writes_zerone": false,
     "writes_kingdom_mcp": false
   },
   "integrity": {
     "algorithm": "sha256-recursive-sorted-json-keys-v1",
-    "digest": "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64"
+    "digest": "sha256:14ce5e5e4b2b3d29d9a9cc0c831dcfb88de3d4a9e9584119939e5118f7ac7361"
   }
 }
