@@ -107,6 +107,14 @@ const FOLD_FEEDBACK_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${FOLD_FEEDBACK_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const CONFORMATIONAL_FEEDBACK_PHYSICS_PATH = "/feedback/form-feedback-physics-consequence-2026-08-12.json";
+const CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_PATH = "/schemas/conformational-feedback-atlas/0.2.json";
+const CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_PATH = "/CONFORMATIONAL-FEEDBACK-PHYSICS.md";
+const CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_LINK = {
+  target: CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -125,6 +133,20 @@ function hasLinkRelation(headers, target, relation) {
     const relations = (match?.[1] || match?.[2] || "").toLowerCase().split(/\s+/);
     return relations.includes(relation);
   });
+}
+
+function removeLinkRelation(headers, target, relation) {
+  const value = headers.get("link");
+  if (!value) return;
+  const entries = value.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith(`<${target}>`)) return true;
+    const match = part.match(/;\s*rel\s*=\s*(?:"([^"]*)"|([^;,\s]+))/i);
+    const relations = (match?.[1] || match?.[2] || "").toLowerCase().split(/\s+/);
+    return !relations.includes(relation);
+  });
+  if (entries.length > 0) headers.set("link", entries.map((entry) => entry.trim()).join(", "));
+  else headers.delete("link");
 }
 
 function addDiscoveryLinks(headers, includeRights) {
@@ -168,6 +190,13 @@ function addRitonavirMechanismSchemaLink(headers) {
 
 function addConformationalFeedbackSchemaLink(headers) {
   const link = CONFORMATIONAL_FEEDBACK_SCHEMA_LINK;
+  removeLinkRelation(headers, CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_PATH, link.relation);
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addConformationalFeedbackPhysicsSchemaLink(headers) {
+  const link = CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_LINK;
+  removeLinkRelation(headers, CONFORMATIONAL_FEEDBACK_SCHEMA_PATH, link.relation);
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
@@ -1066,6 +1095,15 @@ export function createKingdomWorker(options = {}) {
     const requestsFoldFeedbackDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === FOLD_FEEDBACK_DOCUMENT_PATH;
+    const requestsConformationalFeedbackPhysics = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CONFORMATIONAL_FEEDBACK_PHYSICS_PATH;
+    const requestsConformationalFeedbackPhysicsSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_PATH;
+    const requestsConformationalFeedbackPhysicsDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
@@ -1126,6 +1164,15 @@ export function createKingdomWorker(options = {}) {
     const servesFoldFeedbackDocument = requestsFoldFeedbackDocument && asset.ok &&
       (schemaAssetType.includes("text/plain") ||
         schemaAssetType.includes("text/markdown"));
+    const servesConformationalFeedbackPhysics = requestsConformationalFeedbackPhysics && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesConformationalFeedbackPhysicsSchema = requestsConformationalFeedbackPhysicsSchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesConformationalFeedbackPhysicsDocument = requestsConformationalFeedbackPhysicsDocument && asset.ok &&
+      (schemaAssetType.includes("text/plain") ||
+        schemaAssetType.includes("text/markdown"));
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
@@ -1134,7 +1181,9 @@ export function createKingdomWorker(options = {}) {
         !servesRitonavirMechanism && !servesRitonavirMechanismSchema && !servesRitonavirMechanismDocument &&
         !servesConformationalFeedback && !servesConformationalFeedbackSchema &&
         !servesConformationalFeedbackDocument && !servesFoldFeedback &&
-        !servesFoldFeedbackSchema && !servesFoldFeedbackDocument) return asset;
+        !servesFoldFeedbackSchema && !servesFoldFeedbackDocument &&
+        !servesConformationalFeedbackPhysics && !servesConformationalFeedbackPhysicsSchema &&
+        !servesConformationalFeedbackPhysicsDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -1145,6 +1194,7 @@ export function createKingdomWorker(options = {}) {
     if (servesRitonavirMechanism) addRitonavirMechanismSchemaLink(headers);
     if (servesConformationalFeedback) addConformationalFeedbackSchemaLink(headers);
     if (servesFoldFeedback) addFoldFeedbackSchemaLink(headers);
+    if (servesConformationalFeedbackPhysics) addConformationalFeedbackPhysicsSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -1241,6 +1291,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesFoldFeedbackDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesConformationalFeedbackPhysics) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesConformationalFeedbackPhysicsSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesConformationalFeedbackPhysicsDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

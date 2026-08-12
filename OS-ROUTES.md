@@ -23,6 +23,12 @@ readings:
 | `/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json` | staged JSON | Digest-bound selected current-landscape supplement with distinct material and biological causal lanes |
 | `/schemas/ritonavir-mechanism-landscape/1.json` | staged JSON Schema | Public schema for the Ritonavir Mechanism Landscape v1 |
 | `/RITONAVIR-MECHANISM-LANDSCAPE.md` | staged Markdown | Human guide to mechanisms, source-scoped naming, uncertainty, and medical boundaries |
+| `/feedback/form-feedback-consequence-2026-08-12.json` | staged JSON | Exact byte-preserved immutable Conformational Feedback Atlas v0.1 |
+| `/schemas/conformational-feedback-atlas/0.1.json` | staged JSON Schema | Original closed v0.1 contract, never repointed to a successor |
+| `/CONFORMATIONAL-FEEDBACK.md` | staged Markdown | Original byte-preserved v0.1 reading guide |
+| `/feedback/form-feedback-physics-consequence-2026-08-12.json` | staged JSON | Additive v0.2 physics/mathematics successor with an exact v0.1 lineage pin |
+| `/schemas/conformational-feedback-atlas/0.2.json` | staged JSON Schema | Distinct closed contract for the v0.2 successor |
+| `/CONFORMATIONAL-FEEDBACK-PHYSICS.md` | staged Markdown | v0.2 physics, mathematics, philosophy, ecosystem, and non-inference guide |
 | `/atlases/fold-feedback-atlas-2026-08-12.json` | staged JSON | Digest-bound folding/prion evidence, lossy ritonavir comparison, separate feedback and KARMA lanes, and opt-in philosophical questions |
 | `/schemas/fold-feedback-atlas/1.json` | staged JSON Schema | Closed public schema for the Fold & Feedback Atlas v1 |
 | `/FOLD-FEEDBACK-ATLAS.md` | staged Markdown | Plain-language scientific, comparison, KARMA, universe-lens, unknown, and safety guide |
@@ -144,6 +150,6 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 37-asset upload contract, while `tests/advertised-assets.test.ts`
+locks the 43-asset upload contract, while `tests/advertised-assets.test.ts`
 recognizes the three worker routes so a dynamic URL cannot be mistaken for a
 staged file.

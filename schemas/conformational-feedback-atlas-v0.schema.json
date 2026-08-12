@@ -15,9 +15,7 @@
     "evidence_through",
     "scope",
     "bindings",
-    "ecosystem_bridges",
     "registers",
-    "physics_and_mathematics",
     "geometries",
     "translations",
     "feedback_path",
@@ -84,7 +82,6 @@
           "allOf": [
             { "$ref": "#/$defs/binding" },
             {
-              "type": "object",
               "properties": {
                 "id": { "const": "kingdom-ritonavir-mechanism-landscape" },
                 "protocol": { "const": "kingdom.ritonavir-mechanism-landscape/0.1" },
@@ -100,7 +97,6 @@
           "allOf": [
             { "$ref": "#/$defs/binding" },
             {
-              "type": "object",
               "properties": {
                 "id": { "const": "zerone-karma-foundation-v1" },
                 "protocol": { "const": "zerone.karma-foundation/v1" },
@@ -116,7 +112,6 @@
           "allOf": [
             { "$ref": "#/$defs/binding" },
             {
-              "type": "object",
               "properties": {
                 "id": { "const": "zerone-life-sciences-v0" },
                 "protocol": { "const": "zerone.constructive-intelligence-life-sciences/v0" },
@@ -124,79 +119,6 @@
                 "byte_sha256": { "const": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e" },
                 "semantic_digest": { "const": null },
                 "relation": { "const": "external-read-only-non-implication-source" }
-              }
-            }
-          ]
-        }
-      ],
-      "items": false
-    },
-    "ecosystem_bridges": {
-      "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
-      "prefixItems": [
-        {
-          "allOf": [
-            { "$ref": "#/$defs/ecosystemBridge" },
-            {
-              "type": "object",
-              "properties": {
-                "id": { "const": "rcsb-pdb-data-api" },
-                "url": { "const": "https://data.rcsb.org/" },
-                "relation": { "const": "experimentally-determined-structure-metadata" }
-              }
-            }
-          ]
-        },
-        {
-          "allOf": [
-            { "$ref": "#/$defs/ecosystemBridge" },
-            {
-              "type": "object",
-              "properties": {
-                "id": { "const": "alphafold-database" },
-                "url": { "const": "https://alphafold.ebi.ac.uk/" },
-                "relation": { "const": "predicted-coordinate-and-confidence-records" }
-              }
-            }
-          ]
-        },
-        {
-          "allOf": [
-            { "$ref": "#/$defs/ecosystemBridge" },
-            {
-              "type": "object",
-              "properties": {
-                "id": { "const": "uniprotkb" },
-                "url": { "const": "https://www.uniprot.org/" },
-                "relation": { "const": "versioned-protein-sequence-and-annotation-identity" }
-              }
-            }
-          ]
-        },
-        {
-          "allOf": [
-            { "$ref": "#/$defs/ecosystemBridge" },
-            {
-              "type": "object",
-              "properties": {
-                "id": { "const": "modelarchive" },
-                "url": { "const": "https://modelarchive.org/" },
-                "relation": { "const": "stable-computational-model-deposition" }
-              }
-            }
-          ]
-        },
-        {
-          "allOf": [
-            { "$ref": "#/$defs/ecosystemBridge" },
-            {
-              "type": "object",
-              "properties": {
-                "id": { "const": "openfold" },
-                "url": { "const": "https://github.com/aqlaboratory/openfold" },
-                "relation": { "const": "inspectable-open-structure-prediction-implementation" }
               }
             }
           ]
@@ -213,17 +135,12 @@
           "allOf": [
             { "$ref": "#/$defs/register" },
             {
-              "type": "object",
               "properties": {
                 "id": { "const": "protein-folding-landscape" },
                 "register": { "const": "SCIENTIFIC_OBSERVATION" },
                 "empirical": { "const": true }
               },
-              "not": {
-                "type": "object",
-                "properties": { "karma_constraints": {} },
-                "required": ["karma_constraints"]
-              }
+              "not": { "required": ["karma_constraints"] }
             }
           ]
         },
@@ -231,17 +148,12 @@
           "allOf": [
             { "$ref": "#/$defs/register" },
             {
-              "type": "object",
               "properties": {
                 "id": { "const": "prion-conformational-propagation" },
                 "register": { "const": "SCIENTIFIC_OBSERVATION" },
                 "empirical": { "const": true }
               },
-              "not": {
-                "type": "object",
-                "properties": { "karma_constraints": {} },
-                "required": ["karma_constraints"]
-              }
+              "not": { "required": ["karma_constraints"] }
             }
           ]
         },
@@ -249,85 +161,11 @@
           "allOf": [
             { "$ref": "#/$defs/register" },
             {
-              "type": "object",
               "required": ["karma_constraints"],
               "properties": {
                 "id": { "const": "zerone-contextual-recognition" },
                 "register": { "const": "CONSTITUTIONAL_DESIGN" },
-                "empirical": { "const": false },
-                "karma_constraints": {}
-              }
-            }
-          ]
-        }
-      ],
-      "items": false
-    },
-    "physics_and_mathematics": {
-      "type": "array",
-      "minItems": 4,
-      "maxItems": 4,
-      "prefixItems": [
-        {
-          "allOf": [
-            { "$ref": "#/$defs/physicsModel" },
-            {
-              "type": "object",
-              "properties": {
-                "id": { "const": "conditional-free-energy" },
-                "register": { "const": "SCIENTIFIC_MODEL" },
-                "equation": { "const": "G(x;T,pH,solvent,force) = -k_B T ln P_eq(x) + C" },
-                "basis_ids": {
-                  "const": ["bryngelson-1995", "krivov-2018"]
-                }
-              }
-            }
-          ]
-        },
-        {
-          "allOf": [
-            { "$ref": "#/$defs/physicsModel" },
-            {
-              "type": "object",
-              "properties": {
-                "id": { "const": "memory-bearing-barrier-crossing" },
-                "register": { "const": "SCIENTIFIC_MODEL" },
-                "equation": { "const": "m q_ddot(t) = -dG(q)/dq - integral_0^t Gamma(t-s) q_dot(s) ds + eta(t)" },
-                "basis_ids": {
-                  "const": ["ayaz-2021"]
-                }
-              }
-            }
-          ]
-        },
-        {
-          "allOf": [
-            { "$ref": "#/$defs/physicsModel" },
-            {
-              "type": "object",
-              "properties": {
-                "id": { "const": "templated-population-balance" },
-                "register": { "const": "SCIENTIFIC_MODEL" },
-                "equation": { "const": "dM/dt = k_n m^n + k_+ m P - k_loss M ; dP/dt = k_f M - k_end P" },
-                "basis_ids": {
-                  "const": ["knowles-2009"]
-                }
-              }
-            }
-          ]
-        },
-        {
-          "allOf": [
-            { "$ref": "#/$defs/physicsModel" },
-            {
-              "type": "object",
-              "properties": {
-                "id": { "const": "linearized-feedback-threshold" },
-                "register": { "const": "MATHEMATICAL_TRANSLATION" },
-                "equation": { "const": "delta_x_(t+1) = J delta_x_t ; perturbations decay locally when rho(J) < 1" },
-                "basis_ids": {
-                  "const": []
-                }
+                "empirical": { "const": false }
               }
             }
           ]
@@ -343,31 +181,31 @@
         {
           "allOf": [
             { "$ref": "#/$defs/geometry" },
-            { "type": "object", "properties": { "id": { "const": "rugged-landscape" }, "register": { "const": "SCIENTIFIC_OBSERVATION" } } }
+            { "properties": { "id": { "const": "rugged-landscape" }, "register": { "const": "SCIENTIFIC_OBSERVATION" } } }
           ]
         },
         {
           "allOf": [
             { "$ref": "#/$defs/geometry" },
-            { "type": "object", "properties": { "id": { "const": "templated-edge" }, "register": { "const": "SCIENTIFIC_OBSERVATION" } } }
+            { "properties": { "id": { "const": "templated-edge" }, "register": { "const": "SCIENTIFIC_OBSERVATION" } } }
           ]
         },
         {
           "allOf": [
             { "$ref": "#/$defs/geometry" },
-            { "type": "object", "properties": { "id": { "const": "amplifying-path" }, "register": { "const": "SCIENTIFIC_OBSERVATION" } } }
+            { "properties": { "id": { "const": "amplifying-path" }, "register": { "const": "SCIENTIFIC_OBSERVATION" } } }
           ]
         },
         {
           "allOf": [
             { "$ref": "#/$defs/geometry" },
-            { "type": "object", "properties": { "id": { "const": "homeostatic-counterloop" }, "register": { "const": "SCIENTIFIC_OBSERVATION" } } }
+            { "properties": { "id": { "const": "homeostatic-counterloop" }, "register": { "const": "SCIENTIFIC_OBSERVATION" } } }
           ]
         },
         {
           "allOf": [
             { "$ref": "#/$defs/geometry" },
-            { "type": "object", "properties": { "id": { "const": "contextual-memory-with-repair" }, "register": { "const": "CONSTITUTIONAL_DESIGN" } } }
+            { "properties": { "id": { "const": "contextual-memory-with-repair" }, "register": { "const": "CONSTITUTIONAL_DESIGN" } } }
           ]
         }
       ],
@@ -381,19 +219,19 @@
         {
           "allOf": [
             { "$ref": "#/$defs/translation" },
-            { "type": "object", "properties": { "id": { "const": "multiple-accessible-forms" } } }
+            { "properties": { "id": { "const": "multiple-accessible-forms" } } }
           ]
         },
         {
           "allOf": [
             { "$ref": "#/$defs/translation" },
-            { "type": "object", "properties": { "id": { "const": "history-dependent-accessibility" } } }
+            { "properties": { "id": { "const": "history-dependent-accessibility" } } }
           ]
         },
         {
           "allOf": [
             { "$ref": "#/$defs/translation" },
-            { "type": "object", "properties": { "id": { "const": "propagation-under-constraints" } } }
+            { "properties": { "id": { "const": "propagation-under-constraints" } } }
           ]
         }
       ],
@@ -416,10 +254,10 @@
           "minItems": 4,
           "maxItems": 4,
           "prefixItems": [
-            { "$ref": "#/$defs/feedbackStage", "type": "object", "properties": { "id": { "const": "artifact-exists" } } },
-            { "$ref": "#/$defs/feedbackStage", "type": "object", "properties": { "id": { "const": "contextual-observation" } } },
-            { "$ref": "#/$defs/feedbackStage", "type": "object", "properties": { "id": { "const": "challenge-or-repair" } } },
-            { "$ref": "#/$defs/feedbackStage", "type": "object", "properties": { "id": { "const": "bounded-consultation" } } }
+            { "$ref": "#/$defs/feedbackStage", "properties": { "id": { "const": "artifact-exists" } } },
+            { "$ref": "#/$defs/feedbackStage", "properties": { "id": { "const": "contextual-observation" } } },
+            { "$ref": "#/$defs/feedbackStage", "properties": { "id": { "const": "challenge-or-repair" } } },
+            { "$ref": "#/$defs/feedbackStage", "properties": { "id": { "const": "bounded-consultation" } } }
           ],
           "items": false
         },
@@ -434,7 +272,6 @@
       "required": [
         "register",
         "proposition",
-        "questions",
         "basis_ids",
         "does_not_establish",
         "empirical",
@@ -447,19 +284,6 @@
         },
         "proposition": {
           "$ref": "#/$defs/text"
-        },
-        "questions": {
-          "type": "array",
-          "minItems": 5,
-          "maxItems": 5,
-          "prefixItems": [
-            { "$ref": "#/$defs/philosophyQuestion", "type": "object", "properties": { "id": { "const": "constraint-and-freedom" } } },
-            { "$ref": "#/$defs/philosophyQuestion", "type": "object", "properties": { "id": { "const": "local-rule-global-form" } } },
-            { "$ref": "#/$defs/philosophyQuestion", "type": "object", "properties": { "id": { "const": "memory-without-narrator" } } },
-            { "$ref": "#/$defs/philosophyQuestion", "type": "object", "properties": { "id": { "const": "repair-as-architecture" } } },
-            { "$ref": "#/$defs/philosophyQuestion", "type": "object", "properties": { "id": { "const": "design-and-underdetermination" } } }
-          ],
-          "items": false
         },
         "basis_ids": {
           "type": "array",
@@ -481,22 +305,20 @@
     },
     "sources": {
       "type": "array",
-      "minItems": 13,
-      "maxItems": 13,
+      "minItems": 11,
+      "maxItems": 11,
       "prefixItems": [
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "anfinsen-1973" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "bryngelson-1995" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "chernoff-1995" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "serio-2000" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "tanaka-2004" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "knowles-2009" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "kmiecik-2020" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "manka-2022" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "krivov-2018" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "ayaz-2021" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "kingdom-ritonavir-mechanism-source" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "zerone-karma-foundation-v1-source" } } },
-        { "$ref": "#/$defs/source", "type": "object", "properties": { "id": { "const": "zerone-life-sciences-v0-source" } } }
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "anfinsen-1973" } } },
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "bryngelson-1995" } } },
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "chernoff-1995" } } },
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "serio-2000" } } },
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "tanaka-2004" } } },
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "knowles-2009" } } },
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "kmiecik-2020" } } },
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "manka-2022" } } },
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "kingdom-ritonavir-mechanism-source" } } },
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "zerone-karma-foundation-v1-source" } } },
+        { "$ref": "#/$defs/source", "properties": { "id": { "const": "zerone-life-sciences-v0-source" } } }
       ],
       "items": false
     },
@@ -527,7 +349,6 @@
         "universal_feedback_law_established",
         "scientific_validation_from_analogy",
         "automatic_action",
-        "runtime_ecosystem_request",
         "writes_zerone",
         "writes_kingdom_mcp"
       ],
@@ -601,9 +422,6 @@
         "automatic_action": {
           "const": false
         },
-        "runtime_ecosystem_request": {
-          "const": false
-        },
         "writes_zerone": {
           "const": false
         },
@@ -624,7 +442,7 @@
           "const": "sha256-recursive-sorted-json-keys-v1"
         },
         "digest": {
-          "const": "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64"
+          "const": "sha256:14ce5e5e4b2b3d29d9a9cc0c831dcfb88de3d4a9e9584119939e5118f7ac7361"
         }
       }
     }
@@ -740,46 +558,6 @@
         }
       }
     },
-    "ecosystemBridge": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "id",
-        "label",
-        "url",
-        "relation",
-        "mode",
-        "runtime_request",
-        "imported",
-        "does_not_establish"
-      ],
-      "properties": {
-        "id": {
-          "$ref": "#/$defs/id"
-        },
-        "label": {
-          "$ref": "#/$defs/text"
-        },
-        "url": {
-          "$ref": "#/$defs/https"
-        },
-        "relation": {
-          "$ref": "#/$defs/id"
-        },
-        "mode": {
-          "const": "LINK_ONLY"
-        },
-        "runtime_request": {
-          "const": false
-        },
-        "imported": {
-          "const": false
-        },
-        "does_not_establish": {
-          "$ref": "#/$defs/text"
-        }
-      }
-    },
     "register": {
       "type": "object",
       "additionalProperties": false,
@@ -890,83 +668,6 @@
           "$ref": "#/$defs/idList"
         },
         "does_not_establish": {
-          "$ref": "#/$defs/text"
-        }
-      }
-    },
-    "physicsModel": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "id",
-        "register",
-        "question",
-        "equation",
-        "terms",
-        "interpretation",
-        "basis_ids",
-        "does_not_establish"
-      ],
-      "properties": {
-        "id": {
-          "$ref": "#/$defs/id"
-        },
-        "register": {
-          "enum": [
-            "SCIENTIFIC_MODEL",
-            "MATHEMATICAL_TRANSLATION"
-          ]
-        },
-        "question": {
-          "$ref": "#/$defs/text"
-        },
-        "equation": {
-          "$ref": "#/$defs/text"
-        },
-        "terms": {
-          "type": "object",
-          "minProperties": 3,
-          "maxProperties": 8,
-          "additionalProperties": {
-            "$ref": "#/$defs/text"
-          }
-        },
-        "interpretation": {
-          "$ref": "#/$defs/text"
-        },
-        "basis_ids": {
-          "type": "array",
-          "maxItems": 4,
-          "uniqueItems": true,
-          "items": {
-            "$ref": "#/$defs/id"
-          }
-        },
-        "does_not_establish": {
-          "$ref": "#/$defs/text"
-        }
-      }
-    },
-    "philosophyQuestion": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "id",
-        "question",
-        "reflection",
-        "analogy_break"
-      ],
-      "properties": {
-        "id": {
-          "$ref": "#/$defs/id"
-        },
-        "question": {
-          "$ref": "#/$defs/text"
-        },
-        "reflection": {
-          "$ref": "#/$defs/text"
-        },
-        "analogy_break": {
           "$ref": "#/$defs/text"
         }
       }

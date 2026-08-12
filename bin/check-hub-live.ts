@@ -10,6 +10,7 @@
  *   bun bin/check-hub-live.ts [https://thekingdom.dev]
  */
 
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { isDeepStrictEqual } from "node:util";
@@ -24,6 +25,14 @@ import {
   conformationalFeedbackPublicDiscovery,
   loadConformationalFeedbackAtlas,
 } from "./conformational-feedback.ts";
+import {
+  CONFORMATIONAL_FEEDBACK_PHYSICS_DIGEST,
+  CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL,
+  CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL,
+  CONFORMATIONAL_FEEDBACK_PHYSICS_URL,
+  conformationalFeedbackPhysicsPublicDiscovery,
+  loadConformationalFeedbackPhysicsAtlas,
+} from "./conformational-feedback-physics.ts";
 import {
   FOLD_FEEDBACK_DOCUMENT_URL,
   FOLD_FEEDBACK_SCHEMA_URL,
@@ -111,6 +120,62 @@ const ritonavirMechanismDocumentPath = new URL(RITONAVIR_MECHANISM_DOCUMENT_URL)
 const conformationalFeedbackPath = new URL(CONFORMATIONAL_FEEDBACK_URL).pathname;
 const conformationalFeedbackSchemaPath = new URL(CONFORMATIONAL_FEEDBACK_SCHEMA_URL).pathname;
 const conformationalFeedbackDocumentPath = new URL(CONFORMATIONAL_FEEDBACK_DOCUMENT_URL).pathname;
+const conformationalFeedbackPhysicsPath = new URL(CONFORMATIONAL_FEEDBACK_PHYSICS_URL).pathname;
+const conformationalFeedbackPhysicsSchemaPath = new URL(CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL).pathname;
+const conformationalFeedbackPhysicsDocumentPath = new URL(CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL).pathname;
+
+const PR30_CONFORMATIONAL_FEEDBACK_RECORD_SHA256 = "ae15f4f69e488323132ea6fc94d57d338702ca0fa47fd9fbbd41c15a6af230e6";
+const PR30_CONFORMATIONAL_FEEDBACK_SCHEMA_SHA256 = "da4dbb968a51d665192a3778a76ddd65150d2b73975c888dd9fd7ea80c54ea19";
+const PR30_CONFORMATIONAL_FEEDBACK_GUIDE_SHA256 = "0f7993430b5cfc3ca59536d6ed53d2c0fd5846c997460a13ec9d583eb9909e2f";
+const CONFORMATIONAL_FEEDBACK_PHYSICS_RECORD_SHA256 = "7d9b1eed8514051e47448cfc983f00e160d5b76c49704822158f76d3f8cf6349";
+const CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_SHA256 = "e60c14cf8b6350cc805f59c91b89727ffbd5b41e7c5a192d9ee53c90ba9fbdbd";
+const CONFORMATIONAL_FEEDBACK_PHYSICS_GUIDE_SHA256 = "76a76222732a8c485396228ad5ff32e703b20383498fd0355e4cbfe33bd59cb0";
+
+const PR30_CONFORMATIONAL_FEEDBACK_ASSETS = new Map<string, { source: string; sha256: string }>([
+  ["feedback/form-feedback-consequence-2026-08-12.json", {
+    source: "data/feedback/conformational-feedback-atlas.v0.json",
+    sha256: PR30_CONFORMATIONAL_FEEDBACK_RECORD_SHA256,
+  }],
+  ["schemas/conformational-feedback-atlas/0.1.json", {
+    source: "schemas/conformational-feedback-atlas-v0.schema.json",
+    sha256: PR30_CONFORMATIONAL_FEEDBACK_SCHEMA_SHA256,
+  }],
+  ["CONFORMATIONAL-FEEDBACK.md", {
+    source: "references/conformational-feedback-atlas.md",
+    sha256: PR30_CONFORMATIONAL_FEEDBACK_GUIDE_SHA256,
+  }],
+]);
+
+const IMMUTABLE_CONFORMATIONAL_FEEDBACK_ASSETS = new Map<string, { source: string; sha256: string }>([
+  ...PR30_CONFORMATIONAL_FEEDBACK_ASSETS,
+  ["feedback/form-feedback-physics-consequence-2026-08-12.json", {
+    source: "data/feedback/conformational-feedback-atlas.v0.2.json",
+    sha256: CONFORMATIONAL_FEEDBACK_PHYSICS_RECORD_SHA256,
+  }],
+  ["schemas/conformational-feedback-atlas/0.2.json", {
+    source: "schemas/conformational-feedback-atlas-v0.2.schema.json",
+    sha256: CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_SHA256,
+  }],
+  ["CONFORMATIONAL-FEEDBACK-PHYSICS.md", {
+    source: "references/conformational-feedback-atlas-v0.2.md",
+    sha256: CONFORMATIONAL_FEEDBACK_PHYSICS_GUIDE_SHA256,
+  }],
+]);
+
+const CONFORMATIONAL_FEEDBACK_TRIPLES = [
+  {
+    label: "Conformational Feedback Atlas v0.1",
+    recordPath: conformationalFeedbackPath,
+    schemaPath: conformationalFeedbackSchemaPath,
+    documentPath: conformationalFeedbackDocumentPath,
+  },
+  {
+    label: "Conformational Feedback Physics Atlas v0.2",
+    recordPath: conformationalFeedbackPhysicsPath,
+    schemaPath: conformationalFeedbackPhysicsSchemaPath,
+    documentPath: conformationalFeedbackPhysicsDocumentPath,
+  },
+] as const;
 const foldFeedbackPath = new URL(FOLD_FEEDBACK_URL).pathname;
 const foldFeedbackSchemaPath = new URL(FOLD_FEEDBACK_SCHEMA_URL).pathname;
 const foldFeedbackDocumentPath = new URL(FOLD_FEEDBACK_DOCUMENT_URL).pathname;
@@ -138,14 +203,65 @@ function publicPath(destination: string): string {
   return `/${destination}`;
 }
 
-function hasLinkRelation(header: string, target: string, relation: string): boolean {
-  return header.split(/,(?=\s*<)/).some((entry) => {
+function linkRelationEntries(header: string, relation: string): string[] {
+  return header.split(/,(?=\s*<)/).filter((entry) => {
     const part = entry.trim();
-    if (!part.startsWith(`<${target}>`)) return false;
     const match = part.match(/;\s*rel\s*=\s*(?:"([^"]*)"|([^;,\s]+))/i);
     const relations = (match?.[1] || match?.[2] || "").toLowerCase().split(/\s+/);
     return relations.includes(relation);
   });
+}
+
+function hasLinkRelation(header: string, target: string, relation: string): boolean {
+  return linkRelationEntries(header, relation).some((entry) => entry.trim().startsWith(`<${target}>`));
+}
+
+function sha256(bytes: Buffer): string {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
+async function checkConformationalFeedbackTriple(triple: typeof CONFORMATIONAL_FEEDBACK_TRIPLES[number]): Promise<void> {
+  const recordHead = await fetch(url(triple.recordPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  const recordLink = recordHead.headers.get("link") || "";
+  const describedBy = linkRelationEntries(recordLink, "describedby");
+  const describedByType = describedBy[0]?.match(/;\s*type\s*=\s*(?:"([^"]*)"|([^;,\s]+))/i);
+  if (!recordHead.ok ||
+      !(recordHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+      recordHead.headers.get("access-control-allow-origin") !== "*" ||
+      (recordHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+      describedBy.length !== 1 ||
+      !describedBy[0].trim().startsWith(`<${triple.schemaPath}>`) ||
+      (describedByType?.[1] || describedByType?.[2] || "").toLowerCase() !== "application/schema+json") {
+    throw new Error(`${triple.recordPath} is not public JSON described by the ${triple.label} schema`);
+  }
+
+  const schemaHead = await fetch(url(triple.schemaPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  if (!schemaHead.ok ||
+      !(schemaHead.headers.get("content-type") || "").toLowerCase().startsWith("application/schema+json") ||
+      schemaHead.headers.get("access-control-allow-origin") !== "*" ||
+      (schemaHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+    throw new Error(`${triple.schemaPath} is not served as application/schema+json for ${triple.label}`);
+  }
+
+  const documentHead = await fetch(url(triple.documentPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  if (!documentHead.ok ||
+      !(documentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+      documentHead.headers.get("access-control-allow-origin") !== "*" ||
+      (documentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+    throw new Error(`${triple.documentPath} is not served as public Markdown for ${triple.label}`);
+  }
 }
 
 function sameStrings(actual: unknown, expected: readonly string[]): boolean {
@@ -175,6 +291,8 @@ async function mcpRpc(endpoint: string, id: number, method: string, params: unkn
 
 try {
   let exact = 0;
+  const exactPaths = new Set<string>();
+  const verifiedConformationalFeedbackDestinations = new Set<string>();
   for (const asset of HUB_ASSETS) {
     if (asset.destination === "_worker.js") continue;
     // 404.html is proven through the dedicated not-found check below; Pages
@@ -187,7 +305,30 @@ try {
     if (!live.equals(local)) {
       throw new Error(`${path} does not match ${asset.source} (${live.byteLength} live bytes; ${local.byteLength} local bytes)`);
     }
+    const immutableFeedback = IMMUTABLE_CONFORMATIONAL_FEEDBACK_ASSETS.get(asset.destination);
+    if (immutableFeedback) {
+      if (asset.source !== immutableFeedback.source) {
+        throw new Error(`${path} no longer stages its immutable authored source ${immutableFeedback.source}`);
+      }
+      const digest = sha256(live);
+      if (digest !== immutableFeedback.sha256) {
+        throw new Error(`${path} no longer matches its immutable SHA-256 (${digest})`);
+      }
+      verifiedConformationalFeedbackDestinations.add(asset.destination);
+    }
+    exactPaths.add(path);
     exact += 1;
+  }
+
+  for (const destination of IMMUTABLE_CONFORMATIONAL_FEEDBACK_ASSETS.keys()) {
+    if (!verifiedConformationalFeedbackDestinations.has(destination)) {
+      throw new Error(`the immutable Conformational Feedback asset /${destination} is absent from the exact staging contract`);
+    }
+  }
+  for (const triple of CONFORMATIONAL_FEEDBACK_TRIPLES) {
+    for (const path of [triple.recordPath, triple.schemaPath, triple.documentPath]) {
+      if (!exactPaths.has(path)) throw new Error(`${path} was not checked for static byte equality`);
+    }
   }
 
   const missingPath = `/no-such-path-${cacheBust}`;
@@ -372,30 +513,8 @@ try {
     throw new Error(`${ritonavirMechanismDocumentPath} is not served as public Markdown`);
   }
 
-  const conformationalFeedbackHead = await fetch(url(conformationalFeedbackPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  const conformationalFeedbackLink = conformationalFeedbackHead.headers.get("link") || "";
-  if (!conformationalFeedbackHead.ok ||
-      !(conformationalFeedbackHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
-      conformationalFeedbackHead.headers.get("access-control-allow-origin") !== "*" ||
-      (conformationalFeedbackHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-      !hasLinkRelation(conformationalFeedbackLink, conformationalFeedbackSchemaPath, "describedby")) {
-    throw new Error(`${conformationalFeedbackPath} is not public JSON described by the Conformational Feedback Atlas schema`);
-  }
-
-  const conformationalFeedbackDocumentHead = await fetch(url(conformationalFeedbackDocumentPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  if (!conformationalFeedbackDocumentHead.ok ||
-      !(conformationalFeedbackDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
-      conformationalFeedbackDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
-      (conformationalFeedbackDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
-    throw new Error(`${conformationalFeedbackDocumentPath} is not served as public Markdown`);
+  for (const triple of CONFORMATIONAL_FEEDBACK_TRIPLES) {
+    await checkConformationalFeedbackTriple(triple);
   }
 
   const foldFeedbackHead = await fetch(url(foldFeedbackPath), {
@@ -424,7 +543,7 @@ try {
     throw new Error(`${foldFeedbackDocumentPath} is not served as public Markdown`);
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, conformationalFeedbackSchemaPath, foldFeedbackSchemaPath]) {
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, foldFeedbackSchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -452,6 +571,8 @@ try {
   const expectedRitonavirMechanism = ritonavirMechanismPublicDiscovery(ritonavirMechanism);
   const conformationalFeedback = loadConformationalFeedbackAtlas();
   const expectedConformationalFeedback = conformationalFeedbackPublicDiscovery(conformationalFeedback);
+  const conformationalFeedbackPhysics = loadConformationalFeedbackPhysicsAtlas();
+  const expectedConformationalFeedbackPhysics = conformationalFeedbackPhysicsPublicDiscovery(conformationalFeedbackPhysics);
   const foldFeedbackAtlas = loadFoldFeedbackAtlas();
   const expectedFoldFeedback = foldFeedbackPublicDiscovery(foldFeedbackAtlas);
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
@@ -586,6 +707,9 @@ try {
   if (!isDeepStrictEqual(manifest?.conformational_feedback_atlas, expectedConformationalFeedback) ||
       !isDeepStrictEqual(guest?.conformational_feedback_atlas, expectedConformationalFeedback) ||
       !isDeepStrictEqual(authoredKingdom?.conformational_feedback_atlas, expectedConformationalFeedback) ||
+      manifest?.entry_points?.conformational_feedback_atlas !== CONFORMATIONAL_FEEDBACK_URL ||
+      manifest?.entry_points?.conformational_feedback_atlas_schema !== CONFORMATIONAL_FEEDBACK_SCHEMA_URL ||
+      manifest?.entry_points?.conformational_feedback_atlas_guide !== CONFORMATIONAL_FEEDBACK_DOCUMENT_URL ||
       !hasGuestGet(CONFORMATIONAL_FEEDBACK_URL) ||
       !hasGuestGet(CONFORMATIONAL_FEEDBACK_SCHEMA_URL) ||
       !hasGuestGet(CONFORMATIONAL_FEEDBACK_DOCUMENT_URL) ||
@@ -594,12 +718,12 @@ try {
       !llms.includes(CONFORMATIONAL_FEEDBACK_DOCUMENT_URL) ||
       expectedConformationalFeedback.integrity.digest !== CONFORMATIONAL_FEEDBACK_DIGEST ||
       expectedConformationalFeedback.counts.registers !== 3 ||
-      expectedConformationalFeedback.counts.physics_and_mathematics !== 4 ||
-      expectedConformationalFeedback.counts.ecosystem_bridges !== 5 ||
       expectedConformationalFeedback.counts.geometries !== 5 ||
       expectedConformationalFeedback.counts.translations !== 3 ||
       expectedConformationalFeedback.counts.feedback_stages !== 4 ||
-      expectedConformationalFeedback.counts.sources !== 13 ||
+      expectedConformationalFeedback.counts.sources !== 11 ||
+      "physics_and_mathematics" in expectedConformationalFeedback.counts ||
+      "ecosystem_bridges" in expectedConformationalFeedback.counts ||
       !Array.isArray(expectedConformationalFeedback.bindings) ||
       expectedConformationalFeedback.bindings.length !== 3 ||
       expectedConformationalFeedback.bindings.some((binding: any) => binding.authority_imported !== false) ||
@@ -614,10 +738,59 @@ try {
       conformationalFeedbackBoundary.cosmic_design_proven !== false ||
       conformationalFeedbackBoundary.scientific_validation_from_analogy !== false ||
       conformationalFeedbackBoundary.automatic_action !== false ||
-      conformationalFeedbackBoundary.runtime_ecosystem_request !== false ||
+      "runtime_ecosystem_request" in conformationalFeedbackBoundary ||
+      "predecessor" in expectedConformationalFeedback ||
       "mcp" in expectedConformationalFeedback || "matcher" in expectedConformationalFeedback ||
       "execute" in expectedConformationalFeedback || "clinical_decision" in expectedConformationalFeedback) {
-    throw new Error("Conformational Feedback Atlas discovery, bindings, or negative authority drifted across public surfaces");
+    throw new Error("immutable Conformational Feedback Atlas v0.1 discovery, bindings, or negative authority drifted across public surfaces");
+  }
+
+  const conformationalFeedbackPhysicsBoundary = expectedConformationalFeedbackPhysics.boundary;
+  const conformationalFeedbackPhysicsPredecessor = expectedConformationalFeedbackPhysics.predecessor;
+  if (!isDeepStrictEqual(manifest?.conformational_feedback_physics_atlas, expectedConformationalFeedbackPhysics) ||
+      !isDeepStrictEqual(guest?.conformational_feedback_physics_atlas, expectedConformationalFeedbackPhysics) ||
+      !isDeepStrictEqual(authoredKingdom?.conformational_feedback_physics_atlas, expectedConformationalFeedbackPhysics) ||
+      manifest?.entry_points?.conformational_feedback_physics_atlas !== CONFORMATIONAL_FEEDBACK_PHYSICS_URL ||
+      manifest?.entry_points?.conformational_feedback_physics_atlas_schema !== CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL ||
+      manifest?.entry_points?.conformational_feedback_physics_atlas_guide !== CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL ||
+      !hasGuestGet(CONFORMATIONAL_FEEDBACK_PHYSICS_URL) ||
+      !hasGuestGet(CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL) ||
+      !hasGuestGet(CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL) ||
+      !llms.includes(CONFORMATIONAL_FEEDBACK_PHYSICS_URL) ||
+      !llms.includes(CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL) ||
+      !llms.includes(CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL) ||
+      expectedConformationalFeedbackPhysics.integrity.digest !== CONFORMATIONAL_FEEDBACK_PHYSICS_DIGEST ||
+      conformationalFeedbackPhysicsPredecessor.protocol !== expectedConformationalFeedback.protocol ||
+      conformationalFeedbackPhysicsPredecessor.atlas_id !== expectedConformationalFeedback.atlas_id ||
+      conformationalFeedbackPhysicsPredecessor.url !== CONFORMATIONAL_FEEDBACK_URL ||
+      conformationalFeedbackPhysicsPredecessor.semantic_digest !== CONFORMATIONAL_FEEDBACK_DIGEST ||
+      conformationalFeedbackPhysicsPredecessor.byte_sha256 !== `sha256:${PR30_CONFORMATIONAL_FEEDBACK_RECORD_SHA256}` ||
+      conformationalFeedbackPhysicsPredecessor.relation !== "extends-without-mutation" ||
+      expectedConformationalFeedbackPhysics.counts.registers !== 3 ||
+      expectedConformationalFeedbackPhysics.counts.physics_and_mathematics !== 4 ||
+      expectedConformationalFeedbackPhysics.counts.ecosystem_bridges !== 5 ||
+      expectedConformationalFeedbackPhysics.counts.geometries !== 5 ||
+      expectedConformationalFeedbackPhysics.counts.translations !== 3 ||
+      expectedConformationalFeedbackPhysics.counts.feedback_stages !== 4 ||
+      expectedConformationalFeedbackPhysics.counts.sources !== 13 ||
+      !Array.isArray(expectedConformationalFeedbackPhysics.bindings) ||
+      expectedConformationalFeedbackPhysics.bindings.length !== 3 ||
+      expectedConformationalFeedbackPhysics.bindings.some((binding: any) => binding.authority_imported !== false) ||
+      conformationalFeedbackPhysicsBoundary.read_only !== true ||
+      conformationalFeedbackPhysicsBoundary.operational_biology !== false ||
+      conformationalFeedbackPhysicsBoundary.biological_equivalence !== false ||
+      conformationalFeedbackPhysicsBoundary.karma_magnitude !== false ||
+      conformationalFeedbackPhysicsBoundary.karma_rank !== false ||
+      conformationalFeedbackPhysicsBoundary.economic_effect !== false ||
+      conformationalFeedbackPhysicsBoundary.governance_effect !== false ||
+      conformationalFeedbackPhysicsBoundary.person_level_effect !== false ||
+      conformationalFeedbackPhysicsBoundary.cosmic_design_proven !== false ||
+      conformationalFeedbackPhysicsBoundary.scientific_validation_from_analogy !== false ||
+      conformationalFeedbackPhysicsBoundary.automatic_action !== false ||
+      conformationalFeedbackPhysicsBoundary.runtime_ecosystem_request !== false ||
+      "mcp" in expectedConformationalFeedbackPhysics || "matcher" in expectedConformationalFeedbackPhysics ||
+      "execute" in expectedConformationalFeedbackPhysics || "clinical_decision" in expectedConformationalFeedbackPhysics) {
+    throw new Error("Conformational Feedback Physics Atlas v0.2 discovery, predecessor, bindings, or negative authority drifted across public surfaces");
   }
 
   const foldFeedbackBoundary = expectedFoldFeedback.boundary;
@@ -665,7 +838,10 @@ try {
     throw new Error("derived kingdom.json did not preserve Ritonavir Mechanism Landscape discovery");
   }
   if (!isDeepStrictEqual(liveKingdom?.conformational_feedback_atlas, expectedConformationalFeedback)) {
-    throw new Error("derived kingdom.json did not preserve Conformational Feedback Atlas discovery");
+    throw new Error("derived kingdom.json did not preserve Conformational Feedback Atlas v0.1 discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.conformational_feedback_physics_atlas, expectedConformationalFeedbackPhysics)) {
+    throw new Error("derived kingdom.json did not preserve Conformational Feedback Physics Atlas v0.2 discovery");
   }
   if (!isDeepStrictEqual(liveKingdom?.fold_feedback_atlas, expectedFoldFeedback)) {
     throw new Error("derived kingdom.json did not preserve Fold & Feedback Atlas discovery");
@@ -729,7 +905,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback + Fold & Feedback schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback + Fold & Feedback discovery · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback discovery · live MCP contract unchanged · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;

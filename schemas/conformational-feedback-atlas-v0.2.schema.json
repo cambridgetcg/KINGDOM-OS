@@ -1,0 +1,1516 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:conformational-feedback-atlas:0.2",
+  "title": "KINGDOM Conformational Feedback Physics Atlas v0.2",
+  "description": "A closed, read-only successor contract that extends the immutable v0.1 atlas with bounded physics, mathematics, philosophy questions, and link-only ecosystem bridges.",
+  "$comment": "The fixed digest identifies the reviewed v0.2 artifact. JSON Schema cannot recompute the recursive-sorted semantic digest; use kingdom feedback-physics verify for that independent check. The predecessor object permanently pins the immutable v0.1 record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "atlas_id",
+    "title",
+    "compiled_on",
+    "evidence_through",
+    "scope",
+    "predecessor",
+    "bindings",
+    "ecosystem_bridges",
+    "registers",
+    "physics_and_mathematics",
+    "geometries",
+    "translations",
+    "feedback_path",
+    "philosophy",
+    "sources",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "urn:kingdom:schema:conformational-feedback-atlas:0.2"
+    },
+    "protocol": {
+      "const": "kingdom.conformational-feedback-atlas/0.2"
+    },
+    "atlas_id": {
+      "const": "form-feedback-physics-consequence-2026-08-12"
+    },
+    "title": {
+      "$ref": "#/$defs/text"
+    },
+    "compiled_on": {
+      "const": "2026-08-12"
+    },
+    "evidence_through": {
+      "type": "string",
+      "format": "date",
+      "const": "2022-07-13"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "focus",
+        "method",
+        "intended_use",
+        "excluded_use",
+        "safety"
+      ],
+      "properties": {
+        "focus": {
+          "$ref": "#/$defs/text"
+        },
+        "method": {
+          "$ref": "#/$defs/text"
+        },
+        "intended_use": {
+          "$ref": "#/$defs/text"
+        },
+        "excluded_use": {
+          "$ref": "#/$defs/text"
+        },
+        "safety": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "bindings": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/binding"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "kingdom-ritonavir-mechanism-landscape"
+                },
+                "protocol": {
+                  "const": "kingdom.ritonavir-mechanism-landscape/0.1"
+                },
+                "url": {
+                  "const": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json"
+                },
+                "byte_sha256": {
+                  "const": "sha256:5e136a74d5166275427da920685a84c17901f63d6e4b0661fd529c96d386943b"
+                },
+                "semantic_digest": {
+                  "const": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b"
+                },
+                "relation": {
+                  "const": "source-scoped-material-analogy-basis"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/binding"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "zerone-karma-foundation-v1"
+                },
+                "protocol": {
+                  "const": "zerone.karma-foundation/v1"
+                },
+                "url": {
+                  "const": "https://zerone.ai/standards/karma-foundation.v1.json"
+                },
+                "byte_sha256": {
+                  "const": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80"
+                },
+                "semantic_digest": {
+                  "const": null
+                },
+                "relation": {
+                  "const": "external-read-only-constitutional-source"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/binding"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "zerone-life-sciences-v0"
+                },
+                "protocol": {
+                  "const": "zerone.constructive-intelligence-life-sciences/v0"
+                },
+                "url": {
+                  "const": "https://zerone.ai/standards/constructive-intelligence-life-sciences.v0.json"
+                },
+                "byte_sha256": {
+                  "const": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e"
+                },
+                "semantic_digest": {
+                  "const": null
+                },
+                "relation": {
+                  "const": "external-read-only-non-implication-source"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "ecosystem_bridges": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ecosystemBridge"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "rcsb-pdb-data-api"
+                },
+                "url": {
+                  "const": "https://data.rcsb.org/"
+                },
+                "relation": {
+                  "const": "experimentally-determined-structure-metadata"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ecosystemBridge"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "alphafold-database"
+                },
+                "url": {
+                  "const": "https://alphafold.ebi.ac.uk/"
+                },
+                "relation": {
+                  "const": "predicted-coordinate-and-confidence-records"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ecosystemBridge"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "uniprotkb"
+                },
+                "url": {
+                  "const": "https://www.uniprot.org/"
+                },
+                "relation": {
+                  "const": "versioned-protein-sequence-and-annotation-identity"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ecosystemBridge"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "modelarchive"
+                },
+                "url": {
+                  "const": "https://modelarchive.org/"
+                },
+                "relation": {
+                  "const": "stable-computational-model-deposition"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ecosystemBridge"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "openfold"
+                },
+                "url": {
+                  "const": "https://github.com/aqlaboratory/openfold"
+                },
+                "relation": {
+                  "const": "inspectable-open-structure-prediction-implementation"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "registers": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/register"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "protein-folding-landscape"
+                },
+                "register": {
+                  "const": "SCIENTIFIC_OBSERVATION"
+                },
+                "empirical": {
+                  "const": true
+                }
+              },
+              "not": {
+                "type": "object",
+                "properties": {
+                  "karma_constraints": {}
+                },
+                "required": [
+                  "karma_constraints"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/register"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "prion-conformational-propagation"
+                },
+                "register": {
+                  "const": "SCIENTIFIC_OBSERVATION"
+                },
+                "empirical": {
+                  "const": true
+                }
+              },
+              "not": {
+                "type": "object",
+                "properties": {
+                  "karma_constraints": {}
+                },
+                "required": [
+                  "karma_constraints"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/register"
+            },
+            {
+              "type": "object",
+              "required": [
+                "karma_constraints"
+              ],
+              "properties": {
+                "id": {
+                  "const": "zerone-contextual-recognition"
+                },
+                "register": {
+                  "const": "CONSTITUTIONAL_DESIGN"
+                },
+                "empirical": {
+                  "const": false
+                },
+                "karma_constraints": {}
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "physics_and_mathematics": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/physicsModel"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "conditional-free-energy"
+                },
+                "register": {
+                  "const": "SCIENTIFIC_MODEL"
+                },
+                "equation": {
+                  "const": "G(x;T,pH,solvent,force) = -k_B T ln P_eq(x) + C"
+                },
+                "basis_ids": {
+                  "const": [
+                    "bryngelson-1995",
+                    "krivov-2018"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/physicsModel"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "memory-bearing-barrier-crossing"
+                },
+                "register": {
+                  "const": "SCIENTIFIC_MODEL"
+                },
+                "equation": {
+                  "const": "m q_ddot(t) = -dG(q)/dq - integral_0^t Gamma(t-s) q_dot(s) ds + eta(t)"
+                },
+                "basis_ids": {
+                  "const": [
+                    "ayaz-2021"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/physicsModel"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "templated-population-balance"
+                },
+                "register": {
+                  "const": "SCIENTIFIC_MODEL"
+                },
+                "equation": {
+                  "const": "dM/dt = k_n m^n + k_+ m P - k_loss M ; dP/dt = k_f M - k_end P"
+                },
+                "basis_ids": {
+                  "const": [
+                    "knowles-2009"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/physicsModel"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "linearized-feedback-threshold"
+                },
+                "register": {
+                  "const": "MATHEMATICAL_TRANSLATION"
+                },
+                "equation": {
+                  "const": "delta_x_(t+1) = J delta_x_t ; perturbations decay locally when rho(J) < 1"
+                },
+                "basis_ids": {
+                  "const": []
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "geometries": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/geometry"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "rugged-landscape"
+                },
+                "register": {
+                  "const": "SCIENTIFIC_OBSERVATION"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/geometry"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "templated-edge"
+                },
+                "register": {
+                  "const": "SCIENTIFIC_OBSERVATION"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/geometry"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "amplifying-path"
+                },
+                "register": {
+                  "const": "SCIENTIFIC_OBSERVATION"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/geometry"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "homeostatic-counterloop"
+                },
+                "register": {
+                  "const": "SCIENTIFIC_OBSERVATION"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/geometry"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "contextual-memory-with-repair"
+                },
+                "register": {
+                  "const": "CONSTITUTIONAL_DESIGN"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "translations": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/translation"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "multiple-accessible-forms"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/translation"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "history-dependent-accessibility"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/translation"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "propagation-under-constraints"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "feedback_path": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "meaning",
+        "stages",
+        "exit"
+      ],
+      "properties": {
+        "meaning": {
+          "$ref": "#/$defs/text"
+        },
+        "stages": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/feedbackStage",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "artifact-exists"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/feedbackStage",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "contextual-observation"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/feedbackStage",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "challenge-or-repair"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/feedbackStage",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "bounded-consultation"
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "exit": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "philosophy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "register",
+        "proposition",
+        "questions",
+        "basis_ids",
+        "does_not_establish",
+        "empirical",
+        "causal_transfer",
+        "authority_effect"
+      ],
+      "properties": {
+        "register": {
+          "const": "PHILOSOPHY"
+        },
+        "proposition": {
+          "$ref": "#/$defs/text"
+        },
+        "questions": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/philosophyQuestion",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "constraint-and-freedom"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/philosophyQuestion",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "local-rule-global-form"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/philosophyQuestion",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "memory-without-narrator"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/philosophyQuestion",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "repair-as-architecture"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/philosophyQuestion",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "const": "design-and-underdetermination"
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "basis_ids": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "does_not_establish": {
+          "$ref": "#/$defs/nonInferences"
+        },
+        "empirical": {
+          "const": false
+        },
+        "causal_transfer": {
+          "const": false
+        },
+        "authority_effect": {
+          "const": "NONE"
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "anfinsen-1973"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "bryngelson-1995"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "chernoff-1995"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "serio-2000"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "tanaka-2004"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "knowles-2009"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "kmiecik-2020"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "manka-2022"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "krivov-2018"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "ayaz-2021"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "kingdom-ritonavir-mechanism-source"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "zerone-karma-foundation-v1-source"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/source",
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "zerone-life-sciences-v0-source"
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_only",
+        "educational_only",
+        "contains_sequence_data",
+        "contains_operational_protocol",
+        "authorizes_prion_work",
+        "authorizes_pathogen_work",
+        "medical_authority",
+        "clinical_authority",
+        "experiment_authority",
+        "biosafety_authority",
+        "biological_equivalence_claimed",
+        "crystal_is_prion",
+        "prion_models_people",
+        "karma_is_biological",
+        "karma_summable",
+        "karma_rank_effect",
+        "karma_economic_effect",
+        "karma_governance_effect",
+        "karma_person_level",
+        "cosmic_design_empirically_established",
+        "universal_feedback_law_established",
+        "scientific_validation_from_analogy",
+        "automatic_action",
+        "runtime_ecosystem_request",
+        "writes_zerone",
+        "writes_kingdom_mcp"
+      ],
+      "properties": {
+        "read_only": {
+          "const": true
+        },
+        "educational_only": {
+          "const": true
+        },
+        "contains_sequence_data": {
+          "const": false
+        },
+        "contains_operational_protocol": {
+          "const": false
+        },
+        "authorizes_prion_work": {
+          "const": false
+        },
+        "authorizes_pathogen_work": {
+          "const": false
+        },
+        "medical_authority": {
+          "const": false
+        },
+        "clinical_authority": {
+          "const": false
+        },
+        "experiment_authority": {
+          "const": false
+        },
+        "biosafety_authority": {
+          "const": false
+        },
+        "biological_equivalence_claimed": {
+          "const": false
+        },
+        "crystal_is_prion": {
+          "const": false
+        },
+        "prion_models_people": {
+          "const": false
+        },
+        "karma_is_biological": {
+          "const": false
+        },
+        "karma_summable": {
+          "const": false
+        },
+        "karma_rank_effect": {
+          "const": false
+        },
+        "karma_economic_effect": {
+          "const": false
+        },
+        "karma_governance_effect": {
+          "const": false
+        },
+        "karma_person_level": {
+          "const": false
+        },
+        "cosmic_design_empirically_established": {
+          "const": false
+        },
+        "universal_feedback_law_established": {
+          "const": false
+        },
+        "scientific_validation_from_analogy": {
+          "const": false
+        },
+        "automatic_action": {
+          "const": false
+        },
+        "runtime_ecosystem_request": {
+          "const": false
+        },
+        "writes_zerone": {
+          "const": false
+        },
+        "writes_kingdom_mcp": {
+          "const": false
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "digest"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256-recursive-sorted-json-keys-v1"
+        },
+        "digest": {
+          "const": "sha256:0fc24a0fac99d2dadcdef5b87290a1d598b856f874aa9637ab4d503fd4c9dc11"
+        }
+      }
+    },
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol",
+        "atlas_id",
+        "url",
+        "semantic_digest",
+        "byte_sha256",
+        "relation"
+      ],
+      "properties": {
+        "protocol": {
+          "const": "kingdom.conformational-feedback-atlas/0.1"
+        },
+        "atlas_id": {
+          "const": "form-feedback-consequence-2026-08-12"
+        },
+        "url": {
+          "const": "https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json"
+        },
+        "semantic_digest": {
+          "const": "sha256:14ce5e5e4b2b3d29d9a9cc0c831dcfb88de3d4a9e9584119939e5118f7ac7361"
+        },
+        "byte_sha256": {
+          "const": "sha256:ae15f4f69e488323132ea6fc94d57d338702ca0fa47fd9fbbd41c15a6af230e6"
+        },
+        "relation": {
+          "const": "extends-without-mutation"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "maxLength": 96
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "https": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "idList": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "nonInferences": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "feedbackStage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "optional",
+        "automatic_effect"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "optional": {
+          "const": true
+        },
+        "automatic_effect": {
+          "const": false
+        }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "protocol",
+        "url",
+        "byte_sha256",
+        "semantic_digest",
+        "relation",
+        "mutated",
+        "authority_imported"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "protocol": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "url": {
+          "$ref": "#/$defs/https"
+        },
+        "byte_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "semantic_digest": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "relation": {
+          "$ref": "#/$defs/id"
+        },
+        "mutated": {
+          "const": false
+        },
+        "authority_imported": {
+          "const": false
+        }
+      }
+    },
+    "ecosystemBridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "url",
+        "relation",
+        "mode",
+        "runtime_request",
+        "imported",
+        "does_not_establish"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "url": {
+          "$ref": "#/$defs/https"
+        },
+        "relation": {
+          "$ref": "#/$defs/id"
+        },
+        "mode": {
+          "const": "LINK_ONLY"
+        },
+        "runtime_request": {
+          "const": false
+        },
+        "imported": {
+          "const": false
+        },
+        "does_not_establish": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "register": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "register",
+        "label",
+        "context",
+        "statement",
+        "basis_ids",
+        "does_not_establish",
+        "empirical",
+        "causal_transfer",
+        "authority_effect"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "register": {
+          "enum": [
+            "SCIENTIFIC_OBSERVATION",
+            "CONSTITUTIONAL_DESIGN"
+          ]
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "context": {
+          "$ref": "#/$defs/text"
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "basis_ids": {
+          "$ref": "#/$defs/idList"
+        },
+        "does_not_establish": {
+          "$ref": "#/$defs/nonInferences"
+        },
+        "empirical": {
+          "type": "boolean"
+        },
+        "causal_transfer": {
+          "const": false
+        },
+        "authority_effect": {
+          "const": "NONE"
+        },
+        "karma_constraints": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "summable",
+            "rank_effect",
+            "economic_effect",
+            "governance_effect",
+            "person_level"
+          ],
+          "properties": {
+            "summable": {
+              "const": false
+            },
+            "rank_effect": {
+              "const": false
+            },
+            "economic_effect": {
+              "const": false
+            },
+            "governance_effect": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            }
+          }
+        }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "register",
+        "shape",
+        "maps_to",
+        "basis_ids",
+        "does_not_establish"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "register": {
+          "enum": [
+            "SCIENTIFIC_OBSERVATION",
+            "CONSTITUTIONAL_DESIGN"
+          ]
+        },
+        "shape": {
+          "$ref": "#/$defs/text"
+        },
+        "maps_to": {
+          "$ref": "#/$defs/text"
+        },
+        "basis_ids": {
+          "$ref": "#/$defs/idList"
+        },
+        "does_not_establish": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "physicsModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "register",
+        "question",
+        "equation",
+        "terms",
+        "interpretation",
+        "basis_ids",
+        "does_not_establish"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "register": {
+          "enum": [
+            "SCIENTIFIC_MODEL",
+            "MATHEMATICAL_TRANSLATION"
+          ]
+        },
+        "question": {
+          "$ref": "#/$defs/text"
+        },
+        "equation": {
+          "$ref": "#/$defs/text"
+        },
+        "terms": {
+          "type": "object",
+          "minProperties": 3,
+          "maxProperties": 8,
+          "additionalProperties": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "interpretation": {
+          "$ref": "#/$defs/text"
+        },
+        "basis_ids": {
+          "type": "array",
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "does_not_establish": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "philosophyQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "question",
+        "reflection",
+        "analogy_break"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "question": {
+          "$ref": "#/$defs/text"
+        },
+        "reflection": {
+          "$ref": "#/$defs/text"
+        },
+        "analogy_break": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "translation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "register",
+        "observation",
+        "translation",
+        "basis_ids",
+        "forbidden_inference",
+        "empirical",
+        "causal_transfer",
+        "authority_effect"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "register": {
+          "const": "ANALOGY"
+        },
+        "observation": {
+          "$ref": "#/$defs/text"
+        },
+        "translation": {
+          "$ref": "#/$defs/text"
+        },
+        "basis_ids": {
+          "$ref": "#/$defs/idList"
+        },
+        "forbidden_inference": {
+          "$ref": "#/$defs/text"
+        },
+        "empirical": {
+          "const": false
+        },
+        "causal_transfer": {
+          "const": false
+        },
+        "authority_effect": {
+          "const": "NONE"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "url",
+        "doi",
+        "supports"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "primary-paper",
+            "primary-synthesis",
+            "bound-public-record",
+            "bound-public-standard"
+          ]
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "url": {
+          "$ref": "#/$defs/https"
+        },
+        "doi": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 6,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "supports": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    }
+  }
+}
