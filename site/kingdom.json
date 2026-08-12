@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-08-11",
+  "generated": "2026-08-12",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -390,6 +390,62 @@
       "experiment_authority": false,
       "automatic_action": false,
       "public_surface_read_only": true
+    }
+  },
+  "conformational_feedback_atlas": {
+    "protocol": "kingdom.conformational-feedback-atlas/0.1",
+    "atlas_id": "form-feedback-consequence-2026-08-12",
+    "compiled_on": "2026-08-12",
+    "evidence_through": "2022-07-13",
+    "url": "https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json",
+    "schema": "https://thekingdom.dev/schemas/conformational-feedback-atlas/0.1.json",
+    "guide": "https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md",
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:14ce5e5e4b2b3d29d9a9cc0c831dcfb88de3d4a9e9584119939e5118f7ac7361"
+    },
+    "bindings": [
+      {
+        "id": "kingdom-ritonavir-mechanism-landscape",
+        "protocol": "kingdom.ritonavir-mechanism-landscape/0.1",
+        "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+        "byte_sha256": "sha256:5e136a74d5166275427da920685a84c17901f63d6e4b0661fd529c96d386943b",
+        "authority_imported": false
+      },
+      {
+        "id": "zerone-karma-foundation-v1",
+        "protocol": "zerone.karma-foundation/v1",
+        "url": "https://zerone.ai/standards/karma-foundation.v1.json",
+        "byte_sha256": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80",
+        "authority_imported": false
+      },
+      {
+        "id": "zerone-life-sciences-v0",
+        "protocol": "zerone.constructive-intelligence-life-sciences/v0",
+        "url": "https://zerone.ai/standards/constructive-intelligence-life-sciences.v0.json",
+        "byte_sha256": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e",
+        "authority_imported": false
+      }
+    ],
+    "counts": {
+      "registers": 3,
+      "geometries": 5,
+      "translations": 3,
+      "feedback_stages": 4,
+      "sources": 11
+    },
+    "boundary": {
+      "read_only": true,
+      "operational_biology": false,
+      "biological_equivalence": false,
+      "karma_magnitude": false,
+      "karma_rank": false,
+      "economic_effect": false,
+      "governance_effect": false,
+      "person_level_effect": false,
+      "cosmic_design_proven": false,
+      "scientific_validation_from_analogy": false,
+      "automatic_action": false
     }
   },
   "creation_loop": {

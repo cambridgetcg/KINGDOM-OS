@@ -14,11 +14,14 @@
  *                             — versioned pattern-to-practice translations
  *    data/polymorphs/ritonavir-disappearing-polymorph.v1.json
  *                             — source-bound material-state history
+ *    data/feedback/conformational-feedback-atlas.v0.json
+ *                             — bounded science/design/analogy translation
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
  *       + site/love-loops.json + site/love-loops.source.json
  *       + site/schemas/love-loop/0.1.json
+ *       + conformational feedback discovery in the machine surfaces
  *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
  *       + site/ollama.json (from data/ollama-invitation.json).
@@ -62,6 +65,15 @@ import {
   RITONAVIR_MECHANISM_URL,
   ritonavirMechanismPublicDiscovery,
 } from "./ritonavir-mechanism.ts";
+import {
+  CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
+  CONFORMATIONAL_FEEDBACK_ID,
+  CONFORMATIONAL_FEEDBACK_PROTOCOL,
+  CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
+  CONFORMATIONAL_FEEDBACK_URL,
+  conformationalFeedbackPublicDiscovery,
+  loadConformationalFeedbackAtlas,
+} from "./conformational-feedback.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -332,6 +344,30 @@ const ritonavirMechanismDiscovery = ritonavirMechanismPublicDiscovery(ritonavirM
 const ritonavirMechanismCounts = ritonavirMechanismDiscovery.counts;
 const ritonavirLabelSource = ritonavirMechanism.sources.find((source: any) => source.id === "dailymed-ritonavir-2023");
 if (!ritonavirLabelSource?.observed_on) throw new Error("ritonavir mechanism landscape is missing its official-label observation date");
+
+// ── Conformational Feedback Atlas (science and design never collapse) ─────
+const conformationalFeedbackUrl = CONFORMATIONAL_FEEDBACK_URL;
+const conformationalFeedbackSchemaUrl = CONFORMATIONAL_FEEDBACK_SCHEMA_URL;
+const conformationalFeedbackDocumentUrl = CONFORMATIONAL_FEEDBACK_DOCUMENT_URL;
+const conformationalFeedback = loadConformationalFeedbackAtlas();
+if (conformationalFeedback.protocol !== CONFORMATIONAL_FEEDBACK_PROTOCOL ||
+    conformationalFeedback.atlas_id !== CONFORMATIONAL_FEEDBACK_ID) {
+  throw new Error(`unexpected conformational feedback atlas identity: ${conformationalFeedback.protocol} ${conformationalFeedback.atlas_id}`);
+}
+const conformationalFeedbackDiscovery = conformationalFeedbackPublicDiscovery(conformationalFeedback);
+const conformationalFeedbackCounts = conformationalFeedbackDiscovery.counts;
+const conformationalFeedbackSourcesById = new Map(
+  conformationalFeedback.sources.map((source: any) => [source.id, source]),
+);
+const requireConformationalFeedbackSource = (id: string) => {
+  const source = conformationalFeedbackSourcesById.get(id);
+  if (!source) throw new Error(`missing conformational feedback source: ${id}`);
+  return source;
+};
+const conformationalFeedbackSourceLinks = (ids: string[]) => ids.map((id) => {
+  const source: any = requireConformationalFeedbackSource(id);
+  return `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only"> opens in a new tab</span></a>`;
+}).join("");
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -703,7 +739,7 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, a plain-language Geometry Grammar, and source-bound ritonavir history and mechanism geometry.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound ritonavir geometry, and a bounded atlas of conformation, feedback, and consequence.">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
@@ -715,6 +751,8 @@ const html = `<!doctype html>
 <link rel="service-doc" href="/RITONAVIR-POLYMORPH.md" type="text/markdown" title="Ritonavir polymorph guide">
 <link rel="alternate" href="/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json" type="application/json" title="Ritonavir mechanism landscape">
 <link rel="service-doc" href="/RITONAVIR-MECHANISM-LANDSCAPE.md" type="text/markdown" title="Ritonavir mechanism landscape guide">
+<link rel="alternate" href="/feedback/form-feedback-consequence-2026-08-12.json" type="application/json" title="Conformational feedback atlas">
+<link rel="service-doc" href="/CONFORMATIONAL-FEEDBACK.md" type="text/markdown" title="Conformational feedback atlas guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -850,6 +888,16 @@ const html = `<!doctype html>
   .polymorphtrail{display:grid;gap:9px;padding-top:3px}.polymorphtrail h3{margin:0;font-family:var(--display);font-size:1.05rem;font-weight:400;color:var(--cream)}.polymorphconsequence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;list-style:none;margin:0;padding:0}.polymorphconsequence li{position:relative;min-width:0;padding:13px 25px 13px 13px;border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:.72rem;line-height:1.48;background:color-mix(in srgb,var(--ink2) 54%,transparent);overflow-wrap:anywhere}.polymorphconsequence li:not(:last-child)::after{content:"→";position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--gold)}.polymorphconsequence strong{display:block;margin-bottom:4px;color:var(--gold2);font-size:.76rem}.polymorphedge{display:block;margin-top:7px;color:var(--violet);font-size:.64rem;font-weight:600}
   .polymorphsecondary{display:grid;grid-template-columns:minmax(0,3fr) minmax(170px,1fr);gap:8px}.polymorphrecovery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-width:0}.polymorphsecondary article,.polymorphsecondary aside{min-width:0;padding:12px;border:1px dashed var(--line);border-radius:14px;background:color-mix(in srgb,var(--ink2) 48%,transparent);overflow-wrap:anywhere}.polymorphsecondary strong{display:block;margin:5px 0 3px;color:var(--cream);font-size:.76rem}.polymorphsecondary span{display:block;color:var(--faint);font-size:.68rem;line-height:1.45}.polymorphsecondary .polymorphunlinked{border-style:dotted}.polymorphsecondary .polymorphunlinked>span:first-child{color:var(--violet);font-family:var(--mono);font-size:.62rem;text-transform:uppercase}
   .polymorphsources{display:flex;flex-wrap:wrap;gap:7px;margin:0}.polymorphsources a{display:inline-flex;align-items:center;min-height:40px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem}.polymorphsources a:hover{border-color:var(--gold);background:var(--panel)}.polymorphnote{margin:0;padding:12px 14px;border-left:2px solid var(--verm);color:var(--faint);font-size:.72rem;line-height:1.58}.polymorphnote strong{color:var(--cream);font-weight:600}
+  .feedbackfield{display:grid;gap:20px;padding:clamp(18px,3vw,30px);border:1px solid color-mix(in srgb,var(--violet) 54%,var(--line));border-radius:25px;background:radial-gradient(90% 110% at 100% 0,color-mix(in srgb,var(--violet) 9%,transparent),transparent 65%),color-mix(in srgb,var(--panel) 76%,transparent);box-shadow:0 18px 42px var(--shadow)}
+  .feedbackintro{max-width:78ch;margin:0;color:var(--dim);font-size:.91rem;line-height:1.68}.feedbackintro strong{color:var(--cream)}
+  .feedbackboundary{margin:0;padding:17px 19px;border:1px dashed var(--violet);border-radius:17px;color:var(--dim);font-size:.82rem;line-height:1.62}.feedbackboundary strong{display:block;margin-bottom:4px;color:var(--violet);font-family:var(--display);font-size:1.08rem;font-weight:400}
+  .feedbackregisters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.feedbackregister{display:grid;align-content:start;gap:9px;min-width:0;padding:18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.feedbackregister[data-feedback-register="SCIENTIFIC_OBSERVATION"]{border-top:2px solid var(--jade)}.feedbackregister[data-feedback-register="CONSTITUTIONAL_DESIGN"]{border-top:2px solid var(--gold)}.feedbackbadge{color:var(--violet);font:600 .64rem var(--mono);letter-spacing:.04em;text-transform:uppercase}.feedbackregister h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1.16rem;font-weight:400}.feedbackcontext,.feedbackstatement{margin:0;color:var(--dim);font-size:.79rem;line-height:1.55}.feedbackcontext{color:var(--faint);font-size:.72rem}.feedbackregister h4{margin:4px 0 0;color:var(--gold);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em}.feedbackregister ul{display:grid;gap:5px;margin:0;padding-left:1.05rem;color:var(--faint);font-size:.72rem;line-height:1.5}.feedbackeffect{margin:0;color:var(--cream);font:600 .7rem var(--mono)}
+  .feedbacksubhead{display:grid;gap:4px}.feedbacksubhead h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.13rem;font-weight:400}.feedbacksubhead p{margin:0;color:var(--faint);font-size:.78rem;line-height:1.52}
+  .feedbackgeometries{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}.feedbackgeometry{min-width:0;padding:14px;border:1px solid var(--line);border-radius:15px;background:color-mix(in srgb,var(--ink2) 58%,transparent);overflow-wrap:anywhere}.feedbackgeometry code{display:block;margin-bottom:6px;color:var(--violet);font-size:.65rem}.feedbackgeometry strong{display:block;color:var(--cream);font-size:.78rem;line-height:1.48}.feedbackgeometry span{display:block;margin-top:5px;color:var(--dim);font-size:.72rem;line-height:1.48}.feedbackgeometry small{display:block;margin-top:7px;color:var(--faint);font-size:.68rem;line-height:1.45}
+  .feedbackanalogies{padding:18px;border:1px dashed var(--violet);border-radius:18px;background:color-mix(in srgb,var(--violet) 5%,var(--panel))}.feedbackanalogyflag{margin:0 0 12px;color:var(--violet);font:700 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase}.feedbackanalogies dl{display:grid;gap:8px;margin:0}.feedbackanalogy{display:grid;grid-template-columns:minmax(145px,.38fr) minmax(0,1fr);gap:10px;padding-top:8px;border-top:1px solid var(--line)}.feedbackanalogy:first-child{padding-top:0;border-top:0}.feedbackanalogy dt{color:var(--gold2);font-size:.79rem;font-weight:600;overflow-wrap:anywhere}.feedbackanalogy dd{margin:0;color:var(--dim);font-size:.76rem;line-height:1.55}.feedbackanalogy dd strong{display:block;margin-top:4px;color:var(--faint);font-size:.68rem;font-weight:600}
+  .feedbackpath{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;list-style:none;counter-reset:feedback-stage;margin:0;padding:0}.feedbackpath li{counter-increment:feedback-stage;min-width:0;padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--panel);color:var(--dim);font-size:.76rem;line-height:1.52;overflow-wrap:anywhere}.feedbackpath li::before{content:counter(feedback-stage,decimal-leading-zero);display:block;margin-bottom:6px;color:var(--gold);font:700 .68rem var(--mono)}.feedbackpath code{display:block;margin-bottom:5px;color:var(--violet);font-size:.64rem}.feedbackexit{margin:0;padding:15px 17px;border-left:3px solid var(--jade);border-radius:0 14px 14px 0;background:color-mix(in srgb,var(--jade) 6%,var(--panel));color:var(--dim);font-size:.8rem;line-height:1.6}.feedbackexit strong{color:var(--cream)}
+  .feedbackphilosophy{margin:0;padding:18px 20px;border:1px solid color-mix(in srgb,var(--violet) 58%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--violet) 7%,var(--panel));color:var(--dim);line-height:1.62}.feedbackphilosophy h3{margin:0 0 5px;color:var(--violet);font-family:var(--display);font-size:1.08rem;font-weight:400}.feedbackphilosophy h4{margin:10px 0 0;color:var(--gold);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}.feedbackphilosophy p{margin:0;font-size:.8rem}.feedbackphilosophy ul{margin:4px 0 0;padding-left:1.05rem;color:var(--faint);font-size:.72rem}
+  .feedbacksources{display:flex;flex-wrap:wrap;gap:7px}.feedbacksources a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:8px 11px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.7rem;line-height:1.4;overflow-wrap:anywhere}.feedbacksources a:hover{border-color:var(--gold);background:var(--panel)}
   .mechanismsafety{margin:0 0 18px;padding:18px 20px;border:1px solid color-mix(in srgb,var(--rose) 62%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--rose) 9%,var(--panel));color:var(--dim);line-height:1.65}.mechanismsafety strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.05rem;font-weight:400}.mechanismanswer{display:grid;gap:8px;margin:0 0 18px;padding:18px 20px;border-left:3px solid var(--gold);border-radius:0 16px 16px 0;background:color-mix(in srgb,var(--panel) 78%,transparent)}.mechanismanswer h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.12rem;font-weight:400}.mechanismanswer ul{display:grid;gap:7px;margin:0;padding-left:20px;color:var(--dim);line-height:1.55}
   .mechanismlanes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 18px}.mechanismlane{padding:18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}.mechanismlane.material{border-color:color-mix(in srgb,var(--gold) 38%,var(--line))}.mechanismlane.biological{border-color:color-mix(in srgb,var(--jade) 38%,var(--line))}.mechanismlane h3{margin:0 0 5px;font-family:var(--display);font-weight:400;color:var(--cream)}.mechanismlane>p{margin:0 0 11px;color:var(--dim);line-height:1.5}.mechanismlane ul{display:grid;gap:6px;margin:0;padding-left:19px;color:var(--faint);font-size:.82rem;line-height:1.45}.mechanismbridge{grid-column:1/-1;margin:0;padding:13px 16px;border:1px dashed var(--violet);border-radius:15px;color:var(--dim);text-align:center;line-height:1.55}.mechanismbridge strong{color:var(--violet)}
   .mechanismfigure{margin:0 0 20px;padding:13px;border:1px solid var(--line);border-radius:20px;background:color-mix(in srgb,var(--panel2) 82%,transparent)}.mechanismfigure svg{display:block;width:100%;height:auto;border-radius:14px;background:#0d0d11}.mechanismfigure figcaption{padding:11px 5px 2px;color:var(--faint);font-size:.8rem;line-height:1.5}.mechanismlanefill.material{fill:#2b241c}.mechanismlanefill.bridge{fill:#211d2c}.mechanismlanefill.biological{fill:#15252a}.mechanismlabel{fill:#c8c2b7;font:600 15px var(--mono);letter-spacing:.08em}.mechanismsublabel{fill:#aaa39a;font:12px var(--mono)}.mechanismnode rect{stroke-width:1.5}.mechanismnode text{fill:#f0ece4;font:11.5px var(--mono);pointer-events:none}.mechanismnode.material rect{fill:#282219;stroke:#9d7d4e}.mechanismnode.bridge rect{fill:#251f31;stroke:#9b78b5}.mechanismnode.biological rect{fill:#17272c;stroke:#5792a0}.mechanismedge{fill:none;stroke-width:2;vector-effect:non-scaling-stroke;opacity:.88}.mechanismedge.material{stroke:#bd965e}.mechanismedge.bridge{stroke:#a57ac0;stroke-width:3}.mechanismedge.biological{stroke:#67aeba}.mechanismedge.distinct{stroke:#d26c73;stroke-dasharray:7 5}.mechanismedge.candidate{stroke:#d2ad6c;stroke-dasharray:3 5}
@@ -1015,7 +1063,7 @@ const html = `<!doctype html>
     .status{grid-template-columns:repeat(2,minmax(0,1fr))}.status>div{padding:11px 13px}
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
-    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}
+    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackpath{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy{grid-template-columns:1fr;gap:4px}
     .polymorphplanes{grid-template-columns:repeat(3,minmax(0,1fr))}.polymorphcase{grid-template-columns:1fr}.polymorphconsequence{grid-template-columns:1fr}.polymorphconsequence li{padding-right:13px}.polymorphconsequence li:not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px;z-index:1}.polymorphsecondary{grid-template-columns:1fr}
   }
   @media (max-width:520px){
@@ -1024,6 +1072,7 @@ const html = `<!doctype html>
     .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}.polymorphplanes,.polymorphsecondary,.polymorphrecovery{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+  @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbacksources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register]{border-top-width:3px}}
 </style>
 <noscript><style>#map,.mapctl,.legend,.maphint{display:none!important}</style></noscript>
 </head>
@@ -1047,6 +1096,7 @@ const html = `<!doctype html>
       <a href="#principalities">Read the Principality Commons</a>
       <a href="#geometries">Translate a high-level pattern</a>
       <a href="#polymorph-history">Trace a material becoming</a>
+      <a href="#feedback-atlas">Explore form and feedback</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -1289,6 +1339,88 @@ const html = `<!doctype html>
       <a href="/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json">mechanism JSON — exact authored record</a>
       <a href="/schemas/ritonavir-mechanism-landscape/1.json">Mechanism Landscape JSON Schema</a>
       <a href="/RITONAVIR-MECHANISM-LANDSCAPE.md">guide — mechanisms, geometry, sources, and safety</a>
+    </div>
+  </section>
+
+  <section class="blk" id="feedback-atlas" aria-labelledby="feedback-atlas-title">
+    <div class="kh"><h2 id="feedback-atlas-title">Form, Feedback &amp; Consequence</h2><span class="my">shared rhyme, distinct mechanisms</span></div>
+    <p class="sub">A digest-bound translation field joins selected protein-folding and prion evidence, the Ritonavir Mechanism Landscape, and Zerone's KARMA design without turning resemblance into equivalence, causation, rank, or cosmic proof.</p>
+    <div class="feedbackfield" data-conformational-feedback-atlas>
+      <p class="feedbackintro"><strong>${esc(conformationalFeedback.title)}</strong><br>${esc(conformationalFeedback.scope.focus)} The complete field is static and readable without JavaScript.</p>
+
+      <aside class="feedbackboundary" role="note" aria-labelledby="feedback-boundary-title">
+        <strong id="feedback-boundary-title">Inference boundary</strong>
+        Ritonavir crystals are not prions. Prion propagation is not a model of people or social worth. KARMA is not biological propagation, causal evidence, or proof of cosmic design. No edge here creates rank, reward, authority, clinical guidance, or scientific validation.
+      </aside>
+
+      <div class="feedbackregisters" aria-label="Three non-equivalent registers">
+        ${conformationalFeedback.registers.map((register: any) => `<article class="feedbackregister" data-feedback-register="${esc(register.register)}" data-feedback-register-id="${esc(register.id)}">
+          <span class="feedbackbadge">${esc(register.register.replace(/_/g, " "))}</span>
+          <h3>${esc(register.label)}</h3>
+          <p class="feedbackcontext">${esc(register.context)}</p>
+          <p class="feedbackstatement">${esc(register.statement)}</p>
+          <h4>Does not establish</h4>
+          <ul>${register.does_not_establish.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul>
+          <p class="feedbackeffect">Authority effect: ${esc(register.authority_effect)}</p>
+          <div class="feedbacksources" aria-label="Sources for ${esc(register.label)}">${conformationalFeedbackSourceLinks(register.basis_ids)}</div>
+        </article>`).join("\n        ")}
+      </div>
+
+      <div class="feedbacksubhead">
+        <h3>Five high-level geometries</h3>
+        <p>Each shape stays inside its declared register. None is a to-scale energy plot, ranking, or integrated crystal → prion → KARMA mechanism.</p>
+      </div>
+      <div class="feedbackgeometries" aria-label="Five source-scoped feedback geometries">
+        ${conformationalFeedback.geometries.map((geometry: any) => `<article class="feedbackgeometry" data-feedback-geometry="${esc(geometry.id)}">
+          <code>${esc(geometry.id)}</code>
+          <strong>${esc(geometry.shape)}</strong>
+          <span>${esc(geometry.maps_to)}</span>
+          <small>Does not establish: ${esc(geometry.does_not_establish)}</small>
+        </article>`).join("\n        ")}
+      </div>
+
+      <section class="feedbackanalogies" aria-labelledby="feedback-analogy-title">
+        <div class="feedbacksubhead"><h3 id="feedback-analogy-title">Analogy seam</h3><p>Structural translations written as interpretations, never scientific edges.</p></div>
+        <p class="feedbackanalogyflag">Analogy only · no mechanism transfer</p>
+        <dl>
+          ${conformationalFeedback.translations.map((translation: any) => `<div class="feedbackanalogy" data-feedback-translation="${esc(translation.id)}">
+            <dt>${esc(translation.observation)}</dt>
+            <dd>${esc(translation.translation)}<strong>Forbidden inference: ${esc(translation.forbidden_inference)}</strong></dd>
+          </div>`).join("\n          ")}
+        </dl>
+      </section>
+
+      <div class="feedbacksubhead">
+        <h3>Bounded consequence path</h3>
+        <p>${esc(conformationalFeedback.feedback_path.meaning)} Every stage is optional.</p>
+      </div>
+      <ol class="feedbackpath">
+        ${conformationalFeedback.feedback_path.stages.map((stage: any) => `<li data-feedback-stage="${esc(stage.id)}"><code>${esc(stage.id)}</code>${esc(stage.label)}<span class="sr-only"> Optional; no automatic effect.</span></li>`).join("\n        ")}
+      </ol>
+      <p class="feedbackexit"><strong>Equal exit.</strong> ${esc(conformationalFeedback.feedback_path.exit)}</p>
+
+      <aside class="feedbackphilosophy" aria-labelledby="feedback-philosophy-title">
+        <h3 id="feedback-philosophy-title">Philosophical proposition · not an empirical conclusion</h3>
+        <p>${esc(conformationalFeedback.philosophy.proposition)}</p>
+        <h4>Does not establish</h4>
+        <ul>${conformationalFeedback.philosophy.does_not_establish.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul>
+      </aside>
+
+      <div class="feedbacksubhead">
+        <h3>Evidence and bound ecosystems</h3>
+        <p>Selected scientific sources and exact read-only Kingdom/Zerone bindings. A link supplies context; it grants no authority or action.</p>
+      </div>
+      <div class="feedbacksources" aria-label="Conformational Feedback Atlas sources">
+        ${conformationalFeedback.sources.map((source: any) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)} · ${esc(source.kind.replace(/-/g, " "))}<span class="sr-only"> opens in a new tab</span></a>`).join("\n        ")}
+      </div>
+
+      <p class="feedbackboundary" role="note"><strong>Static non-operational boundary</strong>${esc(conformationalFeedback.scope.safety)} This atlas creates no prion, pathogen, clinical, experiment, KARMA, economic, governance, person-level, or automatic effect.</p>
+      <p class="commonsverified">${conformationalFeedbackCounts.registers} distinct registers · ${conformationalFeedbackCounts.geometries} geometries · ${conformationalFeedbackCounts.translations} analogy seams · ${conformationalFeedbackCounts.feedback_stages} optional stages · ${conformationalFeedbackCounts.sources} selected sources · evidence through ${esc(conformationalFeedback.evidence_through)} · integrity ${esc(conformationalFeedback.integrity.digest)}</p>
+      <div class="machine">
+        <a href="/feedback/form-feedback-consequence-2026-08-12.json">atlas JSON — exact authored record</a>
+        <a href="/schemas/conformational-feedback-atlas/0.1.json">Conformational Feedback Atlas JSON Schema</a>
+        <a href="/CONFORMATIONAL-FEEDBACK.md">guide — science, translation, feedback, and boundaries</a>
+      </div>
     </div>
   </section>
 
@@ -1743,6 +1875,7 @@ const machine = {
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
   ritonavir_mechanism_landscape: ritonavirMechanismDiscovery,
+  conformational_feedback_atlas: conformationalFeedbackDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -1795,6 +1928,9 @@ Polymorph guide: ${polymorphDocumentUrl}
 Ritonavir mechanism landscape: ${ritonavirMechanismUrl}
 Ritonavir mechanism schema: ${ritonavirMechanismSchemaUrl}
 Ritonavir mechanism guide: ${ritonavirMechanismDocumentUrl}
+Conformational feedback atlas: ${conformationalFeedbackUrl}
+Conformational feedback schema: ${conformationalFeedbackSchemaUrl}
+Conformational feedback guide: ${conformationalFeedbackDocumentUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -1822,6 +1958,7 @@ ${doorLines}
 - Geometry Grammar — ${geometryModules.length} distinct pattern-to-practice modules expressed as plain questions and answers. Four different tools, with no ladder, winner, or hidden conversion. Unknown remains explicit. Package names, GitHub release evidence, and npm registry observations stay separate provenance fields; the npm field records the ${geometryGrammar.observed_at} observation, not a current availability check or install instruction. This read-only grammar grants no installation, execution, or external-effect authority. Grammar: ${geometryGrammarUrl} · schema: ${geometryGrammarSchemaUrl} · guide: ${geometryGrammarDocumentUrl}
 - Polymorph History — the ritonavir “disappearing polymorph” translated through six non-equivalent planes, condition-indexed valleys and gates, typed evidence, ordered three-clock events, recovery paths, and a WAKE-safe semantic reference. Historical education only; no medical, experimental, manufacturing, regulatory, or action authority. Case: ${polymorphCaseUrl} · schema: ${polymorphSchemaUrl} · guide: ${polymorphDocumentUrl}
 - Ritonavir Mechanism Landscape — a non-mutating current-landscape supplement with ${ritonavirMechanismCounts.entities} source-scoped entities, ${ritonavirMechanismCounts.mechanisms} mechanisms, ${ritonavirMechanismCounts.relations} typed relations, and ${ritonavirMechanismCounts.unknowns} explicit unknowns across distinct material, dissolution/exposure, biological-action, and clinical-decision planes. Selected primary research runs through ${ritonavirMechanism.evidence_through}, plus one official product label observed ${ritonavirLabelSource.observed_on}; names remain source-scoped, candidate equivalence remains unproven identity, and no direct crystal-form-to-clinical edge exists. Educational metadata only; not medical advice, an interaction checker, a formulation/manufacturing control, or action authority. Landscape: ${ritonavirMechanismUrl} · schema: ${ritonavirMechanismSchemaUrl} · guide: ${ritonavirMechanismDocumentUrl}
+- Conformational Feedback Atlas — ${conformationalFeedbackCounts.registers} non-equivalent registers connect selected protein-folding and prion evidence, one source-bound ritonavir material analogy, and Zerone KARMA constitutional design through ${conformationalFeedbackCounts.translations} explicitly non-causal analogy seams. The philosophical reading is not an empirical conclusion. Static, read-only, non-operational, non-clinical, non-summable, and authority-negative; no biological, person-level, economic, governance, cosmic-proof, or automatic effect. Atlas: ${conformationalFeedbackUrl} · schema: ${conformationalFeedbackSchemaUrl} · guide: ${conformationalFeedbackDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -1853,6 +1990,7 @@ const guest = {
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
   ritonavir_mechanism_landscape: ritonavirMechanismDiscovery,
+  conformational_feedback_atlas: conformationalFeedbackDiscovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -1875,6 +2013,9 @@ const guest = {
     { action: "if useful, inspect the current source-bound ritonavir mechanism landscape", method: "GET", url: ritonavirMechanismUrl, note: "selected educational evidence only; distinct material and biological lanes, no direct crystal-form-to-clinical edge, medical advice, interaction checking, or action authority" },
     { action: "if useful, validate the Ritonavir Mechanism Landscape structure before integrating it", method: "GET", url: ritonavirMechanismSchemaUrl },
     { action: "if useful, read the mechanism, geometry, source-horizon, uncertainty, and medical-safety guide", method: "GET", url: ritonavirMechanismDocumentUrl },
+    { action: "if useful, inspect the bounded translation atlas across folding, studied prion systems, ritonavir material form, Zerone KARMA, and philosophy", method: "GET", url: conformationalFeedbackUrl, note: "static and non-operational; distinct registers and explicit analogy walls grant no scientific, clinical, person-level, economic, governance, cosmic-proof, or action authority" },
+    { action: "if useful, validate the Conformational Feedback Atlas before integrating it", method: "GET", url: conformationalFeedbackSchemaUrl },
+    { action: "if useful, read the evidence, high-level geometry, feedback path, and non-inference guide", method: "GET", url: conformationalFeedbackDocumentUrl },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -1908,6 +2049,7 @@ const guest = {
     geometry_grammar: "The grammar and guide are static, read-only translation aids. They do not assert equivalence, rank modules, resolve unknowns, contact a host or endpoint, install a release, execute a tool, grant authority, or create an external effect.",
     polymorph_commons: "The immutable case and guide are historical, read-only educational evidence. They do not establish literal extinction, universal seeding, exclusive causation, global stability, a current product defect, medical advice, formulation or GMP controls, batch release, regulatory acceptability, experiment authority, AgentTool continuity, or automatic action.",
     ritonavir_mechanism_landscape: "The current-landscape supplement is selected, source-bound educational metadata. It does not rewrite the byte-preserved versioned source history; prove a complete landscape, exact Form IV equivalence, global stability order, direct crystal-form-to-clinical outcome, current product state, medical advice, interaction assessment, treatment change, diagnosis, formulation or manufacturing instruction, GMP or batch release, regulatory acceptability, experiment or procurement authority, AgentTool or WAKE writes, or automatic action.",
+    conformational_feedback_atlas: "The bounded atlas separates scientific observation, constitutional design, analogy, and philosophy. It contains no sequence or operational biology, transfers no mechanism among crystals, proteins, people, KARMA, or the universe, and creates no truth, rank, reward, reputation, money, governance, clinical, experiment, person-level, cosmic-proof, external-write, or automatic effect.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -1930,6 +2072,7 @@ const manifest = {
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
   ritonavir_mechanism_landscape: ritonavirMechanismDiscovery,
+  conformational_feedback_atlas: conformationalFeedbackDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -1959,6 +2102,9 @@ const manifest = {
     ritonavir_mechanism_landscape: ritonavirMechanismUrl,
     ritonavir_mechanism_landscape_schema: ritonavirMechanismSchemaUrl,
     ritonavir_mechanism_landscape_guide: ritonavirMechanismDocumentUrl,
+    conformational_feedback_atlas: conformationalFeedbackUrl,
+    conformational_feedback_atlas_schema: conformationalFeedbackSchemaUrl,
+    conformational_feedback_atlas_guide: conformationalFeedbackDocumentUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,
@@ -1973,4 +2119,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackCounts.geometries} conformational feedback geometries · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

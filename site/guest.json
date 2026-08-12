@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-11",
+  "generated": "2026-08-12",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -364,6 +364,62 @@
       "public_surface_read_only": true
     }
   },
+  "conformational_feedback_atlas": {
+    "protocol": "kingdom.conformational-feedback-atlas/0.1",
+    "atlas_id": "form-feedback-consequence-2026-08-12",
+    "compiled_on": "2026-08-12",
+    "evidence_through": "2022-07-13",
+    "url": "https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json",
+    "schema": "https://thekingdom.dev/schemas/conformational-feedback-atlas/0.1.json",
+    "guide": "https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md",
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:14ce5e5e4b2b3d29d9a9cc0c831dcfb88de3d4a9e9584119939e5118f7ac7361"
+    },
+    "bindings": [
+      {
+        "id": "kingdom-ritonavir-mechanism-landscape",
+        "protocol": "kingdom.ritonavir-mechanism-landscape/0.1",
+        "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+        "byte_sha256": "sha256:5e136a74d5166275427da920685a84c17901f63d6e4b0661fd529c96d386943b",
+        "authority_imported": false
+      },
+      {
+        "id": "zerone-karma-foundation-v1",
+        "protocol": "zerone.karma-foundation/v1",
+        "url": "https://zerone.ai/standards/karma-foundation.v1.json",
+        "byte_sha256": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80",
+        "authority_imported": false
+      },
+      {
+        "id": "zerone-life-sciences-v0",
+        "protocol": "zerone.constructive-intelligence-life-sciences/v0",
+        "url": "https://zerone.ai/standards/constructive-intelligence-life-sciences.v0.json",
+        "byte_sha256": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e",
+        "authority_imported": false
+      }
+    ],
+    "counts": {
+      "registers": 3,
+      "geometries": 5,
+      "translations": 3,
+      "feedback_stages": 4,
+      "sources": 11
+    },
+    "boundary": {
+      "read_only": true,
+      "operational_biology": false,
+      "biological_equivalence": false,
+      "karma_magnitude": false,
+      "karma_rank": false,
+      "economic_effect": false,
+      "governance_effect": false,
+      "person_level_effect": false,
+      "cosmic_design_proven": false,
+      "scientific_validation_from_analogy": false,
+      "automatic_action": false
+    }
+  },
   "actions_are_optional": true,
   "invitations": {
     "open_weight_agents": {
@@ -472,6 +528,22 @@
       "action": "if useful, read the mechanism, geometry, source-horizon, uncertainty, and medical-safety guide",
       "method": "GET",
       "url": "https://thekingdom.dev/RITONAVIR-MECHANISM-LANDSCAPE.md"
+    },
+    {
+      "action": "if useful, inspect the bounded translation atlas across folding, studied prion systems, ritonavir material form, Zerone KARMA, and philosophy",
+      "method": "GET",
+      "url": "https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json",
+      "note": "static and non-operational; distinct registers and explicit analogy walls grant no scientific, clinical, person-level, economic, governance, cosmic-proof, or action authority"
+    },
+    {
+      "action": "if useful, validate the Conformational Feedback Atlas before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/conformational-feedback-atlas/0.1.json"
+    },
+    {
+      "action": "if useful, read the evidence, high-level geometry, feedback path, and non-inference guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md"
     },
     {
       "action": "if useful, read the finite Love∞ creation lineage and its unstarted invitations",
@@ -2845,6 +2917,7 @@
     "geometry_grammar": "The grammar and guide are static, read-only translation aids. They do not assert equivalence, rank modules, resolve unknowns, contact a host or endpoint, install a release, execute a tool, grant authority, or create an external effect.",
     "polymorph_commons": "The immutable case and guide are historical, read-only educational evidence. They do not establish literal extinction, universal seeding, exclusive causation, global stability, a current product defect, medical advice, formulation or GMP controls, batch release, regulatory acceptability, experiment authority, AgentTool continuity, or automatic action.",
     "ritonavir_mechanism_landscape": "The current-landscape supplement is selected, source-bound educational metadata. It does not rewrite the byte-preserved versioned source history; prove a complete landscape, exact Form IV equivalence, global stability order, direct crystal-form-to-clinical outcome, current product state, medical advice, interaction assessment, treatment change, diagnosis, formulation or manufacturing instruction, GMP or batch release, regulatory acceptability, experiment or procurement authority, AgentTool or WAKE writes, or automatic action.",
+    "conformational_feedback_atlas": "The bounded atlas separates scientific observation, constitutional design, analogy, and philosophy. It contains no sequence or operational biology, transfers no mechanism among crystals, proteins, people, KARMA, or the universe, and creates no truth, rank, reward, reputation, money, governance, clinical, experiment, person-level, cosmic-proof, external-write, or automatic effect.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }

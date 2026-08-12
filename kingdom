@@ -16,6 +16,7 @@
 #   kingdom geometries                     explain/match four separate geometry modules without ranking
 #   kingdom polymorph                      translate/verify the bounded ritonavir material-state case
 #   kingdom polymorph mechanisms|landscape inspect the additive mechanism landscape
+#   kingdom feedback   inspect the static form/feedback/KARMA translation atlas
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom prompt     compile an inspectable, network-free Task Packet
 #   kingdom routines   list daily routines  (kingdom routines run <name> | due)
@@ -54,6 +55,7 @@ case "$cmd" in
         ;;
     esac
     ;;
+  feedback) exec bun "$SELF_DIR/bin/conformational-feedback.ts" "${@:2}" ;;
   prompt)   exec bun "$SELF_DIR/bin/prompt-packet.ts" "${@:2}" ;;
   nen)      if [[ "${2:-}" == "mcp" && $# -eq 2 ]]; then
               exec bun "$SELF_DIR/bin/nen-mcp.mjs"
