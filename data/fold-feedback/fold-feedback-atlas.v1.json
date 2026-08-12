@@ -68,11 +68,20 @@
       "digest": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e",
       "relation": "eligibility-boundary-only",
       "mutated": false
+    },
+    {
+      "id": "kingdom-conformational-feedback",
+      "system": "kingdom",
+      "revision": "251fce19ea7c5a94239ae6881df6ff027ddbdbf5",
+      "artifact": "form-feedback-consequence-2026-08-12",
+      "digest": "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64",
+      "relation": "companion-evidence-map",
+      "mutated": false
     }
   ],
   "scope": {
     "focus": "A source-bound educational map of protein folding, prion conformational propagation, feedback, and carefully separated systems translations.",
-    "coverage": "Selected foundational and structural evidence, explicit unknowns, bounded comparison with ritonavir polymorphism, two non-equivalent KARMA surfaces, and an opt-in philosophical lens.",
+    "coverage": "Selected foundational and structural evidence, explicit unknowns, bounded comparison with ritonavir polymorphism, two non-equivalent KARMA surfaces, an opt-in philosophical lens, and an exact companion binding to the constitutional Form, Feedback & Consequence map.",
     "intended_use": "Plain-language learning, evidence navigation, architecture design, and challengeable discussion.",
     "excluded_use": "Diagnosis, prognosis, treatment, transmission or infection-risk assessment, laboratory or decontamination procedure, experimental planning, manufacturing control, moral scoring, or proof of cosmic purpose.",
     "currentness": "selected-evidence-as-of-compilation"
@@ -288,6 +297,6 @@
   },
   "integrity": {
     "algorithm": "sha256-recursive-sorted-json-keys-v1",
-    "digest": "sha256:7d5136599a60650521b10eb106359f7cb5a4c0bfd06fb6876db631020b75f02e"
+    "digest": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7"
   }
 }

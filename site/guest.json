@@ -433,7 +433,7 @@
     "guide": "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md",
     "integrity": {
       "algorithm": "sha256-recursive-sorted-json-keys-v1",
-      "digest": "sha256:7d5136599a60650521b10eb106359f7cb5a4c0bfd06fb6876db631020b75f02e"
+      "digest": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7"
     },
     "counts": {
       "planes": 9,

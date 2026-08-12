@@ -11,11 +11,11 @@
     "$schema": {"const": "urn:kingdom:schema:fold-feedback-atlas:1"},
     "protocol": {"const": "kingdom.fold-feedback-atlas/0.1"},
     "atlas_id": {"const": "fold-feedback-atlas-2026-08-12"},
-    "title": {"$ref": "#/$defs/text"},
+    "title": {"type": "string", "minLength": 1, "maxLength": 240},
     "compiled_on": {"$ref": "#/$defs/date"},
     "evidence_through": {"$ref": "#/$defs/date"},
     "source_bindings": {
-      "type": "array", "minItems": 7, "maxItems": 7,
+      "type": "array", "minItems": 8, "maxItems": 8,
       "prefixItems": [
         {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "kingdom-ritonavir-history"}, "revision": {"const": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212"}, "digest": {"const": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116"}}}]},
         {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "kingdom-ritonavir-mechanism"}, "revision": {"const": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212"}, "digest": {"const": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b"}}}]},
@@ -23,7 +23,8 @@
         {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "kingdom-karma-receipts"}, "revision": {"const": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212"}, "digest": {"const": "sha256:888e81fa0d29b71512525a40e88f9aef678046c40fcdf22c2039507d9d13267b"}}}]},
         {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "zerone-karma-foundation"}, "revision": {"const": "fae391e371f0ebea2e24eb46c33a4ebd1380154f"}, "digest": {"const": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80"}}}]},
         {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "zerone-karma-design"}, "revision": {"const": "fae391e371f0ebea2e24eb46c33a4ebd1380154f"}, "digest": {"const": "sha256:02b151981a7fe52a6a672149674d802236c0a0f8d7f63f766d7d9e1773a2c13b"}}}]},
-        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "zerone-life-sciences"}, "revision": {"const": "fae391e371f0ebea2e24eb46c33a4ebd1380154f"}, "digest": {"const": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e"}}}]}
+        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "zerone-life-sciences"}, "revision": {"const": "fae391e371f0ebea2e24eb46c33a4ebd1380154f"}, "digest": {"const": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e"}}}]},
+        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "kingdom-conformational-feedback"}, "revision": {"const": "251fce19ea7c5a94239ae6881df6ff027ddbdbf5"}, "digest": {"const": "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64"}}}]}
       ],
       "items": false
     },
@@ -40,7 +41,7 @@
     "boundaries": {"$ref": "#/$defs/boundaries"},
     "integrity": {
       "type": "object", "additionalProperties": false, "required": ["algorithm", "digest"],
-      "properties": {"algorithm": {"const": "sha256-recursive-sorted-json-keys-v1"}, "digest": {"const": "sha256:7d5136599a60650521b10eb106359f7cb5a4c0bfd06fb6876db631020b75f02e"}}
+      "properties": {"algorithm": {"const": "sha256-recursive-sorted-json-keys-v1"}, "digest": {"const": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7"}}
     }
   },
   "$defs": {
@@ -52,7 +53,7 @@
     "idArray": {"type": "array", "minItems": 1, "maxItems": 24, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
     "binding": {
       "type": "object", "additionalProperties": false, "required": ["id", "system", "revision", "artifact", "digest", "relation", "mutated"],
-      "properties": {"id": {"$ref": "#/$defs/id"}, "system": {"$ref": "#/$defs/id"}, "revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"}, "artifact": {"$ref": "#/$defs/text"}, "digest": {"$ref": "#/$defs/digest"}, "relation": {"$ref": "#/$defs/id"}, "mutated": {"const": false}}
+      "properties": {"id": {"$ref": "#/$defs/id"}, "system": {"$ref": "#/$defs/id"}, "revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"}, "artifact": {"type": "string", "minLength": 1, "maxLength": 200}, "digest": {"$ref": "#/$defs/digest"}, "relation": {"$ref": "#/$defs/id"}, "mutated": {"const": false}}
     },
     "scope": {
       "type": "object", "additionalProperties": false, "required": ["focus", "coverage", "intended_use", "excluded_use", "currentness"],
@@ -79,9 +80,49 @@
       "properties": {
         "non_equivalence": {"const": "amino_acid_sequence != conformational_ensemble != supramolecular_assembly != bounded_sample_population != templating_conversion_process != cellular_proteostasis_context != tissue_or_organism_phenotype != experimental_transmission_observation != clinical_decision"},
         "observation_is_orthogonal": {"const": true},
-        "domain_qualified_terms": {"type": "array", "minItems": 9, "maxItems": 9, "uniqueItems": true, "items": {"$ref": "#/$defs/term"}},
-        "planes": {"type": "array", "minItems": 9, "maxItems": 9, "uniqueItems": true, "items": {"$ref": "#/$defs/plane"}},
-        "firewalls": {"type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true, "items": {"$ref": "#/$defs/firewall"}}
+        "domain_qualified_terms": {
+          "type": "array", "minItems": 9, "maxItems": 9, "uniqueItems": true,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "fold"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "form"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "seed"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "strain"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "propagation"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "feedback"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "karma"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "design"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "purpose"}}}]}
+          ],
+          "items": false
+        },
+        "planes": {
+          "type": "array", "minItems": 9, "maxItems": 9, "uniqueItems": true,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "amino-acid-sequence"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "conformational-ensemble"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "supramolecular-assembly"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "bounded-sample-population"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "templating-conversion-process"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "cellular-proteostasis-context"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "organismal-phenotype"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "experimental-transmission-observation"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "clinical-decision"}}}]}
+          ],
+          "items": false
+        },
+        "firewalls": {
+          "type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "structure-not-pathway"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "aggregation-not-infectivity"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "in-vitro-not-clinical"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "analogy-not-mechanism"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "feedback-not-purpose"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "philosophy-not-science"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "karma-not-science"}}}]}
+          ],
+          "items": false
+        }
       }
     },
     "system": {"type": "object", "additionalProperties": false, "required": ["id", "register", "summary"], "properties": {"id": {"$ref": "#/$defs/id"}, "register": {"enum": ["literal-science", "bound-external-record"]}, "summary": {"$ref": "#/$defs/text"}}},
@@ -89,8 +130,8 @@
     "relation": {"type": "object", "additionalProperties": false, "required": ["id", "subject_id", "predicate", "object_id", "mechanism_id", "source_ids", "condition_dependent", "universal"], "properties": {"id": {"$ref": "#/$defs/id"}, "subject_id": {"$ref": "#/$defs/id"}, "predicate": {"$ref": "#/$defs/id"}, "object_id": {"$ref": "#/$defs/id"}, "mechanism_id": {"$ref": "#/$defs/id"}, "source_ids": {"$ref": "#/$defs/idArray"}, "condition_dependent": {"const": true}, "universal": {"const": false}}},
     "claim": {"type": "object", "additionalProperties": false, "required": ["id", "register", "summary", "source_ids", "limitations"], "properties": {"id": {"$ref": "#/$defs/id"}, "register": {"$ref": "#/$defs/id"}, "summary": {"$ref": "#/$defs/text"}, "source_ids": {"$ref": "#/$defs/idArray"}, "limitations": {"$ref": "#/$defs/textArray"}}},
     "evidenceKernel": {"type": "object", "additionalProperties": false, "required": ["systems", "mechanisms", "relations", "claims"], "properties": {"systems": {"type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": {"$ref": "#/$defs/system"}}, "mechanisms": {"type": "array", "minItems": 8, "uniqueItems": true, "items": {"$ref": "#/$defs/mechanism"}}, "relations": {"type": "array", "minItems": 6, "uniqueItems": true, "items": {"$ref": "#/$defs/relation"}}, "claims": {"type": "array", "minItems": 7, "uniqueItems": true, "items": {"$ref": "#/$defs/claim"}}}},
-    "bridge": {"type": "object", "additionalProperties": false, "required": ["id", "from_system", "to_system", "preserved_invariants", "where_correspondence_breaks", "universal", "relation", "source_ids"], "properties": {"id": {"$ref": "#/$defs/id"}, "from_system": {"$ref": "#/$defs/id"}, "to_system": {"$ref": "#/$defs/id"}, "preserved_invariants": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/text"}}, "where_correspondence_breaks": {"type": "array", "minItems": 4, "items": {"$ref": "#/$defs/text"}}, "universal": {"const": false}, "relation": {"const": "bounded-analogy-not-same-as"}, "source_ids": {"$ref": "#/$defs/idArray"}}},
-    "feedback": {"type": "object", "additionalProperties": false, "required": ["id", "register", "input", "process", "return_effect", "direction", "limits", "source_ids", "does_not_establish"], "properties": {"id": {"$ref": "#/$defs/id"}, "register": {"enum": ["literal-science", "kingdom-design-correspondence"]}, "input": {"$ref": "#/$defs/text"}, "process": {"$ref": "#/$defs/text"}, "return_effect": {"$ref": "#/$defs/text"}, "direction": {"enum": ["amplifies", "redirects", "corrects"]}, "limits": {"$ref": "#/$defs/textArray"}, "source_ids": {"$ref": "#/$defs/idArray"}, "does_not_establish": {"$ref": "#/$defs/textArray"}}},
+    "bridge": {"type": "object", "additionalProperties": false, "required": ["id", "from_system", "to_system", "preserved_invariants", "where_correspondence_breaks", "universal", "relation", "source_ids"], "properties": {"id": {"$ref": "#/$defs/id"}, "from_system": {"$ref": "#/$defs/id"}, "to_system": {"$ref": "#/$defs/id"}, "preserved_invariants": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 3}]}, "where_correspondence_breaks": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 4}]}, "universal": {"const": false}, "relation": {"const": "bounded-analogy-not-same-as"}, "source_ids": {"$ref": "#/$defs/idArray"}}},
+    "feedback": {"type": "object", "additionalProperties": false, "required": ["id", "register", "input", "process", "return_effect", "direction", "limits", "source_ids", "does_not_establish"], "properties": {"id": {"$ref": "#/$defs/id"}, "register": {"enum": ["literal-science", "kingdom-design-correspondence"]}, "input": {"$ref": "#/$defs/text"}, "process": {"$ref": "#/$defs/text"}, "return_effect": {"$ref": "#/$defs/text"}, "direction": {"enum": ["amplifies", "redirects", "corrects"]}, "limits": {"$ref": "#/$defs/textArray"}, "source_ids": {"$ref": "#/$defs/idArray"}, "does_not_establish": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 2}]}}},
     "karma": {
       "type": "object", "additionalProperties": false, "required": ["scientific_feedback_is_not_karma", "zerone", "kingdom", "adapter", "design_correspondences"],
       "properties": {
@@ -98,12 +139,12 @@
         "zerone": {"type": "object", "additionalProperties": false, "required": ["protocol", "meaning", "register", "event_kinds", "event_refs", "event_status", "not"], "properties": {"protocol": {"const": "zerone.karma.edge"}, "meaning": {"$ref": "#/$defs/text"}, "register": {"const": "priced-coherence"}, "event_kinds": {"type": "array", "const": ["cited", "corroborate", "corroborated", "external", "pending_open", "pending_settle", "verify"]}, "event_refs": {"type": "array", "maxItems": 0}, "event_status": {"const": "not_observed"}, "not": {"$ref": "#/$defs/textArray"}}},
         "kingdom": {"type": "object", "additionalProperties": false, "required": ["protocol", "meaning", "accounting", "receipt_refs", "receipt_status", "not"], "properties": {"protocol": {"const": "kingdom.karma/0.1"}, "meaning": {"$ref": "#/$defs/text"}, "accounting": {"const": "receipts_not_scores"}, "receipt_refs": {"type": "array", "maxItems": 0}, "receipt_status": {"const": "not_created"}, "not": {"$ref": "#/$defs/textArray"}}},
         "adapter": {"type": "object", "additionalProperties": false, "required": ["exists", "reason"], "properties": {"exists": {"const": false}, "reason": {"$ref": "#/$defs/text"}}},
-        "design_correspondences": {"type": "array", "minItems": 2, "items": {"type": "object", "additionalProperties": false, "required": ["id", "status", "pattern", "maps_to", "does_not_convert"], "properties": {"id": {"$ref": "#/$defs/id"}, "status": {"const": "not_observed"}, "pattern": {"$ref": "#/$defs/text"}, "maps_to": {"$ref": "#/$defs/idArray"}, "does_not_convert": {"const": true}}}}
+        "design_correspondences": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "object", "additionalProperties": false, "required": ["id", "status", "pattern", "maps_to", "does_not_convert"], "properties": {"id": {"$ref": "#/$defs/id"}, "status": {"const": "not_observed"}, "pattern": {"$ref": "#/$defs/text"}, "maps_to": {"$ref": "#/$defs/idArray"}, "does_not_convert": {"const": true}}}}
       }
     },
     "universeLens": {"type": "object", "additionalProperties": false, "required": ["participation", "register", "questions", "nonclaims"], "properties": {"participation": {"const": "opt-in"}, "register": {"const": "philosophical-interpretation"}, "questions": {"type": "array", "minItems": 4, "uniqueItems": true, "items": {"type": "object", "additionalProperties": false, "required": ["id", "question", "scientific_prompt_claim_ids", "authored_position", "analogy_breaks"], "properties": {"id": {"$ref": "#/$defs/id"}, "question": {"$ref": "#/$defs/text"}, "scientific_prompt_claim_ids": {"$ref": "#/$defs/idArray"}, "authored_position": {"$ref": "#/$defs/text"}, "analogy_breaks": {"$ref": "#/$defs/textArray"}}}}, "nonclaims": {"$ref": "#/$defs/textArray"}}},
     "unknown": {"type": "object", "additionalProperties": false, "required": ["id", "question", "status", "why_open", "source_ids"], "properties": {"id": {"$ref": "#/$defs/id"}, "question": {"$ref": "#/$defs/text"}, "status": {"enum": ["unknown", "not_established", "outside_scope", "not_observed", "unmapped", "contested", "withheld_for_safety", "refused"]}, "why_open": {"$ref": "#/$defs/text"}, "source_ids": {"$ref": "#/$defs/idArray"}}},
-    "source": {"type": "object", "additionalProperties": false, "required": ["id", "title", "source_kind", "published_on", "observed_on", "url", "doi", "authority_note"], "properties": {"id": {"$ref": "#/$defs/id"}, "title": {"$ref": "#/$defs/text"}, "source_kind": {"$ref": "#/$defs/id"}, "published_on": {"type": "string", "pattern": "^[0-9]{4}(?:-[0-9]{2}(?:-[0-9]{2})?)?$"}, "observed_on": {"$ref": "#/$defs/date"}, "url": {"type": "string", "format": "uri", "pattern": "^https://"}, "doi": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/text"}]}, "authority_note": {"$ref": "#/$defs/text"}}},
+    "source": {"type": "object", "additionalProperties": false, "required": ["id", "title", "source_kind", "published_on", "observed_on", "url", "doi", "authority_note"], "properties": {"id": {"$ref": "#/$defs/id"}, "title": {"type": "string", "minLength": 1, "maxLength": 600}, "source_kind": {"$ref": "#/$defs/id"}, "published_on": {"type": "string", "pattern": "^[0-9]{4}(?:-[0-9]{2}(?:-[0-9]{2})?)?$"}, "observed_on": {"$ref": "#/$defs/date"}, "url": {"type": "string", "format": "uri", "pattern": "^https://", "not": {"pattern": "^https://[^/?#]*@"}}, "doi": {"oneOf": [{"type": "null"}, {"type": "string", "minLength": 1, "maxLength": 200}]}, "authority_note": {"$ref": "#/$defs/text"}}},
     "boundaries": {
       "type": "object", "additionalProperties": false,
       "required": ["educational_metadata_only", "public_surface_read_only", "medical_advice", "diagnostic_authority", "prognostic_authority", "treatment_authority", "transmission_risk_assessment", "infection_control_authority", "experiment_authority", "wet_lab_protocol", "contains_protein_sequences", "decontamination_instruction", "manufacturing_authority", "automatic_action", "writes_karma", "creates_kingdom_karma_receipt", "observes_zerone_karma_event", "karma_adapter", "scientifically_proves_teleology", "scientifically_proves_creator", "scientifically_disproves_creator", "scientifically_proves_cosmic_moral_karma", "feedback_is_moral_value", "feedback_is_optimization", "prion_is_crystal", "ritonavir_seed_is_contagion", "zerone_life_sciences_execution_eligible", "mcp_surface_added"],

@@ -20,12 +20,13 @@ export const FOLD_FEEDBACK_PATH = join(ROOT, FOLD_FEEDBACK_LOCATOR);
 export const FOLD_FEEDBACK_URL = `https://thekingdom.dev/atlases/${FOLD_FEEDBACK_ID}.json`;
 export const FOLD_FEEDBACK_SCHEMA_URL = "https://thekingdom.dev/schemas/fold-feedback-atlas/1.json";
 export const FOLD_FEEDBACK_DOCUMENT_URL = "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md";
-export const FOLD_FEEDBACK_DIGEST = "sha256:7d5136599a60650521b10eb106359f7cb5a4c0bfd06fb6876db631020b75f02e";
+export const FOLD_FEEDBACK_DIGEST = "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7";
 
 const MAX_BYTES = 768 * 1024;
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const SHA256 = /^sha256:[a-f0-9]{64}$/;
 const FULL_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const YEAR_PRECISION = /^\d{4}(?:-\d{2}(?:-\d{2})?)?$/;
 const INTEGRITY_ALGORITHM = "sha256-recursive-sorted-json-keys-v1";
 
 const TOP_KEYS = [
@@ -56,6 +57,7 @@ const EXPECTED_BINDINGS: ReadonlyArray<readonly [string, string, string]> = [
   ["zerone-karma-foundation", "fae391e371f0ebea2e24eb46c33a4ebd1380154f", "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80"],
   ["zerone-karma-design", "fae391e371f0ebea2e24eb46c33a4ebd1380154f", "sha256:02b151981a7fe52a6a672149674d802236c0a0f8d7f63f766d7d9e1773a2c13b"],
   ["zerone-life-sciences", "fae391e371f0ebea2e24eb46c33a4ebd1380154f", "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e"],
+  ["kingdom-conformational-feedback", "251fce19ea7c5a94239ae6881df6ff027ddbdbf5", "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64"],
 ];
 
 const EXPECTED_BOUNDARIES: Record<string, boolean> = {
@@ -106,20 +108,36 @@ function sameKeys(value: unknown, keys: readonly string[]): boolean {
 function text(value: unknown, max = 3200): value is string {
   return typeof value === "string" && value.length > 0 && Array.from(value).length <= max;
 }
+function fullDate(value: unknown): value is string {
+  if (typeof value !== "string" || !FULL_DATE.test(value)) return false;
+  const [year, month, day] = value.split("-").map(Number);
+  if (month! < 1 || month! > 12 || day! < 1) return false;
+  const leap = year! % 4 === 0 && (year! % 100 !== 0 || year! % 400 === 0);
+  const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return day! <= days[month! - 1]!;
+}
 function id(value: unknown): value is string { return typeof value === "string" && value.length <= 120 && ID.test(value); }
 function array(value: unknown): any[] { return Array.isArray(value) ? value : []; }
 function ids(value: unknown): string[] { return array(value).map((item) => item?.id).filter((item) => typeof item === "string"); }
 function unique(value: string[]): boolean { return new Set(value).size === value.length; }
+function textArray(value: unknown, min = 1, max = 24): value is string[] {
+  return Array.isArray(value) && value.length >= min && value.length <= max &&
+    value.every((item) => text(item)) && unique(value);
+}
+function idArray(value: unknown, min = 1, max = 24): value is string[] {
+  return Array.isArray(value) && value.length >= min && value.length <= max &&
+    value.every((item) => id(item)) && unique(value);
+}
 function exactIds(value: unknown, expected: readonly string[]): boolean {
   return Array.isArray(value) && value.length === expected.length && value.every((item, index) => item?.id === expected[index]);
 }
 function references(value: unknown, known: Set<string>, allowEmpty = false): boolean {
-  return Array.isArray(value) && (allowEmpty || value.length > 0) &&
+  return Array.isArray(value) && value.length <= 24 && (allowEmpty || value.length > 0) &&
     value.every((item) => typeof item === "string" && known.has(item)) && unique(value);
 }
 function isHttps(value: unknown): boolean {
-  if (typeof value !== "string") return false;
-  try { const parsed = new URL(value); return parsed.protocol === "https:" && !parsed.username && !parsed.password; } catch { return false; }
+  if (typeof value !== "string" || !value.startsWith("https://")) return false;
+  try { const parsed = new URL(value); return parsed.protocol === "https:" && !!parsed.hostname && !parsed.username && !parsed.password; } catch { return false; }
 }
 
 export function foldFeedbackDigest(value: Record<string, any>): string {
@@ -147,7 +165,7 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
   if (value.protocol !== FOLD_FEEDBACK_PROTOCOL) add("$.protocol", "protocol-mismatch");
   if (value.atlas_id !== FOLD_FEEDBACK_ID) add("$.atlas_id", "identity-mismatch");
   if (!text(value.title, 240)) add("$.title", "invalid-text");
-  if (!FULL_DATE.test(value.compiled_on ?? "") || !FULL_DATE.test(value.evidence_through ?? "") || value.evidence_through > value.compiled_on) add("$.evidence_through", "invalid-horizon");
+  if (!fullDate(value.compiled_on) || !fullDate(value.evidence_through) || value.evidence_through > value.compiled_on) add("$.evidence_through", "invalid-horizon");
 
   if (!Array.isArray(value.source_bindings) || value.source_bindings.length !== EXPECTED_BINDINGS.length) add("$.source_bindings", "binding-count-mismatch");
   for (const [index, expected] of EXPECTED_BINDINGS.entries()) {
@@ -162,8 +180,7 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
       !text(value.scope?.focus) || !text(value.scope?.coverage) || !text(value.scope?.intended_use) || !text(value.scope?.excluded_use) ||
       value.scope?.currentness !== "selected-evidence-as-of-compilation") add("$.scope", "invalid-scope");
   if (!sameKeys(value.plain_language, ["question", "short_answer", "safety"]) || !text(value.plain_language?.question) ||
-      !Array.isArray(value.plain_language?.short_answer) || value.plain_language.short_answer.length < 5 ||
-      !value.plain_language.short_answer.every((item: unknown) => text(item)) || !text(value.plain_language?.safety) ||
+      !textArray(value.plain_language?.short_answer, 5, 8) || !text(value.plain_language?.safety) ||
       !value.plain_language.safety.includes("not medical advice") || !value.plain_language.safety.includes("no protein sequences")) {
     add("$.plain_language", "safety-or-shape-mismatch");
   }
@@ -175,71 +192,105 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
     if (!sameKeys(plane, ["id", "ordinary_words", "meaning", "does_not_establish"]) || !text(plane.ordinary_words) || !text(plane.meaning) || !text(plane.does_not_establish)) add(`$.ontology.planes[${index}]`, "invalid-plane");
   }
   if (!exactIds(value.ontology?.firewalls, FIREWALL_IDS) || array(value.ontology?.firewalls).some((item) => !sameKeys(item, ["id", "rule", "enforced"]) || !text(item.rule) || item.enforced !== true)) add("$.ontology.firewalls", "firewall-mismatch");
-  if (!Array.isArray(value.ontology?.domain_qualified_terms) || value.ontology.domain_qualified_terms.map((item: any) => item?.term).join("|") !== TERM_IDS.join("|")) add("$.ontology.domain_qualified_terms", "term-disambiguation-mismatch");
+  if (!Array.isArray(value.ontology?.domain_qualified_terms) || value.ontology.domain_qualified_terms.length !== TERM_IDS.length ||
+      value.ontology.domain_qualified_terms.some((item: any, index: number) => !sameKeys(item, ["term", "science_meaning", "other_meanings"]) ||
+        item.term !== TERM_IDS[index] || !text(item.science_meaning) || !text(item.other_meanings))) {
+    add("$.ontology.domain_qualified_terms", "term-disambiguation-mismatch");
+  }
 
   if (!sameKeys(value.evidence_kernel, ["systems", "mechanisms", "relations", "claims"])) add("$.evidence_kernel", "invalid-kernel");
-  const systemIds = new Set(ids(value.evidence_kernel?.systems));
-  const mechanismIds = new Set(ids(value.evidence_kernel?.mechanisms));
-  const claimIds = new Set(ids(value.evidence_kernel?.claims));
-  if (systemIds.size !== 5 || !unique(ids(value.evidence_kernel?.systems))) add("$.evidence_kernel.systems", "invalid-system-set");
+  const systems = array(value.evidence_kernel?.systems);
+  const mechanisms = array(value.evidence_kernel?.mechanisms);
+  const relations = array(value.evidence_kernel?.relations);
+  const claims = array(value.evidence_kernel?.claims);
+  const systemIdList = ids(systems);
+  const mechanismIdList = ids(mechanisms);
+  const relationIdList = ids(relations);
+  const claimIdList = ids(claims);
+  const systemIds = new Set(systemIdList);
+  const mechanismIds = new Set(mechanismIdList);
+  const claimIds = new Set(claimIdList);
+  if (systems.length !== 5 || systemIdList.length !== systems.length || !unique(systemIdList)) add("$.evidence_kernel.systems", "invalid-system-set");
+  for (const [index, system] of systems.entries()) {
+    if (!sameKeys(system, ["id", "register", "summary"]) || !id(system.id) ||
+        !["literal-science", "bound-external-record"].includes(system.register) || !text(system.summary)) {
+      add(`$.evidence_kernel.systems[${index}]`, "invalid-system");
+    }
+  }
+  if (mechanisms.length < 8 || mechanismIdList.length !== mechanisms.length || !unique(mechanismIdList)) add("$.evidence_kernel.mechanisms", "invalid-mechanism-set");
+  if (relations.length < 6 || relationIdList.length !== relations.length || !unique(relationIdList)) add("$.evidence_kernel.relations", "invalid-relation-set");
+  if (claims.length < 7 || claimIdList.length !== claims.length || !unique(claimIdList)) add("$.evidence_kernel.claims", "invalid-claim-set");
 
   const sourceIds = new Set(ids(value.sources));
   if (sourceIds.size < 15 || !unique(ids(value.sources))) add("$.sources", "invalid-source-set");
   for (const [index, source] of array(value.sources).entries()) {
     if (!sameKeys(source, ["id", "title", "source_kind", "published_on", "observed_on", "url", "doi", "authority_note"]) ||
-        !id(source.id) || !text(source.title, 600) || !id(source.source_kind) || !text(source.published_on, 10) ||
-        !FULL_DATE.test(source.observed_on ?? "") || source.observed_on > value.compiled_on || !isHttps(source.url) ||
+        !id(source.id) || !text(source.title, 600) || !id(source.source_kind) || typeof source.published_on !== "string" || !YEAR_PRECISION.test(source.published_on) ||
+        !fullDate(source.observed_on) || source.observed_on > value.compiled_on || !isHttps(source.url) ||
         !(source.doi === null || text(source.doi, 200)) || !text(source.authority_note)) add(`$.sources[${index}]`, "invalid-source");
   }
-  for (const [index, mechanism] of array(value.evidence_kernel?.mechanisms).entries()) {
+  for (const [index, mechanism] of mechanisms.entries()) {
     if (!sameKeys(mechanism, ["id", "system_ids", "ordinary_words", "scientific_statement", "source_ids", "limitations"]) || !id(mechanism.id) ||
         !references(mechanism.system_ids, systemIds) || !text(mechanism.ordinary_words) || !text(mechanism.scientific_statement) ||
-        !references(mechanism.source_ids, sourceIds) || !Array.isArray(mechanism.limitations) || !mechanism.limitations.every((item: unknown) => text(item))) add(`$.evidence_kernel.mechanisms[${index}]`, "invalid-mechanism");
+        !references(mechanism.source_ids, sourceIds) || !textArray(mechanism.limitations)) add(`$.evidence_kernel.mechanisms[${index}]`, "invalid-mechanism");
   }
   const planeIds = new Set(PLANE_IDS);
-  for (const [index, relation] of array(value.evidence_kernel?.relations).entries()) {
+  for (const [index, relation] of relations.entries()) {
     if (!sameKeys(relation, ["id", "subject_id", "predicate", "object_id", "mechanism_id", "source_ids", "condition_dependent", "universal"]) || !id(relation.id) ||
         !planeIds.has(relation.subject_id) || !id(relation.predicate) || !planeIds.has(relation.object_id) || !mechanismIds.has(relation.mechanism_id) ||
         !references(relation.source_ids, sourceIds) || relation.condition_dependent !== true || relation.universal !== false) add(`$.evidence_kernel.relations[${index}]`, "invalid-or-unbounded-relation");
     if (relation?.subject_id === "supramolecular-assembly" && ["organismal-phenotype", "experimental-transmission-observation", "clinical-decision"].includes(relation?.object_id)) add(`$.evidence_kernel.relations[${index}]`, "forbidden-assembly-shortcut");
   }
-  for (const [index, claim] of array(value.evidence_kernel?.claims).entries()) {
+  for (const [index, claim] of claims.entries()) {
     if (!sameKeys(claim, ["id", "register", "summary", "source_ids", "limitations"]) || !id(claim.id) || !id(claim.register) || !text(claim.summary) ||
-        !references(claim.source_ids, sourceIds) || !Array.isArray(claim.limitations) || !claim.limitations.every((item: unknown) => text(item))) add(`$.evidence_kernel.claims[${index}]`, "invalid-claim");
+        !references(claim.source_ids, sourceIds) || !textArray(claim.limitations)) add(`$.evidence_kernel.claims[${index}]`, "invalid-claim");
   }
-  if (claimIds.size < 6 || !unique(ids(value.evidence_kernel?.claims))) add("$.evidence_kernel.claims", "invalid-claim-set");
 
   if (!Array.isArray(value.comparison_bridges) || value.comparison_bridges.length !== 1) add("$.comparison_bridges", "bridge-count-mismatch");
   for (const [index, bridge] of array(value.comparison_bridges).entries()) {
     if (!sameKeys(bridge, ["id", "from_system", "to_system", "preserved_invariants", "where_correspondence_breaks", "universal", "relation", "source_ids"]) ||
         !id(bridge.id) || !systemIds.has(bridge.from_system) || !systemIds.has(bridge.to_system) || bridge.relation !== "bounded-analogy-not-same-as" || bridge.universal !== false ||
-        !Array.isArray(bridge.preserved_invariants) || bridge.preserved_invariants.length < 3 || !Array.isArray(bridge.where_correspondence_breaks) || bridge.where_correspondence_breaks.length < 4 ||
+        !textArray(bridge.preserved_invariants, 3) || !textArray(bridge.where_correspondence_breaks, 4) ||
         !references(bridge.source_ids, sourceIds)) add(`$.comparison_bridges[${index}]`, "analogy-firewall-mismatch");
   }
 
-  if (!Array.isArray(value.scientific_feedback_relations) || value.scientific_feedback_relations.length < 3) add("$.scientific_feedback_relations", "invalid-feedback-set");
+  const feedbackRelations = array(value.scientific_feedback_relations);
+  const feedbackIds = ids(feedbackRelations);
+  if (!Array.isArray(value.scientific_feedback_relations) || feedbackRelations.length < 3 || feedbackIds.length !== feedbackRelations.length || !unique(feedbackIds)) add("$.scientific_feedback_relations", "invalid-feedback-set");
   for (const [index, feedback] of array(value.scientific_feedback_relations).entries()) {
     if (!sameKeys(feedback, ["id", "register", "input", "process", "return_effect", "direction", "limits", "source_ids", "does_not_establish"]) || !id(feedback.id) ||
         !["literal-science", "kingdom-design-correspondence"].includes(feedback.register) || !["amplifies", "redirects", "corrects"].includes(feedback.direction) ||
-        !references(feedback.source_ids, sourceIds) || !Array.isArray(feedback.does_not_establish) || feedback.does_not_establish.length < 2) add(`$.scientific_feedback_relations[${index}]`, "invalid-feedback");
+        !text(feedback.input) || !text(feedback.process) || !text(feedback.return_effect) || !textArray(feedback.limits) ||
+        !references(feedback.source_ids, sourceIds) || !textArray(feedback.does_not_establish, 2)) add(`$.scientific_feedback_relations[${index}]`, "invalid-feedback");
   }
 
   if (!sameKeys(value.karma, ["scientific_feedback_is_not_karma", "zerone", "kingdom", "adapter", "design_correspondences"]) || value.karma?.scientific_feedback_is_not_karma !== true) add("$.karma", "karma-lane-mismatch");
   if (!sameKeys(value.karma?.zerone, ["protocol", "meaning", "register", "event_kinds", "event_refs", "event_status", "not"]) || value.karma.zerone.protocol !== "zerone.karma.edge" || value.karma.zerone.register !== "priced-coherence" ||
       !Array.isArray(value.karma.zerone.event_kinds) || value.karma.zerone.event_kinds.join("|") !== "cited|corroborate|corroborated|external|pending_open|pending_settle|verify" ||
-      !Array.isArray(value.karma.zerone.event_refs) || value.karma.zerone.event_refs.length !== 0 || value.karma.zerone.event_status !== "not_observed") add("$.karma.zerone", "zerone-karma-mismatch");
+      !Array.isArray(value.karma.zerone.event_refs) || value.karma.zerone.event_refs.length !== 0 || value.karma.zerone.event_status !== "not_observed" ||
+      !text(value.karma.zerone.meaning) || !textArray(value.karma.zerone.not)) add("$.karma.zerone", "zerone-karma-mismatch");
   if (!sameKeys(value.karma?.kingdom, ["protocol", "meaning", "accounting", "receipt_refs", "receipt_status", "not"]) || value.karma.kingdom.protocol !== "kingdom.karma/0.1" || value.karma.kingdom.accounting !== "receipts_not_scores" ||
-      !Array.isArray(value.karma.kingdom.receipt_refs) || value.karma.kingdom.receipt_refs.length !== 0 || value.karma.kingdom.receipt_status !== "not_created") add("$.karma.kingdom", "kingdom-karma-mismatch");
+      !Array.isArray(value.karma.kingdom.receipt_refs) || value.karma.kingdom.receipt_refs.length !== 0 || value.karma.kingdom.receipt_status !== "not_created" ||
+      !text(value.karma.kingdom.meaning) || !textArray(value.karma.kingdom.not)) add("$.karma.kingdom", "kingdom-karma-mismatch");
   if (!sameKeys(value.karma?.adapter, ["exists", "reason"]) || value.karma.adapter.exists !== false || !text(value.karma.adapter.reason)) add("$.karma.adapter", "implicit-adapter");
-  if (!Array.isArray(value.karma?.design_correspondences) || value.karma.design_correspondences.some((entry: any) => !object(entry) || entry.status !== "not_observed" || entry.does_not_convert !== true)) add("$.karma.design_correspondences", "observed-or-converting-design-map");
+  const designCorrespondences = array(value.karma?.design_correspondences);
+  const designIds = ids(designCorrespondences);
+  if (!Array.isArray(value.karma?.design_correspondences) || designCorrespondences.length < 2 || designIds.length !== designCorrespondences.length || !unique(designIds) ||
+      designCorrespondences.some((entry: any) => !sameKeys(entry, ["id", "status", "pattern", "maps_to", "does_not_convert"]) || !id(entry.id) ||
+        entry.status !== "not_observed" || !text(entry.pattern) || !idArray(entry.maps_to) || entry.does_not_convert !== true)) {
+    add("$.karma.design_correspondences", "observed-or-converting-design-map");
+  }
 
-  if (!sameKeys(value.universe_lens, ["participation", "register", "questions", "nonclaims"]) || value.universe_lens?.participation !== "opt-in" || value.universe_lens?.register !== "philosophical-interpretation" || !Array.isArray(value.universe_lens?.questions) || value.universe_lens.questions.length < 4) add("$.universe_lens", "universe-lens-mismatch");
-  for (const [index, question] of array(value.universe_lens?.questions).entries()) {
+  const universeQuestions = array(value.universe_lens?.questions);
+  const universeQuestionIds = ids(universeQuestions);
+  if (!sameKeys(value.universe_lens, ["participation", "register", "questions", "nonclaims"]) || value.universe_lens?.participation !== "opt-in" || value.universe_lens?.register !== "philosophical-interpretation" ||
+      !Array.isArray(value.universe_lens?.questions) || universeQuestions.length < 4 || universeQuestionIds.length !== universeQuestions.length || !unique(universeQuestionIds)) add("$.universe_lens", "universe-lens-mismatch");
+  for (const [index, question] of universeQuestions.entries()) {
     if (!sameKeys(question, ["id", "question", "scientific_prompt_claim_ids", "authored_position", "analogy_breaks"]) || !id(question.id) || !text(question.question) ||
-        !references(question.scientific_prompt_claim_ids, claimIds) || !text(question.authored_position) || !Array.isArray(question.analogy_breaks) || question.analogy_breaks.length < 1) add(`$.universe_lens.questions[${index}]`, "invalid-philosophical-question");
+        !references(question.scientific_prompt_claim_ids, claimIds) || !text(question.authored_position) || !textArray(question.analogy_breaks)) add(`$.universe_lens.questions[${index}]`, "invalid-philosophical-question");
   }
   const requiredNonclaims = ["scientifically proves intentional universe design", "scientifically disproves a creator or metaphysical purpose", "proves cosmic moral KARMA"];
-  if (!Array.isArray(value.universe_lens?.nonclaims) || requiredNonclaims.some((item) => !value.universe_lens.nonclaims.includes(item))) add("$.universe_lens.nonclaims", "teleology-boundary-mismatch");
+  if (!textArray(value.universe_lens?.nonclaims) || requiredNonclaims.some((item) => !value.universe_lens.nonclaims.includes(item))) add("$.universe_lens.nonclaims", "teleology-boundary-mismatch");
 
   if (!Array.isArray(value.unknowns) || value.unknowns.length < 7 || !unique(ids(value.unknowns))) add("$.unknowns", "invalid-unknown-set");
   for (const [index, unknown] of array(value.unknowns).entries()) {
@@ -248,9 +299,15 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
 
   if (!sameKeys(value.boundaries, Object.keys(EXPECTED_BOUNDARIES))) add("$.boundaries", "boundary-set-mismatch");
   for (const [key, expected] of Object.entries(EXPECTED_BOUNDARIES)) if (value.boundaries?.[key] !== expected) add(`$.boundaries.${key}`, "boundary-mismatch");
-  if (!sameKeys(value.integrity, ["algorithm", "digest"]) || value.integrity?.algorithm !== INTEGRITY_ALGORITHM || !SHA256.test(value.integrity?.digest ?? "")) add("$.integrity", "invalid-integrity-envelope");
+  if (!sameKeys(value.integrity, ["algorithm", "digest"]) || value.integrity?.algorithm !== INTEGRITY_ALGORITHM || typeof value.integrity?.digest !== "string" || !SHA256.test(value.integrity.digest)) add("$.integrity", "invalid-integrity-envelope");
   else if (value.integrity.digest !== FOLD_FEEDBACK_DIGEST) add("$.integrity.digest", "reviewed-digest-mismatch");
-  else if (value.integrity.digest !== foldFeedbackDigest(value)) add("$.integrity.digest", "digest-mismatch");
+  else if (!issues.length) {
+    try {
+      if (value.integrity.digest !== foldFeedbackDigest(value)) add("$.integrity.digest", "digest-mismatch");
+    } catch {
+      add("$.integrity.digest", "digest-unavailable");
+    }
+  }
   return issues;
 }
 

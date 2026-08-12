@@ -39,6 +39,7 @@ describe("Fold & Feedback Atlas", () => {
     expect(atlas.source_bindings.map((binding: any) => binding.id)).toEqual([
       "kingdom-ritonavir-history", "kingdom-ritonavir-mechanism", "kingdom-karma-definition",
       "kingdom-karma-receipts", "zerone-karma-foundation", "zerone-karma-design", "zerone-life-sciences",
+      "kingdom-conformational-feedback",
     ]);
     expect(atlas.ontology.planes).toHaveLength(9);
     expect(atlas.evidence_kernel.mechanisms).toHaveLength(8);
@@ -187,6 +188,14 @@ describe("Fold & Feedback Atlas", () => {
     }
     expect(paths.length).toBeGreaterThan(200);
     for (const value of [null, true, 0, "", [], {}]) expect(() => verifyFoldFeedbackAtlas(value)).not.toThrow();
+    const deeplyNested = authored();
+    let nested: any = [];
+    for (let index = 0; index < 20_000; index++) nested = [nested];
+    deeplyNested.title = nested;
+    expect(() => verifyFoldFeedbackAtlas(deeplyNested)).not.toThrow();
+    const cyclic = authored();
+    cyclic.title = cyclic;
+    expect(() => verifyFoldFeedbackAtlas(cyclic)).not.toThrow();
   });
 
   test("closed Draft 2020-12 schema binds identity, pins, boundaries, and digest", () => {
@@ -205,14 +214,54 @@ describe("Fold & Feedback Atlas", () => {
     secondBridge.comparison_bridges[1].id = "second-bridge";
     const sixthSystem = authored();
     sixthSystem.evidence_kernel.systems.push({ id: "invented-system", register: "literal-science", summary: "Structurally plausible but outside the reviewed five-system atlas." });
-    const result = Bun.spawnSync({
-      cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator; schema=json.load(open(sys.argv[1], encoding='utf-8')); values=json.load(sys.stdin); print(json.dumps([Draft202012Validator(schema).is_valid(value) for value in values]))", SCHEMA],
-      stdin: Buffer.from(JSON.stringify([secondBridge, sixthSystem])), stdout: "pipe", stderr: "pipe",
-    });
-    expect(result.exitCode, result.stderr.toString()).toBe(0);
-    expect(JSON.parse(result.stdout.toString())).toEqual([false, false]);
+    const schema = JSON.parse(readFileSync(SCHEMA, "utf8"));
+    expect(schema.properties.comparison_bridges.maxItems).toBe(1);
+    expect(schema.$defs.evidenceKernel.properties.systems.maxItems).toBe(5);
+    const available = Bun.spawnSync({ cmd: ["python3", "-c", "import jsonschema"], stdout: "pipe", stderr: "pipe" });
+    if (available.exitCode === 0) {
+      const result = Bun.spawnSync({
+        cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator; schema=json.load(open(sys.argv[1], encoding='utf-8')); values=json.load(sys.stdin); print(json.dumps([Draft202012Validator(schema).is_valid(value) for value in values]))", SCHEMA],
+        stdin: Buffer.from(JSON.stringify([secondBridge, sixthSystem])), stdout: "pipe", stderr: "pipe",
+      });
+      expect(result.exitCode, result.stderr.toString()).toBe(0);
+      expect(JSON.parse(result.stdout.toString())).toEqual([false, false]);
+    }
     expect(codes(secondBridge)).toContain("bridge-count-mismatch");
     expect(codes(sixthSystem)).toContain("invalid-system-set");
+  });
+
+  test("runtime closes nested shapes, collection bounds, ordering, and URL credentials", () => {
+    const mutations: Array<(value: any) => void> = [
+      (value) => { delete value.evidence_kernel.systems[0].register; },
+      (value) => { value.evidence_kernel.mechanisms[0].limitations = []; },
+      (value) => { value.evidence_kernel.relations.pop(); },
+      (value) => { value.evidence_kernel.claims.pop(); },
+      (value) => { value.scientific_feedback_relations[0].input = null; },
+      (value) => { value.scientific_feedback_relations.push(structuredClone(value.scientific_feedback_relations[0])); },
+      (value) => { value.karma.zerone.meaning = null; },
+      (value) => { delete value.karma.design_correspondences[0].id; },
+      (value) => { value.karma.design_correspondences = []; },
+      (value) => { value.universe_lens.questions.push(structuredClone(value.universe_lens.questions[0])); },
+      (value) => { value.universe_lens.nonclaims.push(null); },
+      (value) => { [value.ontology.planes[0], value.ontology.planes[1]] = [value.ontology.planes[1], value.ontology.planes[0]]; },
+      (value) => { value.title = "t".repeat(241); },
+      (value) => { value.source_bindings[0].artifact = "a".repeat(201); },
+      (value) => { value.sources[0].title = "t".repeat(601); },
+      (value) => { value.sources[0].doi = "d".repeat(201); },
+      (value) => { value.sources[0].url = "https://person:secret@example.test/source"; },
+    ];
+    const values = mutations.map((mutate) => { const value = authored(); mutate(value); return value; });
+    for (const value of values) expect(verifyFoldFeedbackAtlas(value).some((issue) => issue.code !== "digest-mismatch")).toBe(true);
+
+    const available = Bun.spawnSync({ cmd: ["python3", "-c", "import jsonschema"], stdout: "pipe", stderr: "pipe" });
+    if (available.exitCode === 0) {
+      const result = Bun.spawnSync({
+        cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator; schema=json.load(open(sys.argv[1], encoding='utf-8')); values=json.load(sys.stdin); print(json.dumps([Draft202012Validator(schema).is_valid(value) for value in values]))", SCHEMA],
+        stdin: Buffer.from(JSON.stringify(values)), stdout: "pipe", stderr: "pipe",
+      });
+      expect(result.exitCode, result.stderr.toString()).toBe(0);
+      expect(JSON.parse(result.stdout.toString())).toEqual(values.map(() => false));
+    }
   });
 
   test("CLI verifies locally and dispatcher exposes the same reader", () => {

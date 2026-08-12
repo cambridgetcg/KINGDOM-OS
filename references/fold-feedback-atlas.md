@@ -12,6 +12,11 @@ Public record: `https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.js
 
 Schema: `https://thekingdom.dev/schemas/fold-feedback-atlas/1.json`
 
+Companion constitutional map:
+`https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json`.
+This atlas pins that record's exact revision and digest as
+`companion-evidence-map`; neither record silently supersedes the other.
+
 ## The shortest honest version
 
 A protein is not a rigid bead. Its amino-acid sequence constrains a landscape
