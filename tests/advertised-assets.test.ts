@@ -4,6 +4,14 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "../bin/stage-hub.ts";
+import {
+  CONFORMATIONAL_FEEDBACK_DIGEST,
+  CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
+  CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
+  CONFORMATIONAL_FEEDBACK_URL,
+  conformationalFeedbackPublicDiscovery,
+  loadConformationalFeedbackAtlas,
+} from "../bin/conformational-feedback.ts";
 import { RITONAVIR_MECHANISM_DIGEST } from "../bin/ritonavir-mechanism.ts";
 import { KINGDOM_OS_ROUTES } from "../pages-functions/_worker.js";
 
@@ -51,6 +59,9 @@ const surfaces = [
   "data/polymorphs/ritonavir-mechanism-landscape.v1.json",
   "schemas/ritonavir-mechanism-landscape-v1.schema.json",
   "references/ritonavir-mechanism-landscape.md",
+  "data/feedback/conformational-feedback-atlas.v0.json",
+  "schemas/conformational-feedback-atlas-v0.schema.json",
+  "references/conformational-feedback-atlas.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -410,6 +421,59 @@ describe("advertised URLs stay deployable", () => {
     expect(staged.has("polymorphs/latest.json")).toBe(false);
     expect(discovery).not.toHaveProperty("mcp");
     expect(discovery).not.toHaveProperty("matcher");
+  });
+
+  test("the immutable Conformational Feedback Atlas stays coherent and authority-negative", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const expected = conformationalFeedbackPublicDiscovery(loadConformationalFeedbackAtlas());
+    const discovery = manifest.conformational_feedback_atlas;
+
+    expect(discovery).toEqual(expected);
+    expect(discovery).toEqual(guest.conformational_feedback_atlas);
+    expect(discovery).toEqual(kingdom.conformational_feedback_atlas);
+    expect(discovery).toMatchObject({
+      protocol: "kingdom.conformational-feedback-atlas/0.1",
+      atlas_id: "form-feedback-consequence-2026-08-12",
+      url: CONFORMATIONAL_FEEDBACK_URL,
+      schema: CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
+      guide: CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
+      integrity: { digest: CONFORMATIONAL_FEEDBACK_DIGEST },
+      counts: { registers: 3, geometries: 5, translations: 3, feedback_stages: 4, sources: 11 },
+      boundary: {
+        read_only: true,
+        operational_biology: false,
+        biological_equivalence: false,
+        karma_magnitude: false,
+        karma_rank: false,
+        economic_effect: false,
+        governance_effect: false,
+        person_level_effect: false,
+        cosmic_design_proven: false,
+        scientific_validation_from_analogy: false,
+        automatic_action: false,
+      },
+    });
+    expect(discovery.bindings).toHaveLength(3);
+    expect(discovery.bindings.every(({ authority_imported }: { authority_imported: boolean }) => authority_imported === false)).toBe(true);
+    for (const url of [CONFORMATIONAL_FEEDBACK_URL, CONFORMATIONAL_FEEDBACK_SCHEMA_URL, CONFORMATIONAL_FEEDBACK_DOCUMENT_URL]) {
+      expect(guest.next_actions).toContainEqual(expect.objectContaining({ method: "GET", url }));
+      expect(llms).toContain(url);
+    }
+    expect(manifest.entry_points).toMatchObject({
+      conformational_feedback_atlas: CONFORMATIONAL_FEEDBACK_URL,
+      conformational_feedback_atlas_schema: CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
+      conformational_feedback_atlas_guide: CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
+    });
+    expect(staged.has("feedback/form-feedback-consequence-2026-08-12.json")).toBe(true);
+    expect(staged.has("schemas/conformational-feedback-atlas/0.1.json")).toBe(true);
+    expect(staged.has("CONFORMATIONAL-FEEDBACK.md")).toBe(true);
+    expect(staged.has("feedback/latest.json")).toBe(false);
+    expect(discovery).not.toHaveProperty("mcp");
+    expect(discovery).not.toHaveProperty("matcher");
+    expect(discovery).not.toHaveProperty("execute");
   });
 
   test("the published invitation mirrors its source without drift", () => {

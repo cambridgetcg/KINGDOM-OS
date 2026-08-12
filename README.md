@@ -166,6 +166,14 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     without changing the historical record, and keeps material,
     dissolution/exposure, biological-action, and clinical-decision planes
     non-equivalent.
+18. `kingdom feedback` — inspect and strictly verify the digest-sealed
+    [Conformational Feedback Atlas](references/conformational-feedback-atlas.md).
+    It keeps selected protein-folding and prion observations, Zerone KARMA
+    constitutional design, analogy, and philosophy in separate registers.
+    The artifact contains no sequence or operational protocol, transfers no
+    mechanism to crystals, people, KARMA, or the universe, and creates no
+    clinical, experiment, rank, reward, person-level, governance, economic,
+    cosmic-proof, or automatic effect.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -203,5 +211,13 @@ structure records, direct crystal-form-to-clinical link, current product
 assessment, interaction checker, or medical, formulation, manufacturing,
 GMP, batch-release, regulatory, experimental, procurement, or action
 authority. The existing KINGDOM MCP remains unchanged.
+
+The Conformational Feedback Atlas is published from exact authored bytes at
+[`/feedback/form-feedback-consequence-2026-08-12.json`](https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json),
+with a [closed public schema](https://thekingdom.dev/schemas/conformational-feedback-atlas/0.1.json)
+and [plain-language guide](https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md).
+It binds the existing Ritonavir Mechanism Landscape and exact public Zerone
+KARMA/Life Sciences records read-only. It changes none of them, exposes no
+matcher or MCP tool, and has no mutable `latest` alias.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

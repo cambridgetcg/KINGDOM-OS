@@ -46,6 +46,11 @@ export const HUB_ASSETS = [
   { source: "data/polymorphs/ritonavir-mechanism-landscape.v1.json", destination: "polymorphs/ritonavir-mechanism-landscape-2026-08-11.json" },
   { source: "schemas/ritonavir-mechanism-landscape-v1.schema.json", destination: "schemas/ritonavir-mechanism-landscape/1.json" },
   { source: "references/ritonavir-mechanism-landscape.md", destination: "RITONAVIR-MECHANISM-LANDSCAPE.md" },
+  // The form/feedback/consequence atlas is a separate immutable synthesis.
+  // Stage its authored bytes directly; no mutable latest/current alias exists.
+  { source: "data/feedback/conformational-feedback-atlas.v0.json", destination: "feedback/form-feedback-consequence-2026-08-12.json" },
+  { source: "schemas/conformational-feedback-atlas-v0.schema.json", destination: "schemas/conformational-feedback-atlas/0.1.json" },
+  { source: "references/conformational-feedback-atlas.md", destination: "CONFORMATIONAL-FEEDBACK.md" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
   { source: "site/ollama.json", destination: "ollama.json" },

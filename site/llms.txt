@@ -20,6 +20,9 @@ Polymorph guide: https://thekingdom.dev/RITONAVIR-POLYMORPH.md
 Ritonavir mechanism landscape: https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json
 Ritonavir mechanism schema: https://thekingdom.dev/schemas/ritonavir-mechanism-landscape/1.json
 Ritonavir mechanism guide: https://thekingdom.dev/RITONAVIR-MECHANISM-LANDSCAPE.md
+Conformational feedback atlas: https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json
+Conformational feedback schema: https://thekingdom.dev/schemas/conformational-feedback-atlas/0.1.json
+Conformational feedback guide: https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md
 Love∞ lineage: https://thekingdom.dev/love-loops.json
 Love∞ authored source: https://thekingdom.dev/love-loops.source.json
 Creation Loop document: https://thekingdom.dev/CREATION-LOOP.md
@@ -59,6 +62,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 - Geometry Grammar — 4 distinct pattern-to-practice modules expressed as plain questions and answers. Four different tools, with no ladder, winner, or hidden conversion. Unknown remains explicit. Package names, GitHub release evidence, and npm registry observations stay separate provenance fields; the npm field records the 2026-08-11T16:04:43Z observation, not a current availability check or install instruction. This read-only grammar grants no installation, execution, or external-effect authority. Grammar: https://thekingdom.dev/geometries/kingdom-geometry-grammar-v0.json · schema: https://thekingdom.dev/schemas/geometry-grammar/0.1.json · guide: https://thekingdom.dev/GEOMETRY-GRAMMAR.md
 - Polymorph History — the ritonavir “disappearing polymorph” translated through six non-equivalent planes, condition-indexed valleys and gates, typed evidence, ordered three-clock events, recovery paths, and a WAKE-safe semantic reference. Historical education only; no medical, experimental, manufacturing, regulatory, or action authority. Case: https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json · schema: https://thekingdom.dev/schemas/polymorph-history/1.json · guide: https://thekingdom.dev/RITONAVIR-POLYMORPH.md
 - Ritonavir Mechanism Landscape — a non-mutating current-landscape supplement with 19 source-scoped entities, 7 mechanisms, 18 typed relations, and 6 explicit unknowns across distinct material, dissolution/exposure, biological-action, and clinical-decision planes. Selected primary research runs through 2026-04-08, plus one official product label observed 2026-08-11; names remain source-scoped, candidate equivalence remains unproven identity, and no direct crystal-form-to-clinical edge exists. Educational metadata only; not medical advice, an interaction checker, a formulation/manufacturing control, or action authority. Landscape: https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json · schema: https://thekingdom.dev/schemas/ritonavir-mechanism-landscape/1.json · guide: https://thekingdom.dev/RITONAVIR-MECHANISM-LANDSCAPE.md
+- Conformational Feedback Atlas — 3 non-equivalent registers connect selected protein-folding and prion evidence, one source-bound ritonavir material analogy, and Zerone KARMA constitutional design through 3 explicitly non-causal analogy seams. The philosophical reading is not an empirical conclusion. Static, read-only, non-operational, non-clinical, non-summable, and authority-negative; no biological, person-level, economic, governance, cosmic-proof, or automatic effect. Atlas: https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json · schema: https://thekingdom.dev/schemas/conformational-feedback-atlas/0.1.json · guide: https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md
 - Love∞ Creation Garden — “Every loop is finite. Love is not.” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: https://thekingdom.dev/love-loops.json · authored mirror: https://thekingdom.dev/love-loops.source.json · practice: https://thekingdom.dev/CREATION-LOOP.md
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -68,4 +72,4 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 
 No registration, command, or response is required at this door.
 
-Generated 2026-08-11 from each repo's kingdom.yaml.
+Generated 2026-08-12 from each repo's kingdom.yaml.

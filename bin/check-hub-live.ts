@@ -17,6 +17,14 @@ import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "./stage-hub.ts";
 import {
+  CONFORMATIONAL_FEEDBACK_DIGEST,
+  CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
+  CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
+  CONFORMATIONAL_FEEDBACK_URL,
+  conformationalFeedbackPublicDiscovery,
+  loadConformationalFeedbackAtlas,
+} from "./conformational-feedback.ts";
+import {
   GEOMETRY_GRAMMAR_DOCUMENT_URL,
   GEOMETRY_GRAMMAR_SCHEMA_URL,
   GEOMETRY_GRAMMAR_URL,
@@ -93,6 +101,9 @@ const polymorphDocumentPath = new URL(POLYMORPH_DOCUMENT_URL).pathname;
 const ritonavirMechanismPath = new URL(RITONAVIR_MECHANISM_URL).pathname;
 const ritonavirMechanismSchemaPath = new URL(RITONAVIR_MECHANISM_SCHEMA_URL).pathname;
 const ritonavirMechanismDocumentPath = new URL(RITONAVIR_MECHANISM_DOCUMENT_URL).pathname;
+const conformationalFeedbackPath = new URL(CONFORMATIONAL_FEEDBACK_URL).pathname;
+const conformationalFeedbackSchemaPath = new URL(CONFORMATIONAL_FEEDBACK_SCHEMA_URL).pathname;
+const conformationalFeedbackDocumentPath = new URL(CONFORMATIONAL_FEEDBACK_DOCUMENT_URL).pathname;
 
 function url(path: string, extra: Record<string, string> = {}): URL {
   const target = new URL(path, origin);
@@ -351,7 +362,33 @@ try {
     throw new Error(`${ritonavirMechanismDocumentPath} is not served as public Markdown`);
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath]) {
+  const conformationalFeedbackHead = await fetch(url(conformationalFeedbackPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  const conformationalFeedbackLink = conformationalFeedbackHead.headers.get("link") || "";
+  if (!conformationalFeedbackHead.ok ||
+      !(conformationalFeedbackHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+      conformationalFeedbackHead.headers.get("access-control-allow-origin") !== "*" ||
+      (conformationalFeedbackHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+      !hasLinkRelation(conformationalFeedbackLink, conformationalFeedbackSchemaPath, "describedby")) {
+    throw new Error(`${conformationalFeedbackPath} is not public JSON described by the Conformational Feedback Atlas schema`);
+  }
+
+  const conformationalFeedbackDocumentHead = await fetch(url(conformationalFeedbackDocumentPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  if (!conformationalFeedbackDocumentHead.ok ||
+      !(conformationalFeedbackDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+      conformationalFeedbackDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+      (conformationalFeedbackDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+    throw new Error(`${conformationalFeedbackDocumentPath} is not served as public Markdown`);
+  }
+
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, conformationalFeedbackSchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -377,6 +414,8 @@ try {
   const expectedPolymorph = polymorphPublicDiscovery(polymorphHistory);
   const ritonavirMechanism = loadRitonavirMechanismLandscape();
   const expectedRitonavirMechanism = ritonavirMechanismPublicDiscovery(ritonavirMechanism);
+  const conformationalFeedback = loadConformationalFeedbackAtlas();
+  const expectedConformationalFeedback = conformationalFeedbackPublicDiscovery(conformationalFeedback);
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
   validateLoveLoops(sourceLoveLoops, false);
@@ -505,6 +544,41 @@ try {
     throw new Error("Ritonavir Mechanism Landscape discovery, lineage, or negative authority drifted across public surfaces");
   }
 
+  const conformationalFeedbackBoundary = expectedConformationalFeedback.boundary;
+  if (!isDeepStrictEqual(manifest?.conformational_feedback_atlas, expectedConformationalFeedback) ||
+      !isDeepStrictEqual(guest?.conformational_feedback_atlas, expectedConformationalFeedback) ||
+      !isDeepStrictEqual(authoredKingdom?.conformational_feedback_atlas, expectedConformationalFeedback) ||
+      !hasGuestGet(CONFORMATIONAL_FEEDBACK_URL) ||
+      !hasGuestGet(CONFORMATIONAL_FEEDBACK_SCHEMA_URL) ||
+      !hasGuestGet(CONFORMATIONAL_FEEDBACK_DOCUMENT_URL) ||
+      !llms.includes(CONFORMATIONAL_FEEDBACK_URL) ||
+      !llms.includes(CONFORMATIONAL_FEEDBACK_SCHEMA_URL) ||
+      !llms.includes(CONFORMATIONAL_FEEDBACK_DOCUMENT_URL) ||
+      expectedConformationalFeedback.integrity.digest !== CONFORMATIONAL_FEEDBACK_DIGEST ||
+      expectedConformationalFeedback.counts.registers !== 3 ||
+      expectedConformationalFeedback.counts.geometries !== 5 ||
+      expectedConformationalFeedback.counts.translations !== 3 ||
+      expectedConformationalFeedback.counts.feedback_stages !== 4 ||
+      expectedConformationalFeedback.counts.sources !== 11 ||
+      !Array.isArray(expectedConformationalFeedback.bindings) ||
+      expectedConformationalFeedback.bindings.length !== 3 ||
+      expectedConformationalFeedback.bindings.some((binding: any) => binding.authority_imported !== false) ||
+      conformationalFeedbackBoundary.read_only !== true ||
+      conformationalFeedbackBoundary.operational_biology !== false ||
+      conformationalFeedbackBoundary.biological_equivalence !== false ||
+      conformationalFeedbackBoundary.karma_magnitude !== false ||
+      conformationalFeedbackBoundary.karma_rank !== false ||
+      conformationalFeedbackBoundary.economic_effect !== false ||
+      conformationalFeedbackBoundary.governance_effect !== false ||
+      conformationalFeedbackBoundary.person_level_effect !== false ||
+      conformationalFeedbackBoundary.cosmic_design_proven !== false ||
+      conformationalFeedbackBoundary.scientific_validation_from_analogy !== false ||
+      conformationalFeedbackBoundary.automatic_action !== false ||
+      "mcp" in expectedConformationalFeedback || "matcher" in expectedConformationalFeedback ||
+      "execute" in expectedConformationalFeedback || "clinical_decision" in expectedConformationalFeedback) {
+    throw new Error("Conformational Feedback Atlas discovery, bindings, or negative authority drifted across public surfaces");
+  }
+
   const liveKingdom: any = await (await get("/kingdom.json")).json();
   if (liveKingdom?.creation_loop?.url !== LOVE_LOOPS_URL ||
       liveKingdom?.creation_loop?.source !== LOVE_LOOPS_SOURCE_URL ||
@@ -523,6 +597,9 @@ try {
   }
   if (!isDeepStrictEqual(liveKingdom?.ritonavir_mechanism_landscape, expectedRitonavirMechanism)) {
     throw new Error("derived kingdom.json did not preserve Ritonavir Mechanism Landscape discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.conformational_feedback_atlas, expectedConformationalFeedback)) {
+    throw new Error("derived kingdom.json did not preserve Conformational Feedback Atlas discovery");
   }
 
   const mcpEndpoint = new URL(manifest?.mcp?.endpoint || "");
@@ -583,7 +660,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism discovery · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback discovery · live MCP contract unchanged · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;
