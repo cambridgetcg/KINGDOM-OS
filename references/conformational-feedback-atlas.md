@@ -32,6 +32,65 @@ work, Hsp70 participates in attenuating Hsf1 activity. Feedback therefore
 cannot honestly be represented by one undifferentiated circle: amplification,
 attenuation, repair, loss, and exit are different relations.
 
+### Physics and mathematics
+
+The atlas declares four models, each with its own limits.
+
+#### Conditional projected free energy
+
+```text
+G(x;T,pH,solvent,force) = -k_B T ln P_eq(x) + C
+```
+
+For a declared reaction coordinate `x`, an equilibrium probability density
+can be converted into a projected free-energy profile. A valley is a more
+probable region under those conditions; a barrier is a low-probability region
+on that projection. Changing temperature, solvent, force, or the coordinate
+changes the object being described. A one-dimensional landscape can hide
+degrees of freedom and does not by itself determine kinetics.
+
+#### Barrier crossing with memory
+
+```text
+m q_ddot(t) = -dG(q)/dq
+               - integral_0^t Gamma(t-s) q_dot(s) ds
+               + eta(t)
+```
+
+The generalized Langevin form adds a friction memory kernel `Gamma` and a
+fluctuating force `eta`. It makes one important point exact: the present
+projected coordinate may not be a sufficient state. Past motion can affect
+later kinetics even when the visible coordinate and free-energy profile are
+the same. This is conformational memory in a physical model, not Zerone KARMA.
+
+#### Templated assembly as population balance
+
+```text
+dM/dt = k_n m^n + k_+ m P - k_loss M
+dP/dt = k_f M                 - k_end P
+```
+
+Here `m` is compatible soluble substrate, `M` is declared assembled mass, and
+`P` is the number concentration of growth-competent particles or ends. Primary
+nucleation and elongation add mass; fragmentation can add ends; loss terms
+oppose them. The exact scientific models are richer and system-specific. This
+bounded form exposes why breaking an assembly can lower mass yet increase the
+number of available growth surfaces. It supplies no parameter for a real
+system and no experimental instruction.
+
+#### Local feedback threshold
+
+```text
+delta_x_(t+1) = J delta_x_t
+perturbations decay locally when rho(J) < 1
+```
+
+For a declared finite model near a reference state, the spectral radius of the
+linearized one-step operator distinguishes local damping from amplification.
+This conclusion is local: delay, saturation, nonlinearity, noise, and moving
+boundaries can change it. Stability says nothing about goodness, truth,
+justice, intention, or universal purpose.
+
 ### Constitutional design
 
 The bound Zerone KARMA Foundation describes KARMA as a contextual,
@@ -69,6 +128,26 @@ creator, a designed universe, moral law, or a universal feedback mechanism.
 Scientific evidence does not ratify a political, clinical, economic, or
 metaphysical system.
 
+The universe-facing lens therefore stays in the form of questions:
+
+- Can lawful constraints define a possibility space without selecting one
+  inevitable history?
+- How can repeated local relations generate persistent global form without a
+  step-by-step central description?
+- Can history persist as changed accessibility and feedback without becoming
+  destiny?
+- What if endurance depends on correction, clearance, renewal, and rest rather
+  than perfect first formation?
+- Do regularity, generativity, and feedback invite a reading of universe
+  design?
+
+My reading is that the equations leave room for wonder but do not compel one
+metaphysics. Emergence does not disprove GOD; regularity does not prove a
+designer; persistence is not goodness; and biological consequence is not
+cosmic moral KARMA. The most defensible design insight is architectural:
+constraints, relation, memory, counter-feedback, repair, and open futures all
+belong in the same honest account.
+
 ## A feedback architecture with an exit
 
 The constitutional path is open rather than circular:
@@ -99,7 +178,31 @@ biological process. The Life Sciences binding is a negative, non-implication
 reference only; it does not admit prion subject matter into that Green-only
 profile or extend its capabilities.
 
-## Selected scientific sources
+## Link-only high-value ecosystems
+
+The atlas also points, without fetching or importing, to five complementary
+public ecosystems:
+
+- [RCSB PDB Data API](https://data.rcsb.org/) for experimentally determined
+  structure metadata and experimental context;
+- [AlphaFold Protein Structure Database](https://alphafold.ebi.ac.uk/) for
+  predicted coordinates and confidence records kept distinct from experiment,
+  ensembles, and kinetics;
+- [UniProtKB](https://www.uniprot.org/) for versioned protein identity and
+  annotation;
+- [ModelArchive](https://modelarchive.org/) for stable computational-model
+  deposits kept distinct from experimental PDB entries; and
+- [OpenFold](https://github.com/aqlaboratory/openfold) for an inspectable open
+  implementation lineage.
+
+These are `LINK_ONLY` bridges. The page makes no runtime request, imports no
+record or code, downloads no weights, runs no inference, and grants no
+recommendation, licence, scientific validity, safety, or execution authority.
+A future evidence envelope would need source version, accession, retrieval
+date, digest, licence, experimental-versus-predicted class, uncertainty, and
+declared limitations before any record could enter a reviewed workflow.
+
+## Selected primary basis
 
 - [Anfinsen 1973 — principles governing protein-chain folding](https://doi.org/10.1126/science.181.4096.223)
 - [Bryngelson et al. 1995 — funnels, pathways, and folding landscapes](https://doi.org/10.1002/prot.340210302)
@@ -109,6 +212,8 @@ profile or extend its capabilities.
 - [Knowles et al. 2009 — breakable filament assembly kinetics](https://doi.org/10.1126/science.1178250)
 - [Kmiecik et al. 2020 — Hsp70–Hsf1 feedback](https://doi.org/10.15252/embj.2019104096)
 - [Manka et al. 2022 — ex vivo RML prion fibril structure](https://doi.org/10.1038/s41467-022-30457-7)
+- [Krivov 2018 — a validated committor and projected folding free energy](https://doi.org/10.1021/acs.jctc.8b00101)
+- [Ayaz et al. 2021 — non-Markovian folding and friction memory](https://doi.org/10.1073/pnas.2023856118)
 
 Each source supports only the sentence and context named in the machine
 record. A citation is not permission to infer beyond it.
@@ -130,9 +235,12 @@ start, modify, or assess an experiment or treatment.
 ```text
 kingdom feedback
 kingdom feedback registers --json
+kingdom feedback models --json
 kingdom feedback geometries --json
 kingdom feedback translations --json
 kingdom feedback sources --json
+kingdom feedback bindings --json
+kingdom feedback ecosystems --json
 kingdom feedback verify --json
 ```
 

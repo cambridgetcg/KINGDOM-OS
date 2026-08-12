@@ -441,7 +441,7 @@ describe("advertised URLs stay deployable", () => {
       schema: CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
       guide: CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
       integrity: { digest: CONFORMATIONAL_FEEDBACK_DIGEST },
-      counts: { registers: 3, geometries: 5, translations: 3, feedback_stages: 4, sources: 11 },
+      counts: { registers: 3, physics_and_mathematics: 4, ecosystem_bridges: 5, geometries: 5, translations: 3, feedback_stages: 4, sources: 13 },
       boundary: {
         read_only: true,
         operational_biology: false,
@@ -454,6 +454,7 @@ describe("advertised URLs stay deployable", () => {
         cosmic_design_proven: false,
         scientific_validation_from_analogy: false,
         automatic_action: false,
+        runtime_ecosystem_request: false,
       },
     });
     expect(discovery.bindings).toHaveLength(3);

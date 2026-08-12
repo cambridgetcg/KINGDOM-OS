@@ -59,10 +59,12 @@ describe("Conformational Feedback Atlas", () => {
     expect(atlas.integrity.digest).toBe(CONFORMATIONAL_FEEDBACK_DIGEST);
     expect(atlas.integrity.digest).toBe(conformationalFeedbackDigest(atlas));
     expect(atlas.registers).toHaveLength(3);
+    expect(atlas.physics_and_mathematics).toHaveLength(4);
+    expect(atlas.ecosystem_bridges).toHaveLength(5);
     expect(atlas.geometries).toHaveLength(5);
     expect(atlas.translations).toHaveLength(3);
     expect(atlas.feedback_path.stages).toHaveLength(4);
-    expect(atlas.sources).toHaveLength(11);
+    expect(atlas.sources).toHaveLength(13);
   });
 
   test("pins the existing Kingdom and Zerone public bytes without importing authority", () => {
@@ -109,6 +111,56 @@ describe("Conformational Feedback Atlas", () => {
     });
   });
 
+  test("carries four exact models without turning the mathematical translation into scientific evidence", () => {
+    const atlas = loadConformationalFeedbackAtlas();
+    expect(atlas.physics_and_mathematics.map((entry: any) => [entry.id, entry.register, entry.basis_ids])).toEqual([
+      ["conditional-free-energy", "SCIENTIFIC_MODEL", ["bryngelson-1995", "krivov-2018"]],
+      ["memory-bearing-barrier-crossing", "SCIENTIFIC_MODEL", ["ayaz-2021"]],
+      ["templated-population-balance", "SCIENTIFIC_MODEL", ["knowles-2009"]],
+      ["linearized-feedback-threshold", "MATHEMATICAL_TRANSLATION", []],
+    ]);
+    expect(atlas.physics_and_mathematics.map((entry: any) => entry.equation)).toEqual([
+      "G(x;T,pH,solvent,force) = -k_B T ln P_eq(x) + C",
+      "m q_ddot(t) = -dG(q)/dq - integral_0^t Gamma(t-s) q_dot(s) ds + eta(t)",
+      "dM/dt = k_n m^n + k_+ m P - k_loss M ; dP/dt = k_f M - k_end P",
+      "delta_x_(t+1) = J delta_x_t ; perturbations decay locally when rho(J) < 1",
+    ]);
+
+    const drift = clone();
+    drift.physics_and_mathematics[3].basis_ids = ["knowles-2009"];
+    expect(codes(resign(drift))).toContain("translation-cannot-claim-scientific-basis");
+
+    const sourceDrift = clone();
+    sourceDrift.physics_and_mathematics[0].basis_ids = ["anfinsen-1973"];
+    expect(codes(resign(sourceDrift))).toContain("model-basis-pin-mismatch");
+  });
+
+  test("keeps universe design reflective and all ecosystem bridges link-only", () => {
+    const atlas = loadConformationalFeedbackAtlas();
+    expect(atlas.philosophy.questions.map((entry: any) => entry.id)).toEqual([
+      "constraint-and-freedom",
+      "local-rule-global-form",
+      "memory-without-narrator",
+      "repair-as-architecture",
+      "design-and-underdetermination",
+    ]);
+    expect(atlas.philosophy.basis_ids).toEqual([]);
+    expect(atlas.ecosystem_bridges.every((entry: any) =>
+      entry.mode === "LINK_ONLY" && entry.runtime_request === false && entry.imported === false)).toBe(true);
+
+    const fetch = clone();
+    fetch.ecosystem_bridges[0].runtime_request = true;
+    expect(codes(resign(fetch))).toContain("invalid-ecosystem-bridge");
+
+    const urlDrift = clone();
+    urlDrift.ecosystem_bridges[0].url = "https://example.com/";
+    expect(codes(resign(urlDrift))).toContain("ecosystem-bridge-pin-mismatch");
+
+    const relationDrift = clone();
+    relationDrift.ecosystem_bridges[0].relation = "generic-structure-metadata";
+    expect(codes(resign(relationDrift))).toContain("ecosystem-bridge-pin-mismatch");
+  });
+
   test("refuses causal transfer, biological equivalence, KARMA magnitude, and empirical cosmic claims after resigning", () => {
     const causal = clone();
     causal.translations[0].causal_transfer = true;
@@ -145,7 +197,7 @@ describe("Conformational Feedback Atlas", () => {
     expect(codes(resign(lowercasePayload))).toContain("sequence-like-payload-refused");
 
     const boundSource = clone();
-    boundSource.sources[9].url = "https://example.com/not-the-bound-karma-record.json";
+    boundSource.sources[11].url = "https://example.com/not-the-bound-karma-record.json";
     expect(codes(resign(boundSource))).toContain("bound-source-url-mismatch");
   });
 
@@ -180,10 +232,31 @@ describe("Conformational Feedback Atlas", () => {
     }
   });
 
+  test("returns structured issues instead of throwing on null collection entries", () => {
+    const mutations = [
+      (value: any) => { value.ecosystem_bridges = [null]; },
+      (value: any) => { value.sources = [null]; },
+      (value: any) => { value.registers = [null]; },
+      (value: any) => { value.physics_and_mathematics = [null]; },
+      (value: any) => { value.geometries = [null]; },
+      (value: any) => { value.translations = [null]; },
+      (value: any) => { value.feedback_path.stages = [null]; },
+      (value: any) => { value.philosophy.questions = [null]; },
+    ];
+
+    for (const mutate of mutations) {
+      const malformed = clone();
+      mutate(malformed);
+      resign(malformed);
+      expect(() => verifyConformationalFeedbackAtlas(malformed)).not.toThrow();
+      expect(verifyConformationalFeedbackAtlas(malformed).length).toBeGreaterThan(0);
+    }
+  });
+
   test("projects a small public discovery record with only negative effects", () => {
     expect(conformationalFeedbackPublicDiscovery()).toMatchObject({
       atlas_id: "form-feedback-consequence-2026-08-12",
-      counts: { registers: 3, geometries: 5, translations: 3, feedback_stages: 4, sources: 11 },
+      counts: { registers: 3, physics_and_mathematics: 4, ecosystem_bridges: 5, geometries: 5, translations: 3, feedback_stages: 4, sources: 13 },
       boundary: {
         read_only: true,
         operational_biology: false,
@@ -196,6 +269,7 @@ describe("Conformational Feedback Atlas", () => {
         cosmic_design_proven: false,
         scientific_validation_from_analogy: false,
         automatic_action: false,
+        runtime_ecosystem_request: false,
       },
     });
   });
@@ -210,7 +284,7 @@ describe("Conformational Feedback Atlas", () => {
     expect(schema.$comment).toContain("cannot recompute");
   });
 
-  test("portable schema rejects reordered registers, binding drift, missing KARMA walls, and stage drift", () => {
+  test("portable schema rejects all reviewed-order drift, binding drift, and missing walls", () => {
     const directory = mkdtempSync(join(tmpdir(), "kingdom-feedback-schema."));
     try {
       const cases: Record<string, any>[] = [];
@@ -226,6 +300,27 @@ describe("Conformational Feedback Atlas", () => {
       const stage = clone();
       stage.feedback_path.stages[3].id = "automatic-return";
       cases.push(stage);
+      const geometry = clone();
+      [geometry.geometries[0], geometry.geometries[1]] = [geometry.geometries[1], geometry.geometries[0]];
+      cases.push(geometry);
+      const translation = clone();
+      [translation.translations[0], translation.translations[1]] = [translation.translations[1], translation.translations[0]];
+      cases.push(translation);
+      const source = clone();
+      [source.sources[0], source.sources[1]] = [source.sources[1], source.sources[0]];
+      cases.push(source);
+      const model = clone();
+      [model.physics_and_mathematics[0], model.physics_and_mathematics[1]] =
+        [model.physics_and_mathematics[1], model.physics_and_mathematics[0]];
+      cases.push(model);
+      const ecosystem = clone();
+      [ecosystem.ecosystem_bridges[0], ecosystem.ecosystem_bridges[1]] =
+        [ecosystem.ecosystem_bridges[1], ecosystem.ecosystem_bridges[0]];
+      cases.push(ecosystem);
+      const philosophy = clone();
+      [philosophy.philosophy.questions[0], philosophy.philosophy.questions[1]] =
+        [philosophy.philosophy.questions[1], philosophy.philosophy.questions[0]];
+      cases.push(philosophy);
       const paths = cases.map((value, index) => {
         const path = join(directory, `invalid-${index}.json`);
         writeFileSync(path, JSON.stringify(value));
@@ -240,21 +335,63 @@ describe("Conformational Feedback Atlas", () => {
     }
   });
 
+  test("makes the schema-versus-runtime semantic boundary executable", () => {
+    const directory = mkdtempSync(join(tmpdir(), "kingdom-feedback-semantic."));
+    try {
+      const structurallyValidTamper = clone();
+      structurallyValidTamper.scope.focus = `${structurallyValidTamper.scope.focus} Changed.`;
+      const path = join(directory, "structurally-valid-tamper.json");
+      writeFileSync(path, JSON.stringify(structurallyValidTamper));
+      const result = validateWithPython([path]);
+
+      expect(result.exitCode, result.stderr).toBe(0);
+      expect(result.counts).toEqual([0]);
+      expect(codes(structurallyValidTamper)).toContain("digest-mismatch");
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+
   test("kingdom feedback is network-free and leaves another working directory unchanged", () => {
     const directory = mkdtempSync(join(tmpdir(), "kingdom-feedback-cli."));
     const root = dirname(dirname(dirname(CONFORMATIONAL_FEEDBACK_PATH)));
     try {
       const before = readdirSync(directory);
+      const env = {
+        ...process.env,
+        LC_ALL: "C",
+        LANG: "C",
+        HTTPS_PROXY: "http://127.0.0.1:1",
+        HTTP_PROXY: "http://127.0.0.1:1",
+        ALL_PROXY: "http://127.0.0.1:1",
+        NO_PROXY: "",
+      };
       const result = Bun.spawnSync({
         cmd: [join(root, "kingdom"), "feedback", "verify", "--json"],
         cwd: directory,
-        env: { ...process.env },
+        env,
         stdout: "pipe",
         stderr: "pipe",
       });
       expect(result.exitCode, result.stderr.toString()).toBe(0);
       expect(result.stderr.toString()).toBe("");
       expect(JSON.parse(result.stdout.toString())).toEqual({ valid: true, issues: [] });
+
+      for (const [command, field, count] of [
+        ["models", "physics_and_mathematics", 4],
+        ["ecosystems", "ecosystem_bridges", 5],
+      ] as const) {
+        const projection = Bun.spawnSync({
+          cmd: [join(root, "kingdom"), "feedback", command, "--json"],
+          cwd: directory,
+          env,
+          stdout: "pipe",
+          stderr: "pipe",
+        });
+        expect(projection.exitCode, projection.stderr.toString()).toBe(0);
+        expect(projection.stderr.toString()).toBe("");
+        expect(JSON.parse(projection.stdout.toString())[field]).toHaveLength(count);
+      }
       expect(readdirSync(directory)).toEqual(before);
     } finally {
       rmSync(directory, { recursive: true, force: true });

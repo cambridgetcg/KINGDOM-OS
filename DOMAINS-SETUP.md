@@ -18,22 +18,60 @@
 ## Redeploy (repeatable)
 
 ```bash
-# regenerate, stage the complete asset contract, inspect it, then deploy only
-# with explicit production publication authority
+# Fetch the intended production commit, then build and stage only from a clean,
+# detached worktree at that exact SHA. --commit-dirty=false records metadata;
+# it does not inspect or prove the staged bytes.
 # Release gate: the XENIA baseline and Covenant links in rights.json must be
 # publicly retrievable at their pinned version before this deployment.
+(
+set -euo pipefail
 cd ~/Desktop/kingdom-os
+release_repo="$(pwd -P)"
+git fetch origin main
+release_sha="$(git rev-parse origin/main)"
+release_root="$(mktemp -d)"
+release_tree="$release_root/tree"
+stage_dir=""
+cleanup_release() {
+  cleanup_status=$?
+  trap - EXIT HUP INT TERM
+  cd "$release_repo" || true
+  if test -e "$release_tree"; then
+    git worktree remove --force "$release_tree" 2>/dev/null || \
+      rm -rf -- "$release_tree"
+  fi
+  if test -n "$stage_dir" && test -d "$stage_dir"; then
+    rm -rf -- "$stage_dir"
+  fi
+  rmdir "$release_root" 2>/dev/null || true
+  exit "$cleanup_status"
+}
+trap cleanup_release EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+git worktree add --detach "$release_tree" "$release_sha"
+cd "$release_tree"
+test "$(git rev-parse HEAD)" = "$release_sha"
+test -z "$(git status --porcelain=v1 --untracked-files=all)"
 bun bin/build-hub.ts "$(date -u +%F)"
+test -z "$(git status --porcelain=v1 --untracked-files=all)"
 stage_dir="$(mktemp -d)"
 bun bin/stage-hub.ts "$stage_dir"
-release_sha="$(git rev-parse HEAD)"
 wrangler pages deploy "$stage_dir" --project-name=thekingdom --branch=main \
   --commit-hash="$release_sha" --commit-dirty=false
 bun bin/check-hub-live.ts
+)
 
 # others:
 npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zerone-ai
 ```
+
+The post-build cleanliness gate intentionally refuses an older exact SHA when
+today's generated release bytes would differ; commit that generated drift as a
+new reviewed release rather than mislabeling it. The EXIT trap removes the
+registered release worktree and both exact temporary roots on success or
+failure.
 
 `stage-hub.ts` refuses a non-empty destination and copies exactly 37 assets:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;

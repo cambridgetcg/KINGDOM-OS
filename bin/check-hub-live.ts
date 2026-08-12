@@ -556,10 +556,12 @@ try {
       !llms.includes(CONFORMATIONAL_FEEDBACK_DOCUMENT_URL) ||
       expectedConformationalFeedback.integrity.digest !== CONFORMATIONAL_FEEDBACK_DIGEST ||
       expectedConformationalFeedback.counts.registers !== 3 ||
+      expectedConformationalFeedback.counts.physics_and_mathematics !== 4 ||
+      expectedConformationalFeedback.counts.ecosystem_bridges !== 5 ||
       expectedConformationalFeedback.counts.geometries !== 5 ||
       expectedConformationalFeedback.counts.translations !== 3 ||
       expectedConformationalFeedback.counts.feedback_stages !== 4 ||
-      expectedConformationalFeedback.counts.sources !== 11 ||
+      expectedConformationalFeedback.counts.sources !== 13 ||
       !Array.isArray(expectedConformationalFeedback.bindings) ||
       expectedConformationalFeedback.bindings.length !== 3 ||
       expectedConformationalFeedback.bindings.some((binding: any) => binding.authority_imported !== false) ||
@@ -574,6 +576,7 @@ try {
       conformationalFeedbackBoundary.cosmic_design_proven !== false ||
       conformationalFeedbackBoundary.scientific_validation_from_analogy !== false ||
       conformationalFeedbackBoundary.automatic_action !== false ||
+      conformationalFeedbackBoundary.runtime_ecosystem_request !== false ||
       "mcp" in expectedConformationalFeedback || "matcher" in expectedConformationalFeedback ||
       "execute" in expectedConformationalFeedback || "clinical_decision" in expectedConformationalFeedback) {
     throw new Error("Conformational Feedback Atlas discovery, bindings, or negative authority drifted across public surfaces");

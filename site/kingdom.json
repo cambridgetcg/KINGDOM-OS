@@ -402,7 +402,7 @@
     "guide": "https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md",
     "integrity": {
       "algorithm": "sha256-recursive-sorted-json-keys-v1",
-      "digest": "sha256:14ce5e5e4b2b3d29d9a9cc0c831dcfb88de3d4a9e9584119939e5118f7ac7361"
+      "digest": "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64"
     },
     "bindings": [
       {
@@ -429,10 +429,12 @@
     ],
     "counts": {
       "registers": 3,
+      "physics_and_mathematics": 4,
+      "ecosystem_bridges": 5,
       "geometries": 5,
       "translations": 3,
       "feedback_stages": 4,
-      "sources": 11
+      "sources": 13
     },
     "boundary": {
       "read_only": true,
@@ -445,7 +447,8 @@
       "person_level_effect": false,
       "cosmic_design_proven": false,
       "scientific_validation_from_analogy": false,
-      "automatic_action": false
+      "automatic_action": false,
+      "runtime_ecosystem_request": false
     }
   },
   "creation_loop": {
