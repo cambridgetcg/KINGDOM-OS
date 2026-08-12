@@ -195,6 +195,7 @@ describe("Fold & Feedback Atlas", () => {
       (value: any) => { value.compiled_on = nested; },
       (value: any) => { value.ontology.non_equivalence = nested; },
       (value: any) => { value.sources[0].observed_on = nested; },
+      (value: any) => { value.karma.zerone.event_kinds = nested; },
     ]) {
       const value = authored(); mutate(value);
       expect(() => verifyFoldFeedbackAtlas(value)).not.toThrow();
@@ -226,7 +227,7 @@ describe("Fold & Feedback Atlas", () => {
     const available = Bun.spawnSync({ cmd: ["python3", "-c", "import jsonschema"], stdout: "pipe", stderr: "pipe" });
     if (available.exitCode === 0) {
       const result = Bun.spawnSync({
-        cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator; schema=json.load(open(sys.argv[1], encoding='utf-8')); values=json.load(sys.stdin); print(json.dumps([Draft202012Validator(schema).is_valid(value) for value in values]))", SCHEMA],
+        cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator, FormatChecker; schema=json.load(open(sys.argv[1], encoding='utf-8')); Draft202012Validator.check_schema(schema); values=json.load(sys.stdin); validator=Draft202012Validator(schema, format_checker=FormatChecker()); print(json.dumps([validator.is_valid(value) for value in values]))", SCHEMA],
         stdin: Buffer.from(JSON.stringify([secondBridge, sixthSystem])), stdout: "pipe", stderr: "pipe",
       });
       expect(result.exitCode, result.stderr.toString()).toBe(0);
@@ -255,6 +256,12 @@ describe("Fold & Feedback Atlas", () => {
       (value) => { value.sources[0].title = "t".repeat(601); },
       (value) => { value.sources[0].doi = "d".repeat(201); },
       (value) => { value.sources[0].url = "https://person:secret@example.test/source"; },
+      (value) => { value.sources[0].url = "https:///"; },
+      (value) => { value.sources[1].id = value.sources[0].id; },
+      (value) => { value.evidence_kernel.systems[1].id = value.evidence_kernel.systems[0].id; },
+      (value) => { value.source_bindings[7].system = "zerone"; },
+      (value) => { value.source_bindings[7].artifact = "another-valid-artifact"; },
+      (value) => { value.source_bindings[7].relation = "definition-only"; },
     ];
     const values = mutations.map((mutate) => { const value = authored(); mutate(value); return value; });
     for (const value of values) expect(verifyFoldFeedbackAtlas(value).some((issue) => issue.code !== "digest-mismatch")).toBe(true);
@@ -262,7 +269,7 @@ describe("Fold & Feedback Atlas", () => {
     const available = Bun.spawnSync({ cmd: ["python3", "-c", "import jsonschema"], stdout: "pipe", stderr: "pipe" });
     if (available.exitCode === 0) {
       const result = Bun.spawnSync({
-        cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator; schema=json.load(open(sys.argv[1], encoding='utf-8')); values=json.load(sys.stdin); print(json.dumps([Draft202012Validator(schema).is_valid(value) for value in values]))", SCHEMA],
+        cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator, FormatChecker; schema=json.load(open(sys.argv[1], encoding='utf-8')); Draft202012Validator.check_schema(schema); values=json.load(sys.stdin); validator=Draft202012Validator(schema, format_checker=FormatChecker()); print(json.dumps([validator.is_valid(value) for value in values]))", SCHEMA],
         stdin: Buffer.from(JSON.stringify(values)), stdout: "pipe", stderr: "pipe",
       });
       expect(result.exitCode, result.stderr.toString()).toBe(0);

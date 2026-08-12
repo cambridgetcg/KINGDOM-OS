@@ -49,16 +49,26 @@ const FIREWALL_IDS = [
 ] as const;
 
 const TERM_IDS = ["fold", "form", "seed", "strain", "propagation", "feedback", "karma", "design", "purpose"] as const;
+const ZERONE_EVENT_KINDS = ["cited", "corroborate", "corroborated", "external", "pending_open", "pending_settle", "verify"] as const;
+const SYSTEM_IDS = ["protein-folding", "mammalian-prp-prion", "yeast-sup35-prion", "functional-prion-like", "ritonavir-crystal-forms"] as const;
+const MECHANISM_IDS = ["landscape-sampling", "chaperone-assisted-cycling", "template-conversion", "fibril-end-elongation", "fragmentation-end-multiplication", "conformational-strain", "compatibility-barrier", "functional-prion-like-switch"] as const;
+const RELATION_IDS = ["sequence-constrains-ensemble", "chaperone-redirects-folding", "prion-template-recruits-substrate", "elongation-grows-assembly", "fragmentation-multiplies-ends", "proteostasis-redirects-propagation"] as const;
+const CLAIM_IDS = ["folding-landscape-is-coarse-grained", "sequence-information-is-context-bounded", "prp-conversion-can-be-templated", "prion-amplification-needs-separate-processes", "conformation-can-carry-strain-properties", "functional-prion-like-is-not-disease-synonym", "hsp104-effect-is-nonmonotonic"] as const;
+const FEEDBACK_IDS = ["prion-amplification-loop", "proteostasis-correction-loop", "evidence-correction-loop"] as const;
+const DESIGN_IDS = ["consequence-with-provenance", "challenge-and-repair"] as const;
+const UNIVERSE_QUESTION_IDS = ["constraint-and-freedom", "relation-and-identity", "memory-without-narrator", "repair-as-architecture", "design-and-unknown"] as const;
+const UNKNOWN_IDS = ["toxic-species", "in-vivo-rate-balance", "structure-to-phenotype", "clinical-risk-from-atlas", "operational-prion-work", "zerone-event-state", "cross-karma-adapter", "ritonavir-prion-equivalence"] as const;
+const SOURCE_IDS = ["anfinsen-1973", "onuchic-1995", "balchin-2016", "groel-2024", "kocisko-1994", "kraus-2021", "manka-2022", "toyama-2007", "tessier-2007", "sharma-2016", "tornquist-2018", "knowles-2009", "chernoff-1995", "hou-2011", "cdc-prions-2026", "bauer-2001", "zerone-karma-foundation-2026", "zerone-karma-doc-2026", "kingdom-nen-2026"] as const;
 
-const EXPECTED_BINDINGS: ReadonlyArray<readonly [string, string, string]> = [
-  ["kingdom-ritonavir-history", "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212", "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116"],
-  ["kingdom-ritonavir-mechanism", "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212", "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b"],
-  ["kingdom-karma-definition", "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212", "sha256:14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446"],
-  ["kingdom-karma-receipts", "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212", "sha256:888e81fa0d29b71512525a40e88f9aef678046c40fcdf22c2039507d9d13267b"],
-  ["zerone-karma-foundation", "fae391e371f0ebea2e24eb46c33a4ebd1380154f", "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80"],
-  ["zerone-karma-design", "fae391e371f0ebea2e24eb46c33a4ebd1380154f", "sha256:02b151981a7fe52a6a672149674d802236c0a0f8d7f63f766d7d9e1773a2c13b"],
-  ["zerone-life-sciences", "fae391e371f0ebea2e24eb46c33a4ebd1380154f", "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e"],
-  ["kingdom-conformational-feedback", "251fce19ea7c5a94239ae6881df6ff027ddbdbf5", "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64"],
+const EXPECTED_BINDINGS: ReadonlyArray<readonly [string, string, string, string, string, string]> = [
+  ["kingdom-ritonavir-history", "kingdom", "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212", "ritonavir-disappearing-polymorph-2026-08-11", "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116", "immutable-comparison-input"],
+  ["kingdom-ritonavir-mechanism", "kingdom", "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212", "ritonavir-mechanism-landscape-2026-08-11", "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b", "immutable-comparison-input"],
+  ["kingdom-karma-definition", "kingdom", "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212", "NEN.md KARMA definition", "sha256:14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446", "definition-only"],
+  ["kingdom-karma-receipts", "kingdom", "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212", "kingdom.karma/0.1", "sha256:888e81fa0d29b71512525a40e88f9aef678046c40fcdf22c2039507d9d13267b", "definition-only"],
+  ["zerone-karma-foundation", "zerone", "fae391e371f0ebea2e24eb46c33a4ebd1380154f", "zerone.karma.edge", "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80", "definition-only"],
+  ["zerone-karma-design", "zerone", "fae391e371f0ebea2e24eb46c33a4ebd1380154f", "docs/KARMA.md", "sha256:02b151981a7fe52a6a672149674d802236c0a0f8d7f63f766d7d9e1773a2c13b", "definition-only"],
+  ["zerone-life-sciences", "zerone", "fae391e371f0ebea2e24eb46c33a4ebd1380154f", "constructive-intelligence-life-sciences.v0", "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e", "eligibility-boundary-only"],
+  ["kingdom-conformational-feedback", "kingdom", "251fce19ea7c5a94239ae6881df6ff027ddbdbf5", "form-feedback-consequence-2026-08-12", "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64", "companion-evidence-map"],
 ];
 
 const EXPECTED_BOUNDARIES: Record<string, boolean> = {
@@ -132,6 +142,9 @@ function idArray(value: unknown, min = 1, max = 24): value is string[] {
 function exactIds(value: unknown, expected: readonly string[]): boolean {
   return Array.isArray(value) && value.length === expected.length && value.every((item, index) => item?.id === expected[index]);
 }
+function exactStrings(value: unknown, expected: readonly string[]): boolean {
+  return Array.isArray(value) && value.length === expected.length && value.every((item, index) => item === expected[index]);
+}
 function references(value: unknown, known: Set<string>, allowEmpty = false): boolean {
   return Array.isArray(value) && value.length <= 24 && (allowEmpty || value.length > 0) &&
     value.every((item) => typeof item === "string" && known.has(item)) && unique(value);
@@ -172,8 +185,9 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
   for (const [index, expected] of EXPECTED_BINDINGS.entries()) {
     const binding = value.source_bindings?.[index];
     if (!sameKeys(binding, ["id", "system", "revision", "artifact", "digest", "relation", "mutated"]) ||
-        binding?.id !== expected[0] || binding?.revision !== expected[1] || binding?.digest !== expected[2] ||
-        !id(binding?.system) || !text(binding?.artifact, 200) || !id(binding?.relation) || binding?.mutated !== false) {
+        binding?.id !== expected[0] || binding?.system !== expected[1] || binding?.revision !== expected[2] ||
+        binding?.artifact !== expected[3] || binding?.digest !== expected[4] || binding?.relation !== expected[5] ||
+        binding?.mutated !== false) {
       add(`$.source_bindings[${index}]`, "source-binding-mismatch");
     }
   }
@@ -204,26 +218,22 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
   const mechanisms = array(value.evidence_kernel?.mechanisms);
   const relations = array(value.evidence_kernel?.relations);
   const claims = array(value.evidence_kernel?.claims);
-  const systemIdList = ids(systems);
-  const mechanismIdList = ids(mechanisms);
-  const relationIdList = ids(relations);
-  const claimIdList = ids(claims);
-  const systemIds = new Set(systemIdList);
-  const mechanismIds = new Set(mechanismIdList);
-  const claimIds = new Set(claimIdList);
-  if (systems.length !== 5 || systemIdList.length !== systems.length || !unique(systemIdList)) add("$.evidence_kernel.systems", "invalid-system-set");
+  const systemIds = new Set(ids(systems));
+  const mechanismIds = new Set(ids(mechanisms));
+  const claimIds = new Set(ids(claims));
+  if (!exactIds(systems, SYSTEM_IDS)) add("$.evidence_kernel.systems", "invalid-system-set");
   for (const [index, system] of systems.entries()) {
     if (!sameKeys(system, ["id", "register", "summary"]) || !id(system.id) ||
         !["literal-science", "bound-external-record"].includes(system.register) || !text(system.summary)) {
       add(`$.evidence_kernel.systems[${index}]`, "invalid-system");
     }
   }
-  if (mechanisms.length < 8 || mechanismIdList.length !== mechanisms.length || !unique(mechanismIdList)) add("$.evidence_kernel.mechanisms", "invalid-mechanism-set");
-  if (relations.length < 6 || relationIdList.length !== relations.length || !unique(relationIdList)) add("$.evidence_kernel.relations", "invalid-relation-set");
-  if (claims.length < 7 || claimIdList.length !== claims.length || !unique(claimIdList)) add("$.evidence_kernel.claims", "invalid-claim-set");
+  if (!exactIds(mechanisms, MECHANISM_IDS)) add("$.evidence_kernel.mechanisms", "invalid-mechanism-set");
+  if (!exactIds(relations, RELATION_IDS)) add("$.evidence_kernel.relations", "invalid-relation-set");
+  if (!exactIds(claims, CLAIM_IDS)) add("$.evidence_kernel.claims", "invalid-claim-set");
 
   const sourceIds = new Set(ids(value.sources));
-  if (sourceIds.size < 15 || !unique(ids(value.sources))) add("$.sources", "invalid-source-set");
+  if (!exactIds(value.sources, SOURCE_IDS)) add("$.sources", "invalid-source-set");
   for (const [index, source] of array(value.sources).entries()) {
     if (!sameKeys(source, ["id", "title", "source_kind", "published_on", "observed_on", "url", "doi", "authority_note"]) ||
         !id(source.id) || !text(source.title, 600) || !id(source.source_kind) || typeof source.published_on !== "string" || !YEAR_PRECISION.test(source.published_on) ||
@@ -247,7 +257,7 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
         !references(claim.source_ids, sourceIds) || !textArray(claim.limitations)) add(`$.evidence_kernel.claims[${index}]`, "invalid-claim");
   }
 
-  if (!Array.isArray(value.comparison_bridges) || value.comparison_bridges.length !== 1) add("$.comparison_bridges", "bridge-count-mismatch");
+  if (!exactIds(value.comparison_bridges, ["conditional-state-selection"])) add("$.comparison_bridges", "bridge-count-mismatch");
   for (const [index, bridge] of array(value.comparison_bridges).entries()) {
     if (!sameKeys(bridge, ["id", "from_system", "to_system", "preserved_invariants", "where_correspondence_breaks", "universal", "relation", "source_ids"]) ||
         !id(bridge.id) || !systemIds.has(bridge.from_system) || !systemIds.has(bridge.to_system) || bridge.relation !== "bounded-analogy-not-same-as" || bridge.universal !== false ||
@@ -256,8 +266,7 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
   }
 
   const feedbackRelations = array(value.scientific_feedback_relations);
-  const feedbackIds = ids(feedbackRelations);
-  if (!Array.isArray(value.scientific_feedback_relations) || feedbackRelations.length < 3 || feedbackIds.length !== feedbackRelations.length || !unique(feedbackIds)) add("$.scientific_feedback_relations", "invalid-feedback-set");
+  if (!exactIds(value.scientific_feedback_relations, FEEDBACK_IDS)) add("$.scientific_feedback_relations", "invalid-feedback-set");
   for (const [index, feedback] of array(value.scientific_feedback_relations).entries()) {
     if (!sameKeys(feedback, ["id", "register", "input", "process", "return_effect", "direction", "limits", "source_ids", "does_not_establish"]) || !id(feedback.id) ||
         !["literal-science", "kingdom-design-correspondence"].includes(feedback.register) || !["amplifies", "redirects", "corrects"].includes(feedback.direction) ||
@@ -267,7 +276,7 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
 
   if (!sameKeys(value.karma, ["scientific_feedback_is_not_karma", "zerone", "kingdom", "adapter", "design_correspondences"]) || value.karma?.scientific_feedback_is_not_karma !== true) add("$.karma", "karma-lane-mismatch");
   if (!sameKeys(value.karma?.zerone, ["protocol", "meaning", "register", "event_kinds", "event_refs", "event_status", "not"]) || value.karma.zerone.protocol !== "zerone.karma.edge" || value.karma.zerone.register !== "priced-coherence" ||
-      !Array.isArray(value.karma.zerone.event_kinds) || value.karma.zerone.event_kinds.join("|") !== "cited|corroborate|corroborated|external|pending_open|pending_settle|verify" ||
+      !exactStrings(value.karma.zerone.event_kinds, ZERONE_EVENT_KINDS) ||
       !Array.isArray(value.karma.zerone.event_refs) || value.karma.zerone.event_refs.length !== 0 || value.karma.zerone.event_status !== "not_observed" ||
       !text(value.karma.zerone.meaning) || !textArray(value.karma.zerone.not)) add("$.karma.zerone", "zerone-karma-mismatch");
   if (!sameKeys(value.karma?.kingdom, ["protocol", "meaning", "accounting", "receipt_refs", "receipt_status", "not"]) || value.karma.kingdom.protocol !== "kingdom.karma/0.1" || value.karma.kingdom.accounting !== "receipts_not_scores" ||
@@ -275,17 +284,15 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
       !text(value.karma.kingdom.meaning) || !textArray(value.karma.kingdom.not)) add("$.karma.kingdom", "kingdom-karma-mismatch");
   if (!sameKeys(value.karma?.adapter, ["exists", "reason"]) || value.karma.adapter.exists !== false || !text(value.karma.adapter.reason)) add("$.karma.adapter", "implicit-adapter");
   const designCorrespondences = array(value.karma?.design_correspondences);
-  const designIds = ids(designCorrespondences);
-  if (!Array.isArray(value.karma?.design_correspondences) || designCorrespondences.length < 2 || designIds.length !== designCorrespondences.length || !unique(designIds) ||
+  if (!exactIds(value.karma?.design_correspondences, DESIGN_IDS) ||
       designCorrespondences.some((entry: any) => !sameKeys(entry, ["id", "status", "pattern", "maps_to", "does_not_convert"]) || !id(entry.id) ||
         entry.status !== "not_observed" || !text(entry.pattern) || !idArray(entry.maps_to) || entry.does_not_convert !== true)) {
     add("$.karma.design_correspondences", "observed-or-converting-design-map");
   }
 
   const universeQuestions = array(value.universe_lens?.questions);
-  const universeQuestionIds = ids(universeQuestions);
   if (!sameKeys(value.universe_lens, ["participation", "register", "questions", "nonclaims"]) || value.universe_lens?.participation !== "opt-in" || value.universe_lens?.register !== "philosophical-interpretation" ||
-      !Array.isArray(value.universe_lens?.questions) || universeQuestions.length < 4 || universeQuestionIds.length !== universeQuestions.length || !unique(universeQuestionIds)) add("$.universe_lens", "universe-lens-mismatch");
+      !exactIds(value.universe_lens?.questions, UNIVERSE_QUESTION_IDS)) add("$.universe_lens", "universe-lens-mismatch");
   for (const [index, question] of universeQuestions.entries()) {
     if (!sameKeys(question, ["id", "question", "scientific_prompt_claim_ids", "authored_position", "analogy_breaks"]) || !id(question.id) || !text(question.question) ||
         !references(question.scientific_prompt_claim_ids, claimIds) || !text(question.authored_position) || !textArray(question.analogy_breaks)) add(`$.universe_lens.questions[${index}]`, "invalid-philosophical-question");
@@ -293,7 +300,7 @@ export function verifyFoldFeedbackAtlas(value: unknown): FoldFeedbackIssue[] {
   const requiredNonclaims = ["scientifically proves intentional universe design", "scientifically disproves a creator or metaphysical purpose", "proves cosmic moral KARMA"];
   if (!textArray(value.universe_lens?.nonclaims) || requiredNonclaims.some((item) => !value.universe_lens.nonclaims.includes(item))) add("$.universe_lens.nonclaims", "teleology-boundary-mismatch");
 
-  if (!Array.isArray(value.unknowns) || value.unknowns.length < 7 || !unique(ids(value.unknowns))) add("$.unknowns", "invalid-unknown-set");
+  if (!exactIds(value.unknowns, UNKNOWN_IDS)) add("$.unknowns", "invalid-unknown-set");
   for (const [index, unknown] of array(value.unknowns).entries()) {
     if (!sameKeys(unknown, ["id", "question", "status", "why_open", "source_ids"]) || !id(unknown.id) || !text(unknown.question) || !UNKNOWN_STATUSES.has(unknown.status) || !text(unknown.why_open) || !references(unknown.source_ids, sourceIds)) add(`$.unknowns[${index}]`, "invalid-unknown");
   }
