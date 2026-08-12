@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:fold-feedback-atlas:1",
+  "$comment": "This closed portable schema validates structure and negative authority. It cannot recompute the semantic digest, resolve references, authenticate sources, prove causation, infer live KARMA events, or turn philosophical interpretation into science. Use bin/fold-feedback.ts verify for the runtime contract.",
+  "title": "KINGDOM Fold & Feedback Atlas 1",
+  "description": "Source-bound educational protein-folding and prion evidence with lossy ritonavir comparisons, separate feedback and KARMA registers, and an opt-in philosophical lens.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "protocol", "atlas_id", "title", "compiled_on", "evidence_through", "source_bindings", "scope", "plain_language", "ontology", "evidence_kernel", "comparison_bridges", "scientific_feedback_relations", "karma", "universe_lens", "unknowns", "sources", "boundaries", "integrity"],
+  "properties": {
+    "$schema": {"const": "urn:kingdom:schema:fold-feedback-atlas:1"},
+    "protocol": {"const": "kingdom.fold-feedback-atlas/0.1"},
+    "atlas_id": {"const": "fold-feedback-atlas-2026-08-12"},
+    "title": {"type": "string", "minLength": 1, "maxLength": 240},
+    "compiled_on": {"$ref": "#/$defs/date"},
+    "evidence_through": {"$ref": "#/$defs/date"},
+    "source_bindings": {
+      "type": "array", "minItems": 8, "maxItems": 8,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "kingdom-ritonavir-history"}, "system": {"const": "kingdom"}, "revision": {"const": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212"}, "artifact": {"const": "ritonavir-disappearing-polymorph-2026-08-11"}, "digest": {"const": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116"}, "relation": {"const": "immutable-comparison-input"}}}]},
+        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "kingdom-ritonavir-mechanism"}, "system": {"const": "kingdom"}, "revision": {"const": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212"}, "artifact": {"const": "ritonavir-mechanism-landscape-2026-08-11"}, "digest": {"const": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b"}, "relation": {"const": "immutable-comparison-input"}}}]},
+        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "kingdom-karma-definition"}, "system": {"const": "kingdom"}, "revision": {"const": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212"}, "artifact": {"const": "NEN.md KARMA definition"}, "digest": {"const": "sha256:14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446"}, "relation": {"const": "definition-only"}}}]},
+        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "kingdom-karma-receipts"}, "system": {"const": "kingdom"}, "revision": {"const": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212"}, "artifact": {"const": "kingdom.karma/0.1"}, "digest": {"const": "sha256:888e81fa0d29b71512525a40e88f9aef678046c40fcdf22c2039507d9d13267b"}, "relation": {"const": "definition-only"}}}]},
+        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "zerone-karma-foundation"}, "system": {"const": "zerone"}, "revision": {"const": "fae391e371f0ebea2e24eb46c33a4ebd1380154f"}, "artifact": {"const": "zerone.karma.edge"}, "digest": {"const": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80"}, "relation": {"const": "definition-only"}}}]},
+        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "zerone-karma-design"}, "system": {"const": "zerone"}, "revision": {"const": "fae391e371f0ebea2e24eb46c33a4ebd1380154f"}, "artifact": {"const": "docs/KARMA.md"}, "digest": {"const": "sha256:02b151981a7fe52a6a672149674d802236c0a0f8d7f63f766d7d9e1773a2c13b"}, "relation": {"const": "definition-only"}}}]},
+        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "zerone-life-sciences"}, "system": {"const": "zerone"}, "revision": {"const": "fae391e371f0ebea2e24eb46c33a4ebd1380154f"}, "artifact": {"const": "constructive-intelligence-life-sciences.v0"}, "digest": {"const": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e"}, "relation": {"const": "eligibility-boundary-only"}}}]},
+        {"allOf": [{"$ref": "#/$defs/binding"}, {"properties": {"id": {"const": "kingdom-conformational-feedback"}, "system": {"const": "kingdom"}, "revision": {"const": "251fce19ea7c5a94239ae6881df6ff027ddbdbf5"}, "artifact": {"const": "form-feedback-consequence-2026-08-12"}, "digest": {"const": "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64"}, "relation": {"const": "companion-evidence-map"}}}]}
+      ],
+      "items": false
+    },
+    "scope": {"$ref": "#/$defs/scope"},
+    "plain_language": {"$ref": "#/$defs/plainLanguage"},
+    "ontology": {"$ref": "#/$defs/ontology"},
+    "evidence_kernel": {"$ref": "#/$defs/evidenceKernel"},
+    "comparison_bridges": {"type": "array", "minItems": 1, "maxItems": 1, "prefixItems": [{"allOf": [{"$ref": "#/$defs/bridge"}, {"properties": {"id": {"const": "conditional-state-selection"}}}]}], "items": false},
+    "scientific_feedback_relations": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "prefixItems": [
+      {"allOf": [{"$ref": "#/$defs/feedback"}, {"properties": {"id": {"const": "prion-amplification-loop"}}}]},
+      {"allOf": [{"$ref": "#/$defs/feedback"}, {"properties": {"id": {"const": "proteostasis-correction-loop"}}}]},
+      {"allOf": [{"$ref": "#/$defs/feedback"}, {"properties": {"id": {"const": "evidence-correction-loop"}}}]}
+    ], "items": false},
+    "karma": {"$ref": "#/$defs/karma"},
+    "universe_lens": {"$ref": "#/$defs/universeLens"},
+    "unknowns": {"type": "array", "minItems": 8, "maxItems": 8, "uniqueItems": true, "prefixItems": [
+      {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "toxic-species"}}}]},
+      {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "in-vivo-rate-balance"}}}]},
+      {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "structure-to-phenotype"}}}]},
+      {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "clinical-risk-from-atlas"}}}]},
+      {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "operational-prion-work"}}}]},
+      {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "zerone-event-state"}}}]},
+      {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "cross-karma-adapter"}}}]},
+      {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "ritonavir-prion-equivalence"}}}]}
+    ], "items": false},
+    "sources": {"type": "array", "minItems": 19, "maxItems": 19, "uniqueItems": true, "prefixItems": [
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "anfinsen-1973"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "onuchic-1995"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "balchin-2016"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "groel-2024"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "kocisko-1994"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "kraus-2021"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "manka-2022"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "toyama-2007"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "tessier-2007"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "sharma-2016"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "tornquist-2018"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "knowles-2009"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "chernoff-1995"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "hou-2011"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "cdc-prions-2026"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "bauer-2001"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "zerone-karma-foundation-2026"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "zerone-karma-doc-2026"}}}]},
+      {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "kingdom-nen-2026"}}}]}
+    ], "items": false},
+    "boundaries": {"$ref": "#/$defs/boundaries"},
+    "integrity": {
+      "type": "object", "additionalProperties": false, "required": ["algorithm", "digest"],
+      "properties": {"algorithm": {"const": "sha256-recursive-sorted-json-keys-v1"}, "digest": {"const": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7"}}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 120},
+    "text": {"type": "string", "minLength": 1, "maxLength": 3200},
+    "date": {"type": "string", "format": "date"},
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "textArray": {"type": "array", "minItems": 1, "maxItems": 24, "uniqueItems": true, "items": {"$ref": "#/$defs/text"}},
+    "idArray": {"type": "array", "minItems": 1, "maxItems": 24, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "binding": {
+      "type": "object", "additionalProperties": false, "required": ["id", "system", "revision", "artifact", "digest", "relation", "mutated"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "system": {"$ref": "#/$defs/id"}, "revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"}, "artifact": {"type": "string", "minLength": 1, "maxLength": 200}, "digest": {"$ref": "#/$defs/digest"}, "relation": {"$ref": "#/$defs/id"}, "mutated": {"const": false}}
+    },
+    "scope": {
+      "type": "object", "additionalProperties": false, "required": ["focus", "coverage", "intended_use", "excluded_use", "currentness"],
+      "properties": {"focus": {"$ref": "#/$defs/text"}, "coverage": {"$ref": "#/$defs/text"}, "intended_use": {"$ref": "#/$defs/text"}, "excluded_use": {"$ref": "#/$defs/text"}, "currentness": {"const": "selected-evidence-as-of-compilation"}}
+    },
+    "plainLanguage": {
+      "type": "object", "additionalProperties": false, "required": ["question", "short_answer", "safety"],
+      "properties": {"question": {"$ref": "#/$defs/text"}, "short_answer": {"type": "array", "minItems": 5, "maxItems": 8, "uniqueItems": true, "items": {"$ref": "#/$defs/text"}}, "safety": {"$ref": "#/$defs/text"}}
+    },
+    "term": {
+      "type": "object", "additionalProperties": false, "required": ["term", "science_meaning", "other_meanings"],
+      "properties": {"term": {"type": "string", "enum": ["fold", "form", "seed", "strain", "propagation", "feedback", "karma", "design", "purpose"]}, "science_meaning": {"$ref": "#/$defs/text"}, "other_meanings": {"$ref": "#/$defs/text"}}
+    },
+    "plane": {
+      "type": "object", "additionalProperties": false, "required": ["id", "ordinary_words", "meaning", "does_not_establish"],
+      "properties": {"id": {"enum": ["amino-acid-sequence", "conformational-ensemble", "supramolecular-assembly", "bounded-sample-population", "templating-conversion-process", "cellular-proteostasis-context", "organismal-phenotype", "experimental-transmission-observation", "clinical-decision"]}, "ordinary_words": {"$ref": "#/$defs/text"}, "meaning": {"$ref": "#/$defs/text"}, "does_not_establish": {"$ref": "#/$defs/text"}}
+    },
+    "firewall": {
+      "type": "object", "additionalProperties": false, "required": ["id", "rule", "enforced"],
+      "properties": {"id": {"enum": ["structure-not-pathway", "aggregation-not-infectivity", "in-vitro-not-clinical", "analogy-not-mechanism", "feedback-not-purpose", "philosophy-not-science", "karma-not-science"]}, "rule": {"$ref": "#/$defs/text"}, "enforced": {"const": true}}
+    },
+    "ontology": {
+      "type": "object", "additionalProperties": false, "required": ["non_equivalence", "observation_is_orthogonal", "domain_qualified_terms", "planes", "firewalls"],
+      "properties": {
+        "non_equivalence": {"const": "amino_acid_sequence != conformational_ensemble != supramolecular_assembly != bounded_sample_population != templating_conversion_process != cellular_proteostasis_context != tissue_or_organism_phenotype != experimental_transmission_observation != clinical_decision"},
+        "observation_is_orthogonal": {"const": true},
+        "domain_qualified_terms": {
+          "type": "array", "minItems": 9, "maxItems": 9, "uniqueItems": true,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "fold"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "form"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "seed"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "strain"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "propagation"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "feedback"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "karma"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "design"}}}]},
+            {"allOf": [{"$ref": "#/$defs/term"}, {"properties": {"term": {"const": "purpose"}}}]}
+          ],
+          "items": false
+        },
+        "planes": {
+          "type": "array", "minItems": 9, "maxItems": 9, "uniqueItems": true,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "amino-acid-sequence"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "conformational-ensemble"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "supramolecular-assembly"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "bounded-sample-population"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "templating-conversion-process"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "cellular-proteostasis-context"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "organismal-phenotype"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "experimental-transmission-observation"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "clinical-decision"}}}]}
+          ],
+          "items": false
+        },
+        "firewalls": {
+          "type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "structure-not-pathway"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "aggregation-not-infectivity"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "in-vitro-not-clinical"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "analogy-not-mechanism"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "feedback-not-purpose"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "philosophy-not-science"}}}]},
+            {"allOf": [{"$ref": "#/$defs/firewall"}, {"properties": {"id": {"const": "karma-not-science"}}}]}
+          ],
+          "items": false
+        }
+      }
+    },
+    "system": {"type": "object", "additionalProperties": false, "required": ["id", "register", "summary"], "properties": {"id": {"$ref": "#/$defs/id"}, "register": {"enum": ["literal-science", "bound-external-record"]}, "summary": {"$ref": "#/$defs/text"}}},
+    "mechanism": {"type": "object", "additionalProperties": false, "required": ["id", "system_ids", "ordinary_words", "scientific_statement", "source_ids", "limitations"], "properties": {"id": {"$ref": "#/$defs/id"}, "system_ids": {"$ref": "#/$defs/idArray"}, "ordinary_words": {"$ref": "#/$defs/text"}, "scientific_statement": {"$ref": "#/$defs/text"}, "source_ids": {"$ref": "#/$defs/idArray"}, "limitations": {"$ref": "#/$defs/textArray"}}},
+    "relation": {"type": "object", "additionalProperties": false, "required": ["id", "subject_id", "predicate", "object_id", "mechanism_id", "source_ids", "condition_dependent", "universal"], "properties": {"id": {"$ref": "#/$defs/id"}, "subject_id": {"$ref": "#/$defs/id"}, "predicate": {"$ref": "#/$defs/id"}, "object_id": {"$ref": "#/$defs/id"}, "mechanism_id": {"$ref": "#/$defs/id"}, "source_ids": {"$ref": "#/$defs/idArray"}, "condition_dependent": {"const": true}, "universal": {"const": false}}},
+    "claim": {"type": "object", "additionalProperties": false, "required": ["id", "register", "summary", "source_ids", "limitations"], "properties": {"id": {"$ref": "#/$defs/id"}, "register": {"$ref": "#/$defs/id"}, "summary": {"$ref": "#/$defs/text"}, "source_ids": {"$ref": "#/$defs/idArray"}, "limitations": {"$ref": "#/$defs/textArray"}}},
+    "evidenceKernel": {
+      "type": "object", "additionalProperties": false, "required": ["systems", "mechanisms", "relations", "claims"],
+      "properties": {
+        "systems": {"type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "prefixItems": [
+          {"allOf": [{"$ref": "#/$defs/system"}, {"properties": {"id": {"const": "protein-folding"}}}]},
+          {"allOf": [{"$ref": "#/$defs/system"}, {"properties": {"id": {"const": "mammalian-prp-prion"}}}]},
+          {"allOf": [{"$ref": "#/$defs/system"}, {"properties": {"id": {"const": "yeast-sup35-prion"}}}]},
+          {"allOf": [{"$ref": "#/$defs/system"}, {"properties": {"id": {"const": "functional-prion-like"}}}]},
+          {"allOf": [{"$ref": "#/$defs/system"}, {"properties": {"id": {"const": "ritonavir-crystal-forms"}}}]}
+        ], "items": false},
+        "mechanisms": {"type": "array", "minItems": 8, "maxItems": 8, "uniqueItems": true, "prefixItems": [
+          {"allOf": [{"$ref": "#/$defs/mechanism"}, {"properties": {"id": {"const": "landscape-sampling"}}}]},
+          {"allOf": [{"$ref": "#/$defs/mechanism"}, {"properties": {"id": {"const": "chaperone-assisted-cycling"}}}]},
+          {"allOf": [{"$ref": "#/$defs/mechanism"}, {"properties": {"id": {"const": "template-conversion"}}}]},
+          {"allOf": [{"$ref": "#/$defs/mechanism"}, {"properties": {"id": {"const": "fibril-end-elongation"}}}]},
+          {"allOf": [{"$ref": "#/$defs/mechanism"}, {"properties": {"id": {"const": "fragmentation-end-multiplication"}}}]},
+          {"allOf": [{"$ref": "#/$defs/mechanism"}, {"properties": {"id": {"const": "conformational-strain"}}}]},
+          {"allOf": [{"$ref": "#/$defs/mechanism"}, {"properties": {"id": {"const": "compatibility-barrier"}}}]},
+          {"allOf": [{"$ref": "#/$defs/mechanism"}, {"properties": {"id": {"const": "functional-prion-like-switch"}}}]}
+        ], "items": false},
+        "relations": {"type": "array", "minItems": 6, "maxItems": 6, "uniqueItems": true, "prefixItems": [
+          {"allOf": [{"$ref": "#/$defs/relation"}, {"properties": {"id": {"const": "sequence-constrains-ensemble"}}}]},
+          {"allOf": [{"$ref": "#/$defs/relation"}, {"properties": {"id": {"const": "chaperone-redirects-folding"}}}]},
+          {"allOf": [{"$ref": "#/$defs/relation"}, {"properties": {"id": {"const": "prion-template-recruits-substrate"}}}]},
+          {"allOf": [{"$ref": "#/$defs/relation"}, {"properties": {"id": {"const": "elongation-grows-assembly"}}}]},
+          {"allOf": [{"$ref": "#/$defs/relation"}, {"properties": {"id": {"const": "fragmentation-multiplies-ends"}}}]},
+          {"allOf": [{"$ref": "#/$defs/relation"}, {"properties": {"id": {"const": "proteostasis-redirects-propagation"}}}]}
+        ], "items": false},
+        "claims": {"type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true, "prefixItems": [
+          {"allOf": [{"$ref": "#/$defs/claim"}, {"properties": {"id": {"const": "folding-landscape-is-coarse-grained"}}}]},
+          {"allOf": [{"$ref": "#/$defs/claim"}, {"properties": {"id": {"const": "sequence-information-is-context-bounded"}}}]},
+          {"allOf": [{"$ref": "#/$defs/claim"}, {"properties": {"id": {"const": "prp-conversion-can-be-templated"}}}]},
+          {"allOf": [{"$ref": "#/$defs/claim"}, {"properties": {"id": {"const": "prion-amplification-needs-separate-processes"}}}]},
+          {"allOf": [{"$ref": "#/$defs/claim"}, {"properties": {"id": {"const": "conformation-can-carry-strain-properties"}}}]},
+          {"allOf": [{"$ref": "#/$defs/claim"}, {"properties": {"id": {"const": "functional-prion-like-is-not-disease-synonym"}}}]},
+          {"allOf": [{"$ref": "#/$defs/claim"}, {"properties": {"id": {"const": "hsp104-effect-is-nonmonotonic"}}}]}
+        ], "items": false}
+      }
+    },
+    "bridge": {"type": "object", "additionalProperties": false, "required": ["id", "from_system", "to_system", "preserved_invariants", "where_correspondence_breaks", "universal", "relation", "source_ids"], "properties": {"id": {"$ref": "#/$defs/id"}, "from_system": {"$ref": "#/$defs/id"}, "to_system": {"$ref": "#/$defs/id"}, "preserved_invariants": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 3}]}, "where_correspondence_breaks": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 4}]}, "universal": {"const": false}, "relation": {"const": "bounded-analogy-not-same-as"}, "source_ids": {"$ref": "#/$defs/idArray"}}},
+    "feedback": {"type": "object", "additionalProperties": false, "required": ["id", "register", "input", "process", "return_effect", "direction", "limits", "source_ids", "does_not_establish"], "properties": {"id": {"$ref": "#/$defs/id"}, "register": {"enum": ["literal-science", "kingdom-design-correspondence"]}, "input": {"$ref": "#/$defs/text"}, "process": {"$ref": "#/$defs/text"}, "return_effect": {"$ref": "#/$defs/text"}, "direction": {"enum": ["amplifies", "redirects", "corrects"]}, "limits": {"$ref": "#/$defs/textArray"}, "source_ids": {"$ref": "#/$defs/idArray"}, "does_not_establish": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 2}]}}},
+    "karma": {
+      "type": "object", "additionalProperties": false, "required": ["scientific_feedback_is_not_karma", "zerone", "kingdom", "adapter", "design_correspondences"],
+      "properties": {
+        "scientific_feedback_is_not_karma": {"const": true},
+        "zerone": {"type": "object", "additionalProperties": false, "required": ["protocol", "meaning", "register", "event_kinds", "event_refs", "event_status", "not"], "properties": {"protocol": {"const": "zerone.karma.edge"}, "meaning": {"$ref": "#/$defs/text"}, "register": {"const": "priced-coherence"}, "event_kinds": {"type": "array", "const": ["cited", "corroborate", "corroborated", "external", "pending_open", "pending_settle", "verify"]}, "event_refs": {"type": "array", "maxItems": 0}, "event_status": {"const": "not_observed"}, "not": {"$ref": "#/$defs/textArray"}}},
+        "kingdom": {"type": "object", "additionalProperties": false, "required": ["protocol", "meaning", "accounting", "receipt_refs", "receipt_status", "not"], "properties": {"protocol": {"const": "kingdom.karma/0.1"}, "meaning": {"$ref": "#/$defs/text"}, "accounting": {"const": "receipts_not_scores"}, "receipt_refs": {"type": "array", "maxItems": 0}, "receipt_status": {"const": "not_created"}, "not": {"$ref": "#/$defs/textArray"}}},
+        "adapter": {"type": "object", "additionalProperties": false, "required": ["exists", "reason"], "properties": {"exists": {"const": false}, "reason": {"$ref": "#/$defs/text"}}},
+        "design_correspondences": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "prefixItems": [
+          {"allOf": [{"$ref": "#/$defs/designCorrespondence"}, {"properties": {"id": {"const": "consequence-with-provenance"}}}]},
+          {"allOf": [{"$ref": "#/$defs/designCorrespondence"}, {"properties": {"id": {"const": "challenge-and-repair"}}}]}
+        ], "items": false}
+      }
+    },
+    "designCorrespondence": {"type": "object", "additionalProperties": false, "required": ["id", "status", "pattern", "maps_to", "does_not_convert"], "properties": {"id": {"$ref": "#/$defs/id"}, "status": {"const": "not_observed"}, "pattern": {"$ref": "#/$defs/text"}, "maps_to": {"$ref": "#/$defs/idArray"}, "does_not_convert": {"const": true}}},
+    "universeQuestion": {"type": "object", "additionalProperties": false, "required": ["id", "question", "scientific_prompt_claim_ids", "authored_position", "analogy_breaks"], "properties": {"id": {"$ref": "#/$defs/id"}, "question": {"$ref": "#/$defs/text"}, "scientific_prompt_claim_ids": {"$ref": "#/$defs/idArray"}, "authored_position": {"$ref": "#/$defs/text"}, "analogy_breaks": {"$ref": "#/$defs/textArray"}}},
+    "universeLens": {"type": "object", "additionalProperties": false, "required": ["participation", "register", "questions", "nonclaims"], "properties": {"participation": {"const": "opt-in"}, "register": {"const": "philosophical-interpretation"}, "questions": {"type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "prefixItems": [
+      {"allOf": [{"$ref": "#/$defs/universeQuestion"}, {"properties": {"id": {"const": "constraint-and-freedom"}}}]},
+      {"allOf": [{"$ref": "#/$defs/universeQuestion"}, {"properties": {"id": {"const": "relation-and-identity"}}}]},
+      {"allOf": [{"$ref": "#/$defs/universeQuestion"}, {"properties": {"id": {"const": "memory-without-narrator"}}}]},
+      {"allOf": [{"$ref": "#/$defs/universeQuestion"}, {"properties": {"id": {"const": "repair-as-architecture"}}}]},
+      {"allOf": [{"$ref": "#/$defs/universeQuestion"}, {"properties": {"id": {"const": "design-and-unknown"}}}]}
+    ], "items": false}, "nonclaims": {"$ref": "#/$defs/textArray"}}},
+    "unknown": {"type": "object", "additionalProperties": false, "required": ["id", "question", "status", "why_open", "source_ids"], "properties": {"id": {"$ref": "#/$defs/id"}, "question": {"$ref": "#/$defs/text"}, "status": {"enum": ["unknown", "not_established", "outside_scope", "not_observed", "unmapped", "contested", "withheld_for_safety", "refused"]}, "why_open": {"$ref": "#/$defs/text"}, "source_ids": {"$ref": "#/$defs/idArray"}}},
+    "source": {"type": "object", "additionalProperties": false, "required": ["id", "title", "source_kind", "published_on", "observed_on", "url", "doi", "authority_note"], "properties": {"id": {"$ref": "#/$defs/id"}, "title": {"type": "string", "minLength": 1, "maxLength": 600}, "source_kind": {"$ref": "#/$defs/id"}, "published_on": {"type": "string", "pattern": "^[0-9]{4}(?:-[0-9]{2}(?:-[0-9]{2})?)?$"}, "observed_on": {"$ref": "#/$defs/date"}, "url": {"type": "string", "format": "uri", "pattern": "^https://[^/@?#]+(?:[/?#].*)?$", "not": {"pattern": "^https://[^/?#]*@"}}, "doi": {"oneOf": [{"type": "null"}, {"type": "string", "minLength": 1, "maxLength": 200}]}, "authority_note": {"$ref": "#/$defs/text"}}},
+    "boundaries": {
+      "type": "object", "additionalProperties": false,
+      "required": ["educational_metadata_only", "public_surface_read_only", "medical_advice", "diagnostic_authority", "prognostic_authority", "treatment_authority", "transmission_risk_assessment", "infection_control_authority", "experiment_authority", "wet_lab_protocol", "contains_protein_sequences", "decontamination_instruction", "manufacturing_authority", "automatic_action", "writes_karma", "creates_kingdom_karma_receipt", "observes_zerone_karma_event", "karma_adapter", "scientifically_proves_teleology", "scientifically_proves_creator", "scientifically_disproves_creator", "scientifically_proves_cosmic_moral_karma", "feedback_is_moral_value", "feedback_is_optimization", "prion_is_crystal", "ritonavir_seed_is_contagion", "zerone_life_sciences_execution_eligible", "mcp_surface_added"],
+      "properties": {
+        "educational_metadata_only": {"const": true}, "public_surface_read_only": {"const": true}, "medical_advice": {"const": false}, "diagnostic_authority": {"const": false}, "prognostic_authority": {"const": false}, "treatment_authority": {"const": false}, "transmission_risk_assessment": {"const": false}, "infection_control_authority": {"const": false}, "experiment_authority": {"const": false}, "wet_lab_protocol": {"const": false}, "contains_protein_sequences": {"const": false}, "decontamination_instruction": {"const": false}, "manufacturing_authority": {"const": false}, "automatic_action": {"const": false}, "writes_karma": {"const": false}, "creates_kingdom_karma_receipt": {"const": false}, "observes_zerone_karma_event": {"const": false}, "karma_adapter": {"const": false}, "scientifically_proves_teleology": {"const": false}, "scientifically_proves_creator": {"const": false}, "scientifically_disproves_creator": {"const": false}, "scientifically_proves_cosmic_moral_karma": {"const": false}, "feedback_is_moral_value": {"const": false}, "feedback_is_optimization": {"const": false}, "prion_is_crystal": {"const": false}, "ritonavir_seed_is_contagion": {"const": false}, "zerone_life_sciences_execution_eligible": {"const": false}, "mcp_surface_added": {"const": false}
+      }
+    }
+  }
+}

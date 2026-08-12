@@ -23,6 +23,9 @@ readings:
 | `/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json` | staged JSON | Digest-bound selected current-landscape supplement with distinct material and biological causal lanes |
 | `/schemas/ritonavir-mechanism-landscape/1.json` | staged JSON Schema | Public schema for the Ritonavir Mechanism Landscape v1 |
 | `/RITONAVIR-MECHANISM-LANDSCAPE.md` | staged Markdown | Human guide to mechanisms, source-scoped naming, uncertainty, and medical boundaries |
+| `/atlases/fold-feedback-atlas-2026-08-12.json` | staged JSON | Digest-bound folding/prion evidence, lossy ritonavir comparison, separate feedback and KARMA lanes, and opt-in philosophical questions |
+| `/schemas/fold-feedback-atlas/1.json` | staged JSON Schema | Closed public schema for the Fold & Feedback Atlas v1 |
+| `/FOLD-FEEDBACK-ATLAS.md` | staged Markdown | Plain-language scientific, comparison, KARMA, universe-lens, unknown, and safety guide |
 
 The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,

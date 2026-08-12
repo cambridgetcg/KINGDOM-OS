@@ -25,6 +25,13 @@ import {
   loadConformationalFeedbackAtlas,
 } from "./conformational-feedback.ts";
 import {
+  FOLD_FEEDBACK_DOCUMENT_URL,
+  FOLD_FEEDBACK_SCHEMA_URL,
+  FOLD_FEEDBACK_URL,
+  foldFeedbackPublicDiscovery,
+  loadFoldFeedbackAtlas,
+} from "./fold-feedback.ts";
+import {
   GEOMETRY_GRAMMAR_DOCUMENT_URL,
   GEOMETRY_GRAMMAR_SCHEMA_URL,
   GEOMETRY_GRAMMAR_URL,
@@ -104,6 +111,9 @@ const ritonavirMechanismDocumentPath = new URL(RITONAVIR_MECHANISM_DOCUMENT_URL)
 const conformationalFeedbackPath = new URL(CONFORMATIONAL_FEEDBACK_URL).pathname;
 const conformationalFeedbackSchemaPath = new URL(CONFORMATIONAL_FEEDBACK_SCHEMA_URL).pathname;
 const conformationalFeedbackDocumentPath = new URL(CONFORMATIONAL_FEEDBACK_DOCUMENT_URL).pathname;
+const foldFeedbackPath = new URL(FOLD_FEEDBACK_URL).pathname;
+const foldFeedbackSchemaPath = new URL(FOLD_FEEDBACK_SCHEMA_URL).pathname;
+const foldFeedbackDocumentPath = new URL(FOLD_FEEDBACK_DOCUMENT_URL).pathname;
 
 function url(path: string, extra: Record<string, string> = {}): URL {
   const target = new URL(path, origin);
@@ -388,7 +398,33 @@ try {
     throw new Error(`${conformationalFeedbackDocumentPath} is not served as public Markdown`);
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, conformationalFeedbackSchemaPath]) {
+  const foldFeedbackHead = await fetch(url(foldFeedbackPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  const foldFeedbackLink = foldFeedbackHead.headers.get("link") || "";
+  if (!foldFeedbackHead.ok ||
+      !(foldFeedbackHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+      foldFeedbackHead.headers.get("access-control-allow-origin") !== "*" ||
+      (foldFeedbackHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+      !hasLinkRelation(foldFeedbackLink, foldFeedbackSchemaPath, "describedby")) {
+    throw new Error(`${foldFeedbackPath} is not public JSON described by the Fold & Feedback Atlas schema`);
+  }
+
+  const foldFeedbackDocumentHead = await fetch(url(foldFeedbackDocumentPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  if (!foldFeedbackDocumentHead.ok ||
+      !(foldFeedbackDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+      foldFeedbackDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+      (foldFeedbackDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+    throw new Error(`${foldFeedbackDocumentPath} is not served as public Markdown`);
+  }
+
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, conformationalFeedbackSchemaPath, foldFeedbackSchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -416,6 +452,8 @@ try {
   const expectedRitonavirMechanism = ritonavirMechanismPublicDiscovery(ritonavirMechanism);
   const conformationalFeedback = loadConformationalFeedbackAtlas();
   const expectedConformationalFeedback = conformationalFeedbackPublicDiscovery(conformationalFeedback);
+  const foldFeedbackAtlas = loadFoldFeedbackAtlas();
+  const expectedFoldFeedback = foldFeedbackPublicDiscovery(foldFeedbackAtlas);
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
   validateLoveLoops(sourceLoveLoops, false);
@@ -582,6 +620,31 @@ try {
     throw new Error("Conformational Feedback Atlas discovery, bindings, or negative authority drifted across public surfaces");
   }
 
+  const foldFeedbackBoundary = expectedFoldFeedback.boundary;
+  if (!isDeepStrictEqual(manifest?.fold_feedback_atlas, expectedFoldFeedback) ||
+      !isDeepStrictEqual(guest?.fold_feedback_atlas, expectedFoldFeedback) ||
+      !isDeepStrictEqual(authoredKingdom?.fold_feedback_atlas, expectedFoldFeedback) ||
+      !hasGuestGet(FOLD_FEEDBACK_URL) ||
+      !hasGuestGet(FOLD_FEEDBACK_SCHEMA_URL) ||
+      !hasGuestGet(FOLD_FEEDBACK_DOCUMENT_URL) ||
+      !llms.includes(FOLD_FEEDBACK_URL) ||
+      !llms.includes(FOLD_FEEDBACK_SCHEMA_URL) ||
+      !llms.includes(FOLD_FEEDBACK_DOCUMENT_URL) ||
+      manifest?.entry_points?.fold_feedback_atlas !== FOLD_FEEDBACK_URL ||
+      manifest?.entry_points?.fold_feedback_atlas_schema !== FOLD_FEEDBACK_SCHEMA_URL ||
+      manifest?.entry_points?.fold_feedback_atlas_guide !== FOLD_FEEDBACK_DOCUMENT_URL ||
+      foldFeedbackBoundary.public_surface_read_only !== true ||
+      foldFeedbackBoundary.medical_advice !== false ||
+      foldFeedbackBoundary.experiment_authority !== false ||
+      foldFeedbackBoundary.automatic_action !== false ||
+      foldFeedbackBoundary.writes_karma !== false ||
+      foldFeedbackBoundary.creates_kingdom_karma_receipt !== false ||
+      foldFeedbackBoundary.observes_zerone_karma_event !== false ||
+      "mcp" in expectedFoldFeedback || "matcher" in expectedFoldFeedback ||
+      "write" in expectedFoldFeedback) {
+    throw new Error("Fold & Feedback Atlas discovery or read-only/KARMA boundary drifted across public surfaces");
+  }
+
   const liveKingdom: any = await (await get("/kingdom.json")).json();
   if (liveKingdom?.creation_loop?.url !== LOVE_LOOPS_URL ||
       liveKingdom?.creation_loop?.source !== LOVE_LOOPS_SOURCE_URL ||
@@ -603,6 +666,9 @@ try {
   }
   if (!isDeepStrictEqual(liveKingdom?.conformational_feedback_atlas, expectedConformationalFeedback)) {
     throw new Error("derived kingdom.json did not preserve Conformational Feedback Atlas discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.fold_feedback_atlas, expectedFoldFeedback)) {
+    throw new Error("derived kingdom.json did not preserve Fold & Feedback Atlas discovery");
   }
 
   const mcpEndpoint = new URL(manifest?.mcp?.endpoint || "");
@@ -663,7 +729,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback discovery · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback + Fold & Feedback schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback + Fold & Feedback discovery · live MCP contract unchanged · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;

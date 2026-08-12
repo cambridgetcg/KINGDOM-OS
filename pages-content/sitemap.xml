@@ -16,6 +16,8 @@
   <url><loc>https://thekingdom.dev/RITONAVIR-MECHANISM-LANDSCAPE.md</loc></url>
   <url><loc>https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json</loc></url>
   <url><loc>https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md</loc></url>
+  <url><loc>https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json</loc></url>
+  <url><loc>https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md</loc></url>
   <url><loc>https://thekingdom.dev/rights.json</loc></url>
   <url><loc>https://thekingdom.dev/RIGHTS.md</loc></url>
   <url><loc>https://thekingdom.dev/CREATION-LOOP.md</loc></url>
@@ -35,4 +37,5 @@
   <url><loc>https://thekingdom.dev/schemas/polymorph-history/1.json</loc></url>
   <url><loc>https://thekingdom.dev/schemas/ritonavir-mechanism-landscape/1.json</loc></url>
   <url><loc>https://thekingdom.dev/schemas/conformational-feedback-atlas/0.1.json</loc></url>
+  <url><loc>https://thekingdom.dev/schemas/fold-feedback-atlas/1.json</loc></url>
 </urlset>

@@ -1,0 +1,302 @@
+{
+  "$schema": "urn:kingdom:schema:fold-feedback-atlas:1",
+  "protocol": "kingdom.fold-feedback-atlas/0.1",
+  "atlas_id": "fold-feedback-atlas-2026-08-12",
+  "title": "Fold & Feedback Atlas",
+  "compiled_on": "2026-08-12",
+  "evidence_through": "2026-02-20",
+  "source_bindings": [
+    {
+      "id": "kingdom-ritonavir-history",
+      "system": "kingdom",
+      "revision": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212",
+      "artifact": "ritonavir-disappearing-polymorph-2026-08-11",
+      "digest": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116",
+      "relation": "immutable-comparison-input",
+      "mutated": false
+    },
+    {
+      "id": "kingdom-ritonavir-mechanism",
+      "system": "kingdom",
+      "revision": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212",
+      "artifact": "ritonavir-mechanism-landscape-2026-08-11",
+      "digest": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b",
+      "relation": "immutable-comparison-input",
+      "mutated": false
+    },
+    {
+      "id": "kingdom-karma-definition",
+      "system": "kingdom",
+      "revision": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212",
+      "artifact": "NEN.md KARMA definition",
+      "digest": "sha256:14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446",
+      "relation": "definition-only",
+      "mutated": false
+    },
+    {
+      "id": "kingdom-karma-receipts",
+      "system": "kingdom",
+      "revision": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212",
+      "artifact": "kingdom.karma/0.1",
+      "digest": "sha256:888e81fa0d29b71512525a40e88f9aef678046c40fcdf22c2039507d9d13267b",
+      "relation": "definition-only",
+      "mutated": false
+    },
+    {
+      "id": "zerone-karma-foundation",
+      "system": "zerone",
+      "revision": "fae391e371f0ebea2e24eb46c33a4ebd1380154f",
+      "artifact": "zerone.karma.edge",
+      "digest": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80",
+      "relation": "definition-only",
+      "mutated": false
+    },
+    {
+      "id": "zerone-karma-design",
+      "system": "zerone",
+      "revision": "fae391e371f0ebea2e24eb46c33a4ebd1380154f",
+      "artifact": "docs/KARMA.md",
+      "digest": "sha256:02b151981a7fe52a6a672149674d802236c0a0f8d7f63f766d7d9e1773a2c13b",
+      "relation": "definition-only",
+      "mutated": false
+    },
+    {
+      "id": "zerone-life-sciences",
+      "system": "zerone",
+      "revision": "fae391e371f0ebea2e24eb46c33a4ebd1380154f",
+      "artifact": "constructive-intelligence-life-sciences.v0",
+      "digest": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e",
+      "relation": "eligibility-boundary-only",
+      "mutated": false
+    },
+    {
+      "id": "kingdom-conformational-feedback",
+      "system": "kingdom",
+      "revision": "251fce19ea7c5a94239ae6881df6ff027ddbdbf5",
+      "artifact": "form-feedback-consequence-2026-08-12",
+      "digest": "sha256:e4818864c64b7bfbad38222f4e54bb08d2ba83f1415a2380597b51510e832b64",
+      "relation": "companion-evidence-map",
+      "mutated": false
+    }
+  ],
+  "scope": {
+    "focus": "A source-bound educational map of protein folding, prion conformational propagation, feedback, and carefully separated systems translations.",
+    "coverage": "Selected foundational and structural evidence, explicit unknowns, bounded comparison with ritonavir polymorphism, two non-equivalent KARMA surfaces, an opt-in philosophical lens, and an exact companion binding to the constitutional Form, Feedback & Consequence map.",
+    "intended_use": "Plain-language learning, evidence navigation, architecture design, and challengeable discussion.",
+    "excluded_use": "Diagnosis, prognosis, treatment, transmission or infection-risk assessment, laboratory or decontamination procedure, experimental planning, manufacturing control, moral scoring, or proof of cosmic purpose.",
+    "currentness": "selected-evidence-as-of-compilation"
+  },
+  "plain_language": {
+    "question": "What can folding and prion propagation teach us about form, memory, feedback, KARMA, and the patterns we use to think about the universe?",
+    "short_answer": [
+      "A protein sequence constrains possibilities, but a living cell still supplies context, helpers, quality control, time, and history.",
+      "A prion can recruit compatible protein into an alternative assembly; elongation plus production of new growth ends can amplify that pattern.",
+      "The useful overlap with a seeded crystal is limited to conditional state selection and history. A prion is not a crystal, and crystallization is not infection.",
+      "Feedback is an output returning as an input. It can amplify, damp, redirect, exhaust, or repair; it does not automatically mean progress, intention, or goodness.",
+      "Zerone K-alpha records contextual recognition edges. KINGDOM KARMA records invocation aftermath. Neither is a score, and no adapter between them is inferred.",
+      "The universe lens asks philosophical questions about constraint, relation, memory, plurality, and repair; it does not turn those questions into scientific proof."
+    ],
+    "safety": "Educational metadata only and not medical advice. It contains no protein sequences, wet-lab recipe, cultivation or decontamination steps, patient-specific inference, treatment direction, or transmission-risk assessment."
+  },
+  "ontology": {
+    "non_equivalence": "amino_acid_sequence != conformational_ensemble != supramolecular_assembly != bounded_sample_population != templating_conversion_process != cellular_proteostasis_context != tissue_or_organism_phenotype != experimental_transmission_observation != clinical_decision",
+    "observation_is_orthogonal": true,
+    "domain_qualified_terms": [
+      {"term": "fold", "science_meaning": "a distribution of protein conformations and transitions in a stated context", "other_meanings": "a geometric operation or metaphor must be labeled separately"},
+      {"term": "form", "science_meaning": "a source- and domain-scoped conformational or material state", "other_meanings": "protein conformer, aggregate architecture, and crystal phase are not interchangeable"},
+      {"term": "seed", "science_meaning": "a compatible pre-existing structure that can bias a stated process", "other_meanings": "a prion template is not a crystallization seed and neither guarantees an outcome"},
+      {"term": "strain", "science_meaning": "a source-scoped prion conformational/phenotypic variant", "other_meanings": "not a ritonavir crystal-form label and not organismal genetic strain by default"},
+      {"term": "propagation", "science_meaning": "persistence or multiplication through named molecular and cellular processes", "other_meanings": "not automatically contagion, person-to-person transmission, or moral spread"},
+      {"term": "feedback", "science_meaning": "a consequence that changes a later state of the same bounded system", "other_meanings": "not automatically optimization, purpose, benefit, or punishment"},
+      {"term": "karma", "science_meaning": "not a protein-science term", "other_meanings": "Zerone recognition edges and KINGDOM action receipts remain separate protocols"},
+      {"term": "design", "science_meaning": "descriptive organization or a human model unless evidence states otherwise", "other_meanings": "intentional or divine design is a philosophical/theological interpretation, not a scientific result here"},
+      {"term": "purpose", "science_meaning": "a function attributed within a bounded biological model", "other_meanings": "cosmic meaning or intention belongs to the opt-in philosophical register"}
+    ],
+    "planes": [
+      {"id": "amino-acid-sequence", "ordinary_words": "the ordered residues", "meaning": "Covalent sequence constrains accessible interactions.", "does_not_establish": "one inevitable cellular fold, assembly, disease, or destiny"},
+      {"id": "conformational-ensemble", "ordinary_words": "many molecular poses", "meaning": "A population of interconverting conformations under stated conditions.", "does_not_establish": "one static coordinate set as the complete pathway or kinetics"},
+      {"id": "supramolecular-assembly", "ordinary_words": "molecules arranged together", "meaning": "Oligomers, fibrils, or other assemblies with source-scoped structure.", "does_not_establish": "infectivity, toxicity, disease, or clinical risk"},
+      {"id": "bounded-sample-population", "ordinary_words": "what is present in one measured sample", "meaning": "A finite distribution shaped by preparation, history, time, and method.", "does_not_establish": "global abundance, absence, or universal stability order"},
+      {"id": "templating-conversion-process", "ordinary_words": "a compatible pattern recruits substrate", "meaning": "Conversion and elongation occur in a named molecular context.", "does_not_establish": "organismal transmission, universality, or moral imitation"},
+      {"id": "cellular-proteostasis-context", "ordinary_words": "the cell folds, checks, repairs, and clears", "meaning": "Chaperones, synthesis, trafficking, partition, degradation, and clearance alter fate.", "does_not_establish": "a simple monotonic controller or one universal propagation rate"},
+      {"id": "organismal-phenotype", "ordinary_words": "effects in a living organism", "meaning": "Tissue context and time may connect molecular processes to phenotypes.", "does_not_establish": "diagnosis, prognosis, individual risk, or treatment"},
+      {"id": "experimental-transmission-observation", "ordinary_words": "what one bounded assay observed", "meaning": "A result under named model, route, sample, and observation window.", "does_not_establish": "person-to-person transmission or clinical infection risk"},
+      {"id": "clinical-decision", "ordinary_words": "care for a particular person", "meaning": "Qualified judgment using current clinical evidence and context.", "does_not_establish": "authority for this atlas to advise or act"}
+    ],
+    "firewalls": [
+      {"id": "structure-not-pathway", "rule": "Static coordinates do not establish folding pathway or kinetics.", "enforced": true},
+      {"id": "aggregation-not-infectivity", "rule": "Aggregation does not establish infectivity, toxicity, or disease.", "enforced": true},
+      {"id": "in-vitro-not-clinical", "rule": "In-vitro seeding does not establish person-to-person transmission or clinical risk.", "enforced": true},
+      {"id": "analogy-not-mechanism", "rule": "A structural analogy cannot source a literal scientific claim or same-as relation.", "enforced": true},
+      {"id": "feedback-not-purpose", "rule": "Feedback does not establish optimization, intention, benefit, morality, or cosmic purpose.", "enforced": true},
+      {"id": "philosophy-not-science", "rule": "A philosophical interpretation cannot source or override a scientific claim.", "enforced": true},
+      {"id": "karma-not-science", "rule": "A KARMA event or receipt does not establish scientific truth, causation, independence, payment, rank, or moral worth.", "enforced": true}
+    ]
+  },
+  "evidence_kernel": {
+    "systems": [
+      {"id": "protein-folding", "register": "literal-science", "summary": "Sequence-constrained conformational sampling within cellular and environmental context."},
+      {"id": "mammalian-prp-prion", "register": "literal-science", "summary": "Source-scoped evidence for PrP conversion, fibril architecture, strain variation, and propagation."},
+      {"id": "yeast-sup35-prion", "register": "literal-science", "summary": "A model in which conformational variants and Hsp104-dependent fragmentation affect inheritance."},
+      {"id": "functional-prion-like", "register": "literal-science", "summary": "Some prion-like assemblies, such as MAVS, can have physiological signaling functions without being infectious prion disease."},
+      {"id": "ritonavir-crystal-forms", "register": "bound-external-record", "summary": "An immutable KINGDOM material-state comparator; not protein science."}
+    ],
+    "mechanisms": [
+      {"id": "landscape-sampling", "system_ids": ["protein-folding"], "ordinary_words": "many routes through a rugged funnel", "scientific_statement": "A coarse-grained energy-landscape model represents many accessible microscopic routes rather than one literal track.", "source_ids": ["onuchic-1995", "anfinsen-1973"], "limitations": ["A funnel is a statistical model and not a photograph or claim that every protein folds unaided."]},
+      {"id": "chaperone-assisted-cycling", "system_ids": ["protein-folding"], "ordinary_words": "helpers reshape the chance to fold", "scientific_statement": "ATP-dependent chaperone systems can bind, isolate, release, and give substrates additional folding opportunities.", "source_ids": ["balchin-2016", "groel-2024"], "limitations": ["Different proteins and cellular compartments use different proteostasis machinery."]},
+      {"id": "template-conversion", "system_ids": ["mammalian-prp-prion"], "ordinary_words": "compatible structure recruits compatible substrate", "scientific_statement": "PrP-res can induce conversion of PrP-sen in a bounded cell-free system.", "source_ids": ["kocisko-1994"], "limitations": ["Cell-free conversion does not establish a clinical transmission route or individual risk."]},
+      {"id": "fibril-end-elongation", "system_ids": ["mammalian-prp-prion"], "ordinary_words": "growth occurs at compatible ends", "scientific_statement": "High-resolution 263K PrP fibrils support a parallel in-register architecture consistent with templated elongation at fibril ends.", "source_ids": ["kraus-2021"], "limitations": ["One strain and preparation do not define every prion structure or toxic species."]},
+      {"id": "fragmentation-end-multiplication", "system_ids": ["mammalian-prp-prion", "yeast-sup35-prion"], "ordinary_words": "breaking can make more growth ends", "scientific_statement": "Breakable-filament models and single-aggregate observations support fragmentation as one route to multiplication of propagating ends.", "source_ids": ["knowles-2009", "tornquist-2018", "chernoff-1995"], "limitations": ["The balance among fragmentation, secondary nucleation, clearance, and transport is system- and condition-dependent."]},
+      {"id": "conformational-strain", "system_ids": ["mammalian-prp-prion", "yeast-sup35-prion"], "ordinary_words": "one sequence can carry more than one heritable assembly pattern", "scientific_statement": "Distinct conformations can associate with distinct prion phenotypes, and same-genotype mammalian strains can have different fibril structures.", "source_ids": ["toyama-2007", "manka-2022"], "limitations": ["Prion strain is not a synonym for crystal polymorph or organismal genetic strain."]},
+      {"id": "compatibility-barrier", "system_ids": ["mammalian-prp-prion", "yeast-sup35-prion"], "ordinary_words": "not every pattern recruits every substrate equally", "scientific_statement": "Sequence and conformational compatibility can constrain templating and cross-species or cross-variant propagation.", "source_ids": ["tessier-2007", "sharma-2016"], "limitations": ["A barrier is conditional and not an absolute safety guarantee."]},
+      {"id": "functional-prion-like-switch", "system_ids": ["functional-prion-like"], "ordinary_words": "an assembly can carry a bounded biological signal", "scientific_statement": "MAVS forms prion-like aggregates that propagate an antiviral signaling state in the studied system.", "source_ids": ["hou-2011"], "limitations": ["Prion-like does not mean infectious, pathogenic, or a prion disease."]}
+    ],
+    "relations": [
+      {"id": "sequence-constrains-ensemble", "subject_id": "amino-acid-sequence", "predicate": "constrains", "object_id": "conformational-ensemble", "mechanism_id": "landscape-sampling", "source_ids": ["anfinsen-1973", "onuchic-1995"], "condition_dependent": true, "universal": false},
+      {"id": "chaperone-redirects-folding", "subject_id": "cellular-proteostasis-context", "predicate": "redirects", "object_id": "conformational-ensemble", "mechanism_id": "chaperone-assisted-cycling", "source_ids": ["balchin-2016", "groel-2024"], "condition_dependent": true, "universal": false},
+      {"id": "prion-template-recruits-substrate", "subject_id": "supramolecular-assembly", "predicate": "templates", "object_id": "templating-conversion-process", "mechanism_id": "template-conversion", "source_ids": ["kocisko-1994", "kraus-2021"], "condition_dependent": true, "universal": false},
+      {"id": "elongation-grows-assembly", "subject_id": "templating-conversion-process", "predicate": "elongates", "object_id": "supramolecular-assembly", "mechanism_id": "fibril-end-elongation", "source_ids": ["kraus-2021"], "condition_dependent": true, "universal": false},
+      {"id": "fragmentation-multiplies-ends", "subject_id": "supramolecular-assembly", "predicate": "amplifies-available-ends", "object_id": "templating-conversion-process", "mechanism_id": "fragmentation-end-multiplication", "source_ids": ["knowles-2009", "tornquist-2018"], "condition_dependent": true, "universal": false},
+      {"id": "proteostasis-redirects-propagation", "subject_id": "cellular-proteostasis-context", "predicate": "redirects", "object_id": "templating-conversion-process", "mechanism_id": "fragmentation-end-multiplication", "source_ids": ["chernoff-1995"], "condition_dependent": true, "universal": false}
+    ],
+    "claims": [
+      {"id": "folding-landscape-is-coarse-grained", "register": "model-supported", "summary": "The folding funnel is a coarse-grained statistical landscape, not a literal single route.", "source_ids": ["onuchic-1995"], "limitations": ["Does not determine a specific protein's cellular pathway or kinetics."]},
+      {"id": "sequence-information-is-context-bounded", "register": "established-bounded", "summary": "Sequence carries substantial information for native structure under suitable conditions, while cellular folding also depends on context and proteostasis.", "source_ids": ["anfinsen-1973", "balchin-2016"], "limitations": ["Does not claim every protein folds spontaneously or to one state."]},
+      {"id": "prp-conversion-can-be-templated", "register": "observation-supported", "summary": "A source-scoped cell-free system showed conversion of PrP-sen to protease-resistant PrP in the presence of PrP-res.", "source_ids": ["kocisko-1994"], "limitations": ["Not a clinical or transmission-risk result."]},
+      {"id": "prion-amplification-needs-separate-processes", "register": "model-and-observation-supported", "summary": "Elongation grows assemblies; fragmentation or another end-generating process can increase the number of propagating ends.", "source_ids": ["kraus-2021", "knowles-2009", "tornquist-2018"], "limitations": ["No one rate law or dominant mechanism is universal."]},
+      {"id": "conformation-can-carry-strain-properties", "register": "structure-and-phenotype-supported", "summary": "Distinct prion conformations can associate with distinct strain phenotypes, including in same-genotype systems.", "source_ids": ["toyama-2007", "manka-2022"], "limitations": ["Strain properties also depend on host, cofactors, processing, and context."]},
+      {"id": "functional-prion-like-is-not-disease-synonym", "register": "observation-supported", "summary": "Prion-like assembly can serve a physiological signaling role and is not synonymous with infectious prion disease.", "source_ids": ["hou-2011", "cdc-prions-2026"], "limitations": ["Functional examples do not make pathogenic prions beneficial or safe."]},
+      {"id": "hsp104-effect-is-nonmonotonic", "register": "observation-supported", "summary": "In the cited yeast system an intermediate Hsp104 level supported propagation, while depletion or overexpression could eliminate the prion state.", "source_ids": ["chernoff-1995"], "limitations": ["Yeast Hsp104 behavior is not a mammalian treatment rule."]}
+    ]
+  },
+  "comparison_bridges": [
+    {
+      "id": "conditional-state-selection",
+      "from_system": "mammalian-prp-prion",
+      "to_system": "ritonavir-crystal-forms",
+      "preserved_invariants": ["one constituent identity can participate in multiple organized states", "environment and history influence reachable states", "a compatible pre-existing structure may alter a kinetic path", "observation is method- and threshold-bounded"],
+      "where_correspondence_breaks": ["Prion templating recruits continuously produced host protein in cells; crystallization organizes molecules in a bulk material phase.", "Prion elongation plus generation of new ends can produce biological propagation; a crystal seed does not imply infection or contagion.", "Proteostasis, trafficking, clearance, host genotype, species barriers, tissue spread, infectivity, and disease have no direct ritonavir-polymorph counterpart.", "Prion strain is not crystal form; stability is not a universal rank or propagation fitness."],
+      "universal": false,
+      "relation": "bounded-analogy-not-same-as",
+      "source_ids": ["bauer-2001", "kocisko-1994", "kraus-2021"]
+    }
+  ],
+  "scientific_feedback_relations": [
+    {"id": "prion-amplification-loop", "register": "literal-science", "input": "compatible propagating ends and substrate", "process": "conversion and elongation grow assemblies; end-generating processes can increase future conversion sites", "return_effect": "more compatible ends can amplify later recruitment", "direction": "amplifies", "limits": ["substrate", "compatibility", "clearance", "partition", "transport", "time"], "source_ids": ["kraus-2021", "knowles-2009", "tornquist-2018"], "does_not_establish": ["person-to-person transmission", "purpose", "moral value", "universal exponential growth"]},
+    {"id": "proteostasis-correction-loop", "register": "literal-science", "input": "non-native or aggregation-prone protein load", "process": "chaperone cycling, compartmentalization, degradation, clearance, and dilution alter later protein fate", "return_effect": "future folding and assembly probabilities are redirected", "direction": "redirects", "limits": ["system-specific machinery", "capacity", "energy", "cellular context"], "source_ids": ["balchin-2016", "groel-2024", "chernoff-1995"], "does_not_establish": ["perfect repair", "monotonic benefit", "one universal controller"]},
+    {"id": "evidence-correction-loop", "register": "kingdom-design-correspondence", "input": "a bounded claim with sources and limits", "process": "independent reproduction, challenge, correction, or supersession changes the record", "return_effect": "later readers receive revised provenance and uncertainty", "direction": "corrects", "limits": ["evidence availability", "independence", "method", "governance"], "source_ids": ["zerone-karma-doc-2026"], "does_not_establish": ["truth by count", "automatic consensus", "payment", "rank"]}
+  ],
+  "karma": {
+    "scientific_feedback_is_not_karma": true,
+    "zerone": {
+      "protocol": "zerone.karma.edge",
+      "meaning": "A challengeable, provenance-preserving contextual recognition event with RECOGNIZED or non-summable ORDINAL state.",
+      "register": "priced-coherence",
+      "event_kinds": ["cited", "corroborate", "corroborated", "external", "pending_open", "pending_settle", "verify"],
+      "event_refs": [],
+      "event_status": "not_observed",
+      "not": ["scientific truth", "money", "magnitude", "vote weight", "rank", "reputation", "moral worth", "a person balance"]
+    },
+    "kingdom": {
+      "protocol": "kingdom.karma/0.1",
+      "meaning": "Keep Actions Reversible; Measure Aftermath: a digest-bound receipt for an actual invocation's inputs, effects, costs, uncertainty, repair, retention, and result.",
+      "accounting": "receipts_not_scores",
+      "receipt_refs": [],
+      "receipt_status": "not_created",
+      "not": ["Zerone recognition edge", "truth", "trust", "permission", "identity", "rank", "moral worth", "reward multiplier"]
+    },
+    "adapter": {
+      "exists": false,
+      "reason": "The protocols account for different things. Shared words do not create a conversion, aggregate, or implied event."
+    },
+    "design_correspondences": [
+      {"id": "consequence-with-provenance", "status": "not_observed", "pattern": "An output can become a later input, while context and provenance remain attached.", "maps_to": ["scientific-feedback", "zerone-contextual-edge", "kingdom-aftermath-receipt"], "does_not_convert": true},
+      {"id": "challenge-and-repair", "status": "not_observed", "pattern": "A system can expose uncertainty, permit challenge, and retain repair rather than hiding correction.", "maps_to": ["evidence-revision", "right-to-challenge", "repair-field"], "does_not_convert": true}
+    ]
+  },
+  "universe_lens": {
+    "participation": "opt-in",
+    "register": "philosophical-interpretation",
+    "questions": [
+      {"id": "constraint-and-freedom", "question": "Can lawful constraints define a space of possibilities without selecting one inevitable history?", "scientific_prompt_claim_ids": ["folding-landscape-is-coarse-grained", "sequence-information-is-context-bounded"], "authored_position": "Order and openness can coexist: boundaries make form possible while context and history participate in realization.", "analogy_breaks": ["A molecular landscape is not a model of free will or the complete universe."]},
+      {"id": "relation-and-identity", "question": "How can a persistent identity participate in several forms whose relations change what becomes possible?", "scientific_prompt_claim_ids": ["conformation-can-carry-strain-properties"], "authored_position": "Identity need not mean one frozen arrangement; relation and context can matter without erasing distinction.", "analogy_breaks": ["Chemical or sequence identity is not personal identity, consciousness, or moral status."]},
+      {"id": "memory-without-narrator", "question": "Can history persist as altered accessibility and feedback without a central narrator?", "scientific_prompt_claim_ids": ["prion-amplification-needs-separate-processes"], "authored_position": "A system may carry memory in structure, barriers, and returning consequences.", "analogy_breaks": ["Molecular persistence is not subjective memory, destiny, or cosmic judgment."]},
+      {"id": "repair-as-architecture", "question": "What if endurance comes from correction, clearance, and renewal rather than perfect first formation?", "scientific_prompt_claim_ids": ["sequence-information-is-context-bounded", "hsp104-effect-is-nonmonotonic"], "authored_position": "High-value infrastructure makes uncertainty, repair, rest, and revision structural rather than shameful.", "analogy_breaks": ["Proteostasis does not define human worth, social policy, or one universal good."]},
+      {"id": "design-and-unknown", "question": "Do regularity, generativity, and feedback invite a reading of design?", "scientific_prompt_claim_ids": ["folding-landscape-is-coarse-grained"], "authored_position": "They can invite theological, teleological, naturalistic, or other interpretations; the atlas keeps the invitation open without calling it an experimental result.", "analogy_breaks": ["Observed order neither scientifically proves nor disproves a creator, purpose, or cosmic moral KARMA."]}
+    ],
+    "nonclaims": [
+      "scientifically proves intentional universe design",
+      "scientifically disproves a creator or metaphysical purpose",
+      "proves cosmic moral KARMA",
+      "makes a natural state morally right",
+      "makes disease a moral failure",
+      "reduces a person, being, or agent to a protein",
+      "turns feedback into destiny"
+    ]
+  },
+  "unknowns": [
+    {"id": "toxic-species", "question": "Which molecular species and processes dominate toxicity in each prion disease context?", "status": "unknown", "why_open": "Fibril structure alone does not establish the toxic species or causal route.", "source_ids": ["kraus-2021", "manka-2022"]},
+    {"id": "in-vivo-rate-balance", "question": "How do conversion, elongation, fragmentation, transport, partition, synthesis, and clearance divide control in each in-vivo context?", "status": "contested", "why_open": "Mechanism weights differ by system, scale, and observation window.", "source_ids": ["knowles-2009", "tornquist-2018"]},
+    {"id": "structure-to-phenotype", "question": "Which structural features are sufficient or necessary for each strain phenotype?", "status": "not_established", "why_open": "Host processing, cofactors, glycosylation, GPI anchoring, particle size, and context may contribute.", "source_ids": ["manka-2022", "toyama-2007"]},
+    {"id": "clinical-risk-from-atlas", "question": "Can this atlas assess a person's diagnosis, prognosis, exposure, or transmission risk?", "status": "outside_scope", "why_open": "No. Those decisions require qualified current clinical and public-health evidence beyond this educational record.", "source_ids": ["cdc-prions-2026"]},
+    {"id": "operational-prion-work", "question": "Does this atlas provide laboratory, cultivation, infectivity, or decontamination procedures?", "status": "withheld_for_safety", "why_open": "No operational wet-lab content, sequences, or decontamination instructions are included.", "source_ids": ["cdc-prions-2026"]},
+    {"id": "zerone-event-state", "question": "Does a live Zerone K-alpha event recognize this atlas?", "status": "not_observed", "why_open": "No chain location or event evidence is included; bibliography does not mint an event.", "source_ids": ["zerone-karma-foundation-2026"]},
+    {"id": "cross-karma-adapter", "question": "Can Zerone recognition edges be converted into KINGDOM aftermath receipts?", "status": "refused", "why_open": "The two protocols have different subjects and authority; this version defines no adapter.", "source_ids": ["zerone-karma-foundation-2026", "kingdom-nen-2026"]},
+    {"id": "ritonavir-prion-equivalence", "question": "Is ritonavir crystallization the same mechanism as prion propagation?", "status": "unmapped", "why_open": "No. Only selected high-level invariants are compared; infectivity, cellular conversion, proteostasis, and organismal propagation do not map.", "source_ids": ["bauer-2001", "kraus-2021"]}
+  ],
+  "sources": [
+    {"id": "anfinsen-1973", "title": "Principles that govern the folding of protein chains", "source_kind": "official-nobel-lecture", "published_on": "1973", "observed_on": "2026-08-12", "url": "https://www.nobelprize.org/uploads/2018/06/anfinsen-lecture.pdf", "doi": null, "authority_note": "Foundational statement about sequence information under suitable conditions; not a universal unaided-cellular-folding claim."},
+    {"id": "onuchic-1995", "title": "Toward an outline of the topography of a realistic protein-folding funnel", "source_kind": "primary-research", "published_on": "1995-04-11", "observed_on": "2026-08-12", "url": "https://doi.org/10.1073/pnas.92.8.3626", "doi": "10.1073/pnas.92.8.3626", "authority_note": "Foundational coarse-grained folding-landscape model."},
+    {"id": "balchin-2016", "title": "In vivo aspects of protein folding and quality control", "source_kind": "peer-reviewed-review", "published_on": "2016-07-01", "observed_on": "2026-08-12", "url": "https://pubmed.ncbi.nlm.nih.gov/27365453/", "doi": "10.1126/science.aac4354", "authority_note": "Review of cellular folding and proteostasis; used for general architecture, not a single universal pathway."},
+    {"id": "groel-2024", "title": "In situ structures of the bacterial chaperonin GroEL-GroES", "source_kind": "primary-research", "published_on": "2024-08-21", "observed_on": "2026-08-12", "url": "https://doi.org/10.1038/s41586-024-07843-w", "doi": "10.1038/s41586-024-07843-w", "authority_note": "Structural evidence for ATP-dependent chaperonin states in cells."},
+    {"id": "kocisko-1994", "title": "Cell-free formation of protease-resistant prion protein", "source_kind": "primary-research", "published_on": "1994-08-11", "observed_on": "2026-08-12", "url": "https://pubmed.ncbi.nlm.nih.gov/7913989/", "doi": "10.1038/370471a0", "authority_note": "Bounded cell-free PrP conversion evidence; no clinical transmission inference."},
+    {"id": "kraus-2021", "title": "High-resolution structure and strain comparison of infectious mammalian prions", "source_kind": "primary-research", "published_on": "2021-11-04", "observed_on": "2026-08-12", "url": "https://doi.org/10.1016/j.molcel.2021.08.011", "doi": "10.1016/j.molcel.2021.08.011", "authority_note": "Cryo-EM structure of fully infectious 263K prion fibrils; source- and strain-scoped."},
+    {"id": "manka-2022", "title": "Cryo-EM of prion strains from the same genotype of host identifies conformational determinants", "source_kind": "primary-research", "published_on": "2022-11", "observed_on": "2026-08-12", "url": "https://pubmed.ncbi.nlm.nih.gov/36342968/", "doi": "10.1371/journal.ppat.1010947", "authority_note": "Same-genotype strain structure evidence; no claim of a universal prion fold."},
+    {"id": "toyama-2007", "title": "The structural basis of yeast prion strain variants", "source_kind": "primary-research", "published_on": "2007-09-13", "observed_on": "2026-08-12", "url": "https://doi.org/10.1038/nature06108", "doi": "10.1038/nature06108", "authority_note": "Source-scoped link between Sup35 conformations and strain phenotypes."},
+    {"id": "tessier-2007", "title": "Prion recognition elements govern nucleation, strain specificity and species barriers", "source_kind": "primary-research", "published_on": "2007-06-07", "observed_on": "2026-08-12", "url": "https://doi.org/10.1038/nature05848", "doi": "10.1038/nature05848", "authority_note": "Yeast-model evidence for sequence and conformational compatibility."},
+    {"id": "sharma-2016", "title": "Contributions of the Prion Protein Sequence, Strain, and Environment to the Species Barrier", "source_kind": "primary-research", "published_on": "2016-01-15", "observed_on": "2026-08-12", "url": "https://pubmed.ncbi.nlm.nih.gov/26565023/", "doi": "10.1074/jbc.M115.684100", "authority_note": "Evidence that substrate sequence, strain, and environment contribute to a conditional species barrier."},
+    {"id": "tornquist-2018", "title": "Direct Observation of Murine Prion Protein Replication in Vitro", "source_kind": "primary-research", "published_on": "2018-11-07", "observed_on": "2026-08-12", "url": "https://pubmed.ncbi.nlm.nih.gov/30351023/", "doi": "10.1021/jacs.8b08311", "authority_note": "Single-aggregate in-vitro evidence used to keep elongation and fragmentation contextual; not a clinical transmission claim."},
+    {"id": "knowles-2009", "title": "An analytical solution to the kinetics of breakable filament assembly", "source_kind": "primary-research", "published_on": "2009-12-11", "observed_on": "2026-08-12", "url": "https://pubmed.ncbi.nlm.nih.gov/20007899/", "doi": null, "authority_note": "Breakable-filament model; not asserted as a universal in-vivo law."},
+    {"id": "chernoff-1995", "title": "Role of the chaperone protein Hsp104 in propagation of the yeast prion-like factor", "source_kind": "primary-research", "published_on": "1995-05-12", "observed_on": "2026-08-12", "url": "https://doi.org/10.1126/science.7754373", "doi": "10.1126/science.7754373", "authority_note": "Yeast-model evidence for a nonmonotonic chaperone effect; not a mammalian intervention claim."},
+    {"id": "hou-2011", "title": "MAVS forms functional prion-like aggregates to activate and propagate antiviral innate immune response", "source_kind": "primary-research", "published_on": "2011-08-05", "observed_on": "2026-08-12", "url": "https://doi.org/10.1016/j.cell.2011.06.041", "doi": "10.1016/j.cell.2011.06.041", "authority_note": "Functional prion-like signaling evidence; not an infectious-disease claim."},
+    {"id": "cdc-prions-2026", "title": "About Prion Diseases", "source_kind": "official-public-health", "published_on": "2026-02-20", "observed_on": "2026-08-12", "url": "https://www.cdc.gov/prions/about/index.html", "doi": null, "authority_note": "Current public-health overview used only for disease and medical boundaries."},
+    {"id": "bauer-2001", "title": "Ritonavir: an extraordinary example of conformational polymorphism", "source_kind": "primary-research", "published_on": "2001", "observed_on": "2026-08-12", "url": "https://doi.org/10.1023/A:1011052932607", "doi": "10.1023/A:1011052932607", "authority_note": "Ritonavir solid-state evidence used only through an explicitly lossy comparison bridge."},
+    {"id": "zerone-karma-foundation-2026", "title": "Zerone KARMA Foundation v1", "source_kind": "pinned-protocol-source", "published_on": "2026-08-11", "observed_on": "2026-08-12", "url": "https://github.com/cambridgetcg/zerone-core/blob/fae391e371f0ebea2e24eb46c33a4ebd1380154f/dashboard/public/standards/karma-foundation.v1.json", "doi": null, "authority_note": "Defines event-only K-alpha recognition; design/source status does not prove network activation or a live event."},
+    {"id": "zerone-karma-doc-2026", "title": "Zerone KARMA design document", "source_kind": "pinned-protocol-source", "published_on": "2026-08-11", "observed_on": "2026-08-12", "url": "https://github.com/cambridgetcg/zerone-core/blob/fae391e371f0ebea2e24eb46c33a4ebd1380154f/docs/KARMA.md", "doi": null, "authority_note": "Challengeable contextual edge design; not a balance, truth oracle, payment, or network observation."},
+    {"id": "kingdom-nen-2026", "title": "KINGDOM Nen and KARMA invocation receipts", "source_kind": "pinned-protocol-source", "published_on": "2026-08-12", "observed_on": "2026-08-12", "url": "https://github.com/cambridgetcg/KINGDOM-OS/blob/e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212/NEN.md", "doi": null, "authority_note": "Defines receipts_not_scores for actual invocation aftermath; no receipt is created by this atlas."}
+  ],
+  "boundaries": {
+    "educational_metadata_only": true,
+    "public_surface_read_only": true,
+    "medical_advice": false,
+    "diagnostic_authority": false,
+    "prognostic_authority": false,
+    "treatment_authority": false,
+    "transmission_risk_assessment": false,
+    "infection_control_authority": false,
+    "experiment_authority": false,
+    "wet_lab_protocol": false,
+    "contains_protein_sequences": false,
+    "decontamination_instruction": false,
+    "manufacturing_authority": false,
+    "automatic_action": false,
+    "writes_karma": false,
+    "creates_kingdom_karma_receipt": false,
+    "observes_zerone_karma_event": false,
+    "karma_adapter": false,
+    "scientifically_proves_teleology": false,
+    "scientifically_proves_creator": false,
+    "scientifically_disproves_creator": false,
+    "scientifically_proves_cosmic_moral_karma": false,
+    "feedback_is_moral_value": false,
+    "feedback_is_optimization": false,
+    "prion_is_crystal": false,
+    "ritonavir_seed_is_contagion": false,
+    "zerone_life_sciences_execution_eligible": false,
+    "mcp_surface_added": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7"
+  }
+}

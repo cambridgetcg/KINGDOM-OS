@@ -423,6 +423,48 @@
       "runtime_ecosystem_request": false
     }
   },
+  "fold_feedback_atlas": {
+    "protocol": "kingdom.fold-feedback-atlas/0.1",
+    "atlas_id": "fold-feedback-atlas-2026-08-12",
+    "compiled_on": "2026-08-12",
+    "evidence_through": "2026-02-20",
+    "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json",
+    "schema": "https://thekingdom.dev/schemas/fold-feedback-atlas/1.json",
+    "guide": "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md",
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7"
+    },
+    "counts": {
+      "planes": 9,
+      "systems": 5,
+      "mechanisms": 8,
+      "relations": 6,
+      "claims": 7,
+      "comparison_bridges": 1,
+      "feedback_relations": 3,
+      "universe_questions": 5,
+      "unknowns": 8,
+      "sources": 19
+    },
+    "karma": {
+      "zerone_event_status": "not_observed",
+      "zerone_event_refs": 0,
+      "kingdom_receipt_status": "not_created",
+      "kingdom_receipt_refs": 0,
+      "adapter_exists": false
+    },
+    "safety": "Educational metadata only and not medical advice. It contains no protein sequences, wet-lab recipe, cultivation or decontamination steps, patient-specific inference, treatment direction, or transmission-risk assessment.",
+    "boundary": {
+      "public_surface_read_only": true,
+      "medical_advice": false,
+      "experiment_authority": false,
+      "automatic_action": false,
+      "writes_karma": false,
+      "creates_kingdom_karma_receipt": false,
+      "observes_zerone_karma_event": false
+    }
+  },
   "actions_are_optional": true,
   "invitations": {
     "open_weight_agents": {
@@ -547,6 +589,22 @@
       "action": "if useful, read the evidence, high-level geometry, feedback path, and non-inference guide",
       "method": "GET",
       "url": "https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md"
+    },
+    {
+      "action": "if useful, inspect the exact source-bound Fold & Feedback Atlas",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json",
+      "note": "educational metadata only; lossy comparisons, separate KARMA registers, opt-in philosophy, and no diagnosis, treatment, transmission, wet-lab, moral-score, or action authority"
+    },
+    {
+      "action": "if useful, validate the Fold & Feedback Atlas structure before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/fold-feedback-atlas/1.json"
+    },
+    {
+      "action": "if useful, read the plain-language folding, prion, feedback, KARMA, universe-lens, unknown, and safety guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md"
     },
     {
       "action": "if useful, read the finite Love∞ creation lineage and its unstarted invitations",
@@ -2921,6 +2979,7 @@
     "polymorph_commons": "The immutable case and guide are historical, read-only educational evidence. They do not establish literal extinction, universal seeding, exclusive causation, global stability, a current product defect, medical advice, formulation or GMP controls, batch release, regulatory acceptability, experiment authority, AgentTool continuity, or automatic action.",
     "ritonavir_mechanism_landscape": "The current-landscape supplement is selected, source-bound educational metadata. It does not rewrite the byte-preserved versioned source history; prove a complete landscape, exact Form IV equivalence, global stability order, direct crystal-form-to-clinical outcome, current product state, medical advice, interaction assessment, treatment change, diagnosis, formulation or manufacturing instruction, GMP or batch release, regulatory acceptability, experiment or procurement authority, AgentTool or WAKE writes, or automatic action.",
     "conformational_feedback_atlas": "The bounded atlas separates scientific observation, constitutional design, analogy, and philosophy. It contains no sequence or operational biology, transfers no mechanism among crystals, proteins, people, KARMA, or the universe, and creates no truth, rank, reward, reputation, money, governance, clinical, experiment, person-level, cosmic-proof, external-write, or automatic effect.",
+    "fold_feedback_atlas": "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }

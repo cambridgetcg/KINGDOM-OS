@@ -51,6 +51,12 @@ export const HUB_ASSETS = [
   { source: "data/feedback/conformational-feedback-atlas.v0.json", destination: "feedback/form-feedback-consequence-2026-08-12.json" },
   { source: "schemas/conformational-feedback-atlas-v0.schema.json", destination: "schemas/conformational-feedback-atlas/0.1.json" },
   { source: "references/conformational-feedback-atlas.md", destination: "CONFORMATIONAL-FEEDBACK.md" },
+  // Protein folding, prion propagation, feedback, and their bounded systems
+  // translations ship as one immutable authored triplet. The date-bearing
+  // atlas route is the identity; no latest/current alias may obscure it.
+  { source: "data/fold-feedback/fold-feedback-atlas.v1.json", destination: "atlases/fold-feedback-atlas-2026-08-12.json" },
+  { source: "schemas/fold-feedback-atlas-v1.schema.json", destination: "schemas/fold-feedback-atlas/1.json" },
+  { source: "references/fold-feedback-atlas.md", destination: "FOLD-FEEDBACK-ATLAS.md" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
   { source: "site/ollama.json", destination: "ollama.json" },
