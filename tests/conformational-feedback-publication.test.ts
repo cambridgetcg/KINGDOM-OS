@@ -38,9 +38,11 @@ describe("Conformational Feedback Atlas publication", () => {
     expect(schema.$comment).toContain("cannot recompute");
     expect(schema.required).toEqual([
       "$schema", "protocol", "atlas_id", "title", "compiled_on", "evidence_through", "scope",
-      "bindings", "registers", "geometries", "translations", "feedback_path", "philosophy",
-      "sources", "boundaries", "integrity",
+      "bindings", "ecosystem_bridges", "registers", "physics_and_mathematics", "geometries",
+      "translations", "feedback_path", "philosophy", "sources", "boundaries", "integrity",
     ]);
+    expect(atlas.physics_and_mathematics).toHaveLength(4);
+    expect(atlas.ecosystem_bridges).toHaveLength(5);
     expect(atlas.registers.map(({ register }: { register: string }) => register)).toEqual([
       "SCIENTIFIC_OBSERVATION",
       "SCIENTIFIC_OBSERVATION",
@@ -84,6 +86,7 @@ describe("Conformational Feedback Atlas publication", () => {
     const end = html.indexOf('<section class="blk" id="rights"', start);
     expect(start).toBeGreaterThanOrEqual(0);
     expect(end).toBeGreaterThan(start);
+    expect(start).toBeLessThan(html.indexOf("<script>"));
     const field = html.slice(start, end);
 
     expect(field).toContain('data-conformational-feedback-atlas');
@@ -106,12 +109,32 @@ describe("Conformational Feedback Atlas publication", () => {
       expect(field.match(new RegExp(`data-feedback-geometry="${geometry.id}"`, "g")) ?? []).toHaveLength(1);
       expect(field).toContain(geometry.does_not_establish);
     }
+    for (const model of atlas.physics_and_mathematics) {
+      expect(field.match(new RegExp(`data-feedback-model="${model.id}"`, "g")) ?? []).toHaveLength(1);
+      expect(field).toContain(
+        model.equation.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;"),
+      );
+      for (const [term, meaning] of Object.entries(model.terms)) {
+        expect(field).toContain(`<dt>${term}</dt>`);
+        expect(field).toContain(String(meaning));
+      }
+      expect(field).toContain(model.does_not_establish);
+    }
     for (const translation of atlas.translations) {
       expect(field.match(new RegExp(`data-feedback-translation="${translation.id}"`, "g")) ?? []).toHaveLength(1);
       expect(field).toContain(`Forbidden inference: ${translation.forbidden_inference}`);
     }
     for (const stage of atlas.feedback_path.stages) {
       expect(field.match(new RegExp(`data-feedback-stage="${stage.id}"`, "g")) ?? []).toHaveLength(1);
+    }
+    for (const question of atlas.philosophy.questions) {
+      expect(field.match(new RegExp(`data-feedback-philosophy-question="${question.id}"`, "g")) ?? []).toHaveLength(1);
+      expect(field).toContain(question.analogy_break);
+    }
+    for (const bridge of atlas.ecosystem_bridges) {
+      expect(field.match(new RegExp(`data-feedback-ecosystem="${bridge.id}"`, "g")) ?? []).toHaveLength(1);
+      expect(field).toContain(`href="${bridge.url}"`);
+      expect(field).toContain(`${bridge.mode} · request ${bridge.runtime_request} · import ${bridge.imported}`);
     }
     for (const source of atlas.sources) {
       expect(field).toContain(`href="${source.url}"`);
@@ -134,6 +157,15 @@ describe("Conformational Feedback Atlas publication", () => {
     expect(manifest.conformational_feedback_atlas).toEqual(expected);
     expect(expected.bindings).toHaveLength(3);
     expect(expected.bindings.every(({ authority_imported }: any) => authority_imported === false)).toBe(true);
+    expect(expected.counts).toEqual({
+      registers: 3,
+      physics_and_mathematics: 4,
+      ecosystem_bridges: 5,
+      geometries: 5,
+      translations: 3,
+      feedback_stages: 4,
+      sources: 13,
+    });
     expect(expected.boundary).toEqual({
       read_only: true,
       operational_biology: false,
@@ -146,6 +178,7 @@ describe("Conformational Feedback Atlas publication", () => {
       cosmic_design_proven: false,
       scientific_validation_from_analogy: false,
       automatic_action: false,
+      runtime_ecosystem_request: false,
     });
     for (const url of [CONFORMATIONAL_FEEDBACK_URL, CONFORMATIONAL_FEEDBACK_SCHEMA_URL, CONFORMATIONAL_FEEDBACK_DOCUMENT_URL]) {
       expect(guest.next_actions).toContainEqual(expect.objectContaining({ method: "GET", url }));
@@ -154,6 +187,15 @@ describe("Conformational Feedback Atlas publication", () => {
     expect(expected).not.toHaveProperty("mcp");
     expect(expected).not.toHaveProperty("matcher");
     expect(expected).not.toHaveProperty("execute");
+  });
+
+  test("keeps the post-deploy checker aligned with the sealed discovery counts", () => {
+    const expected = conformationalFeedbackPublicDiscovery();
+    const liveChecker = read("bin/check-hub-live.ts");
+    for (const [name, count] of Object.entries(expected.counts)) {
+      expect(liveChecker).toContain(`expectedConformationalFeedback.counts.${name} !== ${count}`);
+    }
+    expect(liveChecker).toContain("conformationalFeedbackBoundary.runtime_ecosystem_request !== false");
   });
 
   test("the bound Ritonavir source remains byte-preserved", () => {

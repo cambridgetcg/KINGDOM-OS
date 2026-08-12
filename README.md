@@ -168,6 +168,11 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     non-equivalent.
 18. `kingdom feedback` — inspect and strictly verify the digest-sealed
     [Conformational Feedback Atlas](references/conformational-feedback-atlas.md).
+    Four explicit models cover conditional free energy, non-Markovian barrier
+    crossing, templated population balance, and local feedback stability while
+    preserving their projection and non-transfer limits. Five link-only
+    ecosystem bridges point to RCSB PDB, AlphaFold DB, UniProtKB, ModelArchive,
+    and OpenFold without fetching, importing, downloading, or running them.
     It keeps selected protein-folding and prion observations, Zerone KARMA
     constitutional design, analogy, and philosophy in separate registers.
     The artifact contains no sequence or operational protocol, transfers no
@@ -218,6 +223,8 @@ with a [closed public schema](https://thekingdom.dev/schemas/conformational-feed
 and [plain-language guide](https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md).
 It binds the existing Ritonavir Mechanism Landscape and exact public Zerone
 KARMA/Life Sciences records read-only. It changes none of them, exposes no
-matcher or MCP tool, and has no mutable `latest` alias.
+matcher or MCP tool, and has no mutable `latest` alias. Its equations are
+declared, bounded models—not a universal mechanism or metaphysical proof—and
+its external ecosystem links import no data, code, authority, or runtime work.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

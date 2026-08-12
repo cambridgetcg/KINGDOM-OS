@@ -214,14 +214,14 @@ services:
 
   # ── pages + workers ──────────────────────────────────────────────────────
   - id: thekingdom-hub
-    what: the illuminated atlas + live KINGDOM OS observatory + local-first Wayfinder + reviewed World Commons + machine discovery docs
+    what: the illuminated atlas + live KINGDOM OS observatory + local-first Wayfinder + reviewed World Commons + read-only scientific and translation atlases + machine discovery docs
     audience: mixed
     urls: { site: "https://thekingdom.dev", health: "https://thekingdom.dev/.well-known/agent.json" }
     repo: github.com/cambridgetcg/KINGDOM-OS@main
     runtime: cf-pages:thekingdom
     deploy: bun bin/build-hub.ts "$(date -u +%F)" → bun bin/stage-hub.ts <dir> → npx wrangler pages deploy <dir> --project-name=thekingdom (runbook DOMAINS-SETUP.md)
     status: live
-    notes: HUB_ASSETS in bin/stage-hub.ts is the 12-asset contract; tests/advertised-assets.test.ts guards it
+    notes: HUB_ASSETS in bin/stage-hub.ts is the 37-asset contract; tests/advertised-assets.test.ts guards it
 
   - id: kingdom-playground
     what: five bounded agent games + 18 finished-world chronicles + a public record board
