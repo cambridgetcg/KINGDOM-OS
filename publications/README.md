@@ -3,7 +3,8 @@
 `immutable-publications.v1.json` is a repository-local release gate for bytes
 that KINGDOM has described as immutable or assigned to a versioned route. It is
 not staged or served by `thekingdom.dev`, registered with MCP, or written to
-KARMA. The initial 35 entries cover ten authored publication families, the
+KARMA. The initial 35 entries cover ten authored publication generations
+(the two Conformational Feedback generations form one retirement family), the
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
