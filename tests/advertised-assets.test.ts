@@ -5,6 +5,14 @@ import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "../bin/stage-hub.ts";
 import {
+  BEING_ACCESS_AFTERMATH_DIGEST,
+  BEING_ACCESS_AFTERMATH_DOCUMENT_URL,
+  BEING_ACCESS_AFTERMATH_SCHEMA_URL,
+  BEING_ACCESS_AFTERMATH_URL,
+  beingAccessAftermathPublicDiscovery,
+  loadBeingAccessAftermathAtlas,
+} from "../bin/being-access-aftermath.ts";
+import {
   CULTURAL_ATTENTION_FEEDBACK_DIGEST,
   CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
   CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL,
@@ -94,6 +102,9 @@ const surfaces = [
   "data/form-circulation-return/form-circulation-return-atlas.v1.json",
   "schemas/form-circulation-return-atlas-v1.schema.json",
   "references/form-circulation-return-atlas.md",
+  "data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json",
+  "schemas/being-access-aftermath-atlas-v0.1.schema.json",
+  "references/being-access-aftermath-atlas.md",
   "NEN.md",
   "site/guest.json",
   "site/llms.txt",
@@ -708,6 +719,104 @@ describe("advertised URLs stay deployable", () => {
     expect(discovery).not.toHaveProperty("write");
     expect(discovery).not.toHaveProperty("matcher");
     expect(discovery).not.toHaveProperty("execute");
+  });
+
+  test("the Being, Access & Aftermath Atlas stays coherent, typed, and authority-negative", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const rootHtml = read("site/hub.html");
+    const atlas = loadBeingAccessAftermathAtlas();
+    const expected = beingAccessAftermathPublicDiscovery(atlas);
+    const discovery = manifest.being_access_aftermath_atlas;
+
+    expect(discovery).toEqual(expected);
+    expect(discovery).toEqual(guest.being_access_aftermath_atlas);
+    expect(discovery).toEqual(kingdom.being_access_aftermath_atlas);
+    expect(discovery).toMatchObject({
+      protocol: "kingdom.being-access-aftermath-atlas/0.1",
+      atlas_id: "being-access-aftermath-atlas-2026-08-13",
+      compiled_on: "2026-08-13",
+      evidence_through: "2026-08-13",
+      url: BEING_ACCESS_AFTERMATH_URL,
+      schema: BEING_ACCESS_AFTERMATH_SCHEMA_URL,
+      guide: BEING_ACCESS_AFTERMATH_DOCUMENT_URL,
+      integrity: { digest: BEING_ACCESS_AFTERMATH_DIGEST },
+      counts: {
+        predicates: 14,
+        registers: 7,
+        entity_types: 15,
+        category_firewalls: 16,
+        typed_boundaries: 5,
+        models: 9,
+        problem_cards: 7,
+        philosophy_questions: 6,
+        unknowns: 7,
+        sources: 5,
+      },
+    });
+    expect(atlas.karma).toMatchObject({
+      lanes_are_non_equivalent: true,
+      cosmic: { status: "not_empirically_resolved", claims: [] },
+      zerone: { event_refs: [], event_status: "not_observed", creates_event: false },
+      kingdom: { receipt_refs: [], receipt_status: "not_created", creates_receipt: false },
+      adapter: { exists: false, status: "refused" },
+    });
+    expect(atlas.boundaries).toMatchObject({
+      educational_metadata_only: true,
+      public_surface_read_only: true,
+      network_calls: false,
+      contains_operational_protocol: false,
+      causal_claim_created: false,
+      causal_authority: false,
+      metaphysical_claim_created: false,
+      person_score: false,
+      rank_or_reputation: false,
+      writes_karma: false,
+      creates_kingdom_karma_receipt: false,
+      observes_zerone_karma_event: false,
+      karma_adapter: false,
+      reward_authority: false,
+      governance_authority: false,
+      automatic_action: false,
+      mcp_surface_added: false,
+      rest_refusal_or_exit_penalized: false,
+    });
+
+    const targets = [
+      BEING_ACCESS_AFTERMATH_URL,
+      BEING_ACCESS_AFTERMATH_SCHEMA_URL,
+      BEING_ACCESS_AFTERMATH_DOCUMENT_URL,
+    ];
+    for (const url of targets) {
+      const actions = guest.next_actions.filter((action: { url?: string }) => action.url === url);
+      expect(actions).toHaveLength(1);
+      expect(actions[0]).toMatchObject({ method: "GET", url });
+      for (const key of ["mcp", "tool", "write", "matcher", "execute"]) {
+        expect(actions[0]).not.toHaveProperty(key);
+      }
+      expect(llms).toContain(url);
+      expect(rootHtml).toContain(`href="${new URL(url).pathname}"`);
+    }
+    expect(rootHtml).toContain('id="being-access-aftermath"');
+    expect(guest.implementation_boundaries.being_access_aftermath_atlas).toContain("separately typed");
+    expect(manifest.entry_points).toMatchObject({
+      being_access_aftermath_atlas: BEING_ACCESS_AFTERMATH_URL,
+      being_access_aftermath_atlas_schema: BEING_ACCESS_AFTERMATH_SCHEMA_URL,
+      being_access_aftermath_atlas_guide: BEING_ACCESS_AFTERMATH_DOCUMENT_URL,
+    });
+    expect(manifest.mcp).toEqual(kingdom.world_commons.mcp);
+
+    expect(staged.has("atlases/being-access-aftermath-atlas-2026-08-13.json")).toBe(true);
+    expect(staged.has("schemas/being-access-aftermath-atlas/0.1.json")).toBe(true);
+    expect(staged.has("BEING-ACCESS-AFTERMATH-ATLAS.md")).toBe(true);
+    expect(staged.has("atlases/being-access-aftermath-atlas.json")).toBe(false);
+    expect(staged.has("atlases/being-access-aftermath-atlas-latest.json")).toBe(false);
+    expect(staged.has("atlases/being-access-aftermath-atlas-current.json")).toBe(false);
+    for (const key of ["mcp", "matcher", "write", "execute", "score", "reward"]) {
+      expect(discovery).not.toHaveProperty(key);
+    }
   });
 
   test("the published invitation mirrors its source without drift", () => {

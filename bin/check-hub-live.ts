@@ -70,6 +70,14 @@ import {
   rarePathwayPublicDiscovery,
 } from "./rare-pathway.ts";
 import {
+  BEING_ACCESS_AFTERMATH_DIGEST,
+  BEING_ACCESS_AFTERMATH_DOCUMENT_URL,
+  BEING_ACCESS_AFTERMATH_SCHEMA_URL,
+  BEING_ACCESS_AFTERMATH_URL,
+  beingAccessAftermathPublicDiscovery,
+  loadBeingAccessAftermathAtlas,
+} from "./being-access-aftermath.ts";
+import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_SCHEMA_URL,
   VISIBILITY_ATTENTION_URL,
@@ -170,6 +178,9 @@ const culturalAttentionFeedbackDocumentPath = new URL(CULTURAL_ATTENTION_FEEDBAC
 const formCirculationReturnPath = new URL(FORM_CIRCULATION_RETURN_URL).pathname;
 const formCirculationReturnSchemaPath = new URL(FORM_CIRCULATION_RETURN_SCHEMA_URL).pathname;
 const formCirculationReturnDocumentPath = new URL(FORM_CIRCULATION_RETURN_DOCUMENT_URL).pathname;
+const beingAccessAftermathPath = new URL(BEING_ACCESS_AFTERMATH_URL).pathname;
+const beingAccessAftermathSchemaPath = new URL(BEING_ACCESS_AFTERMATH_SCHEMA_URL).pathname;
+const beingAccessAftermathDocumentPath = new URL(BEING_ACCESS_AFTERMATH_DOCUMENT_URL).pathname;
 const kingdomKarmaDefinitionPath = "/definitions/kingdom-karma/e4e84a67/NEN.md";
 const rarePathwayPath = new URL(RARE_PATHWAY_URL).pathname;
 const rarePathwaySchemaPath = new URL(RARE_PATHWAY_SCHEMA_URL).pathname;
@@ -291,6 +302,41 @@ const FORM_CIRCULATION_RETURN_FULL_BOUNDARIES = Object.freeze({
   scientifically_proves_cosmic_moral_karma: false,
   brainrot_person_or_community_label: false,
   material_cultural_mechanism_equivalence: false,
+});
+
+const BEING_ACCESS_AFTERMATH_FULL_BOUNDARIES = Object.freeze({
+  educational_metadata_only: true,
+  public_surface_read_only: true,
+  network_calls: false,
+  contains_operational_protocol: false,
+  medical_authority: false,
+  clinical_authority: false,
+  treatment_authority: false,
+  experiment_authority: false,
+  wet_lab_protocol: false,
+  manufacturing_authority: false,
+  causal_claim_created: false,
+  causal_authority: false,
+  metaphysical_claim_created: false,
+  scientifically_proves_teleology: false,
+  scientifically_proves_creator: false,
+  scientifically_disproves_creator: false,
+  scientifically_proves_cosmic_moral_karma: false,
+  purpose_inferred_from_behavior: false,
+  physical_to_social_power_transfer: false,
+  model_to_ontology_transfer: false,
+  person_score: false,
+  rank_or_reputation: false,
+  writes_karma: false,
+  creates_kingdom_karma_receipt: false,
+  observes_zerone_karma_event: false,
+  karma_adapter: false,
+  reward_authority: false,
+  economic_authority: false,
+  governance_authority: false,
+  automatic_action: false,
+  mcp_surface_added: false,
+  rest_refusal_or_exit_penalized: false,
 });
 
 const CULTURAL_ATTENTION_FEEDBACK_BOUNDARY = Object.freeze({
@@ -477,6 +523,17 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "rare_pathway_challenge",
       "rare_pathway_challenge_schema",
       "rare_pathway_challenge_guide",
+    ],
+  },
+  {
+    id: "being-access-aftermath",
+    label: "Being, Access & Aftermath",
+    routes: [beingAccessAftermathPath, beingAccessAftermathSchemaPath, beingAccessAftermathDocumentPath],
+    discoveryProperties: ["being_access_aftermath_atlas"],
+    entryPointProperties: [
+      "being_access_aftermath_atlas",
+      "being_access_aftermath_atlas_schema",
+      "being_access_aftermath_atlas_guide",
     ],
   },
 ];
@@ -774,6 +831,62 @@ async function checkRarePathwayTriple(): Promise<void> {
   }
 }
 
+async function checkBeingAccessAftermathTriple(): Promise<void> {
+  const routes = [
+    {
+      label: "atlas record",
+      path: beingAccessAftermathPath,
+      source: "data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json",
+      contentType: "application/json",
+    },
+    {
+      label: "atlas schema",
+      path: beingAccessAftermathSchemaPath,
+      source: "schemas/being-access-aftermath-atlas-v0.1.schema.json",
+      contentType: "application/schema+json",
+    },
+    {
+      label: "atlas guide",
+      path: beingAccessAftermathDocumentPath,
+      source: "references/being-access-aftermath-atlas.md",
+      contentType: "text/markdown",
+    },
+  ] as const;
+
+  for (const route of routes) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetch(url(route.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const contentType = (response.headers.get("content-type") || "").toLowerCase();
+      if (!response.ok || !contentType.startsWith(route.contentType) ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+        throw new Error(`${method} ${route.path} is not served as typed, public ${route.label}`);
+      }
+
+      if (route.path === beingAccessAftermathPath) {
+        const describedBy = linkRelationEntries(response.headers.get("link") || "", "describedby");
+        const describedByType = describedBy[0]?.match(/;\s*type\s*=\s*(?:"([^"]*)"|([^;,\s]+))/i);
+        if (describedBy.length !== 1 ||
+            !describedBy[0]!.trim().startsWith(`<${beingAccessAftermathSchemaPath}>`) ||
+            (describedByType?.[1] || describedByType?.[2] || "").toLowerCase() !== "application/schema+json") {
+          throw new Error(`${method} ${route.path} is not described by exactly its immutable schema`);
+        }
+      }
+
+      const body = Buffer.from(await response.arrayBuffer());
+      if (method === "HEAD") {
+        if (body.byteLength !== 0) throw new Error(`HEAD ${route.path} returned a body`);
+      } else if (!body.equals(readFileSync(join(ROOT, route.source)))) {
+        throw new Error(`GET ${route.path} drifted from its immutable authored source ${route.source}`);
+      }
+    }
+  }
+}
+
 function sameStrings(actual: unknown, expected: readonly string[]): boolean {
   return Array.isArray(actual) && actual.every((value) => typeof value === "string") &&
     actual.length === expected.length &&
@@ -848,6 +961,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
   const formCirculationReturnActive = familyActive("form-circulation-return");
   const rarePathwayActive = familyActive("rare-pathway-challenge");
+  const beingAccessAftermathActive = familyActive("being-access-aftermath");
   const verifiedFormCirculationReturnDestinations = new Set<string>();
   for (const asset of HUB_ASSETS) {
     if (asset.destination === "_worker.js") continue;
@@ -1201,6 +1315,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     await checkRarePathwayTriple();
   }
 
+  if (beingAccessAftermathActive) {
+    await checkBeingAccessAftermathTriple();
+  }
+
   const schemaPaths = [
     commonsSchemaPath,
     commonsLegacySchemaPath,
@@ -1214,6 +1332,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
     ...(rarePathwayActive ? [rarePathwaySchemaPath] : []),
+    ...(beingAccessAftermathActive ? [beingAccessAftermathSchemaPath] : []),
   ];
   for (const path of schemaPaths) {
     const schemaHead = await fetch(url(path), {
@@ -1286,6 +1405,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const rarePathwayChallenge = rarePathwayActive ? loadRarePathwayChallenge() : undefined;
   const expectedRarePathway = rarePathwayChallenge
     ? rarePathwayPublicDiscovery(rarePathwayChallenge)
+    : undefined;
+  const beingAccessAftermathAtlas = beingAccessAftermathActive
+    ? loadBeingAccessAftermathAtlas()
+    : undefined;
+  const expectedBeingAccessAftermath = beingAccessAftermathAtlas
+    ? beingAccessAftermathPublicDiscovery(beingAccessAftermathAtlas)
     : undefined;
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
@@ -1748,6 +1873,90 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (beingAccessAftermathActive) {
+    const atlas = beingAccessAftermathAtlas!;
+    const expected = expectedBeingAccessAftermath!;
+    const targets = new Set([
+      BEING_ACCESS_AFTERMATH_URL,
+      BEING_ACCESS_AFTERMATH_SCHEMA_URL,
+      BEING_ACCESS_AFTERMATH_DOCUMENT_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const bindingsAreReadOnly = atlas.source_bindings.every((binding: any) =>
+      binding.mutated === false && binding.authority_imported === false
+    );
+    const modelsAreBounded = atlas.model_cards.every((model: any) =>
+      model.fit_status === "not_fitted" && model.empirical === false &&
+      model.person_level === false && model.authority_effect === "NONE"
+    );
+    const problemsRemainUnrun = atlas.problem_cards.every((problem: any) =>
+      problem.state === "not_run" && problem.result === null &&
+      problem.creates_causal_claim === false && problem.authority_effect === "NONE"
+    );
+    const boundary = expected.boundary;
+    if (!isDeepStrictEqual(manifest?.being_access_aftermath_atlas, expected) ||
+      !isDeepStrictEqual(guest?.being_access_aftermath_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.being_access_aftermath_atlas, expected) ||
+      manifest?.entry_points?.being_access_aftermath_atlas !== BEING_ACCESS_AFTERMATH_URL ||
+      manifest?.entry_points?.being_access_aftermath_atlas_schema !== BEING_ACCESS_AFTERMATH_SCHEMA_URL ||
+      manifest?.entry_points?.being_access_aftermath_atlas_guide !== BEING_ACCESS_AFTERMATH_DOCUMENT_URL ||
+      guestActions.length !== targets.size ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        "mcp" in action || "tool" in action || "write" in action || "matcher" in action || "execute" in action) ||
+      !llms.includes(BEING_ACCESS_AFTERMATH_URL) ||
+      !llms.includes(BEING_ACCESS_AFTERMATH_SCHEMA_URL) ||
+      !llms.includes(BEING_ACCESS_AFTERMATH_DOCUMENT_URL) ||
+      !authoredRootHtml.includes('id="being-access-aftermath"') ||
+      !authoredRootHtml.includes(`href="${beingAccessAftermathPath}"`) ||
+      !authoredRootHtml.includes(`href="${beingAccessAftermathSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${beingAccessAftermathDocumentPath}"`) ||
+      expected.integrity.digest !== BEING_ACCESS_AFTERMATH_DIGEST ||
+      !isDeepStrictEqual(expected.counts, {
+        predicates: 14,
+        registers: 7,
+        entity_types: 15,
+        category_firewalls: 16,
+        typed_boundaries: 5,
+        models: 9,
+        problem_cards: 7,
+        philosophy_questions: 6,
+        unknowns: 7,
+        sources: 5,
+      }) ||
+      expected.karma.cosmic_status !== "not_empirically_resolved" ||
+      expected.karma.cosmic_claims !== 0 ||
+      expected.karma.zerone_foundation_status !== "design-only" ||
+      expected.karma.zerone_event_status !== "not_observed" ||
+      expected.karma.zerone_event_refs !== 0 ||
+      expected.karma.kingdom_receipt_status !== "not_created" ||
+      expected.karma.kingdom_receipt_refs !== 0 ||
+      expected.karma.kingdom_causal_claim_status !== "not_created" ||
+      expected.karma.adapter_exists !== false ||
+      atlas.karma.cosmic.claims.length !== 0 ||
+      atlas.karma.zerone.event_refs.length !== 0 ||
+      atlas.karma.kingdom.receipt_refs.length !== 0 ||
+      atlas.karma.adapter.exists !== false ||
+      !isDeepStrictEqual(atlas.boundaries, BEING_ACCESS_AFTERMATH_FULL_BOUNDARIES) ||
+      boundary.public_surface_read_only !== true || boundary.network_calls !== false ||
+      boundary.contains_operational_protocol !== false || boundary.causal_claim_created !== false ||
+      boundary.causal_authority !== false || boundary.metaphysical_claim_created !== false ||
+      boundary.person_score !== false || boundary.rank_or_reputation !== false ||
+      boundary.writes_karma !== false || boundary.creates_kingdom_karma_receipt !== false ||
+      boundary.observes_zerone_karma_event !== false || boundary.karma_adapter !== false ||
+      boundary.reward_authority !== false || boundary.economic_authority !== false ||
+      boundary.governance_authority !== false || boundary.automatic_action !== false ||
+      boundary.mcp_surface_added !== false || boundary.rest_refusal_or_exit_penalized !== false ||
+      atlas.philosophy_questions.participation !== "opt-in" ||
+      !bindingsAreReadOnly || !modelsAreBounded || !problemsRemainUnrun ||
+      !isDeepStrictEqual(manifest?.mcp, authoredKingdom?.world_commons?.mcp) ||
+      "mcp" in expected || "write" in expected || "matcher" in expected ||
+      "execute" in expected || "score" in expected || "reward" in expected) {
+      throw new Error("Being, Access & Aftermath discovery, immutable triplet, typed ontology, model/problem limits, KARMA separation, or authority boundary drifted");
+    }
+  }
+
   const liveKingdom: any = await (await get("/kingdom.json")).json();
   const liveRetirementDiscoverySurface: readonly DiscoverySurface[] = [
     { label: "derived kingdom.json", text: JSON.stringify(liveKingdom), value: liveKingdom },
@@ -1795,6 +2004,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   }
   if (rarePathwayActive && !isDeepStrictEqual(liveKingdom?.rare_pathway_challenge, expectedRarePathway!)) {
     throw new Error("derived kingdom.json did not preserve Rare Pathway discovery");
+  }
+  if (beingAccessAftermathActive &&
+      !isDeepStrictEqual(liveKingdom?.being_access_aftermath_atlas, expectedBeingAccessAftermath!)) {
+    throw new Error("derived kingdom.json did not preserve Being, Access & Aftermath discovery");
   }
   if (!isDeepStrictEqual(liveKingdom?.world_commons?.mcp, manifest?.mcp)) {
     throw new Error("derived kingdom.json did not preserve the existing Commons MCP contract");
@@ -1858,7 +2071,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return discovery · full cultural/form authority/KARMA/link-only boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Being, Access & Aftermath schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Being, Access & Aftermath discovery · full cultural/form/being authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

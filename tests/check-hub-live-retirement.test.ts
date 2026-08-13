@@ -50,6 +50,44 @@ describe("hub live-check publication retirement", () => {
     ])).not.toThrow();
   });
 
+  test("retires the Being, Access & Aftermath triplet and all of its discovery together", () => {
+    const being = family("being-access-aftermath");
+    expect(being.routes).toEqual([
+      "/atlases/being-access-aftermath-atlas-2026-08-13.json",
+      "/schemas/being-access-aftermath-atlas/0.1.json",
+      "/BEING-ACCESS-AFTERMATH-ATLAS.md",
+    ]);
+    expect(being.discoveryProperties).toEqual(["being_access_aftermath_atlas"]);
+    expect(being.entryPointProperties).toEqual([
+      "being_access_aftermath_atlas",
+      "being_access_aftermath_atlas_schema",
+      "being_access_aftermath_atlas_guide",
+    ]);
+
+    const partiallyStaged = stagedDestinations();
+    partiallyStaged.delete(destinationForPublicPath(being.routes[1]!));
+    expect(() => publicationFamilyStates(partiallyStaged))
+      .toThrow("Being, Access & Aftermath is partially staged");
+
+    const retired = stagedDestinations();
+    for (const route of being.routes) retired.delete(destinationForPublicPath(route));
+    expect(publicationFamilyStates(retired).get(being.id)?.active).toBe(false);
+
+    const staleDiscovery = { being_access_aftermath_atlas: { stale: true } };
+    const staleEntryPoints = {
+      entry_points: { being_access_aftermath_atlas_guide: being.routes[2] },
+    };
+    for (const surface of [
+      { label: "authored Kingdom map", text: JSON.stringify(staleDiscovery), value: staleDiscovery },
+      { label: "agent manifest", text: JSON.stringify(staleEntryPoints), value: staleEntryPoints },
+      { label: "llms.txt", text: `https://thekingdom.dev${being.routes[0]}` },
+      { label: "hub HTML", text: `<a href='${being.routes[2]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(being, [surface]))
+        .toThrow("Being, Access & Aftermath is retired");
+    }
+  });
+
   test("accepts only a canonical 404 or an empty 410 tombstone", () => {
     const canonical404 = new TextEncoder().encode("not found\n");
     const oldBytes = new TextEncoder().encode("withdrawn publication\n");
