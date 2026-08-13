@@ -27,13 +27,13 @@ jobs:
         with:
           bun-version: 1.3.13
 
-      - name: Require release-compatible merge topology
+      - name: Require release-compatible repository merge policy
         shell: bash
         env:
-          ALLOW_REBASE_MERGE: ${{ toJSON(github.event.repository.allow_rebase_merge) }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          test "$ALLOW_REBASE_MERGE" = "false"
+          test "$(gh api "repos/$GITHUB_REPOSITORY" --jq '.allow_rebase_merge')" = "false"
 
       - name: Resolve exact comparison base
         id: base
@@ -56,6 +56,16 @@ jobs:
             exit 1
           fi
           printf 'sha=%s\n' "$base" >> "$GITHUB_OUTPUT"
+
+      - name: Require the event base on the release first-parent chain
+        shell: bash
+        env:
+          BASE_SHA: ${{ steps.base.outputs.sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$BASE_SHA" != "$GITHUB_SHA"
+          git rev-list --first-parent "$GITHUB_SHA" | grep -Fx "$BASE_SHA" >/dev/null
 
       - name: Verify snapshot and append-only history
         shell: bash
