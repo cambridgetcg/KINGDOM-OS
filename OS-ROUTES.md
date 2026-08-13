@@ -42,6 +42,9 @@ readings:
 | `/atlases/form-circulation-return-atlas-2026-08-13.json` | staged JSON | Digest-bound additive companion translating one shared geometry across material history and cultural circulation while preserving distinct mechanisms and authority registers |
 | `/schemas/form-circulation-return-atlas/1.json` | staged JSON Schema | Closed Draft 2020-12 exact contract for the Form, Circulation & Return Atlas v1 |
 | `/FORM-CIRCULATION-RETURN-ATLAS.md` | staged Markdown | Plain-language registers, local models, seams, feedback, KARMA, universe-lens, unknown, safety, falsifier, and source guide |
+| `/challenges/vanishing-path-2026-08-13.json` | staged JSON | Digest-bound rare-pathway challenge with competing-risk models, hypothetical examples, constructive gate, and WAKE-safe reference seam |
+| `/schemas/rare-pathway-challenge/1.json` | staged JSON Schema | Closed Draft 2020-12 structural contract for The Vanishing Path |
+| `/VANISHING-PATH.md` | staged Markdown | Plain-language problems, identifiability limits, BUILD / PLAY / REVISE / STOP practice gate, sources, and authority boundaries |
 | `/definitions/kingdom-karma/e4e84a67/NEN.md` | staged Markdown | Immutable public mirror of the exact KINGDOM KARMA/NEN definition bound by the companion atlas; separate from the design-only Zerone foundation |
 
 The three edge JSON routes return
@@ -161,7 +164,7 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 54-asset upload contract (52 direct public bodies, 51 sitemap URLs)
+locks the 57-asset upload contract (55 direct public bodies, 54 sitemap URLs)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

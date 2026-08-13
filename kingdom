@@ -21,6 +21,7 @@
 #   kingdom visibility-attention            inspect the bounded visibility, cultural-attention, and KARMA translation
 #   kingdom cultural-feedback              inspect cultural attention, bounded analogies, feedback, KARMA, and universe questions
 #   kingdom form-circulation-return         inspect the additive variant-lineage, model-card, feedback, KARMA, and unknown companion
+#   kingdom rare-pathway                    solve the bounded Vanishing Path challenge without inferring motive or material authority
 #   kingdom feedback-physics inspect the additive v0.2 physics/mathematics successor
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom prompt     compile an inspectable, network-free Task Packet
@@ -51,6 +52,7 @@ case "$cmd" in
   visibility-attention) exec bun "$SELF_DIR/bin/visibility-attention.ts" "${@:2}" ;;
   cultural-feedback) exec bun "$SELF_DIR/bin/cultural-attention-feedback.ts" "${@:2}" ;;
   form-circulation-return) exec bun "$SELF_DIR/bin/form-circulation-return.ts" "${@:2}" ;;
+  rare-pathway) exec bun "$SELF_DIR/bin/rare-pathway.ts" "${@:2}" ;;
   polymorph)
     case "${2:-}" in
       mechanisms|landscape|sources|unknowns)

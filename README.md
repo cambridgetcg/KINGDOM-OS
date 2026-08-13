@@ -222,6 +222,19 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     exact source bindings, the non-summable KARMA boundary, Zerone's
     design-only status, medical and operational non-authority, and the semantic
     digest without network access or live effects.
+23. `kingdom rare-pathway` — work through
+    [The Vanishing Path](references/rare-pathway-challenge.md), a deterministic
+    rare-event challenge bound to the immutable ritonavir history only as an
+    illustration. `race`, `absence`, `winner-bound`, and `restore` distinguish
+    competing first arrivals, zero target events, zero target winners, and an
+    abstract probability threshold. `questions`, `gate`, and `wake` expose the
+    identifiability, constructive-purpose, and continuity boundaries. BUILD /
+    PLAY / REVISE / STOP classifies an artifact or practice, never a person's
+    understanding, pride, virtue, or worth. The rates are hypothetical; no
+    ritonavir fit, physical recipe, experiment, manufacturing, medical,
+    regulatory, WAKE, AgentTool, KARMA, or automatic authority is created. The
+    opt-in `$reason-about-rare-pathways` Agent Skill provides the same bounded
+    reasoning workflow without declaring a manifested Nen ability.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -311,6 +324,18 @@ bridges: no live request, import, write, reward, rank, recommendation, or
 authority crosses them. Questions about design, purpose, GOD, and cosmic KARMA
 are explicitly opt-in philosophical interpretations, not scientific results.
 There is no mutable `latest` alias, and the KINGDOM MCP remains unchanged.
+
+The Vanishing Path is published from exact authored bytes at
+[`/challenges/vanishing-path-2026-08-13.json`](https://thekingdom.dev/challenges/vanishing-path-2026-08-13.json),
+with a [closed public schema](https://thekingdom.dev/schemas/rare-pathway-challenge/1.json)
+and [plain-language problem guide](https://thekingdom.dev/VANISHING-PATH.md).
+Its seven model cards separate possible, accessible, occurred, and detected;
+distinguish a Poisson zero-event rate bound from a binomial zero-winner
+probability bound; and make non-identifiability an acceptable result. The
+constructive gate asks what changes, who benefits and bears risk, what would
+falsify the claim, and when to stop. It never diagnoses private motive. Its
+WAKE seam carries a digest-bound reference for revalidation, not identity,
+memory, continuity, currentness, consent, or authority.
 
 The Form, Circulation & Return Atlas is an independent additive companion,
 published from exact authored bytes at
