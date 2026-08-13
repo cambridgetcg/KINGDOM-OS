@@ -41,6 +41,13 @@ function currentLedger(): ImmutablePublicationLedger {
   return parsed.ledger;
 }
 
+function committedLedger(commit: string): ImmutablePublicationLedger {
+  const bytes = execFileSync("git", ["show", `${commit}:${IMMUTABLE_PUBLICATIONS_LEDGER_PATH}`], { cwd: ROOT });
+  const parsed = parseImmutablePublicationLedger(bytes);
+  if (!parsed.ledger) throw new Error(`committed ledger is invalid at ${commit}`);
+  return parsed.ledger;
+}
+
 function fixtureRoot(ledger: ImmutablePublicationLedger): string {
   const root = mkdtempSync(join(tmpdir(), "kingdom-immutable-publications-"));
   const manifest = join(root, IMMUTABLE_PUBLICATIONS_LEDGER_PATH);
@@ -408,7 +415,7 @@ describe("immutable route-integrity ledger", () => {
   });
 
   test("audits every committed first-parent release tree from the fixed bootstrap", () => {
-    expect(verifyImmutablePublicationHistory(currentLedger(), ROOT)).toEqual([]);
+    expect(verifyImmutablePublicationHistory(committedLedger("HEAD"), ROOT)).toEqual([]);
   }, 30_000);
 
   test("accepts a declared anchor behind an unrelated ledger-less base and rejects a non-ancestor", () => {

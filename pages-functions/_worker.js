@@ -170,6 +170,20 @@ const CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const RECONSTRUCTIVE_BUILD_PATH = "/atlases/reconstructive-build-kernel-2026-08-13.json";
+const RECONSTRUCTIVE_BUILD_SCHEMA_PATH = "/schemas/reconstructive-build-kernel/0.1.json";
+const RECONSTRUCTIVE_PROJECT_SCHEMA_PATH = "/schemas/reconstructive-project/0.1.json";
+const RECONSTRUCTIVE_BUILD_DOCUMENT_PATH = "/RECONSTRUCTIVE-BUILD-KERNEL.md";
+const RECONSTRUCTIVE_BUILD_SCHEMA_LINK = {
+  target: RECONSTRUCTIVE_BUILD_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${RECONSTRUCTIVE_BUILD_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+const RECONSTRUCTIVE_PROJECT_SCHEMA_LINK = {
+  target: RECONSTRUCTIVE_PROJECT_SCHEMA_PATH,
+  relation: "profile",
+  value: `<${RECONSTRUCTIVE_PROJECT_SCHEMA_PATH}>; rel="profile"; type="application/schema+json"; title="reconstructive project profile"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -179,14 +193,18 @@ function hasKingdomRightsAssets(url) {
     host.endsWith(".thekingdom.pages.dev");
 }
 
+function linkRelations(part) {
+  return [...part.matchAll(/;\s*rel\s*=\s*(?:"([^"]*)"|([^;,\s]+))/gi)]
+    .flatMap((match) => (match[1] || match[2] || "").toLowerCase().split(/\s+/))
+    .filter(Boolean);
+}
+
 function hasLinkRelation(headers, target, relation) {
   const link = headers.get("link") || "";
   return link.split(/,(?=\s*<)/).some((entry) => {
     const part = entry.trim();
     if (!part.startsWith(`<${target}>`)) return false;
-    const match = part.match(/;\s*rel\s*=\s*(?:"([^"]*)"|([^;,\s]+))/i);
-    const relations = (match?.[1] || match?.[2] || "").toLowerCase().split(/\s+/);
-    return relations.includes(relation);
+    return linkRelations(part).includes(relation);
   });
 }
 
@@ -196,10 +214,18 @@ function removeLinkRelation(headers, target, relation) {
   const entries = value.split(/,(?=\s*<)/).filter((entry) => {
     const part = entry.trim();
     if (!part.startsWith(`<${target}>`)) return true;
-    const match = part.match(/;\s*rel\s*=\s*(?:"([^"]*)"|([^;,\s]+))/i);
-    const relations = (match?.[1] || match?.[2] || "").toLowerCase().split(/\s+/);
-    return !relations.includes(relation);
+    return !linkRelations(part).includes(relation);
   });
+  if (entries.length > 0) headers.set("link", entries.map((entry) => entry.trim()).join(", "));
+  else headers.delete("link");
+}
+
+function removeLinkRelations(headers, relations) {
+  const value = headers.get("link");
+  if (!value) return;
+  const refused = new Set(relations);
+  const entries = value.split(/,(?=\s*<)/).filter((entry) =>
+    !linkRelations(entry.trim()).some((relation) => refused.has(relation)));
   if (entries.length > 0) headers.set("link", entries.map((entry) => entry.trim()).join(", "));
   else headers.delete("link");
 }
@@ -292,6 +318,13 @@ function addBeingAccessAftermathV02SchemaLink(headers) {
   const link = BEING_ACCESS_AFTERMATH_V02_SCHEMA_LINK;
   removeLinkRelation(headers, BEING_ACCESS_AFTERMATH_SCHEMA_PATH, link.relation);
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addReconstructiveBuildSchemaLinks(headers) {
+  removeLinkRelations(headers, ["describedby", "profile"]);
+  for (const link of [RECONSTRUCTIVE_BUILD_SCHEMA_LINK, RECONSTRUCTIVE_PROJECT_SCHEMA_LINK]) {
+    headers.append("link", link.value);
+  }
 }
 
 function preventAutomaticBrowserTelemetry(headers) {
@@ -1253,7 +1286,20 @@ export function createKingdomWorker(options = {}) {
     const requestsConformationalFeedbackPhysicsDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_PATH;
+    const requestsReconstructiveBuild = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === RECONSTRUCTIVE_BUILD_PATH;
+    const requestsReconstructiveBuildSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === RECONSTRUCTIVE_BUILD_SCHEMA_PATH;
+    const requestsReconstructiveProjectSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === RECONSTRUCTIVE_PROJECT_SCHEMA_PATH;
+    const requestsReconstructiveBuildDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === RECONSTRUCTIVE_BUILD_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
+    const reconstructiveAssetType = schemaAssetType.split(";", 1)[0].trim();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1382,6 +1428,14 @@ export function createKingdomWorker(options = {}) {
     const servesConformationalFeedbackPhysicsDocument = requestsConformationalFeedbackPhysicsDocument && asset.ok &&
       (schemaAssetType.includes("text/plain") ||
         schemaAssetType.includes("text/markdown"));
+    const servesReconstructiveBuild = requestsReconstructiveBuild && asset.ok &&
+      (reconstructiveAssetType === "application/json" || reconstructiveAssetType === "application/schema+json");
+    const servesReconstructiveBuildSchema = requestsReconstructiveBuildSchema && asset.ok &&
+      (reconstructiveAssetType === "application/json" || reconstructiveAssetType === "application/schema+json");
+    const servesReconstructiveProjectSchema = requestsReconstructiveProjectSchema && asset.ok &&
+      (reconstructiveAssetType === "application/json" || reconstructiveAssetType === "application/schema+json");
+    const servesReconstructiveBuildDocument = requestsReconstructiveBuildDocument && asset.ok &&
+      (reconstructiveAssetType === "text/plain" || reconstructiveAssetType === "text/markdown");
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
@@ -1404,7 +1458,9 @@ export function createKingdomWorker(options = {}) {
         !servesBeingAccessAftermathV02Schema && !servesBeingAccessAftermathV02Document &&
         !servesKingdomKarmaDefinition &&
         !servesConformationalFeedbackPhysics && !servesConformationalFeedbackPhysicsSchema &&
-        !servesConformationalFeedbackPhysicsDocument) return asset;
+        !servesConformationalFeedbackPhysicsDocument && !servesReconstructiveBuild &&
+        !servesReconstructiveBuildSchema && !servesReconstructiveProjectSchema &&
+        !servesReconstructiveBuildDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -1422,6 +1478,7 @@ export function createKingdomWorker(options = {}) {
     if (servesBeingAccessAftermath) addBeingAccessAftermathSchemaLink(headers);
     if (servesBeingAccessAftermathV02) addBeingAccessAftermathV02SchemaLink(headers);
     if (servesConformationalFeedbackPhysics) addConformationalFeedbackPhysicsSchemaLink(headers);
+    if (servesReconstructiveBuild) addReconstructiveBuildSchemaLinks(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -1633,6 +1690,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesConformationalFeedbackPhysicsDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesReconstructiveBuild) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesReconstructiveBuildSchema || servesReconstructiveProjectSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesReconstructiveBuildDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

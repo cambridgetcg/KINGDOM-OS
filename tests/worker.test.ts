@@ -1634,6 +1634,111 @@ describe("the Kingdom edge discovery surface", () => {
     expect(sharedDoor).toBe(shared);
   });
 
+  test("serves the Reconstructive Build Kernel and reusable project profile as typed read-only infrastructure", async () => {
+    const kernelPath = "/atlases/reconstructive-build-kernel-2026-08-13.json";
+    const kernelSchemaPath = "/schemas/reconstructive-build-kernel/0.1.json";
+    const projectSchemaPath = "/schemas/reconstructive-project/0.1.json";
+    const documentPath = "/RECONSTRUCTIVE-BUILD-KERNEL.md";
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      const body = request.method === "HEAD" ? null
+        : path === kernelPath ? '{"kernel_id":"reconstructive-build-kernel-2026-08-13"}'
+          : path === documentPath ? "# Reconstructive Build Kernel"
+            : '{"type":"object"}';
+      return new Response(body, { headers: {
+        "content-type": path === documentPath
+          ? "Text/Plain; charset=UTF-8"
+          : path === kernelPath
+            ? "Application/JSON; charset=UTF-8"
+            : "Application/Schema+JSON; charset=UTF-8",
+        link: '</elsewhere>; rel="alternate"',
+      } });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const kernel = await worker.fetch(new Request(`https://thekingdom.dev${kernelPath}`, { method }), environment);
+      expect(await kernel.text()).toBe(method === "HEAD" ? "" : '{"kernel_id":"reconstructive-build-kernel-2026-08-13"}');
+      expect(kernel.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(kernel.headers.get("access-control-allow-origin")).toBe("*");
+      expect(kernel.headers.get("x-content-type-options")).toBe("nosniff");
+      const link = kernel.headers.get("link") ?? "";
+      expect(link).toContain(`<${kernelSchemaPath}>; rel="describedby"`);
+      expect(link).toContain(`<${projectSchemaPath}>; rel="profile"`);
+    }
+    for (const path of [kernelSchemaPath, projectSchemaPath]) {
+      const schema = await worker.fetch(new Request(`https://thekingdom.dev${path}`), environment);
+      expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+      expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+      expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+    }
+    const document = await worker.fetch(new Request(`https://thekingdom.dev${documentPath}`), environment);
+    expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+    expect(document.headers.get("access-control-allow-origin")).toBe("*");
+    expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+
+    const postAsset = new Response("no execution route");
+    expect(await worker.fetch(new Request(`https://thekingdom.dev${kernelPath}`, { method: "POST" }), assets(() => postAsset))).toBe(postAsset);
+    const sharedAsset = new Response("shared");
+    expect(await worker.fetch(new Request(`https://we-are.love${kernelPath}`), assets(() => sharedAsset))).toBe(sharedAsset);
+  });
+
+  test("rejects near-match media types and replaces poisoned reconstructive schema links", async () => {
+    const kernelPath = "/atlases/reconstructive-build-kernel-2026-08-13.json";
+    const kernelSchemaPath = "/schemas/reconstructive-build-kernel/0.1.json";
+    const projectSchemaPath = "/schemas/reconstructive-project/0.1.json";
+
+    for (const [path, contentType] of [
+      [kernelPath, "application/jsonp; charset=utf-8"],
+      [kernelPath, "xapplication/jsonbad"],
+      [kernelSchemaPath, "application/schema+jsonp"],
+      [projectSchemaPath, "text/application/json"],
+    ] as const) {
+      const original = new Response("untrusted upstream type", {
+        headers: {
+          "content-type": contentType,
+          link: `<${kernelSchemaPath}>; rel="describedby"; type="text/html"`,
+        },
+      });
+      const response = await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => original),
+      );
+      expect(response).toBe(original);
+      expect(response.headers.get("content-type")).toBe(contentType);
+      expect(response.headers.get("access-control-allow-origin")).toBeNull();
+      expect(response.headers.get("x-content-type-options")).toBeNull();
+    }
+
+    const kernel = await worker.fetch(
+      new Request(`https://thekingdom.dev${kernelPath}`),
+      assets(() => new Response("{}", {
+        headers: {
+          "content-type": "application/json; profile=kernel",
+          link: [
+            `<${kernelSchemaPath}>; rel="describedby"; type="text/html"; title="poisoned kernel type"`,
+            `<${projectSchemaPath}>; rel="profile"; type="application/jsonp"; title="poisoned profile type"`,
+            `</evil>; rel="describedby"; type="text/html"; title="wrong target poison"`,
+            `</evil2>; rel="alternate profile"; type="text/html"; title="multi relation poison"`,
+            `</evil3>; rel="alternate"; rel="describedby"; type="text/html"; title="duplicate relation poison"`,
+            `<${kernelSchemaPath}>; rel="alternate"; type="text/plain"`,
+            '</elsewhere>; rel="alternate"',
+          ].join(", "),
+        },
+      })),
+    );
+    const links = (kernel.headers.get("link") ?? "").split(/,(?=\s*<)/).map((entry) => entry.trim());
+    expect(links.filter((entry) => entry.startsWith(`<${kernelSchemaPath}>`) && entry.includes('rel="describedby"'))).toEqual([
+      `<${kernelSchemaPath}>; rel="describedby"; type="application/schema+json"`,
+    ]);
+    expect(links.filter((entry) => entry.startsWith(`<${projectSchemaPath}>`) && entry.includes('rel="profile"'))).toEqual([
+      `<${projectSchemaPath}>; rel="profile"; type="application/schema+json"; title="reconstructive project profile"`,
+    ]);
+    expect(links).toContain(`<${kernelSchemaPath}>; rel="alternate"; type="text/plain"`);
+    expect(links).toContain('</elsewhere>; rel="alternate"');
+    expect(kernel.headers.get("link")).not.toContain("poisoned");
+    expect(kernel.headers.get("link")).not.toContain("</evil");
+  });
+
   test("leaves unrelated paths and non-read methods untouched", async () => {
     const unrelatedAsset = new Response("rights");
     const unrelated = await worker.fetch(

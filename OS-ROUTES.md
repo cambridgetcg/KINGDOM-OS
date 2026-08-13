@@ -52,6 +52,10 @@ readings:
 | `/schemas/being-access-aftermath-atlas/0.2.json` | staged JSON Schema | Distinct closed Draft 2020-12 contract for the v0.2 successor |
 | `/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md` | staged Markdown | v0.2 causal-kernel, predicates, force/power, aftermath, repair, philosophy, and non-inference guide |
 | `/definitions/kingdom-karma/e4e84a67/NEN.md` | staged Markdown | Immutable public mirror of the exact KINGDOM KARMA/NEN definition bound by the companion atlas; separate from the design-only Zerone foundation |
+| `/atlases/reconstructive-build-kernel-2026-08-13.json` | staged JSON | Source-bound reconstruction, correspondence, realization, landscape, catalysis, and feedback kernel with explicit epistemic boundaries |
+| `/schemas/reconstructive-build-kernel/0.1.json` | staged JSON Schema | Closed public contract for the Reconstructive Build Kernel v0.1 |
+| `/schemas/reconstructive-project/0.1.json` | staged JSON Schema | Reusable, inert project profile that requires correspondence, ambiguity, intervention, invariant, authority, and feedback declarations |
+| `/RECONSTRUCTIVE-BUILD-KERNEL.md` | staged Markdown | Human guide to the constraint-fiber method, scientific bridges, project profile, falsifiers, unknowns, and non-authority boundaries |
 
 The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
@@ -170,7 +174,7 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 63-asset upload contract (61 direct public bodies, 60 sitemap URLs)
+locks the 67-asset upload contract (65 direct public bodies, 64 sitemap URLs)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

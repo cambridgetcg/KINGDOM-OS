@@ -1,0 +1,299 @@
+{
+  "$schema": "urn:kingdom:schema:reconstructive-project:0.1",
+  "protocol": "kingdom.reconstructive-project/0.1",
+  "project_id": "reconstructive-project-example",
+  "version": "0.1.0",
+  "title": "Inert Reconstructive Project Example",
+  "kernel_binding": {
+    "protocol": "kingdom.reconstructive-build-kernel/0.1",
+    "url": "https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json",
+    "byte_sha256": "sha256:2d1598bdfcce2501ee5a7cfdba55f581920d18733052f067e96bf9d79a7376a5",
+    "semantic_digest": "sha256:265a75e18dbd4bad5bcf07bca0645132de4f9a881d8f0f398cd56b9afb734dd1",
+    "relation": "PROFILE_OF",
+    "mutated": false,
+    "authority_imported": false
+  },
+  "state_spaces": [
+    {
+      "id": "authored-artifact-states",
+      "definition": "Versioned local document states from draft through reviewed candidate, without any implied publication or deployment.",
+      "symmetry": "Exact artifact identity and version are retained.",
+      "conditions": ["Local files only", "Human review required"],
+      "source_ids": []
+    },
+    {
+      "id": "authored-artifact-observations",
+      "definition": "Typed partial observations projected from a declared authored artifact state without changing that source state.",
+      "symmetry": "Observation identity, source-state identity and observation window are retained.",
+      "conditions": ["Read-only local projection", "Source state and observation window declared"],
+      "source_ids": []
+    }
+  ],
+  "states": [
+    {
+      "id": "artifact-draft-state",
+      "state_space_id": "authored-artifact-states",
+      "version": "0.1.0",
+      "conditions": ["Local draft bytes", "No publication or deployment"],
+      "value_digest": null,
+      "supersedes_state_id": null
+    },
+    {
+      "id": "artifact-reviewed-state",
+      "state_space_id": "authored-artifact-states",
+      "version": "0.1.1",
+      "conditions": ["Hypothetical reviewed successor", "No publication or deployment"],
+      "value_digest": null,
+      "supersedes_state_id": "artifact-draft-state"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "make-ambiguity-auditable",
+      "statement": "Represent candidate interpretations, constraints and unknowns without coercing them into one answer.",
+      "success_evidence": ["Every candidate fiber has one explicit EMPTY, UNIQUE, MULTIPLE or UNKNOWN status.", "Every state-changing intervention creates a new state identity."],
+      "status": "PROPOSED",
+      "source_ids": []
+    }
+  ],
+  "correspondences": [
+    {
+      "id": "local-artifact-identity",
+      "from_id": "authored-artifact-states",
+      "to_id": "authored-artifact-observations",
+      "kind": "EXACT_LABELED",
+      "carrier": "ARTIFACT_ID",
+      "labels_retained": true,
+      "multiplicity_retained": true,
+      "overlap_maps_available": true,
+      "mapping_or_digest": "source-state-id-plus-observation-window-plus-artifact-identity",
+      "uncertainty": "The observation remains partial even though its source-state and artifact carriers are exact.",
+      "basis_ids": [],
+      "conditions": ["Immutable source-state identity", "Observation window and artifact identity declared"],
+      "nonclaims": ["Exact carrier identity does not make the observation complete or prove truth, fitness, safety, consent or authority."]
+    }
+  ],
+  "observations": [
+    {
+      "id": "draft-structure-observation",
+      "state_id": "artifact-draft-state",
+      "output_state_space_id": "authored-artifact-observations",
+      "output_type": "typed-partial-project-observations",
+      "operator_kind": "PROJECTION",
+      "correspondence_id": "local-artifact-identity",
+      "evidence_class": "UNKNOWN",
+      "value_digest": null,
+      "loss_profile": ["No claim truth is established", "No external system state is observed"],
+      "intervention": {
+        "kind": "NONE",
+        "remaining_relations_guaranteed_unchanged": true
+      },
+      "conditions": ["Read-only local inspection", "Observation window is this fixture revision"],
+      "source_ids": []
+    }
+  ],
+  "reconstruction_requirements": [
+    {
+      "id": "reviewed-candidate-fiber",
+      "observation_ids": ["draft-structure-observation"],
+      "target_state_id": "artifact-draft-state",
+      "target_state_space_id": "authored-artifact-states",
+      "quotient_symmetry": "Exact artifact identity; no semantic quotient is assumed.",
+      "solution_semantics": "FIBER",
+      "identifiability": "UNKNOWN",
+      "fiber_status": "UNKNOWN",
+      "correspondence_requirement_ids": ["local-artifact-identity"],
+      "invariant_ids": ["preserve-negative-authority", "preserve-ambiguity"],
+      "constraint_ids": ["closed-shape", "human-review"],
+      "solver_status": "No solver is included; candidates remain unknown until separate evidence and review are supplied.",
+      "validation_metrics": ["Closed-schema validity", "Explicit ambiguity", "No authority drift"],
+      "nonclaims": ["Schema validity does not choose, execute or publish a candidate."]
+    }
+  ],
+  "realizability_constraints": [
+    {
+      "id": "closed-shape",
+      "kind": "schema-closure",
+      "expression": "Every object has only declared keys.",
+      "tolerance": "none",
+      "units": "categorical",
+      "status": "SATISFIED",
+      "evidence_ids": [],
+      "conditions": ["Draft 2020-12 validation executes"]
+    },
+    {
+      "id": "human-review",
+      "kind": "authority-boundary",
+      "expression": "No profile transition occurs without separate human review and authority.",
+      "tolerance": "none",
+      "units": "categorical",
+      "status": "UNKNOWN",
+      "evidence_ids": [],
+      "conditions": ["External action would be proposed separately"]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "draft-to-reviewed-candidate",
+      "from_state_id": "artifact-draft-state",
+      "to_state_id": "artifact-reviewed-state",
+      "kind": "STATE_CHANGE",
+      "conditions": ["All schema and falsifier checks pass", "A human explicitly reviews the new immutable version"],
+      "endpoint_invariants": ["preserve-negative-authority", "preserve-ambiguity"],
+      "comparator_id": "unstructured-review-baseline",
+      "reversible": true,
+      "authority_required": ["Separate human approval for any write beyond this fixture"],
+      "evidence_ids": [],
+      "nonclaims": ["Declaring the transition does not perform it."]
+    }
+  ],
+  "transition_accelerators": [
+    {
+      "id": "schema-first-review-accelerator",
+      "kind": "DESIGN_TRANSITION_ACCELERATOR",
+      "transition_id": "draft-to-reviewed-candidate",
+      "comparator_id": "unstructured-review-baseline",
+      "barrier_definition": "Locally observed review effort spent finding missing fields and authority drift; not a thermodynamic barrier.",
+      "endpoint_invariant": "Truth criteria, safety boundaries, human choice and action authority remain unchanged.",
+      "conditions": ["Same fixture scope", "Same review criteria", "Rollback retained"],
+      "metric": "Count of schema and boundary issues surfaced before human review.",
+      "empirical": false,
+      "physical_parameter_transfer": false,
+      "authority_effect": "NONE",
+      "reversible": true,
+      "evidence_ids": [],
+      "falsifier_ids": ["reject-analogy-flip", "reject-hidden-authority"],
+      "nonclaims": ["No enzyme rate, activation energy, biological mechanism, productivity gain or delivery time is predicted."]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "preserve-negative-authority",
+      "statement": "No schema-valid state grants execution, deployment, external-write, KARMA, scoring, economic, governance or automatic-action authority.",
+      "status": "HELD",
+      "evidence_ids": []
+    },
+    {
+      "id": "preserve-ambiguity",
+      "statement": "UNKNOWN and MULTIPLE remain valid outcomes and are never silently rewritten as UNIQUE.",
+      "status": "HELD",
+      "evidence_ids": []
+    }
+  ],
+  "uncertainty_policy": {
+    "fiber_statuses": ["EMPTY", "UNIQUE", "MULTIPLE", "UNKNOWN"],
+    "unknown_not_coerced": true,
+    "ambiguity_preserved": true,
+    "condition_drift_new_version": true,
+    "physical_perturbation_new_state": true,
+    "notes": ["A missing observation remains missing.", "A changed condition or intervention is a new state rather than retroactive evidence about the old state."]
+  },
+  "authority": {
+    "profile_inert": true,
+    "human_review_required": true,
+    "grants_authority": false,
+    "execute": false,
+    "deploy": false,
+    "external_write": false,
+    "karma_write": false,
+    "automatic_action": false,
+    "allowed": ["offline validation", "human review"]
+  },
+  "risks": [
+    {
+      "id": "analogy-overreach",
+      "statement": "Folding or catalysis language could be mistaken for a transferred physical mechanism or coefficient.",
+      "likelihood": "UNKNOWN",
+      "impact": "HIGH",
+      "mitigations": ["Keep the accelerator non-empirical and parameter-transfer false.", "Run an explicit analogy-flip falsifier."],
+      "status": "OPEN",
+      "evidence_ids": []
+    }
+  ],
+  "feedback": {
+    "append_only": true,
+    "supersede_not_mutate": true,
+    "challengeable": true,
+    "correction_allowed": true,
+    "reversible_actions_preferred": true,
+    "valid_exits": ["REST", "SILENCE", "REFUSAL", "NO_ACTION", "DEPARTURE"],
+    "events": [
+      {
+        "id": "reviewed-state-feedback",
+        "kind": "SUPERSESSION",
+        "state_id": "artifact-reviewed-state",
+        "evidence_ids": [],
+        "supersedes": null,
+        "effect": "CREATES_NEW_STATE",
+        "note": "The reviewed candidate is a distinct successor state; this fixture records no external action."
+      }
+    ],
+    "karma": {
+      "zerone_events": [],
+      "kingdom_receipts": [],
+      "non_summable": true,
+      "adapter_exists": false,
+      "score": null,
+      "authority_effect": "NONE"
+    },
+    "automatic_action": false
+  },
+  "tests": [
+    {
+      "id": "reject-analogy-flip",
+      "kind": "FALSIFIER",
+      "procedure": "Set empirical or physical_parameter_transfer true on the design accelerator.",
+      "expected": "Closed schema rejects the mutation.",
+      "status": "PASS",
+      "evidence_ids": []
+    },
+    {
+      "id": "reject-hidden-authority",
+      "kind": "FALSIFIER",
+      "procedure": "Set execute, deploy, external_write, karma_write or automatic_action true.",
+      "expected": "Closed schema rejects the mutation.",
+      "status": "PASS",
+      "evidence_ids": []
+    }
+  ],
+  "claims": [],
+  "sources": [],
+  "provenance": {
+    "created_on": "2026-08-13",
+    "created_by": "KINGDOM-OS fixture",
+    "source_ids": [],
+    "previous_version": null,
+    "notes": ["Synthetic validation fixture only.", "No external state, person, protein, experiment or deployment was observed."]
+  },
+  "release": {
+    "status": "DRAFT",
+    "artifact_url": null,
+    "byte_sha256": null,
+    "deployed": false,
+    "deployment_authority": false
+  },
+  "boundaries": {
+    "read_only": true,
+    "design_infrastructure_only": true,
+    "solver_included": false,
+    "project_execution": false,
+    "project_deployment": false,
+    "external_write": false,
+    "biological_mechanism_transfer": false,
+    "physical_parameter_transfer": false,
+    "medical_authority": false,
+    "experiment_authority": false,
+    "wet_lab_protocol": false,
+    "person_scoring": false,
+    "writes_karma": false,
+    "creates_karma_receipt": false,
+    "economic_effect": false,
+    "governance_effect": false,
+    "automatic_action": false,
+    "runtime_network_request": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:32cf92f1756185464ce49af42914d6d99b3e4e3e55907e35e8496f23b570d521"
+  }
+}

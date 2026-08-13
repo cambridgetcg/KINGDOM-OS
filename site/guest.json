@@ -530,6 +530,65 @@
       "observes_zerone_karma_event": false
     }
   },
+  "reconstructive_build_kernel": {
+    "protocol": "kingdom.reconstructive-build-kernel/0.1",
+    "kernel_id": "reconstructive-build-kernel-2026-08-13",
+    "title": "Reconstructive Build Kernel",
+    "compiled_on": "2026-08-13",
+    "evidence_through": "2026-08-13",
+    "url": "https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json",
+    "schema": "https://thekingdom.dev/schemas/reconstructive-build-kernel/0.1.json",
+    "project_schema": "https://thekingdom.dev/schemas/reconstructive-project/0.1.json",
+    "guide": "https://thekingdom.dev/RECONSTRUCTIVE-BUILD-KERNEL.md",
+    "counts": {
+      "registers": 8,
+      "state_spaces": 6,
+      "correspondences": 5,
+      "observation_operators": 3,
+      "state_transition_operators": 1,
+      "reconstruction_cases": 3,
+      "realizability_models": 2,
+      "landscape_models": 2,
+      "catalysis_models": 2,
+      "equations": 11,
+      "claims": 12,
+      "falsification_tests": 12,
+      "sources": 13
+    },
+    "pipeline": [
+      "STATE",
+      "OBSERVE",
+      "DECLARE_CORRESPONDENCE",
+      "INFER_FIBER",
+      "REALIZE",
+      "TRAVERSE_LANDSCAPE",
+      "MEASURE_OR_CATALYZE",
+      "APPEND_FEEDBACK"
+    ],
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:265a75e18dbd4bad5bcf07bca0645132de4f9a881d8f0f398cd56b9afb734dd1"
+    },
+    "boundary": {
+      "read_only": true,
+      "grc_proven": false,
+      "protein_fold_prediction": false,
+      "unique_contact_realization": false,
+      "biological_mechanism_transfer": false,
+      "physical_parameter_transfer": false,
+      "medical_authority": false,
+      "experiment_authority": false,
+      "project_execution": false,
+      "project_deployment": false,
+      "person_scoring": false,
+      "writes_karma": false,
+      "creates_karma_receipt": false,
+      "ecosystem_authority_imported": false,
+      "cosmic_design_proven": false,
+      "automatic_action": false,
+      "mcp_surface_added": false
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -1100,6 +1159,28 @@
       "action": "if useful, read the plain-language folding, prion, feedback, KARMA, universe-lens, unknown, and safety guide",
       "method": "GET",
       "url": "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md"
+    },
+    {
+      "action": "if useful, inspect the exact Reconstructive Build Kernel",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json",
+      "note": "read-only design metadata; definition, theorem, open conjecture, empirical science, scientific model, analogy, design constraint, and philosophy stay typed; no proof transfer, biological mechanism transfer, execution, scoring, KARMA write, or automatic action"
+    },
+    {
+      "action": "if useful, validate the Reconstructive Build Kernel record before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/reconstructive-build-kernel/0.1.json"
+    },
+    {
+      "action": "if useful, validate a local reconstructive project record",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/reconstructive-project/0.1.json",
+      "note": "a portable closed schema, not an executor, deployment instruction, or grant of authority"
+    },
+    {
+      "action": "if useful, read the reconstruction, folding, catalysis, pipeline, feedback, source, and boundary guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/RECONSTRUCTIVE-BUILD-KERNEL.md"
     },
     {
       "action": "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority",
@@ -3572,6 +3653,7 @@
     "conformational_feedback_atlas": "The bounded atlas separates scientific observation, constitutional design, analogy, and philosophy. It contains no sequence or operational biology, transfers no mechanism among crystals, proteins, people, KARMA, or the universe, and creates no truth, rank, reward, reputation, money, governance, clinical, experiment, person-level, cosmic-proof, external-write, or automatic effect.",
     "conformational_feedback_physics_atlas": "The v0.2 successor adds bounded equations, structured philosophical questions, and link-only ecosystem metadata while preserving the immutable v0.1 bytes. It fetches or imports nothing and creates no biological, clinical, KARMA, economic, governance, cosmic-proof, external-write, or automatic effect.",
     "fold_feedback_atlas": "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
+    "reconstructive_build_kernel": "The Reconstructive Build Kernel is static, read-only design metadata. It does not prove the graph reconstruction conjecture, predict a protein fold, transfer a biological mechanism into software, execute or deploy a project, fetch a source, score a person or work, write KARMA, create a receipt, import ecosystem authority, prove cosmic design, or take automatic action. Every analogy keeps explicit breaks and every build transition requires a deliberate local choice.",
     "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",

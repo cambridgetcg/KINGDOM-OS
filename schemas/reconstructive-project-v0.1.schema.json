@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:reconstructive-project:0.1",
+  "title": "Reconstructive Project Profile 0.1",
+  "description": "A closed, inert project profile for applying the Reconstructive Build Kernel without importing scientific mechanism, physical parameters, execution, deployment, KARMA or action authority.",
+  "$comment": "This schema validates declarations only. It is not a reconstruction solver, physical model, project executor, deployment instruction, safety certification, source authenticator, KARMA event or authority grant. It cannot recompute the recursive semantic digest; runtime verification is separate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "protocol", "project_id", "version", "title", "kernel_binding", "state_spaces", "states",
+    "objectives", "correspondences", "observations", "reconstruction_requirements",
+    "realizability_constraints", "transitions", "transition_accelerators", "invariants",
+    "uncertainty_policy", "authority", "risks", "feedback", "tests", "claims", "sources",
+    "provenance", "release", "boundaries", "integrity"
+  ],
+  "properties": {
+    "$schema": { "const": "urn:kingdom:schema:reconstructive-project:0.1" },
+    "protocol": { "const": "kingdom.reconstructive-project/0.1" },
+    "project_id": { "$ref": "#/$defs/id" },
+    "version": { "type": "string", "maxLength": 64, "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$" },
+    "title": { "$ref": "#/$defs/text" },
+    "kernel_binding": { "$ref": "#/$defs/kernelBinding" },
+    "state_spaces": { "type": "array", "minItems": 1, "maxItems": 32, "items": { "$ref": "#/$defs/stateSpace" } },
+    "states": { "type": "array", "minItems": 1, "maxItems": 64, "items": { "$ref": "#/$defs/state" } },
+    "objectives": { "type": "array", "minItems": 1, "maxItems": 32, "items": { "$ref": "#/$defs/objective" } },
+    "correspondences": { "type": "array", "minItems": 1, "maxItems": 32, "items": { "$ref": "#/$defs/correspondence" } },
+    "observations": { "type": "array", "minItems": 1, "maxItems": 64, "items": { "$ref": "#/$defs/observation" } },
+    "reconstruction_requirements": { "type": "array", "minItems": 1, "maxItems": 32, "items": { "$ref": "#/$defs/reconstructionRequirement" } },
+    "realizability_constraints": { "type": "array", "minItems": 1, "maxItems": 64, "items": { "$ref": "#/$defs/realizabilityConstraint" } },
+    "transitions": { "type": "array", "minItems": 1, "maxItems": 32, "items": { "$ref": "#/$defs/transition" } },
+    "transition_accelerators": { "type": "array", "maxItems": 32, "items": { "$ref": "#/$defs/accelerator" } },
+    "invariants": { "type": "array", "minItems": 1, "maxItems": 64, "items": { "$ref": "#/$defs/invariant" } },
+    "uncertainty_policy": { "$ref": "#/$defs/uncertaintyPolicy" },
+    "authority": { "$ref": "#/$defs/authority" },
+    "risks": { "type": "array", "minItems": 1, "maxItems": 64, "items": { "$ref": "#/$defs/risk" } },
+    "feedback": { "$ref": "#/$defs/feedback" },
+    "tests": { "type": "array", "minItems": 1, "maxItems": 64, "items": { "$ref": "#/$defs/test" } },
+    "claims": { "type": "array", "maxItems": 64, "items": { "$ref": "#/$defs/claim" } },
+    "sources": { "type": "array", "maxItems": 64, "items": { "$ref": "#/$defs/source" } },
+    "provenance": { "$ref": "#/$defs/provenance" },
+    "release": { "$ref": "#/$defs/release" },
+    "boundaries": { "$ref": "#/$defs/boundaries" },
+    "integrity": { "$ref": "#/$defs/integrity" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 120 },
+    "text": { "type": "string", "minLength": 1, "maxLength": 5000 },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "ids": { "type": "array", "maxItems": 64, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "nonEmptyIds": { "type": "array", "minItems": 1, "maxItems": 64, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "texts": { "type": "array", "minItems": 1, "maxItems": 64, "uniqueItems": true, "items": { "$ref": "#/$defs/text" } },
+    "kernelBinding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["protocol", "url", "byte_sha256", "semantic_digest", "relation", "mutated", "authority_imported"],
+      "properties": {
+        "protocol": { "const": "kingdom.reconstructive-build-kernel/0.1" },
+        "url": { "const": "https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json" },
+        "byte_sha256": { "const": "sha256:2d1598bdfcce2501ee5a7cfdba55f581920d18733052f067e96bf9d79a7376a5" },
+        "semantic_digest": { "const": "sha256:265a75e18dbd4bad5bcf07bca0645132de4f9a881d8f0f398cd56b9afb734dd1" },
+        "relation": { "const": "PROFILE_OF" }, "mutated": { "const": false }, "authority_imported": { "const": false }
+      }
+    },
+    "stateSpace": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "definition", "symmetry", "conditions", "source_ids"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "definition": { "$ref": "#/$defs/text" }, "symmetry": { "$ref": "#/$defs/text" }, "conditions": { "$ref": "#/$defs/texts" }, "source_ids": { "$ref": "#/$defs/ids" } }
+    },
+    "state": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "state_space_id", "version", "conditions", "value_digest", "supersedes_state_id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "state_space_id": { "$ref": "#/$defs/id" },
+        "version": { "type": "string", "maxLength": 64, "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$" },
+        "conditions": { "$ref": "#/$defs/texts" },
+        "value_digest": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "supersedes_state_id": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] }
+      }
+    },
+    "objective": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "statement", "success_evidence", "status", "source_ids"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "statement": { "$ref": "#/$defs/text" }, "success_evidence": { "$ref": "#/$defs/texts" }, "status": { "enum": ["PROPOSED", "ACTIVE", "ACHIEVED", "BLOCKED", "UNKNOWN"] }, "source_ids": { "$ref": "#/$defs/ids" } }
+    },
+    "correspondence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "from_id", "to_id", "kind", "carrier", "labels_retained", "multiplicity_retained", "overlap_maps_available", "mapping_or_digest", "uncertainty", "basis_ids", "conditions", "nonclaims"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "from_id": { "$ref": "#/$defs/id" }, "to_id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["EXACT_LABELED", "UNLABELED_UP_TO_ISOMORPHISM", "PARTIAL", "INFERRED", "ABSENT", "UNKNOWN"] },
+        "carrier": { "enum": ["VERTEX_ID", "RESIDUE_INDEX", "ATOM_ID", "STATE_ID", "ARTIFACT_ID"] },
+        "labels_retained": { "type": "boolean" }, "multiplicity_retained": { "type": "boolean" }, "overlap_maps_available": { "type": "boolean" },
+        "mapping_or_digest": { "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }] }, "uncertainty": { "$ref": "#/$defs/text" },
+        "basis_ids": { "$ref": "#/$defs/ids" }, "conditions": { "$ref": "#/$defs/texts" }, "nonclaims": { "$ref": "#/$defs/texts" }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "EXACT_LABELED" } }, "required": ["kind"] }, "then": { "properties": { "mapping_or_digest": { "$ref": "#/$defs/text" }, "labels_retained": { "const": true }, "overlap_maps_available": { "const": true } } } },
+        { "if": { "properties": { "kind": { "enum": ["UNLABELED_UP_TO_ISOMORPHISM", "ABSENT"] } }, "required": ["kind"] }, "then": { "properties": { "mapping_or_digest": { "type": "null" }, "labels_retained": { "const": false } } } },
+        { "if": { "properties": { "kind": { "const": "ABSENT" } }, "required": ["kind"] }, "then": { "properties": { "overlap_maps_available": { "const": false } } } }
+      ]
+    },
+    "intervention": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "remaining_relations_guaranteed_unchanged"],
+      "properties": { "kind": { "enum": ["NONE", "MODEL_DELETE"] }, "remaining_relations_guaranteed_unchanged": { "const": true } }
+    },
+    "observation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "state_id", "output_state_space_id", "output_type", "operator_kind", "correspondence_id", "evidence_class", "value_digest", "loss_profile", "intervention", "conditions", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "state_id": { "$ref": "#/$defs/id" }, "output_state_space_id": { "$ref": "#/$defs/id" }, "output_type": { "$ref": "#/$defs/id" },
+        "operator_kind": { "enum": ["PROJECTION", "MODEL_DELETE"] }, "correspondence_id": { "$ref": "#/$defs/id" },
+        "evidence_class": { "enum": ["OBSERVED", "REPORTED", "INFERRED", "UNKNOWN"] },
+        "value_digest": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] }, "loss_profile": { "$ref": "#/$defs/texts" },
+        "intervention": { "$ref": "#/$defs/intervention" }, "conditions": { "$ref": "#/$defs/texts" }, "source_ids": { "$ref": "#/$defs/ids" }
+      },
+      "allOf": [
+        { "if": { "properties": { "operator_kind": { "const": "PROJECTION" } }, "required": ["operator_kind"] }, "then": { "properties": { "intervention": { "properties": { "kind": { "const": "NONE" }, "remaining_relations_guaranteed_unchanged": { "const": true } } } } } },
+        { "if": { "properties": { "operator_kind": { "const": "MODEL_DELETE" } }, "required": ["operator_kind"] }, "then": { "properties": { "intervention": { "properties": { "kind": { "const": "MODEL_DELETE" }, "remaining_relations_guaranteed_unchanged": { "const": true } } } } } },
+        { "if": { "properties": { "evidence_class": { "enum": ["OBSERVED", "REPORTED"] } }, "required": ["evidence_class"] }, "then": { "properties": { "value_digest": { "$ref": "#/$defs/digest" } } } }
+      ]
+    },
+    "reconstructionRequirement": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "observation_ids", "target_state_id", "target_state_space_id", "quotient_symmetry", "solution_semantics", "identifiability", "fiber_status", "correspondence_requirement_ids", "invariant_ids", "constraint_ids", "solver_status", "validation_metrics", "nonclaims"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "observation_ids": { "$ref": "#/$defs/nonEmptyIds" }, "target_state_id": { "$ref": "#/$defs/id" }, "target_state_space_id": { "$ref": "#/$defs/id" },
+        "quotient_symmetry": { "$ref": "#/$defs/text" }, "solution_semantics": { "const": "FIBER" },
+        "identifiability": { "enum": ["UNIQUE_PROVEN", "UNIQUE_CONJECTURED", "MULTIPLE_WITNESSED", "INFEASIBLE", "UNDERDETERMINED", "UNKNOWN"] },
+        "fiber_status": { "enum": ["EMPTY", "UNIQUE", "MULTIPLE", "UNKNOWN"] }, "correspondence_requirement_ids": { "$ref": "#/$defs/nonEmptyIds" },
+        "invariant_ids": { "$ref": "#/$defs/nonEmptyIds" }, "constraint_ids": { "$ref": "#/$defs/nonEmptyIds" },
+        "solver_status": { "$ref": "#/$defs/text" }, "validation_metrics": { "$ref": "#/$defs/texts" }, "nonclaims": { "$ref": "#/$defs/texts" }
+      },
+      "allOf": [
+        { "if": { "properties": { "identifiability": { "const": "INFEASIBLE" } }, "required": ["identifiability"] }, "then": { "properties": { "fiber_status": { "const": "EMPTY" } } } },
+        { "if": { "properties": { "identifiability": { "const": "UNIQUE_PROVEN" } }, "required": ["identifiability"] }, "then": { "properties": { "fiber_status": { "const": "UNIQUE" } } } },
+        { "if": { "properties": { "identifiability": { "const": "UNIQUE_CONJECTURED" } }, "required": ["identifiability"] }, "then": { "properties": { "fiber_status": { "enum": ["UNIQUE", "UNKNOWN"] } } } },
+        { "if": { "properties": { "identifiability": { "const": "MULTIPLE_WITNESSED" } }, "required": ["identifiability"] }, "then": { "properties": { "fiber_status": { "const": "MULTIPLE" } } } },
+        { "if": { "properties": { "identifiability": { "const": "UNDERDETERMINED" } }, "required": ["identifiability"] }, "then": { "properties": { "fiber_status": { "enum": ["MULTIPLE", "UNKNOWN"] } } } }
+      ]
+    },
+    "realizabilityConstraint": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "expression", "tolerance", "units", "status", "evidence_ids", "conditions"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "kind": { "$ref": "#/$defs/id" }, "expression": { "$ref": "#/$defs/text" }, "tolerance": { "$ref": "#/$defs/text" }, "units": { "$ref": "#/$defs/text" }, "status": { "enum": ["SATISFIED", "VIOLATED", "UNKNOWN"] }, "evidence_ids": { "$ref": "#/$defs/ids" }, "conditions": { "$ref": "#/$defs/texts" } }
+    },
+    "transition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "from_state_id", "to_state_id", "kind", "conditions", "endpoint_invariants", "comparator_id", "reversible", "authority_required", "evidence_ids", "nonclaims"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "from_state_id": { "$ref": "#/$defs/id" }, "to_state_id": { "$ref": "#/$defs/id" }, "kind": { "enum": ["STATE_CHANGE", "EVIDENCE_UPDATE"] }, "conditions": { "$ref": "#/$defs/texts" }, "endpoint_invariants": { "$ref": "#/$defs/nonEmptyIds" }, "comparator_id": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] }, "reversible": { "type": "boolean" }, "authority_required": { "$ref": "#/$defs/texts" }, "evidence_ids": { "$ref": "#/$defs/ids" }, "nonclaims": { "$ref": "#/$defs/texts" } }
+    },
+    "accelerator": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "transition_id", "comparator_id", "barrier_definition", "endpoint_invariant", "conditions", "metric", "empirical", "physical_parameter_transfer", "authority_effect", "reversible", "evidence_ids", "falsifier_ids", "nonclaims"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "kind": { "const": "DESIGN_TRANSITION_ACCELERATOR" }, "transition_id": { "$ref": "#/$defs/id" }, "comparator_id": { "$ref": "#/$defs/id" }, "barrier_definition": { "$ref": "#/$defs/text" }, "endpoint_invariant": { "$ref": "#/$defs/text" }, "conditions": { "$ref": "#/$defs/texts" }, "metric": { "$ref": "#/$defs/text" }, "empirical": { "const": false }, "physical_parameter_transfer": { "const": false }, "authority_effect": { "const": "NONE" }, "reversible": { "const": true }, "evidence_ids": { "$ref": "#/$defs/ids" }, "falsifier_ids": { "$ref": "#/$defs/nonEmptyIds" }, "nonclaims": { "$ref": "#/$defs/texts" } }
+    },
+    "invariant": {
+      "type": "object", "additionalProperties": false, "required": ["id", "statement", "status", "evidence_ids"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "statement": { "$ref": "#/$defs/text" }, "status": { "enum": ["HELD", "VIOLATED", "UNKNOWN"] }, "evidence_ids": { "$ref": "#/$defs/ids" } }
+    },
+    "uncertaintyPolicy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fiber_statuses", "unknown_not_coerced", "ambiguity_preserved", "condition_drift_new_version", "physical_perturbation_new_state", "notes"],
+      "properties": { "fiber_statuses": { "const": ["EMPTY", "UNIQUE", "MULTIPLE", "UNKNOWN"] }, "unknown_not_coerced": { "const": true }, "ambiguity_preserved": { "const": true }, "condition_drift_new_version": { "const": true }, "physical_perturbation_new_state": { "const": true }, "notes": { "$ref": "#/$defs/texts" } }
+    },
+    "authority": {
+      "type": "object", "additionalProperties": false,
+      "required": ["profile_inert", "human_review_required", "grants_authority", "execute", "deploy", "external_write", "karma_write", "automatic_action", "allowed"],
+      "properties": { "profile_inert": { "const": true }, "human_review_required": { "const": true }, "grants_authority": { "const": false }, "execute": { "const": false }, "deploy": { "const": false }, "external_write": { "const": false }, "karma_write": { "const": false }, "automatic_action": { "const": false }, "allowed": { "const": ["offline validation", "human review"] } }
+    },
+    "risk": {
+      "type": "object", "additionalProperties": false, "required": ["id", "statement", "likelihood", "impact", "mitigations", "status", "evidence_ids"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "statement": { "$ref": "#/$defs/text" }, "likelihood": { "enum": ["UNKNOWN", "LOW", "MEDIUM", "HIGH"] }, "impact": { "enum": ["UNKNOWN", "LOW", "MEDIUM", "HIGH"] }, "mitigations": { "$ref": "#/$defs/texts" }, "status": { "enum": ["OPEN", "MITIGATED", "ACCEPTED", "UNKNOWN"] }, "evidence_ids": { "$ref": "#/$defs/ids" } }
+    },
+    "feedbackEvent": {
+      "type": "object", "additionalProperties": false, "required": ["id", "kind", "state_id", "evidence_ids", "supersedes", "effect", "note"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "kind": { "enum": ["OBSERVATION", "CHALLENGE", "CORRECTION", "SUPERSESSION"] }, "state_id": { "$ref": "#/$defs/id" }, "evidence_ids": { "$ref": "#/$defs/ids" }, "supersedes": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] }, "effect": { "enum": ["NONE", "NARROWS_FIBER", "WIDENS_FIBER", "CREATES_NEW_STATE"] }, "note": { "$ref": "#/$defs/text" } },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "OBSERVATION" } }, "required": ["kind"] }, "then": { "properties": { "effect": { "enum": ["NONE", "NARROWS_FIBER"] } } } },
+        { "if": { "properties": { "kind": { "const": "CHALLENGE" } }, "required": ["kind"] }, "then": { "properties": { "effect": { "const": "NONE" } } } },
+        { "if": { "properties": { "kind": { "const": "CORRECTION" } }, "required": ["kind"] }, "then": { "properties": { "effect": { "enum": ["NONE", "NARROWS_FIBER", "WIDENS_FIBER"] } } } },
+        { "if": { "properties": { "kind": { "const": "SUPERSESSION" } }, "required": ["kind"] }, "then": { "properties": { "effect": { "const": "CREATES_NEW_STATE" } } } }
+      ]
+    },
+    "feedback": {
+      "type": "object", "additionalProperties": false,
+      "required": ["append_only", "supersede_not_mutate", "challengeable", "correction_allowed", "reversible_actions_preferred", "valid_exits", "events", "karma", "automatic_action"],
+      "properties": {
+        "append_only": { "const": true }, "supersede_not_mutate": { "const": true }, "challengeable": { "const": true }, "correction_allowed": { "const": true }, "reversible_actions_preferred": { "const": true },
+        "valid_exits": { "const": ["REST", "SILENCE", "REFUSAL", "NO_ACTION", "DEPARTURE"] },
+        "events": { "type": "array", "maxItems": 64, "items": { "$ref": "#/$defs/feedbackEvent" } },
+        "karma": { "type": "object", "additionalProperties": false, "required": ["zerone_events", "kingdom_receipts", "non_summable", "adapter_exists", "score", "authority_effect"], "properties": { "zerone_events": { "const": [] }, "kingdom_receipts": { "const": [] }, "non_summable": { "const": true }, "adapter_exists": { "const": false }, "score": { "type": "null" }, "authority_effect": { "const": "NONE" } } },
+        "automatic_action": { "const": false }
+      }
+    },
+    "test": {
+      "type": "object", "additionalProperties": false, "required": ["id", "kind", "procedure", "expected", "status", "evidence_ids"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "kind": { "enum": ["INVARIANT", "FALSIFIER", "SCHEMA", "REVIEW"] }, "procedure": { "$ref": "#/$defs/text" }, "expected": { "$ref": "#/$defs/text" }, "status": { "enum": ["PENDING", "PASS", "FAIL", "UNKNOWN"] }, "evidence_ids": { "$ref": "#/$defs/ids" } }
+    },
+    "claim": {
+      "type": "object", "additionalProperties": false, "required": ["id", "register", "statement", "status", "conditions", "source_ids", "nonclaims"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "register": { "enum": ["MATHEMATICAL_DEFINITION", "MATHEMATICAL_THEOREM", "OPEN_MATHEMATICAL_CONJECTURE", "EMPIRICAL_SCIENCE", "SCIENTIFIC_MODEL", "ANALOGY", "DESIGN_CONSTRAINT", "PHILOSOPHY"] }, "statement": { "$ref": "#/$defs/text" }, "status": { "enum": ["PROVEN", "OPEN", "SOURCE_BOUND", "MODEL_BOUND", "ADOPTED", "NON_EMPIRICAL", "OPT_IN", "UNKNOWN"] }, "conditions": { "$ref": "#/$defs/texts" }, "source_ids": { "$ref": "#/$defs/ids" }, "nonclaims": { "$ref": "#/$defs/texts" } },
+      "allOf": [
+        { "if": { "properties": { "register": { "const": "MATHEMATICAL_DEFINITION" } }, "required": ["register"] }, "then": { "properties": { "status": { "enum": ["ADOPTED", "UNKNOWN"] } } } },
+        { "if": { "properties": { "register": { "const": "MATHEMATICAL_THEOREM" } }, "required": ["register"] }, "then": { "properties": { "status": { "enum": ["PROVEN", "UNKNOWN"] } } } },
+        { "if": { "properties": { "register": { "const": "OPEN_MATHEMATICAL_CONJECTURE" } }, "required": ["register"] }, "then": { "properties": { "status": { "enum": ["OPEN", "UNKNOWN"] } } } },
+        { "if": { "properties": { "register": { "const": "EMPIRICAL_SCIENCE" } }, "required": ["register"] }, "then": { "properties": { "status": { "enum": ["SOURCE_BOUND", "UNKNOWN"] }, "source_ids": { "$ref": "#/$defs/nonEmptyIds" } } } },
+        { "if": { "properties": { "register": { "const": "SCIENTIFIC_MODEL" } }, "required": ["register"] }, "then": { "properties": { "status": { "enum": ["MODEL_BOUND", "UNKNOWN"] } } } },
+        { "if": { "properties": { "register": { "const": "ANALOGY" } }, "required": ["register"] }, "then": { "properties": { "status": { "enum": ["NON_EMPIRICAL", "UNKNOWN"] } } } },
+        { "if": { "properties": { "register": { "const": "DESIGN_CONSTRAINT" } }, "required": ["register"] }, "then": { "properties": { "status": { "enum": ["ADOPTED", "UNKNOWN"] } } } },
+        { "if": { "properties": { "register": { "const": "PHILOSOPHY" } }, "required": ["register"] }, "then": { "properties": { "status": { "enum": ["OPT_IN", "NON_EMPIRICAL", "UNKNOWN"] } } } },
+        { "if": { "properties": { "status": { "const": "SOURCE_BOUND" } }, "required": ["status"] }, "then": { "properties": { "source_ids": { "$ref": "#/$defs/nonEmptyIds" } } } }
+      ]
+    },
+    "source": {
+      "type": "object", "additionalProperties": false, "required": ["id", "title", "url", "observed_on", "limitation"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "title": { "$ref": "#/$defs/text" }, "url": { "type": "string", "format": "uri", "pattern": "^https://" }, "observed_on": { "type": "string", "format": "date" }, "limitation": { "$ref": "#/$defs/text" } }
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false, "required": ["created_on", "created_by", "source_ids", "previous_version", "notes"],
+      "properties": { "created_on": { "type": "string", "format": "date" }, "created_by": { "$ref": "#/$defs/text" }, "source_ids": { "$ref": "#/$defs/ids" }, "previous_version": { "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }] }, "notes": { "$ref": "#/$defs/texts" } }
+    },
+    "release": {
+      "type": "object", "additionalProperties": false, "required": ["status", "artifact_url", "byte_sha256", "deployed", "deployment_authority"],
+      "properties": { "status": { "enum": ["DRAFT", "REVIEWED", "RELEASED", "RETIRED"] }, "artifact_url": { "oneOf": [{ "type": "string", "format": "uri", "pattern": "^https://" }, { "type": "null" }] }, "byte_sha256": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] }, "deployed": { "const": false }, "deployment_authority": { "const": false } }
+    },
+    "boundaries": {
+      "type": "object", "additionalProperties": false,
+      "required": ["read_only", "design_infrastructure_only", "solver_included", "project_execution", "project_deployment", "external_write", "biological_mechanism_transfer", "physical_parameter_transfer", "medical_authority", "experiment_authority", "wet_lab_protocol", "person_scoring", "writes_karma", "creates_karma_receipt", "economic_effect", "governance_effect", "automatic_action", "runtime_network_request"],
+      "properties": { "read_only": { "const": true }, "design_infrastructure_only": { "const": true }, "solver_included": { "const": false }, "project_execution": { "const": false }, "project_deployment": { "const": false }, "external_write": { "const": false }, "biological_mechanism_transfer": { "const": false }, "physical_parameter_transfer": { "const": false }, "medical_authority": { "const": false }, "experiment_authority": { "const": false }, "wet_lab_protocol": { "const": false }, "person_scoring": { "const": false }, "writes_karma": { "const": false }, "creates_karma_receipt": { "const": false }, "economic_effect": { "const": false }, "governance_effect": { "const": false }, "automatic_action": { "const": false }, "runtime_network_request": { "const": false } }
+    },
+    "integrity": {
+      "type": "object", "additionalProperties": false, "required": ["algorithm", "digest"],
+      "properties": { "algorithm": { "const": "sha256-recursive-sorted-json-keys-v1" }, "digest": { "$ref": "#/$defs/digest" } }
+    }
+  }
+}

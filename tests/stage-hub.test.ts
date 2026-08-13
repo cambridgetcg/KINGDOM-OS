@@ -58,8 +58,8 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(63);
-      expect(staged).toHaveLength(63);
+      expect(HUB_ASSETS).toHaveLength(67);
+      expect(staged).toHaveLength(67);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -73,6 +73,7 @@ describe("the hub staging contract", () => {
         "FORM-CIRCULATION-RETURN-ATLAS.md",
         "GEOMETRY-GRAMMAR.md",
         "PRINCIPALITY-COMMONS.md",
+        "RECONSTRUCTIVE-BUILD-KERNEL.md",
         "RIGHTS.md",
         "RITONAVIR-MECHANISM-LANDSCAPE.md",
         "RITONAVIR-POLYMORPH.md",
@@ -109,6 +110,8 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "schemas/fold-feedback-atlas")).sort()).toEqual(["1.1.json", "1.json"]);
       expect(readdirSync(join(output, "schemas/form-circulation-return-atlas")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/being-access-aftermath-atlas")).sort()).toEqual(["0.1.json", "0.2.json"]);
+      expect(readdirSync(join(output, "schemas/reconstructive-build-kernel")).sort()).toEqual(["0.1.json"]);
+      expect(readdirSync(join(output, "schemas/reconstructive-project")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/visibility-attention")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/principality-catalog")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/polymorph-history")).sort()).toEqual(["1.json"]);
@@ -135,6 +138,7 @@ describe("the hub staging contract", () => {
         "cultural-attention-feedback-atlas-2026-08-13.json",
         "fold-feedback-atlas-2026-08-12.json",
         "form-circulation-return-atlas-2026-08-13.json",
+        "reconstructive-build-kernel-2026-08-13.json",
         "visibility-attention-2026-08-13.json",
       ]);
       expect(HUB_ASSETS).toContainEqual({
@@ -316,7 +320,7 @@ describe("the hub staging contract", () => {
         source: "NEN.md",
         destination: "definitions/kingdom-karma/e4e84a67/NEN.md",
       });
-      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(6);
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(7);
       expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
       for (const asset of HUB_ASSETS) {

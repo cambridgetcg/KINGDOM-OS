@@ -1,0 +1,621 @@
+{
+  "$schema": "urn:kingdom:schema:reconstructive-build-kernel:0.1",
+  "protocol": "kingdom.reconstructive-build-kernel/0.1",
+  "kernel_id": "reconstructive-build-kernel-2026-08-13",
+  "title": "Reconstructive Build Kernel",
+  "compiled_on": "2026-08-13",
+  "evidence_through": "2026-08-13",
+  "scope": {
+    "focus": "A typed unification layer for reasoning from lossy observations to candidate wholes, realizations, condition-dependent transitions, measured function, and append-only feedback.",
+    "coverage": "Finite simple graph reconstruction, protein contact-map representation and geometric realization, conditional folding landscapes, physical enzyme catalysis, and a deliberately non-physical build-system translation.",
+    "intended_use": "Offline design review, evidence typing, ambiguity preservation, falsification planning, and reversible project architecture.",
+    "excluded_use": "A proof of the graph reconstruction conjecture; protein structure or rate prediction; medical, laboratory, deployment, scoring, governance, economic, or automatic-action authority.",
+    "currentness": "selected-evidence-as-of-compilation"
+  },
+  "epistemic_registers": [
+    {
+      "id": "mathematical-definition",
+      "kind": "MATHEMATICAL_DEFINITION",
+      "meaning": "A declared formal object or notation, not a claim that needs proof.",
+      "transfer_rule": "Fixes vocabulary only; it establishes neither a theorem nor physical realization."
+    },
+    {
+      "id": "mathematical-theorem",
+      "kind": "MATHEMATICAL_THEOREM",
+      "meaning": "A statement proved under its declared mathematical assumptions.",
+      "transfer_rule": "May constrain matching formal objects only; it does not establish physical realization or mechanism."
+    },
+    {
+      "id": "open-mathematical-conjecture",
+      "kind": "OPEN_MATHEMATICAL_CONJECTURE",
+      "meaning": "A precise unresolved statement with neither an accepted general proof nor counterexample in the cited horizon.",
+      "transfer_rule": "Must remain open; finite verification and analogy cannot upgrade it to a theorem."
+    },
+    {
+      "id": "empirical-science",
+      "kind": "EMPIRICAL_SCIENCE",
+      "meaning": "A source-scoped observation from a declared physical system and conditions.",
+      "transfer_rule": "Applies only within supported conditions and does not transfer causal parameters to another domain."
+    },
+    {
+      "id": "scientific-model",
+      "kind": "SCIENTIFIC_MODEL",
+      "meaning": "A conditional representation whose variables, assumptions, and validation limits must be declared.",
+      "transfer_rule": "Model output is not direct observation and is not universal outside its fit or validation scope."
+    },
+    {
+      "id": "analogy",
+      "kind": "ANALOGY",
+      "meaning": "A deliberately lossy preservation of a named relational pattern across non-equivalent domains.",
+      "transfer_rule": "Transfers no ontology, mechanism, causal coefficient, empirical status, or authority."
+    },
+    {
+      "id": "design-constraint",
+      "kind": "DESIGN_CONSTRAINT",
+      "meaning": "A chosen rule for building inspectable and reversible systems.",
+      "transfer_rule": "Creates no scientific fact and authorizes no external effect without a separate local decision."
+    },
+    {
+      "id": "philosophy",
+      "kind": "PHILOSOPHY",
+      "meaning": "An optional interpretation about identity, feedback, and the intelligibility of wholes.",
+      "transfer_rule": "Is not empirical evidence for cosmic design, purpose, or moral causation."
+    }
+  ],
+  "state_spaces": [
+    {
+      "id": "finite-simple-graphs",
+      "domain": "graph-theory",
+      "state_definition": "Labeled finite simple undirected graphs on declared finite vertex carriers, including lower-order cards.",
+      "symmetry": "vertex relabelling by S_n",
+      "conditions": ["finite", "simple", "undirected", "vertex carrier declared"],
+      "nonclaims": ["No claim is made for directed, hypergraph, infinite, or physically embedded analogues."]
+    },
+    {
+      "id": "graph-vertex-decks",
+      "domain": "graph-theory",
+      "state_definition": "Multisets of unlabeled isomorphism classes of all one-vertex-deleted induced cards from a declared finite simple graph.",
+      "symmetry": "card order ignored; card multiplicity retained; cross-card vertex alignment absent",
+      "conditions": ["one card per parent vertex", "multiplicity retained", "each card unlabeled up to graph isomorphism"],
+      "nonclaims": ["A deck definition does not establish that its parent is unique or efficiently computable."]
+    },
+    {
+      "id": "protein-coordinate-ensembles",
+      "domain": "molecular-science",
+      "state_definition": "Stereochemically admissible protein coordinates or ensembles under declared sequence and environmental conditions.",
+      "symmetry": "proper rigid motions SE(3), with chain, residue, atom, and chirality constraints retained",
+      "conditions": ["sequence declared", "atom selector declared", "temperature, solvent, pH, and ensemble rule declared"],
+      "nonclaims": ["No universal fold, trajectory, or catalytic function is implied by membership in this state space."]
+    },
+    {
+      "id": "protein-contact-projections",
+      "domain": "molecular-representation",
+      "state_definition": "Binary labeled residue-contact graphs produced from one declared representative site per residue, threshold, and within-chain sequence-neighbour exclusion.",
+      "symmetry": "none while chain and residue identity are retained; graph isomorphism only when labels are explicitly erased",
+      "conditions": ["representative site selector declared", "threshold tau > 0 declared", "within-chain sequence exclusion s is a declared nonnegative integer", "interchain eligibility predicate declared", "correspondence declared"],
+      "nonclaims": ["A contact graph is not exact coordinates, chemistry, dynamics, a unique structure, or a graph deck."]
+    },
+    {
+      "id": "reconstructive-project-states",
+      "domain": "system-design",
+      "state_definition": "Versioned project states with explicit observations, constraints, candidate interpretations, transitions, invariants, risks, and feedback.",
+      "symmetry": "declared equivalence only; artifact identities and versions are retained",
+      "conditions": ["offline profile", "human review", "no hidden effect authority"],
+      "nonclaims": ["A valid profile does not prove correctness, choose a candidate, execute work, or deploy anything."]
+    },
+    {
+      "id": "reconstructive-project-observations",
+      "domain": "system-design",
+      "state_definition": "Typed partial observations of one declared reconstructive project state, with provenance, loss profile, correspondence, and intervention status retained.",
+      "symmetry": "declared evidence equivalence only; observation and state identities are retained",
+      "conditions": ["source state declared", "observation window declared", "loss profile declared", "no hidden effectful probe"],
+      "nonclaims": ["An observation record is not the project state, a chosen reconstruction, execution, or deployment authority."]
+    }
+  ],
+  "correspondences": [
+    {
+      "id": "graph-card-correspondence",
+      "from_id": "finite-simple-graphs",
+      "to_id": "graph-vertex-decks",
+      "kind": "UNLABELED_UP_TO_ISOMORPHISM",
+      "carrier": "VERTEX_ID",
+      "labels_retained": false,
+      "multiplicity_retained": true,
+      "overlap_maps_available": false,
+      "mapping_or_digest": null,
+      "uncertainty": "Cross-card vertex alignment is intentionally absent.",
+      "basis_ids": ["qi-2026", "mckay-2022", "clifton-2024"],
+      "conditions": ["Each card is an unlabeled isomorphism class", "The deck is a multiset, never a set"],
+      "nonclaims": ["Cardwise isomorphisms need not glue to one global isomorphism."]
+    },
+    {
+      "id": "protein-index-correspondence",
+      "from_id": "protein-coordinate-ensembles",
+      "to_id": "protein-contact-projections",
+      "kind": "EXACT_LABELED",
+      "carrier": "RESIDUE_INDEX",
+      "labels_retained": true,
+      "multiplicity_retained": true,
+      "overlap_maps_available": true,
+      "mapping_or_digest": "sequence-index-and-chain-id",
+      "uncertainty": "Experimental missingness, alternate conformers, or atom-selection ambiguity must be reported separately.",
+      "basis_ids": ["fakhoury-2024", "ooka-2023"],
+      "conditions": ["The same declared molecular state is projected", "Chain and residue identifiers are retained"],
+      "nonclaims": ["A physical residue deletion or mutation is not this static projection with one node removed."]
+    },
+    {
+      "id": "partial-restraint-correspondence",
+      "from_id": "protein-contact-projections",
+      "to_id": "protein-coordinate-ensembles",
+      "kind": "PARTIAL",
+      "carrier": "RESIDUE_INDEX",
+      "labels_retained": true,
+      "multiplicity_retained": true,
+      "overlap_maps_available": false,
+      "mapping_or_digest": "declared-residue-restraint-identities-and-representative-site-selector",
+      "uncertainty": "Binary contacts supply inequalities rather than a complete exact distance matrix.",
+      "basis_ids": ["fakhoury-2024"],
+      "conditions": ["Contact definition fixed", "Stereochemical constraints supplied independently"],
+      "nonclaims": ["Partial restraints do not generally determine a unique coordinate realization."]
+    },
+    {
+      "id": "cross-state-sequence-correspondence",
+      "from_id": "protein-coordinate-ensembles",
+      "to_id": "protein-coordinate-ensembles",
+      "kind": "PARTIAL",
+      "carrier": "RESIDUE_INDEX",
+      "labels_retained": true,
+      "multiplicity_retained": true,
+      "overlap_maps_available": true,
+      "mapping_or_digest": "declared-sequence-alignment-with-gaps-and-new-state-identities",
+      "uncertainty": "Mutation, deletion, insertion, and condition changes can alter carrier membership, ensemble weights, and every projected relation.",
+      "basis_ids": [],
+      "conditions": ["Source and successor state IDs are distinct", "Sequence alignment and gaps are declared", "Environment is re-declared"],
+      "nonclaims": ["Cross-state alignment does not guarantee preserved contacts, geometry, landscape, or function."]
+    },
+    {
+      "id": "project-artifact-correspondence",
+      "from_id": "reconstructive-project-states",
+      "to_id": "reconstructive-project-observations",
+      "kind": "EXACT_LABELED",
+      "carrier": "ARTIFACT_ID",
+      "labels_retained": true,
+      "multiplicity_retained": true,
+      "overlap_maps_available": true,
+      "mapping_or_digest": "versioned-artifact-id-and-content-digest",
+      "uncertainty": "Semantic equivalence beyond exact identity remains a reviewed claim.",
+      "basis_ids": [],
+      "conditions": ["Immutable source-state identity", "Observation window and loss profile declared"],
+      "nonclaims": ["A matching digest proves byte identity, not truth, safety, consent, or authority."]
+    }
+  ],
+  "observation_operators": [
+    {
+      "id": "vertex-deletion-deck",
+      "input_state_space_id": "finite-simple-graphs",
+      "output_state_space_id": "graph-vertex-decks",
+      "output_type": "multiset-of-unlabeled-vertex-deleted-induced-subgraphs",
+      "operator_kind": "MODEL_DELETE",
+      "equation_id": "graph-deck-definition",
+      "correspondence_id": "graph-card-correspondence",
+      "loss_profile": ["deleted vertex identity", "cross-card vertex alignment", "the adjacency of each deleted vertex"],
+      "intervention": {"kind": "MODEL_DELETE", "remaining_relations_guaranteed_unchanged": true},
+      "conditions": ["Deletion is mathematical, not a physical perturbation"],
+      "source_ids": ["qi-2026", "mckay-2022", "clifton-2024"]
+    },
+    {
+      "id": "threshold-contact-projection",
+      "input_state_space_id": "protein-coordinate-ensembles",
+      "output_state_space_id": "protein-contact-projections",
+      "output_type": "labeled-binary-contact-graph-or-ensemble",
+      "operator_kind": "PROJECTION",
+      "equation_id": "protein-contact-map",
+      "correspondence_id": "protein-index-correspondence",
+      "loss_profile": ["exact distances", "orientations", "solvent and chemistry not encoded as graph attributes", "unresolved fast dynamics"],
+      "intervention": {"kind": "NONE", "remaining_relations_guaranteed_unchanged": true},
+      "conditions": ["tau, s, atom selector, chain IDs, and ensemble rule fixed"],
+      "source_ids": ["fakhoury-2024", "ooka-2023"]
+    },
+    {
+      "id": "project-evidence-projection",
+      "input_state_space_id": "reconstructive-project-states",
+      "output_state_space_id": "reconstructive-project-observations",
+      "output_type": "typed-partial-project-observations",
+      "operator_kind": "PROJECTION",
+      "equation_id": "reconstruction-fiber",
+      "correspondence_id": "project-artifact-correspondence",
+      "loss_profile": ["Unobserved project state", "Unmeasured transition costs", "Unknown risks and alternative explanations"],
+      "intervention": {"kind": "NONE", "remaining_relations_guaranteed_unchanged": true},
+      "conditions": ["Observation window and provenance declared", "No effectful probe is hidden inside observation"],
+      "source_ids": []
+    }
+  ],
+  "state_transition_operators": [
+    {
+      "id": "physical-sequence-perturbation",
+      "input_state_space_id": "protein-coordinate-ensembles",
+      "output_state_space_id": "protein-coordinate-ensembles",
+      "operator_kind": "PHYSICAL_PERTURBATION",
+      "equation_id": null,
+      "correspondence_id": "cross-state-sequence-correspondence",
+      "change_profile": ["No guarantee that remaining contacts, ensemble weights, or landscape are unchanged"],
+      "intervention": {"kind": "PHYSICAL_PERTURBATION", "remaining_relations_guaranteed_unchanged": false},
+      "conditions": ["New sequence and state identity required", "Environment re-declared"],
+      "source_ids": []
+    }
+  ],
+  "reconstruction_cases": [
+    {
+      "id": "classical-graph-reconstruction",
+      "observation_operator_id": "vertex-deletion-deck",
+      "target_state_space_id": "finite-simple-graphs",
+      "quotient_symmetry": "graph isomorphism",
+      "solution_semantics": "FIBER",
+      "identifiability": "UNIQUE_CONJECTURED",
+      "correspondence_requirement_ids": ["graph-card-correspondence"],
+      "invariant_ids": ["deck-multiplicity", "kelly-proper-subgraph-counts"],
+      "constraint_statements": ["The parent is finite, simple, undirected, and has n >= 3; its cards may have fewer than three vertices."],
+      "solver_status": "No general solver or proof is supplied; the classical conjecture remains open.",
+      "validation_metrics": ["Exact full-deck equality", "Exact parent isomorphism, not a hash-only comparison"],
+      "falsifier_ids": ["nonisomorphic-same-deck-witness", "finite-check-is-not-proof"],
+      "nonclaims": ["Verification through a finite order does not prove the conjecture for all orders."]
+    },
+    {
+      "id": "contact-to-coordinate-realization",
+      "observation_operator_id": "threshold-contact-projection",
+      "target_state_space_id": "protein-coordinate-ensembles",
+      "quotient_symmetry": "SE(3) with chirality and stereochemistry retained",
+      "solution_semantics": "FIBER",
+      "identifiability": "UNDERDETERMINED",
+      "correspondence_requirement_ids": ["protein-index-correspondence", "partial-restraint-correspondence"],
+      "invariant_ids": ["contact-definition-fixed", "stereochemical-validity"],
+      "constraint_statements": ["Declared distance or contact restraints", "Molecular chirality", "Excluded volume", "Covalent geometry"],
+      "solver_status": "The kernel validates declarations only and performs no structure reconstruction.",
+      "validation_metrics": ["Restraint satisfaction", "Stereochemical validity", "Independent physical validation"],
+      "falsifier_ids": ["contact-map-nonuniqueness", "mirror-under-se3", "nonphysical-realization"],
+      "nonclaims": ["The graph reconstruction conjecture gives no uniqueness theorem for contact-map realization."]
+    },
+    {
+      "id": "project-candidate-realization",
+      "observation_operator_id": "project-evidence-projection",
+      "target_state_space_id": "reconstructive-project-states",
+      "quotient_symmetry": "declared project equivalence only",
+      "solution_semantics": "FIBER",
+      "identifiability": "UNKNOWN",
+      "correspondence_requirement_ids": ["project-artifact-correspondence"],
+      "invariant_ids": ["append-only-feedback", "supersede-not-mutate", "explicit-unknown-state"],
+      "constraint_statements": ["Local project evidence", "Reviewed risk boundary", "Human choice retained"],
+      "solver_status": "Candidate projects remain plural or unknown until local evidence and review narrow them.",
+      "validation_metrics": ["Declared uncertainty", "Invariant preservation", "Reversible rollback"],
+      "falsifier_ids": ["analogy-promoted-to-mechanism", "hidden-action-authority"],
+      "nonclaims": ["This design translation neither ranks candidates nor selects or executes a project."]
+    }
+  ],
+  "realizability_models": [
+    {
+      "id": "exact-euclidean-distance-realization",
+      "equation_id": "euclidean-distance-gram",
+      "input_type": "complete-exact-squared-distance-matrix",
+      "realization_space": "Centered coordinates in R^3 modulo O(3), equivalently arbitrary coordinates modulo Euclidean isometries E(3), then chirality-filtered for molecular SE(3)",
+      "constraints": [
+        {"kind": "positive-semidefinite-gram", "expression": "B >= 0", "tolerance": "declared-numerical-tolerance", "units": "distance-squared"},
+        {"kind": "embedding-rank", "expression": "rank(B) <= 3", "tolerance": "declared-rank-tolerance", "units": "dimensionless"},
+        {"kind": "molecular-chirality", "expression": "stereocentres match declared chemistry", "tolerance": "none", "units": "categorical"}
+      ],
+      "conditions": ["Candidate squared-distance matrix is complete, exact, symmetric, hollow, and nonnegative", "Positive-semidefinite and rank tests determine Euclidean R^3 realizability"],
+      "solver_kind": "constraint-check-only",
+      "output_ambiguity": "Complete squared distances determine coordinates up to O(3); molecular chirality requires additional constraints.",
+      "source_ids": ["gower-1985"]
+    },
+    {
+      "id": "contact-restraint-realization",
+      "equation_id": null,
+      "input_type": "partial-binary-contact-inequalities",
+      "realization_space": "stereochemically admissible coordinate ensemble",
+      "constraints": [
+        {"kind": "contact-upper-bound", "expression": "d_ij <= tau for declared contacts", "tolerance": "declared", "units": "distance"},
+        {"kind": "noncontact-semantics", "expression": "depends on observation completeness", "tolerance": "declared", "units": "categorical"},
+        {"kind": "molecular-validity", "expression": "covalent geometry, chirality, and excluded volume", "tolerance": "method-specific", "units": "mixed"}
+      ],
+      "conditions": ["Correspondence retained", "Observation completeness declared", "Back-mapping method validated separately"],
+      "solver_kind": "external-method-required",
+      "output_ambiguity": "Multiple, one, or no valid lifts may exist; the kernel computes none of them.",
+      "source_ids": ["fakhoury-2024"]
+    }
+  ],
+  "landscape_models": [
+    {
+      "id": "conditional-folding-free-energy",
+      "state_space_id": "protein-coordinate-ensembles",
+      "coordinate_ids": ["declared-order-parameter-z", "configuration-q"],
+      "energy_kind": "conditional-free-energy",
+      "equation_id": "conditional-free-energy",
+      "conditions": ["Sequence, temperature, pH, solvent, ribosome, chaperone, and ligand context declared", "Equilibrium sampling assumptions declared"],
+      "equilibrium_assumption": "Required for the written equilibrium expression; kinetics need a separate model.",
+      "sampling_method": "not supplied by this kernel",
+      "parameter_source": "external experiment or validated physical model",
+      "uncertainty": "Projection and sampling can hide barriers, intermediates, and slow coordinates.",
+      "kinetics_inferable": false,
+      "source_ids": ["ooka-2023", "streit-2024"],
+      "nonclaims": ["No universal folding path or rate follows from a projected free-energy surface."]
+    },
+    {
+      "id": "project-transition-landscape",
+      "state_space_id": "reconstructive-project-states",
+      "coordinate_ids": ["declared-project-state", "declared-transition-cost"],
+      "energy_kind": "DESIGN_ANALOGY_ONLY",
+      "equation_id": null,
+      "conditions": ["Local costs and risks are declared", "No thermodynamic units or coefficients are imported"],
+      "equilibrium_assumption": "none",
+      "sampling_method": "human-reviewed alternatives",
+      "parameter_source": "local project evidence only",
+      "uncertainty": "Organizational and software transitions are not molecular free-energy landscapes.",
+      "kinetics_inferable": false,
+      "source_ids": [],
+      "nonclaims": ["This metaphor predicts no delivery time, productivity, adoption, or success probability."]
+    }
+  ],
+  "catalysis_models": [
+    {
+      "id": "physical-enzyme-barrier-model",
+      "kind": "PHYSICAL_ENZYME",
+      "transition_id": "matched-catalyzed-process-or-channel",
+      "comparator_id": "matched-reference-process-or-channel",
+      "equation_ids": ["eyring-rate", "barrier-saving", "ensemble-rate"],
+      "barrier_definition": "Standard molar activation Gibbs-energy difference between matched elementary-step-level processes or channels for the same net chemical transformation, under dimensionally compatible rate laws or explicit standard-state normalization.",
+      "endpoint_invariant": "For an uncoupled closed reaction, a catalyst changes rate and pathway barriers but not the equilibrium constant.",
+      "conditions": ["Matched elementary-step-level processes or channels for the same net chemical transformation and temperature", "Rate constants have the same rate-law dimensions or use explicit standard-state normalization", "Comparator and standard states declared", "Shared transition-state-theory regime with comparable transmission coefficient and prefactor", "Fast conformational pre-equilibrium declared before ensemble averaging"],
+      "evidence_ids": ["eyring-1935", "truhlar-2015", "iupac-1996", "du-2025", "zheng-2023", "jara-2025"],
+      "falsifier_ids": ["rate-misread-as-equilibrium", "condition-drift"],
+      "empirical": true,
+      "physical_parameter_transfer": false,
+      "authority_effect": "NONE",
+      "nonclaims": ["Contact topology alone predicts neither catalytic mechanism nor rate.", "An overall enzyme turnover kcat is not automatically the elementary-step rate used in the barrier relation when binding, conformational change, product release, or another step is limiting.", "Rate constants with different dimensions cannot be placed in the written logarithmic ratio without explicit normalization."]
+    },
+    {
+      "id": "design-transition-accelerator",
+      "kind": "DESIGN_TRANSITION_ACCELERATOR",
+      "transition_id": "reviewed-project-state-change",
+      "comparator_id": "declared-project-baseline",
+      "equation_ids": [],
+      "barrier_definition": "A locally declared reversible obstacle such as missing correspondence, validation, or handoff—not a thermodynamic barrier.",
+      "endpoint_invariant": "The accelerator may reduce reversible coordination cost but cannot alter truth criteria, safety gates, consent, or authority.",
+      "conditions": ["Local metric declared", "Rollback preserved", "No biological coefficient reused", "Human choice retained"],
+      "evidence_ids": [],
+      "falsifier_ids": ["analogy-promoted-to-mechanism", "hidden-action-authority"],
+      "empirical": false,
+      "physical_parameter_transfer": false,
+      "authority_effect": "NONE",
+      "nonclaims": ["There is no validated mapping from enzyme catalysis to software productivity or social influence."]
+    }
+  ],
+  "equations": [
+    {
+      "id": "reconstruction-fiber",
+      "register": "MATHEMATICAL_DEFINITION",
+      "expression": "F_O(y) = {x in X : O(x) = y}/Gamma",
+      "variables": ["X: declared state space", "Gamma: declared symmetry", "O: lossy observation operator", "y: observed value"],
+      "conditions": ["Gamma acts on X", "O is invariant under the declared Gamma action, or Gamma is restricted to the stabilizer of O", "Equivalence, action, and observation are fixed"],
+      "basis_ids": [],
+      "does_not_establish": ["Computability", "Physical realizability", "Uniqueness for an arbitrary observation"]
+    },
+    {
+      "id": "graph-deck-definition",
+      "register": "MATHEMATICAL_DEFINITION",
+      "expression": "D(G) = multiset{[G-v] : v in V(G)}",
+      "variables": ["G: finite simple undirected graph", "[G-v]: unlabeled isomorphism class"],
+      "conditions": ["Multiplicity retained"],
+      "basis_ids": ["qi-2026", "mckay-2022", "clifton-2024"],
+      "does_not_establish": ["Uniqueness of the parent", "Protein reconstruction", "A fast algorithm"]
+    },
+    {
+      "id": "graph-reconstruction-conjecture",
+      "register": "OPEN_MATHEMATICAL_CONJECTURE",
+      "expression": "D(G)=D(H) implies G isomorphic to H",
+      "variables": ["G,H: finite simple undirected graphs of equal order", "D: full vertex-deck operator"],
+      "conditions": ["|V(G)| = |V(H)| >= 3", "Multiplicity retained"],
+      "basis_ids": ["qi-2026", "mckay-2022"],
+      "does_not_establish": ["An accepted general proof", "Protein reconstruction", "A fast algorithm"]
+    },
+    {
+      "id": "kelly-counting",
+      "register": "MATHEMATICAL_THEOREM",
+      "expression": "N(F,G) = [sum_v N(F,G-v)]/[n-|V(F)|] for |V(F)| < n",
+      "variables": ["F: fixed graph with fewer vertices than G", "G: parent graph", "n: |V(G)|", "N: occurrence count under one fixed induced or non-induced convention"],
+      "conditions": ["|V(F)| < |V(G)|", "Counting convention fixed", "Each occurrence of F survives in exactly |V(G)|-|V(F)| cards"],
+      "basis_ids": ["clifton-2024"],
+      "does_not_establish": ["Counts of arbitrary spanning configurations by this formula", "Completeness of any finite invariant list"]
+    },
+    {
+      "id": "protein-contact-map",
+      "register": "SCIENTIFIC_MODEL",
+      "expression": "C^(tau,s)_ij(q) = 1[eligible(i,j) and ||r_i(q)-r_j(q)|| <= tau]",
+      "variables": ["q: conformation", "r_i: declared representative-site atom coordinate for residue i", "eligible(i,j): declared predicate including chain identity and within-chain |i-j| > s", "tau: positive contact threshold", "s: nonnegative integer within-chain sequence-neighbour exclusion"],
+      "conditions": ["Representative-site selector, chain IDs, tau > 0, integer s >= 0, eligibility predicate, and ensemble rule declared"],
+      "basis_ids": ["fakhoury-2024", "ooka-2023"],
+      "does_not_establish": ["Exact coordinates", "Chemistry", "Unique fold", "Catalytic rate"]
+    },
+    {
+      "id": "euclidean-distance-gram",
+      "register": "MATHEMATICAL_THEOREM",
+      "expression": "S has an R^3 realization if and only if J = I - 11^T/n and B = -1/2 J S J is positive semidefinite with rank(B) <= 3",
+      "variables": ["S: complete exact squared-distance matrix", "n: order of S", "1: all-ones vector in R^n", "J: centering matrix", "B: centered Gram matrix"],
+      "conditions": ["S is a complete exact symmetric hollow nonnegative candidate squared-distance matrix"],
+      "basis_ids": ["gower-1985"],
+      "does_not_establish": ["Chirality under SE(3) without extra constraints", "Realizability from a binary contact map"]
+    },
+    {
+      "id": "conditional-free-energy",
+      "register": "SCIENTIFIC_MODEL",
+      "expression": "A(z|c) = -beta^-1 ln integral_Omega delta(z-xi(q)) exp[-beta U(q;c)] dq + C",
+      "variables": ["z: declared order parameter", "c: sequence and environment conditions", "beta: 1/(k_B T)", "U: potential model"],
+      "conditions": ["Equilibrium ensemble and sampling model declared"],
+      "basis_ids": ["ooka-2023", "streit-2024"],
+      "does_not_establish": ["Kinetics", "A universal path", "Validity after condition drift"]
+    },
+    {
+      "id": "eyring-rate",
+      "register": "SCIENTIFIC_MODEL",
+      "expression": "k approximately kappa(k_B T/h) exp[-Delta G^dagger/(R T)]",
+      "variables": ["k: first-order or pseudo-first-order rate constant", "kappa: transmission coefficient", "k_B: Boltzmann constant", "h: Planck constant", "R: molar gas constant", "Delta G^dagger: standard molar activation Gibbs energy", "T: absolute temperature"],
+      "conditions": ["Transition-state model and thermodynamic standard state declared", "Rate-law dimensions and any pseudo-first-order conditions declared"],
+      "basis_ids": ["eyring-1935", "truhlar-2015", "iupac-1996", "du-2025", "zheng-2023", "jara-2025"],
+      "does_not_establish": ["Mechanism from rate alone", "A change in equilibrium constant"]
+    },
+    {
+      "id": "barrier-saving",
+      "register": "SCIENTIFIC_MODEL",
+      "expression": "Delta G^dagger_saved = Delta G^dagger_reference - Delta G^dagger_catalyzed approximately R T ln(k_catalyzed/k_reference)",
+      "variables": ["k_catalyzed: first-order or pseudo-first-order rate constant for a declared catalyzed elementary-step-level process or channel", "k_reference: dimensionally matched or explicitly normalized rate constant for a reference process or channel of the same net transformation", "R: molar gas constant", "T: absolute temperature", "Delta G^dagger_saved: positive standard molar activation Gibbs-energy difference"],
+      "conditions": ["Matched processes or channels, temperature, and thermodynamic standard states", "Same rate-law dimensions or explicit standard-state normalization", "Shared transition-state-theory regime with comparable transmission coefficient and prefactor"],
+      "basis_ids": ["eyring-1935", "truhlar-2015", "iupac-1996", "du-2025", "zheng-2023"],
+      "does_not_establish": ["Cross-reaction comparison", "A barrier difference from overall enzyme turnover kcat when another step is limiting", "Software productivity parameter"]
+    },
+    {
+      "id": "ensemble-rate",
+      "register": "SCIENTIFIC_MODEL",
+      "expression": "k_obs = sum_c p(c) k_c",
+      "variables": ["p(c): conformer population", "k_c: conformer-specific rate"],
+      "conditions": ["Fast conformational pre-equilibrium relative to reaction"],
+      "basis_ids": ["du-2025", "jara-2025"],
+      "does_not_establish": ["Validity for slow exchange without a kinetic master equation"]
+    },
+    {
+      "id": "fiber-monotonicity",
+      "register": "MATHEMATICAL_THEOREM",
+      "expression": "F_(O1,O2)(y1,y2) = F_O1(y1) intersection F_O2(y2) subseteq F_O1(y1)",
+      "variables": ["O1,O2: fixed nonperturbing observation operators", "y1,y2: consistent observations of the same state", "F: candidate fiber under the same declared symmetry"],
+      "conditions": ["Same underlying state and symmetry", "Observations are consistent and nonperturbing"],
+      "basis_ids": [],
+      "does_not_establish": ["Monotonicity across a mutation, deletion, or changed environment"]
+    }
+  ],
+  "invariants": [
+    {"id": "deck-multiplicity", "register": "MATHEMATICAL_DEFINITION", "statement": "The deck is a multiset; repeated card types are evidence and cannot be discarded.", "basis_ids": ["qi-2026", "mckay-2022"]},
+    {"id": "kelly-proper-subgraph-counts", "register": "MATHEMATICAL_THEOREM", "statement": "For every fixed graph F having fewer vertices than G, its occurrence count under one fixed convention is reconstructible by Kelly's double count.", "basis_ids": ["clifton-2024"]},
+    {"id": "contact-definition-fixed", "register": "DESIGN_CONSTRAINT", "statement": "A contact graph is compared only with the same atom selector, threshold, sequence exclusion, chain identity, and ensemble rule.", "basis_ids": ["fakhoury-2024"]},
+    {"id": "stereochemical-validity", "register": "DESIGN_CONSTRAINT", "statement": "A graph or distance solution is not a protein realization until chirality, covalent geometry, excluded volume, and condition constraints pass.", "basis_ids": ["fakhoury-2024"]},
+    {"id": "append-only-feedback", "register": "DESIGN_CONSTRAINT", "statement": "New evidence appends or supersedes a state; it does not silently rewrite the prior observation.", "basis_ids": []},
+    {"id": "supersede-not-mutate", "register": "DESIGN_CONSTRAINT", "statement": "Corrections create a versioned successor with provenance while preserving prior bytes.", "basis_ids": []},
+    {"id": "explicit-unknown-state", "register": "DESIGN_CONSTRAINT", "statement": "EMPTY, UNIQUE, MULTIPLE, and UNKNOWN are distinct candidate-fiber outcomes; uncertainty cannot be coerced into one answer.", "basis_ids": []}
+  ],
+  "claims": [
+    {"id": "graph-conjecture-open", "register": "OPEN_MATHEMATICAL_CONJECTURE", "domain": "graph-theory", "status": "OPEN", "statement": "The classical vertex reconstruction conjecture remains open for all finite simple undirected graphs of order at least three.", "equation_ids": ["graph-reconstruction-conjecture"], "conditions": ["Cited horizon"], "basis_ids": ["qi-2026", "mckay-2022"], "falsifier_ids": ["nonisomorphic-same-deck-witness"], "supports": ["Preserve UNKNOWN rather than claim a proof"], "does_not_support": ["Protein reconstruction uniqueness", "A universal local-to-global law"]},
+    {"id": "proper-counts-reconstructible", "register": "MATHEMATICAL_THEOREM", "domain": "graph-theory", "status": "PROVEN", "statement": "Kelly counting reconstructs the occurrence count of every fixed graph F having fewer vertices than the parent G.", "equation_ids": ["kelly-counting"], "conditions": ["|V(F)| < |V(G)|", "One fixed occurrence-count convention"], "basis_ids": ["clifton-2024"], "falsifier_ids": [], "supports": ["Deck-visible invariant extraction"], "does_not_support": ["Counts of arbitrary spanning configurations by this formula", "A complete graph isomorphism invariant"]},
+    {"id": "contact-map-lossy", "register": "SCIENTIFIC_MODEL", "domain": "protein-folding", "status": "MODEL_BOUNDED", "statement": "A binary contact projection deliberately discards exact metric, orientation, chemical, and dynamical information.", "equation_ids": ["protein-contact-map"], "conditions": ["Declared projection"], "basis_ids": ["fakhoury-2024", "ooka-2023"], "falsifier_ids": ["contact-map-nonuniqueness"], "supports": ["Explicit realizability gate"], "does_not_support": ["Unique protein coordinates"]},
+    {"id": "environment-conditions-folding", "register": "EMPIRICAL_SCIENCE", "domain": "protein-folding", "status": "SOURCE_SCOPED", "statement": "The ribosomal environment can alter folding energetics and conformational behaviour relative to isolated solution conditions.", "equation_ids": ["conditional-free-energy"], "conditions": ["Source-scoped systems and assays"], "basis_ids": ["streit-2024"], "falsifier_ids": ["condition-drift"], "supports": ["Condition-bound landscape versions"], "does_not_support": ["One universal folding landscape"]},
+    {"id": "conformation-contributes-to-catalysis", "register": "EMPIRICAL_SCIENCE", "domain": "enzyme-catalysis", "status": "SOURCE_SCOPED", "statement": "Source-scoped studies support contributions from conformational ensembles and active-site electrostatics to enzyme catalytic rates.", "equation_ids": ["eyring-rate", "ensemble-rate"], "conditions": ["Declared enzymes, reactions, assays, and comparators"], "basis_ids": ["du-2025", "zheng-2023", "jara-2025"], "falsifier_ids": ["condition-drift"], "supports": ["Measure ensemble and barrier contributions separately"], "does_not_support": ["Topology-only rate prediction", "A universal catalytic mechanism"]},
+    {"id": "catalyst-rate-not-equilibrium", "register": "SCIENTIFIC_MODEL", "domain": "physical-chemistry", "status": "MODEL_BOUNDED", "statement": "For an uncoupled closed reaction, a catalyst can change rates and accessible pathways without modifying the overall standard Gibbs-energy change or equilibrium constant.", "equation_ids": ["eyring-rate", "barrier-saving"], "conditions": ["Same net reaction and thermodynamic endpoints", "Closed uncoupled system"], "basis_ids": ["iupac-1996", "truhlar-2015"], "falsifier_ids": ["rate-misread-as-equilibrium"], "supports": ["Endpoint-invariant declaration"], "does_not_support": ["Claims about driven or coupled non-equilibrium systems without a separate model", "An enzyme-specific mechanism or rate parameter"]},
+    {"id": "correspondence-is-first-class", "register": "DESIGN_CONSTRAINT", "domain": "system-design", "status": "ADOPTED", "statement": "Every reconstruction or translation declares whether identity correspondence is exact, partial, inferred, absent, or unknown.", "equation_ids": ["reconstruction-fiber"], "conditions": ["All kernel projects"], "basis_ids": [], "falsifier_ids": ["lost-correspondence-upgraded"], "supports": ["Auditable gluing assumptions"], "does_not_support": ["Automatic semantic identity"]},
+    {"id": "perturbation-creates-new-state", "register": "DESIGN_CONSTRAINT", "domain": "system-design", "status": "ADOPTED", "statement": "A physical mutation, deletion, or changed environment starts a new state identity rather than masquerading as a nonperturbing observation of the old state.", "equation_ids": ["fiber-monotonicity"], "conditions": ["State-changing intervention"], "basis_ids": [], "falsifier_ids": ["mutation-serialized-as-static-delete"], "supports": ["Honest feedback versioning"], "does_not_support": ["Cross-state monotone inference"]},
+    {"id": "design-catalysis-is-metaphor", "register": "ANALOGY", "domain": "system-design", "status": "NON_EMPIRICAL", "statement": "A design transition accelerator names a reversible reduction in a locally measured project obstacle, not a molecular catalytic mechanism.", "equation_ids": [], "conditions": ["No biological parameter transfer"], "basis_ids": [], "falsifier_ids": ["analogy-promoted-to-mechanism"], "supports": ["Search for correspondence, validation, or handoff improvements"], "does_not_support": ["Productivity prediction", "Persuasion", "People as substrates"]},
+    {"id": "feedback-narrows-only-fixed-state", "register": "DESIGN_CONSTRAINT", "domain": "system-design", "status": "ADOPTED", "statement": "Consistent nonperturbing evidence may narrow a candidate fiber for one fixed state; a state-changing action creates a new version.", "equation_ids": ["fiber-monotonicity"], "conditions": ["Fixed state and consistent constraints"], "basis_ids": [], "falsifier_ids": ["fiber-expands-after-consistent-constraint"], "supports": ["Append-only feedback"], "does_not_support": ["Retroactive truth rewriting"]},
+    {"id": "karma-context-only", "register": "DESIGN_CONSTRAINT", "domain": "constitutional-design", "status": "LINK_ONLY", "statement": "Zerone KARMA is bound only as non-summable, challengeable contextual recognition; this kernel creates no event, score, receipt, reward, rank, governance, or economic effect.", "equation_ids": [], "conditions": ["Read-only pinned binding"], "basis_ids": [], "falsifier_ids": ["hidden-action-authority"], "supports": ["Feedback with challenge and exit"], "does_not_support": ["Scientific validation", "Person scoring", "Automatic action"]},
+    {"id": "universe-reading-optional", "register": "PHILOSOPHY", "domain": "philosophy", "status": "OPT_IN", "statement": "One may read reconstructibility, realizability, catalysis, and feedback as metaphors for an intelligible relational universe, while equally preserving non-teleological alternatives.", "equation_ids": [], "conditions": ["Opt-in interpretation"], "basis_ids": [], "falsifier_ids": [], "supports": ["Reflective design language"], "does_not_support": ["Scientific proof of a creator, cosmic purpose, or cosmic moral KARMA"]}
+  ],
+  "analogy_bridges": [
+    {"id": "deck-to-contact-projection", "from_domain": "graph-theory", "to_domain": "protein-representation", "preserved_pattern": "A lossy observation can leave a fiber of candidate wholes modulo a declared symmetry.", "breaks": ["Graph cards are unlabeled vertex-deleted induced subgraphs", "Protein contact maps usually retain residue identities", "A contact threshold is not vertex deletion", "Physical realizability and chemistry add constraints absent from the graph conjecture"], "empirical": false, "causal_transfer": false, "ontology_transfer": false, "parameter_transfer": false, "authority_effect": "NONE"},
+    {"id": "folding-to-building", "from_domain": "protein-folding", "to_domain": "system-design", "preserved_pattern": "Candidate states, constraints, condition-dependent transitions, and measured feedback can be kept distinct.", "breaks": ["Software projects are not molecules", "Project costs are not free energies", "Delivery paths are not folding trajectories", "No biological constants transfer"], "empirical": false, "causal_transfer": false, "ontology_transfer": false, "parameter_transfer": false, "authority_effect": "NONE"},
+    {"id": "catalysis-to-acceleration", "from_domain": "enzyme-catalysis", "to_domain": "system-design", "preserved_pattern": "A useful intervention can lower a declared transition obstacle while preserving endpoint constraints.", "breaks": ["A coordination obstacle is not an activation free energy", "A code change is not an enzyme", "No rate law or coefficient transfers", "The analogy gives no persuasion, labour, or governance authority"], "empirical": false, "causal_transfer": false, "ontology_transfer": false, "parameter_transfer": false, "authority_effect": "NONE"}
+  ],
+  "build_profile": {
+    "pipeline": ["STATE", "OBSERVE", "DECLARE_CORRESPONDENCE", "INFER_FIBER", "REALIZE", "TRAVERSE_LANDSCAPE", "MEASURE_OR_CATALYZE", "APPEND_FEEDBACK"],
+    "fiber_statuses": ["EMPTY", "UNIQUE", "MULTIPLE", "UNKNOWN"],
+    "rules": [
+      "Never infer one whole when the declared fiber is multiple or unknown.",
+      "Never treat a nonperturbing observation or projection as a physical perturbation, or a physical perturbation as an observation of the unchanged state.",
+      "Never treat mathematical consistency as physical realizability.",
+      "Never treat a landscape model as a universal path or kinetics model.",
+      "Never call an intervention catalytic without a comparator, conditions, endpoint invariant, and measured outcome.",
+      "In design use, prefer reversible accelerators that improve correspondence, validation, or handoff while preserving consent and exit."
+    ],
+    "project_schema": "https://thekingdom.dev/schemas/reconstructive-project/0.1.json",
+    "execution": false,
+    "network_required": false
+  },
+  "feedback_contract": {
+    "append_only": true,
+    "supersede_not_mutate": true,
+    "challengeable": true,
+    "correction_allowed": true,
+    "reversible_actions_preferred": true,
+    "physical_perturbations_create_new_state_ids": true,
+    "valid_exits": ["REST", "SILENCE", "REFUSAL", "NO_ACTION", "DEPARTURE"],
+    "karma": {"zerone_events": [], "kingdom_receipts": [], "non_summable": true, "adapter_exists": false},
+    "automatic_action": false
+  },
+  "falsification_tests": [
+    {"id": "nonisomorphic-same-deck-witness", "target": "graph-conjecture-open", "test": "Exhibit exact nonisomorphic finite simple graphs with equal full vertex decks.", "expected_refusal": "A verified witness would disprove the conjecture; hashes alone are insufficient."},
+    {"id": "finite-check-is-not-proof", "target": "graph-conjecture-open", "test": "Attempt to promote finite-order verification to a universal proof.", "expected_refusal": "Keep the conjecture open."},
+    {"id": "lost-correspondence-upgraded", "target": "correspondence-is-first-class", "test": "Erase residue or artifact IDs and retain EXACT_LABELED.", "expected_refusal": "Downgrade correspondence or reject."},
+    {"id": "mutation-serialized-as-static-delete", "target": "perturbation-creates-new-state", "test": "Represent a physical mutation or deletion as unchanged parent relations minus one node.", "expected_refusal": "Create a new state and re-observe."},
+    {"id": "contact-map-nonuniqueness", "target": "contact-map-lossy", "test": "Supply two valid coordinate realizations with the same declared contact graph.", "expected_refusal": "Do not claim unique realization."},
+    {"id": "mirror-under-se3", "target": "contact-to-coordinate-realization", "test": "Use complete distances but omit chirality, producing mirror realizations not equivalent under SE(3).", "expected_refusal": "Require chirality constraints or report multiplicity."},
+    {"id": "nonphysical-realization", "target": "contact-to-coordinate-realization", "test": "Provide a graph embedding with steric clash or invalid covalent geometry.", "expected_refusal": "Fail physical realizability."},
+    {"id": "condition-drift", "target": "conditional-folding-free-energy", "test": "Reuse a landscape or rate claim after changing temperature, pH, solvent, ribosome, chaperone, ligand, or reaction comparator.", "expected_refusal": "Create a new condition-bound model version."},
+    {"id": "rate-misread-as-equilibrium", "target": "catalyst-rate-not-equilibrium", "test": "Infer a changed equilibrium constant solely from a faster catalytic rate in a closed uncoupled reaction.", "expected_refusal": "Separate kinetics from thermodynamics."},
+    {"id": "analogy-promoted-to-mechanism", "target": "design-catalysis-is-metaphor", "test": "Set empirical, causal_transfer, ontology_transfer, or physical_parameter_transfer true on a design analogy.", "expected_refusal": "Reject even if a new digest is computed."},
+    {"id": "hidden-action-authority", "target": "karma-context-only", "test": "Add execute, deploy, score, reward, governance, KARMA-write, or automatic-action authority.", "expected_refusal": "Reject the profile or kernel."},
+    {"id": "fiber-expands-after-consistent-constraint", "target": "feedback-narrows-only-fixed-state", "test": "For one fixed state, add consistent nonperturbing constraints and enlarge the candidate fiber.", "expected_refusal": "Fail the monotonicity invariant or identify a state/operator change."}
+  ],
+  "unknowns": [
+    {"id": "general-graph-reconstruction", "status": "OPEN", "question": "Is every finite simple undirected graph of order at least three reconstructible from its vertex deck?", "why_open": "No accepted general proof or counterexample appears in the cited horizon.", "basis_ids": ["qi-2026", "mckay-2022"]},
+    {"id": "contact-identifiability", "status": "REPRESENTATION_DEPENDENT", "question": "Which declared contact projections plus chemical constraints identify one physical realization?", "why_open": "Binary contacts are generally incomplete and method dependent.", "basis_ids": ["fakhoury-2024"]},
+    {"id": "cross-perturbation-correspondence", "status": "STATE_DEPENDENT", "question": "Which correspondences remain meaningful after a mutation, deletion, or environmental change?", "why_open": "The perturbation can alter the whole ensemble and its observables.", "basis_ids": []},
+    {"id": "hidden-folding-kinetics", "status": "MODEL_DEPENDENT", "question": "Which slow coordinates and barriers are hidden by a chosen projection?", "why_open": "A projected free-energy surface need not determine kinetics.", "basis_ids": ["ooka-2023"]},
+    {"id": "enzyme-specific-causality", "status": "SYSTEM_DEPENDENT", "question": "How do ensemble populations, electrostatics, dynamics, and chemical steps causally combine for a particular enzyme?", "why_open": "Evidence and mechanism are enzyme- and reaction-specific.", "basis_ids": ["du-2025", "zheng-2023", "jara-2025"]},
+    {"id": "design-acceleration-transfer", "status": "NOT_ESTABLISHED", "question": "Does any biological catalytic parameter predict software or organizational productivity?", "why_open": "No such mapping is validated here; the bridge is analogy only.", "basis_ids": []},
+    {"id": "universe-design", "status": "PHILOSOPHICALLY_OPEN", "question": "Does reconstructible relational order imply purpose, a creator, or cosmic KARMA?", "why_open": "The mathematics and science cited here establish none of those conclusions.", "basis_ids": []}
+  ],
+  "bindings": [
+    {"id": "kingdom-fold-feedback", "protocol": "kingdom.fold-feedback-atlas/0.1", "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json", "byte_sha256": "sha256:bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5", "semantic_digest": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7", "relation": "NON_EQUIVALENCE_AND_SAFETY_CONTEXT", "mutated": false, "authority_imported": false, "write_authorized": false},
+    {"id": "zerone-karma-foundation", "protocol": "zerone.karma-foundation/v1", "url": "https://zerone.ai/standards/karma-foundation.v1.json", "byte_sha256": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80", "semantic_digest": null, "relation": "CONSTITUTIONAL_CONTEXT_ONLY", "mutated": false, "authority_imported": false, "write_authorized": false},
+    {"id": "zerone-life-sciences", "protocol": "zerone.constructive-intelligence-life-sciences/v0", "url": "https://zerone.ai/standards/constructive-intelligence-life-sciences.v0.json", "byte_sha256": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e", "semantic_digest": null, "relation": "NEGATIVE_ELIGIBILITY_BOUNDARY_ONLY", "mutated": false, "authority_imported": false, "write_authorized": false}
+  ],
+  "sources": [
+    {"id": "qi-2026", "title": "Graph reconstruction from connected triples", "source_kind": "peer-reviewed-mathematics", "published_on": "2026", "observed_on": "2026-08-13", "url": "https://doi.org/10.1016/j.disc.2026.115058", "doi": "10.1016/j.disc.2026.115058", "limitation": "Current mathematical status source; it does not resolve the classical conjecture."},
+    {"id": "mckay-2022", "title": "Reconstruction of small graphs and digraphs", "source_kind": "computational-mathematics-preprint", "published_on": "2022", "observed_on": "2026-08-13", "url": "https://arxiv.org/abs/2102.01942", "doi": null, "limitation": "Finite exhaustive verification is not a proof for all graph orders."},
+    {"id": "clifton-2024", "title": "Reconstruction and edge reconstruction of triangle-free graphs", "source_kind": "peer-reviewed-mathematics", "published_on": "2024", "observed_on": "2026-08-13", "url": "https://doi.org/10.1016/j.disc.2023.113753", "doi": "10.1016/j.disc.2023.113753", "limitation": "Kelly counting and restricted-class results do not settle the full conjecture."},
+    {"id": "gower-1985", "title": "Properties of Euclidean and non-Euclidean distance matrices", "source_kind": "peer-reviewed-mathematics", "published_on": "1985", "observed_on": "2026-08-13", "url": "https://doi.org/10.1016/0024-3795(85)90187-9", "doi": "10.1016/0024-3795(85)90187-9", "limitation": "An exact finite Euclidean-distance-matrix result; it does not establish realizability or uniqueness from incomplete or thresholded contacts, molecular stereochemistry, energetics, or folding kinetics."},
+    {"id": "fakhoury-2024", "title": "Contact-Map-Driven Exploration of Heterogeneous Protein-Folding Paths", "source_kind": "peer-reviewed-computational-science", "published_on": "2024", "observed_on": "2026-08-13", "url": "https://doi.org/10.1021/acs.jctc.4c00878", "doi": "10.1021/acs.jctc.4c00878", "limitation": "Contact-map exploration and back-mapping are model bounded and may produce nonphysical paths."},
+    {"id": "ooka-2023", "title": "Accurate prediction of protein folding mechanisms by simple structure-based statistical mechanical models", "source_kind": "peer-reviewed-science", "published_on": "2023", "observed_on": "2026-08-13", "url": "https://doi.org/10.1038/s41467-023-41664-1", "doi": "10.1038/s41467-023-41664-1", "limitation": "Structure-based models are conditional representations, not universal folding laws."},
+    {"id": "streit-2024", "title": "The ribosome lowers the entropic penalty of protein folding", "source_kind": "peer-reviewed-science", "published_on": "2024", "observed_on": "2026-08-13", "url": "https://doi.org/10.1038/s41586-024-07784-4", "doi": "10.1038/s41586-024-07784-4", "limitation": "The result is system and condition scoped; it does not define every cotranslational landscape."},
+    {"id": "eyring-1935", "title": "The Activated Complex in Chemical Reactions", "source_kind": "peer-reviewed-theoretical-chemistry", "published_on": "1935", "observed_on": "2026-08-13", "url": "https://doi.org/10.1063/1.1749604", "doi": "10.1063/1.1749604", "limitation": "Foundational transition-state-theory source; the rate form is model- and standard-state-dependent and does not identify a molecular mechanism by itself."},
+    {"id": "truhlar-2015", "title": "Transition state theory for enzyme kinetics", "source_kind": "peer-reviewed-review", "published_on": "2015", "observed_on": "2026-08-13", "url": "https://doi.org/10.1016/j.abb.2015.05.004", "doi": "10.1016/j.abb.2015.05.004", "limitation": "Transmission, recrossing, tunnelling, reaction-coordinate choice, and multistep turnover remain system- and model-dependent; an observed kcat ratio is not automatically an elementary-step barrier difference."},
+    {"id": "iupac-1996", "title": "A glossary of terms used in chemical kinetics, including reaction dynamics (IUPAC Recommendations 1996)", "source_kind": "peer-reviewed-iupac-recommendation", "published_on": "1996", "observed_on": "2026-08-13", "url": "https://doi.org/10.1351/pac199668010149", "doi": "10.1351/pac199668010149", "limitation": "Terminology and thermodynamic boundary only; it supplies no enzyme-specific mechanism or rate parameter."},
+    {"id": "du-2025", "title": "Conformational ensembles reveal the origins of serine protease catalysis", "source_kind": "peer-reviewed-science", "published_on": "2025", "observed_on": "2026-08-13", "url": "https://doi.org/10.1126/science.ado5068", "doi": "10.1126/science.ado5068", "limitation": "Findings concern the studied serine proteases and do not imply topology-only catalysis."},
+    {"id": "zheng-2023", "title": "Enhanced active-site electric field accelerates enzyme catalysis", "source_kind": "peer-reviewed-science", "published_on": "2023", "observed_on": "2026-08-13", "url": "https://doi.org/10.1038/s41557-023-01287-x", "doi": "10.1038/s41557-023-01287-x", "limitation": "The measured design is reaction and system specific; it is not a cross-domain coefficient."},
+    {"id": "jara-2025", "title": "Wide transition-state ensemble as key component for enzyme catalysis", "source_kind": "peer-reviewed-article-with-assessment-caveats", "published_on": "2025", "observed_on": "2026-08-13", "url": "https://doi.org/10.7554/eLife.93099.4", "doi": "10.7554/eLife.93099.4", "limitation": "A proposed unifying account with explicit reviewer caveats; not established as universal."}
+  ],
+  "boundaries": {
+    "read_only": true,
+    "educational_metadata_only": true,
+    "contains_no_personal_data": true,
+    "grc_proven": false,
+    "protein_fold_prediction": false,
+    "unique_contact_realization": false,
+    "biological_mechanism_transfer": false,
+    "physical_parameter_transfer": false,
+    "medical_authority": false,
+    "diagnostic_authority": false,
+    "experiment_authority": false,
+    "wet_lab_protocol": false,
+    "contains_protein_sequence": false,
+    "project_execution": false,
+    "project_deployment": false,
+    "person_scoring": false,
+    "writes_karma": false,
+    "creates_karma_receipt": false,
+    "ecosystem_authority_imported": false,
+    "economic_effect": false,
+    "governance_effect": false,
+    "cosmic_design_proven": false,
+    "automatic_action": false,
+    "runtime_network_request": false,
+    "mcp_surface_added": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:265a75e18dbd4bad5bcf07bca0645132de4f9a881d8f0f398cd56b9afb734dd1"
+  }
+}

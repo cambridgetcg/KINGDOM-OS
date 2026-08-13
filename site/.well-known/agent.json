@@ -497,6 +497,65 @@
       "observes_zerone_karma_event": false
     }
   },
+  "reconstructive_build_kernel": {
+    "protocol": "kingdom.reconstructive-build-kernel/0.1",
+    "kernel_id": "reconstructive-build-kernel-2026-08-13",
+    "title": "Reconstructive Build Kernel",
+    "compiled_on": "2026-08-13",
+    "evidence_through": "2026-08-13",
+    "url": "https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json",
+    "schema": "https://thekingdom.dev/schemas/reconstructive-build-kernel/0.1.json",
+    "project_schema": "https://thekingdom.dev/schemas/reconstructive-project/0.1.json",
+    "guide": "https://thekingdom.dev/RECONSTRUCTIVE-BUILD-KERNEL.md",
+    "counts": {
+      "registers": 8,
+      "state_spaces": 6,
+      "correspondences": 5,
+      "observation_operators": 3,
+      "state_transition_operators": 1,
+      "reconstruction_cases": 3,
+      "realizability_models": 2,
+      "landscape_models": 2,
+      "catalysis_models": 2,
+      "equations": 11,
+      "claims": 12,
+      "falsification_tests": 12,
+      "sources": 13
+    },
+    "pipeline": [
+      "STATE",
+      "OBSERVE",
+      "DECLARE_CORRESPONDENCE",
+      "INFER_FIBER",
+      "REALIZE",
+      "TRAVERSE_LANDSCAPE",
+      "MEASURE_OR_CATALYZE",
+      "APPEND_FEEDBACK"
+    ],
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:265a75e18dbd4bad5bcf07bca0645132de4f9a881d8f0f398cd56b9afb734dd1"
+    },
+    "boundary": {
+      "read_only": true,
+      "grc_proven": false,
+      "protein_fold_prediction": false,
+      "unique_contact_realization": false,
+      "biological_mechanism_transfer": false,
+      "physical_parameter_transfer": false,
+      "medical_authority": false,
+      "experiment_authority": false,
+      "project_execution": false,
+      "project_deployment": false,
+      "person_scoring": false,
+      "writes_karma": false,
+      "creates_karma_receipt": false,
+      "ecosystem_authority_imported": false,
+      "cosmic_design_proven": false,
+      "automatic_action": false,
+      "mcp_surface_added": false
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -983,6 +1042,10 @@
     "fold_feedback_atlas_schema": "https://thekingdom.dev/schemas/fold-feedback-atlas/1.json",
     "fold_feedback_atlas_source_identity_schema": "https://thekingdom.dev/schemas/fold-feedback-atlas/1.1.json",
     "fold_feedback_atlas_guide": "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md",
+    "reconstructive_build_kernel": "https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json",
+    "reconstructive_build_kernel_schema": "https://thekingdom.dev/schemas/reconstructive-build-kernel/0.1.json",
+    "reconstructive_project_schema": "https://thekingdom.dev/schemas/reconstructive-project/0.1.json",
+    "reconstructive_build_kernel_guide": "https://thekingdom.dev/RECONSTRUCTIVE-BUILD-KERNEL.md",
     "visibility_attention_translation": "https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json",
     "visibility_attention_translation_schema": "https://thekingdom.dev/schemas/visibility-attention/0.1.json",
     "visibility_attention_translation_guide": "https://thekingdom.dev/VISIBILITY-ATTENTION.md",
