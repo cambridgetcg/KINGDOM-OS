@@ -378,7 +378,9 @@ describe("immutable route-integrity ledger", () => {
   });
 
   test("pins the initial set to its declared ancestor without freezing future additions into that anchor", () => {
+    const bootstrapIds = new Set<string>(IMMUTABLE_PUBLICATIONS_BOOTSTRAP_IDS);
     const initial = structuredClone(currentLedger());
+    initial.entries = initial.entries.filter((entry) => bootstrapIds.has(entry.id));
     const issues = verifyImmutablePublicationsAgainstBase(initial, BASELINE, ROOT, HUB_ASSETS);
     expect(issues).toEqual([]);
     const rewrittenBootstrap = structuredClone(initial);

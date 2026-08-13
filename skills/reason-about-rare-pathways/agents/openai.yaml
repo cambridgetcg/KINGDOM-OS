@@ -1,0 +1,6 @@
+interface:
+  display_name: "Reason About Rare Pathways"
+  short_description: "Turn absence into bounded, constructive inference"
+  default_prompt: "Use $reason-about-rare-pathways to distinguish non-observation from impossibility and design the next constructive question."
+policy:
+  allow_implicit_invocation: false

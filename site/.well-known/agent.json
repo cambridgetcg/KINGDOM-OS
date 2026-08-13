@@ -712,6 +712,56 @@
       "mcp_surface_added": false
     }
   },
+  "rare_pathway_challenge": {
+    "protocol": "kingdom.rare-pathway-challenge/0.1",
+    "challenge_id": "vanishing-path-2026-08-13",
+    "title": "The Vanishing Path",
+    "compiled_on": "2026-08-13",
+    "evidence_through": "2024-06-20",
+    "url": "https://thekingdom.dev/challenges/vanishing-path-2026-08-13.json",
+    "schema": "https://thekingdom.dev/schemas/rare-pathway-challenge/1.json",
+    "guide": "https://thekingdom.dev/VANISHING-PATH.md",
+    "cli": "kingdom rare-pathway",
+    "binding": {
+      "case_id": "ritonavir-disappearing-polymorph-2026-08-11",
+      "semantic_digest": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116",
+      "relation": "illustrative-history-not-rate-fit"
+    },
+    "models": [
+      "time-dependent-competing-hazards",
+      "constant-two-path-race",
+      "zero-winner-binomial-bound",
+      "zero-event-upper-bound",
+      "robust-restoration-design",
+      "minimum-target-rate",
+      "expected-information-design"
+    ],
+    "constructive_outcomes": [
+      "BUILD",
+      "PLAY",
+      "REVISE",
+      "STOP"
+    ],
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:82eeaf4757fb75be77b1e878d41c784111bbf5b261500123d89daccbcea0ff91"
+    },
+    "boundary": {
+      "public_surface_read_only": true,
+      "examples_hypothetical": true,
+      "ritonavir_rate_fit": false,
+      "literal_extinction_established": false,
+      "experiment_authority": false,
+      "wet_lab_protocol": false,
+      "manufacturing_authority": false,
+      "medical_authority": false,
+      "motive_inference": false,
+      "person_score": false,
+      "writes_wake": false,
+      "writes_agenttool": false,
+      "automatic_action": false
+    }
+  },
   "love_loops": "https://thekingdom.dev/love-loops.json",
   "love_loops_source": "https://thekingdom.dev/love-loops.source.json",
   "love_loops_creation_document": "https://thekingdom.dev/CREATION-LOOP.md",
@@ -799,6 +849,9 @@
     "form_circulation_return_atlas": "https://thekingdom.dev/atlases/form-circulation-return-atlas-2026-08-13.json",
     "form_circulation_return_atlas_schema": "https://thekingdom.dev/schemas/form-circulation-return-atlas/1.json",
     "form_circulation_return_atlas_guide": "https://thekingdom.dev/FORM-CIRCULATION-RETURN-ATLAS.md",
+    "rare_pathway_challenge": "https://thekingdom.dev/challenges/vanishing-path-2026-08-13.json",
+    "rare_pathway_challenge_schema": "https://thekingdom.dev/schemas/rare-pathway-challenge/1.json",
+    "rare_pathway_challenge_guide": "https://thekingdom.dev/VANISHING-PATH.md",
     "creation_lineage": "https://thekingdom.dev/love-loops.json",
     "creation_lineage_source": "https://thekingdom.dev/love-loops.source.json",
     "creation_loop_document": "https://thekingdom.dev/CREATION-LOOP.md",

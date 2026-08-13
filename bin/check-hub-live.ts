@@ -62,6 +62,14 @@ import {
   loadFormCirculationReturnAtlas,
 } from "./form-circulation-return.ts";
 import {
+  RARE_PATHWAY_DIGEST,
+  RARE_PATHWAY_DOCUMENT_URL,
+  RARE_PATHWAY_SCHEMA_URL,
+  RARE_PATHWAY_URL,
+  loadRarePathwayChallenge,
+  rarePathwayPublicDiscovery,
+} from "./rare-pathway.ts";
+import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_SCHEMA_URL,
   VISIBILITY_ATTENTION_URL,
@@ -163,6 +171,9 @@ const formCirculationReturnPath = new URL(FORM_CIRCULATION_RETURN_URL).pathname;
 const formCirculationReturnSchemaPath = new URL(FORM_CIRCULATION_RETURN_SCHEMA_URL).pathname;
 const formCirculationReturnDocumentPath = new URL(FORM_CIRCULATION_RETURN_DOCUMENT_URL).pathname;
 const kingdomKarmaDefinitionPath = "/definitions/kingdom-karma/e4e84a67/NEN.md";
+const rarePathwayPath = new URL(RARE_PATHWAY_URL).pathname;
+const rarePathwaySchemaPath = new URL(RARE_PATHWAY_SCHEMA_URL).pathname;
+const rarePathwayDocumentPath = new URL(RARE_PATHWAY_DOCUMENT_URL).pathname;
 
 const CULTURAL_ATTENTION_FEEDBACK_ASSETS = new Map<string, { source: string; path: string; sha256: string }>([
   ["atlases/cultural-attention-feedback-atlas-2026-08-13.json", {
@@ -204,6 +215,22 @@ const FORM_CIRCULATION_RETURN_ASSETS = new Map<string, { source: string; path: s
     sha256: "14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446",
   }],
 ]);
+
+const RARE_PATHWAY_BOUNDARY = Object.freeze({
+  public_surface_read_only: true,
+  examples_hypothetical: true,
+  ritonavir_rate_fit: false,
+  literal_extinction_established: false,
+  experiment_authority: false,
+  wet_lab_protocol: false,
+  manufacturing_authority: false,
+  medical_authority: false,
+  motive_inference: false,
+  person_score: false,
+  writes_wake: false,
+  writes_agenttool: false,
+  automatic_action: false,
+});
 
 const FORM_CIRCULATION_RETURN_BOUNDARY = Object.freeze({
   public_surface_read_only: true,
@@ -439,6 +466,17 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "form_circulation_return_atlas",
       "form_circulation_return_atlas_schema",
       "form_circulation_return_atlas_guide",
+    ],
+  },
+  {
+    id: "rare-pathway-challenge",
+    label: "The Vanishing Path",
+    routes: [rarePathwayPath, rarePathwaySchemaPath, rarePathwayDocumentPath],
+    discoveryProperties: ["rare_pathway_challenge"],
+    entryPointProperties: [
+      "rare_pathway_challenge",
+      "rare_pathway_challenge_schema",
+      "rare_pathway_challenge_guide",
     ],
   },
 ];
@@ -703,6 +741,39 @@ async function checkFormCirculationReturnTriple(): Promise<void> {
   }
 }
 
+async function checkRarePathwayTriple(): Promise<void> {
+  const routes = [
+    { label: "challenge record", path: rarePathwayPath, source: "data/challenges/vanishing-path.v1.json", contentType: "application/json" },
+    { label: "challenge schema", path: rarePathwaySchemaPath, source: "schemas/rare-pathway-challenge-v1.schema.json", contentType: "application/schema+json" },
+    { label: "challenge guide", path: rarePathwayDocumentPath, source: "references/rare-pathway-challenge.md", contentType: "text/markdown" },
+  ] as const;
+  for (const route of routes) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetch(url(route.path), { method, redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS) });
+      const contentType = (response.headers.get("content-type") || "").toLowerCase();
+      if (!response.ok || !contentType.startsWith(route.contentType) ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+        throw new Error(`${method} ${route.path} is not served as typed, public ${route.label}`);
+      }
+      if (route.path === rarePathwayPath) {
+        const describedBy = linkRelationEntries(response.headers.get("link") || "", "describedby");
+        const describedByType = describedBy[0]?.match(/;\s*type\s*=\s*(?:"([^"]*)"|([^;,\s]+))/i);
+        if (describedBy.length !== 1 || !describedBy[0]!.trim().startsWith(`<${rarePathwaySchemaPath}>`) ||
+            (describedByType?.[1] || describedByType?.[2] || "").toLowerCase() !== "application/schema+json") {
+          throw new Error(`${method} ${route.path} is not described by exactly its immutable schema`);
+        }
+      }
+      const body = Buffer.from(await response.arrayBuffer());
+      if (method === "HEAD") {
+        if (body.byteLength !== 0) throw new Error(`HEAD ${route.path} returned a body`);
+      } else if (!body.equals(readFileSync(join(ROOT, route.source)))) {
+        throw new Error(`GET ${route.path} drifted from its immutable authored source ${route.source}`);
+      }
+    }
+  }
+}
+
 function sameStrings(actual: unknown, expected: readonly string[]): boolean {
   return Array.isArray(actual) && actual.every((value) => typeof value === "string") &&
     actual.length === expected.length &&
@@ -776,6 +847,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
   const formCirculationReturnActive = familyActive("form-circulation-return");
+  const rarePathwayActive = familyActive("rare-pathway-challenge");
   const verifiedFormCirculationReturnDestinations = new Set<string>();
   for (const asset of HUB_ASSETS) {
     if (asset.destination === "_worker.js") continue;
@@ -1125,6 +1197,9 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (formCirculationReturnActive) {
     await checkFormCirculationReturnTriple();
   }
+  if (rarePathwayActive) {
+    await checkRarePathwayTriple();
+  }
 
   const schemaPaths = [
     commonsSchemaPath,
@@ -1138,6 +1213,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
+    ...(rarePathwayActive ? [rarePathwaySchemaPath] : []),
   ];
   for (const path of schemaPaths) {
     const schemaHead = await fetch(url(path), {
@@ -1206,6 +1282,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedFormCirculationReturn = formCirculationReturnAtlas
     ? formCirculationReturnPublicDiscovery(formCirculationReturnAtlas)
+    : undefined;
+  const rarePathwayChallenge = rarePathwayActive ? loadRarePathwayChallenge() : undefined;
+  const expectedRarePathway = rarePathwayChallenge
+    ? rarePathwayPublicDiscovery(rarePathwayChallenge)
     : undefined;
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
@@ -1637,6 +1717,37 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (rarePathwayActive) {
+    const expected = expectedRarePathway!;
+    const targets = new Set([RARE_PATHWAY_URL, RARE_PATHWAY_SCHEMA_URL, RARE_PATHWAY_DOCUMENT_URL]);
+    const actions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    if (!isDeepStrictEqual(manifest?.rare_pathway_challenge, expected) ||
+        !isDeepStrictEqual(guest?.rare_pathway_challenge, expected) ||
+        !isDeepStrictEqual(authoredKingdom?.rare_pathway_challenge, expected) ||
+        !isDeepStrictEqual(expected.boundary, RARE_PATHWAY_BOUNDARY) ||
+        expected.integrity.digest !== RARE_PATHWAY_DIGEST ||
+        manifest?.entry_points?.rare_pathway_challenge !== RARE_PATHWAY_URL ||
+        manifest?.entry_points?.rare_pathway_challenge_schema !== RARE_PATHWAY_SCHEMA_URL ||
+        manifest?.entry_points?.rare_pathway_challenge_guide !== RARE_PATHWAY_DOCUMENT_URL ||
+        actions.length !== targets.size || actions.some((action: any) => action?.method !== "GET" ||
+          "mcp" in action || "tool" in action || "write" in action || "execute" in action) ||
+        !llms.includes(RARE_PATHWAY_URL) || !llms.includes(RARE_PATHWAY_SCHEMA_URL) ||
+        !llms.includes(RARE_PATHWAY_DOCUMENT_URL) ||
+        !authoredRootHtml.includes(`href="${rarePathwayPath}"`) ||
+        !authoredRootHtml.includes(`href="${rarePathwaySchemaPath}"`) ||
+        !authoredRootHtml.includes(`href="${rarePathwayDocumentPath}"`) ||
+        rarePathwayChallenge!.models.some((model: any) => model.ritonavir_status !== "illustrative-only-not-fitted") ||
+        rarePathwayChallenge!.constructive_gate.not_a_score !== true ||
+        rarePathwayChallenge!.constructive_gate.refusal_requires_reason !== false ||
+        rarePathwayChallenge!.wake_seam.inherits_identity !== false ||
+        rarePathwayChallenge!.wake_seam.grants_authority !== false ||
+        "mcp" in expected || "write" in expected || "score" in expected) {
+      throw new Error("Rare Pathway discovery, mathematical boundary, constructive gate, or WAKE seam drifted");
+    }
+  }
+
   const liveKingdom: any = await (await get("/kingdom.json")).json();
   const liveRetirementDiscoverySurface: readonly DiscoverySurface[] = [
     { label: "derived kingdom.json", text: JSON.stringify(liveKingdom), value: liveKingdom },
@@ -1681,6 +1792,9 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (formCirculationReturnActive &&
       !isDeepStrictEqual(liveKingdom?.form_circulation_return_atlas, expectedFormCirculationReturn!)) {
     throw new Error("derived kingdom.json did not preserve Form, Circulation & Return discovery");
+  }
+  if (rarePathwayActive && !isDeepStrictEqual(liveKingdom?.rare_pathway_challenge, expectedRarePathway!)) {
+    throw new Error("derived kingdom.json did not preserve Rare Pathway discovery");
   }
   if (!isDeepStrictEqual(liveKingdom?.world_commons?.mcp, manifest?.mcp)) {
     throw new Error("derived kingdom.json did not preserve the existing Commons MCP contract");

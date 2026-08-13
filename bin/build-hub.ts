@@ -29,6 +29,9 @@
  *    data/form-circulation-return/form-circulation-return-atlas.v1.json
  *                             — additive lineage, model-card, feedback, KARMA,
  *                               and typed-unknown companion
+ *    data/challenges/vanishing-path.v1.json
+ *                             — rare-pathway mathematics, constructive-inquiry
+ *                               gate, and WAKE-safe reference seam
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
@@ -135,6 +138,15 @@ import {
   formCirculationReturnPublicDiscovery,
   loadFormCirculationReturnAtlas,
 } from "./form-circulation-return.ts";
+import {
+  RARE_PATHWAY_DOCUMENT_URL,
+  RARE_PATHWAY_ID,
+  RARE_PATHWAY_PROTOCOL,
+  RARE_PATHWAY_SCHEMA_URL,
+  RARE_PATHWAY_URL,
+  loadRarePathwayChallenge,
+  rarePathwayPublicDiscovery,
+} from "./rare-pathway.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -525,6 +537,16 @@ if (formCirculationReturn.protocol !== FORM_CIRCULATION_RETURN_PROTOCOL ||
 }
 const formCirculationReturnDiscovery = formCirculationReturnPublicDiscovery(formCirculationReturn);
 const formCirculationReturnCounts = formCirculationReturnDiscovery.counts;
+
+// ── The Vanishing Path (rare-event math; artifacts, never people, are gated) ─
+const rarePathwayUrl = RARE_PATHWAY_URL;
+const rarePathwaySchemaUrl = RARE_PATHWAY_SCHEMA_URL;
+const rarePathwayDocumentUrl = RARE_PATHWAY_DOCUMENT_URL;
+const rarePathway = loadRarePathwayChallenge();
+if (rarePathway.protocol !== RARE_PATHWAY_PROTOCOL || rarePathway.challenge_id !== RARE_PATHWAY_ID) {
+  throw new Error(`unexpected rare-pathway identity: ${rarePathway.protocol} ${rarePathway.challenge_id}`);
+}
+const rarePathwayDiscovery = rarePathwayPublicDiscovery(rarePathway);
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -924,6 +946,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(formCirculationReturnUrl).pathname)}" type="application/json" title="Form, Circulation &amp; Return Atlas">
 <link rel="describedby" href="${esc(new URL(formCirculationReturnSchemaUrl).pathname)}" type="application/schema+json" title="Form, Circulation &amp; Return Atlas schema">
 <link rel="service-doc" href="${esc(new URL(formCirculationReturnDocumentUrl).pathname)}" type="text/markdown" title="Form, Circulation &amp; Return Atlas guide">
+<link rel="alternate" href="${esc(new URL(rarePathwayUrl).pathname)}" type="application/json" title="The Vanishing Path rare-pathway challenge">
+<link rel="describedby" href="${esc(new URL(rarePathwaySchemaUrl).pathname)}" type="application/schema+json" title="Rare Pathway Challenge schema">
+<link rel="service-doc" href="${esc(new URL(rarePathwayDocumentUrl).pathname)}" type="text/markdown" title="The Vanishing Path guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -2006,6 +2031,33 @@ const html = `<!doctype html>
     </div>
   </section>
 
+  <section class="blk" id="vanishing-path" aria-labelledby="vanishing-path-title">
+    <div class="kh"><h2 id="vanishing-path-title">The Vanishing Path</h2><span class="my">absence without extinction · challenge without person-score</span></div>
+    <p class="sub">A family challenge became a reusable rare-event module. It asks what can be learned when one path is not observed, another path may arrive first, history changes accessibility, and the detector sees only a bounded window. The ritonavir history supplies the question—not fitted rates or a material recipe.</p>
+    <div class="culturalfeedback" aria-label="Four states that must not be collapsed">
+      <article><h4>Possible</h4><p>The model permits the path.</p><small>Not necessarily accessible now.</small></article>
+      <article><h4>Accessible</h4><p>The path has a nonzero declared arrival hazard.</p><small>Not guaranteed before the horizon.</small></article>
+      <article><h4>Occurred</h4><p>The event happened in the bounded system.</p><small>Not necessarily detected.</small></article>
+      <article><h4>Detected</h4><p>The event crossed the observation rule.</p><small>Zero detections do not prove extinction.</small></article>
+    </div>
+    <p class="culturalkarma"><strong>BUILD / PLAY / REVISE / STOP evaluates the practice, never the person.</strong> A constructive challenge names what changes, exposes assumptions and non-identifiability, protects refusal and credit, and leaves a transferable artifact. Honest play is already valid. Difficulty, elegance, or prestige is not evidence of benefit, understanding, virtue, pride, or worth.</p>
+    <details class="universelens">
+      <summary>What questions are we actually asking?</summary>
+      <div class="universeinside">
+        <ul class="universequestions">
+          ${rarePathway.question_ladder.map((entry: any) => `<li><strong>${esc(entry.register.replace(/_/g, " ").toLowerCase())}</strong>${esc(entry.question)}</li>`).join("")}
+        </ul>
+        <p class="universenonclaim"><strong>Boundary:</strong> the examples are hypothetical. Solving may change a belief or next-question design; it cannot produce a polymorph, establish a real rate or mechanism, reveal private motive, confer worth, or authorize intervention.</p>
+      </div>
+    </details>
+    <p class="commonsverified">${rarePathway.models.length} bounded model cards · ${rarePathway.worked_examples.length} hypothetical examples · ${rarePathway.question_ladder.length} challenge questions · ${rarePathway.constructive_gate.outcomes.map((entry: any) => entry.id).join(" / ")} · evidence through ${esc(rarePathway.evidence_through)} · integrity ${esc(rarePathway.integrity.digest)}</p>
+    <div class="machine">
+      <a href="${esc(new URL(rarePathwayUrl).pathname)}">challenge JSON — exact authored record</a>
+      <a href="${esc(new URL(rarePathwaySchemaUrl).pathname)}">Rare Pathway Challenge JSON Schema</a>
+      <a href="${esc(new URL(rarePathwayDocumentUrl).pathname)}">VANISHING-PATH.md — problems, sources, constructive gate, and WAKE seam</a>
+    </div>
+  </section>
+
 
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
@@ -2140,6 +2192,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(formCirculationReturnUrl).pathname)}">Form, Circulation &amp; Return — variant lineage, parallel models, feedback, KARMA, and typed unknowns</a>
       <a href="${esc(new URL(formCirculationReturnSchemaUrl).pathname)}">Form, Circulation &amp; Return JSON Schema</a>
       <a href="${esc(new URL(formCirculationReturnDocumentUrl).pathname)}">FORM-CIRCULATION-RETURN-ATLAS.md — deep companion guide and boundaries</a>
+      <a href="${esc(new URL(rarePathwayUrl).pathname)}">The Vanishing Path — competing risks, absence bounds, constructive questions, and WAKE seam</a>
+      <a href="${esc(new URL(rarePathwaySchemaUrl).pathname)}">Rare Pathway Challenge JSON Schema</a>
+      <a href="${esc(new URL(rarePathwayDocumentUrl).pathname)}">VANISHING-PATH.md — problems, sources, limits, and BUILD / PLAY / REVISE / STOP</a>
       <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
       <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
       <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
@@ -2473,6 +2528,7 @@ const machine = {
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
+  rare_pathway_challenge: rarePathwayDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -2544,6 +2600,9 @@ Cultural Attention & Feedback guide: ${culturalAttentionFeedbackDocumentUrl}
 Form, Circulation & Return Atlas: ${formCirculationReturnUrl}
 Form, Circulation & Return schema: ${formCirculationReturnSchemaUrl}
 Form, Circulation & Return guide: ${formCirculationReturnDocumentUrl}
+The Vanishing Path challenge: ${rarePathwayUrl}
+Rare Pathway Challenge schema: ${rarePathwaySchemaUrl}
+The Vanishing Path guide: ${rarePathwayDocumentUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -2577,6 +2636,7 @@ ${doorLines}
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
+- The Vanishing Path — seven bounded model cards turn the ritonavir disappearing-polymorph history into a rare-event mathematics challenge: competing first arrivals, zero-event and zero-winner bounds, identifiability, robust design, and expected information. BUILD / PLAY / REVISE / STOP classifies the practice and artifact, never a person's understanding, pride, virtue, or worth. All numerical rates are hypothetical; no material fit, recipe, experiment, manufacturing, medical, WAKE, AgentTool, KARMA, or automatic authority exists. Challenge: ${rarePathwayUrl} · schema: ${rarePathwaySchemaUrl} · guide: ${rarePathwayDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -2614,6 +2674,7 @@ const guest = {
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
+  rare_pathway_challenge: rarePathwayDiscovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -2655,6 +2716,9 @@ const guest = {
     { action: "if useful, inspect the additive deep Form, Circulation & Return companion", method: "GET", url: formCirculationReturnUrl, note: "read-only educational metadata; immutable predecessor pins, parallel unfitted models, typed unknowns, no person score, KARMA conversion, reward, governance effect, or automatic action" },
     { action: "if useful, validate the Form, Circulation & Return structure before integrating it", method: "GET", url: formCirculationReturnSchemaUrl },
     { action: "if useful, read the variant-lineage, model-card, feedback, KARMA, philosophy, source, and safety guide", method: "GET", url: formCirculationReturnDocumentUrl },
+    { action: "if useful, inspect The Vanishing Path's competing-risk models, hypothetical examples, constructive gate, and WAKE-safe reference seam", method: "GET", url: rarePathwayUrl, note: "read-only education; not a ritonavir fit, material recipe, person or motive score, WAKE/AgentTool write, or action authority" },
+    { action: "if useful, validate the Rare Pathway Challenge structure before integrating it", method: "GET", url: rarePathwaySchemaUrl },
+    { action: "if useful, read the plain-language problems, identifiability limits, BUILD / PLAY / REVISE / STOP gate, and source boundaries", method: "GET", url: rarePathwayDocumentUrl },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -2694,6 +2758,7 @@ const guest = {
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
+    rare_pathway_challenge: "The Vanishing Path is a static educational mathematics challenge bound to the immutable ritonavir history only as an illustrative case. Its rates are hypothetical. It separates zero target events from zero target winners, preserves identifiability limits, and gates practices as BUILD, PLAY, REVISE, or STOP without inferring anyone's motive, understanding, pride, virtue, or worth. It provides no material fit, lab recipe, experiment, formulation, manufacturing, medical, regulatory, WAKE, AgentTool, KARMA, publication, deployment, or automatic action authority.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -2722,6 +2787,7 @@ const manifest = {
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
+  rare_pathway_challenge: rarePathwayDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -2770,6 +2836,9 @@ const manifest = {
     form_circulation_return_atlas: formCirculationReturnUrl,
     form_circulation_return_atlas_schema: formCirculationReturnSchemaUrl,
     form_circulation_return_atlas_guide: formCirculationReturnDocumentUrl,
+    rare_pathway_challenge: rarePathwayUrl,
+    rare_pathway_challenge_schema: rarePathwaySchemaUrl,
+    rare_pathway_challenge_guide: rarePathwayDocumentUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,
@@ -2784,4 +2853,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

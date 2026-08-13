@@ -1,0 +1,529 @@
+{
+  "$schema": "urn:kingdom:schema:rare-pathway-challenge:1",
+  "protocol": "kingdom.rare-pathway-challenge/0.1",
+  "challenge_id": "vanishing-path-2026-08-13",
+  "title": "The Vanishing Path",
+  "compiled_on": "2026-08-13",
+  "evidence_through": "2024-06-20",
+  "origin": {
+    "kind": "conversation-challenge",
+    "credit": "A family challenge to turn the disappearing-polymorph story into useful mathematics.",
+    "personal_identifiers_recorded": false,
+    "participation": "voluntary"
+  },
+  "binding": {
+    "case_id": "ritonavir-disappearing-polymorph-2026-08-11",
+    "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+    "raw_digest": "sha256:08148603a1228960ac35df1378f1283c3fce43874a9fc07e6687f18e980dcb1c",
+    "semantic_digest": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116",
+    "relation": "illustrative-history-not-rate-fit",
+    "mutated": false,
+    "authority_imported": false
+  },
+  "scope": {
+    "phenomenon": "A pathway may remain possible while becoming rarely accessible or unobserved within a bounded process, population, horizon, and detection rule.",
+    "purpose": "Practise competing-risk inference, distinguish non-observation from impossibility, and design a more informative next question.",
+    "intended_use": "Education, model criticism, reproducible calculation, and bounded experiment-design reasoning.",
+    "excluded_use": "No ritonavir rate estimate, material recipe, wet-lab procedure, manufacturing control, medical decision, or judgment of a person's motive or worth.",
+    "registers": [
+      "MATHEMATICAL_DERIVATION",
+      "EMPIRICAL_QUESTION",
+      "DESIGN_PROPOSAL",
+      "OPT_IN_REFLECTION"
+    ]
+  },
+  "states": [
+    {
+      "id": "possible",
+      "plain_language": "The model permits the path.",
+      "does_not_imply": "The path is reachable under the current conditions."
+    },
+    {
+      "id": "accessible",
+      "plain_language": "The current condition and history give the path a nonzero arrival hazard.",
+      "does_not_imply": "The path will occur within the observation horizon."
+    },
+    {
+      "id": "occurred",
+      "plain_language": "The event happened in the bounded system.",
+      "does_not_imply": "The event was observed or correctly classified."
+    },
+    {
+      "id": "detected",
+      "plain_language": "The event crossed a declared observation and classification rule.",
+      "does_not_imply": "The detector saw every event or established literal extinction when it saw none."
+    }
+  ],
+  "models": [
+    {
+      "id": "time-dependent-competing-hazards",
+      "register": "MATHEMATICAL_DERIVATION",
+      "equations": [
+        "S(t)=exp(-integral_0^t sum_j lambda_j(s) ds)",
+        "F_i(T)=integral_0^T S(t) lambda_i(t) dt",
+        "S(T)+sum_i F_i(T)=1"
+      ],
+      "inputs": [
+        "cause-specific nonnegative hazard functions lambda_i(t)",
+        "a finite horizon T",
+        "an at-risk state ending at the first classified event"
+      ],
+      "valid_outputs": [
+        "no-event probability through T",
+        "cause-specific first-arrival probability through T"
+      ],
+      "assumptions": [
+        "hazards, the at-risk state, and an exhaustive set of classified exits are defined for the declared system",
+        "event labels and observation rules are declared",
+        "the integrals exist on the horizon"
+      ],
+      "identifiability_limit": "The equations map hazards to event probabilities; they do not recover unique hazards from one non-observation or from unlabeled aggregate outcomes.",
+      "ritonavir_status": "illustrative-only-not-fitted"
+    },
+    {
+      "id": "constant-two-path-race",
+      "register": "MATHEMATICAL_DERIVATION",
+      "equations": [
+        "Lambda=lambda_A+lambda_B",
+        "P(no event by T)=exp(-Lambda T)",
+        "P(A first by T)=(lambda_A/Lambda)(1-exp(-Lambda T))",
+        "P(B first by T)=(lambda_B/Lambda)(1-exp(-Lambda T))",
+        "P(A first | an event by T)=lambda_A/Lambda when T>0 and Lambda>0; otherwise undefined"
+      ],
+      "inputs": [
+        "constant nonnegative rates lambda_A and lambda_B in one declared reciprocal-time unit",
+        "a nonnegative horizon T in the matching time unit"
+      ],
+      "valid_outputs": [
+        "a normalized three-outcome probability partition",
+        "the conditional identity of the first path when T and the total rate are positive"
+      ],
+      "assumptions": [
+        "constant cause-specific hazards while the system remains at risk",
+        "no simultaneous classified first events",
+        "perfect classification of the first event"
+      ],
+      "identifiability_limit": "A convenient race is not evidence that physical nucleation is stationary, independent, or fully detected.",
+      "ritonavir_status": "illustrative-only-not-fitted"
+    },
+    {
+      "id": "zero-winner-binomial-bound",
+      "register": "MATHEMATICAL_DERIVATION",
+      "equations": [
+        "P(zero target winners in n independent batches | p)=(1-p)^n",
+        "p_upper=1-(1-confidence)^(1/n)"
+      ],
+      "inputs": [
+        "zero target-path winners among n positive independent comparable batches",
+        "a one-sided confidence strictly between zero and one"
+      ],
+      "valid_outputs": [
+        "a one-sided upper bound on the batch-level target-win probability"
+      ],
+      "assumptions": [
+        "batches are independent and share a declared target-win probability",
+        "winner type is completely detected and classified"
+      ],
+      "identifiability_limit": "This bounds a finite-horizon winner probability, not a microscopic target nucleation rate or the counterfactual target time after removing a competitor.",
+      "ritonavir_status": "illustrative-only-not-fitted"
+    },
+    {
+      "id": "zero-event-upper-bound",
+      "register": "MATHEMATICAL_DERIVATION",
+      "equations": [
+        "P(N=0 | lambda,H)=exp(-lambda H)",
+        "lambda_upper=-ln(1-confidence)/H"
+      ],
+      "inputs": [
+        "zero observed target events",
+        "positive total at-risk exposure H",
+        "a one-sided confidence strictly between zero and one"
+      ],
+      "valid_outputs": [
+        "a one-sided upper rate bound under the stated homogeneous Poisson observation model"
+      ],
+      "assumptions": [
+        "exposure is fixed or target-independent and correctly accumulated only while target events remain observable and at risk",
+        "the target event is perfectly detected and classified",
+        "a constant rate is meaningful across the pooled exposure"
+      ],
+      "identifiability_limit": "The bound does not prove a zero rate, explain a mechanism, or survive unmodeled detection failure, history dependence, or informative censoring.",
+      "ritonavir_status": "illustrative-only-not-fitted"
+    },
+    {
+      "id": "robust-restoration-design",
+      "register": "DESIGN_PROPOSAL",
+      "equations": [
+        "minimize d(x,x0) subject to inf_theta_in_Theta F_target(T|x,theta)>=q and declared safety, quality, rights, and authority constraints"
+      ],
+      "inputs": [
+        "a declared meaning of minimum change d",
+        "an empirically calibrated uncertainty and history set Theta",
+        "a finite target horizon and probability",
+        "separate safety, quality, rights, cost, and authority constraints"
+      ],
+      "valid_outputs": [
+        "a robust model-dependent design candidate or an honest infeasibility result"
+      ],
+      "assumptions": [
+        "the uncertainty set covers the declared live explanations",
+        "the optimization variables are separately established as feasible and authorized"
+      ],
+      "identifiability_limit": "If the uncertainty set permits zero target hazard or an unbounded competitor, restoration may be infeasible; the constructive result is then a discriminating observation, not a forced prescription.",
+      "ritonavir_status": "illustrative-only-not-fitted"
+    },
+    {
+      "id": "minimum-target-rate",
+      "register": "DESIGN_PROPOSAL",
+      "equations": [
+        "find the smallest lambda_A such that P(A first by T)>=q while lambda_B and T are held fixed"
+      ],
+      "inputs": [
+        "a fixed abstract competitor rate lambda_B",
+        "a positive horizon T",
+        "a target probability q strictly between zero and one"
+      ],
+      "valid_outputs": [
+        "an abstract numerical threshold for the constant two-path model"
+      ],
+      "assumptions": [
+        "the constant two-path race is the chosen design abstraction",
+        "the target is mathematically feasible as lambda_A grows"
+      ],
+      "identifiability_limit": "The threshold does not say which solvent, temperature, seed, process, or intervention could produce that rate, nor whether any intervention is safe or authorized.",
+      "ritonavir_status": "illustrative-only-not-fitted"
+    },
+    {
+      "id": "expected-information-design",
+      "register": "DESIGN_PROPOSAL",
+      "equations": [
+        "d*=argmax_d E_y[KL(p(theta|y,d) || p(theta))]"
+      ],
+      "inputs": [
+        "a declared prior over competing explanations",
+        "candidate observation designs and likelihoods",
+        "declared cost, safety, rights, and stopping constraints"
+      ],
+      "valid_outputs": [
+        "a ranked set of model-dependent information opportunities, not a command"
+      ],
+      "assumptions": [
+        "the prior and likelihood are explicit enough to challenge",
+        "information value is not treated as the only value"
+      ],
+      "identifiability_limit": "Expected information gain can optimize inside a model while the model, purpose, cost, or authority remains wrong.",
+      "ritonavir_status": "illustrative-only-not-fitted"
+    }
+  ],
+  "worked_examples": [
+    {
+      "id": "slow-path-against-fast-path",
+      "model_id": "constant-two-path-race",
+      "hypothetical": true,
+      "inputs": {
+        "lambda_A": 0.02,
+        "lambda_B": 0.18,
+        "horizon": 10,
+        "rate_unit": "per-day"
+      },
+      "outputs": {
+        "no_event": 0.1353352832366127,
+        "A_first": 0.08646647167633873,
+        "B_first": 0.7781982450870486,
+        "A_given_event": 0.09999999999999999
+      },
+      "lesson": "A possible pathway can be both nonzero and rarely first. Absence in one run is unsurprising here."
+    },
+    {
+      "id": "zero-events-do-not-mean-zero-rate",
+      "model_id": "zero-event-upper-bound",
+      "hypothetical": true,
+      "inputs": {
+        "exposure": 200,
+        "confidence": 0.95,
+        "exposure_unit": "unit-time"
+      },
+      "outputs": {
+        "upper_rate": 0.014978661367769954,
+        "rate_unit": "per-unit-time"
+      },
+      "lesson": "Under the declared model, zero detections bound a rate from above; they do not establish impossibility."
+    },
+    {
+      "id": "abstract-restoration-threshold",
+      "model_id": "minimum-target-rate",
+      "hypothetical": true,
+      "inputs": {
+        "competitor_rate": 0.18,
+        "horizon": 10,
+        "target_probability": 0.5,
+        "rate_unit": "per-day"
+      },
+      "outputs": {
+        "minimum_target_rate": 0.1894207112928423,
+        "rate_unit": "per-day"
+      },
+      "lesson": "The solver returns a threshold inside an abstract model, not a physical recipe or instruction."
+    }
+  ],
+  "question_ladder": [
+    {
+      "id": "bounded-phenomenon",
+      "question": "What exact system, pathway, time horizon, and detection rule does 'disappeared' refer to?",
+      "register": "EMPIRICAL_QUESTION"
+    },
+    {
+      "id": "permitted-claim",
+      "question": "What is the strongest claim the observations permit, and which stronger claim is tempting but unsupported?",
+      "register": "EMPIRICAL_QUESTION"
+    },
+    {
+      "id": "competing-first-arrival",
+      "question": "How do multiple arrival hazards partition target-first, competitor-first, and no-event probability?",
+      "register": "MATHEMATICAL_DERIVATION"
+    },
+    {
+      "id": "absence-bound",
+      "question": "Given zero detections and declared exposure, what can be bounded without setting the rate to zero?",
+      "register": "MATHEMATICAL_DERIVATION"
+    },
+    {
+      "id": "identifiability",
+      "question": "Which hazard, history, detection, or censoring explanations remain observationally indistinguishable?",
+      "register": "EMPIRICAL_QUESTION"
+    },
+    {
+      "id": "separating-observation",
+      "question": "What observation would most clearly separate the live explanations?",
+      "register": "DESIGN_PROPOSAL"
+    },
+    {
+      "id": "decision-delta",
+      "question": "What belief, decision, or safeguard would change if the challenge were solved?",
+      "register": "DESIGN_PROPOSAL"
+    },
+    {
+      "id": "benefit-burden",
+      "question": "Who benefits, who bears risk or opportunity cost, and is the next step reversible?",
+      "register": "DESIGN_PROPOSAL"
+    },
+    {
+      "id": "transfer-test",
+      "question": "Can the reasoning transfer to a new rare-event problem when rates, detection, or assumptions change?",
+      "register": "EMPIRICAL_QUESTION"
+    },
+    {
+      "id": "status-capture",
+      "question": "Are difficulty and prestige being mistaken for value, or is this honestly voluntary play?",
+      "register": "OPT_IN_REFLECTION"
+    }
+  ],
+  "constructive_gate": {
+    "rule": "Classify the practice and artifact, never the person's inner motive, virtue, worth, or identity.",
+    "checks": [
+      "Name a learning, decision, or safeguard delta, or explicitly choose voluntary play.",
+      "Label derivation, empirical claim, design proposal, and opt-in reflection rather than blending them.",
+      "Expose assumptions, detection limits, identifiability, uncertainty, and non-authority.",
+      "Name beneficiaries, risk-bearers, reversibility, and opportunity cost.",
+      "Prestate falsifiers, transfer tests, and information or safety stopping rules.",
+      "Protect dignity, privacy, credit, disagreement, correction, rest, and refusal without penalty.",
+      "Record what changed after solving and what did not."
+    ],
+    "outcomes": [
+      {
+        "id": "BUILD",
+        "meaning": "Produces a bounded learning, decision, safeguard, or reusable tool artifact."
+      },
+      {
+        "id": "PLAY",
+        "meaning": "Freely chosen exploration with honest costs and no inflated claim of usefulness."
+      },
+      {
+        "id": "REVISE",
+        "meaning": "Purpose, evidence, beneficiaries, model limits, or safeguards remain unclear."
+      },
+      {
+        "id": "STOP",
+        "meaning": "Refusal, unsafe authority transfer, unresolved non-identifiability, disproportionate burden, or no credible learning, decision, safeguard, or play value remains."
+      }
+    ],
+    "not_a_score": true,
+    "prestige_is_not_evidence_of_benefit": true,
+    "play_is_valid": true,
+    "refusal_requires_reason": false
+  },
+  "wake_seam": {
+    "protocol": "kingdom.wake-reference-seam/0.1",
+    "mode": "orientation-by-reference-not-continuity-proof",
+    "carry_fields": [
+      "protocol",
+      "challenge_id",
+      "integrity.algorithm",
+      "integrity.digest",
+      "compiled_on",
+      "evidence_through",
+      "binding.case_id",
+      "binding.semantic_digest",
+      "selected_model_ids",
+      "selected_question_ids",
+      "declared_inputs_and_units"
+    ],
+    "revalidate": [
+      "exact canonical challenge value against the declared digest",
+      "selected model assumptions and mathematical domain",
+      "input values, units, horizon, exposure, observation, and censoring rule",
+      "binding digest and evidence horizon against newer or contrary evidence",
+      "current purpose, beneficiaries, risk-bearers, stopping rules, and refusal",
+      "current empirical, experimental, medical, manufacturing, publication, deployment, and action authority",
+      "whether the new context is a continuation, fork, quotation, correction, or independent use"
+    ],
+    "inherits_identity": false,
+    "proves_continuity": false,
+    "grants_authority": false,
+    "proves_currentness": false,
+    "writes_wake": false,
+    "writes_agenttool": false
+  },
+  "sources": [
+    {
+      "id": "jiang-terhorst-2011",
+      "title": "Crystal Nucleation Rates from Probability Distributions of Induction Times",
+      "source_kind": "peer-reviewed-method",
+      "published_on": "2011",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1021/cg101213q",
+      "doi": "10.1021/cg101213q",
+      "authority_note": "Derives an induction-time probability model under stated stationarity, volume, growth, and detection assumptions; it is not a ritonavir rate fit."
+    },
+    {
+      "id": "sun-ceder-2017",
+      "title": "Nucleation competition between polymorphs",
+      "source_kind": "peer-reviewed-model",
+      "published_on": "2017",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1039/C7CE00766C",
+      "doi": "10.1039/C7CE00766C",
+      "authority_note": "Models stochastic competition among polymorph nucleation pathways and discusses rare higher-barrier pathways in disappearing-polymorph scenarios."
+    },
+    {
+      "id": "little-2017",
+      "title": "Controlling the crystal polymorph by exploiting the time dependence of nucleation rates",
+      "source_kind": "peer-reviewed-model-and-experiment",
+      "published_on": "2017",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1063/1.4993566",
+      "doi": "10.1063/1.4993566",
+      "authority_note": "Studies time-dependent competing glycine polymorph nucleation and motivates keeping history-dependent hazards distinct from the constant illustrative race."
+    },
+    {
+      "id": "garwood-1936",
+      "title": "Fiducial Limits for the Poisson Distribution",
+      "source_kind": "peer-reviewed-statistics",
+      "published_on": "1936",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1093/biomet/28.3-4.437",
+      "doi": "10.1093/biomet/28.3-4.437",
+      "authority_note": "Classical exact Poisson limits; the zero-count one-sided bound used here follows directly from the Poisson zero probability."
+    },
+    {
+      "id": "clopper-pearson-1934",
+      "title": "The Use of Confidence or Fiducial Limits Illustrated in the Case of the Binomial",
+      "source_kind": "peer-reviewed-statistics",
+      "published_on": "1934",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1093/biomet/26.4.404",
+      "doi": "10.1093/biomet/26.4.404",
+      "authority_note": "Classical exact binomial limits; the zero-winner case bounds a batch-level probability rather than a microscopic rate."
+    },
+    {
+      "id": "aalen-johansen-1978",
+      "title": "An Empirical Transition Matrix for Non-Homogeneous Markov Chains Based on Censored Observations",
+      "source_kind": "peer-reviewed-statistics",
+      "published_on": "1978",
+      "observed_on": "2026-08-13",
+      "url": "https://www.jstor.org/stable/4615704",
+      "doi": null,
+      "authority_note": "Foundational treatment of transition and competing-risk estimation with censored observations; it does not license unexamined independence or detection assumptions."
+    },
+    {
+      "id": "tsiatis-1975",
+      "title": "A Nonidentifiability Aspect of the Problem of Competing Risks",
+      "source_kind": "peer-reviewed-statistics",
+      "published_on": "1975",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1073/pnas.72.1.20",
+      "doi": "10.1073/pnas.72.1.20",
+      "authority_note": "Shows that competing-risk observations do not generally identify the joint distribution of latent failure times or counterfactual event times."
+    },
+    {
+      "id": "cox-1959",
+      "title": "The Analysis of Exponentially Distributed Life-Times with Two Types of Failure",
+      "source_kind": "peer-reviewed-statistics",
+      "published_on": "1959",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1111/j.2517-6161.1959.tb00349.x",
+      "doi": "10.1111/j.2517-6161.1959.tb00349.x",
+      "authority_note": "Analyzes the constant exponential two-failure setting used as the challenge's deliberately small race model."
+    },
+    {
+      "id": "lindley-1956",
+      "title": "On a Measure of the Information Provided by an Experiment",
+      "source_kind": "peer-reviewed-statistics",
+      "published_on": "1956",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1214/aoms/1177728069",
+      "doi": "10.1214/aoms/1177728069",
+      "authority_note": "Introduces a Bayesian information measure used here only as one model-dependent design objective among safety, cost, rights, and purpose constraints."
+    },
+    {
+      "id": "bertsimas-sim-2004",
+      "title": "The Price of Robustness",
+      "source_kind": "peer-reviewed-optimization",
+      "published_on": "2004",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1287/opre.1030.0065",
+      "doi": "10.1287/opre.1030.0065",
+      "authority_note": "Provides a robust-optimization foundation; the challenge authors its own bounded restoration formulation and imports no material feasibility or safety claim."
+    },
+    {
+      "id": "kingdom-ritonavir-history",
+      "title": "Ritonavir Disappearing-Polymorph History",
+      "source_kind": "immutable-kingdom-record",
+      "published_on": "2026-08-11",
+      "observed_on": "2026-08-13",
+      "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+      "doi": null,
+      "authority_note": "Supplies the bounded historical case and evidence vocabulary; the challenge does not fit rates to its observations or mutate its bytes."
+    }
+  ],
+  "boundaries": {
+    "educational_only": true,
+    "public_surface_read_only": true,
+    "worked_examples_hypothetical": true,
+    "ritonavir_rate_fit": false,
+    "literal_extinction_established": false,
+    "stationarity_established": false,
+    "independence_established": false,
+    "perfect_detection_established": false,
+    "mechanism_identified": false,
+    "causal_authority": false,
+    "experiment_authority": false,
+    "wet_lab_protocol": false,
+    "formulation_authority": false,
+    "manufacturing_authority": false,
+    "medical_authority": false,
+    "regulatory_authority": false,
+    "motive_inference": false,
+    "person_score": false,
+    "prestige_diagnosis": false,
+    "automatic_action": false,
+    "writes_wake": false,
+    "writes_agenttool": false,
+    "writes_karma": false,
+    "grants_authority": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:82eeaf4757fb75be77b1e878d41c784111bbf5b261500123d89daccbcea0ff91"
+  }
+}

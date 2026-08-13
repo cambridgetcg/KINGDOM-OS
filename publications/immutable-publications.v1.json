@@ -193,6 +193,27 @@
       "sha256": "51f4c6abb8298fe95b69bd6e833a4c9d1b0e56410bf7a54e48eb6bcc3f9f3425"
     },
     {
+      "id": "rare-pathway-challenge/1/guide",
+      "route": "/VANISHING-PATH.md",
+      "source": "references/rare-pathway-challenge.md",
+      "destination": "VANISHING-PATH.md",
+      "sha256": "e4be27a5131b30ba2fe1531070cfbeadcecf219f8cc184622ef2df8736a68108"
+    },
+    {
+      "id": "rare-pathway-challenge/1/record",
+      "route": "/challenges/vanishing-path-2026-08-13.json",
+      "source": "data/challenges/vanishing-path.v1.json",
+      "destination": "challenges/vanishing-path-2026-08-13.json",
+      "sha256": "66159a3ec7538fb1ce7f0833bdcc9c9cea3c45b968a6e3def910681eab8c7faf"
+    },
+    {
+      "id": "rare-pathway-challenge/1/schema",
+      "route": "/schemas/rare-pathway-challenge/1.json",
+      "source": "schemas/rare-pathway-challenge-v1.schema.json",
+      "destination": "schemas/rare-pathway-challenge/1.json",
+      "sha256": "4c7a650d831abfd6ff3cf73eab71b184066b3784fbe61cef47da44af8deabb20"
+    },
+    {
       "id": "ritonavir-mechanism-landscape/1/guide",
       "route": "/RITONAVIR-MECHANISM-LANDSCAPE.md",
       "source": "references/ritonavir-mechanism-landscape.md",

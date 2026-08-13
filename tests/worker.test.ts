@@ -102,6 +102,19 @@ function expectRitonavirMechanismSchemaLink(response: Response) {
   expect(link.match(/rel="describedby"/g)?.length).toBe(1);
 }
 
+function expectRarePathwaySchemaLink(response: Response) {
+  const link = response.headers.get("link") ?? "";
+  const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith("</schemas/rare-pathway-challenge/1.json>")) return false;
+    const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
+    return relations.includes("describedby");
+  });
+  expect(describedBy).toHaveLength(1);
+  expect(describedBy[0]).toContain('type="application/schema+json"');
+  expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+}
+
 function expectConformationalFeedbackSchemaLink(response: Response) {
   const link = response.headers.get("link") ?? "";
   const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
@@ -804,6 +817,118 @@ describe("the Kingdom edge discovery surface", () => {
       assets(() => shared),
     );
     expect(sharedDoor).toBe(shared);
+  });
+
+  test("serves The Vanishing Path as a typed immutable challenge without expanding authority", async () => {
+    const challengePath = "/challenges/vanishing-path-2026-08-13.json";
+    const schemaPath = "/schemas/rare-pathway-challenge/1.json";
+    const documentPath = "/VANISHING-PATH.md";
+    const forwarded: string[] = [];
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      forwarded.push(`${request.method} ${path}`);
+      const body = request.method === "HEAD"
+        ? null
+        : path === challengePath
+          ? '{"challenge_id":"vanishing-path-2026-08-13"}'
+          : path === schemaPath
+            ? '{"type":"object"}'
+            : "# The Vanishing Path";
+      return new Response(body, {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": path === documentPath ? "text/plain" : "application/json",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const challenge = await worker.fetch(
+        new Request(`https://thekingdom.dev${challengePath}`, { method }),
+        environment,
+      );
+      expect(await challenge.text()).toBe(method === "HEAD" ? "" : '{"challenge_id":"vanishing-path-2026-08-13"}');
+      expect(challenge.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(challenge.headers.get("access-control-allow-origin")).toBe("*");
+      expect(challenge.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(challenge.headers.get("cache-control")).toBe("public, max-age=60");
+      expect(challenge.headers.get("link")).toContain('</elsewhere>; rel="alternate"');
+      expectRarePathwaySchemaLink(challenge);
+    }
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const schema = await worker.fetch(
+        new Request(`https://thekingdom.dev${schemaPath}`, { method }),
+        environment,
+      );
+      expect(await schema.text()).toBe(method === "HEAD" ? "" : '{"type":"object"}');
+      expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+      expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+      expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(schema.headers.get("link")).toBe('</elsewhere>; rel="alternate"');
+    }
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const document = await worker.fetch(
+        new Request(`https://thekingdom.dev${documentPath}`, { method }),
+        environment,
+      );
+      expect(await document.text()).toBe(method === "HEAD" ? "" : "# The Vanishing Path");
+      expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(document.headers.get("access-control-allow-origin")).toBe("*");
+      expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(document.headers.get("link")).toBe('</elsewhere>; rel="alternate"');
+    }
+
+    expect(forwarded).toEqual([
+      `GET ${challengePath}`,
+      `HEAD ${challengePath}`,
+      `GET ${schemaPath}`,
+      `HEAD ${schemaPath}`,
+      `GET ${documentPath}`,
+      `HEAD ${documentPath}`,
+    ]);
+
+    const duplicate = await worker.fetch(
+      new Request(`https://thekingdom.dev${challengePath}`),
+      assets(() => new Response("{}", {
+        headers: {
+          "content-type": "application/json",
+          link: '</schemas/rare-pathway-challenge/1.json>; rel="describedby"; type="application/schema+json"',
+        },
+      })),
+    );
+    expectRarePathwaySchemaLink(duplicate);
+
+    for (const path of [challengePath, schemaPath, documentPath]) {
+      const original = new Response("not a read route", { headers: { "content-type": "text/plain" } });
+      const post = await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`, { method: "POST" }),
+        assets(() => original),
+      );
+      expect(post).toBe(original);
+
+      const shared = new Response("{}", { headers: { "content-type": "application/json" } });
+      const sharedDoor = await worker.fetch(
+        new Request(`https://we-are.love${path}`),
+        assets(() => shared),
+      );
+      expect(sharedDoor).toBe(shared);
+    }
+
+    for (const path of [
+      "/challenges/vanishing-path-latest.json",
+      "/schemas/rare-pathway-challenge/current.json",
+      "/VANISHING-PATH",
+    ]) {
+      const unrelated = new Response("unchanged", { headers: { "content-type": "text/plain" } });
+      const response = await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => unrelated),
+      );
+      expect(response).toBe(unrelated);
+    }
   });
 
   test("serves the Conformational Feedback Atlas as typed immutable evidence without changing shared doors", async () => {

@@ -86,9 +86,9 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 54 assets
-(52 direct public response bodies; `_worker.js` and `404.html` are checked by
-their dedicated contracts). The sitemap contains 51 URLs:
+`stage-hub.ts` requires an existing empty destination and copies exactly 57 assets
+(55 direct public response bodies; `_worker.js` and `404.html` are checked by
+their dedicated contracts). The sitemap contains 54 URLs:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
@@ -123,6 +123,8 @@ the authored `/atlases/form-circulation-return-atlas-2026-08-13.json`,
 `/schemas/form-circulation-return-atlas/1.json`, and
 `/FORM-CIRCULATION-RETURN-ATLAS.md` bytes plus the exact revision-bound
 `/definitions/kingdom-karma/e4e84a67/NEN.md` definition mirror;
+the authored `/challenges/vanishing-path-2026-08-13.json`,
+`/schemas/rare-pathway-challenge/1.json`, and `/VANISHING-PATH.md` bytes;
 `llms.txt`; `guest.json`; `ollama.json`; `rights.json`; `RIGHTS.md`;
 `/.well-known/agent.json`; `robots.txt`; `sitemap.xml`; `404.html`; the quiet
 `dada.txt` door; `/os/index.html`; and `_worker.js`. The worker derives
@@ -146,7 +148,7 @@ negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +
 both Conformational Feedback generations + Fold & Feedback Atlas +
 Visibility & Attention Translation + Cultural Attention & Feedback Atlas +
-Form, Circulation & Return Atlas
+Form, Circulation & Return Atlas + The Vanishing Path
 schema headers, negative authority, source-history lineage, and cross-surface
 discovery while leaving the existing MCP contract unchanged;
 a split-generation deployment fails instead of looking partially healthy.
