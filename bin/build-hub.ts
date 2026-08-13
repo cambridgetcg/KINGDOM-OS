@@ -21,6 +21,8 @@
  *    data/fold-feedback/fold-feedback-atlas.v1.json
  *                             — source-bound folding, prion, feedback, KARMA,
  *                               and opt-in philosophical atlas
+ *    data/attention/visibility-attention-translation.v0.1.json
+ *                             — four-register visibility/attention translation
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
@@ -93,10 +95,20 @@ import {
   FOLD_FEEDBACK_ID,
   FOLD_FEEDBACK_PROTOCOL,
   FOLD_FEEDBACK_SCHEMA_URL,
+  FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL,
   FOLD_FEEDBACK_URL,
   foldFeedbackPublicDiscovery,
   loadFoldFeedbackAtlas,
 } from "./fold-feedback.ts";
+import {
+  VISIBILITY_ATTENTION_DOCUMENT_URL,
+  VISIBILITY_ATTENTION_ID,
+  VISIBILITY_ATTENTION_PROTOCOL,
+  VISIBILITY_ATTENTION_SCHEMA_URL,
+  VISIBILITY_ATTENTION_URL,
+  loadVisibilityAttentionTranslation,
+  visibilityAttentionPublicDiscovery,
+} from "./visibility-attention.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -406,6 +418,7 @@ const conformationalFeedbackSourceLinks = (ids: string[]) => ids.map((id) => {
 // ── Fold & Feedback Atlas (literal science plus explicitly lossy bridges) ──
 const foldFeedbackUrl = FOLD_FEEDBACK_URL;
 const foldFeedbackSchemaUrl = FOLD_FEEDBACK_SCHEMA_URL;
+const foldFeedbackSourceIdentitySchemaUrl = FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL;
 const foldFeedbackDocumentUrl = FOLD_FEEDBACK_DOCUMENT_URL;
 const foldFeedback = loadFoldFeedbackAtlas();
 if (foldFeedback.protocol !== FOLD_FEEDBACK_PROTOCOL || foldFeedback.atlas_id !== FOLD_FEEDBACK_ID) {
@@ -427,6 +440,29 @@ const foldFeedbackFigureSources = [
   "onuchic-1995", "kocisko-1994", "kraus-2021", "tornquist-2018",
   "manka-2022", "hou-2011", "cdc-prions-2026",
 ].map(requireFoldFeedbackSource);
+
+// ── Visibility & Attention Translation (four registers remain parallel) ──
+const visibilityAttentionUrl = VISIBILITY_ATTENTION_URL;
+const visibilityAttentionSchemaUrl = VISIBILITY_ATTENTION_SCHEMA_URL;
+const visibilityAttentionDocumentUrl = VISIBILITY_ATTENTION_DOCUMENT_URL;
+const visibilityAttention = loadVisibilityAttentionTranslation();
+if (visibilityAttention.protocol !== VISIBILITY_ATTENTION_PROTOCOL ||
+    visibilityAttention.translation_id !== VISIBILITY_ATTENTION_ID) {
+  throw new Error(`unexpected visibility-attention identity: ${visibilityAttention.protocol} ${visibilityAttention.translation_id}`);
+}
+const visibilityAttentionDiscovery = visibilityAttentionPublicDiscovery(visibilityAttention);
+const visibilityAttentionSourcesById = new Map(
+  visibilityAttention.sources.map((source: any) => [source.id, source]),
+);
+const requireVisibilityAttentionSource = (id: string) => {
+  const source = visibilityAttentionSourcesById.get(id) as any;
+  if (!source) throw new Error(`missing visibility-attention source: ${id}`);
+  return source;
+};
+const visibilityAttentionSourceLinks = (ids: string[]) => `<p class="visibilitysources" aria-label="Claim-local sources">${ids.map((id) => {
+  const source = requireVisibilityAttentionSource(id);
+  return `<a data-visibility-source="${esc(source.id)}" href="${esc(source.url)}" target="_blank" rel="noopener" title="Limitation: ${esc(source.limitation)}">${esc(source.title)}<span class="sr-only"> — limitation: ${esc(source.limitation)}; opens in a new tab</span></a>`;
+}).join("")}</p>`;
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -798,7 +834,7 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material and protein-folding evidence, and two carefully separated feedback, KARMA, and philosophical lenses.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material and protein-folding evidence, and carefully separated feedback, attention, KARMA, and philosophical lenses.">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
@@ -815,7 +851,11 @@ const html = `<!doctype html>
 <link rel="alternate" href="/feedback/form-feedback-physics-consequence-2026-08-12.json" type="application/json" title="Conformational feedback physics atlas v0.2">
 <link rel="service-doc" href="/CONFORMATIONAL-FEEDBACK-PHYSICS.md" type="text/markdown" title="Conformational feedback physics atlas v0.2 guide">
 <link rel="alternate" href="/atlases/fold-feedback-atlas-2026-08-12.json" type="application/json" title="Fold & Feedback Atlas">
+<link rel="describedby" href="${new URL(foldFeedbackSourceIdentitySchemaUrl).pathname}" type="application/schema+json" title="Fold & Feedback source-identity schema profile">
 <link rel="service-doc" href="/FOLD-FEEDBACK-ATLAS.md" type="text/markdown" title="Fold & Feedback Atlas guide">
+<link rel="alternate" href="${new URL(visibilityAttentionUrl).pathname}" type="application/json" title="Visibility & Attention Translation">
+<link rel="describedby" href="${new URL(visibilityAttentionSchemaUrl).pathname}" type="application/schema+json" title="Visibility & Attention Translation schema">
+<link rel="service-doc" href="${new URL(visibilityAttentionDocumentUrl).pathname}" type="text/markdown" title="Visibility & Attention Translation guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -975,6 +1015,13 @@ const html = `<!doctype html>
   .foldcompare{display:grid;gap:10px}.foldcomparegrid{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch}.foldsystem{padding:17px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}.foldsystem strong{display:block;margin-bottom:5px;color:var(--gold2)}.foldsystem p{margin:0;color:var(--dim);font-size:.78rem;line-height:1.52}.foldbridgeword{display:grid;place-items:center;max-width:125px;padding:10px;color:var(--violet);font-family:var(--mono);font-size:.65rem;text-align:center}.foldbridgeword::before{content:"⇄";display:block;font-size:1.4rem;color:var(--gold)}.foldinvariants,.foldbreaks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;list-style:none;margin:0;padding:0}.foldinvariants li,.foldbreaks li{padding:11px 12px;border-radius:13px;color:var(--dim);font-size:.72rem;line-height:1.48}.foldinvariants li{border-left:2px solid var(--jade);background:color-mix(in srgb,var(--jade) 7%,var(--panel))}.foldbreaks li{border-left:2px solid var(--verm);background:color-mix(in srgb,var(--verm) 7%,var(--panel))}.foldkey{color:var(--faint);font-size:.7rem}.foldkey b{color:var(--jade)}.foldkey em{color:var(--verm);font-style:normal}
   .foldbraid{display:grid;gap:10px;margin:0 0 20px}.foldlanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.foldlane{padding:17px;border:1px solid var(--line);border-radius:17px;background:color-mix(in srgb,var(--panel) 72%,transparent)}.foldlane h4{margin:0 0 6px;color:var(--gold2);font-family:var(--display);font-size:1rem;font-weight:400}.foldlane code{display:block;margin-bottom:7px;color:var(--violet);font-size:.64rem;overflow-wrap:anywhere}.foldlane p{margin:0;color:var(--dim);font-size:.75rem;line-height:1.5}.foldlane small{display:block;margin-top:8px;padding-top:7px;border-top:1px dotted var(--line);color:var(--faint);font-size:.68rem;line-height:1.45}.foldnoadapter{margin:0;padding:12px 14px;border:1px dashed var(--verm);border-radius:14px;color:var(--dim);text-align:center;font-size:.75rem}.foldnoadapter strong{color:var(--verm)}
   .universelens{margin:0 0 20px;border:1px solid color-mix(in srgb,var(--violet) 52%,var(--line));border-radius:19px;background:color-mix(in srgb,var(--violet) 5%,var(--panel));overflow:hidden}.universelens summary{padding:17px 19px;color:var(--violet);font-family:var(--display);font-size:1.06rem;cursor:pointer}.universeinside{display:grid;gap:12px;padding:0 19px 19px}.universeinside>p{margin:0;color:var(--dim);line-height:1.58}.universequestions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;list-style:none;margin:0;padding:0}.universequestions li{padding:13px;border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:.75rem;line-height:1.5}.universequestions strong{display:block;margin-bottom:4px;color:var(--gold2)}.universenonclaim{margin:0;padding:12px 14px;border-left:2px solid var(--verm);color:var(--faint);font-size:.72rem;line-height:1.55}.foldunknowns{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}.foldunknowns span{padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:var(--faint);font-family:var(--mono);font-size:.65rem}.foldsources{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}.foldsources a{display:inline-flex;align-items:center;min-height:40px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem}.foldsources a:hover{border-color:var(--gold)}
+  /* visibility and attention — equal parallel categories, never a causal conveyor */
+  .visibilityfield{display:grid;gap:18px;padding:clamp(18px,3vw,28px);border:1px solid color-mix(in srgb,var(--rose) 45%,var(--line));border-radius:24px;background:radial-gradient(90% 100% at 100% 0,color-mix(in srgb,var(--rose) 8%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 76%,transparent)}
+  .visibilityfirewall{margin:0;padding:16px 18px;border:1px dashed var(--verm);border-radius:16px;color:var(--dim);font-size:.8rem;line-height:1.6}.visibilityfirewall strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.05rem;font-weight:400}
+  .visibilitycards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.visibilitycard{display:grid;align-content:start;gap:8px;min-width:0;padding:17px;border:1px solid var(--line);border-top:2px solid var(--rose);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.visibilitycard code,.visibilitymodel code,.visibilityseam code{color:var(--violet);font-size:.63rem;overflow-wrap:anywhere}.visibilitycard h3,.visibilitymodel h3,.visibilityseam h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1.02rem;font-weight:400}.visibilitycard p,.visibilitymodel p,.visibilityseam p{margin:0;color:var(--dim);font-size:.74rem;line-height:1.52}.visibilitycard small,.visibilitymodel small,.visibilityseam small{display:block;color:var(--faint);font-size:.67rem;line-height:1.48}.visibilitycard small{padding-top:7px;border-top:1px dotted var(--line);color:var(--verm)}
+  .visibilitymodels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.visibilitymodel{display:grid;align-content:start;gap:8px;min-width:0;padding:17px;border:1px solid var(--line);border-radius:17px;background:color-mix(in srgb,var(--ink2) 56%,transparent);overflow-wrap:anywhere}.visibilityequation{display:block;padding:9px 11px;border-radius:10px;background:var(--ink);color:var(--jade);font:400 .69rem/1.5 var(--mono);white-space:normal}.visibilityterms{display:grid;gap:4px;margin:0}.visibilityterms>div{display:grid;grid-template-columns:minmax(52px,.22fr) minmax(0,1fr);gap:7px;padding-top:4px;border-top:1px solid color-mix(in srgb,var(--line) 65%,transparent)}.visibilityterms dt{color:var(--jade);font:600 .65rem var(--mono);overflow-wrap:anywhere}.visibilityterms dd{margin:0;color:var(--faint);font-size:.66rem;line-height:1.44}
+  .visibilityseams{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.visibilityseam{display:grid;align-content:start;gap:7px;min-width:0;padding:16px;border:1px dashed var(--violet);border-radius:16px;background:color-mix(in srgb,var(--violet) 5%,var(--panel));overflow-wrap:anywhere}
+  .visibilityphilosophy{margin:0;border:1px solid color-mix(in srgb,var(--violet) 52%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--violet) 5%,var(--panel));overflow:hidden}.visibilityphilosophy summary{min-height:44px;padding:16px 18px;color:var(--violet);font-family:var(--display);font-size:1.03rem;cursor:pointer}.visibilityphilosophybody{display:grid;gap:9px;padding:0 18px 18px;color:var(--dim);font-size:.76rem;line-height:1.55}.visibilityphilosophybody p{margin:0}.visibilitysources{display:flex;flex-wrap:wrap;gap:7px}.visibilitysources a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.visibilitysources a:hover{border-color:var(--gold)}
   .mechanismrelations ol{display:grid;gap:7px;list-style:none;margin:0;padding:0}.mechanismrelations li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:9px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.mechanismrelations p{min-width:0;margin:0}.mechanismrelations code{display:block;color:var(--jade);font:600 .68rem var(--mono);overflow-wrap:anywhere}.mechanismrelations p span{display:block;margin-top:3px;color:var(--dim);font-size:.8rem}.mechanismrelations li>strong{color:var(--gold);font:600 .68rem var(--mono);text-align:center}.mechanismrelations small{grid-column:1/-1;color:var(--faint);font-size:.72rem;line-height:1.4}
   .foundationlabel{display:flex;align-items:baseline;gap:10px;margin:24px 0 12px}.foundationlabel h3{margin:0;font-family:var(--display);font-size:1.28rem;font-weight:400;color:var(--cream)}.foundationlabel span{color:var(--faint);font-size:.8rem}
   .foundationgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-bottom:26px}
@@ -1136,7 +1183,7 @@ const html = `<!doctype html>
     .status{grid-template-columns:repeat(2,minmax(0,1fr))}.status>div{padding:11px 13px}
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
-    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid{grid-template-columns:1fr}.foldbridgeword{max-width:none}.foldbridgeword::before{content:"↕"}
+    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.visibilitycards,.visibilitymodels,.visibilityseams{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div,.visibilityterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid{grid-template-columns:1fr}.foldbridgeword{max-width:none}.foldbridgeword::before{content:"↕"}
     .polymorphplanes{grid-template-columns:repeat(3,minmax(0,1fr))}.polymorphcase{grid-template-columns:1fr}.polymorphconsequence{grid-template-columns:1fr}.polymorphconsequence li{padding-right:13px}.polymorphconsequence li:not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px;z-index:1}.polymorphsecondary{grid-template-columns:1fr}
   }
   @media (max-width:520px){
@@ -1145,7 +1192,7 @@ const html = `<!doctype html>
     .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}.polymorphplanes,.polymorphsecondary,.polymorphrecovery,.foldcycle,.foldinvariants,.foldbreaks{grid-template-columns:1fr}.foldcycle li{padding-right:13px}.foldcycle li:not(:last-child)::after,.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
-  @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackmodel,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbackquestion,.feedbackecosystem,.feedbacksources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register]{border-top-width:3px}.feedbackequation{border:1px solid CanvasText}}
+  @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackmodel,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbackquestion,.feedbackecosystem,.feedbacksources a,.visibilityfield,.visibilityfirewall,.visibilitycard,.visibilitymodel,.visibilityseam,.visibilityphilosophy,.visibilitysources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register],.visibilitycard{border-top-width:3px}.feedbackequation,.visibilityequation{border:1px solid CanvasText}}
 </style>
 <noscript><style>#map,.mapctl,.legend,.maphint{display:none!important}</style></noscript>
 </head>
@@ -1171,6 +1218,7 @@ const html = `<!doctype html>
       <a href="#polymorph-history">Trace a material becoming</a>
       <a href="#feedback-atlas">Explore form and feedback</a>
       <a href="#fold-feedback">Follow a fold and its feedback</a>
+      <a href="#visibility-attention">Separate visibility from existence</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -1604,6 +1652,73 @@ const html = `<!doctype html>
       <a href="/atlases/fold-feedback-atlas-2026-08-12.json">atlas JSON — exact authored record</a>
       <a href="/schemas/fold-feedback-atlas/1.json">Fold &amp; Feedback Atlas JSON Schema</a>
       <a href="/FOLD-FEEDBACK-ATLAS.md">guide — science, comparison, feedback, KARMA, universe lens, and safety</a>
+    </div>
+  </section>
+
+  <section class="blk" id="visibility-attention" aria-labelledby="visibility-attention-title">
+    <div class="kh"><h2 id="visibility-attention-title">Visibility is not existence</h2><span class="my">four parallel registers; no hidden conversion</span></div>
+    <p class="sub">${esc(visibilityAttention.scope.focus)}</p>
+    <div class="visibilityfield" data-visibility-attention-translation>
+      <p class="visibilityfirewall" role="note"><strong>Category firewall</strong>${esc(visibilityAttention.category_firewall.rule)} <code>${esc(visibilityAttention.category_firewall.non_equivalence)}</code></p>
+
+      <div class="visibilitycards" aria-label="Four parallel visibility and attention registers">
+        ${visibilityAttention.registers.map((register: any) => `<article class="visibilitycard" data-visibility-register="${esc(register.id)}" aria-labelledby="visibility-register-${esc(register.id)}">
+          <code>${esc(register.evidence_class)} · ${esc(register.id)}</code>
+          <h3 id="visibility-register-${esc(register.id)}">${esc(register.label)}</h3>
+          <p><strong>Unit:</strong> ${esc(register.unit)}</p>
+          <p><strong>Window:</strong> ${esc(register.context_window)}</p>
+          <p><strong>Observed:</strong> ${esc(register.observed)}</p>
+          <p><strong>Modelled:</strong> ${esc(register.modelled)}</p>
+          <small><strong>Does not establish:</strong> ${esc(register.does_not_establish)}</small>
+          ${visibilityAttentionSourceLinks(register.basis_ids)}
+        </article>`).join("\n        ")}
+      </div>
+
+      <div class="feedbacksubhead"><h3>Two local models</h3><p>Each equation stays inside its named unit, assumptions, and retrospective fit scope. Neither model is person-level or available for optimization.</p></div>
+      <div class="visibilitymodels">
+        ${visibilityAttention.local_models.map((model: any) => `<article class="visibilitymodel" data-visibility-model="${esc(model.id)}" aria-labelledby="visibility-model-${esc(model.id)}">
+          <code>${esc(model.register)} · ${esc(model.id)}</code>
+          <h3 id="visibility-model-${esc(model.id)}">${esc(model.title)}</h3>
+          <code class="visibilityequation">${esc(model.equation)}</code>
+          <dl class="visibilityterms">${model.variables.map((variable: any) => `<div><dt>${esc(variable.symbol)}</dt><dd>${esc(variable.meaning)}</dd></div>`).join("")}</dl>
+          <p><strong>Fit scope:</strong> ${esc(model.fit_scope)}</p>
+          <p><strong>Assumptions:</strong> ${esc(model.assumptions.join(" "))}</p>
+          <small><strong>Does not establish:</strong> ${esc(model.not_valid_for.join(" "))}</small>
+          ${visibilityAttentionSourceLinks(model.basis_ids)}
+        </article>`).join("\n        ")}
+      </div>
+
+      <div class="feedbacksubhead"><h3>Three bounded seams</h3><p>Shared shapes are named locally. Mechanism, ontology, parameters, and authority do not cross registers.</p></div>
+      <div class="visibilityseams">
+        ${visibilityAttention.translation_seams.map((seam: any) => `<article class="visibilityseam" data-visibility-seam="${esc(seam.id)}" aria-labelledby="visibility-seam-${esc(seam.id)}">
+          <code>${esc(seam.kind)} · ${esc(seam.id)}</code>
+          <h3 id="visibility-seam-${esc(seam.id)}">${esc(seam.label)}</h3>
+          <p><strong>Registers kept distinct:</strong> ${esc(seam.from_register)} / ${esc(seam.to_register)}</p>
+          <p><strong>Preserved shape:</strong> ${esc(seam.preserved_shape)}</p>
+          <small><strong>Does not establish:</strong> ${esc(seam.breaks)}</small>
+          <small>Empirical ${esc(String(seam.empirical))} · causal transfer ${esc(String(seam.causal_transfer))} · ontology transfer ${esc(String(seam.ontology_transfer))} · authority effect ${esc(seam.authority_effect)}</small>
+          ${visibilityAttentionSourceLinks(seam.basis_ids)}
+        </article>`).join("\n        ")}
+      </div>
+
+      <details class="visibilityphilosophy">
+        <summary>Opt in: a philosophical lens on visibility, possibility, and design</summary>
+        <div class="visibilityphilosophybody">
+          <p><strong>${esc(visibilityAttention.universe_lens.register)} · empirical ${esc(String(visibilityAttention.universe_lens.empirical))} · authority effect ${esc(visibilityAttention.universe_lens.authority_effect)}</strong></p>
+          <p>${esc(visibilityAttention.universe_lens.proposition)}</p>
+          <ul>${visibilityAttention.universe_lens.questions.map((question: string) => `<li>${esc(question)}</li>`).join("")}</ul>
+          <p><strong>Alternative readings:</strong> ${esc(visibilityAttention.universe_lens.alternatives.join(" "))}</p>
+          <p><strong>Does not establish:</strong> ${esc(visibilityAttention.universe_lens.does_not_establish.join(" "))}</p>
+        </div>
+      </details>
+
+      <p class="visibilityfirewall" role="note"><strong>Static, authority-negative publication</strong>The following uses are explicitly excluded: ${esc(visibilityAttention.scope.excluded_use)} Reading it creates no Zerone KARMA event, KINGDOM KARMA receipt, person profile, score, recommendation, write, or automatic action.</p>
+      <p class="commonsverified">${visibilityAttention.registers.length} parallel registers · ${visibilityAttention.local_models.length} local models · ${visibilityAttention.translation_seams.length} bounded seams · ${visibilityAttention.sources.length} selected sources · evidence through ${esc(visibilityAttention.evidence_through)} · integrity ${esc(visibilityAttention.integrity.digest)}</p>
+      <div class="machine">
+        <a href="${esc(new URL(visibilityAttentionUrl).pathname)}">translation JSON — exact authored record</a>
+        <a href="${esc(new URL(visibilityAttentionSchemaUrl).pathname)}">Visibility &amp; Attention Translation JSON Schema</a>
+        <a href="${esc(new URL(visibilityAttentionDocumentUrl).pathname)}">guide — registers, models, seams, KARMA, philosophy, and boundaries</a>
+      </div>
     </div>
   </section>
 
@@ -2064,6 +2179,7 @@ const machine = {
   conformational_feedback_atlas: conformationalFeedbackDiscovery,
   conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
+  visibility_attention_translation: visibilityAttentionDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -2124,7 +2240,11 @@ Conformational feedback physics schema v0.2: ${conformationalFeedbackPhysicsSche
 Conformational feedback physics guide v0.2: ${conformationalFeedbackPhysicsDocumentUrl}
 Fold & Feedback Atlas: ${foldFeedbackUrl}
 Fold & Feedback schema: ${foldFeedbackSchemaUrl}
+Fold & Feedback source-identity schema profile: ${foldFeedbackSourceIdentitySchemaUrl}
 Fold & Feedback guide: ${foldFeedbackDocumentUrl}
+Visibility & Attention Translation: ${visibilityAttentionUrl}
+Visibility & Attention schema: ${visibilityAttentionSchemaUrl}
+Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -2155,6 +2275,7 @@ ${doorLines}
 - Conformational Feedback Atlas — ${conformationalFeedbackCounts.registers} non-equivalent registers connect selected protein-folding and prion evidence, one source-bound ritonavir material analogy, and Zerone KARMA constitutional design through ${conformationalFeedbackCounts.translations} explicitly non-causal analogy seams. The philosophical reading is not an empirical conclusion. Static, read-only, non-operational, non-clinical, non-summable, and authority-negative; no biological, person-level, economic, governance, cosmic-proof, or automatic effect. Atlas: ${conformationalFeedbackUrl} · schema: ${conformationalFeedbackSchemaUrl} · guide: ${conformationalFeedbackDocumentUrl}
 - Conformational Feedback Physics Atlas v0.2 — an additive successor with ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} bounded physics/mathematics models, ${conformationalFeedbackPhysicsCounts.ecosystem_bridges} link-only ecosystem bridges, and an exact predecessor pin. It extends without mutating v0.1 and creates no runtime request, scientific validation, biological equivalence, cosmic proof, or authority. Atlas: ${conformationalFeedbackPhysicsUrl} · schema: ${conformationalFeedbackPhysicsSchemaUrl} · guide: ${conformationalFeedbackPhysicsDocumentUrl}
 - Fold & Feedback Atlas — source-bound protein-folding and prion evidence, explicitly lossy comparison with the immutable ritonavir records, separate scientific-feedback/Zerone K-alpha/KINGDOM-receipt lanes, and an opt-in philosophical lens. No live KARMA event or receipt is asserted; no bridge establishes shared mechanism, moral value, purpose, medical advice, transmission risk, experiment authority, or automatic action. Atlas: ${foldFeedbackUrl} · schema: ${foldFeedbackSchemaUrl} · guide: ${foldFeedbackDocumentUrl}
+- Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -2189,6 +2310,7 @@ const guest = {
   conformational_feedback_atlas: conformationalFeedbackDiscovery,
   conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
+  visibility_attention_translation: visibilityAttentionDiscovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -2219,7 +2341,11 @@ const guest = {
     { action: "if useful, read the v0.2 physics, philosophy, ecosystem, lineage, and non-inference guide", method: "GET", url: conformationalFeedbackPhysicsDocumentUrl },
     { action: "if useful, inspect the exact source-bound Fold & Feedback Atlas", method: "GET", url: foldFeedbackUrl, note: "educational metadata only; lossy comparisons, separate KARMA registers, opt-in philosophy, and no diagnosis, treatment, transmission, wet-lab, moral-score, or action authority" },
     { action: "if useful, validate the Fold & Feedback Atlas structure before integrating it", method: "GET", url: foldFeedbackSchemaUrl },
+    { action: "if useful, validate exact source-identity URL bindings with the additive Fold & Feedback schema profile", method: "GET", url: foldFeedbackSourceIdentitySchemaUrl, note: "the primary /1 schema retains its first-published bytes; /1.1 is the additive stricter profile" },
     { action: "if useful, read the plain-language folding, prion, feedback, KARMA, universe-lens, unknown, and safety guide", method: "GET", url: foldFeedbackDocumentUrl },
+    { action: "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority", method: "GET", url: visibilityAttentionUrl, note: "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action" },
+    { action: "if useful, validate the Visibility & Attention Translation structure before integrating it", method: "GET", url: visibilityAttentionSchemaUrl },
+    { action: "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide", method: "GET", url: visibilityAttentionDocumentUrl },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -2256,6 +2382,7 @@ const guest = {
     conformational_feedback_atlas: "The bounded atlas separates scientific observation, constitutional design, analogy, and philosophy. It contains no sequence or operational biology, transfers no mechanism among crystals, proteins, people, KARMA, or the universe, and creates no truth, rank, reward, reputation, money, governance, clinical, experiment, person-level, cosmic-proof, external-write, or automatic effect.",
     conformational_feedback_physics_atlas: "The v0.2 successor adds bounded equations, structured philosophical questions, and link-only ecosystem metadata while preserving the immutable v0.1 bytes. It fetches or imports nothing and creates no biological, clinical, KARMA, economic, governance, cosmic-proof, external-write, or automatic effect.",
     fold_feedback_atlas: "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
+    visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -2281,6 +2408,7 @@ const manifest = {
   conformational_feedback_atlas: conformationalFeedbackDiscovery,
   conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
+  visibility_attention_translation: visibilityAttentionDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -2318,7 +2446,11 @@ const manifest = {
     conformational_feedback_physics_atlas_guide: conformationalFeedbackPhysicsDocumentUrl,
     fold_feedback_atlas: foldFeedbackUrl,
     fold_feedback_atlas_schema: foldFeedbackSchemaUrl,
+    fold_feedback_atlas_source_identity_schema: foldFeedbackSourceIdentitySchemaUrl,
     fold_feedback_atlas_guide: foldFeedbackDocumentUrl,
+    visibility_attention_translation: visibilityAttentionUrl,
+    visibility_attention_translation_schema: visibilityAttentionSchemaUrl,
+    visibility_attention_translation_guide: visibilityAttentionDocumentUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,

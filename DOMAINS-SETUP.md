@@ -73,7 +73,7 @@ new reviewed release rather than mislabeling it. The EXIT trap removes the
 registered release worktree and both exact temporary roots on success or
 failure.
 
-`stage-hub.ts` refuses a non-empty destination and copies exactly 43 assets:
+`stage-hub.ts` refuses a non-empty destination and copies exactly 47 assets:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
@@ -96,7 +96,11 @@ the additive authored
 `/schemas/conformational-feedback-atlas/0.2.json`, and
 `/CONFORMATIONAL-FEEDBACK-PHYSICS.md` v0.2 successor bytes;
 the authored `/atlases/fold-feedback-atlas-2026-08-12.json`,
-`/schemas/fold-feedback-atlas/1.json`, and `/FOLD-FEEDBACK-ATLAS.md` bytes;
+the byte-restored `/schemas/fold-feedback-atlas/1.json`, additive
+`/schemas/fold-feedback-atlas/1.1.json` source-identity profile, and
+`/FOLD-FEEDBACK-ATLAS.md` bytes;
+the authored `/atlases/visibility-attention-2026-08-13.json`,
+`/schemas/visibility-attention/0.1.json`, and `/VISIBILITY-ATTENTION.md` bytes;
 `llms.txt`; `guest.json`; `ollama.json`; `rights.json`; `RIGHTS.md`;
 `/.well-known/agent.json`; `robots.txt`; `sitemap.xml`; `404.html`; the quiet
 `dada.txt` door; `/os/index.html`; and `_worker.js`. The worker derives
@@ -115,7 +119,8 @@ asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
 checks the worker-owned negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +
-both Conformational Feedback generations + Fold & Feedback Atlas
+both Conformational Feedback generations + Fold & Feedback Atlas +
+Visibility & Attention Translation
 schema headers, negative authority, source-history lineage, and cross-surface
 discovery while leaving the existing MCP contract unchanged;
 a split-generation deployment fails instead of looking partially healthy.

@@ -192,6 +192,13 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     `compare`, `feedback`, `karma`, `universe`, `unknowns`, and `sources` expose
     bounded views; `verify` checks exact pins, references, firewalls, boundaries,
     and the semantic digest without network access.
+20. `kingdom visibility-attention` — inspect the compact, source-bound
+    [Visibility & Attention Translation](references/visibility-attention-translation.md).
+    Four parallel registers distinguish material-state existence and detection,
+    population-level cultural visibility, the quoted colloquial label “brain
+    rot,” and non-summable Zerone KARMA. Two local mathematical models and three
+    explicitly lossy seams expose useful structure without transferring crystal,
+    prion, epidemic, thermodynamic, diagnostic, person-scoring, or moral claims.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -257,5 +264,15 @@ neither KARMA surface is a score, truth oracle, moral judgment, or adapter for
 the other. Its philosophical questions do not scientifically prove or disprove
 purpose, a creator, or cosmic moral KARMA. No mutable `latest` alias or write
 path is published, and the existing KINGDOM MCP remains unchanged.
+
+The original Fold schema remains byte-preserved at its `/1.json` URL. A
+[separate source-identity profile](https://thekingdom.dev/schemas/fold-feedback-atlas/1.1.json)
+adds exact selected-source URL constraints without changing that record or
+repointing its schema. The Visibility & Attention Translation is independently
+published at [`/atlases/visibility-attention-2026-08-13.json`](https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json),
+with its [closed schema](https://thekingdom.dev/schemas/visibility-attention/0.1.json)
+and [guide](https://thekingdom.dev/VISIBILITY-ATTENTION.md). It is retrospective
+boundary literacy, not a recommender, virality engine, mental-health inference,
+person or content score, intervention planner, KARMA event, or cosmic proof.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

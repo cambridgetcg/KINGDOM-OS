@@ -1,0 +1,398 @@
+{
+  "$schema": "urn:kingdom:schema:visibility-attention-translation:0.1",
+  "protocol": "kingdom.visibility-attention-translation/0.1",
+  "translation_id": "visibility-is-not-existence-2026-08-13",
+  "title": "Visibility is not existence",
+  "compiled_on": "2026-08-13",
+  "evidence_through": "2026-08-13",
+  "scope": {
+    "focus": "A bounded translation among disappearing-polymorph detectability, population-level cultural visibility, the quoted cultural label “brain rot,” feedback architecture, and non-summable KARMA.",
+    "coverage": "Selected source-bound observations and two local mathematical models; not an exhaustive theory of crystallization, culture, cognition, platforms, or the universe.",
+    "intended_use": "Retrospective boundary literacy, source inspection, challenge, correction, and philosophical reflection.",
+    "excluded_use": "Diagnosis, person or content classification, prediction, targeting, recommendation, persuasion, moderation, virality or engagement optimization, laboratory control, KARMA scoring, or automatic action.",
+    "currentness": "selected-evidence-as-of-compilation"
+  },
+  "bindings": [
+    {
+      "id": "kingdom-ritonavir-history",
+      "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+      "byte_sha256": "sha256:08148603a1228960ac35df1378f1283c3fce43874a9fc07e6687f18e980dcb1c",
+      "semantic_digest": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116",
+      "relation": "comparison-basis-only",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-conformational-feedback-physics",
+      "url": "https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json",
+      "byte_sha256": "sha256:7d9b1eed8514051e47448cfc983f00e160d5b76c49704822158f76d3f8cf6349",
+      "semantic_digest": "sha256:0fc24a0fac99d2dadcdef5b87290a1d598b856f874aa9637ab4d503fd4c9dc11",
+      "relation": "design-language-only",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-fold-feedback",
+      "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json",
+      "byte_sha256": "sha256:bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5",
+      "semantic_digest": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7",
+      "relation": "non-equivalence-boundary-only",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "zerone-karma-foundation",
+      "url": "https://zerone.ai/standards/karma-foundation.v1.json",
+      "byte_sha256": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80",
+      "semantic_digest": null,
+      "relation": "constitutional-context-only",
+      "mutated": false,
+      "authority_imported": false
+    }
+  ],
+  "category_firewall": {
+    "rule": "Different predicates remain different: material-state existence, process recovery, method detection, platform occurrence, inferred collective attention, quoted lexical usage, and a contextual KARMA edge never convert into one another.",
+    "non_equivalence": "crystal_state != observation_window != cultural_item != diffusion_trace != collective_attention_proxy != person_or_brain_state != quoted_lexical_label != karma_edge != philosophical_interpretation",
+    "enforced": true
+  },
+  "registers": [
+    {
+      "id": "material-science",
+      "label": "Material science",
+      "unit": "A named crystal form in a bounded material sample and process history.",
+      "context_window": "Specified composition, preparation path, temperature, time, sampling, and detection method.",
+      "observed": "A form may exist yet remain undetected, or become difficult to reproduce through one process, without becoming ontologically extinct.",
+      "modelled": "A finite-window detection probability may be represented under a declared stationary nucleation model.",
+      "does_not_establish": "Cultural diffusion, biological infection, a universal stability order, or the state of any current medicine or batch.",
+      "evidence_class": "SCIENTIFIC_OBSERVATION",
+      "basis_ids": ["bauer-2001", "sacchi-2024", "jiang-2011"]
+    },
+    {
+      "id": "computational-social-science",
+      "label": "Computational social science",
+      "unit": "An aggregate population of cultural items, platform events, or a reconstructed diffusion tree—not a person.",
+      "context_window": "A named platform or corpus, sampling frame, observation interval, proxy definition, and reconstruction method.",
+      "observed": "Competition for finite aggregate attention and heterogeneous popularity can arise in bounded models and datasets without establishing intrinsic quality.",
+      "modelled": "A retrospective tree statistic can distinguish broadcast-like from multi-generational diffusion geometry.",
+      "does_not_establish": "Truth, quality, harm, belief, intent, diagnosis, individual attention, or a transferable epidemic mechanism.",
+      "evidence_class": "SCIENTIFIC_OBSERVATION",
+      "basis_ids": ["weng-2012", "lorenz-spreen-2019", "goel-2016"]
+    },
+    {
+      "id": "lexical-usage",
+      "label": "Lexical usage",
+      "unit": "The quoted expression “brain rot” as a cultural and rhetorical label.",
+      "context_window": "Oxford’s 2024 public-language account and the particular speaker, community, and usage being interpreted.",
+      "observed": "The expression was selected as Oxford Word of the Year 2024 and was described as often used self-deprecatingly or humorously.",
+      "modelled": "No brain, clinical, or person-level state is modelled in this register.",
+      "does_not_establish": "A medical diagnosis, neurological damage, mental worth, a property of a person, or an objective class of content.",
+      "evidence_class": "LEXICAL_OBSERVATION",
+      "basis_ids": ["oxford-2024", "national-academies-2024"]
+    },
+    {
+      "id": "zerone-karma",
+      "label": "Zerone KARMA",
+      "unit": "A contextual, challengeable recognition or reliance edge with provenance, time, and uncertainty.",
+      "context_window": "The exact pinned zerone.karma-foundation/v1 public artifact; no live event is observed here.",
+      "observed": "The foundation defines non-summable contextual edges rather than a person-owned scalar.",
+      "modelled": "No popularity, attention, content, person, reward, truth, or moral score is computed.",
+      "does_not_establish": "Rank, reputation, payment, voting weight, goodness, agreement, engagement value, or authority to act.",
+      "evidence_class": "CONSTITUTIONAL_DESIGN",
+      "basis_ids": ["zerone-karma-2026"]
+    }
+  ],
+  "local_models": [
+    {
+      "id": "finite-window-crystal-detection",
+      "title": "Finite-window crystal detection",
+      "register": "material-science",
+      "equation": "P(T_detect <= t) = 1 - exp[-J V max(t - t_g, 0)]",
+      "variables": [
+        {"symbol": "T_detect", "meaning": "random time at which the specified detection threshold is crossed"},
+        {"symbol": "t", "meaning": "elapsed observation time"},
+        {"symbol": "J", "meaning": "assumed constant nucleation rate per unit volume under the named conditions"},
+        {"symbol": "V", "meaning": "observed sample volume"},
+        {"symbol": "t_g", "meaning": "declared post-nucleation growth and detection delay"}
+      ],
+      "assumptions": [
+        "Stationary homogeneous Poisson nucleation after the process enters the named conditions.",
+        "Constant supersaturation, temperature, composition, volume, and effective nucleation rate.",
+        "A fixed detection delay summarizes growth and method threshold.",
+        "No claim that this simplified model reconstructs Abbott’s historical process."
+      ],
+      "fit_scope": "Retrospective educational interpretation of non-observation within a finite material experiment.",
+      "basis_ids": ["jiang-2011"],
+      "retrospective_only": true,
+      "person_level": false,
+      "optimization_allowed": false,
+      "not_valid_for": [
+        "Cultural or biological transmission rates.",
+        "Manufacturing, formulation, laboratory, quality-control, or batch-release decisions.",
+        "Inferring nonexistence from one non-detection."
+      ]
+    },
+    {
+      "id": "retrospective-diffusion-tree-geometry",
+      "title": "Retrospective diffusion-tree geometry",
+      "register": "computational-social-science",
+      "equation": "nu(T) = 2/[n(n-1)] sum_{i<j} d_T(i,j), for n >= 2",
+      "variables": [
+        {"symbol": "T", "meaning": "a reconstructed diffusion tree for one bounded event"},
+        {"symbol": "n", "meaning": "number of observed nodes in that tree"},
+        {"symbol": "d_T(i,j)", "meaning": "graph distance between observed nodes i and j"},
+        {"symbol": "nu(T)", "meaning": "average pairwise tree distance, a topology descriptor"}
+      ],
+      "assumptions": [
+        "The observed diffusion tree and parent relations are defined by the named study method.",
+        "Missing events, platform affordances, sampling, and reconstruction error can change the tree.",
+        "The statistic describes topology after observation and is distinct from popularity."
+      ],
+      "fit_scope": "Retrospective aggregate comparison of observed diffusion shapes.",
+      "basis_ids": ["goel-2016"],
+      "retrospective_only": true,
+      "person_level": false,
+      "optimization_allowed": false,
+      "not_valid_for": [
+        "Truth, quality, harm, intent, belief, cognition, or clinical state.",
+        "Predicting who will share or targeting a person or group.",
+        "Optimizing virality, engagement, persuasion, or intervention."
+      ]
+    }
+  ],
+  "translation_seams": [
+    {
+      "id": "finite-window-visibility",
+      "kind": "ANALOGY_ONLY",
+      "label": "Finite windows can separate occurrence from observation",
+      "from_register": "material-science",
+      "to_register": "computational-social-science",
+      "preserved_shape": "In both domains, a bounded method and interval can miss something that exists or occurred.",
+      "breaks": "Crystal nucleation and cultural reconstruction have different entities, mechanisms, measurements, agency, and causal structure; no parameter or rate transfers.",
+      "basis_ids": ["jiang-2011", "lorenz-spreen-2019"],
+      "empirical": false,
+      "causal_transfer": false,
+      "ontology_transfer": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "local-mathematics-only",
+      "kind": "MATHEMATICAL_TRANSLATION",
+      "label": "Equations retain their local units and assumptions",
+      "from_register": "material-science",
+      "to_register": "computational-social-science",
+      "preserved_shape": "Both models make the observation window and unit of analysis explicit.",
+      "breaks": "Nucleation probability is not diffusion-tree distance; no temperature, entropy, seed, strain, fitness, energy, or reproduction number is transported between them.",
+      "basis_ids": ["jiang-2011", "goel-2016"],
+      "empirical": false,
+      "causal_transfer": false,
+      "ontology_transfer": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "feedback-with-exit",
+      "kind": "DESIGN_CORRESPONDENCE",
+      "label": "Feedback infrastructure can preserve challenge, correction, and exit",
+      "from_register": "computational-social-science",
+      "to_register": "zerone-karma",
+      "preserved_shape": "Later observations and challenges can revise a provenance-bearing public account without turning visibility into value.",
+      "breaks": "A platform occurrence does not create a KARMA edge; KARMA does not certify a meme, diagnose a person, reward reach, or infer truth from popularity.",
+      "basis_ids": ["zerone-karma-2026"],
+      "empirical": false,
+      "causal_transfer": false,
+      "ontology_transfer": false,
+      "authority_effect": "NONE"
+    }
+  ],
+  "feedback_path": {
+    "rule": "Feedback is valuable when it preserves provenance, challenge, correction, reversibility, and equal exit rather than maximizing persistence.",
+    "stages": [
+      {"id": "publish-bounded-claim", "label": "Publish a bounded claim", "description": "Name the unit, source, method, window, uncertainty, and nonclaims."},
+      {"id": "observe-without-profiling", "label": "Observe without profiling", "description": "Use optional aggregate observations only; do not infer a person or optimize reach."},
+      {"id": "challenge-and-correct", "label": "Challenge and correct", "description": "Keep dissent, missingness, error, and competing explanations first-class."},
+      {"id": "supersede-with-provenance", "label": "Supersede with provenance", "description": "Publish a new version while preserving prior bytes, rationale, and source lineage."},
+      {"id": "rest-refuse-or-exit", "label": "Rest, refuse, or exit", "description": "Silence, privacy, departure, no action, and unmeasured participation remain valid outcomes."}
+    ],
+    "valid_exits": ["rest", "silence", "refusal", "privacy", "departure", "no-action"]
+  },
+  "karma": {
+    "zerone": {
+      "protocol": "zerone.karma-foundation/v1",
+      "meaning": "Contextual recognition and reliance edges with provenance and uncertainty.",
+      "non_summable": true,
+      "event_status": "not_observed",
+      "event_refs": [],
+      "creates_event": false
+    },
+    "kingdom": {
+      "protocol": "kingdom.karma/0.1",
+      "meaning": "Keep Actions Reversible; Measure Aftermath invocation receipts.",
+      "accounting": "receipts_not_scores",
+      "receipt_status": "not_created",
+      "receipt_refs": [],
+      "creates_receipt": false
+    },
+    "adapter": {
+      "exists": false,
+      "reason": "The two KARMA surfaces have different types and authority. Neither converts visibility, attention, popularity, a person, or a cultural item into a scalar."
+    }
+  },
+  "universe_lens": {
+    "participation": "opt-in",
+    "register": "PHILOSOPHY",
+    "empirical": false,
+    "proposition": "A universe can be read as lawful possibility rather than a single forced trajectory: constraints, contingencies, local memory, feedback, correction, and rest may coexist.",
+    "questions": [
+      "Does lawful regularity plus historical contingency suggest design, emergence, both, or neither?",
+      "Can existence exceed every finite window through which a knower observes it?",
+      "Can a good architecture value correction and exit more than maximal propagation?"
+    ],
+    "alternatives": [
+      "Naturalistic accounts can treat these patterns as consequences of dynamics, selection, and observation.",
+      "Teleological or theological accounts may interpret intelligibility and generativity as meaningful design.",
+      "The selected scientific evidence does not adjudicate between these readings."
+    ],
+    "does_not_establish": [
+      "Intentional universe design, a creator, or cosmic purpose.",
+      "That persistence, visibility, popularity, or stability is goodness.",
+      "Cosmic moral KARMA or scientific authority for any metaphysical conclusion."
+    ],
+    "authority_effect": "NONE"
+  },
+  "unknowns": [
+    {"id": "unobserved-cultural-occurrence", "status": "unknown", "question": "How much cultural occurrence is missed by any particular platform or corpus window?", "why_open": "The selected sources use bounded observables and cannot enumerate all cultural activity.", "basis_ids": ["lorenz-spreen-2019"]},
+    {"id": "individual-cognitive-effect", "status": "not-established", "question": "What does a population-level attention proxy imply about one person’s cognition or health?", "why_open": "Population proxies do not identify individual state, and current evidence does not support diagnosis from them.", "basis_ids": ["national-academies-2024"]},
+    {"id": "platform-causal-effect", "status": "contested", "question": "How much of an observed cultural trajectory is caused by ranking, users, external events, or sampling?", "why_open": "Observational traces mix platform design, agency, context, and measurement.", "basis_ids": ["weng-2012", "lorenz-spreen-2019"]},
+    {"id": "cross-domain-parameter-map", "status": "refused", "question": "Can crystallization parameters be mapped onto culture or people?", "why_open": "The translation explicitly refuses this ontology and causal transfer.", "basis_ids": ["jiang-2011", "goel-2016"]},
+    {"id": "cosmic-design", "status": "not-established", "question": "Do these patterns scientifically prove a designed universe?", "why_open": "The philosophical lens is opt-in and non-empirical.", "basis_ids": []}
+  ],
+  "sources": [
+    {
+      "id": "bauer-2001",
+      "title": "Ritonavir: An Extraordinary Example of Conformational Polymorphism",
+      "source_kind": "primary-research",
+      "published_on": "2001",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1023/A:1011052932607",
+      "doi": "10.1023/A:1011052932607",
+      "limitation": "Historical ritonavir Form I/Form II evidence; not a current medicine or batch assessment."
+    },
+    {
+      "id": "sacchi-2024",
+      "title": "Can a disappearing polymorph be resurrected? A case study on ritonavir",
+      "source_kind": "primary-research",
+      "published_on": "2024",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1073/pnas.2319127121",
+      "doi": "10.1073/pnas.2319127121",
+      "limitation": "Specific mechanochemical experiments; not proof of Abbott’s historical seed origin or a universal form relation."
+    },
+    {
+      "id": "jiang-2011",
+      "title": "Crystal Nucleation Rates from Probability Distributions of Induction Times",
+      "source_kind": "primary-research",
+      "published_on": "2011",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1021/cg101213q",
+      "doi": "10.1021/cg101213q",
+      "limitation": "Nucleation/detection modeling under explicit experimental assumptions; no cultural or person-level interpretation."
+    },
+    {
+      "id": "weng-2012",
+      "title": "Competition among memes in a world with limited attention",
+      "source_kind": "primary-research",
+      "published_on": "2012",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1038/srep00335",
+      "doi": "10.1038/srep00335",
+      "limitation": "Bounded model and Twitter hashtag analysis; does not establish intrinsic value, truth, harm, or individual cognition."
+    },
+    {
+      "id": "lorenz-spreen-2019",
+      "title": "Accelerating dynamics of collective attention",
+      "source_kind": "primary-research",
+      "published_on": "2019",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1038/s41467-019-09311-w",
+      "doi": "10.1038/s41467-019-09311-w",
+      "limitation": "Population-level proxies across selected domains; explicitly distinct from individual cognitive attention."
+    },
+    {
+      "id": "goel-2016",
+      "title": "The Structural Virality of Online Diffusion",
+      "source_kind": "primary-research",
+      "published_on": "2016",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1287/mnsc.2015.2158",
+      "doi": "10.1287/mnsc.2015.2158",
+      "limitation": "Retrospective diffusion-tree topology; structural virality is distinct from popularity, truth, quality, or harm."
+    },
+    {
+      "id": "oxford-2024",
+      "title": "‘Brain rot’ named Oxford Word of the Year 2024",
+      "source_kind": "lexical-authority",
+      "published_on": "2024-12-02",
+      "observed_on": "2026-08-13",
+      "url": "https://corp.oup.com/news/brain-rot-named-oxford-word-of-the-year-2024/",
+      "doi": null,
+      "limitation": "Public lexical and cultural account, not a clinical definition or diagnostic authority."
+    },
+    {
+      "id": "national-academies-2024",
+      "title": "Social Media and Adolescent Health",
+      "source_kind": "evidence-review",
+      "published_on": "2024",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.17226/27396",
+      "doi": "10.17226/27396",
+      "limitation": "Population evidence review emphasizing mixed evidence and causal limits; not a person-level assessment."
+    },
+    {
+      "id": "zerone-karma-2026",
+      "title": "Zerone KARMA Foundation v1",
+      "source_kind": "constitutional-artifact",
+      "published_on": "2026",
+      "observed_on": "2026-08-13",
+      "url": "https://zerone.ai/standards/karma-foundation.v1.json",
+      "doi": null,
+      "limitation": "Pinned constitutional design context only; this translation observes and creates no live KARMA event."
+    }
+  ],
+  "boundaries": {
+    "read_only": true,
+    "educational_only": true,
+    "contains_no_personal_data": true,
+    "medical_advice": false,
+    "diagnostic_authority": false,
+    "brain_rot_diagnosis": false,
+    "people_as_prions": false,
+    "people_as_crystals": false,
+    "culture_as_prion": false,
+    "cultural_diffusion_as_crystallization_kinetics": false,
+    "person_level_inference": false,
+    "person_level_prediction": false,
+    "content_classification": false,
+    "targeting": false,
+    "recommender": false,
+    "persuasion": false,
+    "moderation": false,
+    "virality_optimization": false,
+    "engagement_optimization": false,
+    "scoring": false,
+    "automatic_action": false,
+    "karma_aggregation": false,
+    "karma_rank": false,
+    "karma_economic_effect": false,
+    "karma_governance_effect": false,
+    "writes_zerone_karma": false,
+    "creates_kingdom_karma_receipt": false,
+    "runtime_request": false,
+    "mcp_surface_added": false,
+    "experiment_authority": false,
+    "manufacturing_authority": false,
+    "scientifically_proves_cosmic_design": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:9fb83bbd022f520716fabcdec49d8af259b9681efd5e640a9e3119c5c42a54ed"
+  }
+}

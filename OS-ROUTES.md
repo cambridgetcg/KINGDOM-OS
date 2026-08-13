@@ -30,8 +30,12 @@ readings:
 | `/schemas/conformational-feedback-atlas/0.2.json` | staged JSON Schema | Distinct closed contract for the v0.2 successor |
 | `/CONFORMATIONAL-FEEDBACK-PHYSICS.md` | staged Markdown | v0.2 physics, mathematics, philosophy, ecosystem, and non-inference guide |
 | `/atlases/fold-feedback-atlas-2026-08-12.json` | staged JSON | Digest-bound folding/prion evidence, lossy ritonavir comparison, separate feedback and KARMA lanes, and opt-in philosophical questions |
-| `/schemas/fold-feedback-atlas/1.json` | staged JSON Schema | Closed public schema for the Fold & Feedback Atlas v1 |
+| `/schemas/fold-feedback-atlas/1.json` | staged JSON Schema | Byte-preserved original public schema for the Fold & Feedback Atlas v1 |
+| `/schemas/fold-feedback-atlas/1.1.json` | staged JSON Schema | Additive exact-source-identity validation profile; does not replace or repoint `/1.json` |
 | `/FOLD-FEEDBACK-ATLAS.md` | staged Markdown | Plain-language scientific, comparison, KARMA, universe-lens, unknown, and safety guide |
+| `/atlases/visibility-attention-2026-08-13.json` | staged JSON | Digest-bound four-register visibility and attention translation with local models and explicit non-transfer seams |
+| `/schemas/visibility-attention/0.1.json` | staged JSON Schema | Closed public schema for the Visibility & Attention Translation |
+| `/VISIBILITY-ATTENTION.md` | staged Markdown | Source-scoped guide to material detection, cultural visibility, quoted lexical usage, KARMA, feedback, and the optional universe lens |
 
 The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
@@ -150,6 +154,6 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 43-asset upload contract, while `tests/advertised-assets.test.ts`
+locks the 47-asset upload contract, while `tests/advertised-assets.test.ts`
 recognizes the three worker routes so a dynamic URL cannot be mistaken for a
 staged file.

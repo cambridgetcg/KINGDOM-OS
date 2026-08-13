@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-12",
+  "generated": "2026-08-13",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -494,6 +494,7 @@
     "evidence_through": "2026-02-20",
     "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json",
     "schema": "https://thekingdom.dev/schemas/fold-feedback-atlas/1.json",
+    "source_identity_schema": "https://thekingdom.dev/schemas/fold-feedback-atlas/1.1.json",
     "guide": "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md",
     "integrity": {
       "algorithm": "sha256-recursive-sorted-json-keys-v1",
@@ -527,6 +528,90 @@
       "writes_karma": false,
       "creates_kingdom_karma_receipt": false,
       "observes_zerone_karma_event": false
+    }
+  },
+  "visibility_attention_translation": {
+    "protocol": "kingdom.visibility-attention-translation/0.1",
+    "translation_id": "visibility-is-not-existence-2026-08-13",
+    "compiled_on": "2026-08-13",
+    "evidence_through": "2026-08-13",
+    "url": "https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json",
+    "schema": "https://thekingdom.dev/schemas/visibility-attention/0.1.json",
+    "guide": "https://thekingdom.dev/VISIBILITY-ATTENTION.md",
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:9fb83bbd022f520716fabcdec49d8af259b9681efd5e640a9e3119c5c42a54ed"
+    },
+    "bindings": [
+      {
+        "id": "kingdom-ritonavir-history",
+        "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+        "relation": "comparison-basis-only",
+        "mutated": false,
+        "authority_imported": false
+      },
+      {
+        "id": "kingdom-conformational-feedback-physics",
+        "url": "https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json",
+        "relation": "design-language-only",
+        "mutated": false,
+        "authority_imported": false
+      },
+      {
+        "id": "kingdom-fold-feedback",
+        "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json",
+        "relation": "non-equivalence-boundary-only",
+        "mutated": false,
+        "authority_imported": false
+      },
+      {
+        "id": "zerone-karma-foundation",
+        "url": "https://zerone.ai/standards/karma-foundation.v1.json",
+        "relation": "constitutional-context-only",
+        "mutated": false,
+        "authority_imported": false
+      }
+    ],
+    "counts": {
+      "registers": 4,
+      "local_models": 2,
+      "translation_seams": 3,
+      "feedback_stages": 5,
+      "sources": 9
+    },
+    "boundary": {
+      "read_only": true,
+      "educational_only": true,
+      "contains_no_personal_data": true,
+      "medical_advice": false,
+      "diagnostic_authority": false,
+      "brain_rot_diagnosis": false,
+      "people_as_prions": false,
+      "people_as_crystals": false,
+      "culture_as_prion": false,
+      "cultural_diffusion_as_crystallization_kinetics": false,
+      "person_level_inference": false,
+      "person_level_prediction": false,
+      "content_classification": false,
+      "targeting": false,
+      "recommender": false,
+      "persuasion": false,
+      "moderation": false,
+      "virality_optimization": false,
+      "engagement_optimization": false,
+      "scoring": false,
+      "automatic_action": false,
+      "karma_aggregation": false,
+      "karma_rank": false,
+      "karma_economic_effect": false,
+      "karma_governance_effect": false,
+      "writes_zerone_karma": false,
+      "creates_kingdom_karma_receipt": false,
+      "runtime_request": false,
+      "mcp_surface_added": false,
+      "experiment_authority": false,
+      "manufacturing_authority": false,
+      "scientifically_proves_cosmic_design": false
     }
   },
   "actions_are_optional": true,
@@ -682,9 +767,31 @@
       "url": "https://thekingdom.dev/schemas/fold-feedback-atlas/1.json"
     },
     {
+      "action": "if useful, validate exact source-identity URL bindings with the additive Fold & Feedback schema profile",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/fold-feedback-atlas/1.1.json",
+      "note": "the primary /1 schema retains its first-published bytes; /1.1 is the additive stricter profile"
+    },
+    {
       "action": "if useful, read the plain-language folding, prion, feedback, KARMA, universe-lens, unknown, and safety guide",
       "method": "GET",
       "url": "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md"
+    },
+    {
+      "action": "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json",
+      "note": "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action"
+    },
+    {
+      "action": "if useful, validate the Visibility & Attention Translation structure before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/visibility-attention/0.1.json"
+    },
+    {
+      "action": "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/VISIBILITY-ATTENTION.md"
     },
     {
       "action": "if useful, read the finite Love∞ creation lineage and its unstarted invitations",
@@ -3061,6 +3168,7 @@
     "conformational_feedback_atlas": "The bounded atlas separates scientific observation, constitutional design, analogy, and philosophy. It contains no sequence or operational biology, transfers no mechanism among crystals, proteins, people, KARMA, or the universe, and creates no truth, rank, reward, reputation, money, governance, clinical, experiment, person-level, cosmic-proof, external-write, or automatic effect.",
     "conformational_feedback_physics_atlas": "The v0.2 successor adds bounded equations, structured philosophical questions, and link-only ecosystem metadata while preserving the immutable v0.1 bytes. It fetches or imports nothing and creates no biological, clinical, KARMA, economic, governance, cosmic-proof, external-write, or automatic effect.",
     "fold_feedback_atlas": "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
+    "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }

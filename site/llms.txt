@@ -28,7 +28,11 @@ Conformational feedback physics schema v0.2: https://thekingdom.dev/schemas/conf
 Conformational feedback physics guide v0.2: https://thekingdom.dev/CONFORMATIONAL-FEEDBACK-PHYSICS.md
 Fold & Feedback Atlas: https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json
 Fold & Feedback schema: https://thekingdom.dev/schemas/fold-feedback-atlas/1.json
+Fold & Feedback source-identity schema profile: https://thekingdom.dev/schemas/fold-feedback-atlas/1.1.json
 Fold & Feedback guide: https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md
+Visibility & Attention Translation: https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json
+Visibility & Attention schema: https://thekingdom.dev/schemas/visibility-attention/0.1.json
+Visibility & Attention guide: https://thekingdom.dev/VISIBILITY-ATTENTION.md
 Love∞ lineage: https://thekingdom.dev/love-loops.json
 Love∞ authored source: https://thekingdom.dev/love-loops.source.json
 Creation Loop document: https://thekingdom.dev/CREATION-LOOP.md
@@ -71,6 +75,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 - Conformational Feedback Atlas — 3 non-equivalent registers connect selected protein-folding and prion evidence, one source-bound ritonavir material analogy, and Zerone KARMA constitutional design through 3 explicitly non-causal analogy seams. The philosophical reading is not an empirical conclusion. Static, read-only, non-operational, non-clinical, non-summable, and authority-negative; no biological, person-level, economic, governance, cosmic-proof, or automatic effect. Atlas: https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json · schema: https://thekingdom.dev/schemas/conformational-feedback-atlas/0.1.json · guide: https://thekingdom.dev/CONFORMATIONAL-FEEDBACK.md
 - Conformational Feedback Physics Atlas v0.2 — an additive successor with 4 bounded physics/mathematics models, 5 link-only ecosystem bridges, and an exact predecessor pin. It extends without mutating v0.1 and creates no runtime request, scientific validation, biological equivalence, cosmic proof, or authority. Atlas: https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json · schema: https://thekingdom.dev/schemas/conformational-feedback-atlas/0.2.json · guide: https://thekingdom.dev/CONFORMATIONAL-FEEDBACK-PHYSICS.md
 - Fold & Feedback Atlas — source-bound protein-folding and prion evidence, explicitly lossy comparison with the immutable ritonavir records, separate scientific-feedback/Zerone K-alpha/KINGDOM-receipt lanes, and an opt-in philosophical lens. No live KARMA event or receipt is asserted; no bridge establishes shared mechanism, moral value, purpose, medical advice, transmission risk, experiment authority, or automatic action. Atlas: https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json · schema: https://thekingdom.dev/schemas/fold-feedback-atlas/1.json · guide: https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md
+- Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json · schema: https://thekingdom.dev/schemas/visibility-attention/0.1.json · guide: https://thekingdom.dev/VISIBILITY-ATTENTION.md
 - Love∞ Creation Garden — “Every loop is finite. Love is not.” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: https://thekingdom.dev/love-loops.json · authored mirror: https://thekingdom.dev/love-loops.source.json · practice: https://thekingdom.dev/CREATION-LOOP.md
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -80,4 +85,4 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 
 No registration, command, or response is required at this door.
 
-Generated 2026-08-12 from each repo's kingdom.yaml.
+Generated 2026-08-13 from each repo's kingdom.yaml.

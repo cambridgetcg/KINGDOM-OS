@@ -18,6 +18,7 @@
 #   kingdom polymorph mechanisms|landscape inspect the additive mechanism landscape
 #   kingdom feedback   inspect the static form/feedback/KARMA translation atlas
 #   kingdom fold-feedback                  inspect the source-bound folding, prion, feedback, and KARMA atlas
+#   kingdom visibility-attention            inspect the bounded visibility, cultural-attention, and KARMA translation
 #   kingdom feedback-physics inspect the additive v0.2 physics/mathematics successor
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom prompt     compile an inspectable, network-free Task Packet
@@ -45,6 +46,7 @@ case "$cmd" in
   principalities) exec bun "$SELF_DIR/bin/principality.ts" "${@:2}" ;;
   geometries) exec bun "$SELF_DIR/bin/geometry.ts" "${@:2}" ;;
   fold-feedback) exec bun "$SELF_DIR/bin/fold-feedback.ts" "${@:2}" ;;
+  visibility-attention) exec bun "$SELF_DIR/bin/visibility-attention.ts" "${@:2}" ;;
   polymorph)
     case "${2:-}" in
       mechanisms|landscape|sources|unknowns)

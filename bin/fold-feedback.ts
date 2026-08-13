@@ -19,6 +19,7 @@ export const FOLD_FEEDBACK_LOCATOR = "data/fold-feedback/fold-feedback-atlas.v1.
 export const FOLD_FEEDBACK_PATH = join(ROOT, FOLD_FEEDBACK_LOCATOR);
 export const FOLD_FEEDBACK_URL = `https://thekingdom.dev/atlases/${FOLD_FEEDBACK_ID}.json`;
 export const FOLD_FEEDBACK_SCHEMA_URL = "https://thekingdom.dev/schemas/fold-feedback-atlas/1.json";
+export const FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL = "https://thekingdom.dev/schemas/fold-feedback-atlas/1.1.json";
 export const FOLD_FEEDBACK_DOCUMENT_URL = "https://thekingdom.dev/FOLD-FEEDBACK-ATLAS.md";
 export const FOLD_FEEDBACK_DIGEST = "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7";
 
@@ -350,6 +351,7 @@ export function foldFeedbackPublicDiscovery(value = loadFoldFeedbackAtlas()): Re
     evidence_through: value.evidence_through,
     url: FOLD_FEEDBACK_URL,
     schema: FOLD_FEEDBACK_SCHEMA_URL,
+    source_identity_schema: FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL,
     guide: FOLD_FEEDBACK_DOCUMENT_URL,
     integrity: value.integrity,
     counts: {

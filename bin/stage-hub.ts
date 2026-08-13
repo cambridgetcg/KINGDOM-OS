@@ -60,7 +60,15 @@ export const HUB_ASSETS = [
   // atlas route is the identity; no latest/current alias may obscure it.
   { source: "data/fold-feedback/fold-feedback-atlas.v1.json", destination: "atlases/fold-feedback-atlas-2026-08-12.json" },
   { source: "schemas/fold-feedback-atlas-v1.schema.json", destination: "schemas/fold-feedback-atlas/1.json" },
+  // Preserve the original /1 schema bytes. The stronger source-identity
+  // constraints are an additive profile at a new immutable route.
+  { source: "schemas/fold-feedback-atlas-v1.1.schema.json", destination: "schemas/fold-feedback-atlas/1.1.json" },
   { source: "references/fold-feedback-atlas.md", destination: "FOLD-FEEDBACK-ATLAS.md" },
+  // Visibility is not existence: a compact, read-only translation across
+  // material detection, collective attention, lexical usage, and KARMA.
+  { source: "data/attention/visibility-attention-translation.v0.1.json", destination: "atlases/visibility-attention-2026-08-13.json" },
+  { source: "schemas/visibility-attention-translation-v0.1.schema.json", destination: "schemas/visibility-attention/0.1.json" },
+  { source: "references/visibility-attention-translation.md", destination: "VISIBILITY-ATTENTION.md" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
   { source: "site/ollama.json", destination: "ollama.json" },

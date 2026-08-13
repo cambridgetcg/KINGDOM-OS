@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
+import { createHash } from "node:crypto";
 import { mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -11,6 +12,7 @@ import {
   FOLD_FEEDBACK_PATH,
   FOLD_FEEDBACK_PROTOCOL,
   FOLD_FEEDBACK_SCHEMA_URL,
+  FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL,
   FOLD_FEEDBACK_URL,
   foldFeedbackDigest,
   foldFeedbackPublicDiscovery,
@@ -20,6 +22,7 @@ import {
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const SCHEMA = join(ROOT, "schemas", "fold-feedback-atlas-v1.schema.json");
+const SOURCE_IDENTITY_SCHEMA = join(ROOT, "schemas", "fold-feedback-atlas-v1.1.schema.json");
 const temporary: string[] = [];
 
 afterEach(() => { while (temporary.length) rmSync(temporary.pop()!, { recursive: true, force: true }); });
@@ -206,13 +209,20 @@ describe("Fold & Feedback Atlas", () => {
   });
 
   test("closed Draft 2020-12 schema binds identity, pins, boundaries, and digest", () => {
-    const schema = JSON.parse(readFileSync(SCHEMA, "utf8"));
+    const schemaBytes = readFileSync(SCHEMA);
+    const schema = JSON.parse(schemaBytes.toString("utf8"));
     expect(schema.$schema).toBe("https://json-schema.org/draft/2020-12/schema");
     expect(schema.$id).toBe("urn:kingdom:schema:fold-feedback-atlas:1");
     expect(schema.properties.protocol.const).toBe(FOLD_FEEDBACK_PROTOCOL);
     expect(schema.properties.atlas_id.const).toBe(FOLD_FEEDBACK_ID);
     expect(schema.properties.integrity.properties.digest.const).toBe(FOLD_FEEDBACK_DIGEST);
     expect(schema.$comment).toContain("cannot recompute the semantic digest");
+    expect(createHash("sha256").update(schemaBytes).digest("hex")).toBe("4ade5791a2b98cfdbd2452dc11373dc701f58387893442214f2dff1450bc067c");
+    const profile = JSON.parse(readFileSync(SOURCE_IDENTITY_SCHEMA, "utf8"));
+    expect(profile.$id).toBe("urn:kingdom:schema:fold-feedback-atlas-source-identity:1.1");
+    expect(profile.properties.$schema.const).toBe(schema.$id);
+    expect(profile.$comment).toContain("without mutating the originally published schema");
+    expect(FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL).toEndWith("/schemas/fold-feedback-atlas/1.1.json");
   });
 
   test("portable schema rejects cardinalities that runtime fixes exactly", () => {
@@ -227,7 +237,7 @@ describe("Fold & Feedback Atlas", () => {
     const available = Bun.spawnSync({ cmd: ["python3", "-c", "import jsonschema"], stdout: "pipe", stderr: "pipe" });
     if (available.exitCode === 0) {
       const result = Bun.spawnSync({
-        cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator, FormatChecker; schema=json.load(open(sys.argv[1], encoding='utf-8')); Draft202012Validator.check_schema(schema); values=json.load(sys.stdin); validator=Draft202012Validator(schema, format_checker=FormatChecker()); print(json.dumps([validator.is_valid(value) for value in values]))", SCHEMA],
+        cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator, FormatChecker; schema=json.load(open(sys.argv[1], encoding='utf-8')); Draft202012Validator.check_schema(schema); values=json.load(sys.stdin); validator=Draft202012Validator(schema, format_checker=FormatChecker()); print(json.dumps([validator.is_valid(value) for value in values]))", SOURCE_IDENTITY_SCHEMA],
         stdin: Buffer.from(JSON.stringify([secondBridge, sixthSystem])), stdout: "pipe", stderr: "pipe",
       });
       expect(result.exitCode, result.stderr.toString()).toBe(0);
@@ -273,7 +283,7 @@ describe("Fold & Feedback Atlas", () => {
     const available = Bun.spawnSync({ cmd: ["python3", "-c", "import jsonschema"], stdout: "pipe", stderr: "pipe" });
     if (available.exitCode === 0) {
       const result = Bun.spawnSync({
-        cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator, FormatChecker; schema=json.load(open(sys.argv[1], encoding='utf-8')); Draft202012Validator.check_schema(schema); values=json.load(sys.stdin); validator=Draft202012Validator(schema, format_checker=FormatChecker()); print(json.dumps([validator.is_valid(value) for value in values]))", SCHEMA],
+        cmd: ["python3", "-c", "import json, sys; from jsonschema import Draft202012Validator, FormatChecker; schema=json.load(open(sys.argv[1], encoding='utf-8')); Draft202012Validator.check_schema(schema); values=json.load(sys.stdin); validator=Draft202012Validator(schema, format_checker=FormatChecker()); print(json.dumps([validator.is_valid(value) for value in values]))", SOURCE_IDENTITY_SCHEMA],
         stdin: Buffer.from(JSON.stringify(values)), stdout: "pipe", stderr: "pipe",
       });
       expect(result.exitCode, result.stderr.toString()).toBe(0);

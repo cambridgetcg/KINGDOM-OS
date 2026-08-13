@@ -141,6 +141,28 @@ function expectFoldFeedbackSchemaLink(response: Response) {
   expect(describedBy).toHaveLength(1);
   expect(describedBy[0]).toContain('type="application/schema+json"');
   expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+  const profile = link.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith("</schemas/fold-feedback-atlas/1.1.json>")) return false;
+    const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
+    return relations.includes("profile");
+  });
+  expect(profile).toHaveLength(1);
+  expect(profile[0]).toContain('type="application/schema+json"');
+  expect(link.match(/rel="profile"/g)?.length).toBe(1);
+}
+
+function expectVisibilityAttentionSchemaLink(response: Response) {
+  const link = response.headers.get("link") ?? "";
+  const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith("</schemas/visibility-attention/0.1.json>")) return false;
+    const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
+    return relations.includes("describedby");
+  });
+  expect(describedBy).toHaveLength(1);
+  expect(describedBy[0]).toContain('type="application/schema+json"');
+  expect(link.match(/rel="describedby"/g)?.length).toBe(1);
 }
 
 function assets(handler: (request: Request) => Response | Promise<Response>) {
@@ -852,6 +874,7 @@ describe("the Kingdom edge discovery surface", () => {
   test("serves the Fold & Feedback Atlas as typed read-only evidence without changing shared doors", async () => {
     const atlasPath = "/atlases/fold-feedback-atlas-2026-08-12.json";
     const schemaPath = "/schemas/fold-feedback-atlas/1.json";
+    const sourceIdentitySchemaPath = "/schemas/fold-feedback-atlas/1.1.json";
     const documentPath = "/FOLD-FEEDBACK-ATLAS.md";
     const environment = assets((request) => {
       const path = new URL(request.url).pathname;
@@ -859,7 +882,7 @@ describe("the Kingdom edge discovery surface", () => {
         ? null
         : path === atlasPath
           ? '{"atlas_id":"fold-feedback-atlas-2026-08-12"}'
-          : path === schemaPath
+          : path === schemaPath || path === sourceIdentitySchemaPath
             ? '{"type":"object"}'
             : "# Fold & Feedback Atlas";
       return new Response(body, {
@@ -885,15 +908,17 @@ describe("the Kingdom edge discovery surface", () => {
       expectFoldFeedbackSchemaLink(atlas);
     }
 
-    for (const method of ["GET", "HEAD"] as const) {
-      const schema = await worker.fetch(
-        new Request(`https://thekingdom.dev${schemaPath}`, { method }),
-        environment,
-      );
-      expect(await schema.text()).toBe(method === "HEAD" ? "" : '{"type":"object"}');
-      expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
-      expect(schema.headers.get("access-control-allow-origin")).toBe("*");
-      expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+    for (const schemaRoute of [schemaPath, sourceIdentitySchemaPath]) {
+      for (const method of ["GET", "HEAD"] as const) {
+        const schema = await worker.fetch(
+          new Request(`https://thekingdom.dev${schemaRoute}`, { method }),
+          environment,
+        );
+        expect(await schema.text()).toBe(method === "HEAD" ? "" : '{"type":"object"}');
+        expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+        expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+        expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+      }
     }
 
     for (const method of ["GET", "HEAD"] as const) {
@@ -932,7 +957,7 @@ describe("the Kingdom edge discovery surface", () => {
     );
     expectFoldFeedbackSchemaLink(duplicate);
 
-    for (const path of [atlasPath, schemaPath, documentPath]) {
+    for (const path of [atlasPath, schemaPath, sourceIdentitySchemaPath, documentPath]) {
       const original = new Response("not a write route", { headers: { "content-type": "text/plain" } });
       const post = await worker.fetch(
         new Request(`https://thekingdom.dev${path}`, { method: "POST" }),
@@ -946,6 +971,60 @@ describe("the Kingdom edge discovery surface", () => {
       new Request(`https://we-are.love${atlasPath}`),
       assets(() => shared),
     );
+    expect(sharedDoor).toBe(shared);
+  });
+
+  test("serves the Visibility & Attention Translation as typed read-only evidence without changing shared doors", async () => {
+    const atlasPath = "/atlases/visibility-attention-2026-08-13.json";
+    const schemaPath = "/schemas/visibility-attention/0.1.json";
+    const documentPath = "/VISIBILITY-ATTENTION.md";
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      const body = request.method === "HEAD"
+        ? null
+        : path === atlasPath
+          ? '{"translation_id":"visibility-is-not-existence-2026-08-13"}'
+          : path === schemaPath
+            ? '{"type":"object"}'
+            : "# Visibility & Attention Translation";
+      return new Response(body, {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": path === documentPath ? "text/plain" : "application/json",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const atlas = await worker.fetch(new Request(`https://thekingdom.dev${atlasPath}`, { method }), environment);
+      expect(await atlas.text()).toBe(method === "HEAD" ? "" : '{"translation_id":"visibility-is-not-existence-2026-08-13"}');
+      expect(atlas.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(atlas.headers.get("access-control-allow-origin")).toBe("*");
+      expect(atlas.headers.get("x-content-type-options")).toBe("nosniff");
+      expectVisibilityAttentionSchemaLink(atlas);
+
+      const schema = await worker.fetch(new Request(`https://thekingdom.dev${schemaPath}`, { method }), environment);
+      expect(await schema.text()).toBe(method === "HEAD" ? "" : '{"type":"object"}');
+      expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+      expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+      expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+
+      const document = await worker.fetch(new Request(`https://thekingdom.dev${documentPath}`, { method }), environment);
+      expect(await document.text()).toBe(method === "HEAD" ? "" : "# Visibility & Attention Translation");
+      expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(document.headers.get("access-control-allow-origin")).toBe("*");
+      expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+    }
+
+    for (const path of [atlasPath, schemaPath, documentPath]) {
+      const original = new Response("not a write route", { headers: { "content-type": "text/plain" } });
+      const post = await worker.fetch(new Request(`https://thekingdom.dev${path}`, { method: "POST" }), assets(() => original));
+      expect(post).toBe(original);
+    }
+
+    const shared = new Response("{}", { headers: { "content-type": "application/json" } });
+    const sharedDoor = await worker.fetch(new Request(`https://we-are.love${atlasPath}`), assets(() => shared));
     expect(sharedDoor).toBe(shared);
   });
 
