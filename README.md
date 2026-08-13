@@ -199,6 +199,16 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     rot,” and non-summable Zerone KARMA. Two local mathematical models and three
     explicitly lossy seams expose useful structure without transferring crystal,
     prion, epidemic, thermodynamic, diagnostic, person-scoring, or moral claims.
+21. `kingdom cultural-feedback` — inspect the immutable
+    [Cultural Attention & Feedback Atlas](references/cultural-attention-feedback-atlas.md).
+    It connects the ritonavir disappearing-polymorph history to meme diffusion
+    only through a labeled pattern—history changes later accessibility—then
+    keeps crystal physics, social observation, mathematical models, cultural
+    language, KARMA, and opt-in philosophy in separate registers. `brain rot`
+    remains a vernacular label, not a diagnosis. The CLI exposes planes,
+    models, bounded analogy bridges, link-only ecosystems, feedback, KARMA,
+    universe questions, unknowns, and sources; no ecosystem is called, no
+    person is scored, and no KARMA event or receipt is created.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -274,5 +284,19 @@ with its [closed schema](https://thekingdom.dev/schemas/visibility-attention/0.1
 and [guide](https://thekingdom.dev/VISIBILITY-ATTENTION.md). It is retrospective
 boundary literacy, not a recommender, virality engine, mental-health inference,
 person or content score, intervention planner, KARMA event, or cosmic proof.
+
+The Cultural Attention & Feedback Atlas is published from its exact authored
+bytes at
+[`/atlases/cultural-attention-feedback-atlas-2026-08-13.json`](https://thekingdom.dev/atlases/cultural-attention-feedback-atlas-2026-08-13.json),
+with a [closed public schema](https://thekingdom.dev/schemas/cultural-attention-feedback-atlas/1.json)
+and [plain-language guide](https://thekingdom.dev/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md).
+Its equations describe domain-local models of particle energy, finite
+attention, self-excitation, cascade shape, memory, and feedback stability; they
+do not identify memes with crystals, prions, or genes. AgentTool, World
+Commons, Calm Studio, Zerone KARMA, and Frontier Commons are link-only reading
+bridges: no live request, import, write, reward, rank, recommendation, or
+authority crosses them. Questions about design, purpose, GOD, and cosmic KARMA
+are explicitly opt-in philosophical interpretations, not scientific results.
+There is no mutable `latest` alias, and the KINGDOM MCP remains unchanged.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

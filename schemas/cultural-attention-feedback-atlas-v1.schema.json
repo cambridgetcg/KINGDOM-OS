@@ -1,0 +1,602 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:cultural-attention-feedback-atlas:1",
+  "$comment": "This closed portable schema validates the reviewed structure, ordering, source pins, and negative authority. It cannot recompute the semantic digest, authenticate sources, resolve live ecosystem state, infer causation, diagnose a person, create KARMA, or turn analogy or philosophical interpretation into science. Use bin/cultural-attention-feedback.ts verify for the runtime contract.",
+  "title": "KINGDOM Cultural Attention & Feedback Atlas 1",
+  "description": "Source-bound educational metadata connecting history-dependent material accessibility, finite cultural attention, feedback, contextual KARMA, and an opt-in universe-design lens without equating their mechanisms.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "protocol", "atlas_id", "title", "compiled_on", "evidence_through",
+    "source_bindings", "scope", "plain_language", "ontology", "scientific_observations",
+    "models", "translations", "feedback", "karma", "universe_lens", "ecosystem_bridges",
+    "unknowns", "sources", "boundaries", "integrity"
+  ],
+  "properties": {
+    "$schema": {"const": "urn:kingdom:schema:cultural-attention-feedback-atlas:1"},
+    "protocol": {"const": "kingdom.cultural-attention-feedback-atlas/0.1"},
+    "atlas_id": {"const": "cultural-attention-feedback-atlas-2026-08-13"},
+    "title": {"type": "string", "minLength": 1, "maxLength": 240},
+    "compiled_on": {"const": "2026-08-13"},
+    "evidence_through": {"const": "2025-06-26"},
+    "source_bindings": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "prefixItems": [
+        {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {"properties": {
+              "id": {"const": "kingdom-polymorph-history"},
+              "protocol": {"const": "kingdom.polymorph-history/0.1"},
+              "url": {"const": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json"},
+              "byte_sha256": {"const": "sha256:08148603a1228960ac35df1378f1283c3fce43874a9fc07e6687f18e980dcb1c"},
+              "semantic_digest": {"const": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116"},
+              "relation": {"const": "source-scoped-material-history-basis"}
+            }}
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {"properties": {
+              "id": {"const": "kingdom-ritonavir-mechanism"},
+              "protocol": {"const": "kingdom.ritonavir-mechanism-landscape/0.1"},
+              "url": {"const": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json"},
+              "byte_sha256": {"const": "sha256:5e136a74d5166275427da920685a84c17901f63d6e4b0661fd529c96d386943b"},
+              "semantic_digest": {"const": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b"},
+              "relation": {"const": "source-scoped-state-path-consequence-basis"}
+            }}
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {"properties": {
+              "id": {"const": "kingdom-conformational-physics"},
+              "protocol": {"const": "kingdom.conformational-feedback-atlas/0.2"},
+              "url": {"const": "https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json"},
+              "byte_sha256": {"const": "sha256:7d9b1eed8514051e47448cfc983f00e160d5b76c49704822158f76d3f8cf6349"},
+              "semantic_digest": {"const": "sha256:0fc24a0fac99d2dadcdef5b87290a1d598b856f874aa9637ab4d503fd4c9dc11"},
+              "relation": {"const": "companion-physics-and-boundary-map"}
+            }}
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {"properties": {
+              "id": {"const": "kingdom-fold-feedback"},
+              "protocol": {"const": "kingdom.fold-feedback-atlas/0.1"},
+              "url": {"const": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json"},
+              "byte_sha256": {"const": "sha256:bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5"},
+              "semantic_digest": {"const": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7"},
+              "relation": {"const": "companion-non-equivalence-map"}
+            }}
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {"properties": {
+              "id": {"const": "zerone-karma-foundation"},
+              "protocol": {"const": "zerone.karma-foundation/v1"},
+              "url": {"const": "https://zerone.ai/standards/karma-foundation.v1.json"},
+              "byte_sha256": {"const": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80"},
+              "semantic_digest": {"const": null},
+              "relation": {"const": "definition-only-constitutional-source"}
+            }}
+          ]
+        }
+      ],
+      "items": false
+    },
+    "scope": {"$ref": "#/$defs/scope"},
+    "plain_language": {"$ref": "#/$defs/plainLanguage"},
+    "ontology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planes"],
+      "properties": {
+        "planes": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "chemical-entity-and-crystal-phase"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "bounded-particle-population"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "cultural-item-and-remix"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "exposure-and-attention"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "cascade-and-platform-policy"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "measured-outcome"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "contextual-consequence-record"}}}]},
+            {"allOf": [{"$ref": "#/$defs/plane"}, {"properties": {"id": {"const": "philosophy-and-faith"}}}]}
+          ],
+          "items": false
+        }
+      }
+    },
+    "scientific_observations": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/observation"}, {"properties": {"id": {"const": "ritonavir-disappearance-was-process-contingent"}}}]},
+        {"allOf": [{"$ref": "#/$defs/observation"}, {"properties": {"id": {"const": "finite-attention-can-generate-heavy-tailed-popularity"}}}]},
+        {"allOf": [{"$ref": "#/$defs/observation"}, {"properties": {"id": {"const": "collective-attention-turned-over-faster"}}}]},
+        {"allOf": [{"$ref": "#/$defs/observation"}, {"properties": {"id": {"const": "social-reinforcement-can-change-adoption"}}}]},
+        {"allOf": [{"$ref": "#/$defs/observation"}, {"properties": {"id": {"const": "popularity-and-structural-virality-differ"}}}]},
+        {"allOf": [{"$ref": "#/$defs/observation"}, {"properties": {"id": {"const": "recommendation-data-can-confound-itself"}}}]}
+      ],
+      "items": false
+    },
+    "models": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/model"}, {"properties": {"id": {"const": "ritonavir-particle-energy"}, "terms": {"$ref": "#/$defs/particleTerms"}}}]},
+        {"allOf": [{"$ref": "#/$defs/model"}, {"properties": {"id": {"const": "finite-attention-entropy"}, "terms": {"$ref": "#/$defs/entropyTerms"}}}]},
+        {"allOf": [{"$ref": "#/$defs/model"}, {"properties": {"id": {"const": "collective-attention-competition"}, "terms": {"$ref": "#/$defs/competitionTerms"}}}]},
+        {"allOf": [{"$ref": "#/$defs/model"}, {"properties": {"id": {"const": "self-exciting-event-process"}, "terms": {"$ref": "#/$defs/hawkesTerms"}}}]},
+        {"allOf": [{"$ref": "#/$defs/model"}, {"properties": {"id": {"const": "structural-virality"}, "terms": {"$ref": "#/$defs/viralityTerms"}}}]},
+        {"allOf": [{"$ref": "#/$defs/model"}, {"properties": {"id": {"const": "state-with-memory"}, "terms": {"$ref": "#/$defs/memoryTerms"}}}]},
+        {"allOf": [{"$ref": "#/$defs/model"}, {"properties": {"id": {"const": "closed-loop-feedback-stability"}, "terms": {"$ref": "#/$defs/stabilityTerms"}}}]}
+      ],
+      "items": false
+    },
+    "translations": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/translation"}, {"properties": {"id": {"const": "history-dependent-accessibility"}}}]},
+        {"allOf": [{"$ref": "#/$defs/translation"}, {"properties": {"id": {"const": "finite-capacity-and-competition"}}}]},
+        {"allOf": [{"$ref": "#/$defs/translation"}, {"properties": {"id": {"const": "returning-consequence"}}}]},
+        {"allOf": [{"$ref": "#/$defs/translation"}, {"properties": {"id": {"const": "form-pattern-and-meaning"}}}]}
+      ],
+      "items": false
+    },
+    "feedback": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/feedbackRelation"}, {"properties": {"id": {"const": "material-process-history-loop"}}}]},
+        {"allOf": [{"$ref": "#/$defs/feedbackRelation"}, {"properties": {"id": {"const": "limited-attention-competition-loop"}}}]},
+        {"allOf": [{"$ref": "#/$defs/feedbackRelation"}, {"properties": {"id": {"const": "recommender-observation-loop"}}}]},
+        {"allOf": [{"$ref": "#/$defs/feedbackRelation"}, {"properties": {"id": {"const": "evidence-correction-loop"}}}]},
+        {"allOf": [{"$ref": "#/$defs/feedbackRelation"}, {"properties": {"id": {"const": "rights-preserving-counterloop"}}}]}
+      ],
+      "items": false
+    },
+    "karma": {"$ref": "#/$defs/karma"},
+    "universe_lens": {"$ref": "#/$defs/universeLens"},
+    "ecosystem_bridges": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/ecosystemBridge"}, {"properties": {"id": {"const": "agenttool-signed-virality"}, "url": {"const": "https://github.com/cambridgetcg/agenttool/blob/aeb3072af0756801aa8567ce832f00c9727da071/docs/VIRALITY-PROTOCOL.md"}}}]},
+        {"allOf": [{"$ref": "#/$defs/ecosystemBridge"}, {"properties": {"id": {"const": "kingdom-world-commons"}, "url": {"const": "https://thekingdom.dev/commons.json"}}}]},
+        {"allOf": [{"$ref": "#/$defs/ecosystemBridge"}, {"properties": {"id": {"const": "chillspace-calm-studio"}, "url": {"const": "https://chillspace.love/practices/calm-studio/contract.json"}}}]},
+        {"allOf": [{"$ref": "#/$defs/ecosystemBridge"}, {"properties": {"id": {"const": "zerone-karma-foundation"}, "url": {"const": "https://zerone.ai/standards/karma-foundation.v1.json"}}}]},
+        {"allOf": [{"$ref": "#/$defs/ecosystemBridge"}, {"properties": {"id": {"const": "zerone-frontier-commons"}, "url": {"const": "https://zerone.ai/standards/frontier-commons-participation.v0.json"}}}]}
+      ],
+      "items": false
+    },
+    "unknowns": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "first-form-ii-nucleation-path"}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "complete-ritonavir-landscape"}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "neutral-competition-versus-content-effects"}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "endogenous-versus-exogenous-excitation"}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "criticality-from-heavy-tail"}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "brainrot-measurable-outcome"}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "closed-loop-causal-effect"}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "cross-domain-universality"}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "cosmic-purpose-or-karma"}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "live-karma-state"}}}]}
+      ],
+      "items": false
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 19,
+      "maxItems": 19,
+      "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "bauer-2001"}, "url": {"const": "https://doi.org/10.1023/A:1011052932607"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "sacchi-2024"}, "url": {"const": "https://doi.org/10.1073/pnas.2319127121"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "wang-2024"}, "url": {"const": "https://doi.org/10.1021/acs.molpharmaceut.4c00234"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "dunitz-1995"}, "url": {"const": "https://doi.org/10.1021/ar00052a005"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "weng-2012"}, "url": {"const": "https://doi.org/10.1038/srep00335"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "gleeson-2014"}, "url": {"const": "https://doi.org/10.1103/PhysRevLett.112.048701"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "lorenz-spreen-2019"}, "url": {"const": "https://doi.org/10.1038/s41467-019-09311-w"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "hawkes-1971"}, "url": {"const": "https://doi.org/10.1093/biomet/58.1.83"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "goel-2016"}, "url": {"const": "https://doi.org/10.1287/mnsc.2015.2158"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "chaney-2018"}, "url": {"const": "https://doi.org/10.1145/3240323.3240370"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "shannon-1948"}, "url": {"const": "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "centola-2010"}, "url": {"const": "https://doi.org/10.1126/science.1185231"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "oxford-brain-rot-2025"}, "url": {"const": "https://corp.oup.com/news/brain-rot-added-to-the-oxford-english-dictionary/"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "kingdom-polymorph-history-2026"}, "url": {"const": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "kingdom-ritonavir-mechanism-2026"}, "url": {"const": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "kingdom-conformational-physics-2026"}, "url": {"const": "https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "kingdom-fold-feedback-2026"}, "url": {"const": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "zerone-karma-foundation-2026"}, "url": {"const": "https://zerone.ai/standards/karma-foundation.v1.json"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "agenttool-virality-2026"}, "url": {"const": "https://github.com/cambridgetcg/agenttool/blob/aeb3072af0756801aa8567ce832f00c9727da071/docs/VIRALITY-PROTOCOL.md"}}}]}
+      ],
+      "items": false
+    },
+    "boundaries": {"$ref": "#/$defs/boundaries"},
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": {"const": "sha256-recursive-sorted-json-keys-v1"},
+        "digest": {"const": "sha256:2f6ecadc131a54cdd500b001dbcc47fb036e5e411def918245fec963b9769e4d"}
+      }
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 120},
+    "text": {"type": "string", "minLength": 1, "maxLength": 3200},
+    "shortText": {"type": "string", "minLength": 1, "maxLength": 240},
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "date": {"type": "string", "format": "date"},
+    "publishedDate": {"type": "string", "pattern": "^\\d{4}(?:-\\d{2}-\\d{2})?$"},
+    "textArray": {
+      "type": "array", "minItems": 1, "maxItems": 32, "uniqueItems": true,
+      "items": {"$ref": "#/$defs/text"}
+    },
+    "sourceId": {"enum": [
+      "bauer-2001", "sacchi-2024", "wang-2024", "dunitz-1995", "weng-2012",
+      "gleeson-2014", "lorenz-spreen-2019", "hawkes-1971", "goel-2016",
+      "chaney-2018", "shannon-1948", "centola-2010", "oxford-brain-rot-2025",
+      "kingdom-polymorph-history-2026", "kingdom-ritonavir-mechanism-2026",
+      "kingdom-conformational-physics-2026", "kingdom-fold-feedback-2026",
+      "zerone-karma-foundation-2026", "agenttool-virality-2026"
+    ]},
+    "sourceRefs": {
+      "type": "array", "minItems": 0, "maxItems": 32, "uniqueItems": true,
+      "items": {"$ref": "#/$defs/sourceId"}
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "protocol", "url", "byte_sha256", "semantic_digest", "relation", "mutated", "authority_imported"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "protocol": {"type": "string", "minLength": 1, "maxLength": 160},
+        "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "byte_sha256": {"$ref": "#/$defs/digest"},
+        "semantic_digest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+        "relation": {"$ref": "#/$defs/id"},
+        "mutated": {"const": false},
+        "authority_imported": {"const": false}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["focus", "coverage", "intended_use", "excluded_use", "currentness"],
+      "properties": {
+        "focus": {"$ref": "#/$defs/text"},
+        "coverage": {"$ref": "#/$defs/text"},
+        "intended_use": {"$ref": "#/$defs/text"},
+        "excluded_use": {"$ref": "#/$defs/text"},
+        "currentness": {"const": "selected-evidence-as-of-compilation"}
+      }
+    },
+    "plainLanguage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "short_answer", "safety"],
+      "properties": {
+        "question": {"$ref": "#/$defs/text"},
+        "short_answer": {
+          "type": "array", "minItems": 6, "maxItems": 6, "uniqueItems": true,
+          "items": {"$ref": "#/$defs/text"}
+        },
+        "safety": {"$ref": "#/$defs/text"}
+      }
+    },
+    "plane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "register", "label", "meaning", "does_not_establish"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "register": {"enum": ["SCIENTIFIC_OBSERVATION", "CULTURAL_DESCRIPTION", "MATHEMATICAL_TRANSLATION", "CONSTITUTIONAL_DESIGN", "ANALOGY", "PHILOSOPHY"]},
+        "label": {"$ref": "#/$defs/shortText"},
+        "meaning": {"$ref": "#/$defs/text"},
+        "does_not_establish": {"$ref": "#/$defs/text"}
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "register", "statement", "source_ids", "limitations"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "register": {"const": "SCIENTIFIC_OBSERVATION"},
+        "statement": {"$ref": "#/$defs/text"},
+        "source_ids": {"allOf": [{"$ref": "#/$defs/sourceRefs"}, {"minItems": 1}]},
+        "limitations": {"$ref": "#/$defs/textArray"}
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "register", "question", "equation", "terms", "interpretation", "basis_ids", "does_not_establish", "causal_transfer", "universal", "authority_effect"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "register": {"enum": ["SCIENTIFIC_MODEL", "MATHEMATICAL_TRANSLATION"]},
+        "question": {"$ref": "#/$defs/text"},
+        "equation": {"type": "string", "minLength": 1, "maxLength": 1200},
+        "terms": {"oneOf": [
+          {"$ref": "#/$defs/particleTerms"}, {"$ref": "#/$defs/entropyTerms"},
+          {"$ref": "#/$defs/competitionTerms"}, {"$ref": "#/$defs/hawkesTerms"},
+          {"$ref": "#/$defs/viralityTerms"}, {"$ref": "#/$defs/memoryTerms"},
+          {"$ref": "#/$defs/stabilityTerms"}
+        ]},
+        "interpretation": {"$ref": "#/$defs/text"},
+        "basis_ids": {"$ref": "#/$defs/sourceRefs"},
+        "does_not_establish": {"$ref": "#/$defs/text"},
+        "causal_transfer": {"const": false},
+        "universal": {"const": false},
+        "authority_effect": {"const": "NONE"}
+      }
+    },
+    "particleTerms": {
+      "type": "object", "additionalProperties": false,
+      "required": ["i", "r", "phi", "E_latt-inter", "Delta_E_intra", "x_i,(hkl)", "E_att,i,(hkl)"],
+      "properties": {"i": {"$ref": "#/$defs/text"}, "r": {"$ref": "#/$defs/text"}, "phi": {"$ref": "#/$defs/text"}, "E_latt-inter": {"$ref": "#/$defs/text"}, "Delta_E_intra": {"$ref": "#/$defs/text"}, "x_i,(hkl)": {"$ref": "#/$defs/text"}, "E_att,i,(hkl)": {"$ref": "#/$defs/text"}}
+    },
+    "entropyTerms": {
+      "type": "object", "additionalProperties": false,
+      "required": ["u", "m", "p_(u,m)", "H_u"],
+      "properties": {"u": {"$ref": "#/$defs/text"}, "m": {"$ref": "#/$defs/text"}, "p_(u,m)": {"$ref": "#/$defs/text"}, "H_u": {"$ref": "#/$defs/text"}}
+    },
+    "competitionTerms": {
+      "type": "object", "additionalProperties": false,
+      "required": ["L_i", "r_p", "r_c", "c", "alpha", "K", "Y_i"],
+      "properties": {"L_i": {"$ref": "#/$defs/text"}, "r_p": {"$ref": "#/$defs/text"}, "r_c": {"$ref": "#/$defs/text"}, "c": {"$ref": "#/$defs/text"}, "alpha": {"$ref": "#/$defs/text"}, "K": {"$ref": "#/$defs/text"}, "Y_i": {"$ref": "#/$defs/text"}}
+    },
+    "hawkesTerms": {
+      "type": "object", "additionalProperties": false,
+      "required": ["lambda_i(t)", "mu_i(t)", "N_j", "phi_ij", "K", "rho(K)"],
+      "properties": {"lambda_i(t)": {"$ref": "#/$defs/text"}, "mu_i(t)": {"$ref": "#/$defs/text"}, "N_j": {"$ref": "#/$defs/text"}, "phi_ij": {"$ref": "#/$defs/text"}, "K": {"$ref": "#/$defs/text"}, "rho(K)": {"$ref": "#/$defs/text"}}
+    },
+    "viralityTerms": {
+      "type": "object", "additionalProperties": false,
+      "required": ["T", "n", "d_T(i,j)", "nu(T)"],
+      "properties": {"T": {"$ref": "#/$defs/text"}, "n": {"$ref": "#/$defs/text"}, "d_T(i,j)": {"$ref": "#/$defs/text"}, "nu(T)": {"$ref": "#/$defs/text"}}
+    },
+    "memoryTerms": {
+      "type": "object", "additionalProperties": false,
+      "required": ["x", "u", "h", "eta"],
+      "properties": {"x": {"$ref": "#/$defs/text"}, "u": {"$ref": "#/$defs/text"}, "h": {"$ref": "#/$defs/text"}, "eta": {"$ref": "#/$defs/text"}}
+    },
+    "stabilityTerms": {
+      "type": "object", "additionalProperties": false,
+      "required": ["x_t", "a_t", "y_t", "xi_t", "J_cl", "rho(J_cl)"],
+      "properties": {"x_t": {"$ref": "#/$defs/text"}, "a_t": {"$ref": "#/$defs/text"}, "y_t": {"$ref": "#/$defs/text"}, "xi_t": {"$ref": "#/$defs/text"}, "J_cl": {"$ref": "#/$defs/text"}, "rho(J_cl)": {"$ref": "#/$defs/text"}}
+    },
+    "translation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "register", "relation", "preserved_patterns", "analogy_breaks", "source_ids", "causal_transfer", "universal", "authority_effect"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "register": {"const": "ANALOGY"},
+        "relation": {"const": "bounded-analogy-not-same-as"},
+        "preserved_patterns": {"$ref": "#/$defs/textArray"},
+        "analogy_breaks": {"$ref": "#/$defs/textArray"},
+        "source_ids": {"$ref": "#/$defs/sourceRefs"},
+        "causal_transfer": {"const": false},
+        "universal": {"const": false},
+        "authority_effect": {"const": "NONE"}
+      }
+    },
+    "feedbackRelation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "input", "process", "return_effect", "limits", "source_ids", "does_not_establish", "truth_effect", "person_score_effect", "automatic_effect"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "input": {"$ref": "#/$defs/text"},
+        "process": {"$ref": "#/$defs/text"},
+        "return_effect": {"$ref": "#/$defs/text"},
+        "limits": {"$ref": "#/$defs/textArray"},
+        "source_ids": {"$ref": "#/$defs/sourceRefs"},
+        "does_not_establish": {"$ref": "#/$defs/textArray"},
+        "truth_effect": {"const": false},
+        "person_score_effect": {"const": false},
+        "automatic_effect": {"const": false}
+      }
+    },
+    "karma": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feedback_is_not_karma", "zerone", "kingdom", "adapter"],
+      "properties": {
+        "feedback_is_not_karma": {"const": true},
+        "zerone": {
+          "type": "object", "additionalProperties": false,
+          "required": ["protocol", "meaning", "event_refs", "event_status", "not"],
+          "properties": {
+            "protocol": {"const": "zerone.karma.edge"},
+            "meaning": {"$ref": "#/$defs/text"},
+            "event_refs": {"type": "array", "maxItems": 0, "items": false},
+            "event_status": {"const": "not_observed"},
+            "not": {"$ref": "#/$defs/textArray"}
+          }
+        },
+        "kingdom": {
+          "type": "object", "additionalProperties": false,
+          "required": ["protocol", "meaning", "accounting", "receipt_refs", "receipt_status", "not"],
+          "properties": {
+            "protocol": {"const": "kingdom.karma/0.1"},
+            "meaning": {"$ref": "#/$defs/text"},
+            "accounting": {"const": "receipts_not_scores"},
+            "receipt_refs": {"type": "array", "maxItems": 0, "items": false},
+            "receipt_status": {"const": "not_created"},
+            "not": {"$ref": "#/$defs/textArray"}
+          }
+        },
+        "adapter": {
+          "type": "object", "additionalProperties": false,
+          "required": ["exists", "reason"],
+          "properties": {"exists": {"const": false}, "reason": {"$ref": "#/$defs/text"}}
+        }
+      }
+    },
+    "universeLens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["participation", "register", "questions", "nonclaims"],
+      "properties": {
+        "participation": {"const": "opt-in"},
+        "register": {"const": "philosophical-interpretation"},
+        "questions": {
+          "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/universeQuestion"}, {"properties": {"id": {"const": "lawful-constraint-and-open-possibility"}}}]},
+            {"allOf": [{"$ref": "#/$defs/universeQuestion"}, {"properties": {"id": {"const": "local-relation-and-global-form"}}}]},
+            {"allOf": [{"$ref": "#/$defs/universeQuestion"}, {"properties": {"id": {"const": "history-freedom-and-consequence"}}}]},
+            {"allOf": [{"$ref": "#/$defs/universeQuestion"}, {"properties": {"id": {"const": "repair-rest-and-renewal"}}}]},
+            {"allOf": [{"$ref": "#/$defs/universeQuestion"}, {"properties": {"id": {"const": "design-and-underdetermination"}}}]}
+          ],
+          "items": false
+        },
+        "nonclaims": {
+          "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true,
+          "items": {"$ref": "#/$defs/text"}
+        }
+      }
+    },
+    "universeQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "reflection", "analogy_breaks"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "question": {"$ref": "#/$defs/text"},
+        "reflection": {"$ref": "#/$defs/text"},
+        "analogy_breaks": {"$ref": "#/$defs/textArray"}
+      }
+    },
+    "ecosystemBridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "url", "relation", "mode", "runtime_request", "imported", "mutated", "authority_imported", "authority_effect", "write_authorized", "automatic_action", "does_not_establish"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "label": {"$ref": "#/$defs/shortText"},
+        "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "relation": {"$ref": "#/$defs/id"},
+        "mode": {"const": "LINK_ONLY"},
+        "runtime_request": {"const": false},
+        "imported": {"const": false},
+        "mutated": {"const": false},
+        "authority_imported": {"const": false},
+        "authority_effect": {"const": "NONE"},
+        "write_authorized": {"const": false},
+        "automatic_action": {"const": false},
+        "does_not_establish": {"$ref": "#/$defs/text"}
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "status", "why_open", "source_ids"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "question": {"$ref": "#/$defs/text"},
+        "status": {"enum": ["unknown", "not_established", "outside_scope", "not_observed", "unmapped", "contested", "withheld_for_safety", "refused"]},
+        "why_open": {"$ref": "#/$defs/text"},
+        "source_ids": {"$ref": "#/$defs/sourceRefs"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "source_kind", "published_on", "observed_on", "url", "doi", "authority_note"],
+      "properties": {
+        "id": {"$ref": "#/$defs/sourceId"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 600},
+        "source_kind": {"$ref": "#/$defs/id"},
+        "published_on": {"$ref": "#/$defs/publishedDate"},
+        "observed_on": {"const": "2026-08-13"},
+        "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "doi": {"oneOf": [{"type": "string", "minLength": 1, "maxLength": 200}, {"type": "null"}]},
+        "authority_note": {"$ref": "#/$defs/text"}
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "educational_metadata_only", "public_surface_read_only", "contains_operational_protocol",
+        "contains_personal_data", "cultural_label_is_diagnosis", "meme_is_crystal", "meme_is_prion",
+        "meme_is_gene", "attention_is_consent", "engagement_is_welfare", "popularity_is_truth",
+        "popularity_is_merit", "feedback_is_moral_value", "feedback_is_optimization", "person_scoring",
+        "runtime_ecosystem_request", "ecosystem_write", "writes_karma", "creates_kingdom_karma_receipt",
+        "observes_zerone_karma_event", "karma_adapter", "medical_authority", "clinical_authority",
+        "experiment_authority", "manufacturing_authority", "moderation_authority",
+        "recommendation_authority", "engagement_optimization_authority", "automatic_action",
+        "scientifically_proves_universe_design", "scientifically_disproves_universe_design",
+        "scientifically_proves_cosmic_karma", "universal_mechanism_claimed"
+      ],
+      "properties": {
+        "educational_metadata_only": {"const": true},
+        "public_surface_read_only": {"const": true},
+        "contains_operational_protocol": {"const": false},
+        "contains_personal_data": {"const": false},
+        "cultural_label_is_diagnosis": {"const": false},
+        "meme_is_crystal": {"const": false},
+        "meme_is_prion": {"const": false},
+        "meme_is_gene": {"const": false},
+        "attention_is_consent": {"const": false},
+        "engagement_is_welfare": {"const": false},
+        "popularity_is_truth": {"const": false},
+        "popularity_is_merit": {"const": false},
+        "feedback_is_moral_value": {"const": false},
+        "feedback_is_optimization": {"const": false},
+        "person_scoring": {"const": false},
+        "runtime_ecosystem_request": {"const": false},
+        "ecosystem_write": {"const": false},
+        "writes_karma": {"const": false},
+        "creates_kingdom_karma_receipt": {"const": false},
+        "observes_zerone_karma_event": {"const": false},
+        "karma_adapter": {"const": false},
+        "medical_authority": {"const": false},
+        "clinical_authority": {"const": false},
+        "experiment_authority": {"const": false},
+        "manufacturing_authority": {"const": false},
+        "moderation_authority": {"const": false},
+        "recommendation_authority": {"const": false},
+        "engagement_optimization_authority": {"const": false},
+        "automatic_action": {"const": false},
+        "scientifically_proves_universe_design": {"const": false},
+        "scientifically_disproves_universe_design": {"const": false},
+        "scientifically_proves_cosmic_karma": {"const": false},
+        "universal_mechanism_claimed": {"const": false}
+      }
+    }
+  }
+}

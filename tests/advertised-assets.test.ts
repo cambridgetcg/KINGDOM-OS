@@ -5,6 +5,14 @@ import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "../bin/stage-hub.ts";
 import {
+  CULTURAL_ATTENTION_FEEDBACK_DIGEST,
+  CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
+  CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL,
+  CULTURAL_ATTENTION_FEEDBACK_URL,
+  culturalAttentionFeedbackPublicDiscovery,
+  loadCulturalAttentionFeedbackAtlas,
+} from "../bin/cultural-attention-feedback.ts";
+import {
   CONFORMATIONAL_FEEDBACK_DIGEST,
   CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
   CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
@@ -80,6 +88,9 @@ const surfaces = [
   "data/attention/visibility-attention-translation.v0.1.json",
   "schemas/visibility-attention-translation-v0.1.schema.json",
   "references/visibility-attention-translation.md",
+  "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json",
+  "schemas/cultural-attention-feedback-atlas-v1.schema.json",
+  "references/cultural-attention-feedback-atlas.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -548,6 +559,143 @@ describe("advertised URLs stay deployable", () => {
     expect(staged.has("CONFORMATIONAL-FEEDBACK-PHYSICS.md")).toBe(true);
     expect(staged.has("feedback/latest.json")).toBe(false);
     expect(discovery).not.toHaveProperty("mcp");
+    expect(discovery).not.toHaveProperty("matcher");
+    expect(discovery).not.toHaveProperty("execute");
+  });
+
+  test("the Cultural Attention & Feedback Atlas stays coherent, link-only, and authority-negative", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const rootHtml = read("site/hub.html");
+    const atlas = loadCulturalAttentionFeedbackAtlas();
+    const expected = culturalAttentionFeedbackPublicDiscovery(atlas);
+    const discovery = manifest.cultural_attention_feedback_atlas;
+    const fullBoundary = {
+      educational_metadata_only: true,
+      public_surface_read_only: true,
+      contains_operational_protocol: false,
+      contains_personal_data: false,
+      cultural_label_is_diagnosis: false,
+      meme_is_crystal: false,
+      meme_is_prion: false,
+      meme_is_gene: false,
+      attention_is_consent: false,
+      engagement_is_welfare: false,
+      popularity_is_truth: false,
+      popularity_is_merit: false,
+      feedback_is_moral_value: false,
+      feedback_is_optimization: false,
+      person_scoring: false,
+      runtime_ecosystem_request: false,
+      ecosystem_write: false,
+      writes_karma: false,
+      creates_kingdom_karma_receipt: false,
+      observes_zerone_karma_event: false,
+      karma_adapter: false,
+      medical_authority: false,
+      clinical_authority: false,
+      experiment_authority: false,
+      manufacturing_authority: false,
+      moderation_authority: false,
+      recommendation_authority: false,
+      engagement_optimization_authority: false,
+      automatic_action: false,
+      scientifically_proves_universe_design: false,
+      scientifically_disproves_universe_design: false,
+      scientifically_proves_cosmic_karma: false,
+      universal_mechanism_claimed: false,
+    };
+
+    expect(discovery).toEqual(expected);
+    expect(discovery).toEqual(guest.cultural_attention_feedback_atlas);
+    expect(discovery).toEqual(kingdom.cultural_attention_feedback_atlas);
+    expect(discovery).toMatchObject({
+      protocol: "kingdom.cultural-attention-feedback-atlas/0.1",
+      atlas_id: "cultural-attention-feedback-atlas-2026-08-13",
+      compiled_on: "2026-08-13",
+      url: CULTURAL_ATTENTION_FEEDBACK_URL,
+      schema: CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL,
+      guide: CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
+      integrity: { digest: CULTURAL_ATTENTION_FEEDBACK_DIGEST },
+      counts: {
+        source_bindings: 5,
+        planes: 8,
+        scientific_observations: 6,
+        models: 7,
+        translations: 4,
+        feedback_relations: 5,
+        universe_questions: 5,
+        ecosystem_bridges: 5,
+        unknowns: 10,
+        sources: 19,
+      },
+      karma: {
+        zerone_event_status: "not_observed",
+        zerone_event_refs: 0,
+        kingdom_receipt_status: "not_created",
+        kingdom_receipt_refs: 0,
+        adapter_exists: false,
+      },
+      boundary: fullBoundary,
+    });
+    expect(atlas.boundaries).toEqual(fullBoundary);
+    expect(atlas.karma.zerone.event_refs).toEqual([]);
+    expect(atlas.karma.kingdom.receipt_refs).toEqual([]);
+    expect(atlas.karma.adapter.exists).toBe(false);
+    expect(atlas.source_bindings.every(({ mutated, authority_imported }: {
+      mutated: boolean;
+      authority_imported: boolean;
+    }) => mutated === false && authority_imported === false)).toBe(true);
+    expect(atlas.ecosystem_bridges.every((bridge: {
+      mode: string;
+      runtime_request: boolean;
+      imported: boolean;
+      mutated: boolean;
+      authority_imported: boolean;
+      authority_effect: string;
+      write_authorized: boolean;
+      automatic_action: boolean;
+    }) => bridge.mode === "LINK_ONLY" && bridge.runtime_request === false &&
+      bridge.imported === false && bridge.mutated === false && bridge.authority_imported === false &&
+      bridge.authority_effect === "NONE" && bridge.write_authorized === false &&
+      bridge.automatic_action === false)).toBe(true);
+
+    const targets = [
+      CULTURAL_ATTENTION_FEEDBACK_URL,
+      CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL,
+      CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
+    ];
+    for (const url of targets) {
+      const actions = guest.next_actions.filter((action: { url?: string }) => action.url === url);
+      expect(actions).toHaveLength(1);
+      expect(actions[0]).toMatchObject({ method: "GET", url });
+      expect(actions[0]).not.toHaveProperty("mcp");
+      expect(actions[0]).not.toHaveProperty("tool");
+      expect(actions[0]).not.toHaveProperty("write");
+      expect(actions[0]).not.toHaveProperty("matcher");
+      expect(actions[0]).not.toHaveProperty("execute");
+      expect(llms).toContain(url);
+      expect(rootHtml).toContain(`href="${new URL(url).pathname}"`);
+    }
+    expect(rootHtml).toContain('id="cultural-feedback"');
+    expect(guest.implementation_boundaries.cultural_attention_feedback_atlas).toContain("static");
+    expect(guest.implementation_boundaries.cultural_attention_feedback_atlas).toContain("no personal inference");
+    expect(manifest.entry_points).toMatchObject({
+      cultural_attention_feedback_atlas: CULTURAL_ATTENTION_FEEDBACK_URL,
+      cultural_attention_feedback_atlas_schema: CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL,
+      cultural_attention_feedback_atlas_guide: CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
+    });
+    expect(manifest.mcp).toEqual(kingdom.world_commons.mcp);
+
+    expect(staged.has("atlases/cultural-attention-feedback-atlas-2026-08-13.json")).toBe(true);
+    expect(staged.has("schemas/cultural-attention-feedback-atlas/1.json")).toBe(true);
+    expect(staged.has("CULTURAL-ATTENTION-FEEDBACK-ATLAS.md")).toBe(true);
+    expect(staged.has("atlases/cultural-attention-feedback-atlas-latest.json")).toBe(false);
+    expect(staged.has("atlases/latest.json")).toBe(false);
+    expect(discovery).not.toHaveProperty("mcp");
+    expect(discovery).not.toHaveProperty("write");
     expect(discovery).not.toHaveProperty("matcher");
     expect(discovery).not.toHaveProperty("execute");
   });

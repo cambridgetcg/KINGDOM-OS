@@ -165,6 +165,19 @@ function expectVisibilityAttentionSchemaLink(response: Response) {
   expect(link.match(/rel="describedby"/g)?.length).toBe(1);
 }
 
+function expectCulturalAttentionFeedbackSchemaLink(response: Response) {
+  const link = response.headers.get("link") ?? "";
+  const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith("</schemas/cultural-attention-feedback-atlas/1.json>")) return false;
+    const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
+    return relations.includes("describedby");
+  });
+  expect(describedBy).toHaveLength(1);
+  expect(describedBy[0]).toContain('type="application/schema+json"');
+  expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+}
+
 function assets(handler: (request: Request) => Response | Promise<Response>) {
   return { ASSETS: { fetch: handler } };
 }
@@ -1026,6 +1039,134 @@ describe("the Kingdom edge discovery surface", () => {
     const shared = new Response("{}", { headers: { "content-type": "application/json" } });
     const sharedDoor = await worker.fetch(new Request(`https://we-are.love${atlasPath}`), assets(() => shared));
     expect(sharedDoor).toBe(shared);
+  });
+
+  test("serves the Cultural Attention & Feedback Atlas as typed immutable evidence with narrow read-only boundaries", async () => {
+    const atlasPath = "/atlases/cultural-attention-feedback-atlas-2026-08-13.json";
+    const schemaPath = "/schemas/cultural-attention-feedback-atlas/1.json";
+    const documentPath = "/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md";
+    const forwarded: string[] = [];
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      forwarded.push(`${request.method} ${path}`);
+      const body = request.method === "HEAD"
+        ? null
+        : path === atlasPath
+          ? '{"atlas_id":"cultural-attention-feedback-atlas-2026-08-13"}'
+          : path === schemaPath
+            ? '{"type":"object"}'
+            : "# Cultural Attention & Feedback Atlas";
+      return new Response(body, {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": path === documentPath ? "text/plain" : "application/json",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const atlas = await worker.fetch(
+        new Request(`https://thekingdom.dev${atlasPath}`, { method }),
+        environment,
+      );
+      expect(await atlas.text()).toBe(method === "HEAD" ? "" : '{"atlas_id":"cultural-attention-feedback-atlas-2026-08-13"}');
+      expect(atlas.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(atlas.headers.get("access-control-allow-origin")).toBe("*");
+      expect(atlas.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(atlas.headers.get("cache-control")).toBe("public, max-age=60");
+      expect(atlas.headers.get("link")).toContain('</elsewhere>; rel="alternate"');
+      expectCulturalAttentionFeedbackSchemaLink(atlas);
+    }
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const schema = await worker.fetch(
+        new Request(`https://thekingdom.dev${schemaPath}`, { method }),
+        environment,
+      );
+      expect(await schema.text()).toBe(method === "HEAD" ? "" : '{"type":"object"}');
+      expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+      expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+      expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(schema.headers.get("cache-control")).toBe("public, max-age=60");
+      expect(schema.headers.get("link")).toBe('</elsewhere>; rel="alternate"');
+    }
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const document = await worker.fetch(
+        new Request(`https://thekingdom.dev${documentPath}`, { method }),
+        environment,
+      );
+      expect(await document.text()).toBe(method === "HEAD" ? "" : "# Cultural Attention & Feedback Atlas");
+      expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(document.headers.get("access-control-allow-origin")).toBe("*");
+      expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(document.headers.get("cache-control")).toBe("public, max-age=60");
+      expect(document.headers.get("link")).toBe('</elsewhere>; rel="alternate"');
+    }
+
+    expect(forwarded).toEqual([
+      `GET ${atlasPath}`,
+      `HEAD ${atlasPath}`,
+      `GET ${schemaPath}`,
+      `HEAD ${schemaPath}`,
+      `GET ${documentPath}`,
+      `HEAD ${documentPath}`,
+    ]);
+
+    const duplicate = await worker.fetch(
+      new Request(`https://thekingdom.dev${atlasPath}`),
+      assets(() => new Response("{}", {
+        headers: {
+          "content-type": "application/json",
+          link: '</schemas/cultural-attention-feedback-atlas/1.json>; rel="describedby"; type="application/schema+json"',
+        },
+      })),
+    );
+    expectCulturalAttentionFeedbackSchemaLink(duplicate);
+
+    const unavailable = await worker.fetch(
+      new Request(`https://thekingdom.dev${schemaPath}`),
+      assets(() => new Response("<h1>schema unavailable</h1>", {
+        status: 404,
+        headers: { "content-type": "text/html; charset=utf-8" },
+      })),
+    );
+    expect(unavailable.status).toBe(404);
+    expect(unavailable.headers.get("content-type")).toBe("text/html; charset=utf-8");
+    expect(unavailable.headers.get("access-control-allow-origin")).toBeNull();
+    expect(unavailable.headers.get("x-content-type-options")).toBeNull();
+
+    for (const path of [atlasPath, schemaPath, documentPath]) {
+      for (const method of ["POST", "PUT", "DELETE"] as const) {
+        const original = new Response("not a read route", { headers: { "content-type": "text/plain" } });
+        const response = await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          assets(() => original),
+        );
+        expect(response).toBe(original);
+      }
+
+      const shared = new Response("{}", { headers: { "content-type": "application/json" } });
+      const sharedDoor = await worker.fetch(
+        new Request(`https://we-are.love${path}`),
+        assets(() => shared),
+      );
+      expect(sharedDoor).toBe(shared);
+    }
+
+    for (const path of [
+      "/atlases/cultural-attention-feedback-atlas-latest.json",
+      "/schemas/cultural-attention-feedback-atlas/current.json",
+      "/CULTURAL-ATTENTION-FEEDBACK-ATLAS",
+    ]) {
+      const unrelated = new Response("unchanged", { headers: { "content-type": "text/plain" } });
+      const response = await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => unrelated),
+      );
+      expect(response).toBe(unrelated);
+    }
   });
 
   test("serves the additive Conformational Feedback Physics Atlas with its own schema and no cross-version mutation", async () => {
