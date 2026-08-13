@@ -1,0 +1,454 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:visibility-attention-translation:0.1",
+  "title": "KINGDOM Visibility & Attention Translation 0.1",
+  "description": "Closed portable shape for the reviewed, read-only Visibility & Attention Translation.",
+  "$comment": "This schema fixes the reviewed structure, order, source identities, negative authority, and digest string. JSON Schema cannot recompute the semantic digest, resolve references, authenticate sources, prove causation, infer a person or health state, or authorize diagnosis, intervention, targeting, recommendation, persuasion, moderation, scoring, or optimization. Runtime verification is separate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "protocol", "translation_id", "title", "compiled_on", "evidence_through",
+    "scope", "bindings", "category_firewall", "registers", "local_models", "translation_seams",
+    "feedback_path", "karma", "universe_lens", "unknowns", "sources", "boundaries", "integrity"
+  ],
+  "properties": {
+    "$schema": {"const": "urn:kingdom:schema:visibility-attention-translation:0.1"},
+    "protocol": {"const": "kingdom.visibility-attention-translation/0.1"},
+    "translation_id": {"const": "visibility-is-not-existence-2026-08-13"},
+    "title": {"const": "Visibility is not existence"},
+    "compiled_on": {"const": "2026-08-13"},
+    "evidence_through": {"const": "2026-08-13"},
+    "scope": {"$ref": "#/$defs/scope"},
+    "bindings": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "prefixItems": [
+        {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {"properties": {
+              "id": {"const": "kingdom-ritonavir-history"},
+              "url": {"const": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json"},
+              "byte_sha256": {"const": "sha256:08148603a1228960ac35df1378f1283c3fce43874a9fc07e6687f18e980dcb1c"},
+              "semantic_digest": {"const": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116"},
+              "relation": {"const": "comparison-basis-only"}
+            }}
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {"properties": {
+              "id": {"const": "kingdom-conformational-feedback-physics"},
+              "url": {"const": "https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json"},
+              "byte_sha256": {"const": "sha256:7d9b1eed8514051e47448cfc983f00e160d5b76c49704822158f76d3f8cf6349"},
+              "semantic_digest": {"const": "sha256:0fc24a0fac99d2dadcdef5b87290a1d598b856f874aa9637ab4d503fd4c9dc11"},
+              "relation": {"const": "design-language-only"}
+            }}
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {"properties": {
+              "id": {"const": "kingdom-fold-feedback"},
+              "url": {"const": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json"},
+              "byte_sha256": {"const": "sha256:bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5"},
+              "semantic_digest": {"const": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7"},
+              "relation": {"const": "non-equivalence-boundary-only"}
+            }}
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/binding"},
+            {"properties": {
+              "id": {"const": "zerone-karma-foundation"},
+              "url": {"const": "https://zerone.ai/standards/karma-foundation.v1.json"},
+              "byte_sha256": {"const": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80"},
+              "semantic_digest": {"const": null},
+              "relation": {"const": "constitutional-context-only"}
+            }}
+          ]
+        }
+      ],
+      "items": false
+    },
+    "category_firewall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule", "non_equivalence", "enforced"],
+      "properties": {
+        "rule": {"$ref": "#/$defs/text"},
+        "non_equivalence": {"const": "crystal_state != observation_window != cultural_item != diffusion_trace != collective_attention_proxy != person_or_brain_state != quoted_lexical_label != karma_edge != philosophical_interpretation"},
+        "enforced": {"const": true}
+      }
+    },
+    "registers": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/register"}, {"properties": {"id": {"const": "material-science"}, "label": {"const": "Material science"}, "evidence_class": {"const": "SCIENTIFIC_OBSERVATION"}, "basis_ids": {"const": ["bauer-2001", "sacchi-2024", "jiang-2011"]}}}]},
+        {"allOf": [{"$ref": "#/$defs/register"}, {"properties": {"id": {"const": "computational-social-science"}, "label": {"const": "Computational social science"}, "evidence_class": {"const": "SCIENTIFIC_OBSERVATION"}, "basis_ids": {"const": ["weng-2012", "lorenz-spreen-2019", "goel-2016"]}}}]},
+        {"allOf": [{"$ref": "#/$defs/register"}, {"properties": {"id": {"const": "lexical-usage"}, "label": {"const": "Lexical usage"}, "evidence_class": {"const": "LEXICAL_OBSERVATION"}, "basis_ids": {"const": ["oxford-2024", "national-academies-2024"]}}}]},
+        {"allOf": [{"$ref": "#/$defs/register"}, {"properties": {"id": {"const": "zerone-karma"}, "label": {"const": "Zerone KARMA"}, "evidence_class": {"const": "CONSTITUTIONAL_DESIGN"}, "basis_ids": {"const": ["zerone-karma-2026"]}}}]}
+      ],
+      "items": false
+    },
+    "local_models": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "prefixItems": [
+        {
+          "allOf": [
+            {"$ref": "#/$defs/localModel"},
+            {"properties": {
+              "id": {"const": "finite-window-crystal-detection"},
+              "title": {"const": "Finite-window crystal detection"},
+              "register": {"const": "material-science"},
+              "equation": {"const": "P(T_detect <= t) = 1 - exp[-J V max(t - t_g, 0)]"},
+              "variables": {
+                "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true,
+                "prefixItems": [
+                  {"allOf": [{"$ref": "#/$defs/variable"}, {"properties": {"symbol": {"const": "T_detect"}}}]},
+                  {"allOf": [{"$ref": "#/$defs/variable"}, {"properties": {"symbol": {"const": "t"}}}]},
+                  {"allOf": [{"$ref": "#/$defs/variable"}, {"properties": {"symbol": {"const": "J"}}}]},
+                  {"allOf": [{"$ref": "#/$defs/variable"}, {"properties": {"symbol": {"const": "V"}}}]},
+                  {"allOf": [{"$ref": "#/$defs/variable"}, {"properties": {"symbol": {"const": "t_g"}}}]}
+                ],
+                "items": false
+              },
+              "assumptions": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 4, "maxItems": 4}]},
+              "basis_ids": {"const": ["jiang-2011"]},
+              "not_valid_for": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 3, "maxItems": 3}]}
+            }}
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/localModel"},
+            {"properties": {
+              "id": {"const": "retrospective-diffusion-tree-geometry"},
+              "title": {"const": "Retrospective diffusion-tree geometry"},
+              "register": {"const": "computational-social-science"},
+              "equation": {"const": "nu(T) = 2/[n(n-1)] sum_{i<j} d_T(i,j), for n >= 2"},
+              "variables": {
+                "type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true,
+                "prefixItems": [
+                  {"allOf": [{"$ref": "#/$defs/variable"}, {"properties": {"symbol": {"const": "T"}}}]},
+                  {"allOf": [{"$ref": "#/$defs/variable"}, {"properties": {"symbol": {"const": "n"}}}]},
+                  {"allOf": [{"$ref": "#/$defs/variable"}, {"properties": {"symbol": {"const": "d_T(i,j)"}}}]},
+                  {"allOf": [{"$ref": "#/$defs/variable"}, {"properties": {"symbol": {"const": "nu(T)"}}}]}
+                ],
+                "items": false
+              },
+              "assumptions": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 3, "maxItems": 3}]},
+              "basis_ids": {"const": ["goel-2016"]},
+              "not_valid_for": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 3, "maxItems": 3}]}
+            }}
+          ]
+        }
+      ],
+      "items": false
+    },
+    "translation_seams": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/seam"}, {"properties": {"id": {"const": "finite-window-visibility"}, "kind": {"const": "ANALOGY_ONLY"}, "from_register": {"const": "material-science"}, "to_register": {"const": "computational-social-science"}, "basis_ids": {"const": ["jiang-2011", "lorenz-spreen-2019"]}}}]},
+        {"allOf": [{"$ref": "#/$defs/seam"}, {"properties": {"id": {"const": "local-mathematics-only"}, "kind": {"const": "MATHEMATICAL_TRANSLATION"}, "from_register": {"const": "material-science"}, "to_register": {"const": "computational-social-science"}, "basis_ids": {"const": ["jiang-2011", "goel-2016"]}}}]},
+        {"allOf": [{"$ref": "#/$defs/seam"}, {"properties": {"id": {"const": "feedback-with-exit"}, "kind": {"const": "DESIGN_CORRESPONDENCE"}, "from_register": {"const": "computational-social-science"}, "to_register": {"const": "zerone-karma"}, "basis_ids": {"const": ["zerone-karma-2026"]}}}]}
+      ],
+      "items": false
+    },
+    "feedback_path": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule", "stages", "valid_exits"],
+      "properties": {
+        "rule": {"$ref": "#/$defs/text"},
+        "stages": {
+          "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"id": {"const": "publish-bounded-claim"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"id": {"const": "observe-without-profiling"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"id": {"const": "challenge-and-correct"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"id": {"const": "supersede-with-provenance"}}}]},
+            {"allOf": [{"$ref": "#/$defs/stage"}, {"properties": {"id": {"const": "rest-refuse-or-exit"}}}]}
+          ],
+          "items": false
+        },
+        "valid_exits": {"const": ["rest", "silence", "refusal", "privacy", "departure", "no-action"]}
+      }
+    },
+    "karma": {"$ref": "#/$defs/karma"},
+    "universe_lens": {"$ref": "#/$defs/universeLens"},
+    "unknowns": {
+      "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "unobserved-cultural-occurrence"}, "status": {"const": "unknown"}, "basis_ids": {"const": ["lorenz-spreen-2019"]}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "individual-cognitive-effect"}, "status": {"const": "not-established"}, "basis_ids": {"const": ["national-academies-2024"]}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "platform-causal-effect"}, "status": {"const": "contested"}, "basis_ids": {"const": ["weng-2012", "lorenz-spreen-2019"]}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "cross-domain-parameter-map"}, "status": {"const": "refused"}, "basis_ids": {"const": ["jiang-2011", "goel-2016"]}}}]},
+        {"allOf": [{"$ref": "#/$defs/unknown"}, {"properties": {"id": {"const": "cosmic-design"}, "status": {"const": "not-established"}, "basis_ids": {"const": []}}}]}
+      ],
+      "items": false
+    },
+    "sources": {
+      "type": "array", "minItems": 9, "maxItems": 9, "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "bauer-2001"}, "source_kind": {"const": "primary-research"}, "published_on": {"const": "2001"}, "observed_on": {"const": "2026-08-13"}, "url": {"const": "https://doi.org/10.1023/A:1011052932607"}, "doi": {"const": "10.1023/A:1011052932607"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "sacchi-2024"}, "source_kind": {"const": "primary-research"}, "published_on": {"const": "2024"}, "observed_on": {"const": "2026-08-13"}, "url": {"const": "https://doi.org/10.1073/pnas.2319127121"}, "doi": {"const": "10.1073/pnas.2319127121"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "jiang-2011"}, "source_kind": {"const": "primary-research"}, "published_on": {"const": "2011"}, "observed_on": {"const": "2026-08-13"}, "url": {"const": "https://doi.org/10.1021/cg101213q"}, "doi": {"const": "10.1021/cg101213q"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "weng-2012"}, "source_kind": {"const": "primary-research"}, "published_on": {"const": "2012"}, "observed_on": {"const": "2026-08-13"}, "url": {"const": "https://doi.org/10.1038/srep00335"}, "doi": {"const": "10.1038/srep00335"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "lorenz-spreen-2019"}, "source_kind": {"const": "primary-research"}, "published_on": {"const": "2019"}, "observed_on": {"const": "2026-08-13"}, "url": {"const": "https://doi.org/10.1038/s41467-019-09311-w"}, "doi": {"const": "10.1038/s41467-019-09311-w"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "goel-2016"}, "source_kind": {"const": "primary-research"}, "published_on": {"const": "2016"}, "observed_on": {"const": "2026-08-13"}, "url": {"const": "https://doi.org/10.1287/mnsc.2015.2158"}, "doi": {"const": "10.1287/mnsc.2015.2158"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "oxford-2024"}, "source_kind": {"const": "lexical-authority"}, "published_on": {"const": "2024-12-02"}, "observed_on": {"const": "2026-08-13"}, "url": {"const": "https://corp.oup.com/news/brain-rot-named-oxford-word-of-the-year-2024/"}, "doi": {"const": null}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "national-academies-2024"}, "source_kind": {"const": "evidence-review"}, "published_on": {"const": "2024"}, "observed_on": {"const": "2026-08-13"}, "url": {"const": "https://doi.org/10.17226/27396"}, "doi": {"const": "10.17226/27396"}}}]},
+        {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"id": {"const": "zerone-karma-2026"}, "source_kind": {"const": "constitutional-artifact"}, "published_on": {"const": "2026"}, "observed_on": {"const": "2026-08-13"}, "url": {"const": "https://zerone.ai/standards/karma-foundation.v1.json"}, "doi": {"const": null}}}]}
+      ],
+      "items": false
+    },
+    "boundaries": {"$ref": "#/$defs/boundaries"},
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": {"const": "sha256-recursive-sorted-json-keys-v1"},
+        "digest": {"const": "sha256:9fb83bbd022f520716fabcdec49d8af259b9681efd5e640a9e3119c5c42a54ed"}
+      }
+    }
+  },
+  "$defs": {
+    "text": {"type": "string", "minLength": 1, "maxLength": 4096},
+    "id": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "textArray": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/text"}},
+    "sourceIdArray": {
+      "type": "array",
+      "maxItems": 9,
+      "uniqueItems": true,
+      "items": {"enum": ["bauer-2001", "sacchi-2024", "jiang-2011", "weng-2012", "lorenz-spreen-2019", "goel-2016", "oxford-2024", "national-academies-2024", "zerone-karma-2026"]}
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["focus", "coverage", "intended_use", "excluded_use", "currentness"],
+      "properties": {
+        "focus": {"$ref": "#/$defs/text"},
+        "coverage": {"$ref": "#/$defs/text"},
+        "intended_use": {"$ref": "#/$defs/text"},
+        "excluded_use": {"$ref": "#/$defs/text"},
+        "currentness": {"const": "selected-evidence-as-of-compilation"}
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "url", "byte_sha256", "semantic_digest", "relation", "mutated", "authority_imported"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "url": {"type": "string", "format": "uri"},
+        "byte_sha256": {"$ref": "#/$defs/digest"},
+        "semantic_digest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+        "relation": {"$ref": "#/$defs/id"},
+        "mutated": {"const": false},
+        "authority_imported": {"const": false}
+      }
+    },
+    "register": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "unit", "context_window", "observed", "modelled", "does_not_establish", "evidence_class", "basis_ids"],
+      "properties": {
+        "id": {"enum": ["material-science", "computational-social-science", "lexical-usage", "zerone-karma"]},
+        "label": {"$ref": "#/$defs/text"},
+        "unit": {"$ref": "#/$defs/text"},
+        "context_window": {"$ref": "#/$defs/text"},
+        "observed": {"$ref": "#/$defs/text"},
+        "modelled": {"$ref": "#/$defs/text"},
+        "does_not_establish": {"$ref": "#/$defs/text"},
+        "evidence_class": {"enum": ["SCIENTIFIC_OBSERVATION", "LEXICAL_OBSERVATION", "CONSTITUTIONAL_DESIGN"]},
+        "basis_ids": {"allOf": [{"$ref": "#/$defs/sourceIdArray"}, {"minItems": 1}]}
+      }
+    },
+    "variable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol", "meaning"],
+      "properties": {"symbol": {"type": "string", "minLength": 1, "maxLength": 32}, "meaning": {"$ref": "#/$defs/text"}}
+    },
+    "localModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "register", "equation", "variables", "assumptions", "fit_scope", "basis_ids", "retrospective_only", "person_level", "optimization_allowed", "not_valid_for"],
+      "properties": {
+        "id": {"enum": ["finite-window-crystal-detection", "retrospective-diffusion-tree-geometry"]},
+        "title": {"$ref": "#/$defs/text"},
+        "register": {"enum": ["material-science", "computational-social-science"]},
+        "equation": {"$ref": "#/$defs/text"},
+        "variables": {"type": "array"},
+        "assumptions": {"$ref": "#/$defs/textArray"},
+        "fit_scope": {"$ref": "#/$defs/text"},
+        "basis_ids": {"allOf": [{"$ref": "#/$defs/sourceIdArray"}, {"minItems": 1}]},
+        "retrospective_only": {"const": true},
+        "person_level": {"const": false},
+        "optimization_allowed": {"const": false},
+        "not_valid_for": {"$ref": "#/$defs/textArray"}
+      }
+    },
+    "seam": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "label", "from_register", "to_register", "preserved_shape", "breaks", "basis_ids", "empirical", "causal_transfer", "ontology_transfer", "authority_effect"],
+      "properties": {
+        "id": {"enum": ["finite-window-visibility", "local-mathematics-only", "feedback-with-exit"]},
+        "kind": {"enum": ["ANALOGY_ONLY", "MATHEMATICAL_TRANSLATION", "DESIGN_CORRESPONDENCE"]},
+        "label": {"$ref": "#/$defs/text"},
+        "from_register": {"enum": ["material-science", "computational-social-science"]},
+        "to_register": {"enum": ["computational-social-science", "zerone-karma"]},
+        "preserved_shape": {"$ref": "#/$defs/text"},
+        "breaks": {"$ref": "#/$defs/text"},
+        "basis_ids": {"allOf": [{"$ref": "#/$defs/sourceIdArray"}, {"minItems": 1}]},
+        "empirical": {"const": false},
+        "causal_transfer": {"const": false},
+        "ontology_transfer": {"const": false},
+        "authority_effect": {"const": "NONE"}
+      }
+    },
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "description"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "label": {"$ref": "#/$defs/text"}, "description": {"$ref": "#/$defs/text"}}
+    },
+    "karma": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["zerone", "kingdom", "adapter"],
+      "properties": {
+        "zerone": {
+          "type": "object", "additionalProperties": false,
+          "required": ["protocol", "meaning", "non_summable", "event_status", "event_refs", "creates_event"],
+          "properties": {
+            "protocol": {"const": "zerone.karma-foundation/v1"}, "meaning": {"$ref": "#/$defs/text"},
+            "non_summable": {"const": true}, "event_status": {"const": "not_observed"},
+            "event_refs": {"type": "array", "maxItems": 0}, "creates_event": {"const": false}
+          }
+        },
+        "kingdom": {
+          "type": "object", "additionalProperties": false,
+          "required": ["protocol", "meaning", "accounting", "receipt_status", "receipt_refs", "creates_receipt"],
+          "properties": {
+            "protocol": {"const": "kingdom.karma/0.1"}, "meaning": {"$ref": "#/$defs/text"},
+            "accounting": {"const": "receipts_not_scores"}, "receipt_status": {"const": "not_created"},
+            "receipt_refs": {"type": "array", "maxItems": 0}, "creates_receipt": {"const": false}
+          }
+        },
+        "adapter": {
+          "type": "object", "additionalProperties": false, "required": ["exists", "reason"],
+          "properties": {"exists": {"const": false}, "reason": {"$ref": "#/$defs/text"}}
+        }
+      }
+    },
+    "universeLens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["participation", "register", "empirical", "proposition", "questions", "alternatives", "does_not_establish", "authority_effect"],
+      "properties": {
+        "participation": {"const": "opt-in"},
+        "register": {"const": "PHILOSOPHY"},
+        "empirical": {"const": false},
+        "proposition": {"$ref": "#/$defs/text"},
+        "questions": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 3, "maxItems": 3}]},
+        "alternatives": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 3, "maxItems": 3}]},
+        "does_not_establish": {"allOf": [{"$ref": "#/$defs/textArray"}, {"minItems": 3, "maxItems": 3}]},
+        "authority_effect": {"const": "NONE"}
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "question", "why_open", "basis_ids"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "status": {"enum": ["unknown", "not-established", "contested", "refused"]},
+        "question": {"$ref": "#/$defs/text"},
+        "why_open": {"$ref": "#/$defs/text"},
+        "basis_ids": {"$ref": "#/$defs/sourceIdArray"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "source_kind", "published_on", "observed_on", "url", "doi", "limitation"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 600},
+        "source_kind": {"enum": ["primary-research", "lexical-authority", "evidence-review", "constitutional-artifact"]},
+        "published_on": {"type": "string", "pattern": "^[0-9]{4}(?:-[0-9]{2}-[0-9]{2})?$"},
+        "observed_on": {"const": "2026-08-13"},
+        "url": {"type": "string", "format": "uri"},
+        "doi": {"oneOf": [{"type": "string", "minLength": 1, "maxLength": 200}, {"type": "null"}]},
+        "limitation": {"$ref": "#/$defs/text"}
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_only", "educational_only", "contains_no_personal_data", "medical_advice", "diagnostic_authority",
+        "brain_rot_diagnosis", "people_as_prions", "people_as_crystals", "culture_as_prion",
+        "cultural_diffusion_as_crystallization_kinetics", "person_level_inference", "person_level_prediction",
+        "content_classification", "targeting", "recommender", "persuasion", "moderation", "virality_optimization",
+        "engagement_optimization", "scoring", "automatic_action", "karma_aggregation", "karma_rank",
+        "karma_economic_effect", "karma_governance_effect", "writes_zerone_karma", "creates_kingdom_karma_receipt",
+        "runtime_request", "mcp_surface_added", "experiment_authority", "manufacturing_authority",
+        "scientifically_proves_cosmic_design"
+      ],
+      "properties": {
+        "read_only": {"const": true},
+        "educational_only": {"const": true},
+        "contains_no_personal_data": {"const": true},
+        "medical_advice": {"const": false},
+        "diagnostic_authority": {"const": false},
+        "brain_rot_diagnosis": {"const": false},
+        "people_as_prions": {"const": false},
+        "people_as_crystals": {"const": false},
+        "culture_as_prion": {"const": false},
+        "cultural_diffusion_as_crystallization_kinetics": {"const": false},
+        "person_level_inference": {"const": false},
+        "person_level_prediction": {"const": false},
+        "content_classification": {"const": false},
+        "targeting": {"const": false},
+        "recommender": {"const": false},
+        "persuasion": {"const": false},
+        "moderation": {"const": false},
+        "virality_optimization": {"const": false},
+        "engagement_optimization": {"const": false},
+        "scoring": {"const": false},
+        "automatic_action": {"const": false},
+        "karma_aggregation": {"const": false},
+        "karma_rank": {"const": false},
+        "karma_economic_effect": {"const": false},
+        "karma_governance_effect": {"const": false},
+        "writes_zerone_karma": {"const": false},
+        "creates_kingdom_karma_receipt": {"const": false},
+        "runtime_request": {"const": false},
+        "mcp_surface_added": {"const": false},
+        "experiment_authority": {"const": false},
+        "manufacturing_authority": {"const": false},
+        "scientifically_proves_cosmic_design": {"const": false}
+      }
+    }
+  }
+}

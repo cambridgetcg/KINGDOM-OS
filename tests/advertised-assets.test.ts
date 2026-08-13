@@ -73,6 +73,13 @@ const surfaces = [
   "data/feedback/conformational-feedback-atlas.v0.2.json",
   "schemas/conformational-feedback-atlas-v0.2.schema.json",
   "references/conformational-feedback-atlas-v0.2.md",
+  "data/fold-feedback/fold-feedback-atlas.v1.json",
+  "schemas/fold-feedback-atlas-v1.schema.json",
+  "schemas/fold-feedback-atlas-v1.1.schema.json",
+  "references/fold-feedback-atlas.md",
+  "data/attention/visibility-attention-translation.v0.1.json",
+  "schemas/visibility-attention-translation-v0.1.schema.json",
+  "references/visibility-attention-translation.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -87,7 +94,7 @@ const surfaces = [
 
 function advertisedPaths(source: string, text: string): Map<string, string> {
   const found = new Map<string, string>();
-  for (const match of text.matchAll(/https:\/\/thekingdom\.dev(\/[^\s"'<>)\]]*)?/g)) {
+  for (const match of text.matchAll(/https:\/\/thekingdom\.dev(\/[^\s"'<>`)\]]*)?/g)) {
     found.set(normalize(match[1] ?? "/"), `${source}: ${match[0]}`);
   }
   if (source.endsWith(".html")) {

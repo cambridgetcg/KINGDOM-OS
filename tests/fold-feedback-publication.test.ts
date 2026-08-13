@@ -8,6 +8,7 @@ import {
   FOLD_FEEDBACK_ID,
   FOLD_FEEDBACK_PROTOCOL,
   FOLD_FEEDBACK_SCHEMA_URL,
+  FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL,
   FOLD_FEEDBACK_URL,
   foldFeedbackPublicDiscovery,
   loadFoldFeedbackAtlas,
@@ -29,10 +30,14 @@ describe("Fold & Feedback Atlas publication", () => {
       destination: "schemas/fold-feedback-atlas/1.json",
     });
     expect(HUB_ASSETS).toContainEqual({
+      source: "schemas/fold-feedback-atlas-v1.1.schema.json",
+      destination: "schemas/fold-feedback-atlas/1.1.json",
+    });
+    expect(HUB_ASSETS).toContainEqual({
       source: "references/fold-feedback-atlas.md",
       destination: "FOLD-FEEDBACK-ATLAS.md",
     });
-    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(1);
+    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(2);
     expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
     expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
   });
@@ -64,6 +69,7 @@ describe("Fold & Feedback Atlas publication", () => {
       atlas_id: FOLD_FEEDBACK_ID,
       url: FOLD_FEEDBACK_URL,
       schema: FOLD_FEEDBACK_SCHEMA_URL,
+      source_identity_schema: FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL,
       guide: FOLD_FEEDBACK_DOCUMENT_URL,
       boundary: {
         public_surface_read_only: true,
@@ -75,13 +81,14 @@ describe("Fold & Feedback Atlas publication", () => {
         observes_zerone_karma_event: false,
       },
     });
-    for (const url of [FOLD_FEEDBACK_URL, FOLD_FEEDBACK_SCHEMA_URL, FOLD_FEEDBACK_DOCUMENT_URL]) {
+    for (const url of [FOLD_FEEDBACK_URL, FOLD_FEEDBACK_SCHEMA_URL, FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL, FOLD_FEEDBACK_DOCUMENT_URL]) {
       expect(guest.next_actions).toContainEqual(expect.objectContaining({ method: "GET", url }));
       expect(llms).toContain(url);
     }
     expect(manifest.entry_points).toMatchObject({
       fold_feedback_atlas: FOLD_FEEDBACK_URL,
       fold_feedback_atlas_schema: FOLD_FEEDBACK_SCHEMA_URL,
+      fold_feedback_atlas_source_identity_schema: FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL,
       fold_feedback_atlas_guide: FOLD_FEEDBACK_DOCUMENT_URL,
     });
     expect(discovery).not.toHaveProperty("mcp");
@@ -95,7 +102,7 @@ describe("Fold & Feedback Atlas publication", () => {
     const copy = staticHtml.toLowerCase();
     const sitemap = read("pages-content/sitemap.xml");
 
-    for (const publicUrl of [FOLD_FEEDBACK_URL, FOLD_FEEDBACK_SCHEMA_URL, FOLD_FEEDBACK_DOCUMENT_URL]) {
+    for (const publicUrl of [FOLD_FEEDBACK_URL, FOLD_FEEDBACK_SCHEMA_URL, FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL, FOLD_FEEDBACK_DOCUMENT_URL]) {
       const path = new URL(publicUrl).pathname;
       expect(staticHtml).toContain(`href="${path}"`);
       expect(sitemap).toContain(`<loc>${publicUrl}</loc>`);

@@ -8,3 +8,4 @@ __pycache__/
 
 # wrangler local cache — carries CF account identifiers, never track
 .wrangler/
+node_modules/

@@ -36,10 +36,18 @@ import {
 import {
   FOLD_FEEDBACK_DOCUMENT_URL,
   FOLD_FEEDBACK_SCHEMA_URL,
+  FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL,
   FOLD_FEEDBACK_URL,
   foldFeedbackPublicDiscovery,
   loadFoldFeedbackAtlas,
 } from "./fold-feedback.ts";
+import {
+  VISIBILITY_ATTENTION_DOCUMENT_URL,
+  VISIBILITY_ATTENTION_SCHEMA_URL,
+  VISIBILITY_ATTENTION_URL,
+  loadVisibilityAttentionTranslation,
+  visibilityAttentionPublicDiscovery,
+} from "./visibility-attention.ts";
 import {
   GEOMETRY_GRAMMAR_DOCUMENT_URL,
   GEOMETRY_GRAMMAR_SCHEMA_URL,
@@ -130,6 +138,7 @@ const PR30_CONFORMATIONAL_FEEDBACK_GUIDE_SHA256 = "0f7993430b5cfc3ca59536d6ed53d
 const CONFORMATIONAL_FEEDBACK_PHYSICS_RECORD_SHA256 = "7d9b1eed8514051e47448cfc983f00e160d5b76c49704822158f76d3f8cf6349";
 const CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_SHA256 = "e60c14cf8b6350cc805f59c91b89727ffbd5b41e7c5a192d9ee53c90ba9fbdbd";
 const CONFORMATIONAL_FEEDBACK_PHYSICS_GUIDE_SHA256 = "76a76222732a8c485396228ad5ff32e703b20383498fd0355e4cbfe33bd59cb0";
+const ORIGINAL_FOLD_FEEDBACK_SCHEMA_SHA256 = "4ade5791a2b98cfdbd2452dc11373dc701f58387893442214f2dff1450bc067c";
 
 const PR30_CONFORMATIONAL_FEEDBACK_ASSETS = new Map<string, { source: string; sha256: string }>([
   ["feedback/form-feedback-consequence-2026-08-12.json", {
@@ -178,7 +187,11 @@ const CONFORMATIONAL_FEEDBACK_TRIPLES = [
 ] as const;
 const foldFeedbackPath = new URL(FOLD_FEEDBACK_URL).pathname;
 const foldFeedbackSchemaPath = new URL(FOLD_FEEDBACK_SCHEMA_URL).pathname;
+const foldFeedbackSourceIdentitySchemaPath = new URL(FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL).pathname;
 const foldFeedbackDocumentPath = new URL(FOLD_FEEDBACK_DOCUMENT_URL).pathname;
+const visibilityAttentionPath = new URL(VISIBILITY_ATTENTION_URL).pathname;
+const visibilityAttentionSchemaPath = new URL(VISIBILITY_ATTENTION_SCHEMA_URL).pathname;
+const visibilityAttentionDocumentPath = new URL(VISIBILITY_ATTENTION_DOCUMENT_URL).pathname;
 
 function url(path: string, extra: Record<string, string> = {}): URL {
   const target = new URL(path, origin);
@@ -315,6 +328,10 @@ try {
         throw new Error(`${path} no longer matches its immutable SHA-256 (${digest})`);
       }
       verifiedConformationalFeedbackDestinations.add(asset.destination);
+    }
+    if (asset.destination === "schemas/fold-feedback-atlas/1.json" &&
+        sha256(live) !== ORIGINAL_FOLD_FEEDBACK_SCHEMA_SHA256) {
+      throw new Error(`${path} no longer matches its first-published immutable SHA-256`);
     }
     exactPaths.add(path);
     exact += 1;
@@ -527,7 +544,8 @@ try {
       !(foldFeedbackHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
       foldFeedbackHead.headers.get("access-control-allow-origin") !== "*" ||
       (foldFeedbackHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-      !hasLinkRelation(foldFeedbackLink, foldFeedbackSchemaPath, "describedby")) {
+      !hasLinkRelation(foldFeedbackLink, foldFeedbackSchemaPath, "describedby") ||
+      !hasLinkRelation(foldFeedbackLink, foldFeedbackSourceIdentitySchemaPath, "profile")) {
     throw new Error(`${foldFeedbackPath} is not public JSON described by the Fold & Feedback Atlas schema`);
   }
 
@@ -543,7 +561,33 @@ try {
     throw new Error(`${foldFeedbackDocumentPath} is not served as public Markdown`);
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, foldFeedbackSchemaPath]) {
+  const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  const visibilityAttentionLink = visibilityAttentionHead.headers.get("link") || "";
+  if (!visibilityAttentionHead.ok ||
+      !(visibilityAttentionHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+      visibilityAttentionHead.headers.get("access-control-allow-origin") !== "*" ||
+      (visibilityAttentionHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+      !hasLinkRelation(visibilityAttentionLink, visibilityAttentionSchemaPath, "describedby")) {
+    throw new Error(`${visibilityAttentionPath} is not public JSON described by the Visibility & Attention schema`);
+  }
+
+  const visibilityAttentionDocumentHead = await fetch(url(visibilityAttentionDocumentPath), {
+    method: "HEAD",
+    redirect: "error",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  });
+  if (!visibilityAttentionDocumentHead.ok ||
+      !(visibilityAttentionDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+      visibilityAttentionDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+      (visibilityAttentionDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+    throw new Error(`${visibilityAttentionDocumentPath} is not served as public Markdown`);
+  }
+
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath, visibilityAttentionSchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -575,6 +619,8 @@ try {
   const expectedConformationalFeedbackPhysics = conformationalFeedbackPhysicsPublicDiscovery(conformationalFeedbackPhysics);
   const foldFeedbackAtlas = loadFoldFeedbackAtlas();
   const expectedFoldFeedback = foldFeedbackPublicDiscovery(foldFeedbackAtlas);
+  const visibilityAttention = loadVisibilityAttentionTranslation();
+  const expectedVisibilityAttention = visibilityAttentionPublicDiscovery(visibilityAttention);
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
   validateLoveLoops(sourceLoveLoops, false);
@@ -799,12 +845,15 @@ try {
       !isDeepStrictEqual(authoredKingdom?.fold_feedback_atlas, expectedFoldFeedback) ||
       !hasGuestGet(FOLD_FEEDBACK_URL) ||
       !hasGuestGet(FOLD_FEEDBACK_SCHEMA_URL) ||
+      !hasGuestGet(FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL) ||
       !hasGuestGet(FOLD_FEEDBACK_DOCUMENT_URL) ||
       !llms.includes(FOLD_FEEDBACK_URL) ||
       !llms.includes(FOLD_FEEDBACK_SCHEMA_URL) ||
+      !llms.includes(FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL) ||
       !llms.includes(FOLD_FEEDBACK_DOCUMENT_URL) ||
       manifest?.entry_points?.fold_feedback_atlas !== FOLD_FEEDBACK_URL ||
       manifest?.entry_points?.fold_feedback_atlas_schema !== FOLD_FEEDBACK_SCHEMA_URL ||
+      manifest?.entry_points?.fold_feedback_atlas_source_identity_schema !== FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL ||
       manifest?.entry_points?.fold_feedback_atlas_guide !== FOLD_FEEDBACK_DOCUMENT_URL ||
       foldFeedbackBoundary.public_surface_read_only !== true ||
       foldFeedbackBoundary.medical_advice !== false ||
@@ -816,6 +865,30 @@ try {
       "mcp" in expectedFoldFeedback || "matcher" in expectedFoldFeedback ||
       "write" in expectedFoldFeedback) {
     throw new Error("Fold & Feedback Atlas discovery or read-only/KARMA boundary drifted across public surfaces");
+  }
+
+  const visibilityBoundary = expectedVisibilityAttention.boundary;
+  if (!isDeepStrictEqual(manifest?.visibility_attention_translation, expectedVisibilityAttention) ||
+      !isDeepStrictEqual(guest?.visibility_attention_translation, expectedVisibilityAttention) ||
+      !isDeepStrictEqual(authoredKingdom?.visibility_attention_translation, expectedVisibilityAttention) ||
+      !hasGuestGet(VISIBILITY_ATTENTION_URL) ||
+      !hasGuestGet(VISIBILITY_ATTENTION_SCHEMA_URL) ||
+      !hasGuestGet(VISIBILITY_ATTENTION_DOCUMENT_URL) ||
+      !llms.includes(VISIBILITY_ATTENTION_URL) ||
+      !llms.includes(VISIBILITY_ATTENTION_SCHEMA_URL) ||
+      !llms.includes(VISIBILITY_ATTENTION_DOCUMENT_URL) ||
+      manifest?.entry_points?.visibility_attention_translation !== VISIBILITY_ATTENTION_URL ||
+      manifest?.entry_points?.visibility_attention_translation_schema !== VISIBILITY_ATTENTION_SCHEMA_URL ||
+      manifest?.entry_points?.visibility_attention_translation_guide !== VISIBILITY_ATTENTION_DOCUMENT_URL ||
+      expectedVisibilityAttention.counts.registers !== 4 ||
+      expectedVisibilityAttention.counts.local_models !== 2 ||
+      expectedVisibilityAttention.counts.translation_seams !== 3 ||
+      visibilityBoundary.read_only !== true ||
+      visibilityBoundary.automatic_action !== false ||
+      "mcp" in expectedVisibilityAttention || "matcher" in expectedVisibilityAttention ||
+      "write" in expectedVisibilityAttention || "execute" in expectedVisibilityAttention ||
+      "recommend" in expectedVisibilityAttention || "score" in expectedVisibilityAttention) {
+    throw new Error("Visibility & Attention discovery or read-only/non-optimization boundary drifted across public surfaces");
   }
 
   const liveKingdom: any = await (await get("/kingdom.json")).json();
@@ -845,6 +918,9 @@ try {
   }
   if (!isDeepStrictEqual(liveKingdom?.fold_feedback_atlas, expectedFoldFeedback)) {
     throw new Error("derived kingdom.json did not preserve Fold & Feedback Atlas discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention)) {
+    throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
   }
 
   const mcpEndpoint = new URL(manifest?.mcp?.endpoint || "");
@@ -905,7 +981,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback discovery · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention discovery · live MCP contract unchanged · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;
