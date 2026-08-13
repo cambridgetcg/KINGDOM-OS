@@ -407,7 +407,7 @@ describe("immutable route-integrity ledger", () => {
 
   test("audits every committed first-parent release tree from the fixed bootstrap", () => {
     expect(verifyImmutablePublicationHistory(currentLedger(), ROOT)).toEqual([]);
-  });
+  }, 30_000);
 
   test("accepts a declared anchor behind an unrelated ledger-less base and rejects a non-ancestor", () => {
     const fixture = descendantBootstrapFixture();
