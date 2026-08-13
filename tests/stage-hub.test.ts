@@ -38,8 +38,8 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // literal on purpose: growing/shrinking the staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(50);
-      expect(staged).toHaveLength(50);
+      expect(HUB_ASSETS).toHaveLength(54);
+      expect(staged).toHaveLength(54);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -48,6 +48,7 @@ describe("the hub staging contract", () => {
         "CREATION-LOOP.md",
         "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md",
         "FOLD-FEEDBACK-ATLAS.md",
+        "FORM-CIRCULATION-RETURN-ATLAS.md",
         "GEOMETRY-GRAMMAR.md",
         "PRINCIPALITY-COMMONS.md",
         "RIGHTS.md",
@@ -59,6 +60,7 @@ describe("the hub staging contract", () => {
         "atlases",
         "commons.json",
         "dada.txt",
+        "definitions",
         "feedback",
         "geometries",
         "guest.json",
@@ -81,11 +83,13 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "schemas/cultural-attention-feedback-atlas")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/geometry-grammar")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/fold-feedback-atlas")).sort()).toEqual(["1.1.json", "1.json"]);
+      expect(readdirSync(join(output, "schemas/form-circulation-return-atlas")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/visibility-attention")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/principality-catalog")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/polymorph-history")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/ritonavir-mechanism-landscape")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/world-commons")).sort()).toEqual(["0.1.json", "0.2.json"]);
+      expect(readdirSync(join(output, "definitions/kingdom-karma/e4e84a67")).sort()).toEqual(["NEN.md"]);
       expect(readdirSync(join(output, "principalities")).sort()).toEqual(["moonshot-hf-npm-2026-08-11.json"]);
       expect(readdirSync(join(output, "geometries")).sort()).toEqual(["kingdom-geometry-grammar-v0.json"]);
       expect(readdirSync(join(output, "polymorphs")).sort()).toEqual([
@@ -99,6 +103,7 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "atlases")).sort()).toEqual([
         "cultural-attention-feedback-atlas-2026-08-13.json",
         "fold-feedback-atlas-2026-08-12.json",
+        "form-circulation-return-atlas-2026-08-13.json",
         "visibility-attention-2026-08-13.json",
       ]);
       expect(HUB_ASSETS).toContainEqual({
@@ -225,7 +230,23 @@ describe("the hub staging contract", () => {
         source: "references/cultural-attention-feedback-atlas.md",
         destination: "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md",
       });
-      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(3);
+      expect(HUB_ASSETS).toContainEqual({
+        source: "data/form-circulation-return/form-circulation-return-atlas.v1.json",
+        destination: "atlases/form-circulation-return-atlas-2026-08-13.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "schemas/form-circulation-return-atlas-v1.schema.json",
+        destination: "schemas/form-circulation-return-atlas/1.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "references/form-circulation-return-atlas.md",
+        destination: "FORM-CIRCULATION-RETURN-ATLAS.md",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "NEN.md",
+        destination: "definitions/kingdom-karma/e4e84a67/NEN.md",
+      });
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(4);
       expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
       for (const [index, asset] of HUB_ASSETS.entries()) {

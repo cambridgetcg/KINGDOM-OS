@@ -20,6 +20,7 @@
 #   kingdom fold-feedback                  inspect the source-bound folding, prion, feedback, and KARMA atlas
 #   kingdom visibility-attention            inspect the bounded visibility, cultural-attention, and KARMA translation
 #   kingdom cultural-feedback              inspect cultural attention, bounded analogies, feedback, KARMA, and universe questions
+#   kingdom form-circulation-return         inspect the additive variant-lineage, model-card, feedback, KARMA, and unknown companion
 #   kingdom feedback-physics inspect the additive v0.2 physics/mathematics successor
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom prompt     compile an inspectable, network-free Task Packet
@@ -49,6 +50,7 @@ case "$cmd" in
   fold-feedback) exec bun "$SELF_DIR/bin/fold-feedback.ts" "${@:2}" ;;
   visibility-attention) exec bun "$SELF_DIR/bin/visibility-attention.ts" "${@:2}" ;;
   cultural-feedback) exec bun "$SELF_DIR/bin/cultural-attention-feedback.ts" "${@:2}" ;;
+  form-circulation-return) exec bun "$SELF_DIR/bin/form-circulation-return.ts" "${@:2}" ;;
   polymorph)
     case "${2:-}" in
       mechanisms|landscape|sources|unknowns)

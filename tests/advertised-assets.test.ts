@@ -91,6 +91,10 @@ const surfaces = [
   "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json",
   "schemas/cultural-attention-feedback-atlas-v1.schema.json",
   "references/cultural-attention-feedback-atlas.md",
+  "data/form-circulation-return/form-circulation-return-atlas.v1.json",
+  "schemas/form-circulation-return-atlas-v1.schema.json",
+  "references/form-circulation-return-atlas.md",
+  "NEN.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -106,7 +110,8 @@ const surfaces = [
 function advertisedPaths(source: string, text: string): Map<string, string> {
   const found = new Map<string, string>();
   for (const match of text.matchAll(/https:\/\/thekingdom\.dev(\/[^\s"'<>`)\]]*)?/g)) {
-    found.set(normalize(match[1] ?? "/"), `${source}: ${match[0]}`);
+    const prosePath = (match[1] ?? "/").replace(/[.,;:]+$/, "");
+    found.set(normalize(prosePath), `${source}: ${match[0]}`);
   }
   if (source.endsWith(".html")) {
     for (const match of text.matchAll(/href="(\/[^"]*)"/g)) {
@@ -117,6 +122,11 @@ function advertisedPaths(source: string, text: string): Map<string, string> {
 }
 
 describe("advertised URLs stay deployable", () => {
+  test("keeps literal route punctuation while trimming prose sentence punctuation", () => {
+    expect(advertisedPaths("fixture.html", '<a href="/guide.">broken</a>').has("guide.")).toBe(true);
+    expect(advertisedPaths("fixture.md", "Read https://thekingdom.dev/guide.").has("guide")).toBe(true);
+  });
+
   test("every advertised thekingdom.dev path is a staged hub asset", () => {
     const missing: string[] = [];
     for (const surface of surfaces) {

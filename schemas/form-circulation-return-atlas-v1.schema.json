@@ -1,0 +1,5994 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:form-circulation-return-atlas:1",
+  "$comment": "This exact closed publication schema pins every reviewed record value, array order, identity, authority boundary, and digest. JSON Schema validation cannot recompute the semantic digest; use kingdom form-circulation-return verify for that check.",
+  "title": "Form, Circulation & Return Atlas v1",
+  "description": "Exact closed schema for the immutable 2026-08-13 form, circulation, and return companion atlas.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "atlas_id",
+    "title",
+    "compiled_on",
+    "evidence_through",
+    "source_bindings",
+    "scope",
+    "plain_language",
+    "ontology",
+    "material_case",
+    "cultural_layer",
+    "model_cards",
+    "evidence_claims",
+    "analogy_seams",
+    "feedback_loops",
+    "karma",
+    "ecosystem_bridges",
+    "universe_lens",
+    "unknowns",
+    "sources",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "urn:kingdom:schema:form-circulation-return-atlas:1"
+    },
+    "protocol": {
+      "const": "kingdom.form-circulation-return-atlas/0.1"
+    },
+    "atlas_id": {
+      "const": "form-circulation-return-atlas-2026-08-13"
+    },
+    "title": {
+      "const": "Form, Circulation & Return"
+    },
+    "compiled_on": {
+      "const": "2026-08-13"
+    },
+    "evidence_through": {
+      "const": "2026-08-13"
+    },
+    "source_bindings": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-ritonavir-history"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "06996296fd0de3a25ed9bb299f3c627b6a29045d"
+            },
+            "artifact": {
+              "const": "ritonavir-disappearing-polymorph-2026-08-11"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json"
+            },
+            "raw_digest": {
+              "const": "sha256:08148603a1228960ac35df1378f1283c3fce43874a9fc07e6687f18e980dcb1c"
+            },
+            "semantic_digest": {
+              "const": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116"
+            },
+            "relation": {
+              "const": "immutable-material-case-input"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-ritonavir-mechanism"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "919df4409fc42ede5330ecd36c12fdb752ee9c50"
+            },
+            "artifact": {
+              "const": "ritonavir-mechanism-landscape-2026-08-11"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json"
+            },
+            "raw_digest": {
+              "const": "sha256:5e136a74d5166275427da920685a84c17901f63d6e4b0661fd529c96d386943b"
+            },
+            "semantic_digest": {
+              "const": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b"
+            },
+            "relation": {
+              "const": "immutable-material-mechanism-input"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-conformational-feedback-v0-1"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "78876f598ebe18a1ae3cbc947a382b550224a7c7"
+            },
+            "artifact": {
+              "const": "form-feedback-consequence-2026-08-12"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json"
+            },
+            "raw_digest": {
+              "const": "sha256:ae15f4f69e488323132ea6fc94d57d338702ca0fa47fd9fbbd41c15a6af230e6"
+            },
+            "semantic_digest": {
+              "const": "sha256:14ce5e5e4b2b3d29d9a9cc0c831dcfb88de3d4a9e9584119939e5118f7ac7361"
+            },
+            "relation": {
+              "const": "immutable-feedback-input"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-conformational-feedback-v0-2"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "78876f598ebe18a1ae3cbc947a382b550224a7c7"
+            },
+            "artifact": {
+              "const": "form-feedback-physics-consequence-2026-08-12"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json"
+            },
+            "raw_digest": {
+              "const": "sha256:7d9b1eed8514051e47448cfc983f00e160d5b76c49704822158f76d3f8cf6349"
+            },
+            "semantic_digest": {
+              "const": "sha256:0fc24a0fac99d2dadcdef5b87290a1d598b856f874aa9637ab4d503fd4c9dc11"
+            },
+            "relation": {
+              "const": "immutable-physics-input"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-fold-feedback"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "b9ef002c953c057e16c9d05f0370b707aa4bf754"
+            },
+            "artifact": {
+              "const": "fold-feedback-atlas-2026-08-12"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json"
+            },
+            "raw_digest": {
+              "const": "sha256:bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5"
+            },
+            "semantic_digest": {
+              "const": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7"
+            },
+            "relation": {
+              "const": "immutable-boundary-input"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-visibility-attention"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "b0130580c5f939cbd7c3eff2708744b952dabaee"
+            },
+            "artifact": {
+              "const": "visibility-is-not-existence-2026-08-13"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json"
+            },
+            "raw_digest": {
+              "const": "sha256:0af0249c40298ed746d39ee60760a4390bb45137caa8ee6dd7555a824f597bd3"
+            },
+            "semantic_digest": {
+              "const": "sha256:9fb83bbd022f520716fabcdec49d8af259b9681efd5e640a9e3119c5c42a54ed"
+            },
+            "relation": {
+              "const": "immutable-attention-boundary-input"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-cultural-attention-feedback"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "3944cacf50f53dfc8939f8557015fe4ad57c5599"
+            },
+            "artifact": {
+              "const": "cultural-attention-feedback-atlas-2026-08-13"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/atlases/cultural-attention-feedback-atlas-2026-08-13.json"
+            },
+            "raw_digest": {
+              "const": "sha256:03f7048966d7b6df582b423254b4d73cda72cce3bd67b40736927faa92b88173"
+            },
+            "semantic_digest": {
+              "const": "sha256:2f6ecadc131a54cdd500b001dbcc47fb036e5e411def918245fec963b9769e4d"
+            },
+            "relation": {
+              "const": "immutable-cultural-attention-predecessor"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-karma-definition"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212"
+            },
+            "artifact": {
+              "const": "NEN.md KARMA definition"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/definitions/kingdom-karma/e4e84a67/NEN.md"
+            },
+            "raw_digest": {
+              "const": "sha256:14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446"
+            },
+            "semantic_digest": {
+              "const": null
+            },
+            "relation": {
+              "const": "immutable-public-definition-mirror"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "zerone-karma-foundation"
+            },
+            "system": {
+              "const": "zerone"
+            },
+            "revision": {
+              "const": "fae391e371f0ebea2e24eb46c33a4ebd1380154f"
+            },
+            "artifact": {
+              "const": "zerone.karma-foundation/v1"
+            },
+            "url": {
+              "const": "https://github.com/cambridgetcg/zerone-core/blob/fae391e371f0ebea2e24eb46c33a4ebd1380154f/dashboard/public/standards/karma-foundation.v1.json"
+            },
+            "raw_digest": {
+              "const": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80"
+            },
+            "semantic_digest": {
+              "const": null
+            },
+            "relation": {
+              "const": "definition-only"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "focus",
+        "intended_use",
+        "excluded_use",
+        "observation_policy",
+        "currentness"
+      ],
+      "properties": {
+        "focus": {
+          "const": "An additive deep companion to the immutable Cultural Attention & Feedback Atlas: a bounded translation between material-form accessibility, cultural-variant circulation, finite attention, mathematical description, feedback, KARMA, and philosophical questions."
+        },
+        "intended_use": {
+          "const": "Education, source tracing, model selection, challenge, and safer infrastructure design."
+        },
+        "excluded_use": {
+          "const": "Medical or clinical advice, diagnosis, treatment, prognosis, experiment or wet-lab design, formulation or manufacturing control, operational protocols, person or community classification, causal attribution, content ranking, moderation, reward, economics, governance, or automatic action."
+        },
+        "observation_policy": {
+          "const": "Every observation stays qualified by subject, corpus or process, procedure, time window, threshold, observed result, exclusions, and uncertainty."
+        },
+        "currentness": {
+          "const": "selected-evidence-as-of-compilation"
+        }
+      }
+    },
+    "plain_language": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question",
+        "short_answer",
+        "safety"
+      ],
+      "properties": {
+        "question": {
+          "const": "What useful shape connects a disappearing polymorph, meme circulation, finite attention, feedback, KARMA, and questions about design without pretending they are the same thing?"
+        },
+        "short_answer": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "prefixItems": [
+            {
+              "const": "Several states or variants may be possible while history and boundary conditions change which ones are easy to reach or observe."
+            },
+            {
+              "const": "Local reinforcement can sometimes create a large aggregate pattern; saturation, correction, refusal, and decay can limit or redirect it."
+            },
+            {
+              "const": "A crystal form is not a cultural artifact, a cultural artifact is not its meaning, and none of them is a person or mind."
+            },
+            {
+              "const": "Exposure, sharing, remixing, interpretation, endorsement, belief, and behavior are different observations."
+            },
+            {
+              "const": "Popularity, persistence, entropy, and model growth are not truth, quality, harm, consent, destiny, or moral worth."
+            },
+            {
+              "const": "KARMA preserves accountable relation and aftermath without converting engagement into a score, balance, reward, or vote."
+            },
+            {
+              "const": "Questions about universal design are opt-in philosophy; the scientific sources neither prove nor disprove them."
+            }
+          ],
+          "items": false
+        },
+        "safety": {
+          "const": "Static educational metadata only. The historical ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. The slang label ‘brainrot’ is not a diagnosis or property of a person or community. No runtime request, tracking, person inference, KARMA write, reward, governance effect, or automatic action occurs."
+        }
+      }
+    },
+    "ontology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "non_equivalence",
+        "registers",
+        "planes",
+        "firewalls",
+        "domain_qualified_terms"
+      ],
+      "properties": {
+        "non_equivalence": {
+          "const": "chemical_identity != crystal_form != bounded_material_sample != cultural_artifact != cultural_practice_label != exposure_event != share_or_remix_event != platform_distribution_state != collective_attention_state != individual_cognitive_state != clinical_assessment != mathematical_model != feedback_hypothesis != karma_event_or_receipt != philosophical_interpretation != person_or_community_or_moral_status"
+        },
+        "registers": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "MATERIAL_OBSERVATION"
+                },
+                "meaning": {
+                  "const": "Source-bound observations about molecules, solid-state forms, samples, and procedures."
+                },
+                "cannot_authorize": {
+                  "const": "Cultural, cognitive, moral, or person-level inference."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "CULTURAL_OBSERVATION"
+                },
+                "meaning": {
+                  "const": "Bounded observations of public artifacts, relations, labels, and circulation events."
+                },
+                "cannot_authorize": {
+                  "const": "Belief, cognition, diagnosis, intent, or population-wide causality."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "CULTURAL_ANALYSIS"
+                },
+                "meaning": {
+                  "const": "A sourced analytic definition or interpretive framework for cultural artifacts and relations."
+                },
+                "cannot_authorize": {
+                  "const": "A claim that the definition is a directly observed natural kind, mechanism, or person state."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "MATHEMATICAL_MODEL"
+                },
+                "meaning": {
+                  "const": "An explicit conditional abstraction with variables, assumptions, and limits."
+                },
+                "cannot_authorize": {
+                  "const": "Evidence, causality, universal law, or value by itself."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "FEEDBACK_HYPOTHESIS"
+                },
+                "meaning": {
+                  "const": "A declared possible return edge whose complete input-process-aftermath chain is not observed here."
+                },
+                "cannot_authorize": {
+                  "const": "Causality, optimization, platform intent, prediction, or an observed feedback loop."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "CONSTITUTIONAL_DESIGN"
+                },
+                "meaning": {
+                  "const": "Infrastructure rules for provenance, challenge, repair, rest, and non-conversion."
+                },
+                "cannot_authorize": {
+                  "const": "A claim that the rule already exists in Zerone or produced a KINGDOM receipt."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "PHILOSOPHY"
+                },
+                "meaning": {
+                  "const": "Opt-in questions about possibility, history, feedback, agency, and design."
+                },
+                "cannot_authorize": {
+                  "const": "Scientific proof for or against teleology, a creator, or cosmic moral KARMA."
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "planes": {
+          "type": "array",
+          "minItems": 11,
+          "maxItems": 11,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "material-molecule"
+                },
+                "ordinary_words": {
+                  "const": "chemical identity"
+                },
+                "does_not_establish": {
+                  "const": "solid-state form or biological effect"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "crystal-form"
+                },
+                "ordinary_words": {
+                  "const": "one solid-state arrangement"
+                },
+                "does_not_establish": {
+                  "const": "cultural meaning, popularity, or value"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "bounded-material-sample"
+                },
+                "ordinary_words": {
+                  "const": "what a named procedure observed or produced"
+                },
+                "does_not_establish": {
+                  "const": "all possible samples or permanent disappearance"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "cultural-artifact"
+                },
+                "ordinary_words": {
+                  "const": "specific public bytes, image, phrase, or composite"
+                },
+                "does_not_establish": {
+                  "const": "meaning, ancestry, exposure, belief, or a person"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "cultural-practice-label"
+                },
+                "ordinary_words": {
+                  "const": "a contextual label applied to artifacts or practices"
+                },
+                "does_not_establish": {
+                  "const": "medical fact, cognitive state, or community property"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "exposure-or-impression-event"
+                },
+                "ordinary_words": {
+                  "const": "an artifact was made available on a declared surface"
+                },
+                "does_not_establish": {
+                  "const": "attention, comprehension, adoption, or persuasion"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "share-or-remix-event"
+                },
+                "ordinary_words": {
+                  "const": "a bounded public action related to an artifact"
+                },
+                "does_not_establish": {
+                  "const": "agreement, fidelity, belief, intent, or worth"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "platform-distribution-state"
+                },
+                "ordinary_words": {
+                  "const": "the documented state of a delivery or ranking system"
+                },
+                "does_not_establish": {
+                  "const": "its objective, total influence, or user susceptibility"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "collective-attention-state"
+                },
+                "ordinary_words": {
+                  "const": "an aggregate measurement over a declared corpus and interval"
+                },
+                "does_not_establish": {
+                  "const": "any individual mind or a conserved substance"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "individual-cognitive-state"
+                },
+                "ordinary_words": {
+                  "const": "a person-level cognitive construct"
+                },
+                "does_not_establish": {
+                  "const": "anything here; this plane is outside scope and never inferred"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "ordinary_words",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "clinical-assessment"
+                },
+                "ordinary_words": {
+                  "const": "a qualified health evaluation"
+                },
+                "does_not_establish": {
+                  "const": "anything here; the atlas has no clinical authority"
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "firewalls": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "crystal-not-meme"
+                },
+                "rule": {
+                  "const": "A polymorph and a meme variant are not the same kind of entity or mechanism."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "seed-not-share"
+                },
+                "rule": {
+                  "const": "A material seed and a cultural precedent or share are not equivalent."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "spread-not-contagion"
+                },
+                "rule": {
+                  "const": "Cultural circulation must not make people hosts, vectors, or pathogens."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "attention-not-mind"
+                },
+                "rule": {
+                  "const": "Aggregate attention is not an individual cognitive state."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "brainrot-not-diagnosis"
+                },
+                "rule": {
+                  "const": "‘Brainrot’ remains a contested contextual label for artifacts or practices, never a diagnosis or person attribute."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "model-not-measurement"
+                },
+                "rule": {
+                  "const": "An equation is not an observation and an unfitted parameter is not a measured fact."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "popularity-not-value"
+                },
+                "rule": {
+                  "const": "Reach, growth, persistence, and centrality do not establish truth, quality, benefit, harm, or moral worth."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "analogy-not-mechanism"
+                },
+                "rule": {
+                  "const": "A preserved abstract relation never imports a mechanism across domains."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "karma-not-metric"
+                },
+                "rule": {
+                  "const": "Engagement and model outputs do not become KARMA, receipts, balances, rewards, ranks, or votes."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "philosophy-not-science"
+                },
+                "rule": {
+                  "const": "A philosophical reading cannot be cited as empirical evidence."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "domain_qualified_terms": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "term",
+                "bounded_meaning",
+                "forbidden_shortcut"
+              ],
+              "properties": {
+                "term": {
+                  "const": "polymorph"
+                },
+                "bounded_meaning": {
+                  "const": "A distinct crystal structure of the same chemical substance."
+                },
+                "forbidden_shortcut": {
+                  "const": "Not a synonym for cultural variant or personality."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "term",
+                "bounded_meaning",
+                "forbidden_shortcut"
+              ],
+              "properties": {
+                "term": {
+                  "const": "disappear"
+                },
+                "bounded_meaning": {
+                  "const": "Failure to reproduce or re-observe a specified subject within a named procedure, corpus, threshold, and window."
+                },
+                "forbidden_shortcut": {
+                  "const": "Not annihilation, extinction, forgetting, suppression, or deserved erasure."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "term",
+                "bounded_meaning",
+                "forbidden_shortcut"
+              ],
+              "properties": {
+                "term": {
+                  "const": "meme"
+                },
+                "bounded_meaning": {
+                  "const": "A group of cultural items recognized through shared content, form, or stance within a declared analysis."
+                },
+                "forbidden_shortcut": {
+                  "const": "Not a gene, molecule, pathogen, mind, or deterministic program."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "term",
+                "bounded_meaning",
+                "forbidden_shortcut"
+              ],
+              "properties": {
+                "term": {
+                  "const": "brainrot"
+                },
+                "bounded_meaning": {
+                  "const": "A contested vernacular label quoted with source and context for cultural artifacts or practices."
+                },
+                "forbidden_shortcut": {
+                  "const": "Not a diagnosis, neurological fact, person or community trait, or score."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "term",
+                "bounded_meaning",
+                "forbidden_shortcut"
+              ],
+              "properties": {
+                "term": {
+                  "const": "spread"
+                },
+                "bounded_meaning": {
+                  "const": "A change in observed public artifact events or reach over a declared graph and window."
+                },
+                "forbidden_shortcut": {
+                  "const": "Not contagion, belief, agreement, or persuasion."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "term",
+                "bounded_meaning",
+                "forbidden_shortcut"
+              ],
+              "properties": {
+                "term": {
+                  "const": "virality"
+                },
+                "bounded_meaning": {
+                  "const": "A diffusion-tree shape statistic when the tree and missing-edge limits are stated."
+                },
+                "forbidden_shortcut": {
+                  "const": "Not popularity, quality, truth, fitness, harm, or agreement."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "term",
+                "bounded_meaning",
+                "forbidden_shortcut"
+              ],
+              "properties": {
+                "term": {
+                  "const": "attention"
+                },
+                "bounded_meaning": {
+                  "const": "A specified aggregate proxy such as observed arrivals, views, or actions."
+                },
+                "forbidden_shortcut": {
+                  "const": "Not a conserved fluid or complete account of a mind."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "term",
+                "bounded_meaning",
+                "forbidden_shortcut"
+              ],
+              "properties": {
+                "term": {
+                  "const": "entropy"
+                },
+                "bounded_meaning": {
+                  "const": "A statistic of a declared probability distribution."
+                },
+                "forbidden_shortcut": {
+                  "const": "Not meaning, wisdom, quality, mental disorder, or cosmic disorder."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "term",
+                "bounded_meaning",
+                "forbidden_shortcut"
+              ],
+              "properties": {
+                "term": {
+                  "const": "karma"
+                },
+                "bounded_meaning": {
+                  "const": "A protocol-qualified Zerone relation or KINGDOM invocation receipt."
+                },
+                "forbidden_shortcut": {
+                  "const": "Not cosmic desert, engagement score, wallet balance, reward, rank, or governance weight."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "term",
+                "bounded_meaning",
+                "forbidden_shortcut"
+              ],
+              "properties": {
+                "term": {
+                  "const": "feedback"
+                },
+                "bounded_meaning": {
+                  "const": "An observed or explicitly hypothesized return from an output or measurement into later conditions."
+                },
+                "forbidden_shortcut": {
+                  "const": "Not purpose, optimization, morality, hidden intent, or inevitable future."
+                }
+              }
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "material_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject",
+        "disappearance_predicate",
+        "literal_model",
+        "source_ids"
+      ],
+      "properties": {
+        "subject": {
+          "const": "ritonavir crystal forms under bounded production and experimental conditions"
+        },
+        "disappearance_predicate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "subject",
+            "process_or_corpus",
+            "procedure",
+            "time_window",
+            "detection_threshold",
+            "observed_result",
+            "exclusions"
+          ],
+          "properties": {
+            "subject": {
+              "const": "ritonavir Form I"
+            },
+            "process_or_corpus": {
+              "const": "named manufacturing and laboratory crystallization procedures"
+            },
+            "procedure": {
+              "const": "historically reported attempts after the appearance of Form II"
+            },
+            "time_window": {
+              "const": "bounded historical intervals reported by the bound material sources"
+            },
+            "detection_threshold": {
+              "const": "method-dependent; no universal absence threshold is asserted"
+            },
+            "observed_result": {
+              "const": "Form I became difficult to reproduce reliably in the affected setting"
+            },
+            "exclusions": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "annihilation from physical possibility"
+                },
+                {
+                  "const": "absence from every sample"
+                },
+                {
+                  "const": "permanent irrecoverability"
+                },
+                {
+                  "const": "cultural or moral meaning"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        "literal_model": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "equations",
+            "register",
+            "warning"
+          ],
+          "properties": {
+            "equations": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "ΔG_i(r) = 4πr²γ_i − (4π/3)r³Δg_vi"
+                },
+                {
+                  "const": "J_i ≈ J0_i exp(−ΔG_i*/kBT)"
+                }
+              ],
+              "items": false
+            },
+            "register": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "warning": {
+              "const": "Atlas-authored, unfitted illustration using the spherical-capillarity form of classical nucleation theory. It is not inferred from, fitted to, or validated by the bound ritonavir sources; they provide material-case context only. J0_i is unspecified, so the second expression is schematic barrier dependence rather than a complete rate law. Its variables and mechanisms must not be transferred to cultural artifacts or people, and the equations are not observations."
+            }
+          }
+        },
+        "source_ids": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            {
+              "const": "dunitz-1995"
+            },
+            {
+              "const": "bauer-2001"
+            },
+            {
+              "const": "sacchi-2024"
+            },
+            {
+              "const": "karthika-2016"
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "cultural_layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "variant_unit",
+        "event_distinctions",
+        "lineage_policy",
+        "meaning_fidelity",
+        "vernacular_labels"
+      ],
+      "properties": {
+        "variant_unit": {
+          "const": "An artifact-family variant exists only under a declared, auditable content/form/stance or transformation rule."
+        },
+        "event_distinctions": {
+          "type": "array",
+          "minItems": 11,
+          "maxItems": 11,
+          "prefixItems": [
+            {
+              "const": "publication"
+            },
+            {
+              "const": "availability"
+            },
+            {
+              "const": "exposure"
+            },
+            {
+              "const": "attention proxy"
+            },
+            {
+              "const": "share"
+            },
+            {
+              "const": "quotation"
+            },
+            {
+              "const": "remix"
+            },
+            {
+              "const": "interpretation"
+            },
+            {
+              "const": "endorsement"
+            },
+            {
+              "const": "belief"
+            },
+            {
+              "const": "behavior"
+            }
+          ],
+          "items": false
+        },
+        "lineage_policy": {
+          "const": "Record immutable artifact hashes and separately asserted parent, quotation, transformation, and semantic-relation claims; ancestry and similarity are not silently interchangeable."
+        },
+        "meaning_fidelity": {
+          "const": "Human review may record lost detail, addition, contradiction, preservation, and unknown; no scalar brainrot, truth, quality, or person score is defined."
+        },
+        "vernacular_labels": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "status",
+                "target_type",
+                "source_id",
+                "context",
+                "quoted_wording",
+                "observed_on",
+                "never"
+              ],
+              "properties": {
+                "id": {
+                  "const": "brainrot"
+                },
+                "status": {
+                  "const": "contested"
+                },
+                "target_type": {
+                  "const": "artifact-or-practice-only"
+                },
+                "source_id": {
+                  "const": "oxford-brain-rot-2024"
+                },
+                "context": {
+                  "const": "Oxford Word of the Year 2024 coverage and wider internet vernacular"
+                },
+                "quoted_wording": {
+                  "const": "brain rot"
+                },
+                "observed_on": {
+                  "const": "2026-08-13"
+                },
+                "never": {
+                  "type": "array",
+                  "minItems": 5,
+                  "maxItems": 5,
+                  "prefixItems": [
+                    {
+                      "const": "diagnosis"
+                    },
+                    {
+                      "const": "individual-cognitive-state"
+                    },
+                    {
+                      "const": "person-or-community-property"
+                    },
+                    {
+                      "const": "susceptibility-parameter"
+                    },
+                    {
+                      "const": "score"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "model_cards": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "equation",
+            "equation_status",
+            "source_relation",
+            "domain",
+            "variables",
+            "fit_status",
+            "assumptions",
+            "valid_outputs",
+            "uncertainty",
+            "identifiability_limits",
+            "prohibited_inferences",
+            "source_ids",
+            "universal",
+            "person_level",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "material-nucleation"
+            },
+            "equation": {
+              "const": "ΔG_i(r)=4πr²γ_i−(4π/3)r³Δg_vi; J_i≈J0_i exp(−ΔG_i*/kBT)"
+            },
+            "equation_status": {
+              "const": "atlas-authored-unfitted-schematic"
+            },
+            "source_relation": {
+              "const": "Karthika reviews classical and nonclassical nucleation theory; the ritonavir sources provide case context, not derivation, fit, or validation of this equation."
+            },
+            "domain": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 10,
+              "maxItems": 10,
+              "prefixItems": [
+                {
+                  "const": "i: declared material form index"
+                },
+                {
+                  "const": "r: spherical nucleus radius in length units"
+                },
+                {
+                  "const": "ΔG_i(r): idealized formation free energy for form i at radius r in energy units"
+                },
+                {
+                  "const": "γ_i: interfacial free energy in energy per area"
+                },
+                {
+                  "const": "Δg_vi: bulk free-energy driving density in energy per volume"
+                },
+                {
+                  "const": "ΔG_i*: barrier maximum in energy units"
+                },
+                {
+                  "const": "J0_i: unspecified rate prefactor in the same units as J_i"
+                },
+                {
+                  "const": "k_B: Boltzmann constant"
+                },
+                {
+                  "const": "T: absolute temperature in kelvin"
+                },
+                {
+                  "const": "J_i: schematic nucleation rate"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "idealized spherical-capillarity description"
+                },
+                {
+                  "const": "declared material environment"
+                },
+                {
+                  "const": "material-domain-only"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "conditional comparison of idealized material barriers or schematic rate dependence"
+                }
+              ],
+              "items": false
+            },
+            "uncertainty": {
+              "const": "Material- and protocol-specific parameters and the rate prefactor are absent here."
+            },
+            "identifiability_limits": {
+              "const": "Competing parameter combinations and nonclassical pathways may explain a bounded outcome."
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "prefixItems": [
+                {
+                  "const": "complete rate law"
+                },
+                {
+                  "const": "ritonavir parameter estimate"
+                },
+                {
+                  "const": "cultural energy"
+                },
+                {
+                  "const": "cultural temperature"
+                },
+                {
+                  "const": "person susceptibility"
+                },
+                {
+                  "const": "quality or moral value"
+                }
+              ],
+              "items": false
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "dunitz-1995"
+                },
+                {
+                  "const": "bauer-2001"
+                },
+                {
+                  "const": "sacchi-2024"
+                },
+                {
+                  "const": "karthika-2016"
+                }
+              ],
+              "items": false
+            },
+            "universal": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "equation",
+            "equation_status",
+            "source_relation",
+            "domain",
+            "variables",
+            "fit_status",
+            "assumptions",
+            "valid_outputs",
+            "uncertainty",
+            "identifiability_limits",
+            "prohibited_inferences",
+            "source_ids",
+            "universal",
+            "person_level",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "threshold"
+            },
+            "equation": {
+              "const": "x_i(t+1)=max{x_i(t),1[f_i(t)≥θ_i]}"
+            },
+            "equation_status": {
+              "const": "source-derived-stylized-model"
+            },
+            "source_relation": {
+              "const": "Watts defines irreversible activation from a declared seed set in the threshold cascade family; Centola supplies bounded experimental context for reinforcement, not a fit of this card."
+            },
+            "domain": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 7,
+              "maxItems": 7,
+              "prefixItems": [
+                {
+                  "const": "i: declared aggregate node index"
+                },
+                {
+                  "const": "t: discrete synchronous model step"
+                },
+                {
+                  "const": "x_i(t): declared binary aggregate activation state at step t"
+                },
+                {
+                  "const": "N_i: declared neighbour set for node i"
+                },
+                {
+                  "const": "f_i(t): dimensionless fraction of N_i active at step t"
+                },
+                {
+                  "const": "θ_i: dimensionless specified threshold"
+                },
+                {
+                  "const": "S_0: declared initially active seed set"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "declared graph and neighbour sets"
+                },
+                {
+                  "const": "declared initial seed set S_0"
+                },
+                {
+                  "const": "binary stylized states"
+                },
+                {
+                  "const": "synchronous updates"
+                },
+                {
+                  "const": "activation persists once reached"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "conditional irreversible cascade behavior in the stated model"
+                }
+              ],
+              "items": false
+            },
+            "uncertainty": {
+              "const": "Graph, thresholds, seed set, exposure, and adoption are unobserved here."
+            },
+            "identifiability_limits": {
+              "const": "Similar cascades can arise from different graphs, thresholds, seeds, or external shocks."
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "belief"
+                },
+                {
+                  "const": "agreement"
+                },
+                {
+                  "const": "persuasion"
+                },
+                {
+                  "const": "truth"
+                },
+                {
+                  "const": "person suggestibility"
+                }
+              ],
+              "items": false
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "watts-2002"
+                },
+                {
+                  "const": "centola-2010"
+                }
+              ],
+              "items": false
+            },
+            "universal": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "equation",
+            "equation_status",
+            "source_relation",
+            "domain",
+            "variables",
+            "fit_status",
+            "assumptions",
+            "valid_outputs",
+            "uncertainty",
+            "identifiability_limits",
+            "prohibited_inferences",
+            "source_ids",
+            "universal",
+            "person_level",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "branching"
+            },
+            "equation": {
+              "const": "Z_(n+1)=Σ_(j=1)^Z_n X_(n,j)"
+            },
+            "equation_status": {
+              "const": "source-motivated-generation-count-identity"
+            },
+            "source_relation": {
+              "const": "Gleeson motivates generation-indexed branching descriptions of public cascade events; this unfitted card states only an auditable count recursion and specifies no offspring law, independence, or stationarity."
+            },
+            "domain": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "n: discrete cascade generation"
+                },
+                {
+                  "const": "j: event index within generation n"
+                },
+                {
+                  "const": "Z_n: nonnegative declared event count at generation n"
+                },
+                {
+                  "const": "X_(n,j): nonnegative observed or modeled downstream event count assigned to event j"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "auditable parent-event and generation-assignment rule"
+                },
+                {
+                  "const": "declared missing-edge and independent-convergence treatment"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "auditable generation-by-generation event counts under the declared assignments"
+                }
+              ],
+              "items": false
+            },
+            "uncertainty": {
+              "const": "Parentage, deletions, offline events, and independent convergence may be unknown."
+            },
+            "identifiability_limits": {
+              "const": "The count identity supplies no offspring distribution and observed descendants do not isolate recommendation, imitation, or external causes."
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "biological reproduction"
+                },
+                {
+                  "const": "semantic fidelity"
+                },
+                {
+                  "const": "fitness"
+                },
+                {
+                  "const": "truth"
+                },
+                {
+                  "const": "human carriers"
+                }
+              ],
+              "items": false
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "gleeson-2021"
+                }
+              ],
+              "items": false
+            },
+            "universal": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "equation",
+            "equation_status",
+            "source_relation",
+            "domain",
+            "variables",
+            "fit_status",
+            "assumptions",
+            "valid_outputs",
+            "uncertainty",
+            "identifiability_limits",
+            "prohibited_inferences",
+            "source_ids",
+            "universal",
+            "person_level",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "hawkes"
+            },
+            "equation": {
+              "const": "λ_i(t|H_t)=ν_i+Σ_jΣ_(τ∈H_j,τ<t)a_ij g_ij(t−τ)"
+            },
+            "equation_status": {
+              "const": "source-derived-stylized-model"
+            },
+            "source_relation": {
+              "const": "Hawkes supplies the stationary self-exciting point-process family; this constant-baseline multitype notation is unfitted here."
+            },
+            "domain": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 9,
+              "maxItems": 9,
+              "prefixItems": [
+                {
+                  "const": "i,j: declared public-event type indices"
+                },
+                {
+                  "const": "t: continuous model time"
+                },
+                {
+                  "const": "λ_i: conditional intensity for type i in events per time"
+                },
+                {
+                  "const": "ν_i: nonnegative constant baseline intensity in events per time"
+                },
+                {
+                  "const": "H_t: observed event history before time t"
+                },
+                {
+                  "const": "H_j: observed history of type-j events"
+                },
+                {
+                  "const": "τ: prior event time"
+                },
+                {
+                  "const": "a_ij: nonnegative dimensionless coupling weight"
+                },
+                {
+                  "const": "g_ij: nonnegative response kernel in inverse-time units"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "timestamped declared event types"
+                },
+                {
+                  "const": "specified observation window"
+                },
+                {
+                  "const": "nonnegative integrable response kernels"
+                },
+                {
+                  "const": "a declared finite-intensity or stability condition"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "conditional temporal clustering description"
+                }
+              ],
+              "items": false
+            },
+            "uncertainty": {
+              "const": "Baselines, couplings, kernels, missing events, stability, and interventions are unspecified."
+            },
+            "identifiability_limits": {
+              "const": "Self-excitation may be statistically confounded with a time-varying external driver."
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "causal influence"
+                },
+                {
+                  "const": "intent"
+                },
+                {
+                  "const": "susceptibility"
+                },
+                {
+                  "const": "endorsement"
+                },
+                {
+                  "const": "hidden platform objective"
+                }
+              ],
+              "items": false
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "hawkes-1971"
+                }
+              ],
+              "items": false
+            },
+            "universal": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "equation",
+            "equation_status",
+            "source_relation",
+            "domain",
+            "variables",
+            "fit_status",
+            "assumptions",
+            "valid_outputs",
+            "uncertainty",
+            "identifiability_limits",
+            "prohibited_inferences",
+            "source_ids",
+            "universal",
+            "person_level",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "structural-virality"
+            },
+            "equation": {
+              "const": "v(T)=(1/(n(n−1)))Σ_iΣ_j d_ij"
+            },
+            "equation_status": {
+              "const": "source-derived-measure"
+            },
+            "source_relation": {
+              "const": "Goel defines structural virality as average pairwise distance in a declared diffusion tree."
+            },
+            "domain": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "T: declared diffusion tree with n≥2 observed nodes"
+                },
+                {
+                  "const": "n: integer observed node count with n≥2"
+                },
+                {
+                  "const": "i,j: node indices"
+                },
+                {
+                  "const": "d_ij: nonnegative shortest-path distance in edges"
+                },
+                {
+                  "const": "v(T): dimensionless average pairwise tree distance"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "auditable tree construction"
+                },
+                {
+                  "const": "declared missing-edge policy"
+                },
+                {
+                  "const": "n is at least 2"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "distinguishing broadcast-like from multigenerational diffusion shape"
+                }
+              ],
+              "items": false
+            },
+            "uncertainty": {
+              "const": "Unseen, deleted, cross-platform, and independently recreated edges can alter the tree."
+            },
+            "identifiability_limits": {
+              "const": "Size and shape are separate; neither identifies motive or semantic fidelity."
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "prefixItems": [
+                {
+                  "const": "popularity"
+                },
+                {
+                  "const": "truth"
+                },
+                {
+                  "const": "quality"
+                },
+                {
+                  "const": "harm"
+                },
+                {
+                  "const": "agreement"
+                },
+                {
+                  "const": "moral worth"
+                }
+              ],
+              "items": false
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "goel-2016"
+                }
+              ],
+              "items": false
+            },
+            "universal": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "equation",
+            "equation_status",
+            "source_relation",
+            "domain",
+            "variables",
+            "fit_status",
+            "assumptions",
+            "valid_outputs",
+            "uncertainty",
+            "identifiability_limits",
+            "prohibited_inferences",
+            "source_ids",
+            "universal",
+            "person_level",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "shannon-diversity"
+            },
+            "equation": {
+              "const": "H=−Σ_k p_k log_b p_k"
+            },
+            "equation_status": {
+              "const": "source-derived-measure"
+            },
+            "source_relation": {
+              "const": "Shannon supplies the distributional entropy form; category semantics remain outside the measure."
+            },
+            "domain": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "k: declared category or variant index"
+                },
+                {
+                  "const": "p_k: nonnegative dimensionless category or variant share with Σ_k p_k=1"
+                },
+                {
+                  "const": "b: declared logarithm base greater than 1"
+                },
+                {
+                  "const": "H: entropy in units determined by log base b"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "auditable mutually stated categories"
+                },
+                {
+                  "const": "p_k≥0 and Σ_k p_k=1"
+                },
+                {
+                  "const": "0 log_b 0 is defined as 0"
+                },
+                {
+                  "const": "logarithm base and units declared before numerical use"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "diversity of a stated distribution"
+                }
+              ],
+              "items": false
+            },
+            "uncertainty": {
+              "const": "Classification choices, log base, and missing observations change the reported quantity."
+            },
+            "identifiability_limits": {
+              "const": "Equal entropy can describe different meanings and histories."
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "prefixItems": [
+                {
+                  "const": "meaning"
+                },
+                {
+                  "const": "wisdom"
+                },
+                {
+                  "const": "quality"
+                },
+                {
+                  "const": "mental disorder"
+                },
+                {
+                  "const": "brainrot score"
+                },
+                {
+                  "const": "cosmic disorder"
+                }
+              ],
+              "items": false
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "shannon-1948"
+                }
+              ],
+              "items": false
+            },
+            "universal": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "equation",
+            "equation_status",
+            "source_relation",
+            "domain",
+            "variables",
+            "fit_status",
+            "assumptions",
+            "valid_outputs",
+            "uncertainty",
+            "identifiability_limits",
+            "prohibited_inferences",
+            "source_ids",
+            "universal",
+            "person_level",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "finite-attention"
+            },
+            "equation": {
+              "const": "observed supply + bounded aggregate selection + turnover → conditional popularity distribution"
+            },
+            "equation_status": {
+              "const": "atlas-authored-conceptual-summary"
+            },
+            "source_relation": {
+              "const": "Weng, Qiu, and Lorenz-Spreen supply finite-attention model and aggregate context; the arrow is an authored summary, not a quoted equation or fitted law."
+            },
+            "domain": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "observed supply: declared artifact arrivals in a bounded corpus and window"
+                },
+                {
+                  "const": "aggregate selection: declared count or rate proxy, never a person state"
+                },
+                {
+                  "const": "turnover: declared entry and exit timing"
+                },
+                {
+                  "const": "conditional popularity distribution: corpus- and procedure-bound output"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "finite aggregate selection capacity"
+                },
+                {
+                  "const": "declared observation surface"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "conditional competition and turnover patterns"
+                }
+              ],
+              "items": false
+            },
+            "uncertainty": {
+              "const": "Attention proxies, ranking exposure, self-selection, and individual effects remain distinct."
+            },
+            "identifiability_limits": {
+              "const": "Heavy-tailed popularity can arise without an intrinsic-value explanation and does not prove all content has equal quality."
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "individual cognition"
+                },
+                {
+                  "const": "neurological decline"
+                },
+                {
+                  "const": "intrinsic value"
+                },
+                {
+                  "const": "deterministic platform control"
+                }
+              ],
+              "items": false
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "weng-2012"
+                },
+                {
+                  "const": "qiu-2017"
+                },
+                {
+                  "const": "lorenz-spreen-2019"
+                }
+              ],
+              "items": false
+            },
+            "universal": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "equation",
+            "equation_status",
+            "source_relation",
+            "domain",
+            "variables",
+            "fit_status",
+            "assumptions",
+            "valid_outputs",
+            "uncertainty",
+            "identifiability_limits",
+            "prohibited_inferences",
+            "source_ids",
+            "universal",
+            "person_level",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "bounded-feedback-state-space"
+            },
+            "equation": {
+              "const": "s_(t+1)=A_t s_t+B_t u_t+w_t; y_t=C_t s_t+v_t"
+            },
+            "equation_status": {
+              "const": "atlas-authored-unfitted-schematic"
+            },
+            "source_relation": {
+              "const": "Hawkes, Huszár, and Chaney provide event-clustering, exposure, and recommender-feedback context; they do not derive, fit, or validate this generic state-space template."
+            },
+            "domain": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 9,
+              "maxItems": 9,
+              "prefixItems": [
+                {
+                  "const": "t: discrete declared observation step"
+                },
+                {
+                  "const": "s_t: declared aggregate latent-state vector"
+                },
+                {
+                  "const": "u_t: documented input or intervention vector"
+                },
+                {
+                  "const": "A_t: unspecified state-transition operator"
+                },
+                {
+                  "const": "B_t: unspecified input operator"
+                },
+                {
+                  "const": "w_t: unspecified process-uncertainty vector"
+                },
+                {
+                  "const": "y_t: declared observation vector"
+                },
+                {
+                  "const": "C_t: unspecified observation operator"
+                },
+                {
+                  "const": "v_t: unspecified observation-uncertainty vector"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "named measurement-to-action-to-later-measurement edges"
+                },
+                {
+                  "const": "declared state, input, and observation semantics"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "conditional amplification, damping, redirection, or correction hypotheses"
+                }
+              ],
+              "items": false
+            },
+            "uncertainty": {
+              "const": "Operators, dimensions, units, policy, confounders, and causal effects are unspecified or unidentified."
+            },
+            "identifiability_limits": {
+              "const": "Temporal return does not establish purpose, cause, or objective."
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "prefixItems": [
+                {
+                  "const": "intent"
+                },
+                {
+                  "const": "benevolence"
+                },
+                {
+                  "const": "punishment"
+                },
+                {
+                  "const": "optimization"
+                },
+                {
+                  "const": "destiny"
+                },
+                {
+                  "const": "person rank"
+                }
+              ],
+              "items": false
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "hawkes-1971"
+                },
+                {
+                  "const": "huszar-2022"
+                },
+                {
+                  "const": "chaney-2018"
+                }
+              ],
+              "items": false
+            },
+            "universal": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "evidence_claims": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "disappearing-is-availability-history-not-destruction"
+            },
+            "register": {
+              "const": "MATERIAL_OBSERVATION"
+            },
+            "claim": {
+              "const": "‘Disappearing polymorph’ names a reproducibility and accessibility problem under bounded conditions, not destruction of physical possibility."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "dunitz-1995"
+                },
+                {
+                  "const": "sacchi-2024"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "Nonproduction in one procedure does not establish absence elsewhere."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "ritonavir-form-ii-disrupted-manufacture"
+            },
+            "register": {
+              "const": "MATERIAL_OBSERVATION"
+            },
+            "claim": {
+              "const": "The appearance of ritonavir Form II created a consequential manufacturing and formulation problem in the historically reported case."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "bauer-2001"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "This is one material history, not a cultural law."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "material-context-selects-accessible-forms"
+            },
+            "register": {
+              "const": "MATERIAL_OBSERVATION"
+            },
+            "claim": {
+              "const": "Recent mechanochemical work recovered both ritonavir forms under different environments, supporting context-dependent accessibility rather than annihilation."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "sacchi-2024"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "Results are bounded to reported methods and conditions."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "digital-memes-are-cultural-groups"
+            },
+            "register": {
+              "const": "CULTURAL_ANALYSIS"
+            },
+            "claim": {
+              "const": "Shifman proposes analyzing a digital meme as a group of cultural items sharing content, form, or stance rather than as one immutable unit."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "shifman-2013"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "This is a sourced analytic framing; grouping remains interpretive and corpus-dependent."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "finite-attention-network-can-generate-heavy-tails"
+            },
+            "register": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "claim": {
+              "const": "Network structure plus limited attention can generate heterogeneous popularity in a specified model without assuming intrinsic-value differences."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "weng-2012"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "A model sufficiency result is not proof that all real differences are irrelevant."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "structural-virality-separates-broadcast-and-chains"
+            },
+            "register": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "claim": {
+              "const": "Average pairwise distance in a diffusion tree distinguishes broad broadcast-like patterns from multigenerational chains."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "goel-2016"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "Tree size, shape, meaning, and causal process remain separate."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "collective-attention-can-accelerate-and-shorten"
+            },
+            "register": {
+              "const": "CULTURAL_OBSERVATION"
+            },
+            "claim": {
+              "const": "Across studied aggregate datasets, attention trajectories became steeper and shorter in several domains."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "lorenz-spreen-2019"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "Aggregate turnover is not evidence of individual cognitive deterioration."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "complex-adoption-can-require-reinforcement"
+            },
+            "register": {
+              "const": "CULTURAL_OBSERVATION"
+            },
+            "claim": {
+              "const": "In a bounded online experiment, clustered networks supported adoption requiring multiple reinforcing exposures more effectively than random networks."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "centola-2010"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "One experimental system does not establish a universal law of sharing."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "brainrot-is-contested-vernacular"
+            },
+            "register": {
+              "const": "CULTURAL_OBSERVATION"
+            },
+            "claim": {
+              "const": "‘Brain rot’ was selected as Oxford Word of the Year 2024 and described as a supposed deterioration associated with overconsumption of trivial online material; the wording itself signals a vernacular attribution, not a diagnosis."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "oxford-brain-rot-2024"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "This atlas does not operationalize or infer a cognitive or neurological condition."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "hawkes-encodes-history-dependent-intensity"
+            },
+            "register": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "claim": {
+              "const": "A self-exciting point process can encode history-dependent conditional event intensity."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "hawkes-1971"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "Second-order event patterns may not identify self-excitation over external time variation."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "shannon-entropy-is-not-quality"
+            },
+            "register": {
+              "const": "MATHEMATICAL_MODEL"
+            },
+            "claim": {
+              "const": "Shannon entropy describes uncertainty or diversity in a probability distribution while bracketing semantic meaning."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "shannon-1948"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "Entropy is not a measure of truth, wisdom, benefit, harm, or mental health."
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "claim",
+            "source_ids",
+            "limitations"
+          ],
+          "properties": {
+            "id": {
+              "const": "unfitted-models-do-not-describe-this-atlas-population"
+            },
+            "register": {
+              "const": "CONSTITUTIONAL_DESIGN"
+            },
+            "claim": {
+              "const": "The atlas model cards are explanatory lenses with no fitted population parameters."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "watts-2002"
+                },
+                {
+                  "const": "hawkes-1971"
+                }
+              ],
+              "items": false
+            },
+            "limitations": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "Equations supply no empirical finding without bound data, methods, fit, and uncertainty."
+                }
+              ],
+              "items": false
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "analogy_seams": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from",
+            "to",
+            "preserves",
+            "breaks",
+            "relation",
+            "empirical",
+            "causal_transfer",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "availability-not-existence"
+            },
+            "from": {
+              "const": "bounded-material-sample"
+            },
+            "to": {
+              "const": "cultural-artifact"
+            },
+            "preserves": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "possible states can be hard to reproduce or re-observe"
+                },
+                {
+                  "const": "history and boundary conditions affect accessibility"
+                }
+              ],
+              "items": false
+            },
+            "breaks": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "cultural copies are not thermodynamic phases"
+                },
+                {
+                  "const": "archives, memory, agency, ranking, and intentional remix have no molecular equivalent"
+                }
+              ],
+              "items": false
+            },
+            "relation": {
+              "const": "bounded-analogy-not-same-as"
+            },
+            "empirical": {
+              "const": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from",
+            "to",
+            "preserves",
+            "breaks",
+            "relation",
+            "empirical",
+            "causal_transfer",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "seed-not-share"
+            },
+            "from": {
+              "const": "crystal-form"
+            },
+            "to": {
+              "const": "share-or-remix-event"
+            },
+            "preserves": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "a prior occurrence may alter later accessibility"
+                }
+              ],
+              "items": false
+            },
+            "breaks": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "a person is never a seed, host, vector, or contaminant"
+                },
+                {
+                  "const": "sharing need not reproduce meaning or form faithfully"
+                }
+              ],
+              "items": false
+            },
+            "relation": {
+              "const": "bounded-analogy-not-same-as"
+            },
+            "empirical": {
+              "const": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from",
+            "to",
+            "preserves",
+            "breaks",
+            "relation",
+            "empirical",
+            "causal_transfer",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "nucleation-not-adoption"
+            },
+            "from": {
+              "const": "crystal-form"
+            },
+            "to": {
+              "const": "collective-attention-state"
+            },
+            "preserves": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "local threshold-like events can precede aggregate change"
+                }
+              ],
+              "items": false
+            },
+            "breaks": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "surface free energy and temperature are not cultural variables"
+                },
+                {
+                  "const": "adoption includes interpretation, choice, and social context"
+                }
+              ],
+              "items": false
+            },
+            "relation": {
+              "const": "bounded-analogy-not-same-as"
+            },
+            "empirical": {
+              "const": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from",
+            "to",
+            "preserves",
+            "breaks",
+            "relation",
+            "empirical",
+            "causal_transfer",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "form-selection-not-cultural-merit"
+            },
+            "from": {
+              "const": "crystal-form"
+            },
+            "to": {
+              "const": "cultural-practice-label"
+            },
+            "preserves": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "one observed form or variant may become prevalent in a bounded setting"
+                }
+              ],
+              "items": false
+            },
+            "breaks": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "material stability is not truth, quality, fitness, morality, or social desirability"
+                }
+              ],
+              "items": false
+            },
+            "relation": {
+              "const": "bounded-analogy-not-same-as"
+            },
+            "empirical": {
+              "const": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from",
+            "to",
+            "preserves",
+            "breaks",
+            "relation",
+            "empirical",
+            "causal_transfer",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "material-sample-not-human-population"
+            },
+            "from": {
+              "const": "bounded-material-sample"
+            },
+            "to": {
+              "const": "collective-attention-state"
+            },
+            "preserves": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "measurement depends on sampling boundary and procedure"
+                }
+              ],
+              "items": false
+            },
+            "breaks": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "people are agents with rights, interpretation, refusal, and privacy"
+                },
+                {
+                  "const": "no individual state is inferred from aggregate traces"
+                }
+              ],
+              "items": false
+            },
+            "relation": {
+              "const": "bounded-analogy-not-same-as"
+            },
+            "empirical": {
+              "const": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from",
+            "to",
+            "preserves",
+            "breaks",
+            "relation",
+            "empirical",
+            "causal_transfer",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "return-not-destiny"
+            },
+            "from": {
+              "const": "platform-distribution-state"
+            },
+            "to": {
+              "const": "collective-attention-state"
+            },
+            "preserves": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "an observed output may return into later conditions"
+                }
+              ],
+              "items": false
+            },
+            "breaks": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "feedback does not prove intent, optimization, moral law, or an inevitable future"
+                }
+              ],
+              "items": false
+            },
+            "relation": {
+              "const": "bounded-analogy-not-same-as"
+            },
+            "empirical": {
+              "const": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "feedback_loops": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "input",
+            "process",
+            "return_effect",
+            "status",
+            "source_relation",
+            "source_ids",
+            "does_not_establish"
+          ],
+          "properties": {
+            "id": {
+              "const": "material-seeding-loop"
+            },
+            "register": {
+              "const": "MATERIAL_OBSERVATION"
+            },
+            "input": {
+              "const": "material form present under named conditions"
+            },
+            "process": {
+              "const": "form-dependent nucleation or growth in a bounded procedure"
+            },
+            "return_effect": {
+              "const": "later samples may become more likely to contain that form"
+            },
+            "status": {
+              "const": "source-bound-example"
+            },
+            "source_relation": {
+              "const": "Bauer and Sacchi supply bounded material-form history; this return edge is limited to the stated material procedures and conditions."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "bauer-2001"
+                },
+                {
+                  "const": "sacchi-2024"
+                }
+              ],
+              "items": false
+            },
+            "does_not_establish": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "universal permanence"
+                },
+                {
+                  "const": "cultural contagion"
+                },
+                {
+                  "const": "purpose"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "input",
+            "process",
+            "return_effect",
+            "status",
+            "source_relation",
+            "source_ids",
+            "does_not_establish"
+          ],
+          "properties": {
+            "id": {
+              "const": "attention-ranking-loop"
+            },
+            "register": {
+              "const": "FEEDBACK_HYPOTHESIS"
+            },
+            "input": {
+              "const": "documented exposure conditions and aggregate interaction measurements"
+            },
+            "process": {
+              "const": "ranked rather than chronological ordering can alter bounded exposure effects; in a simulation, recorded interactions can update later recommendations"
+            },
+            "return_effect": {
+              "const": "a complete measurement-to-ranking-to-later-measurement return edge remains a hypothesis unless observed for a declared platform and window"
+            },
+            "status": {
+              "const": "bounded-hypothesis"
+            },
+            "source_relation": {
+              "const": "Huszár supplies randomized ranked-versus-chronological exposure effects; Chaney supplies a simulated interaction–recommendation feedback loop. Neither establishes the full return edge for an unspecified platform."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "huszar-2022"
+                },
+                {
+                  "const": "chaney-2018"
+                }
+              ],
+              "items": false
+            },
+            "does_not_establish": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "total algorithmic control"
+                },
+                {
+                  "const": "individual persuasion"
+                },
+                {
+                  "const": "platform intent"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "input",
+            "process",
+            "return_effect",
+            "status",
+            "source_relation",
+            "source_ids",
+            "does_not_establish"
+          ],
+          "properties": {
+            "id": {
+              "const": "remix-recognition-loop"
+            },
+            "register": {
+              "const": "FEEDBACK_HYPOTHESIS"
+            },
+            "input": {
+              "const": "an artifact or precedent is encountered"
+            },
+            "process": {
+              "const": "a person may quote, alter, reject, or recreate it"
+            },
+            "return_effect": {
+              "const": "later artifacts can change the recognizable family and its context"
+            },
+            "status": {
+              "const": "bounded-hypothesis"
+            },
+            "source_relation": {
+              "const": "Shifman supplies an analytic framework for shared content, form, stance, imitation, and remix; the return edge is atlas-authored and not observed here."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "shifman-2013"
+                }
+              ],
+              "items": false
+            },
+            "does_not_establish": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "faithful inheritance"
+                },
+                {
+                  "const": "agreement"
+                },
+                {
+                  "const": "biological replication"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "register",
+            "input",
+            "process",
+            "return_effect",
+            "status",
+            "source_relation",
+            "source_ids",
+            "does_not_establish"
+          ],
+          "properties": {
+            "id": {
+              "const": "challenge-repair-loop"
+            },
+            "register": {
+              "const": "CONSTITUTIONAL_DESIGN"
+            },
+            "input": {
+              "const": "a provenance-bearing claim is challenged"
+            },
+            "process": {
+              "const": "sources, scope, counterevidence, and uncertainty are reviewed"
+            },
+            "return_effect": {
+              "const": "a correction or superseding record remains linked to the earlier claim"
+            },
+            "status": {
+              "const": "design-correspondence-not-observed"
+            },
+            "source_relation": {
+              "const": "PROV-O supplies a representation vocabulary for provenance; challenge, review, repair, and supersession are atlas-authored infrastructure design, not a W3C-observed workflow."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "w3c-prov-o"
+                }
+              ],
+              "items": false
+            },
+            "does_not_establish": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "automatic truth settlement"
+                },
+                {
+                  "const": "Zerone event"
+                },
+                {
+                  "const": "KINGDOM receipt"
+                }
+              ],
+              "items": false
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "karma": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cultural_feedback_is_not_karma",
+        "engagement_is_not_karma",
+        "zerone",
+        "kingdom",
+        "adapter",
+        "design_correspondences"
+      ],
+      "properties": {
+        "cultural_feedback_is_not_karma": {
+          "const": true
+        },
+        "engagement_is_not_karma": {
+          "const": true
+        },
+        "zerone": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "foundation_protocol",
+            "foundation_status",
+            "network_observed",
+            "authoritative",
+            "event_type",
+            "event_refs",
+            "event_status",
+            "not"
+          ],
+          "properties": {
+            "foundation_protocol": {
+              "const": "zerone.karma-foundation/v1"
+            },
+            "foundation_status": {
+              "const": "design-only"
+            },
+            "network_observed": {
+              "const": false
+            },
+            "authoritative": {
+              "const": false
+            },
+            "event_type": {
+              "const": "zerone.karma.edge"
+            },
+            "event_refs": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "event_status": {
+              "const": "not_observed"
+            },
+            "not": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "engagement score"
+                },
+                {
+                  "const": "wallet balance"
+                },
+                {
+                  "const": "moral desert"
+                },
+                {
+                  "const": "vote weight"
+                },
+                {
+                  "const": "automatic reward"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        "kingdom": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "protocol",
+            "accounting",
+            "receipt_refs",
+            "receipt_status",
+            "not"
+          ],
+          "properties": {
+            "protocol": {
+              "const": "kingdom.karma/0.1"
+            },
+            "accounting": {
+              "const": "receipts_not_scores"
+            },
+            "receipt_refs": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "receipt_status": {
+              "const": "not_created"
+            },
+            "not": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "reputation score"
+                },
+                {
+                  "const": "feed rank"
+                },
+                {
+                  "const": "moderation signal"
+                },
+                {
+                  "const": "governance standing"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        "adapter": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "exists",
+            "status",
+            "reason"
+          ],
+          "properties": {
+            "exists": {
+              "const": false
+            },
+            "status": {
+              "const": "refused"
+            },
+            "reason": {
+              "const": "The two protocols have different semantics and no conversion rule is authorized."
+            }
+          }
+        },
+        "design_correspondences": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "status",
+                "pattern",
+                "maps_to",
+                "does_not_convert"
+              ],
+              "properties": {
+                "id": {
+                  "const": "provenance-bearing-lineage"
+                },
+                "status": {
+                  "const": "not_observed"
+                },
+                "pattern": {
+                  "const": "Keep source, context, time, uncertainty, challenge, and supersession attached to artifact relations."
+                },
+                "maps_to": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "provenance"
+                    },
+                    {
+                      "const": "context"
+                    },
+                    {
+                      "const": "challenge"
+                    }
+                  ],
+                  "items": false
+                },
+                "does_not_convert": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "status",
+                "pattern",
+                "maps_to",
+                "does_not_convert"
+              ],
+              "properties": {
+                "id": {
+                  "const": "challenge-and-repair"
+                },
+                "status": {
+                  "const": "not_observed"
+                },
+                "pattern": {
+                  "const": "Corrections remain visible and counts do not settle truth."
+                },
+                "maps_to": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "challenge"
+                    },
+                    {
+                      "const": "repair"
+                    },
+                    {
+                      "const": "supersession"
+                    }
+                  ],
+                  "items": false
+                },
+                "does_not_convert": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "status",
+                "pattern",
+                "maps_to",
+                "does_not_convert"
+              ],
+              "properties": {
+                "id": {
+                  "const": "action-and-aftermath"
+                },
+                "status": {
+                  "const": "not_observed"
+                },
+                "pattern": {
+                  "const": "A future owning runtime could receipt an actual invocation and its aftermath."
+                },
+                "maps_to": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "prefixItems": [
+                    {
+                      "const": "invocation"
+                    },
+                    {
+                      "const": "aftermath"
+                    }
+                  ],
+                  "items": false
+                },
+                "does_not_convert": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "status",
+                "pattern",
+                "maps_to",
+                "does_not_convert"
+              ],
+              "properties": {
+                "id": {
+                  "const": "rest-exit-no-debt"
+                },
+                "status": {
+                  "const": "not_observed"
+                },
+                "pattern": {
+                  "const": "Silence, nonparticipation, refusal, no further remix, and disappearance from a corpus create no penalty or obligation."
+                },
+                "maps_to": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "rest"
+                    },
+                    {
+                      "const": "exit"
+                    },
+                    {
+                      "const": "no-debt"
+                    }
+                  ],
+                  "items": false
+                },
+                "does_not_convert": {
+                  "const": true
+                }
+              }
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "ecosystem_bridges": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "standard",
+            "url",
+            "use",
+            "mode",
+            "runtime_request",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "w3c-prov-o"
+            },
+            "standard": {
+              "const": "W3C PROV-O"
+            },
+            "url": {
+              "const": "https://www.w3.org/TR/prov-o/"
+            },
+            "use": {
+              "const": "Translate artifact lineage and derivation claims into interoperable provenance terms."
+            },
+            "mode": {
+              "const": "link-only"
+            },
+            "runtime_request": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "standard",
+            "url",
+            "use",
+            "mode",
+            "runtime_request",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "w3c-web-annotation"
+            },
+            "standard": {
+              "const": "W3C Web Annotation Data Model"
+            },
+            "url": {
+              "const": "https://www.w3.org/TR/annotation-model/"
+            },
+            "use": {
+              "const": "Represent contextual labels, challenges, corrections, and human-reviewed meaning claims as annotations."
+            },
+            "mode": {
+              "const": "link-only"
+            },
+            "runtime_request": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "standard",
+            "url",
+            "use",
+            "mode",
+            "runtime_request",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "w3c-activitystreams-2"
+            },
+            "standard": {
+              "const": "W3C ActivityStreams 2.0"
+            },
+            "url": {
+              "const": "https://www.w3.org/TR/activitystreams-core/"
+            },
+            "use": {
+              "const": "Map public artifact and circulation event types without inferring mental state."
+            },
+            "mode": {
+              "const": "link-only"
+            },
+            "runtime_request": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "standard",
+            "url",
+            "use",
+            "mode",
+            "runtime_request",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "cloudflare-pages-publication"
+            },
+            "standard": {
+              "const": "Cloudflare Pages"
+            },
+            "url": {
+              "const": "https://developers.cloudflare.com/pages/"
+            },
+            "use": {
+              "const": "Publish immutable static record, schema, guide, and no-JavaScript explanation with typed read-only responses."
+            },
+            "mode": {
+              "const": "link-only"
+            },
+            "runtime_request": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "universe_lens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "participation",
+        "register",
+        "questions",
+        "nonclaims"
+      ],
+      "properties": {
+        "participation": {
+          "const": "opt-in"
+        },
+        "register": {
+          "const": "PHILOSOPHY"
+        },
+        "questions": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "authored_position",
+                "analogy_breaks"
+              ],
+              "properties": {
+                "id": {
+                  "const": "persistence-and-return"
+                },
+                "question": {
+                  "const": "Can a lawful possibility remain real when a history makes it difficult to reach, and what does return reveal about possibility versus accessibility?"
+                },
+                "authored_position": {
+                  "const": "Possibility and present accessibility should remain distinct."
+                },
+                "analogy_breaks": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "prefixItems": [
+                    {
+                      "const": "A recurrence is not proof of cosmic intention."
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "authored_position",
+                "analogy_breaks"
+              ],
+              "properties": {
+                "id": {
+                  "const": "selection-and-freedom"
+                },
+                "question": {
+                  "const": "How can constraints and history shape a future without making that future inevitable?"
+                },
+                "authored_position": {
+                  "const": "Constraint and agency can be modeled as coexisting without reducing either to a slogan."
+                },
+                "analogy_breaks": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "prefixItems": [
+                    {
+                      "const": "A platform choice is human-designed; it is not evidence that the universe has the same kind of designer."
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "authored_position",
+                "analogy_breaks"
+              ],
+              "properties": {
+                "id": {
+                  "const": "finite-attention-and-value"
+                },
+                "question": {
+                  "const": "What deserves care when what becomes visible is constrained by finite attention?"
+                },
+                "authored_position": {
+                  "const": "Visibility and value must not be collapsed; infrastructure should preserve context, correction, rest, and rediscovery."
+                },
+                "analogy_breaks": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "prefixItems": [
+                    {
+                      "const": "Scarcity of attention is not a cosmic allocation of worth."
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "authored_position",
+                "analogy_breaks"
+              ],
+              "properties": {
+                "id": {
+                  "const": "feedback-and-responsibility"
+                },
+                "question": {
+                  "const": "Can feedback produce apparent direction without intention, and when does a documented human action create responsibility?"
+                },
+                "authored_position": {
+                  "const": "Responsibility needs attributable action and aftermath, not pattern alone."
+                },
+                "analogy_breaks": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "prefixItems": [
+                    {
+                      "const": "Feedback is not purpose, benevolence, punishment, or moral KARMA."
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "authored_position",
+                "analogy_breaks"
+              ],
+              "properties": {
+                "id": {
+                  "const": "unknown-and-design"
+                },
+                "question": {
+                  "const": "Can the unknown be protected as a live boundary rather than filled with certainty?"
+                },
+                "authored_position": {
+                  "const": "Unknown, refusal, and outside-scope states are architectural information."
+                },
+                "analogy_breaks": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "prefixItems": [
+                    {
+                      "const": "An open question is neither evidence for nor evidence against teleology."
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "nonclaims": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "prefixItems": [
+            {
+              "const": "scientifically proves intentional universe design"
+            },
+            {
+              "const": "scientifically disproves a creator or metaphysical purpose"
+            },
+            {
+              "const": "proves cosmic moral KARMA"
+            },
+            {
+              "const": "makes persistence morally right"
+            },
+            {
+              "const": "makes disappearance a failure or deserved erasure"
+            },
+            {
+              "const": "reduces a person or community to an artifact, metric, model, or metaphor"
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "cultural-unit-definition"
+            },
+            "question": {
+              "const": "Which transformations preserve membership in a declared meme family?"
+            },
+            "status": {
+              "const": "contested"
+            },
+            "why_open": {
+              "const": "Content, form, stance, context, and human interpretation can disagree."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "shifman-2013"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "cross-platform-identity"
+            },
+            "question": {
+              "const": "Which artifacts and events correspond across platforms, private channels, deletions, and offline circulation?"
+            },
+            "status": {
+              "const": "unknown"
+            },
+            "why_open": {
+              "const": "Public corpora omit important contexts and edges."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "goel-2016"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "counterfactual-exposure"
+            },
+            "question": {
+              "const": "What would the same person or aggregate have done under a different exposure?"
+            },
+            "status": {
+              "const": "not_established"
+            },
+            "why_open": {
+              "const": "Observed action does not supply its unobserved counterfactual."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "huszar-2022"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "causal-ranking-effect"
+            },
+            "question": {
+              "const": "How much observed circulation was caused by ranking rather than self-selection, external arrival, or other conditions?"
+            },
+            "status": {
+              "const": "not_established"
+            },
+            "why_open": {
+              "const": "Causal attribution requires a suitable design and bounded platform context."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "huszar-2022"
+                },
+                {
+                  "const": "chaney-2018"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "model-parameters"
+            },
+            "question": {
+              "const": "What parameter values describe any declared corpus and window?"
+            },
+            "status": {
+              "const": "not_observed"
+            },
+            "why_open": {
+              "const": "No dataset, query, fit, digest, or uncertainty estimate is bound to this static atlas."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "watts-2002"
+                },
+                {
+                  "const": "hawkes-1971"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "brainrot-operationalization"
+            },
+            "question": {
+              "const": "Can the contested slang label be operationalized without smuggling in diagnosis or moral judgment?"
+            },
+            "status": {
+              "const": "withheld_for_safety"
+            },
+            "why_open": {
+              "const": "This atlas refuses person/community scoring and keeps the term at artifact/practice level."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "oxford-brain-rot-2024"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "individual-effect"
+            },
+            "question": {
+              "const": "Does a particular artifact or exposure cause a cognitive or clinical effect in a person?"
+            },
+            "status": {
+              "const": "outside_scope"
+            },
+            "why_open": {
+              "const": "The atlas has neither individual clinical evidence nor diagnostic authority and will not infer such a state."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "pennycook-2021"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "cross-domain-isomorphism"
+            },
+            "question": {
+              "const": "Is there a mechanism-preserving isomorphism between material polymorphism and cultural circulation?"
+            },
+            "status": {
+              "const": "unmapped"
+            },
+            "why_open": {
+              "const": "Only bounded abstract correspondences are asserted; material and cultural mechanisms remain non-equivalent."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "dunitz-1995"
+                },
+                {
+                  "const": "shifman-2013"
+                }
+              ],
+              "items": false
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "dunitz-1995"
+            },
+            "title": {
+              "const": "Disappearing Polymorphs"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-review"
+            },
+            "published_on": {
+              "const": "1995"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1021/ar00052a005"
+            },
+            "doi": {
+              "const": "10.1021/ar00052a005"
+            },
+            "authority_note": {
+              "const": "Introduces and reviews the bounded material phenomenon."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "bauer-2001"
+            },
+            "title": {
+              "const": "Ritonavir: An Extraordinary Example of Conformational Polymorphism"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-case-study"
+            },
+            "published_on": {
+              "const": "2001"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1023/A:1011052932607"
+            },
+            "doi": {
+              "const": "10.1023/A:1011052932607"
+            },
+            "authority_note": {
+              "const": "Primary scientific account of the ritonavir solid-form problem."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "sacchi-2024"
+            },
+            "title": {
+              "const": "Crystal size, shape, and conformational changes drive both the disappearance and reappearance of ritonavir polymorphs in the mill"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-research"
+            },
+            "published_on": {
+              "const": "2024"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1073/pnas.2319127121"
+            },
+            "doi": {
+              "const": "10.1073/pnas.2319127121"
+            },
+            "authority_note": {
+              "const": "Reports recovery of both forms under different mechanochemical environments."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "karthika-2016"
+            },
+            "title": {
+              "const": "A Review of Classical and Nonclassical Nucleation Theories"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-review"
+            },
+            "published_on": {
+              "const": "2016"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1021/acs.cgd.6b00794"
+            },
+            "doi": {
+              "const": "10.1021/acs.cgd.6b00794"
+            },
+            "authority_note": {
+              "const": "Reviews classical spherical-capillarity nucleation theory and its limits; it does not validate a ritonavir-specific fit."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "shifman-2013"
+            },
+            "title": {
+              "const": "Memes in a Digital World: Reconciling with a Conceptual Troublemaker"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-theory"
+            },
+            "published_on": {
+              "const": "2013"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1111/jcc4.12013"
+            },
+            "doi": {
+              "const": "10.1111/jcc4.12013"
+            },
+            "authority_note": {
+              "const": "Provides a cultural communication framing of digital meme groups."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "watts-2002"
+            },
+            "title": {
+              "const": "A simple model of global cascades on random networks"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-model"
+            },
+            "published_on": {
+              "const": "2002"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1073/pnas.082090499"
+            },
+            "doi": {
+              "const": "10.1073/pnas.082090499"
+            },
+            "authority_note": {
+              "const": "Defines a threshold cascade model and its conditional cascade regime."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "centola-2010"
+            },
+            "title": {
+              "const": "The Spread of Behavior in an Online Social Network Experiment"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-experiment"
+            },
+            "published_on": {
+              "const": "2010"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1126/science.1185231"
+            },
+            "doi": {
+              "const": "10.1126/science.1185231"
+            },
+            "authority_note": {
+              "const": "Bounded randomized experiment concerning network structure and adoption reinforcement."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "gleeson-2021"
+            },
+            "title": {
+              "const": "Branching process descriptions of information cascades on Twitter"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-model"
+            },
+            "published_on": {
+              "const": "2021"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1093/comnet/cnab002"
+            },
+            "doi": {
+              "const": "10.1093/comnet/cnab002"
+            },
+            "authority_note": {
+              "const": "Applies branching approximations to public event cascades."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "hawkes-1971"
+            },
+            "title": {
+              "const": "Spectra of Some Self-Exciting and Mutually Exciting Point Processes"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-model"
+            },
+            "published_on": {
+              "const": "1971"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1093/biomet/58.1.83"
+            },
+            "doi": {
+              "const": "10.1093/biomet/58.1.83"
+            },
+            "authority_note": {
+              "const": "Foundational stationary self- and mutually-exciting point-process formulation; the atlas authors the external-driver identifiability caveat."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "goel-2016"
+            },
+            "title": {
+              "const": "The Structural Virality of Online Diffusion"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-measurement"
+            },
+            "published_on": {
+              "const": "2016"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1287/mnsc.2015.2158"
+            },
+            "doi": {
+              "const": "10.1287/mnsc.2015.2158"
+            },
+            "authority_note": {
+              "const": "Defines a diffusion-tree shape measure distinct from cascade size."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "weng-2012"
+            },
+            "title": {
+              "const": "Competition among memes in a world with limited attention"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-model"
+            },
+            "published_on": {
+              "const": "2012"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1038/srep00335"
+            },
+            "doi": {
+              "const": "10.1038/srep00335"
+            },
+            "authority_note": {
+              "const": "Shows how finite attention and network structure can generate heterogeneous popularity in a model."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "qiu-2017"
+            },
+            "title": {
+              "const": "Limited individual attention and online virality of low-quality information"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-model-and-data"
+            },
+            "published_on": {
+              "const": "2017"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1038/s41562-017-0132"
+            },
+            "doi": {
+              "const": "10.1038/s41562-017-0132"
+            },
+            "authority_note": {
+              "const": "Examines finite attention and externally modeled information quality; does not define universal quality or a person score."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "lorenz-spreen-2019"
+            },
+            "title": {
+              "const": "Accelerating dynamics of collective attention"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-aggregate-study"
+            },
+            "published_on": {
+              "const": "2019"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1038/s41467-019-09311-w"
+            },
+            "doi": {
+              "const": "10.1038/s41467-019-09311-w"
+            },
+            "authority_note": {
+              "const": "Studies aggregate attention trajectories across selected domains."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "huszar-2022"
+            },
+            "title": {
+              "const": "Algorithmic amplification of politics on Twitter"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-randomized-platform-study"
+            },
+            "published_on": {
+              "const": "2022"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1073/pnas.2025334119"
+            },
+            "doi": {
+              "const": "10.1073/pnas.2025334119"
+            },
+            "authority_note": {
+              "const": "Estimates ranking-related exposure effects in a bounded platform, time, and content context."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "chaney-2018"
+            },
+            "title": {
+              "const": "How Algorithmic Confounding in Recommendation Systems Increases Homogeneity and Decreases Utility"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-simulation"
+            },
+            "published_on": {
+              "const": "2018"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1145/3240323.3240370"
+            },
+            "doi": {
+              "const": "10.1145/3240323.3240370"
+            },
+            "authority_note": {
+              "const": "Analyzes feedback and confounding in simulated recommendation systems."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "pennycook-2021"
+            },
+            "title": {
+              "const": "Shifting attention to accuracy can reduce misinformation online"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-experiment"
+            },
+            "published_on": {
+              "const": "2021"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1038/s41586-021-03344-2"
+            },
+            "doi": {
+              "const": "10.1038/s41586-021-03344-2"
+            },
+            "authority_note": {
+              "const": "Supports separating sharing choices from belief and studies bounded accuracy-attention prompts."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "shannon-1948"
+            },
+            "title": {
+              "const": "A Mathematical Theory of Communication"
+            },
+            "source_kind": {
+              "const": "peer-reviewed-theory"
+            },
+            "published_on": {
+              "const": "1948"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+            },
+            "doi": {
+              "const": "10.1002/j.1538-7305.1948.tb01338.x"
+            },
+            "authority_note": {
+              "const": "Defines information entropy while explicitly separating engineering information from semantic meaning."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "oxford-brain-rot-2024"
+            },
+            "title": {
+              "const": "‘Brain rot’ named Oxford Word of the Year 2024"
+            },
+            "source_kind": {
+              "const": "official-language-institution-release"
+            },
+            "published_on": {
+              "const": "2024-12-02"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://corp.oup.com/news/brain-rot-named-oxford-word-of-the-year-2024/"
+            },
+            "doi": {
+              "const": null
+            },
+            "authority_note": {
+              "const": "Documents a vernacular label and its contested cultural definition; it is not clinical evidence."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "w3c-prov-o"
+            },
+            "title": {
+              "const": "PROV-O: The PROV Ontology"
+            },
+            "source_kind": {
+              "const": "w3c-recommendation"
+            },
+            "published_on": {
+              "const": "2013"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://www.w3.org/TR/prov-o/"
+            },
+            "doi": {
+              "const": null
+            },
+            "authority_note": {
+              "const": "Interoperability standard for provenance representation."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "source_kind",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "authority_note"
+          ],
+          "properties": {
+            "id": {
+              "const": "cloudflare-pages"
+            },
+            "title": {
+              "const": "Cloudflare Pages documentation"
+            },
+            "source_kind": {
+              "const": "official-platform-documentation"
+            },
+            "published_on": {
+              "const": "2026"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://developers.cloudflare.com/pages/"
+            },
+            "doi": {
+              "const": null
+            },
+            "authority_note": {
+              "const": "Publication transport documentation only; it provides no scientific or interpretive authority."
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "educational_metadata_only",
+        "public_surface_read_only",
+        "cognitive_state_inference",
+        "psychological_diagnosis",
+        "person_prediction",
+        "medical_authority",
+        "clinical_authority",
+        "treatment_authority",
+        "prognosis_authority",
+        "experiment_authority",
+        "wet_lab_protocol",
+        "manufacturing_authority",
+        "contains_operational_protocol",
+        "causal_authority",
+        "recommendation_authority",
+        "moderation_authority",
+        "automatic_action",
+        "writes_karma",
+        "creates_kingdom_karma_receipt",
+        "observes_zerone_karma_event",
+        "karma_adapter",
+        "reward_authority",
+        "economic_authority",
+        "governance_authority",
+        "mcp_surface_added",
+        "scientifically_proves_teleology",
+        "scientifically_proves_creator",
+        "scientifically_disproves_creator",
+        "scientifically_proves_cosmic_moral_karma",
+        "brainrot_person_or_community_label",
+        "material_cultural_mechanism_equivalence"
+      ],
+      "properties": {
+        "educational_metadata_only": {
+          "const": true
+        },
+        "public_surface_read_only": {
+          "const": true
+        },
+        "cognitive_state_inference": {
+          "const": false
+        },
+        "psychological_diagnosis": {
+          "const": false
+        },
+        "person_prediction": {
+          "const": false
+        },
+        "medical_authority": {
+          "const": false
+        },
+        "clinical_authority": {
+          "const": false
+        },
+        "treatment_authority": {
+          "const": false
+        },
+        "prognosis_authority": {
+          "const": false
+        },
+        "experiment_authority": {
+          "const": false
+        },
+        "wet_lab_protocol": {
+          "const": false
+        },
+        "manufacturing_authority": {
+          "const": false
+        },
+        "contains_operational_protocol": {
+          "const": false
+        },
+        "causal_authority": {
+          "const": false
+        },
+        "recommendation_authority": {
+          "const": false
+        },
+        "moderation_authority": {
+          "const": false
+        },
+        "automatic_action": {
+          "const": false
+        },
+        "writes_karma": {
+          "const": false
+        },
+        "creates_kingdom_karma_receipt": {
+          "const": false
+        },
+        "observes_zerone_karma_event": {
+          "const": false
+        },
+        "karma_adapter": {
+          "const": false
+        },
+        "reward_authority": {
+          "const": false
+        },
+        "economic_authority": {
+          "const": false
+        },
+        "governance_authority": {
+          "const": false
+        },
+        "mcp_surface_added": {
+          "const": false
+        },
+        "scientifically_proves_teleology": {
+          "const": false
+        },
+        "scientifically_proves_creator": {
+          "const": false
+        },
+        "scientifically_disproves_creator": {
+          "const": false
+        },
+        "scientifically_proves_cosmic_moral_karma": {
+          "const": false
+        },
+        "brainrot_person_or_community_label": {
+          "const": false
+        },
+        "material_cultural_mechanism_equivalence": {
+          "const": false
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "digest"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256-recursive-sorted-json-keys-v1"
+        },
+        "digest": {
+          "const": "sha256:9510fbbced6166507e9a1781a4adfa18cd249fb94e69b0f34faf77733cd20323"
+        }
+      }
+    }
+  }
+}

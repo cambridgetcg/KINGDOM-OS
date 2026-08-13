@@ -178,6 +178,19 @@ function expectCulturalAttentionFeedbackSchemaLink(response: Response) {
   expect(link.match(/rel="describedby"/g)?.length).toBe(1);
 }
 
+function expectFormCirculationReturnSchemaLink(response: Response) {
+  const link = response.headers.get("link") ?? "";
+  const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
+    const part = entry.trim();
+    if (!part.startsWith("</schemas/form-circulation-return-atlas/1.json>")) return false;
+    const relations = part.match(/;\s*rel="([^"]*)"/i)?.[1]?.toLowerCase().split(/\s+/) ?? [];
+    return relations.includes("describedby");
+  });
+  expect(describedBy).toHaveLength(1);
+  expect(describedBy[0]).toContain('type="application/schema+json"');
+  expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+}
+
 function assets(handler: (request: Request) => Response | Promise<Response>) {
   return { ASSETS: { fetch: handler } };
 }
@@ -1159,6 +1172,152 @@ describe("the Kingdom edge discovery surface", () => {
       "/atlases/cultural-attention-feedback-atlas-latest.json",
       "/schemas/cultural-attention-feedback-atlas/current.json",
       "/CULTURAL-ATTENTION-FEEDBACK-ATLAS",
+    ]) {
+      const unrelated = new Response("unchanged", { headers: { "content-type": "text/plain" } });
+      const response = await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => unrelated),
+      );
+      expect(response).toBe(unrelated);
+    }
+  });
+
+  test("serves Form, Circulation & Return as a typed immutable companion without expanding authority", async () => {
+    const atlasPath = "/atlases/form-circulation-return-atlas-2026-08-13.json";
+    const schemaPath = "/schemas/form-circulation-return-atlas/1.json";
+    const documentPath = "/FORM-CIRCULATION-RETURN-ATLAS.md";
+    const definitionPath = "/definitions/kingdom-karma/e4e84a67/NEN.md";
+    const forwarded: string[] = [];
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      forwarded.push(`${request.method} ${path}`);
+      const body = request.method === "HEAD"
+        ? null
+        : path === atlasPath
+          ? '{"atlas_id":"form-circulation-return-atlas-2026-08-13"}'
+          : path === schemaPath
+            ? '{"type":"object"}'
+            : path === documentPath
+              ? "# Form, Circulation & Return Atlas"
+              : "# NEN — let bounded capability be";
+      return new Response(body, {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": path === documentPath || path === definitionPath ? "text/plain" : "application/json",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const atlas = await worker.fetch(
+        new Request(`https://thekingdom.dev${atlasPath}`, { method }),
+        environment,
+      );
+      expect(await atlas.text()).toBe(method === "HEAD" ? "" : '{"atlas_id":"form-circulation-return-atlas-2026-08-13"}');
+      expect(atlas.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(atlas.headers.get("access-control-allow-origin")).toBe("*");
+      expect(atlas.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(atlas.headers.get("cache-control")).toBe("public, max-age=60");
+      expect(atlas.headers.get("link")).toContain('</elsewhere>; rel="alternate"');
+      expectFormCirculationReturnSchemaLink(atlas);
+    }
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const schema = await worker.fetch(
+        new Request(`https://thekingdom.dev${schemaPath}`, { method }),
+        environment,
+      );
+      expect(await schema.text()).toBe(method === "HEAD" ? "" : '{"type":"object"}');
+      expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+      expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+      expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(schema.headers.get("cache-control")).toBe("public, max-age=60");
+      expect(schema.headers.get("link")).toBe('</elsewhere>; rel="alternate"');
+    }
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const document = await worker.fetch(
+        new Request(`https://thekingdom.dev${documentPath}`, { method }),
+        environment,
+      );
+      expect(await document.text()).toBe(method === "HEAD" ? "" : "# Form, Circulation & Return Atlas");
+      expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(document.headers.get("access-control-allow-origin")).toBe("*");
+      expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(document.headers.get("cache-control")).toBe("public, max-age=60");
+      expect(document.headers.get("link")).toBe('</elsewhere>; rel="alternate"');
+    }
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const definition = await worker.fetch(
+        new Request(`https://thekingdom.dev${definitionPath}`, { method }),
+        environment,
+      );
+      expect(await definition.text()).toBe(method === "HEAD" ? "" : "# NEN — let bounded capability be");
+      expect(definition.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(definition.headers.get("access-control-allow-origin")).toBe("*");
+      expect(definition.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(definition.headers.get("cache-control")).toBe("public, max-age=60");
+      expect(definition.headers.get("link")).toBe('</elsewhere>; rel="alternate"');
+    }
+
+    expect(forwarded).toEqual([
+      `GET ${atlasPath}`,
+      `HEAD ${atlasPath}`,
+      `GET ${schemaPath}`,
+      `HEAD ${schemaPath}`,
+      `GET ${documentPath}`,
+      `HEAD ${documentPath}`,
+      `GET ${definitionPath}`,
+      `HEAD ${definitionPath}`,
+    ]);
+
+    const duplicate = await worker.fetch(
+      new Request(`https://thekingdom.dev${atlasPath}`),
+      assets(() => new Response("{}", {
+        headers: {
+          "content-type": "application/json",
+          link: '</schemas/form-circulation-return-atlas/1.json>; rel="describedby"; type="application/schema+json"',
+        },
+      })),
+    );
+    expectFormCirculationReturnSchemaLink(duplicate);
+
+    const unavailable = await worker.fetch(
+      new Request(`https://thekingdom.dev${schemaPath}`),
+      assets(() => new Response("<h1>schema unavailable</h1>", {
+        status: 404,
+        headers: { "content-type": "text/html; charset=utf-8" },
+      })),
+    );
+    expect(unavailable.status).toBe(404);
+    expect(unavailable.headers.get("content-type")).toBe("text/html; charset=utf-8");
+    expect(unavailable.headers.get("access-control-allow-origin")).toBeNull();
+    expect(unavailable.headers.get("x-content-type-options")).toBeNull();
+
+    for (const path of [atlasPath, schemaPath, documentPath, definitionPath]) {
+      for (const method of ["POST", "PUT", "DELETE"] as const) {
+        const original = new Response("not a read route", { headers: { "content-type": "text/plain" } });
+        const response = await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          assets(() => original),
+        );
+        expect(response).toBe(original);
+      }
+
+      const shared = new Response("{}", { headers: { "content-type": "application/json" } });
+      const sharedDoor = await worker.fetch(
+        new Request(`https://we-are.love${path}`),
+        assets(() => shared),
+      );
+      expect(sharedDoor).toBe(shared);
+    }
+
+    for (const path of [
+      "/atlases/form-circulation-return-atlas-latest.json",
+      "/schemas/form-circulation-return-atlas/current.json",
+      "/FORM-CIRCULATION-RETURN-ATLAS",
     ]) {
       const unrelated = new Response("unchanged", { headers: { "content-type": "text/plain" } });
       const response = await worker.fetch(

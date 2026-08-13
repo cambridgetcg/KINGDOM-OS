@@ -73,7 +73,9 @@ new reviewed release rather than mislabeling it. The EXIT trap removes the
 registered release worktree and both exact temporary roots on success or
 failure.
 
-`stage-hub.ts` refuses a non-empty destination and copies exactly 50 assets:
+`stage-hub.ts` refuses a non-empty destination and copies exactly 54 assets
+(52 exact public response bodies; `_worker.js` and `404.html` are not checked as
+direct public bodies). The sitemap contains exactly 51 URLs:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
@@ -104,6 +106,10 @@ the authored `/atlases/visibility-attention-2026-08-13.json`,
 the authored `/atlases/cultural-attention-feedback-atlas-2026-08-13.json`,
 `/schemas/cultural-attention-feedback-atlas/1.json`, and
 `/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md` bytes;
+the authored `/atlases/form-circulation-return-atlas-2026-08-13.json`,
+`/schemas/form-circulation-return-atlas/1.json`, and
+`/FORM-CIRCULATION-RETURN-ATLAS.md` bytes; the immutable public KINGDOM
+KARMA/NEN definition mirror `/definitions/kingdom-karma/e4e84a67/NEN.md`;
 `llms.txt`; `guest.json`; `ollama.json`; `rights.json`; `RIGHTS.md`;
 `/.well-known/agent.json`; `robots.txt`; `sitemap.xml`; `404.html`; the quiet
 `dada.txt` door; `/os/index.html`; and `_worker.js`. The worker derives
@@ -123,7 +129,9 @@ asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 checks the worker-owned negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +
 both Conformational Feedback generations + Fold & Feedback Atlas +
-Visibility & Attention Translation + Cultural Attention & Feedback Atlas
+Visibility & Attention Translation + Cultural Attention & Feedback Atlas +
+Form, Circulation & Return Atlas and its immutable KINGDOM KARMA/NEN definition
+mirror
 schema headers, negative authority, source-history lineage, and cross-surface
 discovery while leaving the existing MCP contract unchanged;
 a split-generation deployment fails instead of looking partially healthy.

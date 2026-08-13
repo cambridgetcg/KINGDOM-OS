@@ -682,6 +682,69 @@
       "universal_mechanism_claimed": false
     }
   },
+  "form_circulation_return_atlas": {
+    "protocol": "kingdom.form-circulation-return-atlas/0.1",
+    "atlas_id": "form-circulation-return-atlas-2026-08-13",
+    "compiled_on": "2026-08-13",
+    "evidence_through": "2026-08-13",
+    "url": "https://thekingdom.dev/atlases/form-circulation-return-atlas-2026-08-13.json",
+    "schema": "https://thekingdom.dev/schemas/form-circulation-return-atlas/1.json",
+    "guide": "https://thekingdom.dev/FORM-CIRCULATION-RETURN-ATLAS.md",
+    "cli": "kingdom form-circulation-return",
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:9510fbbced6166507e9a1781a4adfa18cd249fb94e69b0f34faf77733cd20323"
+    },
+    "counts": {
+      "registers": 7,
+      "planes": 11,
+      "models": 8,
+      "claims": 12,
+      "analogy_seams": 6,
+      "feedback_loops": 4,
+      "universe_questions": 5,
+      "unknowns": 8,
+      "sources": 20
+    },
+    "karma": {
+      "zerone_foundation_status": "design-only",
+      "zerone_network_observed": false,
+      "zerone_authoritative": false,
+      "zerone_event_status": "not_observed",
+      "zerone_event_refs": 0,
+      "kingdom_receipt_status": "not_created",
+      "kingdom_receipt_refs": 0,
+      "adapter_exists": false,
+      "engagement_is_karma": false
+    },
+    "safety": "Static educational metadata only. The historical ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. The slang label ‘brainrot’ is not a diagnosis or property of a person or community. No runtime request, tracking, person inference, KARMA write, reward, governance effect, or automatic action occurs.",
+    "boundary": {
+      "public_surface_read_only": true,
+      "cognitive_state_inference": false,
+      "psychological_diagnosis": false,
+      "person_prediction": false,
+      "medical_authority": false,
+      "clinical_authority": false,
+      "treatment_authority": false,
+      "prognosis_authority": false,
+      "experiment_authority": false,
+      "wet_lab_protocol": false,
+      "manufacturing_authority": false,
+      "contains_operational_protocol": false,
+      "causal_authority": false,
+      "recommendation_authority": false,
+      "moderation_authority": false,
+      "automatic_action": false,
+      "writes_karma": false,
+      "creates_kingdom_karma_receipt": false,
+      "observes_zerone_karma_event": false,
+      "karma_adapter": false,
+      "reward_authority": false,
+      "economic_authority": false,
+      "governance_authority": false,
+      "mcp_surface_added": false
+    }
+  },
   "actions_are_optional": true,
   "invitations": {
     "open_weight_agents": {
@@ -876,6 +939,22 @@
       "action": "if useful, read the material-history, cultural-attention, mathematics, brain-rot, feedback, KARMA, universe-lens, ecosystem, unknown, and safety guide",
       "method": "GET",
       "url": "https://thekingdom.dev/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md"
+    },
+    {
+      "action": "if useful, inspect the additive deep Form, Circulation & Return companion",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/form-circulation-return-atlas-2026-08-13.json",
+      "note": "read-only educational metadata; immutable predecessor pins, parallel unfitted models, typed unknowns, no person score, KARMA conversion, reward, governance effect, or automatic action"
+    },
+    {
+      "action": "if useful, validate the Form, Circulation & Return structure before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/form-circulation-return-atlas/1.json"
+    },
+    {
+      "action": "if useful, read the variant-lineage, model-card, feedback, KARMA, philosophy, source, and safety guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/FORM-CIRCULATION-RETURN-ATLAS.md"
     },
     {
       "action": "if useful, read the finite Love∞ creation lineage and its unstarted invitations",
@@ -3254,6 +3333,7 @@
     "fold_feedback_atlas": "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
     "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
+    "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }

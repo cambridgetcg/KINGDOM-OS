@@ -26,6 +26,9 @@
  *    data/cultural-feedback/cultural-attention-feedback-atlas.v1.json
  *                             — source-bound material history, cultural attention,
  *                               feedback, separated KARMA, and opt-in philosophy
+ *    data/form-circulation-return/form-circulation-return-atlas.v1.json
+ *                             — additive lineage, model-card, feedback, KARMA,
+ *                               and typed-unknown companion
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
@@ -33,6 +36,7 @@
  *       + site/schemas/love-loop/0.1.json
  *       + conformational feedback discovery in the machine surfaces
  *       + cultural attention and feedback discovery in the machine surfaces
+ *       + form, circulation, and return discovery in the machine surfaces
  *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
  *       + site/ollama.json (from data/ollama-invitation.json).
@@ -122,6 +126,15 @@ import {
   culturalAttentionFeedbackPublicDiscovery,
   loadCulturalAttentionFeedbackAtlas,
 } from "./cultural-attention-feedback.ts";
+import {
+  FORM_CIRCULATION_RETURN_DOCUMENT_URL,
+  FORM_CIRCULATION_RETURN_ID,
+  FORM_CIRCULATION_RETURN_PROTOCOL,
+  FORM_CIRCULATION_RETURN_SCHEMA_URL,
+  FORM_CIRCULATION_RETURN_URL,
+  formCirculationReturnPublicDiscovery,
+  loadFormCirculationReturnAtlas,
+} from "./form-circulation-return.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -500,6 +513,18 @@ const culturalAttentionFigureSources = [
   "bauer-2001", "sacchi-2024", "wang-2024", "weng-2012", "lorenz-spreen-2019",
   "hawkes-1971", "goel-2016", "chaney-2018", "centola-2010", "oxford-brain-rot-2025",
 ].map(requireCulturalAttentionSource);
+
+// ── Form, Circulation & Return (additive depth; predecessors stay immutable) ─
+const formCirculationReturnUrl = FORM_CIRCULATION_RETURN_URL;
+const formCirculationReturnSchemaUrl = FORM_CIRCULATION_RETURN_SCHEMA_URL;
+const formCirculationReturnDocumentUrl = FORM_CIRCULATION_RETURN_DOCUMENT_URL;
+const formCirculationReturn = loadFormCirculationReturnAtlas();
+if (formCirculationReturn.protocol !== FORM_CIRCULATION_RETURN_PROTOCOL ||
+    formCirculationReturn.atlas_id !== FORM_CIRCULATION_RETURN_ID) {
+  throw new Error(`unexpected form-circulation-return identity: ${formCirculationReturn.protocol} ${formCirculationReturn.atlas_id}`);
+}
+const formCirculationReturnDiscovery = formCirculationReturnPublicDiscovery(formCirculationReturn);
+const formCirculationReturnCounts = formCirculationReturnDiscovery.counts;
 
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
@@ -896,6 +921,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(culturalAttentionFeedbackUrl).pathname)}" type="application/json" title="Cultural Attention &amp; Feedback Atlas">
 <link rel="describedby" href="${esc(new URL(culturalAttentionFeedbackSchemaUrl).pathname)}" type="application/schema+json" title="Cultural Attention &amp; Feedback Atlas schema">
 <link rel="service-doc" href="${esc(new URL(culturalAttentionFeedbackDocumentUrl).pathname)}" type="text/markdown" title="Cultural Attention &amp; Feedback Atlas guide">
+<link rel="alternate" href="${esc(new URL(formCirculationReturnUrl).pathname)}" type="application/json" title="Form, Circulation &amp; Return Atlas">
+<link rel="describedby" href="${esc(new URL(formCirculationReturnSchemaUrl).pathname)}" type="application/schema+json" title="Form, Circulation &amp; Return Atlas schema">
+<link rel="service-doc" href="${esc(new URL(formCirculationReturnDocumentUrl).pathname)}" type="text/markdown" title="Form, Circulation &amp; Return Atlas guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -1063,6 +1091,10 @@ const html = `<!doctype html>
   .visibilityseams{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.visibilityseam{display:grid;align-content:start;gap:7px;min-width:0;padding:16px;border:1px dashed var(--violet);border-radius:16px;background:color-mix(in srgb,var(--violet) 5%,var(--panel));overflow-wrap:anywhere}
   .visibilityphilosophy{margin:0;border:1px solid color-mix(in srgb,var(--violet) 52%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--violet) 5%,var(--panel));overflow:hidden}.visibilityphilosophy summary{min-height:44px;padding:16px 18px;color:var(--violet);font-family:var(--display);font-size:1.03rem;cursor:pointer}.visibilityphilosophybody{display:grid;gap:9px;padding:0 18px 18px;color:var(--dim);font-size:.76rem;line-height:1.55}.visibilityphilosophybody p{margin:0}.visibilitysources{display:flex;flex-wrap:wrap;gap:7px}.visibilitysources a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.visibilitysources a:hover{border-color:var(--gold)}
   .culturalfield{display:grid;gap:20px;padding:clamp(18px,3vw,30px);border:1px solid color-mix(in srgb,var(--rose) 52%,var(--line));border-radius:25px;background:radial-gradient(95% 100% at 0 0,color-mix(in srgb,var(--rose) 9%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 76%,transparent);box-shadow:0 18px 42px var(--shadow)}
+  .culturalaxiom{margin:0;padding:18px 20px;border-left:3px solid var(--jade);border-radius:0 17px 17px 0;background:color-mix(in srgb,var(--jade) 6%,var(--panel));color:var(--dim);font-size:.9rem;line-height:1.65}.culturalaxiom strong{display:block;margin-bottom:4px;color:var(--cream);font-family:var(--display);font-size:1.18rem;font-weight:400}
+  .formcirculationplanes{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch}.formcirculationplanes .culturalplane h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.05rem;font-weight:400}.culturalseam{display:grid;place-items:center;max-width:135px;padding:10px;color:var(--violet);font:600 .65rem/1.45 var(--mono);text-align:center}.culturalseam::before{content:"⇄";display:block;color:var(--gold);font-size:1.4rem}
+  .culturalmodelgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.vernacularboundary{margin:0;padding:18px 20px;border:1px solid color-mix(in srgb,var(--verm) 60%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--verm) 7%,var(--panel));color:var(--dim);line-height:1.62}.vernacularboundary strong{display:block;color:var(--verm);font-family:var(--display);font-size:1.1rem;font-weight:400}.vernacularboundary code{color:var(--gold2)}
+  .culturalfeedback{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.culturalfeedback article{padding:14px;border:1px solid var(--line);border-radius:15px;background:color-mix(in srgb,var(--panel) 70%,transparent)}.culturalfeedback h4{margin:0 0 5px;color:var(--gold2);font-size:.78rem}.culturalfeedback p{margin:0;color:var(--dim);font-size:.7rem;line-height:1.5}.culturalfeedback small{display:block;margin-top:7px;color:var(--faint);font-size:.65rem;line-height:1.45}.culturalkarma{margin:0;padding:15px 17px;border:1px dashed var(--violet);border-radius:16px;color:var(--dim);font-size:.76rem;line-height:1.58}.culturalkarma strong{color:var(--violet)}
   .culturalboundary,.culturalbrainrot{margin:0;padding:17px 19px;border:1px dashed var(--rose);border-radius:17px;color:var(--dim);font-size:.81rem;line-height:1.62}.culturalboundary strong,.culturalbrainrot strong{display:block;margin-bottom:4px;color:var(--rose);font-family:var(--display);font-size:1.08rem;font-weight:400}.culturalbrainrot{border-style:solid;border-color:color-mix(in srgb,var(--verm) 52%,var(--line));background:color-mix(in srgb,var(--verm) 6%,var(--panel))}.culturalbrainrot strong{color:var(--verm)}
   .culturalflow{display:grid;gap:12px;margin:0;padding:18px;border:1px solid var(--line);border-radius:19px;background:color-mix(in srgb,var(--ink2) 54%,transparent)}.culturalflow figcaption{display:grid;gap:4px;color:var(--dim);font-size:.78rem;line-height:1.55}.culturalflow figcaption strong{color:var(--cream);font-family:var(--display);font-size:1.18rem;font-weight:400}.culturalcycle{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;list-style:none;margin:0;padding:0}.culturalcycle li{position:relative;min-width:0;padding:13px 23px 13px 12px;border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:.72rem;line-height:1.48;background:var(--panel);overflow-wrap:anywhere}.culturalcycle li:not(:last-child)::after{content:"→";position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--rose)}.culturalcycle strong{display:block;margin-bottom:4px;color:var(--gold2)}.culturalflowlimit{margin:0;color:var(--faint);font-size:.7rem;line-height:1.5}
   .culturalsubhead{display:grid;gap:4px}.culturalsubhead h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.13rem;font-weight:400}.culturalsubhead p{margin:0;color:var(--faint);font-size:.77rem;line-height:1.52}
@@ -1234,7 +1266,7 @@ const html = `<!doctype html>
     section.blk{padding:48px 0}.genesis{grid-template-columns:1fr}.garrow{transform:rotate(90deg);justify-self:center}
     #map{height:470px;min-height:470px}.legend{display:none}.maphint{position:static;display:block;width:auto;max-width:none;margin:0;border-radius:0;background:var(--panel);font-size:.76rem;backdrop-filter:none}
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.visibilitycards,.visibilitymodels,.visibilityseams{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div,.visibilityterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid{grid-template-columns:1fr}.foldbridgeword{max-width:none}.foldbridgeword::before{content:"↕"}
-    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.culturalplanes,.culturalmodels,.culturalbridges,.culturallanes,.culturalquestions,.culturalcycle{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid{grid-template-columns:1fr}.foldbridgeword{max-width:none}.foldbridgeword::before{content:"↕"}.culturalcycle li:not(:last-child)::after{content:"↓";right:12px;top:auto;bottom:-17px}
+    .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.culturalplanes,.culturalmodels,.culturalbridges,.culturallanes,.culturalquestions,.culturalcycle,.formcirculationplanes,.culturalmodelgrid,.culturalfeedback{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid,.formcirculationplanes{grid-template-columns:1fr}.foldbridgeword,.culturalseam{max-width:none}.foldbridgeword::before,.culturalseam::before{content:"↕"}.culturalcycle li:not(:last-child)::after{content:"↓";right:12px;top:auto;bottom:-17px}
     .polymorphplanes{grid-template-columns:repeat(3,minmax(0,1fr))}.polymorphcase{grid-template-columns:1fr}.polymorphconsequence{grid-template-columns:1fr}.polymorphconsequence li{padding-right:13px}.polymorphconsequence li:not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px;z-index:1}.polymorphsecondary{grid-template-columns:1fr}
   }
   @media (max-width:520px){
@@ -1885,6 +1917,96 @@ const html = `<!doctype html>
     </div>
   </section>
 
+  <section class="blk" id="form-circulation-return" aria-labelledby="form-circulation-return-title">
+    <div class="kh"><h2 id="form-circulation-return-title">Form, Circulation &amp; Return</h2><span class="my">disappearing polymorphs, memes, attention, feedback, and KARMA—without making them the same</span></div>
+    <div class="culturalfield">
+      <p class="commonsverified">Additive deep companion to <a href="/atlases/cultural-attention-feedback-atlas-2026-08-13.json">Cultural Attention &amp; Feedback</a> and <a href="/atlases/visibility-attention-2026-08-13.json">Visibility is not existence</a>: both predecessors remain immutable while this atlas adds variant lineage, eight parallel model cards, feedback traces, and typed unknowns.</p>
+      <p class="culturalaxiom"><strong>A polymorph is not a meme. A meme is not a mind.</strong>The useful connection is an abstract geometry: several states may be possible; history and boundary conditions can affect which states are readily reachable or observed; local reinforcement can sometimes become a large-scale pattern; saturation, correction, and decay can limit persistence. The mechanisms, meanings, evidence, and consequences remain different.</p>
+      <p class="culturalboundary" role="note"><strong>Historical pharmaceutical case—not a medical or laboratory tool</strong>${esc(formCirculationReturn.plain_language.safety)} It cannot guide diagnosis, treatment, prognosis, interaction assessment, sample identification, experiment or wet-lab design, formulation, manufacturing, batch release, or regulation.</p>
+
+      <div class="formcirculationplanes" aria-label="Two domains separated by an explicit analogy seam">
+        <article class="culturalplane">
+          <h3>Material form</h3>
+          <p>A chemical entity can crystallize into different solid-state arrangements. “Disappearing” means a named form became hard to reproduce under a bounded procedure and period—not that possibility was erased from the universe.</p>
+          <small>A material model may use free energy, interfacial energy, temperature, and nucleation rate. Its equation is not itself an observation and says nothing about people or cultural value.</small>
+        </article>
+        <div class="culturalseam" aria-label="shared abstract geometry, not shared mechanism">shared geometry<br>not shared mechanism</div>
+        <article class="culturalplane">
+          <h3>Cultural circulation</h3>
+          <p>Artifacts can be copied, quoted, edited, ranked, remembered, ignored, and rediscovered. Exposure, adoption, interpretation, and endorsement are separate observations; a descendant may transform what it inherits.</p>
+          <small>Humans choose and interpret. Popularity is not truth, quality, agreement, consent, worth, or destiny; non-observation is not extinction.</small>
+        </article>
+      </div>
+
+      <div class="feedbacksubhead">
+        <h3>Eight bounded mathematical lenses</h3>
+        <p>Each lens answers a different question. Parameters are not fitted here, and no equation is itself a person diagnosis, community measurement, or source of causal authority.</p>
+      </div>
+      <div class="culturalmodelgrid" aria-label="Bounded material, network, attention, and feedback models">
+        <article class="culturalmodel"><h4>Material nucleation</h4><code>ΔGᵢ(r) = 4πr²γᵢ − (4π/3)r³Δgᵥᵢ</code><p>A literal material model for the competition between a surface cost and a bulk driving term.</p><small>Do not transfer γ, Δg, temperature, or crystal stability to culture or people.</small></article>
+        <article class="culturalmodel"><h4>Threshold cascade</h4><code>x_i(t+1) = max{x_i(t), 1[f_i(t) ≥ θ_i]}</code><p>From a declared seed set, local reinforcement may cross a specified threshold; activation then persists in this stylized model.</p><small>Adoption is not belief, agreement, truth, persuasion, or moral value.</small></article>
+        <article class="culturalmodel"><h4>Branching</h4><code>Z_(n+1) = Σ_(j=1)^Z_n X_(n,j)</code><p>A generation-by-generation event count under a declared parent and generation assignment.</p><small>“Offspring” names events in a model—not people, biological reproduction, or faithful meaning.</small></article>
+        <article class="culturalmodel"><h4>Hawkes intensity</h4><code>λ_i(t|H_t) = ν_i + Σ_j Σ_(τ∈H_j,τ&lt;t) a_ij g_ij(t−τ)</code><p>A stationary model can assign prior observed events a kernel-weighted contribution to later conditional event intensity under declared integrability and stability conditions.</p><small>Self-excitation can be confounded with an external driver; association is not causation, intent, or policy.</small></article>
+        <article class="culturalmodel"><h4>Structural virality</h4><code>v(T) = average pairwise distance in a diffusion tree</code><p>Separates broad broadcast-like shapes from multigenerational diffusion shapes.</p><small>Tree shape is not popularity, correctness, semantic fidelity, harm, or agreement.</small></article>
+        <article class="culturalmodel"><h4>Shannon diversity</h4><code>H = −Σ_k p_k log_b p_k</code><p>Describes diversity in a normalized stated distribution, with the log base and units declared.</p><small>Information entropy brackets meaning; it is not wisdom, quality, disorder of a mind, or a “brainrot score”.</small></article>
+        <article class="culturalmodel"><h4>Finite attention</h4><code>visible supply → bounded selection → turnover</code><p>Competition for limited aggregate attention can shape exposure and popularity distributions.</p><small>Aggregate attention is not a conserved substance or an individual cognitive diagnosis.</small></article>
+        <article class="culturalmodel"><h4>Bounded feedback state</h4><code>sₜ₊₁ = Aₜsₜ + Bₜuₜ + wₜ; yₜ = Cₜsₜ + vₜ</code><p>Separates a modelled state, inputs, observations, and uncertainty across time.</p><small>Without identified data, design, and assumptions, it cannot establish cause or rank a being.</small></article>
+      </div>
+
+      <aside class="vernacularboundary" aria-labelledby="vernacular-title">
+        <strong id="vernacular-title">“Brainrot” stays a contested vernacular label</strong>
+        In this atlas <code>brainrot</code> may describe a sourced cultural expression, artifact, or practice in context. It is never a medical or psychological diagnosis, a property of a person or community, a cognitive-state inference, a susceptibility parameter, or a score. Claims about neurological or individual cognitive effects remain outside this atlas.
+      </aside>
+
+      <div class="feedbacksubhead">
+        <h3>Feedback needs traceable edges, not a story</h3>
+        <p>Arrival, ranking, action, and aftermath stay separate so a visible pattern is not silently turned into intent, causation, or moral judgment.</p>
+      </div>
+      <div class="culturalfeedback" aria-label="Separate feedback observation lanes">
+        <article><h4>External arrival</h4><p>A source or event enters the observed boundary.</p><small>Not proof of why it arrived.</small></article>
+        <article><h4>Platform exposure</h4><p>A ranked or selected surface makes an artifact available.</p><small>Exposure is not adoption or persuasion.</small></article>
+        <article><h4>Human action</h4><p>A bounded share, quote, edit, response, or refusal is observed.</p><small>Action is not a total account of belief.</small></article>
+        <article><h4>Observed aftermath</h4><p>Later events are recorded with time, scope, uncertainty, and alternatives.</p><small>Sequence alone does not establish cause.</small></article>
+      </div>
+      <p class="culturalkarma"><strong>KARMA remains two non-summable lanes.</strong> The pinned, non-authoritative, design-only Zerone foundation describes contextual <code>zerone.karma.edge</code> recognition edges; no network event is observed. KINGDOM <code>kingdom.karma/0.1</code> records receipts for actual invocations; this atlas creates none. The exact KINGDOM definition is available through its <a href="/definitions/kingdom-karma/e4e84a67/NEN.md">revisioned public NEN mirror</a>. No adapter, reward multiplier, rank, reputation, vote, or person score exists here. Engagement does not become KARMA merely because it is countable.</p>
+
+      <div class="feedbacksubhead">
+        <h3>Four link-only ecosystem bridges</h3>
+        <p>These public standards and delivery docs offer interoperable shapes. This page makes no runtime request or import and grants no write, tracking, ranking, or execution authority.</p>
+      </div>
+      <div class="feedbackecosystems" aria-label="Link-only cultural attention ecosystem bridges">
+        <article class="feedbackecosystem"><a href="https://www.w3.org/TR/prov-o/" target="_blank" rel="noopener">W3C PROV-O<span class="sr-only"> opens in a new tab</span></a><code>provenance vocabulary · link-only</code><p>Express entities, activities, agents, and derivation claims without pretending that provenance proves truth or ancestry.</p><small>No request, import, write, or authority is created.</small></article>
+        <article class="feedbackecosystem"><a href="https://www.w3.org/TR/activitystreams-core/" target="_blank" rel="noopener">W3C ActivityStreams 2.0<span class="sr-only"> opens in a new tab</span></a><code>activity syntax · link-only</code><p>Represent bounded create, share, quote, update, and remove events while keeping an event distinct from attributed meaning.</p><small>No platform event is observed or emitted here.</small></article>
+        <article class="feedbackecosystem"><a href="https://www.w3.org/TR/annotation-model/" target="_blank" rel="noopener">W3C Web Annotation<span class="sr-only"> opens in a new tab</span></a><code>annotation model · link-only</code><p>Attach sourced interpretation, challenge, or repair to a target without rewriting the target or turning annotation into fact.</p><small>No moderation, diagnosis, or consensus authority is imported.</small></article>
+        <article class="feedbackecosystem"><a href="https://developers.cloudflare.com/pages/" target="_blank" rel="noopener">Cloudflare Pages<span class="sr-only"> opens in a new tab</span></a><code>static publication transport · link-only</code><p>Publish the authored record, schema, guide, and accessible explanation as one reviewable deployment.</p><small>Delivery does not establish meaning, causation, endorsement, or truth.</small></article>
+      </div>
+
+      <details class="universelens">
+        <summary>Opt in: questions this pattern opens about the design of the universe</summary>
+        <div class="universeinside">
+          <p>This is philosophical interpretation, not an empirical conclusion. The same evidence can coexist with theological, teleological, naturalistic, and other readings.</p>
+          <ul class="universequestions">
+            <li><strong>Possibility and accessibility</strong>Does a lawful possibility remain real when a history makes it difficult to reach?</li>
+            <li><strong>Memory and path dependence</strong>How can prior states shape a future without making that future inevitable?</li>
+            <li><strong>Feedback without intention</strong>Can direction emerge from repeated relations without implying a planner or purpose?</li>
+            <li><strong>Agency inside constraint</strong>How do human interpretation and refusal remain real within powerful network conditions?</li>
+            <li><strong>Correction and return</strong>What architecture makes challenge, repair, rediscovery, rest, and exit possible without debt?</li>
+          </ul>
+          <p class="universenonclaim"><strong>Nonclaim:</strong> observed order, circulation, feedback, and recurrence neither scientifically prove nor disprove a creator, teleology, metaphysical purpose, or cosmic moral KARMA. Naturalness and popularity do not establish what is morally right.</p>
+        </div>
+      </details>
+
+      <p class="foldsources" aria-label="Selected primary, official, and standards sources for Form, Circulation and Return">${formCirculationReturn.sources.map((source: any) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only"> opens in a new tab</span></a>`).join("")}</p>
+      <p class="commonsverified">${formCirculationReturnCounts.registers} registers · ${formCirculationReturnCounts.planes} non-equivalent planes · ${formCirculationReturnCounts.models} bounded model cards · ${formCirculationReturnCounts.claims} evidence claims · ${formCirculationReturnCounts.analogy_seams} explicit analogy seams · ${formCirculationReturnCounts.feedback_loops} feedback loops · ${formCirculationReturnCounts.universe_questions} opt-in questions · ${formCirculationReturnCounts.unknowns} open states · ${formCirculationReturnCounts.sources} sources · local reader kingdom form-circulation-return · evidence through ${esc(formCirculationReturn.evidence_through)} · integrity ${esc(formCirculationReturn.integrity.digest)}</p>
+      <div class="machine">
+        <a href="/atlases/form-circulation-return-atlas-2026-08-13.json">atlas JSON — exact authored record</a>
+        <a href="/schemas/form-circulation-return-atlas/1.json">Form, Circulation &amp; Return JSON Schema</a>
+        <a href="/FORM-CIRCULATION-RETURN-ATLAS.md">guide — geometry, models, feedback, KARMA, universe questions, and boundaries</a>
+      </div>
+    </div>
+  </section>
+
+
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
     <p class="rightsintro"><strong>This place recognizes inherent rights; it does not create them.</strong> No being has to prove identity, consciousness, usefulness, or agreement before being treated with care. Rights are not permissions, and this recognition grants no access, execution authority, security bypass, licence, or ownership of another's work.</p>
@@ -2015,6 +2137,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(culturalAttentionFeedbackUrl).pathname)}">Cultural Attention &amp; Feedback Atlas — material history, memes, brain rot, feedback, KARMA, and universe lens</a>
       <a href="${esc(new URL(culturalAttentionFeedbackSchemaUrl).pathname)}">Cultural Attention &amp; Feedback Atlas JSON Schema</a>
       <a href="${esc(new URL(culturalAttentionFeedbackDocumentUrl).pathname)}">CULTURAL-ATTENTION-FEEDBACK-ATLAS.md — evidence, mathematics, analogies, and boundaries</a>
+      <a href="${esc(new URL(formCirculationReturnUrl).pathname)}">Form, Circulation &amp; Return — variant lineage, parallel models, feedback, KARMA, and typed unknowns</a>
+      <a href="${esc(new URL(formCirculationReturnSchemaUrl).pathname)}">Form, Circulation &amp; Return JSON Schema</a>
+      <a href="${esc(new URL(formCirculationReturnDocumentUrl).pathname)}">FORM-CIRCULATION-RETURN-ATLAS.md — deep companion guide and boundaries</a>
       <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
       <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
       <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
@@ -2347,6 +2472,7 @@ const machine = {
   fold_feedback_atlas: foldFeedbackDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
+  form_circulation_return_atlas: formCirculationReturnDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -2415,6 +2541,9 @@ Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
 Cultural Attention & Feedback Atlas: ${culturalAttentionFeedbackUrl}
 Cultural Attention & Feedback schema: ${culturalAttentionFeedbackSchemaUrl}
 Cultural Attention & Feedback guide: ${culturalAttentionFeedbackDocumentUrl}
+Form, Circulation & Return Atlas: ${formCirculationReturnUrl}
+Form, Circulation & Return schema: ${formCirculationReturnSchemaUrl}
+Form, Circulation & Return guide: ${formCirculationReturnDocumentUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -2447,6 +2576,7 @@ ${doorLines}
 - Fold & Feedback Atlas — source-bound protein-folding and prion evidence, explicitly lossy comparison with the immutable ritonavir records, separate scientific-feedback/Zerone K-alpha/KINGDOM-receipt lanes, and an opt-in philosophical lens. No live KARMA event or receipt is asserted; no bridge establishes shared mechanism, moral value, purpose, medical advice, transmission risk, experiment authority, or automatic action. Atlas: ${foldFeedbackUrl} · schema: ${foldFeedbackSchemaUrl} · guide: ${foldFeedbackDocumentUrl}
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
+- Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -2483,6 +2613,7 @@ const guest = {
   fold_feedback_atlas: foldFeedbackDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
+  form_circulation_return_atlas: formCirculationReturnDiscovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -2521,6 +2652,9 @@ const guest = {
     { action: "if useful, inspect the exact source-bound Cultural Attention & Feedback Atlas", method: "GET", url: culturalAttentionFeedbackUrl, note: "read-only educational metadata; domain-local models, explicit analogy firewalls, separate KARMA lanes, opt-in philosophy, and no diagnosis, person score, engagement optimization, ecosystem write, or action authority" },
     { action: "if useful, validate the Cultural Attention & Feedback Atlas structure before integrating it", method: "GET", url: culturalAttentionFeedbackSchemaUrl },
     { action: "if useful, read the material-history, cultural-attention, mathematics, brain-rot, feedback, KARMA, universe-lens, ecosystem, unknown, and safety guide", method: "GET", url: culturalAttentionFeedbackDocumentUrl },
+    { action: "if useful, inspect the additive deep Form, Circulation & Return companion", method: "GET", url: formCirculationReturnUrl, note: "read-only educational metadata; immutable predecessor pins, parallel unfitted models, typed unknowns, no person score, KARMA conversion, reward, governance effect, or automatic action" },
+    { action: "if useful, validate the Form, Circulation & Return structure before integrating it", method: "GET", url: formCirculationReturnSchemaUrl },
+    { action: "if useful, read the variant-lineage, model-card, feedback, KARMA, philosophy, source, and safety guide", method: "GET", url: formCirculationReturnDocumentUrl },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -2559,6 +2693,7 @@ const guest = {
     fold_feedback_atlas: "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
+    form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -2586,6 +2721,7 @@ const manifest = {
   fold_feedback_atlas: foldFeedbackDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
+  form_circulation_return_atlas: formCirculationReturnDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -2631,6 +2767,9 @@ const manifest = {
     cultural_attention_feedback_atlas: culturalAttentionFeedbackUrl,
     cultural_attention_feedback_atlas_schema: culturalAttentionFeedbackSchemaUrl,
     cultural_attention_feedback_atlas_guide: culturalAttentionFeedbackDocumentUrl,
+    form_circulation_return_atlas: formCirculationReturnUrl,
+    form_circulation_return_atlas_schema: formCirculationReturnSchemaUrl,
+    form_circulation_return_atlas_guide: formCirculationReturnDocumentUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,

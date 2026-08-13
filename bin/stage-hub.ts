@@ -75,6 +75,13 @@ export const HUB_ASSETS = [
   { source: "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json", destination: "atlases/cultural-attention-feedback-atlas-2026-08-13.json" },
   { source: "schemas/cultural-attention-feedback-atlas-v1.schema.json", destination: "schemas/cultural-attention-feedback-atlas/1.json" },
   { source: "references/cultural-attention-feedback-atlas.md", destination: "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md" },
+  { source: "data/form-circulation-return/form-circulation-return-atlas.v1.json", destination: "atlases/form-circulation-return-atlas-2026-08-13.json" },
+  { source: "schemas/form-circulation-return-atlas-v1.schema.json", destination: "schemas/form-circulation-return-atlas/1.json" },
+  { source: "references/form-circulation-return-atlas.md", destination: "FORM-CIRCULATION-RETURN-ATLAS.md" },
+  // The companion's KINGDOM KARMA definition pin must remain publicly
+  // resolvable even when the source repository is private. Publish the exact
+  // revision-bound NEN bytes under an immutable path, never a mutable alias.
+  { source: "NEN.md", destination: "definitions/kingdom-karma/e4e84a67/NEN.md" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
   { source: "site/ollama.json", destination: "ollama.json" },
