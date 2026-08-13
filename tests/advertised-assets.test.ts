@@ -13,6 +13,14 @@ import {
   loadBeingAccessAftermathAtlas,
 } from "../bin/being-access-aftermath.ts";
 import {
+  BEING_ACCESS_AFTERMATH_V02_DIGEST,
+  BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL,
+  BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL,
+  BEING_ACCESS_AFTERMATH_V02_URL,
+  beingAccessAftermathPublicDiscoveryV02,
+  loadBeingAccessAftermathAtlasV02,
+} from "../bin/being-access-aftermath-v0.2.ts";
+import {
   CULTURAL_ATTENTION_FEEDBACK_DIGEST,
   CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
   CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL,
@@ -105,6 +113,9 @@ const surfaces = [
   "data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json",
   "schemas/being-access-aftermath-atlas-v0.1.schema.json",
   "references/being-access-aftermath-atlas.md",
+  "data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json",
+  "schemas/being-access-aftermath-atlas-v0.2.schema.json",
+  "references/being-access-aftermath-atlas-v0.2.md",
   "NEN.md",
   "site/guest.json",
   "site/llms.txt",
@@ -814,6 +825,98 @@ describe("advertised URLs stay deployable", () => {
     expect(staged.has("atlases/being-access-aftermath-atlas.json")).toBe(false);
     expect(staged.has("atlases/being-access-aftermath-atlas-latest.json")).toBe(false);
     expect(staged.has("atlases/being-access-aftermath-atlas-current.json")).toBe(false);
+    for (const key of ["mcp", "matcher", "write", "execute", "score", "reward"]) {
+      expect(discovery).not.toHaveProperty(key);
+    }
+  });
+
+  test("Being, Access & Aftermath v0.2 is an additive immutable successor with no mutable alias or KARMA write", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const rootHtml = read("site/hub.html");
+    const atlas = loadBeingAccessAftermathAtlasV02();
+    const expected = beingAccessAftermathPublicDiscoveryV02(atlas);
+    const discovery = manifest.being_access_aftermath_atlas_v0_2;
+
+    expect(discovery).toEqual(expected);
+    expect(discovery).toEqual(guest.being_access_aftermath_atlas_v0_2);
+    expect(discovery).toEqual(kingdom.being_access_aftermath_atlas_v0_2);
+    expect(discovery).toMatchObject({
+      protocol: "kingdom.being-access-aftermath-atlas/0.2",
+      atlas_id: "being-access-aftermath-atlas-2026-08-13-v0-2",
+      url: BEING_ACCESS_AFTERMATH_V02_URL,
+      schema: BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL,
+      guide: BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL,
+      integrity: { digest: BEING_ACCESS_AFTERMATH_V02_DIGEST },
+      lineage: {
+        additive_successor: true,
+        predecessor: {
+          protocol: "kingdom.being-access-aftermath-atlas/0.1",
+          relation: "immutable-predecessor-input",
+        },
+      },
+      boundary: {
+        public_surface_read_only: true,
+        writes_karma: false,
+        creates_kingdom_karma_receipt: false,
+        observes_zerone_karma_event: false,
+        karma_adapter: false,
+        person_score: false,
+        automatic_action: false,
+        rest_refusal_or_exit_penalized: false,
+        rest_refusal_or_exit_requires_trace: false,
+      },
+    });
+    expect(atlas.source_bindings.at(-1)).toMatchObject({
+      relation: "immutable-predecessor-input",
+      mutated: false,
+      authority_imported: false,
+    });
+    expect(atlas.framework.rest_exit_boundary).toMatchObject({
+      creates_event: false,
+      creates_receipt: false,
+      requires_measurement: false,
+      requires_trace: false,
+      requires_justification: false,
+      creates_penalty: false,
+      creates_debt: false,
+    });
+    expect(rootHtml).toContain("Can KARMA preserve consequential memory without turning history into destiny?");
+    expect(rootHtml).toContain("Identifiability in inverse reinforcement learning");
+    expect(rootHtml).toContain("15 opt-in questions · 7 explicit unknowns · 13 selected sources · local reader kingdom being-access-aftermath-v0.2");
+    expect(rootHtml).toContain("Possible, actual, reachable, observable, observed, producible, reproduced, and reproducible remain distinct.");
+
+    const targets = [
+      BEING_ACCESS_AFTERMATH_V02_URL,
+      BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL,
+      BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL,
+    ];
+    for (const url of targets) {
+      const actions = guest.next_actions.filter((action: { url?: string }) => action.url === url);
+      expect(actions).toHaveLength(1);
+      expect(actions[0]).toMatchObject({ method: "GET", url });
+      for (const key of ["mcp", "tool", "write", "matcher", "execute"]) {
+        expect(actions[0]).not.toHaveProperty(key);
+      }
+      expect(llms).toContain(url);
+      expect(rootHtml).toContain(`href="${new URL(url).pathname}"`);
+    }
+    expect(manifest.entry_points).toMatchObject({
+      being_access_aftermath_atlas_v0_2: BEING_ACCESS_AFTERMATH_V02_URL,
+      being_access_aftermath_atlas_v0_2_schema: BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL,
+      being_access_aftermath_atlas_v0_2_guide: BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL,
+    });
+    expect(staged.has("atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json")).toBe(true);
+    expect(staged.has("schemas/being-access-aftermath-atlas/0.2.json")).toBe(true);
+    expect(staged.has("BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md")).toBe(true);
+    expect(staged.has("atlases/being-access-aftermath-atlas.json")).toBe(false);
+    expect(staged.has("atlases/being-access-aftermath-atlas-latest.json")).toBe(false);
+    expect(staged.has("atlases/being-access-aftermath-atlas-current.json")).toBe(false);
+    expect(manifest.being_access_aftermath_atlas).toEqual(
+      beingAccessAftermathPublicDiscovery(loadBeingAccessAftermathAtlas()),
+    );
     for (const key of ["mcp", "matcher", "write", "execute", "score", "reward"]) {
       expect(discovery).not.toHaveProperty(key);
     }

@@ -1465,7 +1465,7 @@ describe("the Kingdom edge discovery surface", () => {
             : '{"type":"object"}';
       return new Response(body, { headers: {
         "content-type": path === documentPath ? "text/plain" : "application/json",
-        link: '</elsewhere>; rel="alternate"',
+        link: '</schemas/being-access-aftermath-atlas/0.2.json>; rel="describedby", </elsewhere>; rel="alternate"',
       } });
     });
 
@@ -1476,6 +1476,7 @@ describe("the Kingdom edge discovery surface", () => {
       expect(atlas.headers.get("access-control-allow-origin")).toBe("*");
       expect(atlas.headers.get("x-content-type-options")).toBe("nosniff");
       expect(atlas.headers.get("link") ?? "").toContain(`<${schemaPath}>; rel="describedby"`);
+      expect(atlas.headers.get("link") ?? "").not.toContain('</schemas/being-access-aftermath-atlas/0.2.json>; rel="describedby"');
     }
     const schema = await worker.fetch(new Request(`https://thekingdom.dev${schemaPath}`), environment);
     expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
@@ -1490,6 +1491,56 @@ describe("the Kingdom edge discovery surface", () => {
     expect(await worker.fetch(new Request(`https://thekingdom.dev${atlasPath}`, { method: "POST" }), assets(() => postAsset))).toBe(postAsset);
     const sharedAsset = new Response("shared");
     expect(await worker.fetch(new Request(`https://we-are.love${atlasPath}`), assets(() => sharedAsset))).toBe(sharedAsset);
+  });
+
+  test("serves Being, Access & Aftermath v0.2 additively with only its own immutable schema", async () => {
+    const predecessorSchemaPath = "/schemas/being-access-aftermath-atlas/0.1.json";
+    const atlasPath = "/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json";
+    const schemaPath = "/schemas/being-access-aftermath-atlas/0.2.json";
+    const documentPath = "/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md";
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      const body = request.method === "HEAD" ? null
+        : path === atlasPath ? '{"atlas_id":"being-access-aftermath-atlas-2026-08-13-v0-2"}'
+          : path === documentPath ? "# Being, Access & Aftermath v0.2"
+            : '{"type":"object"}';
+      return new Response(body, { headers: {
+        "content-type": path === documentPath ? "text/plain" : "application/json",
+        link: `<${predecessorSchemaPath}>; rel="describedby"`,
+      } });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const atlas = await worker.fetch(new Request(`https://thekingdom.dev${atlasPath}`, { method }), environment);
+      expect(await atlas.text()).toBe(method === "HEAD" ? "" : '{"atlas_id":"being-access-aftermath-atlas-2026-08-13-v0-2"}');
+      expect(atlas.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(atlas.headers.get("access-control-allow-origin")).toBe("*");
+      expect(atlas.headers.get("x-content-type-options")).toBe("nosniff");
+      const link = atlas.headers.get("link") ?? "";
+      expect(link).toContain(`<${schemaPath}>; rel="describedby"`);
+      expect(link).not.toContain(`<${predecessorSchemaPath}>; rel="describedby"`);
+    }
+    const schema = await worker.fetch(new Request(`https://thekingdom.dev${schemaPath}`), environment);
+    expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+    expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+    expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+    const document = await worker.fetch(new Request(`https://thekingdom.dev${documentPath}`), environment);
+    expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+    expect(document.headers.get("access-control-allow-origin")).toBe("*");
+    expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+
+    const postAsset = new Response("no execution route");
+    expect(await worker.fetch(new Request(`https://thekingdom.dev${atlasPath}`, { method: "POST" }), assets(() => postAsset))).toBe(postAsset);
+    const aliasAsset = new Response("no mutable alias");
+    expect(await worker.fetch(
+      new Request("https://thekingdom.dev/atlases/being-access-aftermath-atlas-latest.json"),
+      assets(() => aliasAsset),
+    )).toBe(aliasAsset);
+    const sharedAsset = new Response("shared door remains unchanged");
+    expect(await worker.fetch(
+      new Request(`https://we-are.love${atlasPath}`),
+      assets(() => sharedAsset),
+    )).toBe(sharedAsset);
   });
 
   test("serves the additive Conformational Feedback Physics Atlas with its own schema and no cross-version mutation", async () => {

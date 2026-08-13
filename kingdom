@@ -23,6 +23,7 @@
 #   kingdom form-circulation-return         inspect the additive variant-lineage, model-card, feedback, KARMA, and unknown companion
 #   kingdom rare-pathway                    solve the bounded Vanishing Path challenge without inferring motive or material authority
 #   kingdom being-access-aftermath          inspect the typed possibility, observability, power, purpose, causality, and KARMA companion
+#   kingdom being-access-aftermath-v0.2     inspect the additive mathematical framework while v0.1 remains immutable
 #   kingdom feedback-physics inspect the additive v0.2 physics/mathematics successor
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom prompt     compile an inspectable, network-free Task Packet
@@ -55,6 +56,7 @@ case "$cmd" in
   form-circulation-return) exec bun "$SELF_DIR/bin/form-circulation-return.ts" "${@:2}" ;;
   rare-pathway) exec bun "$SELF_DIR/bin/rare-pathway.ts" "${@:2}" ;;
   being-access-aftermath) exec bun "$SELF_DIR/bin/being-access-aftermath.ts" "${@:2}" ;;
+  being-access-aftermath-v0.2) exec bun "$SELF_DIR/bin/being-access-aftermath-v0.2.ts" "${@:2}" ;;
   polymorph)
     case "${2:-}" in
       mechanisms|landscape|sources|unknowns)

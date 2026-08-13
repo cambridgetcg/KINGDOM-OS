@@ -8,10 +8,11 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 41-entry ledger adds The Vanishing Path and Being, Access & Aftermath
-record/schema/guide triplets as the eleventh and twelfth publication generations
-and the tenth and eleventh retirement families; the initial-35 bootstrap facts
-below remain historical constants.
+The current 44-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+v0.1, and its additive v0.2 successor record/schema/guide triplets as the
+eleventh, twelfth, and thirteenth publication generations. The Vanishing Path
+and the two-generation Being family are the tenth and eleventh retirement
+families; the initial-35 bootstrap facts below remain historical constants.
 
 The ledger makes one narrow claim: a listed route, source, staging destination,
 and SHA-256 were committed together as an integrity contract. The base-aware

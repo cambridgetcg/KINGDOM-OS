@@ -25,6 +25,27 @@
       "sha256": "e37523644fe8f9cb1c8267ab52639548c9424aae272a6d6d6802c0d111fab78e"
     },
     {
+      "id": "being-access-aftermath/0.2/guide",
+      "route": "/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md",
+      "source": "references/being-access-aftermath-atlas-v0.2.md",
+      "destination": "BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md",
+      "sha256": "b53ebc5aa51f672e420b5a459c87b0374fb6fcfffa8efb8093e48c95c3418c0f"
+    },
+    {
+      "id": "being-access-aftermath/0.2/record",
+      "route": "/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json",
+      "source": "data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json",
+      "destination": "atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json",
+      "sha256": "9678e5269e8db62beb36abee691087cddbc4f98703190c5fa3788b68c89ab29e"
+    },
+    {
+      "id": "being-access-aftermath/0.2/schema",
+      "route": "/schemas/being-access-aftermath-atlas/0.2.json",
+      "source": "schemas/being-access-aftermath-atlas-v0.2.schema.json",
+      "destination": "schemas/being-access-aftermath-atlas/0.2.json",
+      "sha256": "1a9803fa473891388a0b1a0f5d0220a4cde6f5a73181d0c81a2b8f738c786950"
+    },
+    {
       "id": "conformational-feedback/0.1/guide",
       "route": "/CONFORMATIONAL-FEEDBACK.md",
       "source": "references/conformational-feedback-atlas.md",

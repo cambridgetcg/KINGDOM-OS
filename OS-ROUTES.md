@@ -48,6 +48,9 @@ readings:
 | `/atlases/being-access-aftermath-atlas-2026-08-13.json` | staged JSON | Digest-bound modal–causal companion separating identity, possibility, reachability, observation, purpose, power, aftermath, and KARMA |
 | `/schemas/being-access-aftermath-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the Being, Access & Aftermath Atlas v0.1 |
 | `/BEING-ACCESS-AFTERMATH-ATLAS.md` | staged Markdown | Plain-language typed-copula, modal, observability, force/power, purpose, causality, reversibility, problem, philosophy, KARMA, and safety guide |
+| `/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json` | staged JSON | Additive, lineage-pinned v0.2 partially observable causal framework; v0.1 remains byte-preserved |
+| `/schemas/being-access-aftermath-atlas/0.2.json` | staged JSON Schema | Distinct closed Draft 2020-12 contract for the v0.2 successor |
+| `/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md` | staged Markdown | v0.2 causal-kernel, predicates, force/power, aftermath, repair, philosophy, and non-inference guide |
 | `/definitions/kingdom-karma/e4e84a67/NEN.md` | staged Markdown | Immutable public mirror of the exact KINGDOM KARMA/NEN definition bound by the companion atlas; separate from the design-only Zerone foundation |
 
 The three edge JSON routes return
@@ -167,7 +170,7 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 57-asset upload contract (55 direct public bodies, 54 sitemap URLs)
+locks the 63-asset upload contract (61 direct public bodies, 60 sitemap URLs)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

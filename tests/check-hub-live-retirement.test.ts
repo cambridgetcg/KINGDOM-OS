@@ -50,18 +50,27 @@ describe("hub live-check publication retirement", () => {
     ])).not.toThrow();
   });
 
-  test("retires the Being, Access & Aftermath triplet and all of its discovery together", () => {
+  test("retires both immutable Being, Access & Aftermath triplets and all discovery together", () => {
     const being = family("being-access-aftermath");
     expect(being.routes).toEqual([
       "/atlases/being-access-aftermath-atlas-2026-08-13.json",
       "/schemas/being-access-aftermath-atlas/0.1.json",
       "/BEING-ACCESS-AFTERMATH-ATLAS.md",
+      "/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json",
+      "/schemas/being-access-aftermath-atlas/0.2.json",
+      "/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md",
     ]);
-    expect(being.discoveryProperties).toEqual(["being_access_aftermath_atlas"]);
+    expect(being.discoveryProperties).toEqual([
+      "being_access_aftermath_atlas",
+      "being_access_aftermath_atlas_v0_2",
+    ]);
     expect(being.entryPointProperties).toEqual([
       "being_access_aftermath_atlas",
       "being_access_aftermath_atlas_schema",
       "being_access_aftermath_atlas_guide",
+      "being_access_aftermath_atlas_v0_2",
+      "being_access_aftermath_atlas_v0_2_schema",
+      "being_access_aftermath_atlas_v0_2_guide",
     ]);
 
     const partiallyStaged = stagedDestinations();
@@ -73,15 +82,15 @@ describe("hub live-check publication retirement", () => {
     for (const route of being.routes) retired.delete(destinationForPublicPath(route));
     expect(publicationFamilyStates(retired).get(being.id)?.active).toBe(false);
 
-    const staleDiscovery = { being_access_aftermath_atlas: { stale: true } };
+    const staleDiscovery = { being_access_aftermath_atlas_v0_2: { stale: true } };
     const staleEntryPoints = {
-      entry_points: { being_access_aftermath_atlas_guide: being.routes[2] },
+      entry_points: { being_access_aftermath_atlas_v0_2_guide: being.routes[5] },
     };
     for (const surface of [
       { label: "authored Kingdom map", text: JSON.stringify(staleDiscovery), value: staleDiscovery },
       { label: "agent manifest", text: JSON.stringify(staleEntryPoints), value: staleEntryPoints },
-      { label: "llms.txt", text: `https://thekingdom.dev${being.routes[0]}` },
-      { label: "hub HTML", text: `<a href='${being.routes[2]}'>stale</a>` },
+      { label: "llms.txt", text: `https://thekingdom.dev${being.routes[3]}` },
+      { label: "hub HTML", text: `<a href='${being.routes[5]}'>stale</a>` },
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(being, [surface]))
         .toThrow("Being, Access & Aftermath is retired");

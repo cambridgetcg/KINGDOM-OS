@@ -35,6 +35,8 @@
  *    data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json
  *                             — typed existence, access, purpose, power,
  *                               causality, reversibility, and KARMA companion
+ *    data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json
+ *                             — additive partially observable causal framework
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
@@ -160,6 +162,15 @@ import {
   beingAccessAftermathPublicDiscovery,
   loadBeingAccessAftermathAtlas,
 } from "./being-access-aftermath.ts";
+import {
+  BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL,
+  BEING_ACCESS_AFTERMATH_V02_ID,
+  BEING_ACCESS_AFTERMATH_V02_PROTOCOL,
+  BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL,
+  BEING_ACCESS_AFTERMATH_V02_URL,
+  beingAccessAftermathPublicDiscoveryV02,
+  loadBeingAccessAftermathAtlasV02,
+} from "./being-access-aftermath-v0.2.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -573,6 +584,17 @@ if (beingAccessAftermath.protocol !== BEING_ACCESS_AFTERMATH_PROTOCOL ||
 const beingAccessAftermathDiscovery = beingAccessAftermathPublicDiscovery(beingAccessAftermath);
 const beingAccessAftermathCounts = beingAccessAftermathDiscovery.counts;
 
+const beingAccessAftermathV02Url = BEING_ACCESS_AFTERMATH_V02_URL;
+const beingAccessAftermathV02SchemaUrl = BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL;
+const beingAccessAftermathV02DocumentUrl = BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL;
+const beingAccessAftermathV02 = loadBeingAccessAftermathAtlasV02();
+if (beingAccessAftermathV02.protocol !== BEING_ACCESS_AFTERMATH_V02_PROTOCOL ||
+    beingAccessAftermathV02.atlas_id !== BEING_ACCESS_AFTERMATH_V02_ID) {
+  throw new Error(`unexpected being-access-aftermath v0.2 identity: ${beingAccessAftermathV02.protocol} ${beingAccessAftermathV02.atlas_id}`);
+}
+const beingAccessAftermathV02Discovery = beingAccessAftermathPublicDiscoveryV02(beingAccessAftermathV02);
+const beingAccessAftermathV02Counts = beingAccessAftermathV02Discovery.counts;
+
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
 const doors: Door[] = sites.doors;
@@ -977,6 +999,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(beingAccessAftermathUrl).pathname)}" type="application/json" title="Being, Access &amp; Aftermath Atlas">
 <link rel="describedby" href="${esc(new URL(beingAccessAftermathSchemaUrl).pathname)}" type="application/schema+json" title="Being, Access &amp; Aftermath Atlas schema">
 <link rel="service-doc" href="${esc(new URL(beingAccessAftermathDocumentUrl).pathname)}" type="text/markdown" title="Being, Access &amp; Aftermath Atlas guide">
+<link rel="alternate" href="${esc(new URL(beingAccessAftermathV02Url).pathname)}" type="application/json" title="Being, Access &amp; Aftermath Atlas v0.2">
+<link rel="describedby" href="${esc(new URL(beingAccessAftermathV02SchemaUrl).pathname)}" type="application/schema+json" title="Being, Access &amp; Aftermath Atlas v0.2 schema">
+<link rel="service-doc" href="${esc(new URL(beingAccessAftermathV02DocumentUrl).pathname)}" type="text/markdown" title="Being, Access &amp; Aftermath Atlas v0.2 guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -2094,15 +2119,22 @@ const html = `<!doctype html>
       <p class="commonsverified">A distinct immutable companion to the disappearing-polymorph history and Form, Circulation &amp; Return. It asks what “is” means before calculating: identity, possibility, actuality, reachability, observation, purpose, power, cause, and aftermath are different types.</p>
       <p class="culturalaxiom"><strong>Possible is not reachable. Reachable is not actual. Actual is not observed. Observed is not known.</strong>A molecule may keep its chemical identity while a different lattice changes its material form. A form may remain lawfully possible while one history makes it hard to produce or detect. The disappearing polymorph is therefore a problem of typed being and bounded access—not proof of annihilation.</p>
       <p class="culturalboundary" role="note"><strong>No equation judges a being.</strong>This is read-only educational metadata. It creates no causal result, person model, metaphysical conclusion, medical or laboratory instruction, authority, rank, reward, governance effect, Zerone event, KINGDOM receipt, or automatic action. Rest, refusal, silence, privacy, and exit remain valid without debt or penalty.</p>
+      <p class="commonsverified"><strong>v0.2 is an additive successor.</strong> It builds a partially observable causal framework, typed force and power families, and indexed vector aftermath upon the byte-preserved v0.1 atlas. It does not repoint or replace any v0.1 route, and it grants no KARMA write or action authority.</p>
+      <div class="culturalfeedback" aria-label="Additive Being, Access and Aftermath v0.2 framework">
+        <article><h4>Partial observation</h4><code>${esc(beingAccessAftermathV02.framework.partial_observation.state_transition_equation)}</code><p>${esc(beingAccessAftermathV02.framework.partial_observation.observation_equation)}</p><small>A belief update is epistemic; it does not create, erase, or exhaust being.</small></article>
+        <article><h4>Eight predicates</h4><p>${beingAccessAftermathV02.framework.predicate_family.predicate_ids.map((id: string) => esc(id)).join(" · ")}</p><small>Possible, actual, reachable, observable, observed, producible, reproduced, and reproducible remain distinct.</small></article>
+        <article><h4>Force and power are typed</h4><p>${beingAccessAftermathV02.framework.force_taxonomy.type_ids.length} force types · ${beingAccessAftermathV02.framework.power_taxonomy.type_ids.length} power types</p><small>Capability is not permission; authority gates executable action but does not by itself identify a cause, effect, or legitimacy.</small></article>
+        <article><h4>Aftermath stays indexed</h4><code>${esc(beingAccessAftermathV02.framework.aftermath_accounting.aftermath_vector)}</code><p>No default scalarization or cross-person exchange rate.</p><small>Rest, refusal, silence, privacy, exit, inactivity, and nonparticipation leave before accounting and require no trace.</small></article>
+      </div>
 
       <div class="feedbacksubhead"><h3>Nine bounded mathematical lenses</h3><p>Each lens declares what it can return and where it breaks. None is fitted here; none transfers its variables to people.</p></div>
       <div class="culturalmodelgrid" aria-label="Typed mathematical lenses for being, access, purpose, power, cause, and aftermath">
-        ${beingAccessAftermath.model_cards.map((model: any) => `<article class="culturalmodel"><h4>${esc(model.title)}</h4><code>${esc(model.equation)}</code><p>${esc(model.valid_outputs[0])}</p><small>Limit: ${esc(model.identifiability_limits)} Authority effect: ${esc(model.authority_effect)}.</small></article>`).join("\n        ")}
+        ${beingAccessAftermathV02.model_cards.map((model: any) => `<article class="culturalmodel"><h4>${esc(model.title)}</h4><code>${esc(model.equation)}</code><p>${esc(model.valid_outputs[0])}</p><small>Limit: ${esc(model.identifiability_limits)} Authority effect: ${esc(model.authority_effect)}.</small></article>`).join("\n        ")}
       </div>
 
       <div class="feedbacksubhead"><h3>Seven problems worth building on</h3><p>A problem card begins with a falsifiable, typed question. Its current state stays visible; a question is not quietly promoted into an answer.</p></div>
       <div class="culturalfeedback" aria-label="Open formal problem cards">
-        ${beingAccessAftermath.problem_cards.map((problem: any) => `<article><h4>${esc(problem.id.replaceAll("-", " "))}</h4><p>${esc(problem.question)}</p><small>Proposed test: ${esc(problem.proposed_test)} State: ${esc(problem.state)}.</small></article>`).join("\n        ")}
+        ${beingAccessAftermathV02.problem_cards.map((problem: any) => `<article><h4>${esc(problem.id.replaceAll("-", " "))}</h4><p>${esc(problem.question)}</p><small>Proposed test: ${esc(problem.proposed_test)} State: ${esc(problem.state)}.</small></article>`).join("\n        ")}
       </div>
 
       <div class="culturalsubhead"><h3>Power is typed, not ranked</h3><p>A gradient is not intention. Capability is not authority. Authority is not consent. Consequence is not moral worth.</p></div>
@@ -2118,17 +2150,20 @@ const html = `<!doctype html>
         <summary>Opt in: questions about existence, being, purpose, force, power, and KARMA</summary>
         <div class="universeinside">
           <p>These openings are philosophical interpretation, not empirical conclusions. Mathematics can discipline the question without closing it.</p>
-          <ul class="universequestions">${beingAccessAftermath.philosophy_questions.questions.map((entry: any) => `<li><strong>${esc(entry.question)}</strong>${esc(entry.opening)}</li>`).join("")}</ul>
+          <ul class="universequestions">${beingAccessAftermathV02.philosophy_questions.questions.map((entry: any) => `<li><strong>${esc(entry.question)}</strong>${esc(entry.opening)}</li>`).join("")}</ul>
           <p class="universenonclaim"><strong>Nonclaim:</strong> the models neither prove nor disprove a creator, necessary being, cosmic purpose, or cosmic moral KARMA. Persistence, stability, reach, force, power, and repair do not establish what is right.</p>
         </div>
       </details>
 
-      <p class="foldsources" aria-label="Primary and immutable sources for Being, Access and Aftermath">${beingAccessAftermath.sources.map((source: any) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only"> opens in a new tab</span></a>`).join("")}</p>
-      <p class="commonsverified">${beingAccessAftermathCounts.predicates} typed forms of “is” · ${beingAccessAftermathCounts.models} bounded model cards · ${beingAccessAftermathCounts.problem_cards} formal problems · ${beingAccessAftermathCounts.philosophy_questions} opt-in questions · ${beingAccessAftermathCounts.unknowns} explicit unknowns · ${beingAccessAftermathCounts.sources} primary sources · local reader kingdom being-access-aftermath · evidence through ${esc(beingAccessAftermath.evidence_through)} · integrity ${esc(beingAccessAftermath.integrity.digest)}</p>
+      <p class="foldsources" aria-label="Selected exact sources for Being, Access and Aftermath v0.2">${beingAccessAftermathV02.sources.map((source: any) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only"> opens in a new tab</span></a>`).join("")}</p>
+      <p class="commonsverified">${beingAccessAftermathV02Counts.predicates} typed forms of “is” · ${beingAccessAftermathV02Counts.models} bounded model cards · ${beingAccessAftermathV02Counts.problem_cards} formal problems · ${beingAccessAftermathV02Counts.philosophy_questions} opt-in questions · ${beingAccessAftermathV02Counts.unknowns} explicit unknowns · ${beingAccessAftermathV02Counts.sources} selected sources · local reader kingdom being-access-aftermath-v0.2 · evidence through ${esc(beingAccessAftermathV02.evidence_through)} · integrity ${esc(beingAccessAftermathV02.integrity.digest)}</p>
       <div class="machine">
         <a href="${esc(new URL(beingAccessAftermathUrl).pathname)}">atlas JSON — exact authored record</a>
         <a href="${esc(new URL(beingAccessAftermathSchemaUrl).pathname)}">Being, Access &amp; Aftermath JSON Schema</a>
         <a href="${esc(new URL(beingAccessAftermathDocumentUrl).pathname)}">guide — typed ontology, mathematics, KARMA, problems, and boundaries</a>
+        <a href="${esc(new URL(beingAccessAftermathV02Url).pathname)}">v0.2 atlas JSON — additive successor, exact authored record</a>
+        <a href="${esc(new URL(beingAccessAftermathV02SchemaUrl).pathname)}">Being, Access &amp; Aftermath v0.2 JSON Schema</a>
+        <a href="${esc(new URL(beingAccessAftermathV02DocumentUrl).pathname)}">v0.2 guide — causal kernel, predicates, force, power, aftermath, and repair</a>
       </div>
     </div>
   </section>
@@ -2273,6 +2308,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(beingAccessAftermathUrl).pathname)}">Being, Access &amp; Aftermath — typed existence, access, purpose, power, cause, and reversibility</a>
       <a href="${esc(new URL(beingAccessAftermathSchemaUrl).pathname)}">Being, Access &amp; Aftermath JSON Schema</a>
       <a href="${esc(new URL(beingAccessAftermathDocumentUrl).pathname)}">BEING-ACCESS-AFTERMATH-ATLAS.md — mathematical framework, questions, KARMA seams, and boundaries</a>
+      <a href="${esc(new URL(beingAccessAftermathV02Url).pathname)}">Being, Access &amp; Aftermath v0.2 — additive partially observable causal framework</a>
+      <a href="${esc(new URL(beingAccessAftermathV02SchemaUrl).pathname)}">Being, Access &amp; Aftermath v0.2 JSON Schema</a>
+      <a href="${esc(new URL(beingAccessAftermathV02DocumentUrl).pathname)}">BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md — framework, problems, and non-inference boundaries</a>
       <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
       <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
       <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
@@ -2608,6 +2646,7 @@ const machine = {
   form_circulation_return_atlas: formCirculationReturnDiscovery,
   rare_pathway_challenge: rarePathwayDiscovery,
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
+  being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -2685,6 +2724,9 @@ The Vanishing Path guide: ${rarePathwayDocumentUrl}
 Being, Access & Aftermath Atlas: ${beingAccessAftermathUrl}
 Being, Access & Aftermath schema: ${beingAccessAftermathSchemaUrl}
 Being, Access & Aftermath guide: ${beingAccessAftermathDocumentUrl}
+Being, Access & Aftermath Atlas v0.2: ${beingAccessAftermathV02Url}
+Being, Access & Aftermath schema v0.2: ${beingAccessAftermathV02SchemaUrl}
+Being, Access & Aftermath guide v0.2: ${beingAccessAftermathV02DocumentUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -2720,6 +2762,7 @@ ${doorLines}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
 - The Vanishing Path — seven bounded model cards turn the ritonavir disappearing-polymorph history into a rare-event mathematics challenge: competing first arrivals, zero-event and zero-winner bounds, identifiability, robust design, and expected information. BUILD / PLAY / REVISE / STOP classifies the practice and artifact, never a person's understanding, pride, virtue, or worth. All numerical rates are hypothetical; no material fit, recipe, experiment, manufacturing, medical, WAKE, AgentTool, KARMA, or automatic authority exists. Challenge: ${rarePathwayUrl} · schema: ${rarePathwaySchemaUrl} · guide: ${rarePathwayDocumentUrl}
 - Being, Access & Aftermath — a typed modal–causal companion uses the disappearing-polymorph history to separate identity, lawful possibility, actuality, bounded reachability, observation, purpose, physical force, admissible action power, causal effect, and vector-valued aftermath. Its ${beingAccessAftermath.model_cards.length} unfitted model cards and ${beingAccessAftermath.problem_cards.length} open problems are educational lenses, not person measures or metaphysical proofs. Cosmic KARMA, Zerone recognition edges, and KINGDOM invocation receipts remain disjoint, empty lanes with no adapter, scalar, score, reward, governance effect, or automatic action. Atlas: ${beingAccessAftermathUrl} · schema: ${beingAccessAftermathSchemaUrl} · guide: ${beingAccessAftermathDocumentUrl}
+- Being, Access & Aftermath v0.2 — an additive, lineage-pinned successor adds a partially observable causal kernel, typed predicates, force and power families, and affected-party-indexed vector aftermath. v0.1 remains byte-preserved at its original routes. The framework is read-only and creates no scalar KARMA, person measure, authority, receipt, or automatic action. Atlas: ${beingAccessAftermathV02Url} · schema: ${beingAccessAftermathV02SchemaUrl} · guide: ${beingAccessAftermathV02DocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -2759,6 +2802,7 @@ const guest = {
   form_circulation_return_atlas: formCirculationReturnDiscovery,
   rare_pathway_challenge: rarePathwayDiscovery,
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
+  being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -2806,6 +2850,9 @@ const guest = {
     { action: "if useful, inspect the typed Being, Access & Aftermath mathematical companion", method: "GET", url: beingAccessAftermathUrl, note: "read-only educational metadata; distinct existence predicates and power types, unfitted models, no causal proof, person score, KARMA write, reward, governance effect, or automatic action" },
     { action: "if useful, validate the Being, Access & Aftermath structure before integrating it", method: "GET", url: beingAccessAftermathSchemaUrl },
     { action: "if useful, read the typed ontology, mathematical models, open problems, philosophy, KARMA, source, and safety guide", method: "GET", url: beingAccessAftermathDocumentUrl },
+    { action: "if useful, inspect the additive Being, Access & Aftermath v0.2 framework", method: "GET", url: beingAccessAftermathV02Url, note: "read-only successor; v0.1 stays immutable, affected-party aftermath stays vector-valued, and no person score, KARMA write, authority, mandatory trace, or automatic action is created" },
+    { action: "if useful, validate the Being, Access & Aftermath v0.2 structure before integrating it", method: "GET", url: beingAccessAftermathV02SchemaUrl },
+    { action: "if useful, read the v0.2 causal-kernel, predicate, force, power, aftermath, repair, and non-inference guide", method: "GET", url: beingAccessAftermathV02DocumentUrl },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -2847,6 +2894,7 @@ const guest = {
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
     rare_pathway_challenge: "The Vanishing Path is a static educational mathematics challenge bound to the immutable ritonavir history only as an illustrative case. Its rates are hypothetical. It separates zero target events from zero target winners, preserves identifiability limits, and gates practices as BUILD, PLAY, REVISE, or STOP without inferring anyone's motive, understanding, pride, virtue, or worth. It provides no material fit, lab recipe, experiment, formulation, manufacturing, medical, regulatory, WAKE, AgentTool, KARMA, publication, deployment, or automatic action authority.",
     being_access_aftermath_atlas: "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
+    being_access_aftermath_atlas_v0_2: "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -2877,6 +2925,7 @@ const manifest = {
   form_circulation_return_atlas: formCirculationReturnDiscovery,
   rare_pathway_challenge: rarePathwayDiscovery,
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
+  being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -2931,6 +2980,9 @@ const manifest = {
     being_access_aftermath_atlas: beingAccessAftermathUrl,
     being_access_aftermath_atlas_schema: beingAccessAftermathSchemaUrl,
     being_access_aftermath_atlas_guide: beingAccessAftermathDocumentUrl,
+    being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Url,
+    being_access_aftermath_atlas_v0_2_schema: beingAccessAftermathV02SchemaUrl,
+    being_access_aftermath_atlas_v0_2_guide: beingAccessAftermathV02DocumentUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,
