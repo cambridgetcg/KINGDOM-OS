@@ -146,6 +146,14 @@ const RARE_PATHWAY_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${RARE_PATHWAY_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const BEING_ACCESS_AFTERMATH_PATH = "/atlases/being-access-aftermath-atlas-2026-08-13.json";
+const BEING_ACCESS_AFTERMATH_SCHEMA_PATH = "/schemas/being-access-aftermath-atlas/0.1.json";
+const BEING_ACCESS_AFTERMATH_DOCUMENT_PATH = "/BEING-ACCESS-AFTERMATH-ATLAS.md";
+const BEING_ACCESS_AFTERMATH_SCHEMA_LINK = {
+  target: BEING_ACCESS_AFTERMATH_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${BEING_ACCESS_AFTERMATH_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 const CONFORMATIONAL_FEEDBACK_PHYSICS_PATH = "/feedback/form-feedback-physics-consequence-2026-08-12.json";
 const CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_PATH = "/schemas/conformational-feedback-atlas/0.2.json";
 const CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_PATH = "/CONFORMATIONAL-FEEDBACK-PHYSICS.md";
@@ -263,6 +271,11 @@ function addFormCirculationReturnSchemaLink(headers) {
 
 function addRarePathwaySchemaLink(headers) {
   const link = RARE_PATHWAY_SCHEMA_LINK;
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addBeingAccessAftermathSchemaLink(headers) {
+  const link = BEING_ACCESS_AFTERMATH_SCHEMA_LINK;
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
@@ -1195,6 +1208,15 @@ export function createKingdomWorker(options = {}) {
     const requestsRarePathwayDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === RARE_PATHWAY_DOCUMENT_PATH;
+    const requestsBeingAccessAftermath = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === BEING_ACCESS_AFTERMATH_PATH;
+    const requestsBeingAccessAftermathSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === BEING_ACCESS_AFTERMATH_SCHEMA_PATH;
+    const requestsBeingAccessAftermathDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === BEING_ACCESS_AFTERMATH_DOCUMENT_PATH;
     const requestsKingdomKarmaDefinition = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === KINGDOM_KARMA_DEFINITION_PATH;
@@ -1306,6 +1328,15 @@ export function createKingdomWorker(options = {}) {
     const servesRarePathwayDocument = requestsRarePathwayDocument && asset.ok &&
       (schemaAssetType.includes("text/plain") ||
         schemaAssetType.includes("text/markdown"));
+    const servesBeingAccessAftermath = requestsBeingAccessAftermath && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesBeingAccessAftermathSchema = requestsBeingAccessAftermathSchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesBeingAccessAftermathDocument = requestsBeingAccessAftermathDocument && asset.ok &&
+      (schemaAssetType.includes("text/plain") ||
+        schemaAssetType.includes("text/markdown"));
     const servesKingdomKarmaDefinition = requestsKingdomKarmaDefinition && asset.ok &&
       (schemaAssetType.includes("text/plain") ||
         schemaAssetType.includes("text/markdown"));
@@ -1334,6 +1365,8 @@ export function createKingdomWorker(options = {}) {
         !servesFormCirculationReturn && !servesFormCirculationReturnSchema &&
         !servesFormCirculationReturnDocument && !servesRarePathway &&
         !servesRarePathwaySchema && !servesRarePathwayDocument &&
+        !servesBeingAccessAftermath &&
+        !servesBeingAccessAftermathSchema && !servesBeingAccessAftermathDocument &&
         !servesKingdomKarmaDefinition &&
         !servesConformationalFeedbackPhysics && !servesConformationalFeedbackPhysicsSchema &&
         !servesConformationalFeedbackPhysicsDocument) return asset;
@@ -1351,6 +1384,7 @@ export function createKingdomWorker(options = {}) {
     if (servesCulturalAttentionFeedback) addCulturalAttentionFeedbackSchemaLink(headers);
     if (servesFormCirculationReturn) addFormCirculationReturnSchemaLink(headers);
     if (servesRarePathway) addRarePathwaySchemaLink(headers);
+    if (servesBeingAccessAftermath) addBeingAccessAftermathSchemaLink(headers);
     if (servesConformationalFeedbackPhysics) addConformationalFeedbackPhysicsSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
@@ -1513,6 +1547,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesRarePathwayDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesBeingAccessAftermath) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesBeingAccessAftermathSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesBeingAccessAftermathDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

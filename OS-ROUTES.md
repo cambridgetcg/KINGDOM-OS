@@ -45,6 +45,9 @@ readings:
 | `/challenges/vanishing-path-2026-08-13.json` | staged JSON | Digest-bound rare-pathway challenge with competing-risk models, hypothetical examples, constructive gate, and WAKE-safe reference seam |
 | `/schemas/rare-pathway-challenge/1.json` | staged JSON Schema | Closed Draft 2020-12 structural contract for The Vanishing Path |
 | `/VANISHING-PATH.md` | staged Markdown | Plain-language problems, identifiability limits, BUILD / PLAY / REVISE / STOP practice gate, sources, and authority boundaries |
+| `/atlases/being-access-aftermath-atlas-2026-08-13.json` | staged JSON | Digest-bound modal–causal companion separating identity, possibility, reachability, observation, purpose, power, aftermath, and KARMA |
+| `/schemas/being-access-aftermath-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the Being, Access & Aftermath Atlas v0.1 |
+| `/BEING-ACCESS-AFTERMATH-ATLAS.md` | staged Markdown | Plain-language typed-copula, modal, observability, force/power, purpose, causality, reversibility, problem, philosophy, KARMA, and safety guide |
 | `/definitions/kingdom-karma/e4e84a67/NEN.md` | staged Markdown | Immutable public mirror of the exact KINGDOM KARMA/NEN definition bound by the companion atlas; separate from the design-only Zerone foundation |
 
 The three edge JSON routes return

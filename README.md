@@ -235,6 +235,16 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     regulatory, WAKE, AgentTool, KARMA, or automatic authority is created. The
     opt-in `$reason-about-rare-pathways` Agent Skill provides the same bounded
     reasoning workflow without declaring a manifested Nen ability.
+24. `kingdom being-access-aftermath` — inspect the source-bound
+    [Being, Access & Aftermath Atlas](references/being-access-aftermath-atlas.md).
+    It decomposes the word “is” into typed claims about identity, possibility,
+    actuality, reachability, observation, and declared purpose; then keeps physical
+    force, causal influence, executable capability, authority, legitimacy, and
+    repair capacity distinct. Purpose is represented as declared purpose,
+    functional description, goal-directed model, or opt-in teleological
+    interpretation—not inferred from persistence or feedback alone. Its KARMA
+    layer records no event or receipt: an aftermath observation is not proof of
+     causation, and neither receipt counts nor recognition edges become a score.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -353,5 +363,23 @@ aftermath receipts remain a distinct lane, and none is created. The atlas has
 no medical, clinical, laboratory, manufacturing, moderation, ranking,
 recommendation, reward, governance, or write authority; its universe questions
 are opt-in philosophy, not scientific conclusions.
+
+The Being, Access & Aftermath Atlas is a separate modal–causal companion,
+published from exact authored bytes at
+[`/atlases/being-access-aftermath-atlas-2026-08-13.json`](https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13.json),
+with a [closed public schema](https://thekingdom.dev/schemas/being-access-aftermath-atlas/0.1.json)
+and [plain-language guide](https://thekingdom.dev/BEING-ACCESS-AFTERMATH-ATLAS.md).
+It uses the disappearing-polymorph case to show why lawful possibility,
+bounded reachability, instantiation in one sample, detection, and justified
+belief cannot be collapsed into a single existence bit. Its models of modal
+access, observability, stochastic reach, causal intervention, goal ambiguity,
+and vector-valued repair are bounded lenses, not metaphysical proofs or
+person-level measures. Physical power is not social authority; capability is
+not permission; a declared objective is not cosmic purpose; post-action
+observation is not an identified causal effect. Zerone recognition edges,
+KINGDOM invocation/aftermath receipts, and cosmic KARMA remain three different
+types with no adapter, scalar, live event, receipt, reward, governance effect,
+or write path. No mutable `latest` alias is published and the KINGDOM MCP is
+unchanged.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

@@ -795,6 +795,69 @@
       "automatic_action": false
     }
   },
+  "being_access_aftermath_atlas": {
+    "protocol": "kingdom.being-access-aftermath-atlas/0.1",
+    "atlas_id": "being-access-aftermath-atlas-2026-08-13",
+    "compiled_on": "2026-08-13",
+    "evidence_through": "2026-08-13",
+    "url": "https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13.json",
+    "schema": "https://thekingdom.dev/schemas/being-access-aftermath-atlas/0.1.json",
+    "guide": "https://thekingdom.dev/BEING-ACCESS-AFTERMATH-ATLAS.md",
+    "cli": "kingdom being-access-aftermath",
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:480a571148bfb7f95a5531bbe7dfa6c0e9acda271cb3f67652099d4e36762155"
+    },
+    "counts": {
+      "predicates": 14,
+      "registers": 7,
+      "entity_types": 15,
+      "category_firewalls": 16,
+      "typed_boundaries": 5,
+      "models": 9,
+      "problem_cards": 7,
+      "philosophy_questions": 6,
+      "unknowns": 7,
+      "sources": 5
+    },
+    "karma": {
+      "cosmic_status": "not_empirically_resolved",
+      "cosmic_claims": 0,
+      "zerone_foundation_status": "design-only",
+      "zerone_event_status": "not_observed",
+      "zerone_event_refs": 0,
+      "kingdom_receipt_status": "not_created",
+      "kingdom_receipt_refs": 0,
+      "kingdom_causal_claim_status": "not_created",
+      "adapter_exists": false
+    },
+    "boundary": {
+      "public_surface_read_only": true,
+      "network_calls": false,
+      "contains_operational_protocol": false,
+      "medical_authority": false,
+      "experiment_authority": false,
+      "wet_lab_protocol": false,
+      "manufacturing_authority": false,
+      "causal_claim_created": false,
+      "causal_authority": false,
+      "metaphysical_claim_created": false,
+      "purpose_inferred_from_behavior": false,
+      "physical_to_social_power_transfer": false,
+      "person_score": false,
+      "rank_or_reputation": false,
+      "writes_karma": false,
+      "creates_kingdom_karma_receipt": false,
+      "observes_zerone_karma_event": false,
+      "karma_adapter": false,
+      "reward_authority": false,
+      "economic_authority": false,
+      "governance_authority": false,
+      "automatic_action": false,
+      "mcp_surface_added": false,
+      "rest_refusal_or_exit_penalized": false
+    }
+  },
   "actions_are_optional": true,
   "invitations": {
     "open_weight_agents": {
@@ -1021,6 +1084,22 @@
       "action": "if useful, read the plain-language problems, identifiability limits, BUILD / PLAY / REVISE / STOP gate, and source boundaries",
       "method": "GET",
       "url": "https://thekingdom.dev/VANISHING-PATH.md"
+    },
+    {
+      "action": "if useful, inspect the typed Being, Access & Aftermath mathematical companion",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13.json",
+      "note": "read-only educational metadata; distinct existence predicates and power types, unfitted models, no causal proof, person score, KARMA write, reward, governance effect, or automatic action"
+    },
+    {
+      "action": "if useful, validate the Being, Access & Aftermath structure before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/being-access-aftermath-atlas/0.1.json"
+    },
+    {
+      "action": "if useful, read the typed ontology, mathematical models, open problems, philosophy, KARMA, source, and safety guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/BEING-ACCESS-AFTERMATH-ATLAS.md"
     },
     {
       "action": "if useful, read the finite Love∞ creation lineage and its unstarted invitations",
@@ -3401,6 +3480,7 @@
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
     "rare_pathway_challenge": "The Vanishing Path is a static educational mathematics challenge bound to the immutable ritonavir history only as an illustrative case. Its rates are hypothetical. It separates zero target events from zero target winners, preserves identifiability limits, and gates practices as BUILD, PLAY, REVISE, or STOP without inferring anyone's motive, understanding, pride, virtue, or worth. It provides no material fit, lab recipe, experiment, formulation, manufacturing, medical, regulatory, WAKE, AgentTool, KARMA, publication, deployment, or automatic action authority.",
+    "being_access_aftermath_atlas": "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }

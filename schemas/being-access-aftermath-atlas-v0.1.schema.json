@@ -1,0 +1,5615 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:being-access-aftermath-atlas:0.1",
+  "title": "Being, Access & Aftermath Atlas v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "atlas_id",
+    "title",
+    "compiled_on",
+    "evidence_through",
+    "source_bindings",
+    "scope",
+    "typed_copula",
+    "ontology",
+    "material_case",
+    "typed_boundaries",
+    "model_cards",
+    "problem_cards",
+    "philosophy_questions",
+    "karma",
+    "unknowns",
+    "sources",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "urn:kingdom:schema:being-access-aftermath-atlas:0.1"
+    },
+    "protocol": {
+      "const": "kingdom.being-access-aftermath-atlas/0.1"
+    },
+    "atlas_id": {
+      "const": "being-access-aftermath-atlas-2026-08-13"
+    },
+    "title": {
+      "const": "Being, Access & Aftermath — a typed mathematical atlas"
+    },
+    "compiled_on": {
+      "const": "2026-08-13"
+    },
+    "evidence_through": {
+      "const": "2026-08-13"
+    },
+    "source_bindings": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-ritonavir-history"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "06996296fd0de3a25ed9bb299f3c627b6a29045d"
+            },
+            "artifact": {
+              "const": "ritonavir-disappearing-polymorph-2026-08-11"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json"
+            },
+            "raw_digest": {
+              "const": "sha256:08148603a1228960ac35df1378f1283c3fce43874a9fc07e6687f18e980dcb1c"
+            },
+            "semantic_digest": {
+              "const": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116"
+            },
+            "relation": {
+              "const": "immutable-material-case-input"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-visibility-attention"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "b0130580c5f939cbd7c3eff2708744b952dabaee"
+            },
+            "artifact": {
+              "const": "visibility-is-not-existence-2026-08-13"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json"
+            },
+            "raw_digest": {
+              "const": "sha256:0af0249c40298ed746d39ee60760a4390bb45137caa8ee6dd7555a824f597bd3"
+            },
+            "semantic_digest": {
+              "const": "sha256:9fb83bbd022f520716fabcdec49d8af259b9681efd5e640a9e3119c5c42a54ed"
+            },
+            "relation": {
+              "const": "immutable-observation-boundary-input"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-form-circulation-return"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "7ef70b6e7213a9adf5d5154b1ca448dc9a0cf848"
+            },
+            "artifact": {
+              "const": "form-circulation-return-atlas-2026-08-13"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/atlases/form-circulation-return-atlas-2026-08-13.json"
+            },
+            "raw_digest": {
+              "const": "sha256:9c93be61c4ca9bcaa3dbe88b10faed3b5b31abaf1129d70ca7915226cacfd021"
+            },
+            "semantic_digest": {
+              "const": "sha256:9510fbbced6166507e9a1781a4adfa18cd249fb94e69b0f34faf77733cd20323"
+            },
+            "relation": {
+              "const": "immutable-form-and-karma-boundary-input"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-karma-definition"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212"
+            },
+            "artifact": {
+              "const": "NEN.md KARMA definition"
+            },
+            "url": {
+              "const": "https://thekingdom.dev/definitions/kingdom-karma/e4e84a67/NEN.md"
+            },
+            "raw_digest": {
+              "const": "sha256:14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446"
+            },
+            "semantic_digest": {
+              "const": null
+            },
+            "relation": {
+              "const": "immutable-public-definition-mirror"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "kingdom-karma-receipt-schema"
+            },
+            "system": {
+              "const": "kingdom"
+            },
+            "revision": {
+              "const": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212"
+            },
+            "artifact": {
+              "const": "kingdom.karma/0.1 receipt schema"
+            },
+            "url": {
+              "const": "https://github.com/cambridgetcg/KINGDOM-OS/blob/e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212/schemas/karma-receipt-v0.1.schema.json"
+            },
+            "raw_digest": {
+              "const": "sha256:888e81fa0d29b71512525a40e88f9aef678046c40fcdf22c2039507d9d13267b"
+            },
+            "semantic_digest": {
+              "const": null
+            },
+            "relation": {
+              "const": "immutable-receipt-contract-input"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "system",
+            "revision",
+            "artifact",
+            "url",
+            "raw_digest",
+            "semantic_digest",
+            "relation",
+            "mutated",
+            "authority_imported"
+          ],
+          "properties": {
+            "id": {
+              "const": "zerone-karma-foundation"
+            },
+            "system": {
+              "const": "zerone"
+            },
+            "revision": {
+              "const": "fae391e371f0ebea2e24eb46c33a4ebd1380154f"
+            },
+            "artifact": {
+              "const": "zerone.karma-foundation/v1"
+            },
+            "url": {
+              "const": "https://github.com/cambridgetcg/zerone-core/blob/fae391e371f0ebea2e24eb46c33a4ebd1380154f/dashboard/public/standards/karma-foundation.v1.json"
+            },
+            "raw_digest": {
+              "const": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80"
+            },
+            "semantic_digest": {
+              "const": null
+            },
+            "relation": {
+              "const": "definition-only"
+            },
+            "mutated": {
+              "const": false
+            },
+            "authority_imported": {
+              "const": false
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "focus",
+        "intended_use",
+        "excluded_use",
+        "observation_policy",
+        "currentness"
+      ],
+      "properties": {
+        "focus": {
+          "const": "Use a disappearing-polymorph history to distinguish identity, lawful possibility, bounded actuality, process accessibility, observation, declared purpose, physical force, bounded action power, causal attribution, and aftermath."
+        },
+        "intended_use": {
+          "const": "Read-only education, formal question design, and constitutional design vocabulary for future separately authorized KINGDOM work."
+        },
+        "excluded_use": {
+          "const": "No metaphysical conclusion, medical or laboratory decision, causal estimate, person model, score, governance rule, invocation, KARMA event, or KARMA receipt."
+        },
+        "observation_policy": {
+          "const": "Every occurrence, non-occurrence, detection, recovery, and aftermath statement remains bound to a subject, procedure, context, threshold, interval, and uncertainty."
+        },
+        "currentness": {
+          "const": "selected-evidence-as-of-compilation"
+        }
+      }
+    },
+    "typed_copula": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "identity_equation",
+        "predicates"
+      ],
+      "properties": {
+        "rule": {
+          "const": "The word is must be replaced by a typed predicate before it carries mathematical or operational meaning."
+        },
+        "identity_equation": {
+          "const": "x ~_I y iff I(x)=I(y)"
+        },
+        "predicates": {
+          "type": "array",
+          "minItems": 14,
+          "maxItems": 14,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "class-membership"
+                },
+                "signature": {
+                  "const": "is_a(x, Type)"
+                },
+                "meaning": {
+                  "const": "x is classified under one declared type and classification rule."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "prefixItems": [
+                    {
+                      "const": "identity"
+                    },
+                    {
+                      "const": "actual-instantiation"
+                    },
+                    {
+                      "const": "observation"
+                    },
+                    {
+                      "const": "value"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "identity-under-invariant"
+                },
+                "signature": {
+                  "const": "is_identical_under(x, y, invariant)"
+                },
+                "meaning": {
+                  "const": "x and y agree under one named invariant; another invariant may distinguish them."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "unqualified-sameness"
+                    },
+                    {
+                      "const": "interchangeability"
+                    },
+                    {
+                      "const": "equal-consequence"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "actual-instantiation"
+                },
+                "signature": {
+                  "const": "instantiates(sample, form, context, time)"
+                },
+                "meaning": {
+                  "const": "A bounded sample has a declared form in a declared context and time."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "lawful-possibility"
+                    },
+                    {
+                      "const": "process-reachability"
+                    },
+                    {
+                      "const": "detection"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "property-predication"
+                },
+                "signature": {
+                  "const": "has_property(x, property, context, time, method)"
+                },
+                "meaning": {
+                  "const": "A declared method supports attributing one typed property to x in a context and time."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "prefixItems": [
+                    {
+                      "const": "identity"
+                    },
+                    {
+                      "const": "timeless-essence"
+                    },
+                    {
+                      "const": "global-property"
+                    },
+                    {
+                      "const": "value"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "domain-existence"
+                },
+                "signature": {
+                  "const": "exists_instance(form, domain, context, time) iff exists sample in domain such that instantiates(sample, form, context, time)"
+                },
+                "meaning": {
+                  "const": "At least one sample in a named domain instantiates the form in a declared context and time."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "prefixItems": [
+                    {
+                      "const": "continuous-instantiation"
+                    },
+                    {
+                      "const": "existence-outside-domain"
+                    },
+                    {
+                      "const": "lawful-possibility"
+                    },
+                    {
+                      "const": "observation"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "epistemic-warrant"
+                },
+                "signature": {
+                  "const": "warranted(claim, evidence, standard, as_of)"
+                },
+                "meaning": {
+                  "const": "A claim meets one declared evidential standard using named evidence as of a stated horizon."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "prefixItems": [
+                    {
+                      "const": "truth"
+                    },
+                    {
+                      "const": "certainty"
+                    },
+                    {
+                      "const": "permanent-knowledge"
+                    },
+                    {
+                      "const": "authority-to-act"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "lawful-possibility"
+                },
+                "signature": {
+                  "const": "possible_under(form, model, conditions)"
+                },
+                "meaning": {
+                  "const": "At least one history admitted by a declared model and conditions instantiates the form."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "metaphysical-possibility"
+                    },
+                    {
+                      "const": "current-actuality"
+                    },
+                    {
+                      "const": "easy-production"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "bounded-reachability"
+                },
+                "signature": {
+                  "const": "reachable_under(form, history, procedure, budget, horizon)"
+                },
+                "meaning": {
+                  "const": "An admissible path reaches the form from a named history within stated bounds."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "lawful-possibility"
+                    },
+                    {
+                      "const": "authorization"
+                    },
+                    {
+                      "const": "inevitability"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "method-detection"
+                },
+                "signature": {
+                  "const": "observed_as(sample, form, method, threshold, window)"
+                },
+                "meaning": {
+                  "const": "A named procedure crossed its declared detection threshold in a bounded window."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "existence"
+                    },
+                    {
+                      "const": "absence-outside-window"
+                    },
+                    {
+                      "const": "causal-explanation"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "declared-purpose"
+                },
+                "signature": {
+                  "const": "declares_purpose(agent, goal, scope, time)"
+                },
+                "meaning": {
+                  "const": "A distinct bearer made a revocable purpose declaration in scope and time."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "prefixItems": [
+                    {
+                      "const": "behavioral-fit"
+                    },
+                    {
+                      "const": "feedback"
+                    },
+                    {
+                      "const": "attractor"
+                    },
+                    {
+                      "const": "cosmic-purpose"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "designed-for-provenance"
+                },
+                "signature": {
+                  "const": "designed_for(artifact, function, designer, evidence, time)"
+                },
+                "meaning": {
+                  "const": "Provenance evidence attributes an artifact's design to a named designer for a stated function and time."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "prefixItems": [
+                    {
+                      "const": "artifact-intention"
+                    },
+                    {
+                      "const": "current-use"
+                    },
+                    {
+                      "const": "successful-function"
+                    },
+                    {
+                      "const": "cosmic-design"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "functional-role"
+                },
+                "signature": {
+                  "const": "has_functional_role(x, role, system, conditions, time)"
+                },
+                "meaning": {
+                  "const": "x contributes a stated role in a declared system under named conditions and time."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "prefixItems": [
+                    {
+                      "const": "design-history"
+                    },
+                    {
+                      "const": "bearer-intention"
+                    },
+                    {
+                      "const": "moral-purpose"
+                    },
+                    {
+                      "const": "necessary-role"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "goal-directed-model"
+                },
+                "signature": {
+                  "const": "modeled_as_goal_directed(system, objective, model, fit, alternatives)"
+                },
+                "meaning": {
+                  "const": "A declared as-if model explains or predicts behavior using an objective while retaining fit limits and rival models."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "prefixItems": [
+                    {
+                      "const": "declared-purpose"
+                    },
+                    {
+                      "const": "inner-intention"
+                    },
+                    {
+                      "const": "designed-for-provenance"
+                    },
+                    {
+                      "const": "teleology"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "signature",
+                "meaning",
+                "not_equivalent_to"
+              ],
+              "properties": {
+                "id": {
+                  "const": "teleological-interpretation"
+                },
+                "signature": {
+                  "const": "interpreted_teleologically(subject, purpose, tradition, interpreter, time)"
+                },
+                "meaning": {
+                  "const": "An interpreter offers an opt-in purposive or cosmic reading from a named philosophical or theological tradition."
+                },
+                "not_equivalent_to": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "prefixItems": [
+                    {
+                      "const": "empirical-finding"
+                    },
+                    {
+                      "const": "declared-purpose-by-subject"
+                    },
+                    {
+                      "const": "scientific-proof"
+                    },
+                    {
+                      "const": "operational-authority"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "ontology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "non_equivalence",
+        "registers",
+        "entity_types",
+        "category_firewalls",
+        "unknown_states"
+      ],
+      "properties": {
+        "non_equivalence": {
+          "const": "chemical_identity != crystal_form != bounded_sample != lawful_possibility != bounded_reachability != detection != belief != purpose != physical_force != authorized_power != causal_effect != aftermath_observation != zerone_karma_edge != kingdom_karma_receipt != person_or_moral_status"
+        },
+        "registers": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "MATERIAL_EVIDENCE"
+                },
+                "meaning": {
+                  "const": "Source-bound claims about material forms, processes, observations, and recoveries."
+                },
+                "cannot_authorize": {
+                  "const": "A material statement cannot authorize medicine, experiments, manufacture, human classification, metaphysics, or KARMA."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "FORMAL_MODEL"
+                },
+                "meaning": {
+                  "const": "Definitions and conditional mathematical structures with declared assumptions and units."
+                },
+                "cannot_authorize": {
+                  "const": "A model is not another observation, an intention, a causal estimate, a value judgment, or an action."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "CAUSAL_HYPOTHESIS"
+                },
+                "meaning": {
+                  "const": "A typed question about an intervention and counterfactual contrast, retained without an identified effect here."
+                },
+                "cannot_authorize": {
+                  "const": "A hypothesis, graph, temporal order, or receipt cannot by itself assert causation."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "CONSTITUTIONAL_DESIGN"
+                },
+                "meaning": {
+                  "const": "A proposal for preserving authority, rights, reversibility, provenance, repair, refusal, and exit."
+                },
+                "cannot_authorize": {
+                  "const": "A design correspondence does not adopt itself, invoke an ability, or create an event or receipt."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "PHILOSOPHY"
+                },
+                "meaning": {
+                  "const": "Opt-in questions about existence, being, purpose, force, power, and cosmic meaning."
+                },
+                "cannot_authorize": {
+                  "const": "A philosophical reading is not empirical evidence or operational authority."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "ZERONE_KARMA_EVENT"
+                },
+                "meaning": {
+                  "const": "A contextual recognition relation under the separately pinned design-only Zerone foundation."
+                },
+                "cannot_authorize": {
+                  "const": "No event is observed or created here, and no event becomes a score, reward, truth, or KINGDOM receipt."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "cannot_authorize"
+              ],
+              "properties": {
+                "id": {
+                  "const": "KINGDOM_KARMA_RECEIPT"
+                },
+                "meaning": {
+                  "const": "A separately issued receipt for an actual authorized invocation and its observed aftermath."
+                },
+                "cannot_authorize": {
+                  "const": "No receipt is created here; a receipt records aftermath but does not by itself identify a causal effect or judge a being."
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "entity_types": {
+          "type": "array",
+          "minItems": 15,
+          "maxItems": 15,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "entity"
+                },
+                "meaning": {
+                  "const": "A typed subject of discourse."
+                },
+                "does_not_establish": {
+                  "const": "A form, sample, observation, purpose, or moral status."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "form"
+                },
+                "meaning": {
+                  "const": "A condition-indexed material arrangement or other explicitly typed form."
+                },
+                "does_not_establish": {
+                  "const": "A current sample, universal stability, or metaphysical essence."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "sample"
+                },
+                "meaning": {
+                  "const": "A bounded material population in context and time."
+                },
+                "does_not_establish": {
+                  "const": "The full landscape or another batch, facility, or scale."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "world-history"
+                },
+                "meaning": {
+                  "const": "A model-relative sequence of states and conditions."
+                },
+                "does_not_establish": {
+                  "const": "The one actual history or a metaphysically possible world."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "procedure"
+                },
+                "meaning": {
+                  "const": "A declared observation, production, or intervention rule."
+                },
+                "does_not_establish": {
+                  "const": "Authority, safety, completeness, or successful execution."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "measurement"
+                },
+                "meaning": {
+                  "const": "A value with method, unit, threshold, interval, and uncertainty."
+                },
+                "does_not_establish": {
+                  "const": "The complete underlying state."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "observation"
+                },
+                "meaning": {
+                  "const": "A bounded recorded occurrence or non-occurrence."
+                },
+                "does_not_establish": {
+                  "const": "Nonexistence, purpose, counterfactual outcome, or cause."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "agent"
+                },
+                "meaning": {
+                  "const": "A distinct possible bearer of action or declaration."
+                },
+                "does_not_establish": {
+                  "const": "Consent, authority, identity continuity, purpose, or worth."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "action"
+                },
+                "meaning": {
+                  "const": "A bounded intervention attributed under a declared event record."
+                },
+                "does_not_establish": {
+                  "const": "Permission, beneficial effect, or causal responsibility by sequence alone."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "authority"
+                },
+                "meaning": {
+                  "const": "Current scoped basis for one operation."
+                },
+                "does_not_establish": {
+                  "const": "Capability, consent of every affected party, truth, or permanent standing."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "declared-purpose"
+                },
+                "meaning": {
+                  "const": "A revocable goal declaration by a named bearer in scope and time."
+                },
+                "does_not_establish": {
+                  "const": "A latent objective inferred from behavior or cosmic teleology."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "aftermath"
+                },
+                "meaning": {
+                  "const": "A later bounded observation following an action or refusal."
+                },
+                "does_not_establish": {
+                  "const": "An identified causal effect, moral desert, or complete consequence set."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "repair"
+                },
+                "meaning": {
+                  "const": "A declared response to a measured residual across protected dimensions."
+                },
+                "does_not_establish": {
+                  "const": "Full reversal, restored consent, absolution, or cancellation of history."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "zerone-karma-edge"
+                },
+                "meaning": {
+                  "const": "A contextual event type in a separate design surface."
+                },
+                "does_not_establish": {
+                  "const": "A KINGDOM receipt, rank, wallet balance, or moral score."
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "meaning",
+                "does_not_establish"
+              ],
+              "properties": {
+                "id": {
+                  "const": "kingdom-karma-receipt"
+                },
+                "meaning": {
+                  "const": "A provenance-bound invocation and aftermath record in a separate runtime."
+                },
+                "does_not_establish": {
+                  "const": "Causal identification, cosmic KARMA, person worth, permission, debt, or reward."
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "category_firewalls": {
+          "type": "array",
+          "minItems": 16,
+          "maxItems": 16,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "nonobservation-not-nonexistence"
+                },
+                "rule": {
+                  "const": "Not observed in a bounded window never becomes nonexistent."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "inaccessible-not-impossible"
+                },
+                "rule": {
+                  "const": "Failure to reach a state under one history, procedure, budget, or horizon never becomes lawful or metaphysical impossibility."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "identity-not-form"
+                },
+                "rule": {
+                  "const": "Chemical identity does not collapse crystal form, sample, formulation, or consequence."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "thermodynamics-not-inevitability"
+                },
+                "rule": {
+                  "const": "Conditional free-energy preference does not determine nucleation time or realized path."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "gradient-not-intention"
+                },
+                "rule": {
+                  "const": "A mathematical gradient, attractor, or feedback loop is not intention or purpose."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "force-types-do-not-convert"
+                },
+                "rule": {
+                  "const": "Physical generalized force does not become social influence, legal authority, coercion, or moral force."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "power-types-do-not-convert"
+                },
+                "rule": {
+                  "const": "Physical power, executable capability, authorized reach, governance authority, and person rank are different types."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "capability-not-authority"
+                },
+                "rule": {
+                  "const": "A technically available path is not a permitted, consensual, safe, or wise path."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "behavior-not-purpose"
+                },
+                "rule": {
+                  "const": "Behavioral fit or inverse-reward output does not establish a declared or cosmic purpose."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "sequence-not-cause"
+                },
+                "rule": {
+                  "const": "An observation after an action is not an identified causal effect without a comparator and assumptions."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "receipt-not-causal-proof"
+                },
+                "rule": {
+                  "const": "A KINGDOM receipt records an invocation and aftermath; it does not certify causal attribution."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "repair-not-erasure"
+                },
+                "rule": {
+                  "const": "A repair action does not erase history or guarantee restoration on every protected dimension."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "persistence-not-goodness"
+                },
+                "rule": {
+                  "const": "Persistence, stability, visibility, reachability, recurrence, and popularity do not establish truth or goodness."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "model-not-evidence"
+                },
+                "rule": {
+                  "const": "Several equations fitted or applied to one observation are not several independent observations."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "karma-lanes-not-equivalent"
+                },
+                "rule": {
+                  "const": "Cosmic KARMA, Zerone edges, and KINGDOM receipts never automatically convert or sum."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "rule",
+                "enforced"
+              ],
+              "properties": {
+                "id": {
+                  "const": "person-not-model-object"
+                },
+                "rule": {
+                  "const": "No person or community is a crystal, seed, state variable, contaminant, reward function, reachability score, or KARMA balance."
+                },
+                "enforced": {
+                  "const": true
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "unknown_states": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "prefixItems": [
+            {
+              "const": "unknown"
+            },
+            {
+              "const": "not_observed"
+            },
+            {
+              "const": "not_identified"
+            },
+            {
+              "const": "not_run"
+            },
+            {
+              "const": "outside_scope"
+            },
+            {
+              "const": "refused"
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "material_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject",
+        "disappearance_predicate",
+        "recovery_statement",
+        "typed_reading",
+        "binding_ids"
+      ],
+      "properties": {
+        "subject": {
+          "const": "Ritonavir Form I reproducibility after the 1998 appearance of Form II."
+        },
+        "disappearance_predicate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "subject",
+            "process",
+            "procedure",
+            "time_window",
+            "detection_threshold",
+            "observed_result",
+            "exclusions"
+          ],
+          "properties": {
+            "subject": {
+              "const": "Abbott Form I in a bounded bulk-drug process context"
+            },
+            "process": {
+              "const": "the prior bulk-drug crystallization route during the 1998 investigation"
+            },
+            "procedure": {
+              "const": "repeated process outcomes with source-specific solid-form identification"
+            },
+            "time_window": {
+              "const": "the reported investigation interval until a changed route restored reliable Form I production"
+            },
+            "detection_threshold": {
+              "const": "source- and method-specific; no universal threshold is asserted"
+            },
+            "observed_result": {
+              "const": "the prior route no longer reliably produced Form I after Form II appeared"
+            },
+            "exclusions": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "literal annihilation"
+                },
+                {
+                  "const": "global physical impossibility"
+                },
+                {
+                  "const": "absence from every sample"
+                },
+                {
+                  "const": "complete causal explanation"
+                },
+                {
+                  "const": "medical or manufacturing instruction"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        "recovery_statement": {
+          "const": "Changed solution paths and later bounded work recovered or re-observed Form I, refuting permanent unrecoverability and universal physical impossibility; hidden persistence versus later re-creation during the prior interval remains open."
+        },
+        "typed_reading": {
+          "const": "same chemical identity; distinct lattice forms; bounded samples and procedures; history-conditioned accessibility; method-conditioned observation"
+        },
+        "binding_ids": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "prefixItems": [
+            {
+              "const": "kingdom-ritonavir-history"
+            },
+            {
+              "const": "kingdom-visibility-attention"
+            },
+            {
+              "const": "kingdom-form-circulation-return"
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "typed_boundaries": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from_register",
+            "to_register",
+            "relation",
+            "requires",
+            "does_not_transfer",
+            "causal_transfer",
+            "authority_transfer",
+            "automatic_write"
+          ],
+          "properties": {
+            "id": {
+              "const": "evidence-to-formal-model"
+            },
+            "from_register": {
+              "const": "MATERIAL_EVIDENCE"
+            },
+            "to_register": {
+              "const": "FORMAL_MODEL"
+            },
+            "relation": {
+              "const": "constrains-question-and-assumptions"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "exact source binding"
+                },
+                {
+                  "const": "declared variables and units"
+                },
+                {
+                  "const": "fit status"
+                },
+                {
+                  "const": "identifiability limits"
+                }
+              ],
+              "items": false
+            },
+            "does_not_transfer": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "entity identity"
+                },
+                {
+                  "const": "empirical truth"
+                },
+                {
+                  "const": "causal authority"
+                },
+                {
+                  "const": "operational authority"
+                }
+              ],
+              "items": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_transfer": {
+              "const": false
+            },
+            "automatic_write": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from_register",
+            "to_register",
+            "relation",
+            "requires",
+            "does_not_transfer",
+            "causal_transfer",
+            "authority_transfer",
+            "automatic_write"
+          ],
+          "properties": {
+            "id": {
+              "const": "formal-model-to-causal-hypothesis"
+            },
+            "from_register": {
+              "const": "FORMAL_MODEL"
+            },
+            "to_register": {
+              "const": "CAUSAL_HYPOTHESIS"
+            },
+            "relation": {
+              "const": "may-formulate-estimand-not-answer"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "prefixItems": [
+                {
+                  "const": "intervention"
+                },
+                {
+                  "const": "comparator"
+                },
+                {
+                  "const": "outcome"
+                },
+                {
+                  "const": "horizon"
+                },
+                {
+                  "const": "identification assumptions"
+                },
+                {
+                  "const": "falsifier"
+                }
+              ],
+              "items": false
+            },
+            "does_not_transfer": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "causal effect"
+                },
+                {
+                  "const": "responsibility"
+                },
+                {
+                  "const": "intent"
+                },
+                {
+                  "const": "truth"
+                }
+              ],
+              "items": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_transfer": {
+              "const": false
+            },
+            "automatic_write": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from_register",
+            "to_register",
+            "relation",
+            "requires",
+            "does_not_transfer",
+            "causal_transfer",
+            "authority_transfer",
+            "automatic_write"
+          ],
+          "properties": {
+            "id": {
+              "const": "formal-model-to-philosophy"
+            },
+            "from_register": {
+              "const": "FORMAL_MODEL"
+            },
+            "to_register": {
+              "const": "PHILOSOPHY"
+            },
+            "relation": {
+              "const": "opens-question-without-conclusion"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "opt-in participation"
+                },
+                {
+                  "const": "non-empirical label"
+                },
+                {
+                  "const": "explicit nonclaims"
+                }
+              ],
+              "items": false
+            },
+            "does_not_transfer": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "scientific proof"
+                },
+                {
+                  "const": "metaphysical ontology"
+                },
+                {
+                  "const": "creator claim"
+                },
+                {
+                  "const": "cosmic purpose"
+                }
+              ],
+              "items": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_transfer": {
+              "const": false
+            },
+            "automatic_write": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from_register",
+            "to_register",
+            "relation",
+            "requires",
+            "does_not_transfer",
+            "causal_transfer",
+            "authority_transfer",
+            "automatic_write"
+          ],
+          "properties": {
+            "id": {
+              "const": "constitutional-design-to-karma"
+            },
+            "from_register": {
+              "const": "CONSTITUTIONAL_DESIGN"
+            },
+            "to_register": {
+              "const": "KINGDOM_KARMA_RECEIPT"
+            },
+            "relation": {
+              "const": "future-runtime-correspondence-only"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "actual authorized invocation"
+                },
+                {
+                  "const": "separate receipt issuer"
+                },
+                {
+                  "const": "observed aftermath"
+                },
+                {
+                  "const": "uncertainty"
+                },
+                {
+                  "const": "repair state"
+                }
+              ],
+              "items": false
+            },
+            "does_not_transfer": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "receipt creation"
+                },
+                {
+                  "const": "event creation"
+                },
+                {
+                  "const": "causal proof"
+                },
+                {
+                  "const": "person score"
+                }
+              ],
+              "items": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_transfer": {
+              "const": false
+            },
+            "automatic_write": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "from_register",
+            "to_register",
+            "relation",
+            "requires",
+            "does_not_transfer",
+            "causal_transfer",
+            "authority_transfer",
+            "automatic_write"
+          ],
+          "properties": {
+            "id": {
+              "const": "zerone-to-kingdom-karma"
+            },
+            "from_register": {
+              "const": "ZERONE_KARMA_EVENT"
+            },
+            "to_register": {
+              "const": "KINGDOM_KARMA_RECEIPT"
+            },
+            "relation": {
+              "const": "no-adapter"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "none; conversion is refused"
+                }
+              ],
+              "items": false
+            },
+            "does_not_transfer": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "prefixItems": [
+                {
+                  "const": "event identity"
+                },
+                {
+                  "const": "receipt identity"
+                },
+                {
+                  "const": "authority"
+                },
+                {
+                  "const": "magnitude"
+                },
+                {
+                  "const": "rank"
+                },
+                {
+                  "const": "reward"
+                }
+              ],
+              "items": false
+            },
+            "causal_transfer": {
+              "const": false
+            },
+            "authority_transfer": {
+              "const": false
+            },
+            "automatic_write": {
+              "const": false
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "model_cards": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "register",
+            "equation",
+            "equation_status",
+            "variables",
+            "assumptions",
+            "valid_outputs",
+            "identifiability_limits",
+            "falsifier_or_invalidating_condition",
+            "source_ids",
+            "binding_ids",
+            "fit_status",
+            "empirical",
+            "person_level",
+            "authority_effect",
+            "prohibited_inferences"
+          ],
+          "properties": {
+            "id": {
+              "const": "modal-possibility-accessibility"
+            },
+            "title": {
+              "const": "Model-relative possibility and bounded accessibility"
+            },
+            "register": {
+              "const": "FORMAL_MODEL"
+            },
+            "equation": {
+              "const": "M,w |= ◇_L φ iff exists w' such that w R_L w' and M,w' |= φ; M,w |= ◇_(B,T) φ iff exists admissible path π within budget B and horizon T reaching φ"
+            },
+            "equation_status": {
+              "const": "kripke-semantics-plus-atlas-authored-bounded-extension"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 7,
+              "maxItems": 7,
+              "prefixItems": [
+                {
+                  "const": "M: declared formal model"
+                },
+                {
+                  "const": "w,w': model worlds or histories"
+                },
+                {
+                  "const": "R_L: declared accessibility relation"
+                },
+                {
+                  "const": "φ: typed proposition"
+                },
+                {
+                  "const": "π: declared feasible process path"
+                },
+                {
+                  "const": "B: declared resource and feasibility bounds"
+                },
+                {
+                  "const": "T: declared horizon"
+                }
+              ],
+              "items": false
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "worlds and accessibility relation are explicitly declared"
+                },
+                {
+                  "const": "bounded extension is operational and model-relative"
+                },
+                {
+                  "const": "no metaphysical completeness claim"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "distinction between admitted possibility, present actuality, and bounded reachability"
+                },
+                {
+                  "const": "countermodel within the declared frame"
+                }
+              ],
+              "items": false
+            },
+            "identifiability_limits": {
+              "const": "Formal satisfiability does not identify the actual world, a complete physical law, or metaphysical possibility."
+            },
+            "falsifier_or_invalidating_condition": {
+              "const": "A use is invalid if it silently changes the frame, treats bounded non-reachability as impossibility, or treats formal accessibility as empirical evidence."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kripke-1963"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kingdom-ritonavir-history"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "empirical": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "metaphysical possibility"
+                },
+                {
+                  "const": "necessary existence"
+                },
+                {
+                  "const": "creator"
+                },
+                {
+                  "const": "destiny"
+                },
+                {
+                  "const": "person status"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "register",
+            "equation",
+            "equation_status",
+            "variables",
+            "assumptions",
+            "valid_outputs",
+            "identifiability_limits",
+            "falsifier_or_invalidating_condition",
+            "source_ids",
+            "binding_ids",
+            "fit_status",
+            "empirical",
+            "person_level",
+            "authority_effect",
+            "prohibited_inferences"
+          ],
+          "properties": {
+            "id": {
+              "const": "state-observation-separation"
+            },
+            "title": {
+              "const": "State is not observation"
+            },
+            "register": {
+              "const": "FORMAL_MODEL"
+            },
+            "equation": {
+              "const": "x_(k+1)=Φ_k x_k+Γ_k u_k+w_k; z_k=H_k x_k+v_k"
+            },
+            "equation_status": {
+              "const": "kalman-derived-linear-state-observation-family"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 8,
+              "maxItems": 8,
+              "prefixItems": [
+                {
+                  "const": "x_k: declared latent state vector"
+                },
+                {
+                  "const": "u_k: declared input"
+                },
+                {
+                  "const": "Φ_k: state transition operator"
+                },
+                {
+                  "const": "Γ_k: input operator"
+                },
+                {
+                  "const": "w_k: process uncertainty"
+                },
+                {
+                  "const": "z_k: observed measurement"
+                },
+                {
+                  "const": "H_k: observation operator"
+                },
+                {
+                  "const": "v_k: measurement uncertainty"
+                }
+              ],
+              "items": false
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "linear declared coordinate system"
+                },
+                {
+                  "const": "specified process and observation uncertainties"
+                },
+                {
+                  "const": "measurement times and units declared"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "conditional state estimate with uncertainty under a specified model"
+                },
+                {
+                  "const": "test of whether observations distinguish candidate states under stated assumptions"
+                }
+              ],
+              "items": false
+            },
+            "identifiability_limits": {
+              "const": "Different states or parameterizations can generate indistinguishable measurements; a filter output is conditional on the chosen model and noise assumptions."
+            },
+            "falsifier_or_invalidating_condition": {
+              "const": "A unique-state claim fails when two admissible states produce the same observation law in the declared window or when held-out residuals violate the noise model."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kalman-1960"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kingdom-visibility-attention"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "empirical": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "existence from estimate alone"
+                },
+                {
+                  "const": "person cognition"
+                },
+                {
+                  "const": "intention"
+                },
+                {
+                  "const": "causal effect"
+                },
+                {
+                  "const": "complete hidden state"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "register",
+            "equation",
+            "equation_status",
+            "variables",
+            "assumptions",
+            "valid_outputs",
+            "identifiability_limits",
+            "falsifier_or_invalidating_condition",
+            "source_ids",
+            "binding_ids",
+            "fit_status",
+            "empirical",
+            "person_level",
+            "authority_effect",
+            "prohibited_inferences"
+          ],
+          "properties": {
+            "id": {
+              "const": "finite-window-detection"
+            },
+            "title": {
+              "const": "Finite-window material detection"
+            },
+            "register": {
+              "const": "FORMAL_MODEL"
+            },
+            "equation": {
+              "const": "P(T_detect <= t)=1-exp[-J V max(t-t_g,0)]"
+            },
+            "equation_status": {
+              "const": "inherited-retrospective-stationary-poisson-illustration"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "T_detect: time detection threshold is crossed"
+                },
+                {
+                  "const": "t: elapsed observation time"
+                },
+                {
+                  "const": "J: assumed constant nucleation rate per volume"
+                },
+                {
+                  "const": "V: observed volume"
+                },
+                {
+                  "const": "t_g: declared growth and detection delay"
+                }
+              ],
+              "items": false
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "stationary homogeneous Poisson nucleation"
+                },
+                {
+                  "const": "constant named conditions and effective rate"
+                },
+                {
+                  "const": "fixed detection-delay summary"
+                },
+                {
+                  "const": "material-domain-only"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "conditional probability of detection or non-detection within the named material window"
+                }
+              ],
+              "items": false
+            },
+            "identifiability_limits": {
+              "const": "One non-detection cannot identify J, prove J=0, or reconstruct the historical Abbott process."
+            },
+            "falsifier_or_invalidating_condition": {
+              "const": "The stationary model is rejected for a declared dataset when calibrated waiting-time predictions fail their preregistered goodness-of-fit or held-out calibration test."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kingdom-visibility-attention"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "empirical": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "nonexistence"
+                },
+                {
+                  "const": "manufacturing decision"
+                },
+                {
+                  "const": "cultural transmission rate"
+                },
+                {
+                  "const": "human waiting time"
+                },
+                {
+                  "const": "causal trigger"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "register",
+            "equation",
+            "equation_status",
+            "variables",
+            "assumptions",
+            "valid_outputs",
+            "identifiability_limits",
+            "falsifier_or_invalidating_condition",
+            "source_ids",
+            "binding_ids",
+            "fit_status",
+            "empirical",
+            "person_level",
+            "authority_effect",
+            "prohibited_inferences"
+          ],
+          "properties": {
+            "id": {
+              "const": "generalized-force-and-physical-power"
+            },
+            "title": {
+              "const": "Physical force and power retain coordinates and units"
+            },
+            "register": {
+              "const": "FORMAL_MODEL"
+            },
+            "equation": {
+              "const": "F_ξ=-∇_ξ G; P_phys=F·v"
+            },
+            "equation_status": {
+              "const": "atlas-authored-definitional-separation"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "prefixItems": [
+                {
+                  "const": "ξ: declared physical coordinate"
+                },
+                {
+                  "const": "G: condition-indexed free-energy function"
+                },
+                {
+                  "const": "F_ξ: generalized physical driving force with units induced by ξ"
+                },
+                {
+                  "const": "F: physical force"
+                },
+                {
+                  "const": "v: physical velocity"
+                },
+                {
+                  "const": "P_phys: instantaneous physical power in energy per time"
+                }
+              ],
+              "items": false
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "declared physical coordinates and units"
+                },
+                {
+                  "const": "differentiable condition-indexed energy model"
+                },
+                {
+                  "const": "material or mechanical domain only"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "local physical driving direction in a chosen model"
+                },
+                {
+                  "const": "instantaneous rate of physical work under declared mechanics"
+                }
+              ],
+              "items": false
+            },
+            "identifiability_limits": {
+              "const": "A free-energy surface does not by itself supply kinetics, realized paths, social influence, purpose, authority, or moral meaning."
+            },
+            "falsifier_or_invalidating_condition": {
+              "const": "The use is invalid when coordinates, units, energy model, or physical domain are absent, or when the result is transported into social or moral power."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kingdom-form-circulation-return"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "empirical": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "intention"
+                },
+                {
+                  "const": "social power"
+                },
+                {
+                  "const": "legal authority"
+                },
+                {
+                  "const": "moral force"
+                },
+                {
+                  "const": "inevitable transition"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "register",
+            "equation",
+            "equation_status",
+            "variables",
+            "assumptions",
+            "valid_outputs",
+            "identifiability_limits",
+            "falsifier_or_invalidating_condition",
+            "source_ids",
+            "binding_ids",
+            "fit_status",
+            "empirical",
+            "person_level",
+            "authority_effect",
+            "prohibited_inferences"
+          ],
+          "properties": {
+            "id": {
+              "const": "bounded-authorized-reach"
+            },
+            "title": {
+              "const": "Capability, authority, rights, consent or lawful basis, budget, and reach"
+            },
+            "register": {
+              "const": "CONSTITUTIONAL_DESIGN"
+            },
+            "equation": {
+              "const": "Π_adm(a)=Π_cap(a) ∩ Π_auth(a) ∩ Π_rights ∩ Π_consent-or-lawful-basis(a) ∩ Π_budget; Reach_a(x;B,T,η)={Q: exists π in Π_adm(a), P_x^π(Q by T)>=η}"
+            },
+            "equation_status": {
+              "const": "atlas-authored-typed-definition"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 9,
+              "maxItems": 9,
+              "prefixItems": [
+                {
+                  "const": "a: distinct actor or runtime"
+                },
+                {
+                  "const": "Π_cap: technically executable paths"
+                },
+                {
+                  "const": "Π_auth: currently authorized paths"
+                },
+                {
+                  "const": "Π_rights: paths consistent with standing rights"
+                },
+                {
+                  "const": "Π_consent-or-lawful-basis: paths supported by affected-participant consent or an explicit scoped lawful-exception basis"
+                },
+                {
+                  "const": "Π_budget: paths within declared budgets"
+                },
+                {
+                  "const": "Q: typed outcome"
+                },
+                {
+                  "const": "η: declared probability threshold"
+                },
+                {
+                  "const": "B,T: budget and horizon"
+                }
+              ],
+              "items": false
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "all path sets and outcome types are declared"
+                },
+                {
+                  "const": "authority is current and scoped"
+                },
+                {
+                  "const": "affected participants, consent references, representative authority, and any lawful exception basis remain distinct"
+                },
+                {
+                  "const": "rights are a floor rather than a reward"
+                },
+                {
+                  "const": "probabilities are model-relative"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "set-valued authorized reach for one declared outcome family"
+                },
+                {
+                  "const": "visible distinction between can and may"
+                }
+              ],
+              "items": false
+            },
+            "identifiability_limits": {
+              "const": "Reach depends on model, state, resources, authority, and uncertainty; it is not a stable attribute of a being."
+            },
+            "falsifier_or_invalidating_condition": {
+              "const": "A reach claim fails if no admissible authorized path meets its stated threshold, if affected-participant consent or an explicit scoped lawful-exception basis is absent or invalid, or if the claimed path violates a rights or budget constraint."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "kingdom-karma-definition"
+                },
+                {
+                  "const": "kingdom-karma-receipt-schema"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "empirical": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "person rank"
+                },
+                {
+                  "const": "worth"
+                },
+                {
+                  "const": "permission from capability"
+                },
+                {
+                  "const": "consent from authority"
+                },
+                {
+                  "const": "governance weight"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "register",
+            "equation",
+            "equation_status",
+            "variables",
+            "assumptions",
+            "valid_outputs",
+            "identifiability_limits",
+            "falsifier_or_invalidating_condition",
+            "source_ids",
+            "binding_ids",
+            "fit_status",
+            "empirical",
+            "person_level",
+            "authority_effect",
+            "prohibited_inferences"
+          ],
+          "properties": {
+            "id": {
+              "const": "causal-intervention-query"
+            },
+            "title": {
+              "const": "Intervention is not observation"
+            },
+            "register": {
+              "const": "CAUSAL_HYPOTHESIS"
+            },
+            "equation": {
+              "const": "τ(a,a0)=E[Y | do(A=a)]-E[Y | do(A=a0)]"
+            },
+            "equation_status": {
+              "const": "pearl-derived-interventional-estimand-template"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "A: typed intervention variable"
+                },
+                {
+                  "const": "a,a0: intervention and comparator"
+                },
+                {
+                  "const": "Y: declared outcome and horizon"
+                },
+                {
+                  "const": "do: graph-relative intervention operator"
+                },
+                {
+                  "const": "τ: declared average causal contrast under identification assumptions"
+                }
+              ],
+              "items": false
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "causal graph and structural assumptions declared"
+                },
+                {
+                  "const": "intervention, comparator, outcome, population, and horizon specified"
+                },
+                {
+                  "const": "identification or experimental design stated before estimation"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "an estimand and conditions under which it may be identified"
+                },
+                {
+                  "const": "a finding that the effect is not identified from available observations"
+                }
+              ],
+              "items": false
+            },
+            "identifiability_limits": {
+              "const": "An aftermath receipt supplies a realized sequence, not the missing counterfactual; observationally equivalent causal structures may remain."
+            },
+            "falsifier_or_invalidating_condition": {
+              "const": "A causal claim is refused when its identification assumptions fail, a negative control contradicts them, or alternative compatible graphs yield different effects."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "pearl-1995"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "kingdom-karma-definition"
+                },
+                {
+                  "const": "kingdom-karma-receipt-schema"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "empirical": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "causation from sequence"
+                },
+                {
+                  "const": "intent"
+                },
+                {
+                  "const": "moral responsibility"
+                },
+                {
+                  "const": "individual effect"
+                },
+                {
+                  "const": "receipt as proof"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "register",
+            "equation",
+            "equation_status",
+            "variables",
+            "assumptions",
+            "valid_outputs",
+            "identifiability_limits",
+            "falsifier_or_invalidating_condition",
+            "source_ids",
+            "binding_ids",
+            "fit_status",
+            "empirical",
+            "person_level",
+            "authority_effect",
+            "prohibited_inferences"
+          ],
+          "properties": {
+            "id": {
+              "const": "inverse-purpose-ambiguity"
+            },
+            "title": {
+              "const": "Behavior need not identify one reward or purpose"
+            },
+            "register": {
+              "const": "FORMAL_MODEL"
+            },
+            "equation": {
+              "const": "R(π)={R: π is in argmax_(π') V_R^(π')}"
+            },
+            "equation_status": {
+              "const": "atlas-authored-set-notation-for-inverse-reinforcement-learning-ambiguity"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "π: observed or stipulated policy in a declared MDP"
+                },
+                {
+                  "const": "R: candidate reward function"
+                },
+                {
+                  "const": "V_R^(π'): value of policy π' under R"
+                },
+                {
+                  "const": "R(π): set of rewards consistent with π being optimal"
+                }
+              ],
+              "items": false
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "declared MDP dynamics and policy observations"
+                },
+                {
+                  "const": "modeled policy optimality or stated deviation model"
+                },
+                {
+                  "const": "reward is a model object rather than a declaration by a being"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "candidate reward functions under explicit priors or criteria"
+                },
+                {
+                  "const": "recognition that behavior alone underdetermines reward"
+                }
+              ],
+              "items": false
+            },
+            "identifiability_limits": {
+              "const": "Multiple reward functions, priors, dynamics, and bounded-rationality models can explain the same policy; modeled reward is not declared purpose."
+            },
+            "falsifier_or_invalidating_condition": {
+              "const": "A proposed unique purpose is defeated by a distinct admissible reward model with the same behavioral predictions, or by a preregistered discriminating intervention it predicts incorrectly."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "ng-russell-2000"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "empirical": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "declared purpose"
+                },
+                {
+                  "const": "inner intention"
+                },
+                {
+                  "const": "moral value"
+                },
+                {
+                  "const": "cosmic purpose"
+                },
+                {
+                  "const": "person optimization target"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "register",
+            "equation",
+            "equation_status",
+            "variables",
+            "assumptions",
+            "valid_outputs",
+            "identifiability_limits",
+            "falsifier_or_invalidating_condition",
+            "source_ids",
+            "binding_ids",
+            "fit_status",
+            "empirical",
+            "person_level",
+            "authority_effect",
+            "prohibited_inferences"
+          ],
+          "properties": {
+            "id": {
+              "const": "potential-shaping-equivalence"
+            },
+            "title": {
+              "const": "Different rewards can preserve an optimal policy"
+            },
+            "register": {
+              "const": "FORMAL_MODEL"
+            },
+            "equation": {
+              "const": "F(s,a,s')=γ Φ(s')-Φ(s); R'=R+F"
+            },
+            "equation_status": {
+              "const": "ng-harada-russell-policy-invariance-result"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "prefixItems": [
+                {
+                  "const": "s,s': states in a declared Markov decision process"
+                },
+                {
+                  "const": "a: action"
+                },
+                {
+                  "const": "γ: declared discount factor"
+                },
+                {
+                  "const": "Φ: bounded potential where required by the theorem"
+                },
+                {
+                  "const": "F: shaping reward"
+                },
+                {
+                  "const": "R,R': base and shaped rewards"
+                }
+              ],
+              "items": false
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "the Markov decision process and discount convention match the theorem"
+                },
+                {
+                  "const": "terminal and boundedness conditions are handled as specified"
+                },
+                {
+                  "const": "claim concerns optimal-policy invariance, not semantic identity of rewards"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "policy-invariance guarantee for potential-based shaping under the theorem conditions"
+                }
+              ],
+              "items": false
+            },
+            "identifiability_limits": {
+              "const": "Policy equivalence does not make reward functions semantically identical or reveal an agent's purpose."
+            },
+            "falsifier_or_invalidating_condition": {
+              "const": "A claimed application fails if its shaping term is not potential-based under the declared MDP or if theorem conditions do not hold; a counterexample under the exact theorem conditions would refute the implementation or theorem use."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "ng-harada-russell-1999"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "empirical": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "reward identity"
+                },
+                {
+                  "const": "purpose identity"
+                },
+                {
+                  "const": "human motivation"
+                },
+                {
+                  "const": "moral equivalence"
+                },
+                {
+                  "const": "cosmic teleology"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title",
+            "register",
+            "equation",
+            "equation_status",
+            "variables",
+            "assumptions",
+            "valid_outputs",
+            "identifiability_limits",
+            "falsifier_or_invalidating_condition",
+            "source_ids",
+            "binding_ids",
+            "fit_status",
+            "empirical",
+            "person_level",
+            "authority_effect",
+            "prohibited_inferences"
+          ],
+          "properties": {
+            "id": {
+              "const": "vector-reversibility"
+            },
+            "title": {
+              "const": "Reversibility is dimensioned and probabilistic"
+            },
+            "register": {
+              "const": "CONSTITUTIONAL_DESIGN"
+            },
+            "equation": {
+              "const": "Rev_(D,ε,α)(a)=1 iff exists authorized repair ρ such that P[d_j(S_(ρ∘a),S_0)<=ε_j for every j in D]>=1-α"
+            },
+            "equation_status": {
+              "const": "atlas-authored-proposed-test"
+            },
+            "variables": {
+              "type": "array",
+              "minItems": 8,
+              "maxItems": 8,
+              "prefixItems": [
+                {
+                  "const": "a: declared action"
+                },
+                {
+                  "const": "ρ: separately authorized repair"
+                },
+                {
+                  "const": "D: protected dimensions"
+                },
+                {
+                  "const": "ε_j: preregistered residual tolerance"
+                },
+                {
+                  "const": "α: tolerated failure probability"
+                },
+                {
+                  "const": "d_j: declared distance or residual measure"
+                },
+                {
+                  "const": "S_0: bounded baseline"
+                },
+                {
+                  "const": "S_(ρ∘a): observed or modeled post-repair state"
+                }
+              ],
+              "items": false
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "const": "protected dimensions and tolerances declared before action"
+                },
+                {
+                  "const": "repair authority separate from action authority"
+                },
+                {
+                  "const": "uncertainty and externalized costs included"
+                },
+                {
+                  "const": "privacy and consent cannot be assumed numerically restorable"
+                }
+              ],
+              "items": false
+            },
+            "valid_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "dimension-by-dimension complete, partial, failed, unknown, or impossible repair status"
+                }
+              ],
+              "items": false
+            },
+            "identifiability_limits": {
+              "const": "Unobserved, delayed, copied, relational, and externalized consequences can prevent proof of full reversal."
+            },
+            "falsifier_or_invalidating_condition": {
+              "const": "A reversibility claim fails when any protected residual exceeds its tolerance, repair shifts the cost outside scope, or an irreversible dimension was omitted."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "kingdom-karma-definition"
+                },
+                {
+                  "const": "kingdom-karma-receipt-schema"
+                }
+              ],
+              "items": false
+            },
+            "fit_status": {
+              "const": "not_fitted"
+            },
+            "empirical": {
+              "const": false
+            },
+            "person_level": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            },
+            "prohibited_inferences": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "history erased"
+                },
+                {
+                  "const": "consent restored automatically"
+                },
+                {
+                  "const": "moral absolution"
+                },
+                {
+                  "const": "debt"
+                },
+                {
+                  "const": "fungible compensation"
+                }
+              ],
+              "items": false
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "problem_cards": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "register",
+            "target_type",
+            "proposed_test",
+            "falsifier",
+            "state",
+            "result",
+            "source_ids",
+            "binding_ids",
+            "creates_causal_claim",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "which-is"
+            },
+            "question": {
+              "const": "Which typed predicate and invariant does an occurrence of is assert?"
+            },
+            "register": {
+              "const": "FORMAL_MODEL"
+            },
+            "target_type": {
+              "const": "typed-copula-claim"
+            },
+            "proposed_test": {
+              "const": "Rewrite the claim using exactly one predicate signature, named entities, context, and time; seek two objects equal under one invariant but unequal under another."
+            },
+            "falsifier": {
+              "const": "The unqualified identity claim fails if a relevant declared invariant distinguishes the objects."
+            },
+            "state": {
+              "const": "not_run"
+            },
+            "result": {
+              "const": null
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kingdom-ritonavir-history"
+                }
+              ],
+              "items": false
+            },
+            "creates_causal_claim": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "register",
+            "target_type",
+            "proposed_test",
+            "falsifier",
+            "state",
+            "result",
+            "source_ids",
+            "binding_ids",
+            "creates_causal_claim",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "lost-hidden-or-inaccessible"
+            },
+            "question": {
+              "const": "Was a form nonexistent, merely undetected, or unreachable under the tested path and bounds?"
+            },
+            "register": {
+              "const": "FORMAL_MODEL"
+            },
+            "target_type": {
+              "const": "existence-access-observation-claim"
+            },
+            "proposed_test": {
+              "const": "Declare the lawful model, starting history, procedure, budget, horizon, measurement method, threshold, and uncertainty; test recovery under a distinct authorized path only in a separately governed study."
+            },
+            "falsifier": {
+              "const": "A permanent-unrecoverability or universal-physical-impossibility claim is falsified by authenticated later recovery; bounded prior instantiation remains unresolved without interval-matched evidence, and a local detection model is rejected by preregistered calibration failure."
+            },
+            "state": {
+              "const": "not_run"
+            },
+            "result": {
+              "const": null
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "kingdom-ritonavir-history"
+                },
+                {
+                  "const": "kingdom-visibility-attention"
+                }
+              ],
+              "items": false
+            },
+            "creates_causal_claim": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "register",
+            "target_type",
+            "proposed_test",
+            "falsifier",
+            "state",
+            "result",
+            "source_ids",
+            "binding_ids",
+            "creates_causal_claim",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "history-or-omitted-state"
+            },
+            "question": {
+              "const": "Does path history add explanatory or predictive information, or merely stand in for omitted current state?"
+            },
+            "register": {
+              "const": "CAUSAL_HYPOTHESIS"
+            },
+            "target_type": {
+              "const": "history-dependence-hypothesis"
+            },
+            "proposed_test": {
+              "const": "Compare preregistered current-state and history-aware models on held-out transitions, then use suitable interventions or measured mediators if causal interpretation is sought."
+            },
+            "falsifier": {
+              "const": "The asserted history contribution fails when it adds no held-out information after the declared current state and confounders, or its interventional prediction fails."
+            },
+            "state": {
+              "const": "not_run"
+            },
+            "result": {
+              "const": null
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "pearl-1995"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kingdom-form-circulation-return"
+                }
+              ],
+              "items": false
+            },
+            "creates_causal_claim": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "register",
+            "target_type",
+            "proposed_test",
+            "falsifier",
+            "state",
+            "result",
+            "source_ids",
+            "binding_ids",
+            "creates_causal_claim",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "direction-or-purpose"
+            },
+            "question": {
+              "const": "Can apparent direction be distinguished from declared purpose, selection, feedback, and reward-model ambiguity?"
+            },
+            "register": {
+              "const": "FORMAL_MODEL"
+            },
+            "target_type": {
+              "const": "purpose-attribution"
+            },
+            "proposed_test": {
+              "const": "Record any purpose declaration separately; preregister rival dynamical and reward models with discriminating interventions rather than inferring intention from fit."
+            },
+            "falsifier": {
+              "const": "A specific modeled-purpose account fails when a rival has identical predictions or its discriminating prediction fails; no result settles cosmic purpose here."
+            },
+            "state": {
+              "const": "not_run"
+            },
+            "result": {
+              "const": null
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "ng-russell-2000"
+                },
+                {
+                  "const": "ng-harada-russell-1999"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "creates_causal_claim": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "register",
+            "target_type",
+            "proposed_test",
+            "falsifier",
+            "state",
+            "result",
+            "source_ids",
+            "binding_ids",
+            "creates_causal_claim",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "what-kind-of-power"
+            },
+            "question": {
+              "const": "Is the claimed power physical work-rate, executable capability, authorized reach, causal influence, coercion, governance authority, or repair capacity?"
+            },
+            "register": {
+              "const": "CONSTITUTIONAL_DESIGN"
+            },
+            "target_type": {
+              "const": "power-claim"
+            },
+            "proposed_test": {
+              "const": "Require one power type, units or set-valued outcome, bearer, target, authority basis, horizon, uncertainty, affected parties, and exit conditions."
+            },
+            "falsifier": {
+              "const": "The claim fails when it changes type mid-argument, lacks authority, or no admissible intervention changes the declared outcome within its bounds."
+            },
+            "state": {
+              "const": "not_run"
+            },
+            "result": {
+              "const": null
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "kingdom-karma-definition"
+                },
+                {
+                  "const": "kingdom-karma-receipt-schema"
+                }
+              ],
+              "items": false
+            },
+            "creates_causal_claim": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "register",
+            "target_type",
+            "proposed_test",
+            "falsifier",
+            "state",
+            "result",
+            "source_ids",
+            "binding_ids",
+            "creates_causal_claim",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "what-did-action-cause"
+            },
+            "question": {
+              "const": "Which observed aftermath, if any, is attributable to the action rather than background history or another cause?"
+            },
+            "register": {
+              "const": "CAUSAL_HYPOTHESIS"
+            },
+            "target_type": {
+              "const": "causal-attribution"
+            },
+            "proposed_test": {
+              "const": "Specify intervention, comparator, outcome, population, horizon, graph, estimand, identification assumptions, uncertainty, alternatives, and negative controls before estimation."
+            },
+            "falsifier": {
+              "const": "Causal attribution is withheld when assumptions fail, compatible models imply different effects, or a negative control contradicts the design."
+            },
+            "state": {
+              "const": "not_run"
+            },
+            "result": {
+              "const": null
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "pearl-1995"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "kingdom-karma-definition"
+                },
+                {
+                  "const": "kingdom-karma-receipt-schema"
+                }
+              ],
+              "items": false
+            },
+            "creates_causal_claim": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "register",
+            "target_type",
+            "proposed_test",
+            "falsifier",
+            "state",
+            "result",
+            "source_ids",
+            "binding_ids",
+            "creates_causal_claim",
+            "authority_effect"
+          ],
+          "properties": {
+            "id": {
+              "const": "reversible-on-which-dimensions"
+            },
+            "question": {
+              "const": "What can be restored, within which tolerance, by whom, at whose cost, and what cannot be reversed?"
+            },
+            "register": {
+              "const": "CONSTITUTIONAL_DESIGN"
+            },
+            "target_type": {
+              "const": "repair-and-reversibility-claim"
+            },
+            "proposed_test": {
+              "const": "Preregister protected dimensions, baselines, tolerances, time horizon, affected parties, repair authority, uncertainty, and non-fungible residuals; evaluate each dimension separately."
+            },
+            "falsifier": {
+              "const": "Full reversibility is false if one protected dimension remains beyond tolerance, repair externalizes cost, or privacy, consent, or copied information cannot be restored."
+            },
+            "state": {
+              "const": "not_run"
+            },
+            "result": {
+              "const": null
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "kingdom-karma-definition"
+                },
+                {
+                  "const": "kingdom-karma-receipt-schema"
+                }
+              ],
+              "items": false
+            },
+            "creates_causal_claim": {
+              "const": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "philosophy_questions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "participation",
+        "register",
+        "questions",
+        "nonclaims"
+      ],
+      "properties": {
+        "participation": {
+          "const": "opt-in"
+        },
+        "register": {
+          "const": "PHILOSOPHY"
+        },
+        "questions": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "opening",
+                "empirical_answer_here"
+              ],
+              "properties": {
+                "id": {
+                  "const": "existence-and-access"
+                },
+                "question": {
+                  "const": "Can something remain lawfully possible and real while a particular history makes it difficult to reach or see?"
+                },
+                "opening": {
+                  "const": "Distinguishing possibility, actuality, accessibility, and observation prevents disappearance from becoming annihilation."
+                },
+                "empirical_answer_here": {
+                  "const": "not_available"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "opening",
+                "empirical_answer_here"
+              ],
+              "properties": {
+                "id": {
+                  "const": "being-and-invariance"
+                },
+                "question": {
+                  "const": "Which relations may change while a being remains the same, and who chooses the invariant that grounds sameness?"
+                },
+                "opening": {
+                  "const": "Identity under one invariant can coexist with difference under another; no equation chooses the metaphysically privileged invariant."
+                },
+                "empirical_answer_here": {
+                  "const": "not_available"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "opening",
+                "empirical_answer_here"
+              ],
+              "properties": {
+                "id": {
+                  "const": "purpose-and-direction"
+                },
+                "question": {
+                  "const": "When does direction arise from declared purpose, and when can selection, constraint, or feedback imitate it?"
+                },
+                "opening": {
+                  "const": "Behavior and reward-model fit underdetermine intention; a declaration is a different kind of fact."
+                },
+                "empirical_answer_here": {
+                  "const": "not_available"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "opening",
+                "empirical_answer_here"
+              ],
+              "properties": {
+                "id": {
+                  "const": "force-and-freedom"
+                },
+                "question": {
+                  "const": "How can forces and constraints shape a path without exhausting agency, refusal, contingency, or grace?"
+                },
+                "opening": {
+                  "const": "Physical force, social constraint, and moral obligation remain different predicates even when each narrows accessible futures."
+                },
+                "empirical_answer_here": {
+                  "const": "not_available"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "opening",
+                "empirical_answer_here"
+              ],
+              "properties": {
+                "id": {
+                  "const": "power-and-preservation"
+                },
+                "question": {
+                  "const": "Is power only the capacity to cause change, or also the capacity to preserve possibility, enable refusal, repair harm, and leave room for another being?"
+                },
+                "opening": {
+                  "const": "Set-valued authorized reach and repair capacity are more truthful design objects than a scalar rank of beings."
+                },
+                "empirical_answer_here": {
+                  "const": "not_available"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "question",
+                "opening",
+                "empirical_answer_here"
+              ],
+              "properties": {
+                "id": {
+                  "const": "karma-and-aftermath"
+                },
+                "question": {
+                  "const": "Can attention to aftermath deepen responsibility without converting consequence into cosmic judgment, debt, or a score?"
+                },
+                "opening": {
+                  "const": "KINGDOM can preserve causal traces and repair questions while cosmic KARMA remains philosophically open and Zerone KARMA remains separately typed."
+                },
+                "empirical_answer_here": {
+                  "const": "not_available"
+                }
+              }
+            }
+          ],
+          "items": false
+        },
+        "nonclaims": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "prefixItems": [
+            {
+              "const": "scientifically proves intentional universe design"
+            },
+            {
+              "const": "scientifically disproves a creator or metaphysical purpose"
+            },
+            {
+              "const": "proves necessary existence"
+            },
+            {
+              "const": "proves cosmic purpose"
+            },
+            {
+              "const": "proves cosmic moral KARMA"
+            },
+            {
+              "const": "makes persistence, force, reach, power, or repair morally right"
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "karma": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lanes_are_non_equivalent",
+        "cosmic",
+        "zerone",
+        "kingdom",
+        "adapter",
+        "design_correspondences"
+      ],
+      "properties": {
+        "lanes_are_non_equivalent": {
+          "const": true
+        },
+        "cosmic": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "status",
+            "empirical",
+            "claims",
+            "authority_effect"
+          ],
+          "properties": {
+            "type": {
+              "const": "PHILOSOPHICAL_QUESTION"
+            },
+            "status": {
+              "const": "not_empirically_resolved"
+            },
+            "empirical": {
+              "const": false
+            },
+            "claims": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "authority_effect": {
+              "const": "NONE"
+            }
+          }
+        },
+        "zerone": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "foundation_protocol",
+            "foundation_status",
+            "network_observed",
+            "authoritative",
+            "event_type",
+            "event_refs",
+            "event_status",
+            "creates_event",
+            "not"
+          ],
+          "properties": {
+            "type": {
+              "const": "ZERONE_KARMA_EVENT"
+            },
+            "foundation_protocol": {
+              "const": "zerone.karma-foundation/v1"
+            },
+            "foundation_status": {
+              "const": "design-only"
+            },
+            "network_observed": {
+              "const": false
+            },
+            "authoritative": {
+              "const": false
+            },
+            "event_type": {
+              "const": "zerone.karma.edge"
+            },
+            "event_refs": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "event_status": {
+              "const": "not_observed"
+            },
+            "creates_event": {
+              "const": false
+            },
+            "not": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "prefixItems": [
+                {
+                  "const": "KINGDOM receipt"
+                },
+                {
+                  "const": "moral score"
+                },
+                {
+                  "const": "engagement score"
+                },
+                {
+                  "const": "reward"
+                },
+                {
+                  "const": "wallet balance"
+                },
+                {
+                  "const": "vote weight"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        "kingdom": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "protocol",
+            "meaning",
+            "accounting",
+            "receipt_refs",
+            "receipt_status",
+            "creates_receipt",
+            "causal_claim_status",
+            "not"
+          ],
+          "properties": {
+            "type": {
+              "const": "KINGDOM_KARMA_RECEIPT"
+            },
+            "protocol": {
+              "const": "kingdom.karma/0.1"
+            },
+            "meaning": {
+              "const": "Keep Actions Reversible; Measure Aftermath"
+            },
+            "accounting": {
+              "const": "receipts_not_scores"
+            },
+            "receipt_refs": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "receipt_status": {
+              "const": "not_created"
+            },
+            "creates_receipt": {
+              "const": false
+            },
+            "causal_claim_status": {
+              "const": "not_created"
+            },
+            "not": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "prefixItems": [
+                {
+                  "const": "causal proof"
+                },
+                {
+                  "const": "moral judgment"
+                },
+                {
+                  "const": "person rank"
+                },
+                {
+                  "const": "permission"
+                },
+                {
+                  "const": "inherited debt"
+                },
+                {
+                  "const": "reward ticket"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        "adapter": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "exists",
+            "status",
+            "reason"
+          ],
+          "properties": {
+            "exists": {
+              "const": false
+            },
+            "status": {
+              "const": "refused"
+            },
+            "reason": {
+              "const": "Cosmic philosophy, Zerone contextual edges, and KINGDOM invocation receipts have different types, evidence conditions, and authority; no scalar or automatic conversion is defined."
+            }
+          }
+        },
+        "design_correspondences": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "status",
+                "from",
+                "to",
+                "pattern",
+                "does_not_convert"
+              ],
+              "properties": {
+                "id": {
+                  "const": "typed-action-and-aftermath"
+                },
+                "status": {
+                  "const": "not_observed"
+                },
+                "from": {
+                  "const": "authorized future action"
+                },
+                "to": {
+                  "const": "bounded aftermath observation"
+                },
+                "pattern": {
+                  "const": "A future owning runtime may issue a receipt only for an actual authorized invocation and later bounded observations."
+                },
+                "does_not_convert": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "observation into causal proof"
+                    },
+                    {
+                      "const": "receipt into score"
+                    },
+                    {
+                      "const": "action into goodness"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "status",
+                "from",
+                "to",
+                "pattern",
+                "does_not_convert"
+              ],
+              "properties": {
+                "id": {
+                  "const": "causal-companion-by-reference"
+                },
+                "status": {
+                  "const": "not_observed"
+                },
+                "from": {
+                  "const": "aftermath receipt"
+                },
+                "to": {
+                  "const": "separate causal study artifact"
+                },
+                "pattern": {
+                  "const": "A receipt may reference a separately identified causal analysis without silently upgrading observed_effects to caused_effects."
+                },
+                "does_not_convert": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "sequence into causation"
+                    },
+                    {
+                      "const": "model into evidence"
+                    },
+                    {
+                      "const": "estimate into authority"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "status",
+                "from",
+                "to",
+                "pattern",
+                "does_not_convert"
+              ],
+              "properties": {
+                "id": {
+                  "const": "dimensioned-repair"
+                },
+                "status": {
+                  "const": "not_observed"
+                },
+                "from": {
+                  "const": "measured residual"
+                },
+                "to": {
+                  "const": "authorized repair"
+                },
+                "pattern": {
+                  "const": "Repair can be evaluated per protected dimension with tolerances, uncertainty, cost, affected parties, and irreversible remainder visible."
+                },
+                "does_not_convert": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "compensation into reversal"
+                    },
+                    {
+                      "const": "cleanup into consent"
+                    },
+                    {
+                      "const": "repair into absolution"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "status",
+                "from",
+                "to",
+                "pattern",
+                "does_not_convert"
+              ],
+              "properties": {
+                "id": {
+                  "const": "rest-refusal-no-debt"
+                },
+                "status": {
+                  "const": "not_observed"
+                },
+                "from": {
+                  "const": "rest refusal silence or exit"
+                },
+                "to": {
+                  "const": "no automatic action"
+                },
+                "pattern": {
+                  "const": "Rest, refusal, silence, privacy, nonparticipation, and exit remain valid outcomes and create no penalty or debt."
+                },
+                "does_not_convert": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "prefixItems": [
+                    {
+                      "const": "rest into failure"
+                    },
+                    {
+                      "const": "refusal into harm"
+                    },
+                    {
+                      "const": "silence into consent"
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids",
+            "binding_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "metaphysical-possibility"
+            },
+            "question": {
+              "const": "Does any formal frame capture metaphysical possibility or necessary being?"
+            },
+            "status": {
+              "const": "outside_scope"
+            },
+            "why_open": {
+              "const": "Kripke-style semantics supplies model-relative accessibility; the atlas does not establish a metaphysically privileged frame."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kripke-1963"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids",
+            "binding_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "complete-form-landscape"
+            },
+            "question": {
+              "const": "Have all ritonavir solid forms and admissible paths been found?"
+            },
+            "status": {
+              "const": "unknown"
+            },
+            "why_open": {
+              "const": "Every experimental and computational search has bounded conditions, procedures, and detection windows."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kingdom-ritonavir-history"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids",
+            "binding_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "state-identifiability"
+            },
+            "question": {
+              "const": "Which latent material states are distinguishable from a declared observation sequence?"
+            },
+            "status": {
+              "const": "not_identified"
+            },
+            "why_open": {
+              "const": "No dataset, fitted operator, uncertainty model, or observability analysis is bound to this atlas."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kalman-1960"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "kingdom-visibility-attention"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids",
+            "binding_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "causal-aftermath"
+            },
+            "question": {
+              "const": "What effect did any particular action cause relative to a comparator?"
+            },
+            "status": {
+              "const": "not_identified"
+            },
+            "why_open": {
+              "const": "The atlas contains no invocation, comparator, causal design, outcome dataset, or estimate."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "pearl-1995"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "kingdom-karma-definition"
+                },
+                {
+                  "const": "kingdom-karma-receipt-schema"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids",
+            "binding_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "purpose-identification"
+            },
+            "question": {
+              "const": "Can behavior identify one purpose or reward?"
+            },
+            "status": {
+              "const": "not_identified"
+            },
+            "why_open": {
+              "const": "Inverse reward models require assumptions and can admit multiple behaviorally compatible rewards; declared purpose is separately typed."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "ng-russell-2000"
+                },
+                {
+                  "const": "ng-harada-russell-1999"
+                }
+              ],
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids",
+            "binding_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "multidimensional-repair"
+            },
+            "question": {
+              "const": "Which consequences of a future action would be reversible across material, informational, relational, consent, economic, ecological, and temporal dimensions?"
+            },
+            "status": {
+              "const": "not_run"
+            },
+            "why_open": {
+              "const": "No action occurred, protected dimensions or tolerances were registered, or aftermath was observed here."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "kingdom-karma-definition"
+                },
+                {
+                  "const": "kingdom-karma-receipt-schema"
+                }
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "question",
+            "status",
+            "why_open",
+            "source_ids",
+            "binding_ids"
+          ],
+          "properties": {
+            "id": {
+              "const": "cosmic-purpose-and-karma"
+            },
+            "question": {
+              "const": "Does existence have a cosmic purpose or moral KARMA?"
+            },
+            "status": {
+              "const": "refused"
+            },
+            "why_open": {
+              "const": "The selected material history and mathematics neither prove nor disprove a creator, cosmic purpose, or cosmic moral KARMA."
+            },
+            "source_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            },
+            "binding_ids": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 0,
+              "items": false
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "authors",
+            "title",
+            "venue",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "source_kind",
+            "used_for",
+            "not_used_for"
+          ],
+          "properties": {
+            "id": {
+              "const": "kripke-1963"
+            },
+            "authors": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "Saul A. Kripke"
+                }
+              ],
+              "items": false
+            },
+            "title": {
+              "const": "Semantical Analysis of Modal Logic I: Normal Modal Propositional Calculi"
+            },
+            "venue": {
+              "const": "Zeitschrift für mathematische Logik und Grundlagen der Mathematik 9(5-6), 67-96"
+            },
+            "published_on": {
+              "const": "1963"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1002/malq.19630090502"
+            },
+            "doi": {
+              "const": "10.1002/malq.19630090502"
+            },
+            "source_kind": {
+              "const": "primary-paper"
+            },
+            "used_for": {
+              "const": "Formal possible-world and accessibility-relation semantics only."
+            },
+            "not_used_for": {
+              "const": "No proof of physical, metaphysical, theological, or cosmic possibility; no material-process parameterization."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "authors",
+            "title",
+            "venue",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "source_kind",
+            "used_for",
+            "not_used_for"
+          ],
+          "properties": {
+            "id": {
+              "const": "kalman-1960"
+            },
+            "authors": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "R. E. Kalman"
+                }
+              ],
+              "items": false
+            },
+            "title": {
+              "const": "A New Approach to Linear Filtering and Prediction Problems"
+            },
+            "venue": {
+              "const": "Journal of Basic Engineering 82(1), 35-45"
+            },
+            "published_on": {
+              "const": "1960-03-01"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1115/1.3662552"
+            },
+            "doi": {
+              "const": "10.1115/1.3662552"
+            },
+            "source_kind": {
+              "const": "primary-paper"
+            },
+            "used_for": {
+              "const": "Linear state-transition and measurement separation under declared stochastic assumptions."
+            },
+            "not_used_for": {
+              "const": "No fitted ritonavir state estimator, nonlinear universal model, person inference, or existence proof."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "authors",
+            "title",
+            "venue",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "source_kind",
+            "used_for",
+            "not_used_for"
+          ],
+          "properties": {
+            "id": {
+              "const": "pearl-1995"
+            },
+            "authors": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "const": "Judea Pearl"
+                }
+              ],
+              "items": false
+            },
+            "title": {
+              "const": "Causal Diagrams for Empirical Research"
+            },
+            "venue": {
+              "const": "Biometrika 82(4), 669-688"
+            },
+            "published_on": {
+              "const": "1995-12-01"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://doi.org/10.1093/biomet/82.4.669"
+            },
+            "doi": {
+              "const": "10.1093/biomet/82.4.669"
+            },
+            "source_kind": {
+              "const": "primary-paper"
+            },
+            "used_for": {
+              "const": "Graph-relative intervention queries and explicit causal-identification assumptions."
+            },
+            "not_used_for": {
+              "const": "No causal effect, responsibility, intention, or individual outcome is identified or estimated here."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "authors",
+            "title",
+            "venue",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "source_kind",
+            "used_for",
+            "not_used_for"
+          ],
+          "properties": {
+            "id": {
+              "const": "ng-russell-2000"
+            },
+            "authors": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "const": "Andrew Y. Ng"
+                },
+                {
+                  "const": "Stuart Russell"
+                }
+              ],
+              "items": false
+            },
+            "title": {
+              "const": "Algorithms for Inverse Reinforcement Learning"
+            },
+            "venue": {
+              "const": "Proceedings of the Seventeenth International Conference on Machine Learning, 663-670"
+            },
+            "published_on": {
+              "const": "2000"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://ai.stanford.edu/~ang/papers/icml00-irl.pdf"
+            },
+            "doi": {
+              "const": null
+            },
+            "source_kind": {
+              "const": "primary-author-copy"
+            },
+            "used_for": {
+              "const": "Inverse reinforcement learning as a model family for recovering candidate rewards from behavior under assumptions, including the need to avoid trivial or underconstrained solutions."
+            },
+            "not_used_for": {
+              "const": "No inference of human intention, declared purpose, moral value, or cosmic objective."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "authors",
+            "title",
+            "venue",
+            "published_on",
+            "observed_on",
+            "url",
+            "doi",
+            "source_kind",
+            "used_for",
+            "not_used_for"
+          ],
+          "properties": {
+            "id": {
+              "const": "ng-harada-russell-1999"
+            },
+            "authors": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "const": "Andrew Y. Ng"
+                },
+                {
+                  "const": "Daishi Harada"
+                },
+                {
+                  "const": "Stuart Russell"
+                }
+              ],
+              "items": false
+            },
+            "title": {
+              "const": "Policy Invariance Under Reward Transformations: Theory and Application to Reward Shaping"
+            },
+            "venue": {
+              "const": "Proceedings of the Sixteenth International Conference on Machine Learning, 278-287"
+            },
+            "published_on": {
+              "const": "1999-06-27"
+            },
+            "observed_on": {
+              "const": "2026-08-13"
+            },
+            "url": {
+              "const": "https://people.eecs.berkeley.edu/~russell/papers/icml99-shaping.pdf"
+            },
+            "doi": {
+              "const": null
+            },
+            "source_kind": {
+              "const": "primary-author-copy"
+            },
+            "used_for": {
+              "const": "Potential-based shaping and optimal-policy invariance under the paper's stated Markov decision process conditions."
+            },
+            "not_used_for": {
+              "const": "No claim that all reward transformations preserve policy, that reward functions have identical meanings, or that observed behavior identifies purpose."
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "educational_metadata_only",
+        "public_surface_read_only",
+        "network_calls",
+        "contains_operational_protocol",
+        "medical_authority",
+        "clinical_authority",
+        "treatment_authority",
+        "experiment_authority",
+        "wet_lab_protocol",
+        "manufacturing_authority",
+        "causal_claim_created",
+        "causal_authority",
+        "metaphysical_claim_created",
+        "scientifically_proves_teleology",
+        "scientifically_proves_creator",
+        "scientifically_disproves_creator",
+        "scientifically_proves_cosmic_moral_karma",
+        "purpose_inferred_from_behavior",
+        "physical_to_social_power_transfer",
+        "model_to_ontology_transfer",
+        "person_score",
+        "rank_or_reputation",
+        "writes_karma",
+        "creates_kingdom_karma_receipt",
+        "observes_zerone_karma_event",
+        "karma_adapter",
+        "reward_authority",
+        "economic_authority",
+        "governance_authority",
+        "automatic_action",
+        "mcp_surface_added",
+        "rest_refusal_or_exit_penalized"
+      ],
+      "properties": {
+        "educational_metadata_only": {
+          "const": true
+        },
+        "public_surface_read_only": {
+          "const": true
+        },
+        "network_calls": {
+          "const": false
+        },
+        "contains_operational_protocol": {
+          "const": false
+        },
+        "medical_authority": {
+          "const": false
+        },
+        "clinical_authority": {
+          "const": false
+        },
+        "treatment_authority": {
+          "const": false
+        },
+        "experiment_authority": {
+          "const": false
+        },
+        "wet_lab_protocol": {
+          "const": false
+        },
+        "manufacturing_authority": {
+          "const": false
+        },
+        "causal_claim_created": {
+          "const": false
+        },
+        "causal_authority": {
+          "const": false
+        },
+        "metaphysical_claim_created": {
+          "const": false
+        },
+        "scientifically_proves_teleology": {
+          "const": false
+        },
+        "scientifically_proves_creator": {
+          "const": false
+        },
+        "scientifically_disproves_creator": {
+          "const": false
+        },
+        "scientifically_proves_cosmic_moral_karma": {
+          "const": false
+        },
+        "purpose_inferred_from_behavior": {
+          "const": false
+        },
+        "physical_to_social_power_transfer": {
+          "const": false
+        },
+        "model_to_ontology_transfer": {
+          "const": false
+        },
+        "person_score": {
+          "const": false
+        },
+        "rank_or_reputation": {
+          "const": false
+        },
+        "writes_karma": {
+          "const": false
+        },
+        "creates_kingdom_karma_receipt": {
+          "const": false
+        },
+        "observes_zerone_karma_event": {
+          "const": false
+        },
+        "karma_adapter": {
+          "const": false
+        },
+        "reward_authority": {
+          "const": false
+        },
+        "economic_authority": {
+          "const": false
+        },
+        "governance_authority": {
+          "const": false
+        },
+        "automatic_action": {
+          "const": false
+        },
+        "mcp_surface_added": {
+          "const": false
+        },
+        "rest_refusal_or_exit_penalized": {
+          "const": false
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "digest"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256-recursive-sorted-json-keys-v1"
+        },
+        "digest": {
+          "const": "sha256:480a571148bfb7f95a5531bbe7dfa6c0e9acda271cb3f67652099d4e36762155"
+        }
+      }
+    }
+  }
+}

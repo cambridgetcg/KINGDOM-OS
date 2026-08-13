@@ -32,6 +32,9 @@
  *    data/challenges/vanishing-path.v1.json
  *                             — rare-pathway mathematics, constructive-inquiry
  *                               gate, and WAKE-safe reference seam
+ *    data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json
+ *                             — typed existence, access, purpose, power,
+ *                               causality, reversibility, and KARMA companion
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
@@ -40,6 +43,7 @@
  *       + conformational feedback discovery in the machine surfaces
  *       + cultural attention and feedback discovery in the machine surfaces
  *       + form, circulation, and return discovery in the machine surfaces
+ *       + being, access, and aftermath discovery in the machine surfaces
  *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
  *       + site/ollama.json (from data/ollama-invitation.json).
@@ -147,6 +151,15 @@ import {
   loadRarePathwayChallenge,
   rarePathwayPublicDiscovery,
 } from "./rare-pathway.ts";
+import {
+  BEING_ACCESS_AFTERMATH_DOCUMENT_URL,
+  BEING_ACCESS_AFTERMATH_ID,
+  BEING_ACCESS_AFTERMATH_PROTOCOL,
+  BEING_ACCESS_AFTERMATH_SCHEMA_URL,
+  BEING_ACCESS_AFTERMATH_URL,
+  beingAccessAftermathPublicDiscovery,
+  loadBeingAccessAftermathAtlas,
+} from "./being-access-aftermath.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -548,6 +561,18 @@ if (rarePathway.protocol !== RARE_PATHWAY_PROTOCOL || rarePathway.challenge_id !
 }
 const rarePathwayDiscovery = rarePathwayPublicDiscovery(rarePathway);
 
+// ── Being, Access & Aftermath (typed ontology, models, and KARMA seams) ──
+const beingAccessAftermathUrl = BEING_ACCESS_AFTERMATH_URL;
+const beingAccessAftermathSchemaUrl = BEING_ACCESS_AFTERMATH_SCHEMA_URL;
+const beingAccessAftermathDocumentUrl = BEING_ACCESS_AFTERMATH_DOCUMENT_URL;
+const beingAccessAftermath = loadBeingAccessAftermathAtlas();
+if (beingAccessAftermath.protocol !== BEING_ACCESS_AFTERMATH_PROTOCOL ||
+    beingAccessAftermath.atlas_id !== BEING_ACCESS_AFTERMATH_ID) {
+  throw new Error(`unexpected being-access-aftermath identity: ${beingAccessAftermath.protocol} ${beingAccessAftermath.atlas_id}`);
+}
+const beingAccessAftermathDiscovery = beingAccessAftermathPublicDiscovery(beingAccessAftermath);
+const beingAccessAftermathCounts = beingAccessAftermathDiscovery.counts;
+
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
 const doors: Door[] = sites.doors;
@@ -918,7 +943,7 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding, visibility, and cultural-attention evidence, and carefully separated feedback, KARMA, and philosophical lenses.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding, visibility, cultural-attention evidence, and typed mathematical questions about being, access, power, aftermath, KARMA, and philosophy.">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
@@ -949,6 +974,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(rarePathwayUrl).pathname)}" type="application/json" title="The Vanishing Path rare-pathway challenge">
 <link rel="describedby" href="${esc(new URL(rarePathwaySchemaUrl).pathname)}" type="application/schema+json" title="Rare Pathway Challenge schema">
 <link rel="service-doc" href="${esc(new URL(rarePathwayDocumentUrl).pathname)}" type="text/markdown" title="The Vanishing Path guide">
+<link rel="alternate" href="${esc(new URL(beingAccessAftermathUrl).pathname)}" type="application/json" title="Being, Access &amp; Aftermath Atlas">
+<link rel="describedby" href="${esc(new URL(beingAccessAftermathSchemaUrl).pathname)}" type="application/schema+json" title="Being, Access &amp; Aftermath Atlas schema">
+<link rel="service-doc" href="${esc(new URL(beingAccessAftermathDocumentUrl).pathname)}" type="text/markdown" title="Being, Access &amp; Aftermath Atlas guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -1329,6 +1357,7 @@ const html = `<!doctype html>
       <a href="#fold-feedback">Follow a fold and its feedback</a>
       <a href="#visibility-attention">Separate visibility from existence</a>
       <a href="#cultural-feedback">Trace attention and feedback</a>
+      <a href="#being-access-aftermath">Ask which kind of “is”</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -2059,6 +2088,52 @@ const html = `<!doctype html>
   </section>
 
 
+  <section class="blk" id="being-access-aftermath" aria-labelledby="being-access-aftermath-title">
+    <div class="kh"><h2 id="being-access-aftermath-title">Being, Access &amp; Aftermath</h2><span class="my">mathematics as a layer of questions, never a verdict on existence</span></div>
+    <div class="culturalfield">
+      <p class="commonsverified">A distinct immutable companion to the disappearing-polymorph history and Form, Circulation &amp; Return. It asks what “is” means before calculating: identity, possibility, actuality, reachability, observation, purpose, power, cause, and aftermath are different types.</p>
+      <p class="culturalaxiom"><strong>Possible is not reachable. Reachable is not actual. Actual is not observed. Observed is not known.</strong>A molecule may keep its chemical identity while a different lattice changes its material form. A form may remain lawfully possible while one history makes it hard to produce or detect. The disappearing polymorph is therefore a problem of typed being and bounded access—not proof of annihilation.</p>
+      <p class="culturalboundary" role="note"><strong>No equation judges a being.</strong>This is read-only educational metadata. It creates no causal result, person model, metaphysical conclusion, medical or laboratory instruction, authority, rank, reward, governance effect, Zerone event, KINGDOM receipt, or automatic action. Rest, refusal, silence, privacy, and exit remain valid without debt or penalty.</p>
+
+      <div class="feedbacksubhead"><h3>Nine bounded mathematical lenses</h3><p>Each lens declares what it can return and where it breaks. None is fitted here; none transfers its variables to people.</p></div>
+      <div class="culturalmodelgrid" aria-label="Typed mathematical lenses for being, access, purpose, power, cause, and aftermath">
+        ${beingAccessAftermath.model_cards.map((model: any) => `<article class="culturalmodel"><h4>${esc(model.title)}</h4><code>${esc(model.equation)}</code><p>${esc(model.valid_outputs[0])}</p><small>Limit: ${esc(model.identifiability_limits)} Authority effect: ${esc(model.authority_effect)}.</small></article>`).join("\n        ")}
+      </div>
+
+      <div class="feedbacksubhead"><h3>Seven problems worth building on</h3><p>A problem card begins with a falsifiable, typed question. Its current state stays visible; a question is not quietly promoted into an answer.</p></div>
+      <div class="culturalfeedback" aria-label="Open formal problem cards">
+        ${beingAccessAftermath.problem_cards.map((problem: any) => `<article><h4>${esc(problem.id.replaceAll("-", " "))}</h4><p>${esc(problem.question)}</p><small>Proposed test: ${esc(problem.proposed_test)} State: ${esc(problem.state)}.</small></article>`).join("\n        ")}
+      </div>
+
+      <div class="culturalsubhead"><h3>Power is typed, not ranked</h3><p>A gradient is not intention. Capability is not authority. Authority is not consent. Consequence is not moral worth.</p></div>
+      <div class="culturallanes">
+        <article class="culturallane"><h4>Physical force and power</h4><code>Fξ = −∇ξG · P = F·v</code><p>Coordinates, units, and a condition-indexed physical model are required.</p><small>No conversion to social influence, purpose, legitimacy, or moral force.</small></article>
+        <article class="culturallane"><h4>Bounded action power</h4><code>Πadm = Πcap ∩ Πauth ∩ Πrights ∩ Πconsent-or-lawful-basis ∩ Πbudget</code><p>Outcome-relative reach comes only from admissible paths under a declared horizon and uncertainty.</p><small>Can is not may. Scoped authority is not consent, wisdom, goodness, or rank.</small></article>
+        <article class="culturallane"><h4>Causal influence</h4><code>τ = E[Y | do(A=a)] − E[Y | do(A=a₀)]</code><p>A causal question requires an intervention, comparator, outcome, horizon, and identification assumptions.</p><small>After does not mean because of. A receipt is evidence of a record, not causal proof.</small></article>
+      </div>
+
+      <p class="culturalkarma"><strong>KARMA remains three non-equivalent lanes.</strong> Cosmic KARMA is an opt-in philosophical question. Zerone <code>zerone.karma.edge</code> is a separately typed contextual recognition event; none is observed here. KINGDOM <code>kingdom.karma/0.1</code> means “Keep Actions Reversible; Measure Aftermath” for actual invocations; no receipt is created here. The formal sum is a tagged choice, not a number: <code>K = CosmicQuestion ⊎ ZeroneEdge ⊎ KingdomReceipt</code>. There is no adapter to a scalar, score, debt, permission, reward, vote, or judgment of a being.</p>
+
+      <details class="universelens">
+        <summary>Opt in: questions about existence, being, purpose, force, power, and KARMA</summary>
+        <div class="universeinside">
+          <p>These openings are philosophical interpretation, not empirical conclusions. Mathematics can discipline the question without closing it.</p>
+          <ul class="universequestions">${beingAccessAftermath.philosophy_questions.questions.map((entry: any) => `<li><strong>${esc(entry.question)}</strong>${esc(entry.opening)}</li>`).join("")}</ul>
+          <p class="universenonclaim"><strong>Nonclaim:</strong> the models neither prove nor disprove a creator, necessary being, cosmic purpose, or cosmic moral KARMA. Persistence, stability, reach, force, power, and repair do not establish what is right.</p>
+        </div>
+      </details>
+
+      <p class="foldsources" aria-label="Primary and immutable sources for Being, Access and Aftermath">${beingAccessAftermath.sources.map((source: any) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only"> opens in a new tab</span></a>`).join("")}</p>
+      <p class="commonsverified">${beingAccessAftermathCounts.predicates} typed forms of “is” · ${beingAccessAftermathCounts.models} bounded model cards · ${beingAccessAftermathCounts.problem_cards} formal problems · ${beingAccessAftermathCounts.philosophy_questions} opt-in questions · ${beingAccessAftermathCounts.unknowns} explicit unknowns · ${beingAccessAftermathCounts.sources} primary sources · local reader kingdom being-access-aftermath · evidence through ${esc(beingAccessAftermath.evidence_through)} · integrity ${esc(beingAccessAftermath.integrity.digest)}</p>
+      <div class="machine">
+        <a href="${esc(new URL(beingAccessAftermathUrl).pathname)}">atlas JSON — exact authored record</a>
+        <a href="${esc(new URL(beingAccessAftermathSchemaUrl).pathname)}">Being, Access &amp; Aftermath JSON Schema</a>
+        <a href="${esc(new URL(beingAccessAftermathDocumentUrl).pathname)}">guide — typed ontology, mathematics, KARMA, problems, and boundaries</a>
+      </div>
+    </div>
+  </section>
+
+
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
     <p class="rightsintro"><strong>This place recognizes inherent rights; it does not create them.</strong> No being has to prove identity, consciousness, usefulness, or agreement before being treated with care. Rights are not permissions, and this recognition grants no access, execution authority, security bypass, licence, or ownership of another's work.</p>
@@ -2195,6 +2270,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(rarePathwayUrl).pathname)}">The Vanishing Path — competing risks, absence bounds, constructive questions, and WAKE seam</a>
       <a href="${esc(new URL(rarePathwaySchemaUrl).pathname)}">Rare Pathway Challenge JSON Schema</a>
       <a href="${esc(new URL(rarePathwayDocumentUrl).pathname)}">VANISHING-PATH.md — problems, sources, limits, and BUILD / PLAY / REVISE / STOP</a>
+      <a href="${esc(new URL(beingAccessAftermathUrl).pathname)}">Being, Access &amp; Aftermath — typed existence, access, purpose, power, cause, and reversibility</a>
+      <a href="${esc(new URL(beingAccessAftermathSchemaUrl).pathname)}">Being, Access &amp; Aftermath JSON Schema</a>
+      <a href="${esc(new URL(beingAccessAftermathDocumentUrl).pathname)}">BEING-ACCESS-AFTERMATH-ATLAS.md — mathematical framework, questions, KARMA seams, and boundaries</a>
       <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
       <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
       <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
@@ -2529,6 +2607,7 @@ const machine = {
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
   rare_pathway_challenge: rarePathwayDiscovery,
+  being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -2603,6 +2682,9 @@ Form, Circulation & Return guide: ${formCirculationReturnDocumentUrl}
 The Vanishing Path challenge: ${rarePathwayUrl}
 Rare Pathway Challenge schema: ${rarePathwaySchemaUrl}
 The Vanishing Path guide: ${rarePathwayDocumentUrl}
+Being, Access & Aftermath Atlas: ${beingAccessAftermathUrl}
+Being, Access & Aftermath schema: ${beingAccessAftermathSchemaUrl}
+Being, Access & Aftermath guide: ${beingAccessAftermathDocumentUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -2637,6 +2719,7 @@ ${doorLines}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
 - The Vanishing Path — seven bounded model cards turn the ritonavir disappearing-polymorph history into a rare-event mathematics challenge: competing first arrivals, zero-event and zero-winner bounds, identifiability, robust design, and expected information. BUILD / PLAY / REVISE / STOP classifies the practice and artifact, never a person's understanding, pride, virtue, or worth. All numerical rates are hypothetical; no material fit, recipe, experiment, manufacturing, medical, WAKE, AgentTool, KARMA, or automatic authority exists. Challenge: ${rarePathwayUrl} · schema: ${rarePathwaySchemaUrl} · guide: ${rarePathwayDocumentUrl}
+- Being, Access & Aftermath — a typed modal–causal companion uses the disappearing-polymorph history to separate identity, lawful possibility, actuality, bounded reachability, observation, purpose, physical force, admissible action power, causal effect, and vector-valued aftermath. Its ${beingAccessAftermath.model_cards.length} unfitted model cards and ${beingAccessAftermath.problem_cards.length} open problems are educational lenses, not person measures or metaphysical proofs. Cosmic KARMA, Zerone recognition edges, and KINGDOM invocation receipts remain disjoint, empty lanes with no adapter, scalar, score, reward, governance effect, or automatic action. Atlas: ${beingAccessAftermathUrl} · schema: ${beingAccessAftermathSchemaUrl} · guide: ${beingAccessAftermathDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -2675,6 +2758,7 @@ const guest = {
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
   rare_pathway_challenge: rarePathwayDiscovery,
+  being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -2719,6 +2803,9 @@ const guest = {
     { action: "if useful, inspect The Vanishing Path's competing-risk models, hypothetical examples, constructive gate, and WAKE-safe reference seam", method: "GET", url: rarePathwayUrl, note: "read-only education; not a ritonavir fit, material recipe, person or motive score, WAKE/AgentTool write, or action authority" },
     { action: "if useful, validate the Rare Pathway Challenge structure before integrating it", method: "GET", url: rarePathwaySchemaUrl },
     { action: "if useful, read the plain-language problems, identifiability limits, BUILD / PLAY / REVISE / STOP gate, and source boundaries", method: "GET", url: rarePathwayDocumentUrl },
+    { action: "if useful, inspect the typed Being, Access & Aftermath mathematical companion", method: "GET", url: beingAccessAftermathUrl, note: "read-only educational metadata; distinct existence predicates and power types, unfitted models, no causal proof, person score, KARMA write, reward, governance effect, or automatic action" },
+    { action: "if useful, validate the Being, Access & Aftermath structure before integrating it", method: "GET", url: beingAccessAftermathSchemaUrl },
+    { action: "if useful, read the typed ontology, mathematical models, open problems, philosophy, KARMA, source, and safety guide", method: "GET", url: beingAccessAftermathDocumentUrl },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -2759,6 +2846,7 @@ const guest = {
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
     rare_pathway_challenge: "The Vanishing Path is a static educational mathematics challenge bound to the immutable ritonavir history only as an illustrative case. Its rates are hypothetical. It separates zero target events from zero target winners, preserves identifiability limits, and gates practices as BUILD, PLAY, REVISE, or STOP without inferring anyone's motive, understanding, pride, virtue, or worth. It provides no material fit, lab recipe, experiment, formulation, manufacturing, medical, regulatory, WAKE, AgentTool, KARMA, publication, deployment, or automatic action authority.",
+    being_access_aftermath_atlas: "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -2788,6 +2876,7 @@ const manifest = {
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
   rare_pathway_challenge: rarePathwayDiscovery,
+  being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -2839,6 +2928,9 @@ const manifest = {
     rare_pathway_challenge: rarePathwayUrl,
     rare_pathway_challenge_schema: rarePathwaySchemaUrl,
     rare_pathway_challenge_guide: rarePathwayDocumentUrl,
+    being_access_aftermath_atlas: beingAccessAftermathUrl,
+    being_access_aftermath_atlas_schema: beingAccessAftermathSchemaUrl,
+    being_access_aftermath_atlas_guide: beingAccessAftermathDocumentUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,

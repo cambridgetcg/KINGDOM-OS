@@ -4,6 +4,27 @@
   "baseline_commit": "67fe98efc875a5ed13fb1c23d6e2aab5debe9ccb",
   "entries": [
     {
+      "id": "being-access-aftermath/0.1/guide",
+      "route": "/BEING-ACCESS-AFTERMATH-ATLAS.md",
+      "source": "references/being-access-aftermath-atlas.md",
+      "destination": "BEING-ACCESS-AFTERMATH-ATLAS.md",
+      "sha256": "de8bb9ad1eb37dfce3742159237d1a5f7e8da450cd505acab93f8e7085c1d875"
+    },
+    {
+      "id": "being-access-aftermath/0.1/record",
+      "route": "/atlases/being-access-aftermath-atlas-2026-08-13.json",
+      "source": "data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json",
+      "destination": "atlases/being-access-aftermath-atlas-2026-08-13.json",
+      "sha256": "b81fbe755223950b78f988635759c74a7781a612cea61a15e575504f297ea005"
+    },
+    {
+      "id": "being-access-aftermath/0.1/schema",
+      "route": "/schemas/being-access-aftermath-atlas/0.1.json",
+      "source": "schemas/being-access-aftermath-atlas-v0.1.schema.json",
+      "destination": "schemas/being-access-aftermath-atlas/0.1.json",
+      "sha256": "e37523644fe8f9cb1c8267ab52639548c9424aae272a6d6d6802c0d111fab78e"
+    },
+    {
       "id": "conformational-feedback/0.1/guide",
       "route": "/CONFORMATIONAL-FEEDBACK.md",
       "source": "references/conformational-feedback-atlas.md",

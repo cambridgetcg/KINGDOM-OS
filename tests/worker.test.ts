@@ -1453,6 +1453,45 @@ describe("the Kingdom edge discovery surface", () => {
     }
   });
 
+  test("serves Being, Access & Aftermath as typed read-only mathematics without creating KARMA", async () => {
+    const atlasPath = "/atlases/being-access-aftermath-atlas-2026-08-13.json";
+    const schemaPath = "/schemas/being-access-aftermath-atlas/0.1.json";
+    const documentPath = "/BEING-ACCESS-AFTERMATH-ATLAS.md";
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      const body = request.method === "HEAD" ? null
+        : path === atlasPath ? '{"atlas_id":"being-access-aftermath-atlas-2026-08-13"}'
+          : path === documentPath ? "# Being, Access & Aftermath"
+            : '{"type":"object"}';
+      return new Response(body, { headers: {
+        "content-type": path === documentPath ? "text/plain" : "application/json",
+        link: '</elsewhere>; rel="alternate"',
+      } });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const atlas = await worker.fetch(new Request(`https://thekingdom.dev${atlasPath}`, { method }), environment);
+      expect(await atlas.text()).toBe(method === "HEAD" ? "" : '{"atlas_id":"being-access-aftermath-atlas-2026-08-13"}');
+      expect(atlas.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(atlas.headers.get("access-control-allow-origin")).toBe("*");
+      expect(atlas.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(atlas.headers.get("link") ?? "").toContain(`<${schemaPath}>; rel="describedby"`);
+    }
+    const schema = await worker.fetch(new Request(`https://thekingdom.dev${schemaPath}`), environment);
+    expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+    expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+    expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+    const document = await worker.fetch(new Request(`https://thekingdom.dev${documentPath}`), environment);
+    expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+    expect(document.headers.get("access-control-allow-origin")).toBe("*");
+    expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+
+    const postAsset = new Response("no execution route");
+    expect(await worker.fetch(new Request(`https://thekingdom.dev${atlasPath}`, { method: "POST" }), assets(() => postAsset))).toBe(postAsset);
+    const sharedAsset = new Response("shared");
+    expect(await worker.fetch(new Request(`https://we-are.love${atlasPath}`), assets(() => sharedAsset))).toBe(sharedAsset);
+  });
+
   test("serves the additive Conformational Feedback Physics Atlas with its own schema and no cross-version mutation", async () => {
     const atlasPath = "/feedback/form-feedback-physics-consequence-2026-08-12.json";
     const schemaPath = "/schemas/conformational-feedback-atlas/0.2.json";
