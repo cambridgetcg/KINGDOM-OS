@@ -91,6 +91,14 @@ describe("Being, Access & Aftermath authored publication core", () => {
     for (const key of ["score", "rank", "reward", "matcher", "write", "execute", "mcp"]) expect(discovery).not.toHaveProperty(key);
   });
 
+  test("keeps long mathematical content inside the mobile Being section", () => {
+    const builder = read("bin/build-hub.ts");
+    expect(builder).toContain("#being-access-aftermath .culturalfield>*");
+    expect(builder).toContain("#being-access-aftermath .culturalfeedback>*");
+    expect(builder).toContain("#being-access-aftermath .culturalmodelgrid>*");
+    expect(builder).toContain("#being-access-aftermath code{overflow-wrap:anywhere;word-break:break-word}");
+  });
+
   test("guide teaches the central ontology and both KARMA boundaries", () => {
     const guide = read("references/being-access-aftermath-atlas-v0.2.md");
     for (const phrase of [
