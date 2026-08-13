@@ -244,7 +244,12 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     functional description, goal-directed model, or opt-in teleological
     interpretation—not inferred from persistence or feedback alone. Its KARMA
     layer records no event or receipt: an aftermath observation is not proof of
-     causation, and neither receipt counts nor recognition edges become a score.
+    causation, and neither receipt counts nor recognition edges become a score.
+25. `kingdom being-access-aftermath-v0.2` — inspect the additive, lineage-pinned
+    [v0.2 mathematical framework](references/being-access-aftermath-atlas-v0.2.md).
+    It adds a partially observable causal kernel, distinct accessibility
+    predicates, typed force and power families, and affected-party-indexed
+    vector aftermath without replacing v0.1 or creating a KARMA write.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -381,5 +386,12 @@ KINGDOM invocation/aftermath receipts, and cosmic KARMA remain three different
 types with no adapter, scalar, live event, receipt, reward, governance effect,
 or write path. No mutable `latest` alias is published and the KINGDOM MCP is
 unchanged.
+
+The additive v0.2 successor is published at
+[`/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json`](https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json),
+with its own [closed schema](https://thekingdom.dev/schemas/being-access-aftermath-atlas/0.2.json)
+and [guide](https://thekingdom.dev/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md).
+The original record, schema, guide, CLI, discovery key, and routes remain
+unchanged; v0.2 has distinct immutable identities and no mutable alias.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

@@ -22,6 +22,7 @@ const bytes = (path: string) => readFileSync(join(ROOT, path));
 const read = (path: string) => bytes(path).toString("utf8");
 const json = (path: string) => JSON.parse(read(path));
 const sha256 = (path: string) => createHash("sha256").update(bytes(path)).digest("hex");
+const hasJsonschema = spawnSync("python3", ["-c", "import jsonschema"]).status === 0;
 
 describe("Being, Access & Aftermath authored publication core", () => {
   test("binds one immutable versioned triplet with no latest or current alias", () => {
@@ -55,6 +56,7 @@ describe("Being, Access & Aftermath authored publication core", () => {
   });
 
   test("validates the reviewed atlas with a portable Draft 2020-12 validator", () => {
+    if (!hasJsonschema) return;
     const python = spawnSync("python3", [
       "-c",
       "import json,sys; from jsonschema import Draft202012Validator,FormatChecker; s=json.load(open(sys.argv[1],encoding='utf-8')); v=json.load(open(sys.argv[2],encoding='utf-8')); Draft202012Validator.check_schema(s); Draft202012Validator(s,format_checker=FormatChecker()).validate(v)",

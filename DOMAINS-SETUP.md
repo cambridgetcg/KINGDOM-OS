@@ -86,9 +86,9 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 60 assets
-(58 direct public response bodies; `_worker.js` and `404.html` are checked by
-their dedicated contracts). The sitemap contains 57 URLs:
+`stage-hub.ts` requires an existing empty destination and copies exactly 63 assets
+(61 direct public response bodies; `_worker.js` and `404.html` are checked by
+their dedicated contracts). The sitemap contains 60 URLs:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
@@ -128,6 +128,9 @@ the authored `/challenges/vanishing-path-2026-08-13.json`,
 the authored `/atlases/being-access-aftermath-atlas-2026-08-13.json`,
 `/schemas/being-access-aftermath-atlas/0.1.json`, and
 `/BEING-ACCESS-AFTERMATH-ATLAS.md` bytes;
+the additive authored `/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json`,
+`/schemas/being-access-aftermath-atlas/0.2.json`, and
+`/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md` successor bytes, without repointing v0.1;
 `llms.txt`; `guest.json`; `ollama.json`; `rights.json`; `RIGHTS.md`;
 `/.well-known/agent.json`; `robots.txt`; `sitemap.xml`; `404.html`; the quiet
 `dada.txt` door; `/os/index.html`; and `_worker.js`. The worker derives

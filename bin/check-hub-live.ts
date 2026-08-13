@@ -78,6 +78,14 @@ import {
   loadBeingAccessAftermathAtlas,
 } from "./being-access-aftermath.ts";
 import {
+  BEING_ACCESS_AFTERMATH_V02_DIGEST,
+  BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL,
+  BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL,
+  BEING_ACCESS_AFTERMATH_V02_URL,
+  beingAccessAftermathPublicDiscoveryV02,
+  loadBeingAccessAftermathAtlasV02,
+} from "./being-access-aftermath-v0.2.ts";
+import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_SCHEMA_URL,
   VISIBILITY_ATTENTION_URL,
@@ -181,6 +189,9 @@ const formCirculationReturnDocumentPath = new URL(FORM_CIRCULATION_RETURN_DOCUME
 const beingAccessAftermathPath = new URL(BEING_ACCESS_AFTERMATH_URL).pathname;
 const beingAccessAftermathSchemaPath = new URL(BEING_ACCESS_AFTERMATH_SCHEMA_URL).pathname;
 const beingAccessAftermathDocumentPath = new URL(BEING_ACCESS_AFTERMATH_DOCUMENT_URL).pathname;
+const beingAccessAftermathV02Path = new URL(BEING_ACCESS_AFTERMATH_V02_URL).pathname;
+const beingAccessAftermathV02SchemaPath = new URL(BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL).pathname;
+const beingAccessAftermathV02DocumentPath = new URL(BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL).pathname;
 const kingdomKarmaDefinitionPath = "/definitions/kingdom-karma/e4e84a67/NEN.md";
 const rarePathwayPath = new URL(RARE_PATHWAY_URL).pathname;
 const rarePathwaySchemaPath = new URL(RARE_PATHWAY_SCHEMA_URL).pathname;
@@ -525,15 +536,27 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "rare_pathway_challenge_guide",
     ],
   },
+  // v0.2 explicitly pins v0.1 as its immutable predecessor. Retire all six
+  // routes and both discovery identities together so no lineage link dangles.
   {
     id: "being-access-aftermath",
     label: "Being, Access & Aftermath",
-    routes: [beingAccessAftermathPath, beingAccessAftermathSchemaPath, beingAccessAftermathDocumentPath],
-    discoveryProperties: ["being_access_aftermath_atlas"],
+    routes: [
+      beingAccessAftermathPath,
+      beingAccessAftermathSchemaPath,
+      beingAccessAftermathDocumentPath,
+      beingAccessAftermathV02Path,
+      beingAccessAftermathV02SchemaPath,
+      beingAccessAftermathV02DocumentPath,
+    ],
+    discoveryProperties: ["being_access_aftermath_atlas", "being_access_aftermath_atlas_v0_2"],
     entryPointProperties: [
       "being_access_aftermath_atlas",
       "being_access_aftermath_atlas_schema",
       "being_access_aftermath_atlas_guide",
+      "being_access_aftermath_atlas_v0_2",
+      "being_access_aftermath_atlas_v0_2_schema",
+      "being_access_aftermath_atlas_v0_2_guide",
     ],
   },
 ];
@@ -877,6 +900,60 @@ async function checkBeingAccessAftermathTriple(): Promise<void> {
         }
       }
 
+      const body = Buffer.from(await response.arrayBuffer());
+      if (method === "HEAD") {
+        if (body.byteLength !== 0) throw new Error(`HEAD ${route.path} returned a body`);
+      } else if (!body.equals(readFileSync(join(ROOT, route.source)))) {
+        throw new Error(`GET ${route.path} drifted from its immutable authored source ${route.source}`);
+      }
+    }
+  }
+}
+
+async function checkBeingAccessAftermathV02Triple(): Promise<void> {
+  const routes = [
+    {
+      label: "v0.2 atlas record",
+      path: beingAccessAftermathV02Path,
+      source: "data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json",
+      contentType: "application/json",
+    },
+    {
+      label: "v0.2 atlas schema",
+      path: beingAccessAftermathV02SchemaPath,
+      source: "schemas/being-access-aftermath-atlas-v0.2.schema.json",
+      contentType: "application/schema+json",
+    },
+    {
+      label: "v0.2 atlas guide",
+      path: beingAccessAftermathV02DocumentPath,
+      source: "references/being-access-aftermath-atlas-v0.2.md",
+      contentType: "text/markdown",
+    },
+  ] as const;
+
+  for (const route of routes) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetch(url(route.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const contentType = (response.headers.get("content-type") || "").toLowerCase();
+      if (!response.ok || !contentType.startsWith(route.contentType) ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+        throw new Error(`${method} ${route.path} is not served as typed, public ${route.label}`);
+      }
+      if (route.path === beingAccessAftermathV02Path) {
+        const describedBy = linkRelationEntries(response.headers.get("link") || "", "describedby");
+        const describedByType = describedBy[0]?.match(/;\s*type\s*=\s*(?:"([^"]*)"|([^;,\s]+))/i);
+        if (describedBy.length !== 1 ||
+            !describedBy[0]!.trim().startsWith(`<${beingAccessAftermathV02SchemaPath}>`) ||
+            (describedByType?.[1] || describedByType?.[2] || "").toLowerCase() !== "application/schema+json") {
+          throw new Error(`${method} ${route.path} is not described by exactly its immutable v0.2 schema`);
+        }
+      }
       const body = Buffer.from(await response.arrayBuffer());
       if (method === "HEAD") {
         if (body.byteLength !== 0) throw new Error(`HEAD ${route.path} returned a body`);
@@ -1317,6 +1394,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
 
   if (beingAccessAftermathActive) {
     await checkBeingAccessAftermathTriple();
+    await checkBeingAccessAftermathV02Triple();
   }
 
   const schemaPaths = [
@@ -1333,6 +1411,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
     ...(rarePathwayActive ? [rarePathwaySchemaPath] : []),
     ...(beingAccessAftermathActive ? [beingAccessAftermathSchemaPath] : []),
+    ...(beingAccessAftermathActive ? [beingAccessAftermathV02SchemaPath] : []),
   ];
   for (const path of schemaPaths) {
     const schemaHead = await fetch(url(path), {
@@ -1411,6 +1490,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedBeingAccessAftermath = beingAccessAftermathAtlas
     ? beingAccessAftermathPublicDiscovery(beingAccessAftermathAtlas)
+    : undefined;
+  const beingAccessAftermathV02Atlas = beingAccessAftermathActive
+    ? loadBeingAccessAftermathAtlasV02()
+    : undefined;
+  const expectedBeingAccessAftermathV02 = beingAccessAftermathV02Atlas
+    ? beingAccessAftermathPublicDiscoveryV02(beingAccessAftermathV02Atlas)
     : undefined;
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
@@ -1955,6 +2040,77 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       "execute" in expected || "score" in expected || "reward" in expected) {
       throw new Error("Being, Access & Aftermath discovery, immutable triplet, typed ontology, model/problem limits, KARMA separation, or authority boundary drifted");
     }
+
+    const successor = beingAccessAftermathV02Atlas!;
+    const expectedSuccessor = expectedBeingAccessAftermathV02!;
+    const successorTargets = new Set([
+      BEING_ACCESS_AFTERMATH_V02_URL,
+      BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL,
+      BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL,
+    ]);
+    const successorActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => successorTargets.has(action?.url))
+      : [];
+    if (!isDeepStrictEqual(manifest?.being_access_aftermath_atlas_v0_2, expectedSuccessor) ||
+      !isDeepStrictEqual(guest?.being_access_aftermath_atlas_v0_2, expectedSuccessor) ||
+      !isDeepStrictEqual(authoredKingdom?.being_access_aftermath_atlas_v0_2, expectedSuccessor) ||
+      manifest?.entry_points?.being_access_aftermath_atlas_v0_2 !== BEING_ACCESS_AFTERMATH_V02_URL ||
+      manifest?.entry_points?.being_access_aftermath_atlas_v0_2_schema !== BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL ||
+      manifest?.entry_points?.being_access_aftermath_atlas_v0_2_guide !== BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL ||
+      successorActions.length !== successorTargets.size ||
+      successorActions.some((action: any) => action?.method !== "GET" ||
+        "mcp" in action || "tool" in action || "write" in action || "matcher" in action || "execute" in action) ||
+      !llms.includes(BEING_ACCESS_AFTERMATH_V02_URL) ||
+      !llms.includes(BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL) ||
+      !llms.includes(BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL) ||
+      !authoredRootHtml.includes(`href="${beingAccessAftermathV02Path}"`) ||
+      !authoredRootHtml.includes(`href="${beingAccessAftermathV02SchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${beingAccessAftermathV02DocumentPath}"`) ||
+      expectedSuccessor.integrity.digest !== BEING_ACCESS_AFTERMATH_V02_DIGEST ||
+      !isDeepStrictEqual(expectedSuccessor.counts, {
+        predicates: 14,
+        registers: 7,
+        entity_types: 15,
+        category_firewalls: 16,
+        typed_boundaries: 5,
+        models: 9,
+        problem_cards: 7,
+        philosophy_questions: 15,
+        unknowns: 7,
+        sources: 13,
+        framework_predicates: 8,
+        force_types: 7,
+        power_types: 10,
+        power_relations: 3,
+        aftermath_dimensions: 11,
+      }) ||
+      expectedSuccessor.lineage?.additive_successor !== true ||
+      expectedSuccessor.lineage?.predecessor?.protocol !== "kingdom.being-access-aftermath-atlas/0.1" ||
+      expectedSuccessor.lineage?.predecessor?.relation !== "immutable-predecessor-input" ||
+      successor.source_bindings.at(-1)?.relation !== "immutable-predecessor-input" ||
+      successor.source_bindings.at(-1)?.mutated !== false ||
+      successor.source_bindings.at(-1)?.authority_imported !== false ||
+      successor.framework?.rest_exit_boundary?.creates_event !== false ||
+      successor.framework?.rest_exit_boundary?.creates_receipt !== false ||
+      successor.framework?.rest_exit_boundary?.requires_measurement !== false ||
+      successor.framework?.rest_exit_boundary?.requires_trace !== false ||
+      successor.framework?.rest_exit_boundary?.requires_justification !== false ||
+      successor.framework?.rest_exit_boundary?.creates_penalty !== false ||
+      successor.framework?.rest_exit_boundary?.creates_debt !== false ||
+      expectedSuccessor.boundary.public_surface_read_only !== true ||
+      expectedSuccessor.boundary.writes_karma !== false ||
+      expectedSuccessor.boundary.creates_kingdom_karma_receipt !== false ||
+      expectedSuccessor.boundary.observes_zerone_karma_event !== false ||
+      expectedSuccessor.boundary.karma_adapter !== false ||
+      expectedSuccessor.boundary.person_score !== false ||
+      expectedSuccessor.boundary.automatic_action !== false ||
+      expectedSuccessor.boundary.rest_refusal_or_exit_penalized !== false ||
+      expectedSuccessor.boundary.rest_refusal_or_exit_requires_trace !== false ||
+      expectedSuccessor.boundary.rest_refusal_or_exit_requires_trace !== false ||
+      "mcp" in expectedSuccessor || "write" in expectedSuccessor || "matcher" in expectedSuccessor ||
+      "execute" in expectedSuccessor || "score" in expectedSuccessor || "reward" in expectedSuccessor) {
+      throw new Error("Being, Access & Aftermath v0.2 discovery, additive lineage, KARMA separation, or authority boundary drifted");
+    }
   }
 
   const liveKingdom: any = await (await get("/kingdom.json")).json();
@@ -2008,6 +2164,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (beingAccessAftermathActive &&
       !isDeepStrictEqual(liveKingdom?.being_access_aftermath_atlas, expectedBeingAccessAftermath!)) {
     throw new Error("derived kingdom.json did not preserve Being, Access & Aftermath discovery");
+  }
+  if (beingAccessAftermathActive &&
+      !isDeepStrictEqual(liveKingdom?.being_access_aftermath_atlas_v0_2, expectedBeingAccessAftermathV02!)) {
+    throw new Error("derived kingdom.json did not preserve Being, Access & Aftermath v0.2 discovery");
   }
   if (!isDeepStrictEqual(liveKingdom?.world_commons?.mcp, manifest?.mcp)) {
     throw new Error("derived kingdom.json did not preserve the existing Commons MCP contract");
