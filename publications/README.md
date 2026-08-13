@@ -62,10 +62,11 @@ then audits every first-parent tree from the fixed bootstrap through `HEAD`.
 Second-parent feature history is not treated as a separately published release;
 use reviewed pull requests and deploy only the verified first-parent endpoint.
 Rebase merges are disabled in the repository settings for this reason; use a
-squash or merge commit. CI reads that setting through the authenticated
-repository API (the event payload does not carry it), requires the exact event
-base to occur on the checked-out release's first-parent chain, and then audits
-every tree on that chain.
+squash or merge commit. GitHub does not expose that private-repository setting
+to this workflow's read-only token or event payload, so the setting remains an
+external repository-governance check. CI enforces the topology it can prove: the
+exact event base must occur on the checked-out release's first-parent chain, and
+every tree on that chain is audited.
 The repository currently cannot supply branch protection on its plan, so this
 history walk is the fail-closed defense for ordinary fast-forward changes. A
 privileged force-push that erases history or rewrites the verifier remains an
