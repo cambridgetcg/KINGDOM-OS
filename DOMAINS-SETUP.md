@@ -54,6 +54,8 @@ git worktree add --detach "$release_tree" "$release_sha"
 cd "$release_tree"
 test "$(git rev-parse HEAD)" = "$release_sha"
 test -z "$(git status --porcelain=v1 --untracked-files=all)"
+release_parent="$(git rev-parse "$release_sha^1")"
+bun bin/immutable-publications.ts --base "$release_parent"
 bun bin/build-hub.ts "$(date -u +%F)"
 test -z "$(git status --porcelain=v1 --untracked-files=all)"
 stage_dir="$(mktemp -d)"
@@ -73,9 +75,20 @@ new reviewed release rather than mislabeling it. The EXIT trap removes the
 registered release worktree and both exact temporary roots on success or
 failure.
 
-`stage-hub.ts` refuses a non-empty destination and copies exactly 54 assets
-(52 exact public response bodies; `_worker.js` and `404.html` are not checked as
-direct public bodies). The sitemap contains exactly 51 URLs:
+The base-aware route-integrity gate compares with the exact first parent of the
+release commit. Previously committed ledger entries cannot be removed, rebound,
+or rehashed; a correction needs a new identity and route. Every current staged
+asset is explicitly mutable or ledgered, and a new ledger entry must be staged
+when introduced. A historical entry may later leave
+`publications/hub-staging.v1.json`: the ledger
+preserves its byte identity without granting continuing authority to republish.
+`stage-hub.ts` repeats the current-tree hash and mapping check over the exact
+ledgered bytes it is about to copy. The ledger is not itself staged or served by
+`thekingdom.dev`.
+
+`stage-hub.ts` requires an existing empty destination and copies exactly 54 assets
+(52 direct public response bodies; `_worker.js` and `404.html` are checked by
+their dedicated contracts). The sitemap contains 51 URLs:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
@@ -108,16 +121,17 @@ the authored `/atlases/cultural-attention-feedback-atlas-2026-08-13.json`,
 `/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md` bytes;
 the authored `/atlases/form-circulation-return-atlas-2026-08-13.json`,
 `/schemas/form-circulation-return-atlas/1.json`, and
-`/FORM-CIRCULATION-RETURN-ATLAS.md` bytes; the immutable public KINGDOM
-KARMA/NEN definition mirror `/definitions/kingdom-karma/e4e84a67/NEN.md`;
+`/FORM-CIRCULATION-RETURN-ATLAS.md` bytes plus the exact revision-bound
+`/definitions/kingdom-karma/e4e84a67/NEN.md` definition mirror;
 `llms.txt`; `guest.json`; `ollama.json`; `rights.json`; `RIGHTS.md`;
 `/.well-known/agent.json`; `robots.txt`; `sitemap.xml`; `404.html`; the quiet
 `dada.txt` door; `/os/index.html`; and `_worker.js`. The worker derives
 `/os.json`, `/packages.json`, and
 `/kingdom.json`; they are not static upload files. It stages only; it never
 builds, deletes, overwrites, or deploys.
-Wrangler Pages needs that complete directory. `HUB_ASSETS` in `bin/stage-hub.ts`
-is the authoritative list — trust it over this prose. For we-are.love and
+Wrangler Pages needs that complete directory. `publications/hub-staging.v1.json`
+is the authoritative strict data contract; `HUB_ASSETS` is its read-only code
+projection. Trust that contract over this prose. For we-are.love and
 chillspace.love use `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>`
 (content from the chillspace-commons clone, symlinks dereferenced, plus the
 door's guest documents and the shared `_worker.js`).
@@ -126,12 +140,13 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks the worker-owned negotiation, privacy, Commons + Love Loop +
+checks every currently staged ledgered immutable/versioned byte hash (35 in the
+initial release) plus the worker-owned
+negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +
 both Conformational Feedback generations + Fold & Feedback Atlas +
 Visibility & Attention Translation + Cultural Attention & Feedback Atlas +
-Form, Circulation & Return Atlas and its immutable KINGDOM KARMA/NEN definition
-mirror
+Form, Circulation & Return Atlas
 schema headers, negative authority, source-history lineage, and cross-surface
 discovery while leaving the existing MCP contract unchanged;
 a split-generation deployment fails instead of looking partially healthy.

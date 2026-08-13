@@ -1,106 +1,47 @@
 /** stage-hub.ts — assemble the exact Cloudflare Pages upload directory.
  *
  * The source files are all read before the output directory is touched. The
- * destination must be absent or completely empty; existing content is never
- * overwritten or deleted. This stages files only—it does not deploy them.
+ * destination must already exist and be completely empty; its canonical path
+ * is used, and existing content is never overwritten or deleted. This stages
+ * files only—it does not deploy them.
  *
- * Run: bun bin/stage-hub.ts <empty-output-dir>
+ * Run: bun bin/stage-hub.ts <existing-empty-output-dir>
  */
 
-import { lstatSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import {
+  formatImmutablePublicationIssues,
+  HUB_STAGING_CONTRACT_PATH,
+  parseHubStagingContract,
+  readRegularFileWithinRoot,
+  verifyImmutablePublicationSnapshot,
+} from "./immutable-publications.ts";
+
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 
-export const HUB_ASSETS = [
-  { source: "site/hub.html", destination: "index.html" },
-  // The worker derives /kingdom.json from this authored/generated base.
-  { source: "site/kingdom.json", destination: "_kingdom.base.json" },
-  { source: "site/wayfinder.json", destination: "wayfinder.json" },
-  { source: "site/commons.json", destination: "commons.json" },
-  { source: "site/schemas/world-commons/0.1.json", destination: "schemas/world-commons/0.1.json" },
-  { source: "site/schemas/world-commons/0.2.json", destination: "schemas/world-commons/0.2.json" },
-  { source: "site/love-loops.json", destination: "love-loops.json" },
-  { source: "site/love-loops.source.json", destination: "love-loops.source.json" },
-  { source: "site/schemas/love-loop/0.1.json", destination: "schemas/love-loop/0.1.json" },
-  { source: "CREATION-LOOP.md", destination: "CREATION-LOOP.md" },
-  // Point-in-time capability evidence is published from its authored files,
-  // byte-for-byte. Do not replace these with generated site/ mirrors or a
-  // mutable alias: existing Task Packets may retain the catalog digest.
-  { source: "data/principalities/moonshot-hf-npm.v1.json", destination: "principalities/moonshot-hf-npm-2026-08-11.json" },
-  { source: "schemas/principality-catalog-v1.schema.json", destination: "schemas/principality-catalog/1.json" },
-  { source: "references/principality-commons.md", destination: "PRINCIPALITY-COMMONS.md" },
-  // Stage all three authored Geometry Grammar resources directly. The record
-  // and schema use versioned routes; the guide is its stable human entry.
-  { source: "data/geometries/kingdom-geometry-grammar.v0.json", destination: "geometries/kingdom-geometry-grammar-v0.json" },
-  { source: "schemas/geometry-grammar-v0.schema.json", destination: "schemas/geometry-grammar/0.1.json" },
-  { source: "references/geometry-grammar.md", destination: "GEOMETRY-GRAMMAR.md" },
-  // Historical material-state evidence is likewise staged from authored,
-  // digest-bound files. There is deliberately no mutable latest alias.
-  { source: "data/polymorphs/ritonavir-disappearing-polymorph.v1.json", destination: "polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json" },
-  { source: "schemas/polymorph-history-v1.schema.json", destination: "schemas/polymorph-history/1.json" },
-  { source: "references/ritonavir-polymorph.md", destination: "RITONAVIR-POLYMORPH.md" },
-  // The current mechanism landscape is a separate digest-bound supplement:
-  // it neither mutates nor silently replaces the versioned history bytes.
-  { source: "data/polymorphs/ritonavir-mechanism-landscape.v1.json", destination: "polymorphs/ritonavir-mechanism-landscape-2026-08-11.json" },
-  { source: "schemas/ritonavir-mechanism-landscape-v1.schema.json", destination: "schemas/ritonavir-mechanism-landscape/1.json" },
-  { source: "references/ritonavir-mechanism-landscape.md", destination: "RITONAVIR-MECHANISM-LANDSCAPE.md" },
-  // The form/feedback/consequence atlas is a separate immutable synthesis.
-  // Stage its authored bytes directly; no mutable latest/current alias exists.
-  { source: "data/feedback/conformational-feedback-atlas.v0.json", destination: "feedback/form-feedback-consequence-2026-08-12.json" },
-  { source: "schemas/conformational-feedback-atlas-v0.schema.json", destination: "schemas/conformational-feedback-atlas/0.1.json" },
-  { source: "references/conformational-feedback-atlas.md", destination: "CONFORMATIONAL-FEEDBACK.md" },
-  // v0.2 extends the immutable v0.1 record without changing any v0.1 byte.
-  { source: "data/feedback/conformational-feedback-atlas.v0.2.json", destination: "feedback/form-feedback-physics-consequence-2026-08-12.json" },
-  { source: "schemas/conformational-feedback-atlas-v0.2.schema.json", destination: "schemas/conformational-feedback-atlas/0.2.json" },
-  { source: "references/conformational-feedback-atlas-v0.2.md", destination: "CONFORMATIONAL-FEEDBACK-PHYSICS.md" },
-  // Protein folding, prion propagation, feedback, and their bounded systems
-  // translations ship as one immutable authored triplet. The date-bearing
-  // atlas route is the identity; no latest/current alias may obscure it.
-  { source: "data/fold-feedback/fold-feedback-atlas.v1.json", destination: "atlases/fold-feedback-atlas-2026-08-12.json" },
-  { source: "schemas/fold-feedback-atlas-v1.schema.json", destination: "schemas/fold-feedback-atlas/1.json" },
-  // Preserve the original /1 schema bytes. The stronger source-identity
-  // constraints are an additive profile at a new immutable route.
-  { source: "schemas/fold-feedback-atlas-v1.1.schema.json", destination: "schemas/fold-feedback-atlas/1.1.json" },
-  { source: "references/fold-feedback-atlas.md", destination: "FOLD-FEEDBACK-ATLAS.md" },
-  // Visibility is not existence: a compact, read-only translation across
-  // material detection, collective attention, lexical usage, and KARMA.
-  { source: "data/attention/visibility-attention-translation.v0.1.json", destination: "atlases/visibility-attention-2026-08-13.json" },
-  { source: "schemas/visibility-attention-translation-v0.1.schema.json", destination: "schemas/visibility-attention/0.1.json" },
-  { source: "references/visibility-attention-translation.md", destination: "VISIBILITY-ATTENTION.md" },
-  // Cultural attention, meme diffusion, vernacular "brain rot", bounded
-  // material analogies, feedback, KARMA, and the opt-in universe lens remain
-  // one immutable read-only triplet. There is deliberately no mutable alias.
-  { source: "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json", destination: "atlases/cultural-attention-feedback-atlas-2026-08-13.json" },
-  { source: "schemas/cultural-attention-feedback-atlas-v1.schema.json", destination: "schemas/cultural-attention-feedback-atlas/1.json" },
-  { source: "references/cultural-attention-feedback-atlas.md", destination: "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md" },
-  { source: "data/form-circulation-return/form-circulation-return-atlas.v1.json", destination: "atlases/form-circulation-return-atlas-2026-08-13.json" },
-  { source: "schemas/form-circulation-return-atlas-v1.schema.json", destination: "schemas/form-circulation-return-atlas/1.json" },
-  { source: "references/form-circulation-return-atlas.md", destination: "FORM-CIRCULATION-RETURN-ATLAS.md" },
-  // The companion's KINGDOM KARMA definition pin must remain publicly
-  // resolvable even when the source repository is private. Publish the exact
-  // revision-bound NEN bytes under an immutable path, never a mutable alias.
-  { source: "NEN.md", destination: "definitions/kingdom-karma/e4e84a67/NEN.md" },
-  { source: "site/llms.txt", destination: "llms.txt" },
-  { source: "site/guest.json", destination: "guest.json" },
-  { source: "site/ollama.json", destination: "ollama.json" },
-  { source: "site/rights.json", destination: "rights.json" },
-  { source: "site/RIGHTS.md", destination: "RIGHTS.md" },
-  { source: "site/.well-known/agent.json", destination: ".well-known/agent.json" },
-  // Authored crawl surfaces (2026-07-29): a real robots welcome, a real
-  // sitemap, and a real 404 page. The 404 also switches Cloudflare Pages
-  // out of SPA-fallback mode, so unknown paths stop answering 200 with the
-  // atlas (robots.txt used to be served that way).
-  { source: "pages-content/robots.txt", destination: "robots.txt" },
-  { source: "pages-content/sitemap.xml", destination: "sitemap.xml" },
-  { source: "pages-content/404.html", destination: "404.html" },
-  // A quiet standing door (2026-07-29): linked from llms.txt only, never
-  // enumerated in the sitemap. Reading it or walking past are both honored.
-  { source: "pages-content/dada.txt", destination: "dada.txt" },
-  { source: "pages-content/os/index.html", destination: "os/index.html" },
-  { source: "pages-functions/_worker.js", destination: "_worker.js" },
-] as const;
+// This strict JSON file is the single staging state description. The engine,
+// snapshot verifier, and historical audit all consume the same bytes.
+function loadStagingContract(sourceRoot: string) {
+  try {
+    return parseHubStagingContract(
+      readRegularFileWithinRoot(sourceRoot, HUB_STAGING_CONTRACT_PATH),
+    );
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : "unknown error";
+    throw new Error(`hub staging contract is missing or invalid: ${detail}`);
+  }
+}
+
+const STAGING_CONTRACT = loadStagingContract(ROOT);
+export const HUB_ASSETS = Object.freeze(
+  STAGING_CONTRACT.stagedAssets.map((asset) => Object.freeze(asset)),
+);
+export const MUTABLE_HUB_DESTINATIONS = Object.freeze(
+  [...STAGING_CONTRACT.mutableDestinations],
+);
 
 export type StagedHubAsset = {
   source: string;
@@ -114,40 +55,60 @@ function codeOf(error: unknown): string | undefined {
     : undefined;
 }
 
-function readSources(sourceRoot: string): Array<{ asset: typeof HUB_ASSETS[number]; content: Buffer }> {
-  return HUB_ASSETS.map((asset) => {
-    const source = join(sourceRoot, asset.source);
+function readSources(
+  sourceRoot: string,
+  assets: readonly Readonly<{ source: string; destination: string }>[],
+): Array<{ asset: Readonly<{ source: string; destination: string }>; content: Buffer }> {
+  return assets.map((asset) => {
     try {
-      if (!lstatSync(source).isFile()) throw new Error("not a regular file");
-      return { asset, content: readFileSync(source) };
+      return { asset, content: readRegularFileWithinRoot(sourceRoot, asset.source) };
     } catch {
       throw new Error(`required hub asset is missing or unreadable: ${asset.source}`);
     }
   });
 }
 
-function assertEmptyOutput(output: string): boolean {
+function canonicalEmptyOutput(output: string): string {
   try {
     const info = lstatSync(output);
     if (info.isSymbolicLink()) throw new Error(`output directory must not be a symbolic link: ${output}`);
     if (!info.isDirectory()) throw new Error(`output path is not a directory: ${output}`);
     if (readdirSync(output).length !== 0) throw new Error(`output directory is not empty: ${output}`);
-    return true;
+    return realpathSync(output);
   } catch (error) {
-    if (codeOf(error) === "ENOENT") return false;
+    if (codeOf(error) === "ENOENT") {
+      throw new Error(`output directory must already exist and be empty: ${output}`);
+    }
     throw error;
   }
 }
 
 export function stageHub(outputDirectory: string, sourceRoot = ROOT): StagedHubAsset[] {
   if (!outputDirectory) throw new Error("an empty output directory is required");
-  const output = resolve(outputDirectory);
+  const requestedOutput = resolve(outputDirectory);
 
-  // Complete both read-only preflights before creating or changing anything.
-  const outputExists = assertEmptyOutput(output);
-  const sources = readSources(sourceRoot);
-  if (!outputExists) mkdirSync(output, { recursive: true });
-
+  // Canonicalize the caller-provided output capability, then complete both
+  // read-only preflights before creating or changing anything inside it.
+  const output = canonicalEmptyOutput(requestedOutput);
+  const stagingContract = loadStagingContract(sourceRoot);
+  const contractCheck = verifyImmutablePublicationSnapshot({
+    root: sourceRoot,
+    stagedAssets: stagingContract.stagedAssets,
+    mutableDestinations: stagingContract.mutableDestinations,
+  });
+  if (contractCheck.issues.length > 0) {
+    throw new Error(`immutable publication gate failed:\n${formatImmutablePublicationIssues(contractCheck.issues)}`);
+  }
+  const sources = readSources(sourceRoot, stagingContract.stagedAssets);
+  const publicationCheck = verifyImmutablePublicationSnapshot({
+    root: sourceRoot,
+    stagedAssets: stagingContract.stagedAssets,
+    mutableDestinations: stagingContract.mutableDestinations,
+    sourceBytes: new Map(sources.map(({ asset, content }) => [asset.source, content])),
+  });
+  if (publicationCheck.issues.length > 0) {
+    throw new Error(`immutable publication gate failed:\n${formatImmutablePublicationIssues(publicationCheck.issues)}`);
+  }
   const staged: StagedHubAsset[] = [];
   for (const { asset, content } of sources) {
     const destination = join(output, asset.destination);
@@ -163,10 +124,10 @@ export function stageHub(outputDirectory: string, sourceRoot = ROOT): StagedHubA
 
 function usage(): string {
   return [
-    "Usage: bun bin/stage-hub.ts <empty-output-dir>",
+    "Usage: bun bin/stage-hub.ts <existing-empty-output-dir>",
     "",
     "Copies the exact generated hub, discovery, rights, OS console, and worker assets.",
-    "The destination must be absent or empty. Nothing is deleted or deployed.",
+    "The destination must already exist and be empty. Nothing is deleted or deployed.",
   ].join("\n");
 }
 

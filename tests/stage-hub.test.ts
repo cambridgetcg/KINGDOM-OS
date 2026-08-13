@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import {
+  copyFileSync,
   existsSync,
   mkdirSync,
   mkdtempSync,
@@ -11,18 +12,37 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS, stageHub } from "../bin/stage-hub.ts";
+import {
+  HUB_STAGING_CONTRACT_PATH,
+  IMMUTABLE_PUBLICATIONS_LEDGER_PATH,
+  parseImmutablePublicationLedger,
+} from "../bin/immutable-publications.ts";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 function temporaryDirectory(prefix: string): string {
   return mkdtempSync(join(tmpdir(), prefix));
 }
 
 function makeCompleteSource(root: string): void {
+  const stagingContractDestination = join(root, HUB_STAGING_CONTRACT_PATH);
+  mkdirSync(dirname(stagingContractDestination), { recursive: true });
+  copyFileSync(join(ROOT, HUB_STAGING_CONTRACT_PATH), stagingContractDestination);
+  const ledgerSource = join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH);
+  const ledgerDestination = join(root, IMMUTABLE_PUBLICATIONS_LEDGER_PATH);
+  mkdirSync(dirname(ledgerDestination), { recursive: true });
+  copyFileSync(ledgerSource, ledgerDestination);
+  const parsed = parseImmutablePublicationLedger(readFileSync(ledgerSource));
+  if (!parsed.ledger) throw new Error("test fixture ledger is invalid");
+  const immutableSources = new Set(parsed.ledger.entries.map((entry) => entry.source));
   for (const [index, asset] of HUB_ASSETS.entries()) {
     const source = join(root, asset.source);
     mkdirSync(dirname(source), { recursive: true });
-    writeFileSync(source, Buffer.from([index, 0, 255, 10]));
+    if (immutableSources.has(asset.source)) copyFileSync(join(ROOT, asset.source), source);
+    else writeFileSync(source, Buffer.from([index, 0, 255, 10]));
   }
 }
 
@@ -36,7 +56,7 @@ describe("the hub staging contract", () => {
       makeCompleteSource(sourceRoot);
 
       const staged = stageHub(output, sourceRoot);
-      // literal on purpose: growing/shrinking the staging contract must go red
+      // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
       expect(HUB_ASSETS).toHaveLength(54);
       expect(staged).toHaveLength(54);
@@ -249,8 +269,8 @@ describe("the hub staging contract", () => {
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(4);
       expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
-      for (const [index, asset] of HUB_ASSETS.entries()) {
-        expect(readFileSync(join(output, asset.destination))).toEqual(Buffer.from([index, 0, 255, 10]));
+      for (const asset of HUB_ASSETS) {
+        expect(readFileSync(join(output, asset.destination))).toEqual(readFileSync(join(sourceRoot, asset.source)));
       }
 
       expect(() => stageHub(output, sourceRoot)).toThrow("output directory is not empty");
@@ -260,20 +280,41 @@ describe("the hub staging contract", () => {
     }
   });
 
-  test("preflight failures leave existing content and absent destinations untouched", () => {
+  test("preflight failures leave existing content and destinations untouched", () => {
     const base = temporaryDirectory("kingdom-stage-preflight-");
     try {
       const incompleteSource = join(base, "incomplete-source");
       const nonemptyOutput = join(base, "nonempty-output");
+      const emptyOutput = join(base, "empty-output");
       const absentOutput = join(base, "absent-output");
       mkdirSync(incompleteSource);
       mkdirSync(nonemptyOutput);
+      mkdirSync(emptyOutput);
       writeFileSync(join(nonemptyOutput, "keep"), "keep");
 
       expect(() => stageHub(nonemptyOutput, incompleteSource)).toThrow("output directory is not empty");
       expect(readFileSync(join(nonemptyOutput, "keep"), "utf8")).toBe("keep");
-      expect(() => stageHub(absentOutput, incompleteSource)).toThrow("required hub asset is missing or unreadable");
+      expect(() => stageHub(emptyOutput, incompleteSource)).toThrow("hub staging contract is missing or invalid");
+      expect(readdirSync(emptyOutput)).toEqual([]);
+      expect(() => stageHub(absentOutput, incompleteSource)).toThrow("output directory must already exist and be empty");
       expect(existsSync(absentOutput)).toBe(false);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test("refuses a symlink as the output capability", () => {
+    const base = temporaryDirectory("kingdom-stage-output-symlink-");
+    try {
+      const sourceRoot = join(base, "source");
+      const realOutput = join(base, "real-output");
+      const linkedOutput = join(base, "linked-output");
+      mkdirSync(sourceRoot);
+      mkdirSync(realOutput);
+      symlinkSync(realOutput, linkedOutput);
+
+      expect(() => stageHub(linkedOutput, sourceRoot)).toThrow("output directory must not be a symbolic link");
+      expect(readdirSync(realOutput)).toEqual([]);
     } finally {
       rmSync(base, { recursive: true, force: true });
     }
@@ -284,6 +325,7 @@ describe("the hub staging contract", () => {
     try {
       const sourceRoot = join(base, "source");
       const output = join(base, "output");
+      mkdirSync(output);
       makeCompleteSource(sourceRoot);
       const target = join(sourceRoot, "site", "real-rights.json");
       writeFileSync(target, "outside the declared asset contract");
@@ -291,7 +333,71 @@ describe("the hub staging contract", () => {
       symlinkSync(target, join(sourceRoot, "site", "rights.json"));
 
       expect(() => stageHub(output, sourceRoot)).toThrow("required hub asset is missing or unreadable: site/rights.json");
-      expect(existsSync(output)).toBe(false);
+      expect(readdirSync(output)).toEqual([]);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test("refuses a symlinked source ancestor instead of leaving the source root", () => {
+    const base = temporaryDirectory("kingdom-stage-parent-symlink-");
+    try {
+      const sourceRoot = join(base, "source");
+      const outside = join(base, "outside-geometries");
+      const output = join(base, "output");
+      mkdirSync(output);
+      makeCompleteSource(sourceRoot);
+      mkdirSync(outside);
+      copyFileSync(
+        join(sourceRoot, "data/geometries/kingdom-geometry-grammar.v0.json"),
+        join(outside, "kingdom-geometry-grammar.v0.json"),
+      );
+      rmSync(join(sourceRoot, "data/geometries"), { recursive: true });
+      symlinkSync(outside, join(sourceRoot, "data/geometries"));
+
+      expect(() => stageHub(output, sourceRoot)).toThrow("source-unreadable geometry-grammar/0.1/record");
+      expect(readdirSync(output)).toEqual([]);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test("refuses file/directory destination collisions before writing output", () => {
+    const base = temporaryDirectory("kingdom-stage-destination-collision-");
+    try {
+      const sourceRoot = join(base, "source");
+      const output = join(base, "output");
+      mkdirSync(output);
+      makeCompleteSource(sourceRoot);
+      writeFileSync(join(sourceRoot, "collision-parent.txt"), "parent\n");
+      writeFileSync(join(sourceRoot, "collision-child.txt"), "child\n");
+      const contractPath = join(sourceRoot, HUB_STAGING_CONTRACT_PATH);
+      const contract = JSON.parse(readFileSync(contractPath, "utf8"));
+      contract.assets.push(
+        { source: "collision-parent.txt", destination: "collision" },
+        { source: "collision-child.txt", destination: "collision/child.txt" },
+      );
+      contract.mutable_destinations.push("collision", "collision/child.txt");
+      writeFileSync(contractPath, `${JSON.stringify(contract, null, 2)}\n`);
+
+      expect(() => stageHub(output, sourceRoot)).toThrow("file/directory destination collision");
+      expect(readdirSync(output)).toEqual([]);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test("refuses changed immutable publication bytes before creating an output", () => {
+    const base = temporaryDirectory("kingdom-stage-immutable-");
+    try {
+      const sourceRoot = join(base, "source");
+      const output = join(base, "output");
+      mkdirSync(output);
+      makeCompleteSource(sourceRoot);
+      writeFileSync(join(sourceRoot, "references", "geometry-grammar.md"), "coordinated rewrite");
+
+      expect(() => stageHub(output, sourceRoot)).toThrow("immutable publication gate failed");
+      expect(readdirSync(output)).toEqual([]);
     } finally {
       rmSync(base, { recursive: true, force: true });
     }

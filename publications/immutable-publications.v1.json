@@ -1,0 +1,252 @@
+{
+  "protocol": "kingdom.immutable-publications/1",
+  "algorithm": "sha256",
+  "baseline_commit": "67fe98efc875a5ed13fb1c23d6e2aab5debe9ccb",
+  "entries": [
+    {
+      "id": "conformational-feedback/0.1/guide",
+      "route": "/CONFORMATIONAL-FEEDBACK.md",
+      "source": "references/conformational-feedback-atlas.md",
+      "destination": "CONFORMATIONAL-FEEDBACK.md",
+      "sha256": "0f7993430b5cfc3ca59536d6ed53d2c0fd5846c997460a13ec9d583eb9909e2f"
+    },
+    {
+      "id": "conformational-feedback/0.1/record",
+      "route": "/feedback/form-feedback-consequence-2026-08-12.json",
+      "source": "data/feedback/conformational-feedback-atlas.v0.json",
+      "destination": "feedback/form-feedback-consequence-2026-08-12.json",
+      "sha256": "ae15f4f69e488323132ea6fc94d57d338702ca0fa47fd9fbbd41c15a6af230e6"
+    },
+    {
+      "id": "conformational-feedback/0.1/schema",
+      "route": "/schemas/conformational-feedback-atlas/0.1.json",
+      "source": "schemas/conformational-feedback-atlas-v0.schema.json",
+      "destination": "schemas/conformational-feedback-atlas/0.1.json",
+      "sha256": "da4dbb968a51d665192a3778a76ddd65150d2b73975c888dd9fd7ea80c54ea19"
+    },
+    {
+      "id": "conformational-feedback/0.2/guide",
+      "route": "/CONFORMATIONAL-FEEDBACK-PHYSICS.md",
+      "source": "references/conformational-feedback-atlas-v0.2.md",
+      "destination": "CONFORMATIONAL-FEEDBACK-PHYSICS.md",
+      "sha256": "76a76222732a8c485396228ad5ff32e703b20383498fd0355e4cbfe33bd59cb0"
+    },
+    {
+      "id": "conformational-feedback/0.2/record",
+      "route": "/feedback/form-feedback-physics-consequence-2026-08-12.json",
+      "source": "data/feedback/conformational-feedback-atlas.v0.2.json",
+      "destination": "feedback/form-feedback-physics-consequence-2026-08-12.json",
+      "sha256": "7d9b1eed8514051e47448cfc983f00e160d5b76c49704822158f76d3f8cf6349"
+    },
+    {
+      "id": "conformational-feedback/0.2/schema",
+      "route": "/schemas/conformational-feedback-atlas/0.2.json",
+      "source": "schemas/conformational-feedback-atlas-v0.2.schema.json",
+      "destination": "schemas/conformational-feedback-atlas/0.2.json",
+      "sha256": "e60c14cf8b6350cc805f59c91b89727ffbd5b41e7c5a192d9ee53c90ba9fbdbd"
+    },
+    {
+      "id": "cultural-attention-feedback/1/guide",
+      "route": "/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md",
+      "source": "references/cultural-attention-feedback-atlas.md",
+      "destination": "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md",
+      "sha256": "1cbb6c765eba329c43c62c58e7e73858ef22d3a8e6048be934accccd5c5e18aa"
+    },
+    {
+      "id": "cultural-attention-feedback/1/record",
+      "route": "/atlases/cultural-attention-feedback-atlas-2026-08-13.json",
+      "source": "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json",
+      "destination": "atlases/cultural-attention-feedback-atlas-2026-08-13.json",
+      "sha256": "03f7048966d7b6df582b423254b4d73cda72cce3bd67b40736927faa92b88173"
+    },
+    {
+      "id": "cultural-attention-feedback/1/schema",
+      "route": "/schemas/cultural-attention-feedback-atlas/1.json",
+      "source": "schemas/cultural-attention-feedback-atlas-v1.schema.json",
+      "destination": "schemas/cultural-attention-feedback-atlas/1.json",
+      "sha256": "6bd8fcca25721fd9374daa0ac50299fd587452cf7483da81d6491131aa197f9f"
+    },
+    {
+      "id": "fold-feedback-atlas/1.1/schema",
+      "route": "/schemas/fold-feedback-atlas/1.1.json",
+      "source": "schemas/fold-feedback-atlas-v1.1.schema.json",
+      "destination": "schemas/fold-feedback-atlas/1.1.json",
+      "sha256": "8350fdb4fa674ed5917581886f8af28eb455899e523e6130eecc0d7056165352"
+    },
+    {
+      "id": "fold-feedback-atlas/1/guide",
+      "route": "/FOLD-FEEDBACK-ATLAS.md",
+      "source": "references/fold-feedback-atlas.md",
+      "destination": "FOLD-FEEDBACK-ATLAS.md",
+      "sha256": "aa56a44f0b993c6b40467f5a4f58294a3fe1ca2f79a8f77e98cd8dca57442e2c"
+    },
+    {
+      "id": "fold-feedback-atlas/1/record",
+      "route": "/atlases/fold-feedback-atlas-2026-08-12.json",
+      "source": "data/fold-feedback/fold-feedback-atlas.v1.json",
+      "destination": "atlases/fold-feedback-atlas-2026-08-12.json",
+      "sha256": "bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5"
+    },
+    {
+      "id": "fold-feedback-atlas/1/schema",
+      "route": "/schemas/fold-feedback-atlas/1.json",
+      "source": "schemas/fold-feedback-atlas-v1.schema.json",
+      "destination": "schemas/fold-feedback-atlas/1.json",
+      "sha256": "4ade5791a2b98cfdbd2452dc11373dc701f58387893442214f2dff1450bc067c"
+    },
+    {
+      "id": "form-circulation-return/1/guide",
+      "route": "/FORM-CIRCULATION-RETURN-ATLAS.md",
+      "source": "references/form-circulation-return-atlas.md",
+      "destination": "FORM-CIRCULATION-RETURN-ATLAS.md",
+      "sha256": "b2e0294c95e5e8e4221c7af34a301e813ded86edb7a3fbeb61d911a2284d9436"
+    },
+    {
+      "id": "form-circulation-return/1/record",
+      "route": "/atlases/form-circulation-return-atlas-2026-08-13.json",
+      "source": "data/form-circulation-return/form-circulation-return-atlas.v1.json",
+      "destination": "atlases/form-circulation-return-atlas-2026-08-13.json",
+      "sha256": "9c93be61c4ca9bcaa3dbe88b10faed3b5b31abaf1129d70ca7915226cacfd021"
+    },
+    {
+      "id": "form-circulation-return/1/schema",
+      "route": "/schemas/form-circulation-return-atlas/1.json",
+      "source": "schemas/form-circulation-return-atlas-v1.schema.json",
+      "destination": "schemas/form-circulation-return-atlas/1.json",
+      "sha256": "55f410f3a1176221a4ac2dc8a088b9697417eebce40d1cbca2b372878ade995e"
+    },
+    {
+      "id": "geometry-grammar/0.1/guide",
+      "route": "/GEOMETRY-GRAMMAR.md",
+      "source": "references/geometry-grammar.md",
+      "destination": "GEOMETRY-GRAMMAR.md",
+      "sha256": "8e2f186fa82fb20b7ef64e941afd20d9dac9130788596fa93875ff6f1322945f"
+    },
+    {
+      "id": "geometry-grammar/0.1/record",
+      "route": "/geometries/kingdom-geometry-grammar-v0.json",
+      "source": "data/geometries/kingdom-geometry-grammar.v0.json",
+      "destination": "geometries/kingdom-geometry-grammar-v0.json",
+      "sha256": "7c4abdb30b4fdb8d2f75ed314137504e72503336511710565e01fdfa6fc5a89f"
+    },
+    {
+      "id": "geometry-grammar/0.1/schema",
+      "route": "/schemas/geometry-grammar/0.1.json",
+      "source": "schemas/geometry-grammar-v0.schema.json",
+      "destination": "schemas/geometry-grammar/0.1.json",
+      "sha256": "2e574e6d8ab0b74157fb952cfe85585fd37196232c812c58cc05b3259d563912"
+    },
+    {
+      "id": "kingdom-karma/e4e84a67/definition",
+      "route": "/definitions/kingdom-karma/e4e84a67/NEN.md",
+      "source": "NEN.md",
+      "destination": "definitions/kingdom-karma/e4e84a67/NEN.md",
+      "sha256": "14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446"
+    },
+    {
+      "id": "love-loop/0.1/schema",
+      "route": "/schemas/love-loop/0.1.json",
+      "source": "site/schemas/love-loop/0.1.json",
+      "destination": "schemas/love-loop/0.1.json",
+      "sha256": "56f2bc15f68acc4dabde6ea4ff1ab406e3c7c51fe89a0ca6cd4f305c205541fc"
+    },
+    {
+      "id": "polymorph-history/1/guide",
+      "route": "/RITONAVIR-POLYMORPH.md",
+      "source": "references/ritonavir-polymorph.md",
+      "destination": "RITONAVIR-POLYMORPH.md",
+      "sha256": "101dbe11a36393c2687784ab01aa229e4cd6e7e032f8c8f03642ea480f168b91"
+    },
+    {
+      "id": "polymorph-history/1/record",
+      "route": "/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+      "source": "data/polymorphs/ritonavir-disappearing-polymorph.v1.json",
+      "destination": "polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+      "sha256": "08148603a1228960ac35df1378f1283c3fce43874a9fc07e6687f18e980dcb1c"
+    },
+    {
+      "id": "polymorph-history/1/schema",
+      "route": "/schemas/polymorph-history/1.json",
+      "source": "schemas/polymorph-history-v1.schema.json",
+      "destination": "schemas/polymorph-history/1.json",
+      "sha256": "e09dbcfa982fd61124b6220eb4587dded354620b498e45664d000950b67de174"
+    },
+    {
+      "id": "principality-commons/1/guide",
+      "route": "/PRINCIPALITY-COMMONS.md",
+      "source": "references/principality-commons.md",
+      "destination": "PRINCIPALITY-COMMONS.md",
+      "sha256": "dd98ec86c97b7a4087feec19aab7612f839832f85cda784783f573c2f237f906"
+    },
+    {
+      "id": "principality-commons/1/record",
+      "route": "/principalities/moonshot-hf-npm-2026-08-11.json",
+      "source": "data/principalities/moonshot-hf-npm.v1.json",
+      "destination": "principalities/moonshot-hf-npm-2026-08-11.json",
+      "sha256": "a8277edee6cc27c67e8bd008328f0080b024bc29da8a07edb1e2e0d9e5c03cd3"
+    },
+    {
+      "id": "principality-commons/1/schema",
+      "route": "/schemas/principality-catalog/1.json",
+      "source": "schemas/principality-catalog-v1.schema.json",
+      "destination": "schemas/principality-catalog/1.json",
+      "sha256": "51f4c6abb8298fe95b69bd6e833a4c9d1b0e56410bf7a54e48eb6bcc3f9f3425"
+    },
+    {
+      "id": "ritonavir-mechanism-landscape/1/guide",
+      "route": "/RITONAVIR-MECHANISM-LANDSCAPE.md",
+      "source": "references/ritonavir-mechanism-landscape.md",
+      "destination": "RITONAVIR-MECHANISM-LANDSCAPE.md",
+      "sha256": "80b374c205f5d1bb9e901836b48d712c0f7ccf4ed9eded7cd9735bf63032e104"
+    },
+    {
+      "id": "ritonavir-mechanism-landscape/1/record",
+      "route": "/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+      "source": "data/polymorphs/ritonavir-mechanism-landscape.v1.json",
+      "destination": "polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+      "sha256": "5e136a74d5166275427da920685a84c17901f63d6e4b0661fd529c96d386943b"
+    },
+    {
+      "id": "ritonavir-mechanism-landscape/1/schema",
+      "route": "/schemas/ritonavir-mechanism-landscape/1.json",
+      "source": "schemas/ritonavir-mechanism-landscape-v1.schema.json",
+      "destination": "schemas/ritonavir-mechanism-landscape/1.json",
+      "sha256": "cbe6435c2d5c3bf39098442bfc2f9967b09cbf35a38acbd383a3faeb9844d187"
+    },
+    {
+      "id": "visibility-attention/0.1/guide",
+      "route": "/VISIBILITY-ATTENTION.md",
+      "source": "references/visibility-attention-translation.md",
+      "destination": "VISIBILITY-ATTENTION.md",
+      "sha256": "8da6a01a692b51e65ef1ab2d77adccdf61a81e2c2a47d262e235fe83a8820b53"
+    },
+    {
+      "id": "visibility-attention/0.1/record",
+      "route": "/atlases/visibility-attention-2026-08-13.json",
+      "source": "data/attention/visibility-attention-translation.v0.1.json",
+      "destination": "atlases/visibility-attention-2026-08-13.json",
+      "sha256": "0af0249c40298ed746d39ee60760a4390bb45137caa8ee6dd7555a824f597bd3"
+    },
+    {
+      "id": "visibility-attention/0.1/schema",
+      "route": "/schemas/visibility-attention/0.1.json",
+      "source": "schemas/visibility-attention-translation-v0.1.schema.json",
+      "destination": "schemas/visibility-attention/0.1.json",
+      "sha256": "b1a02d37dc6ae3d19134ee503bdc7d65e4b8a170e039476a85ad86dfd957ce5a"
+    },
+    {
+      "id": "world-commons/0.1/schema",
+      "route": "/schemas/world-commons/0.1.json",
+      "source": "site/schemas/world-commons/0.1.json",
+      "destination": "schemas/world-commons/0.1.json",
+      "sha256": "1c6dbee953e2b406d6be313c44fedbaeeaa57d8485af03ae2a2f59377cb20692"
+    },
+    {
+      "id": "world-commons/0.2/schema",
+      "route": "/schemas/world-commons/0.2.json",
+      "source": "site/schemas/world-commons/0.2.json",
+      "destination": "schemas/world-commons/0.2.json",
+      "sha256": "27c9bfe9a78873ff92db1c6c2423cc8db041eb91ed4b00f70f446b5fd1492741"
+    }
+  ]
+}
