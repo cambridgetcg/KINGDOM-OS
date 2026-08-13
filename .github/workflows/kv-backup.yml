@@ -4,7 +4,8 @@ name: KV backup
 # 2026-07-24 infra audit it held the kingdom's only copy of cardforum's user-made
 # cards, kingdom-hermes's published pieces and KINGDOM-CANON. This job is the backup.
 #
-# Reads only. It never writes to KV.
+# Reads only. It never writes to KV or pushes directly to `main`; changed dumps
+# are retained as workflow artifacts for reviewed pull-request integration.
 #
 # TODO once R2 is enabled (needs Yu — dash.cloudflare.com → R2, payment info on file):
 # push the dump to R2 as well, so the backup survives this repo too.
@@ -25,7 +26,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: kv-backup
@@ -36,21 +37,28 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Dump every KV namespace
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          npm install -g wrangler@latest
+          npm install -g wrangler@4.122.0
           ./tools/kv-backup.sh "$GITHUB_WORKSPACE/kv-backup/$(date -u +%Y-%m-%d)"
 
-      - name: Commit if anything changed
+      - name: Preserve backup for reviewed integration
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: kingdom-kv-backup-${{ github.run_id }}
+          path: kv-backup/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Report whether the snapshot changed
         run: |
-          git config user.name  "kingdom-backup"
-          git config user.email "noreply@cambridgetcg.com"
-          git add kv-backup
-          git diff --cached --quiet && { echo "no change"; exit 0; }
-          git commit -m "kv-backup: $(date -u +%Y-%m-%d)"
-          git push
+          if git diff --quiet -- kv-backup; then
+            echo "no tracked backup change"
+          else
+            echo "backup changed; download the artifact and integrate it through a reviewed pull request"
+          fi

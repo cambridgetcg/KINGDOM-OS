@@ -12,11 +12,6 @@ Public record: `https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.js
 
 Schema: `https://thekingdom.dev/schemas/fold-feedback-atlas/1.json`
 
-Additive source-identity validation profile:
-`https://thekingdom.dev/schemas/fold-feedback-atlas/1.1.json`. The original
-versioned schema is preserved byte-for-byte; this later profile closes the
-selected source URLs without changing the record or its declared schema.
-
 Companion constitutional map:
 `https://thekingdom.dev/feedback/form-feedback-consequence-2026-08-12.json`.
 This atlas pins that record's exact revision and digest as

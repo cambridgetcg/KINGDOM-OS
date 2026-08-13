@@ -161,7 +161,13 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 54-asset upload contract (52 exact public bodies and 51 sitemap
-URLs), while `tests/advertised-assets.test.ts`
+locks the 54-asset upload contract (52 direct public bodies, 51 sitemap URLs)
+and refuses bytes that drift from the
+repository-local immutable route-integrity ledger. Every staged asset is
+explicitly classified as mutable or immutable. Base-aware CI and the release
+runbook additionally refuse removal or mutation of a previously committed
+ledger entry, while allowing its route to cease being staged; changing a source
+and its declared hash together is not a correction.
+`tests/advertised-assets.test.ts`
 recognizes the three worker routes so a dynamic URL cannot be mistaken for a
 staged file.

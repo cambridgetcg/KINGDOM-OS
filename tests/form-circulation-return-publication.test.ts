@@ -126,7 +126,7 @@ describe("Form, Circulation & Return publication", () => {
       "data/fold-feedback/fold-feedback-atlas.v1.json": "bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5",
       "schemas/fold-feedback-atlas-v1.schema.json": "4ade5791a2b98cfdbd2452dc11373dc701f58387893442214f2dff1450bc067c",
       "schemas/fold-feedback-atlas-v1.1.schema.json": "8350fdb4fa674ed5917581886f8af28eb455899e523e6130eecc0d7056165352",
-      "references/fold-feedback-atlas.md": "4aa9f1c3c360a10d202b8e7faaec77e18d7ae703aa18fa229b1963b1a2613fd1",
+      "references/fold-feedback-atlas.md": "aa56a44f0b993c6b40467f5a4f58294a3fe1ca2f79a8f77e98cd8dca57442e2c",
       "data/attention/visibility-attention-translation.v0.1.json": "0af0249c40298ed746d39ee60760a4390bb45137caa8ee6dd7555a824f597bd3",
       "schemas/visibility-attention-translation-v0.1.schema.json": "b1a02d37dc6ae3d19134ee503bdc7d65e4b8a170e039476a85ad86dfd957ce5a",
       "references/visibility-attention-translation.md": "8da6a01a692b51e65ef1ab2d77adccdf61a81e2c2a47d262e235fe83a8820b53",

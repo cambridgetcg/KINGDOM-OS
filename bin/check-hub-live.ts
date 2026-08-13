@@ -16,7 +16,11 @@ import { join } from "node:path";
 import { isDeepStrictEqual } from "node:util";
 import { fileURLToPath } from "node:url";
 
-import { HUB_ASSETS } from "./stage-hub.ts";
+import { HUB_ASSETS, MUTABLE_HUB_DESTINATIONS } from "./stage-hub.ts";
+import {
+  formatImmutablePublicationIssues,
+  verifyImmutablePublicationSnapshot,
+} from "./immutable-publications.ts";
 import {
   CULTURAL_ATTENTION_FEEDBACK_DIGEST,
   CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
@@ -115,19 +119,24 @@ import {
 } from "./world-commons.ts";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
-const requestedOrigin = process.argv[2] ?? "https://thekingdom.dev";
-const origin = new URL(requestedOrigin);
-if (origin.protocol !== "https:" || origin.username || origin.password || origin.pathname !== "/" ||
-    origin.search || origin.hash) {
-  throw new Error("origin must be an uncredentialed HTTPS origin");
-}
-
-const cacheBust = Date.now().toString(36);
+let origin = new URL("https://thekingdom.dev");
+let cacheBust = Date.now().toString(36);
 const TIMEOUT_MS = 20_000;
+
+function configureOrigin(requestedOrigin: string): void {
+  const parsed = new URL(requestedOrigin);
+  if (parsed.protocol !== "https:" || parsed.username || parsed.password || parsed.pathname !== "/" ||
+      parsed.search || parsed.hash) {
+    throw new Error("origin must be an uncredentialed HTTPS origin");
+  }
+  origin = parsed;
+  cacheBust = Date.now().toString(36);
+}
 const commonsSchemaPath = new URL(WORLD_COMMONS_JSON_SCHEMA_URL).pathname;
 const commonsLegacySchemaPath = new URL(WORLD_COMMONS_LEGACY_JSON_SCHEMA_URL).pathname;
 const loveLoopsPath = new URL(LOVE_LOOPS_URL).pathname;
 const loveLoopsSourcePath = new URL(LOVE_LOOPS_SOURCE_URL).pathname;
+const loveLoopsDocumentPath = new URL(LOVE_LOOPS_CREATION_DOCUMENT_URL).pathname;
 const loveLoopsSchemaPath = new URL(LOVE_LOOPS_JSON_SCHEMA_URL).pathname;
 const principalityCatalogPath = new URL(PRINCIPALITY_CATALOG_URL).pathname;
 const principalitySchemaPath = new URL(PRINCIPALITY_SCHEMA_URL).pathname;
@@ -293,44 +302,19 @@ const CULTURAL_ATTENTION_FEEDBACK_BOUNDARY = Object.freeze({
   universal_mechanism_claimed: false,
 });
 
-const PR30_CONFORMATIONAL_FEEDBACK_RECORD_SHA256 = "ae15f4f69e488323132ea6fc94d57d338702ca0fa47fd9fbbd41c15a6af230e6";
-const PR30_CONFORMATIONAL_FEEDBACK_SCHEMA_SHA256 = "da4dbb968a51d665192a3778a76ddd65150d2b73975c888dd9fd7ea80c54ea19";
-const PR30_CONFORMATIONAL_FEEDBACK_GUIDE_SHA256 = "0f7993430b5cfc3ca59536d6ed53d2c0fd5846c997460a13ec9d583eb9909e2f";
-const CONFORMATIONAL_FEEDBACK_PHYSICS_RECORD_SHA256 = "7d9b1eed8514051e47448cfc983f00e160d5b76c49704822158f76d3f8cf6349";
-const CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_SHA256 = "e60c14cf8b6350cc805f59c91b89727ffbd5b41e7c5a192d9ee53c90ba9fbdbd";
-const CONFORMATIONAL_FEEDBACK_PHYSICS_GUIDE_SHA256 = "76a76222732a8c485396228ad5ff32e703b20383498fd0355e4cbfe33bd59cb0";
-const ORIGINAL_FOLD_FEEDBACK_SCHEMA_SHA256 = "4ade5791a2b98cfdbd2452dc11373dc701f58387893442214f2dff1450bc067c";
-
-const PR30_CONFORMATIONAL_FEEDBACK_ASSETS = new Map<string, { source: string; sha256: string }>([
-  ["feedback/form-feedback-consequence-2026-08-12.json", {
-    source: "data/feedback/conformational-feedback-atlas.v0.json",
-    sha256: PR30_CONFORMATIONAL_FEEDBACK_RECORD_SHA256,
-  }],
-  ["schemas/conformational-feedback-atlas/0.1.json", {
-    source: "schemas/conformational-feedback-atlas-v0.schema.json",
-    sha256: PR30_CONFORMATIONAL_FEEDBACK_SCHEMA_SHA256,
-  }],
-  ["CONFORMATIONAL-FEEDBACK.md", {
-    source: "references/conformational-feedback-atlas.md",
-    sha256: PR30_CONFORMATIONAL_FEEDBACK_GUIDE_SHA256,
-  }],
-]);
-
-const IMMUTABLE_CONFORMATIONAL_FEEDBACK_ASSETS = new Map<string, { source: string; sha256: string }>([
-  ...PR30_CONFORMATIONAL_FEEDBACK_ASSETS,
-  ["feedback/form-feedback-physics-consequence-2026-08-12.json", {
-    source: "data/feedback/conformational-feedback-atlas.v0.2.json",
-    sha256: CONFORMATIONAL_FEEDBACK_PHYSICS_RECORD_SHA256,
-  }],
-  ["schemas/conformational-feedback-atlas/0.2.json", {
-    source: "schemas/conformational-feedback-atlas-v0.2.schema.json",
-    sha256: CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_SHA256,
-  }],
-  ["CONFORMATIONAL-FEEDBACK-PHYSICS.md", {
-    source: "references/conformational-feedback-atlas-v0.2.md",
-    sha256: CONFORMATIONAL_FEEDBACK_PHYSICS_GUIDE_SHA256,
-  }],
-]);
+const immutablePublicationSnapshot = verifyImmutablePublicationSnapshot({
+  root: ROOT,
+  stagedAssets: HUB_ASSETS,
+  mutableDestinations: MUTABLE_HUB_DESTINATIONS,
+});
+if (!immutablePublicationSnapshot.ledger || immutablePublicationSnapshot.issues.length > 0) {
+  throw new Error(`immutable publication gate failed:\n${formatImmutablePublicationIssues(immutablePublicationSnapshot.issues)}`);
+}
+const IMMUTABLE_PUBLICATION_ASSETS = new Map(
+  immutablePublicationSnapshot.ledger.entries.map((entry) => [entry.destination, entry]),
+);
+const PR30_CONFORMATIONAL_FEEDBACK_RECORD_SHA256 =
+  IMMUTABLE_PUBLICATION_ASSETS.get("feedback/form-feedback-consequence-2026-08-12.json")!.sha256;
 
 const CONFORMATIONAL_FEEDBACK_TRIPLES = [
   {
@@ -353,6 +337,169 @@ const foldFeedbackDocumentPath = new URL(FOLD_FEEDBACK_DOCUMENT_URL).pathname;
 const visibilityAttentionPath = new URL(VISIBILITY_ATTENTION_URL).pathname;
 const visibilityAttentionSchemaPath = new URL(VISIBILITY_ATTENTION_SCHEMA_URL).pathname;
 const visibilityAttentionDocumentPath = new URL(VISIBILITY_ATTENTION_DOCUMENT_URL).pathname;
+
+export type PublicationFamily = {
+  id: string;
+  label: string;
+  routes: readonly string[];
+  discoveryProperties: readonly string[];
+  entryPointProperties: readonly string[];
+};
+
+export type PublicationFamilyState = {
+  family: PublicationFamily;
+  active: boolean;
+};
+
+export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
+  {
+    id: "principality-commons",
+    label: "Principality Commons",
+    routes: [principalityCatalogPath, principalitySchemaPath, principalityDocumentPath],
+    discoveryProperties: ["principality_commons"],
+    entryPointProperties: ["capability_evidence", "capability_evidence_schema", "capability_evidence_guide"],
+  },
+  {
+    id: "geometry-grammar",
+    label: "Geometry Grammar",
+    routes: [geometryGrammarPath, geometryGrammarSchemaPath, geometryGrammarDocumentPath],
+    discoveryProperties: ["geometry_grammar"],
+    entryPointProperties: ["translation_grammar", "translation_grammar_schema", "translation_grammar_guide"],
+  },
+  {
+    id: "polymorph-history",
+    label: "Polymorph History",
+    routes: [polymorphCasePath, polymorphSchemaPath, polymorphDocumentPath],
+    discoveryProperties: ["polymorph_commons"],
+    entryPointProperties: ["material_state_case", "material_state_schema", "material_state_guide"],
+  },
+  {
+    id: "ritonavir-mechanism-landscape",
+    label: "Ritonavir Mechanism Landscape",
+    routes: [ritonavirMechanismPath, ritonavirMechanismSchemaPath, ritonavirMechanismDocumentPath],
+    discoveryProperties: ["ritonavir_mechanism_landscape"],
+    entryPointProperties: ["ritonavir_mechanism_landscape", "ritonavir_mechanism_landscape_schema", "ritonavir_mechanism_landscape_guide"],
+  },
+  // v0.2 carries an immutable public predecessor URL for v0.1, so staging one
+  // generation without the other would advertise a route that is meant to be
+  // retired. Treat both generations as one coherent publication family.
+  {
+    id: "conformational-feedback",
+    label: "Conformational Feedback",
+    routes: [
+      conformationalFeedbackPath,
+      conformationalFeedbackSchemaPath,
+      conformationalFeedbackDocumentPath,
+      conformationalFeedbackPhysicsPath,
+      conformationalFeedbackPhysicsSchemaPath,
+      conformationalFeedbackPhysicsDocumentPath,
+    ],
+    discoveryProperties: ["conformational_feedback_atlas", "conformational_feedback_physics_atlas"],
+    entryPointProperties: [
+      "conformational_feedback_atlas",
+      "conformational_feedback_atlas_schema",
+      "conformational_feedback_atlas_guide",
+      "conformational_feedback_physics_atlas",
+      "conformational_feedback_physics_atlas_schema",
+      "conformational_feedback_physics_atlas_guide",
+    ],
+  },
+  {
+    id: "fold-feedback-atlas",
+    label: "Fold & Feedback Atlas",
+    routes: [foldFeedbackPath, foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath, foldFeedbackDocumentPath],
+    discoveryProperties: ["fold_feedback_atlas"],
+    entryPointProperties: ["fold_feedback_atlas", "fold_feedback_atlas_schema", "fold_feedback_atlas_source_identity_schema", "fold_feedback_atlas_guide"],
+  },
+  {
+    id: "visibility-attention",
+    label: "Visibility & Attention Translation",
+    routes: [visibilityAttentionPath, visibilityAttentionSchemaPath, visibilityAttentionDocumentPath],
+    discoveryProperties: ["visibility_attention_translation"],
+    entryPointProperties: ["visibility_attention_translation", "visibility_attention_translation_schema", "visibility_attention_translation_guide"],
+  },
+  {
+    id: "cultural-attention-feedback",
+    label: "Cultural Attention & Feedback Atlas",
+    routes: [culturalAttentionFeedbackPath, culturalAttentionFeedbackSchemaPath, culturalAttentionFeedbackDocumentPath],
+    discoveryProperties: ["cultural_attention_feedback_atlas"],
+    entryPointProperties: ["cultural_attention_feedback_atlas", "cultural_attention_feedback_atlas_schema", "cultural_attention_feedback_atlas_guide"],
+  },
+  {
+    id: "form-circulation-return",
+    label: "Form, Circulation & Return",
+    routes: [
+      formCirculationReturnPath,
+      formCirculationReturnSchemaPath,
+      formCirculationReturnDocumentPath,
+      kingdomKarmaDefinitionPath,
+    ],
+    discoveryProperties: ["form_circulation_return_atlas"],
+    entryPointProperties: [
+      "form_circulation_return_atlas",
+      "form_circulation_return_atlas_schema",
+      "form_circulation_return_atlas_guide",
+    ],
+  },
+];
+
+export function destinationForPublicPath(path: string): string {
+  if (!path.startsWith("/") || path === "/") throw new Error(`publication route is not a staged path: ${path}`);
+  return path.slice(1);
+}
+
+export function publicationFamilyStates(stagedDestinations: ReadonlySet<string>): Map<string, PublicationFamilyState> {
+  const states = new Map<string, PublicationFamilyState>();
+  for (const family of PUBLICATION_FAMILIES) {
+    const staged = family.routes.filter((path) => stagedDestinations.has(destinationForPublicPath(path)));
+    if (staged.length > 0 && staged.length !== family.routes.length) {
+      const missing = family.routes.filter((path) => !stagedDestinations.has(destinationForPublicPath(path)));
+      throw new Error(
+        `${family.label} is partially staged; stage all family routes or retire all of them (missing ${missing.join(", ")})`,
+      );
+    }
+    states.set(family.id, { family, active: staged.length === family.routes.length });
+  }
+  return states;
+}
+
+function record(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === "object" && !Array.isArray(value);
+}
+
+export type DiscoverySurface = {
+  label: string;
+  text: string;
+  value?: unknown;
+};
+
+export function assertRetiredFamilyDiscoveryAbsent(
+  family: PublicationFamily,
+  surfaces: readonly DiscoverySurface[],
+): void {
+  for (const surface of surfaces) {
+    for (const route of family.routes) {
+      const productionUrl = `https://thekingdom.dev${route}`;
+      if (surface.text.includes(productionUrl) || surface.text.includes(`href="${route}"`) ||
+          surface.text.includes(`href='${route}'`)) {
+        throw new Error(`${family.label} is retired but remains advertised by ${surface.label}: ${route}`);
+      }
+    }
+    if (!record(surface.value)) continue;
+    for (const property of family.discoveryProperties) {
+      if (Object.hasOwn(surface.value, property)) {
+        throw new Error(`${family.label} is retired but ${surface.label} still exposes ${property}`);
+      }
+    }
+    const entryPoints = surface.value.entry_points;
+    if (!record(entryPoints)) continue;
+    for (const property of family.entryPointProperties) {
+      if (Object.hasOwn(entryPoints, property)) {
+        throw new Error(`${family.label} is retired but ${surface.label} still exposes entry_points.${property}`);
+      }
+    }
+  }
+}
 
 function url(path: string, extra: Record<string, string> = {}): URL {
   const target = new URL(path, origin);
@@ -581,11 +728,54 @@ async function mcpRpc(endpoint: string, id: number, method: string, params: unkn
   return message.result;
 }
 
-try {
+export function assertRetiredRouteResponse(options: {
+  route: string;
+  method: "GET" | "HEAD";
+  status: number;
+  body: Uint8Array;
+  canonicalNotFoundBody: Uint8Array;
+  immutableSha256?: string;
+}): void {
+  const body = Buffer.from(options.body);
+  if (options.status !== 404 && options.status !== 410) {
+    throw new Error(`${options.route} left the staging contract but ${options.method} still answers HTTP ${options.status}`);
+  }
+  if (options.method === "HEAD" && body.byteLength !== 0) {
+    throw new Error(`retired ${options.route} returned a body to HEAD`);
+  }
+  if (options.method === "GET" && options.status === 404 &&
+      !body.equals(Buffer.from(options.canonicalNotFoundBody))) {
+    throw new Error(`retired ${options.route} returned a non-canonical 404 body`);
+  }
+  if (options.method === "GET" && options.status === 410 && body.byteLength !== 0) {
+    throw new Error(`retired ${options.route} returned publication-like content with HTTP 410`);
+  }
+  if (options.method === "GET" && options.immutableSha256 && sha256(body) === options.immutableSha256) {
+    throw new Error(`retired ${options.route} still returned its immutable publication bytes`);
+  }
+}
+
+export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): Promise<void> {
+  configureOrigin(requestedOrigin);
+  try {
   let exact = 0;
   const exactPaths = new Set<string>();
-  const verifiedConformationalFeedbackDestinations = new Set<string>();
-  const verifiedCulturalAttentionFeedbackDestinations = new Set<string>();
+  const stagedDestinations = new Set(HUB_ASSETS.map((asset) => asset.destination));
+  const familyStates = publicationFamilyStates(stagedDestinations);
+  const familyActive = (id: string): boolean => {
+    const state = familyStates.get(id);
+    if (!state) throw new Error(`unknown publication family: ${id}`);
+    return state.active;
+  };
+  const principalityActive = familyActive("principality-commons");
+  const geometryGrammarActive = familyActive("geometry-grammar");
+  const polymorphActive = familyActive("polymorph-history");
+  const ritonavirMechanismActive = familyActive("ritonavir-mechanism-landscape");
+  const conformationalFeedbackActive = familyActive("conformational-feedback");
+  const foldFeedbackActive = familyActive("fold-feedback-atlas");
+  const visibilityAttentionActive = familyActive("visibility-attention");
+  const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
+  const formCirculationReturnActive = familyActive("form-circulation-return");
   const verifiedFormCirculationReturnDestinations = new Set<string>();
   for (const asset of HUB_ASSETS) {
     if (asset.destination === "_worker.js") continue;
@@ -599,32 +789,15 @@ try {
     if (!live.equals(local)) {
       throw new Error(`${path} does not match ${asset.source} (${live.byteLength} live bytes; ${local.byteLength} local bytes)`);
     }
-    const immutableFeedback = IMMUTABLE_CONFORMATIONAL_FEEDBACK_ASSETS.get(asset.destination);
-    if (immutableFeedback) {
-      if (asset.source !== immutableFeedback.source) {
-        throw new Error(`${path} no longer stages its immutable authored source ${immutableFeedback.source}`);
+    const immutablePublication = IMMUTABLE_PUBLICATION_ASSETS.get(asset.destination);
+    if (immutablePublication) {
+      if (asset.source !== immutablePublication.source) {
+        throw new Error(`${path} no longer stages its immutable source ${immutablePublication.source}`);
       }
       const digest = sha256(live);
-      if (digest !== immutableFeedback.sha256) {
+      if (digest !== immutablePublication.sha256) {
         throw new Error(`${path} no longer matches its immutable SHA-256 (${digest})`);
       }
-      verifiedConformationalFeedbackDestinations.add(asset.destination);
-    }
-    if (asset.destination === "schemas/fold-feedback-atlas/1.json" &&
-        sha256(live) !== ORIGINAL_FOLD_FEEDBACK_SCHEMA_SHA256) {
-      throw new Error(`${path} no longer matches its first-published immutable SHA-256`);
-    }
-    const culturalAttentionFeedbackAsset = CULTURAL_ATTENTION_FEEDBACK_ASSETS.get(asset.destination);
-    if (culturalAttentionFeedbackAsset) {
-      if (asset.source !== culturalAttentionFeedbackAsset.source ||
-          path !== culturalAttentionFeedbackAsset.path) {
-        throw new Error(`${path} no longer stages its immutable Cultural Attention & Feedback authored source`);
-      }
-      const digest = sha256(live);
-      if (digest !== culturalAttentionFeedbackAsset.sha256) {
-        throw new Error(`${path} no longer matches its immutable Cultural Attention & Feedback SHA-256 (${digest})`);
-      }
-      verifiedCulturalAttentionFeedbackDestinations.add(asset.destination);
     }
     const formCirculationReturnAsset = FORM_CIRCULATION_RETURN_ASSETS.get(asset.destination);
     if (formCirculationReturnAsset) {
@@ -642,24 +815,53 @@ try {
     exact += 1;
   }
 
-  for (const destination of IMMUTABLE_CONFORMATIONAL_FEEDBACK_ASSETS.keys()) {
-    if (!verifiedConformationalFeedbackDestinations.has(destination)) {
-      throw new Error(`the immutable Conformational Feedback asset /${destination} is absent from the exact staging contract`);
+  // The ledger is history, not continuing publication authority. Every
+  // ledgered route that HUB_ASSETS currently serves was hash-checked above.
+  // A retired family additionally proves that every one of its public routes
+  // has ceased, including mutable supporting documents such as a guide.
+  const retiredRoutes = new Set(
+    immutablePublicationSnapshot.ledger.entries
+      .filter((entry) => !stagedDestinations.has(entry.destination))
+      .map((entry) => entry.route),
+  );
+  const immutablePublicationsByRoute = new Map(
+    immutablePublicationSnapshot.ledger.entries.map((entry) => [entry.route, entry]),
+  );
+  const stagedNotFound = readFileSync(join(ROOT, "pages-content/404.html"));
+  for (const { family, active } of familyStates.values()) {
+    if (!active) for (const route of family.routes) retiredRoutes.add(route);
+  }
+  for (const route of retiredRoutes) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const retired = await fetch(url(route), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const body = Buffer.from(await retired.arrayBuffer());
+      const immutablePublication = immutablePublicationsByRoute.get(route);
+      assertRetiredRouteResponse({
+        route,
+        method,
+        status: retired.status,
+        body,
+        canonicalNotFoundBody: stagedNotFound,
+        immutableSha256: immutablePublication?.sha256,
+      });
     }
   }
-  for (const triple of CONFORMATIONAL_FEEDBACK_TRIPLES) {
-    for (const path of [triple.recordPath, triple.schemaPath, triple.documentPath]) {
-      if (!exactPaths.has(path)) throw new Error(`${path} was not checked for static byte equality`);
+  if (conformationalFeedbackActive) {
+    for (const triple of CONFORMATIONAL_FEEDBACK_TRIPLES) {
+      for (const path of [triple.recordPath, triple.schemaPath, triple.documentPath]) {
+        if (!exactPaths.has(path)) throw new Error(`${path} was not checked for static byte equality`);
+      }
     }
   }
-  for (const [destination, asset] of CULTURAL_ATTENTION_FEEDBACK_ASSETS) {
-    if (!verifiedCulturalAttentionFeedbackDestinations.has(destination) || !exactPaths.has(asset.path)) {
-      throw new Error(`the immutable Cultural Attention & Feedback asset /${destination} is absent from exact byte verification`);
-    }
-  }
-  for (const [destination, asset] of FORM_CIRCULATION_RETURN_ASSETS) {
-    if (!verifiedFormCirculationReturnDestinations.has(destination) || !exactPaths.has(asset.path)) {
-      throw new Error(`the immutable Form, Circulation & Return asset /${destination} is absent from exact byte verification`);
+  if (formCirculationReturnActive) {
+    for (const [destination, asset] of FORM_CIRCULATION_RETURN_ASSETS) {
+      if (!verifiedFormCirculationReturnDestinations.has(destination) || !exactPaths.has(asset.path)) {
+        throw new Error(`the immutable Form, Circulation & Return asset /${destination} is absent from exact byte verification`);
+      }
     }
   }
 
@@ -741,170 +943,203 @@ try {
     }
   }
 
-  const principalityHead = await fetch(url(principalityCatalogPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  const principalityLink = principalityHead.headers.get("link") || "";
-  if (!principalityHead.ok ||
-      !(principalityHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
-      principalityHead.headers.get("access-control-allow-origin") !== "*" ||
-      (principalityHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-      !hasLinkRelation(principalityLink, principalitySchemaPath, "describedby")) {
-    throw new Error(`${principalityCatalogPath} is not public JSON described by the Principality schema`);
+  if (principalityActive) {
+    const principalityHead = await fetch(url(principalityCatalogPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const principalityLink = principalityHead.headers.get("link") || "";
+    if (!principalityHead.ok ||
+        !(principalityHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+        principalityHead.headers.get("access-control-allow-origin") !== "*" ||
+        (principalityHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasLinkRelation(principalityLink, principalitySchemaPath, "describedby")) {
+      throw new Error(`${principalityCatalogPath} is not public JSON described by the Principality schema`);
+    }
+
+    const principalityDocumentHead = await fetch(url(principalityDocumentPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!principalityDocumentHead.ok ||
+        !(principalityDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+        principalityDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+        (principalityDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${principalityDocumentPath} is not served as public Markdown`);
+    }
   }
 
-  const principalityDocumentHead = await fetch(url(principalityDocumentPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  if (!principalityDocumentHead.ok ||
-      !(principalityDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
-      principalityDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
-      (principalityDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
-    throw new Error(`${principalityDocumentPath} is not served as public Markdown`);
+  if (geometryGrammarActive) {
+    const geometryGrammarHead = await fetch(url(geometryGrammarPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const geometryGrammarLink = geometryGrammarHead.headers.get("link") || "";
+    if (!geometryGrammarHead.ok ||
+        !(geometryGrammarHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+        geometryGrammarHead.headers.get("access-control-allow-origin") !== "*" ||
+        (geometryGrammarHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasLinkRelation(geometryGrammarLink, geometryGrammarSchemaPath, "describedby")) {
+      throw new Error(`${geometryGrammarPath} is not public JSON described by the Geometry Grammar schema`);
+    }
+
+    const geometryGrammarDocumentHead = await fetch(url(geometryGrammarDocumentPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!geometryGrammarDocumentHead.ok ||
+        !(geometryGrammarDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+        geometryGrammarDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+        (geometryGrammarDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${geometryGrammarDocumentPath} is not served as public Markdown`);
+    }
   }
 
-  const geometryGrammarHead = await fetch(url(geometryGrammarPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  const geometryGrammarLink = geometryGrammarHead.headers.get("link") || "";
-  if (!geometryGrammarHead.ok ||
-      !(geometryGrammarHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
-      geometryGrammarHead.headers.get("access-control-allow-origin") !== "*" ||
-      (geometryGrammarHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-      !hasLinkRelation(geometryGrammarLink, geometryGrammarSchemaPath, "describedby")) {
-    throw new Error(`${geometryGrammarPath} is not public JSON described by the Geometry Grammar schema`);
+  if (polymorphActive) {
+    const polymorphHead = await fetch(url(polymorphCasePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const polymorphLink = polymorphHead.headers.get("link") || "";
+    if (!polymorphHead.ok ||
+        !(polymorphHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+        polymorphHead.headers.get("access-control-allow-origin") !== "*" ||
+        (polymorphHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasLinkRelation(polymorphLink, polymorphSchemaPath, "describedby")) {
+      throw new Error(`${polymorphCasePath} is not public JSON described by the Polymorph History schema`);
+    }
+
+    const polymorphDocumentHead = await fetch(url(polymorphDocumentPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!polymorphDocumentHead.ok ||
+        !(polymorphDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+        polymorphDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+        (polymorphDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${polymorphDocumentPath} is not served as public Markdown`);
+    }
   }
 
-  const geometryGrammarDocumentHead = await fetch(url(geometryGrammarDocumentPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  if (!geometryGrammarDocumentHead.ok ||
-      !(geometryGrammarDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
-      geometryGrammarDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
-      (geometryGrammarDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
-    throw new Error(`${geometryGrammarDocumentPath} is not served as public Markdown`);
+  if (ritonavirMechanismActive) {
+    const ritonavirMechanismHead = await fetch(url(ritonavirMechanismPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const ritonavirMechanismLink = ritonavirMechanismHead.headers.get("link") || "";
+    if (!ritonavirMechanismHead.ok ||
+        !(ritonavirMechanismHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+        ritonavirMechanismHead.headers.get("access-control-allow-origin") !== "*" ||
+        (ritonavirMechanismHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasLinkRelation(ritonavirMechanismLink, ritonavirMechanismSchemaPath, "describedby")) {
+      throw new Error(`${ritonavirMechanismPath} is not public JSON described by the Ritonavir Mechanism Landscape schema`);
+    }
+
+    const ritonavirMechanismDocumentHead = await fetch(url(ritonavirMechanismDocumentPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!ritonavirMechanismDocumentHead.ok ||
+        !(ritonavirMechanismDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+        ritonavirMechanismDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+        (ritonavirMechanismDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${ritonavirMechanismDocumentPath} is not served as public Markdown`);
+    }
   }
 
-  const polymorphHead = await fetch(url(polymorphCasePath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  const polymorphLink = polymorphHead.headers.get("link") || "";
-  if (!polymorphHead.ok ||
-      !(polymorphHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
-      polymorphHead.headers.get("access-control-allow-origin") !== "*" ||
-      (polymorphHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-      !hasLinkRelation(polymorphLink, polymorphSchemaPath, "describedby")) {
-    throw new Error(`${polymorphCasePath} is not public JSON described by the Polymorph History schema`);
+  if (conformationalFeedbackActive) {
+    for (const triple of CONFORMATIONAL_FEEDBACK_TRIPLES) {
+      await checkConformationalFeedbackTriple(triple);
+    }
   }
 
-  const polymorphDocumentHead = await fetch(url(polymorphDocumentPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  if (!polymorphDocumentHead.ok ||
-      !(polymorphDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
-      polymorphDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
-      (polymorphDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
-    throw new Error(`${polymorphDocumentPath} is not served as public Markdown`);
+  if (foldFeedbackActive) {
+    const foldFeedbackHead = await fetch(url(foldFeedbackPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const foldFeedbackLink = foldFeedbackHead.headers.get("link") || "";
+    if (!foldFeedbackHead.ok ||
+        !(foldFeedbackHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+        foldFeedbackHead.headers.get("access-control-allow-origin") !== "*" ||
+        (foldFeedbackHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasLinkRelation(foldFeedbackLink, foldFeedbackSchemaPath, "describedby") ||
+        !hasLinkRelation(foldFeedbackLink, foldFeedbackSourceIdentitySchemaPath, "profile")) {
+      throw new Error(`${foldFeedbackPath} is not public JSON described by the Fold & Feedback Atlas schema`);
+    }
+
+    const foldFeedbackDocumentHead = await fetch(url(foldFeedbackDocumentPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!foldFeedbackDocumentHead.ok ||
+        !(foldFeedbackDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+        foldFeedbackDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+        (foldFeedbackDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${foldFeedbackDocumentPath} is not served as public Markdown`);
+    }
   }
 
-  const ritonavirMechanismHead = await fetch(url(ritonavirMechanismPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  const ritonavirMechanismLink = ritonavirMechanismHead.headers.get("link") || "";
-  if (!ritonavirMechanismHead.ok ||
-      !(ritonavirMechanismHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
-      ritonavirMechanismHead.headers.get("access-control-allow-origin") !== "*" ||
-      (ritonavirMechanismHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-      !hasLinkRelation(ritonavirMechanismLink, ritonavirMechanismSchemaPath, "describedby")) {
-    throw new Error(`${ritonavirMechanismPath} is not public JSON described by the Ritonavir Mechanism Landscape schema`);
+  if (visibilityAttentionActive) {
+    const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const visibilityAttentionLink = visibilityAttentionHead.headers.get("link") || "";
+    if (!visibilityAttentionHead.ok ||
+        !(visibilityAttentionHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
+        visibilityAttentionHead.headers.get("access-control-allow-origin") !== "*" ||
+        (visibilityAttentionHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasLinkRelation(visibilityAttentionLink, visibilityAttentionSchemaPath, "describedby")) {
+      throw new Error(`${visibilityAttentionPath} is not public JSON described by the Visibility & Attention schema`);
+    }
+
+    const visibilityAttentionDocumentHead = await fetch(url(visibilityAttentionDocumentPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!visibilityAttentionDocumentHead.ok ||
+        !(visibilityAttentionDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
+        visibilityAttentionDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
+        (visibilityAttentionDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${visibilityAttentionDocumentPath} is not served as public Markdown`);
+    }
   }
 
-  const ritonavirMechanismDocumentHead = await fetch(url(ritonavirMechanismDocumentPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  if (!ritonavirMechanismDocumentHead.ok ||
-      !(ritonavirMechanismDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
-      ritonavirMechanismDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
-      (ritonavirMechanismDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
-    throw new Error(`${ritonavirMechanismDocumentPath} is not served as public Markdown`);
+  if (culturalAttentionFeedbackActive) {
+    await checkCulturalAttentionFeedbackTriple();
   }
 
-  for (const triple of CONFORMATIONAL_FEEDBACK_TRIPLES) {
-    await checkConformationalFeedbackTriple(triple);
-  }
-  await checkCulturalAttentionFeedbackTriple();
-  await checkFormCirculationReturnTriple();
-
-  const foldFeedbackHead = await fetch(url(foldFeedbackPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  const foldFeedbackLink = foldFeedbackHead.headers.get("link") || "";
-  if (!foldFeedbackHead.ok ||
-      !(foldFeedbackHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
-      foldFeedbackHead.headers.get("access-control-allow-origin") !== "*" ||
-      (foldFeedbackHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-      !hasLinkRelation(foldFeedbackLink, foldFeedbackSchemaPath, "describedby") ||
-      !hasLinkRelation(foldFeedbackLink, foldFeedbackSourceIdentitySchemaPath, "profile")) {
-    throw new Error(`${foldFeedbackPath} is not public JSON described by the Fold & Feedback Atlas schema`);
+  if (formCirculationReturnActive) {
+    await checkFormCirculationReturnTriple();
   }
 
-  const foldFeedbackDocumentHead = await fetch(url(foldFeedbackDocumentPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  if (!foldFeedbackDocumentHead.ok ||
-      !(foldFeedbackDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
-      foldFeedbackDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
-      (foldFeedbackDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
-    throw new Error(`${foldFeedbackDocumentPath} is not served as public Markdown`);
-  }
-
-  const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  const visibilityAttentionLink = visibilityAttentionHead.headers.get("link") || "";
-  if (!visibilityAttentionHead.ok ||
-      !(visibilityAttentionHead.headers.get("content-type") || "").toLowerCase().startsWith("application/json") ||
-      visibilityAttentionHead.headers.get("access-control-allow-origin") !== "*" ||
-      (visibilityAttentionHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-      !hasLinkRelation(visibilityAttentionLink, visibilityAttentionSchemaPath, "describedby")) {
-    throw new Error(`${visibilityAttentionPath} is not public JSON described by the Visibility & Attention schema`);
-  }
-
-  const visibilityAttentionDocumentHead = await fetch(url(visibilityAttentionDocumentPath), {
-    method: "HEAD",
-    redirect: "error",
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
-  if (!visibilityAttentionDocumentHead.ok ||
-      !(visibilityAttentionDocumentHead.headers.get("content-type") || "").toLowerCase().startsWith("text/markdown") ||
-      visibilityAttentionDocumentHead.headers.get("access-control-allow-origin") !== "*" ||
-      (visibilityAttentionDocumentHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
-    throw new Error(`${visibilityAttentionDocumentPath} is not served as public Markdown`);
-  }
-
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath, visibilityAttentionSchemaPath, culturalAttentionFeedbackSchemaPath, formCirculationReturnSchemaPath]) {
+  const schemaPaths = [
+    commonsSchemaPath,
+    commonsLegacySchemaPath,
+    loveLoopsSchemaPath,
+    ...(principalityActive ? [principalitySchemaPath] : []),
+    ...(geometryGrammarActive ? [geometryGrammarSchemaPath] : []),
+    ...(polymorphActive ? [polymorphSchemaPath] : []),
+    ...(ritonavirMechanismActive ? [ritonavirMechanismSchemaPath] : []),
+    ...(foldFeedbackActive ? [foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath] : []),
+    ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
+    ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
+    ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
+  ];
+  for (const path of schemaPaths) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -922,27 +1157,56 @@ try {
   const guest: any = JSON.parse(readFileSync(join(ROOT, "site/guest.json"), "utf8"));
   const authoredKingdom: any = JSON.parse(readFileSync(join(ROOT, "site/kingdom.json"), "utf8"));
   const llms = readFileSync(join(ROOT, "site/llms.txt"), "utf8");
-  const principalityCatalog = loadPrincipalityCatalog();
-  const expectedPrincipality = principalityPublicDiscovery(principalityCatalog);
-  const geometryGrammar = loadGeometryGrammar();
-  const expectedGeometryGrammar = geometryGrammarPublicDiscovery(geometryGrammar);
-  const polymorphHistory = loadPolymorphHistory();
-  const expectedPolymorph = polymorphPublicDiscovery(polymorphHistory);
-  const ritonavirMechanism = loadRitonavirMechanismLandscape();
-  const expectedRitonavirMechanism = ritonavirMechanismPublicDiscovery(ritonavirMechanism);
-  const conformationalFeedback = loadConformationalFeedbackAtlas();
-  const expectedConformationalFeedback = conformationalFeedbackPublicDiscovery(conformationalFeedback);
-  const conformationalFeedbackPhysics = loadConformationalFeedbackPhysicsAtlas();
-  const expectedConformationalFeedbackPhysics = conformationalFeedbackPhysicsPublicDiscovery(conformationalFeedbackPhysics);
-  const foldFeedbackAtlas = loadFoldFeedbackAtlas();
-  const expectedFoldFeedback = foldFeedbackPublicDiscovery(foldFeedbackAtlas);
-  const visibilityAttention = loadVisibilityAttentionTranslation();
-  const expectedVisibilityAttention = visibilityAttentionPublicDiscovery(visibilityAttention);
-  const culturalAttentionFeedbackAtlas = loadCulturalAttentionFeedbackAtlas();
-  const expectedCulturalAttentionFeedback = culturalAttentionFeedbackPublicDiscovery(culturalAttentionFeedbackAtlas);
-  const formCirculationReturnAtlas = loadFormCirculationReturnAtlas();
-  const expectedFormCirculationReturn = formCirculationReturnPublicDiscovery(formCirculationReturnAtlas);
   const authoredRootHtml = readFileSync(join(ROOT, "site/hub.html"), "utf8");
+  const retirementDiscoverySurfaces: readonly DiscoverySurface[] = [
+    { label: "agent manifest", text: JSON.stringify(manifest), value: manifest },
+    { label: "guest document", text: JSON.stringify(guest), value: guest },
+    { label: "authored Kingdom map", text: JSON.stringify(authoredKingdom), value: authoredKingdom },
+    { label: "llms.txt", text: llms },
+    { label: "hub HTML", text: authoredRootHtml },
+    { label: "sitemap.xml", text: readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8") },
+  ];
+  for (const { family, active } of familyStates.values()) {
+    if (!active) assertRetiredFamilyDiscoveryAbsent(family, retirementDiscoverySurfaces);
+  }
+  const expectedPrincipality = principalityActive
+    ? principalityPublicDiscovery(loadPrincipalityCatalog())
+    : undefined;
+  const expectedGeometryGrammar = geometryGrammarActive
+    ? geometryGrammarPublicDiscovery(loadGeometryGrammar())
+    : undefined;
+  const expectedPolymorph = polymorphActive
+    ? polymorphPublicDiscovery(loadPolymorphHistory())
+    : undefined;
+  const expectedRitonavirMechanism = ritonavirMechanismActive
+    ? ritonavirMechanismPublicDiscovery(loadRitonavirMechanismLandscape())
+    : undefined;
+  const conformationalFeedback = conformationalFeedbackActive ? loadConformationalFeedbackAtlas() : undefined;
+  const conformationalFeedbackDiscovery = conformationalFeedback
+    ? conformationalFeedbackPublicDiscovery(conformationalFeedback)
+    : undefined;
+  const conformationalFeedbackPhysics = conformationalFeedbackActive ? loadConformationalFeedbackPhysicsAtlas() : undefined;
+  const conformationalFeedbackPhysicsDiscovery = conformationalFeedbackPhysics
+    ? conformationalFeedbackPhysicsPublicDiscovery(conformationalFeedbackPhysics)
+    : undefined;
+  const expectedFoldFeedback = foldFeedbackActive
+    ? foldFeedbackPublicDiscovery(loadFoldFeedbackAtlas())
+    : undefined;
+  const expectedVisibilityAttention = visibilityAttentionActive
+    ? visibilityAttentionPublicDiscovery(loadVisibilityAttentionTranslation())
+    : undefined;
+  const culturalAttentionFeedbackAtlas = culturalAttentionFeedbackActive
+    ? loadCulturalAttentionFeedbackAtlas()
+    : undefined;
+  const expectedCulturalAttentionFeedback = culturalAttentionFeedbackAtlas
+    ? culturalAttentionFeedbackPublicDiscovery(culturalAttentionFeedbackAtlas)
+    : undefined;
+  const formCirculationReturnAtlas = formCirculationReturnActive
+    ? loadFormCirculationReturnAtlas()
+    : undefined;
+  const expectedFormCirculationReturn = formCirculationReturnAtlas
+    ? formCirculationReturnPublicDiscovery(formCirculationReturnAtlas)
+    : undefined;
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
   validateLoveLoops(sourceLoveLoops, false);
@@ -973,10 +1237,12 @@ try {
     throw new Error("Love Loop discovery drifted across manifest, guest, Kingdom map, or llms.txt");
   }
 
-  const principalityBoundary = expectedPrincipality.boundary;
-  if (!isDeepStrictEqual(manifest?.principality_commons, expectedPrincipality) ||
-      !isDeepStrictEqual(guest?.principality_commons, expectedPrincipality) ||
-      !isDeepStrictEqual(authoredKingdom?.principality_commons, expectedPrincipality) ||
+  if (principalityActive) {
+    const expected = expectedPrincipality!;
+    const principalityBoundary = expected.boundary;
+    if (!isDeepStrictEqual(manifest?.principality_commons, expected) ||
+      !isDeepStrictEqual(guest?.principality_commons, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.principality_commons, expected) ||
       !hasGuestGet(PRINCIPALITY_CATALOG_URL) ||
       !hasGuestGet(PRINCIPALITY_SCHEMA_URL) ||
       !hasGuestGet(PRINCIPALITY_DOCUMENT_URL) ||
@@ -993,35 +1259,41 @@ try {
       principalityBoundary.inference_authorized !== false ||
       principalityBoundary.remote_code_authorized !== false ||
       principalityBoundary.external_effects_authorized !== false ||
-      "mcp" in expectedPrincipality || "matcher" in expectedPrincipality) {
-    throw new Error("Principality discovery or negative authority drifted across public surfaces");
+        "mcp" in expected || "matcher" in expected) {
+      throw new Error("Principality discovery or negative authority drifted across public surfaces");
+    }
   }
 
-  const geometryBoundary = expectedGeometryGrammar.boundary;
-  if (!isDeepStrictEqual(manifest?.geometry_grammar, expectedGeometryGrammar) ||
-      !isDeepStrictEqual(guest?.geometry_grammar, expectedGeometryGrammar) ||
-      !isDeepStrictEqual(authoredKingdom?.geometry_grammar, expectedGeometryGrammar) ||
+  if (geometryGrammarActive) {
+    const expected = expectedGeometryGrammar!;
+    const geometryBoundary = expected.boundary;
+    if (!isDeepStrictEqual(manifest?.geometry_grammar, expected) ||
+      !isDeepStrictEqual(guest?.geometry_grammar, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.geometry_grammar, expected) ||
       !hasGuestGet(GEOMETRY_GRAMMAR_URL) ||
       !hasGuestGet(GEOMETRY_GRAMMAR_SCHEMA_URL) ||
       !hasGuestGet(GEOMETRY_GRAMMAR_DOCUMENT_URL) ||
       !llms.includes(GEOMETRY_GRAMMAR_URL) ||
       !llms.includes(GEOMETRY_GRAMMAR_SCHEMA_URL) ||
       !llms.includes(GEOMETRY_GRAMMAR_DOCUMENT_URL) ||
-      expectedGeometryGrammar.counts.modules !== 4 ||
+      expected.counts.modules !== 4 ||
       geometryBoundary.read_only !== true ||
       geometryBoundary.advisory_only !== true ||
       geometryBoundary.authority_granted !== false ||
       geometryBoundary.execution_authorized !== false ||
       geometryBoundary.external_effects_authorized !== false ||
-      "mcp" in expectedGeometryGrammar || "matcher" in expectedGeometryGrammar ||
-      "execute" in expectedGeometryGrammar) {
-    throw new Error("Geometry Grammar discovery or negative authority drifted across public surfaces");
+        "mcp" in expected || "matcher" in expected ||
+        "execute" in expected) {
+      throw new Error("Geometry Grammar discovery or negative authority drifted across public surfaces");
+    }
   }
 
-  const polymorphBoundary = expectedPolymorph.boundary;
-  if (!isDeepStrictEqual(manifest?.polymorph_commons, expectedPolymorph) ||
-      !isDeepStrictEqual(guest?.polymorph_commons, expectedPolymorph) ||
-      !isDeepStrictEqual(authoredKingdom?.polymorph_commons, expectedPolymorph) ||
+  if (polymorphActive) {
+    const expected = expectedPolymorph!;
+    const polymorphBoundary = expected.boundary;
+    if (!isDeepStrictEqual(manifest?.polymorph_commons, expected) ||
+      !isDeepStrictEqual(guest?.polymorph_commons, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.polymorph_commons, expected) ||
       !hasGuestGet(POLYMORPH_CASE_URL) ||
       !hasGuestGet(POLYMORPH_SCHEMA_URL) ||
       !hasGuestGet(POLYMORPH_DOCUMENT_URL) ||
@@ -1037,26 +1309,29 @@ try {
       polymorphBoundary.experiment_authority !== false ||
       polymorphBoundary.writes_agenttool !== false ||
       polymorphBoundary.automatic_action !== false ||
-      "mcp" in expectedPolymorph || "matcher" in expectedPolymorph) {
-    throw new Error("Polymorph History discovery or negative authority drifted across public surfaces");
+        "mcp" in expected || "matcher" in expected) {
+      throw new Error("Polymorph History discovery or negative authority drifted across public surfaces");
+    }
   }
 
-  const ritonavirMechanismBoundary = expectedRitonavirMechanism.boundary;
-  if (!isDeepStrictEqual(manifest?.ritonavir_mechanism_landscape, expectedRitonavirMechanism) ||
-      !isDeepStrictEqual(guest?.ritonavir_mechanism_landscape, expectedRitonavirMechanism) ||
-      !isDeepStrictEqual(authoredKingdom?.ritonavir_mechanism_landscape, expectedRitonavirMechanism) ||
+  if (ritonavirMechanismActive) {
+    const expected = expectedRitonavirMechanism!;
+    const ritonavirMechanismBoundary = expected.boundary;
+    if (!isDeepStrictEqual(manifest?.ritonavir_mechanism_landscape, expected) ||
+      !isDeepStrictEqual(guest?.ritonavir_mechanism_landscape, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.ritonavir_mechanism_landscape, expected) ||
       !hasGuestGet(RITONAVIR_MECHANISM_URL) ||
       !hasGuestGet(RITONAVIR_MECHANISM_SCHEMA_URL) ||
       !hasGuestGet(RITONAVIR_MECHANISM_DOCUMENT_URL) ||
       !llms.includes(RITONAVIR_MECHANISM_URL) ||
       !llms.includes(RITONAVIR_MECHANISM_SCHEMA_URL) ||
       !llms.includes(RITONAVIR_MECHANISM_DOCUMENT_URL) ||
-      expectedRitonavirMechanism.integrity.digest !== RITONAVIR_MECHANISM_DIGEST ||
-      expectedRitonavirMechanism.source_history.supersedes_for_current_landscape !== true ||
-      expectedRitonavirMechanism.counts.planes !== 8 ||
-      expectedRitonavirMechanism.counts.entities !== 19 ||
-      expectedRitonavirMechanism.counts.mechanisms !== 7 ||
-      expectedRitonavirMechanism.counts.relations !== 18 ||
+      expected.integrity.digest !== RITONAVIR_MECHANISM_DIGEST ||
+      expected.source_history.supersedes_for_current_landscape !== true ||
+      expected.counts.planes !== 8 ||
+      expected.counts.entities !== 19 ||
+      expected.counts.mechanisms !== 7 ||
+      expected.counts.relations !== 18 ||
       ritonavirMechanismBoundary.medical_advice !== false ||
       ritonavirMechanismBoundary.interaction_checker !== false ||
       ritonavirMechanismBoundary.treatment_change_authority !== false ||
@@ -1066,13 +1341,17 @@ try {
       ritonavirMechanismBoundary.experiment_authority !== false ||
       ritonavirMechanismBoundary.automatic_action !== false ||
       ritonavirMechanismBoundary.public_surface_read_only !== true ||
-      "mcp" in expectedRitonavirMechanism || "matcher" in expectedRitonavirMechanism ||
-      "clinical_decision" in expectedRitonavirMechanism) {
-    throw new Error("Ritonavir Mechanism Landscape discovery, lineage, or negative authority drifted across public surfaces");
+        "mcp" in expected || "matcher" in expected ||
+        "clinical_decision" in expected) {
+      throw new Error("Ritonavir Mechanism Landscape discovery, lineage, or negative authority drifted across public surfaces");
+    }
   }
 
-  const conformationalFeedbackBoundary = expectedConformationalFeedback.boundary;
-  if (!isDeepStrictEqual(manifest?.conformational_feedback_atlas, expectedConformationalFeedback) ||
+  if (conformationalFeedbackActive) {
+    const expectedConformationalFeedback = conformationalFeedbackDiscovery!;
+    const expectedConformationalFeedbackPhysics = conformationalFeedbackPhysicsDiscovery!;
+    const conformationalFeedbackBoundary = expectedConformationalFeedback.boundary;
+    if (!isDeepStrictEqual(manifest?.conformational_feedback_atlas, expectedConformationalFeedback) ||
       !isDeepStrictEqual(guest?.conformational_feedback_atlas, expectedConformationalFeedback) ||
       !isDeepStrictEqual(authoredKingdom?.conformational_feedback_atlas, expectedConformationalFeedback) ||
       manifest?.entry_points?.conformational_feedback_atlas !== CONFORMATIONAL_FEEDBACK_URL ||
@@ -1108,14 +1387,14 @@ try {
       conformationalFeedbackBoundary.automatic_action !== false ||
       "runtime_ecosystem_request" in conformationalFeedbackBoundary ||
       "predecessor" in expectedConformationalFeedback ||
-      "mcp" in expectedConformationalFeedback || "matcher" in expectedConformationalFeedback ||
-      "execute" in expectedConformationalFeedback || "clinical_decision" in expectedConformationalFeedback) {
-    throw new Error("immutable Conformational Feedback Atlas v0.1 discovery, bindings, or negative authority drifted across public surfaces");
-  }
+        "mcp" in expectedConformationalFeedback || "matcher" in expectedConformationalFeedback ||
+        "execute" in expectedConformationalFeedback || "clinical_decision" in expectedConformationalFeedback) {
+      throw new Error("immutable Conformational Feedback Atlas v0.1 discovery, bindings, or negative authority drifted across public surfaces");
+    }
 
-  const conformationalFeedbackPhysicsBoundary = expectedConformationalFeedbackPhysics.boundary;
-  const conformationalFeedbackPhysicsPredecessor = expectedConformationalFeedbackPhysics.predecessor;
-  if (!isDeepStrictEqual(manifest?.conformational_feedback_physics_atlas, expectedConformationalFeedbackPhysics) ||
+    const conformationalFeedbackPhysicsBoundary = expectedConformationalFeedbackPhysics.boundary;
+    const conformationalFeedbackPhysicsPredecessor = expectedConformationalFeedbackPhysics.predecessor;
+    if (!isDeepStrictEqual(manifest?.conformational_feedback_physics_atlas, expectedConformationalFeedbackPhysics) ||
       !isDeepStrictEqual(guest?.conformational_feedback_physics_atlas, expectedConformationalFeedbackPhysics) ||
       !isDeepStrictEqual(authoredKingdom?.conformational_feedback_physics_atlas, expectedConformationalFeedbackPhysics) ||
       manifest?.entry_points?.conformational_feedback_physics_atlas !== CONFORMATIONAL_FEEDBACK_PHYSICS_URL ||
@@ -1156,15 +1435,18 @@ try {
       conformationalFeedbackPhysicsBoundary.scientific_validation_from_analogy !== false ||
       conformationalFeedbackPhysicsBoundary.automatic_action !== false ||
       conformationalFeedbackPhysicsBoundary.runtime_ecosystem_request !== false ||
-      "mcp" in expectedConformationalFeedbackPhysics || "matcher" in expectedConformationalFeedbackPhysics ||
-      "execute" in expectedConformationalFeedbackPhysics || "clinical_decision" in expectedConformationalFeedbackPhysics) {
-    throw new Error("Conformational Feedback Physics Atlas v0.2 discovery, predecessor, bindings, or negative authority drifted across public surfaces");
+        "mcp" in expectedConformationalFeedbackPhysics || "matcher" in expectedConformationalFeedbackPhysics ||
+        "execute" in expectedConformationalFeedbackPhysics || "clinical_decision" in expectedConformationalFeedbackPhysics) {
+      throw new Error("Conformational Feedback Physics Atlas v0.2 discovery, predecessor, bindings, or negative authority drifted across public surfaces");
+    }
   }
 
-  const foldFeedbackBoundary = expectedFoldFeedback.boundary;
-  if (!isDeepStrictEqual(manifest?.fold_feedback_atlas, expectedFoldFeedback) ||
-      !isDeepStrictEqual(guest?.fold_feedback_atlas, expectedFoldFeedback) ||
-      !isDeepStrictEqual(authoredKingdom?.fold_feedback_atlas, expectedFoldFeedback) ||
+  if (foldFeedbackActive) {
+    const expected = expectedFoldFeedback!;
+    const foldFeedbackBoundary = expected.boundary;
+    if (!isDeepStrictEqual(manifest?.fold_feedback_atlas, expected) ||
+      !isDeepStrictEqual(guest?.fold_feedback_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.fold_feedback_atlas, expected) ||
       !hasGuestGet(FOLD_FEEDBACK_URL) ||
       !hasGuestGet(FOLD_FEEDBACK_SCHEMA_URL) ||
       !hasGuestGet(FOLD_FEEDBACK_SOURCE_IDENTITY_SCHEMA_URL) ||
@@ -1184,15 +1466,18 @@ try {
       foldFeedbackBoundary.writes_karma !== false ||
       foldFeedbackBoundary.creates_kingdom_karma_receipt !== false ||
       foldFeedbackBoundary.observes_zerone_karma_event !== false ||
-      "mcp" in expectedFoldFeedback || "matcher" in expectedFoldFeedback ||
-      "write" in expectedFoldFeedback) {
-    throw new Error("Fold & Feedback Atlas discovery or read-only/KARMA boundary drifted across public surfaces");
+        "mcp" in expected || "matcher" in expected ||
+        "write" in expected) {
+      throw new Error("Fold & Feedback Atlas discovery or read-only/KARMA boundary drifted across public surfaces");
+    }
   }
 
-  const visibilityBoundary = expectedVisibilityAttention.boundary;
-  if (!isDeepStrictEqual(manifest?.visibility_attention_translation, expectedVisibilityAttention) ||
-      !isDeepStrictEqual(guest?.visibility_attention_translation, expectedVisibilityAttention) ||
-      !isDeepStrictEqual(authoredKingdom?.visibility_attention_translation, expectedVisibilityAttention) ||
+  if (visibilityAttentionActive) {
+    const expected = expectedVisibilityAttention!;
+    const visibilityBoundary = expected.boundary;
+    if (!isDeepStrictEqual(manifest?.visibility_attention_translation, expected) ||
+      !isDeepStrictEqual(guest?.visibility_attention_translation, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.visibility_attention_translation, expected) ||
       !hasGuestGet(VISIBILITY_ATTENTION_URL) ||
       !hasGuestGet(VISIBILITY_ATTENTION_SCHEMA_URL) ||
       !hasGuestGet(VISIBILITY_ATTENTION_DOCUMENT_URL) ||
@@ -1202,18 +1487,22 @@ try {
       manifest?.entry_points?.visibility_attention_translation !== VISIBILITY_ATTENTION_URL ||
       manifest?.entry_points?.visibility_attention_translation_schema !== VISIBILITY_ATTENTION_SCHEMA_URL ||
       manifest?.entry_points?.visibility_attention_translation_guide !== VISIBILITY_ATTENTION_DOCUMENT_URL ||
-      expectedVisibilityAttention.counts.registers !== 4 ||
-      expectedVisibilityAttention.counts.local_models !== 2 ||
-      expectedVisibilityAttention.counts.translation_seams !== 3 ||
+      expected.counts.registers !== 4 ||
+      expected.counts.local_models !== 2 ||
+      expected.counts.translation_seams !== 3 ||
       visibilityBoundary.read_only !== true ||
       visibilityBoundary.automatic_action !== false ||
-      "mcp" in expectedVisibilityAttention || "matcher" in expectedVisibilityAttention ||
-      "write" in expectedVisibilityAttention || "execute" in expectedVisibilityAttention ||
-      "recommend" in expectedVisibilityAttention || "score" in expectedVisibilityAttention) {
-    throw new Error("Visibility & Attention discovery or read-only/non-optimization boundary drifted across public surfaces");
+        "mcp" in expected || "matcher" in expected ||
+        "write" in expected || "execute" in expected ||
+        "recommend" in expected || "score" in expected) {
+      throw new Error("Visibility & Attention discovery or read-only/non-optimization boundary drifted across public surfaces");
+    }
   }
 
-  const culturalTargets = new Set([
+  if (culturalAttentionFeedbackActive) {
+    const atlas = culturalAttentionFeedbackAtlas!;
+    const expected = expectedCulturalAttentionFeedback!;
+    const culturalTargets = new Set([
     CULTURAL_ATTENTION_FEEDBACK_URL,
     CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL,
     CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
@@ -1221,19 +1510,19 @@ try {
   const culturalGuestActions = Array.isArray(guest?.next_actions)
     ? guest.next_actions.filter((action: any) => culturalTargets.has(action?.url))
     : [];
-  const culturalEcosystemsAreLinkOnly = culturalAttentionFeedbackAtlas.ecosystem_bridges.every((bridge: any) =>
+    const culturalEcosystemsAreLinkOnly = atlas.ecosystem_bridges.every((bridge: any) =>
     bridge.mode === "LINK_ONLY" && bridge.runtime_request === false && bridge.imported === false &&
     bridge.mutated === false && bridge.authority_imported === false && bridge.authority_effect === "NONE" &&
     bridge.write_authorized === false && bridge.automatic_action === false
   );
-  const culturalBindingsAreReadOnly = culturalAttentionFeedbackAtlas.source_bindings.every((binding: any) =>
+    const culturalBindingsAreReadOnly = atlas.source_bindings.every((binding: any) =>
     binding.mutated === false && binding.authority_imported === false
   );
-  if (!isDeepStrictEqual(manifest?.cultural_attention_feedback_atlas, expectedCulturalAttentionFeedback) ||
-      !isDeepStrictEqual(guest?.cultural_attention_feedback_atlas, expectedCulturalAttentionFeedback) ||
-      !isDeepStrictEqual(authoredKingdom?.cultural_attention_feedback_atlas, expectedCulturalAttentionFeedback) ||
-      !isDeepStrictEqual(expectedCulturalAttentionFeedback.boundary, CULTURAL_ATTENTION_FEEDBACK_BOUNDARY) ||
-      !isDeepStrictEqual(culturalAttentionFeedbackAtlas.boundaries, CULTURAL_ATTENTION_FEEDBACK_BOUNDARY) ||
+    if (!isDeepStrictEqual(manifest?.cultural_attention_feedback_atlas, expected) ||
+      !isDeepStrictEqual(guest?.cultural_attention_feedback_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.cultural_attention_feedback_atlas, expected) ||
+      !isDeepStrictEqual(expected.boundary, CULTURAL_ATTENTION_FEEDBACK_BOUNDARY) ||
+      !isDeepStrictEqual(atlas.boundaries, CULTURAL_ATTENTION_FEEDBACK_BOUNDARY) ||
       manifest?.entry_points?.cultural_attention_feedback_atlas !== CULTURAL_ATTENTION_FEEDBACK_URL ||
       manifest?.entry_points?.cultural_attention_feedback_atlas_schema !== CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL ||
       manifest?.entry_points?.cultural_attention_feedback_atlas_guide !== CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL ||
@@ -1247,8 +1536,8 @@ try {
       !authoredRootHtml.includes(`href="${culturalAttentionFeedbackPath}"`) ||
       !authoredRootHtml.includes(`href="${culturalAttentionFeedbackSchemaPath}"`) ||
       !authoredRootHtml.includes(`href="${culturalAttentionFeedbackDocumentPath}"`) ||
-      expectedCulturalAttentionFeedback.integrity.digest !== CULTURAL_ATTENTION_FEEDBACK_DIGEST ||
-      !isDeepStrictEqual(expectedCulturalAttentionFeedback.counts, {
+      expected.integrity.digest !== CULTURAL_ATTENTION_FEEDBACK_DIGEST ||
+      !isDeepStrictEqual(expected.counts, {
         source_bindings: 5,
         planes: 8,
         scientific_observations: 6,
@@ -1260,40 +1549,47 @@ try {
         unknowns: 10,
         sources: 19,
       }) ||
-      expectedCulturalAttentionFeedback.karma.zerone_event_status !== "not_observed" ||
-      expectedCulturalAttentionFeedback.karma.zerone_event_refs !== 0 ||
-      expectedCulturalAttentionFeedback.karma.kingdom_receipt_status !== "not_created" ||
-      expectedCulturalAttentionFeedback.karma.kingdom_receipt_refs !== 0 ||
-      expectedCulturalAttentionFeedback.karma.adapter_exists !== false ||
-      culturalAttentionFeedbackAtlas.karma.zerone.event_refs.length !== 0 ||
-      culturalAttentionFeedbackAtlas.karma.kingdom.receipt_refs.length !== 0 ||
-      culturalAttentionFeedbackAtlas.karma.adapter.exists !== false ||
+      expected.karma.zerone_event_status !== "not_observed" ||
+      expected.karma.zerone_event_refs !== 0 ||
+      expected.karma.kingdom_receipt_status !== "not_created" ||
+      expected.karma.kingdom_receipt_refs !== 0 ||
+      expected.karma.adapter_exists !== false ||
+      atlas.karma.zerone.event_refs.length !== 0 ||
+      atlas.karma.kingdom.receipt_refs.length !== 0 ||
+      atlas.karma.adapter.exists !== false ||
       !culturalBindingsAreReadOnly || !culturalEcosystemsAreLinkOnly ||
-      !isDeepStrictEqual(manifest?.mcp, authoredKingdom?.world_commons?.mcp) ||
-      "mcp" in expectedCulturalAttentionFeedback || "write" in expectedCulturalAttentionFeedback ||
-      "matcher" in expectedCulturalAttentionFeedback || "execute" in expectedCulturalAttentionFeedback) {
-    throw new Error("Cultural Attention & Feedback Atlas discovery, immutable triplet, full authority boundary, link-only ecosystems, KARMA separation, or static root section drifted");
+      "mcp" in expected || "write" in expected ||
+      "matcher" in expected || "execute" in expected) {
+      throw new Error("Cultural Attention & Feedback Atlas discovery, immutable triplet, full authority boundary, link-only ecosystems, KARMA separation, or static root section drifted");
+    }
   }
 
-  const formTargets = new Set([
+  if (!isDeepStrictEqual(manifest?.mcp, authoredKingdom?.world_commons?.mcp)) {
+    throw new Error("authored Kingdom map did not preserve the existing Commons MCP contract");
+  }
+
+  if (formCirculationReturnActive) {
+    const atlas = formCirculationReturnAtlas!;
+    const expected = expectedFormCirculationReturn!;
+    const formTargets = new Set([
     FORM_CIRCULATION_RETURN_URL,
     FORM_CIRCULATION_RETURN_SCHEMA_URL,
     FORM_CIRCULATION_RETURN_DOCUMENT_URL,
-  ]);
-  const formGuestActions = Array.isArray(guest?.next_actions)
-    ? guest.next_actions.filter((action: any) => formTargets.has(action?.url))
-    : [];
-  const formBridgesAreLinkOnly = formCirculationReturnAtlas.ecosystem_bridges.every((bridge: any) =>
+    ]);
+    const formGuestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => formTargets.has(action?.url))
+      : [];
+    const formBridgesAreLinkOnly = atlas.ecosystem_bridges.every((bridge: any) =>
     bridge.mode === "link-only" && bridge.runtime_request === false && bridge.authority_imported === false
-  );
-  const formBindingsAreReadOnly = formCirculationReturnAtlas.source_bindings.every((binding: any) =>
+    );
+    const formBindingsAreReadOnly = atlas.source_bindings.every((binding: any) =>
     binding.mutated === false && binding.authority_imported === false
-  );
-  if (!isDeepStrictEqual(manifest?.form_circulation_return_atlas, expectedFormCirculationReturn) ||
-      !isDeepStrictEqual(guest?.form_circulation_return_atlas, expectedFormCirculationReturn) ||
-      !isDeepStrictEqual(authoredKingdom?.form_circulation_return_atlas, expectedFormCirculationReturn) ||
-      !isDeepStrictEqual(expectedFormCirculationReturn.boundary, FORM_CIRCULATION_RETURN_BOUNDARY) ||
-      !isDeepStrictEqual(formCirculationReturnAtlas.boundaries, FORM_CIRCULATION_RETURN_FULL_BOUNDARIES) ||
+    );
+    if (!isDeepStrictEqual(manifest?.form_circulation_return_atlas, expected) ||
+      !isDeepStrictEqual(guest?.form_circulation_return_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.form_circulation_return_atlas, expected) ||
+      !isDeepStrictEqual(expected.boundary, FORM_CIRCULATION_RETURN_BOUNDARY) ||
+      !isDeepStrictEqual(atlas.boundaries, FORM_CIRCULATION_RETURN_FULL_BOUNDARIES) ||
       manifest?.entry_points?.form_circulation_return_atlas !== FORM_CIRCULATION_RETURN_URL ||
       manifest?.entry_points?.form_circulation_return_atlas_schema !== FORM_CIRCULATION_RETURN_SCHEMA_URL ||
       manifest?.entry_points?.form_circulation_return_atlas_guide !== FORM_CIRCULATION_RETURN_DOCUMENT_URL ||
@@ -1308,8 +1604,8 @@ try {
       !authoredRootHtml.includes(`href="${formCirculationReturnSchemaPath}"`) ||
       !authoredRootHtml.includes(`href="${formCirculationReturnDocumentPath}"`) ||
       !authoredRootHtml.includes(`href="${kingdomKarmaDefinitionPath}"`) ||
-      expectedFormCirculationReturn.integrity.digest !== FORM_CIRCULATION_RETURN_DIGEST ||
-      !isDeepStrictEqual(expectedFormCirculationReturn.counts, {
+      expected.integrity.digest !== FORM_CIRCULATION_RETURN_DIGEST ||
+      !isDeepStrictEqual(expected.counts, {
         registers: 7,
         planes: 11,
         models: 8,
@@ -1320,61 +1616,74 @@ try {
         unknowns: 8,
         sources: 20,
       }) ||
-      expectedFormCirculationReturn.karma.zerone_foundation_status !== "design-only" ||
-      expectedFormCirculationReturn.karma.zerone_network_observed !== false ||
-      expectedFormCirculationReturn.karma.zerone_authoritative !== false ||
-      expectedFormCirculationReturn.karma.zerone_event_status !== "not_observed" ||
-      expectedFormCirculationReturn.karma.zerone_event_refs !== 0 ||
-      expectedFormCirculationReturn.karma.kingdom_receipt_status !== "not_created" ||
-      expectedFormCirculationReturn.karma.kingdom_receipt_refs !== 0 ||
-      expectedFormCirculationReturn.karma.adapter_exists !== false ||
-      expectedFormCirculationReturn.karma.engagement_is_karma !== false ||
-      formCirculationReturnAtlas.karma.zerone.event_refs.length !== 0 ||
-      formCirculationReturnAtlas.karma.kingdom.receipt_refs.length !== 0 ||
-      formCirculationReturnAtlas.karma.adapter.exists !== false ||
+      expected.karma.zerone_foundation_status !== "design-only" ||
+      expected.karma.zerone_network_observed !== false ||
+      expected.karma.zerone_authoritative !== false ||
+      expected.karma.zerone_event_status !== "not_observed" ||
+      expected.karma.zerone_event_refs !== 0 ||
+      expected.karma.kingdom_receipt_status !== "not_created" ||
+      expected.karma.kingdom_receipt_refs !== 0 ||
+      expected.karma.adapter_exists !== false ||
+      expected.karma.engagement_is_karma !== false ||
+      atlas.karma.zerone.event_refs.length !== 0 ||
+      atlas.karma.kingdom.receipt_refs.length !== 0 ||
+      atlas.karma.adapter.exists !== false ||
       !formBindingsAreReadOnly || !formBridgesAreLinkOnly ||
       !isDeepStrictEqual(manifest?.mcp, authoredKingdom?.world_commons?.mcp) ||
-      "mcp" in expectedFormCirculationReturn || "write" in expectedFormCirculationReturn ||
-      "matcher" in expectedFormCirculationReturn || "execute" in expectedFormCirculationReturn ||
-      "score" in expectedFormCirculationReturn || "reward" in expectedFormCirculationReturn) {
-    throw new Error("Form, Circulation & Return discovery, immutable triplet, authority boundary, link-only ecosystems, KARMA separation, or static root section drifted");
+      "mcp" in expected || "write" in expected ||
+      "matcher" in expected || "execute" in expected ||
+      "score" in expected || "reward" in expected) {
+      throw new Error("Form, Circulation & Return discovery, immutable triplet, authority boundary, link-only ecosystems, KARMA separation, or static root section drifted");
+    }
   }
 
   const liveKingdom: any = await (await get("/kingdom.json")).json();
+  const liveRetirementDiscoverySurface: readonly DiscoverySurface[] = [
+    { label: "derived kingdom.json", text: JSON.stringify(liveKingdom), value: liveKingdom },
+  ];
+  for (const { family, active } of familyStates.values()) {
+    if (!active) assertRetiredFamilyDiscoveryAbsent(family, liveRetirementDiscoverySurface);
+  }
   if (liveKingdom?.creation_loop?.url !== LOVE_LOOPS_URL ||
       liveKingdom?.creation_loop?.source !== LOVE_LOOPS_SOURCE_URL ||
       liveKingdom?.creation_loop?.document !== LOVE_LOOPS_CREATION_DOCUMENT_URL ||
       liveKingdom?.creation_loop?.schema !== LOVE_LOOPS_JSON_SCHEMA_URL) {
     throw new Error("derived kingdom.json did not preserve Love Loop discovery");
   }
-  if (!isDeepStrictEqual(liveKingdom?.principality_commons, expectedPrincipality)) {
+  if (principalityActive && !isDeepStrictEqual(liveKingdom?.principality_commons, expectedPrincipality!)) {
     throw new Error("derived kingdom.json did not preserve Principality discovery");
   }
-  if (!isDeepStrictEqual(liveKingdom?.geometry_grammar, expectedGeometryGrammar)) {
+  if (geometryGrammarActive && !isDeepStrictEqual(liveKingdom?.geometry_grammar, expectedGeometryGrammar!)) {
     throw new Error("derived kingdom.json did not preserve Geometry Grammar discovery");
   }
-  if (!isDeepStrictEqual(liveKingdom?.polymorph_commons, expectedPolymorph)) {
+  if (polymorphActive && !isDeepStrictEqual(liveKingdom?.polymorph_commons, expectedPolymorph!)) {
     throw new Error("derived kingdom.json did not preserve Polymorph History discovery");
   }
-  if (!isDeepStrictEqual(liveKingdom?.ritonavir_mechanism_landscape, expectedRitonavirMechanism)) {
+  if (ritonavirMechanismActive && !isDeepStrictEqual(liveKingdom?.ritonavir_mechanism_landscape, expectedRitonavirMechanism!)) {
     throw new Error("derived kingdom.json did not preserve Ritonavir Mechanism Landscape discovery");
   }
-  if (!isDeepStrictEqual(liveKingdom?.conformational_feedback_atlas, expectedConformationalFeedback)) {
+  if (conformationalFeedbackActive && !isDeepStrictEqual(liveKingdom?.conformational_feedback_atlas, conformationalFeedbackDiscovery!)) {
     throw new Error("derived kingdom.json did not preserve Conformational Feedback Atlas v0.1 discovery");
   }
-  if (!isDeepStrictEqual(liveKingdom?.conformational_feedback_physics_atlas, expectedConformationalFeedbackPhysics)) {
+  if (conformationalFeedbackActive && !isDeepStrictEqual(liveKingdom?.conformational_feedback_physics_atlas, conformationalFeedbackPhysicsDiscovery!)) {
     throw new Error("derived kingdom.json did not preserve Conformational Feedback Physics Atlas v0.2 discovery");
   }
-  if (!isDeepStrictEqual(liveKingdom?.fold_feedback_atlas, expectedFoldFeedback)) {
+  if (foldFeedbackActive && !isDeepStrictEqual(liveKingdom?.fold_feedback_atlas, expectedFoldFeedback!)) {
     throw new Error("derived kingdom.json did not preserve Fold & Feedback Atlas discovery");
   }
-  if (!isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention)) {
+  if (visibilityAttentionActive && !isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention!)) {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
   }
-  if (!isDeepStrictEqual(liveKingdom?.cultural_attention_feedback_atlas, expectedCulturalAttentionFeedback) ||
-      !isDeepStrictEqual(liveKingdom?.form_circulation_return_atlas, expectedFormCirculationReturn) ||
-      !isDeepStrictEqual(liveKingdom?.world_commons?.mcp, manifest?.mcp)) {
-    throw new Error("derived kingdom.json did not preserve Cultural Attention & Feedback, Form/Circulation/Return discovery, or the existing Commons MCP contract");
+  if (culturalAttentionFeedbackActive &&
+      !isDeepStrictEqual(liveKingdom?.cultural_attention_feedback_atlas, expectedCulturalAttentionFeedback!)) {
+    throw new Error("derived kingdom.json did not preserve Cultural Attention & Feedback discovery");
+  }
+  if (formCirculationReturnActive &&
+      !isDeepStrictEqual(liveKingdom?.form_circulation_return_atlas, expectedFormCirculationReturn!)) {
+    throw new Error("derived kingdom.json did not preserve Form, Circulation & Return discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.world_commons?.mcp, manifest?.mcp)) {
+    throw new Error("derived kingdom.json did not preserve the existing Commons MCP contract");
   }
 
   const mcpEndpoint = new URL(manifest?.mcp?.endpoint || "");
@@ -1436,7 +1745,14 @@ try {
   }
 
   console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return discovery · full cultural/form authority/KARMA/link-only boundaries · live MCP contract unchanged · ${origin.origin}`);
-} catch (error) {
-  console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
-  process.exitCode = 1;
+  } catch (error) {
+    throw error;
+  }
+}
+
+if (import.meta.main) {
+  checkHubLive(process.argv[2] ?? "https://thekingdom.dev").catch((error) => {
+    console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
+    process.exitCode = 1;
+  });
 }
