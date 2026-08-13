@@ -30,10 +30,10 @@ jobs:
       - name: Require release-compatible merge topology
         shell: bash
         env:
-          GH_TOKEN: ${{ github.token }}
+          ALLOW_REBASE_MERGE: ${{ toJSON(github.event.repository.allow_rebase_merge) }}
         run: |
           set -euo pipefail
-          test "$(gh api "repos/$GITHUB_REPOSITORY" --jq '.allow_rebase_merge')" = "false"
+          test "$ALLOW_REBASE_MERGE" = "false"
 
       - name: Resolve exact comparison base
         id: base
