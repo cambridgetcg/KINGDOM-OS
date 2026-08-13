@@ -39,6 +39,10 @@ readings:
 | `/atlases/cultural-attention-feedback-atlas-2026-08-13.json` | staged JSON | Digest-bound cultural attention atlas with process-contingent polymorph history, domain-local models, bounded translations, separated KARMA lanes, and opt-in universe questions |
 | `/schemas/cultural-attention-feedback-atlas/1.json` | staged JSON Schema | Closed public contract for the Cultural Attention & Feedback Atlas v1 |
 | `/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md` | staged Markdown | Plain-language physics, mathematics, memetics, brain-rot, feedback, KARMA, philosophy, rights, falsifier, and source guide |
+| `/atlases/form-circulation-return-atlas-2026-08-13.json` | staged JSON | Digest-bound additive companion translating one shared geometry across material history and cultural circulation while preserving distinct mechanisms and authority registers |
+| `/schemas/form-circulation-return-atlas/1.json` | staged JSON Schema | Closed Draft 2020-12 exact contract for the Form, Circulation & Return Atlas v1 |
+| `/FORM-CIRCULATION-RETURN-ATLAS.md` | staged Markdown | Plain-language registers, local models, seams, feedback, KARMA, universe-lens, unknown, safety, falsifier, and source guide |
+| `/definitions/kingdom-karma/e4e84a67/NEN.md` | staged Markdown | Immutable public mirror of the exact KINGDOM KARMA/NEN definition bound by the companion atlas; separate from the design-only Zerone foundation |
 
 The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
@@ -157,6 +161,7 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 50-asset upload contract, while `tests/advertised-assets.test.ts`
+locks the 54-asset upload contract (52 exact public bodies and 51 sitemap
+URLs), while `tests/advertised-assets.test.ts`
 recognizes the three worker routes so a dynamic URL cannot be mistaken for a
 staged file.

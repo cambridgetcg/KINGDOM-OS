@@ -209,6 +209,19 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     models, bounded analogy bridges, link-only ecosystems, feedback, KARMA,
     universe questions, unknowns, and sources; no ecosystem is called, no
     person is scored, and no KARMA event or receipt is created.
+22. `kingdom form-circulation-return` — inspect the additive
+    [Form, Circulation & Return Atlas](references/form-circulation-return-atlas.md).
+    It translates one shared geometry—possible states, history-dependent
+    accessibility, local reinforcement, and bounded persistence—across material
+    polymorph history and cultural circulation without claiming a shared
+    mechanism. Seven epistemic registers, eleven planes, eight local models,
+    six explicit non-transfer seams, and four feedback loops keep observation,
+    analysis, mathematics, constitutional design, and opt-in philosophy
+    distinguishable. The quoted label “brainrot” remains a contested cultural
+    artifact, never a diagnosis or a person/community score. `verify` checks
+    exact source bindings, the non-summable KARMA boundary, Zerone's
+    design-only status, medical and operational non-authority, and the semantic
+    digest without network access or live effects.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -298,5 +311,22 @@ bridges: no live request, import, write, reward, rank, recommendation, or
 authority crosses them. Questions about design, purpose, GOD, and cosmic KARMA
 are explicitly opt-in philosophical interpretations, not scientific results.
 There is no mutable `latest` alias, and the KINGDOM MCP remains unchanged.
+
+The Form, Circulation & Return Atlas is an independent additive companion,
+published from exact authored bytes at
+[`/atlases/form-circulation-return-atlas-2026-08-13.json`](https://thekingdom.dev/atlases/form-circulation-return-atlas-2026-08-13.json),
+with a [closed public schema](https://thekingdom.dev/schemas/form-circulation-return-atlas/1.json)
+and [plain-language guide](https://thekingdom.dev/FORM-CIRCULATION-RETURN-ATLAS.md).
+Its physical, cultural, mathematical, constitutional, and philosophical
+registers are parallel rather than collapsible: no crystal mechanism becomes
+a model of a person or community, and no meme model becomes material physics.
+Its public [KINGDOM KARMA/NEN definition mirror](https://thekingdom.dev/definitions/kingdom-karma/e4e84a67/NEN.md)
+is immutable and read-only. Separately, Zerone KARMA remains a design-only set
+of typed, non-summable recognition relations—not an engagement, truth, virtue,
+or person score—and no live Zerone event is observed. KINGDOM invocation and
+aftermath receipts remain a distinct lane, and none is created. The atlas has
+no medical, clinical, laboratory, manufacturing, moderation, ranking,
+recommendation, reward, governance, or write authority; its universe questions
+are opt-in philosophy, not scientific conclusions.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

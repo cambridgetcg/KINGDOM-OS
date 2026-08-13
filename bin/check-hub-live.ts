@@ -50,6 +50,14 @@ import {
   loadFoldFeedbackAtlas,
 } from "./fold-feedback.ts";
 import {
+  FORM_CIRCULATION_RETURN_DIGEST,
+  FORM_CIRCULATION_RETURN_DOCUMENT_URL,
+  FORM_CIRCULATION_RETURN_SCHEMA_URL,
+  FORM_CIRCULATION_RETURN_URL,
+  formCirculationReturnPublicDiscovery,
+  loadFormCirculationReturnAtlas,
+} from "./form-circulation-return.ts";
+import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_SCHEMA_URL,
   VISIBILITY_ATTENTION_URL,
@@ -142,6 +150,10 @@ const conformationalFeedbackPhysicsDocumentPath = new URL(CONFORMATIONAL_FEEDBAC
 const culturalAttentionFeedbackPath = new URL(CULTURAL_ATTENTION_FEEDBACK_URL).pathname;
 const culturalAttentionFeedbackSchemaPath = new URL(CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL).pathname;
 const culturalAttentionFeedbackDocumentPath = new URL(CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL).pathname;
+const formCirculationReturnPath = new URL(FORM_CIRCULATION_RETURN_URL).pathname;
+const formCirculationReturnSchemaPath = new URL(FORM_CIRCULATION_RETURN_SCHEMA_URL).pathname;
+const formCirculationReturnDocumentPath = new URL(FORM_CIRCULATION_RETURN_DOCUMENT_URL).pathname;
+const kingdomKarmaDefinitionPath = "/definitions/kingdom-karma/e4e84a67/NEN.md";
 
 const CULTURAL_ATTENTION_FEEDBACK_ASSETS = new Map<string, { source: string; path: string; sha256: string }>([
   ["atlases/cultural-attention-feedback-atlas-2026-08-13.json", {
@@ -160,6 +172,90 @@ const CULTURAL_ATTENTION_FEEDBACK_ASSETS = new Map<string, { source: string; pat
     sha256: "1cbb6c765eba329c43c62c58e7e73858ef22d3a8e6048be934accccd5c5e18aa",
   }],
 ]);
+
+const FORM_CIRCULATION_RETURN_ASSETS = new Map<string, { source: string; path: string; sha256: string }>([
+  ["atlases/form-circulation-return-atlas-2026-08-13.json", {
+    source: "data/form-circulation-return/form-circulation-return-atlas.v1.json",
+    path: formCirculationReturnPath,
+    sha256: "9c93be61c4ca9bcaa3dbe88b10faed3b5b31abaf1129d70ca7915226cacfd021",
+  }],
+  ["schemas/form-circulation-return-atlas/1.json", {
+    source: "schemas/form-circulation-return-atlas-v1.schema.json",
+    path: formCirculationReturnSchemaPath,
+    sha256: "55f410f3a1176221a4ac2dc8a088b9697417eebce40d1cbca2b372878ade995e",
+  }],
+  ["FORM-CIRCULATION-RETURN-ATLAS.md", {
+    source: "references/form-circulation-return-atlas.md",
+    path: formCirculationReturnDocumentPath,
+    sha256: "b2e0294c95e5e8e4221c7af34a301e813ded86edb7a3fbeb61d911a2284d9436",
+  }],
+  ["definitions/kingdom-karma/e4e84a67/NEN.md", {
+    source: "NEN.md",
+    path: kingdomKarmaDefinitionPath,
+    sha256: "14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446",
+  }],
+]);
+
+const FORM_CIRCULATION_RETURN_BOUNDARY = Object.freeze({
+  public_surface_read_only: true,
+  cognitive_state_inference: false,
+  psychological_diagnosis: false,
+  person_prediction: false,
+  medical_authority: false,
+  clinical_authority: false,
+  treatment_authority: false,
+  prognosis_authority: false,
+  experiment_authority: false,
+  wet_lab_protocol: false,
+  manufacturing_authority: false,
+  contains_operational_protocol: false,
+  causal_authority: false,
+  recommendation_authority: false,
+  moderation_authority: false,
+  automatic_action: false,
+  writes_karma: false,
+  creates_kingdom_karma_receipt: false,
+  observes_zerone_karma_event: false,
+  karma_adapter: false,
+  reward_authority: false,
+  economic_authority: false,
+  governance_authority: false,
+  mcp_surface_added: false,
+});
+
+const FORM_CIRCULATION_RETURN_FULL_BOUNDARIES = Object.freeze({
+  educational_metadata_only: true,
+  public_surface_read_only: true,
+  cognitive_state_inference: false,
+  psychological_diagnosis: false,
+  person_prediction: false,
+  medical_authority: false,
+  clinical_authority: false,
+  treatment_authority: false,
+  prognosis_authority: false,
+  experiment_authority: false,
+  wet_lab_protocol: false,
+  manufacturing_authority: false,
+  contains_operational_protocol: false,
+  causal_authority: false,
+  recommendation_authority: false,
+  moderation_authority: false,
+  automatic_action: false,
+  writes_karma: false,
+  creates_kingdom_karma_receipt: false,
+  observes_zerone_karma_event: false,
+  karma_adapter: false,
+  reward_authority: false,
+  economic_authority: false,
+  governance_authority: false,
+  mcp_surface_added: false,
+  scientifically_proves_teleology: false,
+  scientifically_proves_creator: false,
+  scientifically_disproves_creator: false,
+  scientifically_proves_cosmic_moral_karma: false,
+  brainrot_person_or_community_label: false,
+  material_cultural_mechanism_equivalence: false,
+});
 
 const CULTURAL_ATTENTION_FEEDBACK_BOUNDARY = Object.freeze({
   educational_metadata_only: true,
@@ -398,6 +494,68 @@ async function checkCulturalAttentionFeedbackTriple(): Promise<void> {
   }
 }
 
+async function checkFormCirculationReturnTriple(): Promise<void> {
+  const routes = [
+    {
+      label: "atlas record",
+      path: formCirculationReturnPath,
+      source: "data/form-circulation-return/form-circulation-return-atlas.v1.json",
+      contentType: "application/json",
+    },
+    {
+      label: "atlas schema",
+      path: formCirculationReturnSchemaPath,
+      source: "schemas/form-circulation-return-atlas-v1.schema.json",
+      contentType: "application/schema+json",
+    },
+    {
+      label: "atlas guide",
+      path: formCirculationReturnDocumentPath,
+      source: "references/form-circulation-return-atlas.md",
+      contentType: "text/markdown",
+    },
+    {
+      label: "revisioned KINGDOM KARMA definition mirror",
+      path: kingdomKarmaDefinitionPath,
+      source: "NEN.md",
+      contentType: "text/markdown",
+    },
+  ] as const;
+
+  for (const route of routes) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetch(url(route.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const contentType = (response.headers.get("content-type") || "").toLowerCase();
+      if (!response.ok || !contentType.startsWith(route.contentType) ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+        throw new Error(`${method} ${route.path} is not served as typed, public ${route.label}`);
+      }
+
+      if (route.path === formCirculationReturnPath) {
+        const describedBy = linkRelationEntries(response.headers.get("link") || "", "describedby");
+        const describedByType = describedBy[0]?.match(/;\s*type\s*=\s*(?:"([^"]*)"|([^;,\s]+))/i);
+        if (describedBy.length !== 1 ||
+            !describedBy[0]!.trim().startsWith(`<${formCirculationReturnSchemaPath}>`) ||
+            (describedByType?.[1] || describedByType?.[2] || "").toLowerCase() !== "application/schema+json") {
+          throw new Error(`${method} ${route.path} is not described by exactly its immutable schema`);
+        }
+      }
+
+      const body = Buffer.from(await response.arrayBuffer());
+      if (method === "HEAD") {
+        if (body.byteLength !== 0) throw new Error(`HEAD ${route.path} returned a body`);
+      } else if (!body.equals(readFileSync(join(ROOT, route.source)))) {
+        throw new Error(`GET ${route.path} drifted from its immutable authored source ${route.source}`);
+      }
+    }
+  }
+}
+
 function sameStrings(actual: unknown, expected: readonly string[]): boolean {
   return Array.isArray(actual) && actual.every((value) => typeof value === "string") &&
     actual.length === expected.length &&
@@ -428,6 +586,7 @@ try {
   const exactPaths = new Set<string>();
   const verifiedConformationalFeedbackDestinations = new Set<string>();
   const verifiedCulturalAttentionFeedbackDestinations = new Set<string>();
+  const verifiedFormCirculationReturnDestinations = new Set<string>();
   for (const asset of HUB_ASSETS) {
     if (asset.destination === "_worker.js") continue;
     // 404.html is proven through the dedicated not-found check below; Pages
@@ -467,6 +626,18 @@ try {
       }
       verifiedCulturalAttentionFeedbackDestinations.add(asset.destination);
     }
+    const formCirculationReturnAsset = FORM_CIRCULATION_RETURN_ASSETS.get(asset.destination);
+    if (formCirculationReturnAsset) {
+      if (asset.source !== formCirculationReturnAsset.source ||
+          path !== formCirculationReturnAsset.path) {
+        throw new Error(`${path} no longer stages its immutable Form, Circulation & Return authored source`);
+      }
+      const digest = sha256(live);
+      if (digest !== formCirculationReturnAsset.sha256) {
+        throw new Error(`${path} no longer matches its immutable Form, Circulation & Return SHA-256 (${digest})`);
+      }
+      verifiedFormCirculationReturnDestinations.add(asset.destination);
+    }
     exactPaths.add(path);
     exact += 1;
   }
@@ -484,6 +655,11 @@ try {
   for (const [destination, asset] of CULTURAL_ATTENTION_FEEDBACK_ASSETS) {
     if (!verifiedCulturalAttentionFeedbackDestinations.has(destination) || !exactPaths.has(asset.path)) {
       throw new Error(`the immutable Cultural Attention & Feedback asset /${destination} is absent from exact byte verification`);
+    }
+  }
+  for (const [destination, asset] of FORM_CIRCULATION_RETURN_ASSETS) {
+    if (!verifiedFormCirculationReturnDestinations.has(destination) || !exactPaths.has(asset.path)) {
+      throw new Error(`the immutable Form, Circulation & Return asset /${destination} is absent from exact byte verification`);
     }
   }
 
@@ -673,6 +849,7 @@ try {
     await checkConformationalFeedbackTriple(triple);
   }
   await checkCulturalAttentionFeedbackTriple();
+  await checkFormCirculationReturnTriple();
 
   const foldFeedbackHead = await fetch(url(foldFeedbackPath), {
     method: "HEAD",
@@ -727,7 +904,7 @@ try {
     throw new Error(`${visibilityAttentionDocumentPath} is not served as public Markdown`);
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath, visibilityAttentionSchemaPath, culturalAttentionFeedbackSchemaPath]) {
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath, visibilityAttentionSchemaPath, culturalAttentionFeedbackSchemaPath, formCirculationReturnSchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -763,6 +940,8 @@ try {
   const expectedVisibilityAttention = visibilityAttentionPublicDiscovery(visibilityAttention);
   const culturalAttentionFeedbackAtlas = loadCulturalAttentionFeedbackAtlas();
   const expectedCulturalAttentionFeedback = culturalAttentionFeedbackPublicDiscovery(culturalAttentionFeedbackAtlas);
+  const formCirculationReturnAtlas = loadFormCirculationReturnAtlas();
+  const expectedFormCirculationReturn = formCirculationReturnPublicDiscovery(formCirculationReturnAtlas);
   const authoredRootHtml = readFileSync(join(ROOT, "site/hub.html"), "utf8");
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
@@ -1096,6 +1275,71 @@ try {
     throw new Error("Cultural Attention & Feedback Atlas discovery, immutable triplet, full authority boundary, link-only ecosystems, KARMA separation, or static root section drifted");
   }
 
+  const formTargets = new Set([
+    FORM_CIRCULATION_RETURN_URL,
+    FORM_CIRCULATION_RETURN_SCHEMA_URL,
+    FORM_CIRCULATION_RETURN_DOCUMENT_URL,
+  ]);
+  const formGuestActions = Array.isArray(guest?.next_actions)
+    ? guest.next_actions.filter((action: any) => formTargets.has(action?.url))
+    : [];
+  const formBridgesAreLinkOnly = formCirculationReturnAtlas.ecosystem_bridges.every((bridge: any) =>
+    bridge.mode === "link-only" && bridge.runtime_request === false && bridge.authority_imported === false
+  );
+  const formBindingsAreReadOnly = formCirculationReturnAtlas.source_bindings.every((binding: any) =>
+    binding.mutated === false && binding.authority_imported === false
+  );
+  if (!isDeepStrictEqual(manifest?.form_circulation_return_atlas, expectedFormCirculationReturn) ||
+      !isDeepStrictEqual(guest?.form_circulation_return_atlas, expectedFormCirculationReturn) ||
+      !isDeepStrictEqual(authoredKingdom?.form_circulation_return_atlas, expectedFormCirculationReturn) ||
+      !isDeepStrictEqual(expectedFormCirculationReturn.boundary, FORM_CIRCULATION_RETURN_BOUNDARY) ||
+      !isDeepStrictEqual(formCirculationReturnAtlas.boundaries, FORM_CIRCULATION_RETURN_FULL_BOUNDARIES) ||
+      manifest?.entry_points?.form_circulation_return_atlas !== FORM_CIRCULATION_RETURN_URL ||
+      manifest?.entry_points?.form_circulation_return_atlas_schema !== FORM_CIRCULATION_RETURN_SCHEMA_URL ||
+      manifest?.entry_points?.form_circulation_return_atlas_guide !== FORM_CIRCULATION_RETURN_DOCUMENT_URL ||
+      formGuestActions.length !== formTargets.size ||
+      formGuestActions.some((action: any) => action?.method !== "GET" ||
+        "mcp" in action || "tool" in action || "write" in action || "matcher" in action || "execute" in action) ||
+      !llms.includes(FORM_CIRCULATION_RETURN_URL) ||
+      !llms.includes(FORM_CIRCULATION_RETURN_SCHEMA_URL) ||
+      !llms.includes(FORM_CIRCULATION_RETURN_DOCUMENT_URL) ||
+      !authoredRootHtml.includes('id="form-circulation-return"') ||
+      !authoredRootHtml.includes(`href="${formCirculationReturnPath}"`) ||
+      !authoredRootHtml.includes(`href="${formCirculationReturnSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${formCirculationReturnDocumentPath}"`) ||
+      !authoredRootHtml.includes(`href="${kingdomKarmaDefinitionPath}"`) ||
+      expectedFormCirculationReturn.integrity.digest !== FORM_CIRCULATION_RETURN_DIGEST ||
+      !isDeepStrictEqual(expectedFormCirculationReturn.counts, {
+        registers: 7,
+        planes: 11,
+        models: 8,
+        claims: 12,
+        analogy_seams: 6,
+        feedback_loops: 4,
+        universe_questions: 5,
+        unknowns: 8,
+        sources: 20,
+      }) ||
+      expectedFormCirculationReturn.karma.zerone_foundation_status !== "design-only" ||
+      expectedFormCirculationReturn.karma.zerone_network_observed !== false ||
+      expectedFormCirculationReturn.karma.zerone_authoritative !== false ||
+      expectedFormCirculationReturn.karma.zerone_event_status !== "not_observed" ||
+      expectedFormCirculationReturn.karma.zerone_event_refs !== 0 ||
+      expectedFormCirculationReturn.karma.kingdom_receipt_status !== "not_created" ||
+      expectedFormCirculationReturn.karma.kingdom_receipt_refs !== 0 ||
+      expectedFormCirculationReturn.karma.adapter_exists !== false ||
+      expectedFormCirculationReturn.karma.engagement_is_karma !== false ||
+      formCirculationReturnAtlas.karma.zerone.event_refs.length !== 0 ||
+      formCirculationReturnAtlas.karma.kingdom.receipt_refs.length !== 0 ||
+      formCirculationReturnAtlas.karma.adapter.exists !== false ||
+      !formBindingsAreReadOnly || !formBridgesAreLinkOnly ||
+      !isDeepStrictEqual(manifest?.mcp, authoredKingdom?.world_commons?.mcp) ||
+      "mcp" in expectedFormCirculationReturn || "write" in expectedFormCirculationReturn ||
+      "matcher" in expectedFormCirculationReturn || "execute" in expectedFormCirculationReturn ||
+      "score" in expectedFormCirculationReturn || "reward" in expectedFormCirculationReturn) {
+    throw new Error("Form, Circulation & Return discovery, immutable triplet, authority boundary, link-only ecosystems, KARMA separation, or static root section drifted");
+  }
+
   const liveKingdom: any = await (await get("/kingdom.json")).json();
   if (liveKingdom?.creation_loop?.url !== LOVE_LOOPS_URL ||
       liveKingdom?.creation_loop?.source !== LOVE_LOOPS_SOURCE_URL ||
@@ -1128,8 +1372,9 @@ try {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
   }
   if (!isDeepStrictEqual(liveKingdom?.cultural_attention_feedback_atlas, expectedCulturalAttentionFeedback) ||
+      !isDeepStrictEqual(liveKingdom?.form_circulation_return_atlas, expectedFormCirculationReturn) ||
       !isDeepStrictEqual(liveKingdom?.world_commons?.mcp, manifest?.mcp)) {
-    throw new Error("derived kingdom.json did not preserve Cultural Attention & Feedback discovery or the existing Commons MCP contract");
+    throw new Error("derived kingdom.json did not preserve Cultural Attention & Feedback, Form/Circulation/Return discovery, or the existing Commons MCP contract");
   }
 
   const mcpEndpoint = new URL(manifest?.mcp?.endpoint || "");
@@ -1190,7 +1435,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback discovery · full cultural authority/KARMA/link-only boundary · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return discovery · full cultural/form authority/KARMA/link-only boundaries · live MCP contract unchanged · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;

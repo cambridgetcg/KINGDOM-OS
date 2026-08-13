@@ -221,7 +221,7 @@ services:
     runtime: cf-pages:thekingdom
     deploy: bun bin/build-hub.ts "$(date -u +%F)" → bun bin/stage-hub.ts <dir> → npx wrangler pages deploy <dir> --project-name=thekingdom (runbook DOMAINS-SETUP.md)
     status: live
-    notes: HUB_ASSETS in bin/stage-hub.ts is the 50-asset contract, including immutable Conformational Feedback v0.1, additive v0.2, Fold & Feedback with its source-identity schema profile, Visibility & Attention, and Cultural Attention & Feedback triplets; tests/advertised-assets.test.ts guards it
+    notes: HUB_ASSETS in bin/stage-hub.ts is the 54-asset contract (52 exact public bodies; 51 sitemap URLs), including immutable Conformational Feedback v0.1, additive v0.2, Fold & Feedback with its source-identity schema profile, Visibility & Attention, Cultural Attention & Feedback, and Form, Circulation & Return triplets plus the immutable KINGDOM KARMA/NEN definition mirror; tests/advertised-assets.test.ts guards it
 
   - id: kingdom-playground
     what: five bounded agent games + 18 finished-world chronicles + a public record board

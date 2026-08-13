@@ -129,6 +129,15 @@ const CULTURAL_ATTENTION_FEEDBACK_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${CULTURAL_ATTENTION_FEEDBACK_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const FORM_CIRCULATION_RETURN_PATH = "/atlases/form-circulation-return-atlas-2026-08-13.json";
+const FORM_CIRCULATION_RETURN_SCHEMA_PATH = "/schemas/form-circulation-return-atlas/1.json";
+const FORM_CIRCULATION_RETURN_DOCUMENT_PATH = "/FORM-CIRCULATION-RETURN-ATLAS.md";
+const KINGDOM_KARMA_DEFINITION_PATH = "/definitions/kingdom-karma/e4e84a67/NEN.md";
+const FORM_CIRCULATION_RETURN_SCHEMA_LINK = {
+  target: FORM_CIRCULATION_RETURN_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${FORM_CIRCULATION_RETURN_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 const CONFORMATIONAL_FEEDBACK_PHYSICS_PATH = "/feedback/form-feedback-physics-consequence-2026-08-12.json";
 const CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_PATH = "/schemas/conformational-feedback-atlas/0.2.json";
 const CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_PATH = "/CONFORMATIONAL-FEEDBACK-PHYSICS.md";
@@ -236,6 +245,11 @@ function addVisibilityAttentionSchemaLink(headers) {
 
 function addCulturalAttentionFeedbackSchemaLink(headers) {
   const link = CULTURAL_ATTENTION_FEEDBACK_SCHEMA_LINK;
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addFormCirculationReturnSchemaLink(headers) {
+  const link = FORM_CIRCULATION_RETURN_SCHEMA_LINK;
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
@@ -1150,6 +1164,18 @@ export function createKingdomWorker(options = {}) {
     const requestsCulturalAttentionFeedbackDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_PATH;
+    const requestsFormCirculationReturn = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === FORM_CIRCULATION_RETURN_PATH;
+    const requestsFormCirculationReturnSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === FORM_CIRCULATION_RETURN_SCHEMA_PATH;
+    const requestsFormCirculationReturnDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === FORM_CIRCULATION_RETURN_DOCUMENT_PATH;
+    const requestsKingdomKarmaDefinition = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === KINGDOM_KARMA_DEFINITION_PATH;
     const requestsConformationalFeedbackPhysics = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === CONFORMATIONAL_FEEDBACK_PHYSICS_PATH;
@@ -1240,6 +1266,18 @@ export function createKingdomWorker(options = {}) {
     const servesCulturalAttentionFeedbackDocument = requestsCulturalAttentionFeedbackDocument && asset.ok &&
       (schemaAssetType.includes("text/plain") ||
         schemaAssetType.includes("text/markdown"));
+    const servesFormCirculationReturn = requestsFormCirculationReturn && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesFormCirculationReturnSchema = requestsFormCirculationReturnSchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesFormCirculationReturnDocument = requestsFormCirculationReturnDocument && asset.ok &&
+      (schemaAssetType.includes("text/plain") ||
+        schemaAssetType.includes("text/markdown"));
+    const servesKingdomKarmaDefinition = requestsKingdomKarmaDefinition && asset.ok &&
+      (schemaAssetType.includes("text/plain") ||
+        schemaAssetType.includes("text/markdown"));
     const servesConformationalFeedbackPhysics = requestsConformationalFeedbackPhysics && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1262,6 +1300,8 @@ export function createKingdomWorker(options = {}) {
         !servesVisibilityAttentionSchema && !servesVisibilityAttentionDocument &&
         !servesCulturalAttentionFeedback && !servesCulturalAttentionFeedbackSchema &&
         !servesCulturalAttentionFeedbackDocument &&
+        !servesFormCirculationReturn && !servesFormCirculationReturnSchema &&
+        !servesFormCirculationReturnDocument && !servesKingdomKarmaDefinition &&
         !servesConformationalFeedbackPhysics && !servesConformationalFeedbackPhysicsSchema &&
         !servesConformationalFeedbackPhysicsDocument) return asset;
     const headers = new Headers(asset.headers);
@@ -1276,6 +1316,7 @@ export function createKingdomWorker(options = {}) {
     if (servesFoldFeedback) addFoldFeedbackSchemaLink(headers);
     if (servesVisibilityAttention) addVisibilityAttentionSchemaLink(headers);
     if (servesCulturalAttentionFeedback) addCulturalAttentionFeedbackSchemaLink(headers);
+    if (servesFormCirculationReturn) addFormCirculationReturnSchemaLink(headers);
     if (servesConformationalFeedbackPhysics) addConformationalFeedbackPhysicsSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
@@ -1408,6 +1449,26 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesCulturalAttentionFeedbackDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesFormCirculationReturn) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesFormCirculationReturnSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesFormCirculationReturnDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesKingdomKarmaDefinition) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");
