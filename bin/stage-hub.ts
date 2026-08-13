@@ -69,6 +69,12 @@ export const HUB_ASSETS = [
   { source: "data/attention/visibility-attention-translation.v0.1.json", destination: "atlases/visibility-attention-2026-08-13.json" },
   { source: "schemas/visibility-attention-translation-v0.1.schema.json", destination: "schemas/visibility-attention/0.1.json" },
   { source: "references/visibility-attention-translation.md", destination: "VISIBILITY-ATTENTION.md" },
+  // Cultural attention, meme diffusion, vernacular "brain rot", bounded
+  // material analogies, feedback, KARMA, and the opt-in universe lens remain
+  // one immutable read-only triplet. There is deliberately no mutable alias.
+  { source: "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json", destination: "atlases/cultural-attention-feedback-atlas-2026-08-13.json" },
+  { source: "schemas/cultural-attention-feedback-atlas-v1.schema.json", destination: "schemas/cultural-attention-feedback-atlas/1.json" },
+  { source: "references/cultural-attention-feedback-atlas.md", destination: "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md" },
   { source: "site/llms.txt", destination: "llms.txt" },
   { source: "site/guest.json", destination: "guest.json" },
   { source: "site/ollama.json", destination: "ollama.json" },

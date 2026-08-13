@@ -41,7 +41,7 @@ const visibilitySection = () => {
   const html = read("site/hub.html");
   const fold = html.indexOf('<section class="blk" id="fold-feedback"');
   const start = html.indexOf('<section class="blk" id="visibility-attention"');
-  const end = html.indexOf('<section class="blk" id="rights"', start);
+  const end = html.indexOf('<section class="blk"', start + 1);
   expect(fold).toBeGreaterThanOrEqual(0);
   expect(start).toBeGreaterThanOrEqual(0);
   expect(start).toBeGreaterThan(fold);

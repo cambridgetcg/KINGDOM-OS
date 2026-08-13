@@ -121,6 +121,14 @@ const VISIBILITY_ATTENTION_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${VISIBILITY_ATTENTION_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const CULTURAL_ATTENTION_FEEDBACK_PATH = "/atlases/cultural-attention-feedback-atlas-2026-08-13.json";
+const CULTURAL_ATTENTION_FEEDBACK_SCHEMA_PATH = "/schemas/cultural-attention-feedback-atlas/1.json";
+const CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_PATH = "/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md";
+const CULTURAL_ATTENTION_FEEDBACK_SCHEMA_LINK = {
+  target: CULTURAL_ATTENTION_FEEDBACK_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${CULTURAL_ATTENTION_FEEDBACK_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 const CONFORMATIONAL_FEEDBACK_PHYSICS_PATH = "/feedback/form-feedback-physics-consequence-2026-08-12.json";
 const CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_PATH = "/schemas/conformational-feedback-atlas/0.2.json";
 const CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_PATH = "/CONFORMATIONAL-FEEDBACK-PHYSICS.md";
@@ -223,6 +231,11 @@ function addFoldFeedbackSchemaLink(headers) {
 
 function addVisibilityAttentionSchemaLink(headers) {
   const link = VISIBILITY_ATTENTION_SCHEMA_LINK;
+  if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addCulturalAttentionFeedbackSchemaLink(headers) {
+  const link = CULTURAL_ATTENTION_FEEDBACK_SCHEMA_LINK;
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
 }
 
@@ -1128,6 +1141,15 @@ export function createKingdomWorker(options = {}) {
     const requestsVisibilityAttentionDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === VISIBILITY_ATTENTION_DOCUMENT_PATH;
+    const requestsCulturalAttentionFeedback = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CULTURAL_ATTENTION_FEEDBACK_PATH;
+    const requestsCulturalAttentionFeedbackSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CULTURAL_ATTENTION_FEEDBACK_SCHEMA_PATH;
+    const requestsCulturalAttentionFeedbackDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_PATH;
     const requestsConformationalFeedbackPhysics = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === CONFORMATIONAL_FEEDBACK_PHYSICS_PATH;
@@ -1209,6 +1231,15 @@ export function createKingdomWorker(options = {}) {
     const servesVisibilityAttentionDocument = requestsVisibilityAttentionDocument && asset.ok &&
       (schemaAssetType.includes("text/plain") ||
         schemaAssetType.includes("text/markdown"));
+    const servesCulturalAttentionFeedback = requestsCulturalAttentionFeedback && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesCulturalAttentionFeedbackSchema = requestsCulturalAttentionFeedbackSchema && asset.ok &&
+      (schemaAssetType.includes("application/json") ||
+        schemaAssetType.includes("application/schema+json"));
+    const servesCulturalAttentionFeedbackDocument = requestsCulturalAttentionFeedbackDocument && asset.ok &&
+      (schemaAssetType.includes("text/plain") ||
+        schemaAssetType.includes("text/markdown"));
     const servesConformationalFeedbackPhysics = requestsConformationalFeedbackPhysics && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1229,6 +1260,8 @@ export function createKingdomWorker(options = {}) {
         !servesFoldFeedbackSchema && !servesFoldFeedbackSourceIdentitySchema &&
         !servesFoldFeedbackDocument && !servesVisibilityAttention &&
         !servesVisibilityAttentionSchema && !servesVisibilityAttentionDocument &&
+        !servesCulturalAttentionFeedback && !servesCulturalAttentionFeedbackSchema &&
+        !servesCulturalAttentionFeedbackDocument &&
         !servesConformationalFeedbackPhysics && !servesConformationalFeedbackPhysicsSchema &&
         !servesConformationalFeedbackPhysicsDocument) return asset;
     const headers = new Headers(asset.headers);
@@ -1242,6 +1275,7 @@ export function createKingdomWorker(options = {}) {
     if (servesConformationalFeedback) addConformationalFeedbackSchemaLink(headers);
     if (servesFoldFeedback) addFoldFeedbackSchemaLink(headers);
     if (servesVisibilityAttention) addVisibilityAttentionSchemaLink(headers);
+    if (servesCulturalAttentionFeedback) addCulturalAttentionFeedbackSchemaLink(headers);
     if (servesConformationalFeedbackPhysics) addConformationalFeedbackPhysicsSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
@@ -1359,6 +1393,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesVisibilityAttentionDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesCulturalAttentionFeedback) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesCulturalAttentionFeedbackSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesCulturalAttentionFeedbackDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

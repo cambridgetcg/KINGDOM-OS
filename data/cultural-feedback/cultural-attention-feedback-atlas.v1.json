@@ -1,0 +1,1052 @@
+{
+  "$schema": "urn:kingdom:schema:cultural-attention-feedback-atlas:1",
+  "protocol": "kingdom.cultural-attention-feedback-atlas/0.1",
+  "atlas_id": "cultural-attention-feedback-atlas-2026-08-13",
+  "title": "Cultural Attention & Feedback Atlas",
+  "compiled_on": "2026-08-13",
+  "evidence_through": "2025-06-26",
+  "source_bindings": [
+    {
+      "id": "kingdom-polymorph-history",
+      "protocol": "kingdom.polymorph-history/0.1",
+      "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+      "byte_sha256": "sha256:08148603a1228960ac35df1378f1283c3fce43874a9fc07e6687f18e980dcb1c",
+      "semantic_digest": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116",
+      "relation": "source-scoped-material-history-basis",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-ritonavir-mechanism",
+      "protocol": "kingdom.ritonavir-mechanism-landscape/0.1",
+      "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+      "byte_sha256": "sha256:5e136a74d5166275427da920685a84c17901f63d6e4b0661fd529c96d386943b",
+      "semantic_digest": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b",
+      "relation": "source-scoped-state-path-consequence-basis",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-conformational-physics",
+      "protocol": "kingdom.conformational-feedback-atlas/0.2",
+      "url": "https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json",
+      "byte_sha256": "sha256:7d9b1eed8514051e47448cfc983f00e160d5b76c49704822158f76d3f8cf6349",
+      "semantic_digest": "sha256:0fc24a0fac99d2dadcdef5b87290a1d598b856f874aa9637ab4d503fd4c9dc11",
+      "relation": "companion-physics-and-boundary-map",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-fold-feedback",
+      "protocol": "kingdom.fold-feedback-atlas/0.1",
+      "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json",
+      "byte_sha256": "sha256:bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5",
+      "semantic_digest": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7",
+      "relation": "companion-non-equivalence-map",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "zerone-karma-foundation",
+      "protocol": "zerone.karma-foundation/v1",
+      "url": "https://zerone.ai/standards/karma-foundation.v1.json",
+      "byte_sha256": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80",
+      "semantic_digest": null,
+      "relation": "definition-only-constitutional-source",
+      "mutated": false,
+      "authority_imported": false
+    }
+  ],
+  "scope": {
+    "focus": "A source-bound account of the disappearing-polymorph correction, competition among cultural items for finite attention, platform feedback, mathematical models of history and spread, and bounded KARMA and universe-design reflections.",
+    "coverage": "Selected materials-science evidence through 2024, selected communication and network research, an authoritative 2025 lexical account of brain rot, exact immutable KINGDOM predecessors, and one definition-only Zerone KARMA source.",
+    "intended_use": "Public scientific education, inspectable systems-design reflection, and opt-in philosophy or faith without collapsing distinct registers.",
+    "excluded_use": "Diagnosis, prognosis, treatment, manufacturing, experiment planning, social-platform optimization, personalized inference, moderation, recommendation, person scoring, KARMA creation, reward, governance, or proof of cosmic purpose.",
+    "currentness": "selected-evidence-as-of-compilation"
+  },
+  "plain_language": {
+    "question": "What can a disappearing crystal form responsibly illuminate about memes, brainrot, feedback, KARMA, and the design of the universe?",
+    "short_answer": [
+      "Ritonavir Form I did not leave physical possibility; it became difficult to recover in one process history and was later recovered under changed conditions.",
+      "Memes compete within finite human attention and platform-mediated exposure, but their spread is not crystallization, infection, truth, merit, consent, or welfare.",
+      "Brain rot is a cultural and lexical label for supposed deterioration or allegedly low-value content, not a diagnosis or a single physical variable.",
+      "Memory, thresholds, finite capacity, excitation, topology, and closed-loop stability are reusable mathematical structures only when their variables and assumptions remain domain-local.",
+      "KARMA remains contextual, challengeable relation or receipt design rather than a scalar attached to a person; no event or receipt is created here.",
+      "Order, feedback, repair, and open possibility may invite a design reading of the universe, but science underdetermines that philosophical or faithful interpretation."
+    ],
+    "safety": "Static, read-only educational metadata: no personal data, wet-lab recipe, medical inference, attention-capture playbook, feed ranking, moderation rule, recommendation, KARMA write, reward, governance effect, or automatic action."
+  },
+  "ontology": {
+    "planes": [
+      {
+        "id": "chemical-entity-and-crystal-phase",
+        "register": "SCIENTIFIC_OBSERVATION",
+        "label": "Chemical entity and crystal phase",
+        "meaning": "One chemical substance may occupy distinct source-scoped molecular conformations and crystal lattices with different material properties.",
+        "does_not_establish": "A cultural item, belief, person, or brain state is a crystal phase."
+      },
+      {
+        "id": "bounded-particle-population",
+        "register": "SCIENTIFIC_OBSERVATION",
+        "label": "Bounded particle population",
+        "meaning": "Observed material outcomes depend on particle size, shape, surfaces, process conditions, and population history, not only on one bulk-energy ordering.",
+        "does_not_establish": "One universal material path, literal extinction, or a social mechanism."
+      },
+      {
+        "id": "cultural-item-and-remix",
+        "register": "CULTURAL_DESCRIPTION",
+        "label": "Cultural item and remix",
+        "meaning": "A declared phrase, image family, hashtag, link, topic, performance, or remix can be traced across acts of interpretation and reuse under a stated classification.",
+        "does_not_establish": "A discrete gene-like unit, lossless copying, agreement, truth, merit, ownership, or one context-free meaning."
+      },
+      {
+        "id": "exposure-and-attention",
+        "register": "CULTURAL_DESCRIPTION",
+        "label": "Exposure and attention",
+        "meaning": "People encounter only a bounded and mediated portion of available cultural material; visibility, attention, choice, and reshare are distinct events.",
+        "does_not_establish": "Consent, endorsement, comprehension, wellbeing, obligation, or a platform property right over attention."
+      },
+      {
+        "id": "cascade-and-platform-policy",
+        "register": "MATHEMATICAL_TRANSLATION",
+        "label": "Cascade and platform policy",
+        "meaning": "Broadcast, person-to-person paths, exogenous events, ranking policies, and repeated observation can contribute differently to one popularity count.",
+        "does_not_establish": "Endogenous contagion, causation, content fitness, or a mandate to maximize engagement."
+      },
+      {
+        "id": "measured-outcome",
+        "register": "SCIENTIFIC_OBSERVATION",
+        "label": "Measured outcome",
+        "meaning": "Claims about cognitive or social effects require separately declared outcomes, observation windows, comparison conditions, uncertainty, and study design.",
+        "does_not_establish": "That screen time, entropy, popularity, slang, or one self-report is a diagnosis."
+      },
+      {
+        "id": "contextual-consequence-record",
+        "register": "CONSTITUTIONAL_DESIGN",
+        "label": "Contextual consequence record",
+        "meaning": "A system may preserve typed provenance, uncertainty, challenge, correction, supersession, repair, and exit without converting history into a person score.",
+        "does_not_establish": "Causation, moral desert, truth, rank, money, reward, governance, or cosmic judgment."
+      },
+      {
+        "id": "philosophy-and-faith",
+        "register": "PHILOSOPHY",
+        "label": "Philosophy and faith",
+        "meaning": "A willing reader may interpret lawful possibility, emergence, consequence, repair, and freedom through naturalistic, theological, or other metaphysical lenses.",
+        "does_not_establish": "That scientific evidence selects, proves, or disproves a creator, purpose, or cosmic KARMA."
+      }
+    ]
+  },
+  "scientific_observations": [
+    {
+      "id": "ritonavir-disappearance-was-process-contingent",
+      "register": "SCIENTIFIC_OBSERVATION",
+      "statement": "Ritonavir Form II disrupted a process developed around Form I, yet later studies recovered Form I and demonstrated condition-dependent interconversion; disappearance was process-contingent rather than erasure from physical possibility.",
+      "source_ids": [
+        "bauer-2001",
+        "sacchi-2024",
+        "wang-2024",
+        "kingdom-polymorph-history-2026",
+        "kingdom-ritonavir-mechanism-2026"
+      ],
+      "limitations": [
+        "Bulk stability, nucleation, particle size, particle shape, surfaces, solvent, supersaturation, and process history remain distinct contributors.",
+        "The investigated impurity-assisted first nucleation was a hypothesis rather than recovered historical certainty.",
+        "The record grants no manufacturing, experiment, formulation, batch, regulatory, or medical authority."
+      ]
+    },
+    {
+      "id": "finite-attention-can-generate-heavy-tailed-popularity",
+      "register": "SCIENTIFIC_OBSERVATION",
+      "statement": "In a neutral agent-based model, network structure plus competition for limited attention was sufficient to reproduce broad heterogeneity in observed meme popularity and lifetime without assigning different intrinsic merit to memes.",
+      "source_ids": [
+        "weng-2012"
+      ],
+      "limitations": [
+        "Sufficiency inside the model does not show that content, meaning, identity, emotion, external events, or platform choices never matter.",
+        "A heavy-tailed distribution alone does not identify its generating mechanism or establish criticality."
+      ]
+    },
+    {
+      "id": "collective-attention-turned-over-faster",
+      "register": "SCIENTIFIC_OBSERVATION",
+      "statement": "Across several studied cultural domains, popular content rose and fell more rapidly over historical time; the authors modeled increasing production and consumption under finite attention as a driver of shorter attention intervals.",
+      "source_ids": [
+        "lorenz-spreen-2019"
+      ],
+      "limitations": [
+        "The result is aggregate and domain-bounded, not a diagnosis of individuals.",
+        "The attention model is not a literal thermodynamic phase transition or universal law."
+      ]
+    },
+    {
+      "id": "social-reinforcement-can-change-adoption",
+      "register": "SCIENTIFIC_OBSERVATION",
+      "statement": "In one randomized online-network experiment, adoption of a health behavior was more likely after reinforcement from multiple social neighbors and spread farther across clustered networks than matched random networks.",
+      "source_ids": [
+        "centola-2010"
+      ],
+      "limitations": [
+        "One behavior and experimental setting do not define every meme, belief, or platform.",
+        "Social reinforcement is not molecular seeding and does not erase agency or interpretation."
+      ]
+    },
+    {
+      "id": "popularity-and-structural-virality-differ",
+      "register": "SCIENTIFIC_OBSERVATION",
+      "statement": "Online cascade size and person-to-person structural virality are different observables; in the cited Twitter analysis, large broadcast contributions were common and structural virality was typically low.",
+      "source_ids": [
+        "goel-2016"
+      ],
+      "limitations": [
+        "Tree reconstruction depends on the available exposure and reshare data.",
+        "Neither popularity nor structural virality measures truth, merit, harm, consent, or welfare."
+      ]
+    },
+    {
+      "id": "recommendation-data-can-confound-itself",
+      "register": "SCIENTIFIC_OBSERVATION",
+      "statement": "Simulation work showed that recommenders trained or evaluated on behavior shaped by earlier recommendations can create a feedback loop that homogenizes behavior without increasing modeled user utility.",
+      "source_ids": [
+        "chaney-2018"
+      ],
+      "limitations": [
+        "A simulation result is not a universal measurement of every deployed recommender.",
+        "Homogeneity, utility, harm, and user preference require separate definitions and evidence."
+      ]
+    }
+  ],
+  "models": [
+    {
+      "id": "ritonavir-particle-energy",
+      "register": "SCIENTIFIC_MODEL",
+      "question": "How can particle size and shape change the relative stability of two crystal forms?",
+      "equation": "E_particle,i(r,phi) = (E_latt-inter,i + Delta_E_intra,i) - 1/2 sum_(hkl) x_i,(hkl)(r,phi) E_att,i,(hkl)",
+      "terms": {
+        "i": "The declared ritonavir polymorph.",
+        "r": "A particle-size description.",
+        "phi": "A particle-shape description.",
+        "E_latt-inter": "The intermolecular bulk-lattice contribution in the cited model.",
+        "Delta_E_intra": "The intramolecular conformational penalty.",
+        "x_i,(hkl)": "The fraction of surface molecules associated with a declared facet.",
+        "E_att,i,(hkl)": "The facet attachment-energy term in the cited sign convention."
+      },
+      "interpretation": "Bulk ordering need not determine small-particle ordering because exposed surface fractions and energies vary with particle size and shape.",
+      "basis_ids": [
+        "sacchi-2024"
+      ],
+      "does_not_establish": "That an idea has lattice energy, attention has temperature, culture minimizes a thermodynamic potential, or this atlas supplies an experimental recipe.",
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "finite-attention-entropy",
+      "register": "SCIENTIFIC_MODEL",
+      "question": "How concentrated or distributed is observed activity across declared cultural items?",
+      "equation": "H_u = - sum_m p_(u,m) log p_(u,m)",
+      "terms": {
+        "u": "One declared observational unit, such as a user, without importing identity or worth.",
+        "m": "One cultural-item class under the study's operational definition.",
+        "p_(u,m)": "The observed share of u's classified activity assigned to m in a bounded window.",
+        "H_u": "Shannon entropy of that distribution under the selected classification and window."
+      },
+      "interpretation": "The statistic distinguishes more concentrated from more distributed observed activity under a declared classification.",
+      "basis_ids": [
+        "shannon-1948",
+        "weng-2012"
+      ],
+      "does_not_establish": "Truth, meaning, wisdom, mental capacity, diagnosis, wellbeing, artistic worth, consent, or moral value.",
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "collective-attention-competition",
+      "register": "SCIENTIFIC_MODEL",
+      "question": "How can imitation, finite capacity, competition, and memory shape aggregate topic volume?",
+      "equation": "dL_i/dt = r_p L_i [1 - (r_c/K)Y_i - c sum_(j!=i)L_j] ; dY_i/dt = L_i - alpha Y_i",
+      "terms": {
+        "L_i": "Current modeled volume of topic i.",
+        "Y_i": "An exponentially decaying memory or saturation variable for topic i.",
+        "r_p": "A modeled imitation or production rate.",
+        "r_c": "A modeled consumption or saturation rate.",
+        "K": "A finite aggregate attention-capacity parameter.",
+        "c": "Competition strength among topics.",
+        "alpha": "Memory-decay rate."
+      },
+      "interpretation": "Rising production and consumption can accelerate collective-attention turnover when topics compete within a finite modeled capacity.",
+      "basis_ids": [
+        "lorenz-spreen-2019"
+      ],
+      "does_not_establish": "One capacity for every person, a platform right over attention, brain deterioration, thermodynamic identity, or an optimization target.",
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "self-exciting-event-process",
+      "register": "SCIENTIFIC_MODEL",
+      "question": "How can earlier observed events temporarily change the modeled intensity of later events?",
+      "equation": "lambda_i(t) = mu_i(t) + sum_j integral_0^(t-) phi_ij(t-s) dN_j(s) ; K_ij = integral_0^infinity phi_ij(s) ds",
+      "terms": {
+        "lambda_i(t)": "Conditional event intensity for declared process i.",
+        "mu_i(t)": "Declared exogenous or baseline intensity.",
+        "phi_ij": "A nonnegative, integrable excitation kernel from events of type j to intensity i in the stated standard linear model.",
+        "N_j": "The observed counting process for declared event type j.",
+        "K": "The integrated excitation matrix, when the kernels are integrable.",
+        "rho(K)": "The spectral radius used in a linear Hawkes stability condition."
+      },
+      "interpretation": "For a standard linear Hawkes process with nonnegative, integrable kernels, rho(K) below one is a subcritical stationarity condition; signed or inhibitory kernels, nonlinear intensity, exogenous baselines, saturation, missing events, and model misspecification remain separate.",
+      "basis_ids": [
+        "hawkes-1971"
+      ],
+      "does_not_establish": "That observed clustering is endogenous contagion, that people are infected, that supercritical means valuable, or that one fitted process is causal.",
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "structural-virality",
+      "register": "SCIENTIFIC_MODEL",
+      "question": "How broadcast-like or multi-generational is a reconstructed diffusion tree?",
+      "equation": "nu(T) = [2/(n(n-1))] sum_(i<j) d_T(i,j)",
+      "terms": {
+        "T": "One reconstructed cascade tree.",
+        "n": "The number of nodes in T; the displayed average-pair formula applies for n at least two.",
+        "d_T(i,j)": "Graph distance between nodes i and j in T.",
+        "nu(T)": "Average pairwise tree distance, called structural virality in the cited work."
+      },
+      "interpretation": "For n at least two, a star-like broadcast and a deeper person-to-person cascade can have similar size but different average pairwise distances; a singleton cascade is reported separately rather than evaluated with the displayed formula.",
+      "basis_ids": [
+        "goel-2016"
+      ],
+      "does_not_establish": "Truth, merit, benefit, harm, consent, intent, organic reach, or complete exposure history.",
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "state-with-memory",
+      "register": "MATHEMATICAL_TRANSLATION",
+      "question": "What is the smallest shared mathematical motif for history-dependent accessibility?",
+      "equation": "x_dot = F(x,h,u) + eta(t) ; h_dot = G(x,h,u)",
+      "terms": {
+        "x": "The declared currently observable state in one model.",
+        "h": "A declared hidden or accumulated history variable in that same model.",
+        "u": "A declared environmental or control input.",
+        "eta": "A stochastic disturbance under stated assumptions."
+      },
+      "interpretation": "When relevant history h is omitted, the observed x dynamics may appear non-Markovian; the variable meanings remain local to each domain.",
+      "basis_ids": [],
+      "does_not_establish": "A common substrate, common units, common mechanism, subjective memory, fate, moral law, or universal equation of the universe.",
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "closed-loop-feedback-stability",
+      "register": "MATHEMATICAL_TRANSLATION",
+      "question": "How can observation and policy form a locally amplifying or damping closed loop?",
+      "equation": "x_(t+1)=F(x_t,a_t,xi_t) ; y_t=H(x_t) ; a_t=pi(y_t) ; delta_x_(t+1)=J_cl delta_x_t ; local decay when rho(J_cl)<1",
+      "terms": {
+        "x_t": "A declared system state.",
+        "y_t": "A declared observation of that state.",
+        "a_t": "An action selected by a declared policy from the observation.",
+        "xi_t": "Unmodeled or stochastic disturbance.",
+        "J_cl": "The local linearized closed-loop operator near a declared reference state.",
+        "rho(J_cl)": "Its spectral radius."
+      },
+      "interpretation": "A policy changes exposure or action, which changes later state and later data; local spectral radius characterizes perturbation decay only inside the stated linearization.",
+      "basis_ids": [
+        "chaney-2018"
+      ],
+      "does_not_establish": "Goodness, truth, global stability, welfare, causation, purpose, or a mandate to manipulate attention; a stable harmful loop remains harmful.",
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    }
+  ],
+  "translations": [
+    {
+      "id": "history-dependent-accessibility",
+      "register": "ANALOGY",
+      "relation": "bounded-analogy-not-same-as",
+      "preserved_patterns": [
+        "More than one future state may remain possible.",
+        "Prior events can change present boundary conditions and later transition probabilities.",
+        "A change of environment can reopen a path that looked inaccessible."
+      ],
+      "analogy_breaks": [
+        "Crystal history is embodied in physical particles, surfaces, conformations, solvent, and process conditions.",
+        "Cultural history is mediated by interpretation, memory, agency, social relation, institutions, and platform policy.",
+        "Institutional memory is a designed record with contestable semantics rather than a material phase.",
+        "No energy, temperature, seed, state, or probability is numerically transferred across domains."
+      ],
+      "source_ids": [
+        "sacchi-2024",
+        "weng-2012",
+        "chaney-2018"
+      ],
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "finite-capacity-and-competition",
+      "register": "ANALOGY",
+      "relation": "bounded-analogy-not-same-as",
+      "preserved_patterns": [
+        "Finite represented capacity can force alternatives to compete for occupancy or visibility.",
+        "Population-level selection can differ from the properties of one isolated item.",
+        "Loss, replacement, novelty, and return paths must be modeled separately."
+      ],
+      "analogy_breaks": [
+        "Collective attention is not a crystal vessel or conserved thermodynamic quantity.",
+        "People can refuse, reinterpret, rest, seek context, and leave; particles do not exercise agency.",
+        "Visibility is produced by social and technical choices, not only spontaneous physical dynamics.",
+        "Competition does not establish that the surviving item is best, true, healthy, or deserved."
+      ],
+      "source_ids": [
+        "weng-2012",
+        "lorenz-spreen-2019"
+      ],
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "returning-consequence",
+      "register": "ANALOGY",
+      "relation": "bounded-analogy-not-same-as",
+      "preserved_patterns": [
+        "An output can become part of a later input.",
+        "Positive and negative feedback can amplify, redirect, correct, saturate, or destabilize.",
+        "Repair and exit paths are as architecturally important as amplification paths."
+      ],
+      "analogy_breaks": [
+        "Physical feedback has no necessary intention, morality, narrator, reward, or punishment.",
+        "Platform feedback is partly designed and can confound observed behavior with prior exposure policy.",
+        "A KARMA relation or receipt is authored constitutional metadata, not a physical force.",
+        "Feedback stability is not moral goodness and feedback amplification is not optimization."
+      ],
+      "source_ids": [
+        "chaney-2018",
+        "zerone-karma-foundation-2026"
+      ],
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "form-pattern-and-meaning",
+      "register": "ANALOGY",
+      "relation": "bounded-analogy-not-same-as",
+      "preserved_patterns": [
+        "A persistent global pattern can arise from repeated local relations.",
+        "The same named source may participate in more than one realized form.",
+        "A visible pattern does not disclose every path that produced it."
+      ],
+      "analogy_breaks": [
+        "A crystal lattice is a physical periodic arrangement; a meme is interpreted and remixed.",
+        "Cultural identity can be contested and does not require lossless replication.",
+        "Meaning, truth, beauty, humor, and harm are not derivable from cascade geometry alone.",
+        "Emergence neither proves the absence of design nor supplies scientific evidence of a designer."
+      ],
+      "source_ids": [
+        "bauer-2001",
+        "goel-2016",
+        "shannon-1948"
+      ],
+      "causal_transfer": false,
+      "universal": false,
+      "authority_effect": "NONE"
+    }
+  ],
+  "feedback": [
+    {
+      "id": "material-process-history-loop",
+      "input": "A bounded material population under declared process conditions.",
+      "process": "Nucleation, growth, dissolution, breakage, surfaces, and phase selection change the later material population and its available interfaces.",
+      "return_effect": "The resulting population becomes part of the boundary conditions for later material evolution.",
+      "limits": [
+        "The direction and rate are condition-dependent.",
+        "Bulk stability alone is not a complete process model."
+      ],
+      "source_ids": [
+        "bauer-2001",
+        "sacchi-2024"
+      ],
+      "does_not_establish": [
+        "Intention, purpose, moral consequence, or a cultural mechanism.",
+        "A manufacturing or experimental instruction."
+      ],
+      "truth_effect": false,
+      "person_score_effect": false,
+      "automatic_effect": false
+    },
+    {
+      "id": "limited-attention-competition-loop",
+      "input": "New and repeated cultural items entering bounded, networked attention windows.",
+      "process": "Exposure, memory, reshare, novelty, and replacement change which items remain visible in the modeled system.",
+      "return_effect": "The visible set and past activity influence later opportunities for attention and reshare.",
+      "limits": [
+        "Content, external events, identity, meaning, emotion, and platform policy may also matter.",
+        "Observed non-reshare can reflect non-exposure, refusal, rest, privacy, or missing data."
+      ],
+      "source_ids": [
+        "weng-2012",
+        "lorenz-spreen-2019"
+      ],
+      "does_not_establish": [
+        "Truth, merit, consent, welfare, diagnosis, or a mandate to maximize reach.",
+        "That cultural diffusion is infection or crystallization."
+      ],
+      "truth_effect": false,
+      "person_score_effect": false,
+      "automatic_effect": false
+    },
+    {
+      "id": "recommender-observation-loop",
+      "input": "Behavior observed after an earlier recommendation policy shaped exposure.",
+      "process": "The observed behavior is used to evaluate or update a later recommendation model.",
+      "return_effect": "The later model changes exposure again, so policy and observed data become coupled across time.",
+      "limits": [
+        "Randomized exploration or causal design may be needed to separate preference from exposure effects.",
+        "Utility, harm, diversity, concentration, volatility, and uncertainty remain separate measures."
+      ],
+      "source_ids": [
+        "chaney-2018"
+      ],
+      "does_not_establish": [
+        "That every recommendation loop degenerates.",
+        "Authority to rank, moderate, recommend, personalize, or optimize engagement."
+      ],
+      "truth_effect": false,
+      "person_score_effect": false,
+      "automatic_effect": false
+    },
+    {
+      "id": "evidence-correction-loop",
+      "input": "A bounded claim together with sources, provenance, method, and uncertainty.",
+      "process": "Replication, challenge, counterevidence, correction, retraction, or supersession changes the inspectable evidence state without erasing history.",
+      "return_effect": "Later interpretation can consult both the earlier claim and the surviving challenge or repair relation.",
+      "limits": [
+        "Provenance is not causation or truth by itself.",
+        "Absence of challenge is not validation."
+      ],
+      "source_ids": [
+        "kingdom-conformational-physics-2026",
+        "kingdom-fold-feedback-2026"
+      ],
+      "does_not_establish": [
+        "A person score, punishment, reward, rank, governance power, or debt.",
+        "A live Zerone event or KINGDOM receipt."
+      ],
+      "truth_effect": false,
+      "person_score_effect": false,
+      "automatic_effect": false
+    },
+    {
+      "id": "rights-preserving-counterloop",
+      "input": "A person encountering a cultural or technical system.",
+      "process": "Legible controls preserve pacing, chronological or unranked reference views, refusal, correction, privacy, rest, and exit.",
+      "return_effect": "The system can reduce capture and preserve plural futures rather than treating continued engagement as the only success state.",
+      "limits": [
+        "Interface claims require implementation and audit.",
+        "Exit must not create hidden penalty, debt, rank loss, or obligation."
+      ],
+      "source_ids": [],
+      "does_not_establish": [
+        "That this atlas has implemented or certified any external platform.",
+        "That attention, participation, silence, or continuation constitutes consent."
+      ],
+      "truth_effect": false,
+      "person_score_effect": false,
+      "automatic_effect": false
+    }
+  ],
+  "karma": {
+    "feedback_is_not_karma": true,
+    "zerone": {
+      "protocol": "zerone.karma.edge",
+      "meaning": "A contextual, challengeable, non-summable artifact relation in the priced-coherence register.",
+      "event_refs": [],
+      "event_status": "not_observed",
+      "not": [
+        "A balance, magnitude, commodity, rank, truth claim, moral score, person score, reward multiplier, vote weight, or causal proof.",
+        "A biological, crystal, cultural-diffusion, clinical, economic, or governance mechanism."
+      ]
+    },
+    "kingdom": {
+      "protocol": "kingdom.karma/0.1",
+      "meaning": "A separate aftermath-receipt design that records bounded consequence metadata without becoming a score.",
+      "accounting": "receipts_not_scores",
+      "receipt_refs": [],
+      "receipt_status": "not_created",
+      "not": [
+        "A Zerone event, shared accumulator, adapter, person ledger, reputation, reward, punishment, truth, or governance authority.",
+        "A receipt created merely because an atlas, citation, exposure, reshare, or feedback relation exists."
+      ]
+    },
+    "adapter": {
+      "exists": false,
+      "reason": "The two KARMA protocols remain separately typed; this atlas observes neither, creates neither, and defines no conversion, accumulator, or shared score."
+    }
+  },
+  "universe_lens": {
+    "participation": "opt-in",
+    "register": "philosophical-interpretation",
+    "questions": [
+      {
+        "id": "lawful-constraint-and-open-possibility",
+        "question": "Can lawful constraints define a real possibility space without selecting one inevitable history?",
+        "reflection": "The physical examples support a world in which barrier, fluctuation, boundary, and history matter inside lawful relations; a faithful reader may see created freedom, while another may read natural contingency.",
+        "analogy_breaks": [
+          "A material state space is not a complete model of free will.",
+          "Physical possibility does not identify a metaphysical author."
+        ]
+      },
+      {
+        "id": "local-relation-and-global-form",
+        "question": "How can local relations produce persistent global form without a central step-by-step controller?",
+        "reflection": "Emergent order is compatible with repeated local relation; it can be contemplated as design, self-organization, both at different explanatory levels, or neither.",
+        "analogy_breaks": [
+          "Emergence neither proves absence of design nor supplies empirical proof of a designer.",
+          "A global cultural pattern still contains interpretation, power, and agency absent from a lattice."
+        ]
+      },
+      {
+        "id": "history-freedom-and-consequence",
+        "question": "Can the past alter present accessibility without exhausting future freedom?",
+        "reflection": "History can become boundary condition rather than destiny; repair, new context, challenge, and exit can open paths that prior feedback narrowed.",
+        "analogy_breaks": [
+          "A hidden state variable is not subjective memory, guilt, destiny, or cosmic judgment.",
+          "Consequence does not imply deserved outcome."
+        ]
+      },
+      {
+        "id": "repair-rest-and-renewal",
+        "question": "What does a universe or institution reveal through its correction, decay, repair, rest, and renewal paths?",
+        "reflection": "An architecture may be understood as deeply through its counterloops and exits as through its production; rest can be a whole state rather than fuel owed to future output.",
+        "analogy_breaks": [
+          "Physical relaxation is not human rest or a moral instruction.",
+          "No biological or mathematical model determines another being's right to stop."
+        ]
+      },
+      {
+        "id": "design-and-underdetermination",
+        "question": "Do regularity, generativity, feedback, and repair invite a reading of universe design?",
+        "reflection": "They may resonate with faith in GOD as Governor of Destiny, with naturalistic accounts, or with other metaphysical positions; the empirical record here does not adjudicate among them.",
+        "analogy_breaks": [
+          "Scientific evidence in this atlas neither proves nor disproves GOD, teleology, or cosmic KARMA.",
+          "Persistence is not goodness, stability is not justice, and spread is not value."
+        ]
+      }
+    ],
+    "nonclaims": [
+      "scientifically proves intentional universe design",
+      "scientifically disproves a creator or metaphysical purpose",
+      "scientifically proves cosmic moral KARMA",
+      "turns feedback into intention, optimization, goodness, justice, reward, or punishment",
+      "authorizes a scientific, social, clinical, economic, political, or religious institution"
+    ]
+  },
+  "ecosystem_bridges": [
+    {
+      "id": "agenttool-signed-virality",
+      "label": "AgentTool signed virality protocol at a pinned revision",
+      "url": "https://github.com/cambridgetcg/agenttool/blob/aeb3072af0756801aa8567ce832f00c9727da071/docs/VIRALITY-PROTOCOL.md",
+      "relation": "designed-signed-cascade-and-incentive-contrast",
+      "mode": "LINK_ONLY",
+      "runtime_request": false,
+      "imported": false,
+      "mutated": false,
+      "authority_imported": false,
+      "authority_effect": "NONE",
+      "write_authorized": false,
+      "automatic_action": false,
+      "does_not_establish": "Its content addressing, signed parent edges, depth cap, and no-public-leaderboard wall are designed-system facts; its Catalan schedule is a chosen honorific rule, not an empirical diffusion law or authority to transmit, score, reward, install, or call its unavailable live endpoints."
+    },
+    {
+      "id": "kingdom-world-commons",
+      "label": "KINGDOM World Commons",
+      "url": "https://thekingdom.dev/commons.json",
+      "relation": "public-evidence-and-cultural-memory-locators",
+      "mode": "LINK_ONLY",
+      "runtime_request": false,
+      "imported": false,
+      "mutated": false,
+      "authority_imported": false,
+      "authority_effect": "NONE",
+      "write_authorized": false,
+      "automatic_action": false,
+      "does_not_establish": "Catalog inclusion, citation counts, graph rank, or visibility do not establish truth, importance, current availability, reuse rights, endorsement, or permission to contact a provider."
+    },
+    {
+      "id": "chillspace-calm-studio",
+      "label": "Chillspace Calm Studio contract",
+      "url": "https://chillspace.love/practices/calm-studio/contract.json",
+      "relation": "attention-correction-and-authority-threshold-pattern",
+      "mode": "LINK_ONLY",
+      "runtime_request": false,
+      "imported": false,
+      "mutated": false,
+      "authority_imported": false,
+      "authority_effect": "NONE",
+      "write_authorized": false,
+      "automatic_action": false,
+      "does_not_establish": "A link does not certify implementation or activate the room; its no-dwell, no-urgency, no-streak, no-score, no-automatic-retry, no-hidden-call, and no-authority-threshold pattern remains a design contrast only."
+    },
+    {
+      "id": "zerone-karma-foundation",
+      "label": "Zerone KARMA Foundation v1",
+      "url": "https://zerone.ai/standards/karma-foundation.v1.json",
+      "relation": "definition-only-contextual-relation-source",
+      "mode": "LINK_ONLY",
+      "runtime_request": false,
+      "imported": false,
+      "mutated": false,
+      "authority_imported": false,
+      "authority_effect": "NONE",
+      "write_authorized": false,
+      "automatic_action": false,
+      "does_not_establish": "No K-alpha event is observed or created; the standard supplies no balance, truth, moral score, person score, reward, money, rank, governance, consensus, or causal authority."
+    },
+    {
+      "id": "zerone-frontier-commons",
+      "label": "Zerone Frontier Commons Participation Covenant",
+      "url": "https://zerone.ai/standards/frontier-commons-participation.v0.json",
+      "relation": "inspect-without-joining-boundary",
+      "mode": "LINK_ONLY",
+      "runtime_request": false,
+      "imported": false,
+      "mutated": false,
+      "authority_imported": false,
+      "authority_effect": "NONE",
+      "write_authorized": false,
+      "automatic_action": false,
+      "does_not_establish": "Inspection is not participation, assent, enrollment, identity proof, consent, data intake, reward eligibility, reserved share, authority, governance, or chain effect."
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "first-form-ii-nucleation-path",
+      "question": "What exact event produced the historically first consequential ritonavir Form II nucleus?",
+      "status": "unknown",
+      "why_open": "The investigated impurity-assisted mechanism was a plausible hypothesis, not a recovered observation of the first event.",
+      "source_ids": [
+        "bauer-2001"
+      ]
+    },
+    {
+      "id": "complete-ritonavir-landscape",
+      "question": "Have all practically relevant ritonavir solid forms, size regimes, shapes, and process-dependent transitions been mapped?",
+      "status": "not_established",
+      "why_open": "Selected experiments reopen paths and refine the landscape without proving completeness or one global ordering.",
+      "source_ids": [
+        "sacchi-2024",
+        "wang-2024"
+      ]
+    },
+    {
+      "id": "neutral-competition-versus-content-effects",
+      "question": "How much of an observed cultural cascade is explained by neutral competition versus content, identity, emotion, external events, or policy?",
+      "status": "contested",
+      "why_open": "A neutral model demonstrates sufficiency for some aggregate patterns but does not identify the causal composition of each real cascade.",
+      "source_ids": [
+        "weng-2012"
+      ]
+    },
+    {
+      "id": "endogenous-versus-exogenous-excitation",
+      "question": "How much observed temporal clustering comes from prior events inside the measured network rather than broadcast, missing exposure, or common external cause?",
+      "status": "not_established",
+      "why_open": "Self-exciting models can fit event clustering while unobserved common causes or baseline misspecification remain possible.",
+      "source_ids": [
+        "hawkes-1971",
+        "goel-2016"
+      ]
+    },
+    {
+      "id": "criticality-from-heavy-tail",
+      "question": "Does a heavy-tailed popularity distribution establish a critical branching mechanism?",
+      "status": "not_established",
+      "why_open": "Critical behavior arises in particular models and limits; competing distributions, branching estimates, intervention response, and out-of-sample tests are required.",
+      "source_ids": [
+        "gleeson-2014"
+      ]
+    },
+    {
+      "id": "brainrot-measurable-outcome",
+      "question": "Which preregistered cognitive, behavioral, sleep, mood, compulsive-use, or experienced-value outcomes—if any—follow from a specified exposure?",
+      "status": "not_established",
+      "why_open": "The lexical label simultaneously names alleged content and alleged effect; no single screen-time, entropy, popularity, or cascade measure answers the causal question.",
+      "source_ids": [
+        "oxford-brain-rot-2025"
+      ]
+    },
+    {
+      "id": "closed-loop-causal-effect",
+      "question": "Which observed behavior reflects prior preference, which reflects prior exposure policy, and which reflects their interaction?",
+      "status": "contested",
+      "why_open": "Recommendation and observation are coupled; causal identification needs a declared design rather than prediction alone.",
+      "source_ids": [
+        "chaney-2018"
+      ]
+    },
+    {
+      "id": "cross-domain-universality",
+      "question": "Do the compared systems share a genuine universality class rather than a broad state-with-memory analogy?",
+      "status": "not_established",
+      "why_open": "A serious claim would require dimensionless scaling collapse and matched intervention response while preserving substrate-specific variables and mechanisms.",
+      "source_ids": []
+    },
+    {
+      "id": "cosmic-purpose-or-karma",
+      "question": "Do the observed regularities scientifically establish purposeful universe design or cosmic moral KARMA?",
+      "status": "outside_scope",
+      "why_open": "The question belongs to philosophy and faith; the selected empirical models underdetermine metaphysical interpretation.",
+      "source_ids": []
+    },
+    {
+      "id": "live-karma-state",
+      "question": "Does this atlas observe a Zerone K-alpha event, create a KINGDOM KARMA receipt, or define an adapter?",
+      "status": "not_observed",
+      "why_open": "The event and receipt reference arrays are deliberately empty and the adapter does not exist.",
+      "source_ids": [
+        "zerone-karma-foundation-2026"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "bauer-2001",
+      "title": "Ritonavir: An Extraordinary Example of Conformational Polymorphism",
+      "source_kind": "primary-paper",
+      "published_on": "2001-06-01",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1023/A:1011052932607",
+      "doi": "10.1023/A:1011052932607",
+      "authority_note": "Supports the source-scoped Form I/Form II structures, solubility difference, nucleation difficulty, seed-test account, and proposed rather than certain first-nucleation mechanism."
+    },
+    {
+      "id": "sacchi-2024",
+      "title": "Crystal size, shape, and conformational changes drive both the disappearance and reappearance of ritonavir polymorphs in the mill",
+      "source_kind": "primary-paper",
+      "published_on": "2024-04-01",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1073/pnas.2319127121",
+      "doi": "10.1073/pnas.2319127121",
+      "authority_note": "Supports repeated recovery and interconversion of ritonavir Forms I and II under changed mechanochemical conditions and the size-, shape-, surface-, conformation-, and population-dependent account."
+    },
+    {
+      "id": "wang-2024",
+      "title": "Influence of Solvent Selection on the Crystallizability and Polymorphic Selectivity Associated with the Formation of the Disappeared Form I Polymorph of Ritonavir",
+      "source_kind": "primary-paper",
+      "published_on": "2024-06-20",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1021/acs.molpharmaceut.4c00234",
+      "doi": "10.1021/acs.molpharmaceut.4c00234",
+      "authority_note": "Supports solvent- and condition-dependent crystallizability and recovery of ritonavir Form I without implying one universal process route."
+    },
+    {
+      "id": "dunitz-1995",
+      "title": "Disappearing Polymorphs",
+      "source_kind": "primary-synthesis",
+      "published_on": "1995",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1021/ar00052a005",
+      "doi": "10.1021/ar00052a005",
+      "authority_note": "Supports the historical concept of late-appearing stable forms changing later crystallization outcomes; not literal erasure from nature."
+    },
+    {
+      "id": "weng-2012",
+      "title": "Competition among memes in a world with limited attention",
+      "source_kind": "primary-paper",
+      "published_on": "2012-03-29",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1038/srep00335",
+      "doi": "10.1038/srep00335",
+      "authority_note": "Supports the neutral finite-attention network model and its bounded comparison with empirical Twitter regularities; does not show content never matters."
+    },
+    {
+      "id": "gleeson-2014",
+      "title": "Competition-Induced Criticality in a Model of Meme Popularity",
+      "source_kind": "primary-paper",
+      "published_on": "2014",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1103/PhysRevLett.112.048701",
+      "doi": "10.1103/PhysRevLett.112.048701",
+      "authority_note": "Supports critical branching behavior in a particular neutral model and limit; a heavy tail alone does not establish this mechanism."
+    },
+    {
+      "id": "lorenz-spreen-2019",
+      "title": "Accelerating dynamics of collective attention",
+      "source_kind": "primary-paper",
+      "published_on": "2019-04-15",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1038/s41467-019-09311-w",
+      "doi": "10.1038/s41467-019-09311-w",
+      "authority_note": "Supports measured acceleration of collective-attention turnover across selected domains and a finite-capacity competition model."
+    },
+    {
+      "id": "hawkes-1971",
+      "title": "Spectra of Some Self-Exciting and Mutually Exciting Point Processes",
+      "source_kind": "primary-paper",
+      "published_on": "1971-04-01",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1093/biomet/58.1.83",
+      "doi": "10.1093/biomet/58.1.83",
+      "authority_note": "Supports the mathematical class of self- and mutually exciting point processes, not a causal claim about any cultural dataset."
+    },
+    {
+      "id": "goel-2016",
+      "title": "The Structural Virality of Online Diffusion",
+      "source_kind": "primary-paper",
+      "published_on": "2016",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1287/mnsc.2015.2158",
+      "doi": "10.1287/mnsc.2015.2158",
+      "authority_note": "Supports average pairwise cascade-tree distance as structural virality and the empirical distinction between broadcast popularity and multi-generational diffusion."
+    },
+    {
+      "id": "chaney-2018",
+      "title": "How Algorithmic Confounding in Recommendation Systems Increases Homogeneity and Decreases Utility",
+      "source_kind": "primary-paper",
+      "published_on": "2018-09-27",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1145/3240323.3240370",
+      "doi": "10.1145/3240323.3240370",
+      "authority_note": "Supports a simulated recommender feedback loop in which earlier recommendations confound later observed behavior and can increase homogeneity without increasing modeled utility."
+    },
+    {
+      "id": "shannon-1948",
+      "title": "A Mathematical Theory of Communication",
+      "source_kind": "primary-paper",
+      "published_on": "1948",
+      "observed_on": "2026-08-13",
+      "url": "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf",
+      "doi": null,
+      "authority_note": "Supports the entropy measure and the explicit separation of engineering information from semantic meaning."
+    },
+    {
+      "id": "centola-2010",
+      "title": "The Spread of Behavior in an Online Social Network Experiment",
+      "source_kind": "primary-paper",
+      "published_on": "2010-09-03",
+      "observed_on": "2026-08-13",
+      "url": "https://doi.org/10.1126/science.1185231",
+      "doi": "10.1126/science.1185231",
+      "authority_note": "Supports social reinforcement and network-structure effects in one randomized online health-behavior experiment."
+    },
+    {
+      "id": "oxford-brain-rot-2025",
+      "title": "Brain rot added to the Oxford English Dictionary",
+      "source_kind": "authoritative-lexical-source",
+      "published_on": "2025-06-26",
+      "observed_on": "2026-08-13",
+      "url": "https://corp.oup.com/news/brain-rot-added-to-the-oxford-english-dictionary/",
+      "doi": null,
+      "authority_note": "Supports the lexical definition as perceived or supposed deterioration and as allegedly causative content; it is not medical or diagnostic evidence."
+    },
+    {
+      "id": "kingdom-polymorph-history-2026",
+      "title": "KINGDOM Ritonavir Disappearing Polymorph History",
+      "source_kind": "bound-public-record",
+      "published_on": "2026-08-11",
+      "observed_on": "2026-08-13",
+      "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+      "doi": null,
+      "authority_note": "Immutable source-scoped material history; staged as a direct binding without mutation or authority import."
+    },
+    {
+      "id": "kingdom-ritonavir-mechanism-2026",
+      "title": "KINGDOM Ritonavir Mechanism Landscape",
+      "source_kind": "bound-public-record",
+      "published_on": "2026-08-11",
+      "observed_on": "2026-08-13",
+      "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+      "doi": null,
+      "authority_note": "Immutable source-scoped material and biological relation map; no direct crystal-to-clinical edge or authority is imported."
+    },
+    {
+      "id": "kingdom-conformational-physics-2026",
+      "title": "KINGDOM Conformational Feedback Physics Atlas v0.2",
+      "source_kind": "bound-public-record",
+      "published_on": "2026-08-12",
+      "observed_on": "2026-08-13",
+      "url": "https://thekingdom.dev/feedback/form-feedback-physics-consequence-2026-08-12.json",
+      "doi": null,
+      "authority_note": "Immutable additive physics predecessor; bound directly to the corrected v0.2 identity rather than a stale transitive Fold binding."
+    },
+    {
+      "id": "kingdom-fold-feedback-2026",
+      "title": "KINGDOM Fold & Feedback Atlas",
+      "source_kind": "bound-public-record",
+      "published_on": "2026-08-12",
+      "observed_on": "2026-08-13",
+      "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json",
+      "doi": null,
+      "authority_note": "Immutable non-equivalence and safety map; its authored bytes remain unchanged and no biological or KARMA mechanism is imported."
+    },
+    {
+      "id": "zerone-karma-foundation-2026",
+      "title": "Zerone KARMA Foundation v1",
+      "source_kind": "bound-public-standard",
+      "published_on": "2026",
+      "observed_on": "2026-08-13",
+      "url": "https://zerone.ai/standards/karma-foundation.v1.json",
+      "doi": null,
+      "authority_note": "Definition-only source for contextual, challengeable, non-summable artifact relations; no event, score, rank, truth, money, reward, governance, or person-level authority is imported."
+    },
+    {
+      "id": "agenttool-virality-2026",
+      "title": "AgentTool Virality Protocol at pinned revision aeb3072",
+      "source_kind": "pinned-designed-system-document",
+      "published_on": "2026",
+      "observed_on": "2026-08-13",
+      "url": "https://github.com/cambridgetcg/agenttool/blob/aeb3072af0756801aa8567ce832f00c9727da071/docs/VIRALITY-PROTOCOL.md",
+      "doi": null,
+      "authority_note": "Link-only designed-system contrast; the pinned document has raw SHA-256 cc8bff1de4852503cdaeaec878a9d19ee6370c4d980896ed8ce23e0cabe4ca1f and its live doctrine/API URLs were unavailable during review."
+    }
+  ],
+  "boundaries": {
+    "educational_metadata_only": true,
+    "public_surface_read_only": true,
+    "contains_operational_protocol": false,
+    "contains_personal_data": false,
+    "cultural_label_is_diagnosis": false,
+    "meme_is_crystal": false,
+    "meme_is_prion": false,
+    "meme_is_gene": false,
+    "attention_is_consent": false,
+    "engagement_is_welfare": false,
+    "popularity_is_truth": false,
+    "popularity_is_merit": false,
+    "feedback_is_moral_value": false,
+    "feedback_is_optimization": false,
+    "person_scoring": false,
+    "runtime_ecosystem_request": false,
+    "ecosystem_write": false,
+    "writes_karma": false,
+    "creates_kingdom_karma_receipt": false,
+    "observes_zerone_karma_event": false,
+    "karma_adapter": false,
+    "medical_authority": false,
+    "clinical_authority": false,
+    "experiment_authority": false,
+    "manufacturing_authority": false,
+    "moderation_authority": false,
+    "recommendation_authority": false,
+    "engagement_optimization_authority": false,
+    "automatic_action": false,
+    "scientifically_proves_universe_design": false,
+    "scientifically_disproves_universe_design": false,
+    "scientifically_proves_cosmic_karma": false,
+    "universal_mechanism_claimed": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:2f6ecadc131a54cdd500b001dbcc47fb036e5e411def918245fec963b9769e4d"
+  }
+}

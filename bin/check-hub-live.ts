@@ -18,6 +18,14 @@ import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS } from "./stage-hub.ts";
 import {
+  CULTURAL_ATTENTION_FEEDBACK_DIGEST,
+  CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
+  CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL,
+  CULTURAL_ATTENTION_FEEDBACK_URL,
+  culturalAttentionFeedbackPublicDiscovery,
+  loadCulturalAttentionFeedbackAtlas,
+} from "./cultural-attention-feedback.ts";
+import {
   CONFORMATIONAL_FEEDBACK_DIGEST,
   CONFORMATIONAL_FEEDBACK_DOCUMENT_URL,
   CONFORMATIONAL_FEEDBACK_SCHEMA_URL,
@@ -131,6 +139,63 @@ const conformationalFeedbackDocumentPath = new URL(CONFORMATIONAL_FEEDBACK_DOCUM
 const conformationalFeedbackPhysicsPath = new URL(CONFORMATIONAL_FEEDBACK_PHYSICS_URL).pathname;
 const conformationalFeedbackPhysicsSchemaPath = new URL(CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_URL).pathname;
 const conformationalFeedbackPhysicsDocumentPath = new URL(CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_URL).pathname;
+const culturalAttentionFeedbackPath = new URL(CULTURAL_ATTENTION_FEEDBACK_URL).pathname;
+const culturalAttentionFeedbackSchemaPath = new URL(CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL).pathname;
+const culturalAttentionFeedbackDocumentPath = new URL(CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL).pathname;
+
+const CULTURAL_ATTENTION_FEEDBACK_ASSETS = new Map<string, { source: string; path: string; sha256: string }>([
+  ["atlases/cultural-attention-feedback-atlas-2026-08-13.json", {
+    source: "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json",
+    path: culturalAttentionFeedbackPath,
+    sha256: "03f7048966d7b6df582b423254b4d73cda72cce3bd67b40736927faa92b88173",
+  }],
+  ["schemas/cultural-attention-feedback-atlas/1.json", {
+    source: "schemas/cultural-attention-feedback-atlas-v1.schema.json",
+    path: culturalAttentionFeedbackSchemaPath,
+    sha256: "6bd8fcca25721fd9374daa0ac50299fd587452cf7483da81d6491131aa197f9f",
+  }],
+  ["CULTURAL-ATTENTION-FEEDBACK-ATLAS.md", {
+    source: "references/cultural-attention-feedback-atlas.md",
+    path: culturalAttentionFeedbackDocumentPath,
+    sha256: "1cbb6c765eba329c43c62c58e7e73858ef22d3a8e6048be934accccd5c5e18aa",
+  }],
+]);
+
+const CULTURAL_ATTENTION_FEEDBACK_BOUNDARY = Object.freeze({
+  educational_metadata_only: true,
+  public_surface_read_only: true,
+  contains_operational_protocol: false,
+  contains_personal_data: false,
+  cultural_label_is_diagnosis: false,
+  meme_is_crystal: false,
+  meme_is_prion: false,
+  meme_is_gene: false,
+  attention_is_consent: false,
+  engagement_is_welfare: false,
+  popularity_is_truth: false,
+  popularity_is_merit: false,
+  feedback_is_moral_value: false,
+  feedback_is_optimization: false,
+  person_scoring: false,
+  runtime_ecosystem_request: false,
+  ecosystem_write: false,
+  writes_karma: false,
+  creates_kingdom_karma_receipt: false,
+  observes_zerone_karma_event: false,
+  karma_adapter: false,
+  medical_authority: false,
+  clinical_authority: false,
+  experiment_authority: false,
+  manufacturing_authority: false,
+  moderation_authority: false,
+  recommendation_authority: false,
+  engagement_optimization_authority: false,
+  automatic_action: false,
+  scientifically_proves_universe_design: false,
+  scientifically_disproves_universe_design: false,
+  scientifically_proves_cosmic_karma: false,
+  universal_mechanism_claimed: false,
+});
 
 const PR30_CONFORMATIONAL_FEEDBACK_RECORD_SHA256 = "ae15f4f69e488323132ea6fc94d57d338702ca0fa47fd9fbbd41c15a6af230e6";
 const PR30_CONFORMATIONAL_FEEDBACK_SCHEMA_SHA256 = "da4dbb968a51d665192a3778a76ddd65150d2b73975c888dd9fd7ea80c54ea19";
@@ -277,6 +342,62 @@ async function checkConformationalFeedbackTriple(triple: typeof CONFORMATIONAL_F
   }
 }
 
+async function checkCulturalAttentionFeedbackTriple(): Promise<void> {
+  const routes = [
+    {
+      label: "atlas record",
+      path: culturalAttentionFeedbackPath,
+      source: "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json",
+      contentType: "application/json",
+    },
+    {
+      label: "atlas schema",
+      path: culturalAttentionFeedbackSchemaPath,
+      source: "schemas/cultural-attention-feedback-atlas-v1.schema.json",
+      contentType: "application/schema+json",
+    },
+    {
+      label: "atlas guide",
+      path: culturalAttentionFeedbackDocumentPath,
+      source: "references/cultural-attention-feedback-atlas.md",
+      contentType: "text/markdown",
+    },
+  ] as const;
+
+  for (const route of routes) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetch(url(route.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const contentType = (response.headers.get("content-type") || "").toLowerCase();
+      if (!response.ok || !contentType.startsWith(route.contentType) ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+        throw new Error(`${method} ${route.path} is not served as typed, public ${route.label}`);
+      }
+
+      if (route.path === culturalAttentionFeedbackPath) {
+        const describedBy = linkRelationEntries(response.headers.get("link") || "", "describedby");
+        const describedByType = describedBy[0]?.match(/;\s*type\s*=\s*(?:"([^"]*)"|([^;,\s]+))/i);
+        if (describedBy.length !== 1 ||
+            !describedBy[0]!.trim().startsWith(`<${culturalAttentionFeedbackSchemaPath}>`) ||
+            (describedByType?.[1] || describedByType?.[2] || "").toLowerCase() !== "application/schema+json") {
+          throw new Error(`${method} ${route.path} is not described by exactly its immutable schema`);
+        }
+      }
+
+      const body = Buffer.from(await response.arrayBuffer());
+      if (method === "HEAD") {
+        if (body.byteLength !== 0) throw new Error(`HEAD ${route.path} returned a body`);
+      } else if (!body.equals(readFileSync(join(ROOT, route.source)))) {
+        throw new Error(`GET ${route.path} drifted from its immutable authored source ${route.source}`);
+      }
+    }
+  }
+}
+
 function sameStrings(actual: unknown, expected: readonly string[]): boolean {
   return Array.isArray(actual) && actual.every((value) => typeof value === "string") &&
     actual.length === expected.length &&
@@ -306,6 +427,7 @@ try {
   let exact = 0;
   const exactPaths = new Set<string>();
   const verifiedConformationalFeedbackDestinations = new Set<string>();
+  const verifiedCulturalAttentionFeedbackDestinations = new Set<string>();
   for (const asset of HUB_ASSETS) {
     if (asset.destination === "_worker.js") continue;
     // 404.html is proven through the dedicated not-found check below; Pages
@@ -333,6 +455,18 @@ try {
         sha256(live) !== ORIGINAL_FOLD_FEEDBACK_SCHEMA_SHA256) {
       throw new Error(`${path} no longer matches its first-published immutable SHA-256`);
     }
+    const culturalAttentionFeedbackAsset = CULTURAL_ATTENTION_FEEDBACK_ASSETS.get(asset.destination);
+    if (culturalAttentionFeedbackAsset) {
+      if (asset.source !== culturalAttentionFeedbackAsset.source ||
+          path !== culturalAttentionFeedbackAsset.path) {
+        throw new Error(`${path} no longer stages its immutable Cultural Attention & Feedback authored source`);
+      }
+      const digest = sha256(live);
+      if (digest !== culturalAttentionFeedbackAsset.sha256) {
+        throw new Error(`${path} no longer matches its immutable Cultural Attention & Feedback SHA-256 (${digest})`);
+      }
+      verifiedCulturalAttentionFeedbackDestinations.add(asset.destination);
+    }
     exactPaths.add(path);
     exact += 1;
   }
@@ -345,6 +479,11 @@ try {
   for (const triple of CONFORMATIONAL_FEEDBACK_TRIPLES) {
     for (const path of [triple.recordPath, triple.schemaPath, triple.documentPath]) {
       if (!exactPaths.has(path)) throw new Error(`${path} was not checked for static byte equality`);
+    }
+  }
+  for (const [destination, asset] of CULTURAL_ATTENTION_FEEDBACK_ASSETS) {
+    if (!verifiedCulturalAttentionFeedbackDestinations.has(destination) || !exactPaths.has(asset.path)) {
+      throw new Error(`the immutable Cultural Attention & Feedback asset /${destination} is absent from exact byte verification`);
     }
   }
 
@@ -533,6 +672,7 @@ try {
   for (const triple of CONFORMATIONAL_FEEDBACK_TRIPLES) {
     await checkConformationalFeedbackTriple(triple);
   }
+  await checkCulturalAttentionFeedbackTriple();
 
   const foldFeedbackHead = await fetch(url(foldFeedbackPath), {
     method: "HEAD",
@@ -587,7 +727,7 @@ try {
     throw new Error(`${visibilityAttentionDocumentPath} is not served as public Markdown`);
   }
 
-  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath, visibilityAttentionSchemaPath]) {
+  for (const path of [commonsSchemaPath, commonsLegacySchemaPath, loveLoopsSchemaPath, principalitySchemaPath, geometryGrammarSchemaPath, polymorphSchemaPath, ritonavirMechanismSchemaPath, foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath, visibilityAttentionSchemaPath, culturalAttentionFeedbackSchemaPath]) {
     const schemaHead = await fetch(url(path), {
       method: "HEAD",
       redirect: "error",
@@ -621,6 +761,9 @@ try {
   const expectedFoldFeedback = foldFeedbackPublicDiscovery(foldFeedbackAtlas);
   const visibilityAttention = loadVisibilityAttentionTranslation();
   const expectedVisibilityAttention = visibilityAttentionPublicDiscovery(visibilityAttention);
+  const culturalAttentionFeedbackAtlas = loadCulturalAttentionFeedbackAtlas();
+  const expectedCulturalAttentionFeedback = culturalAttentionFeedbackPublicDiscovery(culturalAttentionFeedbackAtlas);
+  const authoredRootHtml = readFileSync(join(ROOT, "site/hub.html"), "utf8");
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
   validateLoveLoops(sourceLoveLoops, false);
@@ -891,6 +1034,68 @@ try {
     throw new Error("Visibility & Attention discovery or read-only/non-optimization boundary drifted across public surfaces");
   }
 
+  const culturalTargets = new Set([
+    CULTURAL_ATTENTION_FEEDBACK_URL,
+    CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL,
+    CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
+  ]);
+  const culturalGuestActions = Array.isArray(guest?.next_actions)
+    ? guest.next_actions.filter((action: any) => culturalTargets.has(action?.url))
+    : [];
+  const culturalEcosystemsAreLinkOnly = culturalAttentionFeedbackAtlas.ecosystem_bridges.every((bridge: any) =>
+    bridge.mode === "LINK_ONLY" && bridge.runtime_request === false && bridge.imported === false &&
+    bridge.mutated === false && bridge.authority_imported === false && bridge.authority_effect === "NONE" &&
+    bridge.write_authorized === false && bridge.automatic_action === false
+  );
+  const culturalBindingsAreReadOnly = culturalAttentionFeedbackAtlas.source_bindings.every((binding: any) =>
+    binding.mutated === false && binding.authority_imported === false
+  );
+  if (!isDeepStrictEqual(manifest?.cultural_attention_feedback_atlas, expectedCulturalAttentionFeedback) ||
+      !isDeepStrictEqual(guest?.cultural_attention_feedback_atlas, expectedCulturalAttentionFeedback) ||
+      !isDeepStrictEqual(authoredKingdom?.cultural_attention_feedback_atlas, expectedCulturalAttentionFeedback) ||
+      !isDeepStrictEqual(expectedCulturalAttentionFeedback.boundary, CULTURAL_ATTENTION_FEEDBACK_BOUNDARY) ||
+      !isDeepStrictEqual(culturalAttentionFeedbackAtlas.boundaries, CULTURAL_ATTENTION_FEEDBACK_BOUNDARY) ||
+      manifest?.entry_points?.cultural_attention_feedback_atlas !== CULTURAL_ATTENTION_FEEDBACK_URL ||
+      manifest?.entry_points?.cultural_attention_feedback_atlas_schema !== CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL ||
+      manifest?.entry_points?.cultural_attention_feedback_atlas_guide !== CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL ||
+      culturalGuestActions.length !== culturalTargets.size ||
+      culturalGuestActions.some((action: any) => action?.method !== "GET" ||
+        "mcp" in action || "tool" in action || "write" in action || "matcher" in action || "execute" in action) ||
+      !llms.includes(CULTURAL_ATTENTION_FEEDBACK_URL) ||
+      !llms.includes(CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL) ||
+      !llms.includes(CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL) ||
+      !authoredRootHtml.includes('id="cultural-feedback"') ||
+      !authoredRootHtml.includes(`href="${culturalAttentionFeedbackPath}"`) ||
+      !authoredRootHtml.includes(`href="${culturalAttentionFeedbackSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${culturalAttentionFeedbackDocumentPath}"`) ||
+      expectedCulturalAttentionFeedback.integrity.digest !== CULTURAL_ATTENTION_FEEDBACK_DIGEST ||
+      !isDeepStrictEqual(expectedCulturalAttentionFeedback.counts, {
+        source_bindings: 5,
+        planes: 8,
+        scientific_observations: 6,
+        models: 7,
+        translations: 4,
+        feedback_relations: 5,
+        universe_questions: 5,
+        ecosystem_bridges: 5,
+        unknowns: 10,
+        sources: 19,
+      }) ||
+      expectedCulturalAttentionFeedback.karma.zerone_event_status !== "not_observed" ||
+      expectedCulturalAttentionFeedback.karma.zerone_event_refs !== 0 ||
+      expectedCulturalAttentionFeedback.karma.kingdom_receipt_status !== "not_created" ||
+      expectedCulturalAttentionFeedback.karma.kingdom_receipt_refs !== 0 ||
+      expectedCulturalAttentionFeedback.karma.adapter_exists !== false ||
+      culturalAttentionFeedbackAtlas.karma.zerone.event_refs.length !== 0 ||
+      culturalAttentionFeedbackAtlas.karma.kingdom.receipt_refs.length !== 0 ||
+      culturalAttentionFeedbackAtlas.karma.adapter.exists !== false ||
+      !culturalBindingsAreReadOnly || !culturalEcosystemsAreLinkOnly ||
+      !isDeepStrictEqual(manifest?.mcp, authoredKingdom?.world_commons?.mcp) ||
+      "mcp" in expectedCulturalAttentionFeedback || "write" in expectedCulturalAttentionFeedback ||
+      "matcher" in expectedCulturalAttentionFeedback || "execute" in expectedCulturalAttentionFeedback) {
+    throw new Error("Cultural Attention & Feedback Atlas discovery, immutable triplet, full authority boundary, link-only ecosystems, KARMA separation, or static root section drifted");
+  }
+
   const liveKingdom: any = await (await get("/kingdom.json")).json();
   if (liveKingdom?.creation_loop?.url !== LOVE_LOOPS_URL ||
       liveKingdom?.creation_loop?.source !== LOVE_LOOPS_SOURCE_URL ||
@@ -921,6 +1126,10 @@ try {
   }
   if (!isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention)) {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.cultural_attention_feedback_atlas, expectedCulturalAttentionFeedback) ||
+      !isDeepStrictEqual(liveKingdom?.world_commons?.mcp, manifest?.mcp)) {
+    throw new Error("derived kingdom.json did not preserve Cultural Attention & Feedback discovery or the existing Commons MCP contract");
   }
 
   const mcpEndpoint = new URL(manifest?.mcp?.endpoint || "");
@@ -981,7 +1190,7 @@ try {
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention discovery · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback discovery · full cultural authority/KARMA/link-only boundary · live MCP contract unchanged · ${origin.origin}`);
 } catch (error) {
   console.error(`hub live-check failed: ${error instanceof Error ? error.message : "unknown error"}`);
   process.exitCode = 1;

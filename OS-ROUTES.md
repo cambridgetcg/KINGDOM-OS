@@ -36,6 +36,9 @@ readings:
 | `/atlases/visibility-attention-2026-08-13.json` | staged JSON | Digest-bound four-register visibility and attention translation with local models and explicit non-transfer seams |
 | `/schemas/visibility-attention/0.1.json` | staged JSON Schema | Closed public schema for the Visibility & Attention Translation |
 | `/VISIBILITY-ATTENTION.md` | staged Markdown | Source-scoped guide to material detection, cultural visibility, quoted lexical usage, KARMA, feedback, and the optional universe lens |
+| `/atlases/cultural-attention-feedback-atlas-2026-08-13.json` | staged JSON | Digest-bound cultural attention atlas with process-contingent polymorph history, domain-local models, bounded translations, separated KARMA lanes, and opt-in universe questions |
+| `/schemas/cultural-attention-feedback-atlas/1.json` | staged JSON Schema | Closed public contract for the Cultural Attention & Feedback Atlas v1 |
+| `/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md` | staged Markdown | Plain-language physics, mathematics, memetics, brain-rot, feedback, KARMA, philosophy, rights, falsifier, and source guide |
 
 The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
@@ -154,6 +157,6 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 47-asset upload contract, while `tests/advertised-assets.test.ts`
+locks the 50-asset upload contract, while `tests/advertised-assets.test.ts`
 recognizes the three worker routes so a dynamic URL cannot be mistaken for a
 staged file.
