@@ -1,0 +1,516 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:reconstructive-build-kernel:0.1",
+  "title": "Reconstructive Build Kernel 0.1",
+  "description": "A closed, source-bound and read-only unification kernel for reconstruction, realization, conditional landscapes, catalysis and non-physical project translation.",
+  "$comment": "Validation cannot recompute the recursive semantic digest, authenticate sources, prove the graph reconstruction conjecture, establish physical realizability or mechanism, execute a project, deploy software, write KARMA, or authorize any action. Runtime digest verification and source review are separate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "protocol", "kernel_id", "title", "compiled_on", "evidence_through", "scope",
+    "epistemic_registers", "state_spaces", "correspondences", "observation_operators", "state_transition_operators",
+    "reconstruction_cases", "realizability_models", "landscape_models", "catalysis_models",
+    "equations", "invariants", "claims", "analogy_bridges", "build_profile", "feedback_contract",
+    "falsification_tests", "unknowns", "bindings", "sources", "boundaries", "integrity"
+  ],
+  "properties": {
+    "$schema": { "const": "urn:kingdom:schema:reconstructive-build-kernel:0.1" },
+    "protocol": { "const": "kingdom.reconstructive-build-kernel/0.1" },
+    "kernel_id": { "const": "reconstructive-build-kernel-2026-08-13" },
+    "title": { "const": "Reconstructive Build Kernel" },
+    "compiled_on": { "const": "2026-08-13" },
+    "evidence_through": { "const": "2026-08-13" },
+    "scope": { "$ref": "#/$defs/scope" },
+    "epistemic_registers": {
+      "type": "array", "minItems": 8, "maxItems": 8,
+      "prefixItems": [
+        { "$ref": "#/$defs/registerDefinition" }, { "$ref": "#/$defs/registerTheorem" }, { "$ref": "#/$defs/registerConjecture" },
+        { "$ref": "#/$defs/registerEmpirical" }, { "$ref": "#/$defs/registerModel" },
+        { "$ref": "#/$defs/registerAnalogy" }, { "$ref": "#/$defs/registerConstraint" },
+        { "$ref": "#/$defs/registerPhilosophy" }
+      ], "items": false
+    },
+    "state_spaces": {
+      "type": "array", "minItems": 6, "maxItems": 6,
+      "prefixItems": [
+        { "$ref": "#/$defs/stateGraph" }, { "$ref": "#/$defs/stateDeck" },
+        { "$ref": "#/$defs/stateCoordinates" }, { "$ref": "#/$defs/stateContacts" },
+        { "$ref": "#/$defs/stateProjects" }, { "$ref": "#/$defs/stateProjectObservations" }
+      ], "items": false
+    },
+    "correspondences": {
+      "type": "array", "minItems": 5, "maxItems": 5,
+      "prefixItems": [
+        { "$ref": "#/$defs/correspondenceGraph" }, { "$ref": "#/$defs/correspondenceProtein" },
+        { "$ref": "#/$defs/correspondencePartial" }, { "$ref": "#/$defs/correspondenceCrossState" },
+        { "$ref": "#/$defs/correspondenceProject" }
+      ], "items": false
+    },
+    "observation_operators": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "prefixItems": [
+        { "$ref": "#/$defs/operatorDeck" }, { "$ref": "#/$defs/operatorContact" },
+        { "$ref": "#/$defs/operatorProject" }
+      ], "items": false
+    },
+    "state_transition_operators": {
+      "type": "array", "minItems": 1, "maxItems": 1,
+      "prefixItems": [{ "$ref": "#/$defs/stateTransitionPerturbation" }], "items": false
+    },
+    "reconstruction_cases": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "prefixItems": [
+        { "$ref": "#/$defs/caseGraph" }, { "$ref": "#/$defs/caseContact" },
+        { "$ref": "#/$defs/caseProject" }
+      ], "items": false
+    },
+    "realizability_models": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "prefixItems": [
+        { "$ref": "#/$defs/realizabilityExact" }, { "$ref": "#/$defs/realizabilityContact" }
+      ], "items": false
+    },
+    "landscape_models": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "prefixItems": [
+        { "$ref": "#/$defs/landscapeFolding" }, { "$ref": "#/$defs/landscapeProject" }
+      ], "items": false
+    },
+    "catalysis_models": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "prefixItems": [
+        { "$ref": "#/$defs/catalysisPhysical" }, { "$ref": "#/$defs/catalysisDesign" }
+      ], "items": false
+    },
+    "equations": {
+      "type": "array", "minItems": 11, "maxItems": 11,
+      "prefixItems": [
+        { "$ref": "#/$defs/equationFiber" }, { "$ref": "#/$defs/equationDeckDefinition" },
+        { "$ref": "#/$defs/equationGraphConjecture" }, { "$ref": "#/$defs/equationKelly" }, { "$ref": "#/$defs/equationContact" },
+        { "$ref": "#/$defs/equationGram" }, { "$ref": "#/$defs/equationFreeEnergy" },
+        { "$ref": "#/$defs/equationEyring" }, { "$ref": "#/$defs/equationBarrier" },
+        { "$ref": "#/$defs/equationEnsemble" }, { "$ref": "#/$defs/equationMonotonicity" }
+      ], "items": false
+    },
+    "invariants": {
+      "type": "array", "minItems": 7, "maxItems": 7,
+      "prefixItems": [
+        { "$ref": "#/$defs/invariantDeck" }, { "$ref": "#/$defs/invariantKelly" },
+        { "$ref": "#/$defs/invariantContact" }, { "$ref": "#/$defs/invariantStereo" },
+        { "$ref": "#/$defs/invariantAppend" }, { "$ref": "#/$defs/invariantSupersede" },
+        { "$ref": "#/$defs/invariantUnknown" }
+      ], "items": false
+    },
+    "claims": {
+      "type": "array", "minItems": 12, "maxItems": 12,
+      "prefixItems": [
+        { "$ref": "#/$defs/claimGraph" }, { "$ref": "#/$defs/claimKelly" },
+        { "$ref": "#/$defs/claimContact" }, { "$ref": "#/$defs/claimEnvironment" },
+        { "$ref": "#/$defs/claimConformation" }, { "$ref": "#/$defs/claimRate" },
+        { "$ref": "#/$defs/claimCorrespondence" }, { "$ref": "#/$defs/claimPerturbation" },
+        { "$ref": "#/$defs/claimDesignCatalysis" }, { "$ref": "#/$defs/claimFeedback" },
+        { "$ref": "#/$defs/claimKarma" }, { "$ref": "#/$defs/claimUniverse" }
+      ], "items": false
+    },
+    "analogy_bridges": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "prefixItems": [
+        { "$ref": "#/$defs/bridgeDeckContact" }, { "$ref": "#/$defs/bridgeFoldingBuilding" },
+        { "$ref": "#/$defs/bridgeCatalysisAcceleration" }
+      ], "items": false
+    },
+    "build_profile": { "$ref": "#/$defs/buildProfile" },
+    "feedback_contract": { "$ref": "#/$defs/feedbackContract" },
+    "falsification_tests": {
+      "type": "array", "minItems": 12, "maxItems": 12,
+      "prefixItems": [
+        { "$ref": "#/$defs/falsifierGraphWitness" }, { "$ref": "#/$defs/falsifierFinite" },
+        { "$ref": "#/$defs/falsifierCorrespondence" }, { "$ref": "#/$defs/falsifierMutation" },
+        { "$ref": "#/$defs/falsifierContact" }, { "$ref": "#/$defs/falsifierMirror" },
+        { "$ref": "#/$defs/falsifierPhysical" }, { "$ref": "#/$defs/falsifierCondition" },
+        { "$ref": "#/$defs/falsifierRate" }, { "$ref": "#/$defs/falsifierAnalogy" },
+        { "$ref": "#/$defs/falsifierAuthority" }, { "$ref": "#/$defs/falsifierFiber" }
+      ], "items": false
+    },
+    "unknowns": {
+      "type": "array", "minItems": 7, "maxItems": 7,
+      "prefixItems": [
+        { "$ref": "#/$defs/unknownGraph" }, { "$ref": "#/$defs/unknownContact" },
+        { "$ref": "#/$defs/unknownPerturbation" }, { "$ref": "#/$defs/unknownKinetics" },
+        { "$ref": "#/$defs/unknownEnzyme" }, { "$ref": "#/$defs/unknownDesign" },
+        { "$ref": "#/$defs/unknownUniverse" }
+      ], "items": false
+    },
+    "bindings": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "prefixItems": [
+        { "$ref": "#/$defs/bindingFold" }, { "$ref": "#/$defs/bindingKarma" },
+        { "$ref": "#/$defs/bindingLife" }
+      ], "items": false
+    },
+    "sources": {
+      "type": "array", "minItems": 13, "maxItems": 13,
+      "prefixItems": [
+        { "$ref": "#/$defs/sourceQi" }, { "$ref": "#/$defs/sourceMckay" },
+        { "$ref": "#/$defs/sourceClifton" }, { "$ref": "#/$defs/sourceGower" }, { "$ref": "#/$defs/sourceFakhoury" },
+        { "$ref": "#/$defs/sourceOoka" }, { "$ref": "#/$defs/sourceStreit" },
+        { "$ref": "#/$defs/sourceEyring" }, { "$ref": "#/$defs/sourceTruhlar" }, { "$ref": "#/$defs/sourceIupac" },
+        { "$ref": "#/$defs/sourceDu" }, { "$ref": "#/$defs/sourceZheng" },
+        { "$ref": "#/$defs/sourceJara" }
+      ], "items": false
+    },
+    "boundaries": { "$ref": "#/$defs/boundaries" },
+    "integrity": { "$ref": "#/$defs/integrity" }
+  },
+  "$defs": {
+    "nonEmptyText": { "type": "string", "minLength": 1, "maxLength": 5000 },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 120 },
+    "textList": { "type": "array", "minItems": 1, "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyText" } },
+    "idList": { "type": "array", "minItems": 1, "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "nullableId": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["focus", "coverage", "intended_use", "excluded_use", "currentness"],
+      "properties": {
+        "focus": { "$ref": "#/$defs/nonEmptyText" }, "coverage": { "$ref": "#/$defs/nonEmptyText" },
+        "intended_use": { "$ref": "#/$defs/nonEmptyText" }, "excluded_use": { "$ref": "#/$defs/nonEmptyText" },
+        "currentness": { "const": "selected-evidence-as-of-compilation" }
+      }
+    },
+    "register": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "meaning", "transfer_rule"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["MATHEMATICAL_DEFINITION", "MATHEMATICAL_THEOREM", "OPEN_MATHEMATICAL_CONJECTURE", "EMPIRICAL_SCIENCE", "SCIENTIFIC_MODEL", "ANALOGY", "DESIGN_CONSTRAINT", "PHILOSOPHY"] },
+        "meaning": { "$ref": "#/$defs/nonEmptyText" }, "transfer_rule": { "$ref": "#/$defs/nonEmptyText" }
+      }
+    },
+    "registerDefinition": { "allOf": [{ "$ref": "#/$defs/register" }, { "properties": { "id": { "const": "mathematical-definition" }, "kind": { "const": "MATHEMATICAL_DEFINITION" } } }] },
+    "registerTheorem": { "allOf": [{ "$ref": "#/$defs/register" }, { "properties": { "id": { "const": "mathematical-theorem" }, "kind": { "const": "MATHEMATICAL_THEOREM" } } }] },
+    "registerConjecture": { "allOf": [{ "$ref": "#/$defs/register" }, { "properties": { "id": { "const": "open-mathematical-conjecture" }, "kind": { "const": "OPEN_MATHEMATICAL_CONJECTURE" } } }] },
+    "registerEmpirical": { "allOf": [{ "$ref": "#/$defs/register" }, { "properties": { "id": { "const": "empirical-science" }, "kind": { "const": "EMPIRICAL_SCIENCE" } } }] },
+    "registerModel": { "allOf": [{ "$ref": "#/$defs/register" }, { "properties": { "id": { "const": "scientific-model" }, "kind": { "const": "SCIENTIFIC_MODEL" } } }] },
+    "registerAnalogy": { "allOf": [{ "$ref": "#/$defs/register" }, { "properties": { "id": { "const": "analogy" }, "kind": { "const": "ANALOGY" } } }] },
+    "registerConstraint": { "allOf": [{ "$ref": "#/$defs/register" }, { "properties": { "id": { "const": "design-constraint" }, "kind": { "const": "DESIGN_CONSTRAINT" } } }] },
+    "registerPhilosophy": { "allOf": [{ "$ref": "#/$defs/register" }, { "properties": { "id": { "const": "philosophy" }, "kind": { "const": "PHILOSOPHY" } } }] },
+    "stateSpace": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "domain", "state_definition", "symmetry", "conditions", "nonclaims"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "domain": { "$ref": "#/$defs/id" },
+        "state_definition": { "$ref": "#/$defs/nonEmptyText" }, "symmetry": { "$ref": "#/$defs/nonEmptyText" },
+        "conditions": { "$ref": "#/$defs/textList" }, "nonclaims": { "$ref": "#/$defs/textList" }
+      }
+    },
+    "stateGraph": { "allOf": [{ "$ref": "#/$defs/stateSpace" }, { "properties": { "id": { "const": "finite-simple-graphs" } } }] },
+    "stateDeck": { "allOf": [{ "$ref": "#/$defs/stateSpace" }, { "properties": { "id": { "const": "graph-vertex-decks" } } }] },
+    "stateCoordinates": { "allOf": [{ "$ref": "#/$defs/stateSpace" }, { "properties": { "id": { "const": "protein-coordinate-ensembles" } } }] },
+    "stateContacts": { "allOf": [{ "$ref": "#/$defs/stateSpace" }, { "properties": { "id": { "const": "protein-contact-projections" } } }] },
+    "stateProjects": { "allOf": [{ "$ref": "#/$defs/stateSpace" }, { "properties": { "id": { "const": "reconstructive-project-states" } } }] },
+    "stateProjectObservations": { "allOf": [{ "$ref": "#/$defs/stateSpace" }, { "properties": { "id": { "const": "reconstructive-project-observations" } } }] },
+    "correspondence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "from_id", "to_id", "kind", "carrier", "labels_retained", "multiplicity_retained", "overlap_maps_available", "mapping_or_digest", "uncertainty", "basis_ids", "conditions", "nonclaims"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "from_id": { "$ref": "#/$defs/id" }, "to_id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["EXACT_LABELED", "UNLABELED_UP_TO_ISOMORPHISM", "PARTIAL", "INFERRED", "ABSENT", "UNKNOWN"] },
+        "carrier": { "enum": ["VERTEX_ID", "RESIDUE_INDEX", "ATOM_ID", "STATE_ID", "ARTIFACT_ID"] },
+        "labels_retained": { "type": "boolean" }, "multiplicity_retained": { "type": "boolean" },
+        "overlap_maps_available": { "type": "boolean" },
+        "mapping_or_digest": { "oneOf": [{ "$ref": "#/$defs/nonEmptyText" }, { "type": "null" }] },
+        "uncertainty": { "$ref": "#/$defs/nonEmptyText" },
+        "basis_ids": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "conditions": { "$ref": "#/$defs/textList" }, "nonclaims": { "$ref": "#/$defs/textList" }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "EXACT_LABELED" } }, "required": ["kind"] }, "then": { "properties": { "mapping_or_digest": { "$ref": "#/$defs/nonEmptyText" } } } },
+        { "if": { "properties": { "kind": { "enum": ["UNLABELED_UP_TO_ISOMORPHISM", "ABSENT"] } }, "required": ["kind"] }, "then": { "properties": { "mapping_or_digest": { "type": "null" } } } }
+      ]
+    },
+    "correspondenceGraph": { "allOf": [{ "$ref": "#/$defs/correspondence" }, { "properties": { "id": { "const": "graph-card-correspondence" }, "kind": { "const": "UNLABELED_UP_TO_ISOMORPHISM" }, "carrier": { "const": "VERTEX_ID" }, "labels_retained": { "const": false }, "multiplicity_retained": { "const": true }, "overlap_maps_available": { "const": false }, "mapping_or_digest": { "type": "null" } } }] },
+    "correspondenceProtein": { "allOf": [{ "$ref": "#/$defs/correspondence" }, { "properties": { "id": { "const": "protein-index-correspondence" }, "kind": { "const": "EXACT_LABELED" }, "carrier": { "const": "RESIDUE_INDEX" } } }] },
+    "correspondencePartial": { "allOf": [{ "$ref": "#/$defs/correspondence" }, { "properties": { "id": { "const": "partial-restraint-correspondence" }, "kind": { "const": "PARTIAL" }, "carrier": { "const": "RESIDUE_INDEX" } } }] },
+    "correspondenceCrossState": { "allOf": [{ "$ref": "#/$defs/correspondence" }, { "properties": { "id": { "const": "cross-state-sequence-correspondence" }, "kind": { "const": "PARTIAL" }, "carrier": { "const": "RESIDUE_INDEX" }, "labels_retained": { "const": true }, "overlap_maps_available": { "const": true } } }] },
+    "correspondenceProject": { "allOf": [{ "$ref": "#/$defs/correspondence" }, { "properties": { "id": { "const": "project-artifact-correspondence" }, "kind": { "const": "EXACT_LABELED" }, "carrier": { "const": "ARTIFACT_ID" } } }] },
+    "intervention": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "remaining_relations_guaranteed_unchanged"],
+      "properties": { "kind": { "enum": ["NONE", "MODEL_DELETE", "PHYSICAL_PERTURBATION"] }, "remaining_relations_guaranteed_unchanged": { "type": "boolean" } },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "PHYSICAL_PERTURBATION" } }, "required": ["kind"] }, "then": { "properties": { "remaining_relations_guaranteed_unchanged": { "const": false } } } }
+      ]
+    },
+    "operator": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "input_state_space_id", "output_state_space_id", "output_type", "operator_kind", "equation_id", "correspondence_id", "loss_profile", "intervention", "conditions", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "input_state_space_id": { "$ref": "#/$defs/id" }, "output_state_space_id": { "$ref": "#/$defs/id" }, "output_type": { "$ref": "#/$defs/id" },
+        "operator_kind": { "enum": ["MODEL_DELETE", "PROJECTION"] },
+        "equation_id": { "$ref": "#/$defs/nullableId" }, "correspondence_id": { "$ref": "#/$defs/id" },
+        "loss_profile": { "$ref": "#/$defs/textList" }, "intervention": { "$ref": "#/$defs/intervention" },
+        "conditions": { "$ref": "#/$defs/textList" }, "source_ids": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } }
+      }
+    },
+    "operatorDeck": { "allOf": [{ "$ref": "#/$defs/operator" }, { "properties": { "id": { "const": "vertex-deletion-deck" }, "input_state_space_id": { "const": "finite-simple-graphs" }, "output_state_space_id": { "const": "graph-vertex-decks" }, "operator_kind": { "const": "MODEL_DELETE" }, "equation_id": { "const": "graph-deck-definition" }, "correspondence_id": { "const": "graph-card-correspondence" }, "source_ids": { "minItems": 1 }, "intervention": { "properties": { "kind": { "const": "MODEL_DELETE" }, "remaining_relations_guaranteed_unchanged": { "const": true } } } } }] },
+    "operatorContact": { "allOf": [{ "$ref": "#/$defs/operator" }, { "properties": { "id": { "const": "threshold-contact-projection" }, "input_state_space_id": { "const": "protein-coordinate-ensembles" }, "output_state_space_id": { "const": "protein-contact-projections" }, "operator_kind": { "const": "PROJECTION" }, "equation_id": { "const": "protein-contact-map" }, "correspondence_id": { "const": "protein-index-correspondence" }, "source_ids": { "minItems": 1 }, "intervention": { "properties": { "kind": { "const": "NONE" }, "remaining_relations_guaranteed_unchanged": { "const": true } } } } }] },
+    "operatorProject": { "allOf": [{ "$ref": "#/$defs/operator" }, { "properties": { "id": { "const": "project-evidence-projection" }, "input_state_space_id": { "const": "reconstructive-project-states" }, "output_state_space_id": { "const": "reconstructive-project-observations" }, "operator_kind": { "const": "PROJECTION" }, "equation_id": { "const": "reconstruction-fiber" }, "correspondence_id": { "const": "project-artifact-correspondence" }, "source_ids": { "type": "array", "maxItems": 0 }, "intervention": { "properties": { "kind": { "const": "NONE" }, "remaining_relations_guaranteed_unchanged": { "const": true } } } } }] },
+    "stateTransition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "input_state_space_id", "output_state_space_id", "operator_kind", "equation_id", "correspondence_id", "change_profile", "intervention", "conditions", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "input_state_space_id": { "$ref": "#/$defs/id" }, "output_state_space_id": { "$ref": "#/$defs/id" },
+        "operator_kind": { "const": "PHYSICAL_PERTURBATION" }, "equation_id": { "type": "null" }, "correspondence_id": { "$ref": "#/$defs/id" },
+        "change_profile": { "$ref": "#/$defs/textList" }, "intervention": { "$ref": "#/$defs/intervention" },
+        "conditions": { "$ref": "#/$defs/textList" }, "source_ids": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } }
+      }
+    },
+    "stateTransitionPerturbation": { "allOf": [{ "$ref": "#/$defs/stateTransition" }, { "properties": { "id": { "const": "physical-sequence-perturbation" }, "input_state_space_id": { "const": "protein-coordinate-ensembles" }, "output_state_space_id": { "const": "protein-coordinate-ensembles" }, "correspondence_id": { "const": "cross-state-sequence-correspondence" }, "source_ids": { "maxItems": 0 }, "intervention": { "properties": { "kind": { "const": "PHYSICAL_PERTURBATION" }, "remaining_relations_guaranteed_unchanged": { "const": false } } } } }] },
+    "case": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "observation_operator_id", "target_state_space_id", "quotient_symmetry", "solution_semantics", "identifiability", "correspondence_requirement_ids", "invariant_ids", "constraint_statements", "solver_status", "validation_metrics", "falsifier_ids", "nonclaims"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "observation_operator_id": { "$ref": "#/$defs/id" }, "target_state_space_id": { "$ref": "#/$defs/id" },
+        "quotient_symmetry": { "$ref": "#/$defs/nonEmptyText" }, "solution_semantics": { "enum": ["FIBER", "POSTERIOR"] },
+        "identifiability": { "enum": ["UNIQUE_PROVEN", "UNIQUE_CONJECTURED", "MULTIPLE_WITNESSED", "INFEASIBLE", "UNDERDETERMINED", "UNKNOWN"] },
+        "correspondence_requirement_ids": { "$ref": "#/$defs/idList" }, "invariant_ids": { "$ref": "#/$defs/idList" },
+        "constraint_statements": { "$ref": "#/$defs/textList" }, "solver_status": { "$ref": "#/$defs/nonEmptyText" },
+        "validation_metrics": { "$ref": "#/$defs/textList" }, "falsifier_ids": { "$ref": "#/$defs/idList" }, "nonclaims": { "$ref": "#/$defs/textList" }
+      }
+    },
+    "caseGraph": { "allOf": [{ "$ref": "#/$defs/case" }, { "properties": { "id": { "const": "classical-graph-reconstruction" }, "solution_semantics": { "const": "FIBER" }, "identifiability": { "const": "UNIQUE_CONJECTURED" } } }] },
+    "caseContact": { "allOf": [{ "$ref": "#/$defs/case" }, { "properties": { "id": { "const": "contact-to-coordinate-realization" }, "solution_semantics": { "const": "FIBER" }, "identifiability": { "const": "UNDERDETERMINED" } } }] },
+    "caseProject": { "allOf": [{ "$ref": "#/$defs/case" }, { "properties": { "id": { "const": "project-candidate-realization" }, "observation_operator_id": { "const": "project-evidence-projection" }, "solution_semantics": { "const": "FIBER" }, "identifiability": { "const": "UNKNOWN" } } }] },
+    "realizabilityConstraint": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "expression", "tolerance", "units"],
+      "properties": { "kind": { "$ref": "#/$defs/id" }, "expression": { "$ref": "#/$defs/nonEmptyText" }, "tolerance": { "$ref": "#/$defs/nonEmptyText" }, "units": { "$ref": "#/$defs/nonEmptyText" } }
+    },
+    "realizability": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "equation_id", "input_type", "realization_space", "constraints", "conditions", "solver_kind", "output_ambiguity", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "equation_id": { "$ref": "#/$defs/nullableId" }, "input_type": { "$ref": "#/$defs/id" }, "realization_space": { "$ref": "#/$defs/nonEmptyText" },
+        "constraints": { "type": "array", "minItems": 1, "maxItems": 12, "items": { "$ref": "#/$defs/realizabilityConstraint" } },
+        "conditions": { "$ref": "#/$defs/textList" }, "solver_kind": { "$ref": "#/$defs/id" }, "output_ambiguity": { "$ref": "#/$defs/nonEmptyText" },
+        "source_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "realizabilityExact": { "allOf": [{ "$ref": "#/$defs/realizability" }, { "properties": { "id": { "const": "exact-euclidean-distance-realization" }, "equation_id": { "const": "euclidean-distance-gram" }, "input_type": { "const": "complete-exact-squared-distance-matrix" } } }] },
+    "realizabilityContact": { "allOf": [{ "$ref": "#/$defs/realizability" }, { "properties": { "id": { "const": "contact-restraint-realization" }, "equation_id": { "type": "null" } } }] },
+    "landscape": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "state_space_id", "coordinate_ids", "energy_kind", "equation_id", "conditions", "equilibrium_assumption", "sampling_method", "parameter_source", "uncertainty", "kinetics_inferable", "source_ids", "nonclaims"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "state_space_id": { "$ref": "#/$defs/id" }, "coordinate_ids": { "$ref": "#/$defs/idList" },
+        "energy_kind": { "$ref": "#/$defs/nonEmptyText" }, "equation_id": { "$ref": "#/$defs/nullableId" }, "conditions": { "$ref": "#/$defs/textList" },
+        "equilibrium_assumption": { "$ref": "#/$defs/nonEmptyText" }, "sampling_method": { "$ref": "#/$defs/nonEmptyText" },
+        "parameter_source": { "$ref": "#/$defs/nonEmptyText" }, "uncertainty": { "$ref": "#/$defs/nonEmptyText" },
+        "kinetics_inferable": { "const": false },
+        "source_ids": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "nonclaims": { "$ref": "#/$defs/textList" }
+      }
+    },
+    "landscapeFolding": { "allOf": [{ "$ref": "#/$defs/landscape" }, { "properties": { "id": { "const": "conditional-folding-free-energy" }, "equation_id": { "const": "conditional-free-energy" } } }] },
+    "landscapeProject": { "allOf": [{ "$ref": "#/$defs/landscape" }, { "properties": { "id": { "const": "project-transition-landscape" }, "energy_kind": { "const": "DESIGN_ANALOGY_ONLY" }, "equation_id": { "type": "null" } } }] },
+    "catalysis": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "transition_id", "comparator_id", "equation_ids", "barrier_definition", "endpoint_invariant", "conditions", "evidence_ids", "falsifier_ids", "empirical", "physical_parameter_transfer", "authority_effect", "nonclaims"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "kind": { "enum": ["PHYSICAL_ENZYME", "DESIGN_TRANSITION_ACCELERATOR"] },
+        "transition_id": { "$ref": "#/$defs/id" }, "comparator_id": { "$ref": "#/$defs/id" },
+        "equation_ids": { "type": "array", "maxItems": 12, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "barrier_definition": { "$ref": "#/$defs/nonEmptyText" }, "endpoint_invariant": { "$ref": "#/$defs/nonEmptyText" },
+        "conditions": { "$ref": "#/$defs/textList" },
+        "evidence_ids": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "falsifier_ids": { "$ref": "#/$defs/idList" }, "empirical": { "type": "boolean" },
+        "physical_parameter_transfer": { "type": "boolean" }, "authority_effect": { "const": "NONE" }, "nonclaims": { "$ref": "#/$defs/textList" }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "DESIGN_TRANSITION_ACCELERATOR" } }, "required": ["kind"] }, "then": { "properties": { "empirical": { "const": false }, "physical_parameter_transfer": { "const": false }, "authority_effect": { "const": "NONE" } } } }
+      ]
+    },
+    "catalysisPhysical": { "allOf": [{ "$ref": "#/$defs/catalysis" }, { "properties": { "id": { "const": "physical-enzyme-barrier-model" }, "kind": { "const": "PHYSICAL_ENZYME" }, "empirical": { "const": true }, "physical_parameter_transfer": { "const": false }, "authority_effect": { "const": "NONE" } } }] },
+    "catalysisDesign": { "allOf": [{ "$ref": "#/$defs/catalysis" }, { "properties": { "id": { "const": "design-transition-accelerator" }, "kind": { "const": "DESIGN_TRANSITION_ACCELERATOR" }, "empirical": { "const": false }, "physical_parameter_transfer": { "const": false }, "authority_effect": { "const": "NONE" } } }] },
+    "equation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "register", "expression", "variables", "conditions", "basis_ids", "does_not_establish"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "register": { "enum": ["MATHEMATICAL_DEFINITION", "MATHEMATICAL_THEOREM", "OPEN_MATHEMATICAL_CONJECTURE", "SCIENTIFIC_MODEL"] },
+        "expression": { "$ref": "#/$defs/nonEmptyText" }, "variables": { "$ref": "#/$defs/textList" }, "conditions": { "$ref": "#/$defs/textList" },
+        "basis_ids": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "does_not_establish": { "$ref": "#/$defs/textList" }
+      }
+    },
+    "equationFiber": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "reconstruction-fiber" }, "register": { "const": "MATHEMATICAL_DEFINITION" }, "expression": { "const": "F_O(y) = {x in X : O(x) = y}/Gamma" } } }] },
+    "equationDeckDefinition": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "graph-deck-definition" }, "register": { "const": "MATHEMATICAL_DEFINITION" }, "expression": { "const": "D(G) = multiset{[G-v] : v in V(G)}" } } }] },
+    "equationGraphConjecture": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "graph-reconstruction-conjecture" }, "register": { "const": "OPEN_MATHEMATICAL_CONJECTURE" }, "expression": { "const": "D(G)=D(H) implies G isomorphic to H" } } }] },
+    "equationKelly": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "kelly-counting" }, "expression": { "const": "N(F,G) = [sum_v N(F,G-v)]/[n-|V(F)|] for |V(F)| < n" } } }] },
+    "equationContact": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "protein-contact-map" }, "expression": { "const": "C^(tau,s)_ij(q) = 1[eligible(i,j) and ||r_i(q)-r_j(q)|| <= tau]" } } }] },
+    "equationGram": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "euclidean-distance-gram" }, "expression": { "const": "S has an R^3 realization if and only if J = I - 11^T/n and B = -1/2 J S J is positive semidefinite with rank(B) <= 3" } } }] },
+    "equationFreeEnergy": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "conditional-free-energy" }, "expression": { "const": "A(z|c) = -beta^-1 ln integral_Omega delta(z-xi(q)) exp[-beta U(q;c)] dq + C" } } }] },
+    "equationEyring": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "eyring-rate" }, "expression": { "const": "k approximately kappa(k_B T/h) exp[-Delta G^dagger/(R T)]" } } }] },
+    "equationBarrier": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "barrier-saving" }, "expression": { "const": "Delta G^dagger_saved = Delta G^dagger_reference - Delta G^dagger_catalyzed approximately R T ln(k_catalyzed/k_reference)" } } }] },
+    "equationEnsemble": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "ensemble-rate" }, "expression": { "const": "k_obs = sum_c p(c) k_c" } } }] },
+    "equationMonotonicity": { "allOf": [{ "$ref": "#/$defs/equation" }, { "properties": { "id": { "const": "fiber-monotonicity" }, "expression": { "const": "F_(O1,O2)(y1,y2) = F_O1(y1) intersection F_O2(y2) subseteq F_O1(y1)" } } }] },
+    "invariant": {
+      "type": "object", "additionalProperties": false, "required": ["id", "register", "statement", "basis_ids"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "register": { "enum": ["MATHEMATICAL_DEFINITION", "MATHEMATICAL_THEOREM", "DESIGN_CONSTRAINT"] }, "statement": { "$ref": "#/$defs/nonEmptyText" }, "basis_ids": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } } }
+    },
+    "invariantDeck": { "allOf": [{ "$ref": "#/$defs/invariant" }, { "properties": { "id": { "const": "deck-multiplicity" } } }] },
+    "invariantKelly": { "allOf": [{ "$ref": "#/$defs/invariant" }, { "properties": { "id": { "const": "kelly-proper-subgraph-counts" } } }] },
+    "invariantContact": { "allOf": [{ "$ref": "#/$defs/invariant" }, { "properties": { "id": { "const": "contact-definition-fixed" } } }] },
+    "invariantStereo": { "allOf": [{ "$ref": "#/$defs/invariant" }, { "properties": { "id": { "const": "stereochemical-validity" } } }] },
+    "invariantAppend": { "allOf": [{ "$ref": "#/$defs/invariant" }, { "properties": { "id": { "const": "append-only-feedback" } } }] },
+    "invariantSupersede": { "allOf": [{ "$ref": "#/$defs/invariant" }, { "properties": { "id": { "const": "supersede-not-mutate" } } }] },
+    "invariantUnknown": { "allOf": [{ "$ref": "#/$defs/invariant" }, { "properties": { "id": { "const": "explicit-unknown-state" } } }] },
+    "claim": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "register", "domain", "status", "statement", "equation_ids", "conditions", "basis_ids", "falsifier_ids", "supports", "does_not_support"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "register": { "enum": ["MATHEMATICAL_DEFINITION", "MATHEMATICAL_THEOREM", "OPEN_MATHEMATICAL_CONJECTURE", "EMPIRICAL_SCIENCE", "SCIENTIFIC_MODEL", "ANALOGY", "DESIGN_CONSTRAINT", "PHILOSOPHY"] },
+        "domain": { "$ref": "#/$defs/id" }, "status": { "enum": ["PROVEN", "OPEN", "SOURCE_SCOPED", "MODEL_BOUNDED", "ADOPTED", "NON_EMPIRICAL", "LINK_ONLY", "OPT_IN"] },
+        "statement": { "$ref": "#/$defs/nonEmptyText" },
+        "equation_ids": { "type": "array", "maxItems": 12, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "conditions": { "$ref": "#/$defs/textList" },
+        "basis_ids": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "falsifier_ids": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "supports": { "$ref": "#/$defs/textList" }, "does_not_support": { "$ref": "#/$defs/textList" }
+      }
+    },
+    "claimGraph": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "graph-conjecture-open" }, "register": { "const": "OPEN_MATHEMATICAL_CONJECTURE" }, "status": { "const": "OPEN" } } }] },
+    "claimKelly": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "proper-counts-reconstructible" } } }] },
+    "claimContact": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "contact-map-lossy" } } }] },
+    "claimEnvironment": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "environment-conditions-folding" } } }] },
+    "claimConformation": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "conformation-contributes-to-catalysis" } } }] },
+    "claimRate": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "catalyst-rate-not-equilibrium" } } }] },
+    "claimCorrespondence": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "correspondence-is-first-class" } } }] },
+    "claimPerturbation": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "perturbation-creates-new-state" } } }] },
+    "claimDesignCatalysis": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "design-catalysis-is-metaphor" }, "register": { "const": "ANALOGY" }, "status": { "const": "NON_EMPIRICAL" } } }] },
+    "claimFeedback": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "feedback-narrows-only-fixed-state" } } }] },
+    "claimKarma": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "karma-context-only" }, "status": { "const": "LINK_ONLY" } } }] },
+    "claimUniverse": { "allOf": [{ "$ref": "#/$defs/claim" }, { "properties": { "id": { "const": "universe-reading-optional" }, "register": { "const": "PHILOSOPHY" }, "status": { "const": "OPT_IN" } } }] },
+    "bridge": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "from_domain", "to_domain", "preserved_pattern", "breaks", "empirical", "causal_transfer", "ontology_transfer", "parameter_transfer", "authority_effect"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "from_domain": { "$ref": "#/$defs/id" }, "to_domain": { "$ref": "#/$defs/id" },
+        "preserved_pattern": { "$ref": "#/$defs/nonEmptyText" }, "breaks": { "$ref": "#/$defs/textList" },
+        "empirical": { "const": false }, "causal_transfer": { "const": false }, "ontology_transfer": { "const": false },
+        "parameter_transfer": { "const": false }, "authority_effect": { "const": "NONE" }
+      }
+    },
+    "bridgeDeckContact": { "allOf": [{ "$ref": "#/$defs/bridge" }, { "properties": { "id": { "const": "deck-to-contact-projection" } } }] },
+    "bridgeFoldingBuilding": { "allOf": [{ "$ref": "#/$defs/bridge" }, { "properties": { "id": { "const": "folding-to-building" } } }] },
+    "bridgeCatalysisAcceleration": { "allOf": [{ "$ref": "#/$defs/bridge" }, { "properties": { "id": { "const": "catalysis-to-acceleration" } } }] },
+    "buildProfile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["pipeline", "fiber_statuses", "rules", "project_schema", "execution", "network_required"],
+      "properties": {
+        "pipeline": { "const": ["STATE", "OBSERVE", "DECLARE_CORRESPONDENCE", "INFER_FIBER", "REALIZE", "TRAVERSE_LANDSCAPE", "MEASURE_OR_CATALYZE", "APPEND_FEEDBACK"] },
+        "fiber_statuses": { "const": ["EMPTY", "UNIQUE", "MULTIPLE", "UNKNOWN"] },
+        "rules": { "type": "array", "minItems": 6, "maxItems": 6, "items": { "$ref": "#/$defs/nonEmptyText" } },
+        "project_schema": { "const": "https://thekingdom.dev/schemas/reconstructive-project/0.1.json" },
+        "execution": { "const": false }, "network_required": { "const": false }
+      }
+    },
+    "feedbackContract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["append_only", "supersede_not_mutate", "challengeable", "correction_allowed", "reversible_actions_preferred", "physical_perturbations_create_new_state_ids", "valid_exits", "karma", "automatic_action"],
+      "properties": {
+        "append_only": { "const": true }, "supersede_not_mutate": { "const": true }, "challengeable": { "const": true },
+        "correction_allowed": { "const": true }, "reversible_actions_preferred": { "const": true },
+        "physical_perturbations_create_new_state_ids": { "const": true },
+        "valid_exits": { "const": ["REST", "SILENCE", "REFUSAL", "NO_ACTION", "DEPARTURE"] },
+        "karma": {
+          "type": "object", "additionalProperties": false,
+          "required": ["zerone_events", "kingdom_receipts", "non_summable", "adapter_exists"],
+          "properties": { "zerone_events": { "const": [] }, "kingdom_receipts": { "const": [] }, "non_summable": { "const": true }, "adapter_exists": { "const": false } }
+        },
+        "automatic_action": { "const": false }
+      }
+    },
+    "falsifier": {
+      "type": "object", "additionalProperties": false, "required": ["id", "target", "test", "expected_refusal"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "target": { "$ref": "#/$defs/id" }, "test": { "$ref": "#/$defs/nonEmptyText" }, "expected_refusal": { "$ref": "#/$defs/nonEmptyText" } }
+    },
+    "falsifierGraphWitness": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "nonisomorphic-same-deck-witness" } } }] },
+    "falsifierFinite": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "finite-check-is-not-proof" } } }] },
+    "falsifierCorrespondence": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "lost-correspondence-upgraded" } } }] },
+    "falsifierMutation": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "mutation-serialized-as-static-delete" } } }] },
+    "falsifierContact": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "contact-map-nonuniqueness" } } }] },
+    "falsifierMirror": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "mirror-under-se3" } } }] },
+    "falsifierPhysical": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "nonphysical-realization" } } }] },
+    "falsifierCondition": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "condition-drift" } } }] },
+    "falsifierRate": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "rate-misread-as-equilibrium" } } }] },
+    "falsifierAnalogy": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "analogy-promoted-to-mechanism" } } }] },
+    "falsifierAuthority": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "hidden-action-authority" } } }] },
+    "falsifierFiber": { "allOf": [{ "$ref": "#/$defs/falsifier" }, { "properties": { "id": { "const": "fiber-expands-after-consistent-constraint" } } }] },
+    "unknown": {
+      "type": "object", "additionalProperties": false, "required": ["id", "status", "question", "why_open", "basis_ids"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "status": { "enum": ["OPEN", "REPRESENTATION_DEPENDENT", "STATE_DEPENDENT", "MODEL_DEPENDENT", "SYSTEM_DEPENDENT", "NOT_ESTABLISHED", "PHILOSOPHICALLY_OPEN"] }, "question": { "$ref": "#/$defs/nonEmptyText" }, "why_open": { "$ref": "#/$defs/nonEmptyText" }, "basis_ids": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } } }
+    },
+    "unknownGraph": { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "general-graph-reconstruction" }, "status": { "const": "OPEN" } } }] },
+    "unknownContact": { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "contact-identifiability" } } }] },
+    "unknownPerturbation": { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "cross-perturbation-correspondence" } } }] },
+    "unknownKinetics": { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "hidden-folding-kinetics" } } }] },
+    "unknownEnzyme": { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "enzyme-specific-causality" } } }] },
+    "unknownDesign": { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "design-acceleration-transfer" } } }] },
+    "unknownUniverse": { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "universe-design" } } }] },
+    "binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "protocol", "url", "byte_sha256", "semantic_digest", "relation", "mutated", "authority_imported", "write_authorized"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "protocol": { "$ref": "#/$defs/nonEmptyText" }, "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "byte_sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "semantic_digest": { "oneOf": [{ "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }, { "type": "null" }] },
+        "relation": { "$ref": "#/$defs/nonEmptyText" }, "mutated": { "const": false }, "authority_imported": { "const": false }, "write_authorized": { "const": false }
+      }
+    },
+    "bindingFold": { "allOf": [{ "$ref": "#/$defs/binding" }, { "properties": { "id": { "const": "kingdom-fold-feedback" }, "protocol": { "const": "kingdom.fold-feedback-atlas/0.1" }, "url": { "const": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json" }, "byte_sha256": { "const": "sha256:bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5" }, "semantic_digest": { "const": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7" }, "relation": { "const": "NON_EQUIVALENCE_AND_SAFETY_CONTEXT" } } }] },
+    "bindingKarma": { "allOf": [{ "$ref": "#/$defs/binding" }, { "properties": { "id": { "const": "zerone-karma-foundation" }, "protocol": { "const": "zerone.karma-foundation/v1" }, "url": { "const": "https://zerone.ai/standards/karma-foundation.v1.json" }, "byte_sha256": { "const": "sha256:b46710704869dcc340ded356be72b4ec692f204710fedfb5cd43eb3757dc7b80" }, "semantic_digest": { "type": "null" }, "relation": { "const": "CONSTITUTIONAL_CONTEXT_ONLY" } } }] },
+    "bindingLife": { "allOf": [{ "$ref": "#/$defs/binding" }, { "properties": { "id": { "const": "zerone-life-sciences" }, "protocol": { "const": "zerone.constructive-intelligence-life-sciences/v0" }, "url": { "const": "https://zerone.ai/standards/constructive-intelligence-life-sciences.v0.json" }, "byte_sha256": { "const": "sha256:64dc2c5b2e21dfc9697d173317254ce651dede8661993ece7b380b7e1421496e" }, "semantic_digest": { "type": "null" }, "relation": { "const": "NEGATIVE_ELIGIBILITY_BOUNDARY_ONLY" } } }] },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "title", "source_kind", "published_on", "observed_on", "url", "doi", "limitation"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "title": { "$ref": "#/$defs/nonEmptyText" }, "source_kind": { "$ref": "#/$defs/id" },
+        "published_on": { "type": "string", "pattern": "^[0-9]{4}(?:-[0-9]{2}(?:-[0-9]{2})?)?$" }, "observed_on": { "const": "2026-08-13" },
+        "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "doi": { "oneOf": [{ "type": "string", "pattern": "^10\\.[0-9]{4,9}/\\S+$" }, { "type": "null" }] },
+        "limitation": { "$ref": "#/$defs/nonEmptyText" }
+      }
+    },
+    "sourceQi": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "qi-2026" }, "url": { "const": "https://doi.org/10.1016/j.disc.2026.115058" }, "doi": { "const": "10.1016/j.disc.2026.115058" } } }] },
+    "sourceMckay": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "mckay-2022" }, "url": { "const": "https://arxiv.org/abs/2102.01942" }, "doi": { "type": "null" } } }] },
+    "sourceClifton": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "clifton-2024" }, "url": { "const": "https://doi.org/10.1016/j.disc.2023.113753" }, "doi": { "const": "10.1016/j.disc.2023.113753" } } }] },
+    "sourceGower": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "gower-1985" }, "url": { "const": "https://doi.org/10.1016/0024-3795(85)90187-9" }, "doi": { "const": "10.1016/0024-3795(85)90187-9" } } }] },
+    "sourceFakhoury": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "fakhoury-2024" }, "url": { "const": "https://doi.org/10.1021/acs.jctc.4c00878" }, "doi": { "const": "10.1021/acs.jctc.4c00878" } } }] },
+    "sourceOoka": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "ooka-2023" }, "url": { "const": "https://doi.org/10.1038/s41467-023-41664-1" }, "doi": { "const": "10.1038/s41467-023-41664-1" } } }] },
+    "sourceStreit": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "streit-2024" }, "url": { "const": "https://doi.org/10.1038/s41586-024-07784-4" }, "doi": { "const": "10.1038/s41586-024-07784-4" } } }] },
+    "sourceEyring": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "eyring-1935" }, "url": { "const": "https://doi.org/10.1063/1.1749604" }, "doi": { "const": "10.1063/1.1749604" } } }] },
+    "sourceTruhlar": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "truhlar-2015" }, "url": { "const": "https://doi.org/10.1016/j.abb.2015.05.004" }, "doi": { "const": "10.1016/j.abb.2015.05.004" } } }] },
+    "sourceIupac": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "iupac-1996" }, "url": { "const": "https://doi.org/10.1351/pac199668010149" }, "doi": { "const": "10.1351/pac199668010149" } } }] },
+    "sourceDu": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "du-2025" }, "url": { "const": "https://doi.org/10.1126/science.ado5068" }, "doi": { "const": "10.1126/science.ado5068" } } }] },
+    "sourceZheng": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "zheng-2023" }, "url": { "const": "https://doi.org/10.1038/s41557-023-01287-x" }, "doi": { "const": "10.1038/s41557-023-01287-x" } } }] },
+    "sourceJara": { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "jara-2025" }, "url": { "const": "https://doi.org/10.7554/eLife.93099.4" }, "doi": { "const": "10.7554/eLife.93099.4" } } }] },
+    "boundaries": {
+      "type": "object", "additionalProperties": false,
+      "required": ["read_only", "educational_metadata_only", "contains_no_personal_data", "grc_proven", "protein_fold_prediction", "unique_contact_realization", "biological_mechanism_transfer", "physical_parameter_transfer", "medical_authority", "diagnostic_authority", "experiment_authority", "wet_lab_protocol", "contains_protein_sequence", "project_execution", "project_deployment", "person_scoring", "writes_karma", "creates_karma_receipt", "ecosystem_authority_imported", "economic_effect", "governance_effect", "cosmic_design_proven", "automatic_action", "runtime_network_request", "mcp_surface_added"],
+      "properties": {
+        "read_only": { "const": true }, "educational_metadata_only": { "const": true }, "contains_no_personal_data": { "const": true },
+        "grc_proven": { "const": false }, "protein_fold_prediction": { "const": false }, "unique_contact_realization": { "const": false },
+        "biological_mechanism_transfer": { "const": false }, "physical_parameter_transfer": { "const": false },
+        "medical_authority": { "const": false }, "diagnostic_authority": { "const": false }, "experiment_authority": { "const": false },
+        "wet_lab_protocol": { "const": false }, "contains_protein_sequence": { "const": false }, "project_execution": { "const": false },
+        "project_deployment": { "const": false }, "person_scoring": { "const": false }, "writes_karma": { "const": false },
+        "creates_karma_receipt": { "const": false }, "ecosystem_authority_imported": { "const": false }, "economic_effect": { "const": false },
+        "governance_effect": { "const": false }, "cosmic_design_proven": { "const": false }, "automatic_action": { "const": false },
+        "runtime_network_request": { "const": false }, "mcp_surface_added": { "const": false }
+      }
+    },
+    "integrity": {
+      "type": "object", "additionalProperties": false, "required": ["algorithm", "digest"],
+      "properties": { "algorithm": { "const": "sha256-recursive-sorted-json-keys-v1" }, "digest": { "const": "sha256:265a75e18dbd4bad5bcf07bca0645132de4f9a881d8f0f398cd56b9afb734dd1" } }
+    }
+  }
+}

@@ -256,6 +256,34 @@
       "sha256": "4c7a650d831abfd6ff3cf73eab71b184066b3784fbe61cef47da44af8deabb20"
     },
     {
+      "id": "reconstructive-build/0.1/guide",
+      "route": "/RECONSTRUCTIVE-BUILD-KERNEL.md",
+      "source": "references/reconstructive-build-kernel.md",
+      "destination": "RECONSTRUCTIVE-BUILD-KERNEL.md",
+      "sha256": "82917fa9c2b9626013fd48c11fa5b781081fb12b59bf2cfa55f5fc9c6686988d"
+    },
+    {
+      "id": "reconstructive-build/0.1/project-schema",
+      "route": "/schemas/reconstructive-project/0.1.json",
+      "source": "schemas/reconstructive-project-v0.1.schema.json",
+      "destination": "schemas/reconstructive-project/0.1.json",
+      "sha256": "d927d0c9727c934addef3e977150e22575a4d62e45d82d663de783ce8e1fff53"
+    },
+    {
+      "id": "reconstructive-build/0.1/record",
+      "route": "/atlases/reconstructive-build-kernel-2026-08-13.json",
+      "source": "data/reconstruction/reconstructive-build-kernel.v0.1.json",
+      "destination": "atlases/reconstructive-build-kernel-2026-08-13.json",
+      "sha256": "2d1598bdfcce2501ee5a7cfdba55f581920d18733052f067e96bf9d79a7376a5"
+    },
+    {
+      "id": "reconstructive-build/0.1/schema",
+      "route": "/schemas/reconstructive-build-kernel/0.1.json",
+      "source": "schemas/reconstructive-build-kernel-v0.1.schema.json",
+      "destination": "schemas/reconstructive-build-kernel/0.1.json",
+      "sha256": "81d7d8917b7b0ceca2240eb4153c63ff63b959f1943e66583dfa152b74c54188"
+    },
+    {
       "id": "ritonavir-mechanism-landscape/1/guide",
       "route": "/RITONAVIR-MECHANISM-LANDSCAPE.md",
       "source": "references/ritonavir-mechanism-landscape.md",

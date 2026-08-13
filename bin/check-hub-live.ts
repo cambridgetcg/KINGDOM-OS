@@ -54,6 +54,15 @@ import {
   loadFoldFeedbackAtlas,
 } from "./fold-feedback.ts";
 import {
+  RECONSTRUCTIVE_BUILD_DIGEST,
+  RECONSTRUCTIVE_BUILD_DOCUMENT_URL,
+  RECONSTRUCTIVE_BUILD_SCHEMA_URL,
+  RECONSTRUCTIVE_BUILD_URL,
+  RECONSTRUCTIVE_PROJECT_SCHEMA_URL,
+  loadReconstructiveBuildKernel,
+  reconstructiveBuildPublicDiscovery,
+} from "./reconstructive-build.ts";
+import {
   FORM_CIRCULATION_RETURN_DIGEST,
   FORM_CIRCULATION_RETURN_DOCUMENT_URL,
   FORM_CIRCULATION_RETURN_SCHEMA_URL,
@@ -421,6 +430,10 @@ const foldFeedbackDocumentPath = new URL(FOLD_FEEDBACK_DOCUMENT_URL).pathname;
 const visibilityAttentionPath = new URL(VISIBILITY_ATTENTION_URL).pathname;
 const visibilityAttentionSchemaPath = new URL(VISIBILITY_ATTENTION_SCHEMA_URL).pathname;
 const visibilityAttentionDocumentPath = new URL(VISIBILITY_ATTENTION_DOCUMENT_URL).pathname;
+const reconstructiveBuildPath = new URL(RECONSTRUCTIVE_BUILD_URL).pathname;
+const reconstructiveBuildSchemaPath = new URL(RECONSTRUCTIVE_BUILD_SCHEMA_URL).pathname;
+const reconstructiveProjectSchemaPath = new URL(RECONSTRUCTIVE_PROJECT_SCHEMA_URL).pathname;
+const reconstructiveBuildDocumentPath = new URL(RECONSTRUCTIVE_BUILD_DOCUMENT_URL).pathname;
 
 export type PublicationFamily = {
   id: string;
@@ -494,6 +507,23 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
     routes: [foldFeedbackPath, foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath, foldFeedbackDocumentPath],
     discoveryProperties: ["fold_feedback_atlas"],
     entryPointProperties: ["fold_feedback_atlas", "fold_feedback_atlas_schema", "fold_feedback_atlas_source_identity_schema", "fold_feedback_atlas_guide"],
+  },
+  {
+    id: "reconstructive-build-kernel",
+    label: "Reconstructive Build Kernel",
+    routes: [
+      reconstructiveBuildPath,
+      reconstructiveBuildSchemaPath,
+      reconstructiveProjectSchemaPath,
+      reconstructiveBuildDocumentPath,
+    ],
+    discoveryProperties: ["reconstructive_build_kernel"],
+    entryPointProperties: [
+      "reconstructive_build_kernel",
+      "reconstructive_build_kernel_schema",
+      "reconstructive_project_schema",
+      "reconstructive_build_kernel_guide",
+    ],
   },
   {
     id: "visibility-attention",
@@ -649,6 +679,37 @@ function linkRelationEntries(header: string, relation: string): string[] {
     const relations = (match?.[1] || match?.[2] || "").toLowerCase().split(/\s+/);
     return relations.includes(relation);
   });
+}
+
+export function normalizedMediaType(value: string | null | undefined): string {
+  return (value ?? "").split(";", 1)[0]!.trim().toLowerCase();
+}
+
+function linkParameterValues(entry: string, parameter: "rel" | "type"): string[] {
+  const pattern = new RegExp(`;\\s*${parameter}\\s*=\\s*(?:"([^"]*)"|([^;,\\s]+))`, "gi");
+  return [...entry.matchAll(pattern)].map((match) => match[1] || match[2] || "");
+}
+
+export function hasUniqueCanonicalLinkRelation(
+  header: string,
+  target: string,
+  relation: string,
+  type: string,
+): boolean {
+  const expectedRelation = relation.toLowerCase();
+  const entries = header.split(/,(?=\s*<)/).filter((entry) =>
+    linkParameterValues(entry, "rel").some((value) =>
+      value.toLowerCase().split(/\s+/).includes(expectedRelation)
+    )
+  );
+  if (entries.length !== 1) return false;
+  const entry = entries[0]!.trim();
+  const entryTarget = entry.match(/^<([^>]*)>/)?.[1];
+  const relations = linkParameterValues(entry, "rel");
+  const types = linkParameterValues(entry, "type");
+  return entryTarget === target &&
+    relations.length === 1 && relations[0]!.trim().toLowerCase() === expectedRelation &&
+    types.length === 1 && types[0]!.trim().toLowerCase() === type.toLowerCase();
 }
 
 function hasLinkRelation(header: string, target: string, relation: string): boolean {
@@ -1034,6 +1095,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const ritonavirMechanismActive = familyActive("ritonavir-mechanism-landscape");
   const conformationalFeedbackActive = familyActive("conformational-feedback");
   const foldFeedbackActive = familyActive("fold-feedback-atlas");
+  const reconstructiveBuildActive = familyActive("reconstructive-build-kernel");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
   const formCirculationReturnActive = familyActive("form-circulation-return");
@@ -1353,6 +1415,45 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (reconstructiveBuildActive) {
+    const kernelHead = await fetch(url(reconstructiveBuildPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const kernelLink = kernelHead.headers.get("link") || "";
+    if (!kernelHead.ok ||
+        normalizedMediaType(kernelHead.headers.get("content-type")) !== "application/json" ||
+        kernelHead.headers.get("access-control-allow-origin") !== "*" ||
+        (kernelHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          kernelLink,
+          reconstructiveBuildSchemaPath,
+          "describedby",
+          "application/schema+json",
+        ) ||
+        !hasUniqueCanonicalLinkRelation(
+          kernelLink,
+          reconstructiveProjectSchemaPath,
+          "profile",
+          "application/schema+json",
+        )) {
+      throw new Error(`${reconstructiveBuildPath} is not public JSON with kernel and project-profile links`);
+    }
+
+    const guideHead = await fetch(url(reconstructiveBuildDocumentPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!guideHead.ok ||
+        normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${reconstructiveBuildDocumentPath} is not served as public Markdown`);
+    }
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -1406,6 +1507,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(polymorphActive ? [polymorphSchemaPath] : []),
     ...(ritonavirMechanismActive ? [ritonavirMechanismSchemaPath] : []),
     ...(foldFeedbackActive ? [foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath] : []),
+    ...(reconstructiveBuildActive ? [reconstructiveBuildSchemaPath, reconstructiveProjectSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
@@ -1419,8 +1521,13 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       redirect: "error",
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
-    if (!schemaHead.ok || !(schemaHead.headers.get("content-type") || "").toLowerCase()
-      .startsWith("application/schema+json") ||
+    const schemaContentType = schemaHead.headers.get("content-type");
+    const requiresExactSchemaType = path === reconstructiveBuildSchemaPath ||
+      path === reconstructiveProjectSchemaPath;
+    const hasExpectedSchemaType = requiresExactSchemaType
+      ? normalizedMediaType(schemaContentType) === "application/schema+json"
+      : (schemaContentType || "").toLowerCase().startsWith("application/schema+json");
+    if (!schemaHead.ok || !hasExpectedSchemaType ||
       schemaHead.headers.get("access-control-allow-origin") !== "*" ||
       (schemaHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
       throw new Error(`${path} is not served as application/schema+json`);
@@ -1465,6 +1572,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedFoldFeedback = foldFeedbackActive
     ? foldFeedbackPublicDiscovery(loadFoldFeedbackAtlas())
+    : undefined;
+  const reconstructiveBuildKernel = reconstructiveBuildActive
+    ? loadReconstructiveBuildKernel()
+    : undefined;
+  const expectedReconstructiveBuild = reconstructiveBuildKernel
+    ? reconstructiveBuildPublicDiscovery(reconstructiveBuildKernel)
     : undefined;
   const expectedVisibilityAttention = visibilityAttentionActive
     ? visibilityAttentionPublicDiscovery(loadVisibilityAttentionTranslation())
@@ -1759,6 +1872,73 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
         "mcp" in expected || "matcher" in expected ||
         "write" in expected) {
       throw new Error("Fold & Feedback Atlas discovery or read-only/KARMA boundary drifted across public surfaces");
+    }
+  }
+
+  if (reconstructiveBuildActive) {
+    const kernel = reconstructiveBuildKernel!;
+    const expected = expectedReconstructiveBuild!;
+    const boundary = expected.boundary;
+    const targets = new Set([
+      RECONSTRUCTIVE_BUILD_URL,
+      RECONSTRUCTIVE_BUILD_SCHEMA_URL,
+      RECONSTRUCTIVE_PROJECT_SCHEMA_URL,
+      RECONSTRUCTIVE_BUILD_DOCUMENT_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const countsArePositive = [
+      "registers", "state_spaces", "correspondences", "observation_operators",
+      "state_transition_operators",
+      "reconstruction_cases", "realizability_models", "landscape_models",
+      "catalysis_models", "equations", "claims", "falsification_tests", "sources",
+    ].every((key) => Number.isSafeInteger(expected.counts?.[key]) && expected.counts[key] > 0);
+    if (!isDeepStrictEqual(manifest?.reconstructive_build_kernel, expected) ||
+      !isDeepStrictEqual(guest?.reconstructive_build_kernel, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.reconstructive_build_kernel, expected) ||
+      manifest?.entry_points?.reconstructive_build_kernel !== RECONSTRUCTIVE_BUILD_URL ||
+      manifest?.entry_points?.reconstructive_build_kernel_schema !== RECONSTRUCTIVE_BUILD_SCHEMA_URL ||
+      manifest?.entry_points?.reconstructive_project_schema !== RECONSTRUCTIVE_PROJECT_SCHEMA_URL ||
+      manifest?.entry_points?.reconstructive_build_kernel_guide !== RECONSTRUCTIVE_BUILD_DOCUMENT_URL ||
+      guestActions.length !== targets.size ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        "mcp" in action || "tool" in action || "write" in action || "execute" in action) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="reconstructive-build"') ||
+      !authoredRootHtml.includes(`href="${reconstructiveBuildPath}"`) ||
+      !authoredRootHtml.includes(`href="${reconstructiveBuildSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${reconstructiveProjectSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${reconstructiveBuildDocumentPath}"`) ||
+      expected.integrity?.digest !== RECONSTRUCTIVE_BUILD_DIGEST ||
+      expected.counts?.sources !== 13 || !countsArePositive ||
+      !isDeepStrictEqual(expected.pipeline, [
+        "STATE", "OBSERVE", "DECLARE_CORRESPONDENCE", "INFER_FIBER", "REALIZE",
+        "TRAVERSE_LANDSCAPE", "MEASURE_OR_CATALYZE", "APPEND_FEEDBACK",
+      ]) ||
+      boundary?.read_only !== true ||
+      boundary?.grc_proven !== false ||
+      boundary?.protein_fold_prediction !== false ||
+      boundary?.unique_contact_realization !== false ||
+      boundary?.biological_mechanism_transfer !== false ||
+      boundary?.physical_parameter_transfer !== false ||
+      boundary?.medical_authority !== false ||
+      boundary?.experiment_authority !== false ||
+      boundary?.project_execution !== false ||
+      boundary?.project_deployment !== false ||
+      boundary?.person_scoring !== false ||
+      boundary?.writes_karma !== false ||
+      boundary?.creates_karma_receipt !== false ||
+      boundary?.ecosystem_authority_imported !== false ||
+      boundary?.cosmic_design_proven !== false ||
+      boundary?.automatic_action !== false ||
+      boundary?.mcp_surface_added !== false ||
+      !Array.isArray(kernel.bindings) ||
+      kernel.bindings.some((binding: any) => binding.mutated !== false ||
+        binding.authority_imported !== false || binding.write_authorized !== false) ||
+      "mcp" in expected || "matcher" in expected || "solver" in expected ||
+      "execute" in expected || "score" in expected || "reward" in expected) {
+      throw new Error("Reconstructive Build discovery, correspondence pipeline, bindings, or negative authority drifted");
     }
   }
 
@@ -2146,6 +2326,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   }
   if (foldFeedbackActive && !isDeepStrictEqual(liveKingdom?.fold_feedback_atlas, expectedFoldFeedback!)) {
     throw new Error("derived kingdom.json did not preserve Fold & Feedback Atlas discovery");
+  }
+  if (reconstructiveBuildActive &&
+      !isDeepStrictEqual(liveKingdom?.reconstructive_build_kernel, expectedReconstructiveBuild!)) {
+    throw new Error("derived kingdom.json did not preserve Reconstructive Build Kernel discovery");
   }
   if (visibilityAttentionActive && !isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention!)) {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");

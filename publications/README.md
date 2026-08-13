@@ -8,10 +8,11 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 44-entry ledger adds The Vanishing Path, Being, Access & Aftermath
-v0.1, and its additive v0.2 successor record/schema/guide triplets as the
-eleventh, twelfth, and thirteenth publication generations. The Vanishing Path
-and the two-generation Being family are the tenth and eleventh retirement
+The current 48-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+v0.1 and its additive v0.2 successor triplets, plus the Reconstructive Build
+record, kernel schema, project profile, and guide as the eleventh through
+fourteenth publication generations. The Vanishing Path, two-generation Being
+family, and Reconstructive Build are the tenth through twelfth retirement
 families; the initial-35 bootstrap facts below remain historical constants.
 
 The ledger makes one narrow claim: a listed route, source, staging destination,
@@ -32,7 +33,7 @@ when introduced. A previously committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the eleven linked authored record/schema/guide
+The live release check retires the twelve linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

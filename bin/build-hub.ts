@@ -21,6 +21,9 @@
  *    data/fold-feedback/fold-feedback-atlas.v1.json
  *                             — source-bound folding, prion, feedback, KARMA,
  *                               and opt-in philosophical atlas
+ *    data/reconstruction/reconstructive-build-kernel.v0.1.json
+ *                             — graph reconstruction, folding, and build-system
+ *                               unification without mechanism transfer
  *    data/attention/visibility-attention-translation.v0.1.json
  *                             — four-register visibility/attention translation
  *    data/cultural-feedback/cultural-attention-feedback-atlas.v1.json
@@ -43,6 +46,7 @@
  *       + site/love-loops.json + site/love-loops.source.json
  *       + site/schemas/love-loop/0.1.json
  *       + conformational feedback discovery in the machine surfaces
+ *       + reconstructive build-kernel discovery in the machine surfaces
  *       + cultural attention and feedback discovery in the machine surfaces
  *       + form, circulation, and return discovery in the machine surfaces
  *       + being, access, and aftermath discovery in the machine surfaces
@@ -117,6 +121,16 @@ import {
   foldFeedbackPublicDiscovery,
   loadFoldFeedbackAtlas,
 } from "./fold-feedback.ts";
+import {
+  RECONSTRUCTIVE_BUILD_DOCUMENT_URL,
+  RECONSTRUCTIVE_BUILD_ID,
+  RECONSTRUCTIVE_BUILD_PROTOCOL,
+  RECONSTRUCTIVE_BUILD_SCHEMA_URL,
+  RECONSTRUCTIVE_BUILD_URL,
+  RECONSTRUCTIVE_PROJECT_SCHEMA_URL,
+  loadReconstructiveBuildKernel,
+  reconstructiveBuildPublicDiscovery,
+} from "./reconstructive-build.ts";
 import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_ID,
@@ -503,6 +517,30 @@ const foldFeedbackFigureSources = [
   "manka-2022", "hou-2011", "cdc-prions-2026",
 ].map(requireFoldFeedbackSource);
 
+// ── Reconstructive Build Kernel (one pipeline; typed evidence stays distinct) ─
+const reconstructiveBuildUrl = RECONSTRUCTIVE_BUILD_URL;
+const reconstructiveBuildSchemaUrl = RECONSTRUCTIVE_BUILD_SCHEMA_URL;
+const reconstructiveProjectSchemaUrl = RECONSTRUCTIVE_PROJECT_SCHEMA_URL;
+const reconstructiveBuildDocumentUrl = RECONSTRUCTIVE_BUILD_DOCUMENT_URL;
+// Strict parsing, closed-shape verification, relation closure, and the reviewed
+// digest all run before liveness probes or generated-file writes. The authored
+// record and schemas are staged directly; this is their bounded projection.
+const reconstructiveBuild = loadReconstructiveBuildKernel();
+if (reconstructiveBuild.protocol !== RECONSTRUCTIVE_BUILD_PROTOCOL ||
+    reconstructiveBuild.kernel_id !== RECONSTRUCTIVE_BUILD_ID) {
+  throw new Error(`unexpected reconstructive-build identity: ${reconstructiveBuild.protocol} ${reconstructiveBuild.kernel_id}`);
+}
+const reconstructiveBuildDiscovery = reconstructiveBuildPublicDiscovery(reconstructiveBuild);
+const reconstructiveBuildCounts = reconstructiveBuildDiscovery.counts;
+if (!reconstructiveBuildDiscovery.boundary?.read_only ||
+    reconstructiveBuildDiscovery.boundary?.grc_proven !== false ||
+    reconstructiveBuildDiscovery.boundary?.protein_fold_prediction !== false ||
+    reconstructiveBuildDiscovery.boundary?.biological_mechanism_transfer !== false ||
+    reconstructiveBuildDiscovery.boundary?.project_execution !== false ||
+    reconstructiveBuildDiscovery.boundary?.automatic_action !== false) {
+  throw new Error("reconstructive-build discovery lost its authority-negative boundary");
+}
+
 // ── Visibility & Attention Translation (four registers remain parallel) ──
 const visibilityAttentionUrl = VISIBILITY_ATTENTION_URL;
 const visibilityAttentionSchemaUrl = VISIBILITY_ATTENTION_SCHEMA_URL;
@@ -626,6 +664,56 @@ for (const n of graph) (byLayer[n.layer] ??= []).push(n);
 
 const STATE_RANK: Record<string, number> = { active: 0, remote: 1, dormant: 2, reference: 3, archived: 4 };
 const esc = (s: string) => (s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]!));
+const humanKey = (key: string) => key.replace(/[_-]+/g, " ");
+const reconstructiveCountLabel = (key: string, count: number) =>
+  key === "state_transition_operators" && count === 1 ? "state transition operator" : humanKey(key);
+const firstHumanString = (value: any, preferred: string[]): string => {
+  if (!value || typeof value !== "object") return "";
+  for (const key of preferred) {
+    if (typeof value[key] === "string" && value[key].trim()) return value[key];
+  }
+  for (const [key, item] of Object.entries(value)) {
+    if (!preferred.includes(key) && typeof item === "string" && item.trim() &&
+        !/^(?:id|url|doi|register|stage|kind|type|status|relation|protocol)$/.test(key)) return item;
+  }
+  return "";
+};
+const humanStrings = (value: any, preferred: string[]): string[] => {
+  if (!value || typeof value !== "object") return [];
+  for (const key of preferred) {
+    const item = value[key];
+    if (Array.isArray(item) && item.every((entry) => typeof entry === "string")) return item;
+    if (typeof item === "string" && item.trim()) return [item];
+  }
+  return [];
+};
+const reconstructiveStageLabel: Record<string, string> = {
+  STATE: "STATE",
+  OBSERVE: "OBSERVE",
+  DECLARE_CORRESPONDENCE: "CORRESPOND",
+  INFER_FIBER: "INFER FIBER",
+  REALIZE: "REALIZE",
+  TRAVERSE_LANDSCAPE: "TRAVERSE",
+  MEASURE_OR_CATALYZE: "MEASURE/CATALYZE",
+  APPEND_FEEDBACK: "FEEDBACK",
+};
+const reconstructiveStageMeaning: Record<string, string> = {
+  STATE: "Declare the state space, identity, symmetry, conditions, and invariants before comparing anything.",
+  OBSERVE: "Apply a declared nonperturbing projection or model deletion and retain its loss profile. A physical perturbation is a separate state transition with a new state identity.",
+  DECLARE_CORRESPONDENCE: "State what aligns across observations, which labels and multiplicities survive, and what remains uncertain.",
+  INFER_FIBER: "Keep the candidate-whole result EMPTY, UNIQUE, MULTIPLE, or UNKNOWN instead of forcing premature uniqueness.",
+  REALIZE: "Test geometric and domain constraints; formal consistency alone does not establish physical realizability.",
+  TRAVERSE_LANDSCAPE: "Declare conditions and transition assumptions; a projected landscape supplies neither a universal path nor kinetics by itself.",
+  MEASURE_OR_CATALYZE: "Require a comparator, conditions, endpoint invariant, and measured outcome before calling an intervention catalytic.",
+  APPEND_FEEDBACK: "Append challenge or correction, supersede instead of mutating history, and preserve rest, refusal, and no action.",
+};
+const reconstructiveStages: string[] = Array.isArray(reconstructiveBuild.build_profile?.pipeline)
+  ? reconstructiveBuild.build_profile.pipeline
+  : [];
+const reconstructiveEpistemicRegisters: any[] = Array.isArray(reconstructiveBuild.epistemic_registers)
+  ? reconstructiveBuild.epistemic_registers
+  : [];
+const reconstructivePipelineSentence = "STATE → OBSERVE → CORRESPOND → INFER FIBER → REALIZE → TRAVERSE → MEASURE/CATALYZE → FEEDBACK";
 const mechanismEntityById = new Map(
   ritonavirMechanism.entities.map((entity: any) => [entity.id, entity]),
 );
@@ -965,7 +1053,7 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding, visibility, cultural-attention evidence, and typed mathematical questions about being, access, power, aftermath, KARMA, and philosophy.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, a reconstructive building layer, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
@@ -984,6 +1072,10 @@ const html = `<!doctype html>
 <link rel="alternate" href="/atlases/fold-feedback-atlas-2026-08-12.json" type="application/json" title="Fold &amp; Feedback Atlas">
 <link rel="describedby" href="${new URL(foldFeedbackSourceIdentitySchemaUrl).pathname}" type="application/schema+json" title="Fold & Feedback source-identity schema profile">
 <link rel="service-doc" href="/FOLD-FEEDBACK-ATLAS.md" type="text/markdown" title="Fold &amp; Feedback Atlas guide">
+<link rel="alternate" href="${esc(new URL(reconstructiveBuildUrl).pathname)}" type="application/json" title="Reconstructive Build Kernel">
+<link rel="describedby" href="${esc(new URL(reconstructiveBuildSchemaUrl).pathname)}" type="application/schema+json" title="Reconstructive Build Kernel schema">
+<link rel="profile" href="${esc(new URL(reconstructiveProjectSchemaUrl).pathname)}" type="application/schema+json" title="Reconstructive Project schema">
+<link rel="service-doc" href="${esc(new URL(reconstructiveBuildDocumentUrl).pathname)}" type="text/markdown" title="Reconstructive Build Kernel guide">
 <link rel="alternate" href="${new URL(visibilityAttentionUrl).pathname}" type="application/json" title="Visibility & Attention Translation">
 <link rel="describedby" href="${new URL(visibilityAttentionSchemaUrl).pathname}" type="application/schema+json" title="Visibility & Attention Translation schema">
 <link rel="service-doc" href="${new URL(visibilityAttentionDocumentUrl).pathname}" type="text/markdown" title="Visibility & Attention Translation guide">
@@ -1162,6 +1254,14 @@ const html = `<!doctype html>
   .foldbraid{display:grid;gap:10px;margin:0 0 20px}.foldlanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.foldlane{padding:17px;border:1px solid var(--line);border-radius:17px;background:color-mix(in srgb,var(--panel) 72%,transparent)}.foldlane h4{margin:0 0 6px;color:var(--gold2);font-family:var(--display);font-size:1rem;font-weight:400}.foldlane code{display:block;margin-bottom:7px;color:var(--violet);font-size:.64rem;overflow-wrap:anywhere}.foldlane p{margin:0;color:var(--dim);font-size:.75rem;line-height:1.5}.foldlane small{display:block;margin-top:8px;padding-top:7px;border-top:1px dotted var(--line);color:var(--faint);font-size:.68rem;line-height:1.45}.foldnoadapter{margin:0;padding:12px 14px;border:1px dashed var(--verm);border-radius:14px;color:var(--dim);text-align:center;font-size:.75rem}.foldnoadapter strong{color:var(--verm)}
   .universelens{margin:0 0 20px;border:1px solid color-mix(in srgb,var(--violet) 52%,var(--line));border-radius:19px;background:color-mix(in srgb,var(--violet) 5%,var(--panel));overflow:hidden}.universelens summary{padding:17px 19px;color:var(--violet);font-family:var(--display);font-size:1.06rem;cursor:pointer}.universeinside{display:grid;gap:12px;padding:0 19px 19px}.universeinside>p{margin:0;color:var(--dim);line-height:1.58}.universequestions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;list-style:none;margin:0;padding:0}.universequestions li{padding:13px;border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:.75rem;line-height:1.5}.universequestions strong{display:block;margin-bottom:4px;color:var(--gold2)}.universenonclaim{margin:0;padding:12px 14px;border-left:2px solid var(--verm);color:var(--faint);font-size:.72rem;line-height:1.55}.foldunknowns{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}.foldunknowns span{padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:var(--faint);font-family:var(--mono);font-size:.65rem}.foldsources{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}.foldsources a{display:inline-flex;align-items:center;min-height:40px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem}.foldsources a:hover{border-color:var(--gold)}
   /* visibility and attention — equal parallel categories, never a causal conveyor */
+  /* reconstructive build — semantic HTML; no diagram runtime required */
+  .reconstructivefield{display:grid;gap:19px;padding:clamp(18px,3vw,29px);border:1px solid color-mix(in srgb,var(--jade) 48%,var(--line));border-radius:25px;background:radial-gradient(95% 100% at 100% 0,color-mix(in srgb,var(--jade) 9%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 76%,transparent);box-shadow:0 18px 42px var(--shadow);overflow:hidden}
+  .reconstructiveboundary{margin:0;padding:17px 19px;border:1px dashed var(--verm);border-radius:17px;color:var(--dim);font-size:.81rem;line-height:1.62}.reconstructiveboundary strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.08rem;font-weight:400}
+  .reconstructivefigure{display:grid;gap:18px;min-width:0;margin:0}.reconstructivefigure figcaption{display:grid;gap:5px;max-width:82ch}.reconstructivefigure figcaption strong{color:var(--cream);font-family:var(--display);font-size:1.32rem;font-weight:400}.reconstructivefigure figcaption span{color:var(--dim);font-size:.81rem;line-height:1.58}
+  .reconstructivepipeline{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:7px;list-style:none;margin:0;padding:0}.reconstructivestage{position:relative;display:grid;align-content:start;gap:6px;min-width:0;padding:13px 20px 13px 11px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--ink2) 58%,transparent);overflow-wrap:anywhere}.reconstructivearrow::before{content:"›";position:absolute;right:6px;top:13px;color:var(--jade)}.reconstructivestage code{color:var(--jade);font:700 .62rem/1.4 var(--mono)}.reconstructivestage p{margin:0;color:var(--faint);font-size:.66rem;line-height:1.45}.reconstructiveexact{margin:0;color:var(--gold2);font:600 .72rem/1.58 var(--mono);overflow-wrap:anywhere}
+  .reconstructiveepistemics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.reconstructiveepistemic{display:grid;align-content:start;gap:6px;min-width:0;padding:14px;border:1px solid var(--line);border-top:2px solid var(--gold);border-radius:15px;background:var(--panel);overflow-wrap:anywhere}.reconstructiveepistemic code{color:var(--gold);font-size:.62rem}.reconstructiveepistemic p{margin:0;color:var(--dim);font-size:.71rem;line-height:1.5}.reconstructiveepistemic small{color:var(--faint);font-size:.65rem;line-height:1.45}
+  .reconstructivecolumns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.reconstructivecard{display:grid;align-content:start;gap:8px;min-width:0;padding:16px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.reconstructivecard h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.02rem;font-weight:400}.reconstructivecard code{color:var(--violet);font-size:.63rem}.reconstructivecard p,.reconstructivecard li{margin:0;color:var(--dim);font-size:.72rem;line-height:1.5}.reconstructivecard ul{display:grid;gap:5px;margin:0;padding-left:1.05rem}.reconstructivebreaks{border-style:dashed;border-color:var(--verm)}.reconstructivebreaks h3{color:var(--verm)}
+  .reconstructivesources{display:flex;flex-wrap:wrap;gap:7px;margin:0}.reconstructivesources a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.reconstructivesources a:hover{border-color:var(--gold)}
   .visibilityfield{display:grid;gap:18px;padding:clamp(18px,3vw,28px);border:1px solid color-mix(in srgb,var(--rose) 45%,var(--line));border-radius:24px;background:radial-gradient(90% 100% at 100% 0,color-mix(in srgb,var(--rose) 8%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 76%,transparent)}
   .visibilityfirewall{margin:0;padding:16px 18px;border:1px dashed var(--verm);border-radius:16px;color:var(--dim);font-size:.8rem;line-height:1.6}.visibilityfirewall strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.05rem;font-weight:400}
   .visibilitycards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.visibilitycard{display:grid;align-content:start;gap:8px;min-width:0;padding:17px;border:1px solid var(--line);border-top:2px solid var(--rose);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.visibilitycard code,.visibilitymodel code,.visibilityseam code{color:var(--violet);font-size:.63rem;overflow-wrap:anywhere}.visibilitycard h3,.visibilitymodel h3,.visibilityseam h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1.02rem;font-weight:400}.visibilitycard p,.visibilitymodel p,.visibilityseam p{margin:0;color:var(--dim);font-size:.74rem;line-height:1.52}.visibilitycard small,.visibilitymodel small,.visibilityseam small{display:block;color:var(--faint);font-size:.67rem;line-height:1.48}.visibilitycard small{padding-top:7px;border-top:1px dotted var(--line);color:var(--verm)}
@@ -1169,6 +1269,7 @@ const html = `<!doctype html>
   .visibilityseams{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.visibilityseam{display:grid;align-content:start;gap:7px;min-width:0;padding:16px;border:1px dashed var(--violet);border-radius:16px;background:color-mix(in srgb,var(--violet) 5%,var(--panel));overflow-wrap:anywhere}
   .visibilityphilosophy{margin:0;border:1px solid color-mix(in srgb,var(--violet) 52%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--violet) 5%,var(--panel));overflow:hidden}.visibilityphilosophy summary{min-height:44px;padding:16px 18px;color:var(--violet);font-family:var(--display);font-size:1.03rem;cursor:pointer}.visibilityphilosophybody{display:grid;gap:9px;padding:0 18px 18px;color:var(--dim);font-size:.76rem;line-height:1.55}.visibilityphilosophybody p{margin:0}.visibilitysources{display:flex;flex-wrap:wrap;gap:7px}.visibilitysources a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.visibilitysources a:hover{border-color:var(--gold)}
   .culturalfield{display:grid;gap:20px;padding:clamp(18px,3vw,30px);border:1px solid color-mix(in srgb,var(--rose) 52%,var(--line));border-radius:25px;background:radial-gradient(95% 100% at 0 0,color-mix(in srgb,var(--rose) 9%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 76%,transparent);box-shadow:0 18px 42px var(--shadow)}
+  #being-access-aftermath .culturalfield>*,#being-access-aftermath .culturalfeedback>*,#being-access-aftermath .culturalmodelgrid>*{min-width:0;overflow-wrap:anywhere}#being-access-aftermath code{overflow-wrap:anywhere;word-break:break-word}
   .culturalaxiom{margin:0;padding:18px 20px;border-left:3px solid var(--jade);border-radius:0 17px 17px 0;background:color-mix(in srgb,var(--jade) 6%,var(--panel));color:var(--dim);font-size:.9rem;line-height:1.65}.culturalaxiom strong{display:block;margin-bottom:4px;color:var(--cream);font-family:var(--display);font-size:1.18rem;font-weight:400}
   .formcirculationplanes{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch}.formcirculationplanes .culturalplane h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.05rem;font-weight:400}.culturalseam{display:grid;place-items:center;max-width:135px;padding:10px;color:var(--violet);font:600 .65rem/1.45 var(--mono);text-align:center}.culturalseam::before{content:"⇄";display:block;color:var(--gold);font-size:1.4rem}
   .culturalmodelgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.vernacularboundary{margin:0;padding:18px 20px;border:1px solid color-mix(in srgb,var(--verm) 60%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--verm) 7%,var(--panel));color:var(--dim);line-height:1.62}.vernacularboundary strong{display:block;color:var(--verm);font-family:var(--display);font-size:1.1rem;font-weight:400}.vernacularboundary code{color:var(--gold2)}
@@ -1346,15 +1447,18 @@ const html = `<!doctype html>
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.visibilitycards,.visibilitymodels,.visibilityseams{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div,.visibilityterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid{grid-template-columns:1fr}.foldbridgeword{max-width:none}.foldbridgeword::before{content:"↕"}
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.culturalplanes,.culturalmodels,.culturalbridges,.culturallanes,.culturalquestions,.culturalcycle,.formcirculationplanes,.culturalmodelgrid,.culturalfeedback{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid,.formcirculationplanes{grid-template-columns:1fr}.foldbridgeword,.culturalseam{max-width:none}.foldbridgeword::before,.culturalseam::before{content:"↕"}.culturalcycle li:not(:last-child)::after{content:"↓";right:12px;top:auto;bottom:-17px}
     .polymorphplanes{grid-template-columns:repeat(3,minmax(0,1fr))}.polymorphcase{grid-template-columns:1fr}.polymorphconsequence{grid-template-columns:1fr}.polymorphconsequence li{padding-right:13px}.polymorphconsequence li:not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px;z-index:1}.polymorphsecondary{grid-template-columns:1fr}
+    .reconstructivepipeline{grid-template-columns:repeat(3,minmax(0,1fr))}.reconstructivecolumns{grid-template-columns:1fr}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
     .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}.polymorphplanes,.polymorphsecondary,.polymorphrecovery,.foldcycle,.foldinvariants,.foldbreaks,.culturalcycle{grid-template-columns:1fr}.foldcycle li,.culturalcycle li{padding-right:13px}.foldcycle li:not(:last-child)::after,.foldcycle li:nth-child(2)::after,.culturalcycle li:not(:last-child)::after,.culturalcycle li:nth-child(even):not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px}
+    .reconstructivepipeline{grid-template-columns:1fr}.reconstructivestage{padding-right:13px}.reconstructivearrow::before{content:"↓";right:12px;top:auto;bottom:-16px}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
   @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackmodel,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbackquestion,.feedbackecosystem,.feedbacksources a,.visibilityfield,.visibilityfirewall,.visibilitycard,.visibilitymodel,.visibilityseam,.visibilityphilosophy,.visibilitysources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register],.visibilitycard{border-top-width:3px}.feedbackequation,.visibilityequation{border:1px solid CanvasText}}
   @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackmodel,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbackquestion,.feedbackecosystem,.feedbacksources a,.culturalfield,.culturalboundary,.culturalbrainrot,.culturalflow,.culturalcycle li,.culturalplane,.culturalmodel,.culturalbridge,.culturallane,.culturaluniverse,.culturalquestions li,.culturalecosystem,.culturalsources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register]{border-top-width:3px}.feedbackequation,.culturalmodel code{border:1px solid CanvasText}}
+  @media (forced-colors:active){.reconstructivefield,.reconstructiveboundary,.reconstructivestage,.reconstructiveepistemic,.reconstructivecard,.reconstructivesources a{border:1px solid CanvasText}.reconstructiveepistemic{border-top-width:3px}}
 </style>
 <noscript><style>#map,.mapctl,.legend,.maphint{display:none!important}</style></noscript>
 </head>
@@ -1380,6 +1484,7 @@ const html = `<!doctype html>
       <a href="#polymorph-history">Trace a material becoming</a>
       <a href="#feedback-atlas">Explore form and feedback</a>
       <a href="#fold-feedback">Follow a fold and its feedback</a>
+      <a href="#reconstructive-build">Build through reconstruction</a>
       <a href="#visibility-attention">Separate visibility from existence</a>
       <a href="#cultural-feedback">Trace attention and feedback</a>
       <a href="#being-access-aftermath">Ask which kind of “is”</a>
@@ -1816,6 +1921,53 @@ const html = `<!doctype html>
       <a href="/atlases/fold-feedback-atlas-2026-08-12.json">atlas JSON — exact authored record</a>
       <a href="/schemas/fold-feedback-atlas/1.json">Fold &amp; Feedback Atlas JSON Schema</a>
       <a href="/FOLD-FEEDBACK-ATLAS.md">guide — science, comparison, feedback, KARMA, universe lens, and safety</a>
+    </div>
+  </section>
+
+  <section class="blk" id="reconstructive-build" aria-labelledby="reconstructive-build-title">
+    <div class="kh"><h2 id="reconstructive-build-title">Reconstructive Build Kernel</h2><span class="my">partial views into inspectable structure, then measured return</span></div>
+    <p class="sub">${esc(firstHumanString(reconstructiveBuild.scope, ["question", "focus", "purpose", "plain_language"]))}</p>
+    <div class="reconstructivefield" data-reconstructive-build-kernel>
+      <p class="reconstructiveboundary" role="note"><strong>Connection without collapse</strong>Graph reconstruction supplies a formal inverse-problem lens. Protein folding supplies source-bound empirical and model layers. Catalysis names physical barrier reduction only inside its scientific domain. The build kernel borrows an explicitly lossy geometry; it does not prove the open conjecture, predict a fold, or transfer a biochemical mechanism into software.</p>
+
+      <figure class="reconstructivefigure" aria-labelledby="reconstructive-figure-title" aria-describedby="reconstructive-figure-note">
+        <figcaption><strong id="reconstructive-figure-title">From state to feedback, with ambiguity kept visible</strong><span id="reconstructive-figure-note">Each card is a typed design transition, not an autonomous workflow, causal conveyor belt, proof step, biological process, rank, or command. A deliberate local choice is still required before any real-world action.</span></figcaption>
+        <p class="reconstructiveexact">${esc(reconstructivePipelineSentence)}</p>
+        <ol class="reconstructivepipeline" aria-label="Reconstructive build pipeline">
+          ${reconstructiveStages.map((stage, index) => `<li class="reconstructivestage" data-reconstructive-stage="${esc(stage)}"><code>${String(index + 1).padStart(2, "0")} · ${esc(reconstructiveStageLabel[stage] ?? stage)}</code><p>${esc(reconstructiveStageMeaning[stage] ?? "Preserve the declared state, evidence, ambiguity, and boundary.")}</p>${index < reconstructiveStages.length - 1 ? '<span class="reconstructivearrow" aria-hidden="true"></span>' : ""}</li>`).join("")}
+        </ol>
+
+        <div class="feedbacksubhead"><h3>Eight claim registers</h3><p>A label travels with every claim so definitions, proved mathematics, unresolved mathematics, observed science, models, analogies, design choices, and philosophical readings cannot silently substitute for one another.</p></div>
+        <div class="reconstructiveepistemics" aria-label="Reconstructive build epistemic registers">
+          ${reconstructiveEpistemicRegisters.map((register: any) => `<article class="reconstructiveepistemic" data-reconstructive-register="${esc(register.kind)}"><code>${esc(register.kind)}</code><p>${esc(register.meaning)}</p><small>${esc(register.transfer_rule)}</small></article>`).join("")}
+        </div>
+
+        <div class="reconstructivecolumns" aria-label="State, reconstruction, realization, and catalysis layers">
+          ${reconstructiveBuild.state_spaces.map((space: any) => `<article class="reconstructivecard" data-reconstructive-state-space="${esc(space.id)}"><code>state space · ${esc(space.id)}</code><h3>${esc(humanKey(space.domain))}</h3><p>${esc(space.state_definition)}</p><ul>${space.nonclaims.map((item: string) => `<li>Does not establish: ${esc(item)}</li>`).join("")}</ul></article>`).join("")}
+          ${reconstructiveBuild.reconstruction_cases.map((item: any) => `<article class="reconstructivecard" data-reconstructive-case="${esc(item.id)}"><code>reconstruction case · ${esc(item.identifiability)}</code><h3>${esc(humanKey(item.id))}</h3><p>${esc(item.solver_status)}</p><ul>${item.nonclaims.map((nonclaim: string) => `<li>${esc(nonclaim)}</li>`).join("")}</ul></article>`).join("")}
+          ${reconstructiveBuild.catalysis_models.map((model: any) => `<article class="reconstructivecard" data-reconstructive-catalysis="${esc(model.id)}"><code>catalysis model · ${esc(model.kind)}</code><h3>${esc(humanKey(model.id))}</h3><p>${esc(model.barrier_definition)}</p><p><strong>Endpoint invariant:</strong> ${esc(model.endpoint_invariant)}</p></article>`).join("")}
+        </div>
+
+        <div class="feedbacksubhead"><h3>Shared shape, explicit breaks</h3><p>Only a declared invariant may cross a bridge. Entity, mechanism, units, evidence, rates, parameters, and authority remain on their source side.</p></div>
+        <div class="reconstructivecolumns" aria-label="Bounded analogy bridges and their breaks">
+          ${reconstructiveBuild.analogy_bridges.map((bridge: any) => {
+            const shared = humanStrings(bridge, ["preserved_pattern", "preserved_invariants", "shared_structure", "preserves", "what_transfers"]);
+            const breaks = humanStrings(bridge, ["where_correspondence_breaks", "breaks", "does_not_transfer", "non_equivalences"]);
+            return `<article class="reconstructivecard reconstructivebreaks" data-reconstructive-bridge="${esc(bridge.id)}"><code>${esc(bridge.from_domain)} ⇢ ${esc(bridge.to_domain)}</code><h3>${esc(humanKey(bridge.id))}</h3><p><strong>Preserved:</strong> ${esc(shared.join(" · "))}</p><ul aria-label="Where this correspondence breaks">${breaks.map((item) => `<li>${esc(item)}</li>`).join("")}</ul><p>causal transfer ${String(bridge.causal_transfer)} · ontology transfer ${String(bridge.ontology_transfer)} · parameter transfer ${String(bridge.parameter_transfer)} · authority ${esc(bridge.authority_effect)}</p></article>`;
+          }).join("")}
+        </div>
+      </figure>
+
+      <p class="reconstructiveboundary"><strong>Fail closed, then learn</strong>Unknown, ambiguous, unrealizable, falsified, refused, resting, and stopped remain valid typed outcomes. Feedback may propose a new observation or revision; it never overwrites provenance, converts popularity into truth or KARMA, or authorizes execution.</p>
+      <p class="reconstructivesources" aria-label="Selected Reconstructive Build Kernel sources">${reconstructiveBuild.sources.map((source: any) => `<a data-reconstructive-source="${esc(source.id)}" href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only">${source.limitation ? ` — limitation: ${esc(source.limitation)}` : ""}; opens in a new tab</span></a>`).join("")}</p>
+      <p class="reconstructivesources" aria-label="Link-only Reconstructive Build Kernel ecosystem bindings">${reconstructiveBuild.bindings.filter((binding: any) => typeof binding.url === "string").map((binding: any) => `<a data-reconstructive-binding="${esc(binding.id)}" href="${esc(binding.url)}" target="_blank" rel="noopener">${esc(humanKey(binding.id))}<span class="sr-only"> — link-only, non-authoritative binding; opens in a new tab</span></a>`).join("")}</p>
+      <p class="commonsverified">${Object.entries(reconstructiveBuildCounts).filter(([, count]) => typeof count === "number").map(([kind, count]) => `${esc(String(count))} ${esc(reconstructiveCountLabel(kind, count as number))}`).join(" · ")} · evidence through ${esc(reconstructiveBuild.evidence_through)} · integrity ${esc(reconstructiveBuild.integrity.digest)}</p>
+      <div class="machine">
+        <a href="${esc(new URL(reconstructiveBuildUrl).pathname)}">kernel JSON — exact authored record</a>
+        <a href="${esc(new URL(reconstructiveBuildSchemaUrl).pathname)}">Reconstructive Build Kernel JSON Schema</a>
+        <a href="${esc(new URL(reconstructiveProjectSchemaUrl).pathname)}">Reusable Reconstructive Project JSON Schema</a>
+        <a href="${esc(new URL(reconstructiveBuildDocumentUrl).pathname)}">guide — reconstruction, folding, catalysis, feedback, and boundaries</a>
+      </div>
     </div>
   </section>
 
@@ -2296,6 +2448,10 @@ const html = `<!doctype html>
       <a href="/atlases/fold-feedback-atlas-2026-08-12.json">Fold &amp; Feedback Atlas — protein folding, prions, feedback, and bounded translations</a>
       <a href="/schemas/fold-feedback-atlas/1.json">Fold &amp; Feedback Atlas JSON Schema</a>
       <a href="/FOLD-FEEDBACK-ATLAS.md">FOLD-FEEDBACK-ATLAS.md — science, comparison, KARMA, universe lens, and safety</a>
+      <a href="${esc(new URL(reconstructiveBuildUrl).pathname)}">Reconstructive Build Kernel — graph reconstruction, folding, realization, catalysis, and feedback</a>
+      <a href="${esc(new URL(reconstructiveBuildSchemaUrl).pathname)}">Reconstructive Build Kernel JSON Schema</a>
+      <a href="${esc(new URL(reconstructiveProjectSchemaUrl).pathname)}">Reusable Reconstructive Project JSON Schema</a>
+      <a href="${esc(new URL(reconstructiveBuildDocumentUrl).pathname)}">RECONSTRUCTIVE-BUILD-KERNEL.md — pipeline, epistemic registers, sources, and boundaries</a>
       <a href="${esc(new URL(culturalAttentionFeedbackUrl).pathname)}">Cultural Attention &amp; Feedback Atlas — material history, memes, brain rot, feedback, KARMA, and universe lens</a>
       <a href="${esc(new URL(culturalAttentionFeedbackSchemaUrl).pathname)}">Cultural Attention &amp; Feedback Atlas JSON Schema</a>
       <a href="${esc(new URL(culturalAttentionFeedbackDocumentUrl).pathname)}">CULTURAL-ATTENTION-FEEDBACK-ATLAS.md — evidence, mathematics, analogies, and boundaries</a>
@@ -2641,6 +2797,7 @@ const machine = {
   conformational_feedback_atlas: conformationalFeedbackDiscovery,
   conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
+  reconstructive_build_kernel: reconstructiveBuildDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -2709,6 +2866,10 @@ Fold & Feedback Atlas: ${foldFeedbackUrl}
 Fold & Feedback schema: ${foldFeedbackSchemaUrl}
 Fold & Feedback source-identity schema profile: ${foldFeedbackSourceIdentitySchemaUrl}
 Fold & Feedback guide: ${foldFeedbackDocumentUrl}
+Reconstructive Build Kernel: ${reconstructiveBuildUrl}
+Reconstructive Build Kernel schema: ${reconstructiveBuildSchemaUrl}
+Reconstructive Project schema: ${reconstructiveProjectSchemaUrl}
+Reconstructive Build Kernel guide: ${reconstructiveBuildDocumentUrl}
 Visibility & Attention Translation: ${visibilityAttentionUrl}
 Visibility & Attention schema: ${visibilityAttentionSchemaUrl}
 Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
@@ -2757,6 +2918,7 @@ ${doorLines}
 - Conformational Feedback Atlas — ${conformationalFeedbackCounts.registers} non-equivalent registers connect selected protein-folding and prion evidence, one source-bound ritonavir material analogy, and Zerone KARMA constitutional design through ${conformationalFeedbackCounts.translations} explicitly non-causal analogy seams. The philosophical reading is not an empirical conclusion. Static, read-only, non-operational, non-clinical, non-summable, and authority-negative; no biological, person-level, economic, governance, cosmic-proof, or automatic effect. Atlas: ${conformationalFeedbackUrl} · schema: ${conformationalFeedbackSchemaUrl} · guide: ${conformationalFeedbackDocumentUrl}
 - Conformational Feedback Physics Atlas v0.2 — an additive successor with ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} bounded physics/mathematics models, ${conformationalFeedbackPhysicsCounts.ecosystem_bridges} link-only ecosystem bridges, and an exact predecessor pin. It extends without mutating v0.1 and creates no runtime request, scientific validation, biological equivalence, cosmic proof, or authority. Atlas: ${conformationalFeedbackPhysicsUrl} · schema: ${conformationalFeedbackPhysicsSchemaUrl} · guide: ${conformationalFeedbackPhysicsDocumentUrl}
 - Fold & Feedback Atlas — source-bound protein-folding and prion evidence, explicitly lossy comparison with the immutable ritonavir records, separate scientific-feedback/Zerone K-alpha/KINGDOM-receipt lanes, and an opt-in philosophical lens. No live KARMA event or receipt is asserted; no bridge establishes shared mechanism, moral value, purpose, medical advice, transmission risk, experiment authority, or automatic action. Atlas: ${foldFeedbackUrl} · schema: ${foldFeedbackSchemaUrl} · guide: ${foldFeedbackDocumentUrl}
+- Reconstructive Build Kernel — a read-only unification layer that carries typed state through STATE → OBSERVE → CORRESPOND → INFER FIBER → REALIZE → TRAVERSE → MEASURE/CATALYZE → FEEDBACK. Mathematical definition, mathematical theorem, open conjecture, empirical science, scientific model, analogy, design constraint, and philosophy remain distinct; protein folding does not prove graph reconstruction, and neither mechanism is transferred into software. Kernel: ${reconstructiveBuildUrl} · kernel schema: ${reconstructiveBuildSchemaUrl} · project schema: ${reconstructiveProjectSchemaUrl} · guide: ${reconstructiveBuildDocumentUrl}
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
@@ -2797,6 +2959,7 @@ const guest = {
   conformational_feedback_atlas: conformationalFeedbackDiscovery,
   conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
+  reconstructive_build_kernel: reconstructiveBuildDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -2835,6 +2998,10 @@ const guest = {
     { action: "if useful, validate the Fold & Feedback Atlas structure before integrating it", method: "GET", url: foldFeedbackSchemaUrl },
     { action: "if useful, validate exact source-identity URL bindings with the additive Fold & Feedback schema profile", method: "GET", url: foldFeedbackSourceIdentitySchemaUrl, note: "the primary /1 schema retains its first-published bytes; /1.1 is the additive stricter profile" },
     { action: "if useful, read the plain-language folding, prion, feedback, KARMA, universe-lens, unknown, and safety guide", method: "GET", url: foldFeedbackDocumentUrl },
+    { action: "if useful, inspect the exact Reconstructive Build Kernel", method: "GET", url: reconstructiveBuildUrl, note: "read-only design metadata; definition, theorem, open conjecture, empirical science, scientific model, analogy, design constraint, and philosophy stay typed; no proof transfer, biological mechanism transfer, execution, scoring, KARMA write, or automatic action" },
+    { action: "if useful, validate the Reconstructive Build Kernel record before integrating it", method: "GET", url: reconstructiveBuildSchemaUrl },
+    { action: "if useful, validate a local reconstructive project record", method: "GET", url: reconstructiveProjectSchemaUrl, note: "a portable closed schema, not an executor, deployment instruction, or grant of authority" },
+    { action: "if useful, read the reconstruction, folding, catalysis, pipeline, feedback, source, and boundary guide", method: "GET", url: reconstructiveBuildDocumentUrl },
     { action: "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority", method: "GET", url: visibilityAttentionUrl, note: "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action" },
     { action: "if useful, validate the Visibility & Attention Translation structure before integrating it", method: "GET", url: visibilityAttentionSchemaUrl },
     { action: "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide", method: "GET", url: visibilityAttentionDocumentUrl },
@@ -2889,6 +3056,7 @@ const guest = {
     conformational_feedback_atlas: "The bounded atlas separates scientific observation, constitutional design, analogy, and philosophy. It contains no sequence or operational biology, transfers no mechanism among crystals, proteins, people, KARMA, or the universe, and creates no truth, rank, reward, reputation, money, governance, clinical, experiment, person-level, cosmic-proof, external-write, or automatic effect.",
     conformational_feedback_physics_atlas: "The v0.2 successor adds bounded equations, structured philosophical questions, and link-only ecosystem metadata while preserving the immutable v0.1 bytes. It fetches or imports nothing and creates no biological, clinical, KARMA, economic, governance, cosmic-proof, external-write, or automatic effect.",
     fold_feedback_atlas: "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
+    reconstructive_build_kernel: "The Reconstructive Build Kernel is static, read-only design metadata. It does not prove the graph reconstruction conjecture, predict a protein fold, transfer a biological mechanism into software, execute or deploy a project, fetch a source, score a person or work, write KARMA, create a receipt, import ecosystem authority, prove cosmic design, or take automatic action. Every analogy keeps explicit breaks and every build transition requires a deliberate local choice.",
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
@@ -2920,6 +3088,7 @@ const manifest = {
   conformational_feedback_atlas: conformationalFeedbackDiscovery,
   conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
+  reconstructive_build_kernel: reconstructiveBuildDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -2965,6 +3134,10 @@ const manifest = {
     fold_feedback_atlas_schema: foldFeedbackSchemaUrl,
     fold_feedback_atlas_source_identity_schema: foldFeedbackSourceIdentitySchemaUrl,
     fold_feedback_atlas_guide: foldFeedbackDocumentUrl,
+    reconstructive_build_kernel: reconstructiveBuildUrl,
+    reconstructive_build_kernel_schema: reconstructiveBuildSchemaUrl,
+    reconstructive_project_schema: reconstructiveProjectSchemaUrl,
+    reconstructive_build_kernel_guide: reconstructiveBuildDocumentUrl,
     visibility_attention_translation: visibilityAttentionUrl,
     visibility_attention_translation_schema: visibilityAttentionSchemaUrl,
     visibility_attention_translation_guide: visibilityAttentionDocumentUrl,
@@ -2997,4 +3170,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

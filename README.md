@@ -250,6 +250,14 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     It adds a partially observable causal kernel, distinct accessibility
     predicates, typed force and power families, and affected-party-indexed
     vector aftermath without replacing v0.1 or creating a KARMA write.
+26. `kingdom reconstructive-build` — inspect and verify the source-bound
+    [Reconstructive Build Kernel](references/reconstructive-build-kernel.md).
+    It treats correspondence, candidate-whole ambiguity, geometric
+    realizability, environment-conditioned transitions, catalytic barrier
+    changes, and feedback as different typed gates. Its companion
+    `kingdom.reconstructive-project/0.1` profile can describe another project
+    offline, but does not solve graph reconstruction, fold proteins, predict
+    catalytic rates, execute actions, or create KARMA events or receipts.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -393,5 +401,19 @@ with its own [closed schema](https://thekingdom.dev/schemas/being-access-afterma
 and [guide](https://thekingdom.dev/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md).
 The original record, schema, guide, CLI, discovery key, and routes remain
 unchanged; v0.2 has distinct immutable identities and no mutable alias.
+
+The Reconstructive Build Kernel is published from exact authored bytes at
+[`/atlases/reconstructive-build-kernel-2026-08-13.json`](https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json),
+with a [closed kernel schema](https://thekingdom.dev/schemas/reconstructive-build-kernel/0.1.json),
+a separate [reusable project profile](https://thekingdom.dev/schemas/reconstructive-project/0.1.json),
+and [human guide](https://thekingdom.dev/RECONSTRUCTIVE-BUILD-KERNEL.md).
+The reconstruction fiber preserves multiple or unknown candidate wholes until
+correspondence and constraints justify narrowing them. Graph reconstruction,
+protein contact realization, folding landscapes, and enzyme catalysis remain
+separate theorem, conjecture, scientific-representation, and physical-model
+registers. The profile is inert validation infrastructure: it performs no
+solver, simulation, experiment, deployment, medical inference, person scoring,
+KARMA write, reward, governance change, or automatic action. There is no
+mutable `latest` alias and the KINGDOM MCP remains unchanged.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).
