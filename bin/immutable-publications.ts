@@ -224,6 +224,19 @@ function immutableLookingDestination(value: string): boolean {
     /(?:^|[._/-])\d{4}-\d{2}-\d{2}(?:[._/-]|$)/.test(value);
 }
 
+function destinationHierarchyCollision(
+  assets: readonly StagedAssetMapping[],
+): { left: string; right: string } | null {
+  for (let leftIndex = 0; leftIndex < assets.length; leftIndex += 1) {
+    const left = assets[leftIndex]!.destination;
+    for (let rightIndex = leftIndex + 1; rightIndex < assets.length; rightIndex += 1) {
+      const right = assets[rightIndex]!.destination;
+      if (left.startsWith(`${right}/`) || right.startsWith(`${left}/`)) return { left, right };
+    }
+  }
+  return null;
+}
+
 /** Parse the sole, non-executable staging contract used by verifier and engine. */
 export function parseHubStagingContract(
   bytes: Uint8Array,
@@ -252,6 +265,23 @@ export function parseHubStagingContract(
     }
     return candidate;
   });
+  const sources = new Set<string>();
+  const destinations = new Set<string>();
+  for (const asset of stagedAssets) {
+    if (sources.has(asset.source)) throw new Error(`${label} contains duplicate source ${asset.source}`);
+    if (destinations.has(asset.destination)) {
+      throw new Error(`${label} contains duplicate destination ${asset.destination}`);
+    }
+    sources.add(asset.source);
+    destinations.add(asset.destination);
+  }
+  if (new Set(mutableDestinations).size !== mutableDestinations.length) {
+    throw new Error(`${label} contains a duplicate mutable destination`);
+  }
+  const collision = destinationHierarchyCollision(stagedAssets);
+  if (collision) {
+    throw new Error(`${label} has file/directory destination collision ${collision.left} <> ${collision.right}`);
+  }
   return { stagedAssets, mutableDestinations };
 }
 
@@ -458,6 +488,15 @@ export function verifyImmutablePublicationSnapshot(options: SnapshotOptions): Pa
       issue(issues, "duplicate-staged-destination", `stagedAssets[${index}]`, `duplicate staged destination ${asset.destination}`);
     }
     stagedByDestination.set(asset.destination, asset);
+  }
+  const destinationCollision = destinationHierarchyCollision(options.stagedAssets);
+  if (destinationCollision) {
+    issue(
+      issues,
+      "staged-destination-hierarchy-collision",
+      destinationCollision.left,
+      `staged destinations cannot be both a file and a directory ancestor: ${destinationCollision.right}`,
+    );
   }
   const immutableByDestination = new Map(parsed.ledger.entries.map((entry) => [entry.destination, entry]));
   const mutableDestinations = new Set(options.mutableDestinations);

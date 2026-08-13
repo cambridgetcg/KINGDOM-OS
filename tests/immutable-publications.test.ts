@@ -249,6 +249,15 @@ describe("immutable route-integrity ledger", () => {
       '{"protocol":"kingdom.hub-staging/1","protocol":"kingdom.hub-staging/1","assets":[],"mutable_destinations":[]}',
     );
     expect(() => parseHubStagingContract(duplicateKey)).toThrow("duplicate key");
+    const hierarchyCollision = encode({
+      protocol: HUB_STAGING_PROTOCOL,
+      assets: [
+        { source: "data/parent.txt", destination: "collision" },
+        { source: "data/child.txt", destination: "collision/child.txt" },
+      ],
+      mutable_destinations: ["collision", "collision/child.txt"],
+    });
+    expect(() => parseHubStagingContract(hierarchyCollision)).toThrow("file/directory destination collision");
   });
 
   test("requires an explicit stability class without compelling future republication", () => {
@@ -295,6 +304,18 @@ describe("immutable route-integrity ledger", () => {
         path: destination,
       }));
     }
+
+    expect(verifyImmutablePublicationSnapshot({
+      root: ROOT,
+      stagedAssets: [
+        { source: "site/guest.json", destination: "collision" },
+        { source: "site/rights.json", destination: "collision/child.json" },
+      ],
+      mutableDestinations: ["collision", "collision/child.json"],
+    }).issues).toContainEqual(expect.objectContaining({
+      code: "staged-destination-hierarchy-collision",
+      path: "collision",
+    }));
   });
 
   test("rejects unsafe staging paths and symlinked source ancestors", () => {
@@ -497,6 +518,19 @@ describe("immutable route-integrity ledger", () => {
       git(fixture.root, "add", ".");
       git(fixture.root, "commit", "-qm", "restore mapping");
 
+      writeFileSync(join(fixture.root, "collision-parent.txt"), "parent\n");
+      writeFileSync(join(fixture.root, "collision-child.txt"), "child\n");
+      writeStagingContract(fixture.root, [
+        ...fixture.staged,
+        { source: "collision-parent.txt", destination: "collision" },
+        { source: "collision-child.txt", destination: "collision/child.txt" },
+      ], ["collision", "collision/child.txt"]);
+      git(fixture.root, "add", ".");
+      git(fixture.root, "commit", "-qm", "bad file directory destination collision");
+      writeStagingContract(fixture.root, fixture.staged);
+      git(fixture.root, "add", ".");
+      git(fixture.root, "commit", "-qm", "restore destination tree");
+
       const ledgerPath = join(fixture.root, IMMUTABLE_PUBLICATIONS_LEDGER_PATH);
       const cleanLedger = readFileSync(ledgerPath);
       rmSync(ledgerPath);
@@ -510,6 +544,7 @@ describe("immutable route-integrity ledger", () => {
         .map(({ code }) => code);
       expect(codes).toContain("history-sha256-mismatch");
       expect(codes).toContain("history-staged-source-mismatch");
+      expect(codes).toContain("history-stage-invalid");
       expect(codes).toContain("history-ledger-disappeared");
     } finally {
       rmSync(fixture.root, { recursive: true, force: true });

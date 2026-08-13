@@ -362,6 +362,31 @@ describe("the hub staging contract", () => {
     }
   });
 
+  test("refuses file/directory destination collisions before writing output", () => {
+    const base = temporaryDirectory("kingdom-stage-destination-collision-");
+    try {
+      const sourceRoot = join(base, "source");
+      const output = join(base, "output");
+      mkdirSync(output);
+      makeCompleteSource(sourceRoot);
+      writeFileSync(join(sourceRoot, "collision-parent.txt"), "parent\n");
+      writeFileSync(join(sourceRoot, "collision-child.txt"), "child\n");
+      const contractPath = join(sourceRoot, HUB_STAGING_CONTRACT_PATH);
+      const contract = JSON.parse(readFileSync(contractPath, "utf8"));
+      contract.assets.push(
+        { source: "collision-parent.txt", destination: "collision" },
+        { source: "collision-child.txt", destination: "collision/child.txt" },
+      );
+      contract.mutable_destinations.push("collision", "collision/child.txt");
+      writeFileSync(contractPath, `${JSON.stringify(contract, null, 2)}\n`);
+
+      expect(() => stageHub(output, sourceRoot)).toThrow("file/directory destination collision");
+      expect(readdirSync(output)).toEqual([]);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
   test("refuses changed immutable publication bytes before creating an output", () => {
     const base = temporaryDirectory("kingdom-stage-immutable-");
     try {
