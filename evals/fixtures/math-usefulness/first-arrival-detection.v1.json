@@ -1,0 +1,49 @@
+{
+  "$schema": "urn:kingdom:schema:math-usefulness-source-extract:1",
+  "fixture_id": "yerdelen-easymax-85-rc-315-2023",
+  "kind": "published-raw-row-extract",
+  "title": "Detected crystallization induction times for one preselected configuration",
+  "source": {
+    "citation": "C. Yerdelen et al., Machine Learning Derived Correlations for Scale-up and Technology Transfer of Primary Nucleation Kinetics, Crystal Growth & Design 23 (2023) 1252-1263",
+    "dataset_doi": "https://doi.org/10.15129/5a7908ad-2cdf-492f-a3bf-d1e96c8d80d6",
+    "article_doi": "https://doi.org/10.1021/acs.cgd.2c00192",
+    "license": "CC BY 4.0",
+    "retrieved_on": "2026-08-14",
+    "workbook_sha256": "0405f592a8cbb9f6d85b41db663c11d99699d795cd58aff3c194c01e2639b075",
+    "sheet": "induction times and parameters"
+  },
+  "preselection": {
+    "rule": "configuration with the largest released replicate count",
+    "vessel": "EasyMax",
+    "volume_ml": 85,
+    "impeller": "RC",
+    "rpm": 315,
+    "released_training_split": true,
+    "observations": 14
+  },
+  "detected_induction_times_seconds": [
+    13600,
+    15910,
+    15998,
+    16594,
+    17082,
+    17310,
+    17338,
+    17358,
+    18072,
+    19410,
+    19740,
+    20294,
+    20448,
+    20668
+  ],
+  "interpretation_boundary": {
+    "observed_unit": "time until an FBRM detection threshold was reached",
+    "direct_microscopic_nucleation_time": false,
+    "event_status_column_released": false,
+    "administrative_horizon_released": false,
+    "trailing_workbook_blanks_are_censoring": false,
+    "operational_recipe": false
+  },
+  "derivation": "One workbook row was selected by the preregistered replicate-count rule; supplied J, growth-lag, and RMSE columns were excluded rather than treated as ground truth."
+}

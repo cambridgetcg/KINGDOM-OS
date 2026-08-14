@@ -1,0 +1,36 @@
+{
+  "$schema": "urn:kingdom:schema:math-usefulness-source-extract:1",
+  "fixture_id": "piracetam-isopropanol-winners-2022-table-1",
+  "kind": "published-aggregate-table-extract",
+  "title": "Piracetam polymorph outcomes in isopropanol",
+  "source": {
+    "citation": "A. D. Rodrigues Horn et al., Characterization and Crystal Nucleation Kinetics of a New Metastable Polymorph of Piracetam in Alcoholic Solvents, Crystal Growth & Design 22 (2022) 2334-2344",
+    "doi": "https://doi.org/10.1021/acs.cgd.1c01421",
+    "pmcid": "PMC9073936",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9073936/",
+    "biostudies_url": "https://www.ebi.ac.uk/biostudies/studies/S-EPMC9073936",
+    "license": "CC BY 4.0",
+    "table": "Table 1"
+  },
+  "conditions": [
+    { "solvent": "isopropanol", "delta_mu_kj_per_mol": 1.50, "vials": 80, "form_vi": 75, "form_ii": 5, "form_iii": 0 },
+    { "solvent": "isopropanol", "delta_mu_kj_per_mol": 1.67, "vials": 80, "form_vi": 74, "form_ii": 6, "form_iii": 0 },
+    { "solvent": "isopropanol", "delta_mu_kj_per_mol": 1.73, "vials": 80, "form_vi": 74, "form_ii": 6, "form_iii": 0 },
+    { "solvent": "isopropanol", "delta_mu_kj_per_mol": 1.84, "vials": 80, "form_vi": 72, "form_ii": 8, "form_iii": 0 },
+    { "solvent": "isopropanol", "delta_mu_kj_per_mol": 1.96, "vials": 80, "form_vi": 71, "form_ii": 9, "form_iii": 0 },
+    { "solvent": "isopropanol", "delta_mu_kj_per_mol": 2.07, "vials": 80, "form_vi": 70, "form_ii": 10, "form_iii": 0 }
+  ],
+  "interpretation_boundary": {
+    "observed_unit": "first classified polymorph outcome per vial",
+    "zero_means": "zero Form III winners among 80 vials at each listed condition",
+    "zero_does_not_mean": [
+      "zero microscopic Form III nucleation events",
+      "zero Form III nucleation rate",
+      "literal extinction",
+      "identified physical mechanism"
+    ],
+    "pooling_requires": "an explicit model for heterogeneity across delta_mu conditions",
+    "operational_recipe": false
+  },
+  "derivation": "Values transcribed from the cited article's Table 1; labels normalized to JSON field names; no values inferred from a plot."
+}

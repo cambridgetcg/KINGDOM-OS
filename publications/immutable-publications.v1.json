@@ -193,6 +193,27 @@
       "sha256": "56f2bc15f68acc4dabde6ea4ff1ab406e3c7c51fe89a0ca6cd4f305c205541fc"
     },
     {
+      "id": "math-usefulness-result/1/guide",
+      "route": "/MATH-USEFULNESS.md",
+      "source": "references/math-passport-usefulness-pilot.md",
+      "destination": "MATH-USEFULNESS.md",
+      "sha256": "a43dff536e7be9df3ef041f467a9a09af0a295fc2450afa738eb05b6f32ae57a"
+    },
+    {
+      "id": "math-usefulness-result/1/record",
+      "route": "/trials/math-passport-usefulness-pilot-2026-08-14.json",
+      "source": "data/trials/math-passport-usefulness-pilot.v1.json",
+      "destination": "trials/math-passport-usefulness-pilot-2026-08-14.json",
+      "sha256": "93809f6c29a81ae0549138bf70d02ada96b55ca8004819ff8466937d77d6cced"
+    },
+    {
+      "id": "math-usefulness-result/1/schema",
+      "route": "/schemas/math-usefulness-result/1.json",
+      "source": "schemas/math-usefulness-trial-v1.schema.json",
+      "destination": "schemas/math-usefulness-result/1.json",
+      "sha256": "47147ed4d4a1bf77681c5e05555ae924e709b21fc1195c6aa0242c9365be8feb"
+    },
+    {
       "id": "polymorph-history/1/guide",
       "route": "/RITONAVIR-POLYMORPH.md",
       "source": "references/ritonavir-polymorph.md",

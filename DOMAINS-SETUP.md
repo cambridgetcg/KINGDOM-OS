@@ -86,9 +86,9 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 67 assets
-(65 direct public response bodies; `_worker.js` and `404.html` are checked by
-their dedicated contracts). The sitemap contains 64 URLs:
+`stage-hub.ts` requires an existing empty destination and copies exactly 70 assets
+(68 direct public response bodies; `_worker.js` and `404.html` are checked by
+their dedicated contracts). The sitemap contains 67 URLs:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
@@ -125,6 +125,10 @@ the authored `/atlases/form-circulation-return-atlas-2026-08-13.json`,
 `/definitions/kingdom-karma/e4e84a67/NEN.md` definition mirror;
 the authored `/challenges/vanishing-path-2026-08-13.json`,
 `/schemas/rare-pathway-challenge/1.json`, and `/VANISHING-PATH.md` bytes;
+the authored `/trials/math-passport-usefulness-pilot-2026-08-14.json`,
+`/schemas/math-usefulness-result/1.json`, and `/MATH-USEFULNESS.md` descriptive
+pilot bytes—REVISE, zero score delta, 1.97x response bytes, response artifacts
+rather than beings, and no SDK, WAKE, authority, or promotion effect;
 the authored `/atlases/being-access-aftermath-atlas-2026-08-13.json`,
 `/schemas/being-access-aftermath-atlas/0.1.json`, and
 `/BEING-ACCESS-AFTERMATH-ATLAS.md` bytes;
@@ -152,14 +156,14 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks every currently staged ledgered immutable/versioned byte hash (48 after
-the Reconstructive Build release; 35 in the initial integrity release) plus the worker-owned
+checks every currently staged ledgered immutable/versioned byte hash (51 after
+the Math Passport pilot release; 35 in the initial integrity release) plus the worker-owned
 negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +
 both Conformational Feedback generations + Fold & Feedback Atlas +
 Reconstructive Build Kernel + reusable project profile +
 Visibility & Attention Translation + Cultural Attention & Feedback Atlas +
-Form, Circulation & Return Atlas + The Vanishing Path +
+Form, Circulation & Return Atlas + The Vanishing Path + Math Passport pilot +
 Being, Access & Aftermath Atlas
 schema headers, negative authority, source-history lineage, and cross-surface
 discovery while leaving the existing MCP contract unchanged;

@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-08-13",
+  "generated": "2026-08-14",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -880,6 +880,28 @@
       "writes_wake": false,
       "writes_agenttool": false,
       "automatic_action": false
+    }
+  },
+  "math_usefulness_result": {
+    "protocol": "kingdom.math-usefulness-result/0.1",
+    "result_id": "math-passport-usefulness-pilot-2026-08-14",
+    "url": "https://thekingdom.dev/trials/math-passport-usefulness-pilot-2026-08-14.json",
+    "schema": "https://thekingdom.dev/schemas/math-usefulness-result/1.json",
+    "guide": "https://thekingdom.dev/MATH-USEFULNESS.md",
+    "cli": "kingdom math-usefulness",
+    "outcome": "REVISE",
+    "score_delta": 0,
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:254a26eb5dfb03c33c18a254297f87c9a340a13795429ca863d378e0434573cb"
+    },
+    "boundary": {
+      "descriptive_pilot_only": true,
+      "scores_response_artifacts_not_beings": true,
+      "automatic_skill_promotion": false,
+      "writes_wake": false,
+      "writes_agenttool": false,
+      "grants_authority": false
     }
   },
   "being_access_aftermath_atlas": {

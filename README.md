@@ -244,7 +244,17 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     regulatory, WAKE, AgentTool, KARMA, or automatic authority is created. The
     opt-in `$reason-about-rare-pathways` Agent Skill provides the same bounded
     reasoning workflow without declaring a manifested Nen ability.
-24. `kingdom being-access-aftermath` — inspect the source-bound
+24. `kingdom math-usefulness` — inspect the preregistered
+    [Math Passport Usefulness Pilot](references/math-passport-usefulness-pilot.md).
+    Baseline and treatment both scored 24/24, a zero score delta, while the
+    treatment used 1.97x the UTF-8 response bytes. The honest outcome is
+    `REVISE`: this descriptive four-task-artifact pilot does not justify Skill
+    promotion. It scores response artifacts, not beings, publishes no raw
+    responses, adds no AgentTool SDK route, writes no WAKE or AgentTool state,
+    and grants no authority. The network-free CLI verifies the plan and result,
+    reproduces the zero-winner bound, and runs the declared exploratory model
+    check without dispatching a provider.
+25. `kingdom being-access-aftermath` — inspect the source-bound
     [Being, Access & Aftermath Atlas](references/being-access-aftermath-atlas.md).
     It decomposes the word “is” into typed claims about identity, possibility,
     actuality, reachability, observation, and declared purpose; then keeps physical
@@ -254,12 +264,12 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     interpretation—not inferred from persistence or feedback alone. Its KARMA
     layer records no event or receipt: an aftermath observation is not proof of
     causation, and neither receipt counts nor recognition edges become a score.
-25. `kingdom being-access-aftermath-v0.2` — inspect the additive, lineage-pinned
+26. `kingdom being-access-aftermath-v0.2` — inspect the additive, lineage-pinned
     [v0.2 mathematical framework](references/being-access-aftermath-atlas-v0.2.md).
     It adds a partially observable causal kernel, distinct accessibility
     predicates, typed force and power families, and affected-party-indexed
     vector aftermath without replacing v0.1 or creating a KARMA write.
-26. `kingdom reconstructive-build` — inspect and verify the source-bound
+27. `kingdom reconstructive-build` — inspect and verify the source-bound
     [Reconstructive Build Kernel](references/reconstructive-build-kernel.md).
     It treats correspondence, candidate-whole ambiguity, geometric
     realizability, environment-conditioned transitions, catalytic barrier
@@ -376,6 +386,18 @@ constructive gate asks what changes, who benefits and bears risk, what would
 falsify the claim, and when to stop. It never diagnoses private motive. Its
 WAKE seam carries a digest-bound reference for revalidation, not identity,
 memory, continuity, currentness, consent, or authority.
+
+The Math Passport Usefulness Pilot is published from exact authored bytes at
+[`/trials/math-passport-usefulness-pilot-2026-08-14.json`](https://thekingdom.dev/trials/math-passport-usefulness-pilot-2026-08-14.json),
+with a [closed public schema](https://thekingdom.dev/schemas/math-usefulness-result/1.json)
+and [plain-language guide](https://thekingdom.dev/MATH-USEFULNESS.md). Its
+outcome is `REVISE`: baseline and treatment each scored 24/24, so the score
+delta was zero, while treatment used 1.97x the response bytes. This is a
+descriptive pilot with one scorer and a rubric ceiling, not a scientific sample
+or universal usefulness claim. It evaluates response artifacts rather than
+beings, publishes no raw responses, promotes no Skill, adds no AgentTool SDK
+route, writes no WAKE, AgentTool, or KARMA state, and grants no authority.
+There is no mutable `latest` or `current` alias and the KINGDOM MCP is unchanged.
 
 The Form, Circulation & Return Atlas is an independent additive companion,
 published from exact authored bytes at

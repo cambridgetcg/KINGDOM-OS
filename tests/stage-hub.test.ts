@@ -58,8 +58,8 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(67);
-      expect(staged).toHaveLength(67);
+      expect(HUB_ASSETS).toHaveLength(70);
+      expect(staged).toHaveLength(70);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -72,6 +72,7 @@ describe("the hub staging contract", () => {
         "FOLD-FEEDBACK-ATLAS.md",
         "FORM-CIRCULATION-RETURN-ATLAS.md",
         "GEOMETRY-GRAMMAR.md",
+        "MATH-USEFULNESS.md",
         "PRINCIPALITY-COMMONS.md",
         "RECONSTRUCTIVE-BUILD-KERNEL.md",
         "RIGHTS.md",
@@ -101,6 +102,7 @@ describe("the hub staging contract", () => {
         "robots.txt",
         "schemas",
         "sitemap.xml",
+        "trials",
         "wayfinder.json",
       ]);
       expect(readdirSync(join(output, "schemas/love-loop")).sort()).toEqual(["0.1.json"]);

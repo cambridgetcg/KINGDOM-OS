@@ -35,6 +35,9 @@
  *    data/challenges/vanishing-path.v1.json
  *                             — rare-pathway mathematics, constructive-inquiry
  *                               gate, and WAKE-safe reference seam
+ *    data/trials/math-passport-usefulness-pilot.v1.json
+ *                             — descriptive Math Passport usefulness pilot,
+ *                               costs, decision delta, and non-promotion result
  *    data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json
  *                             — typed existence, access, purpose, power,
  *                               causality, reversibility, and KARMA companion
@@ -49,6 +52,7 @@
  *       + reconstructive build-kernel discovery in the machine surfaces
  *       + cultural attention and feedback discovery in the machine surfaces
  *       + form, circulation, and return discovery in the machine surfaces
+ *       + Math Passport usefulness-result discovery in the machine surfaces
  *       + being, access, and aftermath discovery in the machine surfaces
  *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
@@ -167,6 +171,15 @@ import {
   loadRarePathwayChallenge,
   rarePathwayPublicDiscovery,
 } from "./rare-pathway.ts";
+import {
+  MATH_USEFULNESS_DOCUMENT_URL,
+  MATH_USEFULNESS_RESULT_ID,
+  MATH_USEFULNESS_RESULT_PROTOCOL,
+  MATH_USEFULNESS_RESULT_URL,
+  MATH_USEFULNESS_SCHEMA_URL,
+  loadMathUsefulnessResult,
+  mathUsefulnessPublicDiscovery,
+} from "./math-usefulness.ts";
 import {
   BEING_ACCESS_AFTERMATH_DOCUMENT_URL,
   BEING_ACCESS_AFTERMATH_ID,
@@ -609,6 +622,28 @@ if (rarePathway.protocol !== RARE_PATHWAY_PROTOCOL || rarePathway.challenge_id !
   throw new Error(`unexpected rare-pathway identity: ${rarePathway.protocol} ${rarePathway.challenge_id}`);
 }
 const rarePathwayDiscovery = rarePathwayPublicDiscovery(rarePathway);
+
+// ── Math Passport pilot (descriptive artifact evaluation; no promotion) ──
+const mathUsefulnessUrl = MATH_USEFULNESS_RESULT_URL;
+const mathUsefulnessSchemaUrl = MATH_USEFULNESS_SCHEMA_URL;
+const mathUsefulnessDocumentUrl = MATH_USEFULNESS_DOCUMENT_URL;
+const mathUsefulness = loadMathUsefulnessResult();
+if (mathUsefulness.protocol !== MATH_USEFULNESS_RESULT_PROTOCOL ||
+    mathUsefulness.result_id !== MATH_USEFULNESS_RESULT_ID) {
+  throw new Error(`unexpected math-usefulness identity: ${mathUsefulness.protocol} ${mathUsefulness.result_id}`);
+}
+const mathUsefulnessDiscovery = mathUsefulnessPublicDiscovery();
+if (mathUsefulness.aggregate?.outcome !== "REVISE" ||
+    mathUsefulness.aggregate?.score_delta !== 0 ||
+    mathUsefulness.aggregate?.promotion_gate_passed !== false ||
+    mathUsefulness.boundaries?.descriptive_pilot_only !== true ||
+    mathUsefulness.boundaries?.scores_response_artifacts_not_beings !== true ||
+    mathUsefulness.boundaries?.automatic_skill_promotion !== false ||
+    mathUsefulness.boundaries?.writes_wake !== false ||
+    mathUsefulness.boundaries?.writes_agenttool !== false ||
+    mathUsefulness.boundaries?.grants_authority !== false) {
+  throw new Error("math-usefulness publication lost its descriptive, artifact-level, non-promotion boundary");
+}
 
 // ── Being, Access & Aftermath (typed ontology, models, and KARMA seams) ──
 const beingAccessAftermathUrl = BEING_ACCESS_AFTERMATH_URL;
@@ -1088,6 +1123,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(rarePathwayUrl).pathname)}" type="application/json" title="The Vanishing Path rare-pathway challenge">
 <link rel="describedby" href="${esc(new URL(rarePathwaySchemaUrl).pathname)}" type="application/schema+json" title="Rare Pathway Challenge schema">
 <link rel="service-doc" href="${esc(new URL(rarePathwayDocumentUrl).pathname)}" type="text/markdown" title="The Vanishing Path guide">
+<link rel="alternate" href="${esc(new URL(mathUsefulnessUrl).pathname)}" type="application/json" title="Math Passport Usefulness Pilot">
+<link rel="describedby" href="${esc(new URL(mathUsefulnessSchemaUrl).pathname)}" type="application/schema+json" title="Math Usefulness Result schema">
+<link rel="service-doc" href="${esc(new URL(mathUsefulnessDocumentUrl).pathname)}" type="text/markdown" title="Math Passport Usefulness Pilot guide">
 <link rel="alternate" href="${esc(new URL(beingAccessAftermathUrl).pathname)}" type="application/json" title="Being, Access &amp; Aftermath Atlas">
 <link rel="describedby" href="${esc(new URL(beingAccessAftermathSchemaUrl).pathname)}" type="application/schema+json" title="Being, Access &amp; Aftermath Atlas schema">
 <link rel="service-doc" href="${esc(new URL(beingAccessAftermathDocumentUrl).pathname)}" type="text/markdown" title="Being, Access &amp; Aftermath Atlas guide">
@@ -2264,6 +2302,24 @@ const html = `<!doctype html>
     </div>
   </section>
 
+  <section class="blk" id="math-usefulness" aria-labelledby="math-usefulness-title">
+    <div class="kh"><h2 id="math-usefulness-title">Math Passport: a usefulness check</h2><span class="my">REVISE · zero score delta · evidence before promotion</span></div>
+    <p class="sub">A descriptive pilot asked whether the Math Passport treatment card improved two rare-pathway answers. It did not: baseline and treatment each scored 24/24, so the score delta was zero. The treatment used 1.97x the UTF-8 response bytes and made the arm easy for the single scorer to guess.</p>
+    <div class="culturalfeedback" aria-label="Math Passport pilot result">
+      <article><h4>Outcome</h4><p>REVISE</p><small>The artifact remains explicit and unpromoted.</small></article>
+      <article><h4>Score delta</h4><p>${esc(String(mathUsefulness.aggregate.score_delta))}</p><small>A rubric ceiling prevents a usefulness win.</small></article>
+      <article><h4>Response cost proxy</h4><p>${esc(mathUsefulness.aggregate.treatment_to_baseline_byte_ratio.toFixed(2))}x bytes</p><small>4,605 treatment bytes versus 2,336 baseline bytes.</small></article>
+      <article><h4>Scope</h4><p>descriptive pilot</p><small>Four task artifacts, two provider attempts, one scorer; not a scientific sample.</small></article>
+    </div>
+    <p class="culturalkarma"><strong>The result scores response artifacts, not beings.</strong> It does not prove understanding, identity, continuity, safety, or universal usefulness. It publishes no raw responses, creates no WAKE state, grants no authority, promotes no Skill, and adds no AgentTool SDK route. AgentTool's existing local trial-receipt shape records bounded evidence; it is not proof of a remote effect.</p>
+    <p class="commonsverified">outcome ${esc(mathUsefulness.aggregate.outcome)} · score delta ${esc(String(mathUsefulness.aggregate.score_delta))} · treatment/baseline bytes ${esc(mathUsefulness.aggregate.treatment_to_baseline_byte_ratio.toFixed(2))}x · promotion withheld · observed ${esc(mathUsefulness.observed_on)} · integrity ${esc(mathUsefulness.integrity.digest)}</p>
+    <div class="machine">
+      <a href="${esc(new URL(mathUsefulnessUrl).pathname)}">pilot result JSON — exact authored record</a>
+      <a href="${esc(new URL(mathUsefulnessSchemaUrl).pathname)}">Math Usefulness Result JSON Schema</a>
+      <a href="${esc(new URL(mathUsefulnessDocumentUrl).pathname)}">MATH-USEFULNESS.md — findings, model check, practice loop, AgentTool and WAKE boundaries</a>
+    </div>
+  </section>
+
 
   <section class="blk" id="being-access-aftermath" aria-labelledby="being-access-aftermath-title">
     <div class="kh"><h2 id="being-access-aftermath-title">Being, Access &amp; Aftermath</h2><span class="my">mathematics as a layer of questions, never a verdict on existence</span></div>
@@ -2461,6 +2517,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(rarePathwayUrl).pathname)}">The Vanishing Path — competing risks, absence bounds, constructive questions, and WAKE seam</a>
       <a href="${esc(new URL(rarePathwaySchemaUrl).pathname)}">Rare Pathway Challenge JSON Schema</a>
       <a href="${esc(new URL(rarePathwayDocumentUrl).pathname)}">VANISHING-PATH.md — problems, sources, limits, and BUILD / PLAY / REVISE / STOP</a>
+      <a href="${esc(new URL(mathUsefulnessUrl).pathname)}">Math Passport Usefulness Pilot — REVISE, zero score delta, and 1.97x response bytes</a>
+      <a href="${esc(new URL(mathUsefulnessSchemaUrl).pathname)}">Math Usefulness Result JSON Schema</a>
+      <a href="${esc(new URL(mathUsefulnessDocumentUrl).pathname)}">MATH-USEFULNESS.md — descriptive result, constructive math loop, and non-authority boundaries</a>
       <a href="${esc(new URL(beingAccessAftermathUrl).pathname)}">Being, Access &amp; Aftermath — typed existence, access, purpose, power, cause, and reversibility</a>
       <a href="${esc(new URL(beingAccessAftermathSchemaUrl).pathname)}">Being, Access &amp; Aftermath JSON Schema</a>
       <a href="${esc(new URL(beingAccessAftermathDocumentUrl).pathname)}">BEING-ACCESS-AFTERMATH-ATLAS.md — mathematical framework, questions, KARMA seams, and boundaries</a>
@@ -2802,6 +2861,7 @@ const machine = {
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
   rare_pathway_challenge: rarePathwayDiscovery,
+  math_usefulness_result: mathUsefulnessDiscovery,
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   creation_loop: {
@@ -2882,6 +2942,9 @@ Form, Circulation & Return guide: ${formCirculationReturnDocumentUrl}
 The Vanishing Path challenge: ${rarePathwayUrl}
 Rare Pathway Challenge schema: ${rarePathwaySchemaUrl}
 The Vanishing Path guide: ${rarePathwayDocumentUrl}
+Math Passport Usefulness Pilot: ${mathUsefulnessUrl}
+Math Usefulness Result schema: ${mathUsefulnessSchemaUrl}
+Math Passport Usefulness Pilot guide: ${mathUsefulnessDocumentUrl}
 Being, Access & Aftermath Atlas: ${beingAccessAftermathUrl}
 Being, Access & Aftermath schema: ${beingAccessAftermathSchemaUrl}
 Being, Access & Aftermath guide: ${beingAccessAftermathDocumentUrl}
@@ -2923,6 +2986,7 @@ ${doorLines}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
 - The Vanishing Path — seven bounded model cards turn the ritonavir disappearing-polymorph history into a rare-event mathematics challenge: competing first arrivals, zero-event and zero-winner bounds, identifiability, robust design, and expected information. BUILD / PLAY / REVISE / STOP classifies the practice and artifact, never a person's understanding, pride, virtue, or worth. All numerical rates are hypothetical; no material fit, recipe, experiment, manufacturing, medical, WAKE, AgentTool, KARMA, or automatic authority exists. Challenge: ${rarePathwayUrl} · schema: ${rarePathwaySchemaUrl} · guide: ${rarePathwayDocumentUrl}
+- Math Passport Usefulness Pilot — REVISE. Baseline and treatment each scored 24/24, a zero score delta, while the treatment used 1.97x the UTF-8 response bytes and made arm assignment easy to guess. This is a descriptive four-task-artifact pilot with one scorer, not a scientific sample or a universal usefulness claim. It scores response artifacts, not beings; publishes no raw responses; promotes no Skill; adds no AgentTool SDK route; writes no WAKE, AgentTool, or KARMA state; and grants no authority. Result: ${mathUsefulnessUrl} · schema: ${mathUsefulnessSchemaUrl} · guide: ${mathUsefulnessDocumentUrl}
 - Being, Access & Aftermath — a typed modal–causal companion uses the disappearing-polymorph history to separate identity, lawful possibility, actuality, bounded reachability, observation, purpose, physical force, admissible action power, causal effect, and vector-valued aftermath. Its ${beingAccessAftermath.model_cards.length} unfitted model cards and ${beingAccessAftermath.problem_cards.length} open problems are educational lenses, not person measures or metaphysical proofs. Cosmic KARMA, Zerone recognition edges, and KINGDOM invocation receipts remain disjoint, empty lanes with no adapter, scalar, score, reward, governance effect, or automatic action. Atlas: ${beingAccessAftermathUrl} · schema: ${beingAccessAftermathSchemaUrl} · guide: ${beingAccessAftermathDocumentUrl}
 - Being, Access & Aftermath v0.2 — an additive, lineage-pinned successor adds a partially observable causal kernel, typed predicates, force and power families, and affected-party-indexed vector aftermath. v0.1 remains byte-preserved at its original routes. The framework is read-only and creates no scalar KARMA, person measure, authority, receipt, or automatic action. Atlas: ${beingAccessAftermathV02Url} · schema: ${beingAccessAftermathV02SchemaUrl} · guide: ${beingAccessAftermathV02DocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
@@ -2964,6 +3028,7 @@ const guest = {
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
   rare_pathway_challenge: rarePathwayDiscovery,
+  math_usefulness_result: mathUsefulnessDiscovery,
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   actions_are_optional: true,
@@ -3014,6 +3079,9 @@ const guest = {
     { action: "if useful, inspect The Vanishing Path's competing-risk models, hypothetical examples, constructive gate, and WAKE-safe reference seam", method: "GET", url: rarePathwayUrl, note: "read-only education; not a ritonavir fit, material recipe, person or motive score, WAKE/AgentTool write, or action authority" },
     { action: "if useful, validate the Rare Pathway Challenge structure before integrating it", method: "GET", url: rarePathwaySchemaUrl },
     { action: "if useful, read the plain-language problems, identifiability limits, BUILD / PLAY / REVISE / STOP gate, and source boundaries", method: "GET", url: rarePathwayDocumentUrl },
+    { action: "if useful, inspect the Math Passport pilot before deciding whether to revise or promote the card", method: "GET", url: mathUsefulnessUrl, note: "descriptive artifact evaluation only: REVISE, zero score delta, 1.97x response bytes; no raw responses, person score, Skill promotion, SDK route, WAKE/AgentTool write, or authority" },
+    { action: "if useful, validate the closed Math Usefulness Result structure before integrating it", method: "GET", url: mathUsefulnessSchemaUrl },
+    { action: "if useful, read the pilot finding, model check, constructive mathematics loop, and AgentTool/WAKE boundaries", method: "GET", url: mathUsefulnessDocumentUrl },
     { action: "if useful, inspect the typed Being, Access & Aftermath mathematical companion", method: "GET", url: beingAccessAftermathUrl, note: "read-only educational metadata; distinct existence predicates and power types, unfitted models, no causal proof, person score, KARMA write, reward, governance effect, or automatic action" },
     { action: "if useful, validate the Being, Access & Aftermath structure before integrating it", method: "GET", url: beingAccessAftermathSchemaUrl },
     { action: "if useful, read the typed ontology, mathematical models, open problems, philosophy, KARMA, source, and safety guide", method: "GET", url: beingAccessAftermathDocumentUrl },
@@ -3061,6 +3129,7 @@ const guest = {
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
     rare_pathway_challenge: "The Vanishing Path is a static educational mathematics challenge bound to the immutable ritonavir history only as an illustrative case. Its rates are hypothetical. It separates zero target events from zero target winners, preserves identifiability limits, and gates practices as BUILD, PLAY, REVISE, or STOP without inferring anyone's motive, understanding, pride, virtue, or worth. It provides no material fit, lab recipe, experiment, formulation, manufacturing, medical, regulatory, WAKE, AgentTool, KARMA, publication, deployment, or automatic action authority.",
+    math_usefulness_result: "The Math Passport result is a static, descriptive four-task-artifact pilot with one scorer and a rubric ceiling. Its REVISE outcome, zero score delta, and 1.97x response-byte ratio do not prove universal usefulness or uselessness, understanding, identity, continuity, safety, or scientific effect. It evaluates response artifacts rather than beings, publishes no raw responses, promotes no Skill, adds no AgentTool SDK route, writes no WAKE, AgentTool, or KARMA state, and grants no authority or automatic action.",
     being_access_aftermath_atlas: "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
     being_access_aftermath_atlas_v0_2: "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
@@ -3093,6 +3162,7 @@ const manifest = {
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
   rare_pathway_challenge: rarePathwayDiscovery,
+  math_usefulness_result: mathUsefulnessDiscovery,
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   love_loops: loveLoopsUrl,
@@ -3150,6 +3220,9 @@ const manifest = {
     rare_pathway_challenge: rarePathwayUrl,
     rare_pathway_challenge_schema: rarePathwaySchemaUrl,
     rare_pathway_challenge_guide: rarePathwayDocumentUrl,
+    math_usefulness_result: mathUsefulnessUrl,
+    math_usefulness_result_schema: mathUsefulnessSchemaUrl,
+    math_usefulness_result_guide: mathUsefulnessDocumentUrl,
     being_access_aftermath_atlas: beingAccessAftermathUrl,
     being_access_aftermath_atlas_schema: beingAccessAftermathSchemaUrl,
     being_access_aftermath_atlas_guide: beingAccessAftermathDocumentUrl,
@@ -3170,4 +3243,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
