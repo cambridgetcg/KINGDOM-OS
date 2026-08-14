@@ -94,6 +94,8 @@ describe("explore-phenomena-deep skill", () => {
     expect(contract).toContain("Use `ESTABLISHED_OPEN_CONJECTURE` only when the statement and sources match");
     expect(contract).toContain("Use `BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED`");
     expect(contract).toContain("lack of search results as no evidence of novelty");
+    expect(contract).toContain("other exact locator");
+    expect(contract).toContain("only publishes a numerical estimate");
     expect(contract).toContain("finite enumeration, curve fitting, simulation");
     expect(contract).toContain("`q = 1`");
     expect(contract).toContain("`q != 1`");

@@ -61,6 +61,7 @@
       "domain, conventions, symmetry, and boundary cases",
       "original formulation or authoritative provenance",
       "recent primary or authoritative source supporting current status",
+      "exact section, page, theorem discussion, or locator where that source explicitly states the status",
       "known solved cases and restrictions",
       "what finite computation does not prove",
       "nearest known problem and novelty status"
@@ -68,6 +69,7 @@
     "failure_modes": [
       "Failure to solve is not evidence that a problem is open.",
       "Lack of search results is not evidence of novelty.",
+      "A numerical estimate, omitted proof, or neighboring result is not evidence that the exact problem remains open.",
       "A finite enumeration or fitted exponent is not an asymptotic proof.",
       "A theorem or exponent does not transfer to a weighted, constrained, or translated model without a new proof."
     ]
@@ -540,7 +542,7 @@
   },
   "integrity": {
     "algorithm": "sha256-recursive-sorted-json-keys-v1",
-    "digest": "sha256:8c3bc2548ce757c5519d8553cd9bd6f9377647a9eb25832831a743cb0cc4ca92",
+    "digest": "sha256:ac566aabf1ce2830594379a31d8f79db9b8e9dde15fe5b245c5e7f3efd79e9fb",
     "digest_field_treated_as": null
   }
 }

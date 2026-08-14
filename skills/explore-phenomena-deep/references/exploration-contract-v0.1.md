@@ -155,6 +155,10 @@ Apply these rules in order:
 2. Inspect the original formulation or an authoritative provenance source.
 3. Inspect a recent primary or authoritative source that explicitly says the
    exact statement remains open, or use `UNKNOWN_TO_THIS_REVIEW`.
+   Record the section, page, theorem discussion, or other exact locator for that
+   status statement. A source that only publishes a numerical estimate, omits a
+   proof, or treats a neighboring problem does not establish that the declared
+   statement is open.
 4. Record the calendar date of the status check and the source horizon.
 5. List proved subcases, finite checks, conditional results, and neighboring
    conjectures without upgrading them to the full result.

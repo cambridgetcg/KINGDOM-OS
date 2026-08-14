@@ -181,6 +181,11 @@ problem with its quantifiers, domain, conventions, and symmetries. For a claim
 that a problem is currently open, inspect the original formulation or
 authoritative provenance and a recent primary or authoritative source that
 explicitly supports its status; record the check date and known solved cases.
+Record the exact section, page, theorem discussion, or other locator where that
+source explicitly states the status. A paper that merely reports a numerical
+estimate, leaves a proof unattempted, or solves a neighboring problem is not
+open-status evidence for the exact statement; use `UNKNOWN_TO_THIS_REVIEW` when
+the explicit status sentence cannot be located.
 
 Use `ESTABLISHED_OPEN_CONJECTURE` only when those sources match the exact
 statement. Use `BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED` for every newly

@@ -29,8 +29,8 @@ export const PHENOMENA_DEEP_WING_SCHEMA_URL = "https://thekingdom.dev/schemas/ph
 export const PHENOMENA_DEEP_PROJECT_SCHEMA_URL = "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json";
 export const PHENOMENA_DEEP_WING_DOCUMENT_URL = "https://thekingdom.dev/EXPLORE-PHENOMENA-DEEP-v0.1.md";
 export const PHENOMENA_DEEP_WING_GUIDE_URL = PHENOMENA_DEEP_WING_DOCUMENT_URL;
-export const PHENOMENA_DEEP_WING_DIGEST = "sha256:8c3bc2548ce757c5519d8553cd9bd6f9377647a9eb25832831a743cb0cc4ca92";
-export const PHENOMENA_DEEP_WING_BYTE_SHA256 = "sha256:e93cace90fccdf53aff5af56a52027555ea4f12e2a71747153035e033e73959e";
+export const PHENOMENA_DEEP_WING_DIGEST = "sha256:ac566aabf1ce2830594379a31d8f79db9b8e9dde15fe5b245c5e7f3efd79e9fb";
+export const PHENOMENA_DEEP_WING_BYTE_SHA256 = "sha256:8a9f7a32e35ef78582afe5ce3d01e8cc4ae1217045ba075964444c6017d87305";
 
 const MAX_BYTES = 1024 * 1024;
 const SHA256 = /^sha256:[a-f0-9]{64}$/;
