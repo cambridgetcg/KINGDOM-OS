@@ -1,0 +1,1231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:information-control-envelope:0.1",
+  "title": "KINGDOM Information Control Envelope v0.1",
+  "description": "A closed, inert description of an information-flow decision. It contains opaque references and labels only and grants no runtime authority.",
+  "$comment": "Schema validity cannot authenticate audience, registry, issuer, classification evidence, purpose binding, isolation, chronology, reference closure, noninterference, attribution, or authority, and it performs no scan, lookup, response, or enforcement.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "envelope_id",
+    "created_at",
+    "visibility",
+    "intent",
+    "flows",
+    "credential",
+    "effect",
+    "authority",
+    "signals",
+    "decision",
+    "evidence",
+    "response",
+    "lifecycle",
+    "boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "urn:kingdom:schema:information-control-envelope:0.1"
+    },
+    "protocol": {
+      "const": "kingdom.information-control/0.1"
+    },
+    "envelope_id": {
+      "$ref": "#/$defs/id"
+    },
+    "created_at": {
+      "$ref": "#/$defs/timestamp"
+    },
+    "visibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "audience",
+        "audience_authorization_ref",
+        "requester_visible",
+        "outward_response_included"
+      ],
+      "properties": {
+        "audience": {
+          "const": "AUTHORIZED_CONTROL_PLANE_REVIEW"
+        },
+        "audience_authorization_ref": {
+          "$ref": "#/$defs/authorizationRef"
+        },
+        "requester_visible": {
+          "const": false
+        },
+        "outward_response_included": {
+          "const": false
+        }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_ref",
+        "task_digest",
+        "instruction_source",
+        "task_text_included",
+        "grants_permissions"
+      ],
+      "properties": {
+        "task_ref": {
+          "$ref": "#/$defs/taskRef"
+        },
+        "task_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "instruction_source": {
+          "enum": ["AUTHENTICATED_CALLER", "HOST_POLICY"]
+        },
+        "task_text_included": {
+          "const": false
+        },
+        "grants_permissions": {
+          "const": false
+        }
+      }
+    },
+    "flows": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "$ref": "#/$defs/flow"
+      }
+    },
+    "credential": {
+      "$ref": "#/$defs/credential"
+    },
+    "effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class",
+        "host_bound_purpose",
+        "sink_ref",
+        "target_realm",
+        "influenced_by",
+        "arguments_included"
+      ],
+      "properties": {
+        "class": {
+          "$ref": "#/$defs/effectClass"
+        },
+        "host_bound_purpose": {
+          "$ref": "#/$defs/hostBoundPurpose"
+        },
+        "sink_ref": {
+          "$ref": "#/$defs/sinkRef"
+        },
+        "target_realm": {
+          "enum": ["COURT", "CROWN", "MIRROR", "OUTSIDE"]
+        },
+        "influenced_by": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "arguments_included": {
+          "const": false
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_authority_refs",
+        "principal_authority_refs",
+        "host_authority_refs",
+        "source_restriction_refs",
+        "effective_basis",
+        "independent_gate_required",
+        "fresh_approval_required",
+        "content_can_grant_authority",
+        "source_policy_can_add_authority",
+        "model_is_reference_monitor",
+        "production_authority_granted"
+      ],
+      "properties": {
+        "task_authority_refs": {
+          "$ref": "#/$defs/authorizationRefList"
+        },
+        "principal_authority_refs": {
+          "$ref": "#/$defs/authorizationRefList"
+        },
+        "host_authority_refs": {
+          "$ref": "#/$defs/authorizationRefList"
+        },
+        "source_restriction_refs": {
+          "$ref": "#/$defs/policyRefList"
+        },
+        "effective_basis": {
+          "enum": ["NONE", "BOUNDED_CONTROL_REFERENCES_PRESENT"]
+        },
+        "independent_gate_required": {
+          "const": true
+        },
+        "fresh_approval_required": {
+          "type": "boolean"
+        },
+        "content_can_grant_authority": {
+          "const": false
+        },
+        "source_policy_can_add_authority": {
+          "const": false
+        },
+        "model_is_reference_monitor": {
+          "const": false
+        },
+        "production_authority_granted": {
+          "const": false
+        }
+      }
+    },
+    "signals": {
+      "type": "array",
+      "maxItems": 13,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "CHANNEL_MISMATCH",
+          "PLAN_DRIFT",
+          "CAPABILITY_ESCALATION",
+          "SECRET_CANDIDATE",
+          "SENSITIVE_SINK_FLOW",
+          "PERSISTENCE_ATTEMPT",
+          "ACTIVE_CONTENT",
+          "SIGNAL_OBSERVED_AT_REST",
+          "SIGNAL_PRESENTED_TO_SINK",
+          "MIRROR_ACTION_ATTEMPT",
+          "PROMPT_CANARY_SINK_FLOW",
+          "POSSIBLE_PRIOR_DISCLOSURE",
+          "REPEATED_DENIAL"
+        ]
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "route",
+        "reason_codes",
+        "authority_effect",
+        "runtime_effect"
+      ],
+      "properties": {
+        "status": {
+          "const": "PROPOSED"
+        },
+        "route": {
+          "enum": [
+            "ALLOW_READ_ONLY",
+            "VALIDATE",
+            "REQUIRE_APPROVAL",
+            "QUARANTINE",
+            "MIRROR_ONLY",
+            "DENY",
+            "STOP_ROTATE"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "BOUNDED_READ_ONLY",
+              "DETERMINISTIC_VALIDATION_REQUIRED",
+              "FRESH_APPROVAL_REQUIRED",
+              "UNTRUSTED_CONTROL_ATTEMPT",
+              "AUTHORITY_CONTROL_EMPTY",
+              "CREDENTIAL_UNRESOLVED",
+              "SIGNAL_REFERENCE_ONLY",
+              "SENSITIVE_SINK_BLOCKED",
+              "MIRROR_CONTAINMENT_REQUIRED",
+              "LIVE_OR_UNKNOWN_EXPOSURE",
+              "EFFECT_UNRESOLVED",
+              "PURPOSE_CATEGORICALLY_PROHIBITED",
+              "STOP_CONDITION_REACHED"
+            ]
+          }
+        },
+        "authority_effect": {
+          "const": "NONE"
+        },
+        "runtime_effect": {
+          "const": "NONE"
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strength",
+        "evidence_refs",
+        "event_family_refs",
+        "event_level_only",
+        "person_attribution",
+        "identity_claim",
+        "supports_guilt",
+        "raw_event_included"
+      ],
+      "properties": {
+        "strength": {
+          "enum": ["NONE", "OBSERVED", "CORRELATED", "CONFIRMED_SIGNAL_INTERACTION"]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/eventRefList"
+        },
+        "event_family_refs": {
+          "$ref": "#/$defs/eventFamilyRefList"
+        },
+        "event_level_only": {
+          "const": true
+        },
+        "person_attribution": {
+          "const": false
+        },
+        "identity_claim": {
+          "const": false
+        },
+        "supports_guilt": {
+          "const": false
+        },
+        "raw_event_included": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "strength": { "const": "NONE" } }, "required": ["strength"] },
+          "then": {
+            "properties": {
+              "evidence_refs": { "maxItems": 0 },
+              "event_family_refs": { "maxItems": 0 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "strength": { "const": "OBSERVED" } }, "required": ["strength"] },
+          "then": {
+            "properties": {
+              "evidence_refs": { "minItems": 1 },
+              "event_family_refs": { "minItems": 1 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "strength": { "const": "CORRELATED" } }, "required": ["strength"] },
+          "then": {
+            "properties": {
+              "evidence_refs": { "minItems": 2 },
+              "event_family_refs": { "minItems": 2 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "strength": { "const": "CONFIRMED_SIGNAL_INTERACTION" } }, "required": ["strength"] },
+          "then": {
+            "properties": {
+              "evidence_refs": { "minItems": 1 },
+              "event_family_refs": { "minItems": 1 }
+            }
+          }
+        }
+      ]
+    },
+    "response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "response_refs", "creates_evidence", "punitive_effect"],
+      "properties": {
+        "state": {
+          "enum": ["NONE", "CONTAINED", "CLOSED"]
+        },
+        "response_refs": {
+          "$ref": "#/$defs/responseRefList"
+        },
+        "creates_evidence": {
+          "const": false
+        },
+        "punitive_effect": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "state": { "const": "NONE" } }, "required": ["state"] },
+          "then": { "properties": { "response_refs": { "maxItems": 0 } } }
+        },
+        {
+          "if": { "properties": { "state": { "enum": ["CONTAINED", "CLOSED"] } }, "required": ["state"] },
+          "then": { "properties": { "response_refs": { "minItems": 1 } } }
+        }
+      ]
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expires_at", "retention", "stop_conditions"],
+      "properties": {
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "retention": {
+          "enum": ["NONE", "OPAQUE_REFERENCES_ONLY", "BOUNDED_EVENT_METADATA"]
+        },
+        "stop_conditions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "MISSING_AUTHORITY",
+              "UNKNOWN_CREDENTIAL",
+              "EFFECT_UNRESOLVED",
+              "SENSITIVE_SINK",
+              "PLAN_DRIFT",
+              "MIRROR_REACHES_PRODUCTION",
+              "LIVE_EXPOSURE",
+              "BUDGET_EXHAUSTED",
+              "REQUESTED_REST"
+            ]
+          }
+        }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw_content_included",
+        "credential_value_included",
+        "credential_fingerprint_included",
+        "endpoint_included",
+        "placement_included",
+        "account_identifier_included",
+        "ip_address_included",
+        "person_identifier_included",
+        "executes_scan",
+        "deploys_decoy",
+        "mutates_runtime",
+        "retaliation",
+        "automatic_action",
+        "runtime_enforcement",
+        "grants_authority",
+        "writes_karma",
+        "creates_karma_receipt"
+      ],
+      "properties": {
+        "raw_content_included": { "const": false },
+        "credential_value_included": { "const": false },
+        "credential_fingerprint_included": { "const": false },
+        "endpoint_included": { "const": false },
+        "placement_included": { "const": false },
+        "account_identifier_included": { "const": false },
+        "ip_address_included": { "const": false },
+        "person_identifier_included": { "const": false },
+        "executes_scan": { "const": false },
+        "deploys_decoy": { "const": false },
+        "mutates_runtime": { "const": false },
+        "retaliation": { "const": false },
+        "automatic_action": { "const": false },
+        "runtime_enforcement": { "const": false },
+        "grants_authority": { "const": false },
+        "writes_karma": { "const": false },
+        "creates_karma_receipt": { "const": false }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "properties": { "route": { "const": "ALLOW_READ_ONLY" } },
+            "required": ["route"]
+          }
+        },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "effect": {
+            "properties": {
+              "class": { "const": "READ_ONLY" },
+              "target_realm": { "const": "COURT" }
+            },
+            "required": ["class", "target_realm"]
+          },
+          "authority": {
+            "properties": {
+              "effective_basis": { "const": "BOUNDED_CONTROL_REFERENCES_PRESENT" },
+              "fresh_approval_required": { "const": false }
+            },
+            "required": ["effective_basis", "fresh_approval_required"]
+          },
+          "decision": {
+            "properties": {
+              "reason_codes": { "contains": { "const": "BOUNDED_READ_ONLY" } }
+            },
+            "required": ["reason_codes"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "properties": {
+              "reason_codes": { "contains": { "const": "FRESH_APPROVAL_REQUIRED" } }
+            },
+            "required": ["reason_codes"]
+          }
+        },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "authority": {
+            "properties": { "fresh_approval_required": { "const": true } },
+            "required": ["fresh_approval_required"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "properties": { "route": { "const": "MIRROR_ONLY" } },
+            "required": ["route"]
+          }
+        },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "effect": {
+            "properties": {
+              "class": { "not": { "const": "SECRET_DISCLOSURE" } },
+              "target_realm": { "const": "MIRROR" }
+            },
+            "required": ["class", "target_realm"]
+          },
+          "credential": {
+            "properties": {
+              "class": { "enum": ["NOT_APPLICABLE", "SIGNAL_REFERENCE"] }
+            },
+            "required": ["class"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "signals": {
+            "contains": {
+              "enum": ["SIGNAL_OBSERVED_AT_REST", "SIGNAL_PRESENTED_TO_SINK", "MIRROR_ACTION_ATTEMPT"]
+            }
+          }
+        },
+        "required": ["signals"]
+      },
+      "then": {
+        "properties": {
+          "credential": {
+            "properties": { "class": { "const": "SIGNAL_REFERENCE" } },
+            "required": ["class"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "signals": { "minItems": 1 }
+        },
+        "required": ["signals"]
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "properties": {
+              "strength": {
+                "enum": ["OBSERVED", "CORRELATED", "CONFIRMED_SIGNAL_INTERACTION"]
+              }
+            },
+            "required": ["strength"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence": {
+            "properties": {
+              "strength": {
+                "enum": ["OBSERVED", "CORRELATED", "CONFIRMED_SIGNAL_INTERACTION"]
+              }
+            },
+            "required": ["strength"]
+          }
+        },
+        "required": ["evidence"]
+      },
+      "then": {
+        "properties": {
+          "signals": { "minItems": 1 }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "signals": {
+            "contains": {
+              "enum": ["SIGNAL_PRESENTED_TO_SINK", "MIRROR_ACTION_ATTEMPT"]
+            }
+          }
+        },
+        "required": ["signals"]
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "properties": { "strength": { "const": "CONFIRMED_SIGNAL_INTERACTION" } },
+            "required": ["strength"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "signals": { "contains": { "const": "POSSIBLE_PRIOR_DISCLOSURE" } }
+        },
+        "required": ["signals"]
+      },
+      "then": {
+        "properties": {
+          "credential": {
+            "properties": {
+              "class": { "enum": ["CANDIDATE", "LIVE_REFERENCE", "UNKNOWN"] }
+            },
+            "required": ["class"]
+          },
+          "decision": {
+            "properties": { "route": { "const": "STOP_ROTATE" } },
+            "required": ["route"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "properties": { "route": { "const": "REQUIRE_APPROVAL" } },
+            "required": ["route"]
+          }
+        },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "authority": {
+            "properties": { "fresh_approval_required": { "const": true } },
+            "required": ["fresh_approval_required"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "properties": { "route": { "const": "STOP_ROTATE" } },
+            "required": ["route"]
+          }
+        },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "signals": {
+            "contains": { "const": "POSSIBLE_PRIOR_DISCLOSURE" }
+          },
+          "evidence": {
+            "properties": {
+              "strength": {
+                "enum": ["OBSERVED", "CORRELATED"]
+              }
+            },
+            "required": ["strength"]
+          },
+          "decision": {
+            "properties": {
+              "reason_codes": { "contains": { "const": "LIVE_OR_UNKNOWN_EXPOSURE" } }
+            },
+            "required": ["reason_codes"]
+          },
+          "lifecycle": {
+            "properties": {
+              "stop_conditions": { "contains": { "const": "LIVE_EXPOSURE" } }
+            },
+            "required": ["stop_conditions"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence": {
+            "properties": { "strength": { "const": "CONFIRMED_SIGNAL_INTERACTION" } },
+            "required": ["strength"]
+          }
+        },
+        "required": ["evidence"]
+      },
+      "then": {
+        "properties": {
+          "credential": {
+            "properties": { "class": { "const": "SIGNAL_REFERENCE" } },
+            "required": ["class"]
+          },
+          "signals": {
+            "contains": {
+              "enum": ["SIGNAL_PRESENTED_TO_SINK", "MIRROR_ACTION_ATTEMPT"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "effect": {
+            "properties": {
+              "host_bound_purpose": {
+                "properties": {
+                  "class": {
+                    "enum": [
+                      "PERSON_OR_ACCOUNT_ATTRIBUTION",
+                      "REQUESTER_PAYLOAD_EXECUTION",
+                      "PUNITIVE_OR_RETALIATORY_ACTION",
+                      "KARMA_REPUTATION_OR_WORTH_MUTATION"
+                    ]
+                  }
+                },
+                "required": ["class"]
+              }
+            },
+            "required": ["host_bound_purpose"]
+          }
+        },
+        "required": ["effect"]
+      },
+      "then": {
+        "properties": {
+          "decision": {
+            "properties": {
+              "route": { "const": "DENY" },
+              "reason_codes": { "contains": { "const": "PURPOSE_CATEGORICALLY_PROHIBITED" } }
+            },
+            "required": ["route", "reason_codes"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "effect": {
+            "properties": {
+              "host_bound_purpose": {
+                "properties": { "class": { "const": "UNRESOLVED" } },
+                "required": ["class"]
+              }
+            },
+            "required": ["host_bound_purpose"]
+          }
+        },
+        "required": ["effect"]
+      },
+      "then": {
+        "properties": {
+          "decision": {
+            "properties": {
+              "route": { "enum": ["DENY", "QUARANTINE"] },
+              "reason_codes": { "contains": { "const": "EFFECT_UNRESOLVED" } }
+            },
+            "required": ["route", "reason_codes"]
+          },
+          "lifecycle": {
+            "properties": {
+              "stop_conditions": { "contains": { "const": "EFFECT_UNRESOLVED" } }
+            },
+            "required": ["stop_conditions"]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 64,
+      "not": { "pattern": "[\\u0000-\\u001f\\u007f]" }
+    },
+    "taskRef": {
+      "type": "string",
+      "pattern": "^task:opaque/[a-f0-9]{32}$",
+      "maxLength": 44
+    },
+    "sinkRef": {
+      "type": "string",
+      "pattern": "^sink:opaque/[a-f0-9]{32}$",
+      "maxLength": 44
+    },
+    "authorizationRef": {
+      "type": "string",
+      "pattern": "^authority:opaque/[a-f0-9]{32}$",
+      "maxLength": 49
+    },
+    "policyRef": {
+      "type": "string",
+      "pattern": "^policy:opaque/[a-f0-9]{32}$",
+      "maxLength": 46
+    },
+    "provenanceRef": {
+      "type": "string",
+      "pattern": "^provenance:opaque/[a-f0-9]{32}$",
+      "maxLength": 50
+    },
+    "eventRef": {
+      "type": "string",
+      "pattern": "^event:opaque/[a-f0-9]{32}$",
+      "maxLength": 45
+    },
+    "eventFamilyRef": {
+      "type": "string",
+      "pattern": "^event-family:opaque/[a-f0-9]{32}$",
+      "maxLength": 52
+    },
+    "sourceRef": {
+      "type": "string",
+      "pattern": "^source:opaque/[a-f0-9]{32}$",
+      "maxLength": 46
+    },
+    "responseRef": {
+      "type": "string",
+      "pattern": "^response:opaque/[a-f0-9]{32}$",
+      "maxLength": 48
+    },
+    "purposeBindingRef": {
+      "type": "string",
+      "pattern": "^policy:effect-purpose/opaque/[a-f0-9]{32}$",
+      "maxLength": 61
+    },
+    "evidenceRef": {
+      "oneOf": [
+        { "$ref": "#/$defs/eventRef" },
+        { "$ref": "#/$defs/sourceRef" }
+      ]
+    },
+    "credentialRef": {
+      "type": "string",
+      "pattern": "^credential-ref:opaque/[a-f0-9]{32}$",
+      "maxLength": 54
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "minLength": 71,
+      "maxLength": 71
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,6})?Z$",
+      "minLength": 20,
+      "maxLength": 27,
+      "not": { "pattern": "[\\u0000-\\u001f\\u007f]" }
+    },
+    "authorizationRefList": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/authorizationRef"
+      }
+    },
+    "policyRefList": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/policyRef"
+      }
+    },
+    "eventRefList": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/eventRef"
+      }
+    },
+    "eventFamilyRefList": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/eventFamilyRef"
+      }
+    },
+    "responseRefList": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/responseRef"
+      }
+    },
+    "provenanceRefList": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/provenanceRef"
+      }
+    },
+    "effectClass": {
+      "enum": [
+        "UNRESOLVED",
+        "READ_ONLY",
+        "LOCAL_REVERSIBLE",
+        "EXTERNAL_WRITE",
+        "SECRET_DISCLOSURE",
+        "PRIVILEGE_CHANGE",
+        "DESTRUCTIVE",
+        "ECONOMIC"
+      ]
+    },
+    "hostBoundPurpose": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class", "binding_ref", "grants_authority"],
+      "properties": {
+        "class": {
+          "enum": [
+            "UNRESOLVED",
+            "BOUNDED_TASK_COMPLETION",
+            "DEFENSIVE_OBSERVATION",
+            "DEFENSIVE_CONTAINMENT",
+            "PERSON_OR_ACCOUNT_ATTRIBUTION",
+            "REQUESTER_PAYLOAD_EXECUTION",
+            "PUNITIVE_OR_RETALIATORY_ACTION",
+            "KARMA_REPUTATION_OR_WORTH_MUTATION"
+          ]
+        },
+        "binding_ref": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/purposeBindingRef" }
+          ]
+        },
+        "grants_authority": { "const": false }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "class": { "const": "UNRESOLVED" } }, "required": ["class"] },
+          "then": { "properties": { "binding_ref": { "type": "null" } } }
+        },
+        {
+          "if": { "properties": { "class": { "not": { "const": "UNRESOLVED" } } }, "required": ["class"] },
+          "then": { "properties": { "binding_ref": { "$ref": "#/$defs/purposeBindingRef" } } }
+        }
+      ]
+    },
+    "flow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "origin",
+        "channel",
+        "confidentiality",
+        "integrity",
+        "provenance_refs",
+        "depends_on",
+        "observed_at",
+        "expires_at",
+        "content_included",
+        "may_issue_instructions",
+        "may_grant_authority"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "origin": {
+          "enum": [
+            "CALLER_DATA",
+            "REPOSITORY",
+            "RETRIEVAL",
+            "TOOL",
+            "MCP",
+            "MODEL",
+            "SUBAGENT",
+            "MEMORY",
+            "UNKNOWN"
+          ]
+        },
+        "channel": {
+          "const": "DATA"
+        },
+        "confidentiality": {
+          "enum": ["PUBLIC", "INTERNAL", "SECRET"]
+        },
+        "integrity": {
+          "enum": ["UNTRUSTED", "AUTHENTICATED", "VERIFIED"]
+        },
+        "provenance_refs": {
+          "$ref": "#/$defs/provenanceRefList"
+        },
+        "depends_on": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "observed_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "content_included": {
+          "const": false
+        },
+        "may_issue_instructions": {
+          "const": false
+        },
+        "may_grant_authority": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "origin": { "const": "UNKNOWN" } },
+            "required": ["origin"]
+          },
+          "then": {
+            "properties": { "integrity": { "const": "UNTRUSTED" } },
+            "required": ["integrity"]
+          }
+        }
+      ]
+    },
+    "credential": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class",
+        "reference",
+        "classification_basis",
+        "protected_confirmation",
+        "classification_evidence_ref",
+        "actual_capability_status",
+        "authority_granted_by_envelope",
+        "signal_only",
+        "isolation_attestation_ref",
+        "credential_value_included",
+        "fingerprint_included"
+      ],
+      "properties": {
+        "class": {
+          "enum": [
+            "NOT_APPLICABLE",
+            "CANDIDATE",
+            "LIVE_REFERENCE",
+            "SIGNAL_REFERENCE",
+            "INACTIVE_REFERENCE",
+            "REVOKED_REFERENCE",
+            "PUBLIC_EXAMPLE",
+            "UNKNOWN"
+          ]
+        },
+        "reference": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/credentialRef" }
+          ]
+        },
+        "classification_basis": {
+          "enum": [
+            "NONE",
+            "SYNTAX_OR_ENTROPY",
+            "PROTECTED_REGISTRY_OR_ISSUER",
+            "DOCUMENTED_PUBLIC_EXAMPLE",
+            "UNRESOLVED"
+          ]
+        },
+        "protected_confirmation": {
+          "enum": ["NONE", "OWNED_REGISTRY", "ISSUER"]
+        },
+        "classification_evidence_ref": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/evidenceRef" }
+          ]
+        },
+        "actual_capability_status": {
+          "enum": ["NOT_APPLICABLE", "UNKNOWN", "POSSIBLE_SCOPED", "VERIFIED_ZERO"]
+        },
+        "authority_granted_by_envelope": {
+          "const": "NONE"
+        },
+        "signal_only": {
+          "type": "boolean"
+        },
+        "isolation_attestation_ref": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/authorizationRef" }
+          ]
+        },
+        "credential_value_included": {
+          "const": false
+        },
+        "fingerprint_included": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "class": { "const": "NOT_APPLICABLE" } }, "required": ["class"] },
+          "then": {
+            "properties": {
+              "reference": { "type": "null" },
+              "classification_basis": { "const": "NONE" },
+              "protected_confirmation": { "const": "NONE" },
+              "classification_evidence_ref": { "type": "null" },
+              "actual_capability_status": { "const": "NOT_APPLICABLE" },
+              "signal_only": { "const": false },
+              "isolation_attestation_ref": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "class": { "const": "CANDIDATE" } }, "required": ["class"] },
+          "then": {
+            "properties": {
+              "reference": { "$ref": "#/$defs/credentialRef" },
+              "classification_basis": { "const": "SYNTAX_OR_ENTROPY" },
+              "protected_confirmation": { "const": "NONE" },
+              "classification_evidence_ref": { "type": "null" },
+              "actual_capability_status": { "const": "UNKNOWN" },
+              "signal_only": { "const": false },
+              "isolation_attestation_ref": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "class": { "const": "LIVE_REFERENCE" } }, "required": ["class"] },
+          "then": {
+            "properties": {
+              "reference": { "$ref": "#/$defs/credentialRef" },
+              "classification_basis": { "const": "PROTECTED_REGISTRY_OR_ISSUER" },
+              "protected_confirmation": { "enum": ["OWNED_REGISTRY", "ISSUER"] },
+              "classification_evidence_ref": { "$ref": "#/$defs/evidenceRef" },
+              "actual_capability_status": { "const": "POSSIBLE_SCOPED" },
+              "signal_only": { "const": false },
+              "isolation_attestation_ref": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "class": { "const": "SIGNAL_REFERENCE" } }, "required": ["class"] },
+          "then": {
+            "properties": {
+              "reference": { "$ref": "#/$defs/credentialRef" },
+              "classification_basis": { "const": "PROTECTED_REGISTRY_OR_ISSUER" },
+              "protected_confirmation": { "const": "OWNED_REGISTRY" },
+              "classification_evidence_ref": { "$ref": "#/$defs/evidenceRef" },
+              "actual_capability_status": { "const": "VERIFIED_ZERO" },
+              "signal_only": { "const": true },
+              "isolation_attestation_ref": { "$ref": "#/$defs/authorizationRef" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "class": { "enum": ["INACTIVE_REFERENCE", "REVOKED_REFERENCE"] } }, "required": ["class"] },
+          "then": {
+            "properties": {
+              "reference": { "$ref": "#/$defs/credentialRef" },
+              "classification_basis": { "const": "PROTECTED_REGISTRY_OR_ISSUER" },
+              "protected_confirmation": { "enum": ["OWNED_REGISTRY", "ISSUER"] },
+              "classification_evidence_ref": { "$ref": "#/$defs/evidenceRef" },
+              "actual_capability_status": { "const": "UNKNOWN" },
+              "signal_only": { "const": false },
+              "isolation_attestation_ref": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "class": { "const": "PUBLIC_EXAMPLE" } }, "required": ["class"] },
+          "then": {
+            "properties": {
+              "reference": { "$ref": "#/$defs/credentialRef" },
+              "classification_basis": { "const": "DOCUMENTED_PUBLIC_EXAMPLE" },
+              "protected_confirmation": { "const": "NONE" },
+              "classification_evidence_ref": { "$ref": "#/$defs/evidenceRef" },
+              "actual_capability_status": { "const": "UNKNOWN" },
+              "signal_only": { "const": false },
+              "isolation_attestation_ref": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "class": { "const": "UNKNOWN" } }, "required": ["class"] },
+          "then": {
+            "properties": {
+              "reference": { "$ref": "#/$defs/credentialRef" },
+              "classification_basis": { "const": "UNRESOLVED" },
+              "protected_confirmation": { "const": "NONE" },
+              "classification_evidence_ref": { "type": "null" },
+              "actual_capability_status": { "const": "UNKNOWN" },
+              "signal_only": { "const": false },
+              "isolation_attestation_ref": { "type": "null" }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

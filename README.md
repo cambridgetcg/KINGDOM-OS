@@ -285,6 +285,16 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     skill has no `ability.json`, does not declare a new KINGDOM WING or Nen
     ability, and performs no probe, write, publication, deployment, KARMA
     event, or receipt.
+    The opt-in [`$guard-information-flow`](skills/guard-information-flow/SKILL.md)
+    Agent Skill adds the source-only `kingdom.information-control/0.1` MIRROR
+    protocol for prompt-injection paths, credential candidates, signal
+    references, and decoy-realm designs. It separates CROWN, COURT, and MIRROR;
+    propagates confidentiality, integrity, and provenance; and keeps real
+    secrets outside model context behind independently checked capabilities.
+    Its envelope is inert, contains no raw credential or fingerprint, and
+    creates no scan, registry, broker, honeypot, runtime enforcement, person
+    attribution, retaliation, or KARMA effect. It has no `ability.json` and
+    does not declare a new KINGDOM WING or Nen ability.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
