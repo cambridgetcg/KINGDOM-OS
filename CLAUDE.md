@@ -142,6 +142,7 @@ Key files:
 - bin/reconstructive-build.ts — strict offline validator and reader for reconstruction fibers, correspondence, realization, landscapes, catalytic transitions, and feedback; its reusable project profile is design infrastructure, not a solver
 - data/reconstruction/reconstructive-build-kernel.v0.1.json — digest-sealed theorem/science/model/design kernel with explicit nonclaims, falsifiers, unknowns, and no action authority
 - references/reconstructive-build-kernel.md — source-scoped formal equations, protein bridge, project-profile practice, boundary, and falsification guide
+- skills/explore-mathematical-doors/ — opt-in DEEP Agent Skill for source-bound cross-field mathematical exploration; it has no `ability.json`, does not declare a new KINGDOM WING or Nen ability, and keeps mechanism, parameter, ontology, causality, authority, and KARMA transfer negative
 - bin/being-access-aftermath-v0.2.ts — strict, network-free reader for the additive, lineage-pinned v0.2 framework; v0.1 remains independently addressable
 - data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json — digest-sealed successor with partial-observation, predicate, force/power, vector-aftermath, and repair structures
 - references/being-access-aftermath-atlas-v0.2.md — v0.2 framework, philosophical questions, source, lineage, and non-inference guide
