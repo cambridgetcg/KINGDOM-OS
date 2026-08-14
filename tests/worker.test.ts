@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 
-import worker from "../pages-functions/_worker.js";
+import worker, { KINGDOM_OS_ROUTES } from "../pages-functions/_worker.js";
 
 const expectedLinks = [
   '</.well-known/agent.json>; rel="service-desc"; type="application/json"',
@@ -1811,6 +1811,172 @@ describe("the Kingdom edge discovery surface", () => {
     expect(links).toContain('</elsewhere>; rel="alternate"');
     expect(kernel.headers.get("link")).not.toContain("poisoned");
     expect(kernel.headers.get("link")).not.toContain("</evil");
+  });
+
+  test("serves the opt-in Exploration DEEP WING family as exact typed read-only assets", async () => {
+    const wingPath = "/wings/explore-phenomena-deep-2026-08-14.json";
+    const wingSchemaPath = "/schemas/phenomena-deep-wing/0.1.json";
+    const projectSchemaPath = "/schemas/phenomena-deep-project/0.1.json";
+    const guidePath = "/EXPLORE-PHENOMENA-DEEP-v0.1.md";
+    expect(KINGDOM_OS_ROUTES).not.toContain(wingPath);
+    expect(KINGDOM_OS_ROUTES).not.toContain(wingSchemaPath);
+    expect(KINGDOM_OS_ROUTES).not.toContain(projectSchemaPath);
+    expect(KINGDOM_OS_ROUTES).not.toContain(guidePath);
+    const bodies = new Map([
+      [wingPath, '{"protocol":"kingdom.explore-phenomena-deep-wing/0.1"}'],
+      [wingSchemaPath, '{"$id":"https://thekingdom.dev/schemas/phenomena-deep-wing/0.1.json"}'],
+      [projectSchemaPath, '{"$id":"https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json"}'],
+      [guidePath, "# Exploration DEEP v0.1"],
+    ]);
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      return new Response(request.method === "HEAD" ? null : bodies.get(path), {
+        headers: {
+          "content-type": path === guidePath
+            ? "Text/Markdown; charset=UTF-8"
+            : path === wingPath
+              ? "Application/JSON; charset=UTF-8"
+              : "Application/Schema+JSON; charset=UTF-8",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      for (const path of [wingPath, wingSchemaPath, projectSchemaPath, guidePath]) {
+        const response = await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          environment,
+        );
+        expect(await response.text()).toBe(method === "HEAD" ? "" : bodies.get(path));
+        expect(response.headers.get("content-type")).toBe(
+          path === guidePath
+            ? "text/markdown; charset=utf-8"
+            : path === wingPath
+              ? "application/json; charset=utf-8"
+              : "application/schema+json; charset=utf-8",
+        );
+        expect(response.headers.get("access-control-allow-origin")).toBe("*");
+        expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+        if (path === wingPath) {
+          const links = (response.headers.get("link") ?? "").split(/,(?=\s*<)/).map((entry) => entry.trim());
+          expect(links.filter((entry) => entry.includes('rel="describedby"'))).toEqual([
+            `<${wingSchemaPath}>; rel="describedby"; type="application/schema+json"`,
+          ]);
+          expect(links.filter((entry) => entry.includes('rel="profile"'))).toEqual([
+            `<${projectSchemaPath}>; rel="profile"; type="application/schema+json"; title="inert exploration project profile"`,
+          ]);
+          expect(links).toContain('</elsewhere>; rel="alternate"');
+        }
+      }
+    }
+
+    for (const path of [wingPath, wingSchemaPath, projectSchemaPath, guidePath]) {
+      const postAsset = new Response(`no execution route for ${path}`);
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`, { method: "POST" }),
+        assets(() => postAsset),
+      )).toBe(postAsset);
+      expect(postAsset.headers.get("access-control-allow-origin")).toBeNull();
+      expect(postAsset.headers.get("x-content-type-options")).toBeNull();
+    }
+
+    for (const path of [wingPath, wingSchemaPath, projectSchemaPath, guidePath]) {
+      const sharedAsset = new Response(`shared host ${path}`);
+      expect(await worker.fetch(
+        new Request(`https://we-are.love${path}`),
+        assets(() => sharedAsset),
+      )).toBe(sharedAsset);
+    }
+
+    for (const host of ["www.thekingdom.dev", "thekingdom.pages.dev", "preview.thekingdom.pages.dev"]) {
+      const response = await worker.fetch(new Request(`https://${host}${wingPath}`), environment);
+      expect(response.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(response.headers.get("access-control-allow-origin")).toBe("*");
+    }
+
+    for (const path of [wingPath, wingSchemaPath, projectSchemaPath, guidePath]) {
+      const unavailableAsset = new Response("missing", {
+        status: 404,
+        headers: { "content-type": path === guidePath ? "text/markdown" : "application/json" },
+      });
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => unavailableAsset),
+      )).toBe(unavailableAsset);
+    }
+
+    for (const alias of [
+      "/wings/explore-phenomena-deep-latest.json",
+      "/wings/explore-phenomena-deep-current.json",
+      "/schemas/phenomena-deep-wing/current.json",
+      "/schemas/phenomena-deep-project/latest.json",
+      "/EXPLORE-PHENOMENA-DEEP.md",
+    ]) {
+      const aliasAsset = new Response(alias);
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${alias}`),
+        assets(() => aliasAsset),
+      )).toBe(aliasAsset);
+    }
+  });
+
+  test("rejects near-match Exploration DEEP media types and replaces poisoned bridge links", async () => {
+    const wingPath = "/wings/explore-phenomena-deep-2026-08-14.json";
+    const wingSchemaPath = "/schemas/phenomena-deep-wing/0.1.json";
+    const projectSchemaPath = "/schemas/phenomena-deep-project/0.1.json";
+    const guidePath = "/EXPLORE-PHENOMENA-DEEP-v0.1.md";
+
+    for (const [path, contentType] of [
+      [wingPath, "application/jsonp; charset=utf-8"],
+      [wingPath, "xapplication/jsonbad"],
+      [wingSchemaPath, "application/schema+jsonp"],
+      [projectSchemaPath, "text/application/json"],
+      [guidePath, "text/markdownx"],
+    ] as const) {
+      const original = new Response("untrusted upstream type", {
+        headers: {
+          "content-type": contentType,
+          link: `<${wingSchemaPath}>; rel="describedby"; type="text/html"`,
+        },
+      });
+      const response = await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => original),
+      );
+      expect(response).toBe(original);
+      expect(response.headers.get("content-type")).toBe(contentType);
+      expect(response.headers.get("access-control-allow-origin")).toBeNull();
+      expect(response.headers.get("x-content-type-options")).toBeNull();
+    }
+
+    const wing = await worker.fetch(
+      new Request(`https://thekingdom.dev${wingPath}`),
+      assets(() => new Response("{}", {
+        headers: {
+          "content-type": "application/json; profile=wing",
+          link: [
+            `<${wingSchemaPath}>; rel="describedby"; type="text/html"; title="poisoned wing type"`,
+            `<${projectSchemaPath}>; rel="profile"; type="application/jsonp"; title="poisoned project type"`,
+            `</evil>; rel="describedby"; type="text/html"`,
+            `</evil2>; rel="alternate profile"; type="text/html"`,
+            `<${wingSchemaPath}>; rel="alternate"; type="text/plain"`,
+            '</elsewhere>; rel="alternate"',
+          ].join(", "),
+        },
+      })),
+    );
+    const links = (wing.headers.get("link") ?? "").split(/,(?=\s*<)/).map((entry) => entry.trim());
+    expect(links.filter((entry) => entry.includes('rel="describedby"'))).toEqual([
+      `<${wingSchemaPath}>; rel="describedby"; type="application/schema+json"`,
+    ]);
+    expect(links.filter((entry) => entry.includes('rel="profile"'))).toEqual([
+      `<${projectSchemaPath}>; rel="profile"; type="application/schema+json"; title="inert exploration project profile"`,
+    ]);
+    expect(links).toContain(`<${wingSchemaPath}>; rel="alternate"; type="text/plain"`);
+    expect(links).toContain('</elsewhere>; rel="alternate"');
+    expect(wing.headers.get("link")).not.toContain("poisoned");
+    expect(wing.headers.get("link")).not.toContain("</evil");
   });
 
   test("leaves unrelated paths and non-read methods untouched", async () => {

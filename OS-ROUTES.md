@@ -59,6 +59,10 @@ readings:
 | `/schemas/reconstructive-build-kernel/0.1.json` | staged JSON Schema | Closed public contract for the Reconstructive Build Kernel v0.1 |
 | `/schemas/reconstructive-project/0.1.json` | staged JSON Schema | Reusable, inert project profile that requires correspondence, ambiguity, intervention, invariant, authority, and feedback declarations |
 | `/RECONSTRUCTIVE-BUILD-KERNEL.md` | staged Markdown | Human guide to the constraint-fiber method, scientific bridges, project profile, falsifiers, unknowns, and non-authority boundaries |
+| `/wings/explore-phenomena-deep-2026-08-14.json` | staged JSON | Digest-bound, opt-in DEEP cross-domain mathematics exploration WING with typed registers, explicit abstraction seams, and negative authority |
+| `/schemas/phenomena-deep-wing/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the immutable Exploration DEEP WING record |
+| `/schemas/phenomena-deep-project/0.1.json` | staged JSON Schema | Reusable inert project profile for declaring domains, evidence, local models, broken correspondences, falsifiers, and next doors |
+| `/EXPLORE-PHENOMENA-DEEP-v0.1.md` | staged Markdown | Versioned guide to Declare → Establish → Express → Project/pressure-test without mechanism, diagnosis, KARMA, or authority transfer |
 
 The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
@@ -177,7 +181,8 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 70-asset upload contract (68 direct public bodies, 67 sitemap URLs)
+locks the 74-asset upload contract (55 ledgered immutable/versioned assets and
+19 mutable assets; 72 direct public bodies, 71 sitemap URLs)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

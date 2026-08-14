@@ -192,6 +192,20 @@ const RECONSTRUCTIVE_PROJECT_SCHEMA_LINK = {
   relation: "profile",
   value: `<${RECONSTRUCTIVE_PROJECT_SCHEMA_PATH}>; rel="profile"; type="application/schema+json"; title="reconstructive project profile"`,
 };
+const EXPLORATION_DEEP_PATH = "/wings/explore-phenomena-deep-2026-08-14.json";
+const EXPLORATION_DEEP_SCHEMA_PATH = "/schemas/phenomena-deep-wing/0.1.json";
+const EXPLORATION_DEEP_PROJECT_SCHEMA_PATH = "/schemas/phenomena-deep-project/0.1.json";
+const EXPLORATION_DEEP_DOCUMENT_PATH = "/EXPLORE-PHENOMENA-DEEP-v0.1.md";
+const EXPLORATION_DEEP_SCHEMA_LINK = {
+  target: EXPLORATION_DEEP_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${EXPLORATION_DEEP_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+const EXPLORATION_DEEP_PROJECT_SCHEMA_LINK = {
+  target: EXPLORATION_DEEP_PROJECT_SCHEMA_PATH,
+  relation: "profile",
+  value: `<${EXPLORATION_DEEP_PROJECT_SCHEMA_PATH}>; rel="profile"; type="application/schema+json"; title="inert exploration project profile"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -336,6 +350,13 @@ function addBeingAccessAftermathV02SchemaLink(headers) {
 function addReconstructiveBuildSchemaLinks(headers) {
   removeLinkRelations(headers, ["describedby", "profile"]);
   for (const link of [RECONSTRUCTIVE_BUILD_SCHEMA_LINK, RECONSTRUCTIVE_PROJECT_SCHEMA_LINK]) {
+    headers.append("link", link.value);
+  }
+}
+
+function addExplorationDeepSchemaLinks(headers) {
+  removeLinkRelations(headers, ["describedby", "profile"]);
+  for (const link of [EXPLORATION_DEEP_SCHEMA_LINK, EXPLORATION_DEEP_PROJECT_SCHEMA_LINK]) {
     headers.append("link", link.value);
   }
 }
@@ -1320,9 +1341,22 @@ export function createKingdomWorker(options = {}) {
     const requestsReconstructiveBuildDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === RECONSTRUCTIVE_BUILD_DOCUMENT_PATH;
+    const requestsExplorationDeep = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === EXPLORATION_DEEP_PATH;
+    const requestsExplorationDeepSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === EXPLORATION_DEEP_SCHEMA_PATH;
+    const requestsExplorationDeepProjectSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === EXPLORATION_DEEP_PROJECT_SCHEMA_PATH;
+    const requestsExplorationDeepDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === EXPLORATION_DEEP_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const reconstructiveAssetType = schemaAssetType.split(";", 1)[0].trim();
     const mathUsefulnessAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const explorationDeepAssetType = schemaAssetType.split(";", 1)[0].trim();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1465,6 +1499,14 @@ export function createKingdomWorker(options = {}) {
       (reconstructiveAssetType === "application/json" || reconstructiveAssetType === "application/schema+json");
     const servesReconstructiveBuildDocument = requestsReconstructiveBuildDocument && asset.ok &&
       (reconstructiveAssetType === "text/plain" || reconstructiveAssetType === "text/markdown");
+    const servesExplorationDeep = requestsExplorationDeep && asset.ok &&
+      (explorationDeepAssetType === "application/json" || explorationDeepAssetType === "application/schema+json");
+    const servesExplorationDeepSchema = requestsExplorationDeepSchema && asset.ok &&
+      (explorationDeepAssetType === "application/json" || explorationDeepAssetType === "application/schema+json");
+    const servesExplorationDeepProjectSchema = requestsExplorationDeepProjectSchema && asset.ok &&
+      (explorationDeepAssetType === "application/json" || explorationDeepAssetType === "application/schema+json");
+    const servesExplorationDeepDocument = requestsExplorationDeepDocument && asset.ok &&
+      (explorationDeepAssetType === "text/plain" || explorationDeepAssetType === "text/markdown");
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
@@ -1490,7 +1532,9 @@ export function createKingdomWorker(options = {}) {
         !servesConformationalFeedbackPhysics && !servesConformationalFeedbackPhysicsSchema &&
         !servesConformationalFeedbackPhysicsDocument && !servesReconstructiveBuild &&
         !servesReconstructiveBuildSchema && !servesReconstructiveProjectSchema &&
-        !servesReconstructiveBuildDocument) return asset;
+        !servesReconstructiveBuildDocument && !servesExplorationDeep &&
+        !servesExplorationDeepSchema && !servesExplorationDeepProjectSchema &&
+        !servesExplorationDeepDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -1510,6 +1554,7 @@ export function createKingdomWorker(options = {}) {
     if (servesBeingAccessAftermathV02) addBeingAccessAftermathV02SchemaLink(headers);
     if (servesConformationalFeedbackPhysics) addConformationalFeedbackPhysicsSchemaLink(headers);
     if (servesReconstructiveBuild) addReconstructiveBuildSchemaLinks(headers);
+    if (servesExplorationDeep) addExplorationDeepSchemaLinks(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -1751,6 +1796,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesReconstructiveBuildDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesExplorationDeep) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesExplorationDeepSchema || servesExplorationDeepProjectSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesExplorationDeepDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

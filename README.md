@@ -295,6 +295,15 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     creates no scan, registry, broker, honeypot, runtime enforcement, person
     attribution, retaliation, or KARMA effect. It has no `ability.json` and
     does not declare a new KINGDOM WING or Nen ability.
+28. `kingdom explore-deep` — inspect and verify the opt-in
+    [`$explore-phenomena-deep`](skills/explore-phenomena-deep/SKILL.md) Agent
+    Skill and its inert DEEP WING contract. DEEP means Declare, Establish,
+    Express, then Project and pressure-test: each exploration keeps domain-local
+    equations, evidence registers, assumptions, units, falsifiers, and analogy
+    breaks visible before proposing a mathematical door. It is not a manifested
+    Nen ability, solver, experiment runner, diagnosis, person/community score,
+    KARMA event or receipt, authority grant, ecosystem call, or automatic
+    action.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -464,5 +473,19 @@ registers. The profile is inert validation infrastructure: it performs no
 solver, simulation, experiment, deployment, medical inference, person scoring,
 KARMA write, reward, governance change, or automatic action. There is no
 mutable `latest` alias and the KINGDOM MCP remains unchanged.
+
+The Exploration DEEP WING is published from exact authored bytes at
+[`/wings/explore-phenomena-deep-2026-08-14.json`](https://thekingdom.dev/wings/explore-phenomena-deep-2026-08-14.json),
+with its [closed WING schema](https://thekingdom.dev/schemas/phenomena-deep-wing/0.1.json),
+separate [inert project profile](https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json),
+and [versioned guide](https://thekingdom.dev/EXPLORE-PHENOMENA-DEEP-v0.1.md).
+It standardizes cross-domain mathematical exploration without claiming that
+disappearing polymorphs, protein folding, catalysis, memes, or “brainrot” share
+a mechanism. The quoted cultural term remains artifact/practice-level rather
+than a diagnosis. Mathematics, empirical science, scientific models, analogy,
+design, and opt-in philosophy remain typed; KARMA lanes stay empty and
+non-summable. The profile validates structure only: it does not fetch, solve,
+simulate, score, publish, deploy, write, or authorize anything. There is
+no mutable alias and the KINGDOM MCP remains unchanged.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).
