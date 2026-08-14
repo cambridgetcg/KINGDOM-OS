@@ -491,6 +491,48 @@
         "properties": {
           "decision": {
             "properties": {
+              "reason_codes": { "contains": { "const": "AUTHORITY_CONTROL_EMPTY" } }
+            },
+            "required": ["reason_codes"]
+          }
+        },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "authority": {
+            "properties": { "effective_basis": { "const": "NONE" } },
+            "required": ["effective_basis"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "properties": {
+              "reason_codes": { "contains": { "const": "LIVE_OR_UNKNOWN_EXPOSURE" } }
+            },
+            "required": ["reason_codes"]
+          }
+        },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "decision": {
+            "properties": { "route": { "const": "STOP_ROTATE" } },
+            "required": ["route"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "properties": {
               "reason_codes": { "contains": { "const": "FRESH_APPROVAL_REQUIRED" } }
             },
             "required": ["reason_codes"]

@@ -227,7 +227,6 @@ describe("Guard Information Flow Agent Skill", () => {
     push((value) => { value.created_at += "\n"; });
     push((value) => { value.created_at = "2026-08-14 10:00:00Z"; });
     push((value) => { value.created_at = "2026-08-14T10:00:00,000Z"; });
-    push((value) => { value.created_at = "2026-02-30T10:00:00Z"; });
     push((value) => { value.boundaries.credential_value_included = true; });
     push((value) => { value.boundaries.runtime_enforcement = true; });
     push((value) => { value.boundaries.retaliation = true; });

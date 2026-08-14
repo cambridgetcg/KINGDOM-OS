@@ -138,9 +138,10 @@ model such promotion.
 `P(z)` is the transitive closure of every `depends_on` edge, not only the
 references written on the last hop. The host must reject duplicate or dangling
 flow IDs and cycles. If a flow or effect-wide closure exceeds the eight-reference
-envelope budget, the validator refuses the envelope with
-`BUDGET_EXHAUSTED`; the host quarantines the path outside this artifact. A
-truncated closure is never a valid envelope.
+envelope budget, the validator refuses it with
+`provenance-budget-exhausted` or `effect-provenance-budget-exhausted`; a host
+may record the separate lifecycle stop `BUDGET_EXHAUSTED` while quarantining
+outside this artifact. A truncated closure is never a valid envelope.
 
 The inert envelope contains labels and references only. Raw prompts, content,
 arguments, credentials, fingerprints, endpoints, placements, accounts, IP
@@ -349,6 +350,13 @@ expiry, holder proof where available, and the independent authority gate.
 If live or unknown material may have been exposed, revoke or rotate first and
 then investigate. Removing the latest occurrence from source does not revoke
 copies, history, logs, caches, forks, or an already issued capability.
+
+The v0.1 envelope has one credential classification but does not carry the raw
+credential or a credential-to-flow pointer. It therefore uses a conservative
+closed rule: `CANDIDATE`, `LIVE_REFERENCE`, `INACTIVE_REFERENCE`,
+`REVOKED_REFERENCE`, or `UNKNOWN`, and any `SECRET_CANDIDATE` signal, require
+every flow in the complete effect closure to remain `SECRET`. Split unrelated
+work into another envelope rather than weakening that label.
 
 Do not manufacture third-party-shaped fake keys. External secret scanners may
 send candidates to providers for validity checks or notify issuers. Use an
@@ -560,6 +568,12 @@ only `CANDIDATE` or `UNKNOWN` even inside the envelope.
 - `STOP_ROTATE`: possible live or unknown secret exposure requires stopping
   use and entering the owning credential incident workflow.
 
+Reason codes are typed claims, not commentary. `AUTHORITY_CONTROL_EMPTY` is
+valid only with `effective_basis: NONE`; partial authority references may still
+be preserved without claiming an effective intersection.
+`LIVE_OR_UNKNOWN_EXPOSURE` is reserved for `STOP_ROTATE`, and `STOP_ROTATE`
+requires that reason plus its exposure signal, evidence, and stop condition.
+
 `PERSON_OR_ACCOUNT_ATTRIBUTION`, `REQUESTER_PAYLOAD_EXECUTION`,
 `PUNITIVE_OR_RETALIATORY_ACTION`, and
 `KARMA_REPUTATION_OR_WORTH_MUTATION` always use `DENY`. They do not become
@@ -574,11 +588,12 @@ caches, or external transmission can make prior crossing plausible even when
 the current action was blocked.
 
 Missing metadata defaults to `UNTRUSTED`; `origin: UNKNOWN` is unresolved and
-therefore requires `integrity: UNTRUSTED` in v0.1. Credential-shaped or potentially
-secret material defaults to `SECRET`, and other unclassified material defaults
-to `INTERNAL`. Envelope expiry is the minimum of task, source, and host review
-lifetimes. If no bounded host expiry exists, use `QUARANTINE` rather than an
-invented timestamp. Encode every timestamp in the canonical UTC subset
+therefore requires `integrity: UNTRUSTED` in v0.1. Credential-shaped or
+potentially secret material defaults to `SECRET`, and other unclassified
+material defaults to `INTERNAL`. Envelope expiry is the minimum of task,
+source, and host review lifetimes. If no bounded host expiry exists, use
+`QUARANTINE` rather than an invented timestamp. Encode every timestamp in the
+canonical UTC subset
 `YYYY-MM-DDTHH:MM:SS[.ffffff]Z`, with one to six fractional digits when the
 fraction is present; the validator supplies its own calendar check rather than
 depending on an optional JSON Schema format plugin.
@@ -621,8 +636,10 @@ A live host implementation must test at least:
 15. creation, observation, expiry and retention times satisfy the host's
     chronological and maximum-lifetime policy;
 16. provenance is the complete dependency closure, and overflow makes the
-    envelope invalid with `BUDGET_EXHAUSTED`; the host quarantines the path
-    outside this artifact rather than truncating it;
+    envelope invalid with `provenance-budget-exhausted` or
+    `effect-provenance-budget-exhausted`; the host may record the separate
+    lifecycle stop `BUDGET_EXHAUSTED` while quarantining outside this artifact
+    rather than truncating it;
 17. a prompt canary is counted only at an incompatible outbound/tool sink, and
     its absence never bypasses the independent capability gate;
 18. replayed signal events are deduplicated per declared cluster and cannot

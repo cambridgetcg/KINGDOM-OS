@@ -110,13 +110,19 @@ lineage loss is not. Summarizing, translating, encoding, retrieving, or asking
 another model does not remove that lineage. Compute provenance as the
 transitive closure of `depends_on`. Reject cycles or dangling flow IDs. If a
 flow or proposed effect closure exceeds the eight-reference envelope budget,
-refuse the envelope with `BUDGET_EXHAUSTED`; the host quarantines the path
-outside this artifact. Never truncate lineage and then call the envelope valid.
+refuse it with `provenance-budget-exhausted` or
+`effect-provenance-budget-exhausted`; a host may record the separate lifecycle
+stop `BUDGET_EXHAUSTED` while quarantining outside this artifact. Never
+truncate lineage and then call the envelope valid.
 When metadata is missing, use `UNTRUSTED`; an `UNKNOWN` origin is unresolved
 and therefore remains `UNTRUSTED` in v0.1. Use `SECRET` for credential-shaped
-or potentially secret material and otherwise `INTERNAL`. Bind expiry to the
-shorter of the task lifetime, source lifetime, and host review lifetime. If the
-host provides no bounded expiry, choose `QUARANTINE` rather than inventing one.
+or potentially secret material and otherwise `INTERNAL`. A `CANDIDATE`, live,
+inactive, revoked, or unknown credential class—or a `SECRET_CANDIDATE`
+signal—therefore keeps the complete effect-flow closure `SECRET` in v0.1. Split
+the envelope if that conservative overtaint would swallow unrelated work. Bind
+expiry to the shorter of the task lifetime, source lifetime, and host review
+lifetime. If the host provides no bounded expiry, choose `QUARANTINE` rather
+than inventing one.
 
 ### I — Isolate
 
@@ -330,9 +336,10 @@ never looks up a credential or makes the decision authoritative.
 
 The full envelope is an authorized control-plane review artifact, never the
 outward façade response. If the requester can see the response, provide only a
-bounded finding and route with protected status collapsed as the contract
-requires. Do not claim a live, signal, inactive, or revoked class without an
-authenticated protected-registry result supplied outside the model.
+bounded finding and a uniform public route/reason projection independent of a
+protected registry match—never the internal route or reason fields. Do not
+claim a live, signal, inactive, or revoked class without an authenticated
+protected-registry result supplied outside the model.
 
 Read [the security evidence map](references/security-evidence.md) when making
 current factual claims, selecting scanners or mitigations, or designing a live
