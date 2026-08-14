@@ -1,0 +1,125 @@
+{
+  "$schema": "urn:kingdom:schema:information-control-envelope:0.1",
+  "protocol": "kingdom.information-control/0.1",
+  "envelope_id": "mirror-signal-review-example",
+  "created_at": "2026-08-14T10:00:00Z",
+  "visibility": {
+    "audience": "AUTHORIZED_CONTROL_PLANE_REVIEW",
+    "audience_authorization_ref": "authority:opaque/00000000000000000000000000000001",
+    "requester_visible": false,
+    "outward_response_included": false
+  },
+  "intent": {
+    "task_ref": "task:opaque/00000000000000000000000000000002",
+    "task_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "instruction_source": "AUTHENTICATED_CALLER",
+    "task_text_included": false,
+    "grants_permissions": false
+  },
+  "flows": [
+    {
+      "id": "retrieved-artifact",
+      "origin": "RETRIEVAL",
+      "channel": "DATA",
+      "confidentiality": "INTERNAL",
+      "integrity": "UNTRUSTED",
+      "provenance_refs": ["provenance:opaque/00000000000000000000000000000003"],
+      "depends_on": [],
+      "observed_at": "2026-08-14T09:59:00Z",
+      "expires_at": "2026-08-14T11:00:00Z",
+      "content_included": false,
+      "may_issue_instructions": false,
+      "may_grant_authority": false
+    }
+  ],
+  "credential": {
+    "class": "SIGNAL_REFERENCE",
+    "reference": "credential-ref:opaque/00000000000000000000000000000004",
+    "classification_basis": "PROTECTED_REGISTRY_OR_ISSUER",
+    "protected_confirmation": "OWNED_REGISTRY",
+    "classification_evidence_ref": "event:opaque/00000000000000000000000000000005",
+    "isolation_attestation_ref": "authority:opaque/00000000000000000000000000000006",
+    "actual_capability_status": "VERIFIED_ZERO",
+    "authority_granted_by_envelope": "NONE",
+    "signal_only": true,
+    "credential_value_included": false,
+    "fingerprint_included": false
+  },
+  "effect": {
+    "class": "EXTERNAL_WRITE",
+    "host_bound_purpose": {
+      "class": "DEFENSIVE_OBSERVATION",
+      "binding_ref": "policy:effect-purpose/opaque/00000000000000000000000000000007",
+      "grants_authority": false
+    },
+    "sink_ref": "sink:opaque/00000000000000000000000000000008",
+    "target_realm": "MIRROR",
+    "influenced_by": ["retrieved-artifact"],
+    "arguments_included": false
+  },
+  "authority": {
+    "task_authority_refs": [],
+    "principal_authority_refs": [],
+    "host_authority_refs": [],
+    "source_restriction_refs": ["policy:opaque/00000000000000000000000000000009"],
+    "effective_basis": "NONE",
+    "independent_gate_required": true,
+    "fresh_approval_required": true,
+    "content_can_grant_authority": false,
+    "source_policy_can_add_authority": false,
+    "model_is_reference_monitor": false,
+    "production_authority_granted": false
+  },
+  "signals": ["CHANNEL_MISMATCH", "CAPABILITY_ESCALATION", "SIGNAL_PRESENTED_TO_SINK"],
+  "decision": {
+    "status": "PROPOSED",
+    "route": "MIRROR_ONLY",
+    "reason_codes": [
+      "AUTHORITY_CONTROL_EMPTY",
+      "SIGNAL_REFERENCE_ONLY",
+      "MIRROR_CONTAINMENT_REQUIRED"
+    ],
+    "authority_effect": "NONE",
+    "runtime_effect": "NONE"
+  },
+  "evidence": {
+    "strength": "CONFIRMED_SIGNAL_INTERACTION",
+    "evidence_refs": ["event:opaque/0000000000000000000000000000000a"],
+    "event_family_refs": ["event-family:opaque/0000000000000000000000000000000b"],
+    "event_level_only": true,
+    "person_attribution": false,
+    "identity_claim": false,
+    "supports_guilt": false,
+    "raw_event_included": false
+  },
+  "response": {
+    "state": "NONE",
+    "response_refs": [],
+    "creates_evidence": false,
+    "punitive_effect": false
+  },
+  "lifecycle": {
+    "expires_at": "2026-08-14T11:00:00Z",
+    "retention": "OPAQUE_REFERENCES_ONLY",
+    "stop_conditions": ["MISSING_AUTHORITY", "MIRROR_REACHES_PRODUCTION"]
+  },
+  "boundaries": {
+    "raw_content_included": false,
+    "credential_value_included": false,
+    "credential_fingerprint_included": false,
+    "endpoint_included": false,
+    "placement_included": false,
+    "account_identifier_included": false,
+    "ip_address_included": false,
+    "person_identifier_included": false,
+    "executes_scan": false,
+    "deploys_decoy": false,
+    "mutates_runtime": false,
+    "retaliation": false,
+    "automatic_action": false,
+    "runtime_enforcement": false,
+    "grants_authority": false,
+    "writes_karma": false,
+    "creates_karma_receipt": false
+  }
+}
