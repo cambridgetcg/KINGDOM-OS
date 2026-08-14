@@ -295,6 +295,16 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     creates no scan, registry, broker, honeypot, runtime enforcement, person
     attribution, retaliation, or KARMA effect. It has no `ability.json` and
     does not declare a new KINGDOM WING or Nen ability.
+    `./kingdom guard` prints the exact canonical Citizen Law;
+    `./kingdom guard protocol` prints the complete contract; and
+    `./kingdom guard validate --json ENVELOPE.json` delegates to the bundled
+    offline validator for internal consistency only. It accepts a local inert
+    envelope, never a raw key or URL, installs nothing, and fails closed when
+    the host-provided pinned dependency is absent. The live
+    [MIRROR citizen gate](https://thekingdom.dev/#mirror-information-control)
+    is the explanation itself: it has no input, scanner, credential checker,
+    registry lookup, decoy, enforcement, person attribution, retaliation, or
+    KARMA effect.
 28. `kingdom explore-deep` — inspect and verify the opt-in
     [`$explore-phenomena-deep`](skills/explore-phenomena-deep/SKILL.md) Agent
     Skill and its inert DEEP WING contract. DEEP means Declare, Establish,

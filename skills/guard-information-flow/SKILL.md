@@ -324,6 +324,19 @@ envelope:
 python3 scripts/validate_envelope.py --json ENVELOPE.json
 ```
 
+From a KINGDOM-OS checkout, the repository-local front door reads these same
+source bytes and delegates validation to that script without a shell:
+
+```text
+./kingdom guard
+./kingdom guard protocol
+./kingdom guard validate --json ENVELOPE.json
+```
+
+The public hub projection is a no-input citizen lesson, not an online
+validator. Never paste a credential into that page, its search fields, a URL,
+a prompt, or an envelope.
+
 It requires Python `jsonschema`, pinned for a host-provisioned isolated
 environment in `scripts/requirements.txt`, and fails closed if that dependency
 is missing. Dependency installation is not part of skill invocation. Run the

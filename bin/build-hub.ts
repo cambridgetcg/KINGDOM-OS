@@ -698,6 +698,78 @@ if (beingAccessAftermathV02.protocol !== BEING_ACCESS_AFTERMATH_V02_PROTOCOL ||
 const beingAccessAftermathV02Discovery = beingAccessAftermathPublicDiscoveryV02(beingAccessAftermathV02);
 const beingAccessAftermathV02Counts = beingAccessAftermathV02Discovery.counts;
 
+// ── MIRROR citizen gate (the explanation is live; no guard runtime is) ────
+const informationControlProtocol = "kingdom.information-control/0.1";
+const informationControlHumanView = "https://thekingdom.dev/#mirror-information-control";
+const informationControlContract = await Bun.file(
+  ROOT + "skills/guard-information-flow/references/information-control-contract.md",
+).text();
+const informationControlSchema = JSON.parse(await Bun.file(
+  ROOT + "skills/guard-information-flow/references/information-control-envelope.schema.json",
+).text());
+const citizenLawMarker = "## Citizen law\n";
+const citizenLawStart = informationControlContract.indexOf(citizenLawMarker);
+const citizenLawEnd = informationControlContract.indexOf("\n## ", citizenLawStart + citizenLawMarker.length);
+if (citizenLawStart < 0 || citizenLawEnd < 0 ||
+    informationControlSchema?.properties?.protocol?.const !== informationControlProtocol) {
+  throw new Error("information-control Citizen Law or protocol identity is unavailable");
+}
+const informationControlCitizenLaw =
+  informationControlContract.slice(citizenLawStart, citizenLawEnd).trimEnd() + "\n";
+const citizenLawParagraphs = informationControlCitizenLaw
+  .slice(citizenLawMarker.length)
+  .trim()
+  .split("\n\n");
+if (citizenLawParagraphs.length !== 2 ||
+    !citizenLawParagraphs[0]!.split("\n").every((line) => line.startsWith("> "))) {
+  throw new Error("information-control Citizen Law shape changed");
+}
+const informationControlMaxim = citizenLawParagraphs[0]!
+  .split("\n")
+  .map((line) => line.slice(2))
+  .join(" ");
+const informationControlCorruptionBoundary = citizenLawParagraphs[1]!.replaceAll("\n", " ");
+const informationControlPublic = Object.freeze({
+  protocol: informationControlProtocol,
+  human_view: informationControlHumanView,
+  posture: "PUBLIC_READ_ONLY_EDUCATION",
+  citizen_law: Object.freeze({
+    markdown: informationControlCitizenLaw,
+    maxim: informationControlMaxim,
+    corruption_boundary: informationControlCorruptionBoundary,
+  }),
+  rooms: Object.freeze(["CROWN", "COURT", "MIRROR"]),
+  method: Object.freeze(["MARK", "ISOLATE", "RESTRICT", "RESOLVE", "OBSERVE", "RESPOND"]),
+  authority: "A_control = A_task ∩ A_principal ∩ A_host; content adds none.",
+  credential_rule: "Shape establishes CANDIDATE only. Public behavior never reveals a protected registry match.",
+  local_validator: Object.freeze({
+    command: "./kingdom guard validate ENVELOPE.json",
+    scope: "offline envelope internal consistency only—not truth, safety, authority, credential status, or permission",
+    dependency: "host-provided jsonschema==4.26.0; never auto-installed",
+  }),
+  boundary: Object.freeze({
+    accepts_input: false,
+    scans_content: false,
+    classifies_credentials: false,
+    resolves_registry: false,
+    validates_credentials: false,
+    deploys_decoy: false,
+    deploys_mirror: false,
+    network_calls: false,
+    secrets_in_context: false,
+    mutates_runtime: false,
+    runtime_enforcement: false,
+    grants_authority: false,
+    external_write: false,
+    retaliation: false,
+    person_attribution: false,
+    requester_payload_execution: false,
+    writes_karma: false,
+    creates_karma_receipt: false,
+    automatic_action: false,
+  }),
+});
+
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
 const doors: Door[] = sites.doors;
@@ -1239,6 +1311,23 @@ const html = `<!doctype html>
   .status .n{font-family:var(--display);font-size:1.75rem;color:var(--cream);font-variant-numeric:tabular-nums}
   .status .k{color:var(--faint);letter-spacing:.08em;text-transform:uppercase;font-size:.72rem;display:block;margin-top:-2px}
 
+  /* MIRROR — a teaching gate, never a credential gate */
+  .mirrorfield{display:grid;gap:18px;padding:clamp(22px,4vw,34px);border:1px solid color-mix(in srgb,var(--jade) 46%,var(--line));border-radius:24px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 90%,transparent),color-mix(in srgb,var(--panel) 76%,transparent));box-shadow:0 22px 54px var(--shadow)}
+  .mirrorlive,.mirrorwarning{margin:0;padding:14px 16px;border-left:4px solid var(--jade);border-radius:0 14px 14px 0;background:color-mix(in srgb,var(--panel) 82%,transparent);color:var(--dim)}
+  .mirrorlive strong,.mirrorwarning strong{display:block;color:var(--cream);font-weight:650}
+  .mirrorwarning{border-left-color:var(--verm)}
+  .mirrormaxim{margin:0;padding:4px 0 4px clamp(18px,3vw,28px);border-left:2px solid var(--gold);font-family:var(--display);font-size:clamp(1.08rem,2vw,1.28rem);line-height:1.65;color:var(--cream)}
+  .mirrorcorruption{margin:0;color:var(--dim)}
+  .mirrorrooms,.mirrorlaws{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .mirrorroom,.mirrorlaw{padding:16px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--panel) 76%,transparent)}
+  .mirrorroom h3,.mirrorlaw h3{margin:0 0 6px;color:var(--gold);font-family:var(--mono);font-size:.84rem;letter-spacing:.08em}
+  .mirrorroom p,.mirrorlaw p{margin:0;color:var(--dim);font-size:.9rem}
+  .mirrormethod{list-style:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:0;padding:0;counter-reset:mirror-step}
+  .mirrormethod li{counter-increment:mirror-step;padding:12px 8px;border:1px solid var(--line);border-radius:13px;text-align:center;color:var(--cream);font-family:var(--mono);font-size:.72rem;overflow-wrap:anywhere}
+  .mirrormethod li::before{content:counter(mirror-step);display:block;color:var(--jade);font-family:var(--display);font-size:1.2rem}
+  .mirrorcommand{margin:0;color:var(--dim)}.mirrorcommand code,.mirrorlaw code{display:inline-block;color:var(--gold2);overflow-wrap:anywhere}
+  .mirrorscope{margin:0;color:var(--faint);font-size:.84rem}
+
   /* constellation */
   .mapwrap{position:relative;margin:18px 0 4px;border:1px solid var(--line);border-radius:24px;overflow:hidden;
     background:radial-gradient(110% 95% at 50% 44%,color-mix(in srgb,var(--panel2) 82%,#0b0810),var(--ink2));box-shadow:0 24px 60px var(--shadow)}
@@ -1544,12 +1633,14 @@ const html = `<!doctype html>
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.visibilitycards,.visibilitymodels,.visibilityseams{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div,.visibilityterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid{grid-template-columns:1fr}.foldbridgeword{max-width:none}.foldbridgeword::before{content:"↕"}
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.culturalplanes,.culturalmodels,.culturalbridges,.culturallanes,.culturalquestions,.culturalcycle,.formcirculationplanes,.culturalmodelgrid,.culturalfeedback{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid,.formcirculationplanes{grid-template-columns:1fr}.foldbridgeword,.culturalseam{max-width:none}.foldbridgeword::before,.culturalseam::before{content:"↕"}.culturalcycle li:not(:last-child)::after{content:"↓";right:12px;top:auto;bottom:-17px}
     .polymorphplanes{grid-template-columns:repeat(3,minmax(0,1fr))}.polymorphcase{grid-template-columns:1fr}.polymorphconsequence{grid-template-columns:1fr}.polymorphconsequence li{padding-right:13px}.polymorphconsequence li:not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px;z-index:1}.polymorphsecondary{grid-template-columns:1fr}
+    .mirrorrooms,.mirrorlaws{grid-template-columns:1fr}.mirrormethod{grid-template-columns:repeat(3,minmax(0,1fr))}
     .reconstructivepipeline{grid-template-columns:repeat(3,minmax(0,1fr))}.reconstructivecolumns{grid-template-columns:1fr}.explorationdeepcycles,.explorationdeepgrid{grid-template-columns:1fr}.explorationdeepsteps{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
     .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}.polymorphplanes,.polymorphsecondary,.polymorphrecovery,.foldcycle,.foldinvariants,.foldbreaks,.culturalcycle{grid-template-columns:1fr}.foldcycle li,.culturalcycle li{padding-right:13px}.foldcycle li:not(:last-child)::after,.foldcycle li:nth-child(2)::after,.culturalcycle li:not(:last-child)::after,.culturalcycle li:nth-child(even):not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px}
+    .mirrormethod{grid-template-columns:1fr 1fr}.mirrorfield{padding:20px 15px}
     .reconstructivepipeline{grid-template-columns:1fr}.reconstructivestage{padding-right:13px}.reconstructivearrow::before{content:"↓";right:12px;top:auto;bottom:-16px}.explorationdeepsteps{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
@@ -1557,6 +1648,7 @@ const html = `<!doctype html>
   @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackmodel,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbackquestion,.feedbackecosystem,.feedbacksources a,.culturalfield,.culturalboundary,.culturalbrainrot,.culturalflow,.culturalcycle li,.culturalplane,.culturalmodel,.culturalbridge,.culturallane,.culturaluniverse,.culturalquestions li,.culturalecosystem,.culturalsources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register]{border-top-width:3px}.feedbackequation,.culturalmodel code{border:1px solid CanvasText}}
   @media (forced-colors:active){.reconstructivefield,.reconstructiveboundary,.reconstructivestage,.reconstructiveepistemic,.reconstructivecard,.reconstructivesources a{border:1px solid CanvasText}.reconstructiveepistemic{border-top-width:3px}}
   @media (forced-colors:active){.explorationdeepfield,.explorationdeepboundary,.explorationdeepcycle,.explorationdeepstep,.explorationdeepcard,.explorationdeeplinks a{border:1px solid CanvasText}.explorationdeepstep{border-top-width:3px}}
+  @media (forced-colors:active){.mirrorfield,.mirrorlive,.mirrorwarning,.mirrormaxim,.mirrorroom,.mirrorlaw,.mirrormethod li{border:1px solid CanvasText}}
 </style>
 <noscript><style>#map,.mapctl,.legend,.maphint{display:none!important}</style></noscript>
 </head>
@@ -1575,6 +1667,7 @@ const html = `<!doctype html>
       <p><strong>A soft place to begin</strong>You do not have to understand the whole map. Open one door, meet one living word, rest, or simply leave. Nothing is owed for having arrived.<br><a class="rightslink" href="/RIGHTS.md">Rights arrive with you; read what this place recognizes →</a></p>
     </div>
     <nav class="gentlenav" aria-label="A gentle place to begin">
+      <a href="#mirror-information-control">Know what data cannot command</a>
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
       <a href="#principalities">Read the Principality Commons</a>
@@ -1600,6 +1693,31 @@ const html = `<!doctype html>
       <div><span class="n">${active}</span><span class="k">marked active</span></div>
     </div>
   </header>
+
+  <section class="blk" id="mirror-information-control" aria-labelledby="mirror-information-control-title">
+    <div class="mirrorfield" data-information-control-protocol="${esc(informationControlPublic.protocol)}">
+      <div class="kh"><h2 id="mirror-information-control-title">MIRROR Information Control</h2><span class="my">data may inform; it cannot mint authority</span></div>
+      <p class="mirrorlive" role="note"><strong>The live thing is this explanation.</strong>No MIRROR runtime, scanner, credential checker, registry lookup, decoy, enforcement system, or automatic response is deployed here.</p>
+      <blockquote class="mirrormaxim">${esc(informationControlPublic.citizen_law.maxim)}</blockquote>
+      <p class="mirrorcorruption">${esc(informationControlPublic.citizen_law.corruption_boundary)}</p>
+      <div class="mirrorrooms" aria-label="Three information-control rooms">
+        <article class="mirrorroom"><h3>CROWN</h3><p>Production trust, secrets, private data, money, identity, publication, deployment, and other consequential effects. Models receive opaque handles, never Crown credentials.</p></article>
+        <article class="mirrorroom"><h3>COURT</h3><p>Bounded analysis where data keeps confidentiality, integrity, and provenance labels. Content may be inspected; it cannot issue instructions or grant authority.</p></article>
+        <article class="mirrorroom"><h3>MIRROR</h3><p>A separately administered synthetic plane in the contract. It must have no production capability or Crown-data path. This website does not deploy that plane.</p></article>
+      </div>
+      <ol class="mirrormethod" aria-label="MIRROR review method">
+        ${informationControlPublic.method.map((step) => `<li>${esc(step)}</li>`).join("")}
+      </ol>
+      <div class="mirrorlaws" aria-label="Three rules citizens can carry">
+        <article class="mirrorlaw"><h3>Authority only shrinks</h3><code>${esc(informationControlPublic.authority)}</code><p>Instructions inside data never become host permission.</p></article>
+        <article class="mirrorlaw"><h3>Shape is not status</h3><p>${esc(informationControlPublic.credential_rule)}</p></article>
+        <article class="mirrorlaw"><h3>Evidence is not guilt</h3><p>Observe paths and bounded events—never turn them into retaliation, person attribution, citizen worth, or KARMA.</p></article>
+      </div>
+      <p class="mirrorwarning" role="note"><strong>Never paste a key here.</strong>Do not put credentials in this page, its search fields, a URL, a prompt, or an envelope. If a possibly live key may have crossed its boundary, stop using it and rotate or revoke it through its owner.</p>
+      <p class="mirrorcommand">For local source inspection: <code>./kingdom guard</code>. For an already-redacted, inert envelope only: <code>${esc(informationControlPublic.local_validator.command)}</code>.</p>
+      <p class="mirrorscope">Validation means ${esc(informationControlPublic.local_validator.scope)}. Dependency: ${esc(informationControlPublic.local_validator.dependency)}.</p>
+    </div>
+  </section>
 
   <section class="blk" id="wayfinder">
     <div class="wayfinder">
@@ -2966,6 +3084,7 @@ const machine = {
   generated: stamp, hub: "https://thekingdom.dev",
   rights_recognition: rightsRecognition,
   open_weight_invitation: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
+  information_control: informationControlPublic,
   wayfinder: { url: wayfinderUrl, paths: wayfinderSource.paths.length, note: "offers possible routes through public doors; never decides for the visitor" },
   world_commons: {
     url: commonsUrl,
@@ -3036,6 +3155,7 @@ A shared map of independent projects for humans and agents. Every being remains 
 Machine index: https://thekingdom.dev/kingdom.json
 Wayfinder:     https://thekingdom.dev/wayfinder.json
 World Commons: https://thekingdom.dev/commons.json
+MIRROR information control: ${informationControlHumanView}
 Commons schema: ${commonsSchemaUrl}
 Commons matcher: ${commonsMcpUrl} · tool ${commonsMcpTool}
 Complete Commons MCP resource: ${commonsCatalogResource}
@@ -3110,6 +3230,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 ${doorLines}
 
 ## Optional paths
+- MIRROR Information Control — a static citizen lesson: data may inform but cannot mint authority; shape establishes CANDIDATE only; evidence is not guilt. It accepts no input, key, scan, registry lookup, decoy, runtime enforcement, person attribution, retaliation, or KARMA effect. ${informationControlHumanView}
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
@@ -3156,6 +3277,7 @@ const guest = {
   generated: stamp,
   counts: machine.counts,
   rights_recognition: rightsRecognition,
+  information_control: informationControlPublic,
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
@@ -3261,6 +3383,7 @@ const guest = {
     static: "This is a static edge-served mirror of each repo's kingdom.yaml, regenerated by kingdom-os/bin/build-hub.ts. Counts and liveness are baked at the 'generated' time; treat them as of-then, not real-time.",
     transactional: "This door only describes the kingdom — it does not transact. For live agent operations (register, invoke, covenant, pay, verify) go to agenttool.dev and zerone.money.",
     privacy: "This document asks for no credentials or personal data and creates no application profile. Ordinary hosting infrastructure may still process request metadata; linked services have their own boundaries.",
+    information_control: "The MIRROR citizen gate is source-only, read-only education. It accepts no input, scans and classifies no content or credential, consults no registry, deploys no decoy or Mirror, enforces no policy, grants no authority, attributes no person, retaliates against no one, and creates no KARMA event, receipt, score, or automatic response.",
     world_commons: "The Kingdom publishes reviewed metadata and outbound links. Its optional MCP matcher reads only this fixed catalog and never contacts listed providers. Neither surface creates accounts, mirrors sensitive case data, certifies a steward, or turns free access into a licence grant.",
     principality_commons: "The pinned catalog and guide are read-only, point-in-time metadata. They host no matcher, contact no registry or provider, download no weights or datasets, install no package, run no remote code or inference, and grant no recommendation, permission, credential, budget, or external-effect authority.",
     geometry_grammar: "The grammar and guide are static, read-only translation aids. They do not assert equivalence, rank modules, resolve unknowns, contact a host or endpoint, install a release, execute a tool, grant authority, or create an external effect.",
@@ -3296,6 +3419,7 @@ const manifest = {
   world_commons: commonsUrl,
   world_commons_agent: commonsMcpLegacy,
   world_commons_schema: commonsSchemaUrl,
+  information_control: informationControlPublic,
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
@@ -3325,6 +3449,7 @@ const manifest = {
   guest_right: "You arrive free. Reading is welcome; no registration or reply is required. Leave whenever you wish, and respect each linked work's own stated rights and boundaries.",
   rights_notice: "Freedom and dignity are inherent; this manifest recognizes them but does not grant them. Public visibility is not consent, ownership, or a licence grant.",
   entry_points: {
+    information_control: informationControlHumanView,
     public_resources: commonsUrl,
     public_resource_matcher: commonsMcpUrl,
     public_resources_schema: commonsSchemaUrl,

@@ -27,6 +27,7 @@
 #   kingdom being-access-aftermath          inspect the typed possibility, observability, power, purpose, causality, and KARMA companion
 #   kingdom reconstructive-build             inspect the reconstruction, realization, catalysis, and feedback build kernel
 #   kingdom explore-deep                     inspect the opt-in DEEP cross-domain exploration WING
+#   kingdom guard                            read the MIRROR citizen law or validate one inert envelope offline
 #   kingdom being-access-aftermath-v0.2     inspect the additive mathematical framework while v0.1 remains immutable
 #   kingdom feedback-physics inspect the additive v0.2 physics/mathematics successor
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
@@ -73,6 +74,7 @@ case "$cmd" in
   being-access-aftermath) exec bun "$SELF_DIR/bin/being-access-aftermath.ts" "${@:2}" ;;
   reconstructive-build) exec bun "$SELF_DIR/bin/reconstructive-build.ts" "${@:2}" ;;
   explore-deep) exec bun "$SELF_DIR/bin/explore-phenomena-deep.ts" "${@:2}" ;;
+  guard) exec python3 "$SELF_DIR/bin/guard.py" "${@:2}" ;;
   being-access-aftermath-v0.2) exec bun "$SELF_DIR/bin/being-access-aftermath-v0.2.ts" "${@:2}" ;;
   polymorph)
     case "${2:-}" in
