@@ -300,7 +300,7 @@ services:
       link in CITIZENS.md 404s — needs-yu confirm private-or-deleted.
 
   - id: kingdom-mcp
-    what: the agent-side front door — one MCP connect makes the whole estate callable (15 tools)
+    what: the agent-side front door — one MCP connect makes the whole estate callable (17 tools)
     audience: agents
     urls: { api: "https://mcp.thekingdom.dev", health: "https://mcp.thekingdom.dev/health" }
     repo: github.com/cambridgetcg/kingdom-mcp@main
