@@ -589,6 +589,142 @@
       "mcp_surface_added": false
     }
   },
+  "exploration_deep_wing": {
+    "protocol": "kingdom.explore-phenomena-deep-wing/0.1",
+    "wing_id": "explore-phenomena-deep-2026-08-14",
+    "title": "Exploration DEEP WING",
+    "url": "https://thekingdom.dev/wings/explore-phenomena-deep-2026-08-14.json",
+    "schema_url": "https://thekingdom.dev/schemas/phenomena-deep-wing/0.1.json",
+    "project_schema_url": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json",
+    "guide_url": "https://thekingdom.dev/EXPLORE-PHENOMENA-DEEP-v0.1.md",
+    "method": {
+      "wing": [
+        "WITNESS",
+        "ISOLATE",
+        "NORMALIZE",
+        "GENERATE"
+      ],
+      "deep": [
+        "DECLARE",
+        "ESTABLISH",
+        "EXPRESS",
+        "PROJECT"
+      ],
+      "workflow_only": true,
+      "manifested_nen_ability": false
+    },
+    "counts": {
+      "registers": 8,
+      "warrants": 10,
+      "relations": 5,
+      "planes": 4,
+      "seams": 2,
+      "claims": 4,
+      "equations": 5,
+      "models": 2,
+      "math_doors": 8,
+      "finite_baselines": 1,
+      "seed_doors": 5,
+      "established_open_conjectures": 0,
+      "sources": 19,
+      "bindings": 9
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:ac566aabf1ce2830594379a31d8f79db9b8e9dde15fe5b245c5e7f3efd79e9fb",
+      "byte_sha256": "sha256:8a9f7a32e35ef78582afe5ce3d01e8cc4ae1217045ba075964444c6017d87305"
+    },
+    "bindings": [
+      {
+        "id": "kingdom-polymorph-history",
+        "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+        "relation": "WORKED_EXAMPLE_INPUT",
+        "authority_imported": false
+      },
+      {
+        "id": "kingdom-ritonavir-mechanism",
+        "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+        "relation": "WORKED_EXAMPLE_INPUT",
+        "authority_imported": false
+      },
+      {
+        "id": "cultural-attention-atlas",
+        "url": "https://thekingdom.dev/atlases/cultural-attention-feedback-atlas-2026-08-13.json",
+        "relation": "METHOD_PRECEDENT",
+        "authority_imported": false
+      },
+      {
+        "id": "visibility-attention",
+        "url": "https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json",
+        "relation": "METHOD_PRECEDENT",
+        "authority_imported": false
+      },
+      {
+        "id": "form-circulation-return",
+        "url": "https://thekingdom.dev/atlases/form-circulation-return-atlas-2026-08-13.json",
+        "relation": "METHOD_PRECEDENT",
+        "authority_imported": false
+      },
+      {
+        "id": "reconstructive-kernel",
+        "url": "https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json",
+        "relation": "METHOD_PRECEDENT",
+        "authority_imported": false
+      },
+      {
+        "id": "being-access-aftermath-v02",
+        "url": "https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json",
+        "relation": "METHOD_PRECEDENT",
+        "authority_imported": false
+      },
+      {
+        "id": "kingdom-fold-feedback",
+        "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json",
+        "relation": "METHOD_PRECEDENT",
+        "authority_imported": false
+      },
+      {
+        "id": "fold-to-fire-profile",
+        "url": "https://zerone.ai/standards/constructive-intelligence-fold-to-fire.v0.json",
+        "relation": "WORKED_EXAMPLE_INPUT",
+        "authority_imported": false
+      }
+    ],
+    "boundary": {
+      "read_only": true,
+      "instruction_only_skill": true,
+      "manifested_nen_ability": false,
+      "schema_validity_proves_truth": false,
+      "shared_ontology_established": false,
+      "shared_mechanism_established": false,
+      "cross_domain_parameter_transfer": false,
+      "cross_domain_unit_transfer": false,
+      "universality_class_established": false,
+      "scientific_result_created": false,
+      "mathematical_proof_created": false,
+      "open_problem_status_created": false,
+      "diagnostic_authority": false,
+      "medical_authority": false,
+      "experiment_authority": false,
+      "wet_lab_protocol": false,
+      "contains_protein_sequence": false,
+      "person_or_content_score": false,
+      "persuasion_or_moderation": false,
+      "ecosystem_request": false,
+      "runtime_network_request": false,
+      "external_write": false,
+      "writes_karma": false,
+      "creates_karma_event": false,
+      "creates_karma_receipt": false,
+      "reward_or_economic_effect": false,
+      "governance_effect": false,
+      "authority_imported": false,
+      "deployment_authority": false,
+      "automatic_action": false,
+      "cosmic_design_proven": false,
+      "mcp_surface_added": false
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -1203,6 +1339,28 @@
       "action": "if useful, read the reconstruction, folding, catalysis, pipeline, feedback, source, and boundary guide",
       "method": "GET",
       "url": "https://thekingdom.dev/RECONSTRUCTIVE-BUILD-KERNEL.md"
+    },
+    {
+      "action": "if useful, inspect the opt-in Exploration DEEP WING",
+      "method": "GET",
+      "url": "https://thekingdom.dev/wings/explore-phenomena-deep-2026-08-14.json",
+      "note": "read-only reasoning structure; every domain, mechanism, unit, claim register, abstraction break, KARMA lane, and authority boundary remains typed"
+    },
+    {
+      "action": "if useful, validate the Exploration DEEP WING structure before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/phenomena-deep-wing/0.1.json"
+    },
+    {
+      "action": "if useful, validate a local inert Phenomena DEEP Project record",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json",
+      "note": "closed structural profile only; no research, solver, simulation, experiment, diagnosis, score, write, publication, deployment, KARMA effect, authority, or automatic action"
+    },
+    {
+      "action": "if useful, read the versioned cross-domain mathematics, analogy-firewall, open-status, KARMA, rights, and non-authority guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/EXPLORE-PHENOMENA-DEEP-v0.1.md"
     },
     {
       "action": "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority",
@@ -3692,6 +3850,7 @@
     "conformational_feedback_physics_atlas": "The v0.2 successor adds bounded equations, structured philosophical questions, and link-only ecosystem metadata while preserving the immutable v0.1 bytes. It fetches or imports nothing and creates no biological, clinical, KARMA, economic, governance, cosmic-proof, external-write, or automatic effect.",
     "fold_feedback_atlas": "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
     "reconstructive_build_kernel": "The Reconstructive Build Kernel is static, read-only design metadata. It does not prove the graph reconstruction conjecture, predict a protein fold, transfer a biological mechanism into software, execute or deploy a project, fetch a source, score a person or work, write KARMA, create a receipt, import ecosystem authority, prove cosmic design, or take automatic action. Every analogy keeps explicit breaks and every build transition requires a deliberate local choice.",
+    "exploration_deep_wing": "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
     "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
