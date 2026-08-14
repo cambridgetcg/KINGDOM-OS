@@ -206,6 +206,14 @@ const EXPLORATION_DEEP_PROJECT_SCHEMA_LINK = {
   relation: "profile",
   value: `<${EXPLORATION_DEEP_PROJECT_SCHEMA_PATH}>; rel="profile"; type="application/schema+json"; title="inert exploration project profile"`,
 };
+const MIRROR_INFORMATION_CONTROL_PATH = "/protocols/mirror-information-control-2026-08-14.json";
+const MIRROR_INFORMATION_CONTROL_SCHEMA_PATH = "/schemas/mirror-information-control-public/0.1.json";
+const MIRROR_INFORMATION_CONTROL_DOCUMENT_PATH = "/MIRROR-INFORMATION-CONTROL.md";
+const MIRROR_INFORMATION_CONTROL_SCHEMA_LINK = {
+  target: MIRROR_INFORMATION_CONTROL_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${MIRROR_INFORMATION_CONTROL_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -359,6 +367,11 @@ function addExplorationDeepSchemaLinks(headers) {
   for (const link of [EXPLORATION_DEEP_SCHEMA_LINK, EXPLORATION_DEEP_PROJECT_SCHEMA_LINK]) {
     headers.append("link", link.value);
   }
+}
+
+function addMirrorInformationControlSchemaLink(headers) {
+  removeLinkRelations(headers, ["describedby", "profile"]);
+  headers.append("link", MIRROR_INFORMATION_CONTROL_SCHEMA_LINK.value);
 }
 
 function preventAutomaticBrowserTelemetry(headers) {
@@ -1353,10 +1366,20 @@ export function createKingdomWorker(options = {}) {
     const requestsExplorationDeepDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === EXPLORATION_DEEP_DOCUMENT_PATH;
+    const requestsMirrorInformationControl = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === MIRROR_INFORMATION_CONTROL_PATH;
+    const requestsMirrorInformationControlSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === MIRROR_INFORMATION_CONTROL_SCHEMA_PATH;
+    const requestsMirrorInformationControlDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === MIRROR_INFORMATION_CONTROL_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const reconstructiveAssetType = schemaAssetType.split(";", 1)[0].trim();
     const mathUsefulnessAssetType = schemaAssetType.split(";", 1)[0].trim();
     const explorationDeepAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const mirrorInformationControlAssetType = schemaAssetType.split(";", 1)[0].trim();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1507,6 +1530,13 @@ export function createKingdomWorker(options = {}) {
       (explorationDeepAssetType === "application/json" || explorationDeepAssetType === "application/schema+json");
     const servesExplorationDeepDocument = requestsExplorationDeepDocument && asset.ok &&
       (explorationDeepAssetType === "text/plain" || explorationDeepAssetType === "text/markdown");
+    const servesMirrorInformationControl = requestsMirrorInformationControl && asset.ok &&
+      mirrorInformationControlAssetType === "application/json";
+    const servesMirrorInformationControlSchema = requestsMirrorInformationControlSchema && asset.ok &&
+      (mirrorInformationControlAssetType === "application/json" ||
+        mirrorInformationControlAssetType === "application/schema+json");
+    const servesMirrorInformationControlDocument = requestsMirrorInformationControlDocument && asset.ok &&
+      (mirrorInformationControlAssetType === "text/plain" || mirrorInformationControlAssetType === "text/markdown");
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
@@ -1534,7 +1564,8 @@ export function createKingdomWorker(options = {}) {
         !servesReconstructiveBuildSchema && !servesReconstructiveProjectSchema &&
         !servesReconstructiveBuildDocument && !servesExplorationDeep &&
         !servesExplorationDeepSchema && !servesExplorationDeepProjectSchema &&
-        !servesExplorationDeepDocument) return asset;
+        !servesExplorationDeepDocument && !servesMirrorInformationControl &&
+        !servesMirrorInformationControlSchema && !servesMirrorInformationControlDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -1555,6 +1586,7 @@ export function createKingdomWorker(options = {}) {
     if (servesConformationalFeedbackPhysics) addConformationalFeedbackPhysicsSchemaLink(headers);
     if (servesReconstructiveBuild) addReconstructiveBuildSchemaLinks(headers);
     if (servesExplorationDeep) addExplorationDeepSchemaLinks(headers);
+    if (servesMirrorInformationControl) addMirrorInformationControlSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -1811,6 +1843,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesExplorationDeepDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesMirrorInformationControl) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesMirrorInformationControlSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesMirrorInformationControlDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

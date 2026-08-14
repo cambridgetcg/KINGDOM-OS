@@ -58,11 +58,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(74);
+      expect(HUB_ASSETS).toHaveLength(77);
       expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(19);
+      const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
+      expect(ledger.issues).toEqual([]);
+      expect(ledger.ledger?.entries).toHaveLength(58);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(72);
-      expect(staged).toHaveLength(74);
+        .toHaveLength(75);
+      expect(staged).toHaveLength(77);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -77,6 +80,7 @@ describe("the hub staging contract", () => {
         "FORM-CIRCULATION-RETURN-ATLAS.md",
         "GEOMETRY-GRAMMAR.md",
         "MATH-USEFULNESS.md",
+        "MIRROR-INFORMATION-CONTROL.md",
         "PRINCIPALITY-COMMONS.md",
         "RECONSTRUCTIVE-BUILD-KERNEL.md",
         "RIGHTS.md",
@@ -102,6 +106,7 @@ describe("the hub staging contract", () => {
         "os",
         "polymorphs",
         "principalities",
+        "protocols",
         "rights.json",
         "robots.txt",
         "schemas",
@@ -121,6 +126,7 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "schemas/reconstructive-project")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/phenomena-deep-wing")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/phenomena-deep-project")).sort()).toEqual(["0.1.json"]);
+      expect(readdirSync(join(output, "schemas/mirror-information-control-public")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/visibility-attention")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/principality-catalog")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/polymorph-history")).sort()).toEqual(["1.json"]);
@@ -144,6 +150,21 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "wings")).sort()).toEqual([
         "explore-phenomena-deep-2026-08-14.json",
       ]);
+      expect(readdirSync(join(output, "protocols")).sort()).toEqual([
+        "mirror-information-control-2026-08-14.json",
+      ]);
+      const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
+      const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
+      expect(sitemapUrls).toHaveLength(74);
+      expect(new Set(sitemapUrls).size).toBe(74);
+      for (const route of [
+        "/protocols/mirror-information-control-2026-08-14.json",
+        "/schemas/mirror-information-control-public/0.1.json",
+        "/MIRROR-INFORMATION-CONTROL.md",
+      ]) {
+        expect(sitemapUrls.filter((url) => url === `https://thekingdom.dev${route}`)).toHaveLength(1);
+      }
+      expect(sitemapUrls.some((url) => /mirror-information-control.*(?:latest|current)/i.test(url))).toBe(false);
       expect(readdirSync(join(output, "atlases")).sort()).toEqual([
         "being-access-aftermath-atlas-2026-08-13-v0-2.json",
         "being-access-aftermath-atlas-2026-08-13.json",
@@ -351,6 +372,38 @@ describe("the hub staging contract", () => {
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("wings/"))).toHaveLength(1);
       expect(HUB_ASSETS.some(({ destination }) => /wings\/.*(?:latest|current).*\.json$/i.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ destination }) => /phenomena-deep-(?:wing|project)\/.*(?:latest|current).*\.json$/i.test(destination))).toBe(false);
+      expect(HUB_ASSETS).toContainEqual({
+        source: "data/security/mirror-information-control-public.v0.1.json",
+        destination: "protocols/mirror-information-control-2026-08-14.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "schemas/mirror-information-control-public-v0.1.schema.json",
+        destination: "schemas/mirror-information-control-public/0.1.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "references/mirror-information-control-public.md",
+        destination: "MIRROR-INFORMATION-CONTROL.md",
+      });
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("protocols/"))).toHaveLength(1);
+      expect(HUB_ASSETS.some(({ destination }) => /mirror-information-control.*(?:latest|current)/i.test(destination))).toBe(false);
+      expect(HUB_ASSETS.some(({ source }) => source.startsWith("skills/guard-information-flow/"))).toBe(false);
+      expect(HUB_ASSETS.some(({ source }) => /(?:envelope|example|validator|evidence)/i.test(source) &&
+        /(?:mirror|information-control|guard-information-flow)/i.test(source))).toBe(false);
+      for (const forbiddenRoot of [
+        "classify",
+        "credentials",
+        "envelope",
+        "introspect",
+        "mirror",
+        "registry",
+        "scan",
+        "submit",
+        "token",
+        "verify",
+      ]) {
+        expect(HUB_ASSETS.some(({ destination }) =>
+          destination === forbiddenRoot || destination.startsWith(`${forbiddenRoot}/`))).toBe(false);
+      }
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(7);
       expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);

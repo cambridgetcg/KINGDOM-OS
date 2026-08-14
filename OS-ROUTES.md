@@ -63,6 +63,17 @@ readings:
 | `/schemas/phenomena-deep-wing/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the immutable Exploration DEEP WING record |
 | `/schemas/phenomena-deep-project/0.1.json` | staged JSON Schema | Reusable inert project profile for declaring domains, evidence, local models, broken correspondences, falsifiers, and next doors |
 | `/EXPLORE-PHENOMENA-DEEP-v0.1.md` | staged Markdown | Versioned guide to Declare → Establish → Express → Project/pressure-test without mechanism, diagnosis, KARMA, or authority transfer |
+| `/protocols/mirror-information-control-2026-08-14.json` | staged JSON | Immutable static CROWN/COURT/MIRROR information-control source law; no credential intake, classification oracle, security runtime, or authority |
+| `/schemas/mirror-information-control-public/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the static public MIRROR publication, not the private control-plane envelope |
+| `/MIRROR-INFORMATION-CONTROL.md` | staged Markdown | Citizen guide to information provenance, capability gates, signal/non-guilt boundaries, and safe response without exposing operational material |
+
+The MIRROR publication routes are static and read-only. They accept no request
+body, credential, prompt, envelope, or security event; publish no signal
+inventory, registry, fingerprint, placement, endpoint, topology, threshold,
+incident, or person data; and perform no scan, classification, decoy interaction,
+enforcement, response action, retaliation, KARMA effect, or automatic action.
+Ordinary static hosting may retain normal request logs. A live documentation
+route is not a live security control.
 
 The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
@@ -181,8 +192,8 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 74-asset upload contract (55 ledgered immutable/versioned assets and
-19 mutable assets; 72 direct public bodies, 71 sitemap URLs)
+locks the 77-asset upload contract (58 ledgered immutable/versioned assets and
+19 mutable assets; 75 direct public bodies, 74 sitemap URLs)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

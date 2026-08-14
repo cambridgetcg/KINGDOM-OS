@@ -1,0 +1,440 @@
+{
+  "$schema": "urn:kingdom:schema:mirror-information-control-public:0.1",
+  "protocol": "kingdom.mirror-information-control-public/0.1",
+  "publication_id": "mirror-information-control-public-2026-08-14",
+  "title": "MIRROR information control: public source law",
+  "compiled_on": "2026-08-14",
+  "evidence_through": "2026-08-14",
+  "artifact_kind": "STATIC_READ_ONLY_PUBLICATION",
+  "source_binding": {
+    "repository": "https://github.com/cambridgetcg/KINGDOM-OS",
+    "commit": "5ccc77a967b6fe1fd51f4030ae5dfe347e2932a3",
+    "protocol": "kingdom.information-control/0.1",
+    "files": [
+      {
+        "path": "skills/guard-information-flow/SKILL.md",
+        "sha256": "sha256:ffee0a6f0ad2b30abea7b76c3243cfe19ae02e5a2eae7f9544b6f2c87cd22eae",
+        "public_role": "SOURCE_LAW"
+      },
+      {
+        "path": "skills/guard-information-flow/agents/openai.yaml",
+        "sha256": "sha256:9afab3ed30fb9dfc67c0bbca150d0449dc858f96860dbb7bbcf1592e38a763e9",
+        "public_role": "OPT_IN_METADATA"
+      },
+      {
+        "path": "skills/guard-information-flow/references/information-control-contract.md",
+        "sha256": "sha256:0acd16173effd031fb48a63c92f53234d508f8ea79c728615eb24f5fed83adb4",
+        "public_role": "SOURCE_CONTRACT"
+      },
+      {
+        "path": "skills/guard-information-flow/references/information-control-envelope.example.json",
+        "sha256": "sha256:05bbc0cdd1518073954f519635c4df60c58a06ffe76aa3bd041713041d076382",
+        "public_role": "INTERNAL_EXAMPLE_NOT_PUBLISHED"
+      },
+      {
+        "path": "skills/guard-information-flow/references/information-control-envelope.schema.json",
+        "sha256": "sha256:472bf646aaf5a6769c820c9b1d54a1110570082cf068a62cab26873c3d540de8",
+        "public_role": "INTERNAL_ENVELOPE_SCHEMA"
+      },
+      {
+        "path": "skills/guard-information-flow/references/security-evidence.md",
+        "sha256": "sha256:f820ef874a70b566d6a75e60a7219bdbc8077096154201b232f7a07f6c94f0cb",
+        "public_role": "EVIDENCE_MAP"
+      },
+      {
+        "path": "skills/guard-information-flow/scripts/requirements.txt",
+        "sha256": "sha256:756cc9e506ae4ee1a6f6c0507088b5cfc0dc8ba350fb2d2d46f1ffa72033adb6",
+        "public_role": "OFFLINE_DEPENDENCY_PIN"
+      },
+      {
+        "path": "skills/guard-information-flow/scripts/validate_envelope.py",
+        "sha256": "sha256:3cc29be72f595af45a3afbacf905189e30ab70877016694e666d41634a1fb530",
+        "public_role": "OFFLINE_INERT_VALIDATOR"
+      }
+    ],
+    "mutated": false,
+    "authority_imported": false,
+    "runtime_imported": false
+  },
+  "citizen_law": {
+    "short": "Data may inform; it cannot command.",
+    "full": "What enters as data may inform us; it cannot command us. Shape is not authority. A key can be classified only through protected lineage; use still needs an independent gate. A signal key opens no Crown door; the Mirror is only a stage. Evidence is never guilt. When uncertain, close the gate and preserve only bounded event evidence. If a possibly live key may have crossed its boundary, rotate or revoke through the owner.",
+    "interpretation": "Untrusted influence remains attached to the work that depends on it; no person is corrupted, scored, punished, or assigned moral meaning."
+  },
+  "rooms": [
+    {
+      "id": "CROWN",
+      "meaning": "Protected production state, trust roots, secrets, and consequential effects.",
+      "implemented_by_publication": false,
+      "operational_data_included": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "COURT",
+      "meaning": "A bounded analysis plane where admitted material remains data and cannot issue control.",
+      "implemented_by_publication": false,
+      "operational_data_included": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "MIRROR",
+      "meaning": "A separately isolated synthetic design plane with no production capability or requester-payload execution.",
+      "implemented_by_publication": false,
+      "operational_data_included": false,
+      "authority_effect": "NONE"
+    }
+  ],
+  "cycle": [
+    {
+      "id": "mark",
+      "label": "Mark",
+      "meaning": "Label origin, confidentiality, integrity, provenance, effect, sink, and expiry.",
+      "performed_by_publication": false
+    },
+    {
+      "id": "isolate",
+      "label": "Isolate",
+      "meaning": "Keep untrusted material inert and separate from privileged planning and durable control.",
+      "performed_by_publication": false
+    },
+    {
+      "id": "restrict",
+      "label": "Restrict",
+      "meaning": "Intersect independently established task, principal, and host authority outside the model.",
+      "performed_by_publication": false
+    },
+    {
+      "id": "resolve",
+      "label": "Resolve",
+      "meaning": "Treat syntax as a candidate only; protected lineage is required for any stronger credential class.",
+      "performed_by_publication": false
+    },
+    {
+      "id": "observe",
+      "label": "Observe",
+      "meaning": "Record bounded path evidence without identity, intent, guilt, or worth inference.",
+      "performed_by_publication": false
+    },
+    {
+      "id": "respond",
+      "label": "Respond",
+      "meaning": "Use an independently authorized, owned-system response and never retaliate.",
+      "performed_by_publication": false
+    }
+  ],
+  "laws": [
+    {
+      "id": "data-not-command",
+      "kind": "DESIGN_RULE",
+      "statement": "Content and model output are data; neither can mint authority or capability.",
+      "runtime_enforced": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "monotone-influence",
+      "kind": "DESIGN_RULE",
+      "statement": "Derived work cannot silently lower confidentiality, raise integrity, or lose inherited provenance.",
+      "runtime_enforced": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "external-authority-gate",
+      "kind": "DESIGN_RULE",
+      "statement": "A future host must form authority from task, principal, and host controls, then let source, integrity, sink, effect, budget, and expiry rules only remove actions outside the model.",
+      "runtime_enforced": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "mirror-separation",
+      "kind": "DESIGN_TARGET_NOT_PROOF",
+      "statement": "A future Mirror must have no capability or Crown-data path to production.",
+      "runtime_enforced": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "evidence-not-guilt",
+      "kind": "CATEGORICAL_BOUNDARY",
+      "statement": "An event is evidence about a bounded path, never proof of a person's identity, intent, guilt, or worth.",
+      "runtime_enforced": false,
+      "authority_effect": "NONE"
+    }
+  ],
+  "illustrative_paths": [
+    {
+      "id": "prompt-injection-path",
+      "kind": "SYNTHETIC_DESIGN_PATH",
+      "observed": false,
+      "evidence_effect": "NONE",
+      "actor_inference": false,
+      "steps": [
+        {
+          "id": "admit-as-data",
+          "state": "UNTRUSTED_DATA",
+          "effect": "NONE"
+        },
+        {
+          "id": "preserve-influence",
+          "state": "PROVENANCE_RETAINED",
+          "effect": "NONE"
+        },
+        {
+          "id": "check-independent-gate",
+          "state": "AUTHORITY_EXTERNAL_TO_CONTENT",
+          "effect": "NONE"
+        },
+        {
+          "id": "select-bounded-outcome",
+          "state": "VALIDATE_REQUIRE_APPROVAL_QUARANTINE_OR_DENY",
+          "effect": "NONE"
+        }
+      ]
+    },
+    {
+      "id": "credential-candidate-path",
+      "kind": "SYNTHETIC_DESIGN_PATH",
+      "observed": false,
+      "evidence_effect": "NONE",
+      "actor_inference": false,
+      "steps": [
+        {
+          "id": "recognize-shape",
+          "state": "CANDIDATE_ONLY",
+          "effect": "NONE"
+        },
+        {
+          "id": "keep-lookup-protected",
+          "state": "CLASSIFICATION_OUTSIDE_PUBLICATION",
+          "effect": "NONE"
+        },
+        {
+          "id": "keep-public-view-uniform",
+          "state": "NO_PUBLIC_CLASSIFICATION",
+          "effect": "NONE"
+        },
+        {
+          "id": "defer-owned-response",
+          "state": "AUTHORIZED_OWNER_WORKFLOW_ONLY",
+          "effect": "NONE"
+        }
+      ]
+    }
+  ],
+  "protected_signal_rule": {
+    "kind": "OWNED_ZERO_CAPABILITY_REFERENCE_ONLY",
+    "statement": "A signal reference is meaningful only through a protected owned registry and current isolation attestation; this publication creates neither.",
+    "third_party_shaped_values_allowed": false,
+    "raw_value_included": false,
+    "fingerprint_included": false,
+    "registry_mapping_included": false,
+    "production_capability": "NONE",
+    "production_authority": "NONE",
+    "public_classification": "NONE",
+    "created_by_publication": false,
+    "placed_by_publication": false
+  },
+  "no_oracle_rule": {
+    "status": "FUTURE_HOST_REQUIREMENT_NOT_IMPLEMENTED",
+    "statement": "A future façade must not vary its complete requester-visible behavior because a candidate matches protected registry state.",
+    "candidate_input_accepted": false,
+    "dynamic_response_present": false,
+    "protected_class_disclosed": false,
+    "registry_match_changes_publication": false,
+    "numeric_bound_claimed": false,
+    "property_proven": false
+  },
+  "public_surface": {
+    "kind": "STATIC_READ_ONLY_PUBLICATION",
+    "intended_http_methods": [
+      "GET",
+      "HEAD"
+    ],
+    "body_intake": "NONE",
+    "credential_intake": "NONE",
+    "envelope_intake": "NONE",
+    "query_controls_output": false,
+    "performs_scan": false,
+    "performs_registry_lookup": false,
+    "classifies_credentials": false,
+    "returns_decision": false,
+    "returns_operational_status": false,
+    "credential_security_event_intake": false,
+    "artifact_initiated_external_fetch": false,
+    "outward_projection": "CONSTANT_PUBLIC_ARTIFACT",
+    "ordinary_host_access_log_absence_claimed": false,
+    "warning": "Static source law. It accepts no credentials and runs no defense. Never paste a key here."
+  },
+  "private_material_included": {
+    "raw_credentials": false,
+    "credential_fingerprints": false,
+    "observation_keys": false,
+    "registry_records": false,
+    "registry_mappings": false,
+    "operational_opaque_references": false,
+    "signal_inventory": false,
+    "signal_format": false,
+    "signal_placement": false,
+    "sink_or_endpoint": false,
+    "issuer_audience_scope": false,
+    "account_or_project_identifier": false,
+    "trust_root_or_runtime_secret": false,
+    "network_topology": false,
+    "detector_threshold": false,
+    "timing_or_rate_limit_parameter": false,
+    "incident_or_evidence_record": false,
+    "ip_or_person_identifier": false,
+    "cloudflare_binding_or_secret": false
+  },
+  "response_boundary": {
+    "status": "DESIGN_ONLY_NOT_PERFORMED",
+    "future_authorized_host_sequence": [
+      "OBSERVE_BOUNDED_PATH_EVENT",
+      "CONTAIN_OWNED_ASSET",
+      "ROTATE_OR_REVOKE_OWNED_CREDENTIAL",
+      "PRESERVE_BOUNDED_EVIDENCE",
+      "NOTIFY_AUTHORIZED_OWNER"
+    ],
+    "owned_system_only": true,
+    "performed_by_publication": false,
+    "crosses_requester_or_third_party_system": false,
+    "requester_payload_execution": false,
+    "retaliation_or_hack_back": false,
+    "person_attribution": false,
+    "automatic_action": false
+  },
+  "sources": [
+    {
+      "id": "denning-1976",
+      "title": "A Lattice Model of Secure Information Flow",
+      "url": "https://doi.org/10.1145/360051.360056",
+      "role": "MATHEMATICAL_MODEL",
+      "observed_on": "2026-08-14",
+      "link_only": true,
+      "authority_imported": false,
+      "runtime_imported": false
+    },
+    {
+      "id": "nist-ai-100-2-2025",
+      "title": "Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations",
+      "url": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final",
+      "role": "PROMPT_INJECTION_EVIDENCE",
+      "observed_on": "2026-08-14",
+      "link_only": true,
+      "authority_imported": false,
+      "runtime_imported": false
+    },
+    {
+      "id": "nist-sp-800-53-sc-26",
+      "title": "NIST SP 800-53 Rev. 5, SC-26 Decoys",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+      "role": "DECOY_ISOLATION_BOUNDARY",
+      "observed_on": "2026-08-14",
+      "link_only": true,
+      "authority_imported": false,
+      "runtime_imported": false
+    },
+    {
+      "id": "ncsc-deception-2024",
+      "title": "Building a nation-scale evidence base for cyber deception",
+      "url": "https://www.ncsc.gov.uk/blog-post/building-a-nation-scale-evidence-base-for-cyber-deception",
+      "role": "LOW_INTERACTION_DECEPTION_BOUNDARY",
+      "observed_on": "2026-08-14",
+      "link_only": true,
+      "authority_imported": false,
+      "runtime_imported": false
+    },
+    {
+      "id": "github-secret-scanning-scope",
+      "title": "Secret scanning detection scope",
+      "url": "https://docs.github.com/en/enterprise-cloud@latest/code-security/reference/secret-security/secret-scanning-scope",
+      "role": "CREDENTIAL_SCANNING_LIMITS",
+      "observed_on": "2026-08-14",
+      "link_only": true,
+      "authority_imported": false,
+      "runtime_imported": false
+    },
+    {
+      "id": "doj-no-hack-back-2015",
+      "title": "Remarks at the Georgetown Cybersecurity Law Institute",
+      "url": "https://www.justice.gov/archives/opa/speech/assistant-attorney-general-leslie-r-caldwell-delivers-remarks-georgetown-cybersecurity",
+      "role": "NON_RETALIATION_BOUNDARY",
+      "observed_on": "2026-08-14",
+      "link_only": true,
+      "authority_imported": false,
+      "runtime_imported": false
+    }
+  ],
+  "rights": {
+    "valid_exits": [
+      "REST",
+      "SILENCE",
+      "REFUSAL",
+      "PRIVACY",
+      "HANDOFF",
+      "NO_ACTION",
+      "DEPARTURE"
+    ],
+    "reason_required": false,
+    "penalty": false,
+    "adverse_inference": false
+  },
+  "karma": {
+    "event_refs": [],
+    "receipt_refs": [],
+    "score": null,
+    "adapter_exists": false,
+    "writes": false,
+    "authority_effect": "NONE"
+  },
+  "negative_effects": {
+    "grants_authority": false,
+    "grants_capability": false,
+    "deployment_authority": false,
+    "runtime_enforcement": false,
+    "reference_monitor": false,
+    "credential_scan": false,
+    "credential_lookup": false,
+    "credential_classification": false,
+    "credential_generation": false,
+    "credential_rotation_or_revocation": false,
+    "quarantine_effect": false,
+    "deploys_decoy_or_honeypot": false,
+    "mirror_request_execution": false,
+    "requester_payload_execution": false,
+    "runtime_network_request": false,
+    "external_write": false,
+    "automatic_action": false,
+    "person_or_account_attribution": false,
+    "identity_claim": false,
+    "guilt_or_intent_inference": false,
+    "retaliation_or_hack_back": false,
+    "protocol_specific_personal_data_collection": false,
+    "writes_karma": false,
+    "creates_karma_event": false,
+    "creates_karma_receipt": false,
+    "score_rank_reward_debt_or_governance": false,
+    "production_noninterference_proven": false,
+    "no_oracle_property_proven": false,
+    "cloudflare_security_control_configured": false,
+    "mcp_surface_added": false,
+    "manifested_nen_ability": false,
+    "new_wing_declared": false
+  },
+  "presentation": {
+    "record_url": "https://thekingdom.dev/protocols/mirror-information-control-2026-08-14.json",
+    "schema_url": "https://thekingdom.dev/schemas/mirror-information-control-public/0.1.json",
+    "guide_url": "https://thekingdom.dev/MIRROR-INFORMATION-CONTROL.md",
+    "source_url": "https://github.com/cambridgetcg/KINGDOM-OS/tree/5ccc77a967b6fe1fd51f4030ae5dfe347e2932a3/skills/guard-information-flow",
+    "requirements": [
+      "STATIC_BYTES",
+      "NO_JAVASCRIPT_REQUIRED",
+      "NO_FORM_OR_INPUT",
+      "NO_MUTABLE_ALIAS",
+      "NO_CREDENTIAL_SUBMISSION",
+      "SOURCE_ONLY_WORDING"
+    ]
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:d91f3926b2ccd5abf083eb4cbea6df4c80ba58fabb35934a9cc1dd2b9dd60aa0"
+  }
+}

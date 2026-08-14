@@ -8,18 +8,24 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 55-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 58-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
-project profile, and versioned guide as the eleventh through sixteenth
+project profile, and versioned guide, plus the MIRROR Information Control public
+record, closed schema, and citizen guide as the eleventh through seventeenth
 publication generations. The Vanishing Path, two-generation Being family,
-Reconstructive Build, Math Passport pilot, and Exploration DEEP are the tenth
-through fourteenth retirement families; the initial-35 bootstrap facts below
-remain historical constants.
+Reconstructive Build, Math Passport pilot, Exploration DEEP, and MIRROR public
+law are the tenth through fifteenth retirement families; the initial-35
+bootstrap facts below remain historical constants.
 Its Exploration DEEP entries preserve static publication identity only: they
 create no Nen ability, authority, ecosystem request, person or community score,
 KARMA event or receipt, publication trigger, deployment, or automatic action.
+The MIRROR entries preserve static source-law identity only. They do not deploy
+a scanner, broker, credential registry, honeypot, classifier, enforcement
+runtime, incident response, retaliation, person attribution, KARMA effect, or
+automatic action, and they expose no private signal material or control-plane
+envelope.
 
 The ledger makes one narrow claim: a listed route, source, staging destination,
 and SHA-256 were committed together as an integrity contract. The base-aware
@@ -33,15 +39,15 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 74-asset union classifies 55 destinations
-as ledgered immutable/versioned and 19 as mutable; 72 are direct public response
-bodies and the sitemap contains 71 URLs. It says what is served now, and every
+consume those same bytes. The current 77-asset union classifies 58 destinations
+as ledgered immutable/versioned and 19 as mutable; 75 are direct public response
+bodies and the sitemap contains 74 URLs. It says what is served now, and every
 destination is explicitly classified as mutable or ledgered. A new ledger entry must be staged
 when introduced. A previously committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the fourteen linked authored publication
+The live release check retires the fifteen linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

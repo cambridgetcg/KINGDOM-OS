@@ -73,6 +73,14 @@ import {
   phenomenaDeepPublicDiscovery,
 } from "./explore-phenomena-deep.ts";
 import {
+  MIRROR_INFORMATION_CONTROL_PUBLIC_DIGEST,
+  MIRROR_INFORMATION_CONTROL_PUBLIC_DOCUMENT_URL,
+  MIRROR_INFORMATION_CONTROL_PUBLIC_SCHEMA_URL,
+  MIRROR_INFORMATION_CONTROL_PUBLIC_URL,
+  loadMirrorInformationControl,
+  mirrorInformationControlPublicSummary,
+} from "./mirror-information-control.ts";
+import {
   FORM_CIRCULATION_RETURN_DIGEST,
   FORM_CIRCULATION_RETURN_DOCUMENT_URL,
   FORM_CIRCULATION_RETURN_SCHEMA_URL,
@@ -459,6 +467,9 @@ const phenomenaDeepWingPath = new URL(PHENOMENA_DEEP_WING_URL).pathname;
 const phenomenaDeepWingSchemaPath = new URL(PHENOMENA_DEEP_WING_SCHEMA_URL).pathname;
 const phenomenaDeepProjectSchemaPath = new URL(PHENOMENA_DEEP_PROJECT_SCHEMA_URL).pathname;
 const phenomenaDeepWingDocumentPath = new URL(PHENOMENA_DEEP_WING_DOCUMENT_URL).pathname;
+const mirrorInformationControlPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_URL).pathname;
+const mirrorInformationControlSchemaPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_SCHEMA_URL).pathname;
+const mirrorInformationControlDocumentPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_DOCUMENT_URL).pathname;
 
 export type PublicationFamily = {
   id: string;
@@ -565,6 +576,21 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "exploration_deep_wing_schema",
       "exploration_deep_wing_project_schema",
       "exploration_deep_wing_guide",
+    ],
+  },
+  {
+    id: "mirror-information-control",
+    label: "MIRROR Information Control",
+    routes: [
+      mirrorInformationControlPath,
+      mirrorInformationControlSchemaPath,
+      mirrorInformationControlDocumentPath,
+    ],
+    discoveryProperties: ["mirror_information_control"],
+    entryPointProperties: [
+      "mirror_information_control",
+      "mirror_information_control_schema",
+      "mirror_information_control_guide",
     ],
   },
   {
@@ -1182,6 +1208,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const foldFeedbackActive = familyActive("fold-feedback-atlas");
   const reconstructiveBuildActive = familyActive("reconstructive-build-kernel");
   const explorationDeepWingActive = familyActive("exploration-deep-wing");
+  const mirrorInformationControlActive = familyActive("mirror-information-control");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
   const formCirculationReturnActive = familyActive("form-circulation-return");
@@ -1580,6 +1607,40 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (mirrorInformationControlActive) {
+    const recordHead = await fetch(url(mirrorInformationControlPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const recordLink = recordHead.headers.get("link") || "";
+    if (!recordHead.ok ||
+        normalizedMediaType(recordHead.headers.get("content-type")) !== "application/json" ||
+        recordHead.headers.get("access-control-allow-origin") !== "*" ||
+        (recordHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          recordLink,
+          mirrorInformationControlSchemaPath,
+          "describedby",
+          "application/schema+json",
+        ) ||
+        /(?:^|[;,\s])rel\s*=\s*(?:"[^"]*\bprofile\b[^"]*"|profile)(?:[;,\s]|$)/i.test(recordLink)) {
+      throw new Error(`${mirrorInformationControlPath} is not static public JSON with one canonical public-schema link`);
+    }
+
+    const guideHead = await fetch(url(mirrorInformationControlDocumentPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!guideHead.ok ||
+        normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${mirrorInformationControlDocumentPath} is not served as public Markdown`);
+    }
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -1638,6 +1699,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(foldFeedbackActive ? [foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath] : []),
     ...(reconstructiveBuildActive ? [reconstructiveBuildSchemaPath, reconstructiveProjectSchemaPath] : []),
     ...(explorationDeepWingActive ? [phenomenaDeepWingSchemaPath, phenomenaDeepProjectSchemaPath] : []),
+    ...(mirrorInformationControlActive ? [mirrorInformationControlSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
@@ -1656,7 +1718,8 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     const requiresExactSchemaType = path === reconstructiveBuildSchemaPath ||
       path === reconstructiveProjectSchemaPath ||
       path === phenomenaDeepWingSchemaPath ||
-      path === phenomenaDeepProjectSchemaPath;
+      path === phenomenaDeepProjectSchemaPath ||
+      path === mirrorInformationControlSchemaPath;
     const hasExpectedSchemaType = requiresExactSchemaType
       ? normalizedMediaType(schemaContentType) === "application/schema+json"
       : (schemaContentType || "").toLowerCase().startsWith("application/schema+json");
@@ -1717,6 +1780,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedPhenomenaDeepWing = phenomenaDeepWing
     ? phenomenaDeepPublicDiscovery(phenomenaDeepWing)
+    : undefined;
+  const mirrorInformationControl = mirrorInformationControlActive
+    ? loadMirrorInformationControl()
+    : undefined;
+  const expectedMirrorInformationControl = mirrorInformationControl
+    ? mirrorInformationControlPublicSummary(mirrorInformationControl)
     : undefined;
   const expectedVisibilityAttention = visibilityAttentionActive
     ? visibilityAttentionPublicDiscovery(loadVisibilityAttentionTranslation())
@@ -2225,6 +2294,63 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (mirrorInformationControlActive) {
+    const publication = mirrorInformationControl!;
+    const expected = expectedMirrorInformationControl!;
+    const targets = new Set([
+      MIRROR_INFORMATION_CONTROL_PUBLIC_URL,
+      MIRROR_INFORMATION_CONTROL_PUBLIC_SCHEMA_URL,
+      MIRROR_INFORMATION_CONTROL_PUBLIC_DOCUMENT_URL,
+    ]);
+    const guestActions = (guest?.next_actions ?? []).filter((action: any) => targets.has(action?.url));
+    const privateValues = Object.values(publication.private_material_included ?? {});
+    const forbiddenDiscoveryKeys = [
+      "mcp", "tool", "matcher", "classify", "introspect", "submit", "scan",
+      "registry", "credential", "signal", "incident", "execute", "write", "score",
+      "reward", "karma", "authority", "publish", "deploy",
+    ];
+    if (!isDeepStrictEqual(manifest?.mirror_information_control, expected) ||
+      !isDeepStrictEqual(guest?.mirror_information_control, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.mirror_information_control, expected) ||
+      manifest?.entry_points?.mirror_information_control !== MIRROR_INFORMATION_CONTROL_PUBLIC_URL ||
+      manifest?.entry_points?.mirror_information_control_schema !== MIRROR_INFORMATION_CONTROL_PUBLIC_SCHEMA_URL ||
+      manifest?.entry_points?.mirror_information_control_guide !== MIRROR_INFORMATION_CONTROL_PUBLIC_DOCUMENT_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        forbiddenDiscoveryKeys.some((key) => key in action)) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="mirror-information-control"') ||
+      !authoredRootHtml.includes('data-mirror-information-control') ||
+      !authoredRootHtml.includes(`href="${mirrorInformationControlPath}"`) ||
+      !authoredRootHtml.includes(`href="${mirrorInformationControlSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${mirrorInformationControlDocumentPath}"`) ||
+      publication.artifact_kind !== "STATIC_READ_ONLY_PUBLICATION" ||
+      publication.public_surface?.body_intake !== "NONE" ||
+      publication.public_surface?.credential_intake !== "NONE" ||
+      publication.public_surface?.envelope_intake !== "NONE" ||
+      publication.public_surface?.performs_scan !== false ||
+      publication.public_surface?.performs_registry_lookup !== false ||
+      publication.public_surface?.classifies_credentials !== false ||
+      publication.public_surface?.returns_decision !== false ||
+      publication.public_surface?.credential_security_event_intake !== false ||
+      privateValues.length === 0 || privateValues.some((value) => value !== false) ||
+      publication.illustrative_paths?.some((path: any) => path.observed !== false ||
+        path.actor_inference !== false || path.evidence_effect !== "NONE") ||
+      publication.response_boundary?.performed_by_publication !== false ||
+      publication.response_boundary?.retaliation_or_hack_back !== false ||
+      publication.negative_effects?.grants_authority !== false ||
+      publication.negative_effects?.runtime_enforcement !== false ||
+      publication.negative_effects?.deploys_decoy_or_honeypot !== false ||
+      publication.negative_effects?.person_or_account_attribution !== false ||
+      publication.negative_effects?.writes_karma !== false ||
+      publication.negative_effects?.automatic_action !== false ||
+      publication.integrity?.digest !== MIRROR_INFORMATION_CONTROL_PUBLIC_DIGEST ||
+      forbiddenDiscoveryKeys.some((key) => Object.hasOwn(expected, key))) {
+      throw new Error("MIRROR Information Control static publication, privacy firewall, discovery, or negative-authority boundary drifted");
+    }
+  }
+
   if (visibilityAttentionActive) {
     const expected = expectedVisibilityAttention!;
     const visibilityBoundary = expected.boundary;
@@ -2670,6 +2796,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       !isDeepStrictEqual(liveKingdom?.exploration_deep_wing, expectedPhenomenaDeepWing!)) {
     throw new Error("derived kingdom.json did not preserve Exploration DEEP WING discovery");
   }
+  if (mirrorInformationControlActive &&
+      !isDeepStrictEqual(liveKingdom?.mirror_information_control, expectedMirrorInformationControl!)) {
+    throw new Error("derived kingdom.json did not preserve MIRROR Information Control discovery");
+  }
   if (visibilityAttentionActive && !isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention!)) {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
   }
@@ -2757,7 +2887,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath discovery · REVISE/non-promotion and exploration/cultural/form/being authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath discovery · REVISE/non-promotion and exploration/MIRROR/cultural/form/being authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

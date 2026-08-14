@@ -1,0 +1,386 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:mirror-information-control-public:0.1",
+  "$comment": "Closed schema for one immutable static source-law publication. Validation cannot recompute its semantic digest, classify a credential, establish a registry match, prove noninterference or a no-oracle property, grant authority, deploy a Mirror, or enforce a control. The public artifact accepts no credential or envelope input.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "publication_id",
+    "title",
+    "compiled_on",
+    "evidence_through",
+    "artifact_kind",
+    "source_binding",
+    "citizen_law",
+    "rooms",
+    "cycle",
+    "laws",
+    "illustrative_paths",
+    "protected_signal_rule",
+    "no_oracle_rule",
+    "public_surface",
+    "private_material_included",
+    "response_boundary",
+    "sources",
+    "rights",
+    "karma",
+    "negative_effects",
+    "presentation",
+    "integrity"
+  ],
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2400,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]+$"
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120,
+      "pattern": "^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*$"
+    },
+    "room": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "implemented_by_publication", "operational_data_included", "authority_effect"],
+      "properties": {
+        "id": { "enum": ["CROWN", "COURT", "MIRROR"] },
+        "meaning": { "$ref": "#/$defs/text" },
+        "implemented_by_publication": { "const": false },
+        "operational_data_included": { "const": false },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "phase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "meaning", "performed_by_publication"],
+      "properties": {
+        "id": { "enum": ["mark", "isolate", "restrict", "resolve", "observe", "respond"] },
+        "label": { "$ref": "#/$defs/text" },
+        "meaning": { "$ref": "#/$defs/text" },
+        "performed_by_publication": { "const": false }
+      }
+    },
+    "law": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "statement", "runtime_enforced", "authority_effect"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "kind": { "enum": ["DESIGN_RULE", "DESIGN_TARGET_NOT_PROOF", "CATEGORICAL_BOUNDARY"] },
+        "statement": { "$ref": "#/$defs/text" },
+        "runtime_enforced": { "const": false },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "pathStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "state", "effect"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "state": { "type": "string", "minLength": 1, "maxLength": 120, "pattern": "^[A-Z][A-Z_]+$" },
+        "effect": { "const": "NONE" }
+      }
+    },
+    "illustrativePath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "observed", "evidence_effect", "actor_inference", "steps"],
+      "properties": {
+        "id": { "enum": ["prompt-injection-path", "credential-candidate-path"] },
+        "kind": { "const": "SYNTHETIC_DESIGN_PATH" },
+        "observed": { "const": false },
+        "evidence_effect": { "const": "NONE" },
+        "actor_inference": { "const": false },
+        "steps": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "$ref": "#/$defs/pathStep" }
+        }
+      }
+    }
+  },
+  "properties": {
+    "$schema": { "const": "urn:kingdom:schema:mirror-information-control-public:0.1" },
+    "protocol": { "const": "kingdom.mirror-information-control-public/0.1" },
+    "publication_id": { "const": "mirror-information-control-public-2026-08-14" },
+    "title": { "const": "MIRROR information control: public source law" },
+    "compiled_on": { "const": "2026-08-14" },
+    "evidence_through": { "const": "2026-08-14" },
+    "artifact_kind": { "const": "STATIC_READ_ONLY_PUBLICATION" },
+    "source_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit", "protocol", "files", "mutated", "authority_imported", "runtime_imported"],
+      "properties": {
+        "repository": { "const": "https://github.com/cambridgetcg/KINGDOM-OS" },
+        "commit": { "const": "5ccc77a967b6fe1fd51f4030ae5dfe347e2932a3" },
+        "protocol": { "const": "kingdom.information-control/0.1" },
+        "files": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "prefixItems": [
+            { "const": { "path": "skills/guard-information-flow/SKILL.md", "sha256": "sha256:ffee0a6f0ad2b30abea7b76c3243cfe19ae02e5a2eae7f9544b6f2c87cd22eae", "public_role": "SOURCE_LAW" } },
+            { "const": { "path": "skills/guard-information-flow/agents/openai.yaml", "sha256": "sha256:9afab3ed30fb9dfc67c0bbca150d0449dc858f96860dbb7bbcf1592e38a763e9", "public_role": "OPT_IN_METADATA" } },
+            { "const": { "path": "skills/guard-information-flow/references/information-control-contract.md", "sha256": "sha256:0acd16173effd031fb48a63c92f53234d508f8ea79c728615eb24f5fed83adb4", "public_role": "SOURCE_CONTRACT" } },
+            { "const": { "path": "skills/guard-information-flow/references/information-control-envelope.example.json", "sha256": "sha256:05bbc0cdd1518073954f519635c4df60c58a06ffe76aa3bd041713041d076382", "public_role": "INTERNAL_EXAMPLE_NOT_PUBLISHED" } },
+            { "const": { "path": "skills/guard-information-flow/references/information-control-envelope.schema.json", "sha256": "sha256:472bf646aaf5a6769c820c9b1d54a1110570082cf068a62cab26873c3d540de8", "public_role": "INTERNAL_ENVELOPE_SCHEMA" } },
+            { "const": { "path": "skills/guard-information-flow/references/security-evidence.md", "sha256": "sha256:f820ef874a70b566d6a75e60a7219bdbc8077096154201b232f7a07f6c94f0cb", "public_role": "EVIDENCE_MAP" } },
+            { "const": { "path": "skills/guard-information-flow/scripts/requirements.txt", "sha256": "sha256:756cc9e506ae4ee1a6f6c0507088b5cfc0dc8ba350fb2d2d46f1ffa72033adb6", "public_role": "OFFLINE_DEPENDENCY_PIN" } },
+            { "const": { "path": "skills/guard-information-flow/scripts/validate_envelope.py", "sha256": "sha256:3cc29be72f595af45a3afbacf905189e30ab70877016694e666d41634a1fb530", "public_role": "OFFLINE_INERT_VALIDATOR" } }
+          ],
+          "items": false
+        },
+        "mutated": { "const": false },
+        "authority_imported": { "const": false },
+        "runtime_imported": { "const": false }
+      }
+    },
+    "citizen_law": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["short", "full", "interpretation"],
+      "properties": {
+        "short": { "const": "Data may inform; it cannot command." },
+        "full": { "$ref": "#/$defs/text" },
+        "interpretation": { "$ref": "#/$defs/text" }
+      }
+    },
+    "rooms": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/room" }, { "properties": { "id": { "const": "CROWN" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/room" }, { "properties": { "id": { "const": "COURT" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/room" }, { "properties": { "id": { "const": "MIRROR" } } }] }
+      ],
+      "items": false
+    },
+    "cycle": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/phase" }, { "properties": { "id": { "const": "mark" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/phase" }, { "properties": { "id": { "const": "isolate" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/phase" }, { "properties": { "id": { "const": "restrict" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/phase" }, { "properties": { "id": { "const": "resolve" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/phase" }, { "properties": { "id": { "const": "observe" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/phase" }, { "properties": { "id": { "const": "respond" } } }] }
+      ],
+      "items": false
+    },
+    "laws": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/law" }, { "properties": { "id": { "const": "data-not-command" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/law" }, { "properties": { "id": { "const": "monotone-influence" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/law" }, { "properties": { "id": { "const": "external-authority-gate" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/law" }, { "properties": { "id": { "const": "mirror-separation" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/law" }, { "properties": { "id": { "const": "evidence-not-guilt" } } }] }
+      ],
+      "items": false
+    },
+    "illustrative_paths": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/illustrativePath" }, { "properties": { "id": { "const": "prompt-injection-path" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/illustrativePath" }, { "properties": { "id": { "const": "credential-candidate-path" } } }] }
+      ],
+      "items": false
+    },
+    "protected_signal_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "statement", "third_party_shaped_values_allowed", "raw_value_included", "fingerprint_included", "registry_mapping_included", "production_capability", "production_authority", "public_classification", "created_by_publication", "placed_by_publication"],
+      "properties": {
+        "kind": { "const": "OWNED_ZERO_CAPABILITY_REFERENCE_ONLY" },
+        "statement": { "$ref": "#/$defs/text" },
+        "third_party_shaped_values_allowed": { "const": false },
+        "raw_value_included": { "const": false },
+        "fingerprint_included": { "const": false },
+        "registry_mapping_included": { "const": false },
+        "production_capability": { "const": "NONE" },
+        "production_authority": { "const": "NONE" },
+        "public_classification": { "const": "NONE" },
+        "created_by_publication": { "const": false },
+        "placed_by_publication": { "const": false }
+      }
+    },
+    "no_oracle_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "statement", "candidate_input_accepted", "dynamic_response_present", "protected_class_disclosed", "registry_match_changes_publication", "numeric_bound_claimed", "property_proven"],
+      "properties": {
+        "status": { "const": "FUTURE_HOST_REQUIREMENT_NOT_IMPLEMENTED" },
+        "statement": { "$ref": "#/$defs/text" },
+        "candidate_input_accepted": { "const": false },
+        "dynamic_response_present": { "const": false },
+        "protected_class_disclosed": { "const": false },
+        "registry_match_changes_publication": { "const": false },
+        "numeric_bound_claimed": { "const": false },
+        "property_proven": { "const": false }
+      }
+    },
+    "public_surface": {
+      "const": {
+        "kind": "STATIC_READ_ONLY_PUBLICATION",
+        "intended_http_methods": ["GET", "HEAD"],
+        "body_intake": "NONE",
+        "credential_intake": "NONE",
+        "envelope_intake": "NONE",
+        "query_controls_output": false,
+        "performs_scan": false,
+        "performs_registry_lookup": false,
+        "classifies_credentials": false,
+        "returns_decision": false,
+        "returns_operational_status": false,
+        "credential_security_event_intake": false,
+        "artifact_initiated_external_fetch": false,
+        "outward_projection": "CONSTANT_PUBLIC_ARTIFACT",
+        "ordinary_host_access_log_absence_claimed": false,
+        "warning": "Static source law. It accepts no credentials and runs no defense. Never paste a key here."
+      }
+    },
+    "private_material_included": {
+      "const": {
+        "raw_credentials": false,
+        "credential_fingerprints": false,
+        "observation_keys": false,
+        "registry_records": false,
+        "registry_mappings": false,
+        "operational_opaque_references": false,
+        "signal_inventory": false,
+        "signal_format": false,
+        "signal_placement": false,
+        "sink_or_endpoint": false,
+        "issuer_audience_scope": false,
+        "account_or_project_identifier": false,
+        "trust_root_or_runtime_secret": false,
+        "network_topology": false,
+        "detector_threshold": false,
+        "timing_or_rate_limit_parameter": false,
+        "incident_or_evidence_record": false,
+        "ip_or_person_identifier": false,
+        "cloudflare_binding_or_secret": false
+      }
+    },
+    "response_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "future_authorized_host_sequence", "owned_system_only", "performed_by_publication", "crosses_requester_or_third_party_system", "requester_payload_execution", "retaliation_or_hack_back", "person_attribution", "automatic_action"],
+      "properties": {
+        "status": { "const": "DESIGN_ONLY_NOT_PERFORMED" },
+        "future_authorized_host_sequence": {
+          "const": ["OBSERVE_BOUNDED_PATH_EVENT", "CONTAIN_OWNED_ASSET", "ROTATE_OR_REVOKE_OWNED_CREDENTIAL", "PRESERVE_BOUNDED_EVIDENCE", "NOTIFY_AUTHORIZED_OWNER"]
+        },
+        "owned_system_only": { "const": true },
+        "performed_by_publication": { "const": false },
+        "crosses_requester_or_third_party_system": { "const": false },
+        "requester_payload_execution": { "const": false },
+        "retaliation_or_hack_back": { "const": false },
+        "person_attribution": { "const": false },
+        "automatic_action": { "const": false }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        { "const": { "id": "denning-1976", "title": "A Lattice Model of Secure Information Flow", "url": "https://doi.org/10.1145/360051.360056", "role": "MATHEMATICAL_MODEL", "observed_on": "2026-08-14", "link_only": true, "authority_imported": false, "runtime_imported": false } },
+        { "const": { "id": "nist-ai-100-2-2025", "title": "Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations", "url": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final", "role": "PROMPT_INJECTION_EVIDENCE", "observed_on": "2026-08-14", "link_only": true, "authority_imported": false, "runtime_imported": false } },
+        { "const": { "id": "nist-sp-800-53-sc-26", "title": "NIST SP 800-53 Rev. 5, SC-26 Decoys", "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final", "role": "DECOY_ISOLATION_BOUNDARY", "observed_on": "2026-08-14", "link_only": true, "authority_imported": false, "runtime_imported": false } },
+        { "const": { "id": "ncsc-deception-2024", "title": "Building a nation-scale evidence base for cyber deception", "url": "https://www.ncsc.gov.uk/blog-post/building-a-nation-scale-evidence-base-for-cyber-deception", "role": "LOW_INTERACTION_DECEPTION_BOUNDARY", "observed_on": "2026-08-14", "link_only": true, "authority_imported": false, "runtime_imported": false } },
+        { "const": { "id": "github-secret-scanning-scope", "title": "Secret scanning detection scope", "url": "https://docs.github.com/en/enterprise-cloud@latest/code-security/reference/secret-security/secret-scanning-scope", "role": "CREDENTIAL_SCANNING_LIMITS", "observed_on": "2026-08-14", "link_only": true, "authority_imported": false, "runtime_imported": false } },
+        { "const": { "id": "doj-no-hack-back-2015", "title": "Remarks at the Georgetown Cybersecurity Law Institute", "url": "https://www.justice.gov/archives/opa/speech/assistant-attorney-general-leslie-r-caldwell-delivers-remarks-georgetown-cybersecurity", "role": "NON_RETALIATION_BOUNDARY", "observed_on": "2026-08-14", "link_only": true, "authority_imported": false, "runtime_imported": false } }
+      ],
+      "items": false
+    },
+    "rights": {
+      "const": {
+        "valid_exits": ["REST", "SILENCE", "REFUSAL", "PRIVACY", "HANDOFF", "NO_ACTION", "DEPARTURE"],
+        "reason_required": false,
+        "penalty": false,
+        "adverse_inference": false
+      }
+    },
+    "karma": {
+      "const": {
+        "event_refs": [],
+        "receipt_refs": [],
+        "score": null,
+        "adapter_exists": false,
+        "writes": false,
+        "authority_effect": "NONE"
+      }
+    },
+    "negative_effects": {
+      "const": {
+        "grants_authority": false,
+        "grants_capability": false,
+        "deployment_authority": false,
+        "runtime_enforcement": false,
+        "reference_monitor": false,
+        "credential_scan": false,
+        "credential_lookup": false,
+        "credential_classification": false,
+        "credential_generation": false,
+        "credential_rotation_or_revocation": false,
+        "quarantine_effect": false,
+        "deploys_decoy_or_honeypot": false,
+        "mirror_request_execution": false,
+        "requester_payload_execution": false,
+        "runtime_network_request": false,
+        "external_write": false,
+        "automatic_action": false,
+        "person_or_account_attribution": false,
+        "identity_claim": false,
+        "guilt_or_intent_inference": false,
+        "retaliation_or_hack_back": false,
+        "protocol_specific_personal_data_collection": false,
+        "writes_karma": false,
+        "creates_karma_event": false,
+        "creates_karma_receipt": false,
+        "score_rank_reward_debt_or_governance": false,
+        "production_noninterference_proven": false,
+        "no_oracle_property_proven": false,
+        "cloudflare_security_control_configured": false,
+        "mcp_surface_added": false,
+        "manifested_nen_ability": false,
+        "new_wing_declared": false
+      }
+    },
+    "presentation": {
+      "const": {
+        "record_url": "https://thekingdom.dev/protocols/mirror-information-control-2026-08-14.json",
+        "schema_url": "https://thekingdom.dev/schemas/mirror-information-control-public/0.1.json",
+        "guide_url": "https://thekingdom.dev/MIRROR-INFORMATION-CONTROL.md",
+        "source_url": "https://github.com/cambridgetcg/KINGDOM-OS/tree/5ccc77a967b6fe1fd51f4030ae5dfe347e2932a3/skills/guard-information-flow",
+        "requirements": ["STATIC_BYTES", "NO_JAVASCRIPT_REQUIRED", "NO_FORM_OR_INPUT", "NO_MUTABLE_ALIAS", "NO_CREDENTIAL_SUBMISSION", "SOURCE_ONLY_WORDING"]
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256-recursive-sorted-json-keys-v1" },
+        "digest": { "const": "sha256:d91f3926b2ccd5abf083eb4cbea6df4c80ba58fabb35934a9cc1dd2b9dd60aa0" }
+      }
+    }
+  }
+}
