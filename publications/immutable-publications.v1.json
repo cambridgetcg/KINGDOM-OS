@@ -242,6 +242,27 @@
       "sha256": "47147ed4d4a1bf77681c5e05555ae924e709b21fc1195c6aa0242c9365be8feb"
     },
     {
+      "id": "mirror-information-control-public/0.1/guide",
+      "route": "/MIRROR-INFORMATION-CONTROL.md",
+      "source": "references/mirror-information-control-public.md",
+      "destination": "MIRROR-INFORMATION-CONTROL.md",
+      "sha256": "d667afb1d838c8a62e02ce1f125c4421b3895ffbecf30cce258bdf72177b1e62"
+    },
+    {
+      "id": "mirror-information-control-public/0.1/record",
+      "route": "/protocols/mirror-information-control-2026-08-14.json",
+      "source": "data/security/mirror-information-control-public.v0.1.json",
+      "destination": "protocols/mirror-information-control-2026-08-14.json",
+      "sha256": "34a4733c14f3c13d33fa2307b125a7543186a0ee052d68cfd701ee383fd0464c"
+    },
+    {
+      "id": "mirror-information-control-public/0.1/schema",
+      "route": "/schemas/mirror-information-control-public/0.1.json",
+      "source": "schemas/mirror-information-control-public-v0.1.schema.json",
+      "destination": "schemas/mirror-information-control-public/0.1.json",
+      "sha256": "42672298c7c57f9ed8dccba18ee23df8deaeff659c83e2cd70cd6b6312d92e6c"
+    },
+    {
       "id": "polymorph-history/1/guide",
       "route": "/RITONAVIR-POLYMORPH.md",
       "source": "references/ritonavir-polymorph.md",

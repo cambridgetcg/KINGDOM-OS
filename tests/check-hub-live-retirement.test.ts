@@ -20,7 +20,7 @@ const family = (id: string) => {
 describe("hub live-check publication retirement", () => {
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(14);
+    expect(PUBLICATION_FAMILIES).toHaveLength(15);
     expect([...publicationFamilyStates(staged).values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
     staged.delete(destinationForPublicPath(cultural.routes[1]!));
@@ -174,6 +174,39 @@ describe("hub live-check publication retirement", () => {
     expect(() => assertRetiredFamilyDiscoveryAbsent(exploration, [
       { label: "clean discovery surface", text: "{}", value: { entry_points: {} } },
     ])).not.toThrow();
+  });
+
+  test("retires the static MIRROR public-law triplet and discovery atomically", () => {
+    const mirror = family("mirror-information-control");
+    expect(mirror.routes).toEqual([
+      "/protocols/mirror-information-control-2026-08-14.json",
+      "/schemas/mirror-information-control-public/0.1.json",
+      "/MIRROR-INFORMATION-CONTROL.md",
+    ]);
+    expect(mirror.discoveryProperties).toEqual(["mirror_information_control"]);
+    expect(mirror.entryPointProperties).toEqual([
+      "mirror_information_control",
+      "mirror_information_control_schema",
+      "mirror_information_control_guide",
+    ]);
+
+    const partiallyStaged = stagedDestinations();
+    partiallyStaged.delete(destinationForPublicPath(mirror.routes[1]!));
+    expect(() => publicationFamilyStates(partiallyStaged))
+      .toThrow("MIRROR Information Control is partially staged");
+
+    const retired = stagedDestinations();
+    for (const route of mirror.routes) retired.delete(destinationForPublicPath(route));
+    expect(publicationFamilyStates(retired).get(mirror.id)?.active).toBe(false);
+    for (const surface of [
+      { label: "authored Kingdom map", text: JSON.stringify({ mirror_information_control: {} }), value: { mirror_information_control: {} } },
+      { label: "agent manifest", text: JSON.stringify({ entry_points: { mirror_information_control_guide: mirror.routes[2] } }), value: { entry_points: { mirror_information_control_guide: mirror.routes[2] } } },
+      { label: "llms.txt", text: `https://thekingdom.dev${mirror.routes[0]}` },
+      { label: "hub HTML", text: `<a href='${mirror.routes[2]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(mirror, [surface]))
+        .toThrow("MIRROR Information Control is retired");
+    }
   });
 
   test("accepts only a canonical 404 or an empty 410 tombstone", () => {

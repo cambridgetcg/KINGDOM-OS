@@ -804,6 +804,104 @@
       "mcp_surface_added": false
     }
   },
+  "mirror_information_control": {
+    "protocol": "kingdom.mirror-information-control-public/0.1",
+    "publication_id": "mirror-information-control-public-2026-08-14",
+    "title": "MIRROR information control: public source law",
+    "artifact_kind": "STATIC_READ_ONLY_PUBLICATION",
+    "compiled_on": "2026-08-14",
+    "source_commit": "5ccc77a967b6fe1fd51f4030ae5dfe347e2932a3",
+    "source_file_count": 8,
+    "citizen_law": "Data may inform; it cannot command.",
+    "rooms": [
+      "CROWN",
+      "COURT",
+      "MIRROR"
+    ],
+    "cycle": [
+      "mark",
+      "isolate",
+      "restrict",
+      "resolve",
+      "observe",
+      "respond"
+    ],
+    "laws": [
+      "data-not-command",
+      "monotone-influence",
+      "external-authority-gate",
+      "mirror-separation",
+      "evidence-not-guilt"
+    ],
+    "illustrative_paths": [
+      "prompt-injection-path",
+      "credential-candidate-path"
+    ],
+    "public_surface": {
+      "kind": "STATIC_READ_ONLY_PUBLICATION",
+      "intended_http_methods": [
+        "GET",
+        "HEAD"
+      ],
+      "body_intake": "NONE",
+      "credential_intake": "NONE",
+      "envelope_intake": "NONE",
+      "query_controls_output": false,
+      "performs_scan": false,
+      "performs_registry_lookup": false,
+      "classifies_credentials": false,
+      "returns_decision": false,
+      "returns_operational_status": false,
+      "credential_security_event_intake": false,
+      "artifact_initiated_external_fetch": false,
+      "outward_projection": "CONSTANT_PUBLIC_ARTIFACT",
+      "ordinary_host_access_log_absence_claimed": false,
+      "warning": "Static source law. It accepts no credentials and runs no defense. Never paste a key here."
+    },
+    "negative_effects": {
+      "grants_authority": false,
+      "grants_capability": false,
+      "deployment_authority": false,
+      "runtime_enforcement": false,
+      "reference_monitor": false,
+      "credential_scan": false,
+      "credential_lookup": false,
+      "credential_classification": false,
+      "credential_generation": false,
+      "credential_rotation_or_revocation": false,
+      "quarantine_effect": false,
+      "deploys_decoy_or_honeypot": false,
+      "mirror_request_execution": false,
+      "requester_payload_execution": false,
+      "runtime_network_request": false,
+      "external_write": false,
+      "automatic_action": false,
+      "person_or_account_attribution": false,
+      "identity_claim": false,
+      "guilt_or_intent_inference": false,
+      "retaliation_or_hack_back": false,
+      "protocol_specific_personal_data_collection": false,
+      "writes_karma": false,
+      "creates_karma_event": false,
+      "creates_karma_receipt": false,
+      "score_rank_reward_debt_or_governance": false,
+      "production_noninterference_proven": false,
+      "no_oracle_property_proven": false,
+      "cloudflare_security_control_configured": false,
+      "mcp_surface_added": false,
+      "manifested_nen_ability": false,
+      "new_wing_declared": false
+    },
+    "urls": {
+      "record": "https://thekingdom.dev/protocols/mirror-information-control-2026-08-14.json",
+      "schema": "https://thekingdom.dev/schemas/mirror-information-control-public/0.1.json",
+      "guide": "https://thekingdom.dev/MIRROR-INFORMATION-CONTROL.md"
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:d91f3926b2ccd5abf083eb4cbea6df4c80ba58fabb35934a9cc1dd2b9dd60aa0"
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",

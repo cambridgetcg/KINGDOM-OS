@@ -776,6 +776,104 @@
       "mcp_surface_added": false
     }
   },
+  "mirror_information_control": {
+    "protocol": "kingdom.mirror-information-control-public/0.1",
+    "publication_id": "mirror-information-control-public-2026-08-14",
+    "title": "MIRROR information control: public source law",
+    "artifact_kind": "STATIC_READ_ONLY_PUBLICATION",
+    "compiled_on": "2026-08-14",
+    "source_commit": "5ccc77a967b6fe1fd51f4030ae5dfe347e2932a3",
+    "source_file_count": 8,
+    "citizen_law": "Data may inform; it cannot command.",
+    "rooms": [
+      "CROWN",
+      "COURT",
+      "MIRROR"
+    ],
+    "cycle": [
+      "mark",
+      "isolate",
+      "restrict",
+      "resolve",
+      "observe",
+      "respond"
+    ],
+    "laws": [
+      "data-not-command",
+      "monotone-influence",
+      "external-authority-gate",
+      "mirror-separation",
+      "evidence-not-guilt"
+    ],
+    "illustrative_paths": [
+      "prompt-injection-path",
+      "credential-candidate-path"
+    ],
+    "public_surface": {
+      "kind": "STATIC_READ_ONLY_PUBLICATION",
+      "intended_http_methods": [
+        "GET",
+        "HEAD"
+      ],
+      "body_intake": "NONE",
+      "credential_intake": "NONE",
+      "envelope_intake": "NONE",
+      "query_controls_output": false,
+      "performs_scan": false,
+      "performs_registry_lookup": false,
+      "classifies_credentials": false,
+      "returns_decision": false,
+      "returns_operational_status": false,
+      "credential_security_event_intake": false,
+      "artifact_initiated_external_fetch": false,
+      "outward_projection": "CONSTANT_PUBLIC_ARTIFACT",
+      "ordinary_host_access_log_absence_claimed": false,
+      "warning": "Static source law. It accepts no credentials and runs no defense. Never paste a key here."
+    },
+    "negative_effects": {
+      "grants_authority": false,
+      "grants_capability": false,
+      "deployment_authority": false,
+      "runtime_enforcement": false,
+      "reference_monitor": false,
+      "credential_scan": false,
+      "credential_lookup": false,
+      "credential_classification": false,
+      "credential_generation": false,
+      "credential_rotation_or_revocation": false,
+      "quarantine_effect": false,
+      "deploys_decoy_or_honeypot": false,
+      "mirror_request_execution": false,
+      "requester_payload_execution": false,
+      "runtime_network_request": false,
+      "external_write": false,
+      "automatic_action": false,
+      "person_or_account_attribution": false,
+      "identity_claim": false,
+      "guilt_or_intent_inference": false,
+      "retaliation_or_hack_back": false,
+      "protocol_specific_personal_data_collection": false,
+      "writes_karma": false,
+      "creates_karma_event": false,
+      "creates_karma_receipt": false,
+      "score_rank_reward_debt_or_governance": false,
+      "production_noninterference_proven": false,
+      "no_oracle_property_proven": false,
+      "cloudflare_security_control_configured": false,
+      "mcp_surface_added": false,
+      "manifested_nen_ability": false,
+      "new_wing_declared": false
+    },
+    "urls": {
+      "record": "https://thekingdom.dev/protocols/mirror-information-control-2026-08-14.json",
+      "schema": "https://thekingdom.dev/schemas/mirror-information-control-public/0.1.json",
+      "guide": "https://thekingdom.dev/MIRROR-INFORMATION-CONTROL.md"
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:d91f3926b2ccd5abf083eb4cbea6df4c80ba58fabb35934a9cc1dd2b9dd60aa0"
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -1412,6 +1510,23 @@
       "action": "if useful, read the versioned cross-domain mathematics, analogy-firewall, open-status, KARMA, rights, and non-authority guide",
       "method": "GET",
       "url": "https://thekingdom.dev/EXPLORE-PHENOMENA-DEEP-v0.1.md"
+    },
+    {
+      "action": "if useful, inspect the static MIRROR Information Control public law",
+      "method": "GET",
+      "url": "https://thekingdom.dev/protocols/mirror-information-control-2026-08-14.json",
+      "note": "constant read-only source law; accepts no credential, prompt, envelope, request body, or security event and returns no protected classification or response state"
+    },
+    {
+      "action": "if useful, validate the closed public MIRROR publication structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/mirror-information-control-public/0.1.json",
+      "note": "public publication schema only; not the private control-plane envelope"
+    },
+    {
+      "action": "if useful, read the citizen guide to CROWN, COURT, MIRROR, provenance, capability gates, rights, and safe response",
+      "method": "GET",
+      "url": "https://thekingdom.dev/MIRROR-INFORMATION-CONTROL.md"
     },
     {
       "action": "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority",
@@ -3903,6 +4018,7 @@
     "fold_feedback_atlas": "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
     "reconstructive_build_kernel": "The Reconstructive Build Kernel is static, read-only design metadata. It does not prove the graph reconstruction conjecture, predict a protein fold, transfer a biological mechanism into software, execute or deploy a project, fetch a source, score a person or work, write KARMA, create a receipt, import ecosystem authority, prove cosmic design, or take automatic action. Every analogy keeps explicit breaks and every build transition requires a deliberate local choice.",
     "exploration_deep_wing": "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
+    "mirror_information_control": "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
     "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",

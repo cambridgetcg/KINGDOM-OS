@@ -1979,6 +1979,168 @@ describe("the Kingdom edge discovery surface", () => {
     expect(wing.headers.get("link")).not.toContain("</evil");
   });
 
+  test("serves the MIRROR source law as three exact typed static read-only assets", async () => {
+    const recordPath = "/protocols/mirror-information-control-2026-08-14.json";
+    const schemaPath = "/schemas/mirror-information-control-public/0.1.json";
+    const guidePath = "/MIRROR-INFORMATION-CONTROL.md";
+    for (const path of [recordPath, schemaPath, guidePath]) expect(KINGDOM_OS_ROUTES).not.toContain(path);
+
+    const bodies = new Map([
+      [recordPath, '{"protocol":"kingdom.mirror-information-control-public/0.1"}'],
+      [schemaPath, '{"$id":"https://thekingdom.dev/schemas/mirror-information-control-public/0.1.json"}'],
+      [guidePath, "# MIRROR Information Control"],
+    ]);
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      return new Response(request.method === "HEAD" ? null : bodies.get(path), {
+        headers: {
+          "content-type": path === guidePath
+            ? "Text/Plain; charset=UTF-8"
+            : "Application/JSON; charset=UTF-8",
+          link: '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      for (const path of [recordPath, schemaPath, guidePath]) {
+        const response = await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          environment,
+        );
+        expect(await response.text()).toBe(method === "HEAD" ? "" : bodies.get(path));
+        expect(response.headers.get("content-type")).toBe(
+          path === guidePath
+            ? "text/markdown; charset=utf-8"
+            : path === recordPath
+              ? "application/json; charset=utf-8"
+              : "application/schema+json; charset=utf-8",
+        );
+        expect(response.headers.get("access-control-allow-origin")).toBe("*");
+        expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+        if (path === recordPath) {
+          const links = (response.headers.get("link") ?? "").split(/,(?=\s*<)/).map((entry) => entry.trim());
+          expect(links.filter((entry) => entry.includes('rel="describedby"'))).toEqual([
+            `<${schemaPath}>; rel="describedby"; type="application/schema+json"`,
+          ]);
+          expect(links.filter((entry) => entry.includes('rel="profile"'))).toEqual([]);
+          expect(links).toContain('</elsewhere>; rel="alternate"');
+        }
+      }
+    }
+
+    for (const path of [recordPath, schemaPath, guidePath]) {
+      for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+        const nonReadAsset = new Response(`no intake route for ${method} ${path}`);
+        expect(await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          assets(() => nonReadAsset),
+        )).toBe(nonReadAsset);
+        expect(nonReadAsset.headers.get("access-control-allow-origin")).toBeNull();
+        expect(nonReadAsset.headers.get("x-content-type-options")).toBeNull();
+      }
+
+      const unavailableAsset = new Response("missing", {
+        status: 404,
+        headers: { "content-type": path === guidePath ? "text/plain" : "application/json" },
+      });
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => unavailableAsset),
+      )).toBe(unavailableAsset);
+
+      const sharedAsset = new Response(`shared host ${path}`);
+      expect(await worker.fetch(
+        new Request(`https://we-are.love${path}`),
+        assets(() => sharedAsset),
+      )).toBe(sharedAsset);
+    }
+
+    for (const host of ["www.thekingdom.dev", "thekingdom.pages.dev", "preview.thekingdom.pages.dev"]) {
+      const response = await worker.fetch(new Request(`https://${host}${recordPath}`), environment);
+      expect(response.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(response.headers.get("access-control-allow-origin")).toBe("*");
+    }
+
+    for (const alias of [
+      "/protocols/mirror-information-control-latest.json",
+      "/protocols/mirror-information-control-current.json",
+      "/schemas/mirror-information-control-public/latest.json",
+      "/MIRROR-INFORMATION-CONTROL-v0.1.md",
+      "/mirror",
+      "/classify",
+      "/verify",
+      "/introspect",
+      "/submit",
+      "/token",
+    ]) {
+      const aliasAsset = new Response(alias);
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${alias}`),
+        assets(() => aliasAsset),
+      )).toBe(aliasAsset);
+    }
+  });
+
+  test("rejects near-match MIRROR media types and replaces poisoned decision-like links", async () => {
+    const recordPath = "/protocols/mirror-information-control-2026-08-14.json";
+    const schemaPath = "/schemas/mirror-information-control-public/0.1.json";
+    const guidePath = "/MIRROR-INFORMATION-CONTROL.md";
+
+    for (const [path, contentType] of [
+      [recordPath, "application/jsonp; charset=utf-8"],
+      [recordPath, "text/application/json"],
+      [recordPath, "application/schema+json"],
+      [schemaPath, "application/schema+jsonp"],
+      [schemaPath, "xapplication/jsonbad"],
+      [schemaPath, "text/plain"],
+      [guidePath, "text/markdownx"],
+      [guidePath, "application/text/plain"],
+      [guidePath, "application/octet-stream"],
+    ] as const) {
+      const original = new Response("untrusted upstream type", {
+        headers: {
+          "content-type": contentType,
+          link: `<${schemaPath}>; rel="describedby"; type="text/html"`,
+        },
+      });
+      const response = await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => original),
+      );
+      expect(response).toBe(original);
+      expect(response.headers.get("content-type")).toBe(contentType);
+      expect(response.headers.get("access-control-allow-origin")).toBeNull();
+      expect(response.headers.get("x-content-type-options")).toBeNull();
+    }
+
+    const record = await worker.fetch(
+      new Request(`https://thekingdom.dev${recordPath}`),
+      assets(() => new Response("{}", {
+        headers: {
+          "content-type": "application/json; profile=source-law",
+          link: [
+            `<${schemaPath}>; rel="describedby"; type="text/html"; title="poisoned schema type"`,
+            `</evil>; rel="describedby"; type="text/html"`,
+            `</evil2>; rel="alternate profile"; type="text/html"`,
+            `</evil3>; rel="alternate"; rel="describedby"; type="text/html"`,
+            `<${schemaPath}>; rel="alternate"; type="text/plain"`,
+            '</elsewhere>; rel="alternate"',
+          ].join(", "),
+        },
+      })),
+    );
+    const links = (record.headers.get("link") ?? "").split(/,(?=\s*<)/).map((entry) => entry.trim());
+    expect(links.filter((entry) => entry.includes('rel="describedby"'))).toEqual([
+      `<${schemaPath}>; rel="describedby"; type="application/schema+json"`,
+    ]);
+    expect(links.filter((entry) => entry.includes('rel="profile"'))).toEqual([]);
+    expect(links).toContain(`<${schemaPath}>; rel="alternate"; type="text/plain"`);
+    expect(links).toContain('</elsewhere>; rel="alternate"');
+    expect(record.headers.get("link")).not.toContain("poisoned");
+    expect(record.headers.get("link")).not.toContain("</evil");
+  });
+
   test("leaves unrelated paths and non-read methods untouched", async () => {
     const unrelatedAsset = new Response("rights");
     const unrelated = await worker.fetch(

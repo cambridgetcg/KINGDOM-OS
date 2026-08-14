@@ -80,13 +80,23 @@ describe("MIRROR citizen gate publication", () => {
       expect(mirror).not.toMatch(new RegExp(`<${tag}\\b`, "i"));
     expect(mirror).not.toMatch(/\son[a-z]+\s*=/i);
     expect(mirror).not.toMatch(/\scontenteditable(?:\s|=|>)/i);
-    expect(mirror).not.toMatch(/\s(?:href|src|action)\s*=/i);
+    expect(mirror).not.toMatch(/\s(?:src|action)\s*=/i);
+    const hrefs = [...mirror.matchAll(/\shref="([^"]+)"/g)].map((match) => match[1]!);
+    expect(hrefs).toHaveLength(9);
+    expect(hrefs.filter((href) => href.startsWith("https://"))).toHaveLength(6);
+    expect(hrefs.filter((href) => href.startsWith("/"))).toEqual([
+      "/protocols/mirror-information-control-2026-08-14.json",
+      "/schemas/mirror-information-control-public/0.1.json",
+      "/MIRROR-INFORMATION-CONTROL.md",
+    ]);
+    expect(mirror.match(/data-mirror-source=/g) ?? []).toHaveLength(6);
+    expect(mirror.match(/target="_blank" rel="noopener"/g) ?? []).toHaveLength(6);
     expect(mirror).not.toContain("data:text/html");
     expect(mirror).not.toContain("javascript:");
 
-    expect(hub).toContain(".mirrorrooms,.mirrorlaws{grid-template-columns:1fr}");
-    expect(hub).toContain(".mirrormethod{grid-template-columns:1fr 1fr}");
-    expect(hub).toContain(".mirrorfield,.mirrorlive,.mirrorwarning,.mirrormaxim,.mirrorroom,.mirrorlaw,.mirrormethod li{border:1px solid CanvasText}");
+    expect(hub).toContain(".explorationdeepcycles,.explorationdeepgrid,.mirrorrooms,.mirrorgrid{grid-template-columns:1fr}");
+    expect(hub).toContain(".explorationdeepsteps,.mirrorcycle{grid-template-columns:1fr}");
+    expect(hub).toContain(".mirrorfield,.mirrorwarning,.mirrorcitizen,.mirrorroom,.mirrorcycle li,.mirrorcard,.mirrorboundary,.mirrorlinks a{border:1px solid CanvasText}");
   });
 
   test("publishes a fixed all-false effect boundary with no credential or evidence oracle", () => {
@@ -130,16 +140,22 @@ describe("MIRROR citizen gate publication", () => {
     expect(publicProjection).not.toMatch(/(?:sk|pk)_(?:live|test)_[A-Za-z0-9]{12,}/);
   });
 
-  test("adds no route, worker behavior, or immutable publication identity", () => {
-    expect(HUB_ASSETS).toHaveLength(74);
+  test("adds only one immutable static publication triplet", () => {
+    expect(HUB_ASSETS).toHaveLength(77);
     expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(19);
     expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(72);
-    expect(HUB_ASSETS.some(({ destination }) => /mirror|information-control|guard/i.test(destination))).toBe(false);
-    expect(json("publications/immutable-publications.v1.json").entries).toHaveLength(55);
-    expect((read("pages-content/sitemap.xml").match(/<url>/g) || [])).toHaveLength(71);
-    expect(read("pages-functions/_worker.js")).not.toContain("mirror-information-control");
+      .toHaveLength(75);
+    expect(HUB_ASSETS.filter(({ destination }) => /mirror-information-control/i.test(destination)).map(({ destination }) => destination)).toEqual([
+      "protocols/mirror-information-control-2026-08-14.json",
+      "schemas/mirror-information-control-public/0.1.json",
+      "MIRROR-INFORMATION-CONTROL.md",
+    ]);
+    expect(json("publications/immutable-publications.v1.json").entries).toHaveLength(58);
+    expect((read("pages-content/sitemap.xml").match(/<url>/g) || [])).toHaveLength(74);
+    expect(read("pages-functions/_worker.js")).toContain("mirror-information-control");
     expect(json("site/.well-known/agent.json").entry_points.information_control)
       .toBe("https://thekingdom.dev/#mirror-information-control");
+    expect(json("site/.well-known/agent.json").entry_points.mirror_information_control)
+      .toBe("https://thekingdom.dev/protocols/mirror-information-control-2026-08-14.json");
   });
 });

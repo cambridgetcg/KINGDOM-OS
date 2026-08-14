@@ -314,6 +314,14 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     Nen ability, solver, experiment runner, diagnosis, person/community score,
     KARMA event or receipt, authority grant, ecosystem call, or automatic
     action.
+29. `kingdom mirror-information-control` — inspect and verify the immutable,
+    public MIRROR information-control source law. It explains CROWN, COURT,
+    and MIRROR; the Mark → Isolate → Restrict → Resolve → Observe → Respond
+    cycle; and the rule that outside data may inform a proposal but cannot
+    grant authority. The reader is offline and accepts no credential, prompt,
+    envelope, or request body. It performs no classification, registry lookup,
+    scan, decoy interaction, enforcement, response action, person attribution,
+    retaliation, KARMA write, or automatic effect.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -497,5 +505,18 @@ design, and opt-in philosophy remain typed; KARMA lanes stay empty and
 non-summable. The profile validates structure only: it does not fetch, solve,
 simulate, score, publish, deploy, write, or authorize anything. There is
 no mutable alias and the KINGDOM MCP remains unchanged.
+
+The MIRROR Information Control public law is published as static source at
+[`/protocols/mirror-information-control-2026-08-14.json`](https://thekingdom.dev/protocols/mirror-information-control-2026-08-14.json),
+with its [closed public schema](https://thekingdom.dev/schemas/mirror-information-control-public/0.1.json)
+and [citizen guide](https://thekingdom.dev/MIRROR-INFORMATION-CONTROL.md).
+It is documentation, not a live security control: the surface accepts no key,
+prompt, envelope, or security event and returns no credential class, route,
+reason, evidence, or incident status. No signal inventory, placement, registry,
+fingerprint, operational endpoint, topology, threshold, or private response
+state is published. Static hosting may retain ordinary request logs, but this
+artifact creates no credential intake, classification oracle, honeypot,
+enforcement runtime, person score, retaliation, KARMA effect, or automatic
+action. There is no mutable alias and the KINGDOM MCP remains unchanged.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

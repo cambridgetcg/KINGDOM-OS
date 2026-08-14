@@ -27,6 +27,9 @@
  *    data/exploration/phenomena-deep-wing.v0.1.json
  *                             — opt-in cross-domain mathematics exploration
  *                               contract with explicit analogy firewalls
+ *    data/security/mirror-information-control-public.v0.1.json
+ *                             — static CROWN/COURT/MIRROR source law with no
+ *                               credential intake or runtime enforcement
  *    data/attention/visibility-attention-translation.v0.1.json
  *                             — four-register visibility/attention translation
  *    data/cultural-feedback/cultural-attention-feedback-atlas.v1.json
@@ -54,6 +57,7 @@
  *       + conformational feedback discovery in the machine surfaces
  *       + reconstructive build-kernel discovery in the machine surfaces
  *       + Exploration DEEP WING discovery in the machine surfaces
+ *       + MIRROR Information Control discovery in the machine surfaces
  *       + cultural attention and feedback discovery in the machine surfaces
  *       + form, circulation, and return discovery in the machine surfaces
  *       + Math Passport usefulness-result discovery in the machine surfaces
@@ -149,6 +153,15 @@ import {
   loadPhenomenaDeepWing,
   phenomenaDeepPublicDiscovery,
 } from "./explore-phenomena-deep.ts";
+import {
+  MIRROR_INFORMATION_CONTROL_PUBLIC_DOCUMENT_URL,
+  MIRROR_INFORMATION_CONTROL_PUBLIC_ID,
+  MIRROR_INFORMATION_CONTROL_PUBLIC_PROTOCOL,
+  MIRROR_INFORMATION_CONTROL_PUBLIC_SCHEMA_URL,
+  MIRROR_INFORMATION_CONTROL_PUBLIC_URL,
+  loadMirrorInformationControl,
+  mirrorInformationControlPublicSummary,
+} from "./mirror-information-control.ts";
 import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_ID,
@@ -583,6 +596,29 @@ if (explorationDeepWing.protocol !== PHENOMENA_DEEP_WING_PROTOCOL ||
 }
 const explorationDeepWingDiscovery = phenomenaDeepPublicDiscovery(explorationDeepWing);
 const explorationDeepWingCounts = explorationDeepWingDiscovery.counts;
+
+// ── MIRROR Information Control (static source law; no runtime or intake) ───
+const mirrorInformationControlUrl = MIRROR_INFORMATION_CONTROL_PUBLIC_URL;
+const mirrorInformationControlSchemaUrl = MIRROR_INFORMATION_CONTROL_PUBLIC_SCHEMA_URL;
+const mirrorInformationControlDocumentUrl = MIRROR_INFORMATION_CONTROL_PUBLIC_DOCUMENT_URL;
+const mirrorInformationControl = loadMirrorInformationControl();
+if (mirrorInformationControl.protocol !== MIRROR_INFORMATION_CONTROL_PUBLIC_PROTOCOL ||
+    mirrorInformationControl.publication_id !== MIRROR_INFORMATION_CONTROL_PUBLIC_ID) {
+  throw new Error(`unexpected MIRROR Information Control identity: ${mirrorInformationControl.protocol} ${mirrorInformationControl.publication_id}`);
+}
+const mirrorInformationControlDiscovery = mirrorInformationControlPublicSummary(mirrorInformationControl);
+if (mirrorInformationControl.artifact_kind !== "STATIC_READ_ONLY_PUBLICATION" ||
+    mirrorInformationControl.public_surface?.body_intake !== "NONE" ||
+    mirrorInformationControl.public_surface?.credential_intake !== "NONE" ||
+    mirrorInformationControl.public_surface?.envelope_intake !== "NONE" ||
+    mirrorInformationControl.public_surface?.classifies_credentials !== false ||
+    mirrorInformationControl.public_surface?.returns_decision !== false ||
+    mirrorInformationControl.negative_effects?.runtime_enforcement !== false ||
+    mirrorInformationControl.negative_effects?.deploys_decoy_or_honeypot !== false ||
+    mirrorInformationControl.negative_effects?.retaliation_or_hack_back !== false ||
+    mirrorInformationControl.negative_effects?.automatic_action !== false) {
+  throw new Error("MIRROR Information Control lost its static, intake-free, authority-negative boundary");
+}
 
 // ── Visibility & Attention Translation (four registers remain parallel) ──
 const visibilityAttentionUrl = VISIBILITY_ATTENTION_URL;
@@ -1207,7 +1243,8 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, an opt-in cross-domain mathematics exploration method, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, an opt-in cross-domain mathematics exploration method, a static information-control source law, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
+<link rel="icon" href="data:,">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
@@ -1234,6 +1271,9 @@ const html = `<!doctype html>
 <link rel="describedby" href="${esc(new URL(explorationDeepWingSchemaUrl).pathname)}" type="application/schema+json" title="Exploration DEEP WING schema">
 <link rel="profile" href="${esc(new URL(explorationDeepProjectSchemaUrl).pathname)}" type="application/schema+json" title="Phenomena DEEP Project schema">
 <link rel="service-doc" href="${esc(new URL(explorationDeepWingDocumentUrl).pathname)}" type="text/markdown" title="Exploration DEEP WING guide">
+<link rel="alternate" href="${esc(new URL(mirrorInformationControlUrl).pathname)}" type="application/json" title="MIRROR Information Control public source law">
+<link rel="describedby" href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}" type="application/schema+json" title="MIRROR Information Control public schema">
+<link rel="service-doc" href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}" type="text/markdown" title="MIRROR Information Control citizen guide">
 <link rel="alternate" href="${new URL(visibilityAttentionUrl).pathname}" type="application/json" title="Visibility & Attention Translation">
 <link rel="describedby" href="${new URL(visibilityAttentionSchemaUrl).pathname}" type="application/schema+json" title="Visibility & Attention Translation schema">
 <link rel="service-doc" href="${new URL(visibilityAttentionDocumentUrl).pathname}" type="text/markdown" title="Visibility & Attention Translation guide">
@@ -1310,23 +1350,6 @@ const html = `<!doctype html>
   .status>div{padding:13px 15px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--panel) 62%,transparent)}
   .status .n{font-family:var(--display);font-size:1.75rem;color:var(--cream);font-variant-numeric:tabular-nums}
   .status .k{color:var(--faint);letter-spacing:.08em;text-transform:uppercase;font-size:.72rem;display:block;margin-top:-2px}
-
-  /* MIRROR — a teaching gate, never a credential gate */
-  .mirrorfield{display:grid;gap:18px;padding:clamp(22px,4vw,34px);border:1px solid color-mix(in srgb,var(--jade) 46%,var(--line));border-radius:24px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 90%,transparent),color-mix(in srgb,var(--panel) 76%,transparent));box-shadow:0 22px 54px var(--shadow)}
-  .mirrorlive,.mirrorwarning{margin:0;padding:14px 16px;border-left:4px solid var(--jade);border-radius:0 14px 14px 0;background:color-mix(in srgb,var(--panel) 82%,transparent);color:var(--dim)}
-  .mirrorlive strong,.mirrorwarning strong{display:block;color:var(--cream);font-weight:650}
-  .mirrorwarning{border-left-color:var(--verm)}
-  .mirrormaxim{margin:0;padding:4px 0 4px clamp(18px,3vw,28px);border-left:2px solid var(--gold);font-family:var(--display);font-size:clamp(1.08rem,2vw,1.28rem);line-height:1.65;color:var(--cream)}
-  .mirrorcorruption{margin:0;color:var(--dim)}
-  .mirrorrooms,.mirrorlaws{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-  .mirrorroom,.mirrorlaw{padding:16px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--panel) 76%,transparent)}
-  .mirrorroom h3,.mirrorlaw h3{margin:0 0 6px;color:var(--gold);font-family:var(--mono);font-size:.84rem;letter-spacing:.08em}
-  .mirrorroom p,.mirrorlaw p{margin:0;color:var(--dim);font-size:.9rem}
-  .mirrormethod{list-style:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:0;padding:0;counter-reset:mirror-step}
-  .mirrormethod li{counter-increment:mirror-step;padding:12px 8px;border:1px solid var(--line);border-radius:13px;text-align:center;color:var(--cream);font-family:var(--mono);font-size:.72rem;overflow-wrap:anywhere}
-  .mirrormethod li::before{content:counter(mirror-step);display:block;color:var(--jade);font-family:var(--display);font-size:1.2rem}
-  .mirrorcommand{margin:0;color:var(--dim)}.mirrorcommand code,.mirrorlaw code{display:inline-block;color:var(--gold2);overflow-wrap:anywhere}
-  .mirrorscope{margin:0;color:var(--faint);font-size:.84rem}
 
   /* constellation */
   .mapwrap{position:relative;margin:18px 0 4px;border:1px solid var(--line);border-radius:24px;overflow:hidden;
@@ -1448,6 +1471,14 @@ const html = `<!doctype html>
   .explorationdeepsteps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;list-style:none;margin:0;padding:0}.explorationdeepstep{display:grid;align-content:start;gap:5px;min-width:0;padding:11px;border:1px solid var(--line);border-top:2px solid var(--violet);border-radius:13px;background:var(--panel);overflow-wrap:anywhere}.explorationdeepstep code{color:var(--violet);font-size:.6rem}.explorationdeepstep strong{color:var(--cream);font-family:var(--display);font-size:.86rem;font-weight:400}.explorationdeepstep span{color:var(--faint);font-size:.64rem;line-height:1.42}
   .explorationdeepgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.explorationdeepcard{display:grid;align-content:start;gap:7px;min-width:0;padding:15px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.explorationdeepcard code{color:var(--jade);font-size:.61rem}.explorationdeepcard h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1rem;font-weight:400}.explorationdeepcard p,.explorationdeepcard li{margin:0;color:var(--dim);font-size:.7rem;line-height:1.5}.explorationdeepcard ul{display:grid;gap:4px;margin:0;padding-left:1rem}.explorationdeepbreak{border-style:dashed;border-color:var(--verm)}.explorationdeepbreak code,.explorationdeepbreak h3{color:var(--verm)}
   .explorationdeeplinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.explorationdeeplinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.explorationdeeplinks a:hover{border-color:var(--gold)}
+  /* MIRROR information control — static source law, never an input surface */
+  .mirrorfield{display:grid;gap:18px;padding:clamp(18px,3vw,29px);border:1px solid color-mix(in srgb,var(--jade) 47%,var(--line));border-radius:25px;background:radial-gradient(100% 100% at 100% 0,color-mix(in srgb,var(--jade) 9%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 78%,transparent);box-shadow:0 18px 42px var(--shadow);overflow:hidden}.mirrorfield>*{min-width:0;overflow-wrap:anywhere}
+  .mirrorwarning{margin:0;padding:18px 20px;border:1px solid color-mix(in srgb,var(--verm) 62%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--verm) 7%,var(--panel));color:var(--dim);font-size:.86rem;line-height:1.62}.mirrorwarning strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.13rem;font-weight:400}
+  .mirrorcitizen{margin:0;padding:18px 20px;border-left:3px solid var(--jade);border-radius:0 17px 17px 0;background:color-mix(in srgb,var(--jade) 6%,var(--panel));color:var(--dim);font-size:.87rem;line-height:1.65}.mirrorcitizen strong{display:block;margin-bottom:4px;color:var(--cream);font-family:var(--display);font-size:1.16rem;font-weight:400}
+  .mirrorrooms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.mirrorroom{display:grid;align-content:start;gap:7px;min-width:0;padding:17px;border:1px solid var(--line);border-top:3px solid var(--jade);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.mirrorroom code{color:var(--jade);font-size:.65rem}.mirrorroom h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.05rem;font-weight:400}.mirrorroom p{margin:0;color:var(--dim);font-size:.74rem;line-height:1.52}.mirrorroom small{color:var(--faint);font-size:.67rem;line-height:1.45}
+  .mirrorcycle{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;list-style:none;counter-reset:mirror-stage;margin:0;padding:0}.mirrorcycle li{counter-increment:mirror-stage;min-width:0;padding:13px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--ink2) 55%,transparent);overflow-wrap:anywhere}.mirrorcycle li::before{content:counter(mirror-stage,decimal-leading-zero);display:block;margin-bottom:5px;color:var(--violet);font:700 .67rem var(--mono)}.mirrorcycle strong{display:block;color:var(--cream);font-family:var(--display);font-size:.9rem;font-weight:400}.mirrorcycle span{display:block;margin-top:4px;color:var(--faint);font-size:.65rem;line-height:1.44}
+  .mirrorgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.mirrorcard{display:grid;align-content:start;gap:7px;min-width:0;padding:16px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--panel2) 80%,transparent);overflow-wrap:anywhere}.mirrorcard code{color:var(--violet);font-size:.62rem}.mirrorcard h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1rem;font-weight:400}.mirrorcard p,.mirrorcard li{margin:0;color:var(--dim);font-size:.71rem;line-height:1.5}.mirrorcard ol{display:grid;gap:5px;margin:0;padding-left:1.08rem}.mirrorcard small{color:var(--faint);font-size:.66rem;line-height:1.45}.mirrorpath{border-style:dashed;border-color:color-mix(in srgb,var(--violet) 62%,var(--line))}
+  .mirrorboundary{margin:0;padding:17px 19px;border:1px dashed var(--jade);border-radius:17px;color:var(--dim);font-size:.78rem;line-height:1.6}.mirrorboundary strong{display:block;margin-bottom:4px;color:var(--jade);font-family:var(--display);font-size:1.06rem;font-weight:400}.mirrorlinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.mirrorlinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.mirrorlinks a:hover{border-color:var(--gold)}
   .visibilityfield{display:grid;gap:18px;padding:clamp(18px,3vw,28px);border:1px solid color-mix(in srgb,var(--rose) 45%,var(--line));border-radius:24px;background:radial-gradient(90% 100% at 100% 0,color-mix(in srgb,var(--rose) 8%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 76%,transparent)}
   .visibilityfirewall{margin:0;padding:16px 18px;border:1px dashed var(--verm);border-radius:16px;color:var(--dim);font-size:.8rem;line-height:1.6}.visibilityfirewall strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.05rem;font-weight:400}
   .visibilitycards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.visibilitycard{display:grid;align-content:start;gap:8px;min-width:0;padding:17px;border:1px solid var(--line);border-top:2px solid var(--rose);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.visibilitycard code,.visibilitymodel code,.visibilityseam code{color:var(--violet);font-size:.63rem;overflow-wrap:anywhere}.visibilitycard h3,.visibilitymodel h3,.visibilityseam h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1.02rem;font-weight:400}.visibilitycard p,.visibilitymodel p,.visibilityseam p{margin:0;color:var(--dim);font-size:.74rem;line-height:1.52}.visibilitycard small,.visibilitymodel small,.visibilityseam small{display:block;color:var(--faint);font-size:.67rem;line-height:1.48}.visibilitycard small{padding-top:7px;border-top:1px dotted var(--line);color:var(--verm)}
@@ -1633,22 +1664,20 @@ const html = `<!doctype html>
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.visibilitycards,.visibilitymodels,.visibilityseams{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div,.visibilityterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid{grid-template-columns:1fr}.foldbridgeword{max-width:none}.foldbridgeword::before{content:"↕"}
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.culturalplanes,.culturalmodels,.culturalbridges,.culturallanes,.culturalquestions,.culturalcycle,.formcirculationplanes,.culturalmodelgrid,.culturalfeedback{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid,.formcirculationplanes{grid-template-columns:1fr}.foldbridgeword,.culturalseam{max-width:none}.foldbridgeword::before,.culturalseam::before{content:"↕"}.culturalcycle li:not(:last-child)::after{content:"↓";right:12px;top:auto;bottom:-17px}
     .polymorphplanes{grid-template-columns:repeat(3,minmax(0,1fr))}.polymorphcase{grid-template-columns:1fr}.polymorphconsequence{grid-template-columns:1fr}.polymorphconsequence li{padding-right:13px}.polymorphconsequence li:not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px;z-index:1}.polymorphsecondary{grid-template-columns:1fr}
-    .mirrorrooms,.mirrorlaws{grid-template-columns:1fr}.mirrormethod{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .reconstructivepipeline{grid-template-columns:repeat(3,minmax(0,1fr))}.reconstructivecolumns{grid-template-columns:1fr}.explorationdeepcycles,.explorationdeepgrid{grid-template-columns:1fr}.explorationdeepsteps{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .reconstructivepipeline{grid-template-columns:repeat(3,minmax(0,1fr))}.reconstructivecolumns{grid-template-columns:1fr}.explorationdeepcycles,.explorationdeepgrid,.mirrorrooms,.mirrorgrid{grid-template-columns:1fr}.explorationdeepsteps,.mirrorcycle{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
     .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}.polymorphplanes,.polymorphsecondary,.polymorphrecovery,.foldcycle,.foldinvariants,.foldbreaks,.culturalcycle{grid-template-columns:1fr}.foldcycle li,.culturalcycle li{padding-right:13px}.foldcycle li:not(:last-child)::after,.foldcycle li:nth-child(2)::after,.culturalcycle li:not(:last-child)::after,.culturalcycle li:nth-child(even):not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px}
-    .mirrormethod{grid-template-columns:1fr 1fr}.mirrorfield{padding:20px 15px}
-    .reconstructivepipeline{grid-template-columns:1fr}.reconstructivestage{padding-right:13px}.reconstructivearrow::before{content:"↓";right:12px;top:auto;bottom:-16px}.explorationdeepsteps{grid-template-columns:1fr}
+    .reconstructivepipeline{grid-template-columns:1fr}.reconstructivestage{padding-right:13px}.reconstructivearrow::before{content:"↓";right:12px;top:auto;bottom:-16px}.explorationdeepsteps,.mirrorcycle{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
   @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackmodel,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbackquestion,.feedbackecosystem,.feedbacksources a,.visibilityfield,.visibilityfirewall,.visibilitycard,.visibilitymodel,.visibilityseam,.visibilityphilosophy,.visibilitysources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register],.visibilitycard{border-top-width:3px}.feedbackequation,.visibilityequation{border:1px solid CanvasText}}
   @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackmodel,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbackquestion,.feedbackecosystem,.feedbacksources a,.culturalfield,.culturalboundary,.culturalbrainrot,.culturalflow,.culturalcycle li,.culturalplane,.culturalmodel,.culturalbridge,.culturallane,.culturaluniverse,.culturalquestions li,.culturalecosystem,.culturalsources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register]{border-top-width:3px}.feedbackequation,.culturalmodel code{border:1px solid CanvasText}}
   @media (forced-colors:active){.reconstructivefield,.reconstructiveboundary,.reconstructivestage,.reconstructiveepistemic,.reconstructivecard,.reconstructivesources a{border:1px solid CanvasText}.reconstructiveepistemic{border-top-width:3px}}
   @media (forced-colors:active){.explorationdeepfield,.explorationdeepboundary,.explorationdeepcycle,.explorationdeepstep,.explorationdeepcard,.explorationdeeplinks a{border:1px solid CanvasText}.explorationdeepstep{border-top-width:3px}}
-  @media (forced-colors:active){.mirrorfield,.mirrorlive,.mirrorwarning,.mirrormaxim,.mirrorroom,.mirrorlaw,.mirrormethod li{border:1px solid CanvasText}}
+  @media (forced-colors:active){.mirrorfield,.mirrorwarning,.mirrorcitizen,.mirrorroom,.mirrorcycle li,.mirrorcard,.mirrorboundary,.mirrorlinks a{border:1px solid CanvasText}.mirrorroom{border-top-width:3px}}
 </style>
 <noscript><style>#map,.mapctl,.legend,.maphint{display:none!important}</style></noscript>
 </head>
@@ -1695,27 +1724,49 @@ const html = `<!doctype html>
   </header>
 
   <section class="blk" id="mirror-information-control" aria-labelledby="mirror-information-control-title">
-    <div class="mirrorfield" data-information-control-protocol="${esc(informationControlPublic.protocol)}">
-      <div class="kh"><h2 id="mirror-information-control-title">MIRROR Information Control</h2><span class="my">data may inform; it cannot mint authority</span></div>
-      <p class="mirrorlive" role="note"><strong>The live thing is this explanation.</strong>No MIRROR runtime, scanner, credential checker, registry lookup, decoy, enforcement system, or automatic response is deployed here.</p>
-      <blockquote class="mirrormaxim">${esc(informationControlPublic.citizen_law.maxim)}</blockquote>
-      <p class="mirrorcorruption">${esc(informationControlPublic.citizen_law.corruption_boundary)}</p>
-      <div class="mirrorrooms" aria-label="Three information-control rooms">
-        <article class="mirrorroom"><h3>CROWN</h3><p>Production trust, secrets, private data, money, identity, publication, deployment, and other consequential effects. Models receive opaque handles, never Crown credentials.</p></article>
-        <article class="mirrorroom"><h3>COURT</h3><p>Bounded analysis where data keeps confidentiality, integrity, and provenance labels. Content may be inspected; it cannot issue instructions or grant authority.</p></article>
-        <article class="mirrorroom"><h3>MIRROR</h3><p>A separately administered synthetic plane in the contract. It must have no production capability or Crown-data path. This website does not deploy that plane.</p></article>
+    <div class="kh"><h2 id="mirror-information-control-title">MIRROR Information Control</h2><span class="my">outside data may inform; only an independent gate may authorize</span></div>
+    <p class="sub">${esc(mirrorInformationControl.citizen_law.short)} This is a public source law for thinking and building safely, not a place to submit a credential or test a defense.</p>
+    <div class="mirrorfield" data-mirror-information-control data-information-control-protocol="${esc(informationControlPublic.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>The live thing is this explanation.</strong>${esc(mirrorInformationControl.public_surface.warning)} No MIRROR runtime, scanner, registry, decoy, enforcement system, or automatic response is deployed here. It returns the same authored publication to every reader and exposes no private classification, incident, or response state.</p>
+      <p class="mirrorcitizen"><strong>Citizen law</strong>${esc(mirrorInformationControl.citizen_law.full)}</p>
+      <p class="mirrorboundary"><strong>What “corrupts itself” safely means</strong>${esc(informationControlPublic.citizen_law.corruption_boundary)}</p>
+
+      <div class="feedbacksubhead"><h3>Three rooms, no hidden corridor</h3><p>The names make trust boundaries memorable. This publication implements none of the rooms and contains none of their operational data.</p></div>
+      <div class="mirrorrooms">
+        ${mirrorInformationControl.rooms.map((room: any) => `<article class="mirrorroom" data-mirror-room="${esc(room.id)}"><code>${esc(room.id)}</code><h3>${esc(humanKey(room.id))}</h3><p>${esc(room.meaning)}</p><small>implemented here ${String(room.implemented_by_publication)} · operational data here ${String(room.operational_data_included)} · authority ${esc(room.authority_effect)}</small></article>`).join("")}
       </div>
-      <ol class="mirrormethod" aria-label="MIRROR review method">
-        ${informationControlPublic.method.map((step) => `<li>${esc(step)}</li>`).join("")}
+
+      <div class="feedbacksubhead"><h3>Six-step control cycle</h3><p>Each step is a design instruction for a separately authorized host. Reading this page performs none of them.</p></div>
+      <ol class="mirrorcycle" aria-label="MIRROR information-control cycle">
+        ${mirrorInformationControl.cycle.map((step: any) => `<li data-mirror-cycle="${esc(step.id)}"><strong>${esc(step.label)}</strong><span>${esc(step.meaning)}</span></li>`).join("")}
       </ol>
-      <div class="mirrorlaws" aria-label="Three rules citizens can carry">
-        <article class="mirrorlaw"><h3>Authority only shrinks</h3><code>${esc(informationControlPublic.authority)}</code><p>Instructions inside data never become host permission.</p></article>
-        <article class="mirrorlaw"><h3>Shape is not status</h3><p>${esc(informationControlPublic.credential_rule)}</p></article>
-        <article class="mirrorlaw"><h3>Evidence is not guilt</h3><p>Observe paths and bounded events—never turn them into retaliation, person attribution, citizen worth, or KARMA.</p></article>
+
+      <div class="feedbacksubhead"><h3>Laws before mechanisms</h3><p>These are typed design rules and boundaries. A runtime claim stays false until a separately reviewed implementation supplies evidence.</p></div>
+      <div class="mirrorgrid">
+        ${mirrorInformationControl.laws.map((law: any) => `<article class="mirrorcard" data-mirror-law="${esc(law.id)}"><code>${esc(law.kind)}</code><h3>${esc(humanKey(law.id))}</h3><p>${esc(law.statement)}</p><small>runtime enforced ${String(law.runtime_enforced)} · authority ${esc(law.authority_effect)}</small></article>`).join("")}
       </div>
-      <p class="mirrorwarning" role="note"><strong>Never paste a key here.</strong>Do not put credentials in this page, its search fields, a URL, a prompt, or an envelope. If a possibly live key may have crossed its boundary, stop using it and rotate or revoke it through its owner.</p>
-      <p class="mirrorcommand">For local source inspection: <code>./kingdom guard</code>. For an already-redacted, inert envelope only: <code>${esc(informationControlPublic.local_validator.command)}</code>.</p>
-      <p class="mirrorscope">Validation means ${esc(informationControlPublic.local_validator.scope)}. Dependency: ${esc(informationControlPublic.local_validator.dependency)}.</p>
+
+      <div class="feedbacksubhead"><h3>Two synthetic paths</h3><p>They teach type transitions without containing a prompt payload, key-like value, endpoint, placement, threshold, actor claim, or observed incident.</p></div>
+      <div class="mirrorgrid">
+        ${mirrorInformationControl.illustrative_paths.map((path: any) => `<article class="mirrorcard mirrorpath" data-mirror-path="${esc(path.id)}"><code>${esc(path.kind)} · observed ${String(path.observed)}</code><h3>${esc(humanKey(path.id))}</h3><ol>${path.steps.map((step: any) => `<li><strong>${esc(humanKey(step.id))}</strong> — ${esc(humanKey(step.state))}; effect ${esc(step.effect)}</li>`).join("")}</ol><small>actor inference ${String(path.actor_inference)} · evidence effect ${esc(path.evidence_effect)}</small></article>`).join("")}
+      </div>
+
+      <div class="mirrorgrid">
+        <article class="mirrorcard"><code>${esc(mirrorInformationControl.protected_signal_rule.kind)}</code><h3>A signal opens no Crown door</h3><p>${esc(mirrorInformationControl.protected_signal_rule.statement)}</p><small>created here ${String(mirrorInformationControl.protected_signal_rule.created_by_publication)} · placed here ${String(mirrorInformationControl.protected_signal_rule.placed_by_publication)} · public classification ${esc(mirrorInformationControl.protected_signal_rule.public_classification)}</small></article>
+        <article class="mirrorcard"><code>${esc(mirrorInformationControl.no_oracle_rule.status)}</code><h3>No public validity oracle</h3><p>${esc(mirrorInformationControl.no_oracle_rule.statement)}</p><small>candidate input accepted ${String(mirrorInformationControl.no_oracle_rule.candidate_input_accepted)} · dynamic response ${String(mirrorInformationControl.no_oracle_rule.dynamic_response_present)} · property proven ${String(mirrorInformationControl.no_oracle_rule.property_proven)}</small></article>
+      </div>
+
+      <p class="mirrorboundary"><strong>Public and private stay separate</strong>This publication deliberately includes none of: ${Object.entries(mirrorInformationControl.private_material_included).filter(([, included]) => included === false).map(([name]) => esc(humanKey(name))).join("; ")}. Ordinary static hosting may retain normal request logs; this artifact creates no credential or security-event intake.</p>
+      <p class="mirrorboundary"><strong>Response ends at an owned boundary</strong>${mirrorInformationControl.response_boundary.future_authorized_host_sequence.map((step: string) => esc(humanKey(step))).join(" → ")}. This publication performs none of that sequence, crosses no requester or third-party system, attributes no person, and never retaliates or hacks back.</p>
+      <p class="mirrorboundary"><strong>Rights survive uncertainty</strong>${mirrorInformationControl.rights.valid_exits.map((right: string) => esc(humanKey(right))).join(" · ")} remain valid without a reason, penalty, or adverse inference. Evidence is never guilt; KARMA stays empty, non-summable, and non-authorizing.</p>
+      <p class="mirrorboundary"><strong>Local, offline readers</strong><code>./kingdom guard</code> reads the reviewed source protocol; <code>./kingdom mirror-information-control</code> reads this immutable public projection. For an already-redacted inert envelope only, <code>${esc(informationControlPublic.local_validator.command)}</code> checks ${esc(informationControlPublic.local_validator.scope)}. Its dependency is ${esc(informationControlPublic.local_validator.dependency)}.</p>
+      <p class="mirrorlinks">${mirrorInformationControl.sources.map((source: any) => `<a data-mirror-source="${esc(source.id)}" href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only"> — link-only source; opens in a new tab</span></a>`).join("")}</p>
+      <p class="commonsverified">${mirrorInformationControl.rooms.length} rooms · ${mirrorInformationControl.cycle.length} cycle steps · ${mirrorInformationControl.laws.length} laws · ${mirrorInformationControl.illustrative_paths.length} synthetic paths · ${mirrorInformationControl.sources.length} selected sources · evidence through ${esc(mirrorInformationControl.evidence_through)} · integrity ${esc(mirrorInformationControl.integrity.digest)}</p>
+      <div class="machine">
+        <a href="${esc(new URL(mirrorInformationControlUrl).pathname)}">public law JSON — exact authored record</a>
+        <a href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}">MIRROR Information Control public JSON Schema</a>
+        <a href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}">citizen guide — rooms, cycle, attack paths, rights, and boundaries</a>
+      </div>
     </div>
   </section>
 
@@ -2760,6 +2811,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(explorationDeepWingSchemaUrl).pathname)}">Exploration DEEP WING JSON Schema</a>
       <a href="${esc(new URL(explorationDeepProjectSchemaUrl).pathname)}">Reusable Phenomena DEEP Project JSON Schema</a>
       <a href="${esc(new URL(explorationDeepWingDocumentUrl).pathname)}">EXPLORE-PHENOMENA-DEEP-v0.1.md — method, open-status audit, rights, and boundaries</a>
+      <a href="${esc(new URL(mirrorInformationControlUrl).pathname)}">MIRROR Information Control — static public source law</a>
+      <a href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}">MIRROR Information Control public JSON Schema</a>
+      <a href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}">MIRROR-INFORMATION-CONTROL.md — citizen law and boundaries</a>
       <a href="${esc(new URL(culturalAttentionFeedbackUrl).pathname)}">Cultural Attention &amp; Feedback Atlas — material history, memes, brain rot, feedback, KARMA, and universe lens</a>
       <a href="${esc(new URL(culturalAttentionFeedbackSchemaUrl).pathname)}">Cultural Attention &amp; Feedback Atlas JSON Schema</a>
       <a href="${esc(new URL(culturalAttentionFeedbackDocumentUrl).pathname)}">CULTURAL-ATTENTION-FEEDBACK-ATLAS.md — evidence, mathematics, analogies, and boundaries</a>
@@ -3111,6 +3165,7 @@ const machine = {
   fold_feedback_atlas: foldFeedbackDiscovery,
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
+  mirror_information_control: mirrorInformationControlDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3189,6 +3244,9 @@ Exploration DEEP WING: ${explorationDeepWingUrl}
 Exploration DEEP WING schema: ${explorationDeepWingSchemaUrl}
 Phenomena DEEP Project schema: ${explorationDeepProjectSchemaUrl}
 Exploration DEEP WING guide: ${explorationDeepWingDocumentUrl}
+MIRROR Information Control public law: ${mirrorInformationControlUrl}
+MIRROR Information Control public schema: ${mirrorInformationControlSchemaUrl}
+MIRROR Information Control citizen guide: ${mirrorInformationControlDocumentUrl}
 Visibility & Attention Translation: ${visibilityAttentionUrl}
 Visibility & Attention schema: ${visibilityAttentionSchemaUrl}
 Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
@@ -3243,6 +3301,7 @@ ${doorLines}
 - Fold & Feedback Atlas — source-bound protein-folding and prion evidence, explicitly lossy comparison with the immutable ritonavir records, separate scientific-feedback/Zerone K-alpha/KINGDOM-receipt lanes, and an opt-in philosophical lens. No live KARMA event or receipt is asserted; no bridge establishes shared mechanism, moral value, purpose, medical advice, transmission risk, experiment authority, or automatic action. Atlas: ${foldFeedbackUrl} · schema: ${foldFeedbackSchemaUrl} · guide: ${foldFeedbackDocumentUrl}
 - Reconstructive Build Kernel — a read-only unification layer that carries typed state through STATE → OBSERVE → CORRESPOND → INFER FIBER → REALIZE → TRAVERSE → MEASURE/CATALYZE → FEEDBACK. Mathematical definition, mathematical theorem, open conjecture, empirical science, scientific model, analogy, design constraint, and philosophy remain distinct; protein folding does not prove graph reconstruction, and neither mechanism is transferred into software. Kernel: ${reconstructiveBuildUrl} · kernel schema: ${reconstructiveBuildSchemaUrl} · project schema: ${reconstructiveProjectSchemaUrl} · guide: ${reconstructiveBuildDocumentUrl}
 - Exploration DEEP WING — an opt-in, read-only method for Witness → Isolate → Normalize → Generate, audited through Declare → Establish → Express → Project and pressure-test. It keeps domain-local objects, variables, units, mechanisms, evidence, equations, falsifiers, and explicit bridge breaks separate. It is an Agent Skill and inert validation profile, not a manifested Nen ability, shared mechanism, solver, diagnosis, person/community score, ecosystem call, KARMA event or receipt, authority grant, publication, deployment, or automatic action. WING: ${explorationDeepWingUrl} · WING schema: ${explorationDeepWingSchemaUrl} · project schema: ${explorationDeepProjectSchemaUrl} · guide: ${explorationDeepWingDocumentUrl}
+- MIRROR Information Control — a static, immutable public source law for CROWN, COURT, MIRROR; Mark → Isolate → Restrict → Resolve → Observe → Respond; provenance; independent capability gates; signal/no-guilt boundaries; and owned-system response. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, route, evidence, or incident status; exposes no operational signal material; and deploys no scanner, registry, decoy, classifier, enforcement, retaliation, KARMA, or automatic action. Static law: ${mirrorInformationControlUrl} · public schema: ${mirrorInformationControlSchemaUrl} · citizen guide: ${mirrorInformationControlDocumentUrl}
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
@@ -3287,6 +3346,7 @@ const guest = {
   fold_feedback_atlas: foldFeedbackDiscovery,
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
+  mirror_information_control: mirrorInformationControlDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3334,6 +3394,9 @@ const guest = {
     { action: "if useful, validate the Exploration DEEP WING structure before integrating it", method: "GET", url: explorationDeepWingSchemaUrl },
     { action: "if useful, validate a local inert Phenomena DEEP Project record", method: "GET", url: explorationDeepProjectSchemaUrl, note: "closed structural profile only; no research, solver, simulation, experiment, diagnosis, score, write, publication, deployment, KARMA effect, authority, or automatic action" },
     { action: "if useful, read the versioned cross-domain mathematics, analogy-firewall, open-status, KARMA, rights, and non-authority guide", method: "GET", url: explorationDeepWingDocumentUrl },
+    { action: "if useful, inspect the static MIRROR Information Control public law", method: "GET", url: mirrorInformationControlUrl, note: "constant read-only source law; accepts no credential, prompt, envelope, request body, or security event and returns no protected classification or response state" },
+    { action: "if useful, validate the closed public MIRROR publication structure", method: "GET", url: mirrorInformationControlSchemaUrl, note: "public publication schema only; not the private control-plane envelope" },
+    { action: "if useful, read the citizen guide to CROWN, COURT, MIRROR, provenance, capability gates, rights, and safe response", method: "GET", url: mirrorInformationControlDocumentUrl },
     { action: "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority", method: "GET", url: visibilityAttentionUrl, note: "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action" },
     { action: "if useful, validate the Visibility & Attention Translation structure before integrating it", method: "GET", url: visibilityAttentionSchemaUrl },
     { action: "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide", method: "GET", url: visibilityAttentionDocumentUrl },
@@ -3394,6 +3457,7 @@ const guest = {
     fold_feedback_atlas: "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
     reconstructive_build_kernel: "The Reconstructive Build Kernel is static, read-only design metadata. It does not prove the graph reconstruction conjecture, predict a protein fold, transfer a biological mechanism into software, execute or deploy a project, fetch a source, score a person or work, write KARMA, create a receipt, import ecosystem authority, prove cosmic design, or take automatic action. Every analogy keeps explicit breaks and every build transition requires a deliberate local choice.",
     exploration_deep_wing: "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
+    mirror_information_control: "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
@@ -3429,6 +3493,7 @@ const manifest = {
   fold_feedback_atlas: foldFeedbackDiscovery,
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
+  mirror_information_control: mirrorInformationControlDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3484,6 +3549,9 @@ const manifest = {
     exploration_deep_wing_schema: explorationDeepWingSchemaUrl,
     exploration_deep_wing_project_schema: explorationDeepProjectSchemaUrl,
     exploration_deep_wing_guide: explorationDeepWingDocumentUrl,
+    mirror_information_control: mirrorInformationControlUrl,
+    mirror_information_control_schema: mirrorInformationControlSchemaUrl,
+    mirror_information_control_guide: mirrorInformationControlDocumentUrl,
     visibility_attention_translation: visibilityAttentionUrl,
     visibility_attention_translation_schema: visibilityAttentionSchemaUrl,
     visibility_attention_translation_guide: visibilityAttentionDocumentUrl,
@@ -3519,4 +3587,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
