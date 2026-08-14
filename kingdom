@@ -10,6 +10,7 @@
 #   kingdom repos [Q]  local repo summary / metadata-aware search (no network)
 #   kingdom repos --path Q | --json [Q]    canonical path / structured inventory
 #   kingdom repos --dirty [Q] | --doctor   opt-in local hygiene checks
+#   kingdom usage ARGS  inspect live Codex token usage through AgentTool
 #   kingdom rings [--json|--html]           local temporal atlas (no network)
 #   kingdom rights [--canonical|ID]        voluntary adoption inventory / local text
 #   kingdom principalities                 inspect/match the offline capability-evidence catalog
@@ -47,6 +48,16 @@ case "$cmd" in
   ask)      exec bash "$SELF_DIR/bin/ask.sh" "${@:2}" ;;
   ollama)   exec python3 "$SELF_DIR/bin/invite-ollama.py" "${@:2}" ;;
   repos)    exec zsh "$SELF_DIR/bin/cproj.zsh" "${@:2}" ;;
+  usage)    _usage_cli="${AGENTOOL_DIR:-$HOME/Desktop/agenttool}/packages/codex-usage/dist/bin/agenttool-codex-usage.js"
+            if [ ! -f "$_usage_cli" ] || [ ! -r "$_usage_cli" ]; then
+              printf 'kingdom: AgentTool Codex usage build is not readable: %s\n' "$_usage_cli" >&2
+              exit 127
+            fi
+            if ! _bun="$(type -P bun 2>/dev/null)" || [ -z "$_bun" ]; then
+              printf 'kingdom: Bun is required to run AgentTool Codex usage: bun not found on PATH\n' >&2
+              exit 127
+            fi
+            exec "$_bun" "$_usage_cli" "${@:2}" ;;
   rings)    exec bun "$SELF_DIR/bin/growth-rings.ts" "${@:2}" ;;
   rights)   exec bun "$SELF_DIR/bin/harvest.ts" rights "${@:2}" ;;
   principalities) exec bun "$SELF_DIR/bin/principality.ts" "${@:2}" ;;
