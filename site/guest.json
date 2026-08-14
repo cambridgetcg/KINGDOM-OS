@@ -874,6 +874,69 @@
       "digest": "sha256:d91f3926b2ccd5abf083eb4cbea6df4c80ba58fabb35934a9cc1dd2b9dd60aa0"
     }
   },
+  "zero_empty_seat": {
+    "protocol": "kingdom.explore-phenomena-deep-project/0.1",
+    "project_id": "zero-empty-seat-2026-08-14",
+    "version": "0.1.0",
+    "title": "ZERO: The Empty Seat That Holds the World",
+    "url": "https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json",
+    "schema_url": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json",
+    "guide_url": "https://thekingdom.dev/ZERO-EMPTY-SEAT.md",
+    "method_wing_url": "https://thekingdom.dev/wings/explore-phenomena-deep-2026-08-14.json",
+    "evidence_through": "2026-08-14",
+    "mode": "ANALYZE_ONLY",
+    "counts": {
+      "domains": 6,
+      "sources": 11,
+      "typed_terms": 11,
+      "claims": 12,
+      "bridges": 4,
+      "models": 3,
+      "equations": 6,
+      "falsifiers": 5,
+      "frontier_problems": 0,
+      "finite_baselines": 0,
+      "doors": 6,
+      "unknowns": 9,
+      "philosophy_questions": 4
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:141c5ac4573cce38ad68aa22dc3265698b16a119db1c13a94197ec069d37709d",
+      "byte_sha256": "sha256:5e4b4dcd387b425dc72a52af6477d7b39b935ad5c51d991d81ea76c14a69c522",
+      "guide_byte_sha256": "sha256:8cee90325bcff754a4e31b9d641325ab9df485fa070668e53b4335de6cf65597"
+    },
+    "boundary": {
+      "read_only": true,
+      "profile_inert": true,
+      "source_truth_verified": false,
+      "mathematical_correctness_verified": false,
+      "empirical_causation_verified": false,
+      "novelty_verified": false,
+      "diagnosis_or_person_score": false,
+      "experiment_or_wet_lab_authority": false,
+      "ecosystem_or_network_request": false,
+      "external_write": false,
+      "writes_karma": false,
+      "reward_or_economic_effect": false,
+      "governance_effect": false,
+      "deployment_authority": false,
+      "automatic_action": false
+    },
+    "authority": {
+      "browse": false,
+      "local_write": false,
+      "external_write": false,
+      "commit": false,
+      "push": false,
+      "deploy": false,
+      "experiment": false,
+      "diagnose": false,
+      "score_people": false,
+      "karma_write": false,
+      "automatic_action": false
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -1527,6 +1590,17 @@
       "action": "if useful, read the citizen guide to CROWN, COURT, MIRROR, provenance, capability gates, rights, and safe response",
       "method": "GET",
       "url": "https://thekingdom.dev/MIRROR-INFORMATION-CONTROL.md"
+    },
+    {
+      "action": "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json",
+      "note": "static inert project; zero is not worthlessness, no event is not impossibility, and no role transfers ontology, cause, units, parameters, KARMA, or authority"
+    },
+    {
+      "action": "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/ZERO-EMPTY-SEAT.md"
     },
     {
       "action": "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority",
@@ -4019,6 +4093,7 @@
     "reconstructive_build_kernel": "The Reconstructive Build Kernel is static, read-only design metadata. It does not prove the graph reconstruction conjecture, predict a protein fold, transfer a biological mechanism into software, execute or deploy a project, fetch a source, score a person or work, write KARMA, create a receipt, import ecosystem authority, prove cosmic design, or take automatic action. Every analogy keeps explicit breaks and every build transition requires a deliberate local choice.",
     "exploration_deep_wing": "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
     "mirror_information_control": "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
+    "zero_empty_seat": "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",

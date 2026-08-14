@@ -86,10 +86,10 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 77 assets:
-58 ledgered immutable/versioned assets and 19 mutable assets. There are 75 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 79 assets:
+60 ledgered immutable/versioned assets and 19 mutable assets. There are 77 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 74 URLs:
+contracts. The sitemap contains 76 URLs:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
@@ -146,6 +146,9 @@ the authored `/protocols/mirror-information-control-2026-08-14.json`, closed
 `/MIRROR-INFORMATION-CONTROL.md` static source law; these routes accept no
 credential, prompt, envelope, or security event and deploy no scanner,
 classifier, registry, decoy, enforcement, response, or retaliation runtime;
+the authored `/atlases/zero-empty-seat-2026-08-14.json`, which reuses the closed
+`/schemas/phenomena-deep-project/0.1.json` inert project profile, and its versioned
+`/ZERO-EMPTY-SEAT.md` guide;
 the additive authored `/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json`,
 `/schemas/being-access-aftermath-atlas/0.2.json`, and
 `/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md` successor bytes, without repointing v0.1;
@@ -166,8 +169,9 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks every currently staged ledgered immutable/versioned byte hash (58 after
-the Math Passport pilot, Exploration DEEP, and MIRROR public-law releases; 35 in the initial
+checks every currently staged ledgered immutable/versioned byte hash (60 after
+the Math Passport pilot, Exploration DEEP, MIRROR public-law, and ZERO Empty
+Seat releases; 35 in the initial
 integrity release) plus the worker-owned
 negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +
@@ -176,8 +180,9 @@ Reconstructive Build Kernel + reusable project profile +
 Visibility & Attention Translation + Cultural Attention & Feedback Atlas +
 Form, Circulation & Return Atlas + The Vanishing Path + Math Passport pilot +
 Being, Access & Aftermath Atlas, the opt-in Exploration DEEP WING plus its
-reusable inert project profile, and the static MIRROR Information Control public law
-schema headers, negative authority, source-history lineage, and cross-surface
+reusable inert project profile, the ZERO Empty Seat project plus guide, and the
+static MIRROR Information Control public law for schema headers, negative
+authority, source-history lineage, and cross-surface
 discovery while leaving the existing MCP contract unchanged;
 a split-generation deployment fails instead of looking partially healthy.
 

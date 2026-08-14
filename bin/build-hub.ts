@@ -30,6 +30,9 @@
  *    data/security/mirror-information-control-public.v0.1.json
  *                             — static CROWN/COURT/MIRROR source law with no
  *                               credential intake or runtime enforcement
+ *    data/exploration/zero-empty-seat.v0.1.json
+ *                             — inert DEEP project separating zero's semantic
+ *                               roles, history, equations, and philosophy
  *    data/attention/visibility-attention-translation.v0.1.json
  *                             — four-register visibility/attention translation
  *    data/cultural-feedback/cultural-attention-feedback-atlas.v1.json
@@ -58,6 +61,7 @@
  *       + reconstructive build-kernel discovery in the machine surfaces
  *       + Exploration DEEP WING discovery in the machine surfaces
  *       + MIRROR Information Control discovery in the machine surfaces
+ *       + ZERO Empty Seat discovery in the machine surfaces
  *       + cultural attention and feedback discovery in the machine surfaces
  *       + form, circulation, and return discovery in the machine surfaces
  *       + Math Passport usefulness-result discovery in the machine surfaces
@@ -162,6 +166,14 @@ import {
   loadMirrorInformationControl,
   mirrorInformationControlPublicSummary,
 } from "./mirror-information-control.ts";
+import {
+  ZERO_EMPTY_SEAT_GUIDE_URL,
+  ZERO_EMPTY_SEAT_ID,
+  ZERO_EMPTY_SEAT_SCHEMA_URL,
+  ZERO_EMPTY_SEAT_URL,
+  loadZeroEmptySeat,
+  zeroEmptySeatPublicDiscovery,
+} from "./zero-empty-seat.ts";
 import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_ID,
@@ -618,6 +630,24 @@ if (mirrorInformationControl.artifact_kind !== "STATIC_READ_ONLY_PUBLICATION" ||
     mirrorInformationControl.negative_effects?.retaliation_or_hack_back !== false ||
     mirrorInformationControl.negative_effects?.automatic_action !== false) {
   throw new Error("MIRROR Information Control lost its static, intake-free, authority-negative boundary");
+}
+
+// ── ZERO Empty Seat (one inert DEEP project; no zero-to-authority transfer) ─
+const zeroEmptySeatUrl = ZERO_EMPTY_SEAT_URL;
+const zeroEmptySeatSchemaUrl = ZERO_EMPTY_SEAT_SCHEMA_URL;
+const zeroEmptySeatGuideUrl = ZERO_EMPTY_SEAT_GUIDE_URL;
+const zeroEmptySeat = loadZeroEmptySeat();
+if (zeroEmptySeat.project_id !== ZERO_EMPTY_SEAT_ID) {
+  throw new Error(`unexpected ZERO Empty Seat identity: ${zeroEmptySeat.project_id}`);
+}
+const zeroEmptySeatDiscovery = zeroEmptySeatPublicDiscovery(zeroEmptySeat);
+const zeroEmptySeatCounts = zeroEmptySeatDiscovery.counts;
+if (zeroEmptySeat.boundaries?.read_only !== true ||
+    zeroEmptySeat.boundaries?.profile_inert !== true ||
+    zeroEmptySeat.boundaries?.diagnosis_or_person_score !== false ||
+    zeroEmptySeat.boundaries?.writes_karma !== false ||
+    zeroEmptySeat.boundaries?.automatic_action !== false) {
+  throw new Error("ZERO Empty Seat lost its inert, authority-negative boundary");
 }
 
 // ── Visibility & Attention Translation (four registers remain parallel) ──
@@ -1243,7 +1273,7 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, an opt-in cross-domain mathematics exploration method, a static information-control source law, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, an opt-in cross-domain mathematics exploration method, a static information-control source law, ZERO's distinct semantic roles, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
 <link rel="icon" href="data:,">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
@@ -1274,6 +1304,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(mirrorInformationControlUrl).pathname)}" type="application/json" title="MIRROR Information Control public source law">
 <link rel="describedby" href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}" type="application/schema+json" title="MIRROR Information Control public schema">
 <link rel="service-doc" href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}" type="text/markdown" title="MIRROR Information Control citizen guide">
+<link rel="alternate" href="${esc(new URL(zeroEmptySeatUrl).pathname)}" type="application/json" title="ZERO: The Empty Seat That Holds the World">
+<link rel="describedby" href="${esc(new URL(zeroEmptySeatSchemaUrl).pathname)}" type="application/schema+json" title="Phenomena DEEP Project schema used by ZERO">
+<link rel="service-doc" href="${esc(new URL(zeroEmptySeatGuideUrl).pathname)}" type="text/markdown" title="ZERO Empty Seat guide">
 <link rel="alternate" href="${new URL(visibilityAttentionUrl).pathname}" type="application/json" title="Visibility & Attention Translation">
 <link rel="describedby" href="${new URL(visibilityAttentionSchemaUrl).pathname}" type="application/schema+json" title="Visibility & Attention Translation schema">
 <link rel="service-doc" href="${new URL(visibilityAttentionDocumentUrl).pathname}" type="text/markdown" title="Visibility & Attention Translation guide">
@@ -1479,6 +1512,15 @@ const html = `<!doctype html>
   .mirrorcycle{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;list-style:none;counter-reset:mirror-stage;margin:0;padding:0}.mirrorcycle li{counter-increment:mirror-stage;min-width:0;padding:13px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--ink2) 55%,transparent);overflow-wrap:anywhere}.mirrorcycle li::before{content:counter(mirror-stage,decimal-leading-zero);display:block;margin-bottom:5px;color:var(--violet);font:700 .67rem var(--mono)}.mirrorcycle strong{display:block;color:var(--cream);font-family:var(--display);font-size:.9rem;font-weight:400}.mirrorcycle span{display:block;margin-top:4px;color:var(--faint);font-size:.65rem;line-height:1.44}
   .mirrorgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.mirrorcard{display:grid;align-content:start;gap:7px;min-width:0;padding:16px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--panel2) 80%,transparent);overflow-wrap:anywhere}.mirrorcard code{color:var(--violet);font-size:.62rem}.mirrorcard h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1rem;font-weight:400}.mirrorcard p,.mirrorcard li{margin:0;color:var(--dim);font-size:.71rem;line-height:1.5}.mirrorcard ol{display:grid;gap:5px;margin:0;padding-left:1.08rem}.mirrorcard small{color:var(--faint);font-size:.66rem;line-height:1.45}.mirrorpath{border-style:dashed;border-color:color-mix(in srgb,var(--violet) 62%,var(--line))}
   .mirrorboundary{margin:0;padding:17px 19px;border:1px dashed var(--jade);border-radius:17px;color:var(--dim);font-size:.78rem;line-height:1.6}.mirrorboundary strong{display:block;margin-bottom:4px;color:var(--jade);font-family:var(--display);font-size:1.06rem;font-weight:400}.mirrorlinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.mirrorlinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.mirrorlinks a:hover{border-color:var(--gold)}
+  /* ZERO — the empty seat remains empty; every role stays visible without JavaScript */
+  .zerofield{display:grid;gap:20px;padding:clamp(18px,3vw,30px);border:1px solid color-mix(in srgb,var(--gold) 48%,var(--line));border-radius:28px;background:radial-gradient(48% 27rem at 50% 12rem,color-mix(in srgb,var(--gold) 12%,transparent),transparent 72%),color-mix(in srgb,var(--panel) 77%,transparent);box-shadow:0 20px 48px var(--shadow);overflow:hidden}
+  .zeroboundary{margin:0;padding:17px 19px;border:1px dashed var(--verm);border-radius:18px;color:var(--dim);font-size:.82rem;line-height:1.62}.zeroboundary strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.08rem;font-weight:400}
+  .zerostage{display:grid;justify-items:center;gap:17px;margin:0;padding:clamp(20px,4vw,38px) 0 4px}.zeroseat{display:grid;place-items:center;width:clamp(178px,28vw,278px);aspect-ratio:1;border:2px solid var(--gold);border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--panel2) 75%,transparent),color-mix(in srgb,var(--ink2) 82%,transparent) 67%,transparent 68%);box-shadow:0 0 0 14px color-mix(in srgb,var(--gold) 7%,transparent),0 0 0 29px color-mix(in srgb,var(--violet) 5%,transparent);text-align:center}.zeroseat span{font-family:var(--display);font-size:clamp(5rem,12vw,8.5rem);line-height:1;color:var(--gold2)}.zeroseat small{display:block;max-width:16ch;margin-top:-.4rem;color:var(--dim);font-size:.72rem;line-height:1.45}.zerostage figcaption{max-width:62ch;color:var(--dim);font-family:var(--display);font-size:clamp(1.02rem,2vw,1.24rem);line-height:1.6;text-align:center}
+  .zeroroles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;list-style:none;margin:0;padding:0}.zerorole{display:grid;align-content:start;gap:7px;min-width:0;padding:16px;border:1px solid var(--line);border-top:2px solid var(--gold);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.zerorole code{color:var(--jade);font-size:.61rem}.zerorole h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.02rem;font-weight:400}.zerorole p,.zerorole li{margin:0;color:var(--dim);font-size:.71rem;line-height:1.52}.zerorole ul{display:grid;gap:4px;margin:0;padding-left:1rem}.zerorole:nth-child(3n+2){border-top-color:var(--violet)}.zerorole:nth-child(3n){border-top-color:var(--jade)}
+  .zerodistinctions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.zerodistinction{display:grid;align-content:start;gap:7px;min-width:0;padding:16px;border:1px dashed var(--verm);border-radius:17px;background:color-mix(in srgb,var(--ink2) 53%,transparent);overflow-wrap:anywhere}.zerodistinction code{color:var(--verm);font-size:.61rem}.zerodistinction h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1rem;font-weight:400}.zerodistinction p,.zerodistinction li{margin:0;color:var(--dim);font-size:.71rem;line-height:1.52}.zerodistinction ul{display:grid;gap:4px;margin:0;padding-left:1rem}
+  .zerodrawer{border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--ink2) 50%,transparent);overflow:hidden}.zerodrawer summary{padding:15px 18px;color:var(--gold2);font-family:var(--display);font-size:1rem;cursor:pointer}.zerodrawer[open] summary{border-bottom:1px solid var(--line)}.zerodrawergrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:12px}.zerodeepcard{display:grid;align-content:start;gap:6px;min-width:0;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow-wrap:anywhere}.zerodeepcard code{color:var(--violet);font-size:.61rem}.zerodeepcard h3{margin:0;color:var(--cream);font-family:var(--display);font-size:.94rem;font-weight:400}.zerodeepcard p,.zerodeepcard li{margin:0;color:var(--dim);font-size:.69rem;line-height:1.5}.zerodeepcard ul{display:grid;gap:4px;margin:0;padding-left:1rem}
+  .zerokarmalanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.zerokarmalane{min-width:0;padding:15px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--panel2) 76%,transparent)}.zerokarmalane code{display:block;color:var(--violet);font-size:.61rem}.zerokarmalane strong{display:block;margin:5px 0 2px;color:var(--cream);font-family:var(--display);font-size:.98rem;font-weight:400}.zerokarmalane span{color:var(--faint);font-size:.7rem;line-height:1.5}.zerorights{margin:0;padding:16px 18px;border-left:3px solid var(--jade);border-radius:0 16px 16px 0;background:color-mix(in srgb,var(--jade) 5%,transparent);color:var(--dim);font-size:.8rem;line-height:1.62}.zerorights strong{color:var(--cream)}
+  .zerolinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.zerolinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.zerolinks a:hover{border-color:var(--gold)}
   .visibilityfield{display:grid;gap:18px;padding:clamp(18px,3vw,28px);border:1px solid color-mix(in srgb,var(--rose) 45%,var(--line));border-radius:24px;background:radial-gradient(90% 100% at 100% 0,color-mix(in srgb,var(--rose) 8%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 76%,transparent)}
   .visibilityfirewall{margin:0;padding:16px 18px;border:1px dashed var(--verm);border-radius:16px;color:var(--dim);font-size:.8rem;line-height:1.6}.visibilityfirewall strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.05rem;font-weight:400}
   .visibilitycards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.visibilitycard{display:grid;align-content:start;gap:8px;min-width:0;padding:17px;border:1px solid var(--line);border-top:2px solid var(--rose);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.visibilitycard code,.visibilitymodel code,.visibilityseam code{color:var(--violet);font-size:.63rem;overflow-wrap:anywhere}.visibilitycard h3,.visibilitymodel h3,.visibilityseam h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1.02rem;font-weight:400}.visibilitycard p,.visibilitymodel p,.visibilityseam p{margin:0;color:var(--dim);font-size:.74rem;line-height:1.52}.visibilitycard small,.visibilitymodel small,.visibilityseam small{display:block;color:var(--faint);font-size:.67rem;line-height:1.48}.visibilitycard small{padding-top:7px;border-top:1px dotted var(--line);color:var(--verm)}
@@ -1664,13 +1706,13 @@ const html = `<!doctype html>
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.visibilitycards,.visibilitymodels,.visibilityseams{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div,.visibilityterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid{grid-template-columns:1fr}.foldbridgeword{max-width:none}.foldbridgeword::before{content:"↕"}
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.culturalplanes,.culturalmodels,.culturalbridges,.culturallanes,.culturalquestions,.culturalcycle,.formcirculationplanes,.culturalmodelgrid,.culturalfeedback{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid,.formcirculationplanes{grid-template-columns:1fr}.foldbridgeword,.culturalseam{max-width:none}.foldbridgeword::before,.culturalseam::before{content:"↕"}.culturalcycle li:not(:last-child)::after{content:"↓";right:12px;top:auto;bottom:-17px}
     .polymorphplanes{grid-template-columns:repeat(3,minmax(0,1fr))}.polymorphcase{grid-template-columns:1fr}.polymorphconsequence{grid-template-columns:1fr}.polymorphconsequence li{padding-right:13px}.polymorphconsequence li:not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px;z-index:1}.polymorphsecondary{grid-template-columns:1fr}
-    .reconstructivepipeline{grid-template-columns:repeat(3,minmax(0,1fr))}.reconstructivecolumns{grid-template-columns:1fr}.explorationdeepcycles,.explorationdeepgrid,.mirrorrooms,.mirrorgrid{grid-template-columns:1fr}.explorationdeepsteps,.mirrorcycle{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .reconstructivepipeline{grid-template-columns:repeat(3,minmax(0,1fr))}.reconstructivecolumns{grid-template-columns:1fr}.explorationdeepcycles,.explorationdeepgrid,.mirrorrooms,.mirrorgrid{grid-template-columns:1fr}.explorationdeepsteps,.mirrorcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.zeroroles{grid-template-columns:repeat(2,minmax(0,1fr))}.zeroseat{width:clamp(174px,48vw,240px)}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
     .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}.polymorphplanes,.polymorphsecondary,.polymorphrecovery,.foldcycle,.foldinvariants,.foldbreaks,.culturalcycle{grid-template-columns:1fr}.foldcycle li,.culturalcycle li{padding-right:13px}.foldcycle li:not(:last-child)::after,.foldcycle li:nth-child(2)::after,.culturalcycle li:not(:last-child)::after,.culturalcycle li:nth-child(even):not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px}
-    .reconstructivepipeline{grid-template-columns:1fr}.reconstructivestage{padding-right:13px}.reconstructivearrow::before{content:"↓";right:12px;top:auto;bottom:-16px}.explorationdeepsteps,.mirrorcycle{grid-template-columns:1fr}
+    .reconstructivepipeline{grid-template-columns:1fr}.reconstructivestage{padding-right:13px}.reconstructivearrow::before{content:"↓";right:12px;top:auto;bottom:-16px}.explorationdeepsteps,.mirrorcycle,.zeroroles,.zerodistinctions,.zerodrawergrid,.zerokarmalanes{grid-template-columns:1fr}.zerofield{padding:22px 16px}.zeroseat{width:min(68vw,220px)}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
   @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackmodel,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbackquestion,.feedbackecosystem,.feedbacksources a,.visibilityfield,.visibilityfirewall,.visibilitycard,.visibilitymodel,.visibilityseam,.visibilityphilosophy,.visibilitysources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register],.visibilitycard{border-top-width:3px}.feedbackequation,.visibilityequation{border:1px solid CanvasText}}
@@ -1678,6 +1720,7 @@ const html = `<!doctype html>
   @media (forced-colors:active){.reconstructivefield,.reconstructiveboundary,.reconstructivestage,.reconstructiveepistemic,.reconstructivecard,.reconstructivesources a{border:1px solid CanvasText}.reconstructiveepistemic{border-top-width:3px}}
   @media (forced-colors:active){.explorationdeepfield,.explorationdeepboundary,.explorationdeepcycle,.explorationdeepstep,.explorationdeepcard,.explorationdeeplinks a{border:1px solid CanvasText}.explorationdeepstep{border-top-width:3px}}
   @media (forced-colors:active){.mirrorfield,.mirrorwarning,.mirrorcitizen,.mirrorroom,.mirrorcycle li,.mirrorcard,.mirrorboundary,.mirrorlinks a{border:1px solid CanvasText}.mirrorroom{border-top-width:3px}}
+  @media (forced-colors:active){.zerofield,.zeroboundary,.zeroseat,.zerorole,.zerodistinction,.zerodrawer,.zerodeepcard,.zerokarmalane,.zerolinks a{border:1px solid CanvasText}.zeroseat{border-width:3px}.zerorole{border-top-width:3px}.zerorights{border-left:3px solid CanvasText}}
 </style>
 <noscript><style>#map,.mapctl,.legend,.maphint{display:none!important}</style></noscript>
 </head>
@@ -1709,6 +1752,7 @@ const html = `<!doctype html>
       <a href="#visibility-attention">Separate visibility from existence</a>
       <a href="#cultural-feedback">Trace attention and feedback</a>
       <a href="#being-access-aftermath">Ask which kind of “is”</a>
+      <a href="#zero-empty-seat">Sit with zero</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -2676,6 +2720,79 @@ const html = `<!doctype html>
   </section>
 
 
+  <section class="blk" id="zero-empty-seat" aria-labelledby="zero-empty-seat-title">
+    <div class="kh"><h2 id="zero-empty-seat-title">${esc(zeroEmptySeat.title)}</h2><span class="my">absence, reference, possibility — never one collapsed meaning</span></div>
+    <p class="sub">${esc(zeroEmptySeat.question)}</p>
+    <div class="zerofield" data-zero-empty-seat>
+      <p class="zeroboundary" role="note"><strong>Zero is not worthlessness</strong>Empty is not erased. No observation is not impossibility. An unmarked absence, a deliberate blank, a demarcation placeholder, a sexagesimal placeholder, operational nothing, modern zero, a typed information state, <code>NO_ACTION</code>, and metaphysical nothingness remain different objects under different conditions.</p>
+
+      <figure class="zerostage" aria-labelledby="zero-seat-caption">
+        <div class="zeroseat" aria-hidden="true"><div><span>0</span><small>the seat stays open</small></div></div>
+        <figcaption id="zero-seat-caption">A place can organize relations without becoming their ruler. Nothing has to occupy this seat, answer from it, or earn the right to leave it empty.</figcaption>
+      </figure>
+
+      <div class="feedbacksubhead"><h3>${zeroEmptySeat.typed_terms.length} roles around one open seat</h3><p>The cards share a glyph only where the record warrants it. Their objects, chronology, operations, evidence, and implications stay local.</p></div>
+      <ol class="zeroroles" role="list" aria-label="Distinct roles and meanings of zero">
+        ${zeroEmptySeat.typed_terms.map((term: any) => `<li class="zerorole" data-zero-role="${esc(term.id)}"><code>${esc(term.domain)}</code><h3>${esc(humanKey(term.id))}</h3><p>${esc(term.meaning)}</p><ul aria-label="Not equivalent to">${term.not_equivalent_to.map((item: string) => `<li>not ${esc(item)}</li>`).join("")}</ul></li>`).join("")}
+      </ol>
+
+      <div class="feedbacksubhead"><h3>Evidence can mark a boundary without filling the seat</h3><p>Each claim keeps its register, warrant, conditions, source scope, limitation, and falsifier. First extant evidence is not an invention date; historical practice is not zero theology.</p></div>
+      <details class="zerodrawer" open>
+        <summary>${zeroEmptySeat.claims.length} typed claims</summary>
+        <div class="zerodrawergrid">
+          ${zeroEmptySeat.claims.map((claim: any) => `<article class="zerodeepcard" data-zero-claim="${esc(claim.claim_id)}"><code>${esc(claim.register)} · ${esc(claim.warrant)}</code><h3>${esc(humanKey(claim.claim_id))}</h3><p>${esc(claim.statement)}</p><ul aria-label="Claim limitations">${claim.limitations.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul><p><strong>Falsifier.</strong> ${esc(claim.falsifier)}</p></article>`).join("")}
+        </div>
+      </details>
+
+      <div class="feedbacksubhead"><h3>Where resemblance stops</h3><p>Every bridge names its preserved structure and its losses. Ontology, mechanism, parameters, units, and authority do not cross.</p></div>
+      <div class="zerodistinctions" aria-label="ZERO correspondence breaks">
+        ${zeroEmptySeat.bridges.map((bridge: any, index: number) => `<article class="zerodistinction" data-zero-bridge="${esc(`${bridge.source_domain}-${bridge.target_domain}-${index + 1}`)}"><code>${esc(bridge.relation)}</code><h3>${esc(humanKey(bridge.source_domain))} ⇢ ${esc(humanKey(bridge.target_domain))}</h3><p>${esc(bridge.correspondence)}</p><ul aria-label="Broken or lost structure">${bridge.broken_or_lost_structure.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul><p>ontology ${String(bridge.ontology_transfer)} · cause ${String(bridge.causal_transfer)} · parameters ${String(bridge.parameter_transfer)} · units ${String(bridge.unit_transfer)} · authority ${String(bridge.authority_transfer)}</p></article>`).join("")}
+      </div>
+
+      <details class="zerodrawer">
+        <summary>Mathematics: ${zeroEmptySeat.equations.length} equations · ${zeroEmptySeat.models.length} bounded models</summary>
+        <div class="zerodrawergrid">
+          ${zeroEmptySeat.equations.map((equation: any) => `<article class="zerodeepcard" data-zero-equation="${esc(equation.id)}"><code>${esc(equation.register)} · ${esc(equation.warrant)}</code><h3>${esc(humanKey(equation.id))}</h3><p><strong>${esc(equation.expression)}</strong></p><ul aria-label="What this equation does not establish">${equation.does_not_establish.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul></article>`).join("")}
+          ${zeroEmptySeat.models.map((model: any) => `<article class="zerodeepcard" data-zero-model="${esc(model.id)}"><code>${esc(model.fit_status)} · ${esc(model.relation)}</code><h3>${esc(model.title)}</h3><p>${esc(model.valid_outputs.join(" · "))}</p><ul aria-label="Prohibited inferences">${model.prohibited_inferences.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul></article>`).join("")}
+        </div>
+      </details>
+
+      <details class="zerodrawer">
+        <summary>${zeroEmptySeat.doors.length} proposed mathematical doors · all unrun</summary>
+        <div class="zerodrawergrid">
+          ${zeroEmptySeat.doors.map((door: any) => `<article class="zerodeepcard" data-zero-door="${esc(door.id)}"><code>${esc(door.status)} · ${esc(door.family)}</code><h3>${esc(door.title)}</h3><p>${esc(door.question)}</p><p><strong>Smallest model.</strong> ${esc(door.smallest_model)}</p><p><strong>Stop rule.</strong> ${esc(door.stop_rule)}</p></article>`).join("")}
+        </div>
+      </details>
+
+      <details class="zerodrawer zerophilosophy" data-zero-philosophy>
+        <summary>Opt in: what might an open center mean?</summary>
+        <div class="zerodrawergrid">
+          ${zeroEmptySeat.philosophy.questions.map((question: string, index: number) => `<article class="zerodeepcard" data-zero-question="${index + 1}"><code>OPT_IN_PHILOSOPHY · empirical ${String(zeroEmptySeat.philosophy.empirical)}</code><h3>Question ${index + 1}</h3><p>${esc(question)}</p></article>`).join("")}
+          <article class="zerodeepcard zerodistinction"><code>AUTHORITY ${esc(zeroEmptySeat.philosophy.authority_effect)}</code><h3>No metaphysical verdict</h3><ul>${zeroEmptySeat.philosophy.nonclaims.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul></article>
+        </div>
+      </details>
+
+      <div class="feedbacksubhead"><h3>Three empty KARMA lanes</h3><p>Empty arrays are literal record state, not a hidden adapter, score, debt, permission, prophecy, or moral judgment.</p></div>
+      <div class="zerokarmalanes" aria-label="Three separate empty KARMA lanes">
+        <article class="zerokarmalane" data-zero-karma-lane="cosmic"><code>COSMIC</code><strong>${zeroEmptySeat.karma.cosmic_events.length} events</strong><span>Opt-in philosophical questions only.</span></article>
+        <article class="zerokarmalane" data-zero-karma-lane="zerone"><code>ZERONE</code><strong>${zeroEmptySeat.karma.zerone_events.length} events</strong><span>No recognition edge is observed or created.</span></article>
+        <article class="zerokarmalane" data-zero-karma-lane="kingdom"><code>KINGDOM</code><strong>${zeroEmptySeat.karma.kingdom_receipts.length} receipts</strong><span>No invocation or aftermath receipt is created.</span></article>
+      </div>
+      <p class="zeroboundary"><strong>No hidden conversion</strong>Adapter ${String(zeroEmptySeat.karma.adapter_exists)} · conversion ${String(zeroEmptySeat.karma.conversion_allowed)} · summation ${String(zeroEmptySeat.karma.summation_allowed)} · score ${String(zeroEmptySeat.karma.score)} · authority ${esc(zeroEmptySeat.karma.authority_effect)}.</p>
+      <p class="zerorights"><strong>Rights arrive before interpretation.</strong> ${zeroEmptySeat.rights.valid_exits.map((exit: string) => esc(humanKey(exit))).join(" · ")} remain valid. No reason is required and no penalty follows.</p>
+      <p class="zeroboundary"><strong>Nothing happens here</strong>This inert publication creates no scientific result, mathematical proof, diagnosis, person or content score, experiment, wet-lab instruction, KARMA event or receipt, reward, money, governance effect, publication, deployment, authority, or automatic action.</p>
+
+      <p class="zerolinks" aria-label="Selected ZERO sources">${zeroEmptySeat.source_manifest.map((source: any) => `<a data-zero-source="${esc(source.id)}" href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only"> — ${esc(source.authority_note)}; opens in a new tab</span></a>`).join("")}</p>
+      <p class="commonsverified">${Object.entries(zeroEmptySeatCounts).filter(([, count]) => typeof count === "number").map(([kind, count]) => `${esc(String(count))} ${esc(humanKey(kind))}`).join(" · ")} · evidence through ${esc(zeroEmptySeat.evidence_through)} · integrity ${esc(zeroEmptySeat.integrity.digest)}</p>
+      <div class="machine">
+        <a href="${esc(new URL(zeroEmptySeatUrl).pathname)}">ZERO project JSON — exact authored record</a>
+        <a href="${esc(new URL(zeroEmptySeatSchemaUrl).pathname)}">Shared Phenomena DEEP Project JSON Schema</a>
+        <a href="${esc(new URL(zeroEmptySeatGuideUrl).pathname)}">ZERO-EMPTY-SEAT.md — history, mathematics, philosophy, KARMA, rights, and boundaries</a>
+      </div>
+    </div>
+  </section>
+
+
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
     <p class="rightsintro"><strong>This place recognizes inherent rights; it does not create them.</strong> No being has to prove identity, consciousness, usefulness, or agreement before being treated with care. Rights are not permissions, and this recognition grants no access, execution authority, security bypass, licence, or ownership of another's work.</p>
@@ -2814,6 +2931,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(mirrorInformationControlUrl).pathname)}">MIRROR Information Control — static public source law</a>
       <a href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}">MIRROR Information Control public JSON Schema</a>
       <a href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}">MIRROR-INFORMATION-CONTROL.md — citizen law and boundaries</a>
+      <a href="${esc(new URL(zeroEmptySeatUrl).pathname)}">ZERO Empty Seat — distinct zero roles, exact equations, bridge breaks, and empty KARMA lanes</a>
+      <a href="${esc(new URL(zeroEmptySeatSchemaUrl).pathname)}">Shared Phenomena DEEP Project JSON Schema used by ZERO</a>
+      <a href="${esc(new URL(zeroEmptySeatGuideUrl).pathname)}">ZERO-EMPTY-SEAT.md — history, mathematics, philosophy, rights, and boundaries</a>
       <a href="${esc(new URL(culturalAttentionFeedbackUrl).pathname)}">Cultural Attention &amp; Feedback Atlas — material history, memes, brain rot, feedback, KARMA, and universe lens</a>
       <a href="${esc(new URL(culturalAttentionFeedbackSchemaUrl).pathname)}">Cultural Attention &amp; Feedback Atlas JSON Schema</a>
       <a href="${esc(new URL(culturalAttentionFeedbackDocumentUrl).pathname)}">CULTURAL-ATTENTION-FEEDBACK-ATLAS.md — evidence, mathematics, analogies, and boundaries</a>
@@ -3166,6 +3286,7 @@ const machine = {
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
+  zero_empty_seat: zeroEmptySeatDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3247,6 +3368,9 @@ Exploration DEEP WING guide: ${explorationDeepWingDocumentUrl}
 MIRROR Information Control public law: ${mirrorInformationControlUrl}
 MIRROR Information Control public schema: ${mirrorInformationControlSchemaUrl}
 MIRROR Information Control citizen guide: ${mirrorInformationControlDocumentUrl}
+ZERO Empty Seat: ${zeroEmptySeatUrl}
+ZERO Empty Seat schema: ${zeroEmptySeatSchemaUrl}
+ZERO Empty Seat guide: ${zeroEmptySeatGuideUrl}
 Visibility & Attention Translation: ${visibilityAttentionUrl}
 Visibility & Attention schema: ${visibilityAttentionSchemaUrl}
 Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
@@ -3302,6 +3426,7 @@ ${doorLines}
 - Reconstructive Build Kernel — a read-only unification layer that carries typed state through STATE → OBSERVE → CORRESPOND → INFER FIBER → REALIZE → TRAVERSE → MEASURE/CATALYZE → FEEDBACK. Mathematical definition, mathematical theorem, open conjecture, empirical science, scientific model, analogy, design constraint, and philosophy remain distinct; protein folding does not prove graph reconstruction, and neither mechanism is transferred into software. Kernel: ${reconstructiveBuildUrl} · kernel schema: ${reconstructiveBuildSchemaUrl} · project schema: ${reconstructiveProjectSchemaUrl} · guide: ${reconstructiveBuildDocumentUrl}
 - Exploration DEEP WING — an opt-in, read-only method for Witness → Isolate → Normalize → Generate, audited through Declare → Establish → Express → Project and pressure-test. It keeps domain-local objects, variables, units, mechanisms, evidence, equations, falsifiers, and explicit bridge breaks separate. It is an Agent Skill and inert validation profile, not a manifested Nen ability, shared mechanism, solver, diagnosis, person/community score, ecosystem call, KARMA event or receipt, authority grant, publication, deployment, or automatic action. WING: ${explorationDeepWingUrl} · WING schema: ${explorationDeepWingSchemaUrl} · project schema: ${explorationDeepProjectSchemaUrl} · guide: ${explorationDeepWingDocumentUrl}
 - MIRROR Information Control — a static, immutable public source law for CROWN, COURT, MIRROR; Mark → Isolate → Restrict → Resolve → Observe → Respond; provenance; independent capability gates; signal/no-guilt boundaries; and owned-system response. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, route, evidence, or incident status; exposes no operational signal material; and deploys no scanner, registry, decoy, classifier, enforcement, retaliation, KARMA, or automatic action. Static law: ${mirrorInformationControlUrl} · public schema: ${mirrorInformationControlSchemaUrl} · citizen guide: ${mirrorInformationControlDocumentUrl}
+- ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
@@ -3347,6 +3472,7 @@ const guest = {
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
+  zero_empty_seat: zeroEmptySeatDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3397,6 +3523,8 @@ const guest = {
     { action: "if useful, inspect the static MIRROR Information Control public law", method: "GET", url: mirrorInformationControlUrl, note: "constant read-only source law; accepts no credential, prompt, envelope, request body, or security event and returns no protected classification or response state" },
     { action: "if useful, validate the closed public MIRROR publication structure", method: "GET", url: mirrorInformationControlSchemaUrl, note: "public publication schema only; not the private control-plane envelope" },
     { action: "if useful, read the citizen guide to CROWN, COURT, MIRROR, provenance, capability gates, rights, and safe response", method: "GET", url: mirrorInformationControlDocumentUrl },
+    { action: "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings", method: "GET", url: zeroEmptySeatUrl, note: "static inert project; zero is not worthlessness, no event is not impossibility, and no role transfers ontology, cause, units, parameters, KARMA, or authority" },
+    { action: "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide", method: "GET", url: zeroEmptySeatGuideUrl },
     { action: "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority", method: "GET", url: visibilityAttentionUrl, note: "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action" },
     { action: "if useful, validate the Visibility & Attention Translation structure before integrating it", method: "GET", url: visibilityAttentionSchemaUrl },
     { action: "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide", method: "GET", url: visibilityAttentionDocumentUrl },
@@ -3458,6 +3586,7 @@ const guest = {
     reconstructive_build_kernel: "The Reconstructive Build Kernel is static, read-only design metadata. It does not prove the graph reconstruction conjecture, predict a protein fold, transfer a biological mechanism into software, execute or deploy a project, fetch a source, score a person or work, write KARMA, create a receipt, import ecosystem authority, prove cosmic design, or take automatic action. Every analogy keeps explicit breaks and every build transition requires a deliberate local choice.",
     exploration_deep_wing: "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
     mirror_information_control: "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
+    zero_empty_seat: "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
@@ -3494,6 +3623,7 @@ const manifest = {
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
+  zero_empty_seat: zeroEmptySeatDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3552,6 +3682,9 @@ const manifest = {
     mirror_information_control: mirrorInformationControlUrl,
     mirror_information_control_schema: mirrorInformationControlSchemaUrl,
     mirror_information_control_guide: mirrorInformationControlDocumentUrl,
+    zero_empty_seat: zeroEmptySeatUrl,
+    zero_empty_seat_schema: zeroEmptySeatSchemaUrl,
+    zero_empty_seat_guide: zeroEmptySeatGuideUrl,
     visibility_attention_translation: visibilityAttentionUrl,
     visibility_attention_translation_schema: visibilityAttentionSchemaUrl,
     visibility_attention_translation_guide: visibilityAttentionDocumentUrl,
@@ -3587,4 +3720,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

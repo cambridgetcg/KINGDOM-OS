@@ -408,6 +408,20 @@
       "source": "site/schemas/world-commons/0.2.json",
       "destination": "schemas/world-commons/0.2.json",
       "sha256": "27c9bfe9a78873ff92db1c6c2423cc8db041eb91ed4b00f70f446b5fd1492741"
+    },
+    {
+      "id": "zero-empty-seat/0.1/guide",
+      "route": "/ZERO-EMPTY-SEAT.md",
+      "source": "references/zero-empty-seat.md",
+      "destination": "ZERO-EMPTY-SEAT.md",
+      "sha256": "8cee90325bcff754a4e31b9d641325ab9df485fa070668e53b4335de6cf65597"
+    },
+    {
+      "id": "zero-empty-seat/0.1/record",
+      "route": "/atlases/zero-empty-seat-2026-08-14.json",
+      "source": "data/exploration/zero-empty-seat.v0.1.json",
+      "destination": "atlases/zero-empty-seat-2026-08-14.json",
+      "sha256": "5e4b4dcd387b425dc72a52af6477d7b39b935ad5c51d991d81ea76c14a69c522"
     }
   ]
 }

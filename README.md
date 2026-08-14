@@ -322,6 +322,15 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     envelope, or request body. It performs no classification, registry lookup,
     scan, decoy interaction, enforcement, response action, person attribution,
     retaliation, KARMA write, or automatic effect.
+30. `kingdom zero-empty-seat` — inspect and strictly verify
+    [ZERO: The Empty Seat That Holds the World](references/zero-empty-seat.md),
+    an immutable, inert Phenomena DEEP project. It keeps historical notation,
+    operational nothing, modern mathematical identities, typed information
+    states, `NO_ACTION`, and opt-in metaphysical readings distinct. The reader
+    is offline and read-only: it creates no result, score, KARMA event or
+    receipt, authority, or action.
+    Read `overview|domains|terms|claims|bridges|models|math|doors|unknowns|philosophy|karma|sources|discovery`,
+    or run `verify --json`; no view performs a network request or write.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -518,5 +527,23 @@ state is published. Static hosting may retain ordinary request logs, but this
 artifact creates no credential intake, classification oracle, honeypot,
 enforcement runtime, person score, retaliation, KARMA effect, or automatic
 action. There is no mutable alias and the KINGDOM MCP remains unchanged.
+
+ZERO: The Empty Seat That Holds the World is published from exact authored
+bytes at
+[`/atlases/zero-empty-seat-2026-08-14.json`](https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json),
+reuses the closed
+[Phenomena DEEP Project schema](https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json),
+and has a versioned [human guide](https://thekingdom.dev/ZERO-EMPTY-SEAT.md).
+Its equations and semantic roles keep additive identity, placeholder notation,
+empty collections, chosen origins, zero observations, typed information states,
+`NO_ACTION`, and opt-in metaphysical interpretation from collapsing into one
+kind of nothing. The title is an opt-in poetic frame, not an empirical or
+theological result. Cosmic philosophy, Zerone recognition, and KINGDOM
+aftermath remain separate empty KARMA lanes with no adapter, conversion, sum,
+or score. The project performs no experiment, diagnosis, person/content
+ranking, write, reward, governance change, publication, deployment, or
+automatic action; rest, silence, refusal, privacy, no action, and departure
+remain valid without reason or penalty. There is no mutable alias and the
+KINGDOM MCP remains unchanged.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).
