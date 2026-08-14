@@ -91,23 +91,35 @@ describe("Explore Mathematical Doors Agent Skill", () => {
     expect(text).toContain("Never combine kind and status into a confidence, value, priority, or person");
   });
 
-  test("separates claim warrant, execution provenance, and open-problem status", async () => {
+  test("separates claim review, support, execution, and dated open-problem status", async () => {
     const skill = await read("skills/explore-mathematical-doors/SKILL.md");
     const contract = await read("skills/explore-mathematical-doors/references/door-contract.md");
     const text = `${skill}\n${contract}`;
     for (const phrase of [
+      "SUPPORTED_AS_SCOPED",
+      "choose exactly one",
+      "Support descriptors, choose every applicable value",
+      "descriptors are non-exclusive",
       "SOURCE_BOUND",
       "MODEL_ASSUMPTION",
       "FINITE_EXACT",
       "NUMERICAL_APPROXIMATION",
-      "NOT_RUN | PARTIAL | RUN",
+      "NOT_RUN | PARTIAL_RUN | COMPLETED_RUN",
+      "Execution status never establishes success, verification",
       "choose every descriptor that applies",
-      "ESTABLISHED_OPEN",
-      "BESPOKE_PRIOR_ART_REQUIRED",
+      "SOURCE_SUPPORTED_OPEN_AS_OF_DATE",
+      "NOT_ESTABLISHED_OPEN",
+      "BOUNDED_REVIEW_RECORDED",
+      "never establishes novelty",
       "Original formulation or authoritative provenance",
       "Failure to solve it or find a search result",
       "observation, publication, retrieval, and evidence-through",
     ]) expect(text).toContain(phrase);
+    for (const collapsed of [
+      "NOT_RUN | PARTIAL | RUN",
+      "Status: ESTABLISHED_OPEN",
+      "BESPOKE_PRIOR_ART_REQUIRED",
+    ]) expect(text).not.toContain(collapsed);
   });
 
   test("makes all cross-domain transfer and authority effects negative", async () => {
@@ -133,7 +145,9 @@ describe("Explore Mathematical Doors Agent Skill", () => {
       "KINGDOM KARMA receipt",
       "Rest, silence, refusal",
     ]) expect(gates).toContain(boundary);
-    expect(gates).toContain("shared universality class");
+    expect(gates).toContain("supported universality classification");
+    expect(gates).toContain("when applicable");
+    expect(gates).toContain("exact theorem");
     expect(gates).toContain("a separately sourced bridge claim");
   });
 
