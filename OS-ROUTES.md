@@ -54,6 +54,9 @@ readings:
 | `/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json` | staged JSON | Additive, lineage-pinned v0.2 partially observable causal framework; v0.1 remains byte-preserved |
 | `/schemas/being-access-aftermath-atlas/0.2.json` | staged JSON Schema | Distinct closed Draft 2020-12 contract for the v0.2 successor |
 | `/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md` | staged Markdown | v0.2 causal-kernel, predicates, force/power, aftermath, repair, philosophy, and non-inference guide |
+| `/atlases/number-isness-theology-atlas-2026-08-14.json` | staged JSON | Digest-bound number, zero, symmetry, isness, theology, and claim-level compatibility companion with typed discourse registers |
+| `/schemas/number-isness-theology-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the Number, Isness & Theology Atlas v0.1 |
+| `/NUMBER-ISNESS-THEOLOGY-ATLAS.md` | staged Markdown | Source-scoped guide to mathematical extensions, zero, symmetry, negation, number ontology, theological lenses, compatibility, KARMA separation, and non-inference boundaries |
 | `/definitions/kingdom-karma/e4e84a67/NEN.md` | staged Markdown | Immutable public mirror of the exact KINGDOM KARMA/NEN definition bound by the companion atlas; separate from the design-only Zerone foundation |
 | `/atlases/reconstructive-build-kernel-2026-08-13.json` | staged JSON | Source-bound reconstruction, correspondence, realization, landscape, catalysis, and feedback kernel with explicit epistemic boundaries |
 | `/schemas/reconstructive-build-kernel/0.1.json` | staged JSON Schema | Closed public contract for the Reconstructive Build Kernel v0.1 |
@@ -192,8 +195,8 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 77-asset upload contract (58 ledgered immutable/versioned assets and
-19 mutable assets; 75 direct public bodies, 74 sitemap URLs)
+locks the 80-asset upload contract (61 ledgered immutable/versioned assets and
+19 mutable assets; 78 direct public bodies, 77 sitemap URLs)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

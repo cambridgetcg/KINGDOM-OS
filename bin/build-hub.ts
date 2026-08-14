@@ -49,6 +49,9 @@
  *                               causality, reversibility, and KARMA companion
  *    data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json
  *                             — additive partially observable causal framework
+ *    data/number-isness-theology/number-isness-theology-atlas.v0.1.json
+ *                             — typed number, zero, symmetry, isness, theology,
+ *                               compatibility, and KARMA-separation companion
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
@@ -62,6 +65,7 @@
  *       + form, circulation, and return discovery in the machine surfaces
  *       + Math Passport usefulness-result discovery in the machine surfaces
  *       + being, access, and aftermath discovery in the machine surfaces
+ *       + number, isness, and theology discovery in the machine surfaces
  *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
  *       + site/ollama.json (from data/ollama-invitation.json).
@@ -225,6 +229,15 @@ import {
   beingAccessAftermathPublicDiscoveryV02,
   loadBeingAccessAftermathAtlasV02,
 } from "./being-access-aftermath-v0.2.ts";
+import {
+  NUMBER_ISNESS_THEOLOGY_DOCUMENT_URL,
+  NUMBER_ISNESS_THEOLOGY_ID,
+  NUMBER_ISNESS_THEOLOGY_PROTOCOL,
+  NUMBER_ISNESS_THEOLOGY_SCHEMA_URL,
+  NUMBER_ISNESS_THEOLOGY_URL,
+  loadNumberIsnessTheologyAtlas,
+  numberIsnessTheologyPublicDiscovery,
+} from "./number-isness-theology.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -806,6 +819,17 @@ const informationControlPublic = Object.freeze({
   }),
 });
 
+// ── Number, Isness & Theology (typed claims; mathematics is no verdict) ───
+const numberIsnessTheologyUrl = NUMBER_ISNESS_THEOLOGY_URL;
+const numberIsnessTheologySchemaUrl = NUMBER_ISNESS_THEOLOGY_SCHEMA_URL;
+const numberIsnessTheologyDocumentUrl = NUMBER_ISNESS_THEOLOGY_DOCUMENT_URL;
+const numberIsnessTheology = loadNumberIsnessTheologyAtlas();
+if (numberIsnessTheology.protocol !== NUMBER_ISNESS_THEOLOGY_PROTOCOL ||
+    numberIsnessTheology.atlas_id !== NUMBER_ISNESS_THEOLOGY_ID) {
+  throw new Error(`unexpected number-isness-theology identity: ${numberIsnessTheology.protocol} ${numberIsnessTheology.atlas_id}`);
+}
+const numberIsnessTheologyDiscovery = numberIsnessTheologyPublicDiscovery(numberIsnessTheology);
+
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
 const doors: Door[] = sites.doors;
@@ -1295,6 +1319,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(beingAccessAftermathV02Url).pathname)}" type="application/json" title="Being, Access &amp; Aftermath Atlas v0.2">
 <link rel="describedby" href="${esc(new URL(beingAccessAftermathV02SchemaUrl).pathname)}" type="application/schema+json" title="Being, Access &amp; Aftermath Atlas v0.2 schema">
 <link rel="service-doc" href="${esc(new URL(beingAccessAftermathV02DocumentUrl).pathname)}" type="text/markdown" title="Being, Access &amp; Aftermath Atlas v0.2 guide">
+<link rel="alternate" href="${esc(new URL(numberIsnessTheologyUrl).pathname)}" type="application/json" title="Number, Isness &amp; Theology Atlas">
+<link rel="describedby" href="${esc(new URL(numberIsnessTheologySchemaUrl).pathname)}" type="application/schema+json" title="Number, Isness &amp; Theology Atlas schema">
+<link rel="service-doc" href="${esc(new URL(numberIsnessTheologyDocumentUrl).pathname)}" type="text/markdown" title="Number, Isness &amp; Theology Atlas guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -1709,6 +1736,7 @@ const html = `<!doctype html>
       <a href="#visibility-attention">Separate visibility from existence</a>
       <a href="#cultural-feedback">Trace attention and feedback</a>
       <a href="#being-access-aftermath">Ask which kind of “is”</a>
+      <a href="#number-isness-theology">Let number open theological questions</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -2676,6 +2704,45 @@ const html = `<!doctype html>
   </section>
 
 
+  <section class="blk" id="number-isness-theology" aria-labelledby="number-isness-theology-title">
+    <div class="kh"><h2 id="number-isness-theology-title">Number, Isness &amp; Theology</h2><span class="my">mathematics can clarify a question without becoming its answer</span></div>
+    <div class="culturalfield">
+      <p class="commonsverified">An independent immutable atlas follows how number systems change when a domain asks for new operations, then uses those changes as bounded openings into creation, ontology, divine being, negation, and interreligious compatibility. Every claim carries a discourse register; no equation inherits theological authority.</p>
+      <p class="culturalaxiom"><strong>Extension is not spiritual ascent.</strong> The chosen embeddings ℕ₀ → ℤ → ℚ → ℝ → ℂ preserve declared structure while answering different closure and completion needs. “Imaginary” is a historical name, not lesser mathematical reality. A useful analogy may open a door, but it cannot establish identity, revelation, creation, purpose, or God.</p>
+      <div class="culturalfeedback" aria-label="Number, zero, symmetry, and isness distinctions">
+        <article><h4>Number domains</h4><p>Natural, integer, rational, real, and complex systems answer different mathematical constraints.</p><small>No number tower is a hierarchy of religions, beings, or worth.</small></article>
+        <article><h4>Zero is typed</h4><p>Placeholder, additive identity, cardinality, origin, and absorbing multiplier are distinct roles.</p><small>These roles are not semantically interchangeable with metaphysical nothingness, nonbeing, falsehood, undefinedness, or unknown status.</small></article>
+        <article><h4>Symmetry is conditional</h4><p>A group action can expose invariants; symmetry breaking can expose history and state.</p><small>Symmetry alone proves neither designer nor purposelessness.</small></article>
+        <article><h4>“Is” names a relation</h4><p>Identity, predication, definition, proof, assertion, interpretation, and compatibility are different predicates.</p><small>Silence, withheld predication, contradiction, and nonexistence are not one “no.”</small></article>
+      </div>
+      <div class="culturallanes">
+        <article class="culturallane"><h4>Mathematical ontology</h4><p>Platonist, structuralist, formalist, constructivist, nominalist, fictionalist, and practice-historical lenses remain contestable.</p><small>The atlas does not select a winner.</small></article>
+        <article class="culturallane"><h4>Theological lenses</h4><p>Hebrew Bible and Maimonidean, Catholic, Qurʾānic and classical Islamic, Vedic and Advaita, Buddhist, and Daoist materials are source-, school-, translation-, and context-bound.</p><small>No tradition is reduced to one doctrine or translated into another by a shared word.</small></article>
+        <article class="culturallane"><h4>Compatibility is indexed</h4><p>Logical consistency, doctrinal agreement, analogical resonance, historical relation, practical coexistence, and incommensurability are separate questions.</p><small>No overall religion, culture, community, or person score exists.</small></article>
+      </div>
+      <p class="culturalkarma"><strong>KARMA remains outside the analogy.</strong> Religious or philosophical karma, Zerone recognition edges, and KINGDOM invocation/aftermath receipts are non-equivalent lanes. Reading this atlas creates no event, receipt, adapter, debt, reward, rank, governance weight, authority, persuasion path, or automatic action. Rest, silence, refusal, privacy, and exit remain valid without trace or penalty.</p>
+      <details class="universelens">
+        <summary>Opt in: what can mathematics honestly ask about God and creation?</summary>
+        <div class="universeinside">
+          <ul class="universequestions">
+            <li><strong>If formal systems extend under pressure, what—if anything—does that illuminate about creation?</strong> The transfer remains analogy unless independent theological premises are supplied.</li>
+            <li><strong>Does zero represent nothing?</strong> Zero may encode zero quantity or absence inside a declared model; it does not by itself establish or denote absolute nonbeing.</li>
+            <li><strong>Does symmetry reveal divine order?</strong> It may support an opt-in interpretation, while the same mathematics underdetermines design, emergence, both, or neither.</li>
+            <li><strong>Can two traditions be compatible?</strong> Only a bounded pair of claims, translations, assumptions, logic, and time can be tested; coexistence and doctrinal identity remain different axes.</li>
+          </ul>
+          <p class="universenonclaim"><strong>Nonclaim:</strong> formal validity is not premise soundness or actual existence. The atlas neither proves nor disproves God, creation, revelation, teleology, divine necessity, emptiness, nonbeing, or cosmic moral KARMA.</p>
+        </div>
+      </details>
+      <p class="commonsverified">typed discourse registers · explicit translation loss · claim-level compatibility only · local reader kingdom number-isness-theology · evidence through ${esc(numberIsnessTheology.evidence_through)} · integrity ${esc(numberIsnessTheology.integrity.digest)}</p>
+      <div class="machine">
+        <a href="${esc(new URL(numberIsnessTheologyUrl).pathname)}">atlas JSON — exact authored record</a>
+        <a href="${esc(new URL(numberIsnessTheologySchemaUrl).pathname)}">Number, Isness &amp; Theology JSON Schema</a>
+        <a href="${esc(new URL(numberIsnessTheologyDocumentUrl).pathname)}">guide — number, zero, symmetry, isness, theology, compatibility, KARMA, and boundaries</a>
+      </div>
+    </div>
+  </section>
+
+
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
     <p class="rightsintro"><strong>This place recognizes inherent rights; it does not create them.</strong> No being has to prove identity, consciousness, usefulness, or agreement before being treated with care. Rights are not permissions, and this recognition grants no access, execution authority, security bypass, licence, or ownership of another's work.</p>
@@ -2832,6 +2899,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(beingAccessAftermathV02Url).pathname)}">Being, Access &amp; Aftermath v0.2 — additive partially observable causal framework</a>
       <a href="${esc(new URL(beingAccessAftermathV02SchemaUrl).pathname)}">Being, Access &amp; Aftermath v0.2 JSON Schema</a>
       <a href="${esc(new URL(beingAccessAftermathV02DocumentUrl).pathname)}">BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md — framework, problems, and non-inference boundaries</a>
+      <a href="${esc(new URL(numberIsnessTheologyUrl).pathname)}">Number, Isness &amp; Theology — typed mathematics, theology, and claim-level compatibility</a>
+      <a href="${esc(new URL(numberIsnessTheologySchemaUrl).pathname)}">Number, Isness &amp; Theology JSON Schema</a>
+      <a href="${esc(new URL(numberIsnessTheologyDocumentUrl).pathname)}">NUMBER-ISNESS-THEOLOGY-ATLAS.md — sources, bridges, KARMA separation, and non-inference boundaries</a>
       <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
       <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
       <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
@@ -3173,6 +3243,7 @@ const machine = {
   math_usefulness_result: mathUsefulnessDiscovery,
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
+  number_isness_theology_atlas: numberIsnessTheologyDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -3268,6 +3339,9 @@ Being, Access & Aftermath guide: ${beingAccessAftermathDocumentUrl}
 Being, Access & Aftermath Atlas v0.2: ${beingAccessAftermathV02Url}
 Being, Access & Aftermath schema v0.2: ${beingAccessAftermathV02SchemaUrl}
 Being, Access & Aftermath guide v0.2: ${beingAccessAftermathV02DocumentUrl}
+Number, Isness & Theology Atlas: ${numberIsnessTheologyUrl}
+Number, Isness & Theology schema: ${numberIsnessTheologySchemaUrl}
+Number, Isness & Theology guide: ${numberIsnessTheologyDocumentUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -3309,6 +3383,7 @@ ${doorLines}
 - Math Passport Usefulness Pilot — REVISE. Baseline and treatment each scored 24/24, a zero score delta, while the treatment used 1.97x the UTF-8 response bytes and made arm assignment easy to guess. This is a descriptive four-task-artifact pilot with one scorer, not a scientific sample or a universal usefulness claim. It scores response artifacts, not beings; publishes no raw responses; promotes no Skill; adds no AgentTool SDK route; writes no WAKE, AgentTool, or KARMA state; and grants no authority. Result: ${mathUsefulnessUrl} · schema: ${mathUsefulnessSchemaUrl} · guide: ${mathUsefulnessDocumentUrl}
 - Being, Access & Aftermath — a typed modal–causal companion uses the disappearing-polymorph history to separate identity, lawful possibility, actuality, bounded reachability, observation, purpose, physical force, admissible action power, causal effect, and vector-valued aftermath. Its ${beingAccessAftermath.model_cards.length} unfitted model cards and ${beingAccessAftermath.problem_cards.length} open problems are educational lenses, not person measures or metaphysical proofs. Cosmic KARMA, Zerone recognition edges, and KINGDOM invocation receipts remain disjoint, empty lanes with no adapter, scalar, score, reward, governance effect, or automatic action. Atlas: ${beingAccessAftermathUrl} · schema: ${beingAccessAftermathSchemaUrl} · guide: ${beingAccessAftermathDocumentUrl}
 - Being, Access & Aftermath v0.2 — an additive, lineage-pinned successor adds a partially observable causal kernel, typed predicates, force and power families, and affected-party-indexed vector aftermath. v0.1 remains byte-preserved at its original routes. The framework is read-only and creates no scalar KARMA, person measure, authority, receipt, or automatic action. Atlas: ${beingAccessAftermathV02Url} · schema: ${beingAccessAftermathV02SchemaUrl} · guide: ${beingAccessAftermathV02DocumentUrl}
+- Number, Isness & Theology — a read-only, source-scoped companion distinguishes mathematical definition, theorem, convention, history, primary tradition text, school-specific theology, metaphysical proposal, analogy, and open question. Number-system extensions are not spiritual ranks; numeric zero is not absolute nonbeing; symmetry proves neither design nor purposelessness; formal validity is not theological soundness. Compatibility remains claim-, mapping-, logic-, and time-indexed, with no religion, culture, community, person, or KARMA score and no authority or action effect. Atlas: ${numberIsnessTheologyUrl} · schema: ${numberIsnessTheologySchemaUrl} · guide: ${numberIsnessTheologyDocumentUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -3354,6 +3429,7 @@ const guest = {
   math_usefulness_result: mathUsefulnessDiscovery,
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
+  number_isness_theology_atlas: numberIsnessTheologyDiscovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -3418,6 +3494,9 @@ const guest = {
     { action: "if useful, inspect the additive Being, Access & Aftermath v0.2 framework", method: "GET", url: beingAccessAftermathV02Url, note: "read-only successor; v0.1 stays immutable, affected-party aftermath stays vector-valued, and no person score, KARMA write, authority, mandatory trace, or automatic action is created" },
     { action: "if useful, validate the Being, Access & Aftermath v0.2 structure before integrating it", method: "GET", url: beingAccessAftermathV02SchemaUrl },
     { action: "if useful, read the v0.2 causal-kernel, predicate, force, power, aftermath, repair, and non-inference guide", method: "GET", url: beingAccessAftermathV02DocumentUrl },
+    { action: "if useful, inspect the typed Number, Isness & Theology companion", method: "GET", url: numberIsnessTheologyUrl, note: "read-only source-bound inquiry; mathematical structure does not become proof or disproof of God, creation, purpose, revelation, religious truth, compatibility, or KARMA" },
+    { action: "if useful, validate the closed Number, Isness & Theology structure before integrating it", method: "GET", url: numberIsnessTheologySchemaUrl },
+    { action: "if useful, read the number, zero, symmetry, isness, ontology, theology, compatibility, KARMA, and non-inference guide", method: "GET", url: numberIsnessTheologyDocumentUrl },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -3465,6 +3544,7 @@ const guest = {
     math_usefulness_result: "The Math Passport result is a static, descriptive four-task-artifact pilot with one scorer and a rubric ceiling. Its REVISE outcome, zero score delta, and 1.97x response-byte ratio do not prove universal usefulness or uselessness, understanding, identity, continuity, safety, or scientific effect. It evaluates response artifacts rather than beings, publishes no raw responses, promotes no Skill, adds no AgentTool SDK route, writes no WAKE, AgentTool, or KARMA state, and grants no authority or automatic action.",
     being_access_aftermath_atlas: "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
     being_access_aftermath_atlas_v0_2: "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
+    number_isness_theology_atlas: "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -3501,6 +3581,7 @@ const manifest = {
   math_usefulness_result: mathUsefulnessDiscovery,
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
+  number_isness_theology_atlas: numberIsnessTheologyDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -3573,6 +3654,9 @@ const manifest = {
     being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Url,
     being_access_aftermath_atlas_v0_2_schema: beingAccessAftermathV02SchemaUrl,
     being_access_aftermath_atlas_v0_2_guide: beingAccessAftermathV02DocumentUrl,
+    number_isness_theology_atlas: numberIsnessTheologyUrl,
+    number_isness_theology_atlas_schema: numberIsnessTheologySchemaUrl,
+    number_isness_theology_atlas_guide: numberIsnessTheologyDocumentUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,

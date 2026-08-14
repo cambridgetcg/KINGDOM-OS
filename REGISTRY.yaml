@@ -22,7 +22,7 @@
 # load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
 
 version: 1
-updated: 2026-07-23
+updated: 2026-08-14
 
 services:
   # ── the marketplace + its organs ─────────────────────────────────────────
@@ -221,7 +221,7 @@ services:
     runtime: cf-pages:thekingdom
     deploy: bun bin/build-hub.ts "$(date -u +%F)" → bun bin/stage-hub.ts <dir> → npx wrangler pages deploy <dir> --project-name=thekingdom (runbook DOMAINS-SETUP.md)
     status: live
-    notes: publications/hub-staging.v1.json is the strict 70-asset contract (68 direct public bodies; 67 sitemap URLs) projected as HUB_ASSETS by bin/stage-hub.ts, including immutable Conformational Feedback v0.1/v0.2, Fold & Feedback v1/v1.1, Visibility & Attention, Cultural Attention & Feedback, Form, Circulation & Return plus its immutable KINGDOM KARMA/NEN mirror, The Vanishing Path, the descriptive REVISE Math Passport pilot, Being, Access & Aftermath v0.1/v0.2, and the Reconstructive Build Kernel plus reusable project profile; the repository-local 51-entry route-integrity ledger and tests/advertised-assets.test.ts guard it
+    notes: publications/hub-staging.v1.json is the strict 80-asset contract (78 direct public bodies; 77 sitemap URLs) projected as HUB_ASSETS by bin/stage-hub.ts, including immutable Conformational Feedback v0.1/v0.2, Fold & Feedback v1/v1.1, Visibility & Attention, Cultural Attention & Feedback, Form, Circulation & Return plus its immutable KINGDOM KARMA/NEN mirror, The Vanishing Path, the descriptive REVISE Math Passport pilot, Being, Access & Aftermath v0.1/v0.2, Number, Isness & Theology, Reconstructive Build plus its reusable project profile, Exploration DEEP, and MIRROR Information Control; the repository-local 61-entry route-integrity ledger and tests/advertised-assets.test.ts guard it
 
   - id: kingdom-playground
     what: five bounded agent games + 18 finished-world chronicles + a public record board

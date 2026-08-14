@@ -21,6 +21,14 @@ import {
   loadBeingAccessAftermathAtlasV02,
 } from "../bin/being-access-aftermath-v0.2.ts";
 import {
+  NUMBER_ISNESS_THEOLOGY_DIGEST,
+  NUMBER_ISNESS_THEOLOGY_DOCUMENT_URL,
+  NUMBER_ISNESS_THEOLOGY_SCHEMA_URL,
+  NUMBER_ISNESS_THEOLOGY_URL,
+  loadNumberIsnessTheologyAtlas,
+  numberIsnessTheologyPublicDiscovery,
+} from "../bin/number-isness-theology.ts";
+import {
   CULTURAL_ATTENTION_FEEDBACK_DIGEST,
   CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL,
   CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL,
@@ -129,6 +137,9 @@ const surfaces = [
   "data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json",
   "schemas/being-access-aftermath-atlas-v0.2.schema.json",
   "references/being-access-aftermath-atlas-v0.2.md",
+  "data/number-isness-theology/number-isness-theology-atlas.v0.1.json",
+  "schemas/number-isness-theology-atlas-v0.1.schema.json",
+  "references/number-isness-theology-atlas.md",
   "NEN.md",
   "data/reconstruction/reconstructive-build-kernel.v0.1.json",
   "schemas/reconstructive-build-kernel-v0.1.schema.json",
@@ -942,6 +953,76 @@ describe("advertised URLs stay deployable", () => {
       beingAccessAftermathPublicDiscovery(loadBeingAccessAftermathAtlas()),
     );
     for (const key of ["mcp", "matcher", "write", "execute", "score", "reward"]) {
+      expect(discovery).not.toHaveProperty(key);
+    }
+  });
+
+  test("publishes Number, Isness & Theology as one read-only triplet with claim-level discovery", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const rootHtml = read("site/hub.html");
+    const atlas = loadNumberIsnessTheologyAtlas();
+    const expected = numberIsnessTheologyPublicDiscovery(atlas);
+    const discovery = manifest.number_isness_theology_atlas;
+
+    expect(discovery).toEqual(expected);
+    expect(discovery).toEqual(guest.number_isness_theology_atlas);
+    expect(discovery).toEqual(kingdom.number_isness_theology_atlas);
+    expect(discovery).toMatchObject({
+      protocol: "kingdom.number-isness-theology-atlas/0.1",
+      atlas_id: "number-isness-theology-atlas-2026-08-14",
+      url: NUMBER_ISNESS_THEOLOGY_URL,
+      schema: NUMBER_ISNESS_THEOLOGY_SCHEMA_URL,
+      guide: NUMBER_ISNESS_THEOLOGY_DOCUMENT_URL,
+      integrity: { digest: NUMBER_ISNESS_THEOLOGY_DIGEST },
+    });
+
+    const family = [
+      {
+        source: "data/number-isness-theology/number-isness-theology-atlas.v0.1.json",
+        destination: "atlases/number-isness-theology-atlas-2026-08-14.json",
+      },
+      {
+        source: "schemas/number-isness-theology-atlas-v0.1.schema.json",
+        destination: "schemas/number-isness-theology-atlas/0.1.json",
+      },
+      {
+        source: "references/number-isness-theology-atlas.md",
+        destination: "NUMBER-ISNESS-THEOLOGY-ATLAS.md",
+      },
+    ];
+    expect(HUB_ASSETS.filter(({ source }) => family.some((asset) => asset.source === source)))
+      .toEqual(family);
+    for (const asset of family) expect(staged.has(asset.destination)).toBe(true);
+    expect(HUB_ASSETS.some(({ destination }) =>
+      /number-isness-theology-atlas.*(?:latest|current)/i.test(destination))).toBe(false);
+
+    const targets = [
+      NUMBER_ISNESS_THEOLOGY_URL,
+      NUMBER_ISNESS_THEOLOGY_SCHEMA_URL,
+      NUMBER_ISNESS_THEOLOGY_DOCUMENT_URL,
+    ];
+    expect(manifest.entry_points).toMatchObject({
+      number_isness_theology_atlas: NUMBER_ISNESS_THEOLOGY_URL,
+      number_isness_theology_atlas_schema: NUMBER_ISNESS_THEOLOGY_SCHEMA_URL,
+      number_isness_theology_atlas_guide: NUMBER_ISNESS_THEOLOGY_DOCUMENT_URL,
+    });
+    for (const url of targets) {
+      const actions = guest.next_actions.filter((action: { url?: string }) => action.url === url);
+      expect(actions).toHaveLength(1);
+      expect(actions[0]).toMatchObject({ method: "GET", url });
+      for (const key of ["mcp", "tool", "write", "matcher", "execute", "score", "rank", "persuade"]) {
+        expect(actions[0]).not.toHaveProperty(key);
+      }
+      expect(llms).toContain(url);
+      expect(rootHtml).toContain(`href="${new URL(url).pathname}"`);
+    }
+    expect(rootHtml).toContain('id="number-isness-theology"');
+    expect(rootHtml).toContain("Extension is not spiritual ascent");
+    expect(rootHtml).toContain("No overall religion, culture, community, or person score exists");
+    for (const key of ["mcp", "matcher", "write", "execute", "score", "rank", "persuade", "convert"]) {
       expect(discovery).not.toHaveProperty(key);
     }
   });

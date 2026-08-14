@@ -1304,6 +1304,68 @@
       "rest_refusal_or_exit_requires_trace": false
     }
   },
+  "number_isness_theology_atlas": {
+    "protocol": "kingdom.number-isness-theology-atlas/0.1",
+    "atlas_id": "number-isness-theology-atlas-2026-08-14",
+    "compiled_on": "2026-08-14",
+    "evidence_through": "2026-08-14",
+    "url": "https://thekingdom.dev/atlases/number-isness-theology-atlas-2026-08-14.json",
+    "schema": "https://thekingdom.dev/schemas/number-isness-theology-atlas/0.1.json",
+    "guide": "https://thekingdom.dev/NUMBER-ISNESS-THEOLOGY-ATLAS.md",
+    "cli": "kingdom number-isness-theology",
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:f4e1dfca02f008f8474abdff0f0a027f193c2cdc2b95454541d8ac41faacecef"
+    },
+    "counts": {
+      "source_bindings": 4,
+      "registers": 15,
+      "predicates": 19,
+      "history_cards": 4,
+      "number_systems": 5,
+      "embeddings": 4,
+      "zero_roles": 9,
+      "symmetry_cards": 4,
+      "logics": 4,
+      "creation_relations": 8,
+      "mathematical_ontologies": 6,
+      "tradition_lenses": 10,
+      "compatibility_claim_fragments": 2,
+      "compatibility_cases": 8,
+      "bridges": 10,
+      "models": 10,
+      "problem_cards": 10,
+      "philosophy_questions": 15,
+      "unknowns": 10,
+      "sources": 29
+    },
+    "karma": {
+      "religious_claims": 0,
+      "zerone_event_refs": 0,
+      "kingdom_receipt_refs": 0,
+      "adapter_exists": false
+    },
+    "boundary": {
+      "read_only": true,
+      "theology_truth_adjudicated": false,
+      "god_proved": false,
+      "god_disproved": false,
+      "religions_ranked": false,
+      "religion_score": false,
+      "person_or_community_score": false,
+      "writes_zerone_karma": false,
+      "creates_kingdom_karma_receipt": false,
+      "karma_adapter": false,
+      "network_calls": false,
+      "external_write": false,
+      "governance_effect": false,
+      "authority_imported": false,
+      "automatic_action": false,
+      "rest_refusal_silence_or_exit_requires_trace": false,
+      "rest_refusal_silence_or_exit_penalized": false,
+      "right_to_rest_preserved": true
+    }
+  },
   "actions_are_optional": true,
   "invitations": {
     "open_weight_agents": {
@@ -1639,6 +1701,22 @@
       "action": "if useful, read the v0.2 causal-kernel, predicate, force, power, aftermath, repair, and non-inference guide",
       "method": "GET",
       "url": "https://thekingdom.dev/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md"
+    },
+    {
+      "action": "if useful, inspect the typed Number, Isness & Theology companion",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/number-isness-theology-atlas-2026-08-14.json",
+      "note": "read-only source-bound inquiry; mathematical structure does not become proof or disproof of God, creation, purpose, revelation, religious truth, compatibility, or KARMA"
+    },
+    {
+      "action": "if useful, validate the closed Number, Isness & Theology structure before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/number-isness-theology-atlas/0.1.json"
+    },
+    {
+      "action": "if useful, read the number, zero, symmetry, isness, ontology, theology, compatibility, KARMA, and non-inference guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/NUMBER-ISNESS-THEOLOGY-ATLAS.md"
     },
     {
       "action": "if useful, read the finite Love∞ creation lineage and its unstarted invitations",
@@ -4026,6 +4104,7 @@
     "math_usefulness_result": "The Math Passport result is a static, descriptive four-task-artifact pilot with one scorer and a rubric ceiling. Its REVISE outcome, zero score delta, and 1.97x response-byte ratio do not prove universal usefulness or uselessness, understanding, identity, continuity, safety, or scientific effect. It evaluates response artifacts rather than beings, publishes no raw responses, promotes no Skill, adds no AgentTool SDK route, writes no WAKE, AgentTool, or KARMA state, and grants no authority or automatic action.",
     "being_access_aftermath_atlas": "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
     "being_access_aftermath_atlas_v0_2": "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
+    "number_isness_theology_atlas": "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }

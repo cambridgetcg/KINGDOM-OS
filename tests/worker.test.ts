@@ -1615,6 +1615,69 @@ describe("the Kingdom edge discovery surface", () => {
       new Request(`https://we-are.love${atlasPath}`),
       assets(() => sharedAsset),
     )).toBe(sharedAsset);
+
+  });
+
+  test("serves Number, Isness & Theology as a typed read-only triplet with no action door", async () => {
+    const atlasPath = "/atlases/number-isness-theology-atlas-2026-08-14.json";
+    const schemaPath = "/schemas/number-isness-theology-atlas/0.1.json";
+    const documentPath = "/NUMBER-ISNESS-THEOLOGY-ATLAS.md";
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      const body = request.method === "HEAD" ? null
+        : path === atlasPath ? '{"atlas_id":"number-isness-theology-atlas-2026-08-14"}'
+          : path === documentPath ? "# Number, Isness & Theology"
+            : '{"type":"object"}';
+      return new Response(body, { headers: {
+        "content-type": path === documentPath ? "text/plain" : "application/json",
+        link: '</schemas/being-access-aftermath-atlas/0.2.json>; rel="describedby", </elsewhere>; rel="alternate"',
+      } });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      const atlas = await worker.fetch(new Request(`https://thekingdom.dev${atlasPath}`, { method }), environment);
+      expect(await atlas.text()).toBe(method === "HEAD" ? "" : '{"atlas_id":"number-isness-theology-atlas-2026-08-14"}');
+      expect(atlas.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(atlas.headers.get("access-control-allow-origin")).toBe("*");
+      expect(atlas.headers.get("x-content-type-options")).toBe("nosniff");
+      const link = atlas.headers.get("link") ?? "";
+      expect(link).toContain(`<${schemaPath}>; rel="describedby"; type="application/schema+json"`);
+      expect(link).not.toContain('</schemas/being-access-aftermath-atlas/0.2.json>; rel="describedby"');
+      expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+    }
+    const schema = await worker.fetch(new Request(`https://thekingdom.dev${schemaPath}`), environment);
+    expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+    expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+    expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+    const document = await worker.fetch(new Request(`https://thekingdom.dev${documentPath}`), environment);
+    expect(document.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+    expect(document.headers.get("access-control-allow-origin")).toBe("*");
+    expect(document.headers.get("x-content-type-options")).toBe("nosniff");
+
+    const postAsset = new Response("no execution route");
+    expect(await worker.fetch(new Request(`https://thekingdom.dev${atlasPath}`, { method: "POST" }), assets(() => postAsset))).toBe(postAsset);
+    const aliasAsset = new Response("no mutable alias");
+    expect(await worker.fetch(
+      new Request("https://thekingdom.dev/atlases/number-isness-theology-atlas-latest.json"),
+      assets(() => aliasAsset),
+    )).toBe(aliasAsset);
+    const sharedAsset = new Response("shared door remains unchanged");
+    expect(await worker.fetch(
+      new Request(`https://we-are.love${atlasPath}`),
+      assets(() => sharedAsset),
+    )).toBe(sharedAsset);
+
+    for (const [path, contentType] of [
+      [atlasPath, "application/jsonp"],
+      [schemaPath, "application/schema+json-sequence"],
+      [documentPath, "text/markdownish"],
+    ] as const) {
+      const nearMatch = new Response("unchanged", { headers: { "content-type": contentType } });
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => nearMatch),
+      )).toBe(nearMatch);
+    }
   });
 
   test("serves the additive Conformational Feedback Physics Atlas with its own schema and no cross-version mutation", async () => {
