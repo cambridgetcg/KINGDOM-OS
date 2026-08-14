@@ -3,8 +3,8 @@
 
 from __future__ import annotations
 
-import json
 import errno
+import json
 import os
 import re
 import stat
@@ -249,6 +249,9 @@ def semantic_issues(envelope: dict[str, Any]) -> list[dict[str, str]]:
     reasons = set(decision["reason_codes"])
     stops = set(envelope["lifecycle"]["stop_conditions"])
 
+    if "AUTHORITY_CONTROL_EMPTY" in reasons and authority["effective_basis"] != "NONE":
+        issues.append(_issue("authority-empty-reason-contradiction", "/decision/reason_codes", "AUTHORITY_CONTROL_EMPTY requires an empty effective control basis"))
+
     if effect["class"] == "UNRESOLVED":
         if route not in {"DENY", "QUARANTINE"}:
             issues.append(_issue("unresolved-effect-route", "/decision/route", "an unresolved effect can only be denied or quarantined"))
@@ -304,6 +307,17 @@ def semantic_issues(envelope: dict[str, Any]) -> list[dict[str, str]]:
     signals = set(envelope["signals"])
     evidence = envelope["evidence"]
 
+    secret_default_classes = {
+        "CANDIDATE",
+        "LIVE_REFERENCE",
+        "INACTIVE_REFERENCE",
+        "REVOKED_REFERENCE",
+        "UNKNOWN",
+    }
+    if credential_class in secret_default_classes or "SECRET_CANDIDATE" in signals:
+        if any(flows_by_id[flow_id]["confidentiality"] != "SECRET" for flow_id in effect_flow_ids):
+            issues.append(_issue("credential-flow-underlabel", "/effect/influenced_by", "credential-shaped or potentially secret material requires SECRET across the complete effect-flow closure"))
+
     protected_signal_events = {
         "SIGNAL_OBSERVED_AT_REST",
         "SIGNAL_PRESENTED_TO_SINK",
@@ -325,6 +339,8 @@ def semantic_issues(envelope: dict[str, Any]) -> list[dict[str, str]]:
             issues.append(_issue("exposure-signal-class", "/credential/class", "POSSIBLE_PRIOR_DISCLOSURE requires a candidate, live reference, or unknown credential"))
         if evidence_strength not in {"OBSERVED", "CORRELATED"}:
             issues.append(_issue("exposure-signal-evidence", "/evidence/strength", "POSSIBLE_PRIOR_DISCLOSURE requires observed or correlated evidence"))
+    if "LIVE_OR_UNKNOWN_EXPOSURE" in reasons and route != "STOP_ROTATE":
+        issues.append(_issue("exposure-reason-route", "/decision/route", "LIVE_OR_UNKNOWN_EXPOSURE is reserved for the STOP_ROTATE incident route"))
     if signals and evidence_strength == "NONE":
         issues.append(_issue("signal-without-evidence", "/evidence/strength", "a claimed signal requires at least OBSERVED evidence with opaque references"))
     if evidence_strength != "NONE" and not signals:

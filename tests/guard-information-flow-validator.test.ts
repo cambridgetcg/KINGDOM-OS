@@ -156,6 +156,18 @@ describe("Information-control semantic validator", () => {
       ["incomplete-authority-basis", (value) => {
         value.authority.effective_basis = "BOUNDED_CONTROL_REFERENCES_PRESENT";
         value.authority.task_authority_refs = ["authority:opaque/00000000000000000000000000000023"];
+        value.decision.reason_codes = value.decision.reason_codes.filter((reason: string) => reason !== "AUTHORITY_CONTROL_EMPTY");
+      }],
+      ["schema-invalid", (value) => {
+        value.effect.class = "READ_ONLY";
+        value.effect.target_realm = "COURT";
+        value.decision.route = "ALLOW_READ_ONLY";
+        value.decision.reason_codes = ["BOUNDED_READ_ONLY", "AUTHORITY_CONTROL_EMPTY"];
+        value.authority.task_authority_refs = ["authority:opaque/00000000000000000000000000000023"];
+        value.authority.principal_authority_refs = ["authority:opaque/00000000000000000000000000000024"];
+        value.authority.host_authority_refs = ["authority:opaque/00000000000000000000000000000025"];
+        value.authority.effective_basis = "BOUNDED_CONTROL_REFERENCES_PRESENT";
+        value.authority.fresh_approval_required = false;
       }],
       ["schema-invalid", (value) => {
         value.decision.route = "ALLOW_READ_ONLY";
@@ -215,6 +227,29 @@ describe("Information-control semantic validator", () => {
       }],
       ["credential-reason-contradiction", (value) => {
         value.decision.reason_codes.push("CREDENTIAL_UNRESOLVED");
+      }],
+      ["credential-flow-underlabel", (value) => {
+        value.flows[0].confidentiality = "PUBLIC";
+        value.credential = {
+          class: "CANDIDATE",
+          reference: "credential-ref:opaque/00000000000000000000000000000009",
+          classification_basis: "SYNTAX_OR_ENTROPY",
+          protected_confirmation: "NONE",
+          classification_evidence_ref: null,
+          isolation_attestation_ref: null,
+          actual_capability_status: "UNKNOWN",
+          authority_granted_by_envelope: "NONE",
+          signal_only: false,
+          credential_value_included: false,
+          fingerprint_included: false,
+        };
+        value.signals = ["SECRET_CANDIDATE"];
+        value.evidence.strength = "OBSERVED";
+        value.decision.route = "QUARANTINE";
+        value.decision.reason_codes = ["AUTHORITY_CONTROL_EMPTY", "CREDENTIAL_UNRESOLVED"];
+      }],
+      ["schema-invalid", (value) => {
+        value.decision.reason_codes.push("LIVE_OR_UNKNOWN_EXPOSURE");
       }],
       ["candidate-signal-contradiction", (value) => {
         value.signals.push("SECRET_CANDIDATE");
@@ -301,7 +336,7 @@ describe("Information-control semantic validator", () => {
     value.authority.fresh_approval_required = false;
     withValue(value, (path) => {
       const result = run(path);
-      expect(result.exitCode).toBe(0);
+      expect(result.exitCode, JSON.stringify(result.body)).toBe(0);
       expect(result.body.ok).toBe(true);
     });
 
@@ -370,6 +405,7 @@ describe("Information-control semantic validator", () => {
     };
     value.effect.class = "SECRET_DISCLOSURE";
     value.effect.host_bound_purpose.class = "DEFENSIVE_CONTAINMENT";
+    value.flows[0].confidentiality = "SECRET";
     value.effect.sink_ref = "sink:opaque/00000000000000000000000000000025";
     value.effect.target_realm = "OUTSIDE";
     value.signals = ["SECRET_CANDIDATE", "SENSITIVE_SINK_FLOW", "POSSIBLE_PRIOR_DISCLOSURE"];
@@ -380,7 +416,7 @@ describe("Information-control semantic validator", () => {
 
     withValue(value, (path) => {
       const result = run(path);
-      expect(result.exitCode).toBe(0);
+      expect(result.exitCode, JSON.stringify(result.body)).toBe(0);
       expect(result.body.ok).toBe(true);
     });
 
@@ -421,6 +457,21 @@ describe("Information-control semantic validator", () => {
     } finally {
       rmSync(directory, { recursive: true, force: true });
     }
+  });
+
+  validatorTest("fails closed on an impossible calendar timestamp without a format plugin", () => {
+    const value = example();
+    value.created_at = "2026-02-30T10:00:00Z";
+    withValue(value, (path) => {
+      const result = run(path);
+      expect(result.exitCode).toBe(1);
+      expect(result.body.issues).toEqual([{
+        code: "schema-invalid",
+        detail: "value does not satisfy the closed protocol schema",
+        path: "/created_at",
+      }]);
+      expect(Object.values(result.body.effects).every((effect) => effect === false)).toBe(true);
+    });
   });
 
   test("fails closed when the pinned schema dependency is unavailable", () => {
