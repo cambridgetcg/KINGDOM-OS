@@ -101,6 +101,7 @@ describe("Explore Mathematical Doors Agent Skill", () => {
       "FINITE_EXACT",
       "NUMERICAL_APPROXIMATION",
       "NOT_RUN | PARTIAL | RUN",
+      "choose every descriptor that applies",
       "ESTABLISHED_OPEN",
       "BESPOKE_PRIOR_ART_REQUIRED",
       "Original formulation or authoritative provenance",

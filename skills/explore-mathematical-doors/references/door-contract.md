@@ -99,7 +99,8 @@ Falsifier / counterexample / negative control
 Evidence required next
 Bounded output
 Run status: NOT_RUN | PARTIAL | RUN
-Model status: UNFITTED | HYPOTHETICAL | ESTIMATED | FITTED | SIMULATED
+Model provenance, when applicable; choose every descriptor that applies:
+  UNFITTED | HYPOTHETICAL | ESTIMATED | FITTED | SIMULATED
 Effects and authority still absent
 ```
 
