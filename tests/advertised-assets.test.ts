@@ -152,6 +152,8 @@ const surfaces = [
   "data/security/mirror-information-control-public.v0.1.json",
   "schemas/mirror-information-control-public-v0.1.schema.json",
   "references/mirror-information-control-public.md",
+  "data/exploration/zero-empty-seat.v0.1.json",
+  "references/zero-empty-seat.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",

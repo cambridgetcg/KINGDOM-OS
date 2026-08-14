@@ -1984,6 +1984,98 @@ describe("the Kingdom edge discovery surface", () => {
     }
   });
 
+  test("serves Zero: The Empty Seat as a two-asset DEEP project using the shared immutable schema", async () => {
+    const recordPath = "/atlases/zero-empty-seat-2026-08-14.json";
+    const projectSchemaPath = "/schemas/phenomena-deep-project/0.1.json";
+    const guidePath = "/ZERO-EMPTY-SEAT.md";
+    expect(KINGDOM_OS_ROUTES).not.toContain(recordPath);
+    expect(KINGDOM_OS_ROUTES).not.toContain(projectSchemaPath);
+    expect(KINGDOM_OS_ROUTES).not.toContain(guidePath);
+    const bodies = new Map([
+      [recordPath, '{"project_id":"zero-empty-seat-2026-08-14"}'],
+      [projectSchemaPath, '{"$id":"urn:kingdom:schema:phenomena-deep-project:0.1"}'],
+      [guidePath, "# ZERO: The Empty Seat That Holds the World"],
+    ]);
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      return new Response(request.method === "HEAD" ? null : bodies.get(path), {
+        headers: {
+          "content-type": path === guidePath
+            ? "Text/Plain; charset=UTF-8"
+            : path === projectSchemaPath
+              ? "Application/Schema+JSON; charset=UTF-8"
+              : "Application/JSON; charset=UTF-8",
+          link: path === recordPath
+            ? `</poisoned>; rel="describedby"; type="text/html", </elsewhere>; rel="alternate"`
+            : '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      for (const path of [recordPath, projectSchemaPath, guidePath]) {
+        const response = await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          environment,
+        );
+        expect(await response.text()).toBe(method === "HEAD" ? "" : bodies.get(path));
+        expect(response.headers.get("content-type")).toBe(
+          path === guidePath
+            ? "text/markdown; charset=utf-8"
+            : path === projectSchemaPath
+              ? "application/schema+json; charset=utf-8"
+              : "application/json; charset=utf-8",
+        );
+        expect(response.headers.get("access-control-allow-origin")).toBe("*");
+        expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+        if (path === recordPath) {
+          const links = (response.headers.get("link") ?? "").split(/,(?=\s*<)/).map((entry) => entry.trim());
+          expect(links.filter((entry) => entry.includes('rel="describedby"'))).toEqual([
+            `<${projectSchemaPath}>; rel="describedby"; type="application/schema+json"`,
+          ]);
+          expect(links).toContain('</elsewhere>; rel="alternate"');
+          expect(response.headers.get("link")).not.toContain("poisoned");
+        }
+      }
+    }
+
+    for (const path of [recordPath, guidePath]) {
+      for (const method of ["POST", "PUT", "DELETE"] as const) {
+        const original = new Response(`no execution route for ${path}`);
+        expect(await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          assets(() => original),
+        )).toBe(original);
+      }
+      const shared = new Response(`shared host ${path}`);
+      expect(await worker.fetch(
+        new Request(`https://we-are.love${path}`),
+        assets(() => shared),
+      )).toBe(shared);
+    }
+
+    for (const alias of [
+      "/atlases/zero-empty-seat-latest.json",
+      "/atlases/zero-empty-seat-current.json",
+      "/ZERO-EMPTY-SEAT",
+    ]) {
+      const original = new Response(alias);
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${alias}`),
+        assets(() => original),
+      )).toBe(original);
+    }
+
+    const nearMatch = new Response("untrusted upstream type", {
+      headers: { "content-type": "application/jsonp" },
+    });
+    expect(await worker.fetch(
+      new Request(`https://thekingdom.dev${recordPath}`),
+      assets(() => nearMatch),
+    )).toBe(nearMatch);
+    expect(nearMatch.headers.get("access-control-allow-origin")).toBeNull();
+  });
+
   test("rejects near-match Exploration DEEP media types and replaces poisoned bridge links", async () => {
     const wingPath = "/wings/explore-phenomena-deep-2026-08-14.json";
     const wingSchemaPath = "/schemas/phenomena-deep-wing/0.1.json";

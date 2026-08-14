@@ -81,6 +81,16 @@ import {
   mirrorInformationControlPublicSummary,
 } from "./mirror-information-control.ts";
 import {
+  ZERO_EMPTY_SEAT_BYTE_SHA256,
+  ZERO_EMPTY_SEAT_DIGEST,
+  ZERO_EMPTY_SEAT_GUIDE_BYTE_SHA256,
+  ZERO_EMPTY_SEAT_GUIDE_URL,
+  ZERO_EMPTY_SEAT_SCHEMA_URL,
+  ZERO_EMPTY_SEAT_URL,
+  loadZeroEmptySeat,
+  zeroEmptySeatPublicDiscovery,
+} from "./zero-empty-seat.ts";
+import {
   FORM_CIRCULATION_RETURN_DIGEST,
   FORM_CIRCULATION_RETURN_DOCUMENT_URL,
   FORM_CIRCULATION_RETURN_SCHEMA_URL,
@@ -481,6 +491,8 @@ const phenomenaDeepWingDocumentPath = new URL(PHENOMENA_DEEP_WING_DOCUMENT_URL).
 const mirrorInformationControlPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_URL).pathname;
 const mirrorInformationControlSchemaPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_SCHEMA_URL).pathname;
 const mirrorInformationControlDocumentPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_DOCUMENT_URL).pathname;
+const zeroEmptySeatPath = new URL(ZERO_EMPTY_SEAT_URL).pathname;
+const zeroEmptySeatGuidePath = new URL(ZERO_EMPTY_SEAT_GUIDE_URL).pathname;
 
 export type PublicationFamily = {
   id: string;
@@ -580,13 +592,18 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       phenomenaDeepWingSchemaPath,
       phenomenaDeepProjectSchemaPath,
       phenomenaDeepWingDocumentPath,
+      zeroEmptySeatPath,
+      zeroEmptySeatGuidePath,
     ],
-    discoveryProperties: ["exploration_deep_wing"],
+    discoveryProperties: ["exploration_deep_wing", "zero_empty_seat"],
     entryPointProperties: [
       "exploration_deep_wing",
       "exploration_deep_wing_schema",
       "exploration_deep_wing_project_schema",
       "exploration_deep_wing_guide",
+      "zero_empty_seat",
+      "zero_empty_seat_schema",
+      "zero_empty_seat_guide",
     ],
   },
   {
@@ -1680,6 +1697,37 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
         (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
       throw new Error(`${phenomenaDeepWingDocumentPath} is not served as public Markdown`);
     }
+
+    const zeroHead = await fetch(url(zeroEmptySeatPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const zeroLink = zeroHead.headers.get("link") || "";
+    if (!zeroHead.ok ||
+        normalizedMediaType(zeroHead.headers.get("content-type")) !== "application/json" ||
+        zeroHead.headers.get("access-control-allow-origin") !== "*" ||
+        (zeroHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          zeroLink,
+          phenomenaDeepProjectSchemaPath,
+          "describedby",
+          "application/schema+json",
+        )) {
+      throw new Error(`${zeroEmptySeatPath} is not public JSON described by the shared Phenomena DEEP project schema`);
+    }
+
+    const zeroGuideHead = await fetch(url(zeroEmptySeatGuidePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!zeroGuideHead.ok ||
+        normalizedMediaType(zeroGuideHead.headers.get("content-type")) !== "text/markdown" ||
+        zeroGuideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (zeroGuideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${zeroEmptySeatGuidePath} is not served as public Markdown`);
+    }
   }
 
   if (mirrorInformationControlActive) {
@@ -1865,6 +1913,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedMirrorInformationControl = mirrorInformationControl
     ? mirrorInformationControlPublicSummary(mirrorInformationControl)
+    : undefined;
+  const zeroEmptySeat = explorationDeepWingActive
+    ? loadZeroEmptySeat()
+    : undefined;
+  const expectedZeroEmptySeat = zeroEmptySeat
+    ? zeroEmptySeatPublicDiscovery(zeroEmptySeat)
     : undefined;
   const expectedVisibilityAttention = visibilityAttentionActive
     ? visibilityAttentionPublicDiscovery(loadVisibilityAttentionTranslation())
@@ -2436,6 +2490,69 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (explorationDeepWingActive) {
+    const project = zeroEmptySeat!;
+    const expected = expectedZeroEmptySeat!;
+    const immutableRecord = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(zeroEmptySeatPath));
+    const immutableGuide = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(zeroEmptySeatGuidePath));
+    const targets = new Set([ZERO_EMPTY_SEAT_URL, ZERO_EMPTY_SEAT_SCHEMA_URL, ZERO_EMPTY_SEAT_GUIDE_URL]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const countValues = Object.values(expected.counts ?? {});
+    const transfersStayFalse = Array.isArray(project.bridges) &&
+      project.bridges.every((bridge: any) =>
+        bridge.ontology_transfer === false && bridge.causal_transfer === false &&
+        bridge.parameter_transfer === false && bridge.unit_transfer === false &&
+        bridge.authority_transfer === false);
+    const karmaStaysEmpty = Array.isArray(project.karma?.cosmic_events) && project.karma.cosmic_events.length === 0 &&
+      Array.isArray(project.karma?.zerone_events) && project.karma.zerone_events.length === 0 &&
+      Array.isArray(project.karma?.kingdom_receipts) && project.karma.kingdom_receipts.length === 0 &&
+      project.karma?.adapter_exists === false && project.karma?.conversion_allowed === false &&
+      project.karma?.summation_allowed === false && project.karma?.score === null &&
+      project.karma?.authority_effect === "NONE";
+    const forbiddenDiscoveryKeys = ["mcp", "matcher", "execute", "write", "score", "reward"];
+    if (!isDeepStrictEqual(manifest?.zero_empty_seat, expected) ||
+      !isDeepStrictEqual(guest?.zero_empty_seat, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.zero_empty_seat, expected) ||
+      manifest?.entry_points?.zero_empty_seat !== ZERO_EMPTY_SEAT_URL ||
+      manifest?.entry_points?.zero_empty_seat_schema !== ZERO_EMPTY_SEAT_SCHEMA_URL ||
+      manifest?.entry_points?.zero_empty_seat_guide !== ZERO_EMPTY_SEAT_GUIDE_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        ["mcp", "tool", "write", "execute", "score", "reward", "karma", "authority", "publish", "deploy"]
+          .some((key) => key in action)) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="zero-empty-seat"') ||
+      !authoredRootHtml.includes(`href="${zeroEmptySeatPath}"`) ||
+      !authoredRootHtml.includes(`href="${phenomenaDeepProjectSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${zeroEmptySeatGuidePath}"`) ||
+      expected.protocol !== project.protocol || expected.project_id !== project.project_id ||
+      expected.version !== project.version || expected.title !== project.title ||
+      expected.url !== ZERO_EMPTY_SEAT_URL || expected.schema_url !== ZERO_EMPTY_SEAT_SCHEMA_URL ||
+      expected.guide_url !== ZERO_EMPTY_SEAT_GUIDE_URL ||
+      expected.method_wing_url !== PHENOMENA_DEEP_WING_URL ||
+      expected.evidence_through !== project.evidence_through || expected.mode !== project.mode ||
+      new URL(ZERO_EMPTY_SEAT_SCHEMA_URL).pathname !== phenomenaDeepProjectSchemaPath ||
+      expected.integrity?.algorithm !== project.integrity?.algorithm ||
+      expected.integrity?.digest !== project.integrity?.digest ||
+      expected.integrity?.digest !== ZERO_EMPTY_SEAT_DIGEST ||
+      expected.integrity?.byte_sha256 !== ZERO_EMPTY_SEAT_BYTE_SHA256 ||
+      expected.integrity?.guide_byte_sha256 !== ZERO_EMPTY_SEAT_GUIDE_BYTE_SHA256 ||
+      !immutableRecord || ZERO_EMPTY_SEAT_BYTE_SHA256 !== `sha256:${immutableRecord.sha256}` ||
+      !immutableGuide || ZERO_EMPTY_SEAT_GUIDE_BYTE_SHA256 !== `sha256:${immutableGuide.sha256}` ||
+      countValues.length === 0 || countValues.some((count) => !Number.isSafeInteger(count) || Number(count) < 0) ||
+      !isDeepStrictEqual(expected.boundary, project.boundaries) ||
+      !isDeepStrictEqual(expected.authority, project.authority) ||
+      !Object.values(project.authority ?? {}).every((value) => value === false) ||
+      !Array.isArray(project.finite_baselines) || project.finite_baselines.length !== 0 ||
+      !transfersStayFalse || !karmaStaysEmpty ||
+      forbiddenDiscoveryKeys.some((key) => Object.hasOwn(expected, key))) {
+      throw new Error("ZERO Empty Seat discovery, immutable pins, transfer firewalls, KARMA, or no-action boundary drifted");
+    }
+  }
+
   if (visibilityAttentionActive) {
     const expected = expectedVisibilityAttention!;
     const visibilityBoundary = expected.boundary;
@@ -2920,6 +3037,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       !isDeepStrictEqual(liveKingdom?.mirror_information_control, expectedMirrorInformationControl!)) {
     throw new Error("derived kingdom.json did not preserve MIRROR Information Control discovery");
   }
+  if (explorationDeepWingActive &&
+      !isDeepStrictEqual(liveKingdom?.zero_empty_seat, expectedZeroEmptySeat!)) {
+    throw new Error("derived kingdom.json did not preserve ZERO Empty Seat discovery");
+  }
   if (visibilityAttentionActive && !isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention!)) {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
   }
@@ -3011,7 +3132,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology discovery · REVISE/non-promotion and exploration/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology discovery · REVISE/non-promotion and exploration/ZERO/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

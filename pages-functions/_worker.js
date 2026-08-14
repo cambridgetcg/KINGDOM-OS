@@ -222,6 +222,13 @@ const MIRROR_INFORMATION_CONTROL_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${MIRROR_INFORMATION_CONTROL_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const ZERO_EMPTY_SEAT_PATH = "/atlases/zero-empty-seat-2026-08-14.json";
+const ZERO_EMPTY_SEAT_DOCUMENT_PATH = "/ZERO-EMPTY-SEAT.md";
+const ZERO_EMPTY_SEAT_SCHEMA_LINK = {
+  target: EXPLORATION_DEEP_PROJECT_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${EXPLORATION_DEEP_PROJECT_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -385,6 +392,11 @@ function addExplorationDeepSchemaLinks(headers) {
 function addMirrorInformationControlSchemaLink(headers) {
   removeLinkRelations(headers, ["describedby", "profile"]);
   headers.append("link", MIRROR_INFORMATION_CONTROL_SCHEMA_LINK.value);
+}
+
+function addZeroEmptySeatSchemaLink(headers) {
+  removeLinkRelations(headers, ["describedby"]);
+  headers.append("link", ZERO_EMPTY_SEAT_SCHEMA_LINK.value);
 }
 
 function preventAutomaticBrowserTelemetry(headers) {
@@ -1397,12 +1409,19 @@ export function createKingdomWorker(options = {}) {
     const requestsMirrorInformationControlDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === MIRROR_INFORMATION_CONTROL_DOCUMENT_PATH;
+    const requestsZeroEmptySeat = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === ZERO_EMPTY_SEAT_PATH;
+    const requestsZeroEmptySeatDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === ZERO_EMPTY_SEAT_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const reconstructiveAssetType = schemaAssetType.split(";", 1)[0].trim();
     const mathUsefulnessAssetType = schemaAssetType.split(";", 1)[0].trim();
     const explorationDeepAssetType = schemaAssetType.split(";", 1)[0].trim();
     const mirrorInformationControlAssetType = schemaAssetType.split(";", 1)[0].trim();
     const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const zeroEmptySeatAssetType = schemaAssetType.split(";", 1)[0].trim();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1569,6 +1588,10 @@ export function createKingdomWorker(options = {}) {
         mirrorInformationControlAssetType === "application/schema+json");
     const servesMirrorInformationControlDocument = requestsMirrorInformationControlDocument && asset.ok &&
       (mirrorInformationControlAssetType === "text/plain" || mirrorInformationControlAssetType === "text/markdown");
+    const servesZeroEmptySeat = requestsZeroEmptySeat && asset.ok &&
+      (zeroEmptySeatAssetType === "application/json" || zeroEmptySeatAssetType === "application/schema+json");
+    const servesZeroEmptySeatDocument = requestsZeroEmptySeatDocument && asset.ok &&
+      (zeroEmptySeatAssetType === "text/plain" || zeroEmptySeatAssetType === "text/markdown");
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
@@ -1599,7 +1622,9 @@ export function createKingdomWorker(options = {}) {
         !servesReconstructiveBuildDocument && !servesExplorationDeep &&
         !servesExplorationDeepSchema && !servesExplorationDeepProjectSchema &&
         !servesExplorationDeepDocument && !servesMirrorInformationControl &&
-        !servesMirrorInformationControlSchema && !servesMirrorInformationControlDocument) return asset;
+        !servesMirrorInformationControlSchema && !servesMirrorInformationControlDocument &&
+        !servesZeroEmptySeat &&
+        !servesZeroEmptySeatDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -1622,6 +1647,7 @@ export function createKingdomWorker(options = {}) {
     if (servesReconstructiveBuild) addReconstructiveBuildSchemaLinks(headers);
     if (servesExplorationDeep) addExplorationDeepSchemaLinks(headers);
     if (servesMirrorInformationControl) addMirrorInformationControlSchemaLink(headers);
+    if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -1908,6 +1934,16 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesMirrorInformationControlDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesZeroEmptySeat) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesZeroEmptySeatDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

@@ -902,6 +902,69 @@
       "digest": "sha256:d91f3926b2ccd5abf083eb4cbea6df4c80ba58fabb35934a9cc1dd2b9dd60aa0"
     }
   },
+  "zero_empty_seat": {
+    "protocol": "kingdom.explore-phenomena-deep-project/0.1",
+    "project_id": "zero-empty-seat-2026-08-14",
+    "version": "0.1.0",
+    "title": "ZERO: The Empty Seat That Holds the World",
+    "url": "https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json",
+    "schema_url": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json",
+    "guide_url": "https://thekingdom.dev/ZERO-EMPTY-SEAT.md",
+    "method_wing_url": "https://thekingdom.dev/wings/explore-phenomena-deep-2026-08-14.json",
+    "evidence_through": "2026-08-14",
+    "mode": "ANALYZE_ONLY",
+    "counts": {
+      "domains": 6,
+      "sources": 11,
+      "typed_terms": 11,
+      "claims": 12,
+      "bridges": 4,
+      "models": 3,
+      "equations": 6,
+      "falsifiers": 5,
+      "frontier_problems": 0,
+      "finite_baselines": 0,
+      "doors": 6,
+      "unknowns": 9,
+      "philosophy_questions": 4
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:141c5ac4573cce38ad68aa22dc3265698b16a119db1c13a94197ec069d37709d",
+      "byte_sha256": "sha256:5e4b4dcd387b425dc72a52af6477d7b39b935ad5c51d991d81ea76c14a69c522",
+      "guide_byte_sha256": "sha256:8cee90325bcff754a4e31b9d641325ab9df485fa070668e53b4335de6cf65597"
+    },
+    "boundary": {
+      "read_only": true,
+      "profile_inert": true,
+      "source_truth_verified": false,
+      "mathematical_correctness_verified": false,
+      "empirical_causation_verified": false,
+      "novelty_verified": false,
+      "diagnosis_or_person_score": false,
+      "experiment_or_wet_lab_authority": false,
+      "ecosystem_or_network_request": false,
+      "external_write": false,
+      "writes_karma": false,
+      "reward_or_economic_effect": false,
+      "governance_effect": false,
+      "deployment_authority": false,
+      "automatic_action": false
+    },
+    "authority": {
+      "browse": false,
+      "local_write": false,
+      "external_write": false,
+      "commit": false,
+      "push": false,
+      "deploy": false,
+      "experiment": false,
+      "diagnose": false,
+      "score_people": false,
+      "karma_write": false,
+      "automatic_action": false
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
