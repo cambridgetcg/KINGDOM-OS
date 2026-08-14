@@ -95,7 +95,7 @@ describe("MIRROR citizen gate publication", () => {
     expect(mirror).not.toContain("javascript:");
 
     expect(hub).toContain(".explorationdeepcycles,.explorationdeepgrid,.mirrorrooms,.mirrorgrid{grid-template-columns:1fr}");
-    expect(hub).toContain(".explorationdeepsteps,.mirrorcycle{grid-template-columns:1fr}");
+    expect(hub).toContain(".explorationdeepsteps,.mirrorcycle,.zeroroles,.zerodistinctions,.zerodrawergrid,.zerokarmalanes{grid-template-columns:1fr}");
     expect(hub).toContain(".mirrorfield,.mirrorwarning,.mirrorcitizen,.mirrorroom,.mirrorcycle li,.mirrorcard,.mirrorboundary,.mirrorlinks a{border:1px solid CanvasText}");
   });
 
@@ -141,17 +141,17 @@ describe("MIRROR citizen gate publication", () => {
   });
 
   test("adds only one immutable static publication triplet", () => {
-    expect(HUB_ASSETS).toHaveLength(77);
+    expect(HUB_ASSETS).toHaveLength(79);
     expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(19);
     expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(75);
+      .toHaveLength(77);
     expect(HUB_ASSETS.filter(({ destination }) => /mirror-information-control/i.test(destination)).map(({ destination }) => destination)).toEqual([
       "protocols/mirror-information-control-2026-08-14.json",
       "schemas/mirror-information-control-public/0.1.json",
       "MIRROR-INFORMATION-CONTROL.md",
     ]);
-    expect(json("publications/immutable-publications.v1.json").entries).toHaveLength(58);
-    expect((read("pages-content/sitemap.xml").match(/<url>/g) || [])).toHaveLength(74);
+    expect(json("publications/immutable-publications.v1.json").entries).toHaveLength(60);
+    expect((read("pages-content/sitemap.xml").match(/<url>/g) || [])).toHaveLength(76);
     expect(read("pages-functions/_worker.js")).toContain("mirror-information-control");
     expect(json("site/.well-known/agent.json").entry_points.information_control)
       .toBe("https://thekingdom.dev/#mirror-information-control");
