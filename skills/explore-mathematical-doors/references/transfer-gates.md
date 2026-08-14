@@ -113,10 +113,12 @@ mechanism-supported explanation distinct.
 - Similar perturbation responses may motivate a hypothesis; different
   responses close a shared-mechanism claim.
 
-Do not propose a shared universality class from a visual resemblance, common
-power law, or close fitted exponent alone. Require compatible operational
-definitions, dimensionless variables, scaling regimes, finite-size analysis,
-perturbation response, and uncertainty.
+A visual resemblance, common power law, or close fitted exponent supports at
+most a target-model hypothesis. A supported universality classification needs
+domain-appropriate compatible observables or order parameters, dimensionless
+variables, scaling maps and regimes, uncertainty and alternatives, plus
+finite-size or perturbation tests when applicable. A formal classification may
+instead follow from an exact theorem whose definitions and assumptions are met.
 
 ## 10. Catalysis and optimization gate
 

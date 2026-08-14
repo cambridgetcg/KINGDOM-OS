@@ -37,17 +37,29 @@ or exchange.
 
 ## Claim warrant
 
-Keep epistemic register separate from evidentiary warrant:
+Keep epistemic register, review status, and support descriptors separate:
 
 ```text
-SOURCE_BOUND | MODEL_ASSUMPTION | DERIVED | PROVED | FINITE_EXACT |
-NUMERICAL_APPROXIMATION | NOT_ESTABLISHED | UNKNOWN_TO_REVIEW
+Review status, choose exactly one:
+  SUPPORTED_AS_SCOPED | NOT_ESTABLISHED | UNKNOWN_TO_REVIEW
+
+Support descriptors, choose every applicable value:
+  SOURCE_BOUND | MODEL_ASSUMPTION | DERIVED | PROVED | FINITE_EXACT |
+  NUMERICAL_APPROXIMATION
 ```
 
-`FINITE_EXACT` describes only the declared finite horizon. `DERIVED` does not
-make its assumptions empirical. `UNKNOWN_TO_REVIEW` says this exploration did
-not establish the answer; it says nothing about whether the world or literature
-contains one.
+The descriptors are non-exclusive and answer different questions.
+`SUPPORTED_AS_SCOPED` means the declared evidence supports the exact bounded
+claim within this review horizon, never a wider one. `NOT_ESTABLISHED` means the
+available work does not support that claim; it does not prove the claim false.
+`SOURCE_BOUND` means the wording and scope resolve to the cited source, not that
+the source is true. `MODEL_ASSUMPTION` is assumed rather than observed.
+`DERIVED` follows from declared premises and inherits their limits. `PROVED`
+requires an exact statement and an inspected proof or proof-bearing source.
+`FINITE_EXACT` describes only the declared finite horizon.
+`NUMERICAL_APPROXIMATION` retains method and error. `UNKNOWN_TO_REVIEW` means
+the bounded review did not determine a status; it says nothing about whether
+the world or literature contains an answer.
 
 ## Phenomenon map
 
@@ -66,7 +78,7 @@ Conditions and history
 Observation, publication, retrieval, and evidence-through clocks
 Known transitions and feedback
 Claims by epistemic register
-Independent warrant and status-check date
+Independent review status, support descriptors, and status-check date
 Unknowns and competing explanations
 ```
 
@@ -98,7 +110,11 @@ Predicted or constrained observations
 Falsifier / counterexample / negative control
 Evidence required next
 Bounded output
-Run status: NOT_RUN | PARTIAL | RUN
+Execution status: NOT_RUN | PARTIAL_RUN | COMPLETED_RUN
+For any partial or completed run: inputs and artifact/digest; code, tool, and
+  version; environment; seed or determinism; outcome, error, and completion
+  state. Execution status never establishes success, verification,
+  reproducibility, or truth; keep result review status separate.
 Model provenance, when applicable; choose every descriptor that applies:
   UNFITTED | HYPOTHETICAL | ESTIMATED | FITTED | SIMULATED
 Effects and authority still absent
@@ -135,7 +151,9 @@ novel, record:
 
 ```text
 Exact statement, quantifiers, domain, conventions, and symmetries
-Status: ESTABLISHED_OPEN | BESPOKE_PRIOR_ART_REQUIRED | UNKNOWN_TO_REVIEW
+Literature status: SOURCE_SUPPORTED_OPEN_AS_OF_DATE |
+  NOT_ESTABLISHED_OPEN | UNKNOWN_TO_REVIEW
+Prior-art review: NOT_REVIEWED | BOUNDED_REVIEW_RECORDED
 Status checked on
 Original formulation or authoritative provenance
 Recent primary or authoritative status source
@@ -144,9 +162,13 @@ Why finite checks, simulations, or this attempt do not prove the full statement
 ```
 
 Write the statement before searching so a nearby result cannot silently change
-its quantifiers. A new name, observable, weight, constraint, parameter range, or
-cross-domain translation is `BESPOKE_PRIOR_ART_REQUIRED` until audited. Failure
-to solve it or find a search result is not evidence of openness or novelty.
+its quantifiers. `SOURCE_SUPPORTED_OPEN_AS_OF_DATE` means authoritative sources
+explicitly report that exact statement open on the recorded date; it is not a
+timeless status. `NOT_ESTABLISHED_OPEN` does not mean solved. A new name,
+observable, weight, constraint, parameter range, or cross-domain translation
+requires prior-art review. `BOUNDED_REVIEW_RECORDED` describes only the searched
+sources, queries, and dates and never establishes novelty. Failure to solve it
+or find a search result is not evidence of openness or novelty.
 
 ## Candidate kinds
 
