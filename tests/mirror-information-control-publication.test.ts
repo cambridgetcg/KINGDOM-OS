@@ -23,7 +23,7 @@ const PUBLIC_URLS = [
 
 describe("MIRROR Information Control static publication", () => {
   test("stages one immutable three-asset family and no operational source", () => {
-    expect(HUB_ASSETS).toHaveLength(80);
+    expect(HUB_ASSETS).toHaveLength(82);
     expect(HUB_ASSETS).toContainEqual({
       source: "data/security/mirror-information-control-public.v0.1.json",
       destination: "protocols/mirror-information-control-2026-08-14.json",
@@ -94,7 +94,7 @@ describe("MIRROR Information Control static publication", () => {
     expect(section).not.toMatch(/class="(?:mirrorrooms|mirrorgrid|mirrorlinks)"\s+aria-label=/);
     expect(builder).toContain('<link rel="icon" href="data:,">');
     expect(builder).toContain(".mirrorrooms,.mirrorgrid{grid-template-columns:1fr}");
-    expect(builder).toContain(".explorationdeepsteps,.mirrorcycle{grid-template-columns:1fr}");
+    expect(builder).toContain(".explorationdeepsteps,.mirrorcycle,.zeroroles,.zerodistinctions,.zerodrawergrid,.zerokarmalanes{grid-template-columns:1fr}");
     expect(builder).toContain("@media (forced-colors:active){.mirrorfield");
   });
 
@@ -124,7 +124,7 @@ describe("MIRROR Information Control static publication", () => {
   test("advertises exactly three crawl routes and the offline reader", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(77);
+    expect(urls).toHaveLength(79);
     expect(new Set(urls).size).toBe(urls.length);
     for (const url of PUBLIC_URLS) expect(urls).toContain(url);
     expect(urls.filter((url) => /mirror-information-control/i.test(url))).toEqual(PUBLIC_URLS);
