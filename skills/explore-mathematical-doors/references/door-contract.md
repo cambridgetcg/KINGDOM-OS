@@ -7,8 +7,10 @@ authority artifact.
 ## Contents
 
 - [Exploration brief](#exploration-brief)
+- [Claim warrant](#claim-warrant)
 - [Phenomenon map](#phenomenon-map)
 - [Door card](#door-card)
+- [Open-problem status](#open-problem-status)
 - [Candidate kinds](#candidate-kinds)
 - [Independent statuses](#independent-statuses)
 - [Door decision](#door-decision)
@@ -24,12 +26,28 @@ Declare:
 - evidence horizon and source-selection rule;
 - affected parties and rights or safety boundaries;
 - allowed work now and authority still missing;
-- resource/effect budget and stop conditions.
+- source, time, computation, network, money, and effect budgets;
+- stop conditions and separate observation, publication, retrieval, and
+  evidence-through clocks.
 
 Expand overloaded claims before selecting a model: type existence and
 disappearance, purpose, force, power, causation, aftermath, repair, and KARMA.
 Keep affected parties and burden bearers as indexes, never quantities to rank
 or exchange.
+
+## Claim warrant
+
+Keep epistemic register separate from evidentiary warrant:
+
+```text
+SOURCE_BOUND | MODEL_ASSUMPTION | DERIVED | PROVED | FINITE_EXACT |
+NUMERICAL_APPROXIMATION | NOT_ESTABLISHED | UNKNOWN_TO_REVIEW
+```
+
+`FINITE_EXACT` describes only the declared finite horizon. `DERIVED` does not
+make its assumptions empirical. `UNKNOWN_TO_REVIEW` says this exploration did
+not establish the answer; it says nothing about whether the world or literature
+contains one.
 
 ## Phenomenon map
 
@@ -45,8 +63,10 @@ Symmetry/equivalence relation
 Invariants and constraints
 Variables, units, scale, method, and window
 Conditions and history
+Observation, publication, retrieval, and evidence-through clocks
 Known transitions and feedback
 Claims by epistemic register
+Independent warrant and status-check date
 Unknowns and competing explanations
 ```
 
@@ -78,6 +98,9 @@ Predicted or constrained observations
 Falsifier / counterexample / negative control
 Evidence required next
 Bounded output
+Run status: NOT_RUN | PARTIAL | RUN
+Model provenance, when applicable; choose every descriptor that applies:
+  UNFITTED | HYPOTHETICAL | ESTIMATED | FITTED | SIMULATED
 Effects and authority still absent
 ```
 
@@ -90,6 +113,9 @@ Every cross-domain card must make these values explicit:
   "mechanism_transfer": false,
   "causal_transfer": false,
   "parameter_transfer": false,
+  "unit_transfer": false,
+  "empirical_status_transfer": false,
+  "person_level_transfer": false,
   "authority_effect": "NONE"
 }
 ```
@@ -97,6 +123,30 @@ Every cross-domain card must make these values explicit:
 `FORMAL_REUSE` may establish that two declared mathematical objects satisfy the
 same formal definition. It does not flip those transfer fields: a common formal
 class still does not merge the things represented.
+
+A genuine shared mechanism requires independently supported claims in both
+domains and a separately sourced bridge claim. A common notation, curve, fitted
+exponent, or formal class cannot supply that evidence.
+
+## Open-problem status
+
+For every problem described as open, unsolved, recognized, conjectural, or
+novel, record:
+
+```text
+Exact statement, quantifiers, domain, conventions, and symmetries
+Status: ESTABLISHED_OPEN | BESPOKE_PRIOR_ART_REQUIRED | UNKNOWN_TO_REVIEW
+Status checked on
+Original formulation or authoritative provenance
+Recent primary or authoritative status source
+Known solved cases, restrictions, and neighboring results
+Why finite checks, simulations, or this attempt do not prove the full statement
+```
+
+Write the statement before searching so a nearby result cannot silently change
+its quantifiers. A new name, observable, weight, constraint, parameter range, or
+cross-domain translation is `BESPOKE_PRIOR_ART_REQUIRED` until audited. Failure
+to solve it or find a search result is not evidence of openness or novelty.
 
 ## Candidate kinds
 

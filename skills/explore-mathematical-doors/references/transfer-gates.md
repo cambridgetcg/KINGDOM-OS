@@ -106,10 +106,17 @@ mechanism-supported explanation distinct.
   mechanisms.
 - A causal pathway must be established in the target domain with target-domain
   evidence.
+- A shared mechanism needs independently supported claims in both domains and
+  a separately sourced bridge claim; an analogy cannot source itself.
 - Require serious alternative explanations, negative controls, and an
   observation that could distinguish them.
 - Similar perturbation responses may motivate a hypothesis; different
   responses close a shared-mechanism claim.
+
+Do not propose a shared universality class from a visual resemblance, common
+power law, or close fitted exponent alone. Require compatible operational
+definitions, dimensionless variables, scaling regimes, finite-size analysis,
+perturbation response, and uncertainty.
 
 ## 10. Catalysis and optimization gate
 

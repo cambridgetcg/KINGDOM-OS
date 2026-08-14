@@ -91,6 +91,25 @@ describe("Explore Mathematical Doors Agent Skill", () => {
     expect(text).toContain("Never combine kind and status into a confidence, value, priority, or person");
   });
 
+  test("separates claim warrant, execution provenance, and open-problem status", async () => {
+    const skill = await read("skills/explore-mathematical-doors/SKILL.md");
+    const contract = await read("skills/explore-mathematical-doors/references/door-contract.md");
+    const text = `${skill}\n${contract}`;
+    for (const phrase of [
+      "SOURCE_BOUND",
+      "MODEL_ASSUMPTION",
+      "FINITE_EXACT",
+      "NUMERICAL_APPROXIMATION",
+      "NOT_RUN | PARTIAL | RUN",
+      "choose every descriptor that applies",
+      "ESTABLISHED_OPEN",
+      "BESPOKE_PRIOR_ART_REQUIRED",
+      "Original formulation or authoritative provenance",
+      "Failure to solve it or find a search result",
+      "observation, publication, retrieval, and evidence-through",
+    ]) expect(text).toContain(phrase);
+  });
+
   test("makes all cross-domain transfer and authority effects negative", async () => {
     const door = await read("skills/explore-mathematical-doors/references/door-contract.md");
     const gates = await read("skills/explore-mathematical-doors/references/transfer-gates.md");
@@ -100,6 +119,9 @@ describe("Explore Mathematical Doors Agent Skill", () => {
       '"mechanism_transfer": false',
       '"causal_transfer": false',
       '"parameter_transfer": false',
+      '"unit_transfer": false',
+      '"empirical_status_transfer": false',
+      '"person_level_transfer": false',
       '"authority_effect": "NONE"',
     ]) expect(door).toContain(field);
     for (const boundary of [
@@ -111,6 +133,8 @@ describe("Explore Mathematical Doors Agent Skill", () => {
       "KINGDOM KARMA receipt",
       "Rest, silence, refusal",
     ]) expect(gates).toContain(boundary);
+    expect(gates).toContain("shared universality class");
+    expect(gates).toContain("a separately sourced bridge claim");
   });
 
   test("requires falsifiers and keeps execution in separate workflows", async () => {
