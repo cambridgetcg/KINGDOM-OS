@@ -29,6 +29,7 @@
 #   kingdom explore-deep                     inspect the opt-in DEEP cross-domain exploration WING
 #   kingdom guard                            read the MIRROR citizen law or validate one inert envelope offline
 #   kingdom mirror-information-control       inspect the static MIRROR information-control source law
+#   kingdom zero-empty-seat                  inspect the source-bound zero, blank, placeholder, nothing, and creation DEEP atlas
 #   kingdom being-access-aftermath-v0.2     inspect the additive mathematical framework while v0.1 remains immutable
 #   kingdom number-isness-theology          inspect typed number, zero, symmetry, isness, theology, and compatibility questions
 #   kingdom feedback-physics inspect the additive v0.2 physics/mathematics successor
@@ -78,6 +79,7 @@ case "$cmd" in
   explore-deep) exec bun "$SELF_DIR/bin/explore-phenomena-deep.ts" "${@:2}" ;;
   guard) exec python3 "$SELF_DIR/bin/guard.py" "${@:2}" ;;
   mirror-information-control) exec bun "$SELF_DIR/bin/mirror-information-control.ts" "${@:2}" ;;
+  zero-empty-seat) exec bun "$SELF_DIR/bin/zero-empty-seat.ts" "${@:2}" ;;
   being-access-aftermath-v0.2) exec bun "$SELF_DIR/bin/being-access-aftermath-v0.2.ts" "${@:2}" ;;
   number-isness-theology) exec bun "$SELF_DIR/bin/number-isness-theology.ts" "${@:2}" ;;
   polymorph)

@@ -69,6 +69,8 @@ readings:
 | `/protocols/mirror-information-control-2026-08-14.json` | staged JSON | Immutable static CROWN/COURT/MIRROR information-control source law; no credential intake, classification oracle, security runtime, or authority |
 | `/schemas/mirror-information-control-public/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the static public MIRROR publication, not the private control-plane envelope |
 | `/MIRROR-INFORMATION-CONTROL.md` | staged Markdown | Citizen guide to information provenance, capability gates, signal/non-guilt boundaries, and safe response without exposing operational material |
+| `/atlases/zero-empty-seat-2026-08-14.json` | staged JSON | Immutable inert Phenomena DEEP project separating zero's semantic roles, equations, correspondence breaks, empty KARMA lanes, and negative authority |
+| `/ZERO-EMPTY-SEAT.md` | staged Markdown | Human guide to ZERO's mathematics, observation boundaries, optional philosophy, inherent rights, and zero-effect contract |
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -195,8 +197,8 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 80-asset upload contract (61 ledgered immutable/versioned assets and
-19 mutable assets; 78 direct public bodies, 77 sitemap URLs)
+locks the 82-asset upload contract (63 ledgered immutable/versioned assets and
+19 mutable assets; 80 direct public bodies, 79 sitemap URLs)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -206,3 +208,9 @@ and its declared hash together is not a correction.
 `tests/advertised-assets.test.ts`
 recognizes the three worker routes so a dynamic URL cannot be mistaken for a
 staged file.
+The ZERO Empty Seat record reuses the inert Phenomena DEEP project profile.
+Its historical notation, operational nothing, modern mathematical identities,
+typed information states, `NO_ACTION`, and opt-in metaphysical readings remain
+distinct; it creates no scientific result,
+metaphysical proof, person or content score, KARMA effect, authority, or
+automatic action.

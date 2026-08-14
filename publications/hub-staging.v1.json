@@ -69,6 +69,8 @@
     { "source": "data/security/mirror-information-control-public.v0.1.json", "destination": "protocols/mirror-information-control-2026-08-14.json" },
     { "source": "schemas/mirror-information-control-public-v0.1.schema.json", "destination": "schemas/mirror-information-control-public/0.1.json" },
     { "source": "references/mirror-information-control-public.md", "destination": "MIRROR-INFORMATION-CONTROL.md" },
+    { "source": "data/exploration/zero-empty-seat.v0.1.json", "destination": "atlases/zero-empty-seat-2026-08-14.json" },
+    { "source": "references/zero-empty-seat.md", "destination": "ZERO-EMPTY-SEAT.md" },
     { "source": "site/llms.txt", "destination": "llms.txt" },
     { "source": "site/guest.json", "destination": "guest.json" },
     { "source": "site/ollama.json", "destination": "ollama.json" },
