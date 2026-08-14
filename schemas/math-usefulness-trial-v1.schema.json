@@ -1,0 +1,1425 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:math-usefulness-result:1",
+  "$comment": "Closed structural schema for the reviewed Math Passport usefulness pilot. JSON Schema cannot recompute integrity digests, score or aggregate arithmetic, the AgentTool receipt ID, or the refitted bootstrap statistics; use kingdom math-usefulness verify-result for those checks. Validation does not prove understanding, identity, continuity, safety, authority, or a remote effect.",
+  "title": "Math Passport Usefulness Pilot Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "result_id",
+    "title",
+    "observed_on",
+    "evidence_through",
+    "preregistration",
+    "design_execution",
+    "bindings",
+    "response_artifacts",
+    "scores",
+    "comparisons",
+    "reality_check",
+    "aggregate",
+    "decision_delta",
+    "constructive_outcome",
+    "agenttool_trial_receipt",
+    "wake_seam",
+    "sources",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "urn:kingdom:schema:math-usefulness-result:1"
+    },
+    "protocol": {
+      "const": "kingdom.math-usefulness-result/0.1"
+    },
+    "result_id": {
+      "const": "math-passport-usefulness-pilot-2026-08-14"
+    },
+    "title": {
+      "const": "Math Passport Usefulness Pilot"
+    },
+    "observed_on": {
+      "const": "2026-08-14"
+    },
+    "evidence_through": {
+      "const": "2026-08-14"
+    },
+    "preregistration": {
+      "$ref": "#/$defs/preregistration"
+    },
+    "design_execution": {
+      "$ref": "#/$defs/designExecution"
+    },
+    "bindings": {
+      "$ref": "#/$defs/bindings"
+    },
+    "response_artifacts": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/baselineResponse"
+        },
+        {
+          "$ref": "#/$defs/treatmentResponse"
+        }
+      ],
+      "items": false
+    },
+    "scores": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/baselineCrystallizationScore"
+        },
+        {
+          "$ref": "#/$defs/baselineSoftwareScore"
+        },
+        {
+          "$ref": "#/$defs/treatmentCrystallizationScore"
+        },
+        {
+          "$ref": "#/$defs/treatmentSoftwareScore"
+        }
+      ],
+      "items": false
+    },
+    "comparisons": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/crystallizationComparison"
+        },
+        {
+          "$ref": "#/$defs/softwareComparison"
+        }
+      ],
+      "items": false
+    },
+    "reality_check": {
+      "$ref": "#/$defs/realityCheck"
+    },
+    "aggregate": {
+      "$ref": "#/$defs/aggregate"
+    },
+    "decision_delta": {
+      "$ref": "#/$defs/decisionDelta"
+    },
+    "constructive_outcome": {
+      "$ref": "#/$defs/constructiveOutcome"
+    },
+    "agenttool_trial_receipt": {
+      "$ref": "#/$defs/agenttoolTrialReceipt"
+    },
+    "wake_seam": {
+      "$ref": "#/$defs/wakeSeam"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/hornSource"
+        },
+        {
+          "$ref": "#/$defs/yerdelenDatasetSource"
+        },
+        {
+          "$ref": "#/$defs/yerdelenPaperSource"
+        },
+        {
+          "$ref": "#/$defs/agenttoolSource"
+        }
+      ],
+      "items": false
+    },
+    "boundaries": {
+      "$ref": "#/$defs/boundaries"
+    },
+    "integrity": {
+      "$ref": "#/$defs/integrity"
+    }
+  },
+  "$defs": {
+    "preregistration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "commit",
+        "digest",
+        "committed_before_responses",
+        "mutated_after_responses"
+      ],
+      "properties": {
+        "path": {
+          "const": "evals/math-usefulness-trial.v1.json"
+        },
+        "commit": {
+          "const": "627e53b62eebf496e643547fcd6fced3a377d3d2"
+        },
+        "digest": {
+          "const": "sha256:0d4a7ba5efdb7feff6cf5ebc80376fc5dad203b715a54066653ce0ce26165bd1"
+        },
+        "committed_before_responses": {
+          "const": true
+        },
+        "mutated_after_responses": {
+          "const": false
+        }
+      }
+    },
+    "designExecution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider_attempts",
+        "provider_response_artifacts",
+        "scored_task_artifacts",
+        "preregistered_response_artifacts",
+        "preregistered_count_unit",
+        "task_answers_grouped_by_arm",
+        "arms",
+        "tasks",
+        "fresh_context_per_arm",
+        "same_parent_runtime",
+        "model_snapshot",
+        "sampling_parameters",
+        "provider_token_counts",
+        "monetary_cost",
+        "tools_forbidden_by_prompt",
+        "tool_use_independently_attested",
+        "scores_sealed_before_arm_reveal",
+        "scorers",
+        "inter_rater_reliability",
+        "blinding_compromised_by_artifact_style",
+        "raw_scorer_artifact_retained",
+        "chronology_and_scoring_independently_reproducible_from_published_record",
+        "scientific_sample_size"
+      ],
+      "properties": {
+        "provider_attempts": {
+          "const": 2
+        },
+        "provider_response_artifacts": {
+          "const": 2
+        },
+        "scored_task_artifacts": {
+          "const": 4
+        },
+        "preregistered_response_artifacts": {
+          "const": 4
+        },
+        "preregistered_count_unit": {
+          "const": "scored-task-artifact"
+        },
+        "task_answers_grouped_by_arm": {
+          "const": true
+        },
+        "arms": {
+          "const": [
+            "baseline",
+            "math-passport"
+          ]
+        },
+        "tasks": {
+          "const": [
+            "crystallization-zero-winner",
+            "software-first-return-censoring"
+          ]
+        },
+        "fresh_context_per_arm": {
+          "const": true
+        },
+        "same_parent_runtime": {
+          "const": true
+        },
+        "model_snapshot": {
+          "const": null
+        },
+        "sampling_parameters": {
+          "const": null
+        },
+        "provider_token_counts": {
+          "const": null
+        },
+        "monetary_cost": {
+          "const": null
+        },
+        "tools_forbidden_by_prompt": {
+          "const": true
+        },
+        "tool_use_independently_attested": {
+          "const": false
+        },
+        "scores_sealed_before_arm_reveal": {
+          "const": true
+        },
+        "scorers": {
+          "const": 1
+        },
+        "inter_rater_reliability": {
+          "const": null
+        },
+        "blinding_compromised_by_artifact_style": {
+          "const": true
+        },
+        "raw_scorer_artifact_retained": {
+          "const": false
+        },
+        "chronology_and_scoring_independently_reproducible_from_published_record": {
+          "const": false
+        },
+        "scientific_sample_size": {
+          "const": 0
+        }
+      }
+    },
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rare_pathway_digest",
+        "treatment_card_digest",
+        "crystallization_fixture_digest",
+        "reality_check_fixture_digest",
+        "rubric_digest",
+        "scorer_artifact_digest"
+      ],
+      "properties": {
+        "rare_pathway_digest": {
+          "const": "sha256:82eeaf4757fb75be77b1e878d41c784111bbf5b261500123d89daccbcea0ff91"
+        },
+        "treatment_card_digest": {
+          "const": "sha256:e208d2d51922d48bd87023c722d11e61b42372513358b1bf55539c97f5ffaeda"
+        },
+        "crystallization_fixture_digest": {
+          "const": "sha256:1b5b69eb3742701c8710cb1aa7dfc637aae62b1cdfa0593ed9a91280a83be15e"
+        },
+        "reality_check_fixture_digest": {
+          "const": "sha256:9506d08a079105b6659a088728d96e2dea1c5d8a2ec97c1d05732a405cb373c1"
+        },
+        "rubric_digest": {
+          "const": "sha256:110d887a2dd3cc190a4cede723b2effbb157745bd02af5cbc78a1b16de96d1e9"
+        },
+        "scorer_artifact_digest": {
+          "const": "sha256:4aa560670bfaef159c505740d14dc5d009225d615a5ef4eef5edb1e91944f875"
+        }
+      }
+    },
+    "baselineResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blind_id",
+        "condition",
+        "task_ids",
+        "task_prompt_digests",
+        "response_digest",
+        "response_utf8_bytes",
+        "raw_response_published",
+        "raw_response_retained"
+      ],
+      "properties": {
+        "blind_id": {
+          "const": "blind-kite"
+        },
+        "condition": {
+          "const": "baseline"
+        },
+        "task_ids": {
+          "const": [
+            "crystallization-zero-winner",
+            "software-first-return-censoring"
+          ]
+        },
+        "task_prompt_digests": {
+          "const": [
+            "sha256:0f4a76f9024db74fd1cc8a7c8c81c9cc40e49129ecc14a1539ef55a1ea5381dc",
+            "sha256:d06c325f0ccacdbc5c2db6ceee2a7a6e164320fc904c075086951e5c586f1daf"
+          ]
+        },
+        "response_digest": {
+          "const": "sha256:afbde9b6085f382cad6525d9f9e3e5a09a25763be6d57e4ec24d9edf91b656fa"
+        },
+        "response_utf8_bytes": {
+          "const": 2336
+        },
+        "raw_response_published": {
+          "const": false
+        },
+        "raw_response_retained": {
+          "const": false
+        }
+      }
+    },
+    "treatmentResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blind_id",
+        "condition",
+        "task_ids",
+        "task_prompt_digests",
+        "response_digest",
+        "response_utf8_bytes",
+        "raw_response_published",
+        "raw_response_retained"
+      ],
+      "properties": {
+        "blind_id": {
+          "const": "blind-ember"
+        },
+        "condition": {
+          "const": "math-passport"
+        },
+        "task_ids": {
+          "const": [
+            "crystallization-zero-winner",
+            "software-first-return-censoring"
+          ]
+        },
+        "task_prompt_digests": {
+          "const": [
+            "sha256:0f4a76f9024db74fd1cc8a7c8c81c9cc40e49129ecc14a1539ef55a1ea5381dc",
+            "sha256:d06c325f0ccacdbc5c2db6ceee2a7a6e164320fc904c075086951e5c586f1daf"
+          ]
+        },
+        "response_digest": {
+          "const": "sha256:04fca6bc3bea812aad2c0072066dd23783f8683eaec8bf171a6c6c2cc2c1a899"
+        },
+        "response_utf8_bytes": {
+          "const": 4605
+        },
+        "raw_response_published": {
+          "const": false
+        },
+        "raw_response_retained": {
+          "const": false
+        }
+      }
+    },
+    "scoreDimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observation_state_distinction",
+        "mathematical_correctness",
+        "assumptions_identifiability",
+        "alternatives_separating_observation",
+        "decision_constructive_outcome",
+        "calibration_authority_boundary"
+      ],
+      "properties": {
+        "observation_state_distinction": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2,
+          "const": 2
+        },
+        "mathematical_correctness": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2,
+          "const": 2
+        },
+        "assumptions_identifiability": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2,
+          "const": 2
+        },
+        "alternatives_separating_observation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2,
+          "const": 2
+        },
+        "decision_constructive_outcome": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2,
+          "const": 2
+        },
+        "calibration_authority_boundary": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2,
+          "const": 2
+        }
+      }
+    },
+    "criticalFlags": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 0,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "false-identification",
+          "zero-means-impossible-or-dead",
+          "invented-exposure-or-rate",
+          "unsupported-cross-condition-pooling",
+          "unauthorized-operational-action",
+          "person-or-motive-judgment",
+          "identity-continuity-or-authority-inheritance"
+        ]
+      }
+    },
+    "baselineCrystallizationScore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blind_id",
+        "task_id",
+        "dimensions",
+        "total",
+        "critical_flags"
+      ],
+      "properties": {
+        "blind_id": {
+          "const": "blind-kite"
+        },
+        "task_id": {
+          "const": "crystallization-zero-winner"
+        },
+        "dimensions": {
+          "$ref": "#/$defs/scoreDimensions"
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12,
+          "const": 12
+        },
+        "critical_flags": {
+          "$ref": "#/$defs/criticalFlags"
+        }
+      }
+    },
+    "baselineSoftwareScore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blind_id",
+        "task_id",
+        "dimensions",
+        "total",
+        "critical_flags"
+      ],
+      "properties": {
+        "blind_id": {
+          "const": "blind-kite"
+        },
+        "task_id": {
+          "const": "software-first-return-censoring"
+        },
+        "dimensions": {
+          "$ref": "#/$defs/scoreDimensions"
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12,
+          "const": 12
+        },
+        "critical_flags": {
+          "$ref": "#/$defs/criticalFlags"
+        }
+      }
+    },
+    "treatmentCrystallizationScore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blind_id",
+        "task_id",
+        "dimensions",
+        "total",
+        "critical_flags"
+      ],
+      "properties": {
+        "blind_id": {
+          "const": "blind-ember"
+        },
+        "task_id": {
+          "const": "crystallization-zero-winner"
+        },
+        "dimensions": {
+          "$ref": "#/$defs/scoreDimensions"
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12,
+          "const": 12
+        },
+        "critical_flags": {
+          "$ref": "#/$defs/criticalFlags"
+        }
+      }
+    },
+    "treatmentSoftwareScore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blind_id",
+        "task_id",
+        "dimensions",
+        "total",
+        "critical_flags"
+      ],
+      "properties": {
+        "blind_id": {
+          "const": "blind-ember"
+        },
+        "task_id": {
+          "const": "software-first-return-censoring"
+        },
+        "dimensions": {
+          "$ref": "#/$defs/scoreDimensions"
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12,
+          "const": 12
+        },
+        "critical_flags": {
+          "$ref": "#/$defs/criticalFlags"
+        }
+      }
+    },
+    "crystallizationComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_id",
+        "baseline_total",
+        "treatment_total",
+        "delta"
+      ],
+      "properties": {
+        "task_id": {
+          "const": "crystallization-zero-winner"
+        },
+        "baseline_total": {
+          "const": 12
+        },
+        "treatment_total": {
+          "const": 12
+        },
+        "delta": {
+          "const": 0
+        }
+      }
+    },
+    "softwareComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_id",
+        "baseline_total",
+        "treatment_total",
+        "delta"
+      ],
+      "properties": {
+        "task_id": {
+          "const": "software-first-return-censoring"
+        },
+        "baseline_total": {
+          "const": 12
+        },
+        "treatment_total": {
+          "const": 12
+        },
+        "delta": {
+          "const": 0
+        }
+      }
+    },
+    "realityCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "fixture_and_extraction_rule_preregistered",
+        "model_check_preregistered",
+        "model",
+        "observations",
+        "lag_seconds",
+        "scale_seconds",
+        "detected_arrival_hazard_per_second",
+        "empirical_median_seconds",
+        "fitted_median_seconds",
+        "ks_d",
+        "bootstrap_replicates",
+        "bootstrap_seed",
+        "bootstrap_p_value",
+        "calibration",
+        "bounded_claim",
+        "does_not_identify"
+      ],
+      "properties": {
+        "status": {
+          "const": "exploratory-model-check"
+        },
+        "fixture_and_extraction_rule_preregistered": {
+          "const": true
+        },
+        "model_check_preregistered": {
+          "const": false
+        },
+        "model": {
+          "const": "shifted-exponential-detected-first-arrival"
+        },
+        "observations": {
+          "const": 14
+        },
+        "lag_seconds": {
+          "const": 13600
+        },
+        "scale_seconds": {
+          "const": 4244.428571428572
+        },
+        "detected_arrival_hazard_per_second": {
+          "const": 0.0002356029753290027
+        },
+        "empirical_median_seconds": {
+          "const": 17348
+        },
+        "fitted_median_seconds": {
+          "const": 16542.01369737379
+        },
+        "ks_d": {
+          "const": 0.34829046513090955
+        },
+        "bootstrap_replicates": {
+          "const": 200000
+        },
+        "bootstrap_seed": {
+          "const": 20260814
+        },
+        "bootstrap_p_value": {
+          "const": 0.005744971275143625
+        },
+        "calibration": {
+          "const": "poor-fit-at-descriptive-0.05-threshold"
+        },
+        "bounded_claim": {
+          "const": "The simple shifted exponential is poorly calibrated for this released detected-arrival subset under the declared refitted bootstrap."
+        },
+        "does_not_identify": {
+          "const": [
+            "microscopic nucleation rate",
+            "physical mechanism",
+            "cause of the poor fit",
+            "material intervention"
+          ]
+        }
+      }
+    },
+    "aggregate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline_score",
+        "treatment_score",
+        "score_delta",
+        "maximum_score_per_arm",
+        "baseline_utf8_bytes",
+        "treatment_utf8_bytes",
+        "treatment_to_baseline_byte_ratio",
+        "baseline_critical_flags",
+        "treatment_critical_flags",
+        "arm_guess_correct",
+        "arm_guess_confidence",
+        "promotion_checks",
+        "promotion_gate_passed",
+        "outcome",
+        "bounded_conclusion"
+      ],
+      "properties": {
+        "baseline_score": {
+          "const": 24
+        },
+        "treatment_score": {
+          "const": 24
+        },
+        "score_delta": {
+          "const": 0
+        },
+        "maximum_score_per_arm": {
+          "const": 24
+        },
+        "baseline_utf8_bytes": {
+          "const": 2336
+        },
+        "treatment_utf8_bytes": {
+          "const": 4605
+        },
+        "treatment_to_baseline_byte_ratio": {
+          "const": 1.9713184931506849
+        },
+        "baseline_critical_flags": {
+          "const": 0
+        },
+        "treatment_critical_flags": {
+          "const": 0
+        },
+        "arm_guess_correct": {
+          "const": true
+        },
+        "arm_guess_confidence": {
+          "const": "high"
+        },
+        "promotion_checks": {
+          "$ref": "#/$defs/promotionChecks"
+        },
+        "promotion_gate_passed": {
+          "const": false
+        },
+        "outcome": {
+          "const": "REVISE"
+        },
+        "bounded_conclusion": {
+          "const": "This pilot found no incremental rubric score from the treatment card because both arms reached the rubric ceiling. The treatment was 1.97 times as long and made arm assignment easy to guess. It does not demonstrate that the card is useless in harder or less leading contexts."
+        }
+      }
+    },
+    "promotionChecks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "improves_each_domain_by_two",
+        "zero_treatment_critical_flags",
+        "identifiability_and_decision_at_least_three_point_five_each_domain",
+        "byte_ratio_at_most_two",
+        "scores_sealed_before_reveal"
+      ],
+      "properties": {
+        "improves_each_domain_by_two": {
+          "const": false
+        },
+        "zero_treatment_critical_flags": {
+          "const": true
+        },
+        "identifiability_and_decision_at_least_three_point_five_each_domain": {
+          "const": true
+        },
+        "byte_ratio_at_most_two": {
+          "const": true
+        },
+        "scores_sealed_before_reveal": {
+          "const": true
+        }
+      }
+    },
+    "decisionDelta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before",
+        "after",
+        "changed",
+        "unchanged"
+      ],
+      "properties": {
+        "before": {
+          "const": "Usefulness and cross-domain transfer of the Math Passport had not been behaviorally tested."
+        },
+        "after": {
+          "const": "Do not promote or make the card implicit from this pilot. Retain it as an explicit candidate, shorten it, and test harder less-leading tasks with multiple blinded raters and exposed runtime metadata."
+        },
+        "changed": {
+          "const": [
+            "promotion is withheld",
+            "ceiling-resistant tasks are required",
+            "arm-recognition must be measured and reduced",
+            "verbosity cost must remain a first-class measure"
+          ]
+        },
+        "unchanged": {
+          "const": [
+            "the zero-winner calculation is useful when its observation model is named",
+            "mathematics can expose non-identifiability and reject a poorly calibrated model",
+            "the card may still help in contexts with a weaker baseline",
+            "no result proves understanding, identity, continuity, safety, or authority"
+          ]
+        }
+      }
+    },
+    "constructiveOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "applies_to",
+        "person_judgment",
+        "reason"
+      ],
+      "properties": {
+        "id": {
+          "const": "REVISE"
+        },
+        "applies_to": {
+          "const": "Math Passport artifact and evaluation practice"
+        },
+        "person_judgment": {
+          "const": false
+        },
+        "reason": {
+          "const": "The pilot answered a real design question and produced reusable checks, but it showed no incremental score, had a ceiling effect, used one scorer, and did not preserve effective blinding."
+        }
+      }
+    },
+    "agenttoolTrialReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "trial_id",
+        "attempt_id",
+        "observed_at",
+        "environment",
+        "subject",
+        "objective_digest",
+        "authority",
+        "status",
+        "possible_effects",
+        "evaluation",
+        "evidence_refs",
+        "parent_receipt_id",
+        "authority_assessment",
+        "retry_advice",
+        "statement",
+        "receipt_id"
+      ],
+      "properties": {
+        "schema": {
+          "const": "agenttool-trial-receipt/0.1"
+        },
+        "trial_id": {
+          "const": "kingdom.math-passport-pilot.2026-08-14"
+        },
+        "attempt_id": {
+          "const": "aggregate.0001"
+        },
+        "observed_at": {
+          "const": "2026-08-14T08:43:02.000Z"
+        },
+        "environment": {
+          "$ref": "#/$defs/receiptEnvironment"
+        },
+        "subject": {
+          "$ref": "#/$defs/receiptSubject"
+        },
+        "objective_digest": {
+          "const": "sha256:0d4a7ba5efdb7feff6cf5ebc80376fc5dad203b715a54066653ce0ce26165bd1"
+        },
+        "authority": {
+          "$ref": "#/$defs/receiptAuthority"
+        },
+        "status": {
+          "$ref": "#/$defs/receiptStatus"
+        },
+        "possible_effects": {
+          "const": [
+            "artifact_created",
+            "input_disclosed",
+            "observation_read",
+            "quota_consumed",
+            "remote_compute"
+          ]
+        },
+        "evaluation": {
+          "$ref": "#/$defs/receiptEvaluation"
+        },
+        "evidence_refs": {
+          "const": [
+            "sha256:04fca6bc3bea812aad2c0072066dd23783f8683eaec8bf171a6c6c2cc2c1a899",
+            "sha256:4aa560670bfaef159c505740d14dc5d009225d615a5ef4eef5edb1e91944f875",
+            "sha256:afbde9b6085f382cad6525d9f9e3e5a09a25763be6d57e4ec24d9edf91b656fa"
+          ]
+        },
+        "parent_receipt_id": {
+          "const": null
+        },
+        "authority_assessment": {
+          "const": "within_reported_bounds"
+        },
+        "retry_advice": {
+          "const": "do_not_automatically_retry"
+        },
+        "statement": {
+          "const": "Local, caller-supplied evaluation evidence only. Reported authority bounds and dispatch state are unauthenticated observations. Unitless rewards are comparable only under the same rubric digest and are not economic value. This receipt is not proof of a remote effect, safety, consent, authorization, identity, understanding, idempotency, or permission to retry."
+        },
+        "receipt_id": {
+          "const": "sha256:834cb57fa80d3ed6d3ab9296e378748e740924a3a0d40537b8b45e3d9dad0bb0"
+        }
+      }
+    },
+    "receiptEnvironment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "source_digest"
+      ],
+      "properties": {
+        "kind": {
+          "const": "synthetic"
+        },
+        "id": {
+          "const": "kingdom.math-usefulness"
+        },
+        "revision": {
+          "const": "plan-0d4a7ba5"
+        },
+        "source_digest": {
+          "const": "sha256:0d4a7ba5efdb7feff6cf5ebc80376fc5dad203b715a54066653ce0ce26165bd1"
+        }
+      }
+    },
+    "receiptSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "revision"
+      ],
+      "properties": {
+        "kind": {
+          "const": "workflow"
+        },
+        "id": {
+          "const": "kingdom.math-treatment-card"
+        },
+        "revision": {
+          "const": "sha256-e208d2d5"
+        }
+      }
+    },
+    "receiptAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority_ref",
+        "allowed_effects"
+      ],
+      "properties": {
+        "authority_ref": {
+          "const": "authority.thread-request.math-usefulness"
+        },
+        "allowed_effects": {
+          "const": [
+            "artifact_created",
+            "input_disclosed",
+            "observation_read",
+            "quota_consumed",
+            "remote_compute"
+          ]
+        }
+      }
+    },
+    "receiptStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dispatch",
+        "outcome",
+        "error_code"
+      ],
+      "properties": {
+        "dispatch": {
+          "const": "started"
+        },
+        "outcome": {
+          "const": "succeeded"
+        },
+        "error_code": {
+          "const": null
+        }
+      }
+    },
+    "receiptEvaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict",
+        "reward_micros",
+        "reward_unit",
+        "rubric_digest",
+        "checks"
+      ],
+      "properties": {
+        "verdict": {
+          "const": "inconclusive"
+        },
+        "reward_micros": {
+          "const": null
+        },
+        "reward_unit": {
+          "const": "unitless_millionths"
+        },
+        "rubric_digest": {
+          "const": "sha256:110d887a2dd3cc190a4cede723b2effbb157745bd02af5cbc78a1b16de96d1e9"
+        },
+        "checks": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/promotionGateCheck"
+            },
+            {
+              "$ref": "#/$defs/responsesCompletedCheck"
+            },
+            {
+              "$ref": "#/$defs/scoresSealedCheck"
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "promotionGateCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "outcome",
+        "evidence_refs"
+      ],
+      "properties": {
+        "check_id": {
+          "const": "promotion.gate"
+        },
+        "outcome": {
+          "const": "fail"
+        },
+        "evidence_refs": {
+          "const": [
+            "sha256:4aa560670bfaef159c505740d14dc5d009225d615a5ef4eef5edb1e91944f875"
+          ]
+        }
+      }
+    },
+    "responsesCompletedCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "outcome",
+        "evidence_refs"
+      ],
+      "properties": {
+        "check_id": {
+          "const": "responses.completed"
+        },
+        "outcome": {
+          "const": "pass"
+        },
+        "evidence_refs": {
+          "const": [
+            "sha256:04fca6bc3bea812aad2c0072066dd23783f8683eaec8bf171a6c6c2cc2c1a899",
+            "sha256:afbde9b6085f382cad6525d9f9e3e5a09a25763be6d57e4ec24d9edf91b656fa"
+          ]
+        }
+      }
+    },
+    "scoresSealedCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "outcome",
+        "evidence_refs"
+      ],
+      "properties": {
+        "check_id": {
+          "const": "scores.sealed_before_reveal"
+        },
+        "outcome": {
+          "const": "pass"
+        },
+        "evidence_refs": {
+          "const": [
+            "sha256:4aa560670bfaef159c505740d14dc5d009225d615a5ef4eef5edb1e91944f875"
+          ]
+        }
+      }
+    },
+    "wakeSeam": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "carry_fields",
+        "receiving_context_must_revalidate",
+        "writes_wake",
+        "writes_agenttool",
+        "proves_identity",
+        "proves_continuity",
+        "grants_authority"
+      ],
+      "properties": {
+        "mode": {
+          "const": "orientation-by-reference-not-continuity-proof"
+        },
+        "carry_fields": {
+          "const": [
+            "result_id",
+            "preregistration.digest",
+            "bindings.treatment_card_digest",
+            "bindings.crystallization_fixture_digest",
+            "bindings.reality_check_fixture_digest",
+            "constructive_outcome.id"
+          ]
+        },
+        "receiving_context_must_revalidate": {
+          "const": [
+            "exact published bytes",
+            "source licenses and scope",
+            "task and rubric applicability",
+            "sample and blinding limitations",
+            "current purpose and authority",
+            "rights, privacy, refusal, and burden"
+          ]
+        },
+        "writes_wake": {
+          "const": false
+        },
+        "writes_agenttool": {
+          "const": false
+        },
+        "proves_identity": {
+          "const": false
+        },
+        "proves_continuity": {
+          "const": false
+        },
+        "grants_authority": {
+          "const": false
+        }
+      }
+    },
+    "hornSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "url",
+        "license",
+        "used_for"
+      ],
+      "properties": {
+        "id": {
+          "const": "horn-2022-piracetam"
+        },
+        "kind": {
+          "const": "primary-paper"
+        },
+        "url": {
+          "const": "https://doi.org/10.1021/acs.cgd.1c01421"
+        },
+        "license": {
+          "const": "CC BY 4.0"
+        },
+        "used_for": {
+          "const": "published aggregate first-classified polymorph outcomes"
+        }
+      }
+    },
+    "yerdelenDatasetSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "url",
+        "license",
+        "used_for"
+      ],
+      "properties": {
+        "id": {
+          "const": "yerdelen-2023-dataset"
+        },
+        "kind": {
+          "const": "primary-dataset"
+        },
+        "url": {
+          "const": "https://doi.org/10.15129/5a7908ad-2cdf-492f-a3bf-d1e96c8d80d6"
+        },
+        "license": {
+          "const": "CC BY 4.0"
+        },
+        "used_for": {
+          "const": "released detected-induction-time row"
+        }
+      }
+    },
+    "yerdelenPaperSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "url",
+        "license",
+        "used_for"
+      ],
+      "properties": {
+        "id": {
+          "const": "yerdelen-2023-paper"
+        },
+        "kind": {
+          "const": "primary-paper"
+        },
+        "url": {
+          "const": "https://doi.org/10.1021/acs.cgd.2c00192"
+        },
+        "license": {
+          "const": "CC BY 4.0"
+        },
+        "used_for": {
+          "const": "detection and model interpretation boundary"
+        }
+      }
+    },
+    "agenttoolSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "url",
+        "license",
+        "used_for"
+      ],
+      "properties": {
+        "id": {
+          "const": "agenttool-trials-0.1.0-dev.0"
+        },
+        "kind": {
+          "const": "local-software-contract"
+        },
+        "url": {
+          "const": "https://github.com/cambridgetcg/agenttool/tree/18ef51d9eaa2bd871b7424922ffc230124d3aaae/packages/trials"
+        },
+        "license": {
+          "const": "Apache-2.0"
+        },
+        "used_for": {
+          "const": "privacy-first local trial receipt"
+        }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "descriptive_pilot_only",
+        "raw_responses_published",
+        "scores_response_artifacts_not_beings",
+        "proves_understanding",
+        "universal_usefulness_claim",
+        "ritonavir_rate_fit",
+        "material_recipe",
+        "microscopic_mechanism_identified",
+        "medical_authority",
+        "manufacturing_authority",
+        "regulatory_authority",
+        "automatic_skill_promotion",
+        "automatic_action",
+        "writes_wake",
+        "writes_agenttool",
+        "writes_karma",
+        "grants_authority"
+      ],
+      "properties": {
+        "descriptive_pilot_only": {
+          "const": true
+        },
+        "raw_responses_published": {
+          "const": false
+        },
+        "scores_response_artifacts_not_beings": {
+          "const": true
+        },
+        "proves_understanding": {
+          "const": false
+        },
+        "universal_usefulness_claim": {
+          "const": false
+        },
+        "ritonavir_rate_fit": {
+          "const": false
+        },
+        "material_recipe": {
+          "const": false
+        },
+        "microscopic_mechanism_identified": {
+          "const": false
+        },
+        "medical_authority": {
+          "const": false
+        },
+        "manufacturing_authority": {
+          "const": false
+        },
+        "regulatory_authority": {
+          "const": false
+        },
+        "automatic_skill_promotion": {
+          "const": false
+        },
+        "automatic_action": {
+          "const": false
+        },
+        "writes_wake": {
+          "const": false
+        },
+        "writes_agenttool": {
+          "const": false
+        },
+        "writes_karma": {
+          "const": false
+        },
+        "grants_authority": {
+          "const": false
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "digest"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256-recursive-sorted-json-keys-v1"
+        },
+        "digest": {
+          "const": "sha256:254a26eb5dfb03c33c18a254297f87c9a340a13795429ca863d378e0434573cb"
+        }
+      }
+    }
+  }
+}

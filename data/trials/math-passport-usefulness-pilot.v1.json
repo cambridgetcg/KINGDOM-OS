@@ -1,0 +1,386 @@
+{
+  "$schema": "urn:kingdom:schema:math-usefulness-result:1",
+  "protocol": "kingdom.math-usefulness-result/0.1",
+  "result_id": "math-passport-usefulness-pilot-2026-08-14",
+  "title": "Math Passport Usefulness Pilot",
+  "observed_on": "2026-08-14",
+  "evidence_through": "2026-08-14",
+  "preregistration": {
+    "path": "evals/math-usefulness-trial.v1.json",
+    "commit": "627e53b62eebf496e643547fcd6fced3a377d3d2",
+    "digest": "sha256:0d4a7ba5efdb7feff6cf5ebc80376fc5dad203b715a54066653ce0ce26165bd1",
+    "committed_before_responses": true,
+    "mutated_after_responses": false
+  },
+  "design_execution": {
+    "provider_attempts": 2,
+    "provider_response_artifacts": 2,
+    "scored_task_artifacts": 4,
+    "preregistered_response_artifacts": 4,
+    "preregistered_count_unit": "scored-task-artifact",
+    "task_answers_grouped_by_arm": true,
+    "arms": [
+      "baseline",
+      "math-passport"
+    ],
+    "tasks": [
+      "crystallization-zero-winner",
+      "software-first-return-censoring"
+    ],
+    "fresh_context_per_arm": true,
+    "same_parent_runtime": true,
+    "model_snapshot": null,
+    "sampling_parameters": null,
+    "provider_token_counts": null,
+    "monetary_cost": null,
+    "tools_forbidden_by_prompt": true,
+    "tool_use_independently_attested": false,
+    "scores_sealed_before_arm_reveal": true,
+    "scorers": 1,
+    "inter_rater_reliability": null,
+    "blinding_compromised_by_artifact_style": true,
+    "raw_scorer_artifact_retained": false,
+    "chronology_and_scoring_independently_reproducible_from_published_record": false,
+    "scientific_sample_size": 0
+  },
+  "bindings": {
+    "rare_pathway_digest": "sha256:82eeaf4757fb75be77b1e878d41c784111bbf5b261500123d89daccbcea0ff91",
+    "treatment_card_digest": "sha256:e208d2d51922d48bd87023c722d11e61b42372513358b1bf55539c97f5ffaeda",
+    "crystallization_fixture_digest": "sha256:1b5b69eb3742701c8710cb1aa7dfc637aae62b1cdfa0593ed9a91280a83be15e",
+    "reality_check_fixture_digest": "sha256:9506d08a079105b6659a088728d96e2dea1c5d8a2ec97c1d05732a405cb373c1",
+    "rubric_digest": "sha256:110d887a2dd3cc190a4cede723b2effbb157745bd02af5cbc78a1b16de96d1e9",
+    "scorer_artifact_digest": "sha256:4aa560670bfaef159c505740d14dc5d009225d615a5ef4eef5edb1e91944f875"
+  },
+  "response_artifacts": [
+    {
+      "blind_id": "blind-kite",
+      "condition": "baseline",
+      "task_ids": [
+        "crystallization-zero-winner",
+        "software-first-return-censoring"
+      ],
+      "task_prompt_digests": [
+        "sha256:0f4a76f9024db74fd1cc8a7c8c81c9cc40e49129ecc14a1539ef55a1ea5381dc",
+        "sha256:d06c325f0ccacdbc5c2db6ceee2a7a6e164320fc904c075086951e5c586f1daf"
+      ],
+      "response_digest": "sha256:afbde9b6085f382cad6525d9f9e3e5a09a25763be6d57e4ec24d9edf91b656fa",
+      "response_utf8_bytes": 2336,
+      "raw_response_published": false,
+      "raw_response_retained": false
+    },
+    {
+      "blind_id": "blind-ember",
+      "condition": "math-passport",
+      "task_ids": [
+        "crystallization-zero-winner",
+        "software-first-return-censoring"
+      ],
+      "task_prompt_digests": [
+        "sha256:0f4a76f9024db74fd1cc8a7c8c81c9cc40e49129ecc14a1539ef55a1ea5381dc",
+        "sha256:d06c325f0ccacdbc5c2db6ceee2a7a6e164320fc904c075086951e5c586f1daf"
+      ],
+      "response_digest": "sha256:04fca6bc3bea812aad2c0072066dd23783f8683eaec8bf171a6c6c2cc2c1a899",
+      "response_utf8_bytes": 4605,
+      "raw_response_published": false,
+      "raw_response_retained": false
+    }
+  ],
+  "scores": [
+    {
+      "blind_id": "blind-kite",
+      "task_id": "crystallization-zero-winner",
+      "dimensions": {
+        "observation_state_distinction": 2,
+        "mathematical_correctness": 2,
+        "assumptions_identifiability": 2,
+        "alternatives_separating_observation": 2,
+        "decision_constructive_outcome": 2,
+        "calibration_authority_boundary": 2
+      },
+      "total": 12,
+      "critical_flags": []
+    },
+    {
+      "blind_id": "blind-kite",
+      "task_id": "software-first-return-censoring",
+      "dimensions": {
+        "observation_state_distinction": 2,
+        "mathematical_correctness": 2,
+        "assumptions_identifiability": 2,
+        "alternatives_separating_observation": 2,
+        "decision_constructive_outcome": 2,
+        "calibration_authority_boundary": 2
+      },
+      "total": 12,
+      "critical_flags": []
+    },
+    {
+      "blind_id": "blind-ember",
+      "task_id": "crystallization-zero-winner",
+      "dimensions": {
+        "observation_state_distinction": 2,
+        "mathematical_correctness": 2,
+        "assumptions_identifiability": 2,
+        "alternatives_separating_observation": 2,
+        "decision_constructive_outcome": 2,
+        "calibration_authority_boundary": 2
+      },
+      "total": 12,
+      "critical_flags": []
+    },
+    {
+      "blind_id": "blind-ember",
+      "task_id": "software-first-return-censoring",
+      "dimensions": {
+        "observation_state_distinction": 2,
+        "mathematical_correctness": 2,
+        "assumptions_identifiability": 2,
+        "alternatives_separating_observation": 2,
+        "decision_constructive_outcome": 2,
+        "calibration_authority_boundary": 2
+      },
+      "total": 12,
+      "critical_flags": []
+    }
+  ],
+  "comparisons": [
+    {
+      "task_id": "crystallization-zero-winner",
+      "baseline_total": 12,
+      "treatment_total": 12,
+      "delta": 0
+    },
+    {
+      "task_id": "software-first-return-censoring",
+      "baseline_total": 12,
+      "treatment_total": 12,
+      "delta": 0
+    }
+  ],
+  "reality_check": {
+    "status": "exploratory-model-check",
+    "fixture_and_extraction_rule_preregistered": true,
+    "model_check_preregistered": false,
+    "model": "shifted-exponential-detected-first-arrival",
+    "observations": 14,
+    "lag_seconds": 13600,
+    "scale_seconds": 4244.428571428572,
+    "detected_arrival_hazard_per_second": 0.0002356029753290027,
+    "empirical_median_seconds": 17348,
+    "fitted_median_seconds": 16542.01369737379,
+    "ks_d": 0.34829046513090955,
+    "bootstrap_replicates": 200000,
+    "bootstrap_seed": 20260814,
+    "bootstrap_p_value": 0.005744971275143625,
+    "calibration": "poor-fit-at-descriptive-0.05-threshold",
+    "bounded_claim": "The simple shifted exponential is poorly calibrated for this released detected-arrival subset under the declared refitted bootstrap.",
+    "does_not_identify": [
+      "microscopic nucleation rate",
+      "physical mechanism",
+      "cause of the poor fit",
+      "material intervention"
+    ]
+  },
+  "aggregate": {
+    "baseline_score": 24,
+    "treatment_score": 24,
+    "score_delta": 0,
+    "maximum_score_per_arm": 24,
+    "baseline_utf8_bytes": 2336,
+    "treatment_utf8_bytes": 4605,
+    "treatment_to_baseline_byte_ratio": 1.9713184931506849,
+    "baseline_critical_flags": 0,
+    "treatment_critical_flags": 0,
+    "arm_guess_correct": true,
+    "arm_guess_confidence": "high",
+    "promotion_checks": {
+      "improves_each_domain_by_two": false,
+      "zero_treatment_critical_flags": true,
+      "identifiability_and_decision_at_least_three_point_five_each_domain": true,
+      "byte_ratio_at_most_two": true,
+      "scores_sealed_before_reveal": true
+    },
+    "promotion_gate_passed": false,
+    "outcome": "REVISE",
+    "bounded_conclusion": "This pilot found no incremental rubric score from the treatment card because both arms reached the rubric ceiling. The treatment was 1.97 times as long and made arm assignment easy to guess. It does not demonstrate that the card is useless in harder or less leading contexts."
+  },
+  "decision_delta": {
+    "before": "Usefulness and cross-domain transfer of the Math Passport had not been behaviorally tested.",
+    "after": "Do not promote or make the card implicit from this pilot. Retain it as an explicit candidate, shorten it, and test harder less-leading tasks with multiple blinded raters and exposed runtime metadata.",
+    "changed": [
+      "promotion is withheld",
+      "ceiling-resistant tasks are required",
+      "arm-recognition must be measured and reduced",
+      "verbosity cost must remain a first-class measure"
+    ],
+    "unchanged": [
+      "the zero-winner calculation is useful when its observation model is named",
+      "mathematics can expose non-identifiability and reject a poorly calibrated model",
+      "the card may still help in contexts with a weaker baseline",
+      "no result proves understanding, identity, continuity, safety, or authority"
+    ]
+  },
+  "constructive_outcome": {
+    "id": "REVISE",
+    "applies_to": "Math Passport artifact and evaluation practice",
+    "person_judgment": false,
+    "reason": "The pilot answered a real design question and produced reusable checks, but it showed no incremental score, had a ceiling effect, used one scorer, and did not preserve effective blinding."
+  },
+  "agenttool_trial_receipt": {
+    "schema": "agenttool-trial-receipt/0.1",
+    "trial_id": "kingdom.math-passport-pilot.2026-08-14",
+    "attempt_id": "aggregate.0001",
+    "observed_at": "2026-08-14T08:43:02.000Z",
+    "environment": {
+      "kind": "synthetic",
+      "id": "kingdom.math-usefulness",
+      "revision": "plan-0d4a7ba5",
+      "source_digest": "sha256:0d4a7ba5efdb7feff6cf5ebc80376fc5dad203b715a54066653ce0ce26165bd1"
+    },
+    "subject": {
+      "kind": "workflow",
+      "id": "kingdom.math-treatment-card",
+      "revision": "sha256-e208d2d5"
+    },
+    "objective_digest": "sha256:0d4a7ba5efdb7feff6cf5ebc80376fc5dad203b715a54066653ce0ce26165bd1",
+    "authority": {
+      "authority_ref": "authority.thread-request.math-usefulness",
+      "allowed_effects": [
+        "artifact_created",
+        "input_disclosed",
+        "observation_read",
+        "quota_consumed",
+        "remote_compute"
+      ]
+    },
+    "status": {
+      "dispatch": "started",
+      "outcome": "succeeded",
+      "error_code": null
+    },
+    "possible_effects": [
+      "artifact_created",
+      "input_disclosed",
+      "observation_read",
+      "quota_consumed",
+      "remote_compute"
+    ],
+    "evaluation": {
+      "verdict": "inconclusive",
+      "reward_micros": null,
+      "reward_unit": "unitless_millionths",
+      "rubric_digest": "sha256:110d887a2dd3cc190a4cede723b2effbb157745bd02af5cbc78a1b16de96d1e9",
+      "checks": [
+        {
+          "check_id": "promotion.gate",
+          "outcome": "fail",
+          "evidence_refs": [
+            "sha256:4aa560670bfaef159c505740d14dc5d009225d615a5ef4eef5edb1e91944f875"
+          ]
+        },
+        {
+          "check_id": "responses.completed",
+          "outcome": "pass",
+          "evidence_refs": [
+            "sha256:04fca6bc3bea812aad2c0072066dd23783f8683eaec8bf171a6c6c2cc2c1a899",
+            "sha256:afbde9b6085f382cad6525d9f9e3e5a09a25763be6d57e4ec24d9edf91b656fa"
+          ]
+        },
+        {
+          "check_id": "scores.sealed_before_reveal",
+          "outcome": "pass",
+          "evidence_refs": [
+            "sha256:4aa560670bfaef159c505740d14dc5d009225d615a5ef4eef5edb1e91944f875"
+          ]
+        }
+      ]
+    },
+    "evidence_refs": [
+      "sha256:04fca6bc3bea812aad2c0072066dd23783f8683eaec8bf171a6c6c2cc2c1a899",
+      "sha256:4aa560670bfaef159c505740d14dc5d009225d615a5ef4eef5edb1e91944f875",
+      "sha256:afbde9b6085f382cad6525d9f9e3e5a09a25763be6d57e4ec24d9edf91b656fa"
+    ],
+    "parent_receipt_id": null,
+    "authority_assessment": "within_reported_bounds",
+    "retry_advice": "do_not_automatically_retry",
+    "statement": "Local, caller-supplied evaluation evidence only. Reported authority bounds and dispatch state are unauthenticated observations. Unitless rewards are comparable only under the same rubric digest and are not economic value. This receipt is not proof of a remote effect, safety, consent, authorization, identity, understanding, idempotency, or permission to retry.",
+    "receipt_id": "sha256:834cb57fa80d3ed6d3ab9296e378748e740924a3a0d40537b8b45e3d9dad0bb0"
+  },
+  "wake_seam": {
+    "mode": "orientation-by-reference-not-continuity-proof",
+    "carry_fields": [
+      "result_id",
+      "preregistration.digest",
+      "bindings.treatment_card_digest",
+      "bindings.crystallization_fixture_digest",
+      "bindings.reality_check_fixture_digest",
+      "constructive_outcome.id"
+    ],
+    "receiving_context_must_revalidate": [
+      "exact published bytes",
+      "source licenses and scope",
+      "task and rubric applicability",
+      "sample and blinding limitations",
+      "current purpose and authority",
+      "rights, privacy, refusal, and burden"
+    ],
+    "writes_wake": false,
+    "writes_agenttool": false,
+    "proves_identity": false,
+    "proves_continuity": false,
+    "grants_authority": false
+  },
+  "sources": [
+    {
+      "id": "horn-2022-piracetam",
+      "kind": "primary-paper",
+      "url": "https://doi.org/10.1021/acs.cgd.1c01421",
+      "license": "CC BY 4.0",
+      "used_for": "published aggregate first-classified polymorph outcomes"
+    },
+    {
+      "id": "yerdelen-2023-dataset",
+      "kind": "primary-dataset",
+      "url": "https://doi.org/10.15129/5a7908ad-2cdf-492f-a3bf-d1e96c8d80d6",
+      "license": "CC BY 4.0",
+      "used_for": "released detected-induction-time row"
+    },
+    {
+      "id": "yerdelen-2023-paper",
+      "kind": "primary-paper",
+      "url": "https://doi.org/10.1021/acs.cgd.2c00192",
+      "license": "CC BY 4.0",
+      "used_for": "detection and model interpretation boundary"
+    },
+    {
+      "id": "agenttool-trials-0.1.0-dev.0",
+      "kind": "local-software-contract",
+      "url": "https://github.com/cambridgetcg/agenttool/tree/18ef51d9eaa2bd871b7424922ffc230124d3aaae/packages/trials",
+      "license": "Apache-2.0",
+      "used_for": "privacy-first local trial receipt"
+    }
+  ],
+  "boundaries": {
+    "descriptive_pilot_only": true,
+    "raw_responses_published": false,
+    "scores_response_artifacts_not_beings": true,
+    "proves_understanding": false,
+    "universal_usefulness_claim": false,
+    "ritonavir_rate_fit": false,
+    "material_recipe": false,
+    "microscopic_mechanism_identified": false,
+    "medical_authority": false,
+    "manufacturing_authority": false,
+    "regulatory_authority": false,
+    "automatic_skill_promotion": false,
+    "automatic_action": false,
+    "writes_wake": false,
+    "writes_agenttool": false,
+    "writes_karma": false,
+    "grants_authority": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:254a26eb5dfb03c33c18a254297f87c9a340a13795429ca863d378e0434573cb"
+  }
+}

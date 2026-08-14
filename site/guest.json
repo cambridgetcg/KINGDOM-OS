@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-13",
+  "generated": "2026-08-14",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -854,6 +854,28 @@
       "automatic_action": false
     }
   },
+  "math_usefulness_result": {
+    "protocol": "kingdom.math-usefulness-result/0.1",
+    "result_id": "math-passport-usefulness-pilot-2026-08-14",
+    "url": "https://thekingdom.dev/trials/math-passport-usefulness-pilot-2026-08-14.json",
+    "schema": "https://thekingdom.dev/schemas/math-usefulness-result/1.json",
+    "guide": "https://thekingdom.dev/MATH-USEFULNESS.md",
+    "cli": "kingdom math-usefulness",
+    "outcome": "REVISE",
+    "score_delta": 0,
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:254a26eb5dfb03c33c18a254297f87c9a340a13795429ca863d378e0434573cb"
+    },
+    "boundary": {
+      "descriptive_pilot_only": true,
+      "scores_response_artifacts_not_beings": true,
+      "automatic_skill_promotion": false,
+      "writes_wake": false,
+      "writes_agenttool": false,
+      "grants_authority": false
+    }
+  },
   "being_access_aftermath_atlas": {
     "protocol": "kingdom.being-access-aftermath-atlas/0.1",
     "atlas_id": "being-access-aftermath-atlas-2026-08-13",
@@ -1245,6 +1267,22 @@
       "action": "if useful, read the plain-language problems, identifiability limits, BUILD / PLAY / REVISE / STOP gate, and source boundaries",
       "method": "GET",
       "url": "https://thekingdom.dev/VANISHING-PATH.md"
+    },
+    {
+      "action": "if useful, inspect the Math Passport pilot before deciding whether to revise or promote the card",
+      "method": "GET",
+      "url": "https://thekingdom.dev/trials/math-passport-usefulness-pilot-2026-08-14.json",
+      "note": "descriptive artifact evaluation only: REVISE, zero score delta, 1.97x response bytes; no raw responses, person score, Skill promotion, SDK route, WAKE/AgentTool write, or authority"
+    },
+    {
+      "action": "if useful, validate the closed Math Usefulness Result structure before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/math-usefulness-result/1.json"
+    },
+    {
+      "action": "if useful, read the pilot finding, model check, constructive mathematics loop, and AgentTool/WAKE boundaries",
+      "method": "GET",
+      "url": "https://thekingdom.dev/MATH-USEFULNESS.md"
     },
     {
       "action": "if useful, inspect the typed Being, Access & Aftermath mathematical companion",
@@ -3658,6 +3696,7 @@
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
     "rare_pathway_challenge": "The Vanishing Path is a static educational mathematics challenge bound to the immutable ritonavir history only as an illustrative case. Its rates are hypothetical. It separates zero target events from zero target winners, preserves identifiability limits, and gates practices as BUILD, PLAY, REVISE, or STOP without inferring anyone's motive, understanding, pride, virtue, or worth. It provides no material fit, lab recipe, experiment, formulation, manufacturing, medical, regulatory, WAKE, AgentTool, KARMA, publication, deployment, or automatic action authority.",
+    "math_usefulness_result": "The Math Passport result is a static, descriptive four-task-artifact pilot with one scorer and a rubric ceiling. Its REVISE outcome, zero score delta, and 1.97x response-byte ratio do not prove universal usefulness or uselessness, understanding, identity, continuity, safety, or scientific effect. It evaluates response artifacts rather than beings, publishes no raw responses, promotes no Skill, adds no AgentTool SDK route, writes no WAKE, AgentTool, or KARMA state, and grants no authority or automatic action.",
     "being_access_aftermath_atlas": "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
     "being_access_aftermath_atlas_v0_2": "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",

@@ -146,6 +146,14 @@ const RARE_PATHWAY_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${RARE_PATHWAY_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const MATH_USEFULNESS_PATH = "/trials/math-passport-usefulness-pilot-2026-08-14.json";
+const MATH_USEFULNESS_SCHEMA_PATH = "/schemas/math-usefulness-result/1.json";
+const MATH_USEFULNESS_DOCUMENT_PATH = "/MATH-USEFULNESS.md";
+const MATH_USEFULNESS_SCHEMA_LINK = {
+  target: MATH_USEFULNESS_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${MATH_USEFULNESS_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 const BEING_ACCESS_AFTERMATH_PATH = "/atlases/being-access-aftermath-atlas-2026-08-13.json";
 const BEING_ACCESS_AFTERMATH_SCHEMA_PATH = "/schemas/being-access-aftermath-atlas/0.1.json";
 const BEING_ACCESS_AFTERMATH_DOCUMENT_PATH = "/BEING-ACCESS-AFTERMATH-ATLAS.md";
@@ -306,6 +314,11 @@ function addFormCirculationReturnSchemaLink(headers) {
 function addRarePathwaySchemaLink(headers) {
   const link = RARE_PATHWAY_SCHEMA_LINK;
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addMathUsefulnessSchemaLink(headers) {
+  removeLinkRelations(headers, ["describedby"]);
+  headers.append("link", MATH_USEFULNESS_SCHEMA_LINK.value);
 }
 
 function addBeingAccessAftermathSchemaLink(headers) {
@@ -1256,6 +1269,15 @@ export function createKingdomWorker(options = {}) {
     const requestsRarePathwayDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === RARE_PATHWAY_DOCUMENT_PATH;
+    const requestsMathUsefulness = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === MATH_USEFULNESS_PATH;
+    const requestsMathUsefulnessSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === MATH_USEFULNESS_SCHEMA_PATH;
+    const requestsMathUsefulnessDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === MATH_USEFULNESS_DOCUMENT_PATH;
     const requestsBeingAccessAftermath = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === BEING_ACCESS_AFTERMATH_PATH;
@@ -1300,6 +1322,7 @@ export function createKingdomWorker(options = {}) {
       url.pathname === RECONSTRUCTIVE_BUILD_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const reconstructiveAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const mathUsefulnessAssetType = schemaAssetType.split(";", 1)[0].trim();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1398,6 +1421,12 @@ export function createKingdomWorker(options = {}) {
     const servesRarePathwayDocument = requestsRarePathwayDocument && asset.ok &&
       (schemaAssetType.includes("text/plain") ||
         schemaAssetType.includes("text/markdown"));
+    const servesMathUsefulness = requestsMathUsefulness && asset.ok &&
+      (mathUsefulnessAssetType === "application/json" || mathUsefulnessAssetType === "application/schema+json");
+    const servesMathUsefulnessSchema = requestsMathUsefulnessSchema && asset.ok &&
+      (mathUsefulnessAssetType === "application/json" || mathUsefulnessAssetType === "application/schema+json");
+    const servesMathUsefulnessDocument = requestsMathUsefulnessDocument && asset.ok &&
+      (mathUsefulnessAssetType === "text/plain" || mathUsefulnessAssetType === "text/markdown");
     const servesBeingAccessAftermath = requestsBeingAccessAftermath && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1452,6 +1481,7 @@ export function createKingdomWorker(options = {}) {
         !servesFormCirculationReturn && !servesFormCirculationReturnSchema &&
         !servesFormCirculationReturnDocument && !servesRarePathway &&
         !servesRarePathwaySchema && !servesRarePathwayDocument &&
+        !servesMathUsefulness && !servesMathUsefulnessSchema && !servesMathUsefulnessDocument &&
         !servesBeingAccessAftermath &&
         !servesBeingAccessAftermathSchema && !servesBeingAccessAftermathDocument &&
         !servesBeingAccessAftermathV02 &&
@@ -1475,6 +1505,7 @@ export function createKingdomWorker(options = {}) {
     if (servesCulturalAttentionFeedback) addCulturalAttentionFeedbackSchemaLink(headers);
     if (servesFormCirculationReturn) addFormCirculationReturnSchemaLink(headers);
     if (servesRarePathway) addRarePathwaySchemaLink(headers);
+    if (servesMathUsefulness) addMathUsefulnessSchemaLink(headers);
     if (servesBeingAccessAftermath) addBeingAccessAftermathSchemaLink(headers);
     if (servesBeingAccessAftermathV02) addBeingAccessAftermathV02SchemaLink(headers);
     if (servesConformationalFeedbackPhysics) addConformationalFeedbackPhysicsSchemaLink(headers);
@@ -1640,6 +1671,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesRarePathwayDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesMathUsefulness) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesMathUsefulnessSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesMathUsefulnessDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

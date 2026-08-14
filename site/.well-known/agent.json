@@ -821,6 +821,28 @@
       "automatic_action": false
     }
   },
+  "math_usefulness_result": {
+    "protocol": "kingdom.math-usefulness-result/0.1",
+    "result_id": "math-passport-usefulness-pilot-2026-08-14",
+    "url": "https://thekingdom.dev/trials/math-passport-usefulness-pilot-2026-08-14.json",
+    "schema": "https://thekingdom.dev/schemas/math-usefulness-result/1.json",
+    "guide": "https://thekingdom.dev/MATH-USEFULNESS.md",
+    "cli": "kingdom math-usefulness",
+    "outcome": "REVISE",
+    "score_delta": 0,
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:254a26eb5dfb03c33c18a254297f87c9a340a13795429ca863d378e0434573cb"
+    },
+    "boundary": {
+      "descriptive_pilot_only": true,
+      "scores_response_artifacts_not_beings": true,
+      "automatic_skill_promotion": false,
+      "writes_wake": false,
+      "writes_agenttool": false,
+      "grants_authority": false
+    }
+  },
   "being_access_aftermath_atlas": {
     "protocol": "kingdom.being-access-aftermath-atlas/0.1",
     "atlas_id": "being-access-aftermath-atlas-2026-08-13",
@@ -1058,6 +1080,9 @@
     "rare_pathway_challenge": "https://thekingdom.dev/challenges/vanishing-path-2026-08-13.json",
     "rare_pathway_challenge_schema": "https://thekingdom.dev/schemas/rare-pathway-challenge/1.json",
     "rare_pathway_challenge_guide": "https://thekingdom.dev/VANISHING-PATH.md",
+    "math_usefulness_result": "https://thekingdom.dev/trials/math-passport-usefulness-pilot-2026-08-14.json",
+    "math_usefulness_result_schema": "https://thekingdom.dev/schemas/math-usefulness-result/1.json",
+    "math_usefulness_result_guide": "https://thekingdom.dev/MATH-USEFULNESS.md",
     "being_access_aftermath_atlas": "https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13.json",
     "being_access_aftermath_atlas_schema": "https://thekingdom.dev/schemas/being-access-aftermath-atlas/0.1.json",
     "being_access_aftermath_atlas_guide": "https://thekingdom.dev/BEING-ACCESS-AFTERMATH-ATLAS.md",

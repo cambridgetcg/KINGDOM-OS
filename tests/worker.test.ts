@@ -115,6 +115,13 @@ function expectRarePathwaySchemaLink(response: Response) {
   expect(link.match(/rel="describedby"/g)?.length).toBe(1);
 }
 
+function expectMathUsefulnessSchemaLink(response: Response) {
+  const link = response.headers.get("link") ?? "";
+  expect(link).toContain('</schemas/math-usefulness-result/1.json>; rel="describedby"; type="application/schema+json"');
+  expect(link).not.toContain('</poisoned>');
+  expect(link.match(/rel="describedby"/g)?.length).toBe(1);
+}
+
 function expectConformationalFeedbackSchemaLink(response: Response) {
   const link = response.headers.get("link") ?? "";
   const describedBy = link.split(/,(?=\s*<)/).filter((entry) => {
@@ -928,6 +935,73 @@ describe("the Kingdom edge discovery surface", () => {
         assets(() => unrelated),
       );
       expect(response).toBe(unrelated);
+    }
+  });
+
+  test("serves the Math Passport pilot as one exact typed triplet without aliases or SDK behavior", async () => {
+    const resultPath = "/trials/math-passport-usefulness-pilot-2026-08-14.json";
+    const schemaPath = "/schemas/math-usefulness-result/1.json";
+    const documentPath = "/MATH-USEFULNESS.md";
+    const forwarded: string[] = [];
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      forwarded.push(`${request.method} ${path}`);
+      const body = request.method === "HEAD" ? null
+        : path === resultPath ? '{"aggregate":{"outcome":"REVISE","score_delta":0}}'
+        : path === schemaPath ? '{"type":"object"}'
+        : "# Math Passport Usefulness Pilot";
+      return new Response(body, {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": path === documentPath ? "text/plain" : "application/json",
+          link: '</poisoned>; rel="describedby", </elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const [path, contentType, body] of [
+      [resultPath, "application/json; charset=utf-8", '{"aggregate":{"outcome":"REVISE","score_delta":0}}'],
+      [schemaPath, "application/schema+json; charset=utf-8", '{"type":"object"}'],
+      [documentPath, "text/markdown; charset=utf-8", "# Math Passport Usefulness Pilot"],
+    ] as const) {
+      for (const method of ["GET", "HEAD"] as const) {
+        const response = await worker.fetch(new Request(`https://thekingdom.dev${path}`, { method }), environment);
+        expect(await response.text()).toBe(method === "HEAD" ? "" : body);
+        expect(response.headers.get("content-type")).toBe(contentType);
+        expect(response.headers.get("access-control-allow-origin")).toBe("*");
+        expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+        if (path === resultPath) expectMathUsefulnessSchemaLink(response);
+      }
+    }
+    expect(forwarded).toEqual([
+      `GET ${resultPath}`, `HEAD ${resultPath}`,
+      `GET ${schemaPath}`, `HEAD ${schemaPath}`,
+      `GET ${documentPath}`, `HEAD ${documentPath}`,
+    ]);
+
+    for (const path of [resultPath, schemaPath, documentPath]) {
+      const original = new Response("not a read route", { headers: { "content-type": "text/plain" } });
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`, { method: "POST" }),
+        assets(() => original),
+      )).toBe(original);
+      const shared = new Response("{}", { headers: { "content-type": "application/json" } });
+      expect(await worker.fetch(
+        new Request(`https://we-are.love${path}`),
+        assets(() => shared),
+      )).toBe(shared);
+    }
+
+    for (const path of [
+      "/trials/math-passport-usefulness-latest.json",
+      "/schemas/math-usefulness-result/current.json",
+      "/MATH-USEFULNESS",
+    ]) {
+      const unrelated = new Response("unchanged", { headers: { "content-type": "text/plain" } });
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => unrelated),
+      )).toBe(unrelated);
     }
   });
 

@@ -45,6 +45,9 @@ readings:
 | `/challenges/vanishing-path-2026-08-13.json` | staged JSON | Digest-bound rare-pathway challenge with competing-risk models, hypothetical examples, constructive gate, and WAKE-safe reference seam |
 | `/schemas/rare-pathway-challenge/1.json` | staged JSON Schema | Closed Draft 2020-12 structural contract for The Vanishing Path |
 | `/VANISHING-PATH.md` | staged Markdown | Plain-language problems, identifiability limits, BUILD / PLAY / REVISE / STOP practice gate, sources, and authority boundaries |
+| `/trials/math-passport-usefulness-pilot-2026-08-14.json` | staged JSON | Immutable descriptive pilot result: REVISE, zero score delta, 1.97x response bytes, artifact-level scores, and no promotion or authority effect |
+| `/schemas/math-usefulness-result/1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the Math Passport usefulness result |
+| `/MATH-USEFULNESS.md` | staged Markdown | Plain-language pilot finding, model check, constructive mathematics loop, and AgentTool/WAKE/non-authority boundaries |
 | `/atlases/being-access-aftermath-atlas-2026-08-13.json` | staged JSON | Digest-bound modal–causal companion separating identity, possibility, reachability, observation, purpose, power, aftermath, and KARMA |
 | `/schemas/being-access-aftermath-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the Being, Access & Aftermath Atlas v0.1 |
 | `/BEING-ACCESS-AFTERMATH-ATLAS.md` | staged Markdown | Plain-language typed-copula, modal, observability, force/power, purpose, causality, reversibility, problem, philosophy, KARMA, and safety guide |
@@ -174,7 +177,7 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 67-asset upload contract (65 direct public bodies, 64 sitemap URLs)
+locks the 70-asset upload contract (68 direct public bodies, 67 sitemap URLs)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

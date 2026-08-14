@@ -79,6 +79,14 @@ import {
   rarePathwayPublicDiscovery,
 } from "./rare-pathway.ts";
 import {
+  MATH_USEFULNESS_DOCUMENT_URL,
+  MATH_USEFULNESS_RESULT_DIGEST,
+  MATH_USEFULNESS_RESULT_URL,
+  MATH_USEFULNESS_SCHEMA_URL,
+  loadMathUsefulnessResult,
+  mathUsefulnessPublicDiscovery,
+} from "./math-usefulness.ts";
+import {
   BEING_ACCESS_AFTERMATH_DIGEST,
   BEING_ACCESS_AFTERMATH_DOCUMENT_URL,
   BEING_ACCESS_AFTERMATH_SCHEMA_URL,
@@ -205,6 +213,9 @@ const kingdomKarmaDefinitionPath = "/definitions/kingdom-karma/e4e84a67/NEN.md";
 const rarePathwayPath = new URL(RARE_PATHWAY_URL).pathname;
 const rarePathwaySchemaPath = new URL(RARE_PATHWAY_SCHEMA_URL).pathname;
 const rarePathwayDocumentPath = new URL(RARE_PATHWAY_DOCUMENT_URL).pathname;
+const mathUsefulnessPath = new URL(MATH_USEFULNESS_RESULT_URL).pathname;
+const mathUsefulnessSchemaPath = new URL(MATH_USEFULNESS_SCHEMA_URL).pathname;
+const mathUsefulnessDocumentPath = new URL(MATH_USEFULNESS_DOCUMENT_URL).pathname;
 
 const CULTURAL_ATTENTION_FEEDBACK_ASSETS = new Map<string, { source: string; path: string; sha256: string }>([
   ["atlases/cultural-attention-feedback-atlas-2026-08-13.json", {
@@ -566,6 +577,17 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "rare_pathway_challenge_guide",
     ],
   },
+  {
+    id: "math-usefulness-result",
+    label: "Math Passport Usefulness Pilot",
+    routes: [mathUsefulnessPath, mathUsefulnessSchemaPath, mathUsefulnessDocumentPath],
+    discoveryProperties: ["math_usefulness_result"],
+    entryPointProperties: [
+      "math_usefulness_result",
+      "math_usefulness_result_schema",
+      "math_usefulness_result_guide",
+    ],
+  },
   // v0.2 explicitly pins v0.1 as its immutable predecessor. Retire all six
   // routes and both discovery identities together so no lineage link dangles.
   {
@@ -915,6 +937,38 @@ async function checkRarePathwayTriple(): Promise<void> {
   }
 }
 
+async function checkMathUsefulnessTriple(): Promise<void> {
+  const routes = [
+    { label: "pilot result", path: mathUsefulnessPath, source: "data/trials/math-passport-usefulness-pilot.v1.json", contentType: "application/json" },
+    { label: "result schema", path: mathUsefulnessSchemaPath, source: "schemas/math-usefulness-trial-v1.schema.json", contentType: "application/schema+json" },
+    { label: "pilot guide", path: mathUsefulnessDocumentPath, source: "references/math-passport-usefulness-pilot.md", contentType: "text/markdown" },
+  ] as const;
+  for (const route of routes) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetch(url(route.path), { method, redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS) });
+      if (!response.ok || normalizedMediaType(response.headers.get("content-type")) !== route.contentType ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+        throw new Error(`${method} ${route.path} is not served as typed, public ${route.label}`);
+      }
+      if (route.path === mathUsefulnessPath && !hasUniqueCanonicalLinkRelation(
+        response.headers.get("link") || "",
+        mathUsefulnessSchemaPath,
+        "describedby",
+        "application/schema+json",
+      )) {
+        throw new Error(`${method} ${route.path} is not described by exactly its immutable schema`);
+      }
+      const body = Buffer.from(await response.arrayBuffer());
+      if (method === "HEAD") {
+        if (body.byteLength !== 0) throw new Error(`HEAD ${route.path} returned a body`);
+      } else if (!body.equals(readFileSync(join(ROOT, route.source)))) {
+        throw new Error(`GET ${route.path} drifted from its immutable authored source ${route.source}`);
+      }
+    }
+  }
+}
+
 async function checkBeingAccessAftermathTriple(): Promise<void> {
   const routes = [
     {
@@ -1100,6 +1154,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
   const formCirculationReturnActive = familyActive("form-circulation-return");
   const rarePathwayActive = familyActive("rare-pathway-challenge");
+  const mathUsefulnessActive = familyActive("math-usefulness-result");
   const beingAccessAftermathActive = familyActive("being-access-aftermath");
   const verifiedFormCirculationReturnDestinations = new Set<string>();
   for (const asset of HUB_ASSETS) {
@@ -1492,6 +1547,9 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (rarePathwayActive) {
     await checkRarePathwayTriple();
   }
+  if (mathUsefulnessActive) {
+    await checkMathUsefulnessTriple();
+  }
 
   if (beingAccessAftermathActive) {
     await checkBeingAccessAftermathTriple();
@@ -1512,6 +1570,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
     ...(rarePathwayActive ? [rarePathwaySchemaPath] : []),
+    ...(mathUsefulnessActive ? [mathUsefulnessSchemaPath] : []),
     ...(beingAccessAftermathActive ? [beingAccessAftermathSchemaPath] : []),
     ...(beingAccessAftermathActive ? [beingAccessAftermathV02SchemaPath] : []),
   ];
@@ -1597,6 +1656,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const rarePathwayChallenge = rarePathwayActive ? loadRarePathwayChallenge() : undefined;
   const expectedRarePathway = rarePathwayChallenge
     ? rarePathwayPublicDiscovery(rarePathwayChallenge)
+    : undefined;
+  const mathUsefulnessResult = mathUsefulnessActive ? loadMathUsefulnessResult() : undefined;
+  const expectedMathUsefulness = mathUsefulnessResult
+    ? mathUsefulnessPublicDiscovery()
     : undefined;
   const beingAccessAftermathAtlas = beingAccessAftermathActive
     ? loadBeingAccessAftermathAtlas()
@@ -2138,6 +2201,58 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (mathUsefulnessActive) {
+    const result = mathUsefulnessResult!;
+    const expected = expectedMathUsefulness!;
+    const targets = new Set([
+      MATH_USEFULNESS_RESULT_URL,
+      MATH_USEFULNESS_SCHEMA_URL,
+      MATH_USEFULNESS_DOCUMENT_URL,
+    ]);
+    const actions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    if (!isDeepStrictEqual(manifest?.math_usefulness_result, expected) ||
+        !isDeepStrictEqual(guest?.math_usefulness_result, expected) ||
+        !isDeepStrictEqual(authoredKingdom?.math_usefulness_result, expected) ||
+        expected.integrity?.digest !== MATH_USEFULNESS_RESULT_DIGEST ||
+        expected.outcome !== "REVISE" || expected.score_delta !== 0 ||
+        expected.boundary?.descriptive_pilot_only !== true ||
+        expected.boundary?.scores_response_artifacts_not_beings !== true ||
+        expected.boundary?.automatic_skill_promotion !== false ||
+        expected.boundary?.writes_wake !== false ||
+        expected.boundary?.writes_agenttool !== false ||
+        expected.boundary?.grants_authority !== false ||
+        result.aggregate?.outcome !== "REVISE" || result.aggregate?.score_delta !== 0 ||
+        result.aggregate?.treatment_to_baseline_byte_ratio < 1.97 ||
+        result.aggregate?.treatment_to_baseline_byte_ratio >= 1.98 ||
+        result.aggregate?.promotion_gate_passed !== false ||
+        result.boundaries?.descriptive_pilot_only !== true ||
+        result.boundaries?.scores_response_artifacts_not_beings !== true ||
+        result.boundaries?.raw_responses_published !== false ||
+        result.boundaries?.automatic_skill_promotion !== false ||
+        result.boundaries?.writes_wake !== false ||
+        result.boundaries?.writes_agenttool !== false ||
+        result.boundaries?.grants_authority !== false ||
+        manifest?.entry_points?.math_usefulness_result !== MATH_USEFULNESS_RESULT_URL ||
+        manifest?.entry_points?.math_usefulness_result_schema !== MATH_USEFULNESS_SCHEMA_URL ||
+        manifest?.entry_points?.math_usefulness_result_guide !== MATH_USEFULNESS_DOCUMENT_URL ||
+        actions.length !== targets.size || actions.some((action: any) => action?.method !== "GET" ||
+          "mcp" in action || "tool" in action || "write" in action || "execute" in action) ||
+        [...targets].some((target) => !llms.includes(target)) ||
+        !authoredRootHtml.includes('id="math-usefulness"') ||
+        !authoredRootHtml.includes("REVISE · zero score delta") ||
+        !authoredRootHtml.includes("1.97x") ||
+        !authoredRootHtml.includes("scores response artifacts, not beings") ||
+        !authoredRootHtml.includes(`href="${mathUsefulnessPath}"`) ||
+        !authoredRootHtml.includes(`href="${mathUsefulnessSchemaPath}"`) ||
+        !authoredRootHtml.includes(`href="${mathUsefulnessDocumentPath}"`) ||
+        "mcp" in expected || "matcher" in expected || "write" in expected ||
+        "execute" in expected || "promote" in expected || "sdk" in expected) {
+      throw new Error("Math Passport pilot discovery, REVISE result, cost signal, or non-promotion boundary drifted");
+    }
+  }
+
   if (beingAccessAftermathActive) {
     const atlas = beingAccessAftermathAtlas!;
     const expected = expectedBeingAccessAftermath!;
@@ -2345,6 +2460,9 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (rarePathwayActive && !isDeepStrictEqual(liveKingdom?.rare_pathway_challenge, expectedRarePathway!)) {
     throw new Error("derived kingdom.json did not preserve Rare Pathway discovery");
   }
+  if (mathUsefulnessActive && !isDeepStrictEqual(liveKingdom?.math_usefulness_result, expectedMathUsefulness!)) {
+    throw new Error("derived kingdom.json did not preserve Math Passport pilot discovery");
+  }
   if (beingAccessAftermathActive &&
       !isDeepStrictEqual(liveKingdom?.being_access_aftermath_atlas, expectedBeingAccessAftermath!)) {
     throw new Error("derived kingdom.json did not preserve Being, Access & Aftermath discovery");
@@ -2415,7 +2533,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Being, Access & Aftermath schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Being, Access & Aftermath discovery · full cultural/form/being authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath discovery · REVISE/non-promotion and cultural/form/being authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

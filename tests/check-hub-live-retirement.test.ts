@@ -50,6 +50,40 @@ describe("hub live-check publication retirement", () => {
     ])).not.toThrow();
   });
 
+  test("retires the complete Math Passport pilot triplet and its discovery together", () => {
+    const math = family("math-usefulness-result");
+    expect(math.routes).toEqual([
+      "/trials/math-passport-usefulness-pilot-2026-08-14.json",
+      "/schemas/math-usefulness-result/1.json",
+      "/MATH-USEFULNESS.md",
+    ]);
+    expect(math.discoveryProperties).toEqual(["math_usefulness_result"]);
+    expect(math.entryPointProperties).toEqual([
+      "math_usefulness_result",
+      "math_usefulness_result_schema",
+      "math_usefulness_result_guide",
+    ]);
+
+    const partiallyStaged = stagedDestinations();
+    partiallyStaged.delete(destinationForPublicPath(math.routes[1]!));
+    expect(() => publicationFamilyStates(partiallyStaged))
+      .toThrow("Math Passport Usefulness Pilot is partially staged");
+
+    const retired = stagedDestinations();
+    for (const route of math.routes) retired.delete(destinationForPublicPath(route));
+    expect(publicationFamilyStates(retired).get(math.id)?.active).toBe(false);
+
+    for (const surface of [
+      { label: "authored Kingdom map", text: JSON.stringify({ math_usefulness_result: {} }), value: { math_usefulness_result: {} } },
+      { label: "agent manifest", text: JSON.stringify({ entry_points: { math_usefulness_result_guide: math.routes[2] } }), value: { entry_points: { math_usefulness_result_guide: math.routes[2] } } },
+      { label: "llms.txt", text: `https://thekingdom.dev${math.routes[0]}` },
+      { label: "hub HTML", text: `<a href='${math.routes[2]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(math, [surface]))
+        .toThrow("Math Passport Usefulness Pilot is retired");
+    }
+  });
+
   test("retires both immutable Being, Access & Aftermath triplets and all discovery together", () => {
     const being = family("being-access-aftermath");
     expect(being.routes).toEqual([

@@ -107,6 +107,16 @@ evidence of benefit; play is valid without a productivity story.
 Use [the constructive question card](references/constructive-gate.md) when the
 purpose of the challenge is itself under examination.
 
+For a compact, domain-neutral pass, use the frozen
+[Math Passport](references/math-passport.md). Keep it explicitly invoked. The
+2026-08-14 descriptive pilot found a ceiling: baseline and treatment artifacts
+both scored 24/24, while the treatment used 1.97 times as many UTF-8 bytes and
+made its arm easy to guess. That does not establish uselessness in harder
+contexts, but it does withhold implicit invocation and any improvement claim.
+Prefer the card when a prompt does not already demand assumptions,
+identifiability, a separating observation, and a decision delta. Skip it when
+those moves are already explicit unless the user wants the structured pass.
+
 ## Preserve the ritonavir boundary
 
 The Vanishing Path binds the historical ritonavir record as an illustrative

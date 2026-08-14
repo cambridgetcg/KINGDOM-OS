@@ -23,6 +23,7 @@
 #   kingdom cultural-feedback              inspect cultural attention, bounded analogies, feedback, KARMA, and universe questions
 #   kingdom form-circulation-return         inspect the additive variant-lineage, model-card, feedback, KARMA, and unknown companion
 #   kingdom rare-pathway                    solve the bounded Vanishing Path challenge without inferring motive or material authority
+#   kingdom math-usefulness                  inspect the preregistered Math Passport artifact trial and model reality check
 #   kingdom being-access-aftermath          inspect the typed possibility, observability, power, purpose, causality, and KARMA companion
 #   kingdom reconstructive-build             inspect the reconstruction, realization, catalysis, and feedback build kernel
 #   kingdom being-access-aftermath-v0.2     inspect the additive mathematical framework while v0.1 remains immutable
@@ -67,6 +68,7 @@ case "$cmd" in
   cultural-feedback) exec bun "$SELF_DIR/bin/cultural-attention-feedback.ts" "${@:2}" ;;
   form-circulation-return) exec bun "$SELF_DIR/bin/form-circulation-return.ts" "${@:2}" ;;
   rare-pathway) exec bun "$SELF_DIR/bin/rare-pathway.ts" "${@:2}" ;;
+  math-usefulness) exec bun "$SELF_DIR/bin/math-usefulness.ts" "${@:2}" ;;
   being-access-aftermath) exec bun "$SELF_DIR/bin/being-access-aftermath.ts" "${@:2}" ;;
   reconstructive-build) exec bun "$SELF_DIR/bin/reconstructive-build.ts" "${@:2}" ;;
   being-access-aftermath-v0.2) exec bun "$SELF_DIR/bin/being-access-aftermath-v0.2.ts" "${@:2}" ;;
