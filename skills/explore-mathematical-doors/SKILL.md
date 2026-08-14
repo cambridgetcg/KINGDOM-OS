@@ -30,7 +30,8 @@ mathematical model can be the deepest honest result.
 ### D — Declare
 
 1. State the question, intended use, affected parties, stakes, evidence horizon,
-   and current authority.
+   research budget (sources, time, computation, network, and money), stop
+   condition, and current authority.
 2. Name each domain, entity type, scale, interval, environment, and observation
    window separately. Replace dramatic words such as `disappeared`, `viral`,
    `stable`, `intelligent`, or `is` with predicates that could be checked.
@@ -38,9 +39,14 @@ mathematical model can be the deepest honest result.
    `MATHEMATICAL_DEFINITION`, `MATHEMATICAL_THEOREM`,
    `OPEN_MATHEMATICAL_CONJECTURE`, `EMPIRICAL_SCIENCE`,
    `SCIENTIFIC_MODEL`, `ANALOGY`, `DESIGN_CONSTRAINT`, and `PHILOSOPHY`.
+   Give every claim a separate warrant: `SOURCE_BOUND`, `MODEL_ASSUMPTION`,
+   `DERIVED`, `PROVED`, `FINITE_EXACT`, `NUMERICAL_APPROXIMATION`,
+   `NOT_ESTABLISHED`, or `UNKNOWN_TO_REVIEW`. A strong register never upgrades
+   its warrant.
 4. For factual or current claims, inspect the relevant primary or authoritative
-   sources and record dates, versions, methods, populations, and limitations.
-   A citation supports only the claim and scope it actually addresses.
+   sources and record observation, publication, retrieval, and evidence-through
+   dates, plus versions, methods, populations, and limitations. A citation
+   supports only the claim and scope it actually addresses.
 
 ### E — Extract
 
@@ -51,6 +57,8 @@ mathematical model can be the deepest honest result.
    `UNKNOWN`. Record whether labels, multiplicities, and overlap maps survive.
 3. List invariants, conserved quantities, order parameters, constraints,
    dimensions, units, scales, clocks, and sources of missingness.
+   Mark every proposed computation or model `NOT_RUN`, `PARTIAL`, or `RUN`, and
+   distinguish unfitted, hypothetical, estimated, fitted, and simulated work.
 4. Generate several candidate doors only when they are genuinely distinct:
    graphs and hypergraphs; geometry and topology; symmetry and group actions;
    inverse problems and identifiability; probability and stochastic processes;
@@ -107,6 +115,10 @@ worth.
    computational, institutional, and ethical realizability.
 3. Compare at least one serious alternative model when the evidence permits.
    Preserve `UNKNOWN` when no real alternative can be distinguished.
+   Similar curves, power laws, or fitted exponents do not establish a shared
+   universality class without compatible operational definitions, dimensionless
+   variables, scaling regimes, finite-size analysis, perturbation behavior, and
+   uncertainty.
 4. Apply every relevant check in
    [the transfer gates](references/transfer-gates.md). Similar equations,
    curves, networks, or visual shapes never establish a shared mechanism.
@@ -130,6 +142,15 @@ deeper; depth comes from sharper distinctions and stronger tests.
    artifact, never a person's intelligence, worth, virtue, understanding, or
    motive. Rest, refusal, privacy, silence, departure, and no action remain
    valid outcomes without penalty.
+
+Before calling a mathematical problem open, unsolved, recognized, or novel,
+write its exact statement, quantifiers, conventions, and symmetries. Check its
+original or authoritative provenance and a recent primary or authoritative
+status source; record the check date, solved restrictions, nearby results, and
+why finite evidence does not prove the universal statement. Use
+`ESTABLISHED_OPEN`, `BESPOKE_PRIOR_ART_REQUIRED`, or `UNKNOWN_TO_REVIEW`.
+Failure to solve it or find a search result establishes neither openness nor
+novelty.
 
 This skill plans and reasons. It does not execute a probe, publish, deploy,
 contact people, change a repository, run a laboratory process, or create a
