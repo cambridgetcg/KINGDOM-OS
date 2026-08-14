@@ -14,7 +14,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { HUB_ASSETS, stageHub } from "../bin/stage-hub.ts";
+import { HUB_ASSETS, MUTABLE_HUB_DESTINATIONS, stageHub } from "../bin/stage-hub.ts";
 import {
   HUB_STAGING_CONTRACT_PATH,
   IMMUTABLE_PUBLICATIONS_LEDGER_PATH,
@@ -58,8 +58,11 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(70);
-      expect(staged).toHaveLength(70);
+      expect(HUB_ASSETS).toHaveLength(74);
+      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(19);
+      expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
+        .toHaveLength(72);
+      expect(staged).toHaveLength(74);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -69,6 +72,7 @@ describe("the hub staging contract", () => {
         "CONFORMATIONAL-FEEDBACK.md",
         "CREATION-LOOP.md",
         "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md",
+        "EXPLORE-PHENOMENA-DEEP-v0.1.md",
         "FOLD-FEEDBACK-ATLAS.md",
         "FORM-CIRCULATION-RETURN-ATLAS.md",
         "GEOMETRY-GRAMMAR.md",
@@ -104,6 +108,7 @@ describe("the hub staging contract", () => {
         "sitemap.xml",
         "trials",
         "wayfinder.json",
+        "wings",
       ]);
       expect(readdirSync(join(output, "schemas/love-loop")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/conformational-feedback-atlas")).sort()).toEqual(["0.1.json", "0.2.json"]);
@@ -114,6 +119,8 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "schemas/being-access-aftermath-atlas")).sort()).toEqual(["0.1.json", "0.2.json"]);
       expect(readdirSync(join(output, "schemas/reconstructive-build-kernel")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/reconstructive-project")).sort()).toEqual(["0.1.json"]);
+      expect(readdirSync(join(output, "schemas/phenomena-deep-wing")).sort()).toEqual(["0.1.json"]);
+      expect(readdirSync(join(output, "schemas/phenomena-deep-project")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/visibility-attention")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/principality-catalog")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/polymorph-history")).sort()).toEqual(["1.json"]);
@@ -133,6 +140,9 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "feedback")).sort()).toEqual([
         "form-feedback-consequence-2026-08-12.json",
         "form-feedback-physics-consequence-2026-08-12.json",
+      ]);
+      expect(readdirSync(join(output, "wings")).sort()).toEqual([
+        "explore-phenomena-deep-2026-08-14.json",
       ]);
       expect(readdirSync(join(output, "atlases")).sort()).toEqual([
         "being-access-aftermath-atlas-2026-08-13-v0-2.json",
@@ -322,6 +332,25 @@ describe("the hub staging contract", () => {
         source: "NEN.md",
         destination: "definitions/kingdom-karma/e4e84a67/NEN.md",
       });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "data/exploration/phenomena-deep-wing.v0.1.json",
+        destination: "wings/explore-phenomena-deep-2026-08-14.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "schemas/phenomena-deep-wing.v0.1.schema.json",
+        destination: "schemas/phenomena-deep-wing/0.1.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "schemas/phenomena-deep-project.v0.1.schema.json",
+        destination: "schemas/phenomena-deep-project/0.1.json",
+      });
+      expect(HUB_ASSETS).toContainEqual({
+        source: "skills/explore-phenomena-deep/references/exploration-contract-v0.1.md",
+        destination: "EXPLORE-PHENOMENA-DEEP-v0.1.md",
+      });
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("wings/"))).toHaveLength(1);
+      expect(HUB_ASSETS.some(({ destination }) => /wings\/.*(?:latest|current).*\.json$/i.test(destination))).toBe(false);
+      expect(HUB_ASSETS.some(({ destination }) => /phenomena-deep-(?:wing|project)\/.*(?:latest|current).*\.json$/i.test(destination))).toBe(false);
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(7);
       expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);

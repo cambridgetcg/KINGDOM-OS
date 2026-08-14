@@ -198,6 +198,6 @@ describe("Cultural Attention & Feedback Atlas publication", () => {
       expect(sitemap).toContain(`<loc>${publicUrl}</loc>`);
       expect(llms).toContain(publicUrl);
     }
-    expect(sitemap.match(/<loc>/g)).toHaveLength(67);
+    expect(sitemap.match(/<loc>/g)).toHaveLength(71);
   });
 });

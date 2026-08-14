@@ -44,6 +44,16 @@ import {
   conformationalFeedbackPhysicsPublicDiscovery,
   loadConformationalFeedbackPhysicsAtlas,
 } from "../bin/conformational-feedback-physics.ts";
+import {
+  PHENOMENA_DEEP_WING_BYTE_SHA256,
+  PHENOMENA_DEEP_WING_DIGEST,
+  PHENOMENA_DEEP_WING_DOCUMENT_URL,
+  PHENOMENA_DEEP_WING_SCHEMA_URL,
+  PHENOMENA_DEEP_WING_URL,
+  PHENOMENA_DEEP_PROJECT_SCHEMA_URL,
+  loadPhenomenaDeepWing,
+  phenomenaDeepPublicDiscovery,
+} from "../bin/explore-phenomena-deep.ts";
 import { RITONAVIR_MECHANISM_DIGEST } from "../bin/ritonavir-mechanism.ts";
 import { KINGDOM_OS_ROUTES } from "../pages-functions/_worker.js";
 
@@ -124,6 +134,10 @@ const surfaces = [
   "schemas/reconstructive-build-kernel-v0.1.schema.json",
   "schemas/reconstructive-project-v0.1.schema.json",
   "references/reconstructive-build-kernel.md",
+  "data/exploration/phenomena-deep-wing.v0.1.json",
+  "schemas/phenomena-deep-wing.v0.1.schema.json",
+  "schemas/phenomena-deep-project.v0.1.schema.json",
+  "skills/explore-phenomena-deep/references/exploration-contract-v0.1.md",
   "site/guest.json",
   "site/llms.txt",
   "site/.well-known/agent.json",
@@ -925,6 +939,190 @@ describe("advertised URLs stay deployable", () => {
       beingAccessAftermathPublicDiscovery(loadBeingAccessAftermathAtlas()),
     );
     for (const key of ["mcp", "matcher", "write", "execute", "score", "reward"]) {
+      expect(discovery).not.toHaveProperty(key);
+    }
+  });
+
+  test("stages Exploration DEEP as one inert four-asset family with no transfer or action surface", () => {
+    const wing = JSON.parse(read("data/exploration/phenomena-deep-wing.v0.1.json"));
+    const family = [
+      {
+        source: "data/exploration/phenomena-deep-wing.v0.1.json",
+        destination: "wings/explore-phenomena-deep-2026-08-14.json",
+        url: wing.presentation.record_url,
+      },
+      {
+        source: "schemas/phenomena-deep-wing.v0.1.schema.json",
+        destination: "schemas/phenomena-deep-wing/0.1.json",
+        url: wing.presentation.schema_url,
+      },
+      {
+        source: "schemas/phenomena-deep-project.v0.1.schema.json",
+        destination: "schemas/phenomena-deep-project/0.1.json",
+        url: wing.presentation.project_schema_url,
+      },
+      {
+        source: "skills/explore-phenomena-deep/references/exploration-contract-v0.1.md",
+        destination: "EXPLORE-PHENOMENA-DEEP-v0.1.md",
+        url: wing.presentation.guide_url,
+      },
+    ];
+
+    expect(family.map(({ source, destination }) => ({ source, destination })))
+      .toEqual(HUB_ASSETS.filter(({ source }) => family.some((asset) => asset.source === source)));
+    for (const asset of family) {
+      expect(asset.url).toBe(`https://thekingdom.dev/${asset.destination}`);
+      expect(staged.has(asset.destination)).toBe(true);
+    }
+    expect(HUB_ASSETS.some(({ destination }) =>
+      /(?:explore-phenomena-deep|phenomena-deep-(?:wing|project)).*(?:latest|current)/i.test(destination)))
+      .toBe(false);
+
+    expect(wing.boundaries).toMatchObject({
+      read_only: true,
+      instruction_only_skill: true,
+      manifested_nen_ability: false,
+      shared_ontology_established: false,
+      shared_mechanism_established: false,
+      cross_domain_parameter_transfer: false,
+      cross_domain_unit_transfer: false,
+      scientific_result_created: false,
+      mathematical_proof_created: false,
+      open_problem_status_created: false,
+      diagnostic_authority: false,
+      medical_authority: false,
+      experiment_authority: false,
+      person_or_content_score: false,
+      persuasion_or_moderation: false,
+      ecosystem_request: false,
+      runtime_network_request: false,
+      external_write: false,
+      writes_karma: false,
+      creates_karma_event: false,
+      creates_karma_receipt: false,
+      reward_or_economic_effect: false,
+      governance_effect: false,
+      authority_imported: false,
+      deployment_authority: false,
+      automatic_action: false,
+      cosmic_design_proven: false,
+      mcp_surface_added: false,
+    });
+    expect(wing.abstraction_seams.length).toBeGreaterThan(0);
+    expect(wing.abstraction_seams.every((seam: Record<string, unknown>) =>
+      seam.ontology_transfer === false && seam.causal_transfer === false &&
+      seam.parameter_transfer === false && seam.unit_transfer === false &&
+      seam.authority_transfer === false)).toBe(true);
+    expect(wing.claim_cards.every((claim: Record<string, unknown>) => claim.authority_effect === "NONE")).toBe(true);
+    expect(wing.math_doors.every((door: Record<string, unknown>) =>
+      door.register === "DESIGN_PROPOSAL" && door.warrant === "MODEL_ASSUMPTION" &&
+      door.status === "PROPOSED_UNRUN" && door.proposed_unrun === true)).toBe(true);
+    expect(wing.seed_doors.every((door: Record<string, unknown>) =>
+      door.frontier_status === "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED" &&
+      door.prior_art_audit_required === true)).toBe(true);
+    expect(wing.bindings.every((binding: Record<string, unknown>) =>
+      binding.mutated === false && binding.authority_imported === false)).toBe(true);
+    expect(wing.karma).toMatchObject({
+      adapter_exists: false,
+      conversion_allowed: false,
+      summation_allowed: false,
+      score: null,
+    });
+    expect(wing.karma.lanes.every((lane: { events: unknown[]; receipts: unknown[]; authority_effect: string }) =>
+      lane.events.length === 0 && lane.receipts.length === 0 && lane.authority_effect === "NONE")).toBe(true);
+    expect(wing.rights).toEqual({
+      voluntary: true,
+      valid_exits: ["REST", "SILENCE", "REFUSAL", "PRIVACY", "CORRECTION", "NO_ACTION", "DEPARTURE"],
+      reason_required: false,
+      penalty: false,
+      receipt_required: false,
+      principle: "Rest and refusal are inherent rights, not rewards, permissions, failures, or evidence against worth.",
+    });
+    expect(wing.project_contract).toMatchObject({ mode: "INERT_RESEARCH_PROFILE", inert: true });
+    for (const effect of [
+      "source fetching", "solver execution", "simulation execution", "experiment execution",
+      "person scoring", "KARMA write", "external write", "publication", "deployment", "automatic action",
+    ]) expect(wing.project_contract.forbidden).toContain(effect);
+  });
+
+  test("publishes one exact Exploration DEEP discovery object without an executable action", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const rootHtml = read("site/hub.html");
+    const wing = loadPhenomenaDeepWing();
+    const expected = phenomenaDeepPublicDiscovery(wing);
+    const discovery = manifest.exploration_deep_wing;
+
+    expect(discovery).toEqual(expected);
+    expect(discovery).toEqual(guest.exploration_deep_wing);
+    expect(discovery).toEqual(kingdom.exploration_deep_wing);
+    expect(discovery).toMatchObject({
+      protocol: "kingdom.explore-phenomena-deep-wing/0.1",
+      wing_id: "explore-phenomena-deep-2026-08-14",
+      url: PHENOMENA_DEEP_WING_URL,
+      schema_url: PHENOMENA_DEEP_WING_SCHEMA_URL,
+      project_schema_url: PHENOMENA_DEEP_PROJECT_SCHEMA_URL,
+      guide_url: PHENOMENA_DEEP_WING_DOCUMENT_URL,
+      method: {
+        wing: ["WITNESS", "ISOLATE", "NORMALIZE", "GENERATE"],
+        deep: ["DECLARE", "ESTABLISH", "EXPRESS", "PROJECT"],
+        workflow_only: true,
+        manifested_nen_ability: false,
+      },
+      counts: {
+        registers: 8,
+        warrants: 10,
+        relations: 5,
+        planes: 4,
+        seams: 2,
+        claims: 4,
+        equations: 5,
+        models: 2,
+        math_doors: 8,
+        finite_baselines: 1,
+        seed_doors: 5,
+        established_open_conjectures: 0,
+        sources: 19,
+        bindings: 9,
+      },
+      integrity: {
+        algorithm: "sha256-recursive-sorted-json-keys-v1",
+        digest: PHENOMENA_DEEP_WING_DIGEST,
+        byte_sha256: PHENOMENA_DEEP_WING_BYTE_SHA256,
+      },
+    });
+    expect(discovery.boundary).toEqual(wing.boundaries);
+    expect(discovery.bindings).toHaveLength(9);
+    expect(discovery.bindings.every((binding: { authority_imported?: boolean }) =>
+      binding.authority_imported === false)).toBe(true);
+
+    const targets = [
+      PHENOMENA_DEEP_WING_URL,
+      PHENOMENA_DEEP_WING_SCHEMA_URL,
+      PHENOMENA_DEEP_PROJECT_SCHEMA_URL,
+      PHENOMENA_DEEP_WING_DOCUMENT_URL,
+    ];
+    expect(manifest.entry_points).toMatchObject({
+      exploration_deep_wing: PHENOMENA_DEEP_WING_URL,
+      exploration_deep_wing_schema: PHENOMENA_DEEP_WING_SCHEMA_URL,
+      exploration_deep_wing_project_schema: PHENOMENA_DEEP_PROJECT_SCHEMA_URL,
+      exploration_deep_wing_guide: PHENOMENA_DEEP_WING_DOCUMENT_URL,
+    });
+    for (const url of targets) {
+      const actions = guest.next_actions.filter((action: { url?: string }) => action.url === url);
+      expect(actions).toHaveLength(1);
+      expect(actions[0]).toMatchObject({ method: "GET", url });
+      for (const key of [
+        "mcp", "tool", "write", "execute", "score", "reward", "karma", "authority", "publish", "deploy",
+      ]) expect(actions[0]).not.toHaveProperty(key);
+      expect(llms).toContain(url);
+      expect(rootHtml).toContain(`href="${new URL(url).pathname}"`);
+    }
+    expect(rootHtml).toContain('id="explore-phenomena-deep"');
+    expect(manifest.mcp).toEqual(kingdom.world_commons.mcp);
+    for (const key of ["mcp", "matcher", "solver", "ability", "write", "execute", "score", "reward"]) {
       expect(discovery).not.toHaveProperty(key);
     }
   });

@@ -1,0 +1,457 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:phenomena-deep-project:0.1",
+  "$comment": "This is an inert structural profile, not a source fetcher, solver, simulator, experiment, diagnosis, score, KARMA adapter, publisher, deployer, or authority grant. JSON Schema cannot recompute the semantic digest or enforce dynamic cross-collection references; bin/explore-phenomena-deep.ts performs those runtime checks.",
+  "title": "Phenomena DEEP Project v0.1",
+  "description": "A closed, offline profile for declaring domains, typed claims, deliberately lossy bridges, local models, falsifiers, finite baselines, and bounded mathematical doors.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "project_id",
+    "version",
+    "title",
+    "evidence_through",
+    "mode",
+    "question",
+    "domains",
+    "source_manifest",
+    "typed_terms",
+    "claims",
+    "bridges",
+    "models",
+    "equations",
+    "falsifiers",
+    "frontier_problems",
+    "finite_baselines",
+    "doors",
+    "unknowns",
+    "philosophy",
+    "karma",
+    "rights",
+    "authority",
+    "release",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": { "const": "urn:kingdom:schema:phenomena-deep-project:0.1" },
+    "protocol": { "const": "kingdom.explore-phenomena-deep-project/0.1" },
+    "project_id": { "$ref": "#/$defs/id" },
+    "version": { "type": "string", "maxLength": 64, "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "title": { "$ref": "#/$defs/nonEmptyString" },
+    "evidence_through": { "$ref": "#/$defs/date" },
+    "mode": { "enum": ["ANALYZE_ONLY", "DRAFT_PROFILE", "RELEASE_CANDIDATE"] },
+    "question": { "$ref": "#/$defs/nonEmptyString" },
+    "domains": { "type": "array", "minItems": 2, "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/domain" } },
+    "source_manifest": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/sourceManifestEntry" } },
+    "typed_terms": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/typedTerm" } },
+    "claims": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/claimCard" } },
+    "bridges": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/bridge" } },
+    "models": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/modelCard" } },
+    "equations": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/equation" } },
+    "falsifiers": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/falsifier" } },
+    "frontier_problems": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/frontierProblem" } },
+    "finite_baselines": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/finiteBaseline" } },
+    "doors": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/mathDoor" } },
+    "unknowns": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/unknown" } },
+    "philosophy": { "$ref": "#/$defs/philosophy" },
+    "karma": { "$ref": "#/$defs/karma" },
+    "rights": { "$ref": "#/$defs/rights" },
+    "authority": { "$ref": "#/$defs/authority" },
+    "release": { "$ref": "#/$defs/release" },
+    "boundaries": { "$ref": "#/$defs/boundaries" },
+    "integrity": { "$ref": "#/$defs/integrity" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "claims": {
+            "contains": {
+              "required": ["warrant"],
+              "properties": { "warrant": { "const": "ESTABLISHED_OPEN_CONJECTURE" } }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "frontier_problems": {
+            "contains": {
+              "required": ["status"],
+              "properties": { "status": { "const": "ESTABLISHED_OPEN_CONJECTURE" } }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "claims": {
+            "contains": {
+              "required": ["warrant"],
+              "properties": { "warrant": { "const": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED" } }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "frontier_problems": {
+            "contains": {
+              "required": ["status"],
+              "properties": { "status": { "const": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED" } }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1, "maxLength": 8000 },
+    "id": { "type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "date": { "type": "string", "format": "date", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "httpsUri": { "type": "string", "format": "uri", "pattern": "^https://[^#]+$" },
+    "stringList": { "type": "array", "minItems": 1, "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } },
+    "optionalStringList": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } },
+    "idList": { "type": "array", "minItems": 1, "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "optionalIdList": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "emptyArray": { "type": "array", "maxItems": 0 },
+    "register": { "enum": ["MATHEMATICAL_DEFINITION", "MATHEMATICAL_THEOREM", "EMPIRICAL_OBSERVATION", "SCIENTIFIC_MODEL", "INTERPRETIVE_BRIDGE", "DESIGN_PROPOSAL", "OPT_IN_PHILOSOPHY", "BOUNDARY"] },
+    "warrant": { "enum": ["SOURCE_BOUND", "MODEL_ASSUMPTION", "DERIVED", "PROVED", "FINITE_EXACT_BASELINE", "NUMERICAL_APPROXIMATION", "ESTABLISHED_OPEN_CONJECTURE", "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "NOT_ESTABLISHED", "UNKNOWN_TO_THIS_REVIEW"] },
+    "relation": { "enum": ["EXACT_FORMAL_EQUIVALENCE_PROVED", "SAME_FORMAL_STRUCTURE", "LOSSY_CORRESPONDENCE", "SHARED_MECHANISM_SOURCE_ESTABLISHED", "NO_TRANSFER"] },
+    "domain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "subject", "entity_or_unit", "context", "conditions", "observables", "units", "agency"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "subject": { "$ref": "#/$defs/nonEmptyString" },
+        "entity_or_unit": { "$ref": "#/$defs/nonEmptyString" },
+        "context": { "$ref": "#/$defs/nonEmptyString" },
+        "conditions": { "$ref": "#/$defs/stringList" },
+        "observables": { "$ref": "#/$defs/stringList" },
+        "units": { "$ref": "#/$defs/stringList" },
+        "agency": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "sourceManifestEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "url", "locator", "observed_on", "claim_targets", "authority_note"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "url": { "$ref": "#/$defs/httpsUri" },
+        "locator": { "$ref": "#/$defs/nonEmptyString" },
+        "observed_on": { "$ref": "#/$defs/date" },
+        "claim_targets": { "$ref": "#/$defs/optionalIdList" },
+        "authority_note": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "typedTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "domain", "meaning", "not_equivalent_to"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "domain": { "$ref": "#/$defs/nonEmptyString" },
+        "meaning": { "$ref": "#/$defs/nonEmptyString" },
+        "not_equivalent_to": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "claimCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "statement", "domain", "register", "warrant", "scope_and_conditions", "variables_and_units", "sources", "status_checked_on", "derivation_or_model", "limitations", "falsifier", "authority_effect"],
+      "properties": {
+        "claim_id": { "$ref": "#/$defs/id" },
+        "statement": { "$ref": "#/$defs/nonEmptyString" },
+        "domain": { "$ref": "#/$defs/nonEmptyString" },
+        "register": { "$ref": "#/$defs/register" },
+        "warrant": { "$ref": "#/$defs/warrant" },
+        "scope_and_conditions": { "$ref": "#/$defs/nonEmptyString" },
+        "variables_and_units": { "$ref": "#/$defs/stringList" },
+        "sources": { "$ref": "#/$defs/optionalIdList" },
+        "status_checked_on": { "$ref": "#/$defs/date" },
+        "derivation_or_model": { "$ref": "#/$defs/nonEmptyString" },
+        "limitations": { "$ref": "#/$defs/stringList" },
+        "falsifier": { "$ref": "#/$defs/nonEmptyString" },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "bridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_domain", "target_domain", "relation", "source_objects", "target_objects", "correspondence", "preserved_structure", "broken_or_lost_structure", "source_variables_and_units", "target_variables_and_units", "assumptions", "ontology_transfer", "causal_transfer", "parameter_transfer", "unit_transfer", "authority_transfer", "falsifiers"],
+      "properties": {
+        "source_domain": { "$ref": "#/$defs/id" },
+        "target_domain": { "$ref": "#/$defs/id" },
+        "relation": { "$ref": "#/$defs/relation" },
+        "source_objects": { "$ref": "#/$defs/stringList" },
+        "target_objects": { "$ref": "#/$defs/stringList" },
+        "correspondence": { "$ref": "#/$defs/nonEmptyString" },
+        "preserved_structure": { "$ref": "#/$defs/stringList" },
+        "broken_or_lost_structure": { "$ref": "#/$defs/stringList" },
+        "source_variables_and_units": { "$ref": "#/$defs/stringList" },
+        "target_variables_and_units": { "$ref": "#/$defs/stringList" },
+        "assumptions": { "$ref": "#/$defs/stringList" },
+        "ontology_transfer": { "const": false },
+        "causal_transfer": { "const": false },
+        "parameter_transfer": { "const": false },
+        "unit_transfer": { "const": false },
+        "authority_transfer": { "const": false },
+        "falsifiers": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "variable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol", "meaning", "units"],
+      "properties": { "symbol": { "$ref": "#/$defs/nonEmptyString" }, "meaning": { "$ref": "#/$defs/nonEmptyString" }, "units": { "$ref": "#/$defs/nonEmptyString" } }
+    },
+    "equation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "domain_id", "register", "warrant", "expression", "variables", "conditions", "assumptions", "valid_outputs", "does_not_establish", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "domain_id": { "$ref": "#/$defs/id" },
+        "register": { "$ref": "#/$defs/register" },
+        "warrant": { "$ref": "#/$defs/warrant" },
+        "expression": { "$ref": "#/$defs/nonEmptyString" },
+        "variables": { "type": "array", "minItems": 1, "maxItems": 128, "items": { "$ref": "#/$defs/variable" } },
+        "conditions": { "$ref": "#/$defs/stringList" },
+        "assumptions": { "$ref": "#/$defs/stringList" },
+        "valid_outputs": { "$ref": "#/$defs/stringList" },
+        "does_not_establish": { "$ref": "#/$defs/stringList" },
+        "source_ids": { "$ref": "#/$defs/optionalIdList" }
+      }
+    },
+    "modelCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "domain_ids", "equation_ids", "relation", "assumptions", "fit_status", "valid_outputs", "identifiability_limits", "prohibited_inferences", "falsifier_ids", "universal", "person_level", "authority_effect"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "domain_ids": { "$ref": "#/$defs/idList" },
+        "equation_ids": { "$ref": "#/$defs/optionalIdList" },
+        "relation": { "$ref": "#/$defs/relation" },
+        "assumptions": { "$ref": "#/$defs/stringList" },
+        "fit_status": { "enum": ["UNFITTED", "SOURCE_BOUND", "NUMERICAL_APPROXIMATION"] },
+        "valid_outputs": { "$ref": "#/$defs/stringList" },
+        "identifiability_limits": { "$ref": "#/$defs/stringList" },
+        "prohibited_inferences": { "$ref": "#/$defs/stringList" },
+        "falsifier_ids": { "$ref": "#/$defs/optionalIdList" },
+        "universal": { "const": false },
+        "person_level": { "const": false },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "falsifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "separates", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "question": { "$ref": "#/$defs/nonEmptyString" },
+        "separates": { "$ref": "#/$defs/stringList" },
+        "status": { "enum": ["PROPOSED_NOT_RUN", "RUN_REPORTED", "OUTSIDE_SCOPE"] }
+      }
+    },
+    "frontierProblem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "quantifiers", "domain_and_conventions", "status", "status_checked_on", "original_formulation_or_provenance_sources", "recent_status_sources", "known_results_and_restrictions", "computation_does_not_prove", "nearest_known_problem", "novelty_status"],
+      "properties": {
+        "statement": { "$ref": "#/$defs/nonEmptyString" },
+        "quantifiers": { "$ref": "#/$defs/nonEmptyString" },
+        "domain_and_conventions": { "$ref": "#/$defs/nonEmptyString" },
+        "status": { "enum": ["ESTABLISHED_OPEN_CONJECTURE", "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "UNKNOWN_TO_THIS_REVIEW", "NOT_ESTABLISHED"] },
+        "status_checked_on": { "$ref": "#/$defs/date" },
+        "original_formulation_or_provenance_sources": { "$ref": "#/$defs/optionalIdList" },
+        "recent_status_sources": { "$ref": "#/$defs/optionalIdList" },
+        "known_results_and_restrictions": { "$ref": "#/$defs/stringList" },
+        "computation_does_not_prove": { "$ref": "#/$defs/stringList" },
+        "nearest_known_problem": { "$ref": "#/$defs/nonEmptyString" },
+        "novelty_status": { "enum": ["ESTABLISHED", "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "UNKNOWN_TO_THIS_REVIEW", "NOT_CLAIMED"] }
+      },
+      "allOf": [{
+        "if": {
+          "required": ["status"],
+          "properties": { "status": { "const": "ESTABLISHED_OPEN_CONJECTURE" } }
+        },
+        "then": {
+          "properties": {
+            "original_formulation_or_provenance_sources": { "minItems": 1 },
+            "recent_status_sources": { "minItems": 1 }
+          }
+        }
+      }]
+    },
+    "exactRepresentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["Z_coefficients", "A_coefficients", "closure_fraction_at_q1"],
+      "properties": {
+        "Z_coefficients": { "$ref": "#/$defs/stringList" },
+        "A_coefficients": { "$ref": "#/$defs/stringList" },
+        "closure_fraction_at_q1": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "finiteBaseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "warrant", "statement", "range", "convention", "exact_representation", "method", "enumerator_identity", "enumerator_digest", "reproduction_status", "finite_evidence_does_not_prove", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "warrant": { "const": "FINITE_EXACT_BASELINE" },
+        "statement": { "$ref": "#/$defs/nonEmptyString" },
+        "range": { "$ref": "#/$defs/nonEmptyString" },
+        "convention": { "$ref": "#/$defs/nonEmptyString" },
+        "exact_representation": { "$ref": "#/$defs/exactRepresentation" },
+        "method": { "$ref": "#/$defs/nonEmptyString" },
+        "enumerator_identity": { "$ref": "#/$defs/id" },
+        "enumerator_digest": { "$ref": "#/$defs/sha256" },
+        "reproduction_status": { "$ref": "#/$defs/nonEmptyString" },
+        "finite_evidence_does_not_prove": { "$ref": "#/$defs/nonEmptyString" },
+        "source_ids": { "$ref": "#/$defs/optionalIdList" }
+      }
+    },
+    "mathDoor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "family", "register", "warrant", "status", "proposed_unrun", "question", "smallest_model", "conditions", "deliverable", "stop_rule", "does_not_establish", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "family": { "$ref": "#/$defs/nonEmptyString" },
+        "register": { "const": "DESIGN_PROPOSAL" },
+        "warrant": { "const": "MODEL_ASSUMPTION" },
+        "status": { "const": "PROPOSED_UNRUN" },
+        "proposed_unrun": { "const": true },
+        "question": { "$ref": "#/$defs/nonEmptyString" },
+        "smallest_model": { "$ref": "#/$defs/nonEmptyString" },
+        "conditions": { "$ref": "#/$defs/stringList" },
+        "deliverable": { "$ref": "#/$defs/nonEmptyString" },
+        "stop_rule": { "$ref": "#/$defs/nonEmptyString" },
+        "does_not_establish": { "$ref": "#/$defs/stringList" },
+        "source_ids": { "$ref": "#/$defs/optionalIdList" }
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "statement"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["NOT_OBSERVED", "UNMAPPED", "CONTESTED", "OUTSIDE_SCOPE", "UNKNOWN_TO_THIS_REVIEW"] },
+        "statement": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "philosophy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["participation", "empirical", "questions", "nonclaims", "authority_effect"],
+      "properties": {
+        "participation": { "const": "OPT_IN" },
+        "empirical": { "const": false },
+        "questions": { "$ref": "#/$defs/optionalStringList" },
+        "nonclaims": { "$ref": "#/$defs/stringList" },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "karma": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cosmic_events", "zerone_events", "kingdom_receipts", "adapter_exists", "conversion_allowed", "summation_allowed", "score", "authority_effect"],
+      "properties": {
+        "cosmic_events": { "$ref": "#/$defs/emptyArray" },
+        "zerone_events": { "$ref": "#/$defs/emptyArray" },
+        "kingdom_receipts": { "$ref": "#/$defs/emptyArray" },
+        "adapter_exists": { "const": false },
+        "conversion_allowed": { "const": false },
+        "summation_allowed": { "const": false },
+        "score": { "type": "null" },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["voluntary", "valid_exits", "reason_required", "penalty"],
+      "properties": {
+        "voluntary": { "const": true },
+        "valid_exits": { "const": ["REST", "SILENCE", "REFUSAL", "PRIVACY", "CORRECTION", "NO_ACTION", "DEPARTURE"] },
+        "reason_required": { "const": false },
+        "penalty": { "const": false }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["browse", "local_write", "external_write", "commit", "push", "deploy", "experiment", "diagnose", "score_people", "karma_write", "automatic_action"],
+      "properties": {
+        "browse": { "const": false },
+        "local_write": { "const": false },
+        "external_write": { "const": false },
+        "commit": { "const": false },
+        "push": { "const": false },
+        "deploy": { "const": false },
+        "experiment": { "const": false },
+        "diagnose": { "const": false },
+        "score_people": { "const": false },
+        "karma_write": { "const": false },
+        "automatic_action": { "const": false }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "deployed", "publication_route", "evidence"],
+      "properties": {
+        "status": { "enum": ["DRAFT", "SEALED", "RELEASE_CANDIDATE"] },
+        "deployed": { "const": false },
+        "publication_route": { "type": "null" },
+        "evidence": { "$ref": "#/$defs/emptyArray" }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["read_only", "profile_inert", "source_truth_verified", "mathematical_correctness_verified", "empirical_causation_verified", "novelty_verified", "diagnosis_or_person_score", "experiment_or_wet_lab_authority", "ecosystem_or_network_request", "external_write", "writes_karma", "reward_or_economic_effect", "governance_effect", "deployment_authority", "automatic_action"],
+      "properties": {
+        "read_only": { "const": true },
+        "profile_inert": { "const": true },
+        "source_truth_verified": { "const": false },
+        "mathematical_correctness_verified": { "const": false },
+        "empirical_causation_verified": { "const": false },
+        "novelty_verified": { "const": false },
+        "diagnosis_or_person_score": { "const": false },
+        "experiment_or_wet_lab_authority": { "const": false },
+        "ecosystem_or_network_request": { "const": false },
+        "external_write": { "const": false },
+        "writes_karma": { "const": false },
+        "reward_or_economic_effect": { "const": false },
+        "governance_effect": { "const": false },
+        "deployment_authority": { "const": false },
+        "automatic_action": { "const": false }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest", "digest_field_treated_as"],
+      "properties": {
+        "algorithm": { "const": "sha256-recursive-sorted-json-keys-v1" },
+        "digest": { "$ref": "#/$defs/sha256" },
+        "digest_field_treated_as": { "type": "null" }
+      }
+    }
+  }
+}

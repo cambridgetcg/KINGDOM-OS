@@ -1,0 +1,6 @@
+interface:
+  display_name: "Explore Phenomena Deep"
+  short_description: "Build bounded mathematical bridges across domains"
+  default_prompt: "Use $explore-phenomena-deep to connect these phenomena mathematically while marking evidence, broken correspondences, and open-problem status."
+policy:
+  allow_implicit_invocation: false

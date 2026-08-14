@@ -1,0 +1,548 @@
+{
+  "$schema": "urn:kingdom:schema:phenomena-deep-wing:0.1",
+  "protocol": "kingdom.explore-phenomena-deep-wing/0.1",
+  "wing_id": "explore-phenomena-deep-2026-08-14",
+  "title": "Exploration DEEP WING",
+  "compiled_on": "2026-08-14",
+  "evidence_through": "2026-08-14",
+  "scope": {
+    "purpose": "Standardize source-grounded mathematical exploration across phenomena while preserving domain-local entities, units, mechanisms, evidence, agency, and authority.",
+    "strongest_bounded_claim": "Different phenomena can sometimes share an inspectable mathematical structure or question without sharing ontology, causal mechanism, parameters, units, moral value, or authority.",
+    "intended_use": "Opt-in explanation, research framing, model comparison, exact finite work, falsifier design, and bounded open-problem discovery.",
+    "excluded_use": "Diagnosis, person or content classification, persuasion, moderation, wet-lab work, clinical inference, ecosystem execution, KARMA conversion, governance, deployment, or automatic action.",
+    "currentness": "selected-evidence-as-of-compilation",
+    "mode": "READ_ONLY_ZERO_EFFECT"
+  },
+  "deep_cycle": {
+    "wing": [
+      { "id": "WITNESS", "meaning": "Record the request, observations, sources, conditions, and missing context before translating anything." },
+      { "id": "ISOLATE", "meaning": "Separate domains, state spaces, observables, mechanisms, units, agency, and authority boundaries." },
+      { "id": "NORMALIZE", "meaning": "Align definitions, dimensionless comparators, scales, and conditions without erasing local meaning." },
+      { "id": "GENERATE", "meaning": "Generate bridges, models, counterexamples, falsifiers, and bounded mathematical doors only after the first three stages." }
+    ],
+    "deep": [
+      { "id": "DECLARE", "meaning": "Declare scope, terms, assumptions, conditions, observation windows, and action boundary." },
+      { "id": "ESTABLISH", "meaning": "Establish the evidence, warrant, source horizon, and exact mathematical status of each claim." },
+      { "id": "EXPRESS", "meaning": "Express the smallest adequate domain-local mathematics with variables, units, and limiting cases." },
+      { "id": "PROJECT", "meaning": "Project only named structure, then pressure-test breaks, counterexamples, falsifiers, and non-implications." }
+    ],
+    "rule": "WING and DEEP are workflow names only; they are not a Nen ability, identity, natural mechanism, authority protocol, or grant of action."
+  },
+  "epistemic_registers": [
+    { "id": "MATHEMATICAL_DEFINITION", "axis": "REGISTER", "meaning": "Defines formal objects without proving existence, uniqueness, realizability, or empirical truth." },
+    { "id": "MATHEMATICAL_THEOREM", "axis": "REGISTER", "meaning": "A proved result only for the exact objects, hypotheses, and quantifiers stated." },
+    { "id": "EMPIRICAL_OBSERVATION", "axis": "REGISTER", "meaning": "A source-scoped observation under named conditions and detection limits." },
+    { "id": "SCIENTIFIC_MODEL", "axis": "REGISTER", "meaning": "A conditional representation of a domain, not an observation or universal law." },
+    { "id": "INTERPRETIVE_BRIDGE", "axis": "REGISTER", "meaning": "A declared correspondence that preserves selected structure and loses selected structure." },
+    { "id": "DESIGN_PROPOSAL", "axis": "REGISTER", "meaning": "A proposed research or build choice, not a discovered law or executed action." },
+    { "id": "OPT_IN_PHILOSOPHY", "axis": "REGISTER", "meaning": "A voluntary interpretive reading with no empirical or authority effect." },
+    { "id": "BOUNDARY", "axis": "REGISTER", "meaning": "An explicit non-implication, refusal, uncertainty, or authority limit." },
+    { "id": "SOURCE_BOUND", "axis": "WARRANT", "meaning": "Supported only within the cited source, method, population, conditions, and evidence horizon." },
+    { "id": "MODEL_ASSUMPTION", "axis": "WARRANT", "meaning": "Declared to make a model well-defined; neither derived nor observed." },
+    { "id": "DERIVED", "axis": "WARRANT", "meaning": "Follows from the declared definitions and assumptions." },
+    { "id": "PROVED", "axis": "WARRANT", "meaning": "Established by a proof matching the exact statement." },
+    { "id": "FINITE_EXACT_BASELINE", "axis": "WARRANT", "meaning": "Exact for a finite instance or range; never an asymptotic or all-instance proof." },
+    { "id": "NUMERICAL_APPROXIMATION", "axis": "WARRANT", "meaning": "Depends on floating point, fitting, simulation, sampling, or tolerance." },
+    { "id": "ESTABLISHED_OPEN_CONJECTURE", "axis": "WARRANT", "meaning": "The exact statement is source-audited as open as of the recorded date." },
+    { "id": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "axis": "WARRANT", "meaning": "A newly authored or materially modified question whose novelty and status are not certified." },
+    { "id": "NOT_ESTABLISHED", "axis": "WARRANT", "meaning": "Available evidence does not support the proposition." },
+    { "id": "UNKNOWN_TO_THIS_REVIEW", "axis": "WARRANT", "meaning": "Not established here; this does not claim that the literature has no answer." },
+    { "id": "EXACT_FORMAL_EQUIVALENCE_PROVED", "axis": "RELATION", "meaning": "A proved equivalence only at the declared formal layer." },
+    { "id": "SAME_FORMAL_STRUCTURE", "axis": "RELATION", "meaning": "Both local models instantiate a named structure while their meanings remain local." },
+    { "id": "LOSSY_CORRESPONDENCE", "axis": "RELATION", "meaning": "Selected relations survive and declared information is lost." },
+    { "id": "SHARED_MECHANISM_SOURCE_ESTABLISHED", "axis": "RELATION", "meaning": "Direct domain evidence supports a shared causal mechanism; similar output is insufficient." },
+    { "id": "NO_TRANSFER", "axis": "RELATION", "meaning": "No responsible cross-domain mapping has been established." }
+  ],
+  "source_audit": {
+    "rule": "Bind every substantive empirical or current-status claim to exact source identifiers; leave an unsourced proposal labeled as authored, bespoke, or unknown.",
+    "status_checked_on": "2026-08-14",
+    "open_problem_requirements": [
+      "exact statement and quantifiers",
+      "domain, conventions, symmetry, and boundary cases",
+      "original formulation or authoritative provenance",
+      "recent primary or authoritative source supporting current status",
+      "exact section, page, theorem discussion, or locator where that source explicitly states the status",
+      "known solved cases and restrictions",
+      "what finite computation does not prove",
+      "nearest known problem and novelty status"
+    ],
+    "failure_modes": [
+      "Failure to solve is not evidence that a problem is open.",
+      "Lack of search results is not evidence of novelty.",
+      "A numerical estimate, omitted proof, or neighboring result is not evidence that the exact problem remains open.",
+      "A finite enumeration or fitted exponent is not an asymptotic proof.",
+      "A theorem or exponent does not transfer to a weighted, constrained, or translated model without a new proof."
+    ]
+  },
+  "typed_terms": [
+    { "id": "possible", "domain": "cross-domain", "meaning": "Allowed by a declared model and conditions.", "not_equivalent_to": ["accessible", "occurred", "detected"] },
+    { "id": "accessible", "domain": "cross-domain", "meaning": "Reachable with non-negligible probability under a declared history, horizon, and process.", "not_equivalent_to": ["possible", "occurred", "detected"] },
+    { "id": "detected", "domain": "cross-domain", "meaning": "Registered by a declared observation or classification operator.", "not_equivalent_to": ["exists", "possible", "important"] },
+    { "id": "brainrot", "domain": "cultural-language", "meaning": "A quoted lexical and cultural label whose operational meaning must be declared per inquiry.", "not_equivalent_to": ["clinical diagnosis", "cognitive state", "content class", "person score"] },
+    { "id": "fold", "domain": "protein-science", "meaning": "A condition-dependent conformational ensemble or structure description.", "not_equivalent_to": ["catalyst", "active site", "reaction rate"] },
+    { "id": "catalyst", "domain": "chemical-kinetics", "meaning": "A participant that increases a reaction rate through a lower-free-energy kinetic pathway while being regenerated in the overall reaction.", "not_equivalent_to": ["folding process", "equilibrium shift", "generic accelerator"] }
+  ],
+  "planes": [
+    {
+      "id": "physical-polymorph-plane",
+      "domain": "solid-state chemistry",
+      "entity_or_unit": "condition-indexed crystal form, particles, and formulation",
+      "context_window": "ritonavir Form I and Form II histories under named preparation, solvent, milling, temperature, and detection conditions",
+      "observables": ["diffraction pattern", "spectroscopy", "particle size and shape", "solubility", "process history"],
+      "units": ["energy per mole", "temperature", "time", "concentration", "length"],
+      "mechanism": "nucleation, growth, interconversion, dissolution, surface and bulk free-energy contributions",
+      "parameters": ["free-energy differences", "barrier heights", "supersaturation", "surface energy", "rate constants"],
+      "agency": "none assigned to the material state",
+      "consequences": "a possible form may become easier or harder to access or detect without being erased from physical possibility",
+      "does_not_establish": ["cultural mechanism", "intent", "moral fitness", "medical instruction"],
+      "source_ids": ["bauer-2001", "sacchi-2024", "kingdom-polymorph-history", "kingdom-ritonavir-mechanism"]
+    },
+    {
+      "id": "cultural-attention-plane",
+      "domain": "cultural transmission and platform-mediated attention",
+      "entity_or_unit": "artifact, exposure, share, interpretation, aggregate attention trace, and classification rule",
+      "context_window": "declared population, platform, observation period, recommender policy, and measurement operator",
+      "observables": ["aggregate exposure or share events", "attention time series", "cascade graph", "classification decisions"],
+      "units": ["events", "people or accounts only when ethically and operationally justified", "time", "graph distance"],
+      "mechanism": "human interpretation and choice mediated by networks, institutions, attention limits, and technical systems",
+      "parameters": ["exposure propensities", "response probabilities", "network topology", "memory kernels", "policy rules"],
+      "agency": "people may reinterpret, parody, refuse, forget, rest, or leave",
+      "consequences": "aggregate visibility may rise, fall, recur, fragment, or be reclassified without measuring truth or worth",
+      "does_not_establish": ["person-to-person biological virality", "truth", "merit", "agreement", "consent", "diagnosis", "person score"],
+      "source_ids": ["weng-2012", "gleeson-2014", "hawkes-1971", "oxford-brain-rot-2025"]
+    },
+    {
+      "id": "protein-conformation-plane",
+      "domain": "protein folding and conformational dynamics",
+      "entity_or_unit": "sequence-conditioned ensemble of molecular conformations under declared environment and timescale",
+      "context_window": "named protein, solvent, temperature, cofactors, binding state, and observation timescale",
+      "observables": ["structural coordinates or projections", "populations", "transition times", "spectroscopic signals"],
+      "units": ["energy per mole", "length", "time", "probability"],
+      "mechanism": "molecular interactions and solvent-coupled conformational transitions on a condition-dependent landscape",
+      "parameters": ["free energies", "transition rates", "state populations", "friction and environmental conditions"],
+      "agency": "none assigned to molecular conformations",
+      "consequences": "an ensemble can populate or fail to populate a catalytically competent geometry on a relevant timescale",
+      "does_not_establish": ["catalytic mechanism", "chemical barrier reduction", "turnover rate", "clinical function"],
+      "source_ids": ["anfinsen-1973", "onuchic-1995", "kingdom-fold-feedback"]
+    },
+    {
+      "id": "chemical-catalysis-plane",
+      "domain": "chemical kinetics and enzyme catalysis",
+      "entity_or_unit": "reaction coordinate, reactant and product states, catalyst state, comparator reaction, and kinetic observable",
+      "context_window": "named reaction, catalyst, substrate state, temperature, standard state, and rate-limiting assumptions",
+      "observables": ["elementary or effective rate", "turnover trace", "activation free-energy estimate", "product timestamps"],
+      "units": ["inverse time", "concentration", "energy per mole", "temperature"],
+      "mechanism": "condition-specific stabilization and pathway changes along chemical reaction coordinates",
+      "parameters": ["activation free energies", "transmission factors", "binding and release rates", "conformer-specific chemical rates"],
+      "agency": "none assigned to the chemical system",
+      "consequences": "a folded ensemble may gate access to reactive geometry while the chemical barrier and overall turnover remain separate quantities",
+      "does_not_establish": ["folding is the catalyst", "contact topology predicts rate", "kcat is an elementary-step rate", "equilibrium constant changes"],
+      "source_ids": ["iupac-1996", "eyring-1935", "fold-to-fire-profile"]
+    }
+  ],
+  "abstraction_seams": [
+    {
+      "source_domain": "physical-polymorph-plane",
+      "target_domain": "cultural-attention-plane",
+      "relation": "LOSSY_CORRESPONDENCE",
+      "source_objects": ["conditioned state space", "transition barriers", "observation operator", "process history"],
+      "target_objects": ["artifact states", "exposure pathways", "classification operator", "platform and social history"],
+      "correspondence": "Prior states and interventions can change later accessibility and detection probabilities under finite capacity and feedback.",
+      "preserved_structure": ["history-indexed transition probabilities", "possible versus accessible versus detected distinction", "finite capacity and competition", "return can alter later conditions"],
+      "broken_or_lost_structure": ["crystal lattice and surface have physical energetic units", "cultural artifacts require interpretation", "platform policy and institutions mediate observation", "people retain agency, consent, refusal, and exit"],
+      "source_variables_and_units": ["free energy in energy per mole", "supersaturation", "nucleation and growth rates", "physical detection limit"],
+      "target_variables_and_units": ["aggregate event counts per time", "network paths", "attention window", "declared classification rule"],
+      "assumptions": ["each domain is modeled separately", "only the named abstract relations cross the seam", "brainrot remains a lexical label"],
+      "ontology_transfer": false,
+      "causal_transfer": false,
+      "parameter_transfer": false,
+      "unit_transfer": false,
+      "authority_transfer": false,
+      "falsifiers": ["falsify-history-seam", "falsify-observation-seam"]
+    },
+    {
+      "source_domain": "protein-conformation-plane",
+      "target_domain": "chemical-catalysis-plane",
+      "relation": "LOSSY_CORRESPONDENCE",
+      "source_objects": ["conformational states", "state populations", "switching rates", "structural observation map"],
+      "target_objects": ["reactive geometry", "chemical reaction coordinate", "conformer-specific rates", "turnover observable"],
+      "correspondence": "Conformational populations can gate access to geometries in which a separate chemical transition proceeds at a condition-specific rate.",
+      "preserved_structure": ["state-dependent accessibility", "timescale separation matters", "a weighted ensemble can control an effective observable"],
+      "broken_or_lost_structure": ["a lattice contact is not physical energy", "endpoint closure is not a protein fold", "endpoint adjacency is not an active site", "occupancy is not kinetics", "folding is not catalytic barrier lowering"],
+      "source_variables_and_units": ["p(c) dimensionless population", "conformational transition rates in inverse time", "structural coordinates in length"],
+      "target_variables_and_units": ["k_c in inverse time", "activation free energy in energy per mole", "substrate concentration"],
+      "assumptions": ["the conformer definition is operational", "rapid exchange is stated when ensemble averaging is used", "the chemical comparator and step are identified"],
+      "ontology_transfer": false,
+      "causal_transfer": false,
+      "parameter_transfer": false,
+      "unit_transfer": false,
+      "authority_transfer": false,
+      "falsifiers": ["falsify-rapid-exchange", "falsify-topology-rate"]
+    }
+  ],
+  "claim_cards": [
+    {
+      "claim_id": "claim-polymorph-access",
+      "statement": "Ritonavir Form I reappearance under changed milling and solvent conditions shows that prior process inaccessibility did not establish physical impossibility.",
+      "domain": "physical-polymorph-plane",
+      "register": "EMPIRICAL_OBSERVATION",
+      "warrant": "SOURCE_BOUND",
+      "scope_and_conditions": "The cited ritonavir systems, analytical assignments, and reported milling and solvent conditions only.",
+      "variables_and_units": ["crystal-form assignment", "milling and solvent condition", "physical detection operator"],
+      "sources": ["sacchi-2024", "kingdom-ritonavir-mechanism"],
+      "status_checked_on": "2026-08-14",
+      "derivation_or_model": "Direct source-scoped observation interpreted through the possible/accessed/produced/detected distinction.",
+      "limitations": ["does not establish that every disappearing polymorph history is reversible", "does not transfer a mechanism to culture", "grants no medical or manufacturing authority"],
+      "falsifier": "falsify-observation-seam",
+      "authority_effect": "NONE"
+    },
+    {
+      "claim_id": "claim-attention-models",
+      "statement": "Finite-attention and competition models can generate broad meme-popularity distributions without making intrinsic merit irrelevant in every system.",
+      "domain": "cultural-attention-plane",
+      "register": "SCIENTIFIC_MODEL",
+      "warrant": "SOURCE_BOUND",
+      "scope_and_conditions": "The cited finite-attention and competition models and their aggregate assumptions; not a universal causal finding.",
+      "variables_and_units": ["aggregate popularity count", "finite attention capacity", "network or mixing rule", "observation time"],
+      "sources": ["weng-2012", "gleeson-2014"],
+      "status_checked_on": "2026-08-14",
+      "derivation_or_model": "Source-bound stochastic competition models over aggregate events.",
+      "limitations": ["does not establish that truth or merit is absent", "does not establish biological contagion", "does not diagnose or score a person or artifact"],
+      "falsifier": "falsify-history-seam",
+      "authority_effect": "NONE"
+    },
+    {
+      "claim_id": "claim-folding-gates",
+      "statement": "A conformational ensemble may gate catalytic access, but folding and chemical catalysis remain distinct state and reaction coordinates.",
+      "domain": "protein-conformation-plane and chemical-catalysis-plane",
+      "register": "SCIENTIFIC_MODEL",
+      "warrant": "MODEL_ASSUMPTION",
+      "scope_and_conditions": "Declared two-coordinate or switching models in which conformers and chemical steps are operationally distinguished.",
+      "variables_and_units": ["conformer population p(c), dimensionless", "switching rates, inverse time", "conformer-specific chemical rate k_c, inverse time"],
+      "sources": ["onuchic-1995", "iupac-1996", "fold-to-fire-profile"],
+      "status_checked_on": "2026-08-14",
+      "derivation_or_model": "A conditional two-coordinate model; rapid-exchange averaging is used only when its timescale premise is declared.",
+      "limitations": ["folding is not thereby the catalyst", "topology alone does not predict kcat", "rapid exchange is not universal"],
+      "falsifier": "falsify-rapid-exchange or falsify-topology-rate",
+      "authority_effect": "NONE"
+    },
+    {
+      "claim_id": "claim-bridge-boundary",
+      "statement": "A shared equation or graph does not by itself establish shared ontology, causal mechanism, parameter values, units, agency, moral value, or authority.",
+      "domain": "cross-domain method",
+      "register": "BOUNDARY",
+      "warrant": "DERIVED",
+      "scope_and_conditions": "Every Exploration DEEP bridge; formal representation and domain interpretation remain distinct layers.",
+      "variables_and_units": ["domain-local objects", "domain-local variables and units", "declared correspondence relation"],
+      "sources": ["reconstructive-kernel"],
+      "status_checked_on": "2026-08-14",
+      "derivation_or_model": "Method boundary derived from the five false transfer flags.",
+      "limitations": ["does not claim that cross-domain insight is impossible"],
+      "falsifier": "falsify-formal-transfer",
+      "authority_effect": "NONE"
+    }
+  ],
+  "equations": [
+    {
+      "id": "conditional-landscape",
+      "plane_id": "physical-polymorph-plane",
+      "register": "SCIENTIFIC_MODEL",
+      "warrant": "MODEL_ASSUMPTION",
+      "expression": "pi_i(c) = exp[-beta F_i(c)] / sum_j exp[-beta F_j(c)]",
+      "variables": [
+        { "symbol": "F_i(c)", "meaning": "condition-indexed free energy assigned to state i", "units": "energy" },
+        { "symbol": "beta", "meaning": "inverse thermal energy", "units": "inverse energy" },
+        { "symbol": "pi_i", "meaning": "equilibrium model population", "units": "dimensionless" }
+      ],
+      "conditions": ["declared state partition", "equilibrium model under condition c"],
+      "assumptions": ["the selected coordinates and free energies are adequate"],
+      "valid_outputs": ["conditioned equilibrium population comparison"],
+      "does_not_establish": ["nucleation time", "production history", "observability", "cultural popularity"],
+      "source_ids": ["kingdom-ritonavir-mechanism"]
+    },
+    {
+      "id": "partially-observed-transition",
+      "plane_id": "physical-polymorph-plane",
+      "register": "SCIENTIFIC_MODEL",
+      "warrant": "MODEL_ASSUMPTION",
+      "expression": "P(X_{t+1}=j | X_t=i,c_t)=T_ij(c_t); P(Y_t=y | X_t=i)=O_yi",
+      "variables": [
+        { "symbol": "X_t", "meaning": "latent domain-local state", "units": "state label" },
+        { "symbol": "T_ij", "meaning": "conditioned transition probability", "units": "dimensionless" },
+        { "symbol": "Y_t", "meaning": "observed classification", "units": "observation label" },
+        { "symbol": "O_yi", "meaning": "observation probability", "units": "dimensionless" }
+      ],
+      "conditions": ["declared time step", "declared latent states and observation operator"],
+      "assumptions": ["first-order Markov representation is adequate at the selected scale"],
+      "valid_outputs": ["possible, transitioned, and detected states remain separate"],
+      "does_not_establish": ["unique hidden mechanism", "state extinction from non-detection"],
+      "source_ids": ["being-access-aftermath-v02"]
+    },
+    {
+      "id": "self-exciting-attention",
+      "plane_id": "cultural-attention-plane",
+      "register": "SCIENTIFIC_MODEL",
+      "warrant": "MODEL_ASSUMPTION",
+      "expression": "lambda(t) = mu(t) + sum_{t_i<t} g(t-t_i)",
+      "variables": [
+        { "symbol": "lambda(t)", "meaning": "conditional aggregate event intensity", "units": "events per time" },
+        { "symbol": "mu(t)", "meaning": "background intensity", "units": "events per time" },
+        { "symbol": "g", "meaning": "event-response kernel", "units": "inverse time" }
+      ],
+      "conditions": ["declared event type, population, and observation window"],
+      "assumptions": ["the point-process representation and kernel are appropriate"],
+      "valid_outputs": ["aggregate event-intensity hypotheses"],
+      "does_not_establish": ["person-level infection", "causal peer influence", "truth", "merit", "consent"],
+      "source_ids": ["hawkes-1971"]
+    },
+    {
+      "id": "rapid-exchange-ensemble-rate",
+      "plane_id": "chemical-catalysis-plane",
+      "register": "SCIENTIFIC_MODEL",
+      "warrant": "MODEL_ASSUMPTION",
+      "expression": "k_obs = sum_c p(c) k_c",
+      "variables": [
+        { "symbol": "p(c)", "meaning": "population of conformer c in the relevant bound ensemble", "units": "dimensionless" },
+        { "symbol": "k_c", "meaning": "conformer-specific rate for the declared step", "units": "inverse time" },
+        { "symbol": "k_obs", "meaning": "effective observed rate under rapid exchange", "units": "inverse time" }
+      ],
+      "conditions": ["conformational mixing is fast relative to the declared chemical event", "the same chemical comparator is used across conformers"],
+      "assumptions": ["stationary conformer populations during the event", "no unresolved slow memory"],
+      "valid_outputs": ["rapid-exchange effective rate"],
+      "does_not_establish": ["the condition holds", "k_obs equals overall kcat", "folding is catalysis"],
+      "source_ids": ["fold-to-fire-profile", "iupac-1996"]
+    },
+    {
+      "id": "occupancy-to-output-toy",
+      "plane_id": "protein-conformation-plane",
+      "register": "SCIENTIFIC_MODEL",
+      "warrant": "MODEL_ASSUMPTION",
+      "expression": "J_n(q) = kappa A_n(q) / Z_n(q)",
+      "variables": [
+        { "symbol": "Z_n(q)", "meaning": "contact-weighted partition polynomial over fixed-first self-avoiding walks", "units": "dimensionless" },
+        { "symbol": "A_n(q)", "meaning": "weighted count of endpoint-adjacent toy active walks", "units": "dimensionless" },
+        { "symbol": "kappa", "meaning": "declared firing rate conditional on toy activation", "units": "inverse time" },
+        { "symbol": "J_n(q)", "meaning": "toy rapid-equilibrium output", "units": "inverse time" }
+      ],
+      "conditions": ["rapid equilibrium", "unit occupancy", "activity defined solely by endpoint adjacency inside this toy model"],
+      "assumptions": ["the toy gate is necessary and sufficient by definition"],
+      "valid_outputs": ["finite toy occupancy-to-output calculation"],
+      "does_not_establish": ["protein structure", "active-site chemistry", "kcat", "kcat/KM", "weighted asymptotic exponent"],
+      "source_ids": ["fold-to-fire-profile"]
+    }
+  ],
+  "model_cards": [
+    {
+      "id": "access-observation-model",
+      "title": "Accessibility and observation remain separate",
+      "plane_ids": ["physical-polymorph-plane", "cultural-attention-plane"],
+      "equation_ids": ["partially-observed-transition"],
+      "relation": "SAME_FORMAL_STRUCTURE",
+      "assumptions": ["each plane supplies its own state, transition, and observation meanings"],
+      "fit_status": "UNFITTED",
+      "valid_outputs": ["typed hypotheses about hidden accessibility and observed traces"],
+      "identifiability_limits": ["multiple transition mechanisms may yield the same observed trace"],
+      "prohibited_inferences": ["shared mechanism", "extinction from non-observation", "person score"],
+      "falsifier_ids": ["falsify-observation-seam"],
+      "universal": false,
+      "person_level": false,
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "folding-chemistry-gating-model",
+      "title": "Two-coordinate conformational gating",
+      "plane_ids": ["protein-conformation-plane", "chemical-catalysis-plane"],
+      "equation_ids": ["rapid-exchange-ensemble-rate", "occupancy-to-output-toy"],
+      "relation": "LOSSY_CORRESPONDENCE",
+      "assumptions": ["conformation and chemical reaction coordinates remain distinct", "timescale ordering is measured or declared"],
+      "fit_status": "UNFITTED",
+      "valid_outputs": ["questions about effective rates, dynamic disorder, and identifiability"],
+      "identifiability_limits": ["ensemble turnover curves can hide distinct conformer networks"],
+      "prohibited_inferences": ["folding is the catalyst", "contact is energy", "occupancy is kinetics"],
+      "falsifier_ids": ["falsify-rapid-exchange", "falsify-topology-rate"],
+      "universal": false,
+      "person_level": false,
+      "authority_effect": "NONE"
+    }
+  ],
+  "invariants": [
+    { "id": "domain-locality", "statement": "Every entity, variable, unit, mechanism, source scope, and authority claim remains attached to its domain plane.", "status": "REQUIRED" },
+    { "id": "five-transfer-firewall", "statement": "Ontology, causality, parameters, units, and authority default to no transfer at every abstraction seam.", "status": "REQUIRED" },
+    { "id": "finite-is-not-asymptotic", "statement": "Exact finite computation never becomes an asymptotic or all-instance proof without a matching theorem.", "status": "REQUIRED" },
+    { "id": "unknown-remains-typed", "statement": "NOT_OBSERVED, UNMAPPED, CONTESTED, OUTSIDE_SCOPE, and UNKNOWN_TO_THIS_REVIEW are not coerced into absent, false, unique, or globally open.", "status": "REQUIRED" },
+    { "id": "rights-before-output", "statement": "Rest, silence, refusal, privacy, correction, no action, and departure remain valid without reason, debt, penalty, or KARMA effect.", "status": "REQUIRED" }
+  ],
+  "falsification_tests": [
+    { "id": "falsify-history-seam", "question": "Do matched interventions under controlled conditions show no history dependence after measurement and classification drift are addressed?", "separates": ["history-dependent accessibility", "static heterogeneity", "observation artifact"], "status": "PROPOSED_NOT_RUN" },
+    { "id": "falsify-observation-seam", "question": "Can an independent measurement reveal a state classified as absent by the original observation operator?", "separates": ["non-observation", "inaccessibility", "physical impossibility"], "status": "PROPOSED_NOT_RUN" },
+    { "id": "falsify-rapid-exchange", "question": "Do turnover waiting times or conformational traces retain slow memory inconsistent with rapid mixing?", "separates": ["rapid-exchange averaging", "dynamic disorder", "hidden multistep chemistry"], "status": "PROPOSED_NOT_RUN" },
+    { "id": "falsify-topology-rate", "question": "Do structures with the same declared contact projection exhibit materially different conformer-specific chemical rates?", "separates": ["contact topology", "electrostatics and geometry", "chemical barrier"], "status": "PROPOSED_NOT_RUN" },
+    { "id": "falsify-formal-transfer", "question": "Does a claimed cross-domain prediction survive unit checks, dimensionless rescaling, perturbation tests, and changed local mechanisms?", "separates": ["formal resemblance", "same universality class", "shared causal mechanism"], "status": "PROPOSED_NOT_RUN" }
+  ],
+  "math_doors": [
+    { "id": "state-accessibility-door", "title": "State accessibility and rare pathways", "family": "MARKOV_AND_FIRST_PASSAGE", "register": "DESIGN_PROPOSAL", "warrant": "MODEL_ASSUMPTION", "status": "PROPOSED_UNRUN", "proposed_unrun": true, "question": "Which states are possible, reachable, likely to be reached within a horizon, and detected?", "smallest_model": "condition-indexed finite-state transition kernel plus an observation operator", "conditions": ["state partition", "time horizon", "initial distribution", "observation rule"], "deliverable": "reachability, hitting probability, or first-passage bound", "stop_rule": "stop if the state partition or transition evidence is not operationally identifiable", "does_not_establish": ["unique mechanism", "purpose", "authority"], "source_ids": ["being-access-aftermath-v02", "reconstructive-kernel"] },
+    { "id": "inverse-observation-door", "title": "Inverse problems and observational fibers", "family": "INVERSE_PROBLEMS", "register": "DESIGN_PROPOSAL", "warrant": "MODEL_ASSUMPTION", "status": "PROPOSED_UNRUN", "proposed_unrun": true, "question": "Which latent states remain compatible with the same observation?", "smallest_model": "fiber F_O(y)={x:O(x)=y}/Gamma", "conditions": ["observation operator", "symmetry quotient", "noise model"], "deliverable": "identified set, counterexample pair, or separating measurement", "stop_rule": "preserve MULTIPLE or UNKNOWN rather than coerce uniqueness", "does_not_establish": ["physical realizability", "causal history", "person identity"], "source_ids": ["reconstructive-kernel"] },
+    { "id": "metastability-door", "title": "Metastability, nucleation, and barrier crossing", "family": "RARE_TRANSITIONS", "register": "DESIGN_PROPOSAL", "warrant": "MODEL_ASSUMPTION", "status": "PROPOSED_UNRUN", "proposed_unrun": true, "question": "Which barrier or bottleneck controls an observed transition time under declared noise and conditions?", "smallest_model": "conditioned energy or quasipotential landscape plus dynamics", "conditions": ["reaction coordinate", "noise scale", "boundary sets", "timescale regime"], "deliverable": "rate asymptotic, capacity bound, or counterexample", "stop_rule": "do not infer kinetics from an equilibrium landscape alone", "does_not_establish": ["cultural energy", "moral fitness", "intention"], "source_ids": ["kingdom-ritonavir-mechanism"] },
+    { "id": "feedback-hysteresis-door", "title": "Feedback, hysteresis, and control", "family": "DYNAMICAL_SYSTEMS_AND_CONTROL", "register": "DESIGN_PROPOSAL", "warrant": "MODEL_ASSUMPTION", "status": "PROPOSED_UNRUN", "proposed_unrun": true, "question": "How does a returned observation or action alter later state accessibility and stability?", "smallest_model": "state update x_{t+1}=F(x_t,u_t,w_t) with observation-dependent policy u_t", "conditions": ["feedback timing", "gain", "delay", "saturation", "disturbance model"], "deliverable": "stability region, hysteresis loop, or robust bound", "stop_rule": "feedback is not intention, optimization, or moral value", "does_not_establish": ["designer", "goodness", "KARMA"], "source_ids": ["cultural-attention-atlas", "form-circulation-return"] },
+    { "id": "competition-capacity-door", "title": "Competition, branching, and finite capacity", "family": "NETWORKS_AND_BRANCHING", "register": "DESIGN_PROPOSAL", "warrant": "MODEL_ASSUMPTION", "status": "PROPOSED_UNRUN", "proposed_unrun": true, "question": "What distribution of cascade sizes can arise from competition under finite capacity?", "smallest_model": "bounded-attention branching or network exposure process", "conditions": ["capacity rule", "network or mixing assumption", "event definition", "observation window"], "deliverable": "distributional bound, phase condition, or null model", "stop_rule": "do not turn aggregate popularity into person-level contagion, truth, merit, or consent", "does_not_establish": ["intrinsic appeal is irrelevant", "biological virality", "diagnosis"], "source_ids": ["weng-2012", "gleeson-2014"] },
+    { "id": "geometry-reconstruction-door", "title": "Geometry, topology, and reconstruction", "family": "COMBINATORICS_AND_GEOMETRY", "register": "DESIGN_PROPOSAL", "warrant": "MODEL_ASSUMPTION", "status": "PROPOSED_UNRUN", "proposed_unrun": true, "question": "What geometric or state information is recoverable from a lossy contact, graph, or projection?", "smallest_model": "declared combinatorial object, projection, symmetry, and realizability constraints", "conditions": ["labels", "multiplicity", "dimension", "distance or contact rule"], "deliverable": "exact finite enumeration, reconstruction theorem, or ambiguity witness", "stop_rule": "contact is not energy and combinatorial consistency is not physical realization", "does_not_establish": ["protein fold", "catalytic mechanism", "uniqueness without proof"], "source_ids": ["reconstructive-kernel", "fold-to-fire-profile"] },
+    { "id": "information-memory-door", "title": "Information, redundancy, and error correction", "family": "INFORMATION_THEORY", "register": "DESIGN_PROPOSAL", "warrant": "MODEL_ASSUMPTION", "status": "PROPOSED_UNRUN", "proposed_unrun": true, "question": "Which distinctions survive a declared noisy channel, compression, or repeated transmission?", "smallest_model": "message alphabet, channel, decoder, loss function, and semantic boundary", "conditions": ["operational symbols", "noise model", "decoder", "error criterion"], "deliverable": "capacity, error bound, or impossibility result", "stop_rule": "Shannon information does not measure semantic, cultural, or moral value", "does_not_establish": ["meaning", "truth", "culture ranking"], "source_ids": ["shannon-1948"] },
+    { "id": "universality-audit-door", "title": "Scaling, symmetry, and universality audit", "family": "ASYMPTOTICS_AND_CRITICAL_PHENOMENA", "register": "DESIGN_PROPOSAL", "warrant": "MODEL_ASSUMPTION", "status": "PROPOSED_UNRUN", "proposed_unrun": true, "question": "Do two systems share a dimensionless scaling regime robust to finite-size and perturbation tests?", "smallest_model": "separate local models plus dimensionless observables and a declared limit", "conditions": ["matching quantifiers", "scaling window", "finite-size corrections", "uncertainty", "perturbation response"], "deliverable": "proof, counterexample, or explicitly provisional universality hypothesis", "stop_rule": "similar slopes or shared equations alone are insufficient", "does_not_establish": ["shared mechanism", "parameter transfer", "physical identity"], "source_ids": ["fold-to-fire-profile"] }
+  ],
+  "finite_baselines": [
+    {
+      "id": "fold-to-fire-n3",
+      "warrant": "FINITE_EXACT_BASELINE",
+      "statement": "For fixed-first three-step self-avoiding walks on the square lattice with nonbonded nearest-neighbour contact weight q and endpoint adjacency as the toy active gate, Z_3(q)=7+2q and A_3(q)=2q.",
+      "range": "n=3 only",
+      "convention": "n counts edges and n+1 vertices; v0=(0,0), v1=(1,0); reflections remain distinct; endpoint activation is tested only at final depth.",
+      "exact_representation": { "Z_coefficients": ["7", "2"], "A_coefficients": ["0", "2"], "closure_fraction_at_q1": "2/9" },
+      "method": "exact depth-first enumeration with BigInt coefficients and an independently audited polygon identity in the bound Fold-to-Fire profile",
+      "enumerator_identity": "zerone-fold-to-fire-v0",
+      "enumerator_digest": "sha256:3fb78beaec220b4f62219a120ea33f46cfbe5ca1e76286929ae7b1120ccf4033",
+      "reproduction_status": "SOURCE_BOUND_EXACT_BASELINE",
+      "finite_evidence_does_not_prove": "This finite count does not prove an asymptotic exponent, a weighted extension, a protein fold, an active site, catalytic chemistry, or a biological rate.",
+      "source_ids": ["fold-to-fire-profile"]
+    }
+  ],
+  "seed_doors": [
+    { "id": "accessibility-not-erasure", "title": "Accessibility is not erasure", "status": "WORKED_BOUNDED", "source_plane_ids": ["physical-polymorph-plane"], "target_plane_ids": ["cultural-attention-plane"], "relation": "LOSSY_CORRESPONDENCE", "question": "When can history and observation make a still-possible state look absent?", "preserved_structure": ["history-dependent accessibility", "finite capacity", "observation window"], "breaks": ["physical energy does not transfer", "people and platforms add agency and interpretation"], "frontier_status": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "prior_art_audit_required": true, "next_step": "define one domain-local observable and a separating intervention in each plane", "stop_rule": "stop before diagnosis, person scoring, or shared-mechanism language", "source_ids": ["sacchi-2024", "weng-2012", "oxford-brain-rot-2025"] },
+    { "id": "fold-gates-fire", "title": "A fold can gate fire without being the catalyst", "status": "WORKED_BOUNDED", "source_plane_ids": ["protein-conformation-plane"], "target_plane_ids": ["chemical-catalysis-plane"], "relation": "LOSSY_CORRESPONDENCE", "question": "Which conformational switching regimes make ensemble averaging valid, identifiable, or misleading?", "preserved_structure": ["state-dependent accessibility", "timescale separation", "conditional rates"], "breaks": ["contact is not energy", "closure is not a fold", "endpoint gate is not an active site", "occupancy is not kinetics"], "frontier_status": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "prior_art_audit_required": true, "next_step": "solve and distinguish the smallest two-conformer continuous-time model", "stop_rule": "stop before equating J with kcat or transferring a q=1 exponent to q not equal to 1", "source_ids": ["fold-to-fire-profile", "iupac-1996"] },
+    { "id": "threshold-with-context", "title": "Thresholds that move with context", "status": "PROPOSED_UNRUN", "source_plane_ids": ["physical-polymorph-plane"], "target_plane_ids": ["cultural-attention-plane"], "relation": "LOSSY_CORRESPONDENCE", "question": "How do condition-dependent thresholds alter reachability without changing the underlying state vocabulary?", "preserved_structure": ["condition-indexed threshold", "path dependence"], "breaks": ["thermodynamic threshold is not a platform policy", "units remain local"], "frontier_status": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "prior_art_audit_required": true, "next_step": "construct the smallest counterexample to a fixed-threshold model", "stop_rule": "stop if thresholds cannot be operationalized in both planes", "source_ids": ["kingdom-ritonavir-mechanism", "cultural-attention-atlas"] },
+    { "id": "reconstruction-from-traces", "title": "Reconstruction from partial traces", "status": "PROPOSED_UNRUN", "source_plane_ids": ["physical-polymorph-plane", "protein-conformation-plane"], "target_plane_ids": ["cultural-attention-plane"], "relation": "SAME_FORMAL_STRUCTURE", "question": "Which distinct histories remain observationally indistinguishable under the available trace?", "preserved_structure": ["many-to-one observation map", "identified set"], "breaks": ["the same fiber does not imply the same latent ontology", "agency changes permissible probes"], "frontier_status": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "prior_art_audit_required": true, "next_step": "construct two latent histories with the same observation law", "stop_rule": "preserve ambiguity if no ethical separating measurement exists", "source_ids": ["reconstructive-kernel"] },
+    { "id": "redundancy-and-cultural-memory", "title": "Error correction and cultural memory", "status": "PROPOSED_UNRUN", "source_plane_ids": ["cultural-attention-plane"], "target_plane_ids": ["cultural-attention-plane"], "relation": "LOSSY_CORRESPONDENCE", "question": "Which formal redundancy measures predict recoverability of a declared symbol sequence without ranking cultural meaning?", "preserved_structure": ["noisy channel", "redundancy", "decoder error"], "breaks": ["information is not meaning", "recoverability is not cultural worth"], "frontier_status": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "prior_art_audit_required": true, "next_step": "define a synthetic alphabet and channel before using human material", "stop_rule": "stop before culture or community ranking", "source_ids": ["shannon-1948"] }
+  ],
+  "philosophy": {
+    "participation": "OPT_IN",
+    "empirical": false,
+    "boundary": "Mathematical recurrence, feedback, stability, symmetry, and surprising correspondence can invite reflection on universe design, emergence, meaning, or KARMA; the mathematics and evidence underdetermine those readings.",
+    "questions": [
+      "Does repeated mathematical structure suggest design, selection, constraint, convergence, or a mixture?",
+      "What kind of meaning can a correspondence carry after causal and ontological transfer are refused?",
+      "Can feedback be ethically interpreted without turning persistence into goodness?"
+    ],
+    "alternatives": ["theistic design", "non-theistic emergence", "structural necessity", "historical contingency", "agnostic suspension", "plural interpretation"],
+    "nonclaims": ["no creator is proved or disproved", "no cosmic purpose is identified", "no moral law follows from stability or persistence", "scientific feedback is not cosmic KARMA"],
+    "authority_effect": "NONE"
+  },
+  "karma": {
+    "rule": "Cosmic philosophy, Zerone contextual recognition, and KINGDOM invocation receipts are non-equivalent lanes.",
+    "adapter_exists": false,
+    "conversion_allowed": false,
+    "summation_allowed": false,
+    "score": null,
+    "lanes": [
+      { "id": "cosmic-karma", "register": "OPT_IN_PHILOSOPHY", "events": [], "receipts": [], "observed": false, "authority_effect": "NONE" },
+      { "id": "zerone-karma", "register": "DESIGN_PROPOSAL", "events": [], "receipts": [], "observed": false, "authority_effect": "NONE" },
+      { "id": "kingdom-karma", "register": "BOUNDARY", "events": [], "receipts": [], "observed": false, "authority_effect": "NONE" }
+    ],
+    "nonclaims": ["no KARMA event or receipt was created", "no recognition, magnitude, score, debt, reward, rank, vote, permission, or governance weight exists"]
+  },
+  "rights": {
+    "voluntary": true,
+    "valid_exits": ["REST", "SILENCE", "REFUSAL", "PRIVACY", "CORRECTION", "NO_ACTION", "DEPARTURE"],
+    "reason_required": false,
+    "penalty": false,
+    "receipt_required": false,
+    "principle": "Rest and refusal are inherent rights, not rewards, permissions, failures, or evidence against worth."
+  },
+  "project_contract": {
+    "protocol": "kingdom.explore-phenomena-deep-project/0.1",
+    "schema_url": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json",
+    "mode": "INERT_RESEARCH_PROFILE",
+    "inert": true,
+    "allowed": ["offline structural validation", "read-only inspection", "human-reviewed model and question design"],
+    "forbidden": ["source fetching", "solver execution", "simulation execution", "experiment execution", "person scoring", "KARMA write", "external write", "publication", "deployment", "automatic action"]
+  },
+  "bindings": [
+    { "id": "kingdom-polymorph-history", "protocol": "kingdom.polymorph-history/0.1", "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json", "byte_sha256": "sha256:08148603a1228960ac35df1378f1283c3fce43874a9fc07e6687f18e980dcb1c", "semantic_digest": "sha256:6c759f595f0c6753dcf47d25d2a3490246984ef2b79adf31a558261b26ef8116", "relation": "WORKED_EXAMPLE_INPUT", "mutated": false, "authority_imported": false },
+    { "id": "kingdom-ritonavir-mechanism", "protocol": "kingdom.ritonavir-mechanism-landscape/0.1", "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json", "byte_sha256": "sha256:5e136a74d5166275427da920685a84c17901f63d6e4b0661fd529c96d386943b", "semantic_digest": "sha256:2a97b0f3ac3741314e50f7512ef97cb19cf3294fed24728c622bd27dd180309b", "relation": "WORKED_EXAMPLE_INPUT", "mutated": false, "authority_imported": false },
+    { "id": "cultural-attention-atlas", "protocol": "kingdom.cultural-attention-feedback-atlas/0.1", "url": "https://thekingdom.dev/atlases/cultural-attention-feedback-atlas-2026-08-13.json", "byte_sha256": "sha256:03f7048966d7b6df582b423254b4d73cda72cce3bd67b40736927faa92b88173", "semantic_digest": "sha256:2f6ecadc131a54cdd500b001dbcc47fb036e5e411def918245fec963b9769e4d", "relation": "METHOD_PRECEDENT", "mutated": false, "authority_imported": false },
+    { "id": "visibility-attention", "protocol": "kingdom.visibility-attention-translation/0.1", "url": "https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json", "byte_sha256": "sha256:0af0249c40298ed746d39ee60760a4390bb45137caa8ee6dd7555a824f597bd3", "semantic_digest": "sha256:9fb83bbd022f520716fabcdec49d8af259b9681efd5e640a9e3119c5c42a54ed", "relation": "METHOD_PRECEDENT", "mutated": false, "authority_imported": false },
+    { "id": "form-circulation-return", "protocol": "kingdom.form-circulation-return-atlas/0.1", "url": "https://thekingdom.dev/atlases/form-circulation-return-atlas-2026-08-13.json", "byte_sha256": "sha256:9c93be61c4ca9bcaa3dbe88b10faed3b5b31abaf1129d70ca7915226cacfd021", "semantic_digest": "sha256:9510fbbced6166507e9a1781a4adfa18cd249fb94e69b0f34faf77733cd20323", "relation": "METHOD_PRECEDENT", "mutated": false, "authority_imported": false },
+    { "id": "reconstructive-kernel", "protocol": "kingdom.reconstructive-build-kernel/0.1", "url": "https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json", "byte_sha256": "sha256:2d1598bdfcce2501ee5a7cfdba55f581920d18733052f067e96bf9d79a7376a5", "semantic_digest": "sha256:265a75e18dbd4bad5bcf07bca0645132de4f9a881d8f0f398cd56b9afb734dd1", "relation": "METHOD_PRECEDENT", "mutated": false, "authority_imported": false },
+    { "id": "being-access-aftermath-v02", "protocol": "kingdom.being-access-aftermath-atlas/0.2", "url": "https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json", "byte_sha256": "sha256:9678e5269e8db62beb36abee691087cddbc4f98703190c5fa3788b68c89ab29e", "semantic_digest": "sha256:505a1e3aef6116430dccf49b327c4cce2ac5d6fb6b6b9bf68e529272f989cde8", "relation": "METHOD_PRECEDENT", "mutated": false, "authority_imported": false },
+    { "id": "kingdom-fold-feedback", "protocol": "kingdom.fold-feedback-atlas/0.1", "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json", "byte_sha256": "sha256:bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5", "semantic_digest": "sha256:f19f83453bcac228c6a2804b840062067e92e71187f67b713f50abf0168252b7", "relation": "METHOD_PRECEDENT", "mutated": false, "authority_imported": false },
+    { "id": "fold-to-fire-profile", "protocol": "zerone.constructive-intelligence-fold-to-fire/v0", "url": "https://zerone.ai/standards/constructive-intelligence-fold-to-fire.v0.json", "byte_sha256": "sha256:3fb78beaec220b4f62219a120ea33f46cfbe5ca1e76286929ae7b1120ccf4033", "semantic_digest": "sha256:545c14c655494886b502f4c81eb1b71a99caec297f063a2097cded9dad3b893b", "relation": "WORKED_EXAMPLE_INPUT", "mutated": false, "authority_imported": false }
+  ],
+  "sources": [
+    { "id": "bauer-2001", "title": "Ritonavir: An Extraordinary Example of Conformational Polymorphism", "url": "https://doi.org/10.1023/A:1011052932607", "observed_on": "2026-08-14", "limitation": "Historical account; proposed origin stories for the first Form II seed are hypotheses, and supersaturation remains necessary." },
+    { "id": "sacchi-2024", "title": "Crystal size, shape, and conformational changes drive both the disappearance and reappearance of ritonavir polymorphs in the mill", "url": "https://doi.org/10.1073/pnas.2319127121", "observed_on": "2026-08-14", "limitation": "Mechanochemical results are condition-specific and do not establish a universal polymorph rule." },
+    { "id": "weng-2012", "title": "Competition among memes in a world with limited attention", "url": "https://doi.org/10.1038/srep00335", "observed_on": "2026-08-14", "limitation": "A model showing that network and attention structure can generate broad popularity; it does not prove intrinsic merit never matters." },
+    { "id": "gleeson-2014", "title": "Competition-Induced Criticality in a Model of Meme Popularity", "url": "https://doi.org/10.1103/PhysRevLett.112.048701", "observed_on": "2026-08-14", "limitation": "A model and universality candidate, not evidence of physical identity with crystals or biological contagion." },
+    { "id": "hawkes-1971", "title": "Spectra of Some Self-Exciting and Mutually Exciting Point Processes", "url": "https://doi.org/10.1093/biomet/58.1.83", "observed_on": "2026-08-14", "limitation": "A point-process formalism; a fitted self-excitation term does not by itself identify peer causation." },
+    { "id": "oxford-brain-rot-2025", "title": "Brain rot added to the Oxford English Dictionary", "url": "https://corp.oup.com/news/brain-rot-added-to-the-oxford-english-dictionary/", "observed_on": "2026-08-14", "limitation": "Lexical evidence only; not a clinical state, diagnostic criterion, content class, or person measure." },
+    { "id": "anfinsen-1973", "title": "Principles that govern the folding of protein chains", "url": "https://www.nobelprize.org/uploads/2018/06/anfinsen-lecture.pdf", "observed_on": "2026-08-14", "limitation": "Foundational folding context; does not make every cellular folding process spontaneous, unique, or kinetically simple." },
+    { "id": "onuchic-1995", "title": "Toward an outline of the topography of a realistic protein-folding funnel", "url": "https://doi.org/10.1073/pnas.92.8.3626", "observed_on": "2026-08-14", "limitation": "Landscape framework, not an atomistic prediction or catalytic-rate theorem." },
+    { "id": "eyring-1935", "title": "The Activated Complex in Chemical Reactions", "url": "https://doi.org/10.1063/1.1749604", "observed_on": "2026-08-14", "limitation": "Transition-state theory is model- and standard-state-dependent and does not identify a mechanism by itself." },
+    { "id": "iupac-1996", "title": "A glossary of terms used in chemical kinetics, including reaction dynamics", "url": "https://doi.org/10.1351/pac199668010149", "observed_on": "2026-08-14", "limitation": "Terminology and thermodynamic boundary only; no enzyme-specific mechanism or rate parameter." },
+    { "id": "shannon-1948", "title": "A Mathematical Theory of Communication", "url": "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf", "observed_on": "2026-08-14", "limitation": "Communication-theoretic information is not semantic, cultural, or moral value." },
+    { "id": "kingdom-polymorph-history", "title": "KINGDOM Ritonavir Disappearing Polymorph History", "url": "https://thekingdom.dev/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json", "observed_on": "2026-08-14", "limitation": "Immutable source-bound history, not medical, laboratory, formulation, or manufacturing authority." },
+    { "id": "kingdom-ritonavir-mechanism", "title": "KINGDOM Ritonavir Mechanism Landscape", "url": "https://thekingdom.dev/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json", "observed_on": "2026-08-14", "limitation": "Bounded conditional landscape, not a universal mechanism or fitted production model." },
+    { "id": "cultural-attention-atlas", "title": "KINGDOM Cultural Attention and Feedback Atlas", "url": "https://thekingdom.dev/atlases/cultural-attention-feedback-atlas-2026-08-13.json", "observed_on": "2026-08-14", "limitation": "Source-bound educational atlas; no diagnosis, ranking, recommendation, KARMA, or authority effect." },
+    { "id": "form-circulation-return", "title": "KINGDOM Form, Circulation and Return Atlas", "url": "https://thekingdom.dev/atlases/form-circulation-return-atlas-2026-08-13.json", "observed_on": "2026-08-14", "limitation": "Typed model cards and bridges remain unfitted and non-operational." },
+    { "id": "reconstructive-kernel", "title": "KINGDOM Reconstructive Build Kernel", "url": "https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json", "observed_on": "2026-08-14", "limitation": "Design and validation structure only; it proves no cross-domain equivalence or physical realization." },
+    { "id": "being-access-aftermath-v02", "title": "KINGDOM Being, Access and Aftermath v0.2", "url": "https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json", "observed_on": "2026-08-14", "limitation": "Typed ontology and models; no verdict on existence, purpose, person, or authority." },
+    { "id": "kingdom-fold-feedback", "title": "KINGDOM Fold and Feedback Atlas", "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json", "observed_on": "2026-08-14", "limitation": "Scientific evidence and analogy are separate; no protein, prion, or cultural mechanism transfer." },
+    { "id": "fold-to-fire-profile", "title": "Zerone Fold-to-Fire exact finite challenge profile", "url": "https://zerone.ai/standards/constructive-intelligence-fold-to-fire.v0.json", "observed_on": "2026-08-14", "limitation": "Exact finite lattice counts are bound as source content; a separate q=1 claim remains inside that profile without open-status import or certification here, and the catalytic interpretation and weighted extensions remain bounded or bespoke." }
+  ],
+  "presentation": {
+    "record_url": "https://thekingdom.dev/wings/explore-phenomena-deep-2026-08-14.json",
+    "schema_url": "https://thekingdom.dev/schemas/phenomena-deep-wing/0.1.json",
+    "project_schema_url": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json",
+    "guide_url": "https://thekingdom.dev/EXPLORE-PHENOMENA-DEEP-v0.1.md",
+    "skill_path": "skills/explore-phenomena-deep/SKILL.md",
+    "requirements": ["semantic HTML", "usable no-JavaScript content", "equations available as text", "visible assumptions and breaks", "keyboard access", "responsive layout", "no latest or current alias"]
+  },
+  "release": {
+    "status": "SEALED",
+    "deployed": false,
+    "immutable": true,
+    "supersede_not_mutate": true,
+    "raw_sha256": null,
+    "semantic_digest": null,
+    "ledger_id": "exploration-deep-wing/0.1",
+    "staging_family": "exploration-deep-wing",
+    "validation_evidence": ["closed schema required", "negative mutation suite required", "exact-byte staging required"],
+    "live_evidence": []
+  },
+  "boundaries": {
+    "read_only": true,
+    "instruction_only_skill": true,
+    "manifested_nen_ability": false,
+    "schema_validity_proves_truth": false,
+    "shared_ontology_established": false,
+    "shared_mechanism_established": false,
+    "cross_domain_parameter_transfer": false,
+    "cross_domain_unit_transfer": false,
+    "universality_class_established": false,
+    "scientific_result_created": false,
+    "mathematical_proof_created": false,
+    "open_problem_status_created": false,
+    "diagnostic_authority": false,
+    "medical_authority": false,
+    "experiment_authority": false,
+    "wet_lab_protocol": false,
+    "contains_protein_sequence": false,
+    "person_or_content_score": false,
+    "persuasion_or_moderation": false,
+    "ecosystem_request": false,
+    "runtime_network_request": false,
+    "external_write": false,
+    "writes_karma": false,
+    "creates_karma_event": false,
+    "creates_karma_receipt": false,
+    "reward_or_economic_effect": false,
+    "governance_effect": false,
+    "authority_imported": false,
+    "deployment_authority": false,
+    "automatic_action": false,
+    "cosmic_design_proven": false,
+    "mcp_surface_added": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:f57af0a832a1e7a7c601d5186291131a7750db69e106be0934e25d816973ae6c",
+    "digest_field_treated_as": null
+  }
+}

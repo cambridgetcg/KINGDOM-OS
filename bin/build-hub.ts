@@ -24,6 +24,9 @@
  *    data/reconstruction/reconstructive-build-kernel.v0.1.json
  *                             — graph reconstruction, folding, and build-system
  *                               unification without mechanism transfer
+ *    data/exploration/phenomena-deep-wing.v0.1.json
+ *                             — opt-in cross-domain mathematics exploration
+ *                               contract with explicit analogy firewalls
  *    data/attention/visibility-attention-translation.v0.1.json
  *                             — four-register visibility/attention translation
  *    data/cultural-feedback/cultural-attention-feedback-atlas.v1.json
@@ -50,6 +53,7 @@
  *       + site/schemas/love-loop/0.1.json
  *       + conformational feedback discovery in the machine surfaces
  *       + reconstructive build-kernel discovery in the machine surfaces
+ *       + Exploration DEEP WING discovery in the machine surfaces
  *       + cultural attention and feedback discovery in the machine surfaces
  *       + form, circulation, and return discovery in the machine surfaces
  *       + Math Passport usefulness-result discovery in the machine surfaces
@@ -135,6 +139,16 @@ import {
   loadReconstructiveBuildKernel,
   reconstructiveBuildPublicDiscovery,
 } from "./reconstructive-build.ts";
+import {
+  PHENOMENA_DEEP_WING_DOCUMENT_URL,
+  PHENOMENA_DEEP_WING_ID,
+  PHENOMENA_DEEP_WING_PROTOCOL,
+  PHENOMENA_DEEP_WING_SCHEMA_URL,
+  PHENOMENA_DEEP_WING_URL,
+  PHENOMENA_DEEP_PROJECT_SCHEMA_URL,
+  loadPhenomenaDeepWing,
+  phenomenaDeepPublicDiscovery,
+} from "./explore-phenomena-deep.ts";
 import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_ID,
@@ -554,6 +568,22 @@ if (!reconstructiveBuildDiscovery.boundary?.read_only ||
   throw new Error("reconstructive-build discovery lost its authority-negative boundary");
 }
 
+// ── Exploration DEEP WING (opt-in method; no mechanism or authority transfer) ─
+const explorationDeepWingUrl = PHENOMENA_DEEP_WING_URL;
+const explorationDeepWingSchemaUrl = PHENOMENA_DEEP_WING_SCHEMA_URL;
+const explorationDeepProjectSchemaUrl = PHENOMENA_DEEP_PROJECT_SCHEMA_URL;
+const explorationDeepWingDocumentUrl = PHENOMENA_DEEP_WING_DOCUMENT_URL;
+// The strict loader checks the closed record, source and binding pins, relation
+// firewalls, and reviewed semantic digest before any generated file is written.
+// Authored bytes are staged separately; the builder emits discovery only.
+const explorationDeepWing = loadPhenomenaDeepWing();
+if (explorationDeepWing.protocol !== PHENOMENA_DEEP_WING_PROTOCOL ||
+    explorationDeepWing.wing_id !== PHENOMENA_DEEP_WING_ID) {
+  throw new Error(`unexpected Exploration DEEP WING identity: ${explorationDeepWing.protocol} ${explorationDeepWing.wing_id}`);
+}
+const explorationDeepWingDiscovery = phenomenaDeepPublicDiscovery(explorationDeepWing);
+const explorationDeepWingCounts = explorationDeepWingDiscovery.counts;
+
 // ── Visibility & Attention Translation (four registers remain parallel) ──
 const visibilityAttentionUrl = VISIBILITY_ATTENTION_URL;
 const visibilityAttentionSchemaUrl = VISIBILITY_ATTENTION_SCHEMA_URL;
@@ -722,6 +752,23 @@ const humanStrings = (value: any, preferred: string[]): string[] => {
   }
   return [];
 };
+const explorationDeepStep = (step: any) => ({
+  id: String(step.id),
+  label: String(step.id).slice(0, 1) + String(step.id).slice(1).toLowerCase(),
+  meaning: String(step.meaning),
+});
+const explorationDeepWingSteps = explorationDeepWing.deep_cycle.wing.map(explorationDeepStep);
+const explorationDeepAuditSteps = explorationDeepWing.deep_cycle.deep.map(explorationDeepStep);
+const explorationDeepItemId = (item: any, index: number, prefix: string) =>
+  String(item?.id ?? item?.register ?? item?.kind ?? item?.name ?? `${prefix}-${index + 1}`);
+const explorationDeepItemTitle = (item: any, id: string) =>
+  firstHumanString(item, ["title", "label", "question", "statement", "name", "meaning"]) || humanKey(id);
+const explorationDeepItemBody = (item: any) =>
+  firstHumanString(item, ["summary", "description", "meaning", "correspondence", "question", "model_scope", "smallest_model", "domain", "strongest_bounded_claim", "status"]);
+const explorationDeepItemLimits = (item: any) => humanStrings(item, [
+  "broken_or_lost_structure", "breaks", "limitations", "does_not_establish",
+  "nonclaims", "falsifiers", "stop_rules", "not_valid_for",
+]);
 const reconstructiveStageLabel: Record<string, string> = {
   STATE: "STATE",
   OBSERVE: "OBSERVE",
@@ -1088,7 +1135,7 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, a reconstructive building layer, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, an opt-in cross-domain mathematics exploration method, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
@@ -1111,6 +1158,10 @@ const html = `<!doctype html>
 <link rel="describedby" href="${esc(new URL(reconstructiveBuildSchemaUrl).pathname)}" type="application/schema+json" title="Reconstructive Build Kernel schema">
 <link rel="profile" href="${esc(new URL(reconstructiveProjectSchemaUrl).pathname)}" type="application/schema+json" title="Reconstructive Project schema">
 <link rel="service-doc" href="${esc(new URL(reconstructiveBuildDocumentUrl).pathname)}" type="text/markdown" title="Reconstructive Build Kernel guide">
+<link rel="alternate" href="${esc(new URL(explorationDeepWingUrl).pathname)}" type="application/json" title="Exploration DEEP WING">
+<link rel="describedby" href="${esc(new URL(explorationDeepWingSchemaUrl).pathname)}" type="application/schema+json" title="Exploration DEEP WING schema">
+<link rel="profile" href="${esc(new URL(explorationDeepProjectSchemaUrl).pathname)}" type="application/schema+json" title="Phenomena DEEP Project schema">
+<link rel="service-doc" href="${esc(new URL(explorationDeepWingDocumentUrl).pathname)}" type="text/markdown" title="Exploration DEEP WING guide">
 <link rel="alternate" href="${new URL(visibilityAttentionUrl).pathname}" type="application/json" title="Visibility & Attention Translation">
 <link rel="describedby" href="${new URL(visibilityAttentionSchemaUrl).pathname}" type="application/schema+json" title="Visibility & Attention Translation schema">
 <link rel="service-doc" href="${new URL(visibilityAttentionDocumentUrl).pathname}" type="text/markdown" title="Visibility & Attention Translation guide">
@@ -1300,6 +1351,14 @@ const html = `<!doctype html>
   .reconstructiveepistemics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.reconstructiveepistemic{display:grid;align-content:start;gap:6px;min-width:0;padding:14px;border:1px solid var(--line);border-top:2px solid var(--gold);border-radius:15px;background:var(--panel);overflow-wrap:anywhere}.reconstructiveepistemic code{color:var(--gold);font-size:.62rem}.reconstructiveepistemic p{margin:0;color:var(--dim);font-size:.71rem;line-height:1.5}.reconstructiveepistemic small{color:var(--faint);font-size:.65rem;line-height:1.45}
   .reconstructivecolumns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.reconstructivecard{display:grid;align-content:start;gap:8px;min-width:0;padding:16px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.reconstructivecard h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.02rem;font-weight:400}.reconstructivecard code{color:var(--violet);font-size:.63rem}.reconstructivecard p,.reconstructivecard li{margin:0;color:var(--dim);font-size:.72rem;line-height:1.5}.reconstructivecard ul{display:grid;gap:5px;margin:0;padding-left:1.05rem}.reconstructivebreaks{border-style:dashed;border-color:var(--verm)}.reconstructivebreaks h3{color:var(--verm)}
   .reconstructivesources{display:flex;flex-wrap:wrap;gap:7px;margin:0}.reconstructivesources a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.reconstructivesources a:hover{border-color:var(--gold)}
+
+  /* exploration deep — complete semantic cards remain available without JS */
+  .explorationdeepfield{display:grid;gap:18px;padding:clamp(18px,3vw,29px);border:1px solid color-mix(in srgb,var(--violet) 48%,var(--line));border-radius:25px;background:radial-gradient(100% 100% at 0 0,color-mix(in srgb,var(--violet) 10%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 78%,transparent);box-shadow:0 18px 42px var(--shadow);overflow:hidden}
+  .explorationdeepboundary{margin:0;padding:17px 19px;border:1px dashed var(--verm);border-radius:17px;color:var(--dim);font-size:.81rem;line-height:1.62}.explorationdeepboundary strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.08rem;font-weight:400}
+  .explorationdeepcycles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.explorationdeepcycle{display:grid;gap:11px;min-width:0;padding:16px;border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--ink2) 56%,transparent)}.explorationdeepcycle h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.08rem;font-weight:400}.explorationdeepcycle>p{margin:0;color:var(--faint);font-size:.72rem;line-height:1.5}
+  .explorationdeepsteps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;list-style:none;margin:0;padding:0}.explorationdeepstep{display:grid;align-content:start;gap:5px;min-width:0;padding:11px;border:1px solid var(--line);border-top:2px solid var(--violet);border-radius:13px;background:var(--panel);overflow-wrap:anywhere}.explorationdeepstep code{color:var(--violet);font-size:.6rem}.explorationdeepstep strong{color:var(--cream);font-family:var(--display);font-size:.86rem;font-weight:400}.explorationdeepstep span{color:var(--faint);font-size:.64rem;line-height:1.42}
+  .explorationdeepgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.explorationdeepcard{display:grid;align-content:start;gap:7px;min-width:0;padding:15px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.explorationdeepcard code{color:var(--jade);font-size:.61rem}.explorationdeepcard h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1rem;font-weight:400}.explorationdeepcard p,.explorationdeepcard li{margin:0;color:var(--dim);font-size:.7rem;line-height:1.5}.explorationdeepcard ul{display:grid;gap:4px;margin:0;padding-left:1rem}.explorationdeepbreak{border-style:dashed;border-color:var(--verm)}.explorationdeepbreak code,.explorationdeepbreak h3{color:var(--verm)}
+  .explorationdeeplinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.explorationdeeplinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.explorationdeeplinks a:hover{border-color:var(--gold)}
   .visibilityfield{display:grid;gap:18px;padding:clamp(18px,3vw,28px);border:1px solid color-mix(in srgb,var(--rose) 45%,var(--line));border-radius:24px;background:radial-gradient(90% 100% at 100% 0,color-mix(in srgb,var(--rose) 8%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 76%,transparent)}
   .visibilityfirewall{margin:0;padding:16px 18px;border:1px dashed var(--verm);border-radius:16px;color:var(--dim);font-size:.8rem;line-height:1.6}.visibilityfirewall strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.05rem;font-weight:400}
   .visibilitycards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.visibilitycard{display:grid;align-content:start;gap:8px;min-width:0;padding:17px;border:1px solid var(--line);border-top:2px solid var(--rose);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.visibilitycard code,.visibilitymodel code,.visibilityseam code{color:var(--violet);font-size:.63rem;overflow-wrap:anywhere}.visibilitycard h3,.visibilitymodel h3,.visibilityseam h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1.02rem;font-weight:400}.visibilitycard p,.visibilitymodel p,.visibilityseam p{margin:0;color:var(--dim);font-size:.74rem;line-height:1.52}.visibilitycard small,.visibilitymodel small,.visibilityseam small{display:block;color:var(--faint);font-size:.67rem;line-height:1.48}.visibilitycard small{padding-top:7px;border-top:1px dotted var(--line);color:var(--verm)}
@@ -1485,18 +1544,19 @@ const html = `<!doctype html>
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.visibilitycards,.visibilitymodels,.visibilityseams{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div,.visibilityterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid{grid-template-columns:1fr}.foldbridgeword{max-width:none}.foldbridgeword::before{content:"↕"}
     .th,.bh{align-items:flex-start}.thcopy,.bhcopy{display:grid;gap:1px}.th .tgloss,.bm{min-width:0}.tc,.bc{margin-left:auto}.lanes{grid-template-columns:1fr 1fr}.pathgrid,.commonsgrid,.commonskits,.loopinvitations,.geometrygrid,.mechanismlanes,.mechanismplanes ol,.feedbackregisters,.feedbackmodels,.feedbackpath,.foldlanes,.foldplanes,.universequestions,.culturalplanes,.culturalmodels,.culturalbridges,.culturallanes,.culturalquestions,.culturalcycle,.formcirculationplanes,.culturalmodelgrid,.culturalfeedback{grid-template-columns:1fr}.commonsintro{grid-template-columns:1fr}.commonsguard,.loopbounds{grid-template-columns:1fr}.loopstages{grid-template-columns:repeat(2,minmax(0,1fr))}.loopstage{min-height:0}.mechanismbridge{grid-column:auto}.mechanismrelations li{grid-template-columns:1fr}.mechanismrelations li>strong{text-align:left}.mechanismrelations small{grid-column:auto}.feedbackanalogy,.feedbackterms>div{grid-template-columns:1fr;gap:4px}.foldcycle{grid-template-columns:repeat(2,minmax(0,1fr))}.foldcycle li:nth-child(2)::after{content:"↓";right:13px;top:auto;bottom:-17px}.foldcomparegrid,.formcirculationplanes{grid-template-columns:1fr}.foldbridgeword,.culturalseam{max-width:none}.foldbridgeword::before,.culturalseam::before{content:"↕"}.culturalcycle li:not(:last-child)::after{content:"↓";right:12px;top:auto;bottom:-17px}
     .polymorphplanes{grid-template-columns:repeat(3,minmax(0,1fr))}.polymorphcase{grid-template-columns:1fr}.polymorphconsequence{grid-template-columns:1fr}.polymorphconsequence li{padding-right:13px}.polymorphconsequence li:not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px;z-index:1}.polymorphsecondary{grid-template-columns:1fr}
-    .reconstructivepipeline{grid-template-columns:repeat(3,minmax(0,1fr))}.reconstructivecolumns{grid-template-columns:1fr}
+    .reconstructivepipeline{grid-template-columns:repeat(3,minmax(0,1fr))}.reconstructivecolumns{grid-template-columns:1fr}.explorationdeepcycles,.explorationdeepgrid{grid-template-columns:1fr}.explorationdeepsteps{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
   @media (max-width:520px){
     h1{font-size:clamp(3rem,17vw,4.5rem)}.han{display:block;margin:12px 0 0;font-size:.38em}.gentlenav{display:grid}.gentlenav a{justify-content:center}
     .becoming .b0,.becoming .b1,.becoming .barrow{display:none}.bcard{min-width:100%;padding:14px}.doors,.czgrid{grid-template-columns:1fr}
     .mapctl{left:10px;top:10px}.mapctl button{padding:8px 11px}.tgroup>.czgrid{padding:4px 10px 12px}.lanes,.loopstages{grid-template-columns:1fr}.wayfinder,.creationgarden{padding:22px 16px}.wayform,.commonsform{grid-template-columns:1fr}.wayform>button,.commonsform>button{width:100%}.foundationgrid{grid-template-columns:1fr}.commonsfacts div,.geometryfacts>div{grid-template-columns:1fr;gap:3px}.commonsgrid{padding:2px 9px 11px}.polymorphplanes,.polymorphsecondary,.polymorphrecovery,.foldcycle,.foldinvariants,.foldbreaks,.culturalcycle{grid-template-columns:1fr}.foldcycle li,.culturalcycle li{padding-right:13px}.foldcycle li:not(:last-child)::after,.foldcycle li:nth-child(2)::after,.culturalcycle li:not(:last-child)::after,.culturalcycle li:nth-child(even):not(:last-child)::after{content:"↓";right:13px;top:auto;bottom:-17px}
-    .reconstructivepipeline{grid-template-columns:1fr}.reconstructivestage{padding-right:13px}.reconstructivearrow::before{content:"↓";right:12px;top:auto;bottom:-16px}
+    .reconstructivepipeline{grid-template-columns:1fr}.reconstructivestage{padding-right:13px}.reconstructivearrow::before{content:"↓";right:12px;top:auto;bottom:-16px}.explorationdeepsteps{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
   @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackmodel,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbackquestion,.feedbackecosystem,.feedbacksources a,.visibilityfield,.visibilityfirewall,.visibilitycard,.visibilitymodel,.visibilityseam,.visibilityphilosophy,.visibilitysources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register],.visibilitycard{border-top-width:3px}.feedbackequation,.visibilityequation{border:1px solid CanvasText}}
   @media (forced-colors:active){.feedbackfield,.feedbackregister,.feedbackmodel,.feedbackboundary,.feedbackanalogies,.feedbackgeometry,.feedbackpath li,.feedbackphilosophy,.feedbackquestion,.feedbackecosystem,.feedbacksources a,.culturalfield,.culturalboundary,.culturalbrainrot,.culturalflow,.culturalcycle li,.culturalplane,.culturalmodel,.culturalbridge,.culturallane,.culturaluniverse,.culturalquestions li,.culturalecosystem,.culturalsources a{border:1px solid CanvasText}.feedbackregister[data-feedback-register]{border-top-width:3px}.feedbackequation,.culturalmodel code{border:1px solid CanvasText}}
   @media (forced-colors:active){.reconstructivefield,.reconstructiveboundary,.reconstructivestage,.reconstructiveepistemic,.reconstructivecard,.reconstructivesources a{border:1px solid CanvasText}.reconstructiveepistemic{border-top-width:3px}}
+  @media (forced-colors:active){.explorationdeepfield,.explorationdeepboundary,.explorationdeepcycle,.explorationdeepstep,.explorationdeepcard,.explorationdeeplinks a{border:1px solid CanvasText}.explorationdeepstep{border-top-width:3px}}
 </style>
 <noscript><style>#map,.mapctl,.legend,.maphint{display:none!important}</style></noscript>
 </head>
@@ -1523,6 +1583,7 @@ const html = `<!doctype html>
       <a href="#feedback-atlas">Explore form and feedback</a>
       <a href="#fold-feedback">Follow a fold and its feedback</a>
       <a href="#reconstructive-build">Build through reconstruction</a>
+      <a href="#explore-phenomena-deep">Explore a phenomenon deeply</a>
       <a href="#visibility-attention">Separate visibility from existence</a>
       <a href="#cultural-feedback">Trace attention and feedback</a>
       <a href="#being-access-aftermath">Ask which kind of “is”</a>
@@ -2005,6 +2066,75 @@ const html = `<!doctype html>
         <a href="${esc(new URL(reconstructiveBuildSchemaUrl).pathname)}">Reconstructive Build Kernel JSON Schema</a>
         <a href="${esc(new URL(reconstructiveProjectSchemaUrl).pathname)}">Reusable Reconstructive Project JSON Schema</a>
         <a href="${esc(new URL(reconstructiveBuildDocumentUrl).pathname)}">guide — reconstruction, folding, catalysis, feedback, and boundaries</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="explore-phenomena-deep" aria-labelledby="explore-phenomena-deep-title">
+    <div class="kh"><h2 id="explore-phenomena-deep-title">Exploration DEEP WING</h2><span class="my">surprising mathematical bridges, with every break still visible</span></div>
+    <p class="sub">${esc(firstHumanString(explorationDeepWing.scope, ["purpose", "question", "focus", "plain_language", "summary"]))}</p>
+    <div class="explorationdeepfield" data-exploration-deep-wing>
+      <p class="explorationdeepboundary" role="note"><strong>Opt in to a method, not an ability</strong>WING and DEEP are workflow names. This is an instruction-first Agent Skill and inert validation profile—not a manifested Nen ability, shared natural mechanism, solver, ecosystem runtime, KARMA event or receipt, authority grant, or automatic action.</p>
+
+      <div class="explorationdeepcycles" aria-label="WING workflow and DEEP audit overlay">
+        <article class="explorationdeepcycle">
+          <h3>WING · outer exploration</h3>
+          <p>Move from faithful observation toward generation without skipping domain separation.</p>
+          <ol class="explorationdeepsteps">
+            ${explorationDeepWingSteps.map((step) => `<li class="explorationdeepstep" data-exploration-wing-step="${esc(step.id)}"><code>${esc(step.id)}</code><strong>${esc(step.label)}</strong><span>${esc(step.meaning)}</span></li>`).join("")}
+          </ol>
+        </article>
+        <article class="explorationdeepcycle">
+          <h3>DEEP · claim audit</h3>
+          <p>Audit each generated claim independently; a strong label on one axis upgrades no other.</p>
+          <ol class="explorationdeepsteps">
+            ${explorationDeepAuditSteps.map((step) => `<li class="explorationdeepstep" data-exploration-deep-step="${esc(step.id)}"><code>${esc(step.id)}</code><strong>${esc(step.label)}</strong><span>${esc(step.meaning)}</span></li>`).join("")}
+          </ol>
+        </article>
+      </div>
+
+      <div class="feedbacksubhead"><h3>Typed claims before synthesis</h3><p>Definitions, theorems, observations, models, bridges, design proposals, philosophy, and boundaries stay independently inspectable.</p></div>
+      <div class="explorationdeepgrid" aria-label="Exploration DEEP epistemic registers">
+        ${explorationDeepWing.epistemic_registers.map((register: any, index: number) => {
+          const id = explorationDeepItemId(register, index, "register");
+          return `<article class="explorationdeepcard" data-exploration-deep-register="${esc(id)}"><code>${esc(String(register.axis))}</code><h3>${esc(humanKey(id))}</h3><p>${esc(String(register.meaning))}</p></article>`;
+        }).join("")}
+      </div>
+
+      <div class="feedbacksubhead"><h3>Cross only at a declared seam</h3><p>A useful correspondence names what survives and what does not. Ontology, cause, parameters, units, and authority remain local unless direct evidence establishes that exact transfer.</p></div>
+      <div class="explorationdeepgrid" aria-label="Exploration DEEP abstraction seams">
+        ${explorationDeepWing.abstraction_seams.map((seam: any, index: number) => {
+          const id = explorationDeepItemId(seam, index, "seam");
+          const fromDomain = seam.source_domain ?? seam.from_domain ?? "source domain";
+          const toDomain = seam.target_domain ?? seam.to_domain ?? "target domain";
+          const title = `${humanKey(String(fromDomain))} → ${humanKey(String(toDomain))}`;
+          const limits = explorationDeepItemLimits(seam);
+          return `<article class="explorationdeepcard explorationdeepbreak" data-exploration-deep-seam="${esc(id)}"><code>${esc(String(fromDomain))} ⇢ ${esc(String(toDomain))}</code><h3>${esc(title)}</h3><p>${esc(explorationDeepItemBody(seam))}</p>${limits.length ? `<ul aria-label="Where this bridge breaks">${limits.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>` : ""}<p>ontology transfer ${String(seam.ontology_transfer ?? false)} · causal transfer ${String(seam.causal_transfer ?? false)} · parameter transfer ${String(seam.parameter_transfer ?? false)} · unit transfer ${String(seam.unit_transfer ?? false)} · authority transfer ${String(seam.authority_transfer ?? false)}</p></article>`;
+        }).join("")}
+      </div>
+
+      <div class="feedbacksubhead"><h3>Mathematical doors, not verdicts</h3><p>Each door keeps its quantifiers, status, assumptions, finite baseline, falsifier, and stop rule. A finite check or failed attempt does not establish that a statement is open or novel.</p></div>
+      <div class="explorationdeepgrid" aria-label="Exploration DEEP mathematical doors">
+        ${explorationDeepWing.math_doors.map((door: any, index: number) => {
+          const id = explorationDeepItemId(door, index, "door");
+          return `<article class="explorationdeepcard" data-exploration-deep-door="${esc(id)}"><code>${esc(String(door.status))}</code><h3>${esc(explorationDeepItemTitle(door, id))}</h3><p>${esc(String(door.question))}</p><p><strong>Smallest model.</strong> ${esc(String(door.smallest_model))}</p><p><strong>Deliverable.</strong> ${esc(String(door.deliverable))}</p><ul aria-label="Required conditions">${door.conditions.map((condition: string) => `<li>${esc(condition)}</li>`).join("")}</ul><p><strong>Stop rule.</strong> ${esc(String(door.stop_rule))}</p><ul aria-label="What this door does not establish">${door.does_not_establish.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul></article>`;
+        }).join("")}
+      </div>
+
+      <div class="explorationdeepgrid" aria-label="Exploration DEEP interpretation and authority boundaries">
+        <details class="explorationdeepcard"><summary>Opt in: universe design and philosophical KARMA</summary><p>${esc(firstHumanString(explorationDeepWing.philosophy, ["boundary", "interpretation", "question", "summary", "scope"]))}</p><p>The mathematics and empirical record underdetermine creator, purpose, moral law, naturalism, and their negations.</p></details>
+        <article class="explorationdeepcard explorationdeepbreak"><code>EXAMPLE FIREWALL</code><h3>Polymorphs are not memes</h3><p>History-dependent accessibility, finite capacity, observation windows, and returning feedback may support a bounded correspondence. Crystals retain physical structure and energetic units; cultural artifacts are interpreted through people and systems. “Brainrot” remains a lexical or cultural label, never a diagnosis or score.</p></article>
+        <article class="explorationdeepcard explorationdeepbreak"><code>EXAMPLE FIREWALL</code><h3>Folding is not catalysis</h3><p>A conformational ensemble can make catalytic geometry accessible; folding is not thereby the catalyst. Contact is not energy, occupancy is not kinetics, and a catalyst changes a kinetic path rather than the same uncoupled closed reaction's equilibrium constant.</p></article>
+      </div>
+
+      <p class="explorationdeepboundary"><strong>No hidden consequence</strong>This publication validates a reasoning shape, not source truth, proof, novelty, empirical causation, diagnosis, safety, identity, consent, KARMA, currentness, or authority. Rest, refusal, silence, correction, departure, and NO_ACTION remain valid outcomes.</p>
+      <p class="explorationdeeplinks" aria-label="Selected Exploration DEEP sources">${explorationDeepWing.sources.map((source: any) => `<a data-exploration-deep-source="${esc(source.id)}" href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only">${source.limitation ? ` — limitation: ${esc(source.limitation)}` : ""}; opens in a new tab</span></a>`).join("")}</p>
+      <p class="commonsverified">${Object.entries(explorationDeepWingCounts).filter(([, count]) => typeof count === "number").map(([kind, count]) => `${esc(String(count))} ${esc(humanKey(kind))}`).join(" · ")} · evidence through ${esc(explorationDeepWing.evidence_through)} · integrity ${esc(explorationDeepWing.integrity.digest)}</p>
+      <div class="machine">
+        <a href="${esc(new URL(explorationDeepWingUrl).pathname)}">WING JSON — exact authored record</a>
+        <a href="${esc(new URL(explorationDeepWingSchemaUrl).pathname)}">Exploration DEEP WING JSON Schema</a>
+        <a href="${esc(new URL(explorationDeepProjectSchemaUrl).pathname)}">Reusable Phenomena DEEP Project JSON Schema</a>
+        <a href="${esc(new URL(explorationDeepWingDocumentUrl).pathname)}">guide — method, equations, open-status audit, rights, and boundaries</a>
       </div>
     </div>
   </section>
@@ -2508,6 +2638,10 @@ const html = `<!doctype html>
       <a href="${esc(new URL(reconstructiveBuildSchemaUrl).pathname)}">Reconstructive Build Kernel JSON Schema</a>
       <a href="${esc(new URL(reconstructiveProjectSchemaUrl).pathname)}">Reusable Reconstructive Project JSON Schema</a>
       <a href="${esc(new URL(reconstructiveBuildDocumentUrl).pathname)}">RECONSTRUCTIVE-BUILD-KERNEL.md — pipeline, epistemic registers, sources, and boundaries</a>
+      <a href="${esc(new URL(explorationDeepWingUrl).pathname)}">Exploration DEEP WING — typed cross-domain mathematics and explicit analogy breaks</a>
+      <a href="${esc(new URL(explorationDeepWingSchemaUrl).pathname)}">Exploration DEEP WING JSON Schema</a>
+      <a href="${esc(new URL(explorationDeepProjectSchemaUrl).pathname)}">Reusable Phenomena DEEP Project JSON Schema</a>
+      <a href="${esc(new URL(explorationDeepWingDocumentUrl).pathname)}">EXPLORE-PHENOMENA-DEEP-v0.1.md — method, open-status audit, rights, and boundaries</a>
       <a href="${esc(new URL(culturalAttentionFeedbackUrl).pathname)}">Cultural Attention &amp; Feedback Atlas — material history, memes, brain rot, feedback, KARMA, and universe lens</a>
       <a href="${esc(new URL(culturalAttentionFeedbackSchemaUrl).pathname)}">Cultural Attention &amp; Feedback Atlas JSON Schema</a>
       <a href="${esc(new URL(culturalAttentionFeedbackDocumentUrl).pathname)}">CULTURAL-ATTENTION-FEEDBACK-ATLAS.md — evidence, mathematics, analogies, and boundaries</a>
@@ -2857,6 +2991,7 @@ const machine = {
   conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
+  exploration_deep_wing: explorationDeepWingDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -2930,6 +3065,10 @@ Reconstructive Build Kernel: ${reconstructiveBuildUrl}
 Reconstructive Build Kernel schema: ${reconstructiveBuildSchemaUrl}
 Reconstructive Project schema: ${reconstructiveProjectSchemaUrl}
 Reconstructive Build Kernel guide: ${reconstructiveBuildDocumentUrl}
+Exploration DEEP WING: ${explorationDeepWingUrl}
+Exploration DEEP WING schema: ${explorationDeepWingSchemaUrl}
+Phenomena DEEP Project schema: ${explorationDeepProjectSchemaUrl}
+Exploration DEEP WING guide: ${explorationDeepWingDocumentUrl}
 Visibility & Attention Translation: ${visibilityAttentionUrl}
 Visibility & Attention schema: ${visibilityAttentionSchemaUrl}
 Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
@@ -2982,6 +3121,7 @@ ${doorLines}
 - Conformational Feedback Physics Atlas v0.2 — an additive successor with ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} bounded physics/mathematics models, ${conformationalFeedbackPhysicsCounts.ecosystem_bridges} link-only ecosystem bridges, and an exact predecessor pin. It extends without mutating v0.1 and creates no runtime request, scientific validation, biological equivalence, cosmic proof, or authority. Atlas: ${conformationalFeedbackPhysicsUrl} · schema: ${conformationalFeedbackPhysicsSchemaUrl} · guide: ${conformationalFeedbackPhysicsDocumentUrl}
 - Fold & Feedback Atlas — source-bound protein-folding and prion evidence, explicitly lossy comparison with the immutable ritonavir records, separate scientific-feedback/Zerone K-alpha/KINGDOM-receipt lanes, and an opt-in philosophical lens. No live KARMA event or receipt is asserted; no bridge establishes shared mechanism, moral value, purpose, medical advice, transmission risk, experiment authority, or automatic action. Atlas: ${foldFeedbackUrl} · schema: ${foldFeedbackSchemaUrl} · guide: ${foldFeedbackDocumentUrl}
 - Reconstructive Build Kernel — a read-only unification layer that carries typed state through STATE → OBSERVE → CORRESPOND → INFER FIBER → REALIZE → TRAVERSE → MEASURE/CATALYZE → FEEDBACK. Mathematical definition, mathematical theorem, open conjecture, empirical science, scientific model, analogy, design constraint, and philosophy remain distinct; protein folding does not prove graph reconstruction, and neither mechanism is transferred into software. Kernel: ${reconstructiveBuildUrl} · kernel schema: ${reconstructiveBuildSchemaUrl} · project schema: ${reconstructiveProjectSchemaUrl} · guide: ${reconstructiveBuildDocumentUrl}
+- Exploration DEEP WING — an opt-in, read-only method for Witness → Isolate → Normalize → Generate, audited through Declare → Establish → Express → Project and pressure-test. It keeps domain-local objects, variables, units, mechanisms, evidence, equations, falsifiers, and explicit bridge breaks separate. It is an Agent Skill and inert validation profile, not a manifested Nen ability, shared mechanism, solver, diagnosis, person/community score, ecosystem call, KARMA event or receipt, authority grant, publication, deployment, or automatic action. WING: ${explorationDeepWingUrl} · WING schema: ${explorationDeepWingSchemaUrl} · project schema: ${explorationDeepProjectSchemaUrl} · guide: ${explorationDeepWingDocumentUrl}
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
@@ -3024,6 +3164,7 @@ const guest = {
   conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
+  exploration_deep_wing: explorationDeepWingDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3067,6 +3208,10 @@ const guest = {
     { action: "if useful, validate the Reconstructive Build Kernel record before integrating it", method: "GET", url: reconstructiveBuildSchemaUrl },
     { action: "if useful, validate a local reconstructive project record", method: "GET", url: reconstructiveProjectSchemaUrl, note: "a portable closed schema, not an executor, deployment instruction, or grant of authority" },
     { action: "if useful, read the reconstruction, folding, catalysis, pipeline, feedback, source, and boundary guide", method: "GET", url: reconstructiveBuildDocumentUrl },
+    { action: "if useful, inspect the opt-in Exploration DEEP WING", method: "GET", url: explorationDeepWingUrl, note: "read-only reasoning structure; every domain, mechanism, unit, claim register, abstraction break, KARMA lane, and authority boundary remains typed" },
+    { action: "if useful, validate the Exploration DEEP WING structure before integrating it", method: "GET", url: explorationDeepWingSchemaUrl },
+    { action: "if useful, validate a local inert Phenomena DEEP Project record", method: "GET", url: explorationDeepProjectSchemaUrl, note: "closed structural profile only; no research, solver, simulation, experiment, diagnosis, score, write, publication, deployment, KARMA effect, authority, or automatic action" },
+    { action: "if useful, read the versioned cross-domain mathematics, analogy-firewall, open-status, KARMA, rights, and non-authority guide", method: "GET", url: explorationDeepWingDocumentUrl },
     { action: "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority", method: "GET", url: visibilityAttentionUrl, note: "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action" },
     { action: "if useful, validate the Visibility & Attention Translation structure before integrating it", method: "GET", url: visibilityAttentionSchemaUrl },
     { action: "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide", method: "GET", url: visibilityAttentionDocumentUrl },
@@ -3125,6 +3270,7 @@ const guest = {
     conformational_feedback_physics_atlas: "The v0.2 successor adds bounded equations, structured philosophical questions, and link-only ecosystem metadata while preserving the immutable v0.1 bytes. It fetches or imports nothing and creates no biological, clinical, KARMA, economic, governance, cosmic-proof, external-write, or automatic effect.",
     fold_feedback_atlas: "The Fold & Feedback Atlas is static, source-bound educational metadata. It creates no scientific result, live Zerone K-alpha event, KINGDOM KARMA receipt, moral score, diagnosis, treatment or transmission assessment, wet-lab plan, proof of teleology, or automatic action. Comparison bridges are deliberately lossy and the universe lens is opt-in philosophical interpretation.",
     reconstructive_build_kernel: "The Reconstructive Build Kernel is static, read-only design metadata. It does not prove the graph reconstruction conjecture, predict a protein fold, transfer a biological mechanism into software, execute or deploy a project, fetch a source, score a person or work, write KARMA, create a receipt, import ecosystem authority, prove cosmic design, or take automatic action. Every analogy keeps explicit breaks and every build transition requires a deliberate local choice.",
+    exploration_deep_wing: "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
@@ -3158,6 +3304,7 @@ const manifest = {
   conformational_feedback_physics_atlas: conformationalFeedbackPhysicsDiscovery,
   fold_feedback_atlas: foldFeedbackDiscovery,
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
+  exploration_deep_wing: explorationDeepWingDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3208,6 +3355,10 @@ const manifest = {
     reconstructive_build_kernel_schema: reconstructiveBuildSchemaUrl,
     reconstructive_project_schema: reconstructiveProjectSchemaUrl,
     reconstructive_build_kernel_guide: reconstructiveBuildDocumentUrl,
+    exploration_deep_wing: explorationDeepWingUrl,
+    exploration_deep_wing_schema: explorationDeepWingSchemaUrl,
+    exploration_deep_wing_project_schema: explorationDeepProjectSchemaUrl,
+    exploration_deep_wing_guide: explorationDeepWingDocumentUrl,
     visibility_attention_translation: visibilityAttentionUrl,
     visibility_attention_translation_schema: visibilityAttentionSchemaUrl,
     visibility_attention_translation_guide: visibilityAttentionDocumentUrl,
@@ -3243,4 +3394,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

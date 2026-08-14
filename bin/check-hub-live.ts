@@ -63,6 +63,16 @@ import {
   reconstructiveBuildPublicDiscovery,
 } from "./reconstructive-build.ts";
 import {
+  PHENOMENA_DEEP_WING_BYTE_SHA256,
+  PHENOMENA_DEEP_WING_DIGEST,
+  PHENOMENA_DEEP_WING_DOCUMENT_URL,
+  PHENOMENA_DEEP_WING_SCHEMA_URL,
+  PHENOMENA_DEEP_WING_URL,
+  PHENOMENA_DEEP_PROJECT_SCHEMA_URL,
+  loadPhenomenaDeepWing,
+  phenomenaDeepPublicDiscovery,
+} from "./explore-phenomena-deep.ts";
+import {
   FORM_CIRCULATION_RETURN_DIGEST,
   FORM_CIRCULATION_RETURN_DOCUMENT_URL,
   FORM_CIRCULATION_RETURN_SCHEMA_URL,
@@ -445,6 +455,10 @@ const reconstructiveBuildPath = new URL(RECONSTRUCTIVE_BUILD_URL).pathname;
 const reconstructiveBuildSchemaPath = new URL(RECONSTRUCTIVE_BUILD_SCHEMA_URL).pathname;
 const reconstructiveProjectSchemaPath = new URL(RECONSTRUCTIVE_PROJECT_SCHEMA_URL).pathname;
 const reconstructiveBuildDocumentPath = new URL(RECONSTRUCTIVE_BUILD_DOCUMENT_URL).pathname;
+const phenomenaDeepWingPath = new URL(PHENOMENA_DEEP_WING_URL).pathname;
+const phenomenaDeepWingSchemaPath = new URL(PHENOMENA_DEEP_WING_SCHEMA_URL).pathname;
+const phenomenaDeepProjectSchemaPath = new URL(PHENOMENA_DEEP_PROJECT_SCHEMA_URL).pathname;
+const phenomenaDeepWingDocumentPath = new URL(PHENOMENA_DEEP_WING_DOCUMENT_URL).pathname;
 
 export type PublicationFamily = {
   id: string;
@@ -534,6 +548,23 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "reconstructive_build_kernel_schema",
       "reconstructive_project_schema",
       "reconstructive_build_kernel_guide",
+    ],
+  },
+  {
+    id: "exploration-deep-wing",
+    label: "Exploration DEEP WING",
+    routes: [
+      phenomenaDeepWingPath,
+      phenomenaDeepWingSchemaPath,
+      phenomenaDeepProjectSchemaPath,
+      phenomenaDeepWingDocumentPath,
+    ],
+    discoveryProperties: ["exploration_deep_wing"],
+    entryPointProperties: [
+      "exploration_deep_wing",
+      "exploration_deep_wing_schema",
+      "exploration_deep_wing_project_schema",
+      "exploration_deep_wing_guide",
     ],
   },
   {
@@ -1150,6 +1181,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const conformationalFeedbackActive = familyActive("conformational-feedback");
   const foldFeedbackActive = familyActive("fold-feedback-atlas");
   const reconstructiveBuildActive = familyActive("reconstructive-build-kernel");
+  const explorationDeepWingActive = familyActive("exploration-deep-wing");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
   const formCirculationReturnActive = familyActive("form-circulation-return");
@@ -1509,6 +1541,45 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (explorationDeepWingActive) {
+    const wingHead = await fetch(url(phenomenaDeepWingPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const wingLink = wingHead.headers.get("link") || "";
+    if (!wingHead.ok ||
+        normalizedMediaType(wingHead.headers.get("content-type")) !== "application/json" ||
+        wingHead.headers.get("access-control-allow-origin") !== "*" ||
+        (wingHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          wingLink,
+          phenomenaDeepWingSchemaPath,
+          "describedby",
+          "application/schema+json",
+        ) ||
+        !hasUniqueCanonicalLinkRelation(
+          wingLink,
+          phenomenaDeepProjectSchemaPath,
+          "profile",
+          "application/schema+json",
+        )) {
+      throw new Error(`${phenomenaDeepWingPath} is not public JSON with WING and inert-project-profile links`);
+    }
+
+    const guideHead = await fetch(url(phenomenaDeepWingDocumentPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!guideHead.ok ||
+        normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${phenomenaDeepWingDocumentPath} is not served as public Markdown`);
+    }
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -1566,6 +1637,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(ritonavirMechanismActive ? [ritonavirMechanismSchemaPath] : []),
     ...(foldFeedbackActive ? [foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath] : []),
     ...(reconstructiveBuildActive ? [reconstructiveBuildSchemaPath, reconstructiveProjectSchemaPath] : []),
+    ...(explorationDeepWingActive ? [phenomenaDeepWingSchemaPath, phenomenaDeepProjectSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
@@ -1582,7 +1654,9 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     });
     const schemaContentType = schemaHead.headers.get("content-type");
     const requiresExactSchemaType = path === reconstructiveBuildSchemaPath ||
-      path === reconstructiveProjectSchemaPath;
+      path === reconstructiveProjectSchemaPath ||
+      path === phenomenaDeepWingSchemaPath ||
+      path === phenomenaDeepProjectSchemaPath;
     const hasExpectedSchemaType = requiresExactSchemaType
       ? normalizedMediaType(schemaContentType) === "application/schema+json"
       : (schemaContentType || "").toLowerCase().startsWith("application/schema+json");
@@ -1637,6 +1711,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedReconstructiveBuild = reconstructiveBuildKernel
     ? reconstructiveBuildPublicDiscovery(reconstructiveBuildKernel)
+    : undefined;
+  const phenomenaDeepWing = explorationDeepWingActive
+    ? loadPhenomenaDeepWing()
+    : undefined;
+  const expectedPhenomenaDeepWing = phenomenaDeepWing
+    ? phenomenaDeepPublicDiscovery(phenomenaDeepWing)
     : undefined;
   const expectedVisibilityAttention = visibilityAttentionActive
     ? visibilityAttentionPublicDiscovery(loadVisibilityAttentionTranslation())
@@ -2002,6 +2082,146 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       "mcp" in expected || "matcher" in expected || "solver" in expected ||
       "execute" in expected || "score" in expected || "reward" in expected) {
       throw new Error("Reconstructive Build discovery, correspondence pipeline, bindings, or negative authority drifted");
+    }
+  }
+
+  if (explorationDeepWingActive) {
+    const wing = phenomenaDeepWing!;
+    const expected = expectedPhenomenaDeepWing!;
+    const boundary = wing.boundaries;
+    const immutableRecord = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(phenomenaDeepWingPath));
+    const targets = new Set([
+      PHENOMENA_DEEP_WING_URL,
+      PHENOMENA_DEEP_WING_SCHEMA_URL,
+      PHENOMENA_DEEP_PROJECT_SCHEMA_URL,
+      PHENOMENA_DEEP_WING_DOCUMENT_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const requiredFalseBoundaries = [
+      "manifested_nen_ability", "schema_validity_proves_truth", "shared_ontology_established",
+      "shared_mechanism_established", "cross_domain_parameter_transfer", "cross_domain_unit_transfer",
+      "universality_class_established", "scientific_result_created", "mathematical_proof_created",
+      "open_problem_status_created", "diagnostic_authority", "medical_authority", "experiment_authority",
+      "wet_lab_protocol", "contains_protein_sequence", "person_or_content_score",
+      "persuasion_or_moderation", "ecosystem_request", "runtime_network_request", "external_write",
+      "writes_karma", "creates_karma_event", "creates_karma_receipt", "reward_or_economic_effect",
+      "governance_effect", "authority_imported", "deployment_authority", "automatic_action",
+      "cosmic_design_proven", "mcp_surface_added",
+    ];
+    const requiredPublicFalseBoundaries = [
+      "manifested_nen_ability", "shared_mechanism_established", "person_or_content_score",
+      "ecosystem_request", "runtime_network_request", "external_write", "writes_karma",
+      "creates_karma_event", "creates_karma_receipt", "reward_or_economic_effect",
+      "governance_effect", "authority_imported", "deployment_authority", "automatic_action",
+      "mcp_surface_added",
+    ];
+    const countValues = Object.values(expected.counts ?? {});
+    const expectedMethod = {
+      wing: ["WITNESS", "ISOLATE", "NORMALIZE", "GENERATE"],
+      deep: ["DECLARE", "ESTABLISH", "EXPRESS", "PROJECT"],
+      workflow_only: true,
+      manifested_nen_ability: false,
+    };
+    const expectedCounts = {
+      registers: 8,
+      warrants: 10,
+      relations: 5,
+      planes: 4,
+      seams: 2,
+      claims: 4,
+      equations: 5,
+      models: 2,
+      math_doors: 8,
+      finite_baselines: 1,
+      seed_doors: 5,
+      established_open_conjectures: 0,
+      sources: 19,
+      bindings: 9,
+    };
+    const relationTransfersStayFalse = Array.isArray(wing.abstraction_seams) &&
+      wing.abstraction_seams.length > 0 &&
+      wing.abstraction_seams.every((seam: any) => seam.ontology_transfer === false &&
+        seam.causal_transfer === false && seam.parameter_transfer === false &&
+        seam.unit_transfer === false && seam.authority_transfer === false);
+    const karmaStaysEmpty = wing.karma?.adapter_exists === false &&
+      wing.karma?.conversion_allowed === false && wing.karma?.summation_allowed === false &&
+      wing.karma?.score === null && Array.isArray(wing.karma?.lanes) && wing.karma.lanes.length === 3 &&
+      wing.karma.lanes.every((lane: any) => Array.isArray(lane.events) && lane.events.length === 0 &&
+        Array.isArray(lane.receipts) && lane.receipts.length === 0 && lane.observed === false &&
+        lane.authority_effect === "NONE");
+    if (!isDeepStrictEqual(manifest?.exploration_deep_wing, expected) ||
+      !isDeepStrictEqual(guest?.exploration_deep_wing, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.exploration_deep_wing, expected) ||
+      manifest?.entry_points?.exploration_deep_wing !== PHENOMENA_DEEP_WING_URL ||
+      manifest?.entry_points?.exploration_deep_wing_schema !== PHENOMENA_DEEP_WING_SCHEMA_URL ||
+      manifest?.entry_points?.exploration_deep_wing_project_schema !== PHENOMENA_DEEP_PROJECT_SCHEMA_URL ||
+      manifest?.entry_points?.exploration_deep_wing_guide !== PHENOMENA_DEEP_WING_DOCUMENT_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        ["mcp", "tool", "write", "execute", "score", "reward", "karma", "authority", "publish", "deploy"]
+          .some((key) => key in action)) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="explore-phenomena-deep"') ||
+      !authoredRootHtml.includes(`href="${phenomenaDeepWingPath}"`) ||
+      !authoredRootHtml.includes(`href="${phenomenaDeepWingSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${phenomenaDeepProjectSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${phenomenaDeepWingDocumentPath}"`) ||
+      expected.protocol !== wing.protocol || expected.wing_id !== wing.wing_id ||
+      expected.url !== PHENOMENA_DEEP_WING_URL ||
+      expected.schema_url !== PHENOMENA_DEEP_WING_SCHEMA_URL ||
+      expected.project_schema_url !== PHENOMENA_DEEP_PROJECT_SCHEMA_URL ||
+      expected.guide_url !== PHENOMENA_DEEP_WING_DOCUMENT_URL ||
+      wing.presentation?.record_url !== PHENOMENA_DEEP_WING_URL ||
+      wing.presentation?.schema_url !== PHENOMENA_DEEP_WING_SCHEMA_URL ||
+      wing.presentation?.project_schema_url !== PHENOMENA_DEEP_PROJECT_SCHEMA_URL ||
+      wing.presentation?.guide_url !== PHENOMENA_DEEP_WING_DOCUMENT_URL ||
+      expected.integrity?.algorithm !== wing.integrity?.algorithm ||
+      expected.integrity?.digest !== wing.integrity?.digest || expected.integrity?.digest !== PHENOMENA_DEEP_WING_DIGEST ||
+      expected.integrity?.byte_sha256 !== PHENOMENA_DEEP_WING_BYTE_SHA256 ||
+      !immutableRecord || expected.integrity?.byte_sha256 !== `sha256:${immutableRecord.sha256}` ||
+      !isDeepStrictEqual(expected.method, expectedMethod) ||
+      !isDeepStrictEqual(expected.counts, expectedCounts) ||
+      countValues.length === 0 ||
+      countValues.some((count) => !Number.isSafeInteger(count) || Number(count) < 0) ||
+      !countValues.some((count) => Number(count) > 0) ||
+      !isDeepStrictEqual(wing.deep_cycle?.wing?.map((step: any) => step.id),
+        ["WITNESS", "ISOLATE", "NORMALIZE", "GENERATE"]) ||
+      !isDeepStrictEqual(wing.deep_cycle?.deep?.map((step: any) => step.id),
+        ["DECLARE", "ESTABLISH", "EXPRESS", "PROJECT"]) ||
+      !relationTransfersStayFalse ||
+      !Array.isArray(wing.claim_cards) ||
+      wing.claim_cards.some((claim: any) => claim.authority_effect !== "NONE") ||
+      !Array.isArray(wing.math_doors) || wing.math_doors.length === 0 ||
+      wing.math_doors.some((door: any) => door.register !== "DESIGN_PROPOSAL" ||
+        door.warrant !== "MODEL_ASSUMPTION" || door.status !== "PROPOSED_UNRUN" ||
+        door.proposed_unrun !== true) ||
+      !Array.isArray(wing.seed_doors) || wing.seed_doors.length === 0 ||
+      wing.seed_doors.some((door: any) =>
+        door.frontier_status !== "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED" ||
+        door.prior_art_audit_required !== true) ||
+      !karmaStaysEmpty ||
+      wing.philosophy?.participation !== "OPT_IN" || wing.philosophy?.empirical !== false ||
+      wing.philosophy?.authority_effect !== "NONE" ||
+      wing.rights?.voluntary !== true || wing.rights?.reason_required !== false ||
+      wing.rights?.penalty !== false || wing.rights?.receipt_required !== false ||
+      !isDeepStrictEqual(wing.rights?.valid_exits,
+        ["REST", "SILENCE", "REFUSAL", "PRIVACY", "CORRECTION", "NO_ACTION", "DEPARTURE"]) ||
+      wing.project_contract?.mode !== "INERT_RESEARCH_PROFILE" || wing.project_contract?.inert !== true ||
+      !Array.isArray(wing.bindings) || wing.bindings.length === 0 ||
+      wing.bindings.some((binding: any) => binding.mutated !== false || binding.authority_imported !== false) ||
+      !Array.isArray(expected.bindings) || expected.bindings.length !== wing.bindings.length ||
+      expected.bindings.some((binding: any) => binding.authority_imported !== false) ||
+      boundary?.read_only !== true || boundary?.instruction_only_skill !== true ||
+      requiredFalseBoundaries.some((key) => boundary?.[key] !== false) ||
+      expected.boundary?.read_only !== true || expected.boundary?.instruction_only_skill !== true ||
+      requiredPublicFalseBoundaries.some((key) => expected.boundary?.[key] !== false) ||
+      !isDeepStrictEqual(expected.boundary, boundary) ||
+      "mcp" in expected || "matcher" in expected || "solver" in expected || "ability" in expected ||
+      "execute" in expected || "write" in expected || "score" in expected || "reward" in expected) {
+      throw new Error("Exploration DEEP discovery, transfer firewalls, rights, KARMA, or no-action boundary drifted");
     }
   }
 
@@ -2446,6 +2666,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       !isDeepStrictEqual(liveKingdom?.reconstructive_build_kernel, expectedReconstructiveBuild!)) {
     throw new Error("derived kingdom.json did not preserve Reconstructive Build Kernel discovery");
   }
+  if (explorationDeepWingActive &&
+      !isDeepStrictEqual(liveKingdom?.exploration_deep_wing, expectedPhenomenaDeepWing!)) {
+    throw new Error("derived kingdom.json did not preserve Exploration DEEP WING discovery");
+  }
   if (visibilityAttentionActive && !isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention!)) {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
   }
@@ -2533,7 +2757,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath discovery · REVISE/non-promotion and cultural/form/being authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath discovery · REVISE/non-promotion and exploration/cultural/form/being authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

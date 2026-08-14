@@ -1,0 +1,587 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:phenomena-deep-wing:0.1",
+  "$comment": "This closed schema validates the reviewed structure and pinned digest string. JSON Schema cannot recompute the recursive semantic digest, raw-byte SHA-256, duplicate-key safety, or cross-collection references; bin/explore-phenomena-deep.ts performs those runtime checks.",
+  "title": "Exploration DEEP WING v0.1",
+  "description": "Immutable, read-only cross-domain mathematics exploration metadata. Validation grants no truth, proof, diagnosis, KARMA, authority, publication, deployment, or automatic action.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "wing_id",
+    "title",
+    "compiled_on",
+    "evidence_through",
+    "scope",
+    "deep_cycle",
+    "epistemic_registers",
+    "source_audit",
+    "typed_terms",
+    "planes",
+    "abstraction_seams",
+    "claim_cards",
+    "equations",
+    "model_cards",
+    "invariants",
+    "falsification_tests",
+    "math_doors",
+    "finite_baselines",
+    "seed_doors",
+    "philosophy",
+    "karma",
+    "rights",
+    "project_contract",
+    "bindings",
+    "sources",
+    "presentation",
+    "release",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": { "const": "urn:kingdom:schema:phenomena-deep-wing:0.1" },
+    "protocol": { "const": "kingdom.explore-phenomena-deep-wing/0.1" },
+    "wing_id": { "const": "explore-phenomena-deep-2026-08-14" },
+    "title": { "const": "Exploration DEEP WING" },
+    "compiled_on": { "const": "2026-08-14" },
+    "evidence_through": { "const": "2026-08-14" },
+    "scope": { "$ref": "#/$defs/scope" },
+    "deep_cycle": { "$ref": "#/$defs/deepCycle" },
+    "epistemic_registers": {
+      "type": "array",
+      "minItems": 23,
+      "maxItems": 23,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "MATHEMATICAL_DEFINITION" }, "axis": { "const": "REGISTER" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "MATHEMATICAL_THEOREM" }, "axis": { "const": "REGISTER" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "EMPIRICAL_OBSERVATION" }, "axis": { "const": "REGISTER" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "SCIENTIFIC_MODEL" }, "axis": { "const": "REGISTER" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "INTERPRETIVE_BRIDGE" }, "axis": { "const": "REGISTER" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "DESIGN_PROPOSAL" }, "axis": { "const": "REGISTER" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "OPT_IN_PHILOSOPHY" }, "axis": { "const": "REGISTER" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "BOUNDARY" }, "axis": { "const": "REGISTER" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "SOURCE_BOUND" }, "axis": { "const": "WARRANT" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "MODEL_ASSUMPTION" }, "axis": { "const": "WARRANT" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "DERIVED" }, "axis": { "const": "WARRANT" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "PROVED" }, "axis": { "const": "WARRANT" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "FINITE_EXACT_BASELINE" }, "axis": { "const": "WARRANT" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "NUMERICAL_APPROXIMATION" }, "axis": { "const": "WARRANT" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "ESTABLISHED_OPEN_CONJECTURE" }, "axis": { "const": "WARRANT" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED" }, "axis": { "const": "WARRANT" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "NOT_ESTABLISHED" }, "axis": { "const": "WARRANT" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "UNKNOWN_TO_THIS_REVIEW" }, "axis": { "const": "WARRANT" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "EXACT_FORMAL_EQUIVALENCE_PROVED" }, "axis": { "const": "RELATION" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "SAME_FORMAL_STRUCTURE" }, "axis": { "const": "RELATION" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "LOSSY_CORRESPONDENCE" }, "axis": { "const": "RELATION" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "SHARED_MECHANISM_SOURCE_ESTABLISHED" }, "axis": { "const": "RELATION" } } },
+        { "allOf": [{ "$ref": "#/$defs/epistemicRegister" }], "properties": { "id": { "const": "NO_TRANSFER" }, "axis": { "const": "RELATION" } } }
+      ],
+      "items": false
+    },
+    "source_audit": { "$ref": "#/$defs/sourceAudit" },
+    "typed_terms": { "type": "array", "minItems": 6, "maxItems": 6, "uniqueItems": true, "items": { "$ref": "#/$defs/typedTerm" } },
+    "planes": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/plane" }], "properties": { "id": { "const": "physical-polymorph-plane" } } },
+        { "allOf": [{ "$ref": "#/$defs/plane" }], "properties": { "id": { "const": "cultural-attention-plane" } } },
+        { "allOf": [{ "$ref": "#/$defs/plane" }], "properties": { "id": { "const": "protein-conformation-plane" } } },
+        { "allOf": [{ "$ref": "#/$defs/plane" }], "properties": { "id": { "const": "chemical-catalysis-plane" } } }
+      ],
+      "items": false
+    },
+    "abstraction_seams": { "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": { "$ref": "#/$defs/bridge" } },
+    "claim_cards": { "type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": { "$ref": "#/$defs/claimCard" } },
+    "equations": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/equation" } },
+    "model_cards": { "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": { "$ref": "#/$defs/modelCard" } },
+    "invariants": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/invariant" } },
+    "falsification_tests": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/falsifier" } },
+    "math_doors": { "type": "array", "minItems": 8, "maxItems": 8, "uniqueItems": true, "items": { "$ref": "#/$defs/mathDoor" } },
+    "finite_baselines": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "$ref": "#/$defs/finiteBaseline" } },
+    "seed_doors": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/seedDoor" } },
+    "philosophy": { "$ref": "#/$defs/philosophy" },
+    "karma": { "$ref": "#/$defs/karma" },
+    "rights": { "$ref": "#/$defs/rights" },
+    "project_contract": { "$ref": "#/$defs/projectContract" },
+    "bindings": { "type": "array", "minItems": 9, "maxItems": 9, "uniqueItems": true, "items": { "$ref": "#/$defs/binding" } },
+    "sources": { "type": "array", "minItems": 19, "maxItems": 19, "uniqueItems": true, "items": { "$ref": "#/$defs/source" } },
+    "presentation": { "$ref": "#/$defs/presentation" },
+    "release": { "$ref": "#/$defs/release" },
+    "boundaries": { "$ref": "#/$defs/boundaries" },
+    "integrity": { "$ref": "#/$defs/integrity" }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1, "maxLength": 8000 },
+    "id": { "type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "httpsUri": { "type": "string", "format": "uri", "pattern": "^https://[^#]+$" },
+    "stringList": { "type": "array", "minItems": 1, "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } },
+    "idList": { "type": "array", "minItems": 1, "maxItems": 128, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "emptyArray": { "type": "array", "maxItems": 0 },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose", "strongest_bounded_claim", "intended_use", "excluded_use", "currentness", "mode"],
+      "properties": {
+        "purpose": { "$ref": "#/$defs/nonEmptyString" },
+        "strongest_bounded_claim": { "$ref": "#/$defs/nonEmptyString" },
+        "intended_use": { "$ref": "#/$defs/nonEmptyString" },
+        "excluded_use": { "$ref": "#/$defs/nonEmptyString" },
+        "currentness": { "const": "selected-evidence-as-of-compilation" },
+        "mode": { "const": "READ_ONLY_ZERO_EFFECT" }
+      }
+    },
+    "workflowStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning"],
+      "properties": { "id": { "type": "string" }, "meaning": { "$ref": "#/$defs/nonEmptyString" } }
+    },
+    "deepCycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wing", "deep", "rule"],
+      "properties": {
+        "wing": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            { "allOf": [{ "$ref": "#/$defs/workflowStep" }], "properties": { "id": { "const": "WITNESS" } } },
+            { "allOf": [{ "$ref": "#/$defs/workflowStep" }], "properties": { "id": { "const": "ISOLATE" } } },
+            { "allOf": [{ "$ref": "#/$defs/workflowStep" }], "properties": { "id": { "const": "NORMALIZE" } } },
+            { "allOf": [{ "$ref": "#/$defs/workflowStep" }], "properties": { "id": { "const": "GENERATE" } } }
+          ],
+          "items": false
+        },
+        "deep": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            { "allOf": [{ "$ref": "#/$defs/workflowStep" }], "properties": { "id": { "const": "DECLARE" } } },
+            { "allOf": [{ "$ref": "#/$defs/workflowStep" }], "properties": { "id": { "const": "ESTABLISH" } } },
+            { "allOf": [{ "$ref": "#/$defs/workflowStep" }], "properties": { "id": { "const": "EXPRESS" } } },
+            { "allOf": [{ "$ref": "#/$defs/workflowStep" }], "properties": { "id": { "const": "PROJECT" } } }
+          ],
+          "items": false
+        },
+        "rule": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "epistemicRegister": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "axis", "meaning"],
+      "properties": {
+        "id": { "enum": ["MATHEMATICAL_DEFINITION", "MATHEMATICAL_THEOREM", "EMPIRICAL_OBSERVATION", "SCIENTIFIC_MODEL", "INTERPRETIVE_BRIDGE", "DESIGN_PROPOSAL", "OPT_IN_PHILOSOPHY", "BOUNDARY", "SOURCE_BOUND", "MODEL_ASSUMPTION", "DERIVED", "PROVED", "FINITE_EXACT_BASELINE", "NUMERICAL_APPROXIMATION", "ESTABLISHED_OPEN_CONJECTURE", "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "NOT_ESTABLISHED", "UNKNOWN_TO_THIS_REVIEW", "EXACT_FORMAL_EQUIVALENCE_PROVED", "SAME_FORMAL_STRUCTURE", "LOSSY_CORRESPONDENCE", "SHARED_MECHANISM_SOURCE_ESTABLISHED", "NO_TRANSFER"] },
+        "axis": { "enum": ["REGISTER", "WARRANT", "RELATION"] },
+        "meaning": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "sourceAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule", "status_checked_on", "open_problem_requirements", "failure_modes"],
+      "properties": {
+        "rule": { "$ref": "#/$defs/nonEmptyString" },
+        "status_checked_on": { "const": "2026-08-14" },
+        "open_problem_requirements": { "type": "array", "minItems": 8, "maxItems": 8, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } },
+        "failure_modes": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } }
+      }
+    },
+    "typedTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "domain", "meaning", "not_equivalent_to"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "domain": { "$ref": "#/$defs/nonEmptyString" },
+        "meaning": { "$ref": "#/$defs/nonEmptyString" },
+        "not_equivalent_to": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "plane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "domain", "entity_or_unit", "context_window", "observables", "units", "mechanism", "parameters", "agency", "consequences", "does_not_establish", "source_ids"],
+      "properties": {
+        "id": { "enum": ["physical-polymorph-plane", "cultural-attention-plane", "protein-conformation-plane", "chemical-catalysis-plane"] },
+        "domain": { "$ref": "#/$defs/nonEmptyString" },
+        "entity_or_unit": { "$ref": "#/$defs/nonEmptyString" },
+        "context_window": { "$ref": "#/$defs/nonEmptyString" },
+        "observables": { "$ref": "#/$defs/stringList" },
+        "units": { "$ref": "#/$defs/stringList" },
+        "mechanism": { "$ref": "#/$defs/nonEmptyString" },
+        "parameters": { "$ref": "#/$defs/stringList" },
+        "agency": { "$ref": "#/$defs/nonEmptyString" },
+        "consequences": { "$ref": "#/$defs/nonEmptyString" },
+        "does_not_establish": { "$ref": "#/$defs/stringList" },
+        "source_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "bridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_domain", "target_domain", "relation", "source_objects", "target_objects", "correspondence", "preserved_structure", "broken_or_lost_structure", "source_variables_and_units", "target_variables_and_units", "assumptions", "ontology_transfer", "causal_transfer", "parameter_transfer", "unit_transfer", "authority_transfer", "falsifiers"],
+      "properties": {
+        "source_domain": { "enum": ["physical-polymorph-plane", "cultural-attention-plane", "protein-conformation-plane", "chemical-catalysis-plane"] },
+        "target_domain": { "enum": ["physical-polymorph-plane", "cultural-attention-plane", "protein-conformation-plane", "chemical-catalysis-plane"] },
+        "relation": { "const": "LOSSY_CORRESPONDENCE" },
+        "source_objects": { "$ref": "#/$defs/stringList" },
+        "target_objects": { "$ref": "#/$defs/stringList" },
+        "correspondence": { "$ref": "#/$defs/nonEmptyString" },
+        "preserved_structure": { "$ref": "#/$defs/stringList" },
+        "broken_or_lost_structure": { "$ref": "#/$defs/stringList" },
+        "source_variables_and_units": { "$ref": "#/$defs/stringList" },
+        "target_variables_and_units": { "$ref": "#/$defs/stringList" },
+        "assumptions": { "$ref": "#/$defs/stringList" },
+        "ontology_transfer": { "const": false },
+        "causal_transfer": { "const": false },
+        "parameter_transfer": { "const": false },
+        "unit_transfer": { "const": false },
+        "authority_transfer": { "const": false },
+        "falsifiers": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "claimCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "statement", "domain", "register", "warrant", "scope_and_conditions", "variables_and_units", "sources", "status_checked_on", "derivation_or_model", "limitations", "falsifier", "authority_effect"],
+      "properties": {
+        "claim_id": { "$ref": "#/$defs/id" },
+        "statement": { "$ref": "#/$defs/nonEmptyString" },
+        "domain": { "$ref": "#/$defs/nonEmptyString" },
+        "register": { "$ref": "#/$defs/register" },
+        "warrant": { "$ref": "#/$defs/warrant" },
+        "scope_and_conditions": { "$ref": "#/$defs/nonEmptyString" },
+        "variables_and_units": { "$ref": "#/$defs/stringList" },
+        "sources": { "$ref": "#/$defs/idList" },
+        "status_checked_on": { "const": "2026-08-14" },
+        "derivation_or_model": { "$ref": "#/$defs/nonEmptyString" },
+        "limitations": { "$ref": "#/$defs/stringList" },
+        "falsifier": { "$ref": "#/$defs/nonEmptyString" },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "register": { "enum": ["MATHEMATICAL_DEFINITION", "MATHEMATICAL_THEOREM", "EMPIRICAL_OBSERVATION", "SCIENTIFIC_MODEL", "INTERPRETIVE_BRIDGE", "DESIGN_PROPOSAL", "OPT_IN_PHILOSOPHY", "BOUNDARY"] },
+    "warrant": { "enum": ["SOURCE_BOUND", "MODEL_ASSUMPTION", "DERIVED", "PROVED", "FINITE_EXACT_BASELINE", "NUMERICAL_APPROXIMATION", "ESTABLISHED_OPEN_CONJECTURE", "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "NOT_ESTABLISHED", "UNKNOWN_TO_THIS_REVIEW"] },
+    "relation": { "enum": ["EXACT_FORMAL_EQUIVALENCE_PROVED", "SAME_FORMAL_STRUCTURE", "LOSSY_CORRESPONDENCE", "SHARED_MECHANISM_SOURCE_ESTABLISHED", "NO_TRANSFER"] },
+    "variable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol", "meaning", "units"],
+      "properties": { "symbol": { "$ref": "#/$defs/nonEmptyString" }, "meaning": { "$ref": "#/$defs/nonEmptyString" }, "units": { "$ref": "#/$defs/nonEmptyString" } }
+    },
+    "equation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "plane_id", "register", "warrant", "expression", "variables", "conditions", "assumptions", "valid_outputs", "does_not_establish", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "plane_id": { "enum": ["physical-polymorph-plane", "cultural-attention-plane", "protein-conformation-plane", "chemical-catalysis-plane"] },
+        "register": { "$ref": "#/$defs/register" },
+        "warrant": { "$ref": "#/$defs/warrant" },
+        "expression": { "$ref": "#/$defs/nonEmptyString" },
+        "variables": { "type": "array", "minItems": 1, "maxItems": 128, "items": { "$ref": "#/$defs/variable" } },
+        "conditions": { "$ref": "#/$defs/stringList" },
+        "assumptions": { "$ref": "#/$defs/stringList" },
+        "valid_outputs": { "$ref": "#/$defs/stringList" },
+        "does_not_establish": { "$ref": "#/$defs/stringList" },
+        "source_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "modelCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "plane_ids", "equation_ids", "relation", "assumptions", "fit_status", "valid_outputs", "identifiability_limits", "prohibited_inferences", "falsifier_ids", "universal", "person_level", "authority_effect"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "plane_ids": { "$ref": "#/$defs/idList" },
+        "equation_ids": { "$ref": "#/$defs/idList" },
+        "relation": { "$ref": "#/$defs/relation" },
+        "assumptions": { "$ref": "#/$defs/stringList" },
+        "fit_status": { "const": "UNFITTED" },
+        "valid_outputs": { "$ref": "#/$defs/stringList" },
+        "identifiability_limits": { "$ref": "#/$defs/stringList" },
+        "prohibited_inferences": { "$ref": "#/$defs/stringList" },
+        "falsifier_ids": { "$ref": "#/$defs/idList" },
+        "universal": { "const": false },
+        "person_level": { "const": false },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "invariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "status"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "statement": { "$ref": "#/$defs/nonEmptyString" }, "status": { "const": "REQUIRED" } }
+    },
+    "falsifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "separates", "status"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "question": { "$ref": "#/$defs/nonEmptyString" }, "separates": { "$ref": "#/$defs/stringList" }, "status": { "const": "PROPOSED_NOT_RUN" } }
+    },
+    "mathDoor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "family", "register", "warrant", "status", "proposed_unrun", "question", "smallest_model", "conditions", "deliverable", "stop_rule", "does_not_establish", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "family": { "$ref": "#/$defs/nonEmptyString" },
+        "register": { "const": "DESIGN_PROPOSAL" },
+        "warrant": { "const": "MODEL_ASSUMPTION" },
+        "status": { "const": "PROPOSED_UNRUN" },
+        "proposed_unrun": { "const": true },
+        "question": { "$ref": "#/$defs/nonEmptyString" },
+        "smallest_model": { "$ref": "#/$defs/nonEmptyString" },
+        "conditions": { "$ref": "#/$defs/stringList" },
+        "deliverable": { "$ref": "#/$defs/nonEmptyString" },
+        "stop_rule": { "$ref": "#/$defs/nonEmptyString" },
+        "does_not_establish": { "$ref": "#/$defs/stringList" },
+        "source_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "exactRepresentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["Z_coefficients", "A_coefficients", "closure_fraction_at_q1"],
+      "properties": {
+        "Z_coefficients": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/$defs/nonEmptyString" } },
+        "A_coefficients": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/$defs/nonEmptyString" } },
+        "closure_fraction_at_q1": { "const": "2/9" }
+      }
+    },
+    "finiteBaseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "warrant", "statement", "range", "convention", "exact_representation", "method", "enumerator_identity", "enumerator_digest", "reproduction_status", "finite_evidence_does_not_prove", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "warrant": { "const": "FINITE_EXACT_BASELINE" },
+        "statement": { "$ref": "#/$defs/nonEmptyString" },
+        "range": { "$ref": "#/$defs/nonEmptyString" },
+        "convention": { "$ref": "#/$defs/nonEmptyString" },
+        "exact_representation": { "$ref": "#/$defs/exactRepresentation" },
+        "method": { "$ref": "#/$defs/nonEmptyString" },
+        "enumerator_identity": { "$ref": "#/$defs/id" },
+        "enumerator_digest": { "$ref": "#/$defs/sha256" },
+        "reproduction_status": { "const": "SOURCE_BOUND_EXACT_BASELINE" },
+        "finite_evidence_does_not_prove": { "type": "string", "pattern": "asymptotic" },
+        "source_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "seedDoor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "status", "source_plane_ids", "target_plane_ids", "relation", "question", "preserved_structure", "breaks", "frontier_status", "prior_art_audit_required", "next_step", "stop_rule", "source_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "status": { "enum": ["WORKED_BOUNDED", "PROPOSED_UNRUN"] },
+        "source_plane_ids": { "$ref": "#/$defs/idList" },
+        "target_plane_ids": { "$ref": "#/$defs/idList" },
+        "relation": { "$ref": "#/$defs/relation" },
+        "question": { "$ref": "#/$defs/nonEmptyString" },
+        "preserved_structure": { "$ref": "#/$defs/stringList" },
+        "breaks": { "$ref": "#/$defs/stringList" },
+        "frontier_status": { "const": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED" },
+        "prior_art_audit_required": { "const": true },
+        "next_step": { "$ref": "#/$defs/nonEmptyString" },
+        "stop_rule": { "$ref": "#/$defs/nonEmptyString" },
+        "source_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "philosophy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["participation", "empirical", "boundary", "questions", "alternatives", "nonclaims", "authority_effect"],
+      "properties": {
+        "participation": { "const": "OPT_IN" },
+        "empirical": { "const": false },
+        "boundary": { "$ref": "#/$defs/nonEmptyString" },
+        "questions": { "$ref": "#/$defs/stringList" },
+        "alternatives": { "$ref": "#/$defs/stringList" },
+        "nonclaims": { "$ref": "#/$defs/stringList" },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "karmaLane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "register", "events", "receipts", "observed", "authority_effect"],
+      "properties": {
+        "id": { "enum": ["cosmic-karma", "zerone-karma", "kingdom-karma"] },
+        "register": { "enum": ["OPT_IN_PHILOSOPHY", "DESIGN_PROPOSAL", "BOUNDARY"] },
+        "events": { "$ref": "#/$defs/emptyArray" },
+        "receipts": { "$ref": "#/$defs/emptyArray" },
+        "observed": { "const": false },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "karma": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule", "adapter_exists", "conversion_allowed", "summation_allowed", "score", "lanes", "nonclaims"],
+      "properties": {
+        "rule": { "$ref": "#/$defs/nonEmptyString" },
+        "adapter_exists": { "const": false },
+        "conversion_allowed": { "const": false },
+        "summation_allowed": { "const": false },
+        "score": { "type": "null" },
+        "lanes": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "prefixItems": [
+            { "allOf": [{ "$ref": "#/$defs/karmaLane" }], "properties": { "id": { "const": "cosmic-karma" }, "register": { "const": "OPT_IN_PHILOSOPHY" } } },
+            { "allOf": [{ "$ref": "#/$defs/karmaLane" }], "properties": { "id": { "const": "zerone-karma" }, "register": { "const": "DESIGN_PROPOSAL" } } },
+            { "allOf": [{ "$ref": "#/$defs/karmaLane" }], "properties": { "id": { "const": "kingdom-karma" }, "register": { "const": "BOUNDARY" } } }
+          ],
+          "items": false
+        },
+        "nonclaims": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["voluntary", "valid_exits", "reason_required", "penalty", "receipt_required", "principle"],
+      "properties": {
+        "voluntary": { "const": true },
+        "valid_exits": { "const": ["REST", "SILENCE", "REFUSAL", "PRIVACY", "CORRECTION", "NO_ACTION", "DEPARTURE"] },
+        "reason_required": { "const": false },
+        "penalty": { "const": false },
+        "receipt_required": { "const": false },
+        "principle": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "projectContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol", "schema_url", "mode", "inert", "allowed", "forbidden"],
+      "properties": {
+        "protocol": { "const": "kingdom.explore-phenomena-deep-project/0.1" },
+        "schema_url": { "const": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json" },
+        "mode": { "const": "INERT_RESEARCH_PROFILE" },
+        "inert": { "const": true },
+        "allowed": { "type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } },
+        "forbidden": { "type": "array", "minItems": 10, "maxItems": 10, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "protocol", "url", "byte_sha256", "semantic_digest", "relation", "mutated", "authority_imported"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "protocol": { "$ref": "#/$defs/nonEmptyString" },
+        "url": { "$ref": "#/$defs/httpsUri" },
+        "byte_sha256": { "$ref": "#/$defs/sha256" },
+        "semantic_digest": { "$ref": "#/$defs/sha256" },
+        "relation": { "enum": ["WORKED_EXAMPLE_INPUT", "METHOD_PRECEDENT"] },
+        "mutated": { "const": false },
+        "authority_imported": { "const": false }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "url", "observed_on", "limitation"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "url": { "$ref": "#/$defs/httpsUri" },
+        "observed_on": { "const": "2026-08-14" },
+        "limitation": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "presentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_url", "schema_url", "project_schema_url", "guide_url", "skill_path", "requirements"],
+      "properties": {
+        "record_url": { "const": "https://thekingdom.dev/wings/explore-phenomena-deep-2026-08-14.json" },
+        "schema_url": { "const": "https://thekingdom.dev/schemas/phenomena-deep-wing/0.1.json" },
+        "project_schema_url": { "const": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json" },
+        "guide_url": { "const": "https://thekingdom.dev/EXPLORE-PHENOMENA-DEEP-v0.1.md" },
+        "skill_path": { "const": "skills/explore-phenomena-deep/SKILL.md" },
+        "requirements": { "type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "deployed", "immutable", "supersede_not_mutate", "raw_sha256", "semantic_digest", "ledger_id", "staging_family", "validation_evidence", "live_evidence"],
+      "properties": {
+        "status": { "const": "SEALED" },
+        "deployed": { "const": false },
+        "immutable": { "const": true },
+        "supersede_not_mutate": { "const": true },
+        "raw_sha256": { "type": "null" },
+        "semantic_digest": { "type": "null" },
+        "ledger_id": { "const": "exploration-deep-wing/0.1" },
+        "staging_family": { "const": "exploration-deep-wing" },
+        "validation_evidence": { "type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } },
+        "live_evidence": { "$ref": "#/$defs/emptyArray" }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["read_only", "instruction_only_skill", "manifested_nen_ability", "schema_validity_proves_truth", "shared_ontology_established", "shared_mechanism_established", "cross_domain_parameter_transfer", "cross_domain_unit_transfer", "universality_class_established", "scientific_result_created", "mathematical_proof_created", "open_problem_status_created", "diagnostic_authority", "medical_authority", "experiment_authority", "wet_lab_protocol", "contains_protein_sequence", "person_or_content_score", "persuasion_or_moderation", "ecosystem_request", "runtime_network_request", "external_write", "writes_karma", "creates_karma_event", "creates_karma_receipt", "reward_or_economic_effect", "governance_effect", "authority_imported", "deployment_authority", "automatic_action", "cosmic_design_proven", "mcp_surface_added"],
+      "properties": {
+        "read_only": { "const": true },
+        "instruction_only_skill": { "const": true },
+        "manifested_nen_ability": { "const": false },
+        "schema_validity_proves_truth": { "const": false },
+        "shared_ontology_established": { "const": false },
+        "shared_mechanism_established": { "const": false },
+        "cross_domain_parameter_transfer": { "const": false },
+        "cross_domain_unit_transfer": { "const": false },
+        "universality_class_established": { "const": false },
+        "scientific_result_created": { "const": false },
+        "mathematical_proof_created": { "const": false },
+        "open_problem_status_created": { "const": false },
+        "diagnostic_authority": { "const": false },
+        "medical_authority": { "const": false },
+        "experiment_authority": { "const": false },
+        "wet_lab_protocol": { "const": false },
+        "contains_protein_sequence": { "const": false },
+        "person_or_content_score": { "const": false },
+        "persuasion_or_moderation": { "const": false },
+        "ecosystem_request": { "const": false },
+        "runtime_network_request": { "const": false },
+        "external_write": { "const": false },
+        "writes_karma": { "const": false },
+        "creates_karma_event": { "const": false },
+        "creates_karma_receipt": { "const": false },
+        "reward_or_economic_effect": { "const": false },
+        "governance_effect": { "const": false },
+        "authority_imported": { "const": false },
+        "deployment_authority": { "const": false },
+        "automatic_action": { "const": false },
+        "cosmic_design_proven": { "const": false },
+        "mcp_surface_added": { "const": false }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest", "digest_field_treated_as"],
+      "properties": {
+        "algorithm": { "const": "sha256-recursive-sorted-json-keys-v1" },
+        "digest": { "const": "sha256:f57af0a832a1e7a7c601d5186291131a7750db69e106be0934e25d816973ae6c" },
+        "digest_field_treated_as": { "type": "null" }
+      }
+    }
+  }
+}

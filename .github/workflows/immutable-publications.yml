@@ -67,5 +67,16 @@ jobs:
           set -euo pipefail
           bun bin/immutable-publications.ts --base "$BASE_SHA"
 
+      - name: Exercise closed schemas and offline runtime contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          schema_env="$RUNNER_TEMP/kingdom-schema-validator"
+          python3 -m venv "$schema_env"
+          "$schema_env/bin/pip" install --disable-pip-version-check --quiet \
+            -r skills/guard-information-flow/scripts/requirements.txt
+          PATH="$schema_env/bin:$PATH" \
+            PHENOMENA_DEEP_SCHEMA_PYTHON="$schema_env/bin/python" bun test --timeout 15000
+
       - name: Exercise immutable staging gate
         run: bun test tests/immutable-publications.test.ts tests/stage-hub.test.ts tests/check-hub-live-retirement.test.ts
