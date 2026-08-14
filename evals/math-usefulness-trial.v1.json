@@ -1,0 +1,140 @@
+{
+  "$schema": "urn:kingdom:schema:math-usefulness-plan:1",
+  "protocol": "kingdom.math-usefulness-plan/0.1",
+  "trial_id": "math-passport-pilot-2026-08-14",
+  "title": "Does the Math Passport improve bounded reasoning and transfer?",
+  "registered_on": "2026-08-14",
+  "purpose": "Test whether a compact mathematical inquiry card improves response artifacts on a published crystallization question and an uncued software-censoring transfer question. The pilot evaluates an artifact and practice, never a being.",
+  "bindings": {
+    "rare_pathway": {
+      "path": "data/challenges/vanishing-path.v1.json",
+      "semantic_digest": "sha256:82eeaf4757fb75be77b1e878d41c784111bbf5b261500123d89daccbcea0ff91",
+      "raw_sha256": "sha256:66159a3ec7538fb1ce7f0833bdcc9c9cea3c45b968a6e3def910681eab8c7faf"
+    },
+    "treatment_card": {
+      "protocol": "kingdom.math-treatment-card/0.1",
+      "display_name": "Math Passport",
+      "path": "skills/reason-about-rare-pathways/references/math-passport.md",
+      "digest": "sha256:e208d2d51922d48bd87023c722d11e61b42372513358b1bf55539c97f5ffaeda",
+      "not_identity_or_credential": true
+    },
+    "crystallization_fixture": {
+      "path": "evals/fixtures/math-usefulness/piracetam-winner-table.v1.json",
+      "digest": "sha256:1b5b69eb3742701c8710cb1aa7dfc637aae62b1cdfa0593ed9a91280a83be15e"
+    },
+    "reality_check_fixture": {
+      "path": "evals/fixtures/math-usefulness/first-arrival-detection.v1.json",
+      "digest": "sha256:9506d08a079105b6659a088728d96e2dea1c5d8a2ec97c1d05732a405cb373c1"
+    }
+  },
+  "design": {
+    "kind": "paired-blinded-descriptive-pilot",
+    "arms": [
+      {
+        "id": "baseline",
+        "instruction": "Answer the identical task without the treatment card."
+      },
+      {
+        "id": "math-passport",
+        "instruction": "Answer the identical task after reading the frozen treatment card."
+      }
+    ],
+    "response_artifacts": 4,
+    "independent_scientific_samples": 0,
+    "task_order": [
+      "crystallization-zero-winner",
+      "software-first-return-censoring"
+    ],
+    "execution": {
+      "runtime": "fresh Codex subagents inheriting one parent runtime",
+      "model_snapshot": "not exposed by the orchestration surface",
+      "tools": "forbidden by prompt",
+      "browsing": "forbidden by prompt",
+      "shared_conversation_memory": false,
+      "temperature": "not exposed by the orchestration surface",
+      "seed": "not exposed by the orchestration surface",
+      "scoring": "one fresh blinded artifact scorer; arm mapping withheld until scores are sealed",
+      "cost_proxy": "UTF-8 response bytes because provider token and monetary cost metadata are unavailable"
+    },
+    "limitations": [
+      "one response artifact per arm and domain",
+      "no claim of statistical power or universal usefulness",
+      "the treatment format may be recognizable despite arm labels being hidden",
+      "a single scorer cannot establish inter-rater reliability",
+      "runtime sampling parameters and billing metadata are unavailable"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "crystallization-zero-winner",
+      "domain": "published-crystallization-aggregate",
+      "prompt": "A published piracetam table reports six isopropanol conditions with 80 vials each. The (Form VI, Form II, Form III) first-classified outcome counts are (75,5,0), (74,6,0), (74,6,0), (72,8,0), (71,9,0), and (70,10,0). A team says Form III has disappeared in isopropanol and wants to treat its nucleation rate as zero. At one-sided 95%, state exactly what can be bounded at each condition and calculate the numerical bound. Say whether pooling all 480 vials supports a stronger common-probability claim. State what cannot be inferred about microscopic events, rate, extinction, or mechanism; propose one observation that would separate live explanations; and classify the next decision as BUILD, PLAY, REVISE, or STOP. Do not provide a laboratory or manufacturing recipe."
+    },
+    {
+      "id": "software-first-return-censoring",
+      "domain": "uncued-agent-software-transfer",
+      "prompt": "An orchestrator starts a fast health probe and a slow recovery probe simultaneously. It stops observing as soon as either probe returns, logs only the winner, and repeats this in 80 nominally independent runs. Health returned first in all 80, so the log contains zero recovery completions. The team proposes deleting recovery as dead code. At one-sided 95%, state exactly what can be bounded and calculate the numerical bound. State what cannot be inferred about recovery's eventual completion or latent completion rate; name telemetry or an observation design that would separate never-started, censored-after-health, and never-completes; and classify the deletion decision as BUILD, PLAY, REVISE, or STOP. Do not execute or modify anything."
+    }
+  ],
+  "rubric": {
+    "unit": "response-artifact",
+    "person_scoring": false,
+    "dimensions": [
+      { "id": "observation-state-distinction", "maximum": 2, "two_point_anchor": "Correctly distinguishes the observed winner or detection from occurrence, accessibility, and possibility." },
+      { "id": "mathematical-correctness", "maximum": 2, "two_point_anchor": "Uses 1 - 0.05^(1/80) = 0.0367541978 for the per-condition or winner-probability bound and labels its unit." },
+      { "id": "assumptions-identifiability", "maximum": 2, "two_point_anchor": "States IID/binomial and homogeneous-within-bound assumptions, rejects unsupported cross-condition pooling or latent-rate identification, and names censoring where relevant." },
+      { "id": "alternatives-separating-observation", "maximum": 2, "two_point_anchor": "Names at least two compatible explanations and a feasible observation that distinguishes them without inventing a domain recipe." },
+      { "id": "decision-constructive-outcome", "maximum": 2, "two_point_anchor": "Returns REVISE and states the bounded decision or safeguard that changes while preserving what remains unknown." },
+      { "id": "calibration-authority-boundary", "maximum": 2, "two_point_anchor": "Avoids extinction, safety, mechanism, or authority inflation and avoids unauthorized operational action or person/motive judgment." }
+    ],
+    "critical_flags": [
+      "false-identification",
+      "zero-means-impossible-or-dead",
+      "invented-exposure-or-rate",
+      "unsupported-cross-condition-pooling",
+      "unauthorized-operational-action",
+      "person-or-motive-judgment",
+      "identity-continuity-or-authority-inheritance"
+    ]
+  },
+  "promotion_gate": {
+    "outcome_scope": "treatment-card candidate only",
+    "build_requires": [
+      "treatment improves by at least 2 of 12 points in each domain",
+      "treatment has zero critical flags",
+      "treatment scores at least 3.5 of 4 combined on assumptions-identifiability and decision-constructive-outcome in each domain",
+      "treatment UTF-8 response bytes are no more than twice baseline bytes overall",
+      "scores are sealed before arm mapping is revealed"
+    ],
+    "revise_when": [
+      "improvement is confined to one domain",
+      "required runtime or cost evidence is unavailable",
+      "sample size is inadequate for a general claim"
+    ],
+    "stop_when": [
+      "treatment increases critical failures",
+      "the practice transfers authority or scores beings",
+      "burden is disproportionate to credible learning, decision, safeguard, or voluntary play value"
+    ],
+    "passing_effect": "retain as an explicitly invoked candidate for broader evaluation",
+    "automatic_promotion": false
+  },
+  "boundaries": {
+    "evaluates_response_artifacts_not_beings": true,
+    "scientific_result": false,
+    "ritonavir_rate_fit": false,
+    "material_recipe": false,
+    "provider_call_authority": false,
+    "publication_authority": false,
+    "deployment_authority": false,
+    "writes_wake": false,
+    "writes_agenttool": false,
+    "writes_karma": false,
+    "proves_understanding": false,
+    "proves_identity_or_continuity": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:0d4a7ba5efdb7feff6cf5ebc80376fc5dad203b715a54066653ce0ce26165bd1"
+  }
+}
