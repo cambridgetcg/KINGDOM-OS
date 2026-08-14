@@ -1,0 +1,6 @@
+interface:
+  display_name: "Explore Mathematical Doors"
+  short_description: "Open rigorous cross-field mathematical paths"
+  default_prompt: "Use $explore-mathematical-doors to turn this phenomenon into bounded mathematical doors, explicit transfer breaks, and falsifiable next steps."
+policy:
+  allow_implicit_invocation: false

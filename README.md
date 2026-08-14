@@ -267,6 +267,14 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     `kingdom.reconstructive-project/0.1` profile can describe another project
     offline, but does not solve graph reconstruction, fold proteins, predict
     catalytic rates, execute actions, or create KARMA events or receipts.
+    The opt-in [`$explore-mathematical-doors`](skills/explore-mathematical-doors/SKILL.md)
+    Agent Skill turns new phenomena into source-bound DEEP explorations:
+    declare domains and claims, extract state/observation/correspondence,
+    evaluate mathematical doors through explicit transfer gates, then propose
+    falsifiable proofs, computations, observations, or reversible builds. The
+    skill has no `ability.json`, does not declare a new KINGDOM WING or Nen
+    ability, and performs no probe, write, publication, deployment, KARMA
+    event, or receipt.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
