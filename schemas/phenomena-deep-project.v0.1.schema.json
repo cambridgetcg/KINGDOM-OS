@@ -64,6 +64,52 @@
     "boundaries": { "$ref": "#/$defs/boundaries" },
     "integrity": { "$ref": "#/$defs/integrity" }
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "claims": {
+            "contains": {
+              "required": ["warrant"],
+              "properties": { "warrant": { "const": "ESTABLISHED_OPEN_CONJECTURE" } }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "frontier_problems": {
+            "contains": {
+              "required": ["status"],
+              "properties": { "status": { "const": "ESTABLISHED_OPEN_CONJECTURE" } }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "claims": {
+            "contains": {
+              "required": ["warrant"],
+              "properties": { "warrant": { "const": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED" } }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "frontier_problems": {
+            "contains": {
+              "required": ["status"],
+              "properties": { "status": { "const": "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED" } }
+            }
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "nonEmptyString": { "type": "string", "minLength": 1, "maxLength": 8000 },
     "id": { "type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
@@ -96,11 +142,12 @@
     "sourceManifestEntry": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "title", "url", "observed_on", "claim_targets", "authority_note"],
+      "required": ["id", "title", "url", "locator", "observed_on", "claim_targets", "authority_note"],
       "properties": {
         "id": { "$ref": "#/$defs/id" },
         "title": { "$ref": "#/$defs/nonEmptyString" },
         "url": { "$ref": "#/$defs/httpsUri" },
+        "locator": { "$ref": "#/$defs/nonEmptyString" },
         "observed_on": { "$ref": "#/$defs/date" },
         "claim_targets": { "$ref": "#/$defs/optionalIdList" },
         "authority_note": { "$ref": "#/$defs/nonEmptyString" }
@@ -233,7 +280,19 @@
         "computation_does_not_prove": { "$ref": "#/$defs/stringList" },
         "nearest_known_problem": { "$ref": "#/$defs/nonEmptyString" },
         "novelty_status": { "enum": ["ESTABLISHED", "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "UNKNOWN_TO_THIS_REVIEW", "NOT_CLAIMED"] }
-      }
+      },
+      "allOf": [{
+        "if": {
+          "required": ["status"],
+          "properties": { "status": { "const": "ESTABLISHED_OPEN_CONJECTURE" } }
+        },
+        "then": {
+          "properties": {
+            "original_formulation_or_provenance_sources": { "minItems": 1 },
+            "recent_status_sources": { "minItems": 1 }
+          }
+        }
+      }]
     },
     "exactRepresentation": {
       "type": "object",

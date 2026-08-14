@@ -659,8 +659,8 @@
     },
     "integrity": {
       "algorithm": "sha256-recursive-sorted-json-keys-v1",
-      "digest": "sha256:ac566aabf1ce2830594379a31d8f79db9b8e9dde15fe5b245c5e7f3efd79e9fb",
-      "byte_sha256": "sha256:8a9f7a32e35ef78582afe5ce3d01e8cc4ae1217045ba075964444c6017d87305"
+      "digest": "sha256:f57af0a832a1e7a7c601d5186291131a7750db69e106be0934e25d816973ae6c",
+      "byte_sha256": "sha256:3eff9952a2013e011946d37db4316f82081fab992438b003bb6241ff7a775d55"
     },
     "bindings": [
       {

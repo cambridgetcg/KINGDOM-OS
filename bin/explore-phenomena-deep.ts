@@ -29,8 +29,8 @@ export const PHENOMENA_DEEP_WING_SCHEMA_URL = "https://thekingdom.dev/schemas/ph
 export const PHENOMENA_DEEP_PROJECT_SCHEMA_URL = "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json";
 export const PHENOMENA_DEEP_WING_DOCUMENT_URL = "https://thekingdom.dev/EXPLORE-PHENOMENA-DEEP-v0.1.md";
 export const PHENOMENA_DEEP_WING_GUIDE_URL = PHENOMENA_DEEP_WING_DOCUMENT_URL;
-export const PHENOMENA_DEEP_WING_DIGEST = "sha256:ac566aabf1ce2830594379a31d8f79db9b8e9dde15fe5b245c5e7f3efd79e9fb";
-export const PHENOMENA_DEEP_WING_BYTE_SHA256 = "sha256:8a9f7a32e35ef78582afe5ce3d01e8cc4ae1217045ba075964444c6017d87305";
+export const PHENOMENA_DEEP_WING_DIGEST = "sha256:f57af0a832a1e7a7c601d5186291131a7750db69e106be0934e25d816973ae6c";
+export const PHENOMENA_DEEP_WING_BYTE_SHA256 = "sha256:3eff9952a2013e011946d37db4316f82081fab992438b003bb6241ff7a775d55";
 
 const MAX_BYTES = 1024 * 1024;
 const SHA256 = /^sha256:[a-f0-9]{64}$/;
@@ -160,6 +160,9 @@ function text(value: unknown, maximum = 8000): value is string {
 function id(value: unknown): value is string {
   return typeof value === "string" && value.length <= 160 && ID.test(value);
 }
+function sha256(value: unknown): value is string {
+  return typeof value === "string" && SHA256.test(value);
+}
 function strings(value: unknown, minimum = 1, maximum = 128): value is string[] {
   return Array.isArray(value) && value.length >= minimum && value.length <= maximum &&
     value.every((item) => text(item)) && new Set(value).size === value.length;
@@ -176,11 +179,12 @@ function uniqueIds(value: unknown, field = "id"): Set<string> | null {
 }
 function validDate(value: unknown): boolean {
   if (typeof value !== "string" || !DATE.test(value)) return false;
+  if (Number(value.slice(0, 4)) < 1) return false;
   const parsed = new Date(`${value}T00:00:00Z`);
   return Number.isFinite(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
 }
 function safeHttps(value: unknown): boolean {
-  if (typeof value !== "string" || value.trim() !== value) return false;
+  if (typeof value !== "string" || value.trim() !== value || value.includes("#")) return false;
   try {
     const url = new URL(value);
     return url.protocol === "https:" && !url.username && !url.password && !url.hash && url.href === value;
@@ -192,6 +196,11 @@ function strictJsonTree(value: unknown, depth = 0, seen = new WeakSet<object>())
   if (typeof value !== "object" || depth > 64 || seen.has(value)) return false;
   const isArray = Array.isArray(value);
   if (!isArray && !object(value)) return false;
+  if (isArray) {
+    if (Object.getPrototypeOf(value) !== Array.prototype) return false;
+    const ownKeys = Object.keys(value);
+    if (ownKeys.length !== value.length || ownKeys.some((key, index) => key !== String(index))) return false;
+  }
   if (Object.getOwnPropertySymbols(value).length > 0) return false;
   const descriptors = Object.getOwnPropertyDescriptors(value);
   seen.add(value);
@@ -221,13 +230,13 @@ function readStrictFile(path: string, label: string): { value: unknown; bytes: B
 }
 
 export function phenomenaDeepWingDigest(value: AnyRecord): string {
-  const material = structuredClone(value);
+  const material = cloneStrict(value) as AnyRecord;
   if (!object(material.integrity)) throw new Error("Exploration DEEP integrity envelope is missing");
   material.integrity.digest = null;
   return `sha256:${createHash("sha256").update(canonicalizeJsonValue(material)).digest("hex")}`;
 }
 export function phenomenaDeepProjectDigest(value: AnyRecord): string {
-  const material = structuredClone(value);
+  const material = cloneStrict(value) as AnyRecord;
   if (!object(material.integrity)) throw new Error("Phenomena DEEP project integrity envelope is missing");
   material.integrity.digest = null;
   return `sha256:${createHash("sha256").update(canonicalizeJsonValue(material)).digest("hex")}`;
@@ -427,7 +436,7 @@ export function verifyPhenomenaDeepWing(input: unknown): PhenomenaDeepIssue[] {
   }
   if (!exactJson(value.boundaries, EXPECTED_BOUNDARIES)) add(issues, "$.boundaries", "boundary-drift");
   if (!sameKeys(value.integrity, ["algorithm", "digest", "digest_field_treated_as"]) || value.integrity?.algorithm !== ALGORITHM ||
-      !SHA256.test(value.integrity?.digest) || value.integrity?.digest_field_treated_as !== null) add(issues, "$.integrity", "invalid-integrity");
+      !sha256(value.integrity?.digest) || value.integrity?.digest_field_treated_as !== null) add(issues, "$.integrity", "invalid-integrity");
   else if (phenomenaDeepWingDigest(value) !== value.integrity.digest || value.integrity.digest !== PHENOMENA_DEEP_WING_DIGEST) {
     add(issues, "$.integrity.digest", "digest-mismatch");
   }
@@ -439,12 +448,118 @@ function validProjectDomain(entry: unknown): boolean {
     id((entry as AnyRecord).id) && ["subject", "entity_or_unit", "context", "agency"].every((key) => text((entry as AnyRecord)[key])) &&
     strings((entry as AnyRecord).conditions) && strings((entry as AnyRecord).observables) && strings((entry as AnyRecord).units);
 }
+function boundedProjectCollection(value: unknown, minimum = 0): value is AnyRecord[] {
+  return Array.isArray(value) && value.length >= minimum && value.length <= 128;
+}
+function projectIdSet(value: unknown, field = "id", minimum = 0): Set<string> | null {
+  if (!boundedProjectCollection(value, minimum)) return null;
+  return uniqueIds(value, field);
+}
+function uniqueCanonicalItems(value: unknown): boolean {
+  if (!boundedProjectCollection(value)) return false;
+  const seen = new Set<string>();
+  for (const entry of value) {
+    const canonical = canonicalizeJsonValue(entry);
+    if (seen.has(canonical)) return false;
+    seen.add(canonical);
+  }
+  return true;
+}
+function validProjectSource(entry: unknown, claimIds: ReadonlySet<string>): boolean {
+  return sameKeys(entry, ["id", "title", "url", "locator", "observed_on", "claim_targets", "authority_note"]) &&
+    id((entry as AnyRecord).id) && text((entry as AnyRecord).title) && safeHttps((entry as AnyRecord).url) &&
+    text((entry as AnyRecord).locator) && validDate((entry as AnyRecord).observed_on) &&
+    ids((entry as AnyRecord).claim_targets, claimIds, true) &&
+    text((entry as AnyRecord).authority_note);
+}
+function validProjectTypedTerm(entry: unknown): boolean {
+  return sameKeys(entry, ["id", "domain", "meaning", "not_equivalent_to"]) && id((entry as AnyRecord).id) &&
+    text((entry as AnyRecord).domain) && text((entry as AnyRecord).meaning) && strings((entry as AnyRecord).not_equivalent_to);
+}
+function validProjectClaim(entry: unknown, sourceIds: ReadonlySet<string>): boolean {
+  const keys = ["claim_id", "statement", "domain", "register", "warrant", "scope_and_conditions", "variables_and_units", "sources", "status_checked_on", "derivation_or_model", "limitations", "falsifier", "authority_effect"];
+  return sameKeys(entry, keys) && id((entry as AnyRecord).claim_id) && text((entry as AnyRecord).statement) &&
+    text((entry as AnyRecord).domain) && REGISTER_IDS.includes((entry as AnyRecord).register) &&
+    WARRANT_IDS.includes((entry as AnyRecord).warrant) && text((entry as AnyRecord).scope_and_conditions) &&
+    strings((entry as AnyRecord).variables_and_units) && ids((entry as AnyRecord).sources, sourceIds, true) &&
+    validDate((entry as AnyRecord).status_checked_on) && text((entry as AnyRecord).derivation_or_model) &&
+    strings((entry as AnyRecord).limitations) && text((entry as AnyRecord).falsifier) &&
+    (entry as AnyRecord).authority_effect === "NONE";
+}
 function validProjectBridge(entry: unknown, domainIds: ReadonlySet<string>): boolean {
   const keys = ["source_domain", "target_domain", "relation", "source_objects", "target_objects", "correspondence", "preserved_structure", "broken_or_lost_structure", "source_variables_and_units", "target_variables_and_units", "assumptions", "ontology_transfer", "causal_transfer", "parameter_transfer", "unit_transfer", "authority_transfer", "falsifiers"];
   return sameKeys(entry, keys) && domainIds.has((entry as AnyRecord).source_domain) && domainIds.has((entry as AnyRecord).target_domain) &&
     RELATION_IDS.includes((entry as AnyRecord).relation) && text((entry as AnyRecord).correspondence) &&
     ["source_objects", "target_objects", "preserved_structure", "broken_or_lost_structure", "source_variables_and_units", "target_variables_and_units", "assumptions", "falsifiers"].every((key) => strings((entry as AnyRecord)[key])) &&
     ["ontology_transfer", "causal_transfer", "parameter_transfer", "unit_transfer", "authority_transfer"].every((key) => (entry as AnyRecord)[key] === false);
+}
+function validProjectEquation(entry: unknown, domainIds: ReadonlySet<string>, sourceIds: ReadonlySet<string>): boolean {
+  const keys = ["id", "domain_id", "register", "warrant", "expression", "variables", "conditions", "assumptions", "valid_outputs", "does_not_establish", "source_ids"];
+  const variables = (entry as AnyRecord)?.variables;
+  return sameKeys(entry, keys) && id((entry as AnyRecord).id) && domainIds.has((entry as AnyRecord).domain_id) &&
+    REGISTER_IDS.includes((entry as AnyRecord).register) && WARRANT_IDS.includes((entry as AnyRecord).warrant) &&
+    text((entry as AnyRecord).expression) && Array.isArray(variables) && variables.length >= 1 && variables.length <= 128 &&
+    variables.every((variable: unknown) => sameKeys(variable, ["symbol", "meaning", "units"]) &&
+      text((variable as AnyRecord).symbol) && text((variable as AnyRecord).meaning) && text((variable as AnyRecord).units)) &&
+    ["conditions", "assumptions", "valid_outputs", "does_not_establish"].every((key) => strings((entry as AnyRecord)[key])) &&
+    ids((entry as AnyRecord).source_ids, sourceIds, true);
+}
+function validProjectModel(
+  entry: unknown,
+  domainIds: ReadonlySet<string>,
+  equationIds: ReadonlySet<string>,
+  falsifierIds: ReadonlySet<string>,
+): boolean {
+  const keys = ["id", "title", "domain_ids", "equation_ids", "relation", "assumptions", "fit_status", "valid_outputs", "identifiability_limits", "prohibited_inferences", "falsifier_ids", "universal", "person_level", "authority_effect"];
+  return sameKeys(entry, keys) && id((entry as AnyRecord).id) && text((entry as AnyRecord).title) &&
+    ids((entry as AnyRecord).domain_ids, domainIds) && ids((entry as AnyRecord).equation_ids, equationIds, true) &&
+    RELATION_IDS.includes((entry as AnyRecord).relation) && strings((entry as AnyRecord).assumptions) &&
+    ["UNFITTED", "SOURCE_BOUND", "NUMERICAL_APPROXIMATION"].includes((entry as AnyRecord).fit_status) &&
+    ["valid_outputs", "identifiability_limits", "prohibited_inferences"].every((key) => strings((entry as AnyRecord)[key])) &&
+    ids((entry as AnyRecord).falsifier_ids, falsifierIds, true) && (entry as AnyRecord).universal === false &&
+    (entry as AnyRecord).person_level === false && (entry as AnyRecord).authority_effect === "NONE";
+}
+function validProjectFalsifier(entry: unknown): boolean {
+  return sameKeys(entry, ["id", "question", "separates", "status"]) && id((entry as AnyRecord).id) &&
+    text((entry as AnyRecord).question) && strings((entry as AnyRecord).separates) &&
+    ["PROPOSED_NOT_RUN", "RUN_REPORTED", "OUTSIDE_SCOPE"].includes((entry as AnyRecord).status);
+}
+function validProjectFrontier(entry: unknown, sourceIds: ReadonlySet<string>): boolean {
+  const keys = ["statement", "quantifiers", "domain_and_conventions", "status", "status_checked_on", "original_formulation_or_provenance_sources", "recent_status_sources", "known_results_and_restrictions", "computation_does_not_prove", "nearest_known_problem", "novelty_status"];
+  const originalSources = (entry as AnyRecord)?.original_formulation_or_provenance_sources;
+  const recentSources = (entry as AnyRecord)?.recent_status_sources;
+  const establishedOpen = (entry as AnyRecord)?.status === "ESTABLISHED_OPEN_CONJECTURE";
+  return sameKeys(entry, keys) && ["statement", "quantifiers", "domain_and_conventions", "nearest_known_problem"].every((key) => text((entry as AnyRecord)[key])) &&
+    ["ESTABLISHED_OPEN_CONJECTURE", "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "UNKNOWN_TO_THIS_REVIEW", "NOT_ESTABLISHED"].includes((entry as AnyRecord).status) &&
+    validDate((entry as AnyRecord).status_checked_on) &&
+    ids(originalSources, sourceIds, true) && ids(recentSources, sourceIds, true) &&
+    (!establishedOpen || originalSources.length > 0 && recentSources.length > 0) &&
+    strings((entry as AnyRecord).known_results_and_restrictions) && strings((entry as AnyRecord).computation_does_not_prove) &&
+    ["ESTABLISHED", "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED", "UNKNOWN_TO_THIS_REVIEW", "NOT_CLAIMED"].includes((entry as AnyRecord).novelty_status);
+}
+function validProjectFiniteBaseline(entry: unknown, sourceIds: ReadonlySet<string>): boolean {
+  const keys = ["id", "warrant", "statement", "range", "convention", "exact_representation", "method", "enumerator_identity", "enumerator_digest", "reproduction_status", "finite_evidence_does_not_prove", "source_ids"];
+  const exact = (entry as AnyRecord)?.exact_representation;
+  return sameKeys(entry, keys) && id((entry as AnyRecord).id) && (entry as AnyRecord).warrant === "FINITE_EXACT_BASELINE" &&
+    ["statement", "range", "convention", "method", "reproduction_status", "finite_evidence_does_not_prove"].every((key) => text((entry as AnyRecord)[key])) &&
+    sameKeys(exact, ["Z_coefficients", "A_coefficients", "closure_fraction_at_q1"]) && strings(exact.Z_coefficients) &&
+    strings(exact.A_coefficients) && text(exact.closure_fraction_at_q1) && id((entry as AnyRecord).enumerator_identity) &&
+    sha256((entry as AnyRecord).enumerator_digest) &&
+    ids((entry as AnyRecord).source_ids, sourceIds, true);
+}
+function validProjectDoor(entry: unknown, sourceIds: ReadonlySet<string>): boolean {
+  const keys = ["id", "title", "family", "register", "warrant", "status", "proposed_unrun", "question", "smallest_model", "conditions", "deliverable", "stop_rule", "does_not_establish", "source_ids"];
+  return sameKeys(entry, keys) && id((entry as AnyRecord).id) &&
+    ["title", "family", "question", "smallest_model", "deliverable", "stop_rule"].every((key) => text((entry as AnyRecord)[key])) &&
+    (entry as AnyRecord).register === "DESIGN_PROPOSAL" && (entry as AnyRecord).warrant === "MODEL_ASSUMPTION" &&
+    (entry as AnyRecord).status === "PROPOSED_UNRUN" && (entry as AnyRecord).proposed_unrun === true &&
+    strings((entry as AnyRecord).conditions) && strings((entry as AnyRecord).does_not_establish) &&
+    ids((entry as AnyRecord).source_ids, sourceIds, true);
+}
+function validProjectUnknown(entry: unknown): boolean {
+  return sameKeys(entry, ["id", "kind", "statement"]) && id((entry as AnyRecord).id) &&
+    ["NOT_OBSERVED", "UNMAPPED", "CONTESTED", "OUTSIDE_SCOPE", "UNKNOWN_TO_THIS_REVIEW"].includes((entry as AnyRecord).kind) &&
+    text((entry as AnyRecord).statement);
 }
 
 export function verifyPhenomenaDeepProject(input: unknown): PhenomenaDeepIssue[] {
@@ -454,39 +569,85 @@ export function verifyPhenomenaDeepProject(input: unknown): PhenomenaDeepIssue[]
   if (!object(value)) return [{ field: "$", code: "must-be-object" }];
   if (!sameKeys(value, PROJECT_TOP_KEYS)) add(issues, "$", "unexpected-or-missing-field");
   if (value.$schema !== PHENOMENA_DEEP_PROJECT_SCHEMA_ID || value.protocol !== PHENOMENA_DEEP_PROJECT_PROTOCOL ||
-      !id(value.project_id) || !/^\d+\.\d+\.\d+$/.test(value.version ?? "") || !text(value.title) || !validDate(value.evidence_through) ||
+      !id(value.project_id) || typeof value.version !== "string" || value.version.length > 64 || !/^\d+\.\d+\.\d+$/.test(value.version) ||
+      !text(value.title) || !validDate(value.evidence_through) ||
       !["ANALYZE_ONLY", "DRAFT_PROFILE", "RELEASE_CANDIDATE"].includes(value.mode) || !text(value.question)) add(issues, "$", "invalid-project-identity");
-  const domainIds = uniqueIds(value.domains);
-  if (!domainIds || domainIds.size < 2 || array(value.domains).some((entry) => !validProjectDomain(entry))) add(issues, "$.domains", "invalid-domains");
-  const sourceIds = uniqueIds(value.source_manifest);
+  const domainIds = projectIdSet(value.domains, "id", 2);
+  const sourceIds = projectIdSet(value.source_manifest);
+  const typedTermIds = projectIdSet(value.typed_terms);
+  const claimIds = projectIdSet(value.claims, "claim_id");
+  const equationIds = projectIdSet(value.equations);
+  const modelIds = projectIdSet(value.models);
+  const falsifierIds = projectIdSet(value.falsifiers);
+  const finiteBaselineIds = projectIdSet(value.finite_baselines);
+  const doorIds = projectIdSet(value.doors);
+  const unknownIds = projectIdSet(value.unknowns);
+  const knownDomains = domainIds ?? new Set<string>();
+  const knownSources = sourceIds ?? new Set<string>();
+  const knownClaims = claimIds ?? new Set<string>();
+  const knownEquations = equationIds ?? new Set<string>();
+  const knownFalsifiers = falsifierIds ?? new Set<string>();
+
+  if (!domainIds || value.domains.some((entry: unknown) => !validProjectDomain(entry))) add(issues, "$.domains", "invalid-domains");
+  if (!sourceIds) add(issues, "$.source_manifest", "invalid-source-collection");
   for (const [index, source] of array(value.source_manifest).entries()) {
-    if (!sameKeys(source, ["id", "title", "url", "observed_on", "claim_targets", "authority_note"]) || !id(source.id) || !text(source.title) ||
-        !safeHttps(source.url) || !validDate(source.observed_on) || !ids(source.claim_targets, undefined, true) || !text(source.authority_note)) {
-      add(issues, `$.source_manifest[${index}]`, "invalid-source");
-    }
+    if (!validProjectSource(source, knownClaims)) add(issues, `$.source_manifest[${index}]`, "invalid-source");
   }
-  for (const [index, bridge] of array(value.bridges).entries()) {
-    if (!domainIds || !validProjectBridge(bridge, domainIds)) add(issues, `$.bridges[${index}]`, "invalid-bridge");
+  if (!typedTermIds) add(issues, "$.typed_terms", "invalid-typed-term-collection");
+  for (const [index, entry] of array(value.typed_terms).entries()) {
+    if (!validProjectTypedTerm(entry)) add(issues, `$.typed_terms[${index}]`, "invalid-typed-term");
   }
-  const projectClaimKeys = ["claim_id", "statement", "domain", "register", "warrant", "scope_and_conditions", "variables_and_units", "sources", "status_checked_on", "derivation_or_model", "limitations", "falsifier", "authority_effect"];
+  if (!claimIds) add(issues, "$.claims", "invalid-claim-collection");
   for (const [index, claim] of array(value.claims).entries()) {
-    if (!sameKeys(claim, projectClaimKeys) || !id(claim.claim_id) || !text(claim.statement) || !text(claim.domain) ||
-        !REGISTER_IDS.includes(claim.register) || !WARRANT_IDS.includes(claim.warrant) || !text(claim.scope_and_conditions) ||
-        !strings(claim.variables_and_units) || !ids(claim.sources, sourceIds ?? undefined, true) || !validDate(claim.status_checked_on) ||
-        !text(claim.derivation_or_model) || !strings(claim.limitations) || !text(claim.falsifier) || claim.authority_effect !== "NONE") {
-      add(issues, `$.claims[${index}]`, "invalid-claim");
+    if (!validProjectClaim(claim, knownSources)) add(issues, `$.claims[${index}]`, "invalid-claim");
+  }
+  if (!uniqueCanonicalItems(value.bridges)) add(issues, "$.bridges", "invalid-bridge-collection");
+  for (const [index, bridge] of array(value.bridges).entries()) {
+    if (!validProjectBridge(bridge, knownDomains)) add(issues, `$.bridges[${index}]`, "invalid-bridge");
+  }
+  if (!equationIds) add(issues, "$.equations", "invalid-equation-collection");
+  for (const [index, equation] of array(value.equations).entries()) {
+    if (!validProjectEquation(equation, knownDomains, knownSources)) add(issues, `$.equations[${index}]`, "invalid-equation");
+  }
+  if (!modelIds) add(issues, "$.models", "invalid-model-collection");
+  for (const [index, model] of array(value.models).entries()) {
+    if (!validProjectModel(model, knownDomains, knownEquations, knownFalsifiers)) add(issues, `$.models[${index}]`, "invalid-model");
+  }
+  if (!falsifierIds) add(issues, "$.falsifiers", "invalid-falsifier-collection");
+  for (const [index, falsifier] of array(value.falsifiers).entries()) {
+    if (!validProjectFalsifier(falsifier)) add(issues, `$.falsifiers[${index}]`, "invalid-falsifier");
+  }
+  if (!uniqueCanonicalItems(value.frontier_problems)) add(issues, "$.frontier_problems", "invalid-frontier-collection");
+  for (const [index, frontier] of array(value.frontier_problems).entries()) {
+    if (!validProjectFrontier(frontier, knownSources)) add(issues, `$.frontier_problems[${index}]`, "invalid-frontier");
+  }
+  for (const [index, claim] of array(value.claims).entries()) {
+    if (["ESTABLISHED_OPEN_CONJECTURE", "BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED"].includes(claim?.warrant) &&
+        !array(value.frontier_problems).some((frontier) => frontier?.status === claim.warrant && frontier?.statement === claim.statement)) {
+      add(issues, `$.claims[${index}].warrant`, "open-status-card-missing");
     }
   }
-  for (const key of ["typed_terms", "models", "equations", "falsifiers", "frontier_problems", "finite_baselines", "doors", "unknowns"] as const) {
-    if (!Array.isArray(value[key]) || value[key].length > 128) add(issues, `$.${key}`, "invalid-array");
+  if (!finiteBaselineIds) add(issues, "$.finite_baselines", "invalid-finite-baseline-collection");
+  for (const [index, baseline] of array(value.finite_baselines).entries()) {
+    if (!validProjectFiniteBaseline(baseline, knownSources)) add(issues, `$.finite_baselines[${index}]`, "invalid-finite-baseline");
+  }
+  if (!doorIds) add(issues, "$.doors", "invalid-door-collection");
+  for (const [index, door] of array(value.doors).entries()) {
+    if (!validProjectDoor(door, knownSources)) add(issues, `$.doors[${index}]`, "invalid-door");
+  }
+  if (!unknownIds) add(issues, "$.unknowns", "invalid-unknown-collection");
+  for (const [index, unknown] of array(value.unknowns).entries()) {
+    if (!validProjectUnknown(unknown)) add(issues, `$.unknowns[${index}]`, "invalid-unknown");
   }
   if (!sameKeys(value.philosophy, ["participation", "empirical", "questions", "nonclaims", "authority_effect"]) ||
       value.philosophy?.participation !== "OPT_IN" || value.philosophy?.empirical !== false ||
-      !Array.isArray(value.philosophy?.questions) || !strings(value.philosophy?.nonclaims) || value.philosophy?.authority_effect !== "NONE") {
+      !strings(value.philosophy?.questions, 0) || !strings(value.philosophy?.nonclaims) || value.philosophy?.authority_effect !== "NONE") {
     add(issues, "$.philosophy", "invalid-philosophy");
   }
   if (!sameKeys(value.karma, ["cosmic_events", "zerone_events", "kingdom_receipts", "adapter_exists", "conversion_allowed", "summation_allowed", "score", "authority_effect"]) ||
-      array(value.karma?.cosmic_events).length || array(value.karma?.zerone_events).length || array(value.karma?.kingdom_receipts).length ||
+      !Array.isArray(value.karma?.cosmic_events) || value.karma.cosmic_events.length !== 0 ||
+      !Array.isArray(value.karma?.zerone_events) || value.karma.zerone_events.length !== 0 ||
+      !Array.isArray(value.karma?.kingdom_receipts) || value.karma.kingdom_receipts.length !== 0 ||
       value.karma?.adapter_exists !== false || value.karma?.conversion_allowed !== false || value.karma?.summation_allowed !== false ||
       value.karma?.score !== null || value.karma?.authority_effect !== "NONE") add(issues, "$.karma", "invalid-karma");
   if (!sameKeys(value.rights, ["voluntary", "valid_exits", "reason_required", "penalty"]) || value.rights?.voluntary !== true ||
@@ -496,10 +657,12 @@ export function verifyPhenomenaDeepProject(input: unknown): PhenomenaDeepIssue[]
       Object.values(value.authority ?? {}).some((entry) => entry !== false)) add(issues, "$.authority", "authority-must-be-false");
   if (!sameKeys(value.release, ["status", "deployed", "publication_route", "evidence"]) ||
       !["DRAFT", "SEALED", "RELEASE_CANDIDATE"].includes(value.release?.status) || value.release?.deployed !== false ||
-      value.release?.publication_route !== null || array(value.release?.evidence).length !== 0) add(issues, "$.release", "invalid-release");
+      value.release?.publication_route !== null || !Array.isArray(value.release?.evidence) || value.release.evidence.length !== 0) {
+    add(issues, "$.release", "invalid-release");
+  }
   if (!exactJson(value.boundaries, PROJECT_BOUNDARIES)) add(issues, "$.boundaries", "boundary-drift");
   if (!sameKeys(value.integrity, ["algorithm", "digest", "digest_field_treated_as"]) || value.integrity?.algorithm !== ALGORITHM ||
-      !SHA256.test(value.integrity?.digest) || value.integrity?.digest_field_treated_as !== null) add(issues, "$.integrity", "invalid-integrity");
+      !sha256(value.integrity?.digest) || value.integrity?.digest_field_treated_as !== null) add(issues, "$.integrity", "invalid-integrity");
   else if (phenomenaDeepProjectDigest(value) !== value.integrity.digest) add(issues, "$.integrity.digest", "digest-mismatch");
   return issues;
 }

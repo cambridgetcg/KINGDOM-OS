@@ -484,7 +484,7 @@
     { "id": "reconstructive-kernel", "title": "KINGDOM Reconstructive Build Kernel", "url": "https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json", "observed_on": "2026-08-14", "limitation": "Design and validation structure only; it proves no cross-domain equivalence or physical realization." },
     { "id": "being-access-aftermath-v02", "title": "KINGDOM Being, Access and Aftermath v0.2", "url": "https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json", "observed_on": "2026-08-14", "limitation": "Typed ontology and models; no verdict on existence, purpose, person, or authority." },
     { "id": "kingdom-fold-feedback", "title": "KINGDOM Fold and Feedback Atlas", "url": "https://thekingdom.dev/atlases/fold-feedback-atlas-2026-08-12.json", "observed_on": "2026-08-14", "limitation": "Scientific evidence and analogy are separate; no protein, prion, or cultural mechanism transfer." },
-    { "id": "fold-to-fire-profile", "title": "Zerone Fold-to-Fire exact finite challenge profile", "url": "https://zerone.ai/standards/constructive-intelligence-fold-to-fire.v0.json", "observed_on": "2026-08-14", "limitation": "Exact finite lattice counts and one established q=1 closing conjecture; the catalytic interpretation and weighted extensions remain bounded or bespoke." }
+    { "id": "fold-to-fire-profile", "title": "Zerone Fold-to-Fire exact finite challenge profile", "url": "https://zerone.ai/standards/constructive-intelligence-fold-to-fire.v0.json", "observed_on": "2026-08-14", "limitation": "Exact finite lattice counts are bound as source content; a separate q=1 claim remains inside that profile without open-status import or certification here, and the catalytic interpretation and weighted extensions remain bounded or bespoke." }
   ],
   "presentation": {
     "record_url": "https://thekingdom.dev/wings/explore-phenomena-deep-2026-08-14.json",
@@ -542,7 +542,7 @@
   },
   "integrity": {
     "algorithm": "sha256-recursive-sorted-json-keys-v1",
-    "digest": "sha256:ac566aabf1ce2830594379a31d8f79db9b8e9dde15fe5b245c5e7f3efd79e9fb",
+    "digest": "sha256:f57af0a832a1e7a7c601d5186291131a7750db69e106be0934e25d816973ae6c",
     "digest_field_treated_as": null
   }
 }

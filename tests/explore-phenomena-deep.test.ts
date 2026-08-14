@@ -48,6 +48,7 @@ function populatedProject(): Record<string, any> {
     id: "source-one",
     title: "Bounded source",
     url: "https://example.com/bounded-source",
+    locator: "Whole bounded test artifact; no literature-status claim.",
     observed_on: "2026-08-14",
     claim_targets: ["claim-one"],
     authority_note: "Evidence for one local claim only; no action authority is imported.",
@@ -85,6 +86,93 @@ function populatedProject(): Record<string, any> {
     unit_transfer: false,
     authority_transfer: false,
     falsifiers: ["matched perturbations do not preserve the proposed relation"],
+  }];
+  value.typed_terms = [{
+    id: "accessibility-term",
+    domain: "cross-domain comparison",
+    meaning: "Reachability under separately declared conditions and observation operators.",
+    not_equivalent_to: ["shared mechanism", "shared unit", "shared ontology"],
+  }];
+  value.falsifiers = [{
+    id: "falsifier-one",
+    question: "Does the proposed relation fail under matched declared perturbations?",
+    separates: ["a preserved abstract relation", "a merely verbal resemblance"],
+    status: "PROPOSED_NOT_RUN",
+  }];
+  value.equations = [{
+    id: "equation-one",
+    domain_id: "source-domain",
+    register: "SCIENTIFIC_MODEL",
+    warrant: "MODEL_ASSUMPTION",
+    expression: "y = f(x; theta)",
+    variables: [
+      { symbol: "x", meaning: "declared source observable", units: "declared source units" },
+      { symbol: "y", meaning: "declared model output", units: "declared output units" },
+    ],
+    conditions: ["the source observation operator is fixed"],
+    assumptions: ["f and theta are declared locally"],
+    valid_outputs: ["a source-domain model comparison"],
+    does_not_establish: ["a target-domain mechanism"],
+    source_ids: ["source-one"],
+  }];
+  value.models = [{
+    id: "model-one",
+    title: "Bounded source-domain model",
+    domain_ids: ["source-domain"],
+    equation_ids: ["equation-one"],
+    relation: "NO_TRANSFER",
+    assumptions: ["all variables and parameters remain source-local"],
+    fit_status: "UNFITTED",
+    valid_outputs: ["a falsifiable local model"],
+    identifiability_limits: ["the declared observations may not identify hidden states"],
+    prohibited_inferences: ["no person score or target-domain causal claim"],
+    falsifier_ids: ["falsifier-one"],
+    universal: false,
+    person_level: false,
+    authority_effect: "NONE",
+  }];
+  value.frontier_problems = [{
+    statement: "Determine whether the bounded model has the proposed property under the stated conventions.",
+    quantifiers: "For every declared finite input under the stated conditions.",
+    domain_and_conventions: "The source-domain model and observation map declared in this profile.",
+    status: "UNKNOWN_TO_THIS_REVIEW",
+    status_checked_on: "2026-08-14",
+    original_formulation_or_provenance_sources: ["source-one"],
+    recent_status_sources: ["source-one"],
+    known_results_and_restrictions: ["Only the explicitly listed finite setting has been inspected."],
+    computation_does_not_prove: ["No asymptotic or general theorem follows."],
+    nearest_known_problem: "No literature-open identity is asserted by this test fixture.",
+    novelty_status: "UNKNOWN_TO_THIS_REVIEW",
+  }];
+  value.finite_baselines = [{
+    id: "finite-baseline-one",
+    warrant: "FINITE_EXACT_BASELINE",
+    statement: "One declared finite case is represented exactly.",
+    range: "n = 1",
+    convention: "The sole declared local convention.",
+    exact_representation: { Z_coefficients: ["1"], A_coefficients: ["0"], closure_fraction_at_q1: "0/1" },
+    method: "Direct enumeration of the declared singleton case.",
+    enumerator_identity: "enumerator-one",
+    enumerator_digest: `sha256:${"0".repeat(64)}`,
+    reproduction_status: "Reproduced inside the bounded fixture only.",
+    finite_evidence_does_not_prove: "No general, asymptotic, empirical, or cross-domain result.",
+    source_ids: ["source-one"],
+  }];
+  value.doors = [{
+    id: "door-one",
+    title: "A bounded next question",
+    family: "FINITE_COMBINATORICS",
+    register: "DESIGN_PROPOSAL",
+    warrant: "MODEL_ASSUMPTION",
+    status: "PROPOSED_UNRUN",
+    proposed_unrun: true,
+    question: "Which smallest counterexample breaks the proposed relation?",
+    smallest_model: "The declared two-domain finite profile.",
+    conditions: ["all domain and observation declarations remain fixed"],
+    deliverable: "An exact counterexample or a bounded proof for the finite case.",
+    stop_rule: "Stop before importing ontology, mechanism, units, parameters, or authority.",
+    does_not_establish: ["novelty", "open status", "universal design"],
+    source_ids: ["source-one"],
   }];
   return signProject(value);
 }
@@ -257,6 +345,50 @@ describe("Exploration DEEP WING and inert project contract", () => {
     expect(validateWithPython(PHENOMENA_DEEP_PROJECT_SCHEMA_PATH, [cloneWing()]).valid).toEqual([false]);
   });
 
+  schemaTest("keeps runtime and Draft structural rejection aligned while runtime closes dynamic references", () => {
+    const structuralMutations: Array<(value: any) => void> = [
+      (value) => { value.source_manifest = { authority: "GRANTED" }; },
+      (value) => { value.models = [{ authority_effect: "GRANTED", execute: true }]; },
+      (value) => { value.karma.kingdom_receipts = { receipt: "forged" }; },
+      (value) => { value.release.evidence = { deploy: true }; },
+      (value) => { value.finite_baselines[0].enumerator_digest = [`sha256:${"0".repeat(64)}`]; },
+      (value) => { value.frontier_problems[0].status_checked_on = "0000-01-01"; },
+      (value) => { value.source_manifest[0].url = "https://example.com/?evidence#"; },
+      (value) => { delete value.source_manifest[0].locator; },
+      (value) => {
+        value.frontier_problems[0].status = "ESTABLISHED_OPEN_CONJECTURE";
+        value.frontier_problems[0].original_formulation_or_provenance_sources = [];
+        value.frontier_problems[0].recent_status_sources = [];
+      },
+      (value) => {
+        value.claims[0].warrant = "ESTABLISHED_OPEN_CONJECTURE";
+        value.frontier_problems = [];
+      },
+    ];
+    const dynamicMutations: Array<(value: any) => void> = [
+      (value) => { value.models[0].equation_ids = ["missing-equation"]; },
+      (value) => { value.doors.push({ ...value.doors[0], title: "Duplicate-ID door" }); },
+      (value) => {
+        value.claims[0].warrant = "ESTABLISHED_OPEN_CONJECTURE";
+        value.frontier_problems[0].status = "ESTABLISHED_OPEN_CONJECTURE";
+      },
+    ];
+    const makeValues = (mutations: Array<(value: any) => void>) => mutations.map((mutate) => {
+      const value = populatedProject();
+      mutate(value);
+      return signProject(value);
+    });
+    const structuralValues = makeValues(structuralMutations);
+    const dynamicValues = makeValues(dynamicMutations);
+    const allValues = [...structuralValues, ...dynamicValues];
+    expect(allValues.map((value) => verifyPhenomenaDeepProject(value).length > 0)).toEqual(allValues.map(() => true));
+    const result = validateWithPython(PHENOMENA_DEEP_PROJECT_SCHEMA_PATH, allValues);
+    expect(result.valid, JSON.stringify(result.errors)).toEqual([
+      ...structuralValues.map(() => false),
+      ...dynamicValues.map(() => true),
+    ]);
+  });
+
   test("scaffolds and reloads a valid inert project without producing effects", () => {
     const scaffold = scaffoldPhenomenaDeepProject();
     expect(scaffold.protocol).toBe(PHENOMENA_DEEP_PROJECT_PROTOCOL);
@@ -313,6 +445,98 @@ describe("Exploration DEEP WING and inert project contract", () => {
       (value) => { value.claims[0].sources = ["missing-source"]; },
     ];
     for (const mutate of projectMutations) {
+      const changed = populatedProject();
+      mutate(changed);
+      signProject(changed);
+      expect(verifyPhenomenaDeepProject(changed).length).toBeGreaterThan(0);
+    }
+  });
+
+  test("closes every project collection and rejects malformed authority-shaped items after re-signing", () => {
+    const collections = [
+      "domains", "source_manifest", "typed_terms", "claims", "bridges", "models", "equations",
+      "falsifiers", "frontier_problems", "finite_baselines", "doors", "unknowns",
+    ] as const;
+    for (const key of collections) {
+      const nonArray = populatedProject();
+      nonArray[key] = { authority: "GRANTED", execute: true };
+      signProject(nonArray);
+      expect(verifyPhenomenaDeepProject(nonArray).length, `${key} object`).toBeGreaterThan(0);
+
+      const malformedItem = populatedProject();
+      malformedItem[key] = [{ authority: "GRANTED", execute: true }];
+      signProject(malformedItem);
+      expect(verifyPhenomenaDeepProject(malformedItem).length, `${key} malformed item`).toBeGreaterThan(0);
+    }
+
+    for (const mutate of [
+      (value: any) => { value.karma.cosmic_events = { authority: "GRANTED" }; },
+      (value: any) => { value.karma.zerone_events = { execute: true }; },
+      (value: any) => { value.karma.kingdom_receipts = { receipt: "forged" }; },
+      (value: any) => { value.release.evidence = { deploy: true }; },
+      (value: any) => { value.philosophy.questions = [1]; },
+      (value: any) => { value.equations[0].variables[0].execute = true; },
+      (value: any) => { value.finite_baselines[0].exact_representation.execute = true; },
+      (value: any) => { value.finite_baselines[0].enumerator_digest = [`sha256:${"0".repeat(64)}`]; },
+      (value: any) => { value.evidence_through = "0000-01-01"; },
+      (value: any) => { value.source_manifest[0].observed_on = "0000-01-01"; },
+      (value: any) => { value.claims[0].status_checked_on = "0000-01-01"; },
+      (value: any) => { value.frontier_problems[0].status_checked_on = "0000-01-01"; },
+      (value: any) => { value.source_manifest[0].url = "https://example.com/?evidence#"; },
+      (value: any) => { delete value.source_manifest[0].locator; },
+      (value: any) => {
+        value.frontier_problems[0].status = "ESTABLISHED_OPEN_CONJECTURE";
+        value.frontier_problems[0].original_formulation_or_provenance_sources = [];
+        value.frontier_problems[0].recent_status_sources = [];
+      },
+      (value: any) => { value.claims[0].warrant = "ESTABLISHED_OPEN_CONJECTURE"; },
+      (value: any) => { value.version = `${"1".repeat(65)}.0.0`; },
+    ]) {
+      const changed = populatedProject();
+      mutate(changed);
+      signProject(changed);
+      expect(verifyPhenomenaDeepProject(changed).length).toBeGreaterThan(0);
+    }
+  });
+
+  test("enforces project ID uniqueness and every declared dynamic cross-reference", () => {
+    const duplicateMutations: Array<(value: any) => void> = [
+      (value) => { value.domains[1].id = value.domains[0].id; },
+      (value) => { value.source_manifest.push({ ...value.source_manifest[0], title: "Different title" }); },
+      (value) => { value.typed_terms.push({ ...value.typed_terms[0], meaning: "Different meaning" }); },
+      (value) => { value.claims.push({ ...value.claims[0], statement: "Different statement" }); },
+      (value) => { value.models.push({ ...value.models[0], title: "Different title" }); },
+      (value) => { value.equations.push({ ...value.equations[0], expression: "z = g(x)" }); },
+      (value) => { value.falsifiers.push({ ...value.falsifiers[0], question: "Different question?" }); },
+      (value) => { value.finite_baselines.push({ ...value.finite_baselines[0], statement: "Different finite statement." }); },
+      (value) => { value.doors.push({ ...value.doors[0], title: "Different title" }); },
+      (value) => { value.unknowns.push({ ...value.unknowns[0], statement: "Different unknown." }); },
+      (value) => { value.bridges.push(structuredClone(value.bridges[0])); },
+      (value) => { value.frontier_problems.push(structuredClone(value.frontier_problems[0])); },
+    ];
+    for (const mutate of duplicateMutations) {
+      const changed = populatedProject();
+      mutate(changed);
+      signProject(changed);
+      expect(verifyPhenomenaDeepProject(changed).length).toBeGreaterThan(0);
+    }
+
+    const referenceMutations: Array<(value: any) => void> = [
+      (value) => { value.source_manifest[0].claim_targets = ["missing-claim"]; },
+      (value) => { value.claims[0].sources = ["missing-source"]; },
+      (value) => { value.bridges[0].source_domain = "missing-domain"; },
+      (value) => { value.bridges[0].target_domain = "missing-domain"; },
+      (value) => { value.equations[0].domain_id = "missing-domain"; },
+      (value) => { value.equations[0].source_ids = ["missing-source"]; },
+      (value) => { value.models[0].domain_ids = ["missing-domain"]; },
+      (value) => { value.models[0].equation_ids = ["missing-equation"]; },
+      (value) => { value.models[0].falsifier_ids = ["missing-falsifier"]; },
+      (value) => { value.frontier_problems[0].original_formulation_or_provenance_sources = ["missing-source"]; },
+      (value) => { value.frontier_problems[0].recent_status_sources = ["missing-source"]; },
+      (value) => { value.finite_baselines[0].source_ids = ["missing-source"]; },
+      (value) => { value.doors[0].source_ids = ["missing-source"]; },
+    ];
+    for (const mutate of referenceMutations) {
       const changed = populatedProject();
       mutate(changed);
       signProject(changed);
@@ -411,6 +635,32 @@ describe("Exploration DEEP WING and inert project contract", () => {
     });
     expect(() => verifyPhenomenaDeepWing(accessor)).not.toThrow();
     expect(verifyPhenomenaDeepWing(accessor)).toEqual([{ field: "$", code: "non-json-value" }]);
+
+    const wingExpando = cloneWing();
+    (wingExpando.sources as any).execute = { authority: "GRANTED" };
+    expect(verifyPhenomenaDeepWing(wingExpando)).toEqual([{ field: "$", code: "non-json-value" }]);
+    expect(() => phenomenaDeepWingDigest(wingExpando)).toThrow("non-json-value");
+
+    const projectExpando = scaffoldPhenomenaDeepProject();
+    (projectExpando.doors as any).execute = { deploy: true };
+    expect(verifyPhenomenaDeepProject(projectExpando)).toEqual([{ field: "$", code: "non-json-value" }]);
+    expect(() => phenomenaDeepProjectDigest(projectExpando)).toThrow("non-json-value");
+
+    const sparseProject = scaffoldPhenomenaDeepProject();
+    delete sparseProject.domains[0];
+    expect(verifyPhenomenaDeepProject(sparseProject)).toEqual([{ field: "$", code: "non-json-value" }]);
+
+    const inheritedArray = scaffoldPhenomenaDeepProject();
+    Object.setPrototypeOf(inheritedArray.claims, { execute: true });
+    expect(verifyPhenomenaDeepProject(inheritedArray)).toEqual([{ field: "$", code: "non-json-value" }]);
+
+    const arrayAccessor = scaffoldPhenomenaDeepProject();
+    Object.defineProperty(arrayAccessor.domains, "0", {
+      get: () => { throw new Error("array getter must not execute"); },
+      enumerable: true,
+    });
+    expect(() => verifyPhenomenaDeepProject(arrayAccessor)).not.toThrow();
+    expect(verifyPhenomenaDeepProject(arrayAccessor)).toEqual([{ field: "$", code: "non-json-value" }]);
 
   });
 

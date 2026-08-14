@@ -148,6 +148,15 @@ nearest_known_problem:
 novelty_status:
 ```
 
+In a serialized Phenomena DEEP project, an open-status warrant on a claim is
+not sufficient by itself. `ESTABLISHED_OPEN_CONJECTURE` or
+`BESPOKE_FORMULATION_PRIOR_ART_AUDIT_REQUIRED` on `claims[].warrant` requires a
+`frontier_problems[]` card with the same statement and status. Keep the full
+audit in that card; never let a short claim label manufacture open status.
+Each referenced `source_manifest[]` entry must name its exact `locator`, such
+as a section, page, theorem discussion, abstract status sentence, or an honest
+whole-artifact scope.
+
 Apply these rules in order:
 
 1. Write the statement before searching so that nearby results cannot silently

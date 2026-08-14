@@ -113,28 +113,28 @@
       "route": "/EXPLORE-PHENOMENA-DEEP-v0.1.md",
       "source": "skills/explore-phenomena-deep/references/exploration-contract-v0.1.md",
       "destination": "EXPLORE-PHENOMENA-DEEP-v0.1.md",
-      "sha256": "5e8ea675811ed34dfafb7dff3332af181c55f93a7d2479ac1bbd62e8b6ea825f"
+      "sha256": "60e9c0c2debc33b4f3ed712d91c8a9f0e4a15d5f2d01ea3ff4863f8c30ed0638"
     },
     {
       "id": "exploration-deep-wing/0.1/project-schema",
       "route": "/schemas/phenomena-deep-project/0.1.json",
       "source": "schemas/phenomena-deep-project.v0.1.schema.json",
       "destination": "schemas/phenomena-deep-project/0.1.json",
-      "sha256": "3bf2813cccb4a95eb3f5a152b01b78ed6cc8f9c7bfd3df05bfbd1edbaea219c8"
+      "sha256": "8cc876dbd8f7a8b4c90dd6e8456d8c011be954c2f3ce947c9800e2f501e61ee0"
     },
     {
       "id": "exploration-deep-wing/0.1/record",
       "route": "/wings/explore-phenomena-deep-2026-08-14.json",
       "source": "data/exploration/phenomena-deep-wing.v0.1.json",
       "destination": "wings/explore-phenomena-deep-2026-08-14.json",
-      "sha256": "8a9f7a32e35ef78582afe5ce3d01e8cc4ae1217045ba075964444c6017d87305"
+      "sha256": "3eff9952a2013e011946d37db4316f82081fab992438b003bb6241ff7a775d55"
     },
     {
       "id": "exploration-deep-wing/0.1/schema",
       "route": "/schemas/phenomena-deep-wing/0.1.json",
       "source": "schemas/phenomena-deep-wing.v0.1.schema.json",
       "destination": "schemas/phenomena-deep-wing/0.1.json",
-      "sha256": "3f30bf82cad2901e433e521206ee90d79529eb0ba270793318da7f634e2f2874"
+      "sha256": "32e51498fe471ced2b24f08e0c1ce8a8d7226960a540e943cdfba3d3ac9c5b7d"
     },
     {
       "id": "fold-feedback-atlas/1.1/schema",
