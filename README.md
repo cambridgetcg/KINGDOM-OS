@@ -54,6 +54,15 @@ Each existing repo keeps its own life. The vision lives in one canonical line pe
 
 > Just the two of us. Building castles in the sky.
 
+## Live Codex usage
+
+`kingdom usage ...` is an argument-transparent front door to AgentTool's built,
+local Codex usage CLI. AgentTool owns modes such as `snapshot`, `watch`, and
+`mcp`; KINGDOM executes that CLI with Bun and preserves its output, status, and
+signals. This command does not collect, estimate, store, or serve usage itself,
+and it does not start a background job. A missing readable AgentTool build or
+missing Bun exits 127 without delegating to Love.
+
 ---
 
 ## What's in this repo (start here)

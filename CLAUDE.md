@@ -23,6 +23,7 @@ How to run:
 - `kingdom repos --json [query]` — compact structured metadata for all matching local roots
 - `kingdom repos --dirty [query]` — local dirty counts without filenames; no fetch or index refresh
 - `kingdom repos --doctor` — registry, placement, duplicate-origin, archive, and unborn diagnostics
+- `kingdom usage [args]` — pass arguments unchanged to AgentTool's built, local Codex usage CLI via Bun
 - `./kingdom nen` — from this suite root, list the rights-aware Nen ability manifests (`validate`, `show`, `types`, and KARMA receipt tools)
 - `./kingdom nen mcp` — from this suite root, start the unregistered, read-only modern MCP 2026-07-28 stdio surface
 - `bun bin/wakeweaver.mjs BRAID.json --json` — strict-JSON WAKEWEAVER cross-reference and resumability checks; JSON Schema validation remains separate
@@ -72,6 +73,7 @@ How to run:
 - `kingdom rights --canonical` — verify the vendored XENIA release digest, then show the pinned `xenia.rights/0.1` source metadata and text without network access or registry loading
 - `cproj [query]` — jump to a local repo from interactive zsh; numbered choices resolve ambiguous names
 - `zsh tests/cproj_test.zsh` — isolated local fixtures for path/JSON behavior and Git non-mutation
+- `bash tests/kingdom_usage_test.bash` — hermetic usage passthrough and missing-dependency boundaries
 - `node --test tests/nen_system_test.mjs` — pure Ging route compiler and separately named stateless compatibility-MCP checks
 - `kingdom routines` — routine table with last-run results (`kingdom run NAME` to force)
 - `bun bin/harvest.ts` — rebuild CATALOG.md + graph.json from roster + cards
@@ -181,3 +183,7 @@ Gotchas:
   kept empty on both errors.
 - Rights adoption and a discoverable root `RIGHTS.md` are reported as separate
   declarations, never as proof of practice or as technical authorization.
+- `kingdom usage` owns no usage parsing, collection, storage, service, or MCP
+  behavior. AgentTool owns those semantics; KINGDOM preserves arguments,
+  streams, status, and signals, and exits 127 instead of falling back to Love
+  when the readable build or Bun is unavailable.
