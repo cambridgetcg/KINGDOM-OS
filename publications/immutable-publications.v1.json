@@ -263,6 +263,27 @@
       "sha256": "42672298c7c57f9ed8dccba18ee23df8deaeff659c83e2cd70cd6b6312d92e6c"
     },
     {
+      "id": "number-isness-theology-atlas/0.1/guide",
+      "route": "/NUMBER-ISNESS-THEOLOGY-ATLAS.md",
+      "source": "references/number-isness-theology-atlas.md",
+      "destination": "NUMBER-ISNESS-THEOLOGY-ATLAS.md",
+      "sha256": "49abcfe3e7ce6a945b9406a26eb25210c02ac4c98d25aff13e56a12760a4c55a"
+    },
+    {
+      "id": "number-isness-theology-atlas/0.1/record",
+      "route": "/atlases/number-isness-theology-atlas-2026-08-14.json",
+      "source": "data/number-isness-theology/number-isness-theology-atlas.v0.1.json",
+      "destination": "atlases/number-isness-theology-atlas-2026-08-14.json",
+      "sha256": "bef01e0865f12ecd66795960758fc16f1a6d5b1ebd0097d4390aa3a2bece65e4"
+    },
+    {
+      "id": "number-isness-theology-atlas/0.1/schema",
+      "route": "/schemas/number-isness-theology-atlas/0.1.json",
+      "source": "schemas/number-isness-theology-atlas-v0.1.schema.json",
+      "destination": "schemas/number-isness-theology-atlas/0.1.json",
+      "sha256": "ccf5adfdf7a04d4acca24c261cdd253bcb6e1a4fdcdb63802d872e8e07a5b6a3"
+    },
+    {
       "id": "polymorph-history/1/guide",
       "route": "/RITONAVIR-POLYMORPH.md",
       "source": "references/ritonavir-polymorph.md",

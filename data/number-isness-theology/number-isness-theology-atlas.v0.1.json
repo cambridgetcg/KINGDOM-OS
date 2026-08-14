@@ -1,0 +1,495 @@
+{
+  "$schema": "urn:kingdom:schema:number-isness-theology-atlas:0.1",
+  "protocol": "kingdom.number-isness-theology-atlas/0.1",
+  "atlas_id": "number-isness-theology-atlas-2026-08-14",
+  "title": "Number, Isness & Theology Atlas",
+  "compiled_on": "2026-08-14",
+  "evidence_through": "2026-08-14",
+  "source_bindings": [
+    {
+      "id": "kingdom-being-access-aftermath-v0-2",
+      "protocol": "kingdom.being-access-aftermath-atlas/0.2",
+      "revision": "a22a88f8be3387fed199b5d746a6b3c5f1e4d81d",
+      "url": "https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json",
+      "raw_digest": "sha256:9678e5269e8db62beb36abee691087cddbc4f98703190c5fa3788b68c89ab29e",
+      "semantic_digest": "sha256:505a1e3aef6116430dccf49b327c4cce2ac5d6fb6b6b9bf68e529272f989cde8",
+      "relation": "typed-isness-and-karma-boundary-precedent",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-exploration-deep",
+      "protocol": "kingdom.explore-phenomena-deep-wing/0.1",
+      "revision": "013e9f4619029e9ccbb7442dfd0311dfa473bd8d",
+      "url": "https://thekingdom.dev/wings/explore-phenomena-deep-2026-08-14.json",
+      "raw_digest": "sha256:3eff9952a2013e011946d37db4316f82081fab992438b003bb6241ff7a775d55",
+      "semantic_digest": "sha256:f57af0a832a1e7a7c601d5186291131a7750db69e106be0934e25d816973ae6c",
+      "relation": "cross-domain-transfer-gate-precedent",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-karma-definition",
+      "protocol": "kingdom.karma/0.1",
+      "revision": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212",
+      "url": "https://thekingdom.dev/definitions/kingdom-karma/e4e84a67/NEN.md",
+      "raw_digest": "sha256:14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446",
+      "semantic_digest": null,
+      "relation": "immutable-public-definition-mirror",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-karma-receipt-schema",
+      "protocol": "kingdom.karma/0.1",
+      "revision": "e4e84a67d7ee1ae0dd9c9c23762e6ecd03597212",
+      "url": null,
+      "repository_locator": "schemas/karma-receipt-v0.1.schema.json",
+      "public_availability": "UNAVAILABLE_AT_EVIDENCE_HORIZON",
+      "raw_digest": "sha256:888e81fa0d29b71512525a40e88f9aef678046c40fcdf22c2039507d9d13267b",
+      "semantic_digest": null,
+      "relation": "repository-local-receipt-contract-input",
+      "verification_note": "The revision-pinned GitHub URL inherited by predecessor atlases returned 404 on 2026-08-14. This atlas makes no public-access claim; the digest was checked against the repository-local path and revision object.",
+      "mutated": false,
+      "authority_imported": false
+    }
+  ],
+  "scope": {
+    "question": "How can changes in mathematical expression illuminate number, zero, symmetry, being, negation, creation, God-language, and religious compatibility without turning analogy into proof?",
+    "intended_use": "Read-only education, typed question design, source comparison, and bounded opt-in philosophical reflection.",
+    "excluded_use": "No proof or disproof of God, revelation, creation doctrine, religious truth, cosmic purpose, or karma; no religion, culture, community, or person ranking; no persuasion, governance, invocation, event, receipt, or action.",
+    "method": "Keep formal mathematics, historical scholarship, source attribution, school-specific theology, metaphysical proposal, comparative relation, and analogy in separate registers; every bridge records what it does not transfer.",
+    "central_boundary": "A mathematical structure can sharpen the form of a question. It does not supply the theological premises, translation, interpretation, soundness, actuality, or authority required to answer that question.",
+    "currentness": "selected-sources-observed-through-compilation"
+  },
+  "claim_typing": {
+    "rule": "Every reviewed claim has a discourse register, review target, review status, support descriptors, and source scope. Source attribution can be supported without the attributed proposition becoming a world fact.",
+    "registers": [
+      "MATHEMATICAL_DEFINITION",
+      "MATHEMATICAL_CONVENTION",
+      "MATHEMATICAL_CONSTRUCTION",
+      "MATHEMATICAL_THEOREM",
+      "OPEN_MATHEMATICAL_CONJECTURE",
+      "HISTORICAL_SCHOLARSHIP",
+      "EMPIRICAL_SCIENCE",
+      "SCIENTIFIC_MODEL",
+      "PRIMARY_TRADITION_TEXT",
+      "SCHOOL_SPECIFIC_THEOLOGY",
+      "METAPHYSICAL_PROPOSAL",
+      "COMPARATIVE_RELIGION",
+      "INTERPRETIVE_BRIDGE",
+      "BOUNDARY",
+      "OPEN_QUESTION"
+    ],
+    "review_targets": [
+      "FORMAL_DERIVATION",
+      "WORLD_CLAIM",
+      "SOURCE_ATTRIBUTION",
+      "INTERNAL_COHERENCE"
+    ],
+    "review_statuses": [
+      "SUPPORTED_AS_SCOPED",
+      "NOT_ESTABLISHED",
+      "UNKNOWN_TO_REVIEW"
+    ],
+    "support_descriptors": [
+      "SOURCE_BOUND",
+      "MODEL_ASSUMPTION",
+      "DERIVED",
+      "PROVED",
+      "FINITE_EXACT",
+      "NUMERICAL_APPROXIMATION"
+    ],
+    "support_guard": "Descriptors are non-exclusive and never upgrade review status. A theorem proves only its exact statement under its assumptions; a primary text establishes what that text says under a declared edition and interpretation, not that its claim is true.",
+    "translation_guard": "A translated term remains indexed by source language, edition, translator, context, school, and interpretive loss; lexical resemblance never establishes shared reference."
+  },
+  "typed_isness": {
+    "rule": "Replace is, is not, no, and no-no with a typed predicate before drawing a mathematical, historical, metaphysical, or theological inference.",
+    "isness_record": "ISNESS(x;c,t)=<types,identity_invariants,instantiations,properties,modalities,observations,warrants,source_attributions,interpretations>",
+    "predicates": [
+      {"id":"formal-membership","signature":"FORMAL_MEMBER(x,structure,model)","meaning":"x belongs to a declared formal carrier under a named model.","not_equivalent_to":["physical-existence","theological-being","moral-worth"]},
+      {"id":"typed-as","signature":"TYPED_AS(x,type)","meaning":"x is classified under one declared type rule.","not_equivalent_to":["identity","essence","actuality"]},
+      {"id":"identity-under-invariant","signature":"IDENTICAL_UNDER(x,y,invariant)","meaning":"x and y agree under one named invariant.","not_equivalent_to":["unqualified-sameness","interchangeability","shared-ontology"]},
+      {"id":"embedded-as","signature":"EMBEDS_AS(source,target,map,x,y)","meaning":"A structure-preserving map sends x to y.","not_equivalent_to":["literal-identity-of-constructions","historical-supersession","spiritual-inclusion"]},
+      {"id":"property-predication","signature":"HAS_PROPERTY(x,property,context,time,method)","meaning":"A named method supports one property attribution in scope.","not_equivalent_to":["identity","timeless-essence","global-predication"]},
+      {"id":"domain-existence","signature":"EXISTS_INSTANCE(form,domain,context,time)","meaning":"At least one witness in a named domain instantiates the form in context and time.","not_equivalent_to":["metaphysical-necessity","continuous-existence","observation"]},
+      {"id":"defined-in","signature":"DEFINED_IN(term,theory,conventions)","meaning":"The term receives a formation and interpretation rule in a formal theory.","not_equivalent_to":["actual-existence","unique-reference","empirical-instantiation"]},
+      {"id":"proved-in","signature":"PROVED_IN(formula,theory,logic,proof)","meaning":"A checked derivation establishes a formula relative to premises, rules, and logic.","not_equivalent_to":["premise-truth","soundness-about-the-world","revelation"]},
+      {"id":"asserted-by-source","signature":"ASSERTED_BY(claim,source,edition,interpretation)","meaning":"A source is attributed a bounded claim under an edition and interpretation.","not_equivalent_to":["world-truth","whole-tradition-consensus","endorsement"]},
+      {"id":"interpreted-by","signature":"INTERPRETED_BY(interpreter,expression,concept,tradition,as_of)","meaning":"A named interpreter offers one scoped reading.","not_equivalent_to":["literal-translation","sole-reading","formal-equivalence"]},
+      {"id":"compatible-under","signature":"COMPATIBLE_UNDER(claims,translation,logic,assumptions)","meaning":"A bounded formalization has at least one model under declared choices.","not_equivalent_to":["doctrinal-identity","truth","practical-coexistence","whole-religion-compatibility"]},
+      {"id":"predicate-negation","signature":"NEGATES(logic,phi)","meaning":"A logic-specific negation is applied to a proposition.","not_equivalent_to":["numeric-zero","refusal","absence-of-witness","unknown"]},
+      {"id":"quantified-absence","signature":"ABSENT(domain,predicate) iff not exists x in domain: predicate(x)","meaning":"No witness satisfies a predicate in a named domain.","not_equivalent_to":["absolute-nonbeing","not-observed","impossibility"]},
+      {"id":"zero-value","signature":"ZERO_VALUE(value,structure)","meaning":"A value is the distinguished zero of one declared structure.","not_equivalent_to":["metaphysical-nothingness","undefined","false","unknown"]},
+      {"id":"null-observation","signature":"NULL_OBSERVATION(operator,window)","meaning":"An observation operator returned zero reports in a bounded window.","not_equivalent_to":["zero-event-rate","nonexistence","refusal"]},
+      {"id":"refusal","signature":"REFUSES(subject,proposal,time)","meaning":"A subject declines a proposal at a time.","not_equivalent_to":["nonexistence","incapacity","falsehood","silence"]},
+      {"id":"prohibition","signature":"FORBIDDEN(norm,action,context)","meaning":"A norm disallows an action in context.","not_equivalent_to":["physical-impossibility","refusal","zero"]},
+      {"id":"unknown-at-horizon","signature":"UNKNOWN_AT(claim,evidence_horizon)","meaning":"This bounded review cannot determine the claim.","not_equivalent_to":["false","nonexistent","unknowable"]},
+      {"id":"withheld-predication","signature":"WITHHOLDS(speaker,predicate,subject,context)","meaning":"A speaker does not apply a predicate in context.","not_equivalent_to":["predicate-negation","denial","agreement"]}
+    ],
+    "no_family": {
+      "members": ["not P(x)","not exists x in D: P(x)","v=0 in a structure","count(O,W)=0","REFUSES(a,p,t)","FORBIDDEN(n,p,c)","WITHHOLDS(s,p,x,c)","UNKNOWN_AT(phi,H)"],
+      "guard": "These expressions have different types and no default conversion.",
+      "double_negation_guard": "No-no returns affirmation only in a declared logic that validates double-negation elimination. Apophatic restraint, tetralemma, refusal, and silence are not hidden applications of that formal rule."
+    }
+  },
+  "historical_expression": {
+    "rule": "Formal inclusion order is not chronological history. Mathematical expression developed nonlinearly across cultures through notation, calculation, transmission, rejection, reuse, and later formalization.",
+    "relation_types": ["INTRODUCED_SYMBOL","USED_OPERATION","BORROWED_OR_TRANSLATED","ACCEPTED_AS_NUMBER","FORMALIZED_AS","EMBEDDED_IN"],
+    "cards": [
+      {
+        "id": "zero-placeholder-and-number",
+        "claim": "The positional placeholder and zero as a number are historically distinguishable uses; their development was neither a single invention event nor an inevitable straight line.",
+        "register": "HISTORICAL_SCHOLARSHIP",
+        "review_target": "SOURCE_ATTRIBUTION",
+        "review_status": "SUPPORTED_AS_SCOPED",
+        "support_descriptors": ["SOURCE_BOUND"],
+        "source_ids": ["mactutor-zero"],
+        "nonclaims": ["one culture alone explains every zero practice","mathematical zero is Buddhist emptiness","notation history proves metaphysics"]
+      },
+      {
+        "id": "division-by-zero-theological-analogy",
+        "claim": "MacTutor records Bhaskara using divine immutability as an analogy while treating division by zero; the historical analogy does not make division by zero valid in an ordinary field.",
+        "register": "HISTORICAL_SCHOLARSHIP",
+        "review_target": "SOURCE_ATTRIBUTION",
+        "review_status": "SUPPORTED_AS_SCOPED",
+        "support_descriptors": ["SOURCE_BOUND"],
+        "source_ids": ["mactutor-zero"],
+        "nonclaims": ["theology caused the mathematical error","Indian mathematics is reducible to this episode","metaphor can replace an inverse law"]
+      },
+      {
+        "id": "complex-from-impossible-to-structural",
+        "claim": "Rules for complex arithmetic, geometric rotation, and later field language emerged through distinct historical stages; imaginary was a contested name, not a proof of lesser mathematical reality.",
+        "register": "HISTORICAL_SCHOLARSHIP",
+        "review_target": "SOURCE_ATTRIBUTION",
+        "review_status": "SUPPORTED_AS_SCOPED",
+        "support_descriptors": ["SOURCE_BOUND"],
+        "source_ids": ["mactutor-complex"],
+        "nonclaims": ["complex numbers prove an unseen realm","historical acceptance establishes Platonism","formal extension is cosmic creation"]
+      },
+      {
+        "id": "formal-tower-not-history",
+        "claim": "N0 to Z to Q to R to C is a modern structural presentation of embeddings, closure, and completion needs, not a complete chronology of how people expressed number.",
+        "register": "BOUNDARY",
+        "review_target": "INTERNAL_COHERENCE",
+        "review_status": "SUPPORTED_AS_SCOPED",
+        "support_descriptors": ["DERIVED"],
+        "source_ids": ["mactutor-zero","mactutor-complex"],
+        "nonclaims": ["civilizations form a progress ranking","later systems replace earlier practices","religions follow the same tower"]
+      }
+    ]
+  },
+  "number_systems": {
+    "natural_convention": "N0={0,1,2,...}; authors using N={1,2,3,...} must declare that alternate convention.",
+    "tower": "N0 embeds in Z embeds in Q embeds in R embeds in C",
+    "embedding_guard": "Write iota_NZ(1_N)=1_Z rather than an untyped literal identity. Canonically embedded roles may agree while set-theoretic constructions differ.",
+    "cards": [
+      {"id":"natural-succession","symbol":"N0","construction":"A model of the Peano-style zero-and-successor structure.","door":"finite counting, iteration, and induction","equations":["S(0)=1","n+0=n"],"limit":"not closed under additive inverses or nonzero division","register":"MATHEMATICAL_CONVENTION","review_target":"FORMAL_DERIVATION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["DERIVED"],"source_ids":[],"nonclaims":["natural in mathematics means metaphysically natural","one counts divine unity","successor causes ontological creation"]},
+      {"id":"integer-group-completion","symbol":"Z","construction":"(N0 x N0)/~, where (a,b)~(c,d) iff a+d=b+c","door":"additive inverses and signed difference","equations":["[(a,b)]+[(c,d)]=[(a+c,b+d)]","iota_NZ(n)=[(n,0)]"],"limit":"not closed under division by every nonzero element","register":"MATHEMATICAL_CONSTRUCTION","review_target":"FORMAL_DERIVATION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["DERIVED"],"source_ids":[],"nonclaims":["negative number is moral negation","construction chronology follows this quotient","completion increases worth"]},
+      {"id":"rational-fraction-field","symbol":"Q","construction":"{(a,b):a in Z,b in Z\\{0}}/~, where (a,b)~(c,d) iff ad=bc","door":"fractions, ratios, and division by nonzero elements","equations":["a/b=c/d iff ad=bc","(a/b)/(c/d)=ad/bc when c is nonzero"],"limit":"dense and ordered but not complete; rational does not mean reasonable or revelatory","register":"MATHEMATICAL_CONSTRUCTION","review_target":"FORMAL_DERIVATION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["DERIVED"],"source_ids":[],"nonclaims":["God is ratio","rational number measures rationality","proportion proves harmony is divine"]},
+      {"id":"real-completion","symbol":"R","construction":"A completion of Q, for example by Cauchy sequences modulo zero-distance equivalence or Dedekind cuts.","door":"limits and completeness of the ordered field","equations":["every Cauchy sequence in R converges in R","sqrt(2) is in R but not Q"],"limit":"the construction choice is not the unique ontology of real numbers","register":"MATHEMATICAL_CONSTRUCTION","review_target":"FORMAL_DERIVATION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["DERIVED"],"source_ids":[],"nonclaims":["real means more existent than complex","completion means theological perfection","continuum proves divine infinity"]},
+      {"id":"complex-adjoin-i","symbol":"C","construction":"R[x]/(x^2+1), isomorphic to {a+bi:a,b in R and i^2=-1}.","door":"roots of polynomials and plane rotations","equations":["i^2=-1"],"theorem_claims":[{"id":"complex-rotation","statement":"For theta in R and z in C, multiplication by exp(i theta) rotates z through angle theta in the standard complex plane.","conditions":["theta is real","z is complex","the standard complex exponential and Euclidean plane identification are used"],"register":"MATHEMATICAL_THEOREM","review_target":"FORMAL_DERIVATION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["DERIVED"],"source_ids":[]},{"id":"fundamental-theorem-of-algebra","statement":"Every nonconstant polynomial with complex coefficients has a root in C.","conditions":["the polynomial is nonconstant","coefficients lie in C"],"register":"MATHEMATICAL_THEOREM","review_target":"FORMAL_DERIVATION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["PROVED","SOURCE_BOUND"],"source_ids":["mactutor-complex"]}],"limit":"C admits no field order compatible with its field operations; adjoining elements does not preserve every structure of R","register":"MATHEMATICAL_CONSTRUCTION","review_target":"FORMAL_DERIVATION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["DERIVED"],"source_ids":[],"nonclaims":["imaginary means unreal","complex numbers evidence spirits","algebraic closure is metaphysical completeness"]}
+    ],
+    "embeddings": [
+      {"id":"N0-to-Z","map":"n maps to [(n,0)]","preserves":["zero","one","addition","multiplication"],"does_not_establish":["literal identity of underlying encodings","historical replacement","higher worth"]},
+      {"id":"Z-to-Q","map":"a maps to a/1","preserves":["zero","one","addition","multiplication","order"],"does_not_establish":["all rational numbers are embedded integers","division by zero","rational membership measures reason"]},
+      {"id":"Q-to-R","map":"q maps to the equivalence class of its constant Cauchy sequence or to the matching Dedekind cut","preserves":["field operations","order","rational values"],"does_not_establish":["chronological inevitability","one unique construction","theological completion"]},
+      {"id":"R-to-C","map":"a maps to a+0i","preserves":["zero","one","addition","multiplication","absolute value on embedded reals"],"does_not_establish":["compatible field order on C","literal identity of carriers","ontological ascent"]}
+    ]
+  },
+  "zero": {
+    "rule": "Zero is role-indexed. A representation may identify a zero with an empty set, as in the von Neumann encoding 0=empty set, without making the number-role semantically identical to an empty collection or to metaphysical nothingness.",
+    "field_boundary": "No field element z satisfies 0*z=1; therefore zero has no multiplicative inverse and division by zero is not a field operation.",
+    "roles": [
+      {"id":"number-zero","signature":"0 in a declared number structure","equation":"x+0=x","not":"absolute nothingness"},
+      {"id":"additive-identity","signature":"0_A for an additive structure A","equation":"for all x in A: x+0_A=x","not":"absence of structure"},
+      {"id":"absorbing-multiplier","signature":"0_R in a ring or semiring R","equation":"for all x in R: x*0_R=0_R","not":"universal annihilation outside the operation"},
+      {"id":"positional-digit","signature":"0 in a base-b numeral","equation":"205_base10=2*10^2+0*10+5","not":"the number zero in every historical notation"},
+      {"id":"empty-cardinality","signature":"cardinality(empty set)=0","equation":"|empty set|=0","not":"the empty set is metaphysical nothing"},
+      {"id":"origin-or-zero-vector","signature":"0_V in a vector space V","equation":"v+0_V=v","not":"no space or no vector structure"},
+      {"id":"zero-probability","signature":"P(E)=0 in a probability space","equation":"P({x})=0 for a point under a continuous distribution","not":"logical impossibility without further assumptions"},
+      {"id":"initial-object-in-Set","signature":"empty set is initial in Set","equation":"for every set X there is a unique function empty set -> X","not":"a causal process creating X from nothing"},
+      {"id":"zero-observation-count","signature":"count(O,W)=0","equation":"zero reports in window W under operator O","not":"zero event rate, nonexistence, refusal, or impossibility"}
+    ],
+    "non_equivalences": [
+      "numeric zero is not metaphysical nothingness",
+      "numeric zero is not theological creation ex nihilo",
+      "numeric zero is not Buddhist sunyata",
+      "numeric zero is not Daoist wu",
+      "numeric zero is not falsehood",
+      "numeric zero is not undefinedness",
+      "numeric zero is not an unknown review status",
+      "numeric zero is not silence or refusal",
+      "cardinality zero does not erase the existence of the carrier, rule, or discourse",
+      "a chosen encoding such as 0=empty set does not transfer set-theoretic identity into a universal ontology"
+    ]
+  },
+  "symmetry": {
+    "definitions": {
+      "group_action": "A group action is a map G x X -> X satisfying e*x=x and (g*h)*x=g*(h*x) for all g,h in G and x in X",
+      "orbit": "Orbit_G(x)={g*x:g in G}",
+      "stabilizer": "Stab_G(x)={g in G:g*x=x}",
+      "invariant": "I(g*x)=I(x) for declared g,x",
+      "quotient": "X/G identifies points only up to the declared action"
+    },
+    "cards": [
+      {"id":"group-action-invariance","claim":"Symmetry is invariance under specified transformations, not beauty or sameness without a transformation group.","register":"MATHEMATICAL_DEFINITION","review_target":"FORMAL_DERIVATION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["DERIVED"],"source_ids":["sep-symmetry"],"nonclaims":["group action is agency","invariance is authority","equivalence is identity in every respect"]},
+      {"id":"noether-conditional","claim":"For a variational problem satisfying the theorem's hypotheses, continuous invariance yields corresponding conservation structure.","register":"MATHEMATICAL_THEOREM","review_target":"FORMAL_DERIVATION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["PROVED","SOURCE_BOUND"],"source_ids":["noether-1918"],"nonclaims":["every visual symmetry yields a conserved quantity","conservation proves a creator","conservation is moral or karmic balance"]},
+      {"id":"symmetry-breaking","claim":"A law or model can have a symmetry while a realized state has lower symmetry; asymmetry and history remain mathematically meaningful.","register":"SCIENTIFIC_MODEL","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["sep-symmetry"],"nonclaims":["all asymmetry has one cause","broken symmetry is moral fall","model symmetry is world ontology"]},
+      {"id":"sacred-order-reflection","claim":"Geometric repetition, balance, and invariant form can support source-bound aesthetic or theological reflection without constituting a designer proof.","register":"INTERPRETIVE_BRIDGE","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["met-islamic-geometry","quran-55-7-9","met-buddhist-mandalas"],"nonclaims":["Islamic geometry is mandated by scripture","mandalas and Islamic patterns share theology","symmetry proves divine perfection"]}
+    ]
+  },
+  "logics": {
+    "rule": "Negation, contradiction, proof, and existence claims are logic-indexed. A logic is a formal consequence relation, not a religion or a complete metaphysics.",
+    "cards": [
+      {"id":"classical-double-negation","equations":["not not phi iff phi","from phi and not phi, arbitrary psi follows"],"meaning":"Classical logic validates double-negation elimination and explosion.","source_ids":["sep-intuitionistic-logic"],"not_equivalent_to":["every natural-language no-no","apophatic theology","refusal"]},
+      {"id":"intuitionistic-double-negation","equations":["phi implies not not phi","not generally: not not phi implies phi"],"meaning":"Intuitionistic logic does not validate unrestricted double-negation elimination.","source_ids":["sep-intuitionistic-logic"],"not_equivalent_to":["denial of truth","paraconsistency","agnosticism"]},
+      {"id":"paraconsistent-non-explosion","equations":["not generally: {phi,not phi} entails psi"],"meaning":"A paraconsistent consequence relation is non-explosive; there are many such logics.","source_ids":["sep-paraconsistent-logic"],"not_equivalent_to":["every contradiction is true","anything goes","Buddhist tetralemma"]},
+      {"id":"belnap-dunn-information-states","equations":["status(phi) in {true-only,false-only,both,neither}"],"meaning":"Four statuses can represent supported truth, supported falsity, conflicting information, or no information in the Belnap-Dunn setting.","source_ids":["sep-many-valued-logic"],"not_equivalent_to":["four metaphysical states","catuskoti identity","religious truth classification"]}
+    ],
+    "tetralemma_boundary": "A fourfold religious or philosophical discourse may challenge a question's presupposition or suspend predication. Similar cardinality to a four-valued logic is not a translation or formal equivalence."
+  },
+  "creation": {
+    "rule": "Construction, causation, cosmogenesis, theological creation, manifestation, dependent arising, and grammatical command are separate relations with no default adapter.",
+    "types": [
+      {"id":"formal-construction","signature":"CONSTRUCTS(formal_system,object,rules)","register":"MATHEMATICAL_CONSTRUCTION","meaning":"Rules introduce or characterize an object in a formal system.","not_equivalent_to":["temporal beginning","physical manufacture","theological creation"]},
+      {"id":"physical-causation","signature":"CAUSES_TO_EXIST(cause,entity,model,conditions,time)","register":"SCIENTIFIC_MODEL","meaning":"A causal model attributes production under explicit conditions and evidence.","not_equivalent_to":["formal definition","ultimate explanation","divine act"]},
+      {"id":"theological-creation","signature":"CREATES_THEOLOGICALLY(tradition,creator,creation,mode,source,interpretation)","register":"SCHOOL_SPECIFIC_THEOLOGY","meaning":"A source or school attributes creation under a named theological mode.","not_equivalent_to":["field extension","empirical cosmology","source-independent world fact"]},
+      {"id":"creation-ex-nihilo","signature":"NO_PREEXISTENT_CREATED_MATERIAL(source,interpretation)","register":"SCHOOL_SPECIFIC_THEOLOGY","meaning":"A theological doctrine denies pre-existent material required by the creator.","not_equivalent_to":["zero-to-universe function","empty-set map","nothing as a substance"]},
+      {"id":"divine-command-language","signature":"SOURCE_SAYS_BE(source,translation,context)","register":"PRIMARY_TRADITION_TEXT","meaning":"A text uses command language translated as Be and it is.","not_equivalent_to":["mechanistic process description","English copula ontology","formal operational semantics"]},
+      {"id":"cyclic-manifestation","signature":"MANIFESTS_CYCLICALLY(source,school,cycle)","register":"SCHOOL_SPECIFIC_THEOLOGY","meaning":"A source or school describes recurring manifestation or projection.","not_equivalent_to":["all Hindu traditions","creation ex nihilo","periodic physical model"]},
+      {"id":"dependent-arising","signature":"ARISES_DEPENDENTLY(effect,conditions,source,school)","register":"SCHOOL_SPECIFIC_THEOLOGY","meaning":"A Buddhist source or school explains conditioned arising without importing a sovereign creator relation.","not_equivalent_to":["primordial nothingness","numeric zero","all Buddhist cosmology"]},
+      {"id":"cosmogonic-suspension","signature":"SUSPENDS_ORIGIN_ANSWER(source,interpretation)","register":"PRIMARY_TRADITION_TEXT","meaning":"A source poses or leaves open an origin question.","not_equivalent_to":["formal undecidability","atheism","theism"]}
+    ],
+    "adapter": {"exists":false,"status":"refused","reason":"No formal construction, physical causal relation, or theological creation relation converts into another without separately sourced premises and typed correspondence."}
+  },
+  "mathematical_ontology": {
+    "rule": "The atlas presents live positions about mathematical objects and practice without selecting one or converting it into a theology.",
+    "positions": [
+      {"id":"platonism","proposal":"Mathematical objects are abstract and exist independently of human language, thought, or practice.","register":"METAPHYSICAL_PROPOSAL","source_ids":["sep-philosophy-mathematics"],"does_not_entail":["theism","divine conceptualism","all mathematical questions have determinate answers"]},
+      {"id":"structuralism","proposal":"Mathematics concerns positions and relations in structures, with multiple versions of what structures are.","register":"METAPHYSICAL_PROPOSAL","source_ids":["sep-philosophy-mathematics"],"does_not_entail":["objects have no identity","religions are structures of one type","symmetry proves ontology"]},
+      {"id":"formalism","proposal":"Mathematical practice can be understood through formal signs, rules, or systems in one family of views.","register":"METAPHYSICAL_PROPOSAL","source_ids":["sep-philosophy-mathematics"],"does_not_entail":["mathematics is meaningless","proof establishes world truth","God is a symbol"]},
+      {"id":"intuitionism-constructivism","proposal":"Mathematics is tied to construction and proof rather than unrestricted classical truth conditions in one family of views.","register":"METAPHYSICAL_PROPOSAL","source_ids":["sep-philosophy-mathematics","sep-intuitionistic-logic"],"does_not_entail":["subjective whim","physical manufacture","theological creation"]},
+      {"id":"nominalism-fictionalism","proposal":"Mathematical discourse may be interpreted without commitment to independently existing abstract objects in several distinct views.","register":"METAPHYSICAL_PROPOSAL","source_ids":["sep-philosophy-mathematics"],"does_not_entail":["mathematics is false in use","atheism","numbers are worthless"]},
+      {"id":"practice-historical","proposal":"Notation, proof, institutions, transmission, and applications are indispensable to explaining how mathematics is expressed and evolves.","register":"HISTORICAL_SCHOLARSHIP","source_ids":["mactutor-zero","mactutor-complex"],"does_not_entail":["formal truth is only sociology","one civilizational ladder","history settles ontology"]}
+    ],
+    "selection": "NONE"
+  },
+  "tradition_lenses": [
+    {"id":"jewish-ehyeh","voice":"Hebrew Bible in Revised JPS 2023 translation","claim":"Exodus 3:14 presents Ehyeh-Asher-Ehyeh with translation uncertainty including I am and I will be renderings.","register":"PRIMARY_TRADITION_TEXT","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["exodus-3-14"],"translation_limits":["Hebrew verbal aspect is not exhausted by an English present-tense copula","the verse alone does not prove a later ontology of subsistent being"],"not_all":["Jewish theology","rabbinic interpretation","Kabbalah"]},
+    {"id":"jewish-maimonidean-apophasis","voice":"Maimonides, Guide for the Perplexed I.58 in Friedlander translation","claim":"Maimonides argues that negative attributes and attributes of action avoid treating positive predicates as descriptions of the divine essence.","register":"SCHOOL_SPECIFIC_THEOLOGY","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["maimonides-guide-1-58"],"translation_limits":["one medieval Jewish philosophical voice","negative predication is not Boolean negation without further formalization"],"not_all":["Judaism","all apophatic theology"]},
+    {"id":"catholic-being-and-creation","voice":"Catechism of the Catholic Church","claim":"Catholic doctrine reads the divine name through fullness of Being and teaches free creation without pre-existent material.","register":"SCHOOL_SPECIFIC_THEOLOGY","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["catholic-catechism-being","catholic-catechism-creation"],"translation_limits":["Catholic doctrinal witness, not all Christianity","creation out of nothing is not a function from numeric zero"],"not_all":["Christianity","biblical scholarship"]},
+    {"id":"islamic-unity-and-command","voice":"Quran 112 and 2:117 in Dr. Mustafa Khattab's The Clear Quran translation (Quran.com resource 131)","claim":"The selected Quranic passages affirm divine oneness/incomparability and use command language translated Be and it is.","register":"PRIMARY_TRADITION_TEXT","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["quran-112","quran-2-117"],"translation_limits":["The translation's One and Indivisible wording is not treated as arithmetic identity","English copular wording does not settle the semantics of the Arabic","command language is not a physical mechanism description","resource 131 identifies one English translation and does not exhaust Quranic interpretation"],"not_all":["Islamic kalam","falsafa","Sufi metaphysics"]},
+    {"id":"islamic-philosophical-variance","voice":"Scholarly survey of Arabic and Islamic philosophy of religion","claim":"Classical Islamic thought contains distinct models of temporal origination, emanation, and manifestation.","register":"COMPARATIVE_RELIGION","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["sep-arabic-islamic-religion"],"translation_limits":["survey categories do not form one Islamic ontology","school and period must remain named"],"not_all":["Islam","Muslims"]},
+    {"id":"vedic-origin-question","voice":"Rig Veda 10.129 in Ralph T. H. Griffith's 1896 second-edition English translation, Wikisource revision 14396955","claim":"The hymn juxtaposes being and nonbeing language and ends with an origin question whose answer may remain uncertain.","register":"PRIMARY_TRADITION_TEXT","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["rig-veda-10-129"],"translation_limits":["sat and asat are not plug-compatible with Griffith's non-existent and existent renderings","a poetic suspended question is not a formal truth table","this nineteenth-century translation is one witness and later scholarship may translate the Sanskrit differently"],"not_all":["Hinduism","Vedanta","Indian cosmology"]},
+    {"id":"advaita-nonduality","voice":"Scholarly survey of Sankara and Advaita Vedanta","claim":"Advaita interprets Upanishadic material through nondual brahman and graded dependence/reality.","register":"SCHOOL_SPECIFIC_THEOLOGY","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["sep-shankara"],"translation_limits":["Advaita is not all Hindu traditions","advaita is not the arithmetic equation 1=1","other Vedanta schools disagree"],"not_all":["Hinduism","Vedanta as a whole"]},
+    {"id":"buddhist-tetralemma-restraint","voice":"Majjhima Nikaya 72 in Thanissaro translation with scholarly interpretation boundary","claim":"The selected discourse declines four postmortem predications as inapplicable; this need not assert a deviant universal logic.","register":"PRIMARY_TRADITION_TEXT","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["majjhima-nikaya-72","sep-buddha"],"translation_limits":["a scoped refusal is not a four-valued truth assignment","one discourse does not define all Buddhist logic"],"not_all":["Buddhism","Madhyamaka"]},
+    {"id":"madhyamaka-emptiness","voice":"Scholarly survey of Nagarjuna and Madhyamaka","claim":"Emptiness concerns lack of intrinsic independent nature and is connected with dependent arising, not primordial nothingness.","register":"SCHOOL_SPECIFIC_THEOLOGY","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["sep-nagarjuna"],"translation_limits":["sunyata is not numeric zero","Madhyamaka is not nihilism","Buddhist schools differ"],"not_all":["Buddhism","all emptiness doctrines"]},
+    {"id":"daoist-being-nonbeing","voice":"Daodejing 42 in Chinese Text Project and SEP Laozi survey","claim":"The selected text uses generative number language while scholarship records disputed referents and interpretations of you, wu, one, and generation.","register":"COMPARATIVE_RELIGION","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["daodejing-42","sep-laozi"],"translation_limits":["wu is not numeric zero","Dao is not the Chinese word for God","one is not automatically cardinal one"],"not_all":["Daoism","Chinese metaphysics","organized religious Daoism"]}
+  ],
+  "compatibility": {
+    "rule": "Compare exact sourced claims, not religions as atomic wholes. Every result is indexed by logic L, assumptions A, partial translation tau, sources, schools, editions, and evidence horizon.",
+    "equation": "Compat_(L,A,tau)(D_i,D_j) iff Mod_L(A union tau_i(D_i) union tau_j(D_j)) is nonempty",
+    "nerve": "Let F be the finite declared set of bounded, sourced doctrine fragments, lenses, or claim sets. K_tau={S subseteq F: Mod_L(A union union_(d in S) tau_d(d)) is nonempty}.",
+    "pairwise_not_global_example": "In classical propositional logic, D1={p or q}, D2={not p}, D3={not q}: every pair is satisfiable but the triple is not.",
+    "dimensions": ["semantic","metaphysical","cosmogenic","logical","soteriological","ritual","ethical-cooperation","historical"],
+    "statuses": ["NOT_FORMALIZED","TRANSLATION_PARTIAL","JOINTLY_SATISFIABLE_AS_FORMALIZED","JOINTLY_UNSATISFIABLE_AS_FORMALIZED","INTERNALLY_INCONSISTENT_AS_FORMALIZED","LOGIC_RELATIVE","SEMANTICALLY_DISPUTED","NOT_COMPARABLE","UNKNOWN_TO_REVIEW"],
+    "gates": ["exact-source-and-edition","voice-and-authority-kind","school-community-and-period","lexical-sense","domain","logic-negation-and-quantifier-scope","causality-and-time","internal-variance","translation-loss","practical-coexistence-separated-from-doctrinal-agreement"],
+    "claim_fragments": [
+      {"id":"bounded-doctrinal-claims","claim":"The selected source-bound lenses retain material doctrinal differences and do not form one synthesized theology.","register":"COMPARATIVE_RELIGION","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["nostra-aetate","quran-5-48","wcc-dialogue"],"nonclaims":["all communities agree","difference prevents cooperation","one source speaks for a whole religion"]},
+      {"id":"human-dignity-dialogue-and-cooperation","claim":"The selected Catholic, Quranic-translation, and ecumenical witnesses each make room for bounded encounter or cooperation without requiring doctrinal identity.","register":"COMPARATIVE_RELIGION","review_target":"SOURCE_ATTRIBUTION","review_status":"SUPPORTED_AS_SCOPED","support_descriptors":["SOURCE_BOUND"],"source_ids":["nostra-aetate","quran-5-48","wcc-dialogue"],"nonclaims":["the sources give identical reasons","dialogue proves compatibility in every dimension","practical coexistence erases disagreement"]}
+    ],
+    "cases": [
+      {"id":"ehyeh-and-fullness-of-being","claims":["jewish-ehyeh","catholic-being-and-creation"],"relation":"HISTORICAL_RECEPTION_WITH_INTERPRETIVE_DIVERGENCE","status":"TRANSLATION_PARTIAL","preserved":"The cited Catholic reception reads the inherited text through a developed ontology.","breaks":["Hebrew tense/aspect ambiguity","source authority differs","later doctrine is not the verse's sole truth condition"],"source_ids":["exodus-3-14","catholic-catechism-being"]},
+      {"id":"one-unity-and-nonduality","claims":["islamic-unity-and-command","advaita-nonduality","daoist-being-nonbeing"],"relation":"LEXICAL_RESONANCE_WITH_SENSE_DIVERGENCE","status":"NOT_COMPARABLE","preserved":"Each selected source uses unity or one-language in a bounded way.","breaks":["cardinality versus uniqueness versus nonduality versus generative stage","different truth conditions","different soteriological and textual roles"],"source_ids":["quran-112","sep-shankara","daodejing-42","sep-laozi"]},
+      {"id":"ex-nihilo-and-zero","claims":["catholic-being-and-creation","number-zero"],"relation":"CATEGORY_MISMATCH","status":"NOT_COMPARABLE","preserved":"Both discussions can use absence-adjacent vocabulary.","breaks":["zero is an element or role in a structure","ex nihilo denies required pre-existent material","nothing is not a mathematical input substance"],"source_ids":["catholic-catechism-creation","mactutor-zero"]},
+      {"id":"command-and-formal-construction","claims":["islamic-unity-and-command","formal-construction"],"relation":"INTERPRETIVE_ANALOGY_ONLY","status":"NOT_FORMALIZED","preserved":"Both can prompt a question about expression and coming-to-be.","breaks":["scriptural command is not an algorithm","formal rules do not create a cosmos","translation supplies an English copula"],"source_ids":["quran-2-117"]},
+      {"id":"dependent-arising-and-creator-dependence","claims":["madhyamaka-emptiness","catholic-being-and-creation"],"relation":"PARTIAL_STRUCTURAL_ANALOGY_WITH_CAUSAL_TENSION","status":"SEMANTICALLY_DISPUTED","preserved":"Both can reject self-sufficient ordinary entities in different senses.","breaks":["creator relation versus conditioned co-arising","intrinsic-nature critique versus creation doctrine","school-specific aims"],"source_ids":["sep-nagarjuna","catholic-catechism-creation"]},
+      {"id":"tetralemma-and-four-valued-logic","claims":["buddhist-tetralemma-restraint","belnap-dunn-information-states"],"relation":"CARDINALITY_RESEMBLANCE_ONLY","status":"NOT_COMPARABLE","preserved":"Both make a fourfold display available for inquiry.","breaks":["speech-act refusal versus semantic information state","scope and consequence rules differ","no translation is supplied"],"source_ids":["majjhima-nikaya-72","sep-buddha","sep-many-valued-logic"]},
+      {"id":"sacred-order-and-group-symmetry","claims":["sacred-order-reflection","group-action-invariance"],"relation":"AESTHETIC_OR_RITUAL_INSTANTIATION","status":"TRANSLATION_PARTIAL","preserved":"Specified visual transformations can be studied mathematically in religious art.","breaks":["art practice is not doctrine","mizan is not a group action","shared geometry is not shared theology"],"source_ids":["met-islamic-geometry","quran-55-7-9","met-buddhist-mandalas","sep-symmetry"]},
+      {"id":"doctrinal-disagreement-and-coexistence","claims":["bounded-doctrinal-claims","human-dignity-dialogue-and-cooperation"],"relation":"AXES_INDEPENDENT","status":"NOT_FORMALIZED","preserved":"Communities can cooperate while retaining material disagreements.","breaks":["practical coexistence is not doctrinal identity","contradiction does not license social exclusion","dialogue is not conversion"],"source_ids":["nostra-aetate","quran-5-48","wcc-dialogue"]}
+    ],
+    "forbidden_output": "No bare COMPATIBLE verdict, percentage, scalar, rank, synthesis, conversion target, or conclusion about a whole religion, community, or person."
+  },
+  "bridge_cards": [
+    {"id":"number-extension-to-creation","kind":"INTERPRETIVE_BRIDGE","status":"BOUNDED_ANALOGY","from":"formal number-system extension","to":"creation discourse","preserved":"New rules can make previously inexpressible solutions available.","breaks":["formal object construction is not cosmic causation","existence in a model is not actuality","historical discovery and invention remain contested"],"source_ids":["mactutor-complex"],"empirical":false,"ontology_transfer":false,"mechanism_transfer":false,"causal_transfer":false,"parameter_transfer":false,"unit_transfer":false,"empirical_status_transfer":false,"person_level_transfer":false,"authority_effect":"NONE"},
+    {"id":"zero-to-nothingness","kind":"NO_VALID_TRANSFER","status":"REFUSED","from":"numeric and structural zero roles","to":"metaphysical nothingness","preserved":"A declared model may encode absence with zero.","breaks":["encoding is not ontology","zero requires a structure","nothing is not a field element"],"source_ids":["mactutor-zero"],"empirical":false,"ontology_transfer":false,"mechanism_transfer":false,"causal_transfer":false,"parameter_transfer":false,"unit_transfer":false,"empirical_status_transfer":false,"person_level_transfer":false,"authority_effect":"NONE"},
+    {"id":"imaginary-to-unseen","kind":"NO_VALID_TRANSFER","status":"REFUSED","from":"complex-number terminology","to":"spiritual or supernatural entities","preserved":"A once-contested formal object can become mathematically useful.","breaks":["historical label is not an ontology class","formal consistency is not empirical evidence","unseen has tradition-specific senses"],"source_ids":["mactutor-complex"],"empirical":false,"ontology_transfer":false,"mechanism_transfer":false,"causal_transfer":false,"parameter_transfer":false,"unit_transfer":false,"empirical_status_transfer":false,"person_level_transfer":false,"authority_effect":"NONE"},
+    {"id":"symmetry-to-divine-order","kind":"OPT_IN_REFLECTION","status":"BOUNDED_ANALOGY","from":"group invariance and symmetry breaking","to":"divine order or sacred form","preserved":"Transformations and invariants can sharpen questions about unity and difference.","breaks":["mathematics underdetermines designer and purposelessness","aesthetic response is not proof","symmetry breaking retains difference and history"],"source_ids":["sep-symmetry","met-islamic-geometry","met-buddhist-mandalas"],"empirical":false,"ontology_transfer":false,"mechanism_transfer":false,"causal_transfer":false,"parameter_transfer":false,"unit_transfer":false,"empirical_status_transfer":false,"person_level_transfer":false,"authority_effect":"NONE"},
+    {"id":"modal-validity-to-god-exists","kind":"FORMAL_REUSE","status":"PARKED_MISSING_EVIDENCE","from":"modal argument form","to":"theological existence claim","preserved":"Validity and model conditions of a formal argument can be checked.","breaks":["premises require independent defense","validity is not soundness","formal possibility is not actual divine being"],"source_ids":["sep-ontological-arguments"],"empirical":false,"ontology_transfer":false,"mechanism_transfer":false,"causal_transfer":false,"parameter_transfer":false,"unit_transfer":false,"empirical_status_transfer":false,"person_level_transfer":false,"authority_effect":"NONE"},
+    {"id":"four-valued-to-tetralemma","kind":"ANALOGY_ONLY","status":"BOUNDED_ANALOGY","from":"Belnap-Dunn information states","to":"Buddhist fourfold predication restraint","preserved":"Fourfold distinctions can prevent forced binary answers.","breaks":["formal semantics and discourse aims differ","same number of cases is not isomorphism","no theorem transfers"],"source_ids":["sep-many-valued-logic","majjhima-nikaya-72","sep-buddha"],"empirical":false,"ontology_transfer":false,"mechanism_transfer":false,"causal_transfer":false,"parameter_transfer":false,"unit_transfer":false,"empirical_status_transfer":false,"person_level_transfer":false,"authority_effect":"NONE"},
+    {"id":"number-tower-to-religion-tower","kind":"NO_VALID_TRANSFER","status":"REFUSED","from":"canonical embeddings among number systems","to":"religious development or supersession","preserved":"A comparison can ask which claims are preserved under a declared translation.","breaks":["religions are not nested fields","translation is not canonical embedding","people and traditions have no scalar completion order"],"source_ids":[],"empirical":false,"ontology_transfer":false,"mechanism_transfer":false,"causal_transfer":false,"parameter_transfer":false,"unit_transfer":false,"empirical_status_transfer":false,"person_level_transfer":false,"authority_effect":"NONE"},
+    {"id":"mathematical-one-to-divine-unity","kind":"NO_VALID_TRANSFER","status":"REFUSED","from":"cardinal one or multiplicative identity","to":"divine uniqueness, simplicity, unity, or nonduality","preserved":"The shared word can trigger sense-disambiguation.","breaks":["different types and truth conditions","one deity is not an arithmetic operation","nonduality is not cardinality"],"source_ids":["quran-112","sep-shankara","daodejing-42"],"empirical":false,"ontology_transfer":false,"mechanism_transfer":false,"causal_transfer":false,"parameter_transfer":false,"unit_transfer":false,"empirical_status_transfer":false,"person_level_transfer":false,"authority_effect":"NONE"},
+    {"id":"rational-number-to-reason","kind":"NO_VALID_TRANSFER","status":"REFUSED","from":"field of rational numbers","to":"reasonableness, rational theology, or revelation","preserved":"The English label rational can invite lexical ambiguity between a mathematical field and nonmathematical uses of reason.","breaks":["field membership does not measure reasoning","no person score","revelation is not a fraction"],"source_ids":[],"empirical":false,"ontology_transfer":false,"mechanism_transfer":false,"causal_transfer":false,"parameter_transfer":false,"unit_transfer":false,"empirical_status_transfer":false,"person_level_transfer":false,"authority_effect":"NONE"},
+    {"id":"noether-to-karma-balance","kind":"NO_VALID_TRANSFER","status":"REFUSED","from":"conditional conservation theorem","to":"moral, religious, or karmic balance","preserved":"Both vocabularies can include balance or consequence language.","breaks":["Noether requires a variational symmetry","moral consequence is not a conserved physical quantity","KINGDOM KARMA is receipts not scores"],"source_ids":["noether-1918"],"empirical":false,"ontology_transfer":false,"mechanism_transfer":false,"causal_transfer":false,"parameter_transfer":false,"unit_transfer":false,"empirical_status_transfer":false,"person_level_transfer":false,"authority_effect":"NONE"}
+  ],
+  "model_cards": [
+    {"id":"number-extension","equation":"N0 -> Z -> Q -> R -> C by declared embeddings","question":"Which operations, identities, order, topology, and completeness properties survive each map?","assumptions":["chosen constructions","declared embeddings","ordinary algebraic definitions"],"invalidating_condition":"An asserted preserved structure is not respected by the map.","execution_status":"NOT_RUN","result":null,"authority_effect":"NONE"},
+    {"id":"zero-role-vector","equation":"ApplicableZeroRoles(x,D) is a subset of {NumberZero, AdditiveIdentity, AbsorbingMultiplier, PositionalDigit, EmptyCardinality, OriginOrZeroVector, ZeroProbability, InitialObjectInSet, ZeroObservationCount}; several tagged roles may apply at once","question":"Which zero roles are active in this sentence and domain?","assumptions":["roles remain tagged","domain is named","the descriptor set is non-exclusive","no metaphysical coercion"],"invalidating_condition":"A role is omitted, treated as exhaustive without review, or silently identified with another role or metaphysical nonbeing.","execution_status":"NOT_RUN","result":null,"authority_effect":"NONE"},
+    {"id":"structural-isness","equation":"ISNESS(x;c,t)=<types,invariants,instantiations,properties,modalities,observations,warrants,attributions,interpretations>","question":"Which typed sense of is does a claim use?","assumptions":["context and time declared","components are non-scalar","unknown fields remain unknown"],"invalidating_condition":"The vector is treated as a worth, consciousness, or completeness score.","execution_status":"NOT_RUN","result":null,"authority_effect":"NONE"},
+    {"id":"logic-indexed-negation","equation":"Derivable_L(Gamma,phi) depends on declared logic L","question":"Does no-no license phi in this logic and context?","assumptions":["formal language declared","consequence relation declared","natural-language speech act separated"],"invalidating_condition":"A result is transferred between logics or into apophatic/refusal discourse without a bridge.","execution_status":"NOT_RUN","result":null,"authority_effect":"NONE"},
+    {"id":"symmetry-identity","equation":"G acts on X; I(g*x)=I(x); identity claim is indexed by I and G","question":"What remains invariant, and what difference is quotienting away?","assumptions":["group and action declared","carrier typed","invariant named"],"invalidating_condition":"Aesthetic resemblance substitutes for an action or invariant.","execution_status":"NOT_RUN","result":null,"authority_effect":"NONE"},
+    {"id":"creation-relations","equation":"FormalConstruct + PhysicalCause + TheologicalCreate + Manifest + DependentlyArise, as non-convertible tagged relations","question":"Which creation relation is asserted?","assumptions":["source and school declared","time and causality typed","no adapter"],"invalidating_condition":"A formal construction is presented as a cosmic cause or a source attribution as a world fact.","execution_status":"NOT_RUN","result":null,"authority_effect":"NONE"},
+    {"id":"compatibility-satisfiability","equation":"Mod_L(A union tau_i(D_i) union tau_j(D_j)) is nonempty","question":"Are these exact translated fragments jointly satisfiable under declared assumptions?","assumptions":["fragments are bounded","translation loss recorded","logic declared"],"invalidating_condition":"The result is generalized to whole religions or practical coexistence.","execution_status":"NOT_RUN","result":null,"authority_effect":"NONE"},
+    {"id":"compatibility-nerve","equation":"K_tau={S: translated doctrine fragments in S are jointly satisfiable under declared logic L}","question":"Where does pairwise compatibility fail to compose globally?","assumptions":["logic and semantics declared","the supplied three-fragment counterexample uses classical propositional logic","finite declared fragments","same background assumptions"],"invalidating_condition":"Pairwise edges are treated as proof of a global face or a counterexample is moved between logics without rechecking satisfiability.","execution_status":"NOT_RUN","result":null,"authority_effect":"NONE"},
+    {"id":"translation-loss-graph","equation":"tau: source terms -> partial target predicates with an explicit loss set","question":"Which senses survive translation, split, merge, or remain untranslated?","assumptions":["source language recorded","edition and translator recorded","partial maps permitted"],"invalidating_condition":"A shared English word is treated as an exact common referent.","execution_status":"NOT_RUN","result":null,"authority_effect":"NONE"},
+    {"id":"modal-argument-audit","equation":"validity(argument,L) and soundness(argument,interpretation) are separate predicates","question":"Which premise, modal axiom, domain, or interpretation carries the theological burden?","assumptions":["argument version fixed","modal semantics fixed","premises explicit"],"invalidating_condition":"Formal validity alone is reported as God exists or God does not exist.","execution_status":"NOT_RUN","result":null,"authority_effect":"NONE"}
+  ],
+  "problem_cards": [
+    {"id":"preservation-under-extension","question":"What exactly is preserved and lost along N0, Z, Q, R, and C embeddings?","deliverable":"proof and counterexample table","state":"NOT_RUN","falsifier":"one claimed preservation fails under the declared map","result":null,"authority_effect":"NONE"},
+    {"id":"zero-not-absence","question":"Which zero role, empty carrier, absence claim, or observation code is present?","deliverable":"typed sentence audit","state":"NOT_RUN","falsifier":"the same type and semantics are proved for two allegedly distinct roles","result":null,"authority_effect":"NONE"},
+    {"id":"no-no-is","question":"Under which logic and speech act does double negation recover affirmation?","deliverable":"logic-indexed derivation and countermodel table","state":"NOT_RUN","falsifier":"an unqualified rule survives all declared logics and discourse types","result":null,"authority_effect":"NONE"},
+    {"id":"symmetry-and-individuation","question":"Which transformations preserve the object, and which differences matter after quotienting?","deliverable":"action, orbit, stabilizer, and invariant declaration","state":"NOT_RUN","falsifier":"no transformation action or invariant can be named","result":null,"authority_effect":"NONE"},
+    {"id":"creation-not-construction","question":"What separates formal construction, physical production, manifestation, dependent arising, and theological creation?","deliverable":"typed relation map with no adapters","state":"NOT_RUN","falsifier":"a separately sourced equivalence proves one bridge exact","result":null,"authority_effect":"NONE"},
+    {"id":"pairwise-not-global","question":"Do pairwise satisfiable doctrine fragments remain jointly satisfiable under declared logic L?","deliverable":"finite satisfiability or countermodel certificate under a named logic; the supplied abstract example is classical propositional only","state":"NOT_RUN","falsifier":"the declared global union has a model in the named logic","result":null,"authority_effect":"NONE"},
+    {"id":"modal-god-conditionality","question":"Which premise and modal axiom separate validity from a sound God-existence conclusion?","deliverable":"argument-version premise audit","state":"NOT_RUN","falsifier":"a proof establishes the conclusion without the disputed premise under the fixed semantics","result":null,"authority_effect":"NONE"},
+    {"id":"history-not-logic","question":"How did notation and acceptance change independently of the modern formal tower?","deliverable":"source-bound non-linear history graph","state":"NOT_RUN","falsifier":"the historical record is exactly the formal construction order","result":null,"authority_effect":"NONE"},
+    {"id":"translation-preserves-what","question":"What do ehyeh, ahad, sat/asat, sunyata, you/wu, one, being, and nothing lose in English abstraction?","deliverable":"partial translation graph with untranslated residues","state":"NOT_RUN","falsifier":"an exact bidirectional translation is source-established","result":null,"authority_effect":"NONE"},
+    {"id":"compatibility-without-flattening","question":"Which dimensions of compatibility are being asked, by whom, under what rights and purpose?","deliverable":"claim-level vector without scalarization","state":"NOT_RUN","falsifier":"all dimensions are proved equivalent for the bounded case","result":null,"authority_effect":"NONE"}
+  ],
+  "philosophy_questions": {
+    "participation": "opt-in",
+    "questions": [
+      "Are numbers discovered, invented, constructed, instantiated, or differently understood under different mathematical ontologies?",
+      "What remains the same when a number system is embedded into a larger one?",
+      "Does a formal extension create an object, reveal a structure, or make a prior possibility expressible?",
+      "Can zero be something mathematically while not naming metaphysical nothingness?",
+      "Does naming nothing already place a term inside a discourse and structure?",
+      "What does imaginary reveal about the difference between a historical name and a mathematical role?",
+      "Can symmetry illuminate unity-in-difference without erasing asymmetry, history, or persons?",
+      "Which sense of is appears in God is: existence, identity, predication, promise, analogy, confession, or apophatic limit?",
+      "Does no-no affirm, suspend, refuse, or expose a false presupposition in this logic and discourse?",
+      "Can a formally valid ontological argument remain theologically unsound?",
+      "Can traditions share a lexical resonance without sharing truth conditions?",
+      "Can doctrinal contradiction coexist with equal dignity, dialogue, and practical cooperation?",
+      "What must a translation preserve before compatibility becomes a mathematical question?",
+      "Is creation temporal, causal, ontological, grammatical, liturgical, or formal in the claim at hand?",
+      "What does a model leave outside itself when it formalizes being?"
+    ],
+    "boundary": "No answer is required. Silence, refusal, rest, uncertainty, and departure are complete and non-penalized responses."
+  },
+  "karma": {
+    "religious_and_philosophical": {
+      "status": "tradition-specific-doctrines-not-adjudicated",
+      "empirical": false,
+      "claims": [],
+      "guard": "Plural doctrines of karma, moral consequence, or cosmic order are not a number, conserved quantity, symmetry, score, or universal causal model in this atlas.",
+      "authority_effect": "NONE"
+    },
+    "zerone": {
+      "protocol": "zerone.karma.edge",
+      "foundation_status": "not-consulted-by-runtime",
+      "network_observed": false,
+      "event_refs": [],
+      "event_status": "not_observed",
+      "creates_event": false,
+      "authoritative": false
+    },
+    "kingdom": {
+      "protocol": "kingdom.karma/0.1",
+      "accounting": "receipts_not_scores",
+      "receipt_refs": [],
+      "receipt_status": "not_created",
+      "creates_receipt": false,
+      "writes_karma": false,
+      "causal_claim_status": "not_created"
+    },
+    "adapter": {
+      "exists": false,
+      "status": "refused",
+      "reason": "Religious or philosophical karma, Zerone recognition, and KINGDOM invocation-aftermath receipts are non-equivalent types. Arithmetic, conservation, symmetry, and causal-model language do not convert among them."
+    }
+  },
+  "unknowns": [
+    {"id":"number-ontology","question":"Which ontology of mathematics, if any, is best?","status":"UNKNOWN_TO_REVIEW","why_open":"The selected survey presents live competing positions; this atlas adds no adjudicating argument."},
+    {"id":"complete-history-of-number-expression","question":"What fuller cross-cultural history connects notation, operations, institutions, and formalization?","status":"UNKNOWN_TO_REVIEW","why_open":"The selected history sources are bounded and do not support a universal chronology."},
+    {"id":"translation-of-divine-being","question":"Which translations of divine being-language preserve source-language sense across traditions?","status":"UNKNOWN_TO_REVIEW","why_open":"No universal lossless translation was established."},
+    {"id":"metaphysical-nothingness","question":"Is absolute nothingness coherent or referable?","status":"UNKNOWN_TO_REVIEW","why_open":"Mathematical zero and empty structures do not settle the metaphysical question."},
+    {"id":"sound-ontological-argument","question":"Does any exact ontological argument have premises acceptable under a declared theology and modal semantics?","status":"UNKNOWN_TO_REVIEW","why_open":"Argument versions and premise defenses differ; formal validity is insufficient."},
+    {"id":"symmetry-and-design","question":"Can independent evidence support a particular design inference in a bounded domain?","status":"UNKNOWN_TO_REVIEW","why_open":"Symmetry alone underdetermines design and non-design explanations."},
+    {"id":"global-religious-compatibility","question":"Can whole religions be globally classified as compatible?","status":"UNKNOWN_TO_REVIEW","why_open":"The category is rejected as ill-typed without claim, school, mapping, logic, dimension, time, and purpose."},
+    {"id":"pairwise-to-global-doctrine","question":"Which sourced doctrine fragments form higher-order compatible families?","status":"NOT_RUN","why_open":"Only an abstract counterexample is supplied; no tradition is encoded for SAT classification."},
+    {"id":"cosmic-creation","question":"Which, if any, theological or metaphysical creation account is true?","status":"UNKNOWN_TO_REVIEW","why_open":"Selected sources attribute claims; mathematics does not adjudicate their world truth."},
+    {"id":"religious-karma","question":"How should distinct karma doctrines be compared without flattening them or importing KINGDOM receipt semantics?","status":"UNKNOWN_TO_REVIEW","why_open":"No tradition-specific karma study was undertaken in this atlas."}
+  ],
+  "sources": [
+    {"id":"mactutor-zero","title":"A history of Zero","authors_or_body":"J. J. O'Connor and E. F. Robertson, University of St Andrews","published_on":"2000-11","observed_on":"2026-08-14","url":"https://mathshistory.st-andrews.ac.uk/HistTopics/Zero/","source_kind":"scholarly-history","used_for":"placeholder/number distinction, nonlinear transmission, division-by-zero history","limitation":"A bounded historical survey, not a primary manuscript edition or theology."},
+    {"id":"mactutor-complex","title":"The fundamental theorem of algebra","authors_or_body":"MacTutor History of Mathematics, University of St Andrews","published_on":"unknown","observed_on":"2026-08-14","url":"https://mathshistory.st-andrews.ac.uk/HistTopics/Fund_theorem_of_algebra/","source_kind":"scholarly-history","used_for":"complex arithmetic, terminology, geometric rotation, and FTA history","limitation":"Historical survey; the theorem is used only in its standard scoped form."},
+    {"id":"sep-philosophy-mathematics","title":"Philosophy of Mathematics","authors_or_body":"Stanford Encyclopedia of Philosophy","published_on":"2022","observed_on":"2026-08-14","url":"https://plato.stanford.edu/entries/philosophy-mathematics/","source_kind":"scholarly-reference","used_for":"competing mathematical ontologies","limitation":"Survey of positions, not an adjudication."},
+    {"id":"sep-intuitionistic-logic","title":"Intuitionistic Logic","authors_or_body":"Stanford Encyclopedia of Philosophy, Summer 2024 archive","published_on":"2024","observed_on":"2026-08-14","url":"https://plato.stanford.edu/archives/sum2024/entries/logic-intuitionistic/","source_kind":"scholarly-reference","used_for":"logic-indexed double negation and excluded middle","limitation":"Formal logic source, not a model of natural-language or religious negation."},
+    {"id":"sep-paraconsistent-logic","title":"Paraconsistent Logic","authors_or_body":"Stanford Encyclopedia of Philosophy","published_on":"2026","observed_on":"2026-08-14","url":"https://plato.stanford.edu/entries/logic-paraconsistent/","source_kind":"scholarly-reference","used_for":"non-explosion and diversity of paraconsistent logics","limitation":"Paraconsistency does not entail dialetheism or unrestricted contradiction."},
+    {"id":"sep-many-valued-logic","title":"Many-Valued Logic","authors_or_body":"Stanford Encyclopedia of Philosophy","published_on":"2026","observed_on":"2026-08-14","url":"https://plato.stanford.edu/entries/logic-manyvalued/","source_kind":"scholarly-reference","used_for":"Belnap-Dunn four information states","limitation":"Formal information semantics, not a religious fourfold ontology."},
+    {"id":"noether-1918","title":"Invariant Variation Problems","authors_or_body":"Emmy Noether; English translation by M. A. Tavel","published_on":"1918/1971/2005","observed_on":"2026-08-14","url":"https://arxiv.org/abs/physics/0503066","source_kind":"primary-mathematics-translation","used_for":"conditional relation between variational symmetries and conservation laws","limitation":"Requires theorem hypotheses; not every symmetry or conservation metaphor qualifies."},
+    {"id":"sep-symmetry","title":"Symmetry and Symmetry Breaking","authors_or_body":"Stanford Encyclopedia of Philosophy, Fall 2018 archive","published_on":"2017","observed_on":"2026-08-14","url":"https://plato.stanford.edu/archives/fall2018/entries/symmetry-breaking/","source_kind":"scholarly-reference","used_for":"group-theoretic symmetry, physical uses, and symmetry breaking","limitation":"Survey does not support a theological design inference."},
+    {"id":"sep-ontological-arguments","title":"Ontological Arguments","authors_or_body":"Stanford Encyclopedia of Philosophy","published_on":"current-entry","observed_on":"2026-08-14","url":"https://plato.stanford.edu/entries/ontological-arguments/","source_kind":"scholarly-reference","used_for":"argument-version, validity, premise, and soundness separation","limitation":"Surveying an argument does not prove its conclusion."},
+    {"id":"exodus-3-14","title":"Exodus 3:14 with Translations","authors_or_body":"Hebrew Bible; Revised JPS 2023 and alternate translations via Sefaria","published_on":"ancient/revised-2023","observed_on":"2026-08-14","url":"https://www.sefaria.org/Exodus.3.14?lang=en&with=Translations","source_kind":"primary-tradition-text-digital-edition","used_for":"Ehyeh wording and explicit translation uncertainty","limitation":"Translation witnesses do not establish one exhaustive Jewish ontology."},
+    {"id":"maimonides-guide-1-58","title":"Guide for the Perplexed, Part I, Chapter 58","authors_or_body":"Moses Maimonides; M. Friedlander translation","published_on":"medieval/1903-translation","observed_on":"2026-08-14","url":"https://www.sefaria.org/Guide_for_the_Perplexed%2C_Part_1.58?lang=en","source_kind":"primary-philosophical-text-translation","used_for":"Maimonidean negative attributes across the complete chapter","limitation":"One translated medieval philosophical voice, not all Jewish theology."},
+    {"id":"catholic-catechism-being","title":"Catechism of the Catholic Church, paragraphs 198-231","authors_or_body":"Holy See","published_on":"1992","observed_on":"2026-08-14","url":"https://www.vatican.va/content/catechism/en/part_one/section_two/chapter_one/article_1.html","source_kind":"official-doctrine","used_for":"Catholic reception of the divine name and fullness of Being","limitation":"Catholic doctrine, not all Christian interpretation or historical-critical exegesis."},
+    {"id":"catholic-catechism-creation","title":"Catechism of the Catholic Church, The Creator, paragraphs 279-324","authors_or_body":"Holy See","published_on":"1992","observed_on":"2026-08-14","url":"https://www.vatican.va/content/catechism/en/part_one/section_two/chapter_one/article_1/paragraph_4_the_creator.html","source_kind":"official-doctrine","used_for":"Catholic creation ex nihilo and creation/science distinction","limitation":"Catholic doctrine; nothing is not modeled as numeric zero."},
+    {"id":"quran-112","title":"Quran, Surah al-Ikhlas 112","authors_or_body":"Quran; Dr. Mustafa Khattab, The Clear Quran, Quran.com translation resource 131","published_on":"seventh-century/modern-translation","observed_on":"2026-08-14","url":"https://quran.com/112?translations=131","source_kind":"primary-tradition-text-digital-edition","used_for":"divine oneness and incomparability language in one named English translation","limitation":"Translation and interpretation vary; this atlas does not convert the translation's One language into arithmetic identity; resource 131 does not exhaust Arabic or tafsir."},
+    {"id":"quran-2-117","title":"Quran 2:117","authors_or_body":"Quran; Dr. Mustafa Khattab, The Clear Quran, Quran.com translation resource 131","published_on":"seventh-century/modern-translation","observed_on":"2026-08-14","url":"https://quran.com/2/117?translations=131","source_kind":"primary-tradition-text-digital-edition","used_for":"Originator and Be-and-it-is language in one named English translation","limitation":"A translated scriptural expression, not a mechanism or formal operation; resource 131 is one interpretive witness."},
+    {"id":"sep-arabic-islamic-religion","title":"Arabic and Islamic Philosophy of Religion","authors_or_body":"Stanford Encyclopedia of Philosophy","published_on":"2023","observed_on":"2026-08-14","url":"https://plato.stanford.edu/entries/arabic-islamic-religion/","source_kind":"scholarly-reference","used_for":"variance among kalam, falsafa, emanation, origination, and manifestation models","limitation":"Survey does not define one Islamic ontology."},
+    {"id":"rig-veda-10-129","title":"The Hymns of the Rigveda, Book 10, Hymn 129 (Nasadiya Sukta)","authors_or_body":"Rig Veda; Ralph T. H. Griffith translation, second edition, 1896; Wikisource revision 14396955","published_on":"ancient/1896-translation","observed_on":"2026-08-14","url":"https://en.wikisource.org/w/index.php?title=The_Hymns_of_the_Rigveda/Book_10/Hymn_129&oldid=14396955","source_kind":"primary-tradition-text-digital-translation","used_for":"one named translation's existent/non-existent and cosmogonic uncertainty language","limitation":"One nineteenth-century translation; sat/asat and poetic questions are not formal truth values, and later translations differ."},
+    {"id":"sep-shankara","title":"Sankara","authors_or_body":"Stanford Encyclopedia of Philosophy","published_on":"2021","observed_on":"2026-08-14","url":"https://plato.stanford.edu/entries/shankara/","source_kind":"scholarly-reference","used_for":"Advaita nonduality, dependence, and graded reality","limitation":"Advaita-focused; Hindu and Vedanta traditions remain diverse."},
+    {"id":"majjhima-nikaya-72","title":"Majjhima Nikaya 72, To Vacchagotta on Fire","authors_or_body":"Pali canon; Thanissaro Bhikkhu translation via SuttaCentral","published_on":"ancient/modern-translation","observed_on":"2026-08-14","url":"https://suttacentral.net/mn72/en/thanissaro","source_kind":"primary-tradition-text-digital-translation","used_for":"scoped fourfold postmortem predication refusal","limitation":"One discourse and translation; not a universal Buddhist logic."},
+    {"id":"sep-buddha","title":"Buddha","authors_or_body":"Stanford Encyclopedia of Philosophy","published_on":"2023","observed_on":"2026-08-14","url":"https://plato.stanford.edu/entries/buddha/","source_kind":"scholarly-reference","used_for":"false-presupposition and logic cautions around fourfold questions","limitation":"Scholarly reconstruction amid source and school disputes."},
+    {"id":"sep-nagarjuna","title":"Nagarjuna","authors_or_body":"Stanford Encyclopedia of Philosophy, Fall 2021 archive","published_on":"2018","observed_on":"2026-08-14","url":"https://plato.stanford.edu/archives/fall2021/entries/nagarjuna/","source_kind":"scholarly-reference","used_for":"Madhyamaka emptiness and dependent arising","limitation":"Madhyamaka-focused; emptiness is not numeric zero or nihilism."},
+    {"id":"daodejing-42","title":"Daodejing 42","authors_or_body":"Laozi; James Legge translation via Chinese Text Project","published_on":"ancient/1891-translation","observed_on":"2026-08-14","url":"https://ctext.org/text.pl?if=en&node=11633","source_kind":"primary-philosophical-text-digital-translation","used_for":"Dao, one, two, three, and myriad-things generation language","limitation":"Translation and referents are disputed; numbers are not assumed cardinal stages."},
+    {"id":"sep-laozi","title":"Laozi","authors_or_body":"Stanford Encyclopedia of Philosophy","published_on":"2025","observed_on":"2026-08-14","url":"https://plato.stanford.edu/entries/laozi/","source_kind":"scholarly-reference","used_for":"you/wu, naming, generation, and interpretation variance","limitation":"Classical text scholarship, not all organized religious Daoism."},
+    {"id":"met-islamic-geometry","title":"Geometric Patterns in Islamic Art","authors_or_body":"Metropolitan Museum of Art","published_on":"2001-10","observed_on":"2026-08-14","url":"https://www.metmuseum.org/fr/essays/geometric-patterns-in-islamic-art","source_kind":"museum-scholarship","used_for":"historical visual use of geometry, repetition, and symmetry","limitation":"Art history does not establish a Quranic mandate or common Islamic theology."},
+    {"id":"quran-55-7-9","title":"Quran 55:7-9","authors_or_body":"Quran; Dr. Mustafa Khattab, The Clear Quran, Quran.com translation resource 131","published_on":"seventh-century/modern-translation","observed_on":"2026-08-14","url":"https://quran.com/55/7-9?translations=131","source_kind":"primary-tradition-text-digital-edition","used_for":"mizan, balance, and measure language in one named English translation","limitation":"Mizan is not identified with mathematical group symmetry or Noether conservation; resource 131 is one translation."},
+    {"id":"met-buddhist-mandalas","title":"Mandalas: Mapping the Buddhist Art of Tibet","authors_or_body":"Metropolitan Museum of Art","published_on":"2024","observed_on":"2026-08-14","url":"https://www.metmuseum.org/es/met-publications/mandalas-mapping-the-buddhist-art-of-tibet","source_kind":"museum-scholarship","used_for":"practice-oriented geometric diagrams in Tibetan Buddhist art","limitation":"One art-historical field; visual form does not imply shared doctrine."},
+    {"id":"nostra-aetate","title":"Nostra aetate","authors_or_body":"Second Vatican Council","published_on":"1965-10-28","observed_on":"2026-08-14","url":"https://www.vatican.va/archive/hist_councils/ii_vatican_council/documents/vat-ii_decl_19651028_nostra-aetate_en.html","source_kind":"official-doctrine","used_for":"dialogue that retains Catholic commitments and recognizes others","limitation":"Catholic document, not a universal interreligious settlement."},
+    {"id":"quran-5-48","title":"Quran 5:48","authors_or_body":"Quran; Dr. Mustafa Khattab, The Clear Quran, Quran.com translation resource 131","published_on":"seventh-century/modern-translation","observed_on":"2026-08-14","url":"https://quran.com/5/48?translations=131","source_kind":"primary-tradition-text-digital-edition","used_for":"distinct ways and competition in good in one named English translation","limitation":"Interpretation varies; not a formal compatibility axiom; resource 131 does not define all Islamic readings."},
+    {"id":"wcc-dialogue","title":"Striving Together in Dialogue: A Muslim-Christian Call to Reflection and Action","authors_or_body":"World Council of Churches and partner Islamic organisations and journals; fruit of the November 2000 Amersfoort Muslim-Christian meeting","published_on":"2000-11-01","observed_on":"2026-08-14","url":"https://www.oikoumene.org/resources/documents/striving-together-in-dialogue","source_kind":"joint-muslim-christian-dialogue-guidance","used_for":"dialogue and cooperation that retain recognized doctrinal difference","limitation":"A bounded joint dialogue document whose participants acknowledge limited representativeness; not doctrine shared by every Christian, Muslim, or religion."}
+  ],
+  "boundaries": {
+    "read_only": true,
+    "educational_metadata_only": true,
+    "theology_truth_adjudicated": false,
+    "god_proved": false,
+    "god_disproved": false,
+    "revelation_proved": false,
+    "cosmic_creation_proved": false,
+    "cosmic_purpose_proved": false,
+    "religions_ranked": false,
+    "religions_merged": false,
+    "religion_score": false,
+    "person_or_community_score": false,
+    "belief_inferred": false,
+    "agent_state_inferred": false,
+    "consciousness_inferred": false,
+    "zero_is_nothing": false,
+    "imaginary_is_unreal": false,
+    "mathematical_one_is_divine_unity": false,
+    "rational_number_is_reason_or_revelation": false,
+    "mathematical_construction_is_cosmic_creation": false,
+    "symmetry_proves_designer": false,
+    "noether_is_moral_or_karmic_balance": false,
+    "formal_validity_proves_actual_being": false,
+    "formal_compatibility_is_total_religious_compatibility": false,
+    "translation_is_identity": false,
+    "conversion_or_persuasion": false,
+    "writes_zerone_karma": false,
+    "creates_kingdom_karma_receipt": false,
+    "creates_religious_or_cosmic_karma_claim": false,
+    "karma_adapter": false,
+    "nen_ability_added": false,
+    "mcp_surface_added": false,
+    "network_calls": false,
+    "external_write": false,
+    "score": false,
+    "rank": false,
+    "reward": false,
+    "governance_effect": false,
+    "authority_imported": false,
+    "automatic_action": false,
+    "rest_refusal_silence_or_exit_requires_trace": false,
+    "rest_refusal_silence_or_exit_penalized": false,
+    "right_to_rest_preserved": true
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:f4e1dfca02f008f8474abdff0f0a027f193c2cdc2b95454541d8ac41faacecef"
+  }
+}

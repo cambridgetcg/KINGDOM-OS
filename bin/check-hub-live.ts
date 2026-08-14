@@ -121,6 +121,14 @@ import {
   loadBeingAccessAftermathAtlasV02,
 } from "./being-access-aftermath-v0.2.ts";
 import {
+  NUMBER_ISNESS_THEOLOGY_DIGEST,
+  NUMBER_ISNESS_THEOLOGY_DOCUMENT_URL,
+  NUMBER_ISNESS_THEOLOGY_SCHEMA_URL,
+  NUMBER_ISNESS_THEOLOGY_URL,
+  loadNumberIsnessTheologyAtlas,
+  numberIsnessTheologyPublicDiscovery,
+} from "./number-isness-theology.ts";
+import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_SCHEMA_URL,
   VISIBILITY_ATTENTION_URL,
@@ -227,6 +235,9 @@ const beingAccessAftermathDocumentPath = new URL(BEING_ACCESS_AFTERMATH_DOCUMENT
 const beingAccessAftermathV02Path = new URL(BEING_ACCESS_AFTERMATH_V02_URL).pathname;
 const beingAccessAftermathV02SchemaPath = new URL(BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL).pathname;
 const beingAccessAftermathV02DocumentPath = new URL(BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL).pathname;
+const numberIsnessTheologyPath = new URL(NUMBER_ISNESS_THEOLOGY_URL).pathname;
+const numberIsnessTheologySchemaPath = new URL(NUMBER_ISNESS_THEOLOGY_SCHEMA_URL).pathname;
+const numberIsnessTheologyDocumentPath = new URL(NUMBER_ISNESS_THEOLOGY_DOCUMENT_URL).pathname;
 const kingdomKarmaDefinitionPath = "/definitions/kingdom-karma/e4e84a67/NEN.md";
 const rarePathwayPath = new URL(RARE_PATHWAY_URL).pathname;
 const rarePathwaySchemaPath = new URL(RARE_PATHWAY_SCHEMA_URL).pathname;
@@ -666,6 +677,17 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "being_access_aftermath_atlas_v0_2",
       "being_access_aftermath_atlas_v0_2_schema",
       "being_access_aftermath_atlas_v0_2_guide",
+    ],
+  },
+  {
+    id: "number-isness-theology",
+    label: "Number, Isness & Theology",
+    routes: [numberIsnessTheologyPath, numberIsnessTheologySchemaPath, numberIsnessTheologyDocumentPath],
+    discoveryProperties: ["number_isness_theology_atlas"],
+    entryPointProperties: [
+      "number_isness_theology_atlas",
+      "number_isness_theology_atlas_schema",
+      "number_isness_theology_atlas_guide",
     ],
   },
 ];
@@ -1136,6 +1158,58 @@ async function checkBeingAccessAftermathV02Triple(): Promise<void> {
   }
 }
 
+async function checkNumberIsnessTheologyTriple(): Promise<void> {
+  const routes = [
+    {
+      label: "atlas record",
+      path: numberIsnessTheologyPath,
+      source: "data/number-isness-theology/number-isness-theology-atlas.v0.1.json",
+      contentType: "application/json",
+    },
+    {
+      label: "atlas schema",
+      path: numberIsnessTheologySchemaPath,
+      source: "schemas/number-isness-theology-atlas-v0.1.schema.json",
+      contentType: "application/schema+json",
+    },
+    {
+      label: "atlas guide",
+      path: numberIsnessTheologyDocumentPath,
+      source: "references/number-isness-theology-atlas.md",
+      contentType: "text/markdown",
+    },
+  ] as const;
+
+  for (const route of routes) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetch(url(route.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (!response.ok || normalizedMediaType(response.headers.get("content-type")) !== route.contentType ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+        throw new Error(`${method} ${route.path} is not served as typed, public ${route.label}`);
+      }
+      if (route.path === numberIsnessTheologyPath && !hasUniqueCanonicalLinkRelation(
+        response.headers.get("link") || "",
+        numberIsnessTheologySchemaPath,
+        "describedby",
+        "application/schema+json",
+      )) {
+        throw new Error(`${method} ${route.path} is not described by exactly its immutable schema`);
+      }
+      const body = Buffer.from(await response.arrayBuffer());
+      if (method === "HEAD") {
+        if (body.byteLength !== 0) throw new Error(`HEAD ${route.path} returned a body`);
+      } else if (!body.equals(readFileSync(join(ROOT, route.source)))) {
+        throw new Error(`GET ${route.path} drifted from its immutable authored source ${route.source}`);
+      }
+    }
+  }
+}
+
 function sameStrings(actual: unknown, expected: readonly string[]): boolean {
   return Array.isArray(actual) && actual.every((value) => typeof value === "string") &&
     actual.length === expected.length &&
@@ -1215,6 +1289,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const rarePathwayActive = familyActive("rare-pathway-challenge");
   const mathUsefulnessActive = familyActive("math-usefulness-result");
   const beingAccessAftermathActive = familyActive("being-access-aftermath");
+  const numberIsnessTheologyActive = familyActive("number-isness-theology");
   const verifiedFormCirculationReturnDestinations = new Set<string>();
   for (const asset of HUB_ASSETS) {
     if (asset.destination === "_worker.js") continue;
@@ -1687,6 +1762,9 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     await checkBeingAccessAftermathTriple();
     await checkBeingAccessAftermathV02Triple();
   }
+  if (numberIsnessTheologyActive) {
+    await checkNumberIsnessTheologyTriple();
+  }
 
   const schemaPaths = [
     commonsSchemaPath,
@@ -1707,6 +1785,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(mathUsefulnessActive ? [mathUsefulnessSchemaPath] : []),
     ...(beingAccessAftermathActive ? [beingAccessAftermathSchemaPath] : []),
     ...(beingAccessAftermathActive ? [beingAccessAftermathV02SchemaPath] : []),
+    ...(numberIsnessTheologyActive ? [numberIsnessTheologySchemaPath] : []),
   ];
   for (const path of schemaPaths) {
     const schemaHead = await fetch(url(path), {
@@ -1821,6 +1900,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedBeingAccessAftermathV02 = beingAccessAftermathV02Atlas
     ? beingAccessAftermathPublicDiscoveryV02(beingAccessAftermathV02Atlas)
+    : undefined;
+  const numberIsnessTheologyAtlas = numberIsnessTheologyActive
+    ? loadNumberIsnessTheologyAtlas()
+    : undefined;
+  const expectedNumberIsnessTheology = numberIsnessTheologyAtlas
+    ? numberIsnessTheologyPublicDiscovery(numberIsnessTheologyAtlas)
     : undefined;
   const sourceLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.source.json"), "utf8"));
   const publishedLoveLoops: any = JSON.parse(readFileSync(join(ROOT, "site/love-loops.json"), "utf8"));
@@ -2754,6 +2839,41 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (numberIsnessTheologyActive) {
+    const expected = expectedNumberIsnessTheology!;
+    const targets = new Set([
+      NUMBER_ISNESS_THEOLOGY_URL,
+      NUMBER_ISNESS_THEOLOGY_SCHEMA_URL,
+      NUMBER_ISNESS_THEOLOGY_DOCUMENT_URL,
+    ]);
+    const actions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    if (!isDeepStrictEqual(manifest?.number_isness_theology_atlas, expected) ||
+      !isDeepStrictEqual(guest?.number_isness_theology_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.number_isness_theology_atlas, expected) ||
+      manifest?.entry_points?.number_isness_theology_atlas !== NUMBER_ISNESS_THEOLOGY_URL ||
+      manifest?.entry_points?.number_isness_theology_atlas_schema !== NUMBER_ISNESS_THEOLOGY_SCHEMA_URL ||
+      manifest?.entry_points?.number_isness_theology_atlas_guide !== NUMBER_ISNESS_THEOLOGY_DOCUMENT_URL ||
+      actions.length !== targets.size ||
+      actions.some((action: any) => action?.method !== "GET" ||
+        "mcp" in action || "tool" in action || "write" in action || "matcher" in action ||
+        "execute" in action || "score" in action || "rank" in action || "persuade" in action) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="number-isness-theology"') ||
+      !authoredRootHtml.includes("Extension is not spiritual ascent") ||
+      !authoredRootHtml.includes("No overall religion, culture, community, or person score exists") ||
+      !authoredRootHtml.includes(`href="${numberIsnessTheologyPath}"`) ||
+      !authoredRootHtml.includes(`href="${numberIsnessTheologySchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${numberIsnessTheologyDocumentPath}"`) ||
+      expected.integrity?.digest !== NUMBER_ISNESS_THEOLOGY_DIGEST ||
+      "mcp" in expected || "matcher" in expected || "write" in expected ||
+      "execute" in expected || "score" in expected || "rank" in expected ||
+      "persuade" in expected || "convert" in expected) {
+      throw new Error("Number, Isness & Theology discovery, typed registers, claim-level compatibility, KARMA separation, or negative authority drifted");
+    }
+  }
+
   const liveKingdom: any = await (await get("/kingdom.json")).json();
   const liveRetirementDiscoverySurface: readonly DiscoverySurface[] = [
     { label: "derived kingdom.json", text: JSON.stringify(liveKingdom), value: liveKingdom },
@@ -2825,6 +2945,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       !isDeepStrictEqual(liveKingdom?.being_access_aftermath_atlas_v0_2, expectedBeingAccessAftermathV02!)) {
     throw new Error("derived kingdom.json did not preserve Being, Access & Aftermath v0.2 discovery");
   }
+  if (numberIsnessTheologyActive &&
+      !isDeepStrictEqual(liveKingdom?.number_isness_theology_atlas, expectedNumberIsnessTheology!)) {
+    throw new Error("derived kingdom.json did not preserve Number, Isness & Theology discovery");
+  }
   if (!isDeepStrictEqual(liveKingdom?.world_commons?.mcp, manifest?.mcp)) {
     throw new Error("derived kingdom.json did not preserve the existing Commons MCP contract");
   }
@@ -2887,7 +3011,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath discovery · REVISE/non-promotion and exploration/MIRROR/cultural/form/being authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology discovery · REVISE/non-promotion and exploration/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

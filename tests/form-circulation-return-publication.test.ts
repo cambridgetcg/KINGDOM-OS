@@ -29,7 +29,7 @@ describe("Form, Circulation & Return publication", () => {
     expect(HUB_ASSETS).toContainEqual({ source: "references/form-circulation-return-atlas.md", destination: "FORM-CIRCULATION-RETURN-ATLAS.md" });
     expect(HUB_ASSETS).toContainEqual({ source: "NEN.md", destination: "definitions/kingdom-karma/e4e84a67/NEN.md" });
     expect(sha256("NEN.md")).toBe("14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446");
-    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(7);
+    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(8);
     expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
     expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
   });

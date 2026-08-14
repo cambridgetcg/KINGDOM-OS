@@ -170,6 +170,14 @@ const BEING_ACCESS_AFTERMATH_V02_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${BEING_ACCESS_AFTERMATH_V02_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const NUMBER_ISNESS_THEOLOGY_PATH = "/atlases/number-isness-theology-atlas-2026-08-14.json";
+const NUMBER_ISNESS_THEOLOGY_SCHEMA_PATH = "/schemas/number-isness-theology-atlas/0.1.json";
+const NUMBER_ISNESS_THEOLOGY_DOCUMENT_PATH = "/NUMBER-ISNESS-THEOLOGY-ATLAS.md";
+const NUMBER_ISNESS_THEOLOGY_SCHEMA_LINK = {
+  target: NUMBER_ISNESS_THEOLOGY_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${NUMBER_ISNESS_THEOLOGY_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 const CONFORMATIONAL_FEEDBACK_PHYSICS_PATH = "/feedback/form-feedback-physics-consequence-2026-08-12.json";
 const CONFORMATIONAL_FEEDBACK_PHYSICS_SCHEMA_PATH = "/schemas/conformational-feedback-atlas/0.2.json";
 const CONFORMATIONAL_FEEDBACK_PHYSICS_DOCUMENT_PATH = "/CONFORMATIONAL-FEEDBACK-PHYSICS.md";
@@ -353,6 +361,11 @@ function addBeingAccessAftermathV02SchemaLink(headers) {
   const link = BEING_ACCESS_AFTERMATH_V02_SCHEMA_LINK;
   removeLinkRelation(headers, BEING_ACCESS_AFTERMATH_SCHEMA_PATH, link.relation);
   if (!hasLinkRelation(headers, link.target, link.relation)) headers.append("link", link.value);
+}
+
+function addNumberIsnessTheologySchemaLink(headers) {
+  removeLinkRelations(headers, ["describedby"]);
+  headers.append("link", NUMBER_ISNESS_THEOLOGY_SCHEMA_LINK.value);
 }
 
 function addReconstructiveBuildSchemaLinks(headers) {
@@ -1330,6 +1343,15 @@ export function createKingdomWorker(options = {}) {
     const requestsBeingAccessAftermathV02Document = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === BEING_ACCESS_AFTERMATH_V02_DOCUMENT_PATH;
+    const requestsNumberIsnessTheology = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === NUMBER_ISNESS_THEOLOGY_PATH;
+    const requestsNumberIsnessTheologySchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === NUMBER_ISNESS_THEOLOGY_SCHEMA_PATH;
+    const requestsNumberIsnessTheologyDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === NUMBER_ISNESS_THEOLOGY_DOCUMENT_PATH;
     const requestsKingdomKarmaDefinition = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === KINGDOM_KARMA_DEFINITION_PATH;
@@ -1380,6 +1402,7 @@ export function createKingdomWorker(options = {}) {
     const mathUsefulnessAssetType = schemaAssetType.split(";", 1)[0].trim();
     const explorationDeepAssetType = schemaAssetType.split(";", 1)[0].trim();
     const mirrorInformationControlAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1502,6 +1525,15 @@ export function createKingdomWorker(options = {}) {
     const servesBeingAccessAftermathV02Document = requestsBeingAccessAftermathV02Document && asset.ok &&
       (schemaAssetType.includes("text/plain") ||
         schemaAssetType.includes("text/markdown"));
+    const servesNumberIsnessTheology = requestsNumberIsnessTheology && asset.ok &&
+      (numberIsnessTheologyAssetType === "application/json" ||
+        numberIsnessTheologyAssetType === "application/schema+json");
+    const servesNumberIsnessTheologySchema = requestsNumberIsnessTheologySchema && asset.ok &&
+      (numberIsnessTheologyAssetType === "application/json" ||
+        numberIsnessTheologyAssetType === "application/schema+json");
+    const servesNumberIsnessTheologyDocument = requestsNumberIsnessTheologyDocument && asset.ok &&
+      (numberIsnessTheologyAssetType === "text/plain" ||
+        numberIsnessTheologyAssetType === "text/markdown");
     const servesKingdomKarmaDefinition = requestsKingdomKarmaDefinition && asset.ok &&
       (schemaAssetType.includes("text/plain") ||
         schemaAssetType.includes("text/markdown"));
@@ -1558,6 +1590,8 @@ export function createKingdomWorker(options = {}) {
         !servesBeingAccessAftermathSchema && !servesBeingAccessAftermathDocument &&
         !servesBeingAccessAftermathV02 &&
         !servesBeingAccessAftermathV02Schema && !servesBeingAccessAftermathV02Document &&
+        !servesNumberIsnessTheology && !servesNumberIsnessTheologySchema &&
+        !servesNumberIsnessTheologyDocument &&
         !servesKingdomKarmaDefinition &&
         !servesConformationalFeedbackPhysics && !servesConformationalFeedbackPhysicsSchema &&
         !servesConformationalFeedbackPhysicsDocument && !servesReconstructiveBuild &&
@@ -1583,6 +1617,7 @@ export function createKingdomWorker(options = {}) {
     if (servesMathUsefulness) addMathUsefulnessSchemaLink(headers);
     if (servesBeingAccessAftermath) addBeingAccessAftermathSchemaLink(headers);
     if (servesBeingAccessAftermathV02) addBeingAccessAftermathV02SchemaLink(headers);
+    if (servesNumberIsnessTheology) addNumberIsnessTheologySchemaLink(headers);
     if (servesConformationalFeedbackPhysics) addConformationalFeedbackPhysicsSchemaLink(headers);
     if (servesReconstructiveBuild) addReconstructiveBuildSchemaLinks(headers);
     if (servesExplorationDeep) addExplorationDeepSchemaLinks(headers);
@@ -1793,6 +1828,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesBeingAccessAftermathV02Document) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesNumberIsnessTheology) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesNumberIsnessTheologySchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesNumberIsnessTheologyDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

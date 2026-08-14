@@ -269,7 +269,19 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     It adds a partially observable causal kernel, distinct accessibility
     predicates, typed force and power families, and affected-party-indexed
     vector aftermath without replacing v0.1 or creating a KARMA write.
-27. `kingdom reconstructive-build` — inspect and verify the source-bound
+27. `kingdom number-isness-theology` — inspect the immutable
+    [Number, Isness & Theology Atlas](references/number-isness-theology-atlas.md).
+    It keeps mathematical definition, theorem, convention, history, primary
+    tradition text, school-specific theology, metaphysical proposal, analogy,
+    and open question in separate registers. Natural, integer, rational, real,
+    and complex extensions are mathematical constructions rather than a
+    spiritual hierarchy; numeric zero is not semantically interchangeable with
+    metaphysical nothingness or nonbeing; symmetry does not prove design.
+    Compatibility is evaluated claim-by-claim and by
+    declared logic and mapping—never as a religion, culture, or person score.
+    The reader creates no proof or disproof of God, KARMA event, receipt,
+    authority, persuasion, governance effect, or automatic action.
+28. `kingdom reconstructive-build` — inspect and verify the source-bound
     [Reconstructive Build Kernel](references/reconstructive-build-kernel.md).
     It treats correspondence, candidate-whole ambiguity, geometric
     realizability, environment-conditioned transitions, catalytic barrier
@@ -305,7 +317,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     is the explanation itself: it has no input, scanner, credential checker,
     registry lookup, decoy, enforcement, person attribution, retaliation, or
     KARMA effect.
-28. `kingdom explore-deep` — inspect and verify the opt-in
+29. `kingdom explore-deep` — inspect and verify the opt-in
     [`$explore-phenomena-deep`](skills/explore-phenomena-deep/SKILL.md) Agent
     Skill and its inert DEEP WING contract. DEEP means Declare, Establish,
     Express, then Project and pressure-test: each exploration keeps domain-local
@@ -314,7 +326,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     Nen ability, solver, experiment runner, diagnosis, person/community score,
     KARMA event or receipt, authority grant, ecosystem call, or automatic
     action.
-29. `kingdom mirror-information-control` — inspect and verify the immutable,
+30. `kingdom mirror-information-control` — inspect and verify the immutable,
     public MIRROR information-control source law. It explains CROWN, COURT,
     and MIRROR; the Mark → Isolate → Restrict → Resolve → Observe → Respond
     cycle; and the rule that outside data may inform a proposal but cannot
@@ -477,6 +489,20 @@ with its own [closed schema](https://thekingdom.dev/schemas/being-access-afterma
 and [guide](https://thekingdom.dev/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md).
 The original record, schema, guide, CLI, discovery key, and routes remain
 unchanged; v0.2 has distinct immutable identities and no mutable alias.
+
+The Number, Isness & Theology Atlas is an independent immutable companion at
+[`/atlases/number-isness-theology-atlas-2026-08-14.json`](https://thekingdom.dev/atlases/number-isness-theology-atlas-2026-08-14.json),
+with a [closed Draft 2020-12 schema](https://thekingdom.dev/schemas/number-isness-theology-atlas/0.1.json)
+and [source-scoped guide](https://thekingdom.dev/NUMBER-ISNESS-THEOLOGY-ATLAS.md).
+It distinguishes the number tower, the roles of zero, group symmetry,
+logical negation, mathematical ontologies, bounded theological lenses, and
+claim-level compatibility tests without turning a formal model into a verdict
+about God or treating religions as atomic theories. Analogical resonance is
+not identity or doctrinal agreement. Numeric zero, the empty set, falsehood,
+undefinedness, unknown status, silence, and nonexistence remain distinct roles
+and concepts; a chosen set-theoretic encoding does not become metaphysical
+identity. The surface is read-only, has no mutable alias, imports no religious
+authority, and leaves KINGDOM KARMA receipts and Zerone recognition untouched.
 
 The Reconstructive Build Kernel is published from exact authored bytes at
 [`/atlases/reconstructive-build-kernel-2026-08-13.json`](https://thekingdom.dev/atlases/reconstructive-build-kernel-2026-08-13.json),

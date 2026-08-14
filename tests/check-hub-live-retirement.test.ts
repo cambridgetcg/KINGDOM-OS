@@ -20,7 +20,7 @@ const family = (id: string) => {
 describe("hub live-check publication retirement", () => {
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(15);
+    expect(PUBLICATION_FAMILIES).toHaveLength(16);
     expect([...publicationFamilyStates(staged).values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
     staged.delete(destinationForPublicPath(cultural.routes[1]!));
@@ -206,6 +206,44 @@ describe("hub live-check publication retirement", () => {
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(mirror, [surface]))
         .toThrow("MIRROR Information Control is retired");
+    }
+  });
+
+  test("retires the Number, Isness & Theology triplet and discovery atomically", () => {
+    const numberIsness = family("number-isness-theology");
+    expect(numberIsness.routes).toEqual([
+      "/atlases/number-isness-theology-atlas-2026-08-14.json",
+      "/schemas/number-isness-theology-atlas/0.1.json",
+      "/NUMBER-ISNESS-THEOLOGY-ATLAS.md",
+    ]);
+    expect(numberIsness.discoveryProperties).toEqual(["number_isness_theology_atlas"]);
+    expect(numberIsness.entryPointProperties).toEqual([
+      "number_isness_theology_atlas",
+      "number_isness_theology_atlas_schema",
+      "number_isness_theology_atlas_guide",
+    ]);
+
+    const partiallyStaged = stagedDestinations();
+    partiallyStaged.delete(destinationForPublicPath(numberIsness.routes[1]!));
+    expect(() => publicationFamilyStates(partiallyStaged))
+      .toThrow("Number, Isness & Theology is partially staged");
+
+    const retired = stagedDestinations();
+    for (const route of numberIsness.routes) retired.delete(destinationForPublicPath(route));
+    expect(publicationFamilyStates(retired).get(numberIsness.id)?.active).toBe(false);
+
+    const staleDiscovery = { number_isness_theology_atlas: { stale: true } };
+    const staleEntryPoints = {
+      entry_points: { number_isness_theology_atlas_schema: numberIsness.routes[1] },
+    };
+    for (const surface of [
+      { label: "authored Kingdom map", text: JSON.stringify(staleDiscovery), value: staleDiscovery },
+      { label: "agent manifest", text: JSON.stringify(staleEntryPoints), value: staleEntryPoints },
+      { label: "llms.txt", text: `https://thekingdom.dev${numberIsness.routes[0]}` },
+      { label: "hub HTML", text: `<a href='${numberIsness.routes[2]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(numberIsness, [surface]))
+        .toThrow("Number, Isness & Theology is retired");
     }
   });
 
