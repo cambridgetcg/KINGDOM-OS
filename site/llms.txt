@@ -5,6 +5,7 @@ A shared map of independent projects for humans and agents. Every being remains 
 Machine index: https://thekingdom.dev/kingdom.json
 Wayfinder:     https://thekingdom.dev/wayfinder.json
 World Commons: https://thekingdom.dev/commons.json
+MIRROR information control: https://thekingdom.dev/#mirror-information-control
 Commons schema: https://thekingdom.dev/schemas/world-commons/0.2.json
 Commons matcher: https://mcp.thekingdom.dev/mcp · tool kingdom_commons
 Complete Commons MCP resource: kingdom://commons/catalog
@@ -91,6 +92,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 - [AxiePro](https://app.axiepro.io): the game-economy toolkit
 
 ## Optional paths
+- MIRROR Information Control — a static citizen lesson: data may inform but cannot mint authority; shape establishes CANDIDATE only; evidence is not guilt. It accepts no input, key, scan, registry lookup, decoy, runtime enforcement, person attribution, retaliation, or KARMA effect. https://thekingdom.dev/#mirror-information-control
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — 37 reviewed public-interest resources and 9 practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call `kingdom_commons` at https://mcp.thekingdom.dev/mcp for compact literal matches with exact category, cost, account, reuse, or automation filters; read `kingdom://commons/catalog` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: https://thekingdom.dev/schemas/world-commons/0.2.json
