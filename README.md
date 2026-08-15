@@ -343,6 +343,17 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     receipt, authority, or action.
     Read `overview|domains|terms|claims|bridges|models|math|doors|unknowns|philosophy|karma|sources|discovery`,
     or run `verify --json`; no view performs a network request or write.
+31. `kingdom string-crawl-trace-sheet` — inspect and strictly verify
+    [STRING / CRAWL: The Trace-Sheet](references/string-crawl-trace-sheet.md),
+    an immutable, inert Phenomena DEEP project. Selected worldsheet, boundary,
+    observable, and history structures remain string mathematics; finite HTTP
+    and crawl traces remain web observations. Generic REP rules request how
+    compliant crawlers access URI paths;
+    some named product tokens may express bounded vendor-specific use
+    preferences. None authenticates identity or entitlement, grants consent or
+    a licence, proves purpose or actual indexing or training, or creates KARMA.
+    The reader runs no crawler and creates no NEN invocation, aftermath receipt,
+    authority, or action. Run `verify --json` for the strict offline checks.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -571,5 +582,24 @@ ranking, write, reward, governance change, publication, deployment, or
 automatic action; rest, silence, refusal, privacy, no action, and departure
 remain valid without reason or penalty. There is no mutable alias and the
 KINGDOM MCP remains unchanged.
+
+STRING / CRAWL: The Trace-Sheet is published from exact authored bytes at
+[`/atlases/string-crawl-trace-sheet-2026-08-15.json`](https://thekingdom.dev/atlases/string-crawl-trace-sheet-2026-08-15.json),
+reuses the closed
+[Phenomena DEEP Project schema](https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json),
+and has a versioned
+[human guide](https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET.md).
+It treats string-theory structures as source-bound, lossy mathematical lenses,
+not as crawler ontology or physics proof. Its crawler-facing boundary is
+explicit: generic REP rules request how compliant crawlers access URI paths,
+while some named product tokens may
+express bounded vendor-specific use preferences and may not be request
+user-agent strings. No directive authenticates identity or entitlement, grants
+consent or a licence, or proves actual indexing or training; per-resource rights
+govern. The static project fetches
+nothing, follows no link, stores no trace, identifies or scores no being, grants
+no permission, and creates no NEN invocation, KINGDOM aftermath receipt,
+external write, deployment, or automatic action. There is no mutable alias and
+the KINGDOM MCP remains unchanged.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

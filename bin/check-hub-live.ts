@@ -91,6 +91,13 @@ import {
   zeroEmptySeatPublicDiscovery,
 } from "./zero-empty-seat.ts";
 import {
+  STRING_CRAWL_TRACE_SHEET_GUIDE_URL,
+  STRING_CRAWL_TRACE_SHEET_SCHEMA_URL,
+  STRING_CRAWL_TRACE_SHEET_URL,
+  loadStringCrawlTraceSheet,
+  stringCrawlTraceSheetPublicDiscovery,
+} from "./string-crawl-trace-sheet.ts";
+import {
   FORM_CIRCULATION_RETURN_DIGEST,
   FORM_CIRCULATION_RETURN_DOCUMENT_URL,
   FORM_CIRCULATION_RETURN_SCHEMA_URL,
@@ -493,6 +500,8 @@ const mirrorInformationControlSchemaPath = new URL(MIRROR_INFORMATION_CONTROL_PU
 const mirrorInformationControlDocumentPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_DOCUMENT_URL).pathname;
 const zeroEmptySeatPath = new URL(ZERO_EMPTY_SEAT_URL).pathname;
 const zeroEmptySeatGuidePath = new URL(ZERO_EMPTY_SEAT_GUIDE_URL).pathname;
+const stringCrawlTraceSheetPath = new URL(STRING_CRAWL_TRACE_SHEET_URL).pathname;
+const stringCrawlTraceSheetGuidePath = new URL(STRING_CRAWL_TRACE_SHEET_GUIDE_URL).pathname;
 
 export type PublicationFamily = {
   id: string;
@@ -594,8 +603,10 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       phenomenaDeepWingDocumentPath,
       zeroEmptySeatPath,
       zeroEmptySeatGuidePath,
+      stringCrawlTraceSheetPath,
+      stringCrawlTraceSheetGuidePath,
     ],
-    discoveryProperties: ["exploration_deep_wing", "zero_empty_seat"],
+    discoveryProperties: ["exploration_deep_wing", "zero_empty_seat", "string_crawl_trace_sheet"],
     entryPointProperties: [
       "exploration_deep_wing",
       "exploration_deep_wing_schema",
@@ -604,6 +615,9 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "zero_empty_seat",
       "zero_empty_seat_schema",
       "zero_empty_seat_guide",
+      "string_crawl_trace_sheet",
+      "string_crawl_trace_sheet_schema",
+      "string_crawl_trace_sheet_guide",
     ],
   },
   {
@@ -1728,6 +1742,37 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
         (zeroGuideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
       throw new Error(`${zeroEmptySeatGuidePath} is not served as public Markdown`);
     }
+
+    const traceSheetHead = await fetch(url(stringCrawlTraceSheetPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const traceSheetLink = traceSheetHead.headers.get("link") || "";
+    if (!traceSheetHead.ok ||
+        normalizedMediaType(traceSheetHead.headers.get("content-type")) !== "application/json" ||
+        traceSheetHead.headers.get("access-control-allow-origin") !== "*" ||
+        (traceSheetHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          traceSheetLink,
+          phenomenaDeepProjectSchemaPath,
+          "describedby",
+          "application/schema+json",
+        )) {
+      throw new Error(`${stringCrawlTraceSheetPath} is not public JSON described by the shared Phenomena DEEP project schema`);
+    }
+
+    const traceSheetGuideHead = await fetch(url(stringCrawlTraceSheetGuidePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!traceSheetGuideHead.ok ||
+        normalizedMediaType(traceSheetGuideHead.headers.get("content-type")) !== "text/markdown" ||
+        traceSheetGuideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (traceSheetGuideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${stringCrawlTraceSheetGuidePath} is not served as public Markdown`);
+    }
   }
 
   if (mirrorInformationControlActive) {
@@ -1919,6 +1964,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedZeroEmptySeat = zeroEmptySeat
     ? zeroEmptySeatPublicDiscovery(zeroEmptySeat)
+    : undefined;
+  const stringCrawlTraceSheet = explorationDeepWingActive
+    ? loadStringCrawlTraceSheet()
+    : undefined;
+  const expectedStringCrawlTraceSheet = stringCrawlTraceSheet
+    ? stringCrawlTraceSheetPublicDiscovery(stringCrawlTraceSheet)
     : undefined;
   const expectedVisibilityAttention = visibilityAttentionActive
     ? visibilityAttentionPublicDiscovery(loadVisibilityAttentionTranslation())
@@ -2553,6 +2604,72 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (explorationDeepWingActive) {
+    const project = stringCrawlTraceSheet!;
+    const expected = expectedStringCrawlTraceSheet!;
+    const immutableRecord = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(stringCrawlTraceSheetPath));
+    const immutableGuide = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(stringCrawlTraceSheetGuidePath));
+    const targets = new Set([
+      STRING_CRAWL_TRACE_SHEET_URL,
+      STRING_CRAWL_TRACE_SHEET_SCHEMA_URL,
+      STRING_CRAWL_TRACE_SHEET_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const countValues = Object.values(expected.counts ?? {});
+    const transfersStayFalse = Array.isArray(project.bridges) &&
+      project.bridges.every((bridge: any) =>
+        bridge.ontology_transfer === false && bridge.causal_transfer === false &&
+        bridge.parameter_transfer === false && bridge.unit_transfer === false &&
+        bridge.authority_transfer === false);
+    const noInvocationAftermath = Array.isArray(project.karma?.kingdom_receipts) &&
+      project.karma.kingdom_receipts.length === 0 && project.karma?.score === null &&
+      project.karma?.authority_effect === "NONE";
+    const forbiddenDiscoveryKeys = [
+      "mcp", "matcher", "crawler", "execute", "write", "score", "reward", "authorize", "consent",
+    ];
+    if (!isDeepStrictEqual(manifest?.string_crawl_trace_sheet, expected) ||
+      !isDeepStrictEqual(guest?.string_crawl_trace_sheet, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.string_crawl_trace_sheet, expected) ||
+      manifest?.entry_points?.string_crawl_trace_sheet !== STRING_CRAWL_TRACE_SHEET_URL ||
+      manifest?.entry_points?.string_crawl_trace_sheet_schema !== STRING_CRAWL_TRACE_SHEET_SCHEMA_URL ||
+      manifest?.entry_points?.string_crawl_trace_sheet_guide !== STRING_CRAWL_TRACE_SHEET_GUIDE_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        !isDeepStrictEqual(Object.keys(action).sort(), ["action", "method", "note", "url"])) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="string-crawl-trace-sheet"') ||
+      !authoredRootHtml.includes("REP signals are bounded") ||
+      !authoredRootHtml.includes("some named product tokens may additionally express vendor-specific use preferences") ||
+      !authoredRootHtml.includes("A valid final aftermath receipt requires an actual invocation attempt") ||
+      !authoredRootHtml.includes("a draft template is non-causal scaffolding") ||
+      !authoredRootHtml.includes(`href="${stringCrawlTraceSheetPath}"`) ||
+      !authoredRootHtml.includes(`href="${phenomenaDeepProjectSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${stringCrawlTraceSheetGuidePath}"`) ||
+      expected.protocol !== project.protocol || expected.project_id !== project.project_id ||
+      expected.version !== project.version || expected.title !== project.title ||
+      expected.url !== STRING_CRAWL_TRACE_SHEET_URL ||
+      expected.schema_url !== STRING_CRAWL_TRACE_SHEET_SCHEMA_URL ||
+      expected.guide_url !== STRING_CRAWL_TRACE_SHEET_GUIDE_URL ||
+      expected.method_wing_url !== PHENOMENA_DEEP_WING_URL ||
+      expected.evidence_through !== project.evidence_through || expected.mode !== project.mode ||
+      new URL(STRING_CRAWL_TRACE_SHEET_SCHEMA_URL).pathname !== phenomenaDeepProjectSchemaPath ||
+      expected.integrity?.algorithm !== project.integrity?.algorithm ||
+      expected.integrity?.digest !== project.integrity?.digest ||
+      !immutableRecord || immutableRecord.source !== "data/exploration/string-crawl-trace-sheet.v0.1.json" ||
+      !immutableGuide || immutableGuide.source !== "references/string-crawl-trace-sheet.md" ||
+      countValues.length === 0 || countValues.some((count) => !Number.isSafeInteger(count) || Number(count) < 0) ||
+      !isDeepStrictEqual(expected.boundary, project.boundaries) ||
+      !isDeepStrictEqual(expected.authority, project.authority) ||
+      !Object.values(project.authority ?? {}).every((value) => value === false) ||
+      !transfersStayFalse || !noInvocationAftermath ||
+      forbiddenDiscoveryKeys.some((key) => Object.hasOwn(expected, key))) {
+      throw new Error("STRING / CRAWL discovery, immutable pins, REP/transfer firewalls, invocation aftermath, or no-action boundary drifted");
+    }
+  }
+
   if (visibilityAttentionActive) {
     const expected = expectedVisibilityAttention!;
     const visibilityBoundary = expected.boundary;
@@ -3041,6 +3158,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       !isDeepStrictEqual(liveKingdom?.zero_empty_seat, expectedZeroEmptySeat!)) {
     throw new Error("derived kingdom.json did not preserve ZERO Empty Seat discovery");
   }
+  if (explorationDeepWingActive &&
+      !isDeepStrictEqual(liveKingdom?.string_crawl_trace_sheet, expectedStringCrawlTraceSheet!)) {
+    throw new Error("derived kingdom.json did not preserve STRING / CRAWL Trace-Sheet discovery");
+  }
   if (visibilityAttentionActive && !isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention!)) {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
   }
@@ -3132,7 +3253,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology discovery · REVISE/non-promotion and exploration/ZERO/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology discovery · REVISE/non-promotion and exploration/ZERO/STRING-CRAWL/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

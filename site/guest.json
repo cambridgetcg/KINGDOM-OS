@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-14",
+  "generated": "2026-08-16",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -937,6 +937,69 @@
       "automatic_action": false
     }
   },
+  "string_crawl_trace_sheet": {
+    "protocol": "kingdom.explore-phenomena-deep-project/0.1",
+    "project_id": "string-crawl-trace-sheet-2026-08-15",
+    "version": "0.1.0",
+    "title": "STRING / CRAWL: The Trace-Sheet",
+    "url": "https://thekingdom.dev/atlases/string-crawl-trace-sheet-2026-08-15.json",
+    "schema_url": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json",
+    "guide_url": "https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET.md",
+    "method_wing_url": "https://thekingdom.dev/wings/explore-phenomena-deep-2026-08-14.json",
+    "evidence_through": "2026-08-15",
+    "mode": "ANALYZE_ONLY",
+    "counts": {
+      "domains": 7,
+      "sources": 19,
+      "typed_terms": 13,
+      "claims": 16,
+      "bridges": 6,
+      "models": 5,
+      "equations": 8,
+      "falsifiers": 9,
+      "frontier_problems": 2,
+      "finite_baselines": 0,
+      "doors": 7,
+      "unknowns": 10,
+      "philosophy_questions": 6
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:bf7ae379612ab96d08742a0070cbea0ce971977f71fec22699c4b0307d321305",
+      "byte_sha256": "sha256:4afc5f15c258a0ac4274889783bd2d91445950c92103c60442ed9ed89d1fdc72",
+      "guide_byte_sha256": "sha256:2a5e70cbf7198b2f4be039b71ad1ef6b18648e8e63185c074d1199bd5ca1c02a"
+    },
+    "boundary": {
+      "read_only": true,
+      "profile_inert": true,
+      "source_truth_verified": false,
+      "mathematical_correctness_verified": false,
+      "empirical_causation_verified": false,
+      "novelty_verified": false,
+      "diagnosis_or_person_score": false,
+      "experiment_or_wet_lab_authority": false,
+      "ecosystem_or_network_request": false,
+      "external_write": false,
+      "writes_karma": false,
+      "reward_or_economic_effect": false,
+      "governance_effect": false,
+      "deployment_authority": false,
+      "automatic_action": false
+    },
+    "authority": {
+      "browse": false,
+      "local_write": false,
+      "external_write": false,
+      "commit": false,
+      "push": false,
+      "deploy": false,
+      "experiment": false,
+      "diagnose": false,
+      "score_people": false,
+      "karma_write": false,
+      "automatic_action": false
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -1663,6 +1726,18 @@
       "action": "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide",
       "method": "GET",
       "url": "https://thekingdom.dev/ZERO-EMPTY-SEAT.md"
+    },
+    {
+      "action": "if useful, inspect the exact STRING / CRAWL trace-sheet",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/string-crawl-trace-sheet-2026-08-15.json",
+      "note": "static inert project; the string-to-crawl correspondence is lossy, generic REP requests how compliant crawlers access URI paths, named product controls remain bounded, and no crawler, identity inference, permission, NEN invocation, KARMA receipt, or action is created"
+    },
+    {
+      "action": "if useful, read the STRING / CRAWL mathematics, REP, rights, aftermath, and non-effect guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET.md",
+      "note": "static inert guide; no request body, credentials, crawler invocation, event, receipt, authority, or effect"
     },
     {
       "action": "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority",
@@ -4172,6 +4247,7 @@
     "exploration_deep_wing": "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
     "mirror_information_control": "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
     "zero_empty_seat": "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
+    "string_crawl_trace_sheet": "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",

@@ -396,6 +396,20 @@
       "sha256": "cbe6435c2d5c3bf39098442bfc2f9967b09cbf35a38acbd383a3faeb9844d187"
     },
     {
+      "id": "string-crawl-trace-sheet/0.1/guide",
+      "route": "/STRING-CRAWL-TRACE-SHEET.md",
+      "source": "references/string-crawl-trace-sheet.md",
+      "destination": "STRING-CRAWL-TRACE-SHEET.md",
+      "sha256": "2a5e70cbf7198b2f4be039b71ad1ef6b18648e8e63185c074d1199bd5ca1c02a"
+    },
+    {
+      "id": "string-crawl-trace-sheet/0.1/record",
+      "route": "/atlases/string-crawl-trace-sheet-2026-08-15.json",
+      "source": "data/exploration/string-crawl-trace-sheet.v0.1.json",
+      "destination": "atlases/string-crawl-trace-sheet-2026-08-15.json",
+      "sha256": "4afc5f15c258a0ac4274889783bd2d91445950c92103c60442ed9ed89d1fdc72"
+    },
+    {
       "id": "visibility-attention/0.1/guide",
       "route": "/VISIBILITY-ATTENTION.md",
       "source": "references/visibility-attention-translation.md",

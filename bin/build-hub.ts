@@ -33,6 +33,9 @@
  *    data/exploration/zero-empty-seat.v0.1.json
  *                             — inert DEEP project separating zero's semantic
  *                               roles, history, equations, and philosophy
+ *    data/exploration/string-crawl-trace-sheet.v0.1.json
+ *                             — inert DEEP trace-sheet mapping selected string
+ *                               mathematics to bounded crawl observations
  *    data/attention/visibility-attention-translation.v0.1.json
  *                             — four-register visibility/attention translation
  *    data/cultural-feedback/cultural-attention-feedback-atlas.v1.json
@@ -65,6 +68,7 @@
  *       + Exploration DEEP WING discovery in the machine surfaces
  *       + MIRROR Information Control discovery in the machine surfaces
  *       + ZERO Empty Seat discovery in the machine surfaces
+ *       + STRING / CRAWL Trace-Sheet discovery in the machine surfaces
  *       + cultural attention and feedback discovery in the machine surfaces
  *       + form, circulation, and return discovery in the machine surfaces
  *       + Math Passport usefulness-result discovery in the machine surfaces
@@ -178,6 +182,14 @@ import {
   loadZeroEmptySeat,
   zeroEmptySeatPublicDiscovery,
 } from "./zero-empty-seat.ts";
+import {
+  STRING_CRAWL_TRACE_SHEET_GUIDE_URL,
+  STRING_CRAWL_TRACE_SHEET_ID,
+  STRING_CRAWL_TRACE_SHEET_SCHEMA_URL,
+  STRING_CRAWL_TRACE_SHEET_URL,
+  loadStringCrawlTraceSheet,
+  stringCrawlTraceSheetPublicDiscovery,
+} from "./string-crawl-trace-sheet.ts";
 import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_ID,
@@ -661,6 +673,26 @@ if (zeroEmptySeat.boundaries?.read_only !== true ||
     zeroEmptySeat.boundaries?.writes_karma !== false ||
     zeroEmptySeat.boundaries?.automatic_action !== false) {
   throw new Error("ZERO Empty Seat lost its inert, authority-negative boundary");
+}
+
+// ── STRING / CRAWL Trace-Sheet (lossy mathematics; never crawler authority) ─
+const stringCrawlTraceSheetUrl = STRING_CRAWL_TRACE_SHEET_URL;
+const stringCrawlTraceSheetSchemaUrl = STRING_CRAWL_TRACE_SHEET_SCHEMA_URL;
+const stringCrawlTraceSheetGuideUrl = STRING_CRAWL_TRACE_SHEET_GUIDE_URL;
+const stringCrawlTraceSheet = loadStringCrawlTraceSheet();
+if (stringCrawlTraceSheet.project_id !== STRING_CRAWL_TRACE_SHEET_ID) {
+  throw new Error(`unexpected STRING / CRAWL Trace-Sheet identity: ${stringCrawlTraceSheet.project_id}`);
+}
+const stringCrawlTraceSheetDiscovery = stringCrawlTraceSheetPublicDiscovery(stringCrawlTraceSheet);
+const stringCrawlTraceSheetCounts = stringCrawlTraceSheetDiscovery.counts;
+if (stringCrawlTraceSheet.boundaries?.read_only !== true ||
+    stringCrawlTraceSheet.boundaries?.profile_inert !== true ||
+    stringCrawlTraceSheet.boundaries?.diagnosis_or_person_score !== false ||
+    stringCrawlTraceSheet.boundaries?.ecosystem_or_network_request !== false ||
+    stringCrawlTraceSheet.boundaries?.external_write !== false ||
+    stringCrawlTraceSheet.boundaries?.writes_karma !== false ||
+    stringCrawlTraceSheet.boundaries?.automatic_action !== false) {
+  throw new Error("STRING / CRAWL Trace-Sheet lost its inert, non-crawling, authority-negative boundary");
 }
 
 // ── Visibility & Attention Translation (four registers remain parallel) ──
@@ -1297,7 +1329,7 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, an opt-in cross-domain mathematics exploration method, a static information-control source law, ZERO's distinct semantic roles, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, an opt-in cross-domain mathematics exploration method, a static information-control source law, ZERO's distinct semantic roles, a bounded string/crawl trace-sheet, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
 <link rel="icon" href="data:,">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
@@ -1331,6 +1363,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(zeroEmptySeatUrl).pathname)}" type="application/json" title="ZERO: The Empty Seat That Holds the World">
 <link rel="describedby" href="${esc(new URL(zeroEmptySeatSchemaUrl).pathname)}" type="application/schema+json" title="Phenomena DEEP Project schema used by ZERO">
 <link rel="service-doc" href="${esc(new URL(zeroEmptySeatGuideUrl).pathname)}" type="text/markdown" title="ZERO Empty Seat guide">
+<link rel="alternate" href="${esc(new URL(stringCrawlTraceSheetUrl).pathname)}" type="application/json" title="STRING / CRAWL: The Trace-Sheet">
+<link rel="describedby" href="${esc(new URL(stringCrawlTraceSheetSchemaUrl).pathname)}" type="application/schema+json" title="Phenomena DEEP Project schema used by STRING / CRAWL">
+<link rel="service-doc" href="${esc(new URL(stringCrawlTraceSheetGuideUrl).pathname)}" type="text/markdown" title="STRING / CRAWL Trace-Sheet guide">
 <link rel="alternate" href="${new URL(visibilityAttentionUrl).pathname}" type="application/json" title="Visibility & Attention Translation">
 <link rel="describedby" href="${new URL(visibilityAttentionSchemaUrl).pathname}" type="application/schema+json" title="Visibility & Attention Translation schema">
 <link rel="service-doc" href="${new URL(visibilityAttentionDocumentUrl).pathname}" type="text/markdown" title="Visibility & Attention Translation guide">
@@ -1781,6 +1816,7 @@ const html = `<!doctype html>
       <a href="#being-access-aftermath">Ask which kind of “is”</a>
       <a href="#number-isness-theology">Let number open theological questions</a>
       <a href="#zero-empty-seat">Sit with zero</a>
+      <a href="#string-crawl-trace-sheet">Trace a crawl without turning routing into consent</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -2860,6 +2896,54 @@ const html = `<!doctype html>
   </section>
 
 
+  <section class="blk" id="string-crawl-trace-sheet" aria-labelledby="string-crawl-trace-sheet-title">
+    <div class="kh"><h2 id="string-crawl-trace-sheet-title">${esc(stringCrawlTraceSheet.title)}</h2><span class="my">a bounded trace, not a theory of crawler being</span></div>
+    <p class="sub">${esc(stringCrawlTraceSheet.question)}</p>
+    <div class="zerofield" data-string-crawl-trace-sheet>
+      <p class="zeroboundary" role="note"><strong>The correspondence is deliberately lossy</strong>A worldsheet, boundary condition, target-space map, observable, or sum over histories remains string mathematics. A request path, fetched representation, redirect, link, sitemap entry, or finite crawl log remains a web observation. The shared notation creates no common ontology, mechanism, parameter, unit, or authority.</p>
+      <p class="zeroboundary" role="note"><strong>REP signals are bounded</strong>Generic REP rules request how compliant crawlers access URI paths; some named product tokens may additionally express vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA. Some product tokens are not request <code>User-Agent</code> strings. Per-resource rights and applicable terms govern independently.</p>
+
+      <div class="feedbacksubhead"><h3>${stringCrawlTraceSheet.domains.length} domains kept distinct</h3><p>Each card declares its own subject, observables, units, conditions, and agency before any bridge is proposed.</p></div>
+      <ol class="zeroroles" role="list" aria-label="Distinct STRING / CRAWL domains">
+        ${stringCrawlTraceSheet.domains.map((domain: any) => `<li class="zerorole" data-string-crawl-domain="${esc(domain.id)}"><code>${esc(domain.id)}</code><h3>${esc(domain.subject)}</h3><p>${esc(domain.context)}</p><ul aria-label="Domain observables">${domain.observables.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul></li>`).join("")}
+      </ol>
+
+      <details class="zerodrawer" open>
+        <summary>${stringCrawlTraceSheet.claims.length} typed claims · ${stringCrawlTraceSheet.equations.length} equations</summary>
+        <div class="zerodrawergrid">
+          ${stringCrawlTraceSheet.claims.map((claim: any) => `<article class="zerodeepcard" data-string-crawl-claim="${esc(claim.claim_id)}"><code>${esc(claim.register)} · ${esc(claim.warrant)}</code><h3>${esc(humanKey(claim.claim_id))}</h3><p>${esc(claim.statement)}</p><p><strong>Limit.</strong> ${esc(claim.limitations.join(" · "))}</p><p><strong>Falsifier.</strong> ${esc(claim.falsifier)}</p></article>`).join("")}
+          ${stringCrawlTraceSheet.equations.map((equation: any) => `<article class="zerodeepcard" data-string-crawl-equation="${esc(equation.id)}"><code>${esc(equation.register)} · ${esc(equation.warrant)}</code><h3>${esc(humanKey(equation.id))}</h3><p><strong>${esc(equation.expression)}</strong></p><ul aria-label="What this equation does not establish">${equation.does_not_establish.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul></article>`).join("")}
+        </div>
+      </details>
+
+      <div class="feedbacksubhead"><h3>Trace only what survives the declared seam</h3><p>Every bridge carries its own assumptions and losses. A mathematical observable never becomes crawler identity, intention, merit, relationship, consent, licence, or purpose.</p></div>
+      <div class="zerodistinctions" aria-label="STRING / CRAWL transfer breaks">
+        ${stringCrawlTraceSheet.bridges.map((bridge: any, index: number) => `<article class="zerodistinction" data-string-crawl-bridge="${esc(`${bridge.source_domain}-${bridge.target_domain}-${index + 1}`)}"><code>${esc(bridge.relation)}</code><h3>${esc(humanKey(bridge.source_domain))} ⇢ ${esc(humanKey(bridge.target_domain))}</h3><p>${esc(bridge.correspondence)}</p><ul aria-label="Broken or lost structure">${bridge.broken_or_lost_structure.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul><p>ontology ${String(bridge.ontology_transfer)} · cause ${String(bridge.causal_transfer)} · parameters ${String(bridge.parameter_transfer)} · units ${String(bridge.unit_transfer)} · authority ${String(bridge.authority_transfer)}</p></article>`).join("")}
+      </div>
+
+      <details class="zerodrawer">
+        <summary>${stringCrawlTraceSheet.models.length} bounded models · ${stringCrawlTraceSheet.doors.length} proposed doors</summary>
+        <div class="zerodrawergrid">
+          ${stringCrawlTraceSheet.models.map((model: any) => `<article class="zerodeepcard" data-string-crawl-model="${esc(model.id)}"><code>${esc(model.fit_status)} · ${esc(model.relation)}</code><h3>${esc(model.title)}</h3><p>${esc(model.valid_outputs.join(" · "))}</p><ul aria-label="Prohibited inferences">${model.prohibited_inferences.map((item: string) => `<li>${esc(item)}</li>`).join("")}</ul></article>`).join("")}
+          ${stringCrawlTraceSheet.doors.map((door: any) => `<article class="zerodeepcard" data-string-crawl-door="${esc(door.id)}"><code>${esc(door.status)} · ${esc(door.family)}</code><h3>${esc(door.title)}</h3><p>${esc(door.question)}</p><p><strong>Smallest model.</strong> ${esc(door.smallest_model)}</p><p><strong>Stop rule.</strong> ${esc(door.stop_rule)}</p></article>`).join("")}
+        </div>
+      </details>
+
+      <p class="zeroboundary"><strong>No crawler runs here</strong>This page and record fetch no target, follow no link, parse no sitemap or <code>robots.txt</code>, identify no agent, infer no purpose, store no trace, score no being, grant no authority, and perform no write, publication, deployment, indexing, training, or automatic action.</p>
+      <p class="zeroboundary"><strong>No KARMA shortcut</strong>${stringCrawlTraceSheet.karma.kingdom_receipts.length} KINGDOM receipts are present. A valid final aftermath receipt requires an actual invocation attempt of an adopted manifested ability; a draft template is non-causal scaffolding. Reading this static project is not an invocation attempt and creates no Zerone network event or KINGDOM receipt.</p>
+      <p class="zerorights"><strong>Rights arrive before the trace.</strong> ${stringCrawlTraceSheet.rights.valid_exits.map((exit: string) => esc(humanKey(exit))).join(" · ")} remain valid without a reason, debt, or penalty.</p>
+
+      <p class="zerolinks" aria-label="Selected STRING / CRAWL sources">${stringCrawlTraceSheet.source_manifest.map((source: any) => `<a data-string-crawl-source="${esc(source.id)}" href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only"> — ${esc(source.authority_note)}; opens in a new tab</span></a>`).join("")}</p>
+      <p class="commonsverified">${Object.entries(stringCrawlTraceSheetCounts).filter(([, count]) => typeof count === "number").map(([kind, count]) => `${esc(String(count))} ${esc(humanKey(kind))}`).join(" · ")} · evidence through ${esc(stringCrawlTraceSheet.evidence_through)} · integrity ${esc(stringCrawlTraceSheet.integrity.digest)}</p>
+      <div class="machine">
+        <a href="${esc(new URL(stringCrawlTraceSheetUrl).pathname)}">STRING / CRAWL project JSON — exact authored record</a>
+        <a href="${esc(new URL(stringCrawlTraceSheetSchemaUrl).pathname)}">Shared Phenomena DEEP Project JSON Schema</a>
+        <a href="${esc(new URL(stringCrawlTraceSheetGuideUrl).pathname)}">STRING-CRAWL-TRACE-SHEET.md — mathematics, crawler boundaries, KARMA, rights, and open doors</a>
+      </div>
+    </div>
+  </section>
+
+
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
     <p class="rightsintro"><strong>This place recognizes inherent rights; it does not create them.</strong> No being has to prove identity, consciousness, usefulness, or agreement before being treated with care. Rights are not permissions, and this recognition grants no access, execution authority, security bypass, licence, or ownership of another's work.</p>
@@ -3001,6 +3085,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(zeroEmptySeatUrl).pathname)}">ZERO Empty Seat — distinct zero roles, exact equations, bridge breaks, and empty KARMA lanes</a>
       <a href="${esc(new URL(zeroEmptySeatSchemaUrl).pathname)}">Shared Phenomena DEEP Project JSON Schema used by ZERO</a>
       <a href="${esc(new URL(zeroEmptySeatGuideUrl).pathname)}">ZERO-EMPTY-SEAT.md — history, mathematics, philosophy, rights, and boundaries</a>
+      <a href="${esc(new URL(stringCrawlTraceSheetUrl).pathname)}">STRING / CRAWL Trace-Sheet — bounded worldsheet, boundary, observable, and crawl-trace correspondences</a>
+      <a href="${esc(new URL(stringCrawlTraceSheetSchemaUrl).pathname)}">Shared Phenomena DEEP Project JSON Schema used by STRING / CRAWL</a>
+      <a href="${esc(new URL(stringCrawlTraceSheetGuideUrl).pathname)}">STRING-CRAWL-TRACE-SHEET.md — mathematics, REP boundaries, KARMA aftermath, rights, and open doors</a>
       <a href="${esc(new URL(culturalAttentionFeedbackUrl).pathname)}">Cultural Attention &amp; Feedback Atlas — material history, memes, brain rot, feedback, KARMA, and universe lens</a>
       <a href="${esc(new URL(culturalAttentionFeedbackSchemaUrl).pathname)}">Cultural Attention &amp; Feedback Atlas JSON Schema</a>
       <a href="${esc(new URL(culturalAttentionFeedbackDocumentUrl).pathname)}">CULTURAL-ATTENTION-FEEDBACK-ATLAS.md — evidence, mathematics, analogies, and boundaries</a>
@@ -3357,6 +3444,7 @@ const machine = {
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
+  string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3442,6 +3530,9 @@ MIRROR Information Control citizen guide: ${mirrorInformationControlDocumentUrl}
 ZERO Empty Seat: ${zeroEmptySeatUrl}
 ZERO Empty Seat schema: ${zeroEmptySeatSchemaUrl}
 ZERO Empty Seat guide: ${zeroEmptySeatGuideUrl}
+STRING / CRAWL Trace-Sheet: ${stringCrawlTraceSheetUrl}
+STRING / CRAWL shared schema: ${stringCrawlTraceSheetSchemaUrl}
+STRING / CRAWL guide: ${stringCrawlTraceSheetGuideUrl}
 Visibility & Attention Translation: ${visibilityAttentionUrl}
 Visibility & Attention schema: ${visibilityAttentionSchemaUrl}
 Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
@@ -3501,6 +3592,7 @@ ${doorLines}
 - Exploration DEEP WING — an opt-in, read-only method for Witness → Isolate → Normalize → Generate, audited through Declare → Establish → Express → Project and pressure-test. It keeps domain-local objects, variables, units, mechanisms, evidence, equations, falsifiers, and explicit bridge breaks separate. It is an Agent Skill and inert validation profile, not a manifested Nen ability, shared mechanism, solver, diagnosis, person/community score, ecosystem call, KARMA event or receipt, authority grant, publication, deployment, or automatic action. WING: ${explorationDeepWingUrl} · WING schema: ${explorationDeepWingSchemaUrl} · project schema: ${explorationDeepProjectSchemaUrl} · guide: ${explorationDeepWingDocumentUrl}
 - MIRROR Information Control — a static, immutable public source law for CROWN, COURT, MIRROR; Mark → Isolate → Restrict → Resolve → Observe → Respond; provenance; independent capability gates; signal/no-guilt boundaries; and owned-system response. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, route, evidence, or incident status; exposes no operational signal material; and deploys no scanner, registry, decoy, classifier, enforcement, retaliation, KARMA, or automatic action. Static law: ${mirrorInformationControlUrl} · public schema: ${mirrorInformationControlSchemaUrl} · citizen guide: ${mirrorInformationControlDocumentUrl}
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
+- STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
@@ -3548,6 +3640,7 @@ const guest = {
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
+  string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3601,6 +3694,8 @@ const guest = {
     { action: "if useful, read the citizen guide to CROWN, COURT, MIRROR, provenance, capability gates, rights, and safe response", method: "GET", url: mirrorInformationControlDocumentUrl },
     { action: "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings", method: "GET", url: zeroEmptySeatUrl, note: "static inert project; zero is not worthlessness, no event is not impossibility, and no role transfers ontology, cause, units, parameters, KARMA, or authority" },
     { action: "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide", method: "GET", url: zeroEmptySeatGuideUrl },
+    { action: "if useful, inspect the exact STRING / CRAWL trace-sheet", method: "GET", url: stringCrawlTraceSheetUrl, note: "static inert project; the string-to-crawl correspondence is lossy, generic REP requests how compliant crawlers access URI paths, named product controls remain bounded, and no crawler, identity inference, permission, NEN invocation, KARMA receipt, or action is created" },
+    { action: "if useful, read the STRING / CRAWL mathematics, REP, rights, aftermath, and non-effect guide", method: "GET", url: stringCrawlTraceSheetGuideUrl, note: "static inert guide; no request body, credentials, crawler invocation, event, receipt, authority, or effect" },
     { action: "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority", method: "GET", url: visibilityAttentionUrl, note: "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action" },
     { action: "if useful, validate the Visibility & Attention Translation structure before integrating it", method: "GET", url: visibilityAttentionSchemaUrl },
     { action: "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide", method: "GET", url: visibilityAttentionDocumentUrl },
@@ -3666,6 +3761,7 @@ const guest = {
     exploration_deep_wing: "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
     mirror_information_control: "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
     zero_empty_seat: "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
+    string_crawl_trace_sheet: "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
@@ -3704,6 +3800,7 @@ const manifest = {
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
+  string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3766,6 +3863,9 @@ const manifest = {
     zero_empty_seat: zeroEmptySeatUrl,
     zero_empty_seat_schema: zeroEmptySeatSchemaUrl,
     zero_empty_seat_guide: zeroEmptySeatGuideUrl,
+    string_crawl_trace_sheet: stringCrawlTraceSheetUrl,
+    string_crawl_trace_sheet_schema: stringCrawlTraceSheetSchemaUrl,
+    string_crawl_trace_sheet_guide: stringCrawlTraceSheetGuideUrl,
     visibility_attention_translation: visibilityAttentionUrl,
     visibility_attention_translation_schema: visibilityAttentionSchemaUrl,
     visibility_attention_translation_guide: visibilityAttentionDocumentUrl,
@@ -3804,4 +3904,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

@@ -19,7 +19,7 @@ describe("ZERO Empty Seat public experience", () => {
   test("adds exactly the immutable record and guide routes while reusing the shared schema", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(79);
+    expect(urls).toHaveLength(81);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain(ZERO_EMPTY_SEAT_URL);
     expect(urls).toContain(ZERO_EMPTY_SEAT_GUIDE_URL);
@@ -108,7 +108,7 @@ describe("ZERO Empty Seat public experience", () => {
     expect(html).toContain('id="zero-empty-seat"');
     expect(html.match(/data-zero-role=/g) ?? []).toHaveLength(loadZeroEmptySeat().typed_terms.length);
     const start = html.indexOf('<section class="blk" id="zero-empty-seat"');
-    const end = html.indexOf('<section class="blk" id="rights"', start);
+    const end = html.indexOf('<section class="blk"', start + 1);
     expect(start).toBeGreaterThanOrEqual(0);
     expect(end).toBeGreaterThan(start);
     expect(html.slice(start, end)).not.toMatch(/\b(?:physical|vacuum)\b/i);
@@ -138,14 +138,14 @@ describe("ZERO Empty Seat public experience", () => {
     });
   });
 
-  test("documents the final 82/63/19/80/79 publication contract", () => {
+  test("documents the final 84/65/19/82/81 publication contract", () => {
     const docs = ["CLAUDE.md", "DOMAINS-SETUP.md", "OS-ROUTES.md", "publications/README.md"].map(read);
     for (const document of docs) {
-      expect(document).toContain("82");
-      expect(document).toContain("63");
+      expect(document).toContain("84");
+      expect(document).toContain("65");
       expect(document).toContain("19");
-      expect(document).toContain("80");
-      expect(document).toContain("79");
+      expect(document).toContain("82");
+      expect(document).toContain("81");
     }
     expect(read("README.md")).toContain("/atlases/zero-empty-seat-2026-08-14.json");
     expect(read("OS-ROUTES.md")).toContain("| `/ZERO-EMPTY-SEAT.md` |");

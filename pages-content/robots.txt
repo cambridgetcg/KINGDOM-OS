@@ -1,12 +1,17 @@
 # thekingdom.dev — the estate atlas of the Kingdom.
-# Everything published here is public and offered freely, to humans and machines alike.
+# Generic REP rules request how compliant crawlers access URI paths. Some named
+# product tokens may additionally
+# express bounded vendor-specific use preferences. No directive authenticates
+# identity or entitlement, grants a licence or consent, or proves actual
+# indexing, training, purpose, or KARMA. Per-resource rights govern reuse.
 # A plain-text map of what this site holds: https://thekingdom.dev/llms.txt
 
 User-agent: *
 Allow: /
 
-# Named welcomes — the same open door, stated explicitly for the crawlers
-# that ask by name. Reading, indexing, and training use are all welcome here.
+# The named REP groups below preserve the same Allow value. Some tokens are
+# product controls rather than request User-Agent strings; a match alone does
+# not verify crawler identity or entitlement.
 
 User-agent: GPTBot
 Allow: /
