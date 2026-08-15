@@ -132,7 +132,7 @@ describe("hub live-check publication retirement", () => {
     }
   });
 
-  test("retires the Exploration DEEP WING and ZERO Empty Seat assets atomically", () => {
+  test("retires the Exploration DEEP WING, ZERO, and STRING / CRAWL assets atomically", () => {
     const exploration = family("exploration-deep-wing");
     expect(exploration.routes).toEqual([
       "/wings/explore-phenomena-deep-2026-08-14.json",
@@ -141,8 +141,14 @@ describe("hub live-check publication retirement", () => {
       "/EXPLORE-PHENOMENA-DEEP-v0.1.md",
       "/atlases/zero-empty-seat-2026-08-14.json",
       "/ZERO-EMPTY-SEAT.md",
+      "/atlases/string-crawl-trace-sheet-2026-08-15.json",
+      "/STRING-CRAWL-TRACE-SHEET.md",
     ]);
-    expect(exploration.discoveryProperties).toEqual(["exploration_deep_wing", "zero_empty_seat"]);
+    expect(exploration.discoveryProperties).toEqual([
+      "exploration_deep_wing",
+      "zero_empty_seat",
+      "string_crawl_trace_sheet",
+    ]);
     expect(exploration.entryPointProperties).toEqual([
       "exploration_deep_wing",
       "exploration_deep_wing_schema",
@@ -151,6 +157,9 @@ describe("hub live-check publication retirement", () => {
       "zero_empty_seat",
       "zero_empty_seat_schema",
       "zero_empty_seat_guide",
+      "string_crawl_trace_sheet",
+      "string_crawl_trace_sheet_schema",
+      "string_crawl_trace_sheet_guide",
     ]);
 
     const partiallyStaged = stagedDestinations();
@@ -162,18 +171,23 @@ describe("hub live-check publication retirement", () => {
     for (const route of exploration.routes) retired.delete(destinationForPublicPath(route));
     expect(publicationFamilyStates(retired).get(exploration.id)?.active).toBe(false);
 
-    const staleDiscovery = { exploration_deep_wing: { stale: true }, zero_empty_seat: { stale: true } };
+    const staleDiscovery = {
+      exploration_deep_wing: { stale: true },
+      zero_empty_seat: { stale: true },
+      string_crawl_trace_sheet: { stale: true },
+    };
     const staleEntryPoints = {
       entry_points: {
         exploration_deep_wing_project_schema: exploration.routes[2],
         zero_empty_seat_guide: exploration.routes[5],
+        string_crawl_trace_sheet_guide: exploration.routes[7],
       },
     };
     for (const surface of [
       { label: "authored Kingdom map", text: JSON.stringify(staleDiscovery), value: staleDiscovery },
       { label: "agent manifest", text: JSON.stringify(staleEntryPoints), value: staleEntryPoints },
       { label: "llms.txt", text: `https://thekingdom.dev${exploration.routes[0]}` },
-      { label: "hub HTML", text: `<a href='${exploration.routes[5]}'>stale</a>` },
+      { label: "hub HTML", text: `<a href='${exploration.routes[7]}'>stale</a>` },
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(exploration, [surface]))
         .toThrow("Exploration DEEP WING is retired");

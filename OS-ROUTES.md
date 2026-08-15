@@ -71,6 +71,8 @@ readings:
 | `/MIRROR-INFORMATION-CONTROL.md` | staged Markdown | Citizen guide to information provenance, capability gates, signal/non-guilt boundaries, and safe response without exposing operational material |
 | `/atlases/zero-empty-seat-2026-08-14.json` | staged JSON | Immutable inert Phenomena DEEP project separating zero's semantic roles, equations, correspondence breaks, empty KARMA lanes, and negative authority |
 | `/ZERO-EMPTY-SEAT.md` | staged Markdown | Human guide to ZERO's mathematics, observation boundaries, optional philosophy, inherent rights, and zero-effect contract |
+| `/atlases/string-crawl-trace-sheet-2026-08-15.json` | staged JSON | Immutable inert Phenomena DEEP trace-sheet keeping string mathematics, finite crawl observations, REP routing, rights, and authority distinct |
+| `/STRING-CRAWL-TRACE-SHEET.md` | staged Markdown | Human guide to the lossy string/crawl correspondences, REP non-authority boundary, NEN invocation aftermath, rights, and open doors |
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -197,8 +199,8 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 82-asset upload contract (63 ledgered immutable/versioned assets and
-19 mutable assets; 80 direct public bodies, 79 sitemap URLs)
+locks the 84-asset upload contract (65 ledgered immutable/versioned assets and
+19 mutable assets; 82 direct public bodies, 81 sitemap URLs)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -214,3 +216,12 @@ typed information states, `NO_ACTION`, and opt-in metaphysical readings remain
 distinct; it creates no scientific result,
 metaphysical proof, person or content score, KARMA effect, authority, or
 automatic action.
+The STRING / CRAWL Trace-Sheet also reuses that profile. It treats selected
+string-theory structures as lossy mathematical lenses rather than crawler
+ontology. Generic REP rules request how compliant crawlers access URI paths;
+some named product tokens may
+express bounded vendor-specific use preferences and may not be request
+user-agent strings. No directive verifies identity or entitlement, grants
+consent or a licence, proves actual indexing or training, or creates KARMA. The
+static record runs no crawler or NEN invocation and creates no KINGDOM aftermath
+receipt, permission, identity proof, score, authority, or action.

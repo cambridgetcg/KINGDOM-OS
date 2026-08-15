@@ -71,6 +71,8 @@
     { "source": "references/mirror-information-control-public.md", "destination": "MIRROR-INFORMATION-CONTROL.md" },
     { "source": "data/exploration/zero-empty-seat.v0.1.json", "destination": "atlases/zero-empty-seat-2026-08-14.json" },
     { "source": "references/zero-empty-seat.md", "destination": "ZERO-EMPTY-SEAT.md" },
+    { "source": "data/exploration/string-crawl-trace-sheet.v0.1.json", "destination": "atlases/string-crawl-trace-sheet-2026-08-15.json" },
+    { "source": "references/string-crawl-trace-sheet.md", "destination": "STRING-CRAWL-TRACE-SHEET.md" },
     { "source": "site/llms.txt", "destination": "llms.txt" },
     { "source": "site/guest.json", "destination": "guest.json" },
     { "source": "site/ollama.json", "destination": "ollama.json" },
