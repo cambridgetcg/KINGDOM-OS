@@ -91,6 +91,8 @@ import {
   zeroEmptySeatPublicDiscovery,
 } from "./zero-empty-seat.ts";
 import {
+  STRING_CRAWL_TRACE_SHEET_BYTE_SHA256,
+  STRING_CRAWL_TRACE_SHEET_DIGEST,
   STRING_CRAWL_TRACE_SHEET_GUIDE_URL,
   STRING_CRAWL_TRACE_SHEET_SCHEMA_URL,
   STRING_CRAWL_TRACE_SHEET_URL,
@@ -115,6 +117,23 @@ import {
   runStringCrawlTraceSheetLabFalsifiers,
   stringCrawlTraceSheetLabPublicDiscovery,
 } from "./string-crawl-trace-sheet-lab.ts";
+import {
+  STRING_CRAWL_STRAND_LAB_BYTE_SHA256,
+  STRING_CRAWL_STRAND_LAB_DIGEST,
+  STRING_CRAWL_STRAND_LAB_GUIDE_BYTE_SHA256,
+  STRING_CRAWL_STRAND_LAB_GUIDE_LOCATOR,
+  STRING_CRAWL_STRAND_LAB_GUIDE_URL,
+  STRING_CRAWL_STRAND_LAB_ID,
+  STRING_CRAWL_STRAND_LAB_LOCATOR,
+  STRING_CRAWL_STRAND_LAB_PROTOCOL,
+  STRING_CRAWL_STRAND_LAB_SCHEMA_BYTE_SHA256,
+  STRING_CRAWL_STRAND_LAB_SCHEMA_LOCATOR,
+  STRING_CRAWL_STRAND_LAB_SCHEMA_URL,
+  STRING_CRAWL_STRAND_LAB_URL,
+  evaluateStringCrawlStrandLab,
+  loadStringCrawlStrandLab,
+  stringCrawlStrandLabPublicDiscovery,
+} from "./string-crawl-strand-lab.ts";
 import {
   FORM_CIRCULATION_RETURN_DIGEST,
   FORM_CIRCULATION_RETURN_DOCUMENT_URL,
@@ -523,6 +542,9 @@ const stringCrawlTraceSheetGuidePath = new URL(STRING_CRAWL_TRACE_SHEET_GUIDE_UR
 const stringCrawlTraceSheetLabPath = new URL(STRING_CRAWL_TRACE_SHEET_LAB_URL).pathname;
 const stringCrawlTraceSheetLabSchemaPath = new URL(STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL).pathname;
 const stringCrawlTraceSheetLabGuidePath = new URL(STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL).pathname;
+const stringCrawlStrandLabPath = new URL(STRING_CRAWL_STRAND_LAB_URL).pathname;
+const stringCrawlStrandLabSchemaPath = new URL(STRING_CRAWL_STRAND_LAB_SCHEMA_URL).pathname;
+const stringCrawlStrandLabGuidePath = new URL(STRING_CRAWL_STRAND_LAB_GUIDE_URL).pathname;
 
 export type PublicationFamily = {
   id: string;
@@ -643,17 +665,23 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
   },
   {
     id: "string-crawl-trace-sheet-lab",
-    label: "STRING / CRAWL Finite Trace-Sheet Lab",
+    label: "STRING / CRAWL STRAND Labs 01–02",
     routes: [
       stringCrawlTraceSheetLabPath,
       stringCrawlTraceSheetLabSchemaPath,
       stringCrawlTraceSheetLabGuidePath,
+      stringCrawlStrandLabPath,
+      stringCrawlStrandLabSchemaPath,
+      stringCrawlStrandLabGuidePath,
     ],
-    discoveryProperties: ["string_crawl_trace_sheet_lab"],
+    discoveryProperties: ["string_crawl_trace_sheet_lab", "string_crawl_strand_lab"],
     entryPointProperties: [
       "string_crawl_trace_sheet_lab",
       "string_crawl_trace_sheet_lab_schema",
       "string_crawl_trace_sheet_lab_guide",
+      "string_crawl_strand_lab",
+      "string_crawl_strand_lab_schema",
+      "string_crawl_strand_lab_guide",
     ],
   },
   {
@@ -1843,6 +1871,37 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
         (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
       throw new Error(`${stringCrawlTraceSheetLabGuidePath} is not served as public Markdown`);
     }
+
+    const strandRecordHead = await fetch(url(stringCrawlStrandLabPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const strandRecordLink = strandRecordHead.headers.get("link") || "";
+    if (!strandRecordHead.ok ||
+        normalizedMediaType(strandRecordHead.headers.get("content-type")) !== "application/json" ||
+        strandRecordHead.headers.get("access-control-allow-origin") !== "*" ||
+        (strandRecordHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          strandRecordLink,
+          stringCrawlStrandLabSchemaPath,
+          "describedby",
+          "application/schema+json",
+        )) {
+      throw new Error(`${stringCrawlStrandLabPath} is not public JSON with one canonical Lab 02 schema link`);
+    }
+
+    const strandGuideHead = await fetch(url(stringCrawlStrandLabGuidePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!strandGuideHead.ok ||
+        normalizedMediaType(strandGuideHead.headers.get("content-type")) !== "text/markdown" ||
+        strandGuideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (strandGuideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${stringCrawlStrandLabGuidePath} is not served as public Markdown`);
+    }
   }
 
   if (mirrorInformationControlActive) {
@@ -1940,7 +1999,9 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(foldFeedbackActive ? [foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath] : []),
     ...(reconstructiveBuildActive ? [reconstructiveBuildSchemaPath, reconstructiveProjectSchemaPath] : []),
     ...(explorationDeepWingActive ? [phenomenaDeepWingSchemaPath, phenomenaDeepProjectSchemaPath] : []),
-    ...(stringCrawlTraceSheetLabActive ? [stringCrawlTraceSheetLabSchemaPath] : []),
+    ...(stringCrawlTraceSheetLabActive
+      ? [stringCrawlTraceSheetLabSchemaPath, stringCrawlStrandLabSchemaPath]
+      : []),
     ...(mirrorInformationControlActive ? [mirrorInformationControlSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
@@ -1963,6 +2024,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       path === phenomenaDeepWingSchemaPath ||
       path === phenomenaDeepProjectSchemaPath ||
       path === stringCrawlTraceSheetLabSchemaPath ||
+      path === stringCrawlStrandLabSchemaPath ||
       path === mirrorInformationControlSchemaPath;
     const hasExpectedSchemaType = requiresExactSchemaType
       ? normalizedMediaType(schemaContentType) === "application/schema+json"
@@ -2054,6 +2116,15 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const stringCrawlTraceSheetLabFalsifiers = stringCrawlTraceSheetLab
     ? runStringCrawlTraceSheetLabFalsifiers(stringCrawlTraceSheetLab)
+    : undefined;
+  const stringCrawlStrandLab = stringCrawlTraceSheetLabActive
+    ? loadStringCrawlStrandLab()
+    : undefined;
+  const expectedStringCrawlStrandLab = stringCrawlStrandLab
+    ? stringCrawlStrandLabPublicDiscovery(stringCrawlStrandLab)
+    : undefined;
+  const stringCrawlStrandLabEvaluation = stringCrawlStrandLab
+    ? evaluateStringCrawlStrandLab(stringCrawlStrandLab)
     : undefined;
   const expectedVisibilityAttention = visibilityAttentionActive
     ? visibilityAttentionPublicDiscovery(loadVisibilityAttentionTranslation())
@@ -2886,6 +2957,142 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (stringCrawlTraceSheetLabActive) {
+    const lab = stringCrawlStrandLab!;
+    const expected = expectedStringCrawlStrandLab! as any;
+    const evaluation = stringCrawlStrandLabEvaluation!;
+    const immutableRecord = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(stringCrawlStrandLabPath));
+    const immutableSchema = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(stringCrawlStrandLabSchemaPath));
+    const immutableGuide = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(stringCrawlStrandLabGuidePath));
+    const targets = new Set([
+      STRING_CRAWL_STRAND_LAB_URL,
+      STRING_CRAWL_STRAND_LAB_SCHEMA_URL,
+      STRING_CRAWL_STRAND_LAB_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const stableInvariant = {
+      vertices: 15,
+      edges: 22,
+      faces: 8,
+      components: 1,
+      euler_characteristic: 1,
+      graph_cycle_rank: 8,
+      boundary_matrix_rank_1: 14,
+      boundary_matrix_rank_2: 8,
+      betti_f2: [1, 0, 0],
+      boundary_squared_zero: true,
+    };
+    const fullInvariant = {
+      vertices: 18,
+      edges: 26,
+      faces: 9,
+      components: 1,
+      euler_characteristic: 1,
+      graph_cycle_rank: 9,
+      boundary_matrix_rank_1: 17,
+      boundary_matrix_rank_2: 9,
+      betti_f2: [1, 0, 0],
+      boundary_squared_zero: true,
+    };
+    const boundary = {
+      synthetic_not_observed: true,
+      offline: true,
+      read_only: true,
+      crawler_present: false,
+      network_capability: false,
+      external_write: false,
+      surface_claim_for_full_complex: false,
+      physical_string_claim: false,
+      spacetime_claim: false,
+      gauge_or_weyl_claim: false,
+      causal_claim: false,
+      consent_or_authorization_claim: false,
+      person_or_content_score: false,
+      nen_ability: false,
+      karma_adapter: false,
+      deployment_authority: false,
+    };
+    const effects = {
+      network_requests: 0,
+      storage_writes: 0,
+      nen_invocation: false,
+      karma_receipt_created: false,
+      zerone_event_created: false,
+      authority_effect: "NONE",
+    };
+    const badVertexIds = Array.isArray(expected.validation?.local_findings?.bad_vertices)
+      ? expected.validation.local_findings.bad_vertices.map((entry: any) => entry?.vertex_id).sort()
+      : [];
+    const forbiddenDiscoveryKeys = [
+      "mcp", "tool", "matcher", "crawler", "http", "request", "response", "evidence",
+      "karma", "receipt", "adapter", "execute", "write", "score", "reward", "sanction",
+      "authorize", "consent", "invoke", "publish", "deploy", "authority",
+    ];
+    if (!isDeepStrictEqual(manifest?.string_crawl_strand_lab, expected) ||
+      !isDeepStrictEqual(guest?.string_crawl_strand_lab, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.string_crawl_strand_lab, expected) ||
+      manifest?.entry_points?.string_crawl_strand_lab !== STRING_CRAWL_STRAND_LAB_URL ||
+      manifest?.entry_points?.string_crawl_strand_lab_schema !== STRING_CRAWL_STRAND_LAB_SCHEMA_URL ||
+      manifest?.entry_points?.string_crawl_strand_lab_guide !== STRING_CRAWL_STRAND_LAB_GUIDE_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        !isDeepStrictEqual(Object.keys(action).sort(), ["action", "method", "note", "url"])) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="string-crawl-strand-lab"') ||
+      !authoredRootHtml.includes(`href="${stringCrawlStrandLabPath}"`) ||
+      !authoredRootHtml.includes(`href="${stringCrawlStrandLabSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${stringCrawlStrandLabGuidePath}"`) ||
+      expected.protocol !== STRING_CRAWL_STRAND_LAB_PROTOCOL || expected.protocol !== lab.protocol ||
+      expected.lab_id !== STRING_CRAWL_STRAND_LAB_ID || expected.lab_id !== lab.lab_id ||
+      expected.title !== "STRAND Lab 02: Release Cospans & the χ=1 Impostor" ||
+      expected.title !== lab.title || expected.mode !== "SYNTHETIC_OFFLINE_EXACT" ||
+      expected.url !== STRING_CRAWL_STRAND_LAB_URL ||
+      expected.schema_url !== STRING_CRAWL_STRAND_LAB_SCHEMA_URL ||
+      expected.guide_url !== STRING_CRAWL_STRAND_LAB_GUIDE_URL ||
+      expected.predecessor?.lab_id !== STRING_CRAWL_TRACE_SHEET_LAB_ID ||
+      expected.predecessor?.url !== STRING_CRAWL_TRACE_SHEET_LAB_URL ||
+      expected.predecessor?.schema_url !== STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL ||
+      expected.predecessor?.guide_url !== STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL ||
+      expected.predecessor?.semantic_digest !== STRING_CRAWL_TRACE_SHEET_LAB_DIGEST ||
+      expected.predecessor?.byte_sha256 !== STRING_CRAWL_TRACE_SHEET_LAB_BYTE_SHA256 ||
+      expected.predecessor?.schema_byte_sha256 !== STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_BYTE_SHA256 ||
+      expected.predecessor?.guide_byte_sha256 !== STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_BYTE_SHA256 ||
+      expected.predecessor?.relation !== "IMMUTABLE_LAB_01_PREDECESSOR" ||
+      expected.predecessor?.mutates_predecessor !== false ||
+      expected.predecessor?.imports_authority !== false ||
+      expected.source_binding?.project_id !== "string-crawl-trace-sheet-2026-08-15" ||
+      expected.source_binding?.semantic_digest !== STRING_CRAWL_TRACE_SHEET_DIGEST ||
+      expected.source_binding?.raw_sha256 !== STRING_CRAWL_TRACE_SHEET_BYTE_SHA256 ||
+      expected.source_binding?.mutates_source !== false || expected.source_binding?.imports_authority !== false ||
+      !isDeepStrictEqual(expected.counts, {
+        releases: 3, stable_threads: 5, born_threads: 1, vertices: 18, edges: 26, faces: 9, cospans: 2,
+      }) ||
+      expected.validation?.valid !== true || expected.validation?.checks?.length !== 6 ||
+      expected.validation.checks.some((check: any) => check?.status !== "PASS") ||
+      !isDeepStrictEqual(expected.validation?.invariants?.["stable-strip"], stableInvariant) ||
+      !isDeepStrictEqual(expected.validation?.invariants?.["full-complex"], fullInvariant) ||
+      !isDeepStrictEqual(badVertexIds, [
+        "v-r1-commons", "v-r2-commons", "v-r2-contact", "v-r2-redirect-target",
+      ]) ||
+      !isDeepStrictEqual(expected.validation?.local_findings?.branch_edges, ["e-commons-r1-r2"]) ||
+      !isDeepStrictEqual(expected.validation?.local_findings?.faceless_edges, ["e-r2-contact-redirect"]) ||
+      !isDeepStrictEqual(expected.boundaries, boundary) || !isDeepStrictEqual(expected.effects, effects) ||
+      expected.integrity?.semantic_digest !== STRING_CRAWL_STRAND_LAB_DIGEST ||
+      evaluation.valid !== true || evaluation.issues.length !== 0 ||
+      !immutableRecord || immutableRecord.source !== STRING_CRAWL_STRAND_LAB_LOCATOR ||
+      `sha256:${immutableRecord.sha256}` !== STRING_CRAWL_STRAND_LAB_BYTE_SHA256 ||
+      !immutableSchema || immutableSchema.source !== STRING_CRAWL_STRAND_LAB_SCHEMA_LOCATOR ||
+      `sha256:${immutableSchema.sha256}` !== STRING_CRAWL_STRAND_LAB_SCHEMA_BYTE_SHA256 ||
+      !immutableGuide || immutableGuide.source !== STRING_CRAWL_STRAND_LAB_GUIDE_LOCATOR ||
+      `sha256:${immutableGuide.sha256}` !== STRING_CRAWL_STRAND_LAB_GUIDE_BYTE_SHA256 ||
+      forbiddenDiscoveryKeys.some((key) => Object.hasOwn(expected, key))) {
+      throw new Error("STRAND Lab 02 discovery, lineage, exact topology, composition, immutable pins, or zero-effect boundary drifted");
+    }
+  }
+
   if (visibilityAttentionActive) {
     const expected = expectedVisibilityAttention!;
     const visibilityBoundary = expected.boundary;
@@ -3382,6 +3589,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       !isDeepStrictEqual(liveKingdom?.string_crawl_trace_sheet_lab, expectedStringCrawlTraceSheetLab!)) {
     throw new Error("derived kingdom.json did not preserve STRING / CRAWL Finite Trace-Sheet Lab discovery");
   }
+  if (stringCrawlTraceSheetLabActive &&
+      !isDeepStrictEqual(liveKingdom?.string_crawl_strand_lab, expectedStringCrawlStrandLab!)) {
+    throw new Error("derived kingdom.json did not preserve STRAND Lab 02 discovery");
+  }
   if (visibilityAttentionActive && !isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention!)) {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
   }
@@ -3473,7 +3684,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet Lab + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet Lab + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology discovery · REVISE/non-promotion and exploration/ZERO/STRING-CRAWL/TRACE-LAB/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Lab schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Lab discovery · REVISE/non-promotion and exploration/ZERO/STRING-CRAWL/TRACE-LABS/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

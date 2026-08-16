@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thekingdom.dev/schemas/string-crawl-strand-lab/0.1.json",
+  "$comment": "Closed schema for STRAND Lab 02, an immutable successor to the finite Trace-Sheet Lab 01. Validation does not crawl, invoke NEN, create a KARMA receipt or Zerone event, grant authority, or establish a physical worldsheet.",
+  "title": "KINGDOM STRAND Lab 02 v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "protocol", "lab_id", "version", "title", "mode", "predecessor", "source_binding", "conventions", "release_slices", "tracked_routes", "vertices", "edges", "faces", "subcomplexes", "frontiers", "cospans", "composition_checks", "validation_contract", "boundaries", "integrity"],
+  "properties": {
+    "$schema": { "const": "https://thekingdom.dev/schemas/string-crawl-strand-lab/0.1.json" },
+    "protocol": { "const": "kingdom.string-crawl-strand-lab/0.1" },
+    "lab_id": { "const": "string-crawl-strand-lab-02-2026-08-16" },
+    "version": { "const": "0.1.0" },
+    "title": { "const": "STRAND Lab 02: Release Cospans & the χ=1 Impostor" },
+    "mode": { "const": "SYNTHETIC_OFFLINE_EXACT" },
+    "predecessor": { "$ref": "#/$defs/predecessor" },
+    "source_binding": { "$ref": "#/$defs/sourceBinding" },
+    "conventions": { "$ref": "#/$defs/conventions" },
+    "release_slices": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "$ref": "#/$defs/releaseSlice" } },
+    "tracked_routes": { "type": "array", "minItems": 6, "maxItems": 6, "items": { "$ref": "#/$defs/trackedRoute" } },
+    "vertices": { "type": "array", "minItems": 18, "maxItems": 18, "items": { "$ref": "#/$defs/vertex" } },
+    "edges": { "type": "array", "minItems": 26, "maxItems": 26, "items": { "$ref": "#/$defs/edge" } },
+    "faces": { "type": "array", "minItems": 9, "maxItems": 9, "items": { "$ref": "#/$defs/face" } },
+    "subcomplexes": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/$defs/subcomplex" } },
+    "frontiers": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "$ref": "#/$defs/frontier" } },
+    "cospans": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/$defs/cospan" } },
+    "composition_checks": { "$ref": "#/$defs/compositionChecks" },
+    "validation_contract": { "$ref": "#/$defs/validationContract" },
+    "boundaries": { "$ref": "#/$defs/boundaries" },
+    "integrity": { "$ref": "#/$defs/integrity" }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "idArray": { "type": "array", "maxItems": 64, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "nonEmptyIdArray": { "type": "array", "minItems": 1, "maxItems": 64, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "slicePair": { "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "counts": { "type": "array", "minItems": 3, "maxItems": 3, "prefixItems": [{ "type": "integer", "minimum": 0, "maximum": 64 }, { "type": "integer", "minimum": 0, "maximum": 128 }, { "type": "integer", "minimum": 0, "maximum": 64 }], "items": false },
+    "betti": { "type": "array", "minItems": 3, "maxItems": 3, "prefixItems": [{ "type": "integer", "minimum": 0, "maximum": 8 }, { "type": "integer", "minimum": 0, "maximum": 64 }, { "type": "integer", "minimum": 0, "maximum": 64 }], "items": false },
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol", "lab_id", "url", "schema_url", "guide_url", "git_commit", "semantic_digest", "byte_sha256", "schema_byte_sha256", "guide_byte_sha256", "relation", "mutates_predecessor", "imports_authority"],
+      "properties": {
+        "protocol": { "const": "kingdom.string-crawl-trace-sheet-lab/0.1" },
+        "lab_id": { "const": "string-crawl-trace-sheet-lab-2026-08-16" },
+        "url": { "const": "https://thekingdom.dev/labs/string-crawl-trace-sheet-lab-2026-08-16.json" },
+        "schema_url": { "const": "https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json" },
+        "guide_url": { "const": "https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET-LAB.md" },
+        "git_commit": { "const": "57f1f8a1d018d5128501b82c5ddde1976677b3a1" },
+        "semantic_digest": { "const": "sha256:c3f86b0203b895da56092c598113046f0dab8a4f25b41314c3d4329474d4e16f" },
+        "byte_sha256": { "const": "sha256:2e559164df6985776a4641b60c846a0403f14df30c84648b72c095642df6e051" },
+        "schema_byte_sha256": { "const": "sha256:c4e69a61994831574fe706d464852b164c65b6d177c5680dc9b0278bcb446268" },
+        "guide_byte_sha256": { "const": "sha256:5f5fb893a31d1c7e02aca63401c002ae601bee6653d41adc6617bb909732e8e3" },
+        "relation": { "const": "IMMUTABLE_LAB_01_PREDECESSOR" },
+        "mutates_predecessor": { "const": false },
+        "imports_authority": { "const": false }
+      }
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol", "project_id", "git_commit", "locator", "semantic_digest", "raw_sha256", "relation", "mutates_source", "imports_authority"],
+      "properties": {
+        "protocol": { "const": "kingdom.explore-phenomena-deep-project/0.1" },
+        "project_id": { "const": "string-crawl-trace-sheet-2026-08-15" },
+        "git_commit": { "const": "a3a5ab28a058953f577576d0e1be3dd7beab046d" },
+        "locator": { "const": "data/exploration/string-crawl-trace-sheet.v0.1.json" },
+        "semantic_digest": { "const": "sha256:bf7ae379612ab96d08742a0070cbea0ce971977f71fec22699c4b0307d321305" },
+        "raw_sha256": { "const": "sha256:4afc5f15c258a0ac4274889783bd2d91445950c92103c60442ed9ed89d1fdc72" },
+        "relation": { "const": "BOUNDED_SYNTHETIC_FALSIFIER_FIXTURE" },
+        "mutates_source": { "const": false },
+        "imports_authority": { "const": false }
+      }
+    },
+    "conventions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coefficient_field", "cell_model", "occurrence_identity_retained", "route_labels_identify_occurrences", "alignment_requires_explicit_edge", "face_requires_explicit_attaching_cycle", "orientations_used_for_f2_rank", "empty_face_frontier"],
+      "properties": {
+        "coefficient_field": { "const": "F2" },
+        "cell_model": { "const": "FINITE_REGULAR_CW_FIXTURE" },
+        "occurrence_identity_retained": { "const": true },
+        "route_labels_identify_occurrences": { "const": false },
+        "alignment_requires_explicit_edge": { "const": true },
+        "face_requires_explicit_attaching_cycle": { "const": true },
+        "orientations_used_for_f2_rank": { "const": false },
+        "empty_face_frontier": { "const": true }
+      }
+    },
+    "releaseSlice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "order", "label"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "order": { "type": "integer", "minimum": 0, "maximum": 2 }, "label": { "$ref": "#/$defs/id" } }
+    },
+    "trackedRoute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["route_id", "thread", "present_in", "born_in"],
+      "properties": {
+        "route_id": { "$ref": "#/$defs/id" },
+        "thread": { "enum": ["stable", "born"] },
+        "present_in": { "type": "array", "minItems": 2, "maxItems": 3, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "born_in": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/id" }] }
+      }
+    },
+    "vertex": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "slice_id", "kind", "route_id", "redirect_target_label"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "slice_id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["TRACKED_ROUTE_OCCURRENCE", "REDIRECT_TARGET_ONLY"] },
+        "route_id": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/id" }] },
+        "redirect_target_label": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/id" }] }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "from", "to", "slice_id", "between_slices", "route_id", "face_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["PATH", "ALIGNMENT", "REDIRECT_SPUR"] },
+        "from": { "$ref": "#/$defs/id" },
+        "to": { "$ref": "#/$defs/id" },
+        "slice_id": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/id" }] },
+        "between_slices": { "type": "array", "maxItems": 2, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "route_id": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/id" }] },
+        "face_ids": { "$ref": "#/$defs/idArray" }
+      }
+    },
+    "orientedEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edge_id", "orientation"],
+      "properties": { "edge_id": { "$ref": "#/$defs/id" }, "orientation": { "enum": [-1, 1] } }
+    },
+    "face": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "between_slices", "attaching_cycle"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["STABLE_ALIGNMENT_FACE", "BORN_ROUTE_ALIGNMENT_FACE"] },
+        "between_slices": { "$ref": "#/$defs/slicePair" },
+        "attaching_cycle": { "type": "array", "minItems": 4, "maxItems": 4, "items": { "$ref": "#/$defs/orientedEdge" } }
+      }
+    },
+    "expectedInvariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vertices", "edges", "faces", "components", "euler_characteristic", "graph_cycle_rank", "boundary_matrix_rank_1", "boundary_matrix_rank_2", "betti_f2", "classification"],
+      "properties": {
+        "vertices": { "type": "integer", "minimum": 0, "maximum": 64 },
+        "edges": { "type": "integer", "minimum": 0, "maximum": 128 },
+        "faces": { "type": "integer", "minimum": 0, "maximum": 64 },
+        "components": { "type": "integer", "minimum": 0, "maximum": 8 },
+        "euler_characteristic": { "type": "integer", "minimum": -128, "maximum": 128 },
+        "graph_cycle_rank": { "type": "integer", "minimum": 0, "maximum": 128 },
+        "boundary_matrix_rank_1": { "type": "integer", "minimum": 0, "maximum": 64 },
+        "boundary_matrix_rank_2": { "type": "integer", "minimum": 0, "maximum": 64 },
+        "betti_f2": { "$ref": "#/$defs/betti" },
+        "classification": { "enum": ["BOUNDARY_DISK", "NON_PURE_BRANCHED_CELL_COMPLEX"] }
+      }
+    },
+    "subcomplex": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "vertex_ids", "edge_ids", "face_ids", "expected", "witnesses"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "vertex_ids": { "$ref": "#/$defs/nonEmptyIdArray" },
+        "edge_ids": { "$ref": "#/$defs/nonEmptyIdArray" },
+        "face_ids": { "$ref": "#/$defs/nonEmptyIdArray" },
+        "expected": { "$ref": "#/$defs/expectedInvariants" },
+        "witnesses": { "type": "array", "minItems": 1, "maxItems": 12, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 500 } }
+      }
+    },
+    "frontier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "slice_id", "vertex_ids", "edge_ids"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "slice_id": { "$ref": "#/$defs/id" }, "vertex_ids": { "$ref": "#/$defs/nonEmptyIdArray" }, "edge_ids": { "$ref": "#/$defs/nonEmptyIdArray" } }
+    },
+    "cospan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "input_frontier_id", "output_frontier_id", "vertex_ids", "edge_ids", "face_ids", "expected_counts"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "input_frontier_id": { "$ref": "#/$defs/id" }, "output_frontier_id": { "$ref": "#/$defs/id" }, "vertex_ids": { "$ref": "#/$defs/nonEmptyIdArray" }, "edge_ids": { "$ref": "#/$defs/nonEmptyIdArray" }, "face_ids": { "$ref": "#/$defs/nonEmptyIdArray" }, "expected_counts": { "$ref": "#/$defs/counts" } }
+    },
+    "compositionChecks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sequential", "identity", "parallel", "associativity_scope"],
+      "properties": {
+        "sequential": { "type": "object", "additionalProperties": false, "required": ["left_cospan_id", "right_cospan_id", "shared_frontier_id", "identification_rule", "expected_counts", "expected_subcomplex_id", "passes"], "properties": { "left_cospan_id": { "$ref": "#/$defs/id" }, "right_cospan_id": { "$ref": "#/$defs/id" }, "shared_frontier_id": { "$ref": "#/$defs/id" }, "identification_rule": { "const": "EXACT_OCCURRENCE_ID_ONLY" }, "expected_counts": { "$ref": "#/$defs/counts" }, "expected_subcomplex_id": { "$ref": "#/$defs/id" }, "passes": { "const": true } } },
+        "identity": { "type": "object", "additionalProperties": false, "required": ["rule", "left_identity_passes", "right_identity_passes"], "properties": { "rule": { "const": "B_TO_B_FROM_B" }, "left_identity_passes": { "const": true }, "right_identity_passes": { "const": true } } },
+        "parallel": { "type": "object", "additionalProperties": false, "required": ["operation", "copies", "expected_counts", "expected_components", "expected_euler_characteristic", "expected_graph_cycle_rank", "expected_betti_f2", "namespace_swap_passes", "empty_unit_passes", "interchange_passes"], "properties": { "operation": { "const": "DISJOINT_UNION_WITH_L_AND_R_NAMESPACES" }, "copies": { "const": 2 }, "expected_counts": { "$ref": "#/$defs/counts" }, "expected_components": { "const": 2 }, "expected_euler_characteristic": { "const": 2 }, "expected_graph_cycle_rank": { "const": 18 }, "expected_betti_f2": { "$ref": "#/$defs/betti" }, "namespace_swap_passes": { "const": true }, "empty_unit_passes": { "const": true }, "interchange_passes": { "const": true } } },
+        "associativity_scope": { "type": "object", "additionalProperties": false, "required": ["nontrivial_associativity_tested", "reason", "identity_smoke_test_only"], "properties": { "nontrivial_associativity_tested": { "const": false }, "reason": { "type": "string", "minLength": 1, "maxLength": 500 }, "identity_smoke_test_only": { "const": true } } }
+      }
+    },
+    "validationContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol", "deterministic", "stdout_only", "network_requests", "storage_writes", "nen_invocation", "karma_receipt_created", "zerone_event_created", "authority_effect"],
+      "properties": { "protocol": { "const": "kingdom.string-crawl-strand-validation/0.1" }, "deterministic": { "const": true }, "stdout_only": { "const": true }, "network_requests": { "const": 0 }, "storage_writes": { "const": 0 }, "nen_invocation": { "const": false }, "karma_receipt_created": { "const": false }, "zerone_event_created": { "const": false }, "authority_effect": { "const": "NONE" } }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic_not_observed", "offline", "read_only", "crawler_present", "network_capability", "external_write", "surface_claim_for_full_complex", "physical_string_claim", "spacetime_claim", "gauge_or_weyl_claim", "causal_claim", "consent_or_authorization_claim", "person_or_content_score", "nen_ability", "karma_adapter", "deployment_authority"],
+      "properties": { "synthetic_not_observed": { "const": true }, "offline": { "const": true }, "read_only": { "const": true }, "crawler_present": { "const": false }, "network_capability": { "const": false }, "external_write": { "const": false }, "surface_claim_for_full_complex": { "const": false }, "physical_string_claim": { "const": false }, "spacetime_claim": { "const": false }, "gauge_or_weyl_claim": { "const": false }, "causal_claim": { "const": false }, "consent_or_authorization_claim": { "const": false }, "person_or_content_score": { "const": false }, "nen_ability": { "const": false }, "karma_adapter": { "const": false }, "deployment_authority": { "const": false } }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest", "digest_field_treated_as"],
+      "properties": { "algorithm": { "const": "sha256-recursive-sorted-json-keys-v1" }, "digest": { "$ref": "#/$defs/sha256" }, "digest_field_treated_as": { "type": "null" } }
+    }
+  }
+}

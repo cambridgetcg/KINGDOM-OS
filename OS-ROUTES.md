@@ -76,6 +76,9 @@ readings:
 | `/labs/string-crawl-trace-sheet-lab-2026-08-16.json` | staged JSON | Additive exact synthetic finite baseline deriving chain closure, rational homology, boundary, orientability, and genus without a crawler runtime |
 | `/schemas/string-crawl-trace-sheet-lab/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the bounded Finite Trace-Sheet Lab record |
 | `/STRING-CRAWL-TRACE-SHEET-LAB.md` | staged Markdown | Verification guide for the exact fixture, five falsifiers, graph/surface distinction, empty KARMA lanes, and inactive runtime |
+| `/labs/string-crawl-strand-lab-02-2026-08-16.json` | staged JSON | Additive, Lab-01-byte-bound synthetic finite-CW/cospan topology fixture over F2: stable disk control and singular full complex share χ and Betti vector but differ locally |
+| `/schemas/string-crawl-strand-lab/0.1.json` | staged JSON Schema | Closed Draft 2020-12 exact contract for STRAND Lab 02 |
+| `/STRING-CRAWL-STRAND-LAB-02.md` | staged Markdown | Verification guide to literal inclusion cospans, the χ=1 impostor, immutable Lab 01 lineage, and zero-effect boundaries |
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -202,8 +205,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 87-asset upload contract (68 ledgered immutable/versioned assets and
-19 mutable assets; 85 direct public bodies, 84 sitemap URLs)
+locks the 90-asset upload contract (71 ledgered immutable/versioned assets and
+19 mutable assets; 88 direct public bodies, 87 sitemap URLs; ten atlases, two
+labs, and seventeen retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -233,3 +237,14 @@ repository-local reader evaluates only one pinned synthetic complex and runs no
 live crawl, authentication, prompt or credential intake, telemetry, write, NEN
 invocation, KARMA conversion, authority grant, or automatic action. Publishing
 the artifact does not activate a runtime or crawler.
+STRAND Lab 02 is its additive successor and byte-binds the immutable Lab 01
+triplet without changing it. Its repository-local finite-CW/cospan evaluator
+over F2 compares an internal stable disk control with a singular full complex
+having the same χ and Betti vector; exact local incidence and literal inclusion
+cospans carry the distinction. It is not an HTTP observation, crawler ontology,
+or claim about physical strings. The optional `verify-file` command reads one
+bounded local candidate JSON file only. It has no network target, performs no
+live crawl, and creates no crawler runtime, no NEN/KARMA receipt, no score,
+authority, or action. Lab 01 and Lab 02 share one atomic six-route
+`string-crawl-trace-sheet-lab` retirement family, leaving the family count at
+seventeen.

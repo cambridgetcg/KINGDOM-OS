@@ -132,7 +132,7 @@ describe("hub live-check publication retirement", () => {
     }
   });
 
-  test("retires the Exploration DEEP WING, ZERO, and STRING / CRAWL assets atomically", () => {
+  test("retires Exploration DEEP, ZERO, and the STRING / CRAWL atlas atomically", () => {
     const exploration = family("exploration-deep-wing");
     expect(exploration.routes).toEqual([
       "/wings/explore-phenomena-deep-2026-08-14.json",
@@ -198,37 +198,46 @@ describe("hub live-check publication retirement", () => {
     ])).not.toThrow();
   });
 
-  test("retires the additive Finite Trace-Sheet Lab triplet and discovery atomically", () => {
+  test("retires the byte-bound STRAND Lab 01 and Lab 02 triplets atomically", () => {
     const lab = family("string-crawl-trace-sheet-lab");
     expect(lab.routes).toEqual([
       "/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
       "/schemas/string-crawl-trace-sheet-lab/0.1.json",
       "/STRING-CRAWL-TRACE-SHEET-LAB.md",
+      "/labs/string-crawl-strand-lab-02-2026-08-16.json",
+      "/schemas/string-crawl-strand-lab/0.1.json",
+      "/STRING-CRAWL-STRAND-LAB-02.md",
     ]);
-    expect(lab.discoveryProperties).toEqual(["string_crawl_trace_sheet_lab"]);
+    expect(lab.discoveryProperties).toEqual([
+      "string_crawl_trace_sheet_lab",
+      "string_crawl_strand_lab",
+    ]);
     expect(lab.entryPointProperties).toEqual([
       "string_crawl_trace_sheet_lab",
       "string_crawl_trace_sheet_lab_schema",
       "string_crawl_trace_sheet_lab_guide",
+      "string_crawl_strand_lab",
+      "string_crawl_strand_lab_schema",
+      "string_crawl_strand_lab_guide",
     ]);
 
     const partiallyStaged = stagedDestinations();
     partiallyStaged.delete(destinationForPublicPath(lab.routes[1]!));
     expect(() => publicationFamilyStates(partiallyStaged))
-      .toThrow("STRING / CRAWL Finite Trace-Sheet Lab is partially staged");
+      .toThrow("STRING / CRAWL STRAND Labs 01–02 is partially staged");
 
     const retired = stagedDestinations();
     for (const route of lab.routes) retired.delete(destinationForPublicPath(route));
     expect(publicationFamilyStates(retired).get(lab.id)?.active).toBe(false);
 
     for (const surface of [
-      { label: "authored Kingdom map", text: JSON.stringify({ string_crawl_trace_sheet_lab: {} }), value: { string_crawl_trace_sheet_lab: {} } },
-      { label: "agent manifest", text: JSON.stringify({ entry_points: { string_crawl_trace_sheet_lab_guide: lab.routes[2] } }), value: { entry_points: { string_crawl_trace_sheet_lab_guide: lab.routes[2] } } },
+      { label: "authored Kingdom map", text: JSON.stringify({ string_crawl_trace_sheet_lab: {}, string_crawl_strand_lab: {} }), value: { string_crawl_trace_sheet_lab: {}, string_crawl_strand_lab: {} } },
+      { label: "agent manifest", text: JSON.stringify({ entry_points: { string_crawl_strand_lab_guide: lab.routes[5] } }), value: { entry_points: { string_crawl_strand_lab_guide: lab.routes[5] } } },
       { label: "llms.txt", text: `https://thekingdom.dev${lab.routes[0]}` },
-      { label: "hub HTML", text: `<a href='${lab.routes[2]}'>stale</a>` },
+      { label: "hub HTML", text: `<a href='${lab.routes[5]}'>stale</a>` },
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(lab, [surface]))
-        .toThrow("STRING / CRAWL Finite Trace-Sheet Lab is retired");
+        .toThrow("STRING / CRAWL STRAND Labs 01–02 is retired");
     }
   });
 

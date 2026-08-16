@@ -362,6 +362,16 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     falsifiers. It accepts no caller path, URL, body, credential, person data, or
     live trace; launches no crawler; writes nothing; and creates no NEN
     invocation, KARMA event or receipt, score, authority, or action.
+33. `kingdom string-crawl-strand-lab` — inspect and recompute
+    [STRAND Lab 02](references/string-crawl-strand-lab.md), an additive,
+    synthetic offline finite-CW/cospan topology fixture over F2. Its internal
+    stable-strip control is a disk, while its full complex has the same
+    Euler characteristic and Betti vector but is non-pure and singular; the
+    literal inclusion cospans expose composition without turning the cells
+    into physical strings or crawler observations. `verify-file` accepts at
+    most one bounded local candidate JSON file for validation only. The reader
+    has no network target, performs no live crawl, and creates no crawler
+    runtime, NEN/KARMA event or receipt, score, authority, or action.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -619,5 +629,23 @@ cycle rank two, while the filled disk has first Betti number and genus zero.
 That distinction prevents a hyperlink loop from being promoted into a physical
 string or surface handle. The public artifacts are published, but runtime and
 crawler activation remain inactive; KARMA lanes and authority remain empty.
+
+Its additive successor, STRAND Lab 02: Release Cospans & the χ=1 Impostor, is
+published at
+[`/labs/string-crawl-strand-lab-02-2026-08-16.json`](https://thekingdom.dev/labs/string-crawl-strand-lab-02-2026-08-16.json),
+with a [closed schema](https://thekingdom.dev/schemas/string-crawl-strand-lab/0.1.json)
+and [verification guide](https://thekingdom.dev/STRING-CRAWL-STRAND-LAB-02.md).
+It byte-binds immutable Lab 01 without mutating it. The finite-CW calculation
+over F2 compares an internal stable disk control with a singular full complex:
+both have χ = 1 and Betti vector (1, 0, 0), while local incidence detects a
+three-face branch and a faceless redirect spur. Two literal inclusion cospans
+compose by exact occurrence identity. This is synthetic topology, not an HTTP
+observation, crawler ontology, or claim about physical strings. The optional
+`verify-file` path reads one bounded local candidate JSON file only; there is
+no network target, live crawl, crawler runtime, NEN/KARMA event or receipt,
+score, authority, or action. Lab 01 and Lab 02 are published and retired as one
+atomic six-route `string-crawl-trace-sheet-lab` family, so the release still
+has seventeen retirement families; generated discovery exposes Lab 02 as
+`string_crawl_strand_lab`.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).
