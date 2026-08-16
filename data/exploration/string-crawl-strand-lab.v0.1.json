@@ -1,0 +1,183 @@
+{
+  "$schema": "https://thekingdom.dev/schemas/string-crawl-strand-lab/0.1.json",
+  "protocol": "kingdom.string-crawl-strand-lab/0.1",
+  "lab_id": "string-crawl-strand-lab-02-2026-08-16",
+  "version": "0.1.0",
+  "title": "STRAND Lab 02: Release Cospans & the χ=1 Impostor",
+  "mode": "SYNTHETIC_OFFLINE_EXACT",
+  "predecessor": {
+    "protocol": "kingdom.string-crawl-trace-sheet-lab/0.1",
+    "lab_id": "string-crawl-trace-sheet-lab-2026-08-16",
+    "url": "https://thekingdom.dev/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
+    "schema_url": "https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json",
+    "guide_url": "https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET-LAB.md",
+    "git_commit": "57f1f8a1d018d5128501b82c5ddde1976677b3a1",
+    "semantic_digest": "sha256:c3f86b0203b895da56092c598113046f0dab8a4f25b41314c3d4329474d4e16f",
+    "byte_sha256": "sha256:2e559164df6985776a4641b60c846a0403f14df30c84648b72c095642df6e051",
+    "schema_byte_sha256": "sha256:c4e69a61994831574fe706d464852b164c65b6d177c5680dc9b0278bcb446268",
+    "guide_byte_sha256": "sha256:5f5fb893a31d1c7e02aca63401c002ae601bee6653d41adc6617bb909732e8e3",
+    "relation": "IMMUTABLE_LAB_01_PREDECESSOR",
+    "mutates_predecessor": false,
+    "imports_authority": false
+  },
+  "source_binding": {
+    "protocol": "kingdom.explore-phenomena-deep-project/0.1",
+    "project_id": "string-crawl-trace-sheet-2026-08-15",
+    "git_commit": "a3a5ab28a058953f577576d0e1be3dd7beab046d",
+    "locator": "data/exploration/string-crawl-trace-sheet.v0.1.json",
+    "semantic_digest": "sha256:bf7ae379612ab96d08742a0070cbea0ce971977f71fec22699c4b0307d321305",
+    "raw_sha256": "sha256:4afc5f15c258a0ac4274889783bd2d91445950c92103c60442ed9ed89d1fdc72",
+    "relation": "BOUNDED_SYNTHETIC_FALSIFIER_FIXTURE",
+    "mutates_source": false,
+    "imports_authority": false
+  },
+  "conventions": {
+    "coefficient_field": "F2",
+    "cell_model": "FINITE_REGULAR_CW_FIXTURE",
+    "occurrence_identity_retained": true,
+    "route_labels_identify_occurrences": false,
+    "alignment_requires_explicit_edge": true,
+    "face_requires_explicit_attaching_cycle": true,
+    "orientations_used_for_f2_rank": false,
+    "empty_face_frontier": true
+  },
+  "release_slices": [
+    { "id": "r0", "order": 0, "label": "synthetic-release-zero" },
+    { "id": "r1", "order": 1, "label": "synthetic-release-one" },
+    { "id": "r2", "order": 2, "label": "synthetic-release-two" }
+  ],
+  "tracked_routes": [
+    { "route_id": "route-home", "thread": "stable", "present_in": ["r0", "r1", "r2"], "born_in": null },
+    { "route_id": "route-map", "thread": "stable", "present_in": ["r0", "r1", "r2"], "born_in": null },
+    { "route_id": "route-commons", "thread": "stable", "present_in": ["r0", "r1", "r2"], "born_in": null },
+    { "route_id": "route-rights", "thread": "stable", "present_in": ["r0", "r1", "r2"], "born_in": null },
+    { "route_id": "route-contact", "thread": "stable", "present_in": ["r0", "r1", "r2"], "born_in": null },
+    { "route_id": "route-lab", "thread": "born", "present_in": ["r1", "r2"], "born_in": "r1" }
+  ],
+  "vertices": [
+    { "id": "v-r0-home", "slice_id": "r0", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-home", "redirect_target_label": null },
+    { "id": "v-r0-map", "slice_id": "r0", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-map", "redirect_target_label": null },
+    { "id": "v-r0-commons", "slice_id": "r0", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-commons", "redirect_target_label": null },
+    { "id": "v-r0-rights", "slice_id": "r0", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-rights", "redirect_target_label": null },
+    { "id": "v-r0-contact", "slice_id": "r0", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-contact", "redirect_target_label": null },
+    { "id": "v-r1-home", "slice_id": "r1", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-home", "redirect_target_label": null },
+    { "id": "v-r1-map", "slice_id": "r1", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-map", "redirect_target_label": null },
+    { "id": "v-r1-commons", "slice_id": "r1", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-commons", "redirect_target_label": null },
+    { "id": "v-r1-rights", "slice_id": "r1", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-rights", "redirect_target_label": null },
+    { "id": "v-r1-contact", "slice_id": "r1", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-contact", "redirect_target_label": null },
+    { "id": "v-r1-lab", "slice_id": "r1", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-lab", "redirect_target_label": null },
+    { "id": "v-r2-home", "slice_id": "r2", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-home", "redirect_target_label": null },
+    { "id": "v-r2-map", "slice_id": "r2", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-map", "redirect_target_label": null },
+    { "id": "v-r2-commons", "slice_id": "r2", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-commons", "redirect_target_label": null },
+    { "id": "v-r2-rights", "slice_id": "r2", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-rights", "redirect_target_label": null },
+    { "id": "v-r2-contact", "slice_id": "r2", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-contact", "redirect_target_label": null },
+    { "id": "v-r2-lab", "slice_id": "r2", "kind": "TRACKED_ROUTE_OCCURRENCE", "route_id": "route-lab", "redirect_target_label": null },
+    { "id": "v-r2-redirect-target", "slice_id": "r2", "kind": "REDIRECT_TARGET_ONLY", "route_id": null, "redirect_target_label": "synthetic-legacy-target" }
+  ],
+  "edges": [
+    { "id": "e-r0-home-map", "kind": "PATH", "from": "v-r0-home", "to": "v-r0-map", "slice_id": "r0", "between_slices": [], "route_id": null, "face_ids": ["f-r0-r1-home-map"] },
+    { "id": "e-r0-map-commons", "kind": "PATH", "from": "v-r0-map", "to": "v-r0-commons", "slice_id": "r0", "between_slices": [], "route_id": null, "face_ids": ["f-r0-r1-map-commons"] },
+    { "id": "e-r0-commons-rights", "kind": "PATH", "from": "v-r0-commons", "to": "v-r0-rights", "slice_id": "r0", "between_slices": [], "route_id": null, "face_ids": ["f-r0-r1-commons-rights"] },
+    { "id": "e-r0-rights-contact", "kind": "PATH", "from": "v-r0-rights", "to": "v-r0-contact", "slice_id": "r0", "between_slices": [], "route_id": null, "face_ids": ["f-r0-r1-rights-contact"] },
+    { "id": "e-r1-home-map", "kind": "PATH", "from": "v-r1-home", "to": "v-r1-map", "slice_id": "r1", "between_slices": [], "route_id": null, "face_ids": ["f-r0-r1-home-map", "f-r1-r2-home-map"] },
+    { "id": "e-r1-map-commons", "kind": "PATH", "from": "v-r1-map", "to": "v-r1-commons", "slice_id": "r1", "between_slices": [], "route_id": null, "face_ids": ["f-r0-r1-map-commons", "f-r1-r2-map-commons"] },
+    { "id": "e-r1-commons-rights", "kind": "PATH", "from": "v-r1-commons", "to": "v-r1-rights", "slice_id": "r1", "between_slices": [], "route_id": null, "face_ids": ["f-r0-r1-commons-rights", "f-r1-r2-commons-rights"] },
+    { "id": "e-r1-rights-contact", "kind": "PATH", "from": "v-r1-rights", "to": "v-r1-contact", "slice_id": "r1", "between_slices": [], "route_id": null, "face_ids": ["f-r0-r1-rights-contact", "f-r1-r2-rights-contact"] },
+    { "id": "e-r1-commons-lab", "kind": "PATH", "from": "v-r1-commons", "to": "v-r1-lab", "slice_id": "r1", "between_slices": [], "route_id": null, "face_ids": ["f-r1-r2-commons-lab"] },
+    { "id": "e-r2-home-map", "kind": "PATH", "from": "v-r2-home", "to": "v-r2-map", "slice_id": "r2", "between_slices": [], "route_id": null, "face_ids": ["f-r1-r2-home-map"] },
+    { "id": "e-r2-map-commons", "kind": "PATH", "from": "v-r2-map", "to": "v-r2-commons", "slice_id": "r2", "between_slices": [], "route_id": null, "face_ids": ["f-r1-r2-map-commons"] },
+    { "id": "e-r2-commons-rights", "kind": "PATH", "from": "v-r2-commons", "to": "v-r2-rights", "slice_id": "r2", "between_slices": [], "route_id": null, "face_ids": ["f-r1-r2-commons-rights"] },
+    { "id": "e-r2-rights-contact", "kind": "PATH", "from": "v-r2-rights", "to": "v-r2-contact", "slice_id": "r2", "between_slices": [], "route_id": null, "face_ids": ["f-r1-r2-rights-contact"] },
+    { "id": "e-r2-commons-lab", "kind": "PATH", "from": "v-r2-commons", "to": "v-r2-lab", "slice_id": "r2", "between_slices": [], "route_id": null, "face_ids": ["f-r1-r2-commons-lab"] },
+    { "id": "e-home-r0-r1", "kind": "ALIGNMENT", "from": "v-r0-home", "to": "v-r1-home", "slice_id": null, "between_slices": ["r0", "r1"], "route_id": "route-home", "face_ids": ["f-r0-r1-home-map"] },
+    { "id": "e-map-r0-r1", "kind": "ALIGNMENT", "from": "v-r0-map", "to": "v-r1-map", "slice_id": null, "between_slices": ["r0", "r1"], "route_id": "route-map", "face_ids": ["f-r0-r1-home-map", "f-r0-r1-map-commons"] },
+    { "id": "e-commons-r0-r1", "kind": "ALIGNMENT", "from": "v-r0-commons", "to": "v-r1-commons", "slice_id": null, "between_slices": ["r0", "r1"], "route_id": "route-commons", "face_ids": ["f-r0-r1-map-commons", "f-r0-r1-commons-rights"] },
+    { "id": "e-rights-r0-r1", "kind": "ALIGNMENT", "from": "v-r0-rights", "to": "v-r1-rights", "slice_id": null, "between_slices": ["r0", "r1"], "route_id": "route-rights", "face_ids": ["f-r0-r1-commons-rights", "f-r0-r1-rights-contact"] },
+    { "id": "e-contact-r0-r1", "kind": "ALIGNMENT", "from": "v-r0-contact", "to": "v-r1-contact", "slice_id": null, "between_slices": ["r0", "r1"], "route_id": "route-contact", "face_ids": ["f-r0-r1-rights-contact"] },
+    { "id": "e-home-r1-r2", "kind": "ALIGNMENT", "from": "v-r1-home", "to": "v-r2-home", "slice_id": null, "between_slices": ["r1", "r2"], "route_id": "route-home", "face_ids": ["f-r1-r2-home-map"] },
+    { "id": "e-map-r1-r2", "kind": "ALIGNMENT", "from": "v-r1-map", "to": "v-r2-map", "slice_id": null, "between_slices": ["r1", "r2"], "route_id": "route-map", "face_ids": ["f-r1-r2-home-map", "f-r1-r2-map-commons"] },
+    { "id": "e-commons-r1-r2", "kind": "ALIGNMENT", "from": "v-r1-commons", "to": "v-r2-commons", "slice_id": null, "between_slices": ["r1", "r2"], "route_id": "route-commons", "face_ids": ["f-r1-r2-map-commons", "f-r1-r2-commons-rights", "f-r1-r2-commons-lab"] },
+    { "id": "e-rights-r1-r2", "kind": "ALIGNMENT", "from": "v-r1-rights", "to": "v-r2-rights", "slice_id": null, "between_slices": ["r1", "r2"], "route_id": "route-rights", "face_ids": ["f-r1-r2-commons-rights", "f-r1-r2-rights-contact"] },
+    { "id": "e-contact-r1-r2", "kind": "ALIGNMENT", "from": "v-r1-contact", "to": "v-r2-contact", "slice_id": null, "between_slices": ["r1", "r2"], "route_id": "route-contact", "face_ids": ["f-r1-r2-rights-contact"] },
+    { "id": "e-lab-r1-r2", "kind": "ALIGNMENT", "from": "v-r1-lab", "to": "v-r2-lab", "slice_id": null, "between_slices": ["r1", "r2"], "route_id": "route-lab", "face_ids": ["f-r1-r2-commons-lab"] },
+    { "id": "e-r2-contact-redirect", "kind": "REDIRECT_SPUR", "from": "v-r2-contact", "to": "v-r2-redirect-target", "slice_id": "r2", "between_slices": [], "route_id": null, "face_ids": [] }
+  ],
+  "faces": [
+    { "id": "f-r0-r1-home-map", "kind": "STABLE_ALIGNMENT_FACE", "between_slices": ["r0", "r1"], "attaching_cycle": [{ "edge_id": "e-r0-home-map", "orientation": 1 }, { "edge_id": "e-map-r0-r1", "orientation": 1 }, { "edge_id": "e-r1-home-map", "orientation": -1 }, { "edge_id": "e-home-r0-r1", "orientation": -1 }] },
+    { "id": "f-r0-r1-map-commons", "kind": "STABLE_ALIGNMENT_FACE", "between_slices": ["r0", "r1"], "attaching_cycle": [{ "edge_id": "e-r0-map-commons", "orientation": 1 }, { "edge_id": "e-commons-r0-r1", "orientation": 1 }, { "edge_id": "e-r1-map-commons", "orientation": -1 }, { "edge_id": "e-map-r0-r1", "orientation": -1 }] },
+    { "id": "f-r0-r1-commons-rights", "kind": "STABLE_ALIGNMENT_FACE", "between_slices": ["r0", "r1"], "attaching_cycle": [{ "edge_id": "e-r0-commons-rights", "orientation": 1 }, { "edge_id": "e-rights-r0-r1", "orientation": 1 }, { "edge_id": "e-r1-commons-rights", "orientation": -1 }, { "edge_id": "e-commons-r0-r1", "orientation": -1 }] },
+    { "id": "f-r0-r1-rights-contact", "kind": "STABLE_ALIGNMENT_FACE", "between_slices": ["r0", "r1"], "attaching_cycle": [{ "edge_id": "e-r0-rights-contact", "orientation": 1 }, { "edge_id": "e-contact-r0-r1", "orientation": 1 }, { "edge_id": "e-r1-rights-contact", "orientation": -1 }, { "edge_id": "e-rights-r0-r1", "orientation": -1 }] },
+    { "id": "f-r1-r2-home-map", "kind": "STABLE_ALIGNMENT_FACE", "between_slices": ["r1", "r2"], "attaching_cycle": [{ "edge_id": "e-r1-home-map", "orientation": 1 }, { "edge_id": "e-map-r1-r2", "orientation": 1 }, { "edge_id": "e-r2-home-map", "orientation": -1 }, { "edge_id": "e-home-r1-r2", "orientation": -1 }] },
+    { "id": "f-r1-r2-map-commons", "kind": "STABLE_ALIGNMENT_FACE", "between_slices": ["r1", "r2"], "attaching_cycle": [{ "edge_id": "e-r1-map-commons", "orientation": 1 }, { "edge_id": "e-commons-r1-r2", "orientation": 1 }, { "edge_id": "e-r2-map-commons", "orientation": -1 }, { "edge_id": "e-map-r1-r2", "orientation": -1 }] },
+    { "id": "f-r1-r2-commons-rights", "kind": "STABLE_ALIGNMENT_FACE", "between_slices": ["r1", "r2"], "attaching_cycle": [{ "edge_id": "e-r1-commons-rights", "orientation": 1 }, { "edge_id": "e-rights-r1-r2", "orientation": 1 }, { "edge_id": "e-r2-commons-rights", "orientation": -1 }, { "edge_id": "e-commons-r1-r2", "orientation": -1 }] },
+    { "id": "f-r1-r2-rights-contact", "kind": "STABLE_ALIGNMENT_FACE", "between_slices": ["r1", "r2"], "attaching_cycle": [{ "edge_id": "e-r1-rights-contact", "orientation": 1 }, { "edge_id": "e-contact-r1-r2", "orientation": 1 }, { "edge_id": "e-r2-rights-contact", "orientation": -1 }, { "edge_id": "e-rights-r1-r2", "orientation": -1 }] },
+    { "id": "f-r1-r2-commons-lab", "kind": "BORN_ROUTE_ALIGNMENT_FACE", "between_slices": ["r1", "r2"], "attaching_cycle": [{ "edge_id": "e-r1-commons-lab", "orientation": 1 }, { "edge_id": "e-lab-r1-r2", "orientation": 1 }, { "edge_id": "e-r2-commons-lab", "orientation": -1 }, { "edge_id": "e-commons-r1-r2", "orientation": -1 }] }
+  ],
+  "subcomplexes": [
+    {
+      "id": "stable-strip",
+      "vertex_ids": ["v-r0-home", "v-r0-map", "v-r0-commons", "v-r0-rights", "v-r0-contact", "v-r1-home", "v-r1-map", "v-r1-commons", "v-r1-rights", "v-r1-contact", "v-r2-home", "v-r2-map", "v-r2-commons", "v-r2-rights", "v-r2-contact"],
+      "edge_ids": ["e-r0-home-map", "e-r0-map-commons", "e-r0-commons-rights", "e-r0-rights-contact", "e-r1-home-map", "e-r1-map-commons", "e-r1-commons-rights", "e-r1-rights-contact", "e-r2-home-map", "e-r2-map-commons", "e-r2-commons-rights", "e-r2-rights-contact", "e-home-r0-r1", "e-map-r0-r1", "e-commons-r0-r1", "e-rights-r0-r1", "e-contact-r0-r1", "e-home-r1-r2", "e-map-r1-r2", "e-commons-r1-r2", "e-rights-r1-r2", "e-contact-r1-r2"],
+      "face_ids": ["f-r0-r1-home-map", "f-r0-r1-map-commons", "f-r0-r1-commons-rights", "f-r0-r1-rights-contact", "f-r1-r2-home-map", "f-r1-r2-map-commons", "f-r1-r2-commons-rights", "f-r1-r2-rights-contact"],
+      "expected": { "vertices": 15, "edges": 22, "faces": 8, "components": 1, "euler_characteristic": 1, "graph_cycle_rank": 8, "boundary_matrix_rank_1": 14, "boundary_matrix_rank_2": 8, "betti_f2": [1, 0, 0], "classification": "BOUNDARY_DISK" },
+      "witnesses": ["one boundary cycle", "every face is a quadrilateral", "each edge has one or two incident faces", "the cellulation is the product of a four-edge path and a two-edge release interval"]
+    },
+    {
+      "id": "full-complex",
+      "vertex_ids": ["v-r0-home", "v-r0-map", "v-r0-commons", "v-r0-rights", "v-r0-contact", "v-r1-home", "v-r1-map", "v-r1-commons", "v-r1-rights", "v-r1-contact", "v-r1-lab", "v-r2-home", "v-r2-map", "v-r2-commons", "v-r2-rights", "v-r2-contact", "v-r2-lab", "v-r2-redirect-target"],
+      "edge_ids": ["e-r0-home-map", "e-r0-map-commons", "e-r0-commons-rights", "e-r0-rights-contact", "e-r1-home-map", "e-r1-map-commons", "e-r1-commons-rights", "e-r1-rights-contact", "e-r1-commons-lab", "e-r2-home-map", "e-r2-map-commons", "e-r2-commons-rights", "e-r2-rights-contact", "e-r2-commons-lab", "e-home-r0-r1", "e-map-r0-r1", "e-commons-r0-r1", "e-rights-r0-r1", "e-contact-r0-r1", "e-home-r1-r2", "e-map-r1-r2", "e-commons-r1-r2", "e-rights-r1-r2", "e-contact-r1-r2", "e-lab-r1-r2", "e-r2-contact-redirect"],
+      "face_ids": ["f-r0-r1-home-map", "f-r0-r1-map-commons", "f-r0-r1-commons-rights", "f-r0-r1-rights-contact", "f-r1-r2-home-map", "f-r1-r2-map-commons", "f-r1-r2-commons-rights", "f-r1-r2-rights-contact", "f-r1-r2-commons-lab"],
+      "expected": { "vertices": 18, "edges": 26, "faces": 9, "components": 1, "euler_characteristic": 1, "graph_cycle_rank": 9, "boundary_matrix_rank_1": 17, "boundary_matrix_rank_2": 9, "betti_f2": [1, 0, 0], "classification": "NON_PURE_BRANCHED_CELL_COMPLEX" },
+      "witnesses": ["e-commons-r1-r2 has three incident faces", "e-r2-contact-redirect has zero incident faces and is a maximal one-cell", "Euler characteristic one does not imply disk or surface"]
+    }
+  ],
+  "frontiers": [
+    { "id": "b0", "slice_id": "r0", "vertex_ids": ["v-r0-home", "v-r0-map", "v-r0-commons", "v-r0-rights", "v-r0-contact"], "edge_ids": ["e-r0-home-map", "e-r0-map-commons", "e-r0-commons-rights", "e-r0-rights-contact"] },
+    { "id": "b1", "slice_id": "r1", "vertex_ids": ["v-r1-home", "v-r1-map", "v-r1-commons", "v-r1-rights", "v-r1-contact", "v-r1-lab"], "edge_ids": ["e-r1-home-map", "e-r1-map-commons", "e-r1-commons-rights", "e-r1-rights-contact", "e-r1-commons-lab"] },
+    { "id": "b2", "slice_id": "r2", "vertex_ids": ["v-r2-home", "v-r2-map", "v-r2-commons", "v-r2-rights", "v-r2-contact", "v-r2-lab", "v-r2-redirect-target"], "edge_ids": ["e-r2-home-map", "e-r2-map-commons", "e-r2-commons-rights", "e-r2-rights-contact", "e-r2-commons-lab", "e-r2-contact-redirect"] }
+  ],
+  "cospans": [
+    { "id": "c01", "input_frontier_id": "b0", "output_frontier_id": "b1", "vertex_ids": ["v-r0-home", "v-r0-map", "v-r0-commons", "v-r0-rights", "v-r0-contact", "v-r1-home", "v-r1-map", "v-r1-commons", "v-r1-rights", "v-r1-contact", "v-r1-lab"], "edge_ids": ["e-r0-home-map", "e-r0-map-commons", "e-r0-commons-rights", "e-r0-rights-contact", "e-r1-home-map", "e-r1-map-commons", "e-r1-commons-rights", "e-r1-rights-contact", "e-r1-commons-lab", "e-home-r0-r1", "e-map-r0-r1", "e-commons-r0-r1", "e-rights-r0-r1", "e-contact-r0-r1"], "face_ids": ["f-r0-r1-home-map", "f-r0-r1-map-commons", "f-r0-r1-commons-rights", "f-r0-r1-rights-contact"], "expected_counts": [11, 14, 4] },
+    { "id": "c12", "input_frontier_id": "b1", "output_frontier_id": "b2", "vertex_ids": ["v-r1-home", "v-r1-map", "v-r1-commons", "v-r1-rights", "v-r1-contact", "v-r1-lab", "v-r2-home", "v-r2-map", "v-r2-commons", "v-r2-rights", "v-r2-contact", "v-r2-lab", "v-r2-redirect-target"], "edge_ids": ["e-r1-home-map", "e-r1-map-commons", "e-r1-commons-rights", "e-r1-rights-contact", "e-r1-commons-lab", "e-r2-home-map", "e-r2-map-commons", "e-r2-commons-rights", "e-r2-rights-contact", "e-r2-commons-lab", "e-r2-contact-redirect", "e-home-r1-r2", "e-map-r1-r2", "e-commons-r1-r2", "e-rights-r1-r2", "e-contact-r1-r2", "e-lab-r1-r2"], "face_ids": ["f-r1-r2-home-map", "f-r1-r2-map-commons", "f-r1-r2-commons-rights", "f-r1-r2-rights-contact", "f-r1-r2-commons-lab"], "expected_counts": [13, 17, 5] }
+  ],
+  "composition_checks": {
+    "sequential": { "left_cospan_id": "c01", "right_cospan_id": "c12", "shared_frontier_id": "b1", "identification_rule": "EXACT_OCCURRENCE_ID_ONLY", "expected_counts": [18, 26, 9], "expected_subcomplex_id": "full-complex", "passes": true },
+    "identity": { "rule": "B_TO_B_FROM_B", "left_identity_passes": true, "right_identity_passes": true },
+    "parallel": { "operation": "DISJOINT_UNION_WITH_L_AND_R_NAMESPACES", "copies": 2, "expected_counts": [36, 52, 18], "expected_components": 2, "expected_euler_characteristic": 2, "expected_graph_cycle_rank": 18, "expected_betti_f2": [2, 0, 0], "namespace_swap_passes": true, "empty_unit_passes": true, "interchange_passes": true },
+    "associativity_scope": { "nontrivial_associativity_tested": false, "reason": "Three slices provide two nonidentity temporal cospans; a genuine nontrivial associativity fixture needs four slices.", "identity_smoke_test_only": true }
+  },
+  "validation_contract": {
+    "protocol": "kingdom.string-crawl-strand-validation/0.1",
+    "deterministic": true,
+    "stdout_only": true,
+    "network_requests": 0,
+    "storage_writes": 0,
+    "nen_invocation": false,
+    "karma_receipt_created": false,
+    "zerone_event_created": false,
+    "authority_effect": "NONE"
+  },
+  "boundaries": {
+    "synthetic_not_observed": true,
+    "offline": true,
+    "read_only": true,
+    "crawler_present": false,
+    "network_capability": false,
+    "external_write": false,
+    "surface_claim_for_full_complex": false,
+    "physical_string_claim": false,
+    "spacetime_claim": false,
+    "gauge_or_weyl_claim": false,
+    "causal_claim": false,
+    "consent_or_authorization_claim": false,
+    "person_or_content_score": false,
+    "nen_ability": false,
+    "karma_adapter": false,
+    "deployment_authority": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:cb07f3408cee01b0b465fa9ee543257e4d38e9cfddc203e47b4c8d429bcc3a1c",
+    "digest_field_treated_as": null
+  }
+}

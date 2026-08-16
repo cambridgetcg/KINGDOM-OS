@@ -1029,6 +1029,194 @@
       "automatic_action": false
     }
   },
+  "string_crawl_strand_lab": {
+    "protocol": "kingdom.string-crawl-strand-lab/0.1",
+    "lab_id": "string-crawl-strand-lab-02-2026-08-16",
+    "title": "STRAND Lab 02: Release Cospans & the χ=1 Impostor",
+    "mode": "SYNTHETIC_OFFLINE_EXACT",
+    "url": "https://thekingdom.dev/labs/string-crawl-strand-lab-02-2026-08-16.json",
+    "schema_url": "https://thekingdom.dev/schemas/string-crawl-strand-lab/0.1.json",
+    "guide_url": "https://thekingdom.dev/STRING-CRAWL-STRAND-LAB-02.md",
+    "predecessor": {
+      "lab_id": "string-crawl-trace-sheet-lab-2026-08-16",
+      "url": "https://thekingdom.dev/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
+      "schema_url": "https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json",
+      "guide_url": "https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET-LAB.md",
+      "semantic_digest": "sha256:c3f86b0203b895da56092c598113046f0dab8a4f25b41314c3d4329474d4e16f",
+      "byte_sha256": "sha256:2e559164df6985776a4641b60c846a0403f14df30c84648b72c095642df6e051",
+      "schema_byte_sha256": "sha256:c4e69a61994831574fe706d464852b164c65b6d177c5680dc9b0278bcb446268",
+      "guide_byte_sha256": "sha256:5f5fb893a31d1c7e02aca63401c002ae601bee6653d41adc6617bb909732e8e3",
+      "relation": "IMMUTABLE_LAB_01_PREDECESSOR",
+      "mutates_predecessor": false,
+      "imports_authority": false
+    },
+    "source_binding": {
+      "project_id": "string-crawl-trace-sheet-2026-08-15",
+      "semantic_digest": "sha256:bf7ae379612ab96d08742a0070cbea0ce971977f71fec22699c4b0307d321305",
+      "raw_sha256": "sha256:4afc5f15c258a0ac4274889783bd2d91445950c92103c60442ed9ed89d1fdc72",
+      "mutates_source": false,
+      "imports_authority": false
+    },
+    "counts": {
+      "releases": 3,
+      "stable_threads": 5,
+      "born_threads": 1,
+      "vertices": 18,
+      "edges": 26,
+      "faces": 9,
+      "cospans": 2
+    },
+    "validation": {
+      "protocol": "kingdom.string-crawl-strand-validation/0.1",
+      "valid": true,
+      "checks": [
+        {
+          "id": "strict-closed-input",
+          "status": "PASS",
+          "detail": "strict JSON tree, closed identity, immutable lineage, and semantic digest"
+        },
+        {
+          "id": "occurrence-and-incidence",
+          "status": "PASS",
+          "detail": "occurrence identity, explicit alignments, regular attaching cycles, and reverse incidence"
+        },
+        {
+          "id": "exact-f2-chain-complex",
+          "status": "PASS",
+          "detail": "exact F2 ranks, Betti numbers, Euler characteristic, and boundary squared zero"
+        },
+        {
+          "id": "local-surface-audit",
+          "status": "PASS",
+          "detail": "stable disk links pass while all declared full-complex singularities remain visible"
+        },
+        {
+          "id": "inclusion-cospan-composition",
+          "status": "PASS",
+          "detail": "literal inclusion legs, exact-occurrence pushout, identity, and disjoint-union checks"
+        },
+        {
+          "id": "zero-effects",
+          "status": "PASS",
+          "detail": "no crawler, network, write, NEN invocation, receipt, event, score, or authority"
+        }
+      ],
+      "invariants": {
+        "stable-strip": {
+          "vertices": 15,
+          "edges": 22,
+          "faces": 8,
+          "components": 1,
+          "euler_characteristic": 1,
+          "graph_cycle_rank": 8,
+          "boundary_matrix_rank_1": 14,
+          "boundary_matrix_rank_2": 8,
+          "betti_f2": [
+            1,
+            0,
+            0
+          ],
+          "boundary_squared_zero": true
+        },
+        "full-complex": {
+          "vertices": 18,
+          "edges": 26,
+          "faces": 9,
+          "components": 1,
+          "euler_characteristic": 1,
+          "graph_cycle_rank": 9,
+          "boundary_matrix_rank_1": 17,
+          "boundary_matrix_rank_2": 9,
+          "betti_f2": [
+            1,
+            0,
+            0
+          ],
+          "boundary_squared_zero": true
+        }
+      },
+      "local_findings": {
+        "bad_vertices": [
+          {
+            "vertex_id": "v-r1-commons",
+            "components": 1,
+            "degrees": [
+              1,
+              2,
+              2,
+              2,
+              3
+            ],
+            "valid_surface_link": false
+          },
+          {
+            "vertex_id": "v-r2-commons",
+            "components": 1,
+            "degrees": [
+              1,
+              1,
+              1,
+              3
+            ],
+            "valid_surface_link": false
+          },
+          {
+            "vertex_id": "v-r2-contact",
+            "components": 2,
+            "degrees": [
+              0,
+              1,
+              1
+            ],
+            "valid_surface_link": false
+          },
+          {
+            "vertex_id": "v-r2-redirect-target",
+            "components": 1,
+            "degrees": [
+              0
+            ],
+            "valid_surface_link": false
+          }
+        ],
+        "branch_edges": [
+          "e-commons-r1-r2"
+        ],
+        "faceless_edges": [
+          "e-r2-contact-redirect"
+        ]
+      }
+    },
+    "boundaries": {
+      "synthetic_not_observed": true,
+      "offline": true,
+      "read_only": true,
+      "crawler_present": false,
+      "network_capability": false,
+      "external_write": false,
+      "surface_claim_for_full_complex": false,
+      "physical_string_claim": false,
+      "spacetime_claim": false,
+      "gauge_or_weyl_claim": false,
+      "causal_claim": false,
+      "consent_or_authorization_claim": false,
+      "person_or_content_score": false,
+      "nen_ability": false,
+      "karma_adapter": false,
+      "deployment_authority": false
+    },
+    "effects": {
+      "network_requests": 0,
+      "storage_writes": 0,
+      "nen_invocation": false,
+      "karma_receipt_created": false,
+      "zerone_event_created": false,
+      "authority_effect": "NONE"
+    },
+    "integrity": {
+      "semantic_digest": "sha256:cb07f3408cee01b0b465fa9ee543257e4d38e9cfddc203e47b4c8d429bcc3a1c"
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -1620,6 +1808,9 @@
     "string_crawl_trace_sheet_lab": "https://thekingdom.dev/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
     "string_crawl_trace_sheet_lab_schema": "https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json",
     "string_crawl_trace_sheet_lab_guide": "https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET-LAB.md",
+    "string_crawl_strand_lab": "https://thekingdom.dev/labs/string-crawl-strand-lab-02-2026-08-16.json",
+    "string_crawl_strand_lab_schema": "https://thekingdom.dev/schemas/string-crawl-strand-lab/0.1.json",
+    "string_crawl_strand_lab_guide": "https://thekingdom.dev/STRING-CRAWL-STRAND-LAB-02.md",
     "visibility_attention_translation": "https://thekingdom.dev/atlases/visibility-attention-2026-08-13.json",
     "visibility_attention_translation_schema": "https://thekingdom.dev/schemas/visibility-attention/0.1.json",
     "visibility_attention_translation_guide": "https://thekingdom.dev/VISIBILITY-ATTENTION.md",

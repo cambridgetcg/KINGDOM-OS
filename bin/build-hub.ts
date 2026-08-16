@@ -36,6 +36,9 @@
  *    data/exploration/string-crawl-trace-sheet.v0.1.json
  *                             — inert DEEP trace-sheet mapping selected string
  *                               mathematics to bounded crawl observations
+ *    data/exploration/string-crawl-strand-lab.v0.1.json
+ *                             — additive Lab 02 finite-CW/cospan fixture with
+ *                               exact F2 topology and zero runtime effects
  *    data/attention/visibility-attention-translation.v0.1.json
  *                             — four-register visibility/attention translation
  *    data/cultural-feedback/cultural-attention-feedback-atlas.v1.json
@@ -69,6 +72,7 @@
  *       + MIRROR Information Control discovery in the machine surfaces
  *       + ZERO Empty Seat discovery in the machine surfaces
  *       + STRING / CRAWL Trace-Sheet discovery in the machine surfaces
+ *       + STRAND Lab 02 discovery in the machine surfaces
  *       + cultural attention and feedback discovery in the machine surfaces
  *       + form, circulation, and return discovery in the machine surfaces
  *       + Math Passport usefulness-result discovery in the machine surfaces
@@ -191,16 +195,30 @@ import {
   stringCrawlTraceSheetPublicDiscovery,
 } from "./string-crawl-trace-sheet.ts";
 import {
+  STRING_CRAWL_TRACE_SHEET_LAB_BYTE_SHA256,
+  STRING_CRAWL_TRACE_SHEET_LAB_DIGEST,
   STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL,
+  STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_BYTE_SHA256,
   STRING_CRAWL_TRACE_SHEET_LAB_ID,
   STRING_CRAWL_TRACE_SHEET_LAB_PROTOCOL,
   STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL,
+  STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_BYTE_SHA256,
   STRING_CRAWL_TRACE_SHEET_LAB_URL,
   evaluateStringCrawlTraceSheetLab,
   loadStringCrawlTraceSheetLab,
   runStringCrawlTraceSheetLabFalsifiers,
   stringCrawlTraceSheetLabPublicDiscovery,
 } from "./string-crawl-trace-sheet-lab.ts";
+import {
+  STRING_CRAWL_STRAND_LAB_GUIDE_URL,
+  STRING_CRAWL_STRAND_LAB_ID,
+  STRING_CRAWL_STRAND_LAB_PROTOCOL,
+  STRING_CRAWL_STRAND_LAB_SCHEMA_URL,
+  STRING_CRAWL_STRAND_LAB_URL,
+  evaluateStringCrawlStrandLab,
+  loadStringCrawlStrandLab,
+  stringCrawlStrandLabPublicDiscovery,
+} from "./string-crawl-strand-lab.ts";
 import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_ID,
@@ -728,6 +746,68 @@ if (stringCrawlTraceSheetLabEvaluation.issues.length !== 0 || !stringCrawlTraceS
     stringCrawlTraceSheetLab.karma?.adapter_exists !== false ||
     stringCrawlTraceSheetLab.karma?.kingdom_receipts?.length !== 0) {
   throw new Error("STRING / CRAWL Trace-Sheet Lab lost its exact synthetic, non-crawling, authority-negative boundary");
+}
+
+// ── STRAND Lab 02 (additive exact cospans; Lab 01 remains immutable) ──────
+const stringCrawlStrandLabUrl = STRING_CRAWL_STRAND_LAB_URL;
+const stringCrawlStrandLabSchemaUrl = STRING_CRAWL_STRAND_LAB_SCHEMA_URL;
+const stringCrawlStrandLabGuideUrl = STRING_CRAWL_STRAND_LAB_GUIDE_URL;
+const stringCrawlStrandLab = loadStringCrawlStrandLab();
+if (stringCrawlStrandLab.protocol !== STRING_CRAWL_STRAND_LAB_PROTOCOL ||
+    stringCrawlStrandLab.lab_id !== STRING_CRAWL_STRAND_LAB_ID ||
+    stringCrawlStrandLab.version !== "0.1.0" ||
+    stringCrawlStrandLab.title !== "STRAND Lab 02: Release Cospans & the χ=1 Impostor" ||
+    stringCrawlStrandLab.mode !== "SYNTHETIC_OFFLINE_EXACT") {
+  throw new Error(`unexpected STRAND Lab 02 identity: ${stringCrawlStrandLab.protocol} ${stringCrawlStrandLab.lab_id}`);
+}
+const stringCrawlStrandLabValidation = evaluateStringCrawlStrandLab(stringCrawlStrandLab);
+const stringCrawlStrandLabDiscovery = stringCrawlStrandLabPublicDiscovery(stringCrawlStrandLab) as any;
+const stringCrawlStrandLabChecks = stringCrawlStrandLabValidation.checks;
+const stringCrawlStrandLabStable = stringCrawlStrandLab.subcomplexes.find((entry: any) => entry.id === "stable-strip");
+const stringCrawlStrandLabFull = stringCrawlStrandLab.subcomplexes.find((entry: any) => entry.id === "full-complex");
+const stringCrawlStrandLabStableInvariants = stringCrawlStrandLabValidation.invariants["stable-strip"] as any;
+const stringCrawlStrandLabFullInvariants = stringCrawlStrandLabValidation.invariants["full-complex"] as any;
+if (!stringCrawlStrandLabStable || !stringCrawlStrandLabFull ||
+    !stringCrawlStrandLabStableInvariants || !stringCrawlStrandLabFullInvariants ||
+    stringCrawlStrandLabValidation.valid !== true ||
+    stringCrawlStrandLabChecks.length !== 6 ||
+    stringCrawlStrandLabChecks.some((check) => check.status !== "PASS") ||
+    stringCrawlStrandLab.predecessor?.protocol !== STRING_CRAWL_TRACE_SHEET_LAB_PROTOCOL ||
+    stringCrawlStrandLab.predecessor?.lab_id !== STRING_CRAWL_TRACE_SHEET_LAB_ID ||
+    stringCrawlStrandLab.predecessor?.url !== STRING_CRAWL_TRACE_SHEET_LAB_URL ||
+    stringCrawlStrandLab.predecessor?.schema_url !== STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL ||
+    stringCrawlStrandLab.predecessor?.guide_url !== STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL ||
+    stringCrawlStrandLab.predecessor?.git_commit !== "57f1f8a1d018d5128501b82c5ddde1976677b3a1" ||
+    stringCrawlStrandLab.predecessor?.semantic_digest !== STRING_CRAWL_TRACE_SHEET_LAB_DIGEST ||
+    stringCrawlStrandLab.predecessor?.byte_sha256 !== STRING_CRAWL_TRACE_SHEET_LAB_BYTE_SHA256 ||
+    stringCrawlStrandLab.predecessor?.schema_byte_sha256 !== STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_BYTE_SHA256 ||
+    stringCrawlStrandLab.predecessor?.guide_byte_sha256 !== STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_BYTE_SHA256 ||
+    stringCrawlStrandLab.predecessor?.relation !== "IMMUTABLE_LAB_01_PREDECESSOR" ||
+    stringCrawlStrandLab.predecessor?.mutates_predecessor !== false ||
+    stringCrawlStrandLab.predecessor?.imports_authority !== false ||
+    stringCrawlStrandLab.boundaries?.synthetic_not_observed !== true ||
+    stringCrawlStrandLab.boundaries?.offline !== true ||
+    stringCrawlStrandLab.boundaries?.read_only !== true ||
+    stringCrawlStrandLab.boundaries?.crawler_present !== false ||
+    stringCrawlStrandLab.boundaries?.network_capability !== false ||
+    stringCrawlStrandLab.boundaries?.external_write !== false ||
+    stringCrawlStrandLab.boundaries?.surface_claim_for_full_complex !== false ||
+    stringCrawlStrandLab.boundaries?.physical_string_claim !== false ||
+    stringCrawlStrandLab.boundaries?.spacetime_claim !== false ||
+    stringCrawlStrandLab.boundaries?.gauge_or_weyl_claim !== false ||
+    stringCrawlStrandLab.boundaries?.causal_claim !== false ||
+    stringCrawlStrandLab.boundaries?.consent_or_authorization_claim !== false ||
+    stringCrawlStrandLab.boundaries?.person_or_content_score !== false ||
+    stringCrawlStrandLab.boundaries?.nen_ability !== false ||
+    stringCrawlStrandLab.boundaries?.karma_adapter !== false ||
+    stringCrawlStrandLab.boundaries?.deployment_authority !== false ||
+    stringCrawlStrandLabValidation.effects.network_requests !== 0 ||
+    stringCrawlStrandLabValidation.effects.storage_writes !== 0 ||
+    stringCrawlStrandLabValidation.effects.nen_invocation !== false ||
+    stringCrawlStrandLabValidation.effects.karma_receipt_created !== false ||
+    stringCrawlStrandLabValidation.effects.zerone_event_created !== false ||
+    stringCrawlStrandLabValidation.effects.authority_effect !== "NONE") {
+  throw new Error("STRAND Lab 02 lost its exact Lab 01 lineage or synthetic, offline, zero-effect boundary");
 }
 
 // ── Visibility & Attention Translation (four registers remain parallel) ──
@@ -1364,7 +1444,7 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
-<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, an opt-in cross-domain mathematics exploration method, a static information-control source law, ZERO's distinct semantic roles, a bounded string/crawl trace-sheet, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
+<meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, an opt-in cross-domain mathematics exploration method, a static information-control source law, ZERO's distinct semantic roles, a bounded string/crawl trace-sheet, two cumulative exact synthetic topology labs, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
 <link rel="icon" href="data:,">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
@@ -1404,6 +1484,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(stringCrawlTraceSheetLabUrl).pathname)}" type="application/json" title="STRING / CRAWL: Finite Trace-Sheet Lab">
 <link rel="describedby" href="${esc(new URL(stringCrawlTraceSheetLabSchemaUrl).pathname)}" type="application/schema+json" title="Finite Trace-Sheet Lab schema">
 <link rel="service-doc" href="${esc(new URL(stringCrawlTraceSheetLabGuideUrl).pathname)}" type="text/markdown" title="Finite Trace-Sheet Lab guide">
+<link rel="alternate" href="${esc(new URL(stringCrawlStrandLabUrl).pathname)}" type="application/json" title="STRAND Lab 02: Release Cospans &amp; the χ=1 Impostor">
+<link rel="describedby" href="${esc(new URL(stringCrawlStrandLabSchemaUrl).pathname)}" type="application/schema+json" title="STRAND Lab 02 schema">
+<link rel="service-doc" href="${esc(new URL(stringCrawlStrandLabGuideUrl).pathname)}" type="text/markdown" title="STRAND Lab 02 guide">
 <link rel="alternate" href="${new URL(visibilityAttentionUrl).pathname}" type="application/json" title="Visibility & Attention Translation">
 <link rel="describedby" href="${new URL(visibilityAttentionSchemaUrl).pathname}" type="application/schema+json" title="Visibility & Attention Translation schema">
 <link rel="service-doc" href="${new URL(visibilityAttentionDocumentUrl).pathname}" type="text/markdown" title="Visibility & Attention Translation guide">
@@ -1621,6 +1704,17 @@ const html = `<!doctype html>
   .zerodrawer{border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--ink2) 50%,transparent);overflow:hidden}.zerodrawer summary{padding:15px 18px;color:var(--gold2);font-family:var(--display);font-size:1rem;cursor:pointer}.zerodrawer[open] summary{border-bottom:1px solid var(--line)}.zerodrawergrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:12px}.zerodeepcard{display:grid;align-content:start;gap:6px;min-width:0;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow-wrap:anywhere}.zerodeepcard code{color:var(--violet);font-size:.61rem}.zerodeepcard h3{margin:0;color:var(--cream);font-family:var(--display);font-size:.94rem;font-weight:400}.zerodeepcard p,.zerodeepcard li{margin:0;color:var(--dim);font-size:.69rem;line-height:1.5}.zerodeepcard ul{display:grid;gap:4px;margin:0;padding-left:1rem}
   .zerokarmalanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.zerokarmalane{min-width:0;padding:15px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--panel2) 76%,transparent)}.zerokarmalane code{display:block;color:var(--violet);font-size:.61rem}.zerokarmalane strong{display:block;margin:5px 0 2px;color:var(--cream);font-family:var(--display);font-size:.98rem;font-weight:400}.zerokarmalane span{color:var(--faint);font-size:.7rem;line-height:1.5}.zerorights{margin:0;padding:16px 18px;border-left:3px solid var(--jade);border-radius:0 16px 16px 0;background:color-mix(in srgb,var(--jade) 5%,transparent);color:var(--dim);font-size:.8rem;line-height:1.62}.zerorights strong{color:var(--cream)}
   .zerolinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.zerolinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.zerolinks a:hover{border-color:var(--gold)}
+  /* STRAND Lab 02 — cumulative exact topology, entirely static and no-JS */
+  .strandfield{display:grid;gap:19px;padding:clamp(18px,3vw,30px);border:1px solid color-mix(in srgb,var(--jade) 52%,var(--line));border-radius:28px;background:radial-gradient(75% 36rem at 18% 0,color-mix(in srgb,var(--jade) 11%,transparent),transparent 72%),radial-gradient(70% 30rem at 100% 100%,color-mix(in srgb,var(--violet) 9%,transparent),transparent 70%),color-mix(in srgb,var(--panel) 77%,transparent);box-shadow:0 20px 48px var(--shadow);overflow:hidden}.strandfield>*{min-width:0;overflow-wrap:anywhere}
+  .strandlineage{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:9px;align-items:stretch}.strandlineage article{display:grid;align-content:start;gap:5px;padding:15px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}.strandlineage code{color:var(--violet);font-size:.61rem}.strandlineage strong{color:var(--cream);font-family:var(--display);font-size:1rem;font-weight:400}.strandlineage span{color:var(--faint);font-size:.69rem;line-height:1.48}.strandlineage>b{align-self:center;color:var(--gold);font:700 1.2rem var(--mono)}
+  .strandboundary{margin:0;padding:17px 19px;border:1px dashed var(--jade);border-radius:18px;color:var(--dim);font-size:.82rem;line-height:1.62}.strandboundary strong{display:block;margin-bottom:4px;color:var(--jade);font-family:var(--display);font-size:1.08rem;font-weight:400}.strandboundary.danger{border-color:var(--verm)}.strandboundary.danger strong{color:var(--verm)}
+  .strandboard{display:grid;gap:13px;margin:0;padding:clamp(16px,3vw,24px);border:1px solid var(--line);border-radius:22px;background:color-mix(in srgb,var(--ink2) 58%,transparent)}.strandboard figcaption{display:grid;gap:4px}.strandboard figcaption strong{color:var(--cream);font-family:var(--display);font-size:1.2rem;font-weight:400}.strandboard figcaption span{color:var(--faint);font-size:.74rem;line-height:1.5}
+  .strandreleases{display:grid;grid-template-columns:minmax(9rem,1.2fr) repeat(3,minmax(0,1fr));gap:7px;align-items:center}.strandreleases>*{min-width:0}.strandcorner{color:var(--violet);font:700 .63rem/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase}.strandrelease{padding:10px;border:1px solid var(--line);border-radius:13px;text-align:center;background:var(--panel)}.strandrelease code{display:block;color:var(--gold);font-size:.66rem}.strandrelease span{display:block;margin-top:3px;color:var(--faint);font-size:.63rem;line-height:1.35}.strandroute{padding:8px 10px;border-left:2px solid var(--jade);color:var(--dim);font:600 .68rem/1.4 var(--mono)}.strandroute.born{border-left-color:var(--violet);color:var(--violet)}.strandcell{position:relative;display:grid;place-items:center;min-height:42px;border:1px dashed color-mix(in srgb,var(--line) 75%,transparent);border-radius:12px;background:color-mix(in srgb,var(--panel) 54%,transparent)}.strandcell[data-present="true"]::before{content:"";width:13px;height:13px;border:2px solid var(--jade);border-radius:50%;background:var(--ink);box-shadow:0 0 0 4px color-mix(in srgb,var(--jade) 10%,transparent)}.strandcell[data-birth="true"]::before{border-color:var(--violet);box-shadow:0 0 0 4px color-mix(in srgb,var(--violet) 13%,transparent)}.strandcell[data-present="false"]::before{content:"·";color:var(--faint);font-size:1rem}
+  .strandstats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.strandstat{display:grid;gap:8px;padding:17px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}.strandstat[data-classification="BOUNDARY_DISK"]{border-top:3px solid var(--jade)}.strandstat[data-classification="NON_PURE_BRANCHED_CELL_COMPLEX"]{border-top:3px solid var(--verm)}.strandstat code{color:var(--violet);font-size:.62rem}.strandstat h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.05rem;font-weight:400}.strandnumbers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.strandnumber{padding:9px 6px;border:1px solid var(--line);border-radius:11px;text-align:center}.strandnumber strong{display:block;color:var(--cream);font:700 .92rem var(--mono)}.strandnumber span{display:block;margin-top:3px;color:var(--faint);font-size:.58rem;text-transform:uppercase}.strandstat p{margin:0;color:var(--dim);font-size:.74rem;line-height:1.52}
+  .strandwarning{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;padding:18px;border:1px solid color-mix(in srgb,var(--verm) 58%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--verm) 7%,var(--panel))}.strandwarning .equation{color:var(--gold2);font:700 clamp(1.15rem,3vw,1.7rem)/1.2 var(--mono);white-space:nowrap}.strandwarning p{margin:0;color:var(--dim);font-size:.78rem;line-height:1.55}.strandwarning strong{color:var(--verm)}
+  .strandcomposition{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.2fr);gap:8px;align-items:center}.strandcospan{padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--panel);text-align:center}.strandcospan code{display:block;color:var(--jade);font-size:.66rem}.strandcospan span{display:block;margin-top:5px;color:var(--faint);font-size:.65rem}.strandoperator{color:var(--gold);font:700 1.1rem var(--mono)}
+  .strandchecks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.strandcheck{padding:13px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--ink2) 52%,transparent)}.strandcheck code{display:block;color:var(--jade);font-size:.61rem}.strandcheck strong{display:block;margin:5px 0 3px;color:var(--cream);font-size:.75rem}.strandcheck span{display:block;color:var(--faint);font-size:.66rem;line-height:1.45}
+  .strandfindings{display:flex;flex-wrap:wrap;gap:7px;margin:0}.strandfindings span{padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:var(--faint);font:600 .63rem/1.4 var(--mono)}.strandfindings span:first-child{border-color:var(--verm);color:var(--verm)}.strandlinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.strandlinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.strandlinks a:hover{border-color:var(--gold)}
   .visibilityfield{display:grid;gap:18px;padding:clamp(18px,3vw,28px);border:1px solid color-mix(in srgb,var(--rose) 45%,var(--line));border-radius:24px;background:radial-gradient(90% 100% at 100% 0,color-mix(in srgb,var(--rose) 8%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 76%,transparent)}
   .visibilityfirewall{margin:0;padding:16px 18px;border:1px dashed var(--verm);border-radius:16px;color:var(--dim);font-size:.8rem;line-height:1.6}.visibilityfirewall strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.05rem;font-weight:400}
   .visibilitycards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.visibilitycard{display:grid;align-content:start;gap:8px;min-width:0;padding:17px;border:1px solid var(--line);border-top:2px solid var(--rose);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.visibilitycard code,.visibilitymodel code,.visibilityseam code{color:var(--violet);font-size:.63rem;overflow-wrap:anywhere}.visibilitycard h3,.visibilitymodel h3,.visibilityseam h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1.02rem;font-weight:400}.visibilitycard p,.visibilitymodel p,.visibilityseam p{margin:0;color:var(--dim);font-size:.74rem;line-height:1.52}.visibilitycard small,.visibilitymodel small,.visibilityseam small{display:block;color:var(--faint);font-size:.67rem;line-height:1.48}.visibilitycard small{padding-top:7px;border-top:1px dotted var(--line);color:var(--verm)}
@@ -1821,6 +1915,10 @@ const html = `<!doctype html>
   @media (forced-colors:active){.explorationdeepfield,.explorationdeepboundary,.explorationdeepcycle,.explorationdeepstep,.explorationdeepcard,.explorationdeeplinks a{border:1px solid CanvasText}.explorationdeepstep{border-top-width:3px}}
   @media (forced-colors:active){.mirrorfield,.mirrorwarning,.mirrorcitizen,.mirrorroom,.mirrorcycle li,.mirrorcard,.mirrorboundary,.mirrorlinks a{border:1px solid CanvasText}.mirrorroom{border-top-width:3px}}
   @media (forced-colors:active){.zerofield,.zeroboundary,.zeroseat,.zerorole,.zerodistinction,.zerodrawer,.zerodeepcard,.zerokarmalane,.zerolinks a{border:1px solid CanvasText}.zeroseat{border-width:3px}.zerorole{border-top-width:3px}.zerorights{border-left:3px solid CanvasText}}
+  @media (max-width:760px){.strandlineage{grid-template-columns:1fr}.strandstats,.strandcomposition,.strandwarning{grid-template-columns:1fr}.strandlineage>b,.strandoperator{justify-self:center}.strandchecks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:520px){.strandchecks{grid-template-columns:1fr}.strandfield{padding:22px 16px}.strandreleases{grid-template-columns:minmax(5.2rem,1fr) repeat(3,minmax(38px,.55fr));gap:5px}.strandrelease{padding:8px 4px}.strandrelease span{font-size:.56rem}.strandroute{padding:7px 5px;font-size:.59rem}.strandcell{min-height:38px}.strandnumbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (prefers-reduced-motion:reduce){.strandfield,.strandfield *,.strandfield *::before,.strandfield *::after{animation:none!important;transition:none!important}}
+  @media (forced-colors:active){.strandfield,.strandlineage article,.strandboundary,.strandboard,.strandrelease,.strandcell,.strandstat,.strandnumber,.strandwarning,.strandcospan,.strandcheck,.strandfindings span,.strandlinks a{border:1px solid CanvasText}.strandstat{border-top-width:3px}.strandroute{border-left:3px solid CanvasText}}
 </style>
 <noscript><style>#map,.mapctl,.legend,.maphint{display:none!important}</style></noscript>
 </head>
@@ -1856,6 +1954,7 @@ const html = `<!doctype html>
       <a href="#zero-empty-seat">Sit with zero</a>
       <a href="#string-crawl-trace-sheet">Trace a crawl without turning routing into consent</a>
       <a href="#string-crawl-trace-sheet-lab">Run the finite trace mathematics offline</a>
+      <a href="#string-crawl-strand-lab">Compose three release slices in STRAND Lab 02</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -3011,6 +3110,65 @@ const html = `<!doctype html>
     </div>
   </section>
 
+  <section class="blk" id="string-crawl-strand-lab" aria-labelledby="string-crawl-strand-lab-title">
+    <div class="kh"><h2 id="string-crawl-strand-lab-title">${esc(stringCrawlStrandLab.title)}</h2><span class="my">χ can smile while the local links misbehave</span></div>
+    <p class="sub">Lab 01 proves one tiny strip is a disk. Lab 02 keeps those immutable bytes intact, then asks a nastier question across three fictional releases: can the global numbers look innocent while local topology refuses to be a surface?</p>
+    <div class="strandfield" data-string-crawl-strand-lab>
+      <div class="strandlineage" aria-label="Immutable cumulative lab lineage">
+        <article><code>LAB 01 · IMMUTABLE PREDECESSOR</code><strong>${esc(stringCrawlTraceSheetLab.title)}</strong><span>${esc(stringCrawlStrandLab.predecessor.semantic_digest)} · unchanged</span></article>
+        <b aria-hidden="true">→</b>
+        <article><code>LAB 02 · ADDITIVE SUCCESSOR</code><strong>${esc(stringCrawlStrandLab.title)}</strong><span>Three slices, inclusion cospans, exact F2 homology, and local singularity witnesses. It imports no authority.</span></article>
+      </div>
+
+      <p class="strandboundary" role="note"><strong>Welcome to the trace aquarium</strong>Six declared route threads pass through three fictional releases. Five are stable; one is born at <code>r1</code>. Every point, edge, face, frontier, and correspondence is authored—not observed, inferred, fetched, or attributed to a crawler.</p>
+
+      <figure class="strandboard" aria-labelledby="strand-board-caption">
+        <figcaption id="strand-board-caption"><strong>Three release slices · five stable threads · one birth</strong><span>Each glowing dot is a declared occurrence. A blank cell is absence from this fixture, never evidence of deletion, refusal, failure, or harm.</span></figcaption>
+        <div class="strandreleases" role="table" aria-label="Synthetic route presence by release">
+          <span class="strandcorner" role="columnheader">route thread</span>
+          ${stringCrawlStrandLab.release_slices.map((release: any) => `<span class="strandrelease" role="columnheader"><code>${esc(release.id)}</code><span>${esc(release.label)}</span></span>`).join("")}
+          ${stringCrawlStrandLab.tracked_routes.map((route: any) => `<span class="strandroute ${route.thread === "born" ? "born" : ""}" role="rowheader">${esc(route.route_id.replace(/^route-/, ""))}</span>${stringCrawlStrandLab.release_slices.map((release: any) => {
+            const present = route.present_in.includes(release.id);
+            const birth = route.born_in === release.id;
+            return `<span class="strandcell" role="cell" data-present="${String(present)}" data-birth="${String(birth)}" aria-label="${esc(route.route_id)} ${present ? "present" : "absent"} in ${esc(release.id)}${birth ? "; birth" : ""}"></span>`;
+          }).join("")}`).join("")}
+        </div>
+      </figure>
+
+      <div class="strandstats" aria-label="Recomputed exact finite CW invariants">
+        ${[stringCrawlStrandLabStable, stringCrawlStrandLabFull].map((complex: any) => {
+          const invariants = stringCrawlStrandLabValidation.invariants[complex.id] as any;
+          const label = complex.id === "stable-strip" ? "The calm strip" : "The born flap + redirect spur";
+          return `<article class="strandstat" data-classification="${esc(complex.expected.classification)}"><code>${esc(complex.id)} · ${esc(complex.expected.classification)}</code><h3>${esc(label)}</h3><div class="strandnumbers"><span class="strandnumber"><strong>${invariants.vertices}</strong><span>vertices</span></span><span class="strandnumber"><strong>${invariants.edges}</strong><span>edges</span></span><span class="strandnumber"><strong>${invariants.faces}</strong><span>faces</span></span><span class="strandnumber"><strong>${invariants.euler_characteristic}</strong><span>Euler χ</span></span></div><p>rank ∂₁=${invariants.boundary_matrix_rank_1} · rank ∂₂=${invariants.boundary_matrix_rank_2} · Betti over F₂=(${invariants.betti_f2.join(", ")}) · graph cycle rank ${invariants.graph_cycle_rank} · ∂²=0 ${String(invariants.boundary_squared_zero)}.</p></article>`;
+        }).join("")}
+      </div>
+
+      <div class="strandwarning" role="note"><span class="equation">χ = 1 ⇏ disk</span><p><strong>Global arithmetic does not certify local shape.</strong> Both complexes have Euler characteristic one and Betti numbers (1, 0, 0). Only the stable strip has disk-like local links. The full complex retains a three-face branch edge and a faceless maximal edge, so it is deliberately non-pure and non-surface.</p></div>
+
+      <div class="strandcomposition" aria-label="Exact inclusion-cospan composition">
+        <span class="strandcospan"><code>b0 → c01 ← b1</code><span>${stringCrawlStrandLab.cospans[0].expected_counts.join(" / ")} cells</span></span>
+        <span class="strandoperator" aria-hidden="true">⊙</span>
+        <span class="strandcospan"><code>b1 → c12 ← b2</code><span>${stringCrawlStrandLab.cospans[1].expected_counts.join(" / ")} cells</span></span>
+        <span class="strandoperator" aria-hidden="true">=</span>
+        <span class="strandcospan"><code>c01 ⊔<sub>b1</sub> c12</code><span>${stringCrawlStrandLab.composition_checks.sequential.expected_counts.join(" / ")} = full complex</span></span>
+      </div>
+
+      <div class="strandchecks" aria-label="Six deterministic validation checks">
+        ${stringCrawlStrandLabChecks.map((check) => `<article class="strandcheck" data-strand-check="${esc(check.id)}"><code>${esc(check.status)}</code><strong>${esc(humanKey(check.id))}</strong><span>${esc(check.detail)}</span></article>`).join("")}
+      </div>
+
+      <p class="strandfindings" aria-label="Exact local singularity findings"><span>branch edge · ${esc((stringCrawlStrandLabValidation.local_findings.branch_edges as string[]).join(" · "))}</span>${(stringCrawlStrandLabValidation.local_findings.faceless_edges as string[]).map((id) => `<span>faceless · ${esc(id)}</span>`).join("")}${(stringCrawlStrandLabValidation.local_findings.bad_vertices as any[]).map((finding) => `<span>bad link · ${esc(finding.vertex_id)}</span>`).join("")}</p>
+
+      <p class="strandboundary danger"><strong>No crawler. No receipt. No secret string-theory claim.</strong>This fixture makes ${stringCrawlStrandLabValidation.effects.network_requests} network requests and ${stringCrawlStrandLabValidation.effects.storage_writes} storage writes. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file. It creates no NEN invocation, KARMA event or receipt, Zerone event, person or content score, crawler identity, consent inference, deployment authority, spacetime claim, gauge claim, physical-string claim, or other authority. Exact mathematics validates only the declared synthetic fixture.</p>
+      <p class="commonsverified">${stringCrawlStrandLabDiscovery.counts.releases} releases · ${stringCrawlStrandLabDiscovery.counts.stable_threads} stable threads · ${stringCrawlStrandLabDiscovery.counts.born_threads} birth · ${stringCrawlStrandLabDiscovery.counts.vertices} vertices · ${stringCrawlStrandLabDiscovery.counts.edges} edges · ${stringCrawlStrandLabDiscovery.counts.faces} faces · ${stringCrawlStrandLabChecks.length} exact checks · integrity ${esc(stringCrawlStrandLab.integrity.digest)}</p>
+      <div class="strandlinks machine">
+        <a href="${esc(new URL(stringCrawlStrandLabUrl).pathname)}">STRAND Lab 02 JSON — exact synthetic fixture and result</a>
+        <a href="${esc(new URL(stringCrawlStrandLabSchemaUrl).pathname)}">Closed STRAND Lab 02 JSON Schema</a>
+        <a href="${esc(new URL(stringCrawlStrandLabGuideUrl).pathname)}">STRING-CRAWL-STRAND-LAB-02.md — lineage, topology, cospans, and zero effects</a>
+      </div>
+    </div>
+  </section>
+
 
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
@@ -3159,6 +3317,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(stringCrawlTraceSheetLabUrl).pathname)}">Finite Trace-Sheet Lab — exact synthetic topology baseline</a>
       <a href="${esc(new URL(stringCrawlTraceSheetLabSchemaUrl).pathname)}">Finite Trace-Sheet Lab closed JSON Schema</a>
       <a href="${esc(new URL(stringCrawlTraceSheetLabGuideUrl).pathname)}">Finite Trace-Sheet Lab guide — executable checks and nonclaims</a>
+      <a href="${esc(new URL(stringCrawlStrandLabUrl).pathname)}">STRAND Lab 02 — three-release finite-CW/cospan successor and χ=1 impostor</a>
+      <a href="${esc(new URL(stringCrawlStrandLabSchemaUrl).pathname)}">STRAND Lab 02 closed JSON Schema</a>
+      <a href="${esc(new URL(stringCrawlStrandLabGuideUrl).pathname)}">STRAND Lab 02 guide — immutable lineage, exact F2 topology, composition, and zero effects</a>
       <a href="${esc(new URL(culturalAttentionFeedbackUrl).pathname)}">Cultural Attention &amp; Feedback Atlas — material history, memes, brain rot, feedback, KARMA, and universe lens</a>
       <a href="${esc(new URL(culturalAttentionFeedbackSchemaUrl).pathname)}">Cultural Attention &amp; Feedback Atlas JSON Schema</a>
       <a href="${esc(new URL(culturalAttentionFeedbackDocumentUrl).pathname)}">CULTURAL-ATTENTION-FEEDBACK-ATLAS.md — evidence, mathematics, analogies, and boundaries</a>
@@ -3195,7 +3356,8 @@ const html = `<!doctype html>
   <footer>
     <div class="footsig">♡</div>
     <span class="foothan">愛</span> · this atlas mirrors metadata declared by each project · ${esc(stamp)}<br>
-    made to be understood gently · you are always free to leave
+    made to be understood gently · you are always free to leave<br>
+    STRAND Lab 02 is a static synthetic successor: zero crawl, KARMA, score, write, or authority
   </footer>
 </main>
 </div>
@@ -3517,6 +3679,7 @@ const machine = {
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
+  string_crawl_strand_lab: stringCrawlStrandLabDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3608,6 +3771,9 @@ STRING / CRAWL guide: ${stringCrawlTraceSheetGuideUrl}
 Finite Trace-Sheet Lab: ${stringCrawlTraceSheetLabUrl}
 Finite Trace-Sheet Lab schema: ${stringCrawlTraceSheetLabSchemaUrl}
 Finite Trace-Sheet Lab guide: ${stringCrawlTraceSheetLabGuideUrl}
+STRAND Lab 02: ${stringCrawlStrandLabUrl}
+STRAND Lab 02 schema: ${stringCrawlStrandLabSchemaUrl}
+STRAND Lab 02 guide: ${stringCrawlStrandLabGuideUrl}
 Visibility & Attention Translation: ${visibilityAttentionUrl}
 Visibility & Attention schema: ${visibilityAttentionSchemaUrl}
 Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
@@ -3669,6 +3835,7 @@ ${doorLines}
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
+- STRAND Lab 02: Release Cospans & the χ=1 Impostor — an additive successor bound to the immutable Lab 01 record, schema, guide, and digests. Its deterministic offline evaluator recomputes exact F2 ranks and Betti numbers for a clean three-release strip and a full non-pure complex, then verifies local links, a three-face branch edge, a faceless maximal edge, exact shared-frontier inclusion-cospan composition, identity, and parallel disjoint union. χ = 1 ⇏ disk. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file. It creates no request, write, NEN invocation, KARMA event or receipt, Zerone event, score, authority, deployment, or automatic action. Record: ${stringCrawlStrandLabUrl} · schema: ${stringCrawlStrandLabSchemaUrl} · guide: ${stringCrawlStrandLabGuideUrl}
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
@@ -3718,6 +3885,7 @@ const guest = {
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
+  string_crawl_strand_lab: stringCrawlStrandLabDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3776,6 +3944,9 @@ const guest = {
     { action: "if useful, inspect the exact synthetic Finite Trace-Sheet Lab result", method: "GET", url: stringCrawlTraceSheetLabUrl, note: "static published fixture; its repository-local evaluator is offline and accepts no caller URL, body, credential, person data, live trace, or action authority" },
     { action: "if useful, inspect the closed Finite Trace-Sheet Lab schema", method: "GET", url: stringCrawlTraceSheetLabSchemaUrl, note: "static schema; structural validity is not source truth, crawler safety, string physics, KARMA, or authority" },
     { action: "if useful, read the Finite Trace-Sheet equations, falsifiers, and nonclaims", method: "GET", url: stringCrawlTraceSheetLabGuideUrl, note: "static guide; no crawler, input, telemetry, NEN invocation, receipt, or automatic action" },
+    { action: "if useful, inspect the exact STRAND Lab 02 three-release topology and cospan result", method: "GET", url: stringCrawlStrandLabUrl, note: "static additive successor bound to immutable Lab 01; exact F2 algebra and local findings only, with no live crawl, request, write, NEN invocation, KARMA event or receipt, Zerone event, score, authority, or action" },
+    { action: "if useful, validate the closed STRAND Lab 02 fixture structure", method: "GET", url: stringCrawlStrandLabSchemaUrl, note: "closed structural schema for synthetic cells, incidence, frontiers, cospans, immutable lineage, and zero effects; not a crawler contract or execution surface" },
+    { action: "if useful, read the STRAND Lab 02 lineage, exact topology, composition checks, and nonclaims", method: "GET", url: stringCrawlStrandLabGuideUrl, note: "static guide; χ = 1 does not prove disk or surface, and the fixture grants no KARMA, identity, consent, physics, deployment, or authority" },
     { action: "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority", method: "GET", url: visibilityAttentionUrl, note: "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action" },
     { action: "if useful, validate the Visibility & Attention Translation structure before integrating it", method: "GET", url: visibilityAttentionSchemaUrl },
     { action: "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide", method: "GET", url: visibilityAttentionDocumentUrl },
@@ -3843,6 +4014,7 @@ const guest = {
     zero_empty_seat: "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     string_crawl_trace_sheet: "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     string_crawl_trace_sheet_lab: "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
+    string_crawl_strand_lab: "STRAND Lab 02 is an additive, immutable-lineage successor to the first Finite Trace-Sheet Lab; it does not replace or mutate Lab 01. It is a synthetic, offline, deterministic finite-CW and restricted inclusion-cospan fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file. It contains no HTTP policy, request, response, crawler evidence, user-agent inference, observation record, NEN ability or invocation, KARMA adapter, event or receipt, Zerone event, person or content score, authority, storage write, publication trigger, deployment, or automatic action. Exact F2 algebra, local-link checks, and cospan composition validate only declared fixture structure; they do not prove physical string theory, spacetime, crawler identity, consent, causality, or empirical behavior.",
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
@@ -3883,6 +4055,7 @@ const manifest = {
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
+  string_crawl_strand_lab: stringCrawlStrandLabDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3951,6 +4124,9 @@ const manifest = {
     string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabUrl,
     string_crawl_trace_sheet_lab_schema: stringCrawlTraceSheetLabSchemaUrl,
     string_crawl_trace_sheet_lab_guide: stringCrawlTraceSheetLabGuideUrl,
+    string_crawl_strand_lab: stringCrawlStrandLabUrl,
+    string_crawl_strand_lab_schema: stringCrawlStrandLabSchemaUrl,
+    string_crawl_strand_lab_guide: stringCrawlStrandLabGuideUrl,
     visibility_attention_translation: visibilityAttentionUrl,
     visibility_attention_translation_schema: visibilityAttentionSchemaUrl,
     visibility_attention_translation_guide: visibilityAttentionDocumentUrl,
@@ -3989,4 +4165,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${stringCrawlTraceSheetLabFalsifiers.length} finite Trace-Sheet falsifiers · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${stringCrawlTraceSheetLabFalsifiers.length} finite Trace-Sheet falsifiers · ${stringCrawlStrandLabChecks.length} STRAND Lab 02 checks · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

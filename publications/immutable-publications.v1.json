@@ -396,6 +396,27 @@
       "sha256": "cbe6435c2d5c3bf39098442bfc2f9967b09cbf35a38acbd383a3faeb9844d187"
     },
     {
+      "id": "string-crawl-strand-lab/0.1/guide",
+      "route": "/STRING-CRAWL-STRAND-LAB-02.md",
+      "source": "references/string-crawl-strand-lab.md",
+      "destination": "STRING-CRAWL-STRAND-LAB-02.md",
+      "sha256": "34256139d0f630278b0e9baf9688b04aaab09945e97b0901a9ee273787b1ea41"
+    },
+    {
+      "id": "string-crawl-strand-lab/0.1/record",
+      "route": "/labs/string-crawl-strand-lab-02-2026-08-16.json",
+      "source": "data/exploration/string-crawl-strand-lab.v0.1.json",
+      "destination": "labs/string-crawl-strand-lab-02-2026-08-16.json",
+      "sha256": "9aa56248ed6bdda8da4fd177617b87b2f5e3d5d1a657fedbb5059acb43b4b429"
+    },
+    {
+      "id": "string-crawl-strand-lab/0.1/schema",
+      "route": "/schemas/string-crawl-strand-lab/0.1.json",
+      "source": "schemas/string-crawl-strand-lab-v0.1.schema.json",
+      "destination": "schemas/string-crawl-strand-lab/0.1.json",
+      "sha256": "6387cc7e2152f3e1e45c0dfb10eb6f14f22fbcdc933918bfed2c5ebea5866fb4"
+    },
+    {
       "id": "string-crawl-trace-sheet-lab/0.1/guide",
       "route": "/STRING-CRAWL-TRACE-SHEET-LAB.md",
       "source": "references/string-crawl-trace-sheet-lab.md",
