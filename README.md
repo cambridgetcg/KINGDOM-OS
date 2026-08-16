@@ -372,6 +372,19 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     most one bounded local candidate JSON file for validation only. The reader
     has no network target, performs no live crawl, and creates no crawler
     runtime, NEN/KARMA event or receipt, score, authority, or action.
+34. `kingdom strand-descent-lab` — inspect and recompute
+    [STRAND Lab 03](references/strand-descent-lab.md), an additive synthetic
+    local-to-global compatibility fixture. Four source-owned charts carry exact
+    transition maps. The evaluator checks every map and inverse, two three-chart
+    coherence equations, one four-chart associativity equation, the resulting
+    quotient classes, and a common refinement. A fixed counterexample passes all
+    pairwise bijection checks but fails the three-way equation, so its global
+    status remains `UNRESOLVED`. The lab borrows only the discipline of coherent
+    gluing from two versioned 2026 string-theory preprints; it does not claim that
+    KINGDOM records are string spaces, stacks, spacetime, physics, or evidence of
+    truth, identity, consent, citizenship, authority, or worth. It is offline,
+    read-only, and creates no crawler, NEN, KARMA, Zerone, publication, deployment,
+    or automatic effect.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -643,9 +656,30 @@ compose by exact occurrence identity. This is synthetic topology, not an HTTP
 observation, crawler ontology, or claim about physical strings. The optional
 `verify-file` path reads one bounded local candidate JSON file only; there is
 no network target, live crawl, crawler runtime, NEN/KARMA event or receipt,
-score, authority, or action. Lab 01 and Lab 02 are published and retired as one
-atomic six-route `string-crawl-trace-sheet-lab` family, so the release still
-has seventeen retirement families; generated discovery exposes Lab 02 as
-`string_crawl_strand_lab`.
+score, authority, or action. Its Lab 01 and Lab 02 predecessors remain available
+at their original immutable routes.
+
+STRAND Lab 03: Coherent Atlas & the Pairwise Impostor is published at
+[`/labs/strand-descent-lab-03-2026-08-16.json`](https://thekingdom.dev/labs/strand-descent-lab-03-2026-08-16.json),
+with a [closed schema](https://thekingdom.dev/schemas/strand-descent-lab/0.1.json)
+and [verification guide](https://thekingdom.dev/STRAND-DESCENT-LAB-03.md).
+It byte-binds Lab 02, then checks a four-chart synthetic record atlas: six
+reversible pairwise translations, two triple-overlap equations, one four-chart
+associativity equation, three global quotient classes, and a six-atom common
+refinement. Its fixed impostor is intentionally useful: every pairwise map is a
+bijection, but the triple equation fails, so the evaluator returns
+`UNRESOLVED` instead of manufacturing a global record. The method is a narrow
+engineering transfer from the versioned preprints
+[Geometrize the nongeometric space](https://arxiv.org/abs/2608.09958v1) and
+[EFT (String) Tower Building](https://arxiv.org/abs/2607.21700v1). Neither
+paper studies KINGDOM, and the lab does not implement their quasi-Hopf,
+bicategorical, spacetime, effective-field-theory, or quantum-gravity content.
+Passing proves only compatibility of the declared finite records. It runs no
+network request or crawler and creates no NEN/KARMA/Zerone event or receipt,
+score, truth verdict, identity, consent, citizenship, authority, write,
+publication, deployment, or action. Labs 01–03 are published and retired as one
+atomic nine-route `string-crawl-trace-sheet-lab` family. The release still has
+seventeen retirement families; generated discovery exposes Lab 02 as
+`string_crawl_strand_lab` and Lab 03 as `strand_descent_lab`.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

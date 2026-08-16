@@ -2384,6 +2384,117 @@ describe("the Kingdom edge discovery surface", () => {
     }
   });
 
+  test("serves STRAND Lab 03 as one exact inert triplet with its schema link and upstream cache", async () => {
+    const labRecordPath = "/labs/strand-descent-lab-03-2026-08-16.json";
+    const labSchemaPath = "/schemas/strand-descent-lab/0.1.json";
+    const labGuidePath = "/STRAND-DESCENT-LAB-03.md";
+    const bodies = new Map([
+      [labRecordPath, '{"lab_id":"strand-descent-lab-03-2026-08-16"}'],
+      [labSchemaPath, '{"$id":"https://thekingdom.dev/schemas/strand-descent-lab/0.1.json"}'],
+      [labGuidePath, "# STRAND Lab 03"],
+    ]);
+    for (const path of bodies.keys()) expect(KINGDOM_OS_ROUTES).not.toContain(path);
+
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      return new Response(request.method === "HEAD" ? null : bodies.get(path), {
+        headers: {
+          "cache-control": "public, max-age=60",
+          "content-type": path === labGuidePath
+            ? "text/plain"
+            : path === labSchemaPath ? "application/schema+json" : "application/json",
+          link: path === labRecordPath
+            ? `<${labSchemaPath}>; rel="describedby"; type="text/html", </poison>; rel="describedby"; type="text/plain", </kept>; rel="alternate"`
+            : "</kept>; rel=alternate",
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      for (const path of bodies.keys()) {
+        const response = await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          environment,
+        );
+        expect(await response.text()).toBe(method === "HEAD" ? "" : bodies.get(path));
+        expect(response.headers.get("content-type")).toBe(path === labRecordPath
+          ? "application/json; charset=utf-8"
+          : path === labSchemaPath
+            ? "application/schema+json; charset=utf-8"
+            : "text/markdown; charset=utf-8");
+        expect(response.headers.get("access-control-allow-origin")).toBe("*");
+        expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+        expect(response.headers.get("cache-control")).toBe("public, max-age=60");
+        if (path === labRecordPath) {
+          const links = (response.headers.get("link") ?? "")
+            .split(/,(?=\s*<)/)
+            .map((entry) => entry.trim());
+          expect(links.filter((entry) => entry.includes("describedby"))).toEqual([
+            `<${labSchemaPath}>; rel="describedby"; type="application/schema+json"`,
+          ]);
+          expect(links).toContain("</kept>; rel=\"alternate\"");
+        }
+      }
+    }
+
+    for (const path of bodies.keys()) {
+      for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+        const original = new Response(`inert ${method}`);
+        expect(await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          assets(() => original),
+        )).toBe(original);
+        expect(original.headers.get("access-control-allow-origin")).toBeNull();
+      }
+
+      const unavailable = new Response("missing", {
+        status: 404,
+        headers: { "content-type": "application/json" },
+      });
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => unavailable),
+      )).toBe(unavailable);
+
+      const shared = new Response("shared");
+      expect(await worker.fetch(
+        new Request(`https://we-are.love${path}`),
+        assets(() => shared),
+      )).toBe(shared);
+    }
+
+    for (const alias of [
+      "/labs/strand-descent-lab-03-latest.json",
+      "/labs/strand-descent-lab-03-current.json",
+      "/schemas/strand-descent-lab/latest.json",
+      "/schemas/strand-descent-lab/current.json",
+      "/STRAND-DESCENT-LAB-03",
+    ]) {
+      const original = new Response(alias);
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${alias}`),
+        assets(() => original),
+      )).toBe(original);
+      expect(original.headers.get("x-content-type-options")).toBeNull();
+    }
+
+    for (const [path, contentType] of [
+      [labRecordPath, "application/jsonp"],
+      [labRecordPath, "application/schema+json"],
+      [labSchemaPath, "application/schema+jsonp"],
+      [labGuidePath, "text/markdownx"],
+    ] as const) {
+      const original = new Response("near type", {
+        headers: { "content-type": contentType },
+      });
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => original),
+      )).toBe(original);
+      expect(original.headers.get("access-control-allow-origin")).toBeNull();
+    }
+  });
+
   test("rejects near-match Exploration DEEP media types and replaces poisoned bridge links", async () => {
     const wingPath = "/wings/explore-phenomena-deep-2026-08-14.json";
     const wingSchemaPath = "/schemas/phenomena-deep-wing/0.1.json";

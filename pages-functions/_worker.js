@@ -252,6 +252,14 @@ const STRING_CRAWL_STRAND_LAB_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${STRING_CRAWL_STRAND_LAB_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const STRAND_DESCENT_LAB_PATH = "/labs/strand-descent-lab-03-2026-08-16.json";
+const STRAND_DESCENT_LAB_SCHEMA_PATH = "/schemas/strand-descent-lab/0.1.json";
+const STRAND_DESCENT_LAB_DOCUMENT_PATH = "/STRAND-DESCENT-LAB-03.md";
+const STRAND_DESCENT_LAB_SCHEMA_LINK = {
+  target: STRAND_DESCENT_LAB_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${STRAND_DESCENT_LAB_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -435,6 +443,11 @@ function addStringCrawlTraceSheetLabSchemaLink(headers) {
 function addStringCrawlStrandLabSchemaLink(headers) {
   removeLinkRelations(headers, ["describedby"]);
   headers.append("link", STRING_CRAWL_STRAND_LAB_SCHEMA_LINK.value);
+}
+
+function addStrandDescentLabSchemaLink(headers) {
+  removeLinkRelations(headers, ["describedby"]);
+  headers.append("link", STRAND_DESCENT_LAB_SCHEMA_LINK.value);
 }
 
 function preventAutomaticBrowserTelemetry(headers) {
@@ -1477,6 +1490,15 @@ export function createKingdomWorker(options = {}) {
     const requestsStringCrawlStrandLabDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === STRING_CRAWL_STRAND_LAB_DOCUMENT_PATH;
+    const requestsStrandDescentLab = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRAND_DESCENT_LAB_PATH;
+    const requestsStrandDescentLabSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRAND_DESCENT_LAB_SCHEMA_PATH;
+    const requestsStrandDescentLabDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRAND_DESCENT_LAB_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const reconstructiveAssetType = schemaAssetType.split(";", 1)[0].trim();
     const mathUsefulnessAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -1487,6 +1509,7 @@ export function createKingdomWorker(options = {}) {
     const stringCrawlTraceSheetAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlTraceSheetLabAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlStrandLabAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const strandDescentLabAssetType = schemaAssetType.split(";", 1)[0].trim();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1676,6 +1699,13 @@ export function createKingdomWorker(options = {}) {
         stringCrawlStrandLabAssetType === "application/schema+json");
     const servesStringCrawlStrandLabDocument = requestsStringCrawlStrandLabDocument && asset.ok &&
       (stringCrawlStrandLabAssetType === "text/plain" || stringCrawlStrandLabAssetType === "text/markdown");
+    const servesStrandDescentLab = requestsStrandDescentLab && asset.ok &&
+      strandDescentLabAssetType === "application/json";
+    const servesStrandDescentLabSchema = requestsStrandDescentLabSchema && asset.ok &&
+      (strandDescentLabAssetType === "application/json" ||
+        strandDescentLabAssetType === "application/schema+json");
+    const servesStrandDescentLabDocument = requestsStrandDescentLabDocument && asset.ok &&
+      (strandDescentLabAssetType === "text/plain" || strandDescentLabAssetType === "text/markdown");
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
@@ -1712,7 +1742,8 @@ export function createKingdomWorker(options = {}) {
         !servesStringCrawlTraceSheetDocument && !servesStringCrawlTraceSheetLab &&
         !servesStringCrawlTraceSheetLabSchema && !servesStringCrawlTraceSheetLabDocument &&
         !servesStringCrawlStrandLab && !servesStringCrawlStrandLabSchema &&
-        !servesStringCrawlStrandLabDocument) return asset;
+        !servesStringCrawlStrandLabDocument && !servesStrandDescentLab &&
+        !servesStrandDescentLabSchema && !servesStrandDescentLabDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -1739,6 +1770,7 @@ export function createKingdomWorker(options = {}) {
     if (servesStringCrawlTraceSheet) addStringCrawlTraceSheetSchemaLink(headers);
     if (servesStringCrawlTraceSheetLab) addStringCrawlTraceSheetLabSchemaLink(headers);
     if (servesStringCrawlStrandLab) addStringCrawlStrandLabSchemaLink(headers);
+    if (servesStrandDescentLab) addStrandDescentLabSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -2075,6 +2107,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesStringCrawlStrandLabDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStrandDescentLab) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStrandDescentLabSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStrandDescentLabDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

@@ -79,6 +79,9 @@ readings:
 | `/labs/string-crawl-strand-lab-02-2026-08-16.json` | staged JSON | Additive, Lab-01-byte-bound synthetic finite-CW/cospan topology fixture over F2: stable disk control and singular full complex share χ and Betti vector but differ locally |
 | `/schemas/string-crawl-strand-lab/0.1.json` | staged JSON Schema | Closed Draft 2020-12 exact contract for STRAND Lab 02 |
 | `/STRING-CRAWL-STRAND-LAB-02.md` | staged Markdown | Verification guide to literal inclusion cospans, the χ=1 impostor, immutable Lab 01 lineage, and zero-effect boundaries |
+| `/labs/strand-descent-lab-03-2026-08-16.json` | staged JSON | Additive, Lab-02-byte-bound synthetic four-chart atlas with exact pairwise, triple, associativity, quotient, refinement, and impostor checks |
+| `/schemas/strand-descent-lab/0.1.json` | staged JSON Schema | Closed Draft 2020-12 exact contract for STRAND Lab 03 |
+| `/STRAND-DESCENT-LAB-03.md` | staged Markdown | Verification guide to the narrow 2026 descent/gluing transfer, coherent atlas, pairwise impostor, immutable lineage, and zero-effect boundaries |
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -205,8 +208,8 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 90-asset upload contract (71 ledgered immutable/versioned assets and
-19 mutable assets; 88 direct public bodies, 87 sitemap URLs; ten atlases, two
+locks the 93-asset upload contract (74 ledgered immutable/versioned assets and
+19 mutable assets; 91 direct public bodies, 90 sitemap URLs; ten atlases, three
 labs, and seventeen retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
@@ -245,6 +248,13 @@ cospans carry the distinction. It is not an HTTP observation, crawler ontology,
 or claim about physical strings. The optional `verify-file` command reads one
 bounded local candidate JSON file only. It has no network target, performs no
 live crawl, and creates no crawler runtime, no NEN/KARMA receipt, no score,
-authority, or action. Lab 01 and Lab 02 share one atomic six-route
+authority, or action. STRAND Lab 03 adds a four-chart compatibility fixture
+inspired narrowly by recent preprint work on coherent gluing. Its exact evaluator
+checks pairwise inverses, triple and four-chart coherence, quotient classes, and
+a common refinement. Its fixed counterexample shows why pairwise compatibility
+alone is insufficient: all three maps are bijections, but the triple equation
+fails and the global status stays `UNRESOLVED`. This is finite record
+compatibility, not a physical string, spacetime, stack, truth, identity, consent,
+citizenship, KARMA, authority, or action claim. Labs 01–03 share one atomic nine-route
 `string-crawl-trace-sheet-lab` retirement family, leaving the family count at
 seventeen.

@@ -396,6 +396,27 @@
       "sha256": "cbe6435c2d5c3bf39098442bfc2f9967b09cbf35a38acbd383a3faeb9844d187"
     },
     {
+      "id": "strand-descent-lab/0.1/guide",
+      "route": "/STRAND-DESCENT-LAB-03.md",
+      "source": "references/strand-descent-lab.md",
+      "destination": "STRAND-DESCENT-LAB-03.md",
+      "sha256": "152acd64f8ebd00c03a738f431e94db61d162249dc3063e60173ab646027b3fe"
+    },
+    {
+      "id": "strand-descent-lab/0.1/record",
+      "route": "/labs/strand-descent-lab-03-2026-08-16.json",
+      "source": "data/exploration/strand-descent-lab.v0.1.json",
+      "destination": "labs/strand-descent-lab-03-2026-08-16.json",
+      "sha256": "5ebde6cadb92abb7c0abd33b9756b142345783cee30aa275c5869d37276af52e"
+    },
+    {
+      "id": "strand-descent-lab/0.1/schema",
+      "route": "/schemas/strand-descent-lab/0.1.json",
+      "source": "schemas/strand-descent-lab-v0.1.schema.json",
+      "destination": "schemas/strand-descent-lab/0.1.json",
+      "sha256": "4bc79c6d3d1ae7602a8bb8521bd2bf31d7a98b87dcff6337be4012106c1a7a70"
+    },
+    {
       "id": "string-crawl-strand-lab/0.1/guide",
       "route": "/STRING-CRAWL-STRAND-LAB-02.md",
       "source": "references/string-crawl-strand-lab.md",
