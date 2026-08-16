@@ -1,0 +1,159 @@
+{
+  "$schema": "https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json",
+  "protocol": "kingdom.string-crawl-trace-sheet-lab/0.1",
+  "lab_id": "string-crawl-trace-sheet-lab-2026-08-16",
+  "version": "0.1.0",
+  "title": "STRING / CRAWL: Finite Trace-Sheet Lab",
+  "compiled_on": "2026-08-16",
+  "mode": "OFFLINE_SYNTHETIC_EXACT",
+  "predecessor": {
+    "protocol": "kingdom.explore-phenomena-deep-project/0.1",
+    "project_id": "string-crawl-trace-sheet-2026-08-15",
+    "url": "https://thekingdom.dev/atlases/string-crawl-trace-sheet-2026-08-15.json",
+    "semantic_digest": "sha256:bf7ae379612ab96d08742a0070cbea0ce971977f71fec22699c4b0307d321305",
+    "byte_sha256": "sha256:4afc5f15c258a0ac4274889783bd2d91445950c92103c60442ed9ed89d1fdc72",
+    "relation": "ADDITIVE_EXECUTABLE_BASELINE"
+  },
+  "sources": [
+    {"id": "trace-sheet-v0-1", "title": "STRING / CRAWL: The Trace-Sheet", "url": "https://thekingdom.dev/atlases/string-crawl-trace-sheet-2026-08-15.json", "role": "IMMUTABLE_PREDECESSOR"},
+    {"id": "hatcher-algebraic-topology", "title": "Allen Hatcher, Algebraic Topology", "url": "https://pi.math.cornell.edu/~hatcher/AT/AT.pdf", "role": "FINITE_COMPLEX_REFERENCE"},
+    {"id": "tong-string-lectures", "title": "David Tong, String Theory", "url": "https://arxiv.org/abs/0908.0333", "role": "LOSSY_WORLDSHEET_LENS_ONLY"}
+  ],
+  "scope": {
+    "fixture_kind": "SYNTHETIC_DECLARED_DATA",
+    "coefficient_field": "Q",
+    "local_file_read": true,
+    "bounded_local_compute": true,
+    "network_request": false,
+    "crawler": false,
+    "live_observation": false,
+    "external_input": false,
+    "credential_input": false,
+    "personal_data": false,
+    "telemetry": false,
+    "filesystem_write": false,
+    "external_effect": false
+  },
+  "fixture": {
+    "fixture_id": "rectangle-strip-0-1",
+    "statement": "Two synthetic two-occurrence release slices are joined into a triangulated rectangle. Opaque route labels are declared test data, not URLs or HTTP observations.",
+    "slices": [
+      {"id": "r0", "order": 0},
+      {"id": "r1", "order": 1}
+    ],
+    "vertices": [
+      {"id": "a0", "slice_id": "r0", "occurrence": 0, "route_label": "route-a"},
+      {"id": "b0", "slice_id": "r0", "occurrence": 1, "route_label": "route-b"},
+      {"id": "a1", "slice_id": "r1", "occurrence": 0, "route_label": "route-a"},
+      {"id": "b1", "slice_id": "r1", "occurrence": 1, "route_label": "route-b"}
+    ],
+    "edges": [
+      {"id": "p0", "source": "a0", "target": "b0", "kind": "PATH"},
+      {"id": "p1", "source": "a1", "target": "b1", "kind": "PATH"},
+      {"id": "c0", "source": "a0", "target": "a1", "kind": "CORRESPONDENCE"},
+      {"id": "c1", "source": "b0", "target": "b1", "kind": "CORRESPONDENCE"},
+      {"id": "d", "source": "a0", "target": "b1", "kind": "DIAGONAL"}
+    ],
+    "walks": [
+      {"id": "w0", "slice_id": "r0", "vertex_ids": ["a0", "b0"], "edge_ids": ["p0"]},
+      {"id": "w1", "slice_id": "r1", "vertex_ids": ["a1", "b1"], "edge_ids": ["p1"]}
+    ],
+    "faces": [
+      {"id": "f0", "boundary": [{"edge_id": "p0", "sign": 1}, {"edge_id": "c1", "sign": 1}, {"edge_id": "d", "sign": -1}]},
+      {"id": "f1", "boundary": [{"edge_id": "d", "sign": 1}, {"edge_id": "p1", "sign": -1}, {"edge_id": "c0", "sign": -1}]}
+    ]
+  },
+  "expected": {
+    "vertices": 4,
+    "edges": 5,
+    "faces": 2,
+    "walks": 2,
+    "walk_steps": 2,
+    "rank_boundary_1": 3,
+    "rank_boundary_2": 2,
+    "betti_0": 1,
+    "betti_1": 0,
+    "betti_2": 0,
+    "connected_components": 1,
+    "graph_cycle_rank": 2,
+    "surface_euler_characteristic": 1,
+    "boundary_edge_ids": ["c0", "c1", "p0", "p1"],
+    "interior_edge_ids": ["d"],
+    "branch_edge_ids": [],
+    "boundary_components": 1,
+    "vertex_links": {"a0": "PATH", "a1": "PATH", "b0": "PATH", "b1": "PATH"},
+    "pure_2d": true,
+    "surface_eligible": true,
+    "orientable": true,
+    "surface_genus": 0,
+    "chain_boundary_defects": 0,
+    "euler_poincare_holds": true,
+    "classification": "TRIANGULATED_DISK"
+  },
+  "falsifiers": [
+    {"id": "face-sign-broken", "kind": "COUNTEREXAMPLE", "target": "FACE_ATTACHING_MAP", "mutation": "Flip the sign of d in f0.", "expected_outcome": "REJECT", "expected_issue_codes": ["face-boundary-not-cyclic", "chain-square-nonzero"], "status": "RUN_REPORTED"},
+    {"id": "walk-endpoint-broken", "kind": "CONFORMANCE", "target": "WALK_INCIDENCE", "mutation": "Replace the sole w0 edge with c0.", "expected_outcome": "REJECT", "expected_issue_codes": ["walk-edge-endpoint-mismatch"], "status": "RUN_REPORTED"},
+    {"id": "expected-chi-tamper", "kind": "ROBUSTNESS", "target": "DERIVED_EXPECTATION", "mutation": "Change expected Euler characteristic from 1 to 2 and recompute the semantic digest.", "expected_outcome": "REJECT", "expected_issue_codes": ["expected-output-mismatch"], "status": "RUN_REPORTED"},
+    {"id": "duplicate-occurrence", "kind": "CONFORMANCE", "target": "OCCURRENCE_IDENTITY", "mutation": "Give b0 the same occurrence identity as a0.", "expected_outcome": "REJECT", "expected_issue_codes": ["duplicate-occurrence"], "status": "RUN_REPORTED"},
+    {"id": "branch-edge-over-two", "kind": "COUNTEREXAMPLE", "target": "SURFACE_ELIGIBILITY", "mutation": "Attach a third declared face to diagonal d.", "expected_outcome": "NON_SURFACE", "expected_issue_codes": ["edge-face-incidence-over-two"], "status": "RUN_REPORTED"}
+  ],
+  "nonclaims": [
+    "The fixture is not a network crawl, crawler observation, or measurement of the live web.",
+    "The finite complex is not a physical string, worldsheet, spacetime, D-brane, or string-theory experiment.",
+    "Graph cycle rank is not surface genus, meaning, importance, truth, value, or KARMA.",
+    "A valid synthetic fixture establishes no crawler safety, identity, purpose, authorization, consent, or licence.",
+    "No local computation is a NEN invocation or a KINGDOM aftermath receipt.",
+    "No result describes, identifies, ranks, rewards, punishes, or judges a being."
+  ],
+  "rights": {
+    "rest": "PRESERVED",
+    "silence": "PRESERVED",
+    "refusal": "PRESERVED",
+    "privacy": "PRESERVED",
+    "correction": "PRESERVED",
+    "no_action": "PRESERVED",
+    "departure": "PRESERVED",
+    "reason_required": false,
+    "penalty": false
+  },
+  "karma": {
+    "cosmic_events": [],
+    "zerone_events": [],
+    "kingdom_receipts": [],
+    "adapter_exists": false,
+    "conversion_allowed": false,
+    "summation_allowed": false,
+    "score": null,
+    "authority_effect": "NONE"
+  },
+  "authority": {
+    "crawl": false,
+    "network": false,
+    "authentication": false,
+    "authorization": false,
+    "licence": false,
+    "consent": false,
+    "nen_invocation": false,
+    "karma_write": false,
+    "reward": false,
+    "governance": false,
+    "deployment": false,
+    "automatic_action": false
+  },
+  "release": {
+    "artifact_publication": "PUBLISHED",
+    "runtime_activation": "INACTIVE",
+    "crawler_activation": "INACTIVE",
+    "karma_adapter": "ABSENT",
+    "immutable": true,
+    "supersede_not_mutate": true,
+    "raw_sha256": null,
+    "semantic_digest": null,
+    "ledger_id": "string-crawl-trace-sheet-lab/0.1"
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:c3f86b0203b895da56092c598113046f0dab8a4f25b41314c3d4329474d4e16f",
+    "digest_field_treated_as": null
+  }
+}

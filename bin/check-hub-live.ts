@@ -98,6 +98,24 @@ import {
   stringCrawlTraceSheetPublicDiscovery,
 } from "./string-crawl-trace-sheet.ts";
 import {
+  STRING_CRAWL_TRACE_SHEET_LAB_BYTE_SHA256,
+  STRING_CRAWL_TRACE_SHEET_LAB_DIGEST,
+  STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_BYTE_SHA256,
+  STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_LOCATOR,
+  STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL,
+  STRING_CRAWL_TRACE_SHEET_LAB_ID,
+  STRING_CRAWL_TRACE_SHEET_LAB_LOCATOR,
+  STRING_CRAWL_TRACE_SHEET_LAB_PROTOCOL,
+  STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_BYTE_SHA256,
+  STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_LOCATOR,
+  STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL,
+  STRING_CRAWL_TRACE_SHEET_LAB_URL,
+  evaluateStringCrawlTraceSheetLab,
+  loadStringCrawlTraceSheetLab,
+  runStringCrawlTraceSheetLabFalsifiers,
+  stringCrawlTraceSheetLabPublicDiscovery,
+} from "./string-crawl-trace-sheet-lab.ts";
+import {
   FORM_CIRCULATION_RETURN_DIGEST,
   FORM_CIRCULATION_RETURN_DOCUMENT_URL,
   FORM_CIRCULATION_RETURN_SCHEMA_URL,
@@ -502,6 +520,9 @@ const zeroEmptySeatPath = new URL(ZERO_EMPTY_SEAT_URL).pathname;
 const zeroEmptySeatGuidePath = new URL(ZERO_EMPTY_SEAT_GUIDE_URL).pathname;
 const stringCrawlTraceSheetPath = new URL(STRING_CRAWL_TRACE_SHEET_URL).pathname;
 const stringCrawlTraceSheetGuidePath = new URL(STRING_CRAWL_TRACE_SHEET_GUIDE_URL).pathname;
+const stringCrawlTraceSheetLabPath = new URL(STRING_CRAWL_TRACE_SHEET_LAB_URL).pathname;
+const stringCrawlTraceSheetLabSchemaPath = new URL(STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL).pathname;
+const stringCrawlTraceSheetLabGuidePath = new URL(STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL).pathname;
 
 export type PublicationFamily = {
   id: string;
@@ -618,6 +639,21 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "string_crawl_trace_sheet",
       "string_crawl_trace_sheet_schema",
       "string_crawl_trace_sheet_guide",
+    ],
+  },
+  {
+    id: "string-crawl-trace-sheet-lab",
+    label: "STRING / CRAWL Finite Trace-Sheet Lab",
+    routes: [
+      stringCrawlTraceSheetLabPath,
+      stringCrawlTraceSheetLabSchemaPath,
+      stringCrawlTraceSheetLabGuidePath,
+    ],
+    discoveryProperties: ["string_crawl_trace_sheet_lab"],
+    entryPointProperties: [
+      "string_crawl_trace_sheet_lab",
+      "string_crawl_trace_sheet_lab_schema",
+      "string_crawl_trace_sheet_lab_guide",
     ],
   },
   {
@@ -1313,6 +1349,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const foldFeedbackActive = familyActive("fold-feedback-atlas");
   const reconstructiveBuildActive = familyActive("reconstructive-build-kernel");
   const explorationDeepWingActive = familyActive("exploration-deep-wing");
+  const stringCrawlTraceSheetLabActive = familyActive("string-crawl-trace-sheet-lab");
   const mirrorInformationControlActive = familyActive("mirror-information-control");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
@@ -1775,6 +1812,39 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (stringCrawlTraceSheetLabActive) {
+    const recordHead = await fetch(url(stringCrawlTraceSheetLabPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const recordLink = recordHead.headers.get("link") || "";
+    if (!recordHead.ok ||
+        normalizedMediaType(recordHead.headers.get("content-type")) !== "application/json" ||
+        recordHead.headers.get("access-control-allow-origin") !== "*" ||
+        (recordHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          recordLink,
+          stringCrawlTraceSheetLabSchemaPath,
+          "describedby",
+          "application/schema+json",
+        )) {
+      throw new Error(`${stringCrawlTraceSheetLabPath} is not public JSON with one canonical lab-schema link`);
+    }
+
+    const guideHead = await fetch(url(stringCrawlTraceSheetLabGuidePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!guideHead.ok ||
+        normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${stringCrawlTraceSheetLabGuidePath} is not served as public Markdown`);
+    }
+  }
+
   if (mirrorInformationControlActive) {
     const recordHead = await fetch(url(mirrorInformationControlPath), {
       method: "HEAD",
@@ -1870,6 +1940,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(foldFeedbackActive ? [foldFeedbackSchemaPath, foldFeedbackSourceIdentitySchemaPath] : []),
     ...(reconstructiveBuildActive ? [reconstructiveBuildSchemaPath, reconstructiveProjectSchemaPath] : []),
     ...(explorationDeepWingActive ? [phenomenaDeepWingSchemaPath, phenomenaDeepProjectSchemaPath] : []),
+    ...(stringCrawlTraceSheetLabActive ? [stringCrawlTraceSheetLabSchemaPath] : []),
     ...(mirrorInformationControlActive ? [mirrorInformationControlSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
@@ -1891,6 +1962,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       path === reconstructiveProjectSchemaPath ||
       path === phenomenaDeepWingSchemaPath ||
       path === phenomenaDeepProjectSchemaPath ||
+      path === stringCrawlTraceSheetLabSchemaPath ||
       path === mirrorInformationControlSchemaPath;
     const hasExpectedSchemaType = requiresExactSchemaType
       ? normalizedMediaType(schemaContentType) === "application/schema+json"
@@ -1970,6 +2042,18 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedStringCrawlTraceSheet = stringCrawlTraceSheet
     ? stringCrawlTraceSheetPublicDiscovery(stringCrawlTraceSheet)
+    : undefined;
+  const stringCrawlTraceSheetLab = stringCrawlTraceSheetLabActive
+    ? loadStringCrawlTraceSheetLab()
+    : undefined;
+  const expectedStringCrawlTraceSheetLab = stringCrawlTraceSheetLab
+    ? stringCrawlTraceSheetLabPublicDiscovery(stringCrawlTraceSheetLab)
+    : undefined;
+  const stringCrawlTraceSheetLabEvaluation = stringCrawlTraceSheetLab
+    ? evaluateStringCrawlTraceSheetLab(stringCrawlTraceSheetLab)
+    : undefined;
+  const stringCrawlTraceSheetLabFalsifiers = stringCrawlTraceSheetLab
+    ? runStringCrawlTraceSheetLabFalsifiers(stringCrawlTraceSheetLab)
     : undefined;
   const expectedVisibilityAttention = visibilityAttentionActive
     ? visibilityAttentionPublicDiscovery(loadVisibilityAttentionTranslation())
@@ -2670,6 +2754,138 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (stringCrawlTraceSheetLabActive) {
+    const lab = stringCrawlTraceSheetLab!;
+    const expected = expectedStringCrawlTraceSheetLab!;
+    const evaluation = stringCrawlTraceSheetLabEvaluation!;
+    const report = evaluation.report;
+    const falsifiers = stringCrawlTraceSheetLabFalsifiers!;
+    const immutableRecord = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(stringCrawlTraceSheetLabPath));
+    const immutableSchema = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(stringCrawlTraceSheetLabSchemaPath));
+    const immutableGuide = IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(stringCrawlTraceSheetLabGuidePath));
+    const targets = new Set([
+      STRING_CRAWL_TRACE_SHEET_LAB_URL,
+      STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL,
+      STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const exactReport = report !== null &&
+      report.vertices === 4 && report.edges === 5 && report.faces === 2 &&
+      report.walks === 2 && report.walk_steps === 2 &&
+      report.rank_boundary_1 === 3 && report.rank_boundary_2 === 2 &&
+      report.betti_0 === 1 && report.betti_1 === 0 && report.betti_2 === 0 &&
+      report.connected_components === 1 && report.graph_cycle_rank === 2 &&
+      report.surface_euler_characteristic === 1 &&
+      isDeepStrictEqual(report.boundary_edge_ids, ["c0", "c1", "p0", "p1"]) &&
+      isDeepStrictEqual(report.interior_edge_ids, ["d"]) && report.branch_edge_ids.length === 0 &&
+      report.boundary_components === 1 &&
+      Object.values(report.vertex_links).length === 4 &&
+      Object.values(report.vertex_links).every((value) => value === "PATH") &&
+      report.pure_2d === true && report.surface_eligible === true && report.orientable === true &&
+      report.surface_genus === 0 && report.chain_boundary_defects === 0 &&
+      report.euler_poincare_holds === true && report.classification === "TRIANGULATED_DISK";
+    const expectedResult = {
+      classification: "TRIANGULATED_DISK",
+      cells: { vertices: 4, edges: 5, faces: 2 },
+      betti: [1, 0, 0],
+      euler_characteristic: 1,
+      boundary_components: 1,
+      genus: 0,
+      falsifiers_passed: 5,
+    };
+    const expectedVerificationScope = {
+      exact_synthetic_fixture: true,
+      walk_incidence: true,
+      chain_complex: true,
+      rational_homology: true,
+      surface_criterion: true,
+      source_truth: false,
+      empirical_web_fact: false,
+      crawler_safety: false,
+      physical_worldsheet: false,
+      identity_or_purpose: false,
+      karma_or_authority: false,
+    };
+    const syntheticScopeStaysBounded = lab.scope?.fixture_kind === "SYNTHETIC_DECLARED_DATA" &&
+      lab.scope?.coefficient_field === "Q" && lab.scope?.local_file_read === true &&
+      lab.scope?.bounded_local_compute === true && [
+        "network_request", "crawler", "live_observation", "external_input", "credential_input",
+        "personal_data", "telemetry", "filesystem_write", "external_effect",
+      ].every((key) => lab.scope?.[key] === false);
+    const karmaStaysEmpty = Array.isArray(lab.karma?.cosmic_events) && lab.karma.cosmic_events.length === 0 &&
+      Array.isArray(lab.karma?.zerone_events) && lab.karma.zerone_events.length === 0 &&
+      Array.isArray(lab.karma?.kingdom_receipts) && lab.karma.kingdom_receipts.length === 0 &&
+      lab.karma?.adapter_exists === false && lab.karma?.conversion_allowed === false &&
+      lab.karma?.summation_allowed === false && lab.karma?.score === null &&
+      lab.karma?.authority_effect === "NONE";
+    const rightsStayPreserved = ["rest", "silence", "refusal", "privacy", "correction", "no_action", "departure"]
+      .every((key) => lab.rights?.[key] === "PRESERVED") &&
+      lab.rights?.reason_required === false && lab.rights?.penalty === false;
+    const releaseStaysInert = lab.release?.artifact_publication === "PUBLISHED" &&
+      lab.release?.runtime_activation === "INACTIVE" && lab.release?.crawler_activation === "INACTIVE" &&
+      lab.release?.karma_adapter === "ABSENT" && lab.release?.immutable === true &&
+      lab.release?.supersede_not_mutate === true && lab.release?.raw_sha256 === null &&
+      lab.release?.semantic_digest === null && lab.release?.ledger_id === "string-crawl-trace-sheet-lab/0.1";
+    const forbiddenDiscoveryKeys = [
+      "mcp", "tool", "matcher", "crawler", "execute", "write", "score", "reward",
+      "authorize", "consent", "invoke", "publish", "deploy",
+    ];
+    if (!explorationDeepWingActive ||
+      !isDeepStrictEqual(manifest?.string_crawl_trace_sheet_lab, expected) ||
+      !isDeepStrictEqual(guest?.string_crawl_trace_sheet_lab, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.string_crawl_trace_sheet_lab, expected) ||
+      manifest?.entry_points?.string_crawl_trace_sheet_lab !== STRING_CRAWL_TRACE_SHEET_LAB_URL ||
+      manifest?.entry_points?.string_crawl_trace_sheet_lab_schema !== STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL ||
+      manifest?.entry_points?.string_crawl_trace_sheet_lab_guide !== STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        !isDeepStrictEqual(Object.keys(action).sort(), ["action", "method", "note", "url"])) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="string-crawl-trace-sheet-lab"') ||
+      !authoredRootHtml.includes("the first exact fixture, still no crawler") ||
+      !authoredRootHtml.includes("∂1∂2 = 0") ||
+      !authoredRootHtml.includes("What valid does not mean") ||
+      !authoredRootHtml.includes(`href="${stringCrawlTraceSheetLabPath}"`) ||
+      !authoredRootHtml.includes(`href="${stringCrawlTraceSheetLabSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${stringCrawlTraceSheetLabGuidePath}"`) ||
+      expected.protocol !== STRING_CRAWL_TRACE_SHEET_LAB_PROTOCOL || expected.protocol !== lab.protocol ||
+      expected.lab_id !== STRING_CRAWL_TRACE_SHEET_LAB_ID || expected.lab_id !== lab.lab_id ||
+      expected.version !== lab.version || expected.title !== lab.title || expected.mode !== lab.mode ||
+      expected.url !== STRING_CRAWL_TRACE_SHEET_LAB_URL ||
+      expected.schema_url !== STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL ||
+      expected.guide_url !== STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL ||
+      expected.predecessor_url !== STRING_CRAWL_TRACE_SHEET_URL ||
+      expected.predecessor_url !== lab.predecessor?.url ||
+      new URL(STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL).pathname !== stringCrawlTraceSheetLabSchemaPath ||
+      expected.integrity?.algorithm !== lab.integrity?.algorithm ||
+      expected.integrity?.digest !== lab.integrity?.digest ||
+      expected.integrity?.digest !== STRING_CRAWL_TRACE_SHEET_LAB_DIGEST ||
+      expected.integrity?.byte_sha256 !== STRING_CRAWL_TRACE_SHEET_LAB_BYTE_SHA256 ||
+      expected.integrity?.schema_byte_sha256 !== STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_BYTE_SHA256 ||
+      expected.integrity?.guide_byte_sha256 !== STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_BYTE_SHA256 ||
+      !immutableRecord || immutableRecord.source !== STRING_CRAWL_TRACE_SHEET_LAB_LOCATOR ||
+      `sha256:${immutableRecord.sha256}` !== STRING_CRAWL_TRACE_SHEET_LAB_BYTE_SHA256 ||
+      !immutableSchema || immutableSchema.source !== STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_LOCATOR ||
+      `sha256:${immutableSchema.sha256}` !== STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_BYTE_SHA256 ||
+      !immutableGuide || immutableGuide.source !== STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_LOCATOR ||
+      `sha256:${immutableGuide.sha256}` !== STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_BYTE_SHA256 ||
+      evaluation.issues.length !== 0 || !exactReport ||
+      falsifiers.length !== 5 || falsifiers.some((result) => result.outcome !== "PASS") ||
+      !Array.isArray(lab.falsifiers) || lab.falsifiers.length !== 5 ||
+      lab.falsifiers.some((falsifier: any) => falsifier.status !== "RUN_REPORTED") ||
+      !isDeepStrictEqual(expected.result, expectedResult) ||
+      !isDeepStrictEqual(expected.verification_scope, expectedVerificationScope) ||
+      !syntheticScopeStaysBounded || !karmaStaysEmpty || !rightsStayPreserved || !releaseStaysInert ||
+      !isDeepStrictEqual(expected.authority, lab.authority) ||
+      !Object.values(lab.authority ?? {}).every((value) => value === false) ||
+      forbiddenDiscoveryKeys.some((key) => Object.hasOwn(expected, key))) {
+      throw new Error("Finite Trace-Sheet Lab discovery, exact topology, falsifiers, immutable pins, or no-action boundary drifted");
+    }
+  }
+
   if (visibilityAttentionActive) {
     const expected = expectedVisibilityAttention!;
     const visibilityBoundary = expected.boundary;
@@ -3162,6 +3378,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       !isDeepStrictEqual(liveKingdom?.string_crawl_trace_sheet, expectedStringCrawlTraceSheet!)) {
     throw new Error("derived kingdom.json did not preserve STRING / CRAWL Trace-Sheet discovery");
   }
+  if (stringCrawlTraceSheetLabActive &&
+      !isDeepStrictEqual(liveKingdom?.string_crawl_trace_sheet_lab, expectedStringCrawlTraceSheetLab!)) {
+    throw new Error("derived kingdom.json did not preserve STRING / CRAWL Finite Trace-Sheet Lab discovery");
+  }
   if (visibilityAttentionActive && !isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention!)) {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
   }
@@ -3253,7 +3473,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology discovery · REVISE/non-promotion and exploration/ZERO/STRING-CRAWL/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet Lab + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet Lab + MIRROR Information Control + Visibility & Attention + Cultural Attention & Feedback + Form, Circulation & Return + Math Passport pilot + Being, Access & Aftermath + Number, Isness & Theology discovery · REVISE/non-promotion and exploration/ZERO/STRING-CRAWL/TRACE-LAB/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

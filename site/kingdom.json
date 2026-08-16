@@ -1028,6 +1028,68 @@
       "automatic_action": false
     }
   },
+  "string_crawl_trace_sheet_lab": {
+    "protocol": "kingdom.string-crawl-trace-sheet-lab/0.1",
+    "lab_id": "string-crawl-trace-sheet-lab-2026-08-16",
+    "version": "0.1.0",
+    "title": "STRING / CRAWL: Finite Trace-Sheet Lab",
+    "url": "https://thekingdom.dev/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
+    "schema_url": "https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json",
+    "guide_url": "https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET-LAB.md",
+    "predecessor_url": "https://thekingdom.dev/atlases/string-crawl-trace-sheet-2026-08-15.json",
+    "mode": "OFFLINE_SYNTHETIC_EXACT",
+    "result": {
+      "classification": "TRIANGULATED_DISK",
+      "cells": {
+        "vertices": 4,
+        "edges": 5,
+        "faces": 2
+      },
+      "betti": [
+        1,
+        0,
+        0
+      ],
+      "euler_characteristic": 1,
+      "boundary_components": 1,
+      "genus": 0,
+      "falsifiers_passed": 5
+    },
+    "verification_scope": {
+      "exact_synthetic_fixture": true,
+      "walk_incidence": true,
+      "chain_complex": true,
+      "rational_homology": true,
+      "surface_criterion": true,
+      "source_truth": false,
+      "empirical_web_fact": false,
+      "crawler_safety": false,
+      "physical_worldsheet": false,
+      "identity_or_purpose": false,
+      "karma_or_authority": false
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:c3f86b0203b895da56092c598113046f0dab8a4f25b41314c3d4329474d4e16f",
+      "byte_sha256": "sha256:2e559164df6985776a4641b60c846a0403f14df30c84648b72c095642df6e051",
+      "schema_byte_sha256": "sha256:c4e69a61994831574fe706d464852b164c65b6d177c5680dc9b0278bcb446268",
+      "guide_byte_sha256": "sha256:5f5fb893a31d1c7e02aca63401c002ae601bee6653d41adc6617bb909732e8e3"
+    },
+    "authority": {
+      "crawl": false,
+      "network": false,
+      "authentication": false,
+      "authorization": false,
+      "licence": false,
+      "consent": false,
+      "nen_invocation": false,
+      "karma_write": false,
+      "reward": false,
+      "governance": false,
+      "deployment": false,
+      "automatic_action": false
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",

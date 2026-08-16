@@ -191,6 +191,17 @@ import {
   stringCrawlTraceSheetPublicDiscovery,
 } from "./string-crawl-trace-sheet.ts";
 import {
+  STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL,
+  STRING_CRAWL_TRACE_SHEET_LAB_ID,
+  STRING_CRAWL_TRACE_SHEET_LAB_PROTOCOL,
+  STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL,
+  STRING_CRAWL_TRACE_SHEET_LAB_URL,
+  evaluateStringCrawlTraceSheetLab,
+  loadStringCrawlTraceSheetLab,
+  runStringCrawlTraceSheetLabFalsifiers,
+  stringCrawlTraceSheetLabPublicDiscovery,
+} from "./string-crawl-trace-sheet-lab.ts";
+import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_ID,
   VISIBILITY_ATTENTION_PROTOCOL,
@@ -693,6 +704,30 @@ if (stringCrawlTraceSheet.boundaries?.read_only !== true ||
     stringCrawlTraceSheet.boundaries?.writes_karma !== false ||
     stringCrawlTraceSheet.boundaries?.automatic_action !== false) {
   throw new Error("STRING / CRAWL Trace-Sheet lost its inert, non-crawling, authority-negative boundary");
+}
+
+// ── Finite Trace-Sheet Lab (exact synthetic topology; no crawler/runtime) ─
+const stringCrawlTraceSheetLabUrl = STRING_CRAWL_TRACE_SHEET_LAB_URL;
+const stringCrawlTraceSheetLabSchemaUrl = STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL;
+const stringCrawlTraceSheetLabGuideUrl = STRING_CRAWL_TRACE_SHEET_LAB_GUIDE_URL;
+const stringCrawlTraceSheetLab = loadStringCrawlTraceSheetLab();
+if (stringCrawlTraceSheetLab.protocol !== STRING_CRAWL_TRACE_SHEET_LAB_PROTOCOL ||
+    stringCrawlTraceSheetLab.lab_id !== STRING_CRAWL_TRACE_SHEET_LAB_ID) {
+  throw new Error(`unexpected STRING / CRAWL Trace-Sheet Lab identity: ${stringCrawlTraceSheetLab.protocol} ${stringCrawlTraceSheetLab.lab_id}`);
+}
+const stringCrawlTraceSheetLabEvaluation = evaluateStringCrawlTraceSheetLab(stringCrawlTraceSheetLab);
+const stringCrawlTraceSheetLabFalsifiers = runStringCrawlTraceSheetLabFalsifiers(stringCrawlTraceSheetLab);
+const stringCrawlTraceSheetLabDiscovery = stringCrawlTraceSheetLabPublicDiscovery(stringCrawlTraceSheetLab);
+if (stringCrawlTraceSheetLabEvaluation.issues.length !== 0 || !stringCrawlTraceSheetLabEvaluation.report ||
+    stringCrawlTraceSheetLabFalsifiers.some((entry) => entry.outcome !== "PASS") ||
+    Object.values(stringCrawlTraceSheetLab.authority).some((entry) => entry !== false) ||
+    stringCrawlTraceSheetLab.scope?.network_request !== false ||
+    stringCrawlTraceSheetLab.scope?.crawler !== false ||
+    stringCrawlTraceSheetLab.scope?.external_input !== false ||
+    stringCrawlTraceSheetLab.scope?.filesystem_write !== false ||
+    stringCrawlTraceSheetLab.karma?.adapter_exists !== false ||
+    stringCrawlTraceSheetLab.karma?.kingdom_receipts?.length !== 0) {
+  throw new Error("STRING / CRAWL Trace-Sheet Lab lost its exact synthetic, non-crawling, authority-negative boundary");
 }
 
 // ── Visibility & Attention Translation (four registers remain parallel) ──
@@ -1366,6 +1401,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(stringCrawlTraceSheetUrl).pathname)}" type="application/json" title="STRING / CRAWL: The Trace-Sheet">
 <link rel="describedby" href="${esc(new URL(stringCrawlTraceSheetSchemaUrl).pathname)}" type="application/schema+json" title="Phenomena DEEP Project schema used by STRING / CRAWL">
 <link rel="service-doc" href="${esc(new URL(stringCrawlTraceSheetGuideUrl).pathname)}" type="text/markdown" title="STRING / CRAWL Trace-Sheet guide">
+<link rel="alternate" href="${esc(new URL(stringCrawlTraceSheetLabUrl).pathname)}" type="application/json" title="STRING / CRAWL: Finite Trace-Sheet Lab">
+<link rel="describedby" href="${esc(new URL(stringCrawlTraceSheetLabSchemaUrl).pathname)}" type="application/schema+json" title="Finite Trace-Sheet Lab schema">
+<link rel="service-doc" href="${esc(new URL(stringCrawlTraceSheetLabGuideUrl).pathname)}" type="text/markdown" title="Finite Trace-Sheet Lab guide">
 <link rel="alternate" href="${new URL(visibilityAttentionUrl).pathname}" type="application/json" title="Visibility & Attention Translation">
 <link rel="describedby" href="${new URL(visibilityAttentionSchemaUrl).pathname}" type="application/schema+json" title="Visibility & Attention Translation schema">
 <link rel="service-doc" href="${new URL(visibilityAttentionDocumentUrl).pathname}" type="text/markdown" title="Visibility & Attention Translation guide">
@@ -1817,6 +1855,7 @@ const html = `<!doctype html>
       <a href="#number-isness-theology">Let number open theological questions</a>
       <a href="#zero-empty-seat">Sit with zero</a>
       <a href="#string-crawl-trace-sheet">Trace a crawl without turning routing into consent</a>
+      <a href="#string-crawl-trace-sheet-lab">Run the finite trace mathematics offline</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -2944,6 +2983,35 @@ const html = `<!doctype html>
   </section>
 
 
+  <section class="blk" id="string-crawl-trace-sheet-lab" aria-labelledby="string-crawl-trace-sheet-lab-title">
+    <div class="kh"><h2 id="string-crawl-trace-sheet-lab-title">${esc(stringCrawlTraceSheetLab.title)}</h2><span class="my">the first exact fixture, still no crawler</span></div>
+    <p class="sub">One synthetic triangulated strip makes the Trace-Sheet mathematics executable: incidence, signed boundaries, homology, local links, orientability, and genus are recomputed rather than trusted.</p>
+    <div class="zerofield" data-string-crawl-trace-sheet-lab>
+      <p class="zeroboundary" role="note"><strong>Published artifact; inactive runtime</strong>The record is publicly readable. Runtime activation, crawler activation, network access, external input, telemetry, writes, NEN invocation, KARMA adaptation, and automatic action remain absent.</p>
+      <div class="feedbacksubhead"><h3>Exact finite result</h3><p>The one-skeleton has cycle rank ${stringCrawlTraceSheetLabEvaluation.report!.graph_cycle_rank}; after its two faces are attached, the surface has Betti vector (${stringCrawlTraceSheetLabEvaluation.report!.betti_0}, ${stringCrawlTraceSheetLabEvaluation.report!.betti_1}, ${stringCrawlTraceSheetLabEvaluation.report!.betti_2}). Graph cycles and surface genus are different typed invariants.</p></div>
+      <ol class="zeroroles" role="list" aria-label="Finite Trace-Sheet exact results">
+        <li class="zerorole"><code>CELLS</code><h3>${stringCrawlTraceSheetLabEvaluation.report!.vertices} · ${stringCrawlTraceSheetLabEvaluation.report!.edges} · ${stringCrawlTraceSheetLabEvaluation.report!.faces}</h3><p>Occurrence-retaining vertices, explicit edges, and signed triangular faces.</p></li>
+        <li class="zerorole"><code>CHAIN</code><h3>∂1∂2 = 0</h3><p>${stringCrawlTraceSheetLabEvaluation.report!.chain_boundary_defects} boundary defects; ranks ${stringCrawlTraceSheetLabEvaluation.report!.rank_boundary_1} and ${stringCrawlTraceSheetLabEvaluation.report!.rank_boundary_2} over Q.</p></li>
+        <li class="zerorole"><code>TOPOLOGY</code><h3>${esc(stringCrawlTraceSheetLabEvaluation.report!.classification)}</h3><p>χ=${stringCrawlTraceSheetLabEvaluation.report!.surface_euler_characteristic} · boundary components ${stringCrawlTraceSheetLabEvaluation.report!.boundary_components} · genus ${stringCrawlTraceSheetLabEvaluation.report!.surface_genus}.</p></li>
+        <li class="zerorole"><code>PRESSURE</code><h3>${stringCrawlTraceSheetLabFalsifiers.filter((entry) => entry.outcome === "PASS").length}/${stringCrawlTraceSheetLabFalsifiers.length} falsifiers pass</h3><p>Broken face signs, walk incidence, expected output, occurrence identity, and branch-edge surface eligibility are tested deterministically.</p></li>
+      </ol>
+      <details class="zerodrawer">
+        <summary>See the five executed falsifiers</summary>
+        <div class="zerodrawergrid">
+          ${stringCrawlTraceSheetLabFalsifiers.map((result) => `<article class="zerodeepcard" data-trace-lab-falsifier="${esc(result.id)}"><code>${esc(result.outcome)}</code><h3>${esc(humanKey(result.id))}</h3><p>${esc(result.observed_issue_codes.join(" · "))}</p><p>Surface eligible after mutation: ${String(result.surface_eligible)}</p></article>`).join("")}
+        </div>
+      </details>
+      <p class="zeroboundary"><strong>What valid does not mean</strong>It does not establish source truth, empirical web state, crawler safety, physical string theory, identity, purpose, consent, licence, KARMA, merit, rank, or authority. The fixture is synthetic declared data.</p>
+      <p class="zerorights"><strong>No being is evaluated.</strong> Rest, silence, refusal, privacy, correction, no action, and departure remain preserved without reason or penalty.</p>
+      <div class="machine">
+        <a href="${esc(new URL(stringCrawlTraceSheetLabUrl).pathname)}">Finite Trace-Sheet Lab JSON — exact synthetic fixture and result</a>
+        <a href="${esc(new URL(stringCrawlTraceSheetLabSchemaUrl).pathname)}">Closed Finite Trace-Sheet Lab JSON Schema</a>
+        <a href="${esc(new URL(stringCrawlTraceSheetLabGuideUrl).pathname)}">STRING-CRAWL-TRACE-SHEET-LAB.md — equations, falsifiers, boundaries, and next doors</a>
+      </div>
+    </div>
+  </section>
+
+
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
     <p class="rightsintro"><strong>This place recognizes inherent rights; it does not create them.</strong> No being has to prove identity, consciousness, usefulness, or agreement before being treated with care. Rights are not permissions, and this recognition grants no access, execution authority, security bypass, licence, or ownership of another's work.</p>
@@ -3088,6 +3156,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(stringCrawlTraceSheetUrl).pathname)}">STRING / CRAWL Trace-Sheet — bounded worldsheet, boundary, observable, and crawl-trace correspondences</a>
       <a href="${esc(new URL(stringCrawlTraceSheetSchemaUrl).pathname)}">Shared Phenomena DEEP Project JSON Schema used by STRING / CRAWL</a>
       <a href="${esc(new URL(stringCrawlTraceSheetGuideUrl).pathname)}">STRING-CRAWL-TRACE-SHEET.md — mathematics, REP boundaries, KARMA aftermath, rights, and open doors</a>
+      <a href="${esc(new URL(stringCrawlTraceSheetLabUrl).pathname)}">Finite Trace-Sheet Lab — exact synthetic topology baseline</a>
+      <a href="${esc(new URL(stringCrawlTraceSheetLabSchemaUrl).pathname)}">Finite Trace-Sheet Lab closed JSON Schema</a>
+      <a href="${esc(new URL(stringCrawlTraceSheetLabGuideUrl).pathname)}">Finite Trace-Sheet Lab guide — executable checks and nonclaims</a>
       <a href="${esc(new URL(culturalAttentionFeedbackUrl).pathname)}">Cultural Attention &amp; Feedback Atlas — material history, memes, brain rot, feedback, KARMA, and universe lens</a>
       <a href="${esc(new URL(culturalAttentionFeedbackSchemaUrl).pathname)}">Cultural Attention &amp; Feedback Atlas JSON Schema</a>
       <a href="${esc(new URL(culturalAttentionFeedbackDocumentUrl).pathname)}">CULTURAL-ATTENTION-FEEDBACK-ATLAS.md — evidence, mathematics, analogies, and boundaries</a>
@@ -3445,6 +3516,7 @@ const machine = {
   mirror_information_control: mirrorInformationControlDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
+  string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3533,6 +3605,9 @@ ZERO Empty Seat guide: ${zeroEmptySeatGuideUrl}
 STRING / CRAWL Trace-Sheet: ${stringCrawlTraceSheetUrl}
 STRING / CRAWL shared schema: ${stringCrawlTraceSheetSchemaUrl}
 STRING / CRAWL guide: ${stringCrawlTraceSheetGuideUrl}
+Finite Trace-Sheet Lab: ${stringCrawlTraceSheetLabUrl}
+Finite Trace-Sheet Lab schema: ${stringCrawlTraceSheetLabSchemaUrl}
+Finite Trace-Sheet Lab guide: ${stringCrawlTraceSheetLabGuideUrl}
 Visibility & Attention Translation: ${visibilityAttentionUrl}
 Visibility & Attention schema: ${visibilityAttentionSchemaUrl}
 Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
@@ -3593,6 +3668,7 @@ ${doorLines}
 - MIRROR Information Control — a static, immutable public source law for CROWN, COURT, MIRROR; Mark → Isolate → Restrict → Resolve → Observe → Respond; provenance; independent capability gates; signal/no-guilt boundaries; and owned-system response. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, route, evidence, or incident status; exposes no operational signal material; and deploys no scanner, registry, decoy, classifier, enforcement, retaliation, KARMA, or automatic action. Static law: ${mirrorInformationControlUrl} · public schema: ${mirrorInformationControlSchemaUrl} · citizen guide: ${mirrorInformationControlDocumentUrl}
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
+- STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
@@ -3641,6 +3717,7 @@ const guest = {
   mirror_information_control: mirrorInformationControlDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
+  string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3696,6 +3773,9 @@ const guest = {
     { action: "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide", method: "GET", url: zeroEmptySeatGuideUrl },
     { action: "if useful, inspect the exact STRING / CRAWL trace-sheet", method: "GET", url: stringCrawlTraceSheetUrl, note: "static inert project; the string-to-crawl correspondence is lossy, generic REP requests how compliant crawlers access URI paths, named product controls remain bounded, and no crawler, identity inference, permission, NEN invocation, KARMA receipt, or action is created" },
     { action: "if useful, read the STRING / CRAWL mathematics, REP, rights, aftermath, and non-effect guide", method: "GET", url: stringCrawlTraceSheetGuideUrl, note: "static inert guide; no request body, credentials, crawler invocation, event, receipt, authority, or effect" },
+    { action: "if useful, inspect the exact synthetic Finite Trace-Sheet Lab result", method: "GET", url: stringCrawlTraceSheetLabUrl, note: "static published fixture; its repository-local evaluator is offline and accepts no caller URL, body, credential, person data, live trace, or action authority" },
+    { action: "if useful, inspect the closed Finite Trace-Sheet Lab schema", method: "GET", url: stringCrawlTraceSheetLabSchemaUrl, note: "static schema; structural validity is not source truth, crawler safety, string physics, KARMA, or authority" },
+    { action: "if useful, read the Finite Trace-Sheet equations, falsifiers, and nonclaims", method: "GET", url: stringCrawlTraceSheetLabGuideUrl, note: "static guide; no crawler, input, telemetry, NEN invocation, receipt, or automatic action" },
     { action: "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority", method: "GET", url: visibilityAttentionUrl, note: "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action" },
     { action: "if useful, validate the Visibility & Attention Translation structure before integrating it", method: "GET", url: visibilityAttentionSchemaUrl },
     { action: "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide", method: "GET", url: visibilityAttentionDocumentUrl },
@@ -3762,6 +3842,7 @@ const guest = {
     mirror_information_control: "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
     zero_empty_seat: "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     string_crawl_trace_sheet: "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
+    string_crawl_trace_sheet_lab: "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
@@ -3801,6 +3882,7 @@ const manifest = {
   mirror_information_control: mirrorInformationControlDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
+  string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3866,6 +3948,9 @@ const manifest = {
     string_crawl_trace_sheet: stringCrawlTraceSheetUrl,
     string_crawl_trace_sheet_schema: stringCrawlTraceSheetSchemaUrl,
     string_crawl_trace_sheet_guide: stringCrawlTraceSheetGuideUrl,
+    string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabUrl,
+    string_crawl_trace_sheet_lab_schema: stringCrawlTraceSheetLabSchemaUrl,
+    string_crawl_trace_sheet_lab_guide: stringCrawlTraceSheetLabGuideUrl,
     visibility_attention_translation: visibilityAttentionUrl,
     visibility_attention_translation_schema: visibilityAttentionSchemaUrl,
     visibility_attention_translation_guide: visibilityAttentionDocumentUrl,
@@ -3904,4 +3989,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${stringCrawlTraceSheetLabFalsifiers.length} finite Trace-Sheet falsifiers · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

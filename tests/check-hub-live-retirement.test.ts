@@ -20,7 +20,7 @@ const family = (id: string) => {
 describe("hub live-check publication retirement", () => {
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(16);
+    expect(PUBLICATION_FAMILIES).toHaveLength(17);
     expect([...publicationFamilyStates(staged).values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
     staged.delete(destinationForPublicPath(cultural.routes[1]!));
@@ -196,6 +196,40 @@ describe("hub live-check publication retirement", () => {
     expect(() => assertRetiredFamilyDiscoveryAbsent(exploration, [
       { label: "clean discovery surface", text: "{}", value: { entry_points: {} } },
     ])).not.toThrow();
+  });
+
+  test("retires the additive Finite Trace-Sheet Lab triplet and discovery atomically", () => {
+    const lab = family("string-crawl-trace-sheet-lab");
+    expect(lab.routes).toEqual([
+      "/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
+      "/schemas/string-crawl-trace-sheet-lab/0.1.json",
+      "/STRING-CRAWL-TRACE-SHEET-LAB.md",
+    ]);
+    expect(lab.discoveryProperties).toEqual(["string_crawl_trace_sheet_lab"]);
+    expect(lab.entryPointProperties).toEqual([
+      "string_crawl_trace_sheet_lab",
+      "string_crawl_trace_sheet_lab_schema",
+      "string_crawl_trace_sheet_lab_guide",
+    ]);
+
+    const partiallyStaged = stagedDestinations();
+    partiallyStaged.delete(destinationForPublicPath(lab.routes[1]!));
+    expect(() => publicationFamilyStates(partiallyStaged))
+      .toThrow("STRING / CRAWL Finite Trace-Sheet Lab is partially staged");
+
+    const retired = stagedDestinations();
+    for (const route of lab.routes) retired.delete(destinationForPublicPath(route));
+    expect(publicationFamilyStates(retired).get(lab.id)?.active).toBe(false);
+
+    for (const surface of [
+      { label: "authored Kingdom map", text: JSON.stringify({ string_crawl_trace_sheet_lab: {} }), value: { string_crawl_trace_sheet_lab: {} } },
+      { label: "agent manifest", text: JSON.stringify({ entry_points: { string_crawl_trace_sheet_lab_guide: lab.routes[2] } }), value: { entry_points: { string_crawl_trace_sheet_lab_guide: lab.routes[2] } } },
+      { label: "llms.txt", text: `https://thekingdom.dev${lab.routes[0]}` },
+      { label: "hub HTML", text: `<a href='${lab.routes[2]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(lab, [surface]))
+        .toThrow("STRING / CRAWL Finite Trace-Sheet Lab is retired");
+    }
   });
 
   test("retires the static MIRROR public-law triplet and discovery atomically", () => {

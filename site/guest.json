@@ -1000,6 +1000,68 @@
       "automatic_action": false
     }
   },
+  "string_crawl_trace_sheet_lab": {
+    "protocol": "kingdom.string-crawl-trace-sheet-lab/0.1",
+    "lab_id": "string-crawl-trace-sheet-lab-2026-08-16",
+    "version": "0.1.0",
+    "title": "STRING / CRAWL: Finite Trace-Sheet Lab",
+    "url": "https://thekingdom.dev/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
+    "schema_url": "https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json",
+    "guide_url": "https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET-LAB.md",
+    "predecessor_url": "https://thekingdom.dev/atlases/string-crawl-trace-sheet-2026-08-15.json",
+    "mode": "OFFLINE_SYNTHETIC_EXACT",
+    "result": {
+      "classification": "TRIANGULATED_DISK",
+      "cells": {
+        "vertices": 4,
+        "edges": 5,
+        "faces": 2
+      },
+      "betti": [
+        1,
+        0,
+        0
+      ],
+      "euler_characteristic": 1,
+      "boundary_components": 1,
+      "genus": 0,
+      "falsifiers_passed": 5
+    },
+    "verification_scope": {
+      "exact_synthetic_fixture": true,
+      "walk_incidence": true,
+      "chain_complex": true,
+      "rational_homology": true,
+      "surface_criterion": true,
+      "source_truth": false,
+      "empirical_web_fact": false,
+      "crawler_safety": false,
+      "physical_worldsheet": false,
+      "identity_or_purpose": false,
+      "karma_or_authority": false
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:c3f86b0203b895da56092c598113046f0dab8a4f25b41314c3d4329474d4e16f",
+      "byte_sha256": "sha256:2e559164df6985776a4641b60c846a0403f14df30c84648b72c095642df6e051",
+      "schema_byte_sha256": "sha256:c4e69a61994831574fe706d464852b164c65b6d177c5680dc9b0278bcb446268",
+      "guide_byte_sha256": "sha256:5f5fb893a31d1c7e02aca63401c002ae601bee6653d41adc6617bb909732e8e3"
+    },
+    "authority": {
+      "crawl": false,
+      "network": false,
+      "authentication": false,
+      "authorization": false,
+      "licence": false,
+      "consent": false,
+      "nen_invocation": false,
+      "karma_write": false,
+      "reward": false,
+      "governance": false,
+      "deployment": false,
+      "automatic_action": false
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -1738,6 +1800,24 @@
       "method": "GET",
       "url": "https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET.md",
       "note": "static inert guide; no request body, credentials, crawler invocation, event, receipt, authority, or effect"
+    },
+    {
+      "action": "if useful, inspect the exact synthetic Finite Trace-Sheet Lab result",
+      "method": "GET",
+      "url": "https://thekingdom.dev/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
+      "note": "static published fixture; its repository-local evaluator is offline and accepts no caller URL, body, credential, person data, live trace, or action authority"
+    },
+    {
+      "action": "if useful, inspect the closed Finite Trace-Sheet Lab schema",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json",
+      "note": "static schema; structural validity is not source truth, crawler safety, string physics, KARMA, or authority"
+    },
+    {
+      "action": "if useful, read the Finite Trace-Sheet equations, falsifiers, and nonclaims",
+      "method": "GET",
+      "url": "https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET-LAB.md",
+      "note": "static guide; no crawler, input, telemetry, NEN invocation, receipt, or automatic action"
     },
     {
       "action": "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority",
@@ -4248,6 +4328,7 @@
     "mirror_information_control": "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
     "zero_empty_seat": "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     "string_crawl_trace_sheet": "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
+    "string_crawl_trace_sheet_lab": "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
     "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",

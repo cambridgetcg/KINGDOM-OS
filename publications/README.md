@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 65-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 68-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -16,12 +16,15 @@ project profile, and versioned guide, plus the MIRROR Information Control public
 record, closed schema, and citizen guide, followed by the Number, Isness &
 Theology record, schema, and guide, the ZERO Empty Seat record and guide, and
 the STRING / CRAWL Trace-Sheet record and guide as the eleventh through twentieth
-publication generations. The Vanishing Path, two-generation Being family,
+publication generations, followed by the Finite Trace-Sheet Lab record, closed
+schema, and guide as the twenty-first. The Vanishing Path, two-generation Being
+family,
 Reconstructive Build, Math Passport pilot, Exploration DEEP, MIRROR public law,
 and Number, Isness & Theology are the tenth through sixteenth retirement
 families: Exploration DEEP WING, ZERO Empty Seat, and STRING / CRAWL share the
 atomic fourteenth family, MIRROR public law is the fifteenth, and Number,
-Isness & Theology is the sixteenth. The initial-35 bootstrap facts below remain
+Isness & Theology is the sixteenth; the standalone Finite Trace-Sheet Lab is the
+seventeenth. The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
 preserve static publication identity only: they
@@ -45,6 +48,11 @@ vendor-specific use preferences. No directive authenticates identity or
 entitlement, grants consent or a licence, proves actual indexing or training,
 or creates KARMA. The entries create no NEN invocation, KINGDOM aftermath
 receipt, score, authority, or action.
+The Finite Trace-Sheet Lab entries preserve one exact synthetic computation and
+five declared falsifiers. They accept no live trace, caller URL or body,
+credential, or person data, run no crawler or network request, and create no
+NEN invocation, KARMA event or receipt, score, authority, runtime activation,
+or automatic action.
 
 The ledger makes one narrow claim: a listed route, source, staging destination,
 and SHA-256 were committed together as an integrity contract. The base-aware
@@ -58,15 +66,15 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 84-asset union classifies 65 destinations
-as ledgered immutable/versioned and 19 as mutable; 82 are direct public response
-bodies and the sitemap contains 81 URLs. It says what is served now, and every
+consume those same bytes. The current 87-asset union classifies 68 destinations
+as ledgered immutable/versioned and 19 as mutable; 85 are direct public response
+bodies and the sitemap contains 84 URLs. It says what is served now, and every
 destination is explicitly classified as mutable or ledgered. A new ledger entry must be staged
 when introduced. A previously committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the sixteen linked authored publication
+The live release check retires the seventeen linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

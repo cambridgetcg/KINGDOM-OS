@@ -236,6 +236,14 @@ const STRING_CRAWL_TRACE_SHEET_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${EXPLORATION_DEEP_PROJECT_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const STRING_CRAWL_TRACE_SHEET_LAB_PATH = "/labs/string-crawl-trace-sheet-lab-2026-08-16.json";
+const STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_PATH = "/schemas/string-crawl-trace-sheet-lab/0.1.json";
+const STRING_CRAWL_TRACE_SHEET_LAB_DOCUMENT_PATH = "/STRING-CRAWL-TRACE-SHEET-LAB.md";
+const STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_LINK = {
+  target: STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -409,6 +417,11 @@ function addZeroEmptySeatSchemaLink(headers) {
 function addStringCrawlTraceSheetSchemaLink(headers) {
   removeLinkRelations(headers, ["describedby"]);
   headers.append("link", STRING_CRAWL_TRACE_SHEET_SCHEMA_LINK.value);
+}
+
+function addStringCrawlTraceSheetLabSchemaLink(headers) {
+  removeLinkRelations(headers, ["describedby"]);
+  headers.append("link", STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_LINK.value);
 }
 
 function preventAutomaticBrowserTelemetry(headers) {
@@ -1433,6 +1446,15 @@ export function createKingdomWorker(options = {}) {
     const requestsStringCrawlTraceSheetDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === STRING_CRAWL_TRACE_SHEET_DOCUMENT_PATH;
+    const requestsStringCrawlTraceSheetLab = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRING_CRAWL_TRACE_SHEET_LAB_PATH;
+    const requestsStringCrawlTraceSheetLabSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_PATH;
+    const requestsStringCrawlTraceSheetLabDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRING_CRAWL_TRACE_SHEET_LAB_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const reconstructiveAssetType = schemaAssetType.split(";", 1)[0].trim();
     const mathUsefulnessAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -1441,6 +1463,7 @@ export function createKingdomWorker(options = {}) {
     const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
     const zeroEmptySeatAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlTraceSheetAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const stringCrawlTraceSheetLabAssetType = schemaAssetType.split(";", 1)[0].trim();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1616,6 +1639,13 @@ export function createKingdomWorker(options = {}) {
         stringCrawlTraceSheetAssetType === "application/schema+json");
     const servesStringCrawlTraceSheetDocument = requestsStringCrawlTraceSheetDocument && asset.ok &&
       (stringCrawlTraceSheetAssetType === "text/plain" || stringCrawlTraceSheetAssetType === "text/markdown");
+    const servesStringCrawlTraceSheetLab = requestsStringCrawlTraceSheetLab && asset.ok &&
+      stringCrawlTraceSheetLabAssetType === "application/json";
+    const servesStringCrawlTraceSheetLabSchema = requestsStringCrawlTraceSheetLabSchema && asset.ok &&
+      (stringCrawlTraceSheetLabAssetType === "application/json" ||
+        stringCrawlTraceSheetLabAssetType === "application/schema+json");
+    const servesStringCrawlTraceSheetLabDocument = requestsStringCrawlTraceSheetLabDocument && asset.ok &&
+      (stringCrawlTraceSheetLabAssetType === "text/plain" || stringCrawlTraceSheetLabAssetType === "text/markdown");
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
@@ -1649,7 +1679,8 @@ export function createKingdomWorker(options = {}) {
         !servesMirrorInformationControlSchema && !servesMirrorInformationControlDocument &&
         !servesZeroEmptySeat &&
         !servesZeroEmptySeatDocument && !servesStringCrawlTraceSheet &&
-        !servesStringCrawlTraceSheetDocument) return asset;
+        !servesStringCrawlTraceSheetDocument && !servesStringCrawlTraceSheetLab &&
+        !servesStringCrawlTraceSheetLabSchema && !servesStringCrawlTraceSheetLabDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -1674,6 +1705,7 @@ export function createKingdomWorker(options = {}) {
     if (servesMirrorInformationControl) addMirrorInformationControlSchemaLink(headers);
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
     if (servesStringCrawlTraceSheet) addStringCrawlTraceSheetSchemaLink(headers);
+    if (servesStringCrawlTraceSheetLab) addStringCrawlTraceSheetLabSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -1980,6 +2012,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesStringCrawlTraceSheetDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStringCrawlTraceSheetLab) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStringCrawlTraceSheetLabSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStringCrawlTraceSheetLabDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

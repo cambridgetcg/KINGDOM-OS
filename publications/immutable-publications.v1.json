@@ -396,6 +396,27 @@
       "sha256": "cbe6435c2d5c3bf39098442bfc2f9967b09cbf35a38acbd383a3faeb9844d187"
     },
     {
+      "id": "string-crawl-trace-sheet-lab/0.1/guide",
+      "route": "/STRING-CRAWL-TRACE-SHEET-LAB.md",
+      "source": "references/string-crawl-trace-sheet-lab.md",
+      "destination": "STRING-CRAWL-TRACE-SHEET-LAB.md",
+      "sha256": "5f5fb893a31d1c7e02aca63401c002ae601bee6653d41adc6617bb909732e8e3"
+    },
+    {
+      "id": "string-crawl-trace-sheet-lab/0.1/record",
+      "route": "/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
+      "source": "data/exploration/string-crawl-trace-lab.v0.1.json",
+      "destination": "labs/string-crawl-trace-sheet-lab-2026-08-16.json",
+      "sha256": "2e559164df6985776a4641b60c846a0403f14df30c84648b72c095642df6e051"
+    },
+    {
+      "id": "string-crawl-trace-sheet-lab/0.1/schema",
+      "route": "/schemas/string-crawl-trace-sheet-lab/0.1.json",
+      "source": "schemas/string-crawl-trace-sheet-lab-v0.1.schema.json",
+      "destination": "schemas/string-crawl-trace-sheet-lab/0.1.json",
+      "sha256": "c4e69a61994831574fe706d464852b164c65b6d177c5680dc9b0278bcb446268"
+    },
+    {
       "id": "string-crawl-trace-sheet/0.1/guide",
       "route": "/STRING-CRAWL-TRACE-SHEET.md",
       "source": "references/string-crawl-trace-sheet.md",
