@@ -26,6 +26,7 @@ import {
   runStrandObservationMembraneFalsifiers,
   simulateStrandObservationMembrane,
   strandObservationMembraneDigest,
+  strandObservationPinnedLookup,
   strandObservationMembranePublicDiscovery,
   verifyStrandObservationMembrane,
   verifyStrandObservationMembraneArtifactPins,
@@ -202,6 +203,40 @@ describe("STRAND Observation Membrane core", () => {
       expect(isPublicStrandObservationAddress(address)).toBe(true);
   });
 
+  test("pins one validated address in both Node lookup callback shapes", async () => {
+    const lookup = strandObservationPinnedLookup("104.21.32.1", 4);
+    const invoke = async (options: unknown) => await new Promise<any>((resolve) => {
+      lookup("thekingdom.dev", options, (error: Error | null, result: unknown, family?: number) =>
+        resolve({ error, result, family }));
+    });
+    expect(await invoke({ all: true })).toEqual({
+      error: null,
+      result: [{ address: "104.21.32.1", family: 4 }],
+      family: undefined,
+    });
+    expect(await invoke({ all: false })).toEqual({
+      error: null,
+      result: "104.21.32.1",
+      family: 4,
+    });
+  });
+
+  test("keeps the committed Node transport bundle derived exactly from reviewed source", async () => {
+    const build = await Bun.build({
+      entrypoints: [join(ROOT, "bin/strand-observation-membrane.ts")],
+      target: "node",
+      format: "esm",
+    });
+    expect(build.success).toBe(true);
+    expect(build.logs).toEqual([]);
+    expect(build.outputs).toHaveLength(1);
+    const generated = (await build.outputs[0]!.text()).replace(
+      /^#!\/usr\/bin\/env bun\n\/\/ @bun\n/,
+      "#!/usr/bin/env node\n// Generated from bin/strand-observation-membrane.ts; the source-equivalence test owns this normalization.\n",
+    );
+    expect(generated).toBe(readFileSync(join(ROOT, "bin/strand-observation-membrane-node.mjs"), "utf8"));
+  });
+
   test("applies the exact reviewed robots gate without turning it into authority", () => {
     expect(sha256(ROBOTS)).toBe(STRAND_OBSERVATION_ROBOTS_BYTE_SHA256);
     for (const path of ["/sitemap.xml", "/kingdom.json", "/observations/strand-observation-membrane-2026-08-16.json"])
@@ -314,15 +349,41 @@ describe("STRAND Observation Membrane core", () => {
     for (const forbidden of ["setInterval(", "writeFileSync", "appendFile", "Bun.write", "spawn(", "cron", "serviceWorker", "ability.json"])
       expect(source).not.toContain(forbidden);
     expect(source).toContain("response.socket.remoteAddress");
-    expect(source).toContain('if (import.meta.main)');
+    expect(source).toContain("resolve(process.argv[1]) === fileURLToPath(import.meta.url)");
 
-    const extraTarget = Bun.spawnSync({
-      cmd: ["bun", "bin/strand-observation-membrane.ts", "observe-live", "https://example.com", "--json"],
+    const nodeOffline = Bun.spawnSync({
+      cmd: ["node", "bin/strand-observation-membrane-node.mjs", "verify", "--json"],
       cwd: ROOT,
       stdout: "pipe",
       stderr: "pipe",
     });
+    expect(nodeOffline.exitCode).toBe(0);
+    expect(nodeOffline.stderr.toString()).toBe("");
+    expect(JSON.parse(nodeOffline.stdout.toString())).toMatchObject({ valid: true, checks: { length: 9 } });
+
+    const dispatcher = readFileSync(join(ROOT, "kingdom"), "utf8");
+    expect(dispatcher).toContain('strand-observation) exec node "$SELF_DIR/bin/strand-observation-membrane-node.mjs"');
+
+    const extraTarget = Bun.spawnSync({
+      cmd: ["./kingdom", "strand-observation", "observe-live", "https://example.com", "--json"],
+      cwd: ROOT,
+      env: { ...process.env, LC_ALL: "en_US.UTF-8" },
+      stdout: "pipe",
+      stderr: "pipe",
+    });
     expect(extraTarget.exitCode).toBe(1);
+    expect(extraTarget.stderr.toString()).toBe("");
     expect(JSON.parse(extraTarget.stdout.toString())).toMatchObject({ valid: false, error: "unexpected positional argument" });
+
+    const flagFirstTarget = Bun.spawnSync({
+      cmd: ["./kingdom", "strand-observation", "--json", "observe-live", "https://example.com"],
+      cwd: ROOT,
+      env: { ...process.env, LC_ALL: "en_US.UTF-8" },
+      stdout: "pipe",
+      stderr: "pipe",
+    });
+    expect(flagFirstTarget.exitCode).toBe(1);
+    expect(flagFirstTarget.stderr.toString()).toBe("");
+    expect(JSON.parse(flagFirstTarget.stdout.toString())).toMatchObject({ valid: false, error: "unexpected positional argument" });
   });
 });

@@ -554,6 +554,14 @@ function sameIpAddress(left: string, right: string): boolean {
   return leftWords !== null && rightWords !== null && deepEqual(leftWords, rightWords);
 }
 
+export function strandObservationPinnedLookup(address: string, family: 4 | 6): any {
+  return (_hostname: string, options: unknown, callback: (...arguments_: any[]) => void) => {
+    const wantsAll = object(options) && options.all === true;
+    if (wantsAll) callback(null, [{ address, family }]);
+    else callback(null, address, family);
+  };
+}
+
 async function transactDefault(input: Parameters<NonNullable<StrandObservationLiveDependencies["transact"]>>[0]): Promise<StrandObservationRawLiveResponse> {
   const started = Date.now();
   return await new Promise((resolvePromise, reject) => {
@@ -568,8 +576,7 @@ async function transactDefault(input: Parameters<NonNullable<StrandObservationLi
         "Accept-Encoding": "identity",
         Connection: "close",
       },
-      lookup: ((_hostname: string, _options: unknown, callback: (error: Error | null, address?: string, family?: number) => void) =>
-        callback(null, input.address, input.family)) as any,
+      lookup: strandObservationPinnedLookup(input.address, input.family),
     }, (response) => {
       response.on("error", (error) => {
         if (absoluteTimer !== null) clearTimeout(absoluteTimer);
@@ -900,4 +907,6 @@ export async function runStrandObservationMembraneCli(argv = process.argv.slice(
   }
 }
 
-if (import.meta.main) process.exitCode = await runStrandObservationMembraneCli();
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  process.exitCode = await runStrandObservationMembraneCli();
+}
