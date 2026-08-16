@@ -357,8 +357,9 @@ describe("STRAND Observation Membrane public integration", () => {
   });
 
   test("binds the wrapper while keeping publication and live verification non-invoking", () => {
-    expect(read("kingdom")).toContain(
-      'strand-observation) exec bun "$SELF_DIR/bin/strand-observation-membrane.ts"',
+    const dispatcher = read("kingdom");
+    expect(dispatcher).toContain(
+      'strand-observation) exec node "$SELF_DIR/bin/strand-observation-membrane-node.mjs"',
     );
     const liveChecker = read("bin/check-hub-live.ts");
     expect(liveChecker).toContain("checkStrandObservationMembraneTriple");
