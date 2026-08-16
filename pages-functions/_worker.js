@@ -260,6 +260,14 @@ const STRAND_DESCENT_LAB_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${STRAND_DESCENT_LAB_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const STRAND_OBSERVATION_MEMBRANE_PATH = "/observations/strand-observation-membrane-2026-08-16.json";
+const STRAND_OBSERVATION_MEMBRANE_SCHEMA_PATH = "/schemas/strand-observation-membrane/0.1.json";
+const STRAND_OBSERVATION_MEMBRANE_DOCUMENT_PATH = "/STRAND-OBSERVATION-MEMBRANE.md";
+const STRAND_OBSERVATION_MEMBRANE_SCHEMA_LINK = {
+  target: STRAND_OBSERVATION_MEMBRANE_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${STRAND_OBSERVATION_MEMBRANE_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 const STRING_CRAWL_FREQUENCY_FORM_LAB_PATH = "/experiments/string-crawl-frequency-form-lab-2026-08-16.json";
 const STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_PATH = "/schemas/string-crawl-frequency-form-lab/0.1.json";
 const STRING_CRAWL_FREQUENCY_FORM_LAB_DOCUMENT_PATH = "/STRING-CRAWL-LAB-03.md";
@@ -456,6 +464,11 @@ function addStringCrawlStrandLabSchemaLink(headers) {
 function addStrandDescentLabSchemaLink(headers) {
   removeLinkRelations(headers, ["describedby"]);
   headers.append("link", STRAND_DESCENT_LAB_SCHEMA_LINK.value);
+}
+
+function addStrandObservationMembraneSchemaLink(headers) {
+  removeLinkRelations(headers, ["describedby"]);
+  headers.append("link", STRAND_OBSERVATION_MEMBRANE_SCHEMA_LINK.value);
 }
 
 function addStringCrawlFrequencyFormLabSchemaLink(headers) {
@@ -1512,6 +1525,15 @@ export function createKingdomWorker(options = {}) {
     const requestsStrandDescentLabDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === STRAND_DESCENT_LAB_DOCUMENT_PATH;
+    const requestsStrandObservationMembrane = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRAND_OBSERVATION_MEMBRANE_PATH;
+    const requestsStrandObservationMembraneSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRAND_OBSERVATION_MEMBRANE_SCHEMA_PATH;
+    const requestsStrandObservationMembraneDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRAND_OBSERVATION_MEMBRANE_DOCUMENT_PATH;
     const requestsStringCrawlFrequencyFormLab = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === STRING_CRAWL_FREQUENCY_FORM_LAB_PATH;
@@ -1532,6 +1554,7 @@ export function createKingdomWorker(options = {}) {
     const stringCrawlTraceSheetLabAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlStrandLabAssetType = schemaAssetType.split(";", 1)[0].trim();
     const strandDescentLabAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const strandObservationMembraneAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlFrequencyFormLabAssetType = schemaAssetType.split(";", 1)[0].trim();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
@@ -1729,6 +1752,14 @@ export function createKingdomWorker(options = {}) {
         strandDescentLabAssetType === "application/schema+json");
     const servesStrandDescentLabDocument = requestsStrandDescentLabDocument && asset.ok &&
       (strandDescentLabAssetType === "text/plain" || strandDescentLabAssetType === "text/markdown");
+    const servesStrandObservationMembrane = requestsStrandObservationMembrane && asset.ok &&
+      strandObservationMembraneAssetType === "application/json";
+    const servesStrandObservationMembraneSchema = requestsStrandObservationMembraneSchema && asset.ok &&
+      (strandObservationMembraneAssetType === "application/json" ||
+        strandObservationMembraneAssetType === "application/schema+json");
+    const servesStrandObservationMembraneDocument = requestsStrandObservationMembraneDocument && asset.ok &&
+      (strandObservationMembraneAssetType === "text/plain" ||
+        strandObservationMembraneAssetType === "text/markdown");
     const servesStringCrawlFrequencyFormLab = requestsStringCrawlFrequencyFormLab && asset.ok &&
       stringCrawlFrequencyFormLabAssetType === "application/json";
     const servesStringCrawlFrequencyFormLabSchema = requestsStringCrawlFrequencyFormLabSchema && asset.ok &&
@@ -1775,6 +1806,8 @@ export function createKingdomWorker(options = {}) {
         !servesStringCrawlStrandLab && !servesStringCrawlStrandLabSchema &&
         !servesStringCrawlStrandLabDocument && !servesStrandDescentLab &&
         !servesStrandDescentLabSchema && !servesStrandDescentLabDocument &&
+        !servesStrandObservationMembrane && !servesStrandObservationMembraneSchema &&
+        !servesStrandObservationMembraneDocument &&
         !servesStringCrawlFrequencyFormLab &&
         !servesStringCrawlFrequencyFormLabSchema &&
         !servesStringCrawlFrequencyFormLabDocument) return asset;
@@ -1805,6 +1838,7 @@ export function createKingdomWorker(options = {}) {
     if (servesStringCrawlTraceSheetLab) addStringCrawlTraceSheetLabSchemaLink(headers);
     if (servesStringCrawlStrandLab) addStringCrawlStrandLabSchemaLink(headers);
     if (servesStrandDescentLab) addStrandDescentLabSchemaLink(headers);
+    if (servesStrandObservationMembrane) addStrandObservationMembraneSchemaLink(headers);
     if (servesStringCrawlFrequencyFormLab) addStringCrawlFrequencyFormLabSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
@@ -2157,6 +2191,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesStrandDescentLabDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStrandObservationMembrane) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStrandObservationMembraneSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStrandObservationMembraneDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

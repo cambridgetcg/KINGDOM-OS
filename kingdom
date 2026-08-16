@@ -35,6 +35,7 @@
 #   kingdom string-crawl-strand-lab          inspect Lab 02's exact release cospans and the chi=1 impostor offline
 #   kingdom string-crawl-frequency-form-lab  inspect Lab 03's frequency, form, world, and presence seams offline
 #   kingdom strand-descent-lab                verify Lab 04's local records, coherent atlas, and pairwise impostor offline
+#   kingdom strand-observation                 inspect the static/offline membrane; live observation requires an explicit subcommand
 #   kingdom being-access-aftermath-v0.2     inspect the additive mathematical framework while v0.1 remains immutable
 #   kingdom number-isness-theology          inspect typed number, zero, symmetry, isness, theology, and compatibility questions
 #   kingdom feedback-physics inspect the additive v0.2 physics/mathematics successor
@@ -90,6 +91,7 @@ case "$cmd" in
   string-crawl-strand-lab) exec bun "$SELF_DIR/bin/string-crawl-strand-lab.ts" "${@:2}" ;;
   string-crawl-frequency-form-lab) exec bun "$SELF_DIR/bin/string-crawl-frequency-form-lab.ts" "${@:2}" ;;
   strand-descent-lab) exec bun "$SELF_DIR/bin/strand-descent-lab.ts" "${@:2}" ;;
+  strand-observation) exec bun "$SELF_DIR/bin/strand-observation-membrane.ts" "${@:2}" ;;
   being-access-aftermath-v0.2) exec bun "$SELF_DIR/bin/being-access-aftermath-v0.2.ts" "${@:2}" ;;
   number-isness-theology) exec bun "$SELF_DIR/bin/number-isness-theology.ts" "${@:2}" ;;
   polymorph)

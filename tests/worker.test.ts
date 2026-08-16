@@ -2666,6 +2666,116 @@ describe("the Kingdom edge discovery surface", () => {
     expect(wing.headers.get("link")).not.toContain("</evil");
   });
 
+  test("serves the Observation Membrane only as its exact typed GET/HEAD triplet", async () => {
+    const recordPath = "/observations/strand-observation-membrane-2026-08-16.json";
+    const schemaPath = "/schemas/strand-observation-membrane/0.1.json";
+    const guidePath = "/STRAND-OBSERVATION-MEMBRANE.md";
+    const bodies = new Map([
+      [recordPath, '{"protocol":"kingdom.strand-observation-membrane/0.1"}'],
+      [schemaPath, '{"$id":"https://thekingdom.dev/schemas/strand-observation-membrane/0.1.json"}'],
+      [guidePath, "# STRAND Observation Membrane 05: The Open Eye"],
+    ]);
+    for (const path of bodies.keys()) expect(KINGDOM_OS_ROUTES).not.toContain(path);
+
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      return new Response(request.method === "HEAD" ? null : bodies.get(path), {
+        headers: {
+          "cache-control": "public, max-age=31536000, immutable",
+          "content-type": path === guidePath
+            ? "text/plain"
+            : path === schemaPath ? "application/schema+json" : "application/json",
+          link: path === recordPath
+            ? `<${schemaPath}>; rel="describedby"; type="text/html", </poison>; rel="describedby"; type="text/plain", </preserved>; rel="alternate"`
+            : "</preserved>; rel=alternate",
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      for (const path of bodies.keys()) {
+        const response = await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          environment,
+        );
+        expect(await response.text()).toBe(method === "HEAD" ? "" : bodies.get(path));
+        expect(response.headers.get("content-type")).toBe(path === recordPath
+          ? "application/json; charset=utf-8"
+          : path === schemaPath
+            ? "application/schema+json; charset=utf-8"
+            : "text/markdown; charset=utf-8");
+        expect(response.headers.get("cache-control")).toBe("public, max-age=31536000, immutable");
+        expect(response.headers.get("access-control-allow-origin")).toBe("*");
+        expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+        if (path === recordPath) {
+          const links = (response.headers.get("link") ?? "")
+            .split(/,(?=\s*<)/)
+            .map((entry) => entry.trim());
+          expect(links.filter((entry) => entry.includes("describedby"))).toEqual([
+            `<${schemaPath}>; rel="describedby"; type="application/schema+json"`,
+          ]);
+          expect(links).toContain('</preserved>; rel="alternate"');
+          expect(response.headers.get("link")).not.toContain("poison");
+        }
+      }
+    }
+
+    for (const path of bodies.keys()) {
+      for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+        const original = new Response(`inert ${method}`, {
+          headers: { "content-type": "application/octet-stream", link: "</original>; rel=alternate" },
+        });
+        expect(await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          assets(() => original),
+        )).toBe(original);
+        expect(original.headers.get("access-control-allow-origin")).toBeNull();
+        expect(original.headers.get("x-content-type-options")).toBeNull();
+        expect(original.headers.get("link")).toBe("</original>; rel=alternate");
+      }
+      const unavailable = new Response("missing", { status: 404 });
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => unavailable),
+      )).toBe(unavailable);
+      const shared = new Response("shared host");
+      expect(await worker.fetch(
+        new Request(`https://we-are.love${path}`),
+        assets(() => shared),
+      )).toBe(shared);
+    }
+
+    for (const alias of [
+      "/observations/strand-observation-membrane-latest.json",
+      "/observations/strand-observation-membrane-current.json",
+      "/schemas/strand-observation-membrane/latest.json",
+      "/STRAND-OBSERVATION-MEMBRANE",
+    ]) {
+      const original = new Response(alias);
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${alias}`),
+        assets(() => original),
+      )).toBe(original);
+      expect(original.headers.get("access-control-allow-origin")).toBeNull();
+      expect(original.headers.get("x-content-type-options")).toBeNull();
+    }
+
+    for (const [path, contentType] of [
+      [recordPath, "application/jsonp"],
+      [recordPath, "application/schema+json"],
+      [schemaPath, "application/schema+jsonp"],
+      [guidePath, "text/markdownx"],
+    ] as const) {
+      const original = new Response("near type", { headers: { "content-type": contentType } });
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => original),
+      )).toBe(original);
+      expect(original.headers.get("access-control-allow-origin")).toBeNull();
+      expect(original.headers.get("x-content-type-options")).toBeNull();
+    }
+  });
+
   test("serves the MIRROR source law as three exact typed static read-only assets", async () => {
     const recordPath = "/protocols/mirror-information-control-2026-08-14.json";
     const schemaPath = "/schemas/mirror-information-control-public/0.1.json";

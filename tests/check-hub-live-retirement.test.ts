@@ -20,7 +20,7 @@ const family = (id: string) => {
 describe("hub live-check publication retirement", () => {
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(17);
+    expect(PUBLICATION_FAMILIES).toHaveLength(18);
     expect([...publicationFamilyStates(staged).values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
     staged.delete(destinationForPublicPath(cultural.routes[1]!));
@@ -285,6 +285,45 @@ describe("hub live-check publication retirement", () => {
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(mirror, [surface]))
         .toThrow("MIRROR Information Control is retired");
+    }
+  });
+
+  test("retires the Observation Membrane independently from immutable Labs 01–04", () => {
+    const membrane = family("strand-observation-membrane");
+    const labs = family("string-crawl-trace-sheet-lab");
+    expect(membrane.routes).toEqual([
+      "/observations/strand-observation-membrane-2026-08-16.json",
+      "/schemas/strand-observation-membrane/0.1.json",
+      "/STRAND-OBSERVATION-MEMBRANE.md",
+    ]);
+    expect(membrane.discoveryProperties).toEqual(["strand_observation_membrane"]);
+    expect(membrane.entryPointProperties).toEqual([
+      "strand_observation_membrane",
+      "strand_observation_membrane_schema",
+      "strand_observation_membrane_guide",
+    ]);
+    expect(labs.routes).toHaveLength(12);
+    expect(labs.routes).not.toContain(membrane.routes[0]);
+
+    const partiallyStaged = stagedDestinations();
+    partiallyStaged.delete(destinationForPublicPath(membrane.routes[1]!));
+    expect(() => publicationFamilyStates(partiallyStaged))
+      .toThrow("STRAND Observation Membrane is partially staged");
+
+    const retired = stagedDestinations();
+    for (const route of membrane.routes) retired.delete(destinationForPublicPath(route));
+    const states = publicationFamilyStates(retired);
+    expect(states.get(membrane.id)?.active).toBe(false);
+    expect(states.get(labs.id)?.active).toBe(true);
+
+    for (const surface of [
+      { label: "authored Kingdom map", text: JSON.stringify({ strand_observation_membrane: {} }), value: { strand_observation_membrane: {} } },
+      { label: "agent manifest", text: JSON.stringify({ entry_points: { strand_observation_membrane_guide: membrane.routes[2] } }), value: { entry_points: { strand_observation_membrane_guide: membrane.routes[2] } } },
+      { label: "llms.txt", text: `https://thekingdom.dev${membrane.routes[0]}` },
+      { label: "hub HTML", text: `<a href='${membrane.routes[2]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(membrane, [surface]))
+        .toThrow("STRAND Observation Membrane is retired");
     }
   });
 
