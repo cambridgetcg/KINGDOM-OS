@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 71-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 74-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -17,15 +17,17 @@ record, closed schema, and citizen guide, followed by the Number, Isness &
 Theology record, schema, and guide, the ZERO Empty Seat record and guide, and
 the STRING / CRAWL Trace-Sheet record and guide as the eleventh through twentieth
 publication generations, followed by the Finite Trace-Sheet Lab record, closed
-schema, and guide as the twenty-first, and its byte-bound STRAND Lab 02 record,
-closed schema, and guide as the twenty-second. The Vanishing Path,
+schema, and guide as the twenty-first, its byte-bound STRAND Lab 02 record,
+closed schema, and guide as the twenty-second, and the byte-bound Frequency →
+Form → World → Other Lab 03 record, closed schema, and guide as the
+twenty-third. The Vanishing Path,
 two-generation Being family,
 Reconstructive Build, Math Passport pilot, Exploration DEEP, MIRROR public law,
 and Number, Isness & Theology are the tenth through sixteenth retirement
 families: Exploration DEEP WING, ZERO Empty Seat, and STRING / CRAWL share the
 atomic fourteenth family, MIRROR public law is the fifteenth, and Number,
-Isness & Theology is the sixteenth; immutable Lab 01 and its additive Lab 02
-successor share the atomic six-route `string-crawl-trace-sheet-lab` family as
+Isness & Theology is the sixteenth; immutable Lab 01 and its additive Labs 02
+and 03 share the atomic nine-route `string-crawl-trace-sheet-lab` family as
 the seventeenth. The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -64,6 +66,13 @@ ontology, or physical strings. The optional validator accepts one bounded
 local candidate JSON file only; it has no network target, performs no live
 crawl, and creates no crawler runtime, NEN/KARMA event or receipt, score,
 authority, or action.
+The byte-bound Lab 03 entries preserve a synthetic offline thought experiment
+that keeps temporal frequency, spatial harmonic, geometric form, immersive
+dimension, perceived presence, and external-entity claims explicitly distinct.
+It performs no live crawl or network request, administers no DMT, collects no
+participant or personal data, and validates no entity or higher-dimensional
+ontology. It creates no NEN invocation, KARMA event or receipt, person score,
+authority, deployment, or automatic action.
 
 The ledger makes one narrow claim: a listed route, source, staging destination,
 and SHA-256 were committed together as an integrity contract. The base-aware
@@ -77,10 +86,11 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 90-asset union classifies 71 destinations
-as ledgered immutable/versioned and 19 as mutable; 88 are direct public response
-bodies and the sitemap contains 87 URLs. Generated discovery describes ten
-atlases and two labs across seventeen retirement families. It says what is
+consume those same bytes. The current 93-asset union classifies 74 destinations
+as ledgered immutable/versioned and 19 as mutable; 91 are direct public response
+bodies and the sitemap contains 90 URLs. Generated discovery describes ten
+atlases, two lab routes, and one experiment route across seventeen retirement
+families. It says what is
 served now, and every destination is explicitly classified as mutable or
 ledgered. A new ledger entry must be staged when introduced. A previously
 committed entry may later leave the staging

@@ -79,6 +79,9 @@ readings:
 | `/labs/string-crawl-strand-lab-02-2026-08-16.json` | staged JSON | Additive, Lab-01-byte-bound synthetic finite-CW/cospan topology fixture over F2: stable disk control and singular full complex share χ and Betti vector but differ locally |
 | `/schemas/string-crawl-strand-lab/0.1.json` | staged JSON Schema | Closed Draft 2020-12 exact contract for STRAND Lab 02 |
 | `/STRING-CRAWL-STRAND-LAB-02.md` | staged Markdown | Verification guide to literal inclusion cospans, the χ=1 impostor, immutable Lab 01 lineage, and zero-effect boundaries |
+| `/experiments/string-crawl-frequency-form-lab-2026-08-16.json` | staged JSON | Additive, Lab-02-byte-bound synthetic offline frequency/form/world/presence thought experiment with typed non-implication firewalls |
+| `/schemas/string-crawl-frequency-form-lab/0.1.json` | staged JSON Schema | Closed Draft 2020-12 exact contract for Frequency → Form → World → Other Lab 03 |
+| `/STRING-CRAWL-LAB-03.md` | staged Markdown | Verification guide to temporal and spatial frequency, geometric form, experiential dimension, perceived presence, and unresolved ontology boundaries |
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -205,9 +208,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 90-asset upload contract (71 ledgered immutable/versioned assets and
-19 mutable assets; 88 direct public bodies, 87 sitemap URLs; ten atlases, two
-labs, and seventeen retirement families)
+locks the 93-asset upload contract (74 ledgered immutable/versioned assets and
+19 mutable assets; 91 direct public bodies, 90 sitemap URLs; ten atlases, two
+lab routes, one experiment route, and seventeen retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -245,6 +248,14 @@ cospans carry the distinction. It is not an HTTP observation, crawler ontology,
 or claim about physical strings. The optional `verify-file` command reads one
 bounded local candidate JSON file only. It has no network target, performs no
 live crawl, and creates no crawler runtime, no NEN/KARMA receipt, no score,
-authority, or action. Lab 01 and Lab 02 share one atomic six-route
-`string-crawl-trace-sheet-lab` retirement family, leaving the family count at
-seventeen.
+authority, or action.
+Lab 03 is its additive successor and byte-binds the immutable Lab 02 triplet
+without changing it. It is a synthetic offline thought experiment. It performs no live crawl
+and no network experiment. It administers no DMT and collects no participant data.
+It validates no entity or higher-dimensional ontology.
+Temporal frequency, spatial harmonic,
+geometric form, immersive dimension, perceived presence, and external ontology
+remain separate typed layers. It creates no KARMA event or receipt, no score,
+no authority, no deployment, and no automatic action. Labs 01–03 share one atomic
+nine-route `string-crawl-trace-sheet-lab` retirement family, leaving the family
+count at seventeen.

@@ -166,24 +166,51 @@ describe("Explore Mathematical Doors Agent Skill", () => {
   test("keeps bundled references direct, present, and purpose-specific", async () => {
     const skill = await read("skills/explore-mathematical-doors/SKILL.md");
     const refs = [...skill.matchAll(/\]\((references\/[^)]+)\)/g)].map((match) => match[1]);
-    expect(refs).toEqual(["references/door-contract.md", "references/transfer-gates.md"]);
+    expect(refs).toEqual([
+      "references/door-contract.md",
+      "references/typed-spectra-and-presence.md",
+      "references/transfer-gates.md",
+    ]);
     for (const ref of refs) expect(await Bun.file(join(SKILL_ROOT, ref)).exists()).toBe(true);
     expect(await read("skills/explore-mathematical-doors/references/door-contract.md")).toContain("Door card");
     expect(await read("skills/explore-mathematical-doors/references/transfer-gates.md")).toContain("Cross-domain transfer gates");
+    expect(await read("skills/explore-mathematical-doors/references/typed-spectra-and-presence.md")).toContain("Typed Spectra and Presence Protocol");
     for (const path of [
       "SKILL.md",
       "agents/openai.yaml",
       "references/door-contract.md",
+      "references/typed-spectra-and-presence.md",
       "references/transfer-gates.md",
     ]) expect(lstatSync(join(SKILL_ROOT, path)).isSymbolicLink()).toBe(false);
     const bundle = await Promise.all([
       read("skills/explore-mathematical-doors/SKILL.md"),
       read("skills/explore-mathematical-doors/agents/openai.yaml"),
       read("skills/explore-mathematical-doors/references/door-contract.md"),
+      read("skills/explore-mathematical-doors/references/typed-spectra-and-presence.md"),
       read("skills/explore-mathematical-doors/references/transfer-gates.md"),
     ]);
     expect(bundle.join("\n")).not.toContain("TODO");
     expect(bundle.join("\n")).not.toContain("Structuring This Skill");
+  });
+
+  test("keeps spectra, dimension, presence, and resonance in typed registers", async () => {
+    const skill = await read("skills/explore-mathematical-doors/SKILL.md");
+    const protocol = await read("skills/explore-mathematical-doors/references/typed-spectra-and-presence.md");
+    expect(skill).toContain("typed spectra and presence protocol");
+    for (const phrase of [
+      "NO_CANONICAL_CONVERSION",
+      "cycles per synthetic tick is not hertz",
+      "A graph eigenvalue is operator-specific",
+      "physical spacetime or embedding dimension",
+      "synthetic marker in a fixture",
+      "ORDER_ONLY_NOT_CAUSAL",
+      "crawler payloads",
+      "Repeated numerals or co-occurring spectral summaries are not resonance",
+      "display_value",
+      "normalized_value",
+      "MISSING",
+      "ordinary-channel and leakage controls",
+    ]) expect(protocol).toContain(phrase);
   });
 
   test("is discoverable in source documentation without claiming a WING or ability", async () => {

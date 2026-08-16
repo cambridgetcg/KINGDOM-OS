@@ -135,6 +135,24 @@ import {
   stringCrawlStrandLabPublicDiscovery,
 } from "./string-crawl-strand-lab.ts";
 import {
+  STRING_CRAWL_FREQUENCY_FORM_LAB_BYTE_SHA256,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_DIGEST,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_BYTE_SHA256,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_LOCATOR,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_URL,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_ID,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_LOCATOR,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_PROTOCOL,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_BYTE_SHA256,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_LOCATOR,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_URL,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_URL,
+  evaluateStringCrawlFrequencyFormLab,
+  loadStringCrawlFrequencyFormLab,
+  runStringCrawlFrequencyFormLabFalsifiers,
+  stringCrawlFrequencyFormLabPublicDiscovery,
+} from "./string-crawl-frequency-form-lab.ts";
+import {
   FORM_CIRCULATION_RETURN_DIGEST,
   FORM_CIRCULATION_RETURN_DOCUMENT_URL,
   FORM_CIRCULATION_RETURN_SCHEMA_URL,
@@ -545,6 +563,9 @@ const stringCrawlTraceSheetLabGuidePath = new URL(STRING_CRAWL_TRACE_SHEET_LAB_G
 const stringCrawlStrandLabPath = new URL(STRING_CRAWL_STRAND_LAB_URL).pathname;
 const stringCrawlStrandLabSchemaPath = new URL(STRING_CRAWL_STRAND_LAB_SCHEMA_URL).pathname;
 const stringCrawlStrandLabGuidePath = new URL(STRING_CRAWL_STRAND_LAB_GUIDE_URL).pathname;
+const stringCrawlFrequencyFormLabPath = new URL(STRING_CRAWL_FREQUENCY_FORM_LAB_URL).pathname;
+const stringCrawlFrequencyFormLabSchemaPath = new URL(STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_URL).pathname;
+const stringCrawlFrequencyFormLabGuidePath = new URL(STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_URL).pathname;
 
 export type PublicationFamily = {
   id: string;
@@ -665,7 +686,7 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
   },
   {
     id: "string-crawl-trace-sheet-lab",
-    label: "STRING / CRAWL STRAND Labs 01–02",
+    label: "STRING / CRAWL Labs 01–03",
     routes: [
       stringCrawlTraceSheetLabPath,
       stringCrawlTraceSheetLabSchemaPath,
@@ -673,8 +694,15 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       stringCrawlStrandLabPath,
       stringCrawlStrandLabSchemaPath,
       stringCrawlStrandLabGuidePath,
+      stringCrawlFrequencyFormLabPath,
+      stringCrawlFrequencyFormLabSchemaPath,
+      stringCrawlFrequencyFormLabGuidePath,
     ],
-    discoveryProperties: ["string_crawl_trace_sheet_lab", "string_crawl_strand_lab"],
+    discoveryProperties: [
+      "string_crawl_trace_sheet_lab",
+      "string_crawl_strand_lab",
+      "string_crawl_frequency_form_lab",
+    ],
     entryPointProperties: [
       "string_crawl_trace_sheet_lab",
       "string_crawl_trace_sheet_lab_schema",
@@ -682,6 +710,9 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "string_crawl_strand_lab",
       "string_crawl_strand_lab_schema",
       "string_crawl_strand_lab_guide",
+      "string_crawl_frequency_form_lab",
+      "string_crawl_frequency_form_lab_schema",
+      "string_crawl_frequency_form_lab_guide",
     ],
   },
   {
@@ -1902,6 +1933,37 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
         (strandGuideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
       throw new Error(`${stringCrawlStrandLabGuidePath} is not served as public Markdown`);
     }
+
+    const frequencyFormRecordHead = await fetch(url(stringCrawlFrequencyFormLabPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const frequencyFormRecordLink = frequencyFormRecordHead.headers.get("link") || "";
+    if (!frequencyFormRecordHead.ok ||
+        normalizedMediaType(frequencyFormRecordHead.headers.get("content-type")) !== "application/json" ||
+        frequencyFormRecordHead.headers.get("access-control-allow-origin") !== "*" ||
+        (frequencyFormRecordHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          frequencyFormRecordLink,
+          stringCrawlFrequencyFormLabSchemaPath,
+          "describedby",
+          "application/schema+json",
+        )) {
+      throw new Error(`${stringCrawlFrequencyFormLabPath} is not public JSON with one canonical Lab 03 schema link`);
+    }
+
+    const frequencyFormGuideHead = await fetch(url(stringCrawlFrequencyFormLabGuidePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!frequencyFormGuideHead.ok ||
+        normalizedMediaType(frequencyFormGuideHead.headers.get("content-type")) !== "text/markdown" ||
+        frequencyFormGuideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (frequencyFormGuideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${stringCrawlFrequencyFormLabGuidePath} is not served as public Markdown`);
+    }
   }
 
   if (mirrorInformationControlActive) {
@@ -2000,7 +2062,11 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(reconstructiveBuildActive ? [reconstructiveBuildSchemaPath, reconstructiveProjectSchemaPath] : []),
     ...(explorationDeepWingActive ? [phenomenaDeepWingSchemaPath, phenomenaDeepProjectSchemaPath] : []),
     ...(stringCrawlTraceSheetLabActive
-      ? [stringCrawlTraceSheetLabSchemaPath, stringCrawlStrandLabSchemaPath]
+      ? [
+          stringCrawlTraceSheetLabSchemaPath,
+          stringCrawlStrandLabSchemaPath,
+          stringCrawlFrequencyFormLabSchemaPath,
+        ]
       : []),
     ...(mirrorInformationControlActive ? [mirrorInformationControlSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
@@ -2025,6 +2091,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       path === phenomenaDeepProjectSchemaPath ||
       path === stringCrawlTraceSheetLabSchemaPath ||
       path === stringCrawlStrandLabSchemaPath ||
+      path === stringCrawlFrequencyFormLabSchemaPath ||
       path === mirrorInformationControlSchemaPath;
     const hasExpectedSchemaType = requiresExactSchemaType
       ? normalizedMediaType(schemaContentType) === "application/schema+json"
@@ -2125,6 +2192,18 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const stringCrawlStrandLabEvaluation = stringCrawlStrandLab
     ? evaluateStringCrawlStrandLab(stringCrawlStrandLab)
+    : undefined;
+  const stringCrawlFrequencyFormLab = stringCrawlTraceSheetLabActive
+    ? loadStringCrawlFrequencyFormLab()
+    : undefined;
+  const expectedStringCrawlFrequencyFormLab = stringCrawlFrequencyFormLab
+    ? stringCrawlFrequencyFormLabPublicDiscovery(stringCrawlFrequencyFormLab)
+    : undefined;
+  const stringCrawlFrequencyFormLabEvaluation = stringCrawlFrequencyFormLab
+    ? evaluateStringCrawlFrequencyFormLab(stringCrawlFrequencyFormLab)
+    : undefined;
+  const stringCrawlFrequencyFormLabFalsifiers = stringCrawlFrequencyFormLab
+    ? runStringCrawlFrequencyFormLabFalsifiers(stringCrawlFrequencyFormLab)
     : undefined;
   const expectedVisibilityAttention = visibilityAttentionActive
     ? visibilityAttentionPublicDiscovery(loadVisibilityAttentionTranslation())
@@ -3093,6 +3172,229 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (stringCrawlTraceSheetLabActive) {
+    const lab = stringCrawlFrequencyFormLab!;
+    const expected = expectedStringCrawlFrequencyFormLab! as any;
+    const evaluation = stringCrawlFrequencyFormLabEvaluation!;
+    const falsifiers = stringCrawlFrequencyFormLabFalsifiers!;
+    const immutableRecord = IMMUTABLE_PUBLICATION_ASSETS.get(
+      destinationForPublicPath(stringCrawlFrequencyFormLabPath),
+    );
+    const immutableSchema = IMMUTABLE_PUBLICATION_ASSETS.get(
+      destinationForPublicPath(stringCrawlFrequencyFormLabSchemaPath),
+    );
+    const immutableGuide = IMMUTABLE_PUBLICATION_ASSETS.get(
+      destinationForPublicPath(stringCrawlFrequencyFormLabGuidePath),
+    );
+    const targets = new Set([
+      STRING_CRAWL_FREQUENCY_FORM_LAB_URL,
+      STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_URL,
+      STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const temporal = evaluation.results.temporal as any;
+    const spatial = evaluation.results.spatial as any;
+    const topology = evaluation.results.topology as any;
+    const repertoire = evaluation.results.spectral_repertoire as any;
+    const occurrence = evaluation.results.occurrence as any;
+    const states = evaluation.results.states as any;
+    const onsets = evaluation.results.onsets as any;
+    const composition = evaluation.results.composition as any;
+    const stateAudit = evaluation.results.state_audit as any;
+    const compositionAudit = evaluation.results.composition_audit as any;
+    const exactFindings = {
+      temporal_bin: 16,
+      temporal_unit: "CYCLES_PER_SYNTHETIC_TICK",
+      graph_eigenvalue: 2,
+      graph_unit: "DIMENSIONLESS_OPERATOR_SPECIFIC_EIGENVALUE",
+      betti: [1, 0],
+      effective_mode_count: 2,
+      onset_order: {
+        oscillation: 0,
+        form: 1,
+        world: 2,
+        presence: 2,
+        world_before_or_concurrent_with_presence: true,
+        strict_world_before_presence: false,
+        interpretation: "ORDER_ONLY_NOT_CAUSAL",
+      },
+    };
+    const effectBoundary = {
+      synthetic_not_observed: true,
+      offline: true,
+      read_only: true,
+      stdout_only: true,
+      network_requests: 0,
+      storage_writes: 0,
+      live_crawl: false,
+      crawler_runtime: false,
+      drug_administration: false,
+      dose_guidance: false,
+      preparation_guidance: false,
+      procurement_guidance: false,
+      combination_guidance: false,
+      use_or_eligibility_guidance: false,
+      recruitment: false,
+      participant_data_ingested: false,
+      participant_data_collected: false,
+      human_subject_research_authority: false,
+      clinical_authority: false,
+      medical_authority: false,
+      external_entity_claim: false,
+      physical_extra_dimension_claim: false,
+      physical_string_claim: false,
+      portal_claim: false,
+      carrier_frequency_claim: false,
+      causal_chain_claim: false,
+      entity_specific_frequency_claim: false,
+      message_truth_claim: false,
+      reported_message_is_instruction: false,
+      reported_message_is_identity_proof: false,
+      reported_message_is_consent: false,
+      reported_message_is_delegation: false,
+      reported_message_is_authority: false,
+      diagnosis: false,
+      treatment_or_medical_action: false,
+      subprocesses: 0,
+      mcp_invocation: false,
+      ability_invocation: false,
+      nen_invocation: false,
+      zerone_karma_event_observed: false,
+      zerone_karma_event_created: false,
+      kingdom_karma_receipt_created: false,
+      karma_adapter: false,
+      person_score: false,
+      rank_or_qualification: false,
+      reward_or_punishment: false,
+      economic_effect: false,
+      governance_effect: false,
+      deployment_authority: false,
+      authority: false,
+      authority_effect: "NONE",
+      action: false,
+    };
+    const forbiddenDiscoveryKeys = [
+      "mcp", "tool", "matcher", "crawler", "http", "request", "response",
+      "karma", "receipt", "adapter", "execute", "write", "score", "reward",
+      "sanction", "authorize", "consent", "invoke", "publish", "deploy",
+      "authority", "action",
+    ];
+    if (!isDeepStrictEqual(manifest?.string_crawl_frequency_form_lab, expected) ||
+      !isDeepStrictEqual(guest?.string_crawl_frequency_form_lab, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.string_crawl_frequency_form_lab, expected) ||
+      manifest?.entry_points?.string_crawl_frequency_form_lab !== STRING_CRAWL_FREQUENCY_FORM_LAB_URL ||
+      manifest?.entry_points?.string_crawl_frequency_form_lab_schema !== STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_URL ||
+      manifest?.entry_points?.string_crawl_frequency_form_lab_guide !== STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        !isDeepStrictEqual(Object.keys(action).sort(), ["action", "method", "note", "url"])) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="string-crawl-frequency-form-lab"') ||
+      !authoredRootHtml.includes("Three things called “frequency” enter") ||
+      !authoredRootHtml.includes("The arrow is not a causal conveyor belt") ||
+      !authoredRootHtml.includes("No entity frequency. No portal. No medical or moral instruction") ||
+      !authoredRootHtml.includes(`href="${stringCrawlFrequencyFormLabPath}"`) ||
+      !authoredRootHtml.includes(`href="${stringCrawlFrequencyFormLabSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${stringCrawlFrequencyFormLabGuidePath}"`) ||
+      expected.protocol !== STRING_CRAWL_FREQUENCY_FORM_LAB_PROTOCOL || expected.protocol !== lab.protocol ||
+      expected.lab_id !== STRING_CRAWL_FREQUENCY_FORM_LAB_ID || expected.lab_id !== lab.lab_id ||
+      expected.version !== "0.1.0" || expected.version !== lab.version ||
+      expected.title !== "STRAND Lab 03: Frequency → Form → World → Other" ||
+      expected.subtitle !== "Three Frequencies, Four Dimensions & the False Portal" ||
+      expected.mode !== "SYNTHETIC_OFFLINE_EXACT" ||
+      expected.url !== STRING_CRAWL_FREQUENCY_FORM_LAB_URL ||
+      expected.schema_url !== STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_URL ||
+      expected.guide_url !== STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_URL ||
+      expected.predecessor?.protocol !== STRING_CRAWL_STRAND_LAB_PROTOCOL ||
+      expected.predecessor?.lab_id !== STRING_CRAWL_STRAND_LAB_ID ||
+      expected.predecessor?.url !== STRING_CRAWL_STRAND_LAB_URL ||
+      expected.predecessor?.relation !== "IMMUTABLE_LAB_02_PREDECESSOR" ||
+      expected.predecessor?.mutates_predecessor !== false ||
+      expected.predecessor?.imports_authority !== false ||
+      lab.predecessor?.schema_url !== STRING_CRAWL_STRAND_LAB_SCHEMA_URL ||
+      lab.predecessor?.guide_url !== STRING_CRAWL_STRAND_LAB_GUIDE_URL ||
+      lab.predecessor?.semantic_digest !== STRING_CRAWL_STRAND_LAB_DIGEST ||
+      lab.predecessor?.byte_sha256 !== STRING_CRAWL_STRAND_LAB_BYTE_SHA256 ||
+      lab.predecessor?.schema_byte_sha256 !== STRING_CRAWL_STRAND_LAB_SCHEMA_BYTE_SHA256 ||
+      lab.predecessor?.guide_byte_sha256 !== STRING_CRAWL_STRAND_LAB_GUIDE_BYTE_SHA256 ||
+      !isDeepStrictEqual(expected.counts, {
+        frequency_types: 3,
+        dimension_registers: 4,
+        presence_evidence_levels: 4,
+        evidence_cards: 8,
+        nonimplication_firewalls: 17,
+        validation_checks: 9,
+      }) ||
+      !isDeepStrictEqual(expected.exact_findings, exactFindings) ||
+      !isDeepStrictEqual(expected.effect_boundary, effectBoundary) ||
+      !isDeepStrictEqual(lab.effect_boundary, effectBoundary) ||
+      evaluation.valid !== true || evaluation.issues.length !== 0 ||
+      evaluation.checks.length !== 9 || evaluation.checks.some((check) => check.status !== "PASS") ||
+      temporal?.dominant_one_sided_bin !== 16 || temporal?.conjugate_bin !== 48 ||
+      temporal?.peak_coefficient?.real !== 32 || temporal?.peak_coefficient?.imaginary !== 0 ||
+      temporal?.quadrature_peak_coefficient?.real !== 0 ||
+      temporal?.quadrature_peak_coefficient?.imaginary !== -32 ||
+      temporal?.time_energy !== 32 || temporal?.spectral_energy !== 2048 ||
+      temporal?.parseval_right_side !== 2048 || temporal?.hertz_conversion !== "UNDEFINED" ||
+      !isDeepStrictEqual(spatial?.characteristic_polynomial_coefficients, [1, -6, 10, -4, 0]) ||
+      !isDeepStrictEqual(spatial?.spectrum_exact, [
+        "ZERO", "TWO_MINUS_SQRT_TWO", "TWO", "TWO_PLUS_SQRT_TWO",
+      ]) ||
+      spatial?.selected_eigenvalue !== 2 ||
+      !isDeepStrictEqual(spatial?.selected_mode_residual, [0, 0, 0, 0]) ||
+      !isDeepStrictEqual(topology?.betti, [1, 0]) || topology?.cell_dimension !== 1 ||
+      topology?.embedding_dimension !== null || repertoire?.effective_mode_count !== 2 ||
+      repertoire?.physical_dimension_claim !== false ||
+      !isDeepStrictEqual(occurrence, {
+        coded_entity_experience_count: 1719,
+        selected_experience_count: 3778,
+        selected_post_count: 3305,
+        reported_percentage_tenths: 455,
+        population_prevalence: false,
+      }) ||
+      !isDeepStrictEqual(states, {
+        present: 7,
+        missing: 5,
+        present_zero: 1,
+        born_before_present_encoded_as: "MISSING_WITH_NULL",
+      }) ||
+      onsets?.oscillation !== 0 || onsets?.form !== 1 || onsets?.world !== 2 || onsets?.presence !== 2 ||
+      onsets?.strict_world_before_presence !== false || onsets?.interpretation !== "ORDER_ONLY_NOT_CAUSAL" ||
+      !isDeepStrictEqual(composition, {
+        shared_observations: 4, shared_transitions: 0, glued_observations: 12, glued_transitions: 8,
+      }) ||
+      !isDeepStrictEqual(stateAudit, { birth_state_passes: true }) ||
+      !isDeepStrictEqual(compositionAudit, {
+        restriction_passes: true,
+        signed_boundary_passes: true,
+        gluing_passes: true,
+        declaration_passes: true,
+      }) ||
+      falsifiers.length !== 10 || falsifiers.some((result) => result.invalid !== true) ||
+      expected.integrity?.algorithm !== lab.integrity?.algorithm ||
+      expected.integrity?.digest !== STRING_CRAWL_FREQUENCY_FORM_LAB_DIGEST ||
+      expected.integrity?.byte_sha256 !== STRING_CRAWL_FREQUENCY_FORM_LAB_BYTE_SHA256 ||
+      expected.integrity?.schema_byte_sha256 !== STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_BYTE_SHA256 ||
+      expected.integrity?.guide_byte_sha256 !== STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_BYTE_SHA256 ||
+      !immutableRecord || immutableRecord.source !== STRING_CRAWL_FREQUENCY_FORM_LAB_LOCATOR ||
+      `sha256:${immutableRecord.sha256}` !== STRING_CRAWL_FREQUENCY_FORM_LAB_BYTE_SHA256 ||
+      !immutableSchema || immutableSchema.source !== STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_LOCATOR ||
+      `sha256:${immutableSchema.sha256}` !== STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_BYTE_SHA256 ||
+      !immutableGuide || immutableGuide.source !== STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_LOCATOR ||
+      `sha256:${immutableGuide.sha256}` !== STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_BYTE_SHA256 ||
+      evaluation.effects.network_requests !== 0 || evaluation.effects.storage_writes !== 0 ||
+      evaluation.effects.subprocesses !== 0 || evaluation.effects.nen_invocation !== false ||
+      evaluation.effects.kingdom_karma_receipt_created !== false ||
+      evaluation.effects.zerone_karma_event_created !== false ||
+      evaluation.effects.authority_effect !== "NONE" ||
+      forbiddenDiscoveryKeys.some((key) => Object.hasOwn(expected, key))) {
+      throw new Error("STRAND Lab 03 discovery, typed math, immutable pins, falsifiers, or zero-effect boundary drifted");
+    }
+  }
+
   if (visibilityAttentionActive) {
     const expected = expectedVisibilityAttention!;
     const visibilityBoundary = expected.boundary;
@@ -3593,6 +3895,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       !isDeepStrictEqual(liveKingdom?.string_crawl_strand_lab, expectedStringCrawlStrandLab!)) {
     throw new Error("derived kingdom.json did not preserve STRAND Lab 02 discovery");
   }
+  if (stringCrawlTraceSheetLabActive &&
+      !isDeepStrictEqual(liveKingdom?.string_crawl_frequency_form_lab, expectedStringCrawlFrequencyFormLab!)) {
+    throw new Error("derived kingdom.json did not preserve STRAND Lab 03 discovery");
+  }
   if (visibilityAttentionActive && !isDeepStrictEqual(liveKingdom?.visibility_attention_translation, expectedVisibilityAttention!)) {
     throw new Error("derived kingdom.json did not preserve Visibility & Attention discovery");
   }
@@ -3684,7 +3990,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Lab schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Lab discovery · REVISE/non-promotion and exploration/ZERO/STRING-CRAWL/TRACE-LABS/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–03 schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–03 discovery · REVISE/non-promotion and exploration/ZERO/STRING-CRAWL/TRACE-LABS/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }
