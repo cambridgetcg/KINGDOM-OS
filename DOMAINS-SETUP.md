@@ -18,15 +18,16 @@
 ## Redeploy (repeatable)
 
 ```bash
-# Fetch the intended production commit, then build and stage only from a clean,
+# Run this from any checkout of cambridgetcg/KINGDOM-OS. Fetch the intended
+# production commit, then build and stage only from a clean,
 # detached worktree at that exact SHA. --commit-dirty=false records metadata;
 # it does not inspect or prove the staged bytes.
 # Release gate: the XENIA baseline and Covenant links in rights.json must be
 # publicly retrievable at their pinned version before this deployment.
 (
 set -euo pipefail
-cd ~/Desktop/kingdom-os
-release_repo="$(pwd -P)"
+release_repo="$(git rev-parse --show-toplevel)"
+cd "$release_repo"
 git fetch origin main
 release_sha="$(git rev-parse origin/main)"
 release_root="$(mktemp -d)"
@@ -86,11 +87,11 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 93 assets:
-74 ledgered immutable/versioned assets and 19 mutable assets. There are 91 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 96 assets:
+77 ledgered immutable/versioned assets and 19 mutable assets. There are 94 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 90 URLs. The generated surface describes ten
-atlases, two lab routes, and one experiment route across seventeen retirement
+contracts. The sitemap contains 93 URLs. The generated surface describes ten
+atlases, three lab routes, and one experiment route across seventeen retirement
 families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
@@ -174,8 +175,17 @@ strings. The additive Lab 03 triplet at
 `/STRING-CRAWL-LAB-03.md` is a synthetic offline thought experiment with no
 live crawl, no network request, no DMT administration, no participant or
 personal data, no entity validation, no KARMA effect, no score, no authority,
-no deployment, and no action.
-Labs 01–03 share one atomic nine-route `string-crawl-trace-sheet-lab`
+no deployment, and no action. The byte-bound additive
+`/labs/strand-descent-lab-04-2026-08-16.json`, closed
+`/schemas/strand-descent-lab/0.1.json`, and `/STRAND-DESCENT-LAB-04.md` guide
+publish four source-owned synthetic charts, six reversible transitions, exact
+triple and four-chart coherence checks, three quotient classes, a common
+refinement, and a fixed pairwise-bijective counterexample whose failed triple
+equation remains `UNRESOLVED`. The two 2026 sources are versioned preprints;
+only the discipline of coherent local-to-global gluing is transferred. Passing
+proves finite record compatibility, not physical string theory, spacetime, a
+stack, truth, identity, consent, citizenship, KARMA, authority, or action.
+Labs 01–04 share one atomic twelve-route `string-crawl-trace-sheet-lab`
 retirement family, so the family count remains seventeen;
 the additive authored `/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json`,
 `/schemas/being-access-aftermath-atlas/0.2.json`, and
@@ -201,9 +211,9 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks every currently staged ledgered immutable/versioned byte hash (74 after
+checks every currently staged ledgered immutable/versioned byte hash (77 after
 the Math Passport pilot, Exploration DEEP, MIRROR public-law, Number, Isness &
-Theology, ZERO Empty Seat, STRING / CRAWL, and the Lab 01–03 releases;
+Theology, ZERO Empty Seat, STRING / CRAWL, and the Lab 01–04 releases;
 35 in the initial integrity release) plus the worker-owned
 negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +
@@ -214,7 +224,7 @@ Form, Circulation & Return Atlas + The Vanishing Path + Math Passport pilot +
 Being, Access & Aftermath Atlas + Number, Isness & Theology Atlas + the opt-in
 Exploration DEEP WING plus its reusable inert project profile + the ZERO Empty
 Seat project plus guide + the STRING / CRAWL Trace-Sheet plus guide + its
-atomic nine-route Lab 01–03 record, schema, and guide family + the static
+atomic twelve-route Lab 01–04 record, schema, and guide family + the static
 MIRROR Information Control public law for
 schema headers, negative authority, source-history lineage, and cross-surface
 discovery while leaving the existing MCP contract unchanged;

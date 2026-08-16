@@ -1386,6 +1386,336 @@
       "action": false
     }
   },
+  "strand_descent_lab": {
+    "protocol": "kingdom.strand-descent-lab/0.1",
+    "lab_id": "strand-descent-lab-04-2026-08-16",
+    "title": "STRAND Lab 04: Coherent Atlas & the Pairwise Impostor",
+    "mode": "SYNTHETIC_OFFLINE_EXACT",
+    "url": "https://thekingdom.dev/labs/strand-descent-lab-04-2026-08-16.json",
+    "schema_url": "https://thekingdom.dev/schemas/strand-descent-lab/0.1.json",
+    "guide_url": "https://thekingdom.dev/STRAND-DESCENT-LAB-04.md",
+    "predecessor": {
+      "lab_id": "string-crawl-frequency-form-lab-03-2026-08-16",
+      "url": "https://thekingdom.dev/experiments/string-crawl-frequency-form-lab-2026-08-16.json",
+      "schema_url": "https://thekingdom.dev/schemas/string-crawl-frequency-form-lab/0.1.json",
+      "guide_url": "https://thekingdom.dev/STRING-CRAWL-LAB-03.md",
+      "git_commit": "d2452d4500c274237097e142609422ebbab7f68d",
+      "semantic_digest": "sha256:ecda97c03307706ce0a9108c27c9199968ee4dc29a7e4d045a036ed108d673c1",
+      "raw_byte_sha256": "sha256:883191b723950ff9cc29c913261f114237e9eaa3eac17ba49cade34b8b0492b4",
+      "schema_byte_sha256": "sha256:2b4fe72f656eeade68ebfb6654cbe52646aa49636fc201501995dc8673db93e3",
+      "guide_byte_sha256": "sha256:808769a513ffcb6230f99e4cd412db5dc4a998f308ccc65313050377634fc1b3",
+      "relation": "IMMUTABLE_LAB_03_PREDECESSOR",
+      "mutates_predecessor": false,
+      "imports_authority": false
+    },
+    "research_sources": [
+      {
+        "source_id": "arxiv-2608-09958v1",
+        "status": "PREPRINT",
+        "binding": "SOURCE_BOUND",
+        "title": "Geometrize the nongeometric space",
+        "authors": [
+          "Tran Chi Quy",
+          "Sonnet Nguyen Quang Hung"
+        ],
+        "version": "v1",
+        "versioned_url": "https://arxiv.org/abs/2608.09958v1",
+        "submitted_on": "2026-07-22",
+        "borrowed_discipline": "LOCAL_DATA_WITH_EXPLICIT_TRANSITIONS_AND_COHERENCE_BEFORE_GLOBALIZATION",
+        "transfer_scope": "LOCAL_TO_GLOBAL_GLUING_DISCIPLINE_ONLY",
+        "content_bytes_vendored": false,
+        "scientific_claim_imported": false,
+        "authority_imported": false
+      },
+      {
+        "source_id": "arxiv-2607-21700v1",
+        "status": "PREPRINT",
+        "binding": "SOURCE_BOUND",
+        "title": "EFT (String) Tower Building",
+        "authors": [
+          "Alessandra Grieco",
+          "Ignacio Ruiz",
+          "Irene Valenzuela"
+        ],
+        "version": "v1",
+        "versioned_url": "https://arxiv.org/abs/2607.21700v1",
+        "submitted_on": "2026-07-23",
+        "borrowed_discipline": "LOCAL_SECTOR_DATA_MUST_GLUE_ACROSS_OVERLAPS_BEFORE_A_GLOBAL_ARRANGEMENT",
+        "transfer_scope": "LOCAL_TO_GLOBAL_GLUING_DISCIPLINE_ONLY",
+        "content_bytes_vendored": false,
+        "scientific_claim_imported": false,
+        "authority_imported": false
+      }
+    ],
+    "counts": {
+      "research_sources": 2,
+      "charts": 4,
+      "transitions": 6,
+      "triple_equations": 2,
+      "quotient_classes": 3,
+      "refinement_atoms": 6,
+      "impostor_transitions": 3
+    },
+    "validation": {
+      "protocol": "kingdom.strand-descent-validation/0.1",
+      "valid": true,
+      "checks": [
+        {
+          "id": "closed-source-bound-input",
+          "status": "PASS",
+          "detail": "strict JSON tree, closed fixture identity, immutable Frequency/Form Lab 03 pin, versioned preprints, and semantic digest"
+        },
+        {
+          "id": "pairwise-invertibility",
+          "status": "PASS",
+          "detail": "all six declared transitions are bijections with exact inverse witnesses"
+        },
+        {
+          "id": "triple-coherence",
+          "status": "PASS",
+          "detail": "both three-chart composites equal their declared direct transitions"
+        },
+        {
+          "id": "four-chart-globalization",
+          "status": "PASS",
+          "detail": "both parenthesizations and the direct map agree, producing the declared quotient"
+        },
+        {
+          "id": "common-refinement-and-impostor",
+          "status": "PASS",
+          "detail": "the common refinement commutes while the pairwise-bijective counterexample remains unresolved"
+        },
+        {
+          "id": "zero-effects",
+          "status": "PASS",
+          "detail": "no crawler, network, write, truth, consent, citizenship, score, KARMA, or authority effect"
+        }
+      ],
+      "results": {
+        "pairwise_invertibility": {
+          "transition_count": 6,
+          "all_bijective": true,
+          "all_inverse_witnesses": true
+        },
+        "triple_coherence": {
+          "equations": [
+            {
+              "id": "triple-abc",
+              "coherent": true,
+              "computed_composite": [
+                {
+                  "from": "a0",
+                  "to": "c1"
+                },
+                {
+                  "from": "a1",
+                  "to": "c2"
+                },
+                {
+                  "from": "a2",
+                  "to": "c0"
+                }
+              ],
+              "direct_map": [
+                {
+                  "from": "a0",
+                  "to": "c1"
+                },
+                {
+                  "from": "a1",
+                  "to": "c2"
+                },
+                {
+                  "from": "a2",
+                  "to": "c0"
+                }
+              ]
+            },
+            {
+              "id": "triple-bcd",
+              "coherent": true,
+              "computed_composite": [
+                {
+                  "from": "b0",
+                  "to": "d0"
+                },
+                {
+                  "from": "b1",
+                  "to": "d2"
+                },
+                {
+                  "from": "b2",
+                  "to": "d1"
+                }
+              ],
+              "direct_map": [
+                {
+                  "from": "b0",
+                  "to": "d0"
+                },
+                {
+                  "from": "b1",
+                  "to": "d2"
+                },
+                {
+                  "from": "b2",
+                  "to": "d1"
+                }
+              ]
+            }
+          ],
+          "all_coherent": true
+        },
+        "four_chart_associativity": {
+          "parenthesizations_equal": true,
+          "direct_match": true,
+          "computed_composite": [
+            {
+              "from": "a0",
+              "to": "d1"
+            },
+            {
+              "from": "a1",
+              "to": "d0"
+            },
+            {
+              "from": "a2",
+              "to": "d2"
+            }
+          ],
+          "direct_map": [
+            {
+              "from": "a0",
+              "to": "d1"
+            },
+            {
+              "from": "a1",
+              "to": "d0"
+            },
+            {
+              "from": "a2",
+              "to": "d2"
+            }
+          ]
+        },
+        "global_quotient": {
+          "classes": [
+            {
+              "id": "q0",
+              "members": [
+                "a0",
+                "b2",
+                "c1",
+                "d1"
+              ]
+            },
+            {
+              "id": "q1",
+              "members": [
+                "a1",
+                "b0",
+                "c2",
+                "d0"
+              ]
+            },
+            {
+              "id": "q2",
+              "members": [
+                "a2",
+                "b1",
+                "c0",
+                "d2"
+              ]
+            }
+          ],
+          "class_count": 3,
+          "class_sizes": [
+            4,
+            4,
+            4
+          ],
+          "all_local_points_covered": true
+        },
+        "common_refinement": {
+          "atom_count": 6,
+          "projections_per_atom": 4,
+          "transition_squares_checked": 36,
+          "transition_squares_commute": true,
+          "quotient_fiber_sizes": [
+            2,
+            2,
+            2
+          ]
+        },
+        "pairwise_impostor": {
+          "pairwise_bijective": true,
+          "triple_coherent": false,
+          "conflict_result": "UNRESOLVED",
+          "automatic_resolution": false,
+          "computed_composite": [
+            {
+              "from": "a0",
+              "to": "c1"
+            },
+            {
+              "from": "a1",
+              "to": "c2"
+            },
+            {
+              "from": "a2",
+              "to": "c0"
+            }
+          ],
+          "direct_map": [
+            {
+              "from": "a0",
+              "to": "c2"
+            },
+            {
+              "from": "a1",
+              "to": "c1"
+            },
+            {
+              "from": "a2",
+              "to": "c0"
+            }
+          ]
+        }
+      }
+    },
+    "boundaries": {
+      "synthetic_not_observed": true,
+      "offline": true,
+      "read_only": true,
+      "proves_finite_record_compatibility_only": true,
+      "crawler_present": false,
+      "network_capability": false,
+      "external_write": false,
+      "truth_claim": false,
+      "consent_claim": false,
+      "citizenship_claim": false,
+      "authority_claim": false,
+      "string_physics_claim": false,
+      "stack_identity_claim": false,
+      "source_owner_identity_claim": false,
+      "person_or_content_score": false,
+      "nen_ability": false,
+      "karma_adapter": false,
+      "deployment_authority": false
+    },
+    "effects": {
+      "network_requests": 0,
+      "storage_writes": 0,
+      "crawler_invocation": false,
+      "nen_invocation": false,
+      "karma_receipt_created": false,
+      "person_or_content_score_created": false,
+      "authority_effect": "NONE"
+    },
+    "integrity": {
+      "semantic_digest": "sha256:a5ca407e3145ae332171b6e426974d148c9db4aae0dafeb7b9db0f54f94e146c"
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",

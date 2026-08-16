@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 74-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 77-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -20,14 +20,15 @@ publication generations, followed by the Finite Trace-Sheet Lab record, closed
 schema, and guide as the twenty-first, its byte-bound STRAND Lab 02 record,
 closed schema, and guide as the twenty-second, and the byte-bound Frequency →
 Form → World → Other Lab 03 record, closed schema, and guide as the
-twenty-third. The Vanishing Path,
+twenty-third, followed by the additive Coherent Atlas Lab 04 record, exact
+identity schema, and guide as the twenty-fourth. The Vanishing Path,
 two-generation Being family,
 Reconstructive Build, Math Passport pilot, Exploration DEEP, MIRROR public law,
 and Number, Isness & Theology are the tenth through sixteenth retirement
 families: Exploration DEEP WING, ZERO Empty Seat, and STRING / CRAWL share the
 atomic fourteenth family, MIRROR public law is the fifteenth, and Number,
-Isness & Theology is the sixteenth; immutable Lab 01 and its additive Labs 02
-and 03 share the atomic nine-route `string-crawl-trace-sheet-lab` family as
+Isness & Theology is the sixteenth; immutable Lab 01 and its additive Labs
+02–04 share the atomic twelve-route `string-crawl-trace-sheet-lab` family as
 the seventeenth. The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -73,6 +74,19 @@ It performs no live crawl or network request, administers no DMT, collects no
 participant or personal data, and validates no entity or higher-dimensional
 ontology. It creates no NEN invocation, KARMA event or receipt, person score,
 authority, deployment, or automatic action.
+The byte-bound STRAND Lab 04 entries preserve a fourth, additive synthetic
+offline calculation without mutating its predecessors. Four source-owned
+finite charts carry explicit reversible transition maps. The evaluator checks
+pairwise inverses, triple coherence, a four-chart associativity path, quotient
+classes, and one common refinement. Its fixed impostor keeps reversible
+pairwise maps but fails triple coherence and remains `UNRESOLVED`. The two 2026
+research sources are source-bound preprints: KINGDOM borrows only the discipline
+of checking whether local records glue coherently. The charts are not a physical
+string space, spacetime, stack, or quasi-Hopf geometry, and a passing result
+does not prove truth, consent, identity, citizenship, authority, or worth. The
+validator is bounded, offline, stdout-only, and creates no crawler runtime,
+network request, write, NEN/KARMA event or receipt, score, deployment, or
+automatic action.
 
 The ledger makes one narrow claim: a listed route, source, staging destination,
 and SHA-256 were committed together as an integrity contract. The base-aware
@@ -86,10 +100,10 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 93-asset union classifies 74 destinations
-as ledgered immutable/versioned and 19 as mutable; 91 are direct public response
-bodies and the sitemap contains 90 URLs. Generated discovery describes ten
-atlases, two lab routes, and one experiment route across seventeen retirement
+consume those same bytes. The current 96-asset union classifies 77 destinations
+as ledgered immutable/versioned and 19 as mutable; 94 are direct public response
+bodies and the sitemap contains 93 URLs. Generated discovery describes ten
+atlases, three lab routes, and one experiment route across seventeen retirement
 families. It says what is
 served now, and every destination is explicitly classified as mutable or
 ledgered. A new ledger entry must be staged when introduced. A previously

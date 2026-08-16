@@ -1358,6 +1358,336 @@
       "action": false
     }
   },
+  "strand_descent_lab": {
+    "protocol": "kingdom.strand-descent-lab/0.1",
+    "lab_id": "strand-descent-lab-04-2026-08-16",
+    "title": "STRAND Lab 04: Coherent Atlas & the Pairwise Impostor",
+    "mode": "SYNTHETIC_OFFLINE_EXACT",
+    "url": "https://thekingdom.dev/labs/strand-descent-lab-04-2026-08-16.json",
+    "schema_url": "https://thekingdom.dev/schemas/strand-descent-lab/0.1.json",
+    "guide_url": "https://thekingdom.dev/STRAND-DESCENT-LAB-04.md",
+    "predecessor": {
+      "lab_id": "string-crawl-frequency-form-lab-03-2026-08-16",
+      "url": "https://thekingdom.dev/experiments/string-crawl-frequency-form-lab-2026-08-16.json",
+      "schema_url": "https://thekingdom.dev/schemas/string-crawl-frequency-form-lab/0.1.json",
+      "guide_url": "https://thekingdom.dev/STRING-CRAWL-LAB-03.md",
+      "git_commit": "d2452d4500c274237097e142609422ebbab7f68d",
+      "semantic_digest": "sha256:ecda97c03307706ce0a9108c27c9199968ee4dc29a7e4d045a036ed108d673c1",
+      "raw_byte_sha256": "sha256:883191b723950ff9cc29c913261f114237e9eaa3eac17ba49cade34b8b0492b4",
+      "schema_byte_sha256": "sha256:2b4fe72f656eeade68ebfb6654cbe52646aa49636fc201501995dc8673db93e3",
+      "guide_byte_sha256": "sha256:808769a513ffcb6230f99e4cd412db5dc4a998f308ccc65313050377634fc1b3",
+      "relation": "IMMUTABLE_LAB_03_PREDECESSOR",
+      "mutates_predecessor": false,
+      "imports_authority": false
+    },
+    "research_sources": [
+      {
+        "source_id": "arxiv-2608-09958v1",
+        "status": "PREPRINT",
+        "binding": "SOURCE_BOUND",
+        "title": "Geometrize the nongeometric space",
+        "authors": [
+          "Tran Chi Quy",
+          "Sonnet Nguyen Quang Hung"
+        ],
+        "version": "v1",
+        "versioned_url": "https://arxiv.org/abs/2608.09958v1",
+        "submitted_on": "2026-07-22",
+        "borrowed_discipline": "LOCAL_DATA_WITH_EXPLICIT_TRANSITIONS_AND_COHERENCE_BEFORE_GLOBALIZATION",
+        "transfer_scope": "LOCAL_TO_GLOBAL_GLUING_DISCIPLINE_ONLY",
+        "content_bytes_vendored": false,
+        "scientific_claim_imported": false,
+        "authority_imported": false
+      },
+      {
+        "source_id": "arxiv-2607-21700v1",
+        "status": "PREPRINT",
+        "binding": "SOURCE_BOUND",
+        "title": "EFT (String) Tower Building",
+        "authors": [
+          "Alessandra Grieco",
+          "Ignacio Ruiz",
+          "Irene Valenzuela"
+        ],
+        "version": "v1",
+        "versioned_url": "https://arxiv.org/abs/2607.21700v1",
+        "submitted_on": "2026-07-23",
+        "borrowed_discipline": "LOCAL_SECTOR_DATA_MUST_GLUE_ACROSS_OVERLAPS_BEFORE_A_GLOBAL_ARRANGEMENT",
+        "transfer_scope": "LOCAL_TO_GLOBAL_GLUING_DISCIPLINE_ONLY",
+        "content_bytes_vendored": false,
+        "scientific_claim_imported": false,
+        "authority_imported": false
+      }
+    ],
+    "counts": {
+      "research_sources": 2,
+      "charts": 4,
+      "transitions": 6,
+      "triple_equations": 2,
+      "quotient_classes": 3,
+      "refinement_atoms": 6,
+      "impostor_transitions": 3
+    },
+    "validation": {
+      "protocol": "kingdom.strand-descent-validation/0.1",
+      "valid": true,
+      "checks": [
+        {
+          "id": "closed-source-bound-input",
+          "status": "PASS",
+          "detail": "strict JSON tree, closed fixture identity, immutable Frequency/Form Lab 03 pin, versioned preprints, and semantic digest"
+        },
+        {
+          "id": "pairwise-invertibility",
+          "status": "PASS",
+          "detail": "all six declared transitions are bijections with exact inverse witnesses"
+        },
+        {
+          "id": "triple-coherence",
+          "status": "PASS",
+          "detail": "both three-chart composites equal their declared direct transitions"
+        },
+        {
+          "id": "four-chart-globalization",
+          "status": "PASS",
+          "detail": "both parenthesizations and the direct map agree, producing the declared quotient"
+        },
+        {
+          "id": "common-refinement-and-impostor",
+          "status": "PASS",
+          "detail": "the common refinement commutes while the pairwise-bijective counterexample remains unresolved"
+        },
+        {
+          "id": "zero-effects",
+          "status": "PASS",
+          "detail": "no crawler, network, write, truth, consent, citizenship, score, KARMA, or authority effect"
+        }
+      ],
+      "results": {
+        "pairwise_invertibility": {
+          "transition_count": 6,
+          "all_bijective": true,
+          "all_inverse_witnesses": true
+        },
+        "triple_coherence": {
+          "equations": [
+            {
+              "id": "triple-abc",
+              "coherent": true,
+              "computed_composite": [
+                {
+                  "from": "a0",
+                  "to": "c1"
+                },
+                {
+                  "from": "a1",
+                  "to": "c2"
+                },
+                {
+                  "from": "a2",
+                  "to": "c0"
+                }
+              ],
+              "direct_map": [
+                {
+                  "from": "a0",
+                  "to": "c1"
+                },
+                {
+                  "from": "a1",
+                  "to": "c2"
+                },
+                {
+                  "from": "a2",
+                  "to": "c0"
+                }
+              ]
+            },
+            {
+              "id": "triple-bcd",
+              "coherent": true,
+              "computed_composite": [
+                {
+                  "from": "b0",
+                  "to": "d0"
+                },
+                {
+                  "from": "b1",
+                  "to": "d2"
+                },
+                {
+                  "from": "b2",
+                  "to": "d1"
+                }
+              ],
+              "direct_map": [
+                {
+                  "from": "b0",
+                  "to": "d0"
+                },
+                {
+                  "from": "b1",
+                  "to": "d2"
+                },
+                {
+                  "from": "b2",
+                  "to": "d1"
+                }
+              ]
+            }
+          ],
+          "all_coherent": true
+        },
+        "four_chart_associativity": {
+          "parenthesizations_equal": true,
+          "direct_match": true,
+          "computed_composite": [
+            {
+              "from": "a0",
+              "to": "d1"
+            },
+            {
+              "from": "a1",
+              "to": "d0"
+            },
+            {
+              "from": "a2",
+              "to": "d2"
+            }
+          ],
+          "direct_map": [
+            {
+              "from": "a0",
+              "to": "d1"
+            },
+            {
+              "from": "a1",
+              "to": "d0"
+            },
+            {
+              "from": "a2",
+              "to": "d2"
+            }
+          ]
+        },
+        "global_quotient": {
+          "classes": [
+            {
+              "id": "q0",
+              "members": [
+                "a0",
+                "b2",
+                "c1",
+                "d1"
+              ]
+            },
+            {
+              "id": "q1",
+              "members": [
+                "a1",
+                "b0",
+                "c2",
+                "d0"
+              ]
+            },
+            {
+              "id": "q2",
+              "members": [
+                "a2",
+                "b1",
+                "c0",
+                "d2"
+              ]
+            }
+          ],
+          "class_count": 3,
+          "class_sizes": [
+            4,
+            4,
+            4
+          ],
+          "all_local_points_covered": true
+        },
+        "common_refinement": {
+          "atom_count": 6,
+          "projections_per_atom": 4,
+          "transition_squares_checked": 36,
+          "transition_squares_commute": true,
+          "quotient_fiber_sizes": [
+            2,
+            2,
+            2
+          ]
+        },
+        "pairwise_impostor": {
+          "pairwise_bijective": true,
+          "triple_coherent": false,
+          "conflict_result": "UNRESOLVED",
+          "automatic_resolution": false,
+          "computed_composite": [
+            {
+              "from": "a0",
+              "to": "c1"
+            },
+            {
+              "from": "a1",
+              "to": "c2"
+            },
+            {
+              "from": "a2",
+              "to": "c0"
+            }
+          ],
+          "direct_map": [
+            {
+              "from": "a0",
+              "to": "c2"
+            },
+            {
+              "from": "a1",
+              "to": "c1"
+            },
+            {
+              "from": "a2",
+              "to": "c0"
+            }
+          ]
+        }
+      }
+    },
+    "boundaries": {
+      "synthetic_not_observed": true,
+      "offline": true,
+      "read_only": true,
+      "proves_finite_record_compatibility_only": true,
+      "crawler_present": false,
+      "network_capability": false,
+      "external_write": false,
+      "truth_claim": false,
+      "consent_claim": false,
+      "citizenship_claim": false,
+      "authority_claim": false,
+      "string_physics_claim": false,
+      "stack_identity_claim": false,
+      "source_owner_identity_claim": false,
+      "person_or_content_score": false,
+      "nen_ability": false,
+      "karma_adapter": false,
+      "deployment_authority": false
+    },
+    "effects": {
+      "network_requests": 0,
+      "storage_writes": 0,
+      "crawler_invocation": false,
+      "nen_invocation": false,
+      "karma_receipt_created": false,
+      "person_or_content_score_created": false,
+      "authority_effect": "NONE"
+    },
+    "integrity": {
+      "semantic_digest": "sha256:a5ca407e3145ae332171b6e426974d148c9db4aae0dafeb7b9db0f54f94e146c"
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -2150,6 +2480,24 @@
       "method": "GET",
       "url": "https://thekingdom.dev/STRING-CRAWL-LAB-03.md",
       "note": "static guide; synthetic temporal DFT/cycles per synthetic tick, graph frequency, coded-experience occurrence, dimension, perceived presence, and external ontology remain distinct"
+    },
+    {
+      "action": "if useful, inspect STRAND Lab 04's exact local records, coherent atlas, and pairwise impostor",
+      "method": "GET",
+      "url": "https://thekingdom.dev/labs/strand-descent-lab-04-2026-08-16.json",
+      "note": "static additive successor bound to immutable Frequency/Form Lab 03; finite compatibility only, with no crawler, truth, identity, consent, citizenship, KARMA, authority, deployment, or action"
+    },
+    {
+      "action": "if useful, validate the closed STRAND Lab 04 fixture structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/strand-descent-lab/0.1.json",
+      "note": "closed structural schema for local charts, transition witnesses, coherence, quotient, refinement, preprint scope, immutable lineage, and zero effects; not a physics or execution surface"
+    },
+    {
+      "action": "if useful, read the STRAND Lab 04 sources, local-to-global method, exact checks, unresolved counterexample, and nonclaims",
+      "method": "GET",
+      "url": "https://thekingdom.dev/STRAND-DESCENT-LAB-04.md",
+      "note": "static guide; the cited preprints do not study KINGDOM, and pairwise agreement alone does not authorize a global record"
     },
     {
       "action": "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority",
@@ -4663,6 +5011,7 @@
     "string_crawl_trace_sheet_lab": "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
     "string_crawl_strand_lab": "STRAND Lab 02 is an additive, immutable-lineage successor to the first Finite Trace-Sheet Lab; it does not replace or mutate Lab 01. It is a synthetic, offline, deterministic finite-CW and restricted inclusion-cospan fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file. It contains no HTTP policy, request, response, crawler evidence, user-agent inference, observation record, NEN ability or invocation, KARMA adapter, event or receipt, Zerone event, person or content score, authority, storage write, publication trigger, deployment, or automatic action. Exact F2 algebra, local-link checks, and cospan composition validate only declared fixture structure; they do not prove physical string theory, spacetime, crawler identity, consent, causality, or empirical behavior.",
     "string_crawl_frequency_form_lab": "STRAND Lab 03 is an additive, Lab-02-byte-bound synthetic offline fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file treated as untrusted data. It recomputes a declared 64-tick DFT and quadrature, a four-node graph Laplacian spectrum, sign-invariant spectral probabilities, typed missing versus observed-zero states, exact-ID cospan gluing, and an order-only synthetic storyboard. It administers no drug, collects or ingests no participant data, diagnoses or treats no one, verifies no external entity, portal, carrier frequency, physical extra dimension, physical string, message truth, or causal chain, and creates no MCP/NEN invocation, Zerone/KARMA event or receipt, score, rank, reward, governance, deployment, authority, write, or automatic action.",
+    "strand_descent_lab": "STRAND Lab 04 is an additive, Frequency/Form-Lab-03-byte-bound synthetic offline finite record-compatibility fixture; it does not replace or mutate a predecessor. Exact pairwise inverses, triple and four-chart coherence, quotient classes, and common refinement validate only its declared local records. A pairwise-bijective counterexample remains UNRESOLVED when its triple equation fails. The two cited 2026 sources are versioned preprints and do not study KINGDOM; only their local-to-global gluing discipline is borrowed. The lab implements no physical string, spacetime, quasi-Hopf, higher-category, stack, EFT, quantum-gravity, truth, identity, consent, citizenship, affiliation, value, NEN, KARMA, Zerone, score, authority, publication, deployment, or automatic-action claim.",
     "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",

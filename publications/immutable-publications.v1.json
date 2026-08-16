@@ -396,6 +396,27 @@
       "sha256": "cbe6435c2d5c3bf39098442bfc2f9967b09cbf35a38acbd383a3faeb9844d187"
     },
     {
+      "id": "strand-descent-lab/0.1/guide",
+      "route": "/STRAND-DESCENT-LAB-04.md",
+      "source": "references/strand-descent-lab.md",
+      "destination": "STRAND-DESCENT-LAB-04.md",
+      "sha256": "49bc137b4feb49e94f3139aec2dc0b6e48b4ef69ca45ba8e69521139ef5a13b6"
+    },
+    {
+      "id": "strand-descent-lab/0.1/record",
+      "route": "/labs/strand-descent-lab-04-2026-08-16.json",
+      "source": "data/exploration/strand-descent-lab.v0.1.json",
+      "destination": "labs/strand-descent-lab-04-2026-08-16.json",
+      "sha256": "d3deea8e2e7f21dbe8b8de52e1b2de2ed17aec7098529fd826aeb5baab446d9f"
+    },
+    {
+      "id": "strand-descent-lab/0.1/schema",
+      "route": "/schemas/strand-descent-lab/0.1.json",
+      "source": "schemas/strand-descent-lab-v0.1.schema.json",
+      "destination": "schemas/strand-descent-lab/0.1.json",
+      "sha256": "6c06f24f681ccc5c490fb242dfa5e17a6d9779799c6fd7b73a0b57cb74c035bb"
+    },
+    {
       "id": "string-crawl-frequency-form-lab/0.1/guide",
       "route": "/STRING-CRAWL-LAB-03.md",
       "source": "references/string-crawl-frequency-form-lab.md",

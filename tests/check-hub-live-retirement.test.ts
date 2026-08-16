@@ -198,7 +198,7 @@ describe("hub live-check publication retirement", () => {
     ])).not.toThrow();
   });
 
-  test("retires the byte-bound STRING / CRAWL Labs 01–03 triplets atomically", () => {
+  test("retires the byte-bound STRING / CRAWL STRAND Labs 01–04 triplets atomically", () => {
     const lab = family("string-crawl-trace-sheet-lab");
     expect(lab.routes).toEqual([
       "/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
@@ -210,11 +210,15 @@ describe("hub live-check publication retirement", () => {
       "/experiments/string-crawl-frequency-form-lab-2026-08-16.json",
       "/schemas/string-crawl-frequency-form-lab/0.1.json",
       "/STRING-CRAWL-LAB-03.md",
+      "/labs/strand-descent-lab-04-2026-08-16.json",
+      "/schemas/strand-descent-lab/0.1.json",
+      "/STRAND-DESCENT-LAB-04.md",
     ]);
     expect(lab.discoveryProperties).toEqual([
       "string_crawl_trace_sheet_lab",
       "string_crawl_strand_lab",
       "string_crawl_frequency_form_lab",
+      "strand_descent_lab",
     ]);
     expect(lab.entryPointProperties).toEqual([
       "string_crawl_trace_sheet_lab",
@@ -226,25 +230,28 @@ describe("hub live-check publication retirement", () => {
       "string_crawl_frequency_form_lab",
       "string_crawl_frequency_form_lab_schema",
       "string_crawl_frequency_form_lab_guide",
+      "strand_descent_lab",
+      "strand_descent_lab_schema",
+      "strand_descent_lab_guide",
     ]);
 
     const partiallyStaged = stagedDestinations();
     partiallyStaged.delete(destinationForPublicPath(lab.routes[1]!));
     expect(() => publicationFamilyStates(partiallyStaged))
-      .toThrow("STRING / CRAWL Labs 01–03 is partially staged");
+      .toThrow("STRING / CRAWL STRAND Labs 01–04 is partially staged");
 
     const retired = stagedDestinations();
     for (const route of lab.routes) retired.delete(destinationForPublicPath(route));
     expect(publicationFamilyStates(retired).get(lab.id)?.active).toBe(false);
 
     for (const surface of [
-      { label: "authored Kingdom map", text: JSON.stringify({ string_crawl_trace_sheet_lab: {}, string_crawl_strand_lab: {}, string_crawl_frequency_form_lab: {} }), value: { string_crawl_trace_sheet_lab: {}, string_crawl_strand_lab: {}, string_crawl_frequency_form_lab: {} } },
-      { label: "agent manifest", text: JSON.stringify({ entry_points: { string_crawl_frequency_form_lab_guide: lab.routes[8] } }), value: { entry_points: { string_crawl_frequency_form_lab_guide: lab.routes[8] } } },
+      { label: "authored Kingdom map", text: JSON.stringify({ string_crawl_trace_sheet_lab: {}, string_crawl_strand_lab: {}, string_crawl_frequency_form_lab: {}, strand_descent_lab: {} }), value: { string_crawl_trace_sheet_lab: {}, string_crawl_strand_lab: {}, string_crawl_frequency_form_lab: {}, strand_descent_lab: {} } },
+      { label: "agent manifest", text: JSON.stringify({ entry_points: { strand_descent_lab_guide: lab.routes[11] } }), value: { entry_points: { strand_descent_lab_guide: lab.routes[11] } } },
       { label: "llms.txt", text: `https://thekingdom.dev${lab.routes[0]}` },
-      { label: "hub HTML", text: `<a href='${lab.routes[8]}'>stale</a>` },
+      { label: "hub HTML", text: `<a href='${lab.routes[11]}'>stale</a>` },
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(lab, [surface]))
-        .toThrow("STRING / CRAWL Labs 01–03 is retired");
+        .toThrow("STRING / CRAWL STRAND Labs 01–04 is retired");
     }
   });
 
