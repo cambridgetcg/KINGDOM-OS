@@ -396,6 +396,27 @@
       "sha256": "cbe6435c2d5c3bf39098442bfc2f9967b09cbf35a38acbd383a3faeb9844d187"
     },
     {
+      "id": "string-crawl-frequency-form-lab/0.1/guide",
+      "route": "/STRING-CRAWL-LAB-03.md",
+      "source": "references/string-crawl-frequency-form-lab.md",
+      "destination": "STRING-CRAWL-LAB-03.md",
+      "sha256": "808769a513ffcb6230f99e4cd412db5dc4a998f308ccc65313050377634fc1b3"
+    },
+    {
+      "id": "string-crawl-frequency-form-lab/0.1/record",
+      "route": "/experiments/string-crawl-frequency-form-lab-2026-08-16.json",
+      "source": "data/exploration/string-crawl-frequency-form-lab.v0.1.json",
+      "destination": "experiments/string-crawl-frequency-form-lab-2026-08-16.json",
+      "sha256": "883191b723950ff9cc29c913261f114237e9eaa3eac17ba49cade34b8b0492b4"
+    },
+    {
+      "id": "string-crawl-frequency-form-lab/0.1/schema",
+      "route": "/schemas/string-crawl-frequency-form-lab/0.1.json",
+      "source": "schemas/string-crawl-frequency-form-lab-v0.1.schema.json",
+      "destination": "schemas/string-crawl-frequency-form-lab/0.1.json",
+      "sha256": "2b4fe72f656eeade68ebfb6654cbe52646aa49636fc201501995dc8673db93e3"
+    },
+    {
       "id": "string-crawl-strand-lab/0.1/guide",
       "route": "/STRING-CRAWL-STRAND-LAB-02.md",
       "source": "references/string-crawl-strand-lab.md",

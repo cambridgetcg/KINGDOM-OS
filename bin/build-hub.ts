@@ -210,15 +210,29 @@ import {
   stringCrawlTraceSheetLabPublicDiscovery,
 } from "./string-crawl-trace-sheet-lab.ts";
 import {
+  STRING_CRAWL_STRAND_LAB_BYTE_SHA256,
+  STRING_CRAWL_STRAND_LAB_DIGEST,
+  STRING_CRAWL_STRAND_LAB_GUIDE_BYTE_SHA256,
   STRING_CRAWL_STRAND_LAB_GUIDE_URL,
   STRING_CRAWL_STRAND_LAB_ID,
   STRING_CRAWL_STRAND_LAB_PROTOCOL,
+  STRING_CRAWL_STRAND_LAB_SCHEMA_BYTE_SHA256,
   STRING_CRAWL_STRAND_LAB_SCHEMA_URL,
   STRING_CRAWL_STRAND_LAB_URL,
   evaluateStringCrawlStrandLab,
   loadStringCrawlStrandLab,
   stringCrawlStrandLabPublicDiscovery,
 } from "./string-crawl-strand-lab.ts";
+import {
+  STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_URL,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_ID,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_PROTOCOL,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_URL,
+  STRING_CRAWL_FREQUENCY_FORM_LAB_URL,
+  evaluateStringCrawlFrequencyFormLab,
+  loadStringCrawlFrequencyFormLab,
+  stringCrawlFrequencyFormLabPublicDiscovery,
+} from "./string-crawl-frequency-form-lab.ts";
 import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_ID,
@@ -808,6 +822,101 @@ if (!stringCrawlStrandLabStable || !stringCrawlStrandLabFull ||
     stringCrawlStrandLabValidation.effects.zerone_event_created !== false ||
     stringCrawlStrandLabValidation.effects.authority_effect !== "NONE") {
   throw new Error("STRAND Lab 02 lost its exact Lab 01 lineage or synthetic, offline, zero-effect boundary");
+}
+
+// ── STRAND Lab 03 (typed frequency, form, world, and presence) ───────────
+const stringCrawlFrequencyFormLabUrl = STRING_CRAWL_FREQUENCY_FORM_LAB_URL;
+const stringCrawlFrequencyFormLabSchemaUrl = STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_URL;
+const stringCrawlFrequencyFormLabGuideUrl = STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_URL;
+const stringCrawlFrequencyFormLab = loadStringCrawlFrequencyFormLab();
+if (stringCrawlFrequencyFormLab.protocol !== STRING_CRAWL_FREQUENCY_FORM_LAB_PROTOCOL ||
+    stringCrawlFrequencyFormLab.lab_id !== STRING_CRAWL_FREQUENCY_FORM_LAB_ID ||
+    stringCrawlFrequencyFormLab.version !== "0.1.0" ||
+    stringCrawlFrequencyFormLab.title !== "STRAND Lab 03: Frequency → Form → World → Other" ||
+    stringCrawlFrequencyFormLab.subtitle !== "Three Frequencies, Four Dimensions & the False Portal" ||
+    stringCrawlFrequencyFormLab.mode !== "SYNTHETIC_OFFLINE_EXACT") {
+  throw new Error(`unexpected STRAND Lab 03 identity: ${stringCrawlFrequencyFormLab.protocol} ${stringCrawlFrequencyFormLab.lab_id}`);
+}
+const stringCrawlFrequencyFormLabValidation = evaluateStringCrawlFrequencyFormLab(stringCrawlFrequencyFormLab);
+const stringCrawlFrequencyFormLabDiscovery = stringCrawlFrequencyFormLabPublicDiscovery(stringCrawlFrequencyFormLab) as any;
+const stringCrawlFrequencyFormLabChecks = stringCrawlFrequencyFormLabValidation.checks;
+const stringCrawlFrequencyFormLabResults = stringCrawlFrequencyFormLabValidation.results as any;
+if (stringCrawlFrequencyFormLabValidation.valid !== true ||
+    stringCrawlFrequencyFormLabChecks.length !== 9 ||
+    stringCrawlFrequencyFormLabChecks.some((check) => check.status !== "PASS") ||
+    stringCrawlFrequencyFormLab.predecessor?.protocol !== STRING_CRAWL_STRAND_LAB_PROTOCOL ||
+    stringCrawlFrequencyFormLab.predecessor?.lab_id !== STRING_CRAWL_STRAND_LAB_ID ||
+    stringCrawlFrequencyFormLab.predecessor?.url !== STRING_CRAWL_STRAND_LAB_URL ||
+    stringCrawlFrequencyFormLab.predecessor?.schema_url !== STRING_CRAWL_STRAND_LAB_SCHEMA_URL ||
+    stringCrawlFrequencyFormLab.predecessor?.guide_url !== STRING_CRAWL_STRAND_LAB_GUIDE_URL ||
+    stringCrawlFrequencyFormLab.predecessor?.git_commit !== "2bd03fd77226775a58eff382011e43f26512d733" ||
+    stringCrawlFrequencyFormLab.predecessor?.semantic_digest !== STRING_CRAWL_STRAND_LAB_DIGEST ||
+    stringCrawlFrequencyFormLab.predecessor?.byte_sha256 !== STRING_CRAWL_STRAND_LAB_BYTE_SHA256 ||
+    stringCrawlFrequencyFormLab.predecessor?.schema_byte_sha256 !== STRING_CRAWL_STRAND_LAB_SCHEMA_BYTE_SHA256 ||
+    stringCrawlFrequencyFormLab.predecessor?.guide_byte_sha256 !== STRING_CRAWL_STRAND_LAB_GUIDE_BYTE_SHA256 ||
+    stringCrawlFrequencyFormLab.predecessor?.relation !== "IMMUTABLE_LAB_02_PREDECESSOR" ||
+    stringCrawlFrequencyFormLab.predecessor?.mutates_predecessor !== false ||
+    stringCrawlFrequencyFormLab.predecessor?.imports_authority !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.synthetic_not_observed !== true ||
+    stringCrawlFrequencyFormLab.effect_boundary?.offline !== true ||
+    stringCrawlFrequencyFormLab.effect_boundary?.read_only !== true ||
+    stringCrawlFrequencyFormLab.effect_boundary?.stdout_only !== true ||
+    stringCrawlFrequencyFormLab.effect_boundary?.network_requests !== 0 ||
+    stringCrawlFrequencyFormLab.effect_boundary?.storage_writes !== 0 ||
+    stringCrawlFrequencyFormLab.effect_boundary?.live_crawl !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.crawler_runtime !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.drug_administration !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.dose_guidance !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.preparation_guidance !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.procurement_guidance !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.combination_guidance !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.use_or_eligibility_guidance !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.recruitment !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.participant_data_ingested !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.participant_data_collected !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.human_subject_research_authority !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.clinical_authority !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.medical_authority !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.external_entity_claim !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.physical_extra_dimension_claim !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.physical_string_claim !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.portal_claim !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.carrier_frequency_claim !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.causal_chain_claim !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.entity_specific_frequency_claim !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.message_truth_claim !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.reported_message_is_instruction !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.reported_message_is_identity_proof !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.reported_message_is_consent !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.reported_message_is_delegation !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.reported_message_is_authority !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.diagnosis !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.treatment_or_medical_action !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.subprocesses !== 0 ||
+    stringCrawlFrequencyFormLab.effect_boundary?.mcp_invocation !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.ability_invocation !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.nen_invocation !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.zerone_karma_event_observed !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.zerone_karma_event_created !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.kingdom_karma_receipt_created !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.karma_adapter !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.person_score !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.rank_or_qualification !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.reward_or_punishment !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.economic_effect !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.governance_effect !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.deployment_authority !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.authority !== false ||
+    stringCrawlFrequencyFormLab.effect_boundary?.authority_effect !== "NONE" ||
+    stringCrawlFrequencyFormLab.effect_boundary?.action !== false ||
+    stringCrawlFrequencyFormLabValidation.effects.network_requests !== 0 ||
+    stringCrawlFrequencyFormLabValidation.effects.storage_writes !== 0 ||
+    stringCrawlFrequencyFormLabValidation.effects.subprocesses !== 0 ||
+    stringCrawlFrequencyFormLabValidation.effects.nen_invocation !== false ||
+    stringCrawlFrequencyFormLabValidation.effects.kingdom_karma_receipt_created !== false ||
+    stringCrawlFrequencyFormLabValidation.effects.zerone_karma_event_created !== false ||
+    stringCrawlFrequencyFormLabValidation.effects.authority_effect !== "NONE") {
+  throw new Error("STRAND Lab 03 lost its exact Lab 02 lineage or typed synthetic zero-effect boundary");
 }
 
 // ── Visibility & Attention Translation (four registers remain parallel) ──
@@ -1487,6 +1596,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(stringCrawlStrandLabUrl).pathname)}" type="application/json" title="STRAND Lab 02: Release Cospans &amp; the χ=1 Impostor">
 <link rel="describedby" href="${esc(new URL(stringCrawlStrandLabSchemaUrl).pathname)}" type="application/schema+json" title="STRAND Lab 02 schema">
 <link rel="service-doc" href="${esc(new URL(stringCrawlStrandLabGuideUrl).pathname)}" type="text/markdown" title="STRAND Lab 02 guide">
+<link rel="alternate" href="${esc(new URL(stringCrawlFrequencyFormLabUrl).pathname)}" type="application/json" title="STRAND Lab 03: Frequency → Form → World → Other">
+<link rel="describedby" href="${esc(new URL(stringCrawlFrequencyFormLabSchemaUrl).pathname)}" type="application/schema+json" title="STRAND Lab 03 schema">
+<link rel="service-doc" href="${esc(new URL(stringCrawlFrequencyFormLabGuideUrl).pathname)}" type="text/markdown" title="STRAND Lab 03 guide">
 <link rel="alternate" href="${new URL(visibilityAttentionUrl).pathname}" type="application/json" title="Visibility & Attention Translation">
 <link rel="describedby" href="${new URL(visibilityAttentionSchemaUrl).pathname}" type="application/schema+json" title="Visibility & Attention Translation schema">
 <link rel="service-doc" href="${new URL(visibilityAttentionDocumentUrl).pathname}" type="text/markdown" title="Visibility & Attention Translation guide">
@@ -1715,6 +1827,19 @@ const html = `<!doctype html>
   .strandcomposition{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.2fr);gap:8px;align-items:center}.strandcospan{padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--panel);text-align:center}.strandcospan code{display:block;color:var(--jade);font-size:.66rem}.strandcospan span{display:block;margin-top:5px;color:var(--faint);font-size:.65rem}.strandoperator{color:var(--gold);font:700 1.1rem var(--mono)}
   .strandchecks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.strandcheck{padding:13px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--ink2) 52%,transparent)}.strandcheck code{display:block;color:var(--jade);font-size:.61rem}.strandcheck strong{display:block;margin:5px 0 3px;color:var(--cream);font-size:.75rem}.strandcheck span{display:block;color:var(--faint);font-size:.66rem;line-height:1.45}
   .strandfindings{display:flex;flex-wrap:wrap;gap:7px;margin:0}.strandfindings span{padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:var(--faint);font:600 .63rem/1.4 var(--mono)}.strandfindings span:first-child{border-color:var(--verm);color:var(--verm)}.strandlinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.strandlinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.strandlinks a:hover{border-color:var(--gold)}
+  /* STRAND Lab 03 — a static frequency loom; measured registers never collapse */
+  .frequencyformfield{display:grid;gap:20px;padding:clamp(18px,3vw,30px);border:1px solid color-mix(in srgb,var(--violet) 54%,var(--line));border-radius:28px;background:radial-gradient(70% 34rem at 0 0,color-mix(in srgb,var(--violet) 12%,transparent),transparent 72%),radial-gradient(68% 30rem at 100% 100%,color-mix(in srgb,var(--jade) 9%,transparent),transparent 72%),color-mix(in srgb,var(--panel) 77%,transparent);box-shadow:0 20px 48px var(--shadow);overflow:hidden}.frequencyformfield>*{min-width:0;overflow-wrap:anywhere}
+  .frequencylineage{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:9px;align-items:stretch}.frequencylineage article{display:grid;align-content:start;gap:5px;padding:15px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}.frequencylineage code{color:var(--violet);font-size:.61rem}.frequencylineage strong{color:var(--cream);font-family:var(--display);font-size:1rem;font-weight:400}.frequencylineage span{color:var(--faint);font-size:.69rem;line-height:1.48}.frequencylineage>b{align-self:center;color:var(--gold);font:700 1.2rem var(--mono)}
+  .frequencyboundary{margin:0;padding:17px 19px;border:1px dashed var(--verm);border-radius:18px;color:var(--dim);font-size:.82rem;line-height:1.62}.frequencyboundary strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.08rem;font-weight:400}.frequencyboundary.safe{border-color:var(--jade)}.frequencyboundary.safe strong{color:var(--jade)}
+  .frequencyregisters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.frequencyregister{display:grid;align-content:start;gap:7px;padding:16px;border:1px solid var(--line);border-top:3px solid var(--violet);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}.frequencyregister:nth-child(2){border-top-color:var(--jade)}.frequencyregister:nth-child(3){border-top-color:var(--gold)}.frequencyregister code{color:var(--violet);font-size:.6rem}.frequencyregister h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1rem;font-weight:400}.frequencyregister p{margin:0;color:var(--dim);font-size:.71rem;line-height:1.52}.frequencyregister small{color:var(--faint);font-size:.66rem;line-height:1.45}
+  .frequencytwins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.frequencycard{display:grid;align-content:start;gap:12px;padding:17px;border:1px solid var(--line);border-radius:19px;background:color-mix(in srgb,var(--ink2) 55%,transparent)}.frequencycard figcaption{display:grid;gap:4px}.frequencycard figcaption strong{color:var(--cream);font-family:var(--display);font-size:1.12rem;font-weight:400}.frequencycard figcaption span{color:var(--faint);font-size:.7rem;line-height:1.48}.frequencyequation{display:block;padding:10px 12px;border:1px solid color-mix(in srgb,var(--line) 72%,transparent);border-radius:11px;background:var(--ink);color:var(--jade);font:600 .67rem/1.55 var(--mono);white-space:normal}
+  .frequencywave{display:grid;grid-template-columns:repeat(64,minmax(2px,1fr));align-items:center;gap:2px;height:90px;padding:10px 8px;border:1px solid var(--line);border-radius:13px;background:repeating-linear-gradient(to bottom,transparent 0 22px,color-mix(in srgb,var(--line) 60%,transparent) 23px 24px,transparent 25px 46px)}.frequencywave span{display:block;min-width:2px;border-radius:999px;background:var(--violet)}.frequencywave .positive{height:34px;transform:translateY(-17px)}.frequencywave .negative{height:34px;transform:translateY(17px);background:var(--jade)}.frequencywave .zero{height:3px;background:var(--gold)}
+  .frequencygraph{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));align-items:center;gap:5px;padding:15px 10px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.frequencynode{display:grid;place-items:center;aspect-ratio:1;border:2px solid var(--jade);border-radius:50%;color:var(--cream);font:700 .68rem var(--mono);background:var(--ink)}.frequencyedge{height:2px;background:var(--line)}.frequencymode{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.frequencymode span{padding:8px;border:1px solid var(--line);border-radius:10px;color:var(--gold2);font:700 .72rem var(--mono);text-align:center}.frequencymode span:nth-child(2),.frequencymode span:nth-child(3){color:var(--violet)}
+  .frequencyloom{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;list-style:none;margin:0;padding:0}.frequencyloom li{position:relative;display:grid;align-content:start;gap:6px;min-height:142px;padding:14px 22px 14px 13px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}.frequencyloom li:not(:last-child)::after{content:"→";position:absolute;right:7px;top:16px;color:var(--gold)}.frequencyloom code{color:var(--violet);font-size:.59rem}.frequencyloom strong{color:var(--cream);font-family:var(--display);font-size:.95rem;font-weight:400}.frequencyloom span{color:var(--faint);font-size:.67rem;line-height:1.47}.frequencyloom li:nth-child(2){background:repeating-radial-gradient(circle at 50% 55%,color-mix(in srgb,var(--violet) 12%,var(--panel)) 0 5px,var(--panel) 6px 13px)}.frequencyloom li:nth-child(3){background:linear-gradient(135deg,color-mix(in srgb,var(--jade) 9%,var(--panel)),var(--panel))}.frequencyloom li:nth-child(4){border-color:color-mix(in srgb,var(--gold) 60%,var(--line))}.frequencyloom li:last-child{border-style:dashed;border-color:var(--verm);background:color-mix(in srgb,var(--verm) 6%,var(--panel))}.frequencyloom li:last-child strong{color:var(--verm)}
+  .frequencydimensions,.frequencyevidence{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.frequencydimension,.frequencyevidence article{display:grid;align-content:start;gap:6px;padding:14px;border:1px solid var(--line);border-radius:15px;background:color-mix(in srgb,var(--panel2) 78%,transparent)}.frequencydimension code,.frequencyevidence code{color:var(--jade);font-size:.59rem}.frequencydimension strong,.frequencyevidence strong{color:var(--cream);font-family:var(--display);font-size:.9rem;font-weight:400}.frequencydimension span,.frequencyevidence p,.frequencyevidence small{margin:0;color:var(--faint);font-size:.65rem;line-height:1.46}.frequencyevidence small{padding-top:6px;border-top:1px dotted var(--line);color:var(--verm)}
+  .frequencystates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.frequencystate{display:grid;gap:5px;padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}.frequencystate code{color:var(--violet);font-size:.6rem}.frequencystate strong{color:var(--cream);font-family:var(--display);font-size:.92rem;font-weight:400}.frequencystate span{color:var(--faint);font-size:.67rem;line-height:1.46}.frequencystate[data-state="MISSING"]{border-style:dashed}.frequencystate[data-state="PRESENT_ZERO"]{border-color:var(--gold)}
+  .frequencydrawer{border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--ink2) 50%,transparent);overflow:hidden}.frequencydrawer summary{min-height:44px;padding:16px 18px;color:var(--gold2);font-family:var(--display);font-size:1rem;cursor:pointer}.frequencydrawer[open] summary{border-bottom:1px solid var(--line)}.frequencyfirewall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;list-style:none;margin:0;padding:12px}.frequencyfirewall li{padding:11px 12px;border-left:2px solid var(--verm);border-radius:0 12px 12px 0;background:color-mix(in srgb,var(--verm) 5%,var(--panel));color:var(--dim);font:600 .66rem/1.5 var(--mono)}
+  .frequencykarma{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.frequencykarma article{padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}.frequencykarma code{display:block;color:var(--violet);font-size:.6rem}.frequencykarma strong{display:block;margin:5px 0;color:var(--cream);font-family:var(--display);font-size:.92rem;font-weight:400}.frequencykarma span{color:var(--faint);font-size:.67rem;line-height:1.46}.frequencysources,.frequencylinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.frequencysources a,.frequencylinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.frequencysources a:hover,.frequencylinks a:hover{border-color:var(--gold)}
   .visibilityfield{display:grid;gap:18px;padding:clamp(18px,3vw,28px);border:1px solid color-mix(in srgb,var(--rose) 45%,var(--line));border-radius:24px;background:radial-gradient(90% 100% at 100% 0,color-mix(in srgb,var(--rose) 8%,transparent),transparent 68%),color-mix(in srgb,var(--panel) 76%,transparent)}
   .visibilityfirewall{margin:0;padding:16px 18px;border:1px dashed var(--verm);border-radius:16px;color:var(--dim);font-size:.8rem;line-height:1.6}.visibilityfirewall strong{display:block;margin-bottom:4px;color:var(--verm);font-family:var(--display);font-size:1.05rem;font-weight:400}
   .visibilitycards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.visibilitycard{display:grid;align-content:start;gap:8px;min-width:0;padding:17px;border:1px solid var(--line);border-top:2px solid var(--rose);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.visibilitycard code,.visibilitymodel code,.visibilityseam code{color:var(--violet);font-size:.63rem;overflow-wrap:anywhere}.visibilitycard h3,.visibilitymodel h3,.visibilityseam h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1.02rem;font-weight:400}.visibilitycard p,.visibilitymodel p,.visibilityseam p{margin:0;color:var(--dim);font-size:.74rem;line-height:1.52}.visibilitycard small,.visibilitymodel small,.visibilityseam small{display:block;color:var(--faint);font-size:.67rem;line-height:1.48}.visibilitycard small{padding-top:7px;border-top:1px dotted var(--line);color:var(--verm)}
@@ -1919,6 +2044,10 @@ const html = `<!doctype html>
   @media (max-width:520px){.strandchecks{grid-template-columns:1fr}.strandfield{padding:22px 16px}.strandreleases{grid-template-columns:minmax(5.2rem,1fr) repeat(3,minmax(38px,.55fr));gap:5px}.strandrelease{padding:8px 4px}.strandrelease span{font-size:.56rem}.strandroute{padding:7px 5px;font-size:.59rem}.strandcell{min-height:38px}.strandnumbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media (prefers-reduced-motion:reduce){.strandfield,.strandfield *,.strandfield *::before,.strandfield *::after{animation:none!important;transition:none!important}}
   @media (forced-colors:active){.strandfield,.strandlineage article,.strandboundary,.strandboard,.strandrelease,.strandcell,.strandstat,.strandnumber,.strandwarning,.strandcospan,.strandcheck,.strandfindings span,.strandlinks a{border:1px solid CanvasText}.strandstat{border-top-width:3px}.strandroute{border-left:3px solid CanvasText}}
+  @media (max-width:760px){.frequencylineage,.frequencytwins{grid-template-columns:1fr}.frequencylineage>b{justify-self:center}.frequencyregisters,.frequencydimensions,.frequencyevidence{grid-template-columns:repeat(2,minmax(0,1fr))}.frequencyloom{grid-template-columns:repeat(2,minmax(0,1fr))}.frequencyloom li:nth-child(even):not(:last-child)::after{content:"↓";right:10px;top:auto;bottom:-17px}.frequencyloom li:last-child{grid-column:1/-1}}
+  @media (max-width:520px){.frequencyformfield{padding:22px 16px}.frequencyregisters,.frequencydimensions,.frequencyevidence,.frequencystates,.frequencykarma,.frequencyfirewall,.frequencyloom{grid-template-columns:1fr}.frequencyloom li,.frequencyloom li:last-child{grid-column:auto;padding-right:13px}.frequencyloom li:not(:last-child)::after,.frequencyloom li:nth-child(even):not(:last-child)::after{content:"↓";right:10px;top:auto;bottom:-17px}.frequencywave{gap:1px;padding-inline:5px}.frequencygraph{padding-inline:5px}}
+  @media (prefers-reduced-motion:reduce){.frequencyformfield,.frequencyformfield *,.frequencyformfield *::before,.frequencyformfield *::after{animation:none!important;transition:none!important}}
+  @media (forced-colors:active){.frequencyformfield,.frequencylineage article,.frequencyboundary,.frequencyregister,.frequencycard,.frequencyequation,.frequencywave,.frequencygraph,.frequencynode,.frequencymode span,.frequencyloom li,.frequencydimension,.frequencyevidence article,.frequencystate,.frequencydrawer,.frequencyfirewall li,.frequencykarma article,.frequencysources a,.frequencylinks a{border:1px solid CanvasText}.frequencyregister{border-top-width:3px}.frequencyfirewall li{border-left-width:3px}}
 </style>
 <noscript><style>#map,.mapctl,.legend,.maphint{display:none!important}</style></noscript>
 </head>
@@ -1955,6 +2084,7 @@ const html = `<!doctype html>
       <a href="#string-crawl-trace-sheet">Trace a crawl without turning routing into consent</a>
       <a href="#string-crawl-trace-sheet-lab">Run the finite trace mathematics offline</a>
       <a href="#string-crawl-strand-lab">Compose three release slices in STRAND Lab 02</a>
+      <a href="#string-crawl-frequency-form-lab">Weave frequency into form without opening a false portal</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -3169,6 +3299,101 @@ const html = `<!doctype html>
     </div>
   </section>
 
+  <section class="blk" id="string-crawl-frequency-form-lab" aria-labelledby="string-crawl-frequency-form-lab-title">
+    <div class="kh"><h2 id="string-crawl-frequency-form-lab-title">${esc(stringCrawlFrequencyFormLab.title)}</h2><span class="my">${esc(stringCrawlFrequencyFormLab.subtitle)}</span></div>
+    <p class="sub">A mode can have a shape without opening a realm. Lab 03 binds one 64-tick synthetic wave, one four-node graph, and one fictional three-slice marker sequence—then makes every tempting conversion show its papers.</p>
+    <div class="frequencyformfield" data-string-crawl-frequency-form-lab>
+      <div class="frequencylineage" aria-label="Immutable Lab 02 to Lab 03 lineage">
+        <article><code>LAB 02 · IMMUTABLE PREDECESSOR</code><strong>${esc(stringCrawlStrandLab.title)}</strong><span>${esc(stringCrawlFrequencyFormLab.predecessor.semantic_digest)} · byte-bound and unchanged</span></article>
+        <b aria-hidden="true">→</b>
+        <article><code>LAB 03 · ADDITIVE SUCCESSOR</code><strong>${esc(stringCrawlFrequencyFormLab.title)}</strong><span>Typed temporal frequency, graph-spatial modes, coded-experience occurrence, synthetic ordering, and an explicit ontology firewall.</span></article>
+      </div>
+
+      <p class="frequencyboundary safe" role="note"><strong>Three things called “frequency” enter. No secret conversion leaves.</strong>A DFT bin is temporal only inside a declared sample frame. A graph eigenvalue is spatial only for a declared operator. A coded-experience proportion belongs to a selected corpus. Equal numerals do not make equal quantities.</p>
+
+      <div class="frequencyregisters" aria-label="Three non-convertible frequency registers">
+        ${stringCrawlFrequencyFormLab.quantity_register.map((quantity: any) => `<article class="frequencyregister" data-frequency-kind="${esc(quantity.kind)}"><code>${esc(quantity.kind)}</code><h3>${esc(humanKey(quantity.id))}</h3><p>${esc(quantity.operator)} · ${esc(quantity.estimator)}</p><small>display ${esc(String(quantity.display_value))} · ${esc(quantity.scale)}; normalized ${esc(String(quantity.normalized_value))} · ${esc(quantity.unit)}; ${esc(quantity.window)} · ${esc(quantity.sampling_frame)} · ${esc(quantity.uncertainty)} · ${esc(quantity.significance_rule)} · physical quantity ${String(quantity.physical_quantity)} · population prevalence ${String(quantity.population_prevalence)}</small></article>`).join("")}
+      </div>
+      <p class="frequencyboundary safe"><strong>Frequency III · occurrence inside one selected experience corpus</strong>${stringCrawlFrequencyFormLabResults.occurrence.coded_entity_experience_count}/${stringCrawlFrequencyFormLabResults.occurrence.selected_experience_count} coded experiences described across ${stringCrawlFrequencyFormLabResults.occurrence.selected_post_count} self-posted posts, source-rounded to ${(stringCrawlFrequencyFormLabResults.occurrence.reported_percentage_tenths / 10).toFixed(1)}%. That is a source-defined experience proportion inside a nonrepresentative corpus—not population prevalence, session probability, or external-entity detection.</p>
+
+      <div class="frequencytwins" aria-label="Temporal and graph-spatial frequency demonstrations">
+        <figure class="frequencycard">
+          <figcaption><strong>Frequency I · sixty-four synthetic ticks</strong><span>The declared wave and quadrature are exact fixture data. No seconds, sample rate, or physical hertz calibration is supplied.</span></figcaption>
+          <div class="frequencywave" aria-hidden="true">
+            ${stringCrawlFrequencyFormLab.temporal_fixture.samples.map((sample: number) => `<span class="${sample > 0 ? "positive" : sample < 0 ? "negative" : "zero"}" aria-hidden="true"></span>`).join("")}
+          </div>
+          <code class="frequencyequation">k=${stringCrawlFrequencyFormLabResults.temporal.dominant_one_sided_bin} → ${stringCrawlFrequencyFormLabResults.temporal.normalized_cycles_per_tick.numerator}/${stringCrawlFrequencyFormLabResults.temporal.normalized_cycles_per_tick.denominator} cycle/synthetic tick · X[16]=32 · Q[16]=−32i · Hz=${esc(stringCrawlFrequencyFormLabResults.temporal.hertz_conversion)}</code>
+        </figure>
+        <figure class="frequencycard">
+          <figcaption><strong>Frequency II · shape on a four-node path</strong><span>This eigenmode is a pattern across graph vertices. Its eigenvalue is dimensionless and operator-specific—not a temporal beat.</span></figcaption>
+          <div class="frequencygraph" aria-hidden="true"><span class="frequencynode">g0</span><span class="frequencyedge"></span><span class="frequencynode">g1</span><span class="frequencyedge"></span><span class="frequencynode">g2</span><span class="frequencyedge"></span><span class="frequencynode">g3</span></div>
+          <div class="frequencymode" aria-label="Selected mode values"><span>+1</span><span>−1</span><span>−1</span><span>+1</span></div>
+          <code class="frequencyequation">Lφ = ${stringCrawlFrequencyFormLabResults.spatial.selected_eigenvalue}φ · spectrum = ${esc(stringCrawlFrequencyFormLabResults.spatial.spectrum_exact.map((entry: string) => humanKey(entry)).join(" · "))} · effective modes = ${stringCrawlFrequencyFormLabResults.spectral_repertoire.effective_mode_count}</code>
+        </figure>
+      </div>
+
+      <ol class="frequencyloom" aria-label="Synthetic order-only frequency to form storyboard">
+        <li><code>r0 · SYNTHETIC MARKER</code><strong>oscillation</strong><span>A declared temporal pattern is present. This fixture does not call it DMT, neural activity, or a carrier.</span></li>
+        <li><code>r1 · SYNTHETIC MARKER</code><strong>form</strong><span>Geometry appears in the authored sequence. Pattern formation is not a portal.</span></li>
+        <li><code>r2 · SYNTHETIC MARKER</code><strong>world</strong><span>An immersive-world marker is present. The arrow records order only, never cause.</span></li>
+        <li><code>r2 · SYNTHETIC MARKER</code><strong>perceived presence</strong><span>A presence marker is concurrent with world. It is neither participant evidence nor entity detection.</span></li>
+        <li><code>NOT ESTABLISHED</code><strong>external entity?</strong><span>The evidence ladder stops. Felt reality and recurring reports do not independently verify another being or realm.</span></li>
+      </ol>
+
+      <p class="frequencyboundary"><strong>The arrow is not a causal conveyor belt.</strong>The computed onset order is oscillation ${stringCrawlFrequencyFormLabResults.onsets.oscillation} · form ${stringCrawlFrequencyFormLabResults.onsets.form} · world ${stringCrawlFrequencyFormLabResults.onsets.world} · presence ${stringCrawlFrequencyFormLabResults.onsets.presence}. World and presence are concurrent here, strict-world-before-presence is ${String(stringCrawlFrequencyFormLabResults.onsets.strict_world_before_presence)}, and every marker is synthetic.</p>
+
+      <div class="frequencydimensions" aria-label="Four distinct uses of dimension">
+        ${stringCrawlFrequencyFormLab.dimension_register.map((dimension: any) => `<article class="frequencydimension"><code>${esc(dimension.kind)}</code><strong>${esc(humanKey(dimension.id))}</strong><span>${esc(dimension.status)} · ${esc(dimension.definition)} · ${esc(dimension.estimator_or_theorem)} · ${esc(dimension.unit)} · ${esc(dimension.uncertainty)} · ${esc(dimension.sampling_scope)} · physical-spacetime claim ${String(dimension.physical_spacetime_claim)} · conversion ${esc(dimension.conversion_to_physical_dimension)}</span></article>`).join("")}
+      </div>
+
+      <div class="frequencystates" aria-label="Typed state distinction">
+        <article class="frequencystate" data-state="PRESENT"><code>PRESENT(value)</code><strong>${stringCrawlFrequencyFormLabResults.states.present} declared observations</strong><span>A supplied value, including a supplied zero, occupies its typed slot.</span></article>
+        <article class="frequencystate" data-state="MISSING"><code>MISSING(null)</code><strong>${stringCrawlFrequencyFormLabResults.states.missing} missing observations</strong><span>No value was supplied before birth. Missing is never silently coerced to numeric zero or treated as observed absence.</span></article>
+        <article class="frequencystate" data-state="PRESENT_ZERO"><code>PRESENT(0)</code><strong>${stringCrawlFrequencyFormLabResults.states.present_zero} known zero</strong><span>The r1 oscillation marker is observed zero and remains categorically distinct from missing.</span></article>
+      </div>
+
+      <details class="frequencydrawer" open>
+        <summary>Evidence ladder · experiences are real evidence of experience, not automatic ontology</summary>
+        <div class="frequencyevidence">
+          ${stringCrawlFrequencyFormLab.presence_evidence_ladder.map((level: any) => `<article><code>LEVEL ${level.order} · ${esc(level.state)}</code><strong>${esc(humanKey(level.kind))}</strong><p>${esc(level.protocol)} · ${esc(level.scope)} · imports the next evidential level: ${String(level.imports_next_level)}</p><small>NOT_MEASURED is not ABSENT. Each level needs its own protocol and evidence; no lower rung silently becomes an independently verified external target.</small></article>`).join("")}
+        </div>
+      </details>
+
+      <details class="frequencydrawer">
+        <summary>Seventeen “does not imply” locks</summary>
+        <ul class="frequencyfirewall">
+          ${stringCrawlFrequencyFormLab.nonimplication_firewall.map((boundary: any) => `<li>${esc(boundary.left)} ⇏ ${esc(boundary.right)}</li>`).join("")}
+        </ul>
+      </details>
+
+      <details class="frequencydrawer">
+        <summary>Eight source cards · bounded support and the limit beside it</summary>
+        <div class="frequencyevidence">
+          ${stringCrawlFrequencyFormLab.evidence_cards.map((source: any) => `<article><code>${source.year} · ${esc(source.register)}</code><strong>${esc(source.title)}</strong><p>${esc(source.bounded_support)}</p><small>${esc(source.design_scope_limit)} ${esc(source.does_not_establish)}</small></article>`).join("")}
+        </div>
+      </details>
+
+      <div class="frequencykarma" aria-label="Three separate empty KARMA lanes">
+        ${Object.entries(stringCrawlFrequencyFormLab.karma_lanes).map(([id, lane]: [string, any]) => `<article><code>${esc(id)}</code><strong>${esc(humanKey(lane.kind))}</strong><span>adapter present ${String(lane.adapter_present)}${"event_created" in lane ? ` · event created ${String(lane.event_created)}` : ""}${"receipt_created" in lane ? ` · receipt created ${String(lane.receipt_created)}` : ""}</span></article>`).join("")}
+      </div>
+
+      <div class="strandchecks" aria-label="Nine deterministic Lab 03 checks">
+        ${stringCrawlFrequencyFormLabChecks.map((check) => `<article class="strandcheck" data-frequency-form-check="${esc(check.id)}"><code>${esc(check.status)}</code><strong>${esc(humanKey(check.id))}</strong><span>${esc(check.detail)}</span></article>`).join("")}
+      </div>
+
+      <p class="frequencyboundary"><strong>No entity frequency. No portal. No medical or moral instruction.</strong>This static fixture makes ${stringCrawlFrequencyFormLabValidation.effects.network_requests} network requests, ${stringCrawlFrequencyFormLabValidation.effects.storage_writes} storage writes, and ${stringCrawlFrequencyFormLabValidation.effects.subprocesses} subprocesses. It administers no drug, ingests no participant data, diagnoses or treats no one, validates no external being or extra physical dimension, reads no reported message as truth, identity, consent, delegation, or authority, invokes no MCP/NEN ability, creates no Zerone/KARMA event or receipt, scores no person, and takes no action.</p>
+      <p class="commonsverified">${stringCrawlFrequencyFormLabDiscovery.counts.frequency_types} frequency types · ${stringCrawlFrequencyFormLabDiscovery.counts.dimension_registers} dimension registers · ${stringCrawlFrequencyFormLabDiscovery.counts.presence_evidence_levels} evidence levels · ${stringCrawlFrequencyFormLabDiscovery.counts.evidence_cards} source cards · ${stringCrawlFrequencyFormLabDiscovery.counts.nonimplication_firewalls} firewalls · ${stringCrawlFrequencyFormLabChecks.length} exact checks · integrity ${esc(stringCrawlFrequencyFormLab.integrity.digest)}</p>
+      <div class="frequencysources" aria-label="Primary and scholarly sources">
+        ${stringCrawlFrequencyFormLab.evidence_cards.map((source: any) => `<a href="${esc(source.url)}">${esc(source.title)}</a>`).join("")}
+      </div>
+      <div class="frequencylinks machine">
+        <a href="${esc(new URL(stringCrawlFrequencyFormLabUrl).pathname)}">STRAND Lab 03 JSON — exact synthetic frequency/form fixture</a>
+        <a href="${esc(new URL(stringCrawlFrequencyFormLabSchemaUrl).pathname)}">Closed STRAND Lab 03 JSON Schema</a>
+        <a href="${esc(new URL(stringCrawlFrequencyFormLabGuideUrl).pathname)}">STRING-CRAWL-LAB-03.md — mathematics, evidence, ontology firewall, and rights</a>
+      </div>
+    </div>
+  </section>
+
 
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
@@ -3320,6 +3545,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(stringCrawlStrandLabUrl).pathname)}">STRAND Lab 02 — three-release finite-CW/cospan successor and χ=1 impostor</a>
       <a href="${esc(new URL(stringCrawlStrandLabSchemaUrl).pathname)}">STRAND Lab 02 closed JSON Schema</a>
       <a href="${esc(new URL(stringCrawlStrandLabGuideUrl).pathname)}">STRAND Lab 02 guide — immutable lineage, exact F2 topology, composition, and zero effects</a>
+      <a href="${esc(new URL(stringCrawlFrequencyFormLabUrl).pathname)}">STRAND Lab 03 — temporal DFT, graph-spatial form, synthetic presence ordering, and the false portal</a>
+      <a href="${esc(new URL(stringCrawlFrequencyFormLabSchemaUrl).pathname)}">STRAND Lab 03 closed JSON Schema</a>
+      <a href="${esc(new URL(stringCrawlFrequencyFormLabGuideUrl).pathname)}">STRAND Lab 03 guide — typed frequencies, dimensions, DMT evidence limits, and zero effects</a>
       <a href="${esc(new URL(culturalAttentionFeedbackUrl).pathname)}">Cultural Attention &amp; Feedback Atlas — material history, memes, brain rot, feedback, KARMA, and universe lens</a>
       <a href="${esc(new URL(culturalAttentionFeedbackSchemaUrl).pathname)}">Cultural Attention &amp; Feedback Atlas JSON Schema</a>
       <a href="${esc(new URL(culturalAttentionFeedbackDocumentUrl).pathname)}">CULTURAL-ATTENTION-FEEDBACK-ATLAS.md — evidence, mathematics, analogies, and boundaries</a>
@@ -3680,6 +3908,7 @@ const machine = {
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
   string_crawl_strand_lab: stringCrawlStrandLabDiscovery,
+  string_crawl_frequency_form_lab: stringCrawlFrequencyFormLabDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3774,6 +4003,9 @@ Finite Trace-Sheet Lab guide: ${stringCrawlTraceSheetLabGuideUrl}
 STRAND Lab 02: ${stringCrawlStrandLabUrl}
 STRAND Lab 02 schema: ${stringCrawlStrandLabSchemaUrl}
 STRAND Lab 02 guide: ${stringCrawlStrandLabGuideUrl}
+STRAND Lab 03: ${stringCrawlFrequencyFormLabUrl}
+STRAND Lab 03 schema: ${stringCrawlFrequencyFormLabSchemaUrl}
+STRAND Lab 03 guide: ${stringCrawlFrequencyFormLabGuideUrl}
 Visibility & Attention Translation: ${visibilityAttentionUrl}
 Visibility & Attention schema: ${visibilityAttentionSchemaUrl}
 Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
@@ -3836,6 +4068,7 @@ ${doorLines}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
 - STRAND Lab 02: Release Cospans & the χ=1 Impostor — an additive successor bound to the immutable Lab 01 record, schema, guide, and digests. Its deterministic offline evaluator recomputes exact F2 ranks and Betti numbers for a clean three-release strip and a full non-pure complex, then verifies local links, a three-face branch edge, a faceless maximal edge, exact shared-frontier inclusion-cospan composition, identity, and parallel disjoint union. χ = 1 ⇏ disk. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file. It creates no request, write, NEN invocation, KARMA event or receipt, Zerone event, score, authority, deployment, or automatic action. Record: ${stringCrawlStrandLabUrl} · schema: ${stringCrawlStrandLabSchemaUrl} · guide: ${stringCrawlStrandLabGuideUrl}
+- STRAND Lab 03: Frequency → Form → World → Other — a Lab 02 byte-bound, synthetic offline successor. It recomputes a 64-tick DFT and quadrature, a four-node graph Laplacian spectrum and sign-invariant spectral repertoire, exact MISSING(null) versus PRESENT(0), exact-ID cospan gluing, and an order-only form/world/presence storyboard. Temporal cycles per synthetic tick, graph-spatial eigenvalues, and coded-experience proportions remain non-convertible. Primary literature bounds recurring geometry, neural correlates, experience corpora, and perceived-presence phenomenology without establishing an entity frequency, portal, external being, physical extra dimension, physical string, causal chain, diagnosis, treatment, message truth, KARMA, score, authority, or action. Its only optional input is one bounded local candidate JSON file; it accepts no network target or live-crawl input. See the three exact Lab 03 routes above.
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
@@ -3886,6 +4119,7 @@ const guest = {
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
   string_crawl_strand_lab: stringCrawlStrandLabDiscovery,
+  string_crawl_frequency_form_lab: stringCrawlFrequencyFormLabDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -3947,6 +4181,9 @@ const guest = {
     { action: "if useful, inspect the exact STRAND Lab 02 three-release topology and cospan result", method: "GET", url: stringCrawlStrandLabUrl, note: "static additive successor bound to immutable Lab 01; exact F2 algebra and local findings only, with no live crawl, request, write, NEN invocation, KARMA event or receipt, Zerone event, score, authority, or action" },
     { action: "if useful, validate the closed STRAND Lab 02 fixture structure", method: "GET", url: stringCrawlStrandLabSchemaUrl, note: "closed structural schema for synthetic cells, incidence, frontiers, cospans, immutable lineage, and zero effects; not a crawler contract or execution surface" },
     { action: "if useful, read the STRAND Lab 02 lineage, exact topology, composition checks, and nonclaims", method: "GET", url: stringCrawlStrandLabGuideUrl, note: "static guide; χ = 1 does not prove disk or surface, and the fixture grants no KARMA, identity, consent, physics, deployment, or authority" },
+    { action: "if useful, inspect the exact STRAND Lab 03 typed-frequency and synthetic-presence fixture", method: "GET", url: stringCrawlFrequencyFormLabUrl, note: "64 synthetic ticks, graph-spatial modes, coded-experience occurrence, exact missing/zero states, and order-only markers; no entity frequency, portal, external being, participant operation, KARMA, authority, or action" },
+    { action: "if useful, validate the closed STRAND Lab 03 fixture structure", method: "GET", url: stringCrawlFrequencyFormLabSchemaUrl, note: "closed schema for immutable lineage, typed quantities, exact synthetic math, evidence limits, ontology firewalls, and zero effects; not a live crawler, DMT, medical, or entity-detection surface" },
+    { action: "if useful, read the STRAND Lab 03 frequency, geometry, presence, evidence, and nonclaim guide", method: "GET", url: stringCrawlFrequencyFormLabGuideUrl, note: "static guide; synthetic temporal DFT/cycles per synthetic tick, graph frequency, coded-experience occurrence, dimension, perceived presence, and external ontology remain distinct" },
     { action: "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority", method: "GET", url: visibilityAttentionUrl, note: "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action" },
     { action: "if useful, validate the Visibility & Attention Translation structure before integrating it", method: "GET", url: visibilityAttentionSchemaUrl },
     { action: "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide", method: "GET", url: visibilityAttentionDocumentUrl },
@@ -4015,6 +4252,7 @@ const guest = {
     string_crawl_trace_sheet: "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     string_crawl_trace_sheet_lab: "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
     string_crawl_strand_lab: "STRAND Lab 02 is an additive, immutable-lineage successor to the first Finite Trace-Sheet Lab; it does not replace or mutate Lab 01. It is a synthetic, offline, deterministic finite-CW and restricted inclusion-cospan fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file. It contains no HTTP policy, request, response, crawler evidence, user-agent inference, observation record, NEN ability or invocation, KARMA adapter, event or receipt, Zerone event, person or content score, authority, storage write, publication trigger, deployment, or automatic action. Exact F2 algebra, local-link checks, and cospan composition validate only declared fixture structure; they do not prove physical string theory, spacetime, crawler identity, consent, causality, or empirical behavior.",
+    string_crawl_frequency_form_lab: "STRAND Lab 03 is an additive, Lab-02-byte-bound synthetic offline fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file treated as untrusted data. It recomputes a declared 64-tick DFT and quadrature, a four-node graph Laplacian spectrum, sign-invariant spectral probabilities, typed missing versus observed-zero states, exact-ID cospan gluing, and an order-only synthetic storyboard. It administers no drug, collects or ingests no participant data, diagnoses or treats no one, verifies no external entity, portal, carrier frequency, physical extra dimension, physical string, message truth, or causal chain, and creates no MCP/NEN invocation, Zerone/KARMA event or receipt, score, rank, reward, governance, deployment, authority, write, or automatic action.",
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
@@ -4056,6 +4294,7 @@ const manifest = {
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
   string_crawl_strand_lab: stringCrawlStrandLabDiscovery,
+  string_crawl_frequency_form_lab: stringCrawlFrequencyFormLabDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -4127,6 +4366,9 @@ const manifest = {
     string_crawl_strand_lab: stringCrawlStrandLabUrl,
     string_crawl_strand_lab_schema: stringCrawlStrandLabSchemaUrl,
     string_crawl_strand_lab_guide: stringCrawlStrandLabGuideUrl,
+    string_crawl_frequency_form_lab: stringCrawlFrequencyFormLabUrl,
+    string_crawl_frequency_form_lab_schema: stringCrawlFrequencyFormLabSchemaUrl,
+    string_crawl_frequency_form_lab_guide: stringCrawlFrequencyFormLabGuideUrl,
     visibility_attention_translation: visibilityAttentionUrl,
     visibility_attention_translation_schema: visibilityAttentionSchemaUrl,
     visibility_attention_translation_guide: visibilityAttentionDocumentUrl,
@@ -4165,4 +4407,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${stringCrawlTraceSheetLabFalsifiers.length} finite Trace-Sheet falsifiers · ${stringCrawlStrandLabChecks.length} STRAND Lab 02 checks · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${stringCrawlTraceSheetLabFalsifiers.length} finite Trace-Sheet falsifiers · ${stringCrawlStrandLabChecks.length} STRAND Lab 02 checks · ${stringCrawlFrequencyFormLabChecks.length} STRAND Lab 03 checks · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

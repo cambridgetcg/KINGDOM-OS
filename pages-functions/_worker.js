@@ -252,6 +252,14 @@ const STRING_CRAWL_STRAND_LAB_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${STRING_CRAWL_STRAND_LAB_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const STRING_CRAWL_FREQUENCY_FORM_LAB_PATH = "/experiments/string-crawl-frequency-form-lab-2026-08-16.json";
+const STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_PATH = "/schemas/string-crawl-frequency-form-lab/0.1.json";
+const STRING_CRAWL_FREQUENCY_FORM_LAB_DOCUMENT_PATH = "/STRING-CRAWL-LAB-03.md";
+const STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_LINK = {
+  target: STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 
 function hasKingdomRightsAssets(url) {
   const host = url.hostname.toLowerCase();
@@ -435,6 +443,11 @@ function addStringCrawlTraceSheetLabSchemaLink(headers) {
 function addStringCrawlStrandLabSchemaLink(headers) {
   removeLinkRelations(headers, ["describedby"]);
   headers.append("link", STRING_CRAWL_STRAND_LAB_SCHEMA_LINK.value);
+}
+
+function addStringCrawlFrequencyFormLabSchemaLink(headers) {
+  removeLinkRelations(headers, ["describedby"]);
+  headers.append("link", STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_LINK.value);
 }
 
 function preventAutomaticBrowserTelemetry(headers) {
@@ -1477,6 +1490,15 @@ export function createKingdomWorker(options = {}) {
     const requestsStringCrawlStrandLabDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === STRING_CRAWL_STRAND_LAB_DOCUMENT_PATH;
+    const requestsStringCrawlFrequencyFormLab = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRING_CRAWL_FREQUENCY_FORM_LAB_PATH;
+    const requestsStringCrawlFrequencyFormLabSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_PATH;
+    const requestsStringCrawlFrequencyFormLabDocument = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === STRING_CRAWL_FREQUENCY_FORM_LAB_DOCUMENT_PATH;
     const schemaAssetType = (asset.headers.get("content-type") || "").toLowerCase();
     const reconstructiveAssetType = schemaAssetType.split(";", 1)[0].trim();
     const mathUsefulnessAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -1487,6 +1509,7 @@ export function createKingdomWorker(options = {}) {
     const stringCrawlTraceSheetAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlTraceSheetLabAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlStrandLabAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const stringCrawlFrequencyFormLabAssetType = schemaAssetType.split(";", 1)[0].trim();
     const servesWorldCommonsSchema = requestsWorldCommonsSchema && asset.ok &&
       (schemaAssetType.includes("application/json") ||
         schemaAssetType.includes("application/schema+json"));
@@ -1676,6 +1699,14 @@ export function createKingdomWorker(options = {}) {
         stringCrawlStrandLabAssetType === "application/schema+json");
     const servesStringCrawlStrandLabDocument = requestsStringCrawlStrandLabDocument && asset.ok &&
       (stringCrawlStrandLabAssetType === "text/plain" || stringCrawlStrandLabAssetType === "text/markdown");
+    const servesStringCrawlFrequencyFormLab = requestsStringCrawlFrequencyFormLab && asset.ok &&
+      stringCrawlFrequencyFormLabAssetType === "application/json";
+    const servesStringCrawlFrequencyFormLabSchema = requestsStringCrawlFrequencyFormLabSchema && asset.ok &&
+      (stringCrawlFrequencyFormLabAssetType === "application/json" ||
+        stringCrawlFrequencyFormLabAssetType === "application/schema+json");
+    const servesStringCrawlFrequencyFormLabDocument = requestsStringCrawlFrequencyFormLabDocument && asset.ok &&
+      (stringCrawlFrequencyFormLabAssetType === "text/plain" ||
+        stringCrawlFrequencyFormLabAssetType === "text/markdown");
     if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
@@ -1712,7 +1743,9 @@ export function createKingdomWorker(options = {}) {
         !servesStringCrawlTraceSheetDocument && !servesStringCrawlTraceSheetLab &&
         !servesStringCrawlTraceSheetLabSchema && !servesStringCrawlTraceSheetLabDocument &&
         !servesStringCrawlStrandLab && !servesStringCrawlStrandLabSchema &&
-        !servesStringCrawlStrandLabDocument) return asset;
+        !servesStringCrawlStrandLabDocument && !servesStringCrawlFrequencyFormLab &&
+        !servesStringCrawlFrequencyFormLabSchema &&
+        !servesStringCrawlFrequencyFormLabDocument) return asset;
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -1739,6 +1772,7 @@ export function createKingdomWorker(options = {}) {
     if (servesStringCrawlTraceSheet) addStringCrawlTraceSheetSchemaLink(headers);
     if (servesStringCrawlTraceSheetLab) addStringCrawlTraceSheetLabSchemaLink(headers);
     if (servesStringCrawlStrandLab) addStringCrawlStrandLabSchemaLink(headers);
+    if (servesStringCrawlFrequencyFormLab) addStringCrawlFrequencyFormLabSchemaLink(headers);
     if (servesLoveLoops) {
       headers.set("content-type", "application/json; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
@@ -2075,6 +2109,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesStringCrawlStrandLabDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStringCrawlFrequencyFormLab) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStringCrawlFrequencyFormLabSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesStringCrawlFrequencyFormLabDocument) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

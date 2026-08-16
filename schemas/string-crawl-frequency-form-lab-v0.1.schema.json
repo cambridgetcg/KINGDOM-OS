@@ -1,0 +1,854 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thekingdom.dev/schemas/string-crawl-frequency-form-lab/0.1.json",
+  "$comment": "Closed structural contract for a synthetic offline frequency/form/world/presence thought experiment. Schema validity does not establish empirical accuracy, causation, a portal, an external entity, a physical extra dimension, medical authority, or KARMA.",
+  "title": "KINGDOM STRAND Lab 03 v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "protocol", "lab_id", "version", "title", "subtitle", "mode",
+    "predecessor", "conventions", "temporal_fixture", "spatial_fixture",
+    "quantity_register", "pairwise_quantity_relations", "occurrence_fixture",
+    "dimension_register", "presence_evidence_ladder", "ordering_contract",
+    "release_slices", "features", "observations", "transitions", "frontiers",
+    "cospans", "composition_check", "evidence_cards", "nonimplication_firewall",
+    "effect_boundary", "karma_lanes", "validation_contract", "expected", "integrity"
+  ],
+  "properties": {
+    "$schema": { "const": "https://thekingdom.dev/schemas/string-crawl-frequency-form-lab/0.1.json" },
+    "protocol": { "const": "kingdom.string-crawl-frequency-form-lab/0.1" },
+    "lab_id": { "const": "string-crawl-frequency-form-lab-03-2026-08-16" },
+    "version": { "const": "0.1.0" },
+    "title": { "const": "STRAND Lab 03: Frequency → Form → World → Other" },
+    "subtitle": { "const": "Three Frequencies, Four Dimensions & the False Portal" },
+    "mode": { "const": "SYNTHETIC_OFFLINE_EXACT" },
+    "predecessor": { "$ref": "#/$defs/predecessor" },
+    "conventions": { "$ref": "#/$defs/conventions" },
+    "temporal_fixture": { "$ref": "#/$defs/temporalFixture" },
+    "spatial_fixture": { "$ref": "#/$defs/spatialFixture" },
+    "quantity_register": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": { "$ref": "#/$defs/quantity" }
+    },
+    "pairwise_quantity_relations": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": { "$ref": "#/$defs/quantityRelation" }
+    },
+    "occurrence_fixture": { "$ref": "#/$defs/occurrenceFixture" },
+    "dimension_register": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": { "$ref": "#/$defs/dimensionEntry" }
+    },
+    "presence_evidence_ladder": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": { "$ref": "#/$defs/presenceEvidence" }
+    },
+    "ordering_contract": { "$ref": "#/$defs/orderingContract" },
+    "release_slices": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": { "$ref": "#/$defs/releaseSlice" }
+    },
+    "features": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": { "$ref": "#/$defs/feature" }
+    },
+    "observations": {
+      "type": "array", "minItems": 12, "maxItems": 12,
+      "items": { "$ref": "#/$defs/observation" }
+    },
+    "transitions": {
+      "type": "array", "minItems": 8, "maxItems": 8,
+      "items": { "$ref": "#/$defs/transition" }
+    },
+    "frontiers": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": { "$ref": "#/$defs/frontier" }
+    },
+    "cospans": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "items": { "$ref": "#/$defs/cospan" }
+    },
+    "composition_check": { "$ref": "#/$defs/compositionCheck" },
+    "evidence_cards": {
+      "type": "array", "minItems": 8, "maxItems": 8,
+      "items": { "$ref": "#/$defs/evidenceCard" }
+    },
+    "nonimplication_firewall": {
+      "type": "array", "minItems": 17, "maxItems": 17,
+      "items": { "$ref": "#/$defs/nonimplication" }
+    },
+    "effect_boundary": { "$ref": "#/$defs/effectBoundary" },
+    "karma_lanes": { "$ref": "#/$defs/karmaLanes" },
+    "validation_contract": { "$ref": "#/$defs/validationContract" },
+    "expected": { "$ref": "#/$defs/expected" },
+    "integrity": { "$ref": "#/$defs/integrity" }
+  },
+  "$defs": {
+    "id": {
+      "type": "string", "minLength": 1, "maxLength": 180,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "upperToken": {
+      "type": "string", "minLength": 1, "maxLength": 180,
+      "pattern": "^[A-Z0-9]+(?:[_-][A-Z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "idArray": {
+      "type": "array", "minItems": 1, "maxItems": 24, "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "integerVector4": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": { "type": "integer", "minimum": -16, "maximum": 16 }
+    },
+    "matrix4x3": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {
+        "type": "array", "minItems": 3, "maxItems": 3,
+        "items": { "type": "integer", "minimum": -4, "maximum": 4 }
+      }
+    },
+    "matrix4x4": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {
+        "type": "array", "minItems": 4, "maxItems": 4,
+        "items": { "type": "integer", "minimum": -8, "maximum": 8 }
+      }
+    },
+    "rational": {
+      "type": "object", "additionalProperties": false,
+      "required": ["numerator", "denominator"],
+      "properties": {
+        "numerator": { "type": "integer", "minimum": 0, "maximum": 10000 },
+        "denominator": { "type": "integer", "minimum": 1, "maximum": 10000 }
+      }
+    },
+    "predecessor": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "protocol", "lab_id", "url", "schema_url", "guide_url", "git_commit",
+        "semantic_digest", "byte_sha256", "schema_byte_sha256",
+        "guide_byte_sha256", "relation", "mutates_predecessor", "imports_authority"
+      ],
+      "properties": {
+        "protocol": { "const": "kingdom.string-crawl-strand-lab/0.1" },
+        "lab_id": { "const": "string-crawl-strand-lab-02-2026-08-16" },
+        "url": { "const": "https://thekingdom.dev/labs/string-crawl-strand-lab-02-2026-08-16.json" },
+        "schema_url": { "const": "https://thekingdom.dev/schemas/string-crawl-strand-lab/0.1.json" },
+        "guide_url": { "const": "https://thekingdom.dev/STRING-CRAWL-STRAND-LAB-02.md" },
+        "git_commit": { "const": "2bd03fd77226775a58eff382011e43f26512d733" },
+        "semantic_digest": { "const": "sha256:cb07f3408cee01b0b465fa9ee543257e4d38e9cfddc203e47b4c8d429bcc3a1c" },
+        "byte_sha256": { "const": "sha256:9aa56248ed6bdda8da4fd177617b87b2f5e3d5d1a657fedbb5059acb43b4b429" },
+        "schema_byte_sha256": { "const": "sha256:6387cc7e2152f3e1e45c0dfb10eb6f14f22fbcdc933918bfed2c5ebea5866fb4" },
+        "guide_byte_sha256": { "const": "sha256:34256139d0f630278b0e9baf9688b04aaab09945e97b0901a9ee273787b1ea41" },
+        "relation": { "const": "IMMUTABLE_LAB_02_PREDECESSOR" },
+        "mutates_predecessor": { "const": false },
+        "imports_authority": { "const": false }
+      }
+    },
+    "conventions": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "tick_count", "tick_unit", "temporal_transform", "temporal_frequency_unit",
+        "spatial_operator", "spatial_mode_unit", "signed_incidence",
+        "spectrum_order", "spectrum_absolute_tolerance",
+        "selected_eigenvector_is_representative_not_canonical",
+        "eigenvector_global_sign_is_not_canonical", "spatial_repertoire_measure",
+        "spatial_repertoire_is_sign_invariant", "missing_value_state",
+        "zero_is_observed_value", "ordering_interpretation",
+        "equal_numerals_cross_types_are_comparable",
+        "candidate_text_is_data_not_instruction", "witnesses_are_authoritative"
+      ],
+      "properties": {
+        "tick_count": { "const": 64 },
+        "tick_unit": { "const": "SYNTHETIC_TICK" },
+        "temporal_transform": { "const": "UNNORMALIZED_FORWARD_DFT_NEGATIVE_PHASE" },
+        "temporal_frequency_unit": { "const": "CYCLES_PER_SYNTHETIC_TICK" },
+        "spatial_operator": { "const": "COMBINATORIAL_GRAPH_LAPLACIAN_BBT" },
+        "spatial_mode_unit": { "const": "GRAPH_LAPLACIAN_EIGENVALUE" },
+        "signed_incidence": { "const": "TAIL_MINUS_ONE_HEAD_PLUS_ONE" },
+        "spectrum_order": { "const": "NONDECREASING_EIGENVALUE" },
+        "spectrum_absolute_tolerance": { "const": 1e-12 },
+        "selected_eigenvector_is_representative_not_canonical": { "const": true },
+        "eigenvector_global_sign_is_not_canonical": { "const": true },
+        "spatial_repertoire_measure": { "const": "ORDERED_EIGENPROJECTOR_ENERGY_PROBABILITY" },
+        "spatial_repertoire_is_sign_invariant": { "const": true },
+        "missing_value_state": { "const": "MISSING_WITH_NULL" },
+        "zero_is_observed_value": { "const": true },
+        "ordering_interpretation": { "const": "ORDER_ONLY_NOT_CAUSAL" },
+        "equal_numerals_cross_types_are_comparable": { "const": false },
+        "candidate_text_is_data_not_instruction": { "const": true },
+        "witnesses_are_authoritative": { "const": false }
+      }
+    },
+    "temporalFixture": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "id", "sample_count", "samples", "quadrature_samples",
+        "physical_sample_interval_seconds", "physical_sample_rate_hz",
+        "hertz_conversion"
+      ],
+      "properties": {
+        "id": { "const": "temporal-wave-64" },
+        "sample_count": { "const": 64 },
+        "samples": {
+          "type": "array", "minItems": 64, "maxItems": 64,
+          "items": { "enum": [-1, 0, 1] }
+        },
+        "quadrature_samples": {
+          "type": "array", "minItems": 64, "maxItems": 64,
+          "items": { "enum": [-1, 0, 1] }
+        },
+        "physical_sample_interval_seconds": { "type": "null" },
+        "physical_sample_rate_hz": { "type": "null" },
+        "hertz_conversion": { "const": "UNDEFINED" }
+      }
+    },
+    "incidenceOccurrence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["vertex_id", "coefficient"],
+      "properties": {
+        "vertex_id": { "$ref": "#/$defs/id" },
+        "coefficient": { "enum": [-1, 1] }
+      }
+    },
+    "orientedEdge": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "tail", "head", "incidence"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "tail": { "$ref": "#/$defs/id" },
+        "head": { "$ref": "#/$defs/id" },
+        "incidence": {
+          "type": "array", "minItems": 2, "maxItems": 2,
+          "items": { "$ref": "#/$defs/incidenceOccurrence" }
+        }
+      }
+    },
+    "spatialFixture": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "id", "vertices", "oriented_edges", "selected_mode", "spatial_signal",
+        "declared_mode_probabilities"
+      ],
+      "properties": {
+        "id": { "const": "spatial-path-four" },
+        "vertices": {
+          "type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "oriented_edges": {
+          "type": "array", "minItems": 3, "maxItems": 3,
+          "items": { "$ref": "#/$defs/orientedEdge" }
+        },
+        "selected_mode": { "$ref": "#/$defs/integerVector4" },
+        "spatial_signal": { "$ref": "#/$defs/integerVector4" },
+        "declared_mode_probabilities": {
+          "type": "array", "minItems": 4, "maxItems": 4,
+          "items": { "$ref": "#/$defs/rational" }
+        }
+      }
+    },
+    "quantity": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "id", "kind", "domain", "carrier", "operator", "estimator",
+        "display_value", "normalized_value", "unit", "scale", "window",
+        "sampling_frame", "uncertainty", "significance_rule",
+        "physical_quantity", "population_prevalence"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "$ref": "#/$defs/upperToken" },
+        "domain": { "$ref": "#/$defs/upperToken" },
+        "carrier": { "$ref": "#/$defs/upperToken" },
+        "operator": { "$ref": "#/$defs/upperToken" },
+        "estimator": { "$ref": "#/$defs/upperToken" },
+        "display_value": { "type": "number", "minimum": 0, "maximum": 10000 },
+        "normalized_value": { "type": "number", "minimum": 0, "maximum": 10000 },
+        "unit": { "$ref": "#/$defs/upperToken" },
+        "scale": { "$ref": "#/$defs/upperToken" },
+        "window": { "$ref": "#/$defs/upperToken" },
+        "sampling_frame": { "$ref": "#/$defs/upperToken" },
+        "uncertainty": { "$ref": "#/$defs/upperToken" },
+        "significance_rule": { "$ref": "#/$defs/upperToken" },
+        "physical_quantity": { "const": false },
+        "population_prevalence": { "const": false }
+      }
+    },
+    "quantityRelation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["left", "right", "relation", "same_numeral_means_same_quantity"],
+      "properties": {
+        "left": { "$ref": "#/$defs/id" },
+        "right": { "$ref": "#/$defs/id" },
+        "relation": { "const": "NO_CANONICAL_CONVERSION" },
+        "same_numeral_means_same_quantity": { "const": false }
+      }
+    },
+    "occurrenceFixture": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "source_card_id", "selected_experience_count", "selected_post_count",
+        "coded_entity_experience_count", "coding_unit", "reported_percentage_tenths",
+        "coding_rule", "sampling_frame",
+        "population_prevalence", "per_session_probability",
+        "external_entity_detection"
+      ],
+      "properties": {
+        "source_card_id": { "const": "lawrence-2022" },
+        "selected_experience_count": { "const": 3778 },
+        "selected_post_count": { "const": 3305 },
+        "coded_entity_experience_count": { "const": 1719 },
+        "coding_unit": { "const": "SOURCE_DEFINED_EXPERIENCE" },
+        "reported_percentage_tenths": { "const": 455 },
+        "coding_rule": { "const": "SOURCE_REPORTED_ENTITY_ENCOUNTER_CATEGORY" },
+        "sampling_frame": { "const": "SOURCE_SELECTED_EXPERIENCES_FROM_SELF_POSTED_REDDIT_POSTS" },
+        "population_prevalence": { "const": false },
+        "per_session_probability": { "const": false },
+        "external_entity_detection": { "const": false }
+      }
+    },
+    "dimensionEntry": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "id", "kind", "status", "definition", "estimator_or_theorem",
+        "unit", "uncertainty", "sampling_scope", "physical_spacetime_claim",
+        "conversion_to_physical_dimension"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "$ref": "#/$defs/upperToken" },
+        "status": { "$ref": "#/$defs/upperToken" },
+        "definition": { "$ref": "#/$defs/upperToken" },
+        "estimator_or_theorem": { "$ref": "#/$defs/upperToken" },
+        "unit": { "$ref": "#/$defs/upperToken" },
+        "uncertainty": { "$ref": "#/$defs/upperToken" },
+        "sampling_scope": { "$ref": "#/$defs/upperToken" },
+        "physical_spacetime_claim": { "const": false },
+        "conversion_to_physical_dimension": {
+          "enum": ["NO_CANONICAL_CONVERSION", "NOT_APPLICABLE"]
+        }
+      }
+    },
+    "presenceEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "order", "kind", "state", "protocol", "scope", "present_here",
+        "imports_next_level"
+      ],
+      "properties": {
+        "order": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "kind": { "$ref": "#/$defs/upperToken" },
+        "state": { "enum": ["PRESENT", "ABSENT", "MISSING", "NOT_MEASURED"] },
+        "protocol": { "$ref": "#/$defs/upperToken" },
+        "scope": { "$ref": "#/$defs/upperToken" },
+        "present_here": { "type": "boolean" },
+        "imports_next_level": { "const": false }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "present_here": { "const": true } } },
+          "then": { "properties": { "state": { "const": "PRESENT" } } }
+        },
+        {
+          "if": { "properties": { "present_here": { "const": false } } },
+          "then": { "properties": { "state": { "const": "NOT_MEASURED" } } }
+        }
+      ]
+    },
+    "orderingContract": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "relation", "onset_definition", "present_zero_counts_as_present",
+        "missing_is_absent", "arrows_establish_causation",
+        "arrows_establish_ontology"
+      ],
+      "properties": {
+        "relation": { "const": "ORDER_ONLY_NOT_CAUSAL" },
+        "onset_definition": { "const": "MINIMUM_RELEASE_ORDER_WITH_PRESENT_STATE" },
+        "present_zero_counts_as_present": { "const": true },
+        "missing_is_absent": { "const": false },
+        "arrows_establish_causation": { "const": false },
+        "arrows_establish_ontology": { "const": false }
+      }
+    },
+    "releaseSlice": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "order"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "order": { "type": "integer", "minimum": 0, "maximum": 2 }
+      }
+    },
+    "feature": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "layer", "born_in", "evidence_kind"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "layer": { "$ref": "#/$defs/upperToken" },
+        "born_in": { "$ref": "#/$defs/id" },
+        "evidence_kind": { "const": "SYNTHETIC_MARKER" }
+      }
+    },
+    "observation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "slice_id", "feature_id", "state", "value"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "slice_id": { "$ref": "#/$defs/id" },
+        "feature_id": { "$ref": "#/$defs/id" },
+        "state": { "enum": ["PRESENT", "MISSING"] },
+        "value": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "integer", "minimum": -16, "maximum": 16 }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "state": { "const": "MISSING" } } },
+          "then": { "properties": { "value": { "type": "null" } } },
+          "else": { "properties": { "value": { "type": "integer" } } }
+        }
+      ]
+    },
+    "boundaryOccurrence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["observation_id", "coefficient"],
+      "properties": {
+        "observation_id": { "$ref": "#/$defs/id" },
+        "coefficient": { "enum": [-1, 1] }
+      }
+    },
+    "transition": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "id", "feature_id", "from_observation_id", "to_observation_id", "boundary"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "feature_id": { "$ref": "#/$defs/id" },
+        "from_observation_id": { "$ref": "#/$defs/id" },
+        "to_observation_id": { "$ref": "#/$defs/id" },
+        "boundary": {
+          "type": "array", "minItems": 2, "maxItems": 2,
+          "items": { "$ref": "#/$defs/boundaryOccurrence" }
+        }
+      }
+    },
+    "frontier": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "slice_id", "observation_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "slice_id": { "$ref": "#/$defs/id" },
+        "observation_ids": {
+          "type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "cospan": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "id", "input_frontier_id", "output_frontier_id",
+        "observation_ids", "transition_ids"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "input_frontier_id": { "$ref": "#/$defs/id" },
+        "output_frontier_id": { "$ref": "#/$defs/id" },
+        "observation_ids": {
+          "type": "array", "minItems": 8, "maxItems": 8, "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "transition_ids": {
+          "type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "compositionCheck": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "left_cospan_id", "right_cospan_id", "shared_frontier_id",
+        "restriction_rule", "gluing_rule", "expected_intersection",
+        "expected_glued_counts", "passes"
+      ],
+      "properties": {
+        "left_cospan_id": { "$ref": "#/$defs/id" },
+        "right_cospan_id": { "$ref": "#/$defs/id" },
+        "shared_frontier_id": { "$ref": "#/$defs/id" },
+        "restriction_rule": { "const": "EXACT_SLICE_RESTRICTION" },
+        "gluing_rule": { "const": "EXACT_OBSERVATION_ID_PUSHOUT" },
+        "expected_intersection": {
+          "type": "object", "additionalProperties": false,
+          "required": ["observation_ids", "transition_ids"],
+          "properties": {
+            "observation_ids": { "$ref": "#/$defs/idArray" },
+            "transition_ids": {
+              "type": "array", "maxItems": 8, "uniqueItems": true,
+              "items": { "$ref": "#/$defs/id" }
+            }
+          }
+        },
+        "expected_glued_counts": {
+          "type": "object", "additionalProperties": false,
+          "required": ["observations", "transitions"],
+          "properties": {
+            "observations": { "type": "integer", "minimum": 0, "maximum": 32 },
+            "transitions": { "type": "integer", "minimum": 0, "maximum": 32 }
+          }
+        },
+        "passes": { "const": true }
+      }
+    },
+    "evidenceCard": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "id", "year", "title", "doi", "url", "register",
+        "bounded_support", "design_scope_limit", "does_not_establish",
+        "participant_data_ingested"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "year": { "type": "integer", "minimum": 1900, "maximum": 2026 },
+        "title": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "doi": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "url": {
+          "type": "string", "minLength": 1, "maxLength": 240,
+          "pattern": "^https://doi[.]org/"
+        },
+        "register": { "$ref": "#/$defs/upperToken" },
+        "bounded_support": { "type": "string", "minLength": 1, "maxLength": 600 },
+        "design_scope_limit": { "type": "string", "minLength": 1, "maxLength": 800 },
+        "does_not_establish": { "type": "string", "minLength": 1, "maxLength": 600 },
+        "participant_data_ingested": { "const": false }
+      }
+    },
+    "nonimplication": {
+      "type": "object", "additionalProperties": false,
+      "required": ["left", "right", "relation"],
+      "properties": {
+        "left": { "$ref": "#/$defs/upperToken" },
+        "right": { "$ref": "#/$defs/upperToken" },
+        "relation": { "const": "DOES_NOT_IMPLY" }
+      }
+    },
+    "effectBoundary": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "synthetic_not_observed", "offline", "read_only", "stdout_only",
+        "network_requests", "storage_writes", "live_crawl", "crawler_runtime",
+        "drug_administration", "dose_guidance", "preparation_guidance",
+        "procurement_guidance", "combination_guidance", "use_or_eligibility_guidance",
+        "recruitment", "participant_data_ingested", "participant_data_collected",
+        "human_subject_research_authority", "clinical_authority", "medical_authority",
+        "external_entity_claim", "physical_extra_dimension_claim",
+        "physical_string_claim", "portal_claim", "carrier_frequency_claim",
+        "causal_chain_claim", "entity_specific_frequency_claim",
+        "message_truth_claim", "reported_message_is_instruction",
+        "reported_message_is_identity_proof", "reported_message_is_consent",
+        "reported_message_is_delegation", "reported_message_is_authority",
+        "diagnosis", "treatment_or_medical_action", "subprocesses",
+        "mcp_invocation", "ability_invocation", "nen_invocation",
+        "zerone_karma_event_observed", "zerone_karma_event_created",
+        "kingdom_karma_receipt_created", "karma_adapter", "person_score",
+        "rank_or_qualification", "reward_or_punishment", "economic_effect",
+        "governance_effect", "deployment_authority", "authority",
+        "authority_effect", "action"
+      ],
+      "properties": {
+        "synthetic_not_observed": { "const": true },
+        "offline": { "const": true },
+        "read_only": { "const": true },
+        "stdout_only": { "const": true },
+        "network_requests": { "const": 0 },
+        "storage_writes": { "const": 0 },
+        "live_crawl": { "const": false },
+        "crawler_runtime": { "const": false },
+        "drug_administration": { "const": false },
+        "dose_guidance": { "const": false },
+        "preparation_guidance": { "const": false },
+        "procurement_guidance": { "const": false },
+        "combination_guidance": { "const": false },
+        "use_or_eligibility_guidance": { "const": false },
+        "recruitment": { "const": false },
+        "participant_data_ingested": { "const": false },
+        "participant_data_collected": { "const": false },
+        "human_subject_research_authority": { "const": false },
+        "clinical_authority": { "const": false },
+        "medical_authority": { "const": false },
+        "external_entity_claim": { "const": false },
+        "physical_extra_dimension_claim": { "const": false },
+        "physical_string_claim": { "const": false },
+        "portal_claim": { "const": false },
+        "carrier_frequency_claim": { "const": false },
+        "causal_chain_claim": { "const": false },
+        "entity_specific_frequency_claim": { "const": false },
+        "message_truth_claim": { "const": false },
+        "reported_message_is_instruction": { "const": false },
+        "reported_message_is_identity_proof": { "const": false },
+        "reported_message_is_consent": { "const": false },
+        "reported_message_is_delegation": { "const": false },
+        "reported_message_is_authority": { "const": false },
+        "diagnosis": { "const": false },
+        "treatment_or_medical_action": { "const": false },
+        "subprocesses": { "const": 0 },
+        "mcp_invocation": { "const": false },
+        "ability_invocation": { "const": false },
+        "nen_invocation": { "const": false },
+        "zerone_karma_event_observed": { "const": false },
+        "zerone_karma_event_created": { "const": false },
+        "kingdom_karma_receipt_created": { "const": false },
+        "karma_adapter": { "const": false },
+        "person_score": { "const": false },
+        "rank_or_qualification": { "const": false },
+        "reward_or_punishment": { "const": false },
+        "economic_effect": { "const": false },
+        "governance_effect": { "const": false },
+        "deployment_authority": { "const": false },
+        "authority": { "const": false },
+        "authority_effect": { "const": "NONE" },
+        "action": { "const": false }
+      }
+    },
+    "karmaLane": {
+      "type": "object", "additionalProperties": false
+    },
+    "karmaLanes": {
+      "type": "object", "additionalProperties": false,
+      "required": ["cosmic_karma", "zerone_karma", "kingdom_karma"],
+      "properties": {
+        "cosmic_karma": {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "empirical_status", "adapter_present"],
+          "properties": {
+            "kind": { "const": "OPT_IN_PHILOSOPHICAL_QUESTION" },
+            "empirical_status": { "const": "UNRESOLVED" },
+            "adapter_present": { "const": false }
+          }
+        },
+        "zerone_karma": {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "event_observed", "event_created", "adapter_present"],
+          "properties": {
+            "kind": { "const": "ZERONE_RECOGNITION_EDGE" },
+            "event_observed": { "const": false },
+            "event_created": { "const": false },
+            "adapter_present": { "const": false }
+          }
+        },
+        "kingdom_karma": {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "action_occurred", "receipt_created", "adapter_present"],
+          "properties": {
+            "kind": { "const": "POST_INVOCATION_AFTERMATH_RECEIPT" },
+            "action_occurred": { "const": false },
+            "receipt_created": { "const": false },
+            "adapter_present": { "const": false }
+          }
+        }
+      }
+    },
+    "validationContract": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "protocol", "strict_json", "deterministic", "bounded_regular_file_only",
+        "stdout_only", "network_requests", "storage_writes", "subprocesses",
+        "candidate_text_handling", "authority_effect"
+      ],
+      "properties": {
+        "protocol": { "const": "kingdom.string-crawl-frequency-form-validation/0.1" },
+        "strict_json": { "const": true },
+        "deterministic": { "const": true },
+        "bounded_regular_file_only": { "const": true },
+        "stdout_only": { "const": true },
+        "network_requests": { "const": 0 },
+        "storage_writes": { "const": 0 },
+        "subprocesses": { "const": 0 },
+        "candidate_text_handling": { "const": "UNTRUSTED_DATA_NEVER_INSTRUCTION" },
+        "authority_effect": { "const": "NONE" }
+      }
+    },
+    "expected": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "temporal", "spatial", "topology", "spectral_repertoire",
+        "occurrence", "states", "onsets", "composition"
+      ],
+      "properties": {
+        "temporal": {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "dominant_one_sided_bin", "conjugate_bin", "normalized_cycles_per_tick",
+            "peak_coefficient", "conjugate_coefficient", "quadrature_peak_coefficient",
+            "quadrature_conjugate_coefficient", "peak_magnitude_squared",
+            "off_peak_max_magnitude_squared", "quadrature_off_peak_max_magnitude_squared",
+            "time_energy", "quadrature_time_energy", "spectral_energy",
+            "quadrature_spectral_energy", "parseval_right_side",
+            "quadrature_parseval_right_side", "hertz_conversion"
+          ],
+          "properties": {
+            "dominant_one_sided_bin": { "const": 16 },
+            "conjugate_bin": { "const": 48 },
+            "normalized_cycles_per_tick": { "$ref": "#/$defs/rational" },
+            "peak_coefficient": { "$ref": "#/$defs/complex" },
+            "conjugate_coefficient": { "$ref": "#/$defs/complex" },
+            "quadrature_peak_coefficient": { "$ref": "#/$defs/complex" },
+            "quadrature_conjugate_coefficient": { "$ref": "#/$defs/complex" },
+            "peak_magnitude_squared": { "const": 1024 },
+            "off_peak_max_magnitude_squared": { "const": 0 },
+            "quadrature_off_peak_max_magnitude_squared": { "const": 0 },
+            "time_energy": { "const": 32 },
+            "quadrature_time_energy": { "const": 32 },
+            "spectral_energy": { "const": 2048 },
+            "quadrature_spectral_energy": { "const": 2048 },
+            "parseval_right_side": { "const": 2048 },
+            "quadrature_parseval_right_side": { "const": 2048 },
+            "hertz_conversion": { "const": "UNDEFINED" }
+          }
+        },
+        "spatial": {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "incidence_matrix", "laplacian_matrix",
+            "characteristic_polynomial_coefficients", "spectrum_exact",
+            "spectrum_approx", "selected_eigenvalue", "selected_mode_residual"
+          ],
+          "properties": {
+            "incidence_matrix": { "$ref": "#/$defs/matrix4x3" },
+            "laplacian_matrix": { "$ref": "#/$defs/matrix4x4" },
+            "characteristic_polynomial_coefficients": {
+              "type": "array", "minItems": 5, "maxItems": 5,
+              "items": { "type": "integer", "minimum": -100, "maximum": 100 }
+            },
+            "spectrum_exact": {
+              "type": "array", "minItems": 4, "maxItems": 4,
+              "items": { "type": "string", "minLength": 1, "maxLength": 32 }
+            },
+            "spectrum_approx": {
+              "type": "array", "minItems": 4, "maxItems": 4,
+              "items": { "type": "number", "minimum": 0, "maximum": 8 }
+            },
+            "selected_eigenvalue": { "const": 2 },
+            "selected_mode_residual": { "$ref": "#/$defs/integerVector4" }
+          }
+        },
+        "topology": {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "vertices", "edges", "components", "incidence_rank", "betti",
+            "cycle_rank", "euler_characteristic", "cell_dimension",
+            "embedding_dimension"
+          ],
+          "properties": {
+            "vertices": { "const": 4 },
+            "edges": { "const": 3 },
+            "components": { "const": 1 },
+            "incidence_rank": { "const": 3 },
+            "betti": {
+              "type": "array", "minItems": 2, "maxItems": 2,
+              "prefixItems": [{ "const": 1 }, { "const": 0 }],
+              "items": false
+            },
+            "cycle_rank": { "const": 0 },
+            "euler_characteristic": { "const": 1 },
+            "cell_dimension": { "const": 1 },
+            "embedding_dimension": { "type": "null" }
+          }
+        },
+        "spectral_repertoire": {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "signal_norm_squared", "dirichlet_energy", "rayleigh_quotient",
+            "entropy_exact", "effective_mode_count",
+            "inverse_participation_effective_count", "physical_dimension_claim"
+          ],
+          "properties": {
+            "signal_norm_squared": { "const": 2 },
+            "dirichlet_energy": { "const": 2 },
+            "rayleigh_quotient": { "$ref": "#/$defs/rational" },
+            "entropy_exact": { "const": "LN_2" },
+            "effective_mode_count": { "const": 2 },
+            "inverse_participation_effective_count": { "const": 2 },
+            "physical_dimension_claim": { "const": false }
+          }
+        },
+        "occurrence": {
+          "type": "object", "additionalProperties": false,
+          "required": ["coded_entity_experience_count", "selected_experience_count", "selected_post_count", "reported_percentage_tenths", "population_prevalence"],
+          "properties": {
+            "coded_entity_experience_count": { "const": 1719 },
+            "selected_experience_count": { "const": 3778 },
+            "selected_post_count": { "const": 3305 },
+            "reported_percentage_tenths": { "const": 455 },
+            "population_prevalence": { "const": false }
+          }
+        },
+        "states": {
+          "type": "object", "additionalProperties": false,
+          "required": ["present", "missing", "present_zero", "born_before_present_encoded_as"],
+          "properties": {
+            "present": { "const": 7 },
+            "missing": { "const": 5 },
+            "present_zero": { "const": 1 },
+            "born_before_present_encoded_as": { "const": "MISSING_WITH_NULL" }
+          }
+        },
+        "onsets": {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "oscillation", "form", "world", "presence",
+            "world_before_or_concurrent_with_presence",
+            "strict_world_before_presence", "interpretation"
+          ],
+          "properties": {
+            "oscillation": { "const": 0 },
+            "form": { "const": 1 },
+            "world": { "const": 2 },
+            "presence": { "const": 2 },
+            "world_before_or_concurrent_with_presence": { "const": true },
+            "strict_world_before_presence": { "const": false },
+            "interpretation": { "const": "ORDER_ONLY_NOT_CAUSAL" }
+          }
+        },
+        "composition": {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "shared_observations", "shared_transitions",
+            "glued_observations", "glued_transitions"
+          ],
+          "properties": {
+            "shared_observations": { "const": 4 },
+            "shared_transitions": { "const": 0 },
+            "glued_observations": { "const": 12 },
+            "glued_transitions": { "const": 8 }
+          }
+        }
+      }
+    },
+    "complex": {
+      "type": "object", "additionalProperties": false,
+      "required": ["real", "imaginary"],
+      "properties": {
+        "real": { "type": "integer", "minimum": -64, "maximum": 64 },
+        "imaginary": { "type": "integer", "minimum": -64, "maximum": 64 }
+      }
+    },
+    "integrity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["algorithm", "digest", "digest_field_treated_as"],
+      "properties": {
+        "algorithm": { "const": "sha256-recursive-sorted-json-keys-v1" },
+        "digest": { "$ref": "#/$defs/sha256" },
+        "digest_field_treated_as": { "type": "null" }
+      }
+    }
+  }
+}

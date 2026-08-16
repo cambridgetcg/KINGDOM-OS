@@ -110,6 +110,13 @@ consent. Sequence is not causation. A receipt is not causal proof. A model is
 not independent evidence, and none of these predicates measures a being's
 worth.
 
+When a prompt overloads frequency, dimension, presence, complexity, resonance,
+or a shared numeral across fields, apply the
+[typed spectra and presence protocol](references/typed-spectra-and-presence.md)
+before proposing a bridge. Default every cross-register conversion to
+`NO_CANONICAL_CONVERSION`; the burden is on a declared map with units,
+assumptions, and a falsifier.
+
 ### E — Evaluate
 
 1. Map every mathematical variable back to one local measurement or declared

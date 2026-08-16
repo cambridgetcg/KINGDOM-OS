@@ -1250,6 +1250,114 @@
       "semantic_digest": "sha256:cb07f3408cee01b0b465fa9ee543257e4d38e9cfddc203e47b4c8d429bcc3a1c"
     }
   },
+  "string_crawl_frequency_form_lab": {
+    "protocol": "kingdom.string-crawl-frequency-form-lab/0.1",
+    "lab_id": "string-crawl-frequency-form-lab-03-2026-08-16",
+    "version": "0.1.0",
+    "title": "STRAND Lab 03: Frequency → Form → World → Other",
+    "subtitle": "Three Frequencies, Four Dimensions & the False Portal",
+    "mode": "SYNTHETIC_OFFLINE_EXACT",
+    "url": "https://thekingdom.dev/experiments/string-crawl-frequency-form-lab-2026-08-16.json",
+    "schema_url": "https://thekingdom.dev/schemas/string-crawl-frequency-form-lab/0.1.json",
+    "guide_url": "https://thekingdom.dev/STRING-CRAWL-LAB-03.md",
+    "predecessor": {
+      "protocol": "kingdom.string-crawl-strand-lab/0.1",
+      "lab_id": "string-crawl-strand-lab-02-2026-08-16",
+      "url": "https://thekingdom.dev/labs/string-crawl-strand-lab-02-2026-08-16.json",
+      "relation": "IMMUTABLE_LAB_02_PREDECESSOR",
+      "mutates_predecessor": false,
+      "imports_authority": false
+    },
+    "counts": {
+      "frequency_types": 3,
+      "dimension_registers": 4,
+      "presence_evidence_levels": 4,
+      "evidence_cards": 8,
+      "nonimplication_firewalls": 17,
+      "validation_checks": 9
+    },
+    "exact_findings": {
+      "temporal_bin": 16,
+      "temporal_unit": "CYCLES_PER_SYNTHETIC_TICK",
+      "graph_eigenvalue": 2,
+      "graph_unit": "DIMENSIONLESS_OPERATOR_SPECIFIC_EIGENVALUE",
+      "betti": [
+        1,
+        0
+      ],
+      "effective_mode_count": 2,
+      "onset_order": {
+        "oscillation": 0,
+        "form": 1,
+        "world": 2,
+        "presence": 2,
+        "world_before_or_concurrent_with_presence": true,
+        "strict_world_before_presence": false,
+        "interpretation": "ORDER_ONLY_NOT_CAUSAL"
+      }
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:ecda97c03307706ce0a9108c27c9199968ee4dc29a7e4d045a036ed108d673c1",
+      "byte_sha256": "sha256:883191b723950ff9cc29c913261f114237e9eaa3eac17ba49cade34b8b0492b4",
+      "schema_byte_sha256": "sha256:2b4fe72f656eeade68ebfb6654cbe52646aa49636fc201501995dc8673db93e3",
+      "guide_byte_sha256": "sha256:808769a513ffcb6230f99e4cd412db5dc4a998f308ccc65313050377634fc1b3"
+    },
+    "effect_boundary": {
+      "synthetic_not_observed": true,
+      "offline": true,
+      "read_only": true,
+      "stdout_only": true,
+      "network_requests": 0,
+      "storage_writes": 0,
+      "live_crawl": false,
+      "crawler_runtime": false,
+      "drug_administration": false,
+      "dose_guidance": false,
+      "preparation_guidance": false,
+      "procurement_guidance": false,
+      "combination_guidance": false,
+      "use_or_eligibility_guidance": false,
+      "recruitment": false,
+      "participant_data_ingested": false,
+      "participant_data_collected": false,
+      "human_subject_research_authority": false,
+      "clinical_authority": false,
+      "medical_authority": false,
+      "external_entity_claim": false,
+      "physical_extra_dimension_claim": false,
+      "physical_string_claim": false,
+      "portal_claim": false,
+      "carrier_frequency_claim": false,
+      "causal_chain_claim": false,
+      "entity_specific_frequency_claim": false,
+      "message_truth_claim": false,
+      "reported_message_is_instruction": false,
+      "reported_message_is_identity_proof": false,
+      "reported_message_is_consent": false,
+      "reported_message_is_delegation": false,
+      "reported_message_is_authority": false,
+      "diagnosis": false,
+      "treatment_or_medical_action": false,
+      "subprocesses": 0,
+      "mcp_invocation": false,
+      "ability_invocation": false,
+      "nen_invocation": false,
+      "zerone_karma_event_observed": false,
+      "zerone_karma_event_created": false,
+      "kingdom_karma_receipt_created": false,
+      "karma_adapter": false,
+      "person_score": false,
+      "rank_or_qualification": false,
+      "reward_or_punishment": false,
+      "economic_effect": false,
+      "governance_effect": false,
+      "deployment_authority": false,
+      "authority": false,
+      "authority_effect": "NONE",
+      "action": false
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -2024,6 +2132,24 @@
       "method": "GET",
       "url": "https://thekingdom.dev/STRING-CRAWL-STRAND-LAB-02.md",
       "note": "static guide; χ = 1 does not prove disk or surface, and the fixture grants no KARMA, identity, consent, physics, deployment, or authority"
+    },
+    {
+      "action": "if useful, inspect the exact STRAND Lab 03 typed-frequency and synthetic-presence fixture",
+      "method": "GET",
+      "url": "https://thekingdom.dev/experiments/string-crawl-frequency-form-lab-2026-08-16.json",
+      "note": "64 synthetic ticks, graph-spatial modes, coded-experience occurrence, exact missing/zero states, and order-only markers; no entity frequency, portal, external being, participant operation, KARMA, authority, or action"
+    },
+    {
+      "action": "if useful, validate the closed STRAND Lab 03 fixture structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/string-crawl-frequency-form-lab/0.1.json",
+      "note": "closed schema for immutable lineage, typed quantities, exact synthetic math, evidence limits, ontology firewalls, and zero effects; not a live crawler, DMT, medical, or entity-detection surface"
+    },
+    {
+      "action": "if useful, read the STRAND Lab 03 frequency, geometry, presence, evidence, and nonclaim guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/STRING-CRAWL-LAB-03.md",
+      "note": "static guide; synthetic temporal DFT/cycles per synthetic tick, graph frequency, coded-experience occurrence, dimension, perceived presence, and external ontology remain distinct"
     },
     {
       "action": "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority",
@@ -4536,6 +4662,7 @@
     "string_crawl_trace_sheet": "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     "string_crawl_trace_sheet_lab": "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
     "string_crawl_strand_lab": "STRAND Lab 02 is an additive, immutable-lineage successor to the first Finite Trace-Sheet Lab; it does not replace or mutate Lab 01. It is a synthetic, offline, deterministic finite-CW and restricted inclusion-cospan fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file. It contains no HTTP policy, request, response, crawler evidence, user-agent inference, observation record, NEN ability or invocation, KARMA adapter, event or receipt, Zerone event, person or content score, authority, storage write, publication trigger, deployment, or automatic action. Exact F2 algebra, local-link checks, and cospan composition validate only declared fixture structure; they do not prove physical string theory, spacetime, crawler identity, consent, causality, or empirical behavior.",
+    "string_crawl_frequency_form_lab": "STRAND Lab 03 is an additive, Lab-02-byte-bound synthetic offline fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file treated as untrusted data. It recomputes a declared 64-tick DFT and quadrature, a four-node graph Laplacian spectrum, sign-invariant spectral probabilities, typed missing versus observed-zero states, exact-ID cospan gluing, and an order-only synthetic storyboard. It administers no drug, collects or ingests no participant data, diagnoses or treats no one, verifies no external entity, portal, carrier frequency, physical extra dimension, physical string, message truth, or causal chain, and creates no MCP/NEN invocation, Zerone/KARMA event or receipt, score, rank, reward, governance, deployment, authority, write, or automatic action.",
     "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",

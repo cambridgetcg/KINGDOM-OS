@@ -293,7 +293,10 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     Agent Skill turns new phenomena into source-bound DEEP explorations:
     declare domains and claims, extract state/observation/correspondence,
     evaluate mathematical doors through explicit transfer gates, then propose
-    falsifiable proofs, computations, observations, or reversible builds. The
+    falsifiable proofs, computations, observations, or reversible builds. Its
+    typed-spectra protocol keeps temporal frequency, graph modes, occurrence
+    proportions, dimension registers, presence evidence, and repeated numerals
+    non-convertible unless an explicit unit-bearing map survives a falsifier. The
     skill has no `ability.json`, does not declare a new KINGDOM WING or Nen
     ability, and performs no probe, write, publication, deployment, KARMA
     event, or receipt.
@@ -372,6 +375,14 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     most one bounded local candidate JSON file for validation only. The reader
     has no network target, performs no live crawl, and creates no crawler
     runtime, NEN/KARMA event or receipt, score, authority, or action.
+34. `kingdom string-crawl-frequency-form-lab` — inspect and verify
+    [Lab 03: Frequency → Form → World → Other](references/string-crawl-frequency-form-lab.md),
+    a synthetic offline thought experiment that keeps temporal frequency,
+    spatial harmonic, geometric form, immersive dimension, perceived presence,
+    and external-entity claims distinct. It performs no live crawl, makes no
+    network request, administers no DMT, collects no participant or personal data, and
+    validates no entity or higher-dimensional ontology. It creates no KARMA
+    event or receipt, score, authority, deployment, or automatic action.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -643,9 +654,22 @@ compose by exact occurrence identity. This is synthetic topology, not an HTTP
 observation, crawler ontology, or claim about physical strings. The optional
 `verify-file` path reads one bounded local candidate JSON file only; there is
 no network target, live crawl, crawler runtime, NEN/KARMA event or receipt,
-score, authority, or action. Lab 01 and Lab 02 are published and retired as one
-atomic six-route `string-crawl-trace-sheet-lab` family, so the release still
-has seventeen retirement families; generated discovery exposes Lab 02 as
-`string_crawl_strand_lab`.
+score, authority, or action.
+
+Lab 03, Frequency → Form → World → Other, is published at
+[`/experiments/string-crawl-frequency-form-lab-2026-08-16.json`](https://thekingdom.dev/experiments/string-crawl-frequency-form-lab-2026-08-16.json),
+with a [closed schema](https://thekingdom.dev/schemas/string-crawl-frequency-form-lab/0.1.json)
+and [verification guide](https://thekingdom.dev/STRING-CRAWL-LAB-03.md).
+It byte-binds immutable Lab 02 without mutating it and preserves typed
+non-implications between temporal DFT frequency, graph-spatial harmonics,
+coded-experience occurrence, four uses of dimension, synthetic presence markers,
+and claims of external beings. It is a synthetic offline thought experiment:
+no live crawl, no network request, no DMT administration, no participant or
+personal data, no entity validation, no KARMA effect, no score, no authority,
+no deployment, and no automatic action.
+Labs 01–03 are published and retired as one atomic nine-route
+`string-crawl-trace-sheet-lab` family, so the release still has seventeen
+retirement families; generated discovery exposes Lab 02 as
+`string_crawl_strand_lab` and Lab 03 as `string_crawl_frequency_form_lab`.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

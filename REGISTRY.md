@@ -54,3 +54,19 @@ bun bin/harvest.ts deps syzygy-sync   # who depends on X
 - Any future reconciler is **fast-forward-only / log-and-notify / never auto-heal silently** (the syzygy safety wire, extended from git-state to values-state).
 
 See `SCHEMA.md` for the card format. See `CATALOG.md` for the current census (generated).
+
+## Bounded STRING / CRAWL experiments
+
+Lab 03, **Frequency → Form → World → Other**, is registered as one immutable
+record, closed schema, and guide:
+
+- `/experiments/string-crawl-frequency-form-lab-2026-08-16.json`
+- `/schemas/string-crawl-frequency-form-lab/0.1.json`
+- `/STRING-CRAWL-LAB-03.md`
+
+It is a synthetic offline thought experiment, byte-bound to Lab 02. It performs
+no live crawl, makes no network request, administers no DMT, collects no
+participant or personal data, and validates no entity or higher-dimensional ontology. Its
+frequency, shape, dimension, and presence layers are typed non-implications,
+not a portal or an empirical protocol. Publication creates no KARMA event or
+receipt, no score, no authority, no deployment, and no automatic action.
