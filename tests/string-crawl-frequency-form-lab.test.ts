@@ -362,6 +362,36 @@ describe("STRAND Lab 03 typed frequency, form, and presence fixture", () => {
     expect(evaluateStringCrawlFrequencyFormLab(excessiveNodes).results).toEqual({});
   });
 
+  test("refuses finite overflow magnitudes before calculation and preserves zero effects", () => {
+    const cases: Array<[(value: any) => void, string, string]> = [
+      [(value) => { value.temporal_fixture.samples.fill(1e308); }, "$.temporal_fixture", "temporal-dft"],
+      [(value) => { value.spatial_fixture.selected_mode.fill(1e308); }, "$.spatial_fixture", "graph-spatial-spectrum"],
+      [(value) => { value.spatial_fixture.spatial_signal.fill(1e308); }, "$.spatial_fixture", "topology-not-dimension"],
+    ];
+    for (const [mutate, field, checkId] of cases) {
+      const candidate = resigned(mutate);
+      expect(hasBoundedCalculationShape(candidate)).toBe(true);
+      const evaluation = evaluateStringCrawlFrequencyFormLab(candidate);
+      expect(evaluation.valid).toBe(false);
+      expect(evaluation.results).toEqual({});
+      expect(evaluation.issues).toContainEqual({
+        field,
+        code: "numeric-calculation-domain-invalid",
+      });
+      expect(evaluation.checks.find(({ id }) => id === checkId)?.status).toBe("FAIL");
+      expect(evaluation.effects).toEqual({
+        network_requests: 0,
+        storage_writes: 0,
+        subprocesses: 0,
+        nen_invocation: false,
+        kingdom_karma_receipt_created: false,
+        zerone_karma_event_created: false,
+        authority_effect: "NONE",
+      });
+      expect(JSON.parse(JSON.stringify(evaluation)).results).toEqual({});
+    }
+  });
+
   test("makes predecessor, birth, restriction, boundary, and gluing check statuses truthful", () => {
     const cases: Array<[(value: any) => void, string, string]> = [
       [(value) => { value.predecessor.git_commit = "0".repeat(40); }, "$.predecessor:immutable-predecessor-binding-drift", "immutable-predecessor"],

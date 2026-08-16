@@ -28,6 +28,7 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const MAX_FILE_BYTES = 512 * 1024;
 const MAX_JSON_NODES = 20_000;
 const MAX_JSON_STRING_CODE_UNITS = MAX_FILE_BYTES;
+const MAX_CALCULATION_ABSOLUTE_VALUE = 1_000_000;
 const NUMERIC_TOLERANCE = 1e-12;
 const SHA256 = /^sha256:[a-f0-9]{64}$/;
 const TOP_KEYS = [
@@ -738,6 +739,62 @@ export function hasBoundedCalculationShape(
   }
 }
 
+const CALCULATION_INPUT_KEYS = [
+  "temporal_fixture", "spatial_fixture", "occurrence_fixture", "release_slices",
+  "features", "observations", "transitions", "frontiers", "cospans",
+  "composition_check",
+] as const;
+
+function numbersWithinCalculationDomain(value: unknown): boolean {
+  if (typeof value === "number") {
+    return Number.isFinite(value) && Math.abs(value) <= MAX_CALCULATION_ABSOLUTE_VALUE;
+  }
+  if (Array.isArray(value)) return value.every(numbersWithinCalculationDomain);
+  if (object(value)) return Object.values(value).every(numbersWithinCalculationDomain);
+  return true;
+}
+
+function calculationDomainIssueField(value: JsonRecord): string | null {
+  for (const key of CALCULATION_INPUT_KEYS) {
+    if (!numbersWithinCalculationDomain(value[key])) {
+      if (key === "temporal_fixture") return "$.temporal_fixture";
+      if (key === "spatial_fixture") return "$.spatial_fixture";
+      return "$.calculation";
+    }
+  }
+  return null;
+}
+
+type CalculationAttempt = {
+  results: Record<string, unknown>;
+  issue: FrequencyFormIssue | null;
+};
+
+function calculateWithinDomain(value: JsonRecord, template: JsonRecord): CalculationAttempt {
+  if (!hasBoundedCalculationShape(value, template)) {
+    return { results: {}, issue: { field: "$", code: "calculation-shape-invalid" } };
+  }
+  const domainField = calculationDomainIssueField(value);
+  if (domainField) {
+    return {
+      results: {},
+      issue: { field: domainField, code: "numeric-calculation-domain-invalid" },
+    };
+  }
+  try {
+    const results = calculate(value);
+    if (!strictJsonTree(results)) {
+      return {
+        results: {},
+        issue: { field: "$.calculation", code: "non-finite-calculation-result" },
+      };
+    }
+    return { results, issue: null };
+  } catch {
+    return { results: {}, issue: { field: "$.calculation", code: "calculation-failed-closed" } };
+  }
+}
+
 function verifyAgainstCanonical(value: JsonRecord, canonical: JsonRecord): FrequencyFormIssue[] {
   const issues: FrequencyFormIssue[] = [];
   const add = (field: string, code: string) => issues.push({ field, code });
@@ -756,9 +813,9 @@ function verifyAgainstCanonical(value: JsonRecord, canonical: JsonRecord): Frequ
     add("$.temporal_fixture", "temporal-fixture-binding-drift");
   }
 
-  const calculationShapeValid = hasBoundedCalculationShape(value, canonical);
-  if (!calculationShapeValid) add("$", "calculation-shape-invalid");
-  const results = calculationShapeValid ? calculate(value) : {};
+  const calculation = calculateWithinDomain(value, canonical);
+  if (calculation.issue) add(calculation.issue.field, calculation.issue.code);
+  const results = calculation.results;
   const expected = value.expected;
   if (!object(expected)) {
     add("$.expected", "must-be-object");
@@ -946,7 +1003,7 @@ function predecessorValid(value: JsonRecord): boolean {
 function evaluateStringCrawlFrequencyFormLabUnchecked(value: unknown): FrequencyFormValidation {
   const issues = verifyStringCrawlFrequencyFormLab(value);
   const record = object(value) && strictJsonTree(value) ? value : null;
-  const results = record && hasBoundedCalculationShape(record) ? calculate(record) : {};
+  const results = record ? calculateWithinDomain(record, loadCanonicalUnchecked()).results : {};
   const issueFields = new Set(issues.map((entry) => entry.field));
   const check = (id: string, pass: boolean, detail: string): FrequencyFormCheck => ({
     id,
@@ -964,10 +1021,12 @@ function evaluateStringCrawlFrequencyFormLabUnchecked(value: unknown): Frequency
       "64-point DFT, quadrature phase, energy, and undefined-Hz boundary recomputed"),
     check("graph-spatial-spectrum", !issueFields.has("$.expected.spatial") &&
       !issueFields.has("$.spatial_fixture.declared_mode_probabilities") &&
+      !issueFields.has("$.spatial_fixture") &&
       !issueFields.has("$.conventions"),
       "B, L=BB^T, characteristic polynomial, spectrum, and eigenpair recomputed"),
     check("topology-not-dimension", !issueFields.has("$.expected.topology") &&
       !issueFields.has("$.expected.spectral_repertoire") &&
+      !issueFields.has("$.spatial_fixture") &&
       !issueFields.has("$.dimension_register"),
       "P4 topology and effective mode count remain distinct from physical dimension"),
     check("three-frequency-types", !issueFields.has("$.quantity_register") &&
