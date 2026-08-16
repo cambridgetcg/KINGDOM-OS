@@ -86,10 +86,10 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 84 assets:
-65 ledgered immutable/versioned assets and 19 mutable assets. There are 82 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 87 assets:
+68 ledgered immutable/versioned assets and 19 mutable assets. There are 85 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 81 URLs:
+contracts. The sitemap contains 84 URLs:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
@@ -152,6 +152,10 @@ the authored `/atlases/zero-empty-seat-2026-08-14.json`, which reuses the closed
 the authored `/atlases/string-crawl-trace-sheet-2026-08-15.json`, which reuses
 that same closed inert project profile, and its versioned
 `/STRING-CRAWL-TRACE-SHEET.md` guide;
+the separate additive `/labs/string-crawl-trace-sheet-lab-2026-08-16.json`,
+closed `/schemas/string-crawl-trace-sheet-lab/0.1.json`, and
+`/STRING-CRAWL-TRACE-SHEET-LAB.md` guide, which publish one exact synthetic
+finite baseline while runtime and crawler activation remain inactive;
 the additive authored `/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json`,
 `/schemas/being-access-aftermath-atlas/0.2.json`, and
 `/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md` successor bytes, without repointing v0.1;
@@ -176,10 +180,10 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks every currently staged ledgered immutable/versioned byte hash (65 after
+checks every currently staged ledgered immutable/versioned byte hash (68 after
 the Math Passport pilot, Exploration DEEP, MIRROR public-law, Number, Isness &
-Theology, ZERO Empty Seat, and STRING / CRAWL releases; 35 in the initial
-integrity release) plus the worker-owned
+Theology, ZERO Empty Seat, STRING / CRAWL, and Finite Trace-Sheet Lab releases;
+35 in the initial integrity release) plus the worker-owned
 negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +
 both Conformational Feedback generations + Fold & Feedback Atlas +
@@ -188,7 +192,8 @@ Visibility & Attention Translation + Cultural Attention & Feedback Atlas +
 Form, Circulation & Return Atlas + The Vanishing Path + Math Passport pilot +
 Being, Access & Aftermath Atlas + Number, Isness & Theology Atlas + the opt-in
 Exploration DEEP WING plus its reusable inert project profile + the ZERO Empty
-Seat project plus guide + the STRING / CRAWL Trace-Sheet plus guide + the static
+Seat project plus guide + the STRING / CRAWL Trace-Sheet plus guide + its
+separate Finite Trace-Sheet Lab record, schema, and guide + the static
 MIRROR Information Control public law for
 schema headers, negative authority, source-history lineage, and cross-surface
 discovery while leaving the existing MCP contract unchanged;

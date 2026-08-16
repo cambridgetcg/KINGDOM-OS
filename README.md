@@ -354,6 +354,14 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     a licence, proves purpose or actual indexing or training, or creates KARMA.
     The reader runs no crawler and creates no NEN invocation, aftermath receipt,
     authority, or action. Run `verify --json` for the strict offline checks.
+32. `kingdom string-crawl-trace-sheet-lab` — recompute the additive
+    [Finite Trace-Sheet Lab](references/string-crawl-trace-sheet-lab.md) from
+    one pinned synthetic two-face fixture. The evaluator derives signed boundary
+    matrices, rational Betti numbers, Euler characteristic, local links,
+    orientability, boundary components, and genus, then runs five deterministic
+    falsifiers. It accepts no caller path, URL, body, credential, person data, or
+    live trace; launches no crawler; writes nothing; and creates no NEN
+    invocation, KARMA event or receipt, score, authority, or action.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -601,5 +609,15 @@ nothing, follows no link, stores no trace, identifies or scores no being, grants
 no permission, and creates no NEN invocation, KINGDOM aftermath receipt,
 external write, deployment, or automatic action. There is no mutable alias and
 the KINGDOM MCP remains unchanged.
+
+The separate Finite Trace-Sheet Lab is published at
+[`/labs/string-crawl-trace-sheet-lab-2026-08-16.json`](https://thekingdom.dev/labs/string-crawl-trace-sheet-lab-2026-08-16.json),
+with its own [closed schema](https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json)
+and [verification guide](https://thekingdom.dev/STRING-CRAWL-TRACE-SHEET-LAB.md).
+It executes only an exact synthetic topology fixture: the one-skeleton has graph
+cycle rank two, while the filled disk has first Betti number and genus zero.
+That distinction prevents a hyperlink loop from being promoted into a physical
+string or surface handle. The public artifacts are published, but runtime and
+crawler activation remain inactive; KARMA lanes and authority remain empty.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

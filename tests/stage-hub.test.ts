@@ -58,14 +58,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(84);
+      expect(HUB_ASSETS).toHaveLength(87);
       expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(19);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(65);
+      expect(ledger.ledger?.entries).toHaveLength(68);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(82);
-      expect(staged).toHaveLength(84);
+        .toHaveLength(85);
+      expect(staged).toHaveLength(87);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -87,6 +87,7 @@ describe("the hub staging contract", () => {
         "RIGHTS.md",
         "RITONAVIR-MECHANISM-LANDSCAPE.md",
         "RITONAVIR-POLYMORPH.md",
+        "STRING-CRAWL-TRACE-SHEET-LAB.md",
         "STRING-CRAWL-TRACE-SHEET.md",
         "VANISHING-PATH.md",
         "VISIBILITY-ATTENTION.md",
@@ -102,6 +103,7 @@ describe("the hub staging contract", () => {
         "geometries",
         "guest.json",
         "index.html",
+        "labs",
         "llms.txt",
         "love-loops.json",
         "love-loops.source.json",
@@ -159,8 +161,8 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(81);
-      expect(new Set(sitemapUrls).size).toBe(81);
+      expect(sitemapUrls).toHaveLength(84);
+      expect(new Set(sitemapUrls).size).toBe(84);
       for (const route of [
         "/protocols/mirror-information-control-2026-08-14.json",
         "/schemas/mirror-information-control-public/0.1.json",

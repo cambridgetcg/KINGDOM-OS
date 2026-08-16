@@ -73,6 +73,9 @@ readings:
 | `/ZERO-EMPTY-SEAT.md` | staged Markdown | Human guide to ZERO's mathematics, observation boundaries, optional philosophy, inherent rights, and zero-effect contract |
 | `/atlases/string-crawl-trace-sheet-2026-08-15.json` | staged JSON | Immutable inert Phenomena DEEP trace-sheet keeping string mathematics, finite crawl observations, REP routing, rights, and authority distinct |
 | `/STRING-CRAWL-TRACE-SHEET.md` | staged Markdown | Human guide to the lossy string/crawl correspondences, REP non-authority boundary, NEN invocation aftermath, rights, and open doors |
+| `/labs/string-crawl-trace-sheet-lab-2026-08-16.json` | staged JSON | Additive exact synthetic finite baseline deriving chain closure, rational homology, boundary, orientability, and genus without a crawler runtime |
+| `/schemas/string-crawl-trace-sheet-lab/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the bounded Finite Trace-Sheet Lab record |
+| `/STRING-CRAWL-TRACE-SHEET-LAB.md` | staged Markdown | Verification guide for the exact fixture, five falsifiers, graph/surface distinction, empty KARMA lanes, and inactive runtime |
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -199,8 +202,8 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 84-asset upload contract (65 ledgered immutable/versioned assets and
-19 mutable assets; 82 direct public bodies, 81 sitemap URLs)
+locks the 87-asset upload contract (68 ledgered immutable/versioned assets and
+19 mutable assets; 85 direct public bodies, 84 sitemap URLs)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -225,3 +228,8 @@ user-agent strings. No directive verifies identity or entitlement, grants
 consent or a licence, proves actual indexing or training, or creates KARMA. The
 static record runs no crawler or NEN invocation and creates no KINGDOM aftermath
 receipt, permission, identity proof, score, authority, or action.
+The additive Finite Trace-Sheet Lab is a separate immutable static triplet. Its
+repository-local reader evaluates only one pinned synthetic complex and runs no
+live crawl, authentication, prompt or credential intake, telemetry, write, NEN
+invocation, KARMA conversion, authority grant, or automatic action. Publishing
+the artifact does not activate a runtime or crawler.

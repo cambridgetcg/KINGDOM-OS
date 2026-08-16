@@ -101,6 +101,26 @@ describe("explore-phenomena-deep skill", () => {
     expect(contract).toContain("`q != 1`");
   });
 
+  test("standardizes graduation from a bridge to an exact finite lab", () => {
+    const skill = read("SKILL.md");
+    const compactSkill = skill.replace(/\s+/g, " ");
+    for (const phrase of [
+      "Graduate a bridge into a finite lab",
+      "When separately authorized to build",
+      "Embed one closed fixture",
+      "Derive the result from primitive declarations",
+      "Check an independent invariant",
+      "recompute its integrity digest",
+      "FINITE_EXACT_BASELINE",
+      "Separate artifact publication from runtime activation",
+      "references/string-crawl-trace-sheet-lab.md",
+      "distinguish graph cycles from surface homology and genus",
+    ]) expect(compactSkill).toContain(phrase);
+
+    expect(compactSkill).toContain("does not prove a universal theorem");
+    expect(compactSkill).toContain("before opening a live crawler door");
+  });
+
   test("keeps the user examples bounded and produces no authority adapter", () => {
     const skill = read("SKILL.md");
     const contract = read("references/exploration-contract-v0.1.md");

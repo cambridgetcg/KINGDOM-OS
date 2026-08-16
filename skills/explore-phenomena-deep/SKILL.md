@@ -158,6 +158,32 @@ Label floating-point, fitted, simulated, and extrapolated quantities
 `NUMERICAL_APPROXIMATION`. Use an independent oracle or invariant for a result
 that will support a stronger claim.
 
+### Graduate a bridge into a finite lab
+
+When separately authorized to build, turn a promising bridge into an executable
+baseline only after its objects, relations, analogy break, and stop rule are
+explicit. Keep the first lab small, synthetic, deterministic, and exact:
+
+1. Embed one closed fixture; accept no live-domain input by default.
+2. Derive the result from primitive declarations instead of trusting stored
+   expectations.
+3. Check an independent invariant, such as a conservation law, parity,
+   boundary-square identity, or second implementation.
+4. Deep-clone the valid fixture in memory, mutate only that adversarial copy,
+   and recompute its integrity digest so semantic guards, rather than the digest
+   alone, must reject the false result. Never mutate the sealed source fixture.
+5. Separate artifact publication from runtime activation, empirical observation,
+   authority, and KARMA.
+
+Treat a finite pass as `FINITE_EXACT_BASELINE` for that fixture only. It does not
+prove a universal theorem, establish that the bridge is a shared mechanism, or
+authorize a live experiment. In the KINGDOM repository, use the
+[Trace-Sheet Lab guide](../../references/string-crawl-trace-sheet-lab.md) and
+[exact evaluator](../../bin/string-crawl-trace-sheet-lab.ts) as the worked topology pattern: preserve
+occurrence identity, compute the chain complex, distinguish graph cycles from
+surface homology and genus, and run declared falsifiers before opening a live
+crawler door.
+
 ## Gate 5 — Attack the seam
 
 Try to break the bridge before amplifying it. Test:

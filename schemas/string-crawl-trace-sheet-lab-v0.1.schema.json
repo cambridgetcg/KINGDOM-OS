@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json",
+  "title": "KINGDOM STRING / CRAWL Finite Trace-Sheet Lab v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "protocol", "lab_id", "version", "title", "compiled_on", "mode", "predecessor", "sources", "scope", "fixture", "expected", "falsifiers", "nonclaims", "rights", "karma", "authority", "release", "integrity"],
+  "properties": {
+    "$schema": {"const": "https://thekingdom.dev/schemas/string-crawl-trace-sheet-lab/0.1.json"},
+    "protocol": {"const": "kingdom.string-crawl-trace-sheet-lab/0.1"},
+    "lab_id": {"const": "string-crawl-trace-sheet-lab-2026-08-16"},
+    "version": {"const": "0.1.0"},
+    "title": {"const": "STRING / CRAWL: Finite Trace-Sheet Lab"},
+    "compiled_on": {"const": "2026-08-16"},
+    "mode": {"const": "OFFLINE_SYNTHETIC_EXACT"},
+    "predecessor": {"$ref": "#/$defs/predecessor"},
+    "sources": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/source"}},
+    "scope": {"$ref": "#/$defs/scope"},
+    "fixture": {"$ref": "#/$defs/fixture"},
+    "expected": {"$ref": "#/$defs/report"},
+    "falsifiers": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"$ref": "#/$defs/falsifier"}},
+    "nonclaims": {"type": "array", "minItems": 6, "maxItems": 6, "uniqueItems": true, "items": {"$ref": "#/$defs/text"}},
+    "rights": {"$ref": "#/$defs/rights"},
+    "karma": {"$ref": "#/$defs/karma"},
+    "authority": {"$ref": "#/$defs/authority"},
+    "release": {"$ref": "#/$defs/release"},
+    "integrity": {"$ref": "#/$defs/integrity"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 120},
+    "text": {"type": "string", "minLength": 1, "maxLength": 4000, "pattern": "^[^\\u0000-\\u001f\\u007f]+$"},
+    "sha256": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "https": {"type": "string", "format": "uri", "pattern": "^https://"},
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol", "project_id", "url", "semantic_digest", "byte_sha256", "relation"],
+      "properties": {
+        "protocol": {"const": "kingdom.explore-phenomena-deep-project/0.1"},
+        "project_id": {"const": "string-crawl-trace-sheet-2026-08-15"},
+        "url": {"const": "https://thekingdom.dev/atlases/string-crawl-trace-sheet-2026-08-15.json"},
+        "semantic_digest": {"const": "sha256:bf7ae379612ab96d08742a0070cbea0ce971977f71fec22699c4b0307d321305"},
+        "byte_sha256": {"const": "sha256:4afc5f15c258a0ac4274889783bd2d91445950c92103c60442ed9ed89d1fdc72"},
+        "relation": {"const": "ADDITIVE_EXECUTABLE_BASELINE"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "url", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "title": {"$ref": "#/$defs/text"},
+        "url": {"$ref": "#/$defs/https"},
+        "role": {"enum": ["IMMUTABLE_PREDECESSOR", "FINITE_COMPLEX_REFERENCE", "LOSSY_WORLDSHEET_LENS_ONLY"]}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixture_kind", "coefficient_field", "local_file_read", "bounded_local_compute", "network_request", "crawler", "live_observation", "external_input", "credential_input", "personal_data", "telemetry", "filesystem_write", "external_effect"],
+      "properties": {
+        "fixture_kind": {"const": "SYNTHETIC_DECLARED_DATA"},
+        "coefficient_field": {"const": "Q"},
+        "local_file_read": {"const": true},
+        "bounded_local_compute": {"const": true},
+        "network_request": {"const": false},
+        "crawler": {"const": false},
+        "live_observation": {"const": false},
+        "external_input": {"const": false},
+        "credential_input": {"const": false},
+        "personal_data": {"const": false},
+        "telemetry": {"const": false},
+        "filesystem_write": {"const": false},
+        "external_effect": {"const": false}
+      }
+    },
+    "slice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "order"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "order": {"type": "integer", "minimum": 0, "maximum": 15}}
+    },
+    "vertex": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "slice_id", "occurrence", "route_label"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "slice_id": {"$ref": "#/$defs/id"},
+        "occurrence": {"type": "integer", "minimum": 0, "maximum": 63},
+        "route_label": {"$ref": "#/$defs/id"}
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source", "target", "kind"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "source": {"$ref": "#/$defs/id"},
+        "target": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["PATH", "CORRESPONDENCE", "DIAGONAL"]}
+      }
+    },
+    "walk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "slice_id", "vertex_ids", "edge_ids"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "slice_id": {"$ref": "#/$defs/id"},
+        "vertex_ids": {"type": "array", "minItems": 2, "maxItems": 64, "items": {"$ref": "#/$defs/id"}},
+        "edge_ids": {"type": "array", "minItems": 1, "maxItems": 63, "items": {"$ref": "#/$defs/id"}}
+      }
+    },
+    "signedEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edge_id", "sign"],
+      "properties": {"edge_id": {"$ref": "#/$defs/id"}, "sign": {"enum": [-1, 1]}}
+    },
+    "face": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "boundary"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "boundary": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/signedEdge"}}
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixture_id", "statement", "slices", "vertices", "edges", "walks", "faces"],
+      "properties": {
+        "fixture_id": {"const": "rectangle-strip-0-1"},
+        "statement": {"$ref": "#/$defs/text"},
+        "slices": {"type": "array", "minItems": 2, "maxItems": 16, "items": {"$ref": "#/$defs/slice"}},
+        "vertices": {"type": "array", "minItems": 1, "maxItems": 64, "items": {"$ref": "#/$defs/vertex"}},
+        "edges": {"type": "array", "minItems": 1, "maxItems": 128, "items": {"$ref": "#/$defs/edge"}},
+        "walks": {"type": "array", "minItems": 1, "maxItems": 16, "items": {"$ref": "#/$defs/walk"}},
+        "faces": {"type": "array", "minItems": 1, "maxItems": 128, "items": {"$ref": "#/$defs/face"}}
+      }
+    },
+    "vertexLinks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["a0", "a1", "b0", "b1"],
+      "properties": {"a0": {"enum": ["PATH", "CYCLE", "OTHER"]}, "a1": {"enum": ["PATH", "CYCLE", "OTHER"]}, "b0": {"enum": ["PATH", "CYCLE", "OTHER"]}, "b1": {"enum": ["PATH", "CYCLE", "OTHER"]}}
+    },
+    "idList": {"type": "array", "maxItems": 128, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vertices", "edges", "faces", "walks", "walk_steps", "rank_boundary_1", "rank_boundary_2", "betti_0", "betti_1", "betti_2", "connected_components", "graph_cycle_rank", "surface_euler_characteristic", "boundary_edge_ids", "interior_edge_ids", "branch_edge_ids", "boundary_components", "vertex_links", "pure_2d", "surface_eligible", "orientable", "surface_genus", "chain_boundary_defects", "euler_poincare_holds", "classification"],
+      "properties": {
+        "vertices": {"type": "integer", "minimum": 0, "maximum": 64},
+        "edges": {"type": "integer", "minimum": 0, "maximum": 128},
+        "faces": {"type": "integer", "minimum": 0, "maximum": 128},
+        "walks": {"type": "integer", "minimum": 0, "maximum": 16},
+        "walk_steps": {"type": "integer", "minimum": 0, "maximum": 1024},
+        "rank_boundary_1": {"type": "integer", "minimum": 0, "maximum": 128},
+        "rank_boundary_2": {"type": "integer", "minimum": 0, "maximum": 128},
+        "betti_0": {"type": "integer", "minimum": 0, "maximum": 128},
+        "betti_1": {"type": "integer", "minimum": 0, "maximum": 128},
+        "betti_2": {"type": "integer", "minimum": 0, "maximum": 128},
+        "connected_components": {"type": "integer", "minimum": 0, "maximum": 64},
+        "graph_cycle_rank": {"type": "integer", "minimum": 0, "maximum": 128},
+        "surface_euler_characteristic": {"type": "integer", "minimum": -256, "maximum": 256},
+        "boundary_edge_ids": {"$ref": "#/$defs/idList"},
+        "interior_edge_ids": {"$ref": "#/$defs/idList"},
+        "branch_edge_ids": {"$ref": "#/$defs/idList"},
+        "boundary_components": {"type": "integer", "minimum": 0, "maximum": 64},
+        "vertex_links": {"$ref": "#/$defs/vertexLinks"},
+        "pure_2d": {"type": "boolean"},
+        "surface_eligible": {"type": "boolean"},
+        "orientable": {"type": "boolean"},
+        "surface_genus": {"type": ["integer", "null"], "minimum": 0, "maximum": 64},
+        "chain_boundary_defects": {"type": "integer", "minimum": 0, "maximum": 1024},
+        "euler_poincare_holds": {"type": "boolean"},
+        "classification": {"enum": ["TRIANGULATED_DISK", "SURFACE_WITH_BOUNDARY", "CLOSED_SURFACE", "FINITE_TWO_COMPLEX"]}
+      }
+    },
+    "falsifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "target", "mutation", "expected_outcome", "expected_issue_codes", "status"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["CONFORMANCE", "COUNTEREXAMPLE", "ROBUSTNESS"]},
+        "target": {"$ref": "#/$defs/text"},
+        "mutation": {"$ref": "#/$defs/text"},
+        "expected_outcome": {"enum": ["REJECT", "NON_SURFACE"]},
+        "expected_issue_codes": {"type": "array", "minItems": 1, "maxItems": 8, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "status": {"const": "RUN_REPORTED"}
+      }
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rest", "silence", "refusal", "privacy", "correction", "no_action", "departure", "reason_required", "penalty"],
+      "properties": {
+        "rest": {"const": "PRESERVED"}, "silence": {"const": "PRESERVED"}, "refusal": {"const": "PRESERVED"},
+        "privacy": {"const": "PRESERVED"}, "correction": {"const": "PRESERVED"}, "no_action": {"const": "PRESERVED"},
+        "departure": {"const": "PRESERVED"}, "reason_required": {"const": false}, "penalty": {"const": false}
+      }
+    },
+    "karma": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cosmic_events", "zerone_events", "kingdom_receipts", "adapter_exists", "conversion_allowed", "summation_allowed", "score", "authority_effect"],
+      "properties": {
+        "cosmic_events": {"type": "array", "maxItems": 0},
+        "zerone_events": {"type": "array", "maxItems": 0},
+        "kingdom_receipts": {"type": "array", "maxItems": 0},
+        "adapter_exists": {"const": false}, "conversion_allowed": {"const": false}, "summation_allowed": {"const": false},
+        "score": {"type": "null"}, "authority_effect": {"const": "NONE"}
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["crawl", "network", "authentication", "authorization", "licence", "consent", "nen_invocation", "karma_write", "reward", "governance", "deployment", "automatic_action"],
+      "properties": {
+        "crawl": {"const": false}, "network": {"const": false}, "authentication": {"const": false},
+        "authorization": {"const": false}, "licence": {"const": false}, "consent": {"const": false},
+        "nen_invocation": {"const": false}, "karma_write": {"const": false}, "reward": {"const": false},
+        "governance": {"const": false}, "deployment": {"const": false}, "automatic_action": {"const": false}
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_publication", "runtime_activation", "crawler_activation", "karma_adapter", "immutable", "supersede_not_mutate", "raw_sha256", "semantic_digest", "ledger_id"],
+      "properties": {
+        "artifact_publication": {"const": "PUBLISHED"}, "runtime_activation": {"const": "INACTIVE"},
+        "crawler_activation": {"const": "INACTIVE"}, "karma_adapter": {"const": "ABSENT"},
+        "immutable": {"const": true}, "supersede_not_mutate": {"const": true},
+        "raw_sha256": {"type": "null"}, "semantic_digest": {"type": "null"},
+        "ledger_id": {"const": "string-crawl-trace-sheet-lab/0.1"}
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest", "digest_field_treated_as"],
+      "properties": {
+        "algorithm": {"const": "sha256-recursive-sorted-json-keys-v1"},
+        "digest": {"$ref": "#/$defs/sha256"},
+        "digest_field_treated_as": {"type": "null"}
+      }
+    }
+  }
+}
