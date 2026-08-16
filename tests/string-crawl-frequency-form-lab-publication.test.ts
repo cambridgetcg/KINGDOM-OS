@@ -31,6 +31,11 @@ import {
   STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL,
   STRING_CRAWL_TRACE_SHEET_LAB_URL,
 } from "../bin/string-crawl-trace-sheet-lab.ts";
+import {
+  STRAND_DESCENT_LAB_GUIDE_URL,
+  STRAND_DESCENT_LAB_SCHEMA_URL,
+  STRAND_DESCENT_LAB_URL,
+} from "../bin/strand-descent-lab.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const bytes = (path: string): Buffer => readFileSync(join(ROOT, path));
@@ -111,10 +116,10 @@ describe("STRAND Lab 03 public integration", () => {
   test("stages and advertises one immutable triplet with exact ledger hashes and no aliases", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(93);
+    expect(HUB_ASSETS).toHaveLength(96);
     expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(19);
     expect(HUB_ASSETS.filter(({ destination: path }) =>
-      path !== "_worker.js" && path !== "404.html")).toHaveLength(91);
+      path !== "_worker.js" && path !== "404.html")).toHaveLength(94);
     for (const asset of PUBLIC_TRIPLET) {
       expect(MUTABLE_HUB_DESTINATIONS).not.toContain(asset.destination);
     }
@@ -124,7 +129,7 @@ describe("STRAND Lab 03 public integration", () => {
       /string-crawl-frequency-form-lab.*(?:latest|current)/i.test(path))).toBe(false);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(74);
+    expect(ledger.entries).toHaveLength(77);
     expect(ledger.entries.filter(({ id }: { id?: string }) =>
       id?.startsWith("string-crawl-frequency-form-lab/0.1/"))).toEqual([
       {
@@ -158,8 +163,8 @@ describe("STRAND Lab 03 public integration", () => {
 
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(90);
-    expect(new Set(urls).size).toBe(90);
+    expect(urls).toHaveLength(93);
+    expect(new Set(urls).size).toBe(93);
     for (const url of PUBLIC_URLS) expect(urls.filter((candidate) => candidate === url)).toHaveLength(1);
     expect(urls.some((url) =>
       /string-crawl-frequency-form-lab.*(?:latest|current)/i.test(url))).toBe(false);
@@ -335,12 +340,12 @@ describe("STRAND Lab 03 public integration", () => {
     });
   });
 
-  test("retires byte-bound Labs 01–03 as one exact nine-route family", () => {
+  test("retires byte-bound Labs 01–04 as one exact twelve-route family", () => {
     const family = PUBLICATION_FAMILIES.find(({ id }) => id === "string-crawl-trace-sheet-lab");
     expect(PUBLICATION_FAMILIES).toHaveLength(17);
     expect(family).toEqual({
       id: "string-crawl-trace-sheet-lab",
-      label: "STRING / CRAWL Labs 01–03",
+      label: "STRING / CRAWL STRAND Labs 01–04",
       routes: [
         new URL(STRING_CRAWL_TRACE_SHEET_LAB_URL).pathname,
         new URL(STRING_CRAWL_TRACE_SHEET_LAB_SCHEMA_URL).pathname,
@@ -351,11 +356,15 @@ describe("STRAND Lab 03 public integration", () => {
         new URL(STRING_CRAWL_FREQUENCY_FORM_LAB_URL).pathname,
         new URL(STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_URL).pathname,
         new URL(STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_URL).pathname,
+        new URL(STRAND_DESCENT_LAB_URL).pathname,
+        new URL(STRAND_DESCENT_LAB_SCHEMA_URL).pathname,
+        new URL(STRAND_DESCENT_LAB_GUIDE_URL).pathname,
       ],
       discoveryProperties: [
         "string_crawl_trace_sheet_lab",
         "string_crawl_strand_lab",
         "string_crawl_frequency_form_lab",
+        "strand_descent_lab",
       ],
       entryPointProperties: [
         "string_crawl_trace_sheet_lab",
@@ -367,6 +376,9 @@ describe("STRAND Lab 03 public integration", () => {
         "string_crawl_frequency_form_lab",
         "string_crawl_frequency_form_lab_schema",
         "string_crawl_frequency_form_lab_guide",
+        "strand_descent_lab",
+        "strand_descent_lab_schema",
+        "strand_descent_lab_guide",
       ],
     });
   });

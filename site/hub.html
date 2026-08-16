@@ -52,6 +52,9 @@
 <link rel="alternate" href="/experiments/string-crawl-frequency-form-lab-2026-08-16.json" type="application/json" title="STRAND Lab 03: Frequency → Form → World → Other">
 <link rel="describedby" href="/schemas/string-crawl-frequency-form-lab/0.1.json" type="application/schema+json" title="STRAND Lab 03 schema">
 <link rel="service-doc" href="/STRING-CRAWL-LAB-03.md" type="text/markdown" title="STRAND Lab 03 guide">
+<link rel="alternate" href="/labs/strand-descent-lab-04-2026-08-16.json" type="application/json" title="STRAND Lab 04: Coherent Atlas &amp; the Pairwise Impostor">
+<link rel="describedby" href="/schemas/strand-descent-lab/0.1.json" type="application/schema+json" title="STRAND Lab 04 schema">
+<link rel="service-doc" href="/STRAND-DESCENT-LAB-04.md" type="text/markdown" title="STRAND Lab 04 guide">
 <link rel="alternate" href="/atlases/visibility-attention-2026-08-13.json" type="application/json" title="Visibility & Attention Translation">
 <link rel="describedby" href="/schemas/visibility-attention/0.1.json" type="application/schema+json" title="Visibility & Attention Translation schema">
 <link rel="service-doc" href="/VISIBILITY-ATTENTION.md" type="text/markdown" title="Visibility & Attention Translation guide">
@@ -280,6 +283,12 @@
   .strandcomposition{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.2fr);gap:8px;align-items:center}.strandcospan{padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--panel);text-align:center}.strandcospan code{display:block;color:var(--jade);font-size:.66rem}.strandcospan span{display:block;margin-top:5px;color:var(--faint);font-size:.65rem}.strandoperator{color:var(--gold);font:700 1.1rem var(--mono)}
   .strandchecks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.strandcheck{padding:13px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--ink2) 52%,transparent)}.strandcheck code{display:block;color:var(--jade);font-size:.61rem}.strandcheck strong{display:block;margin:5px 0 3px;color:var(--cream);font-size:.75rem}.strandcheck span{display:block;color:var(--faint);font-size:.66rem;line-height:1.45}
   .strandfindings{display:flex;flex-wrap:wrap;gap:7px;margin:0}.strandfindings span{padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:var(--faint);font:600 .63rem/1.4 var(--mono)}.strandfindings span:first-child{border-color:var(--verm);color:var(--verm)}.strandlinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.strandlinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.strandlinks a:hover{border-color:var(--gold)}
+  /* STRAND Lab 04 — local records, coherent atlas, and one honest failure */
+  .descentlineage{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:stretch}.descentlineage article{display:grid;align-content:start;gap:5px;padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}.descentlineage code{color:var(--violet);font-size:.6rem}.descentlineage strong{color:var(--cream);font-family:var(--display);font-size:.96rem;font-weight:400}.descentlineage span{color:var(--faint);font-size:.67rem;line-height:1.46}.descentlineage>b{align-self:center;color:var(--gold);font:700 1.1rem var(--mono)}
+  .descentcharts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.descentchart{display:grid;gap:8px;padding:15px;border:1px solid var(--line);border-top:3px solid var(--jade);border-radius:16px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}.descentchart code{color:var(--violet);font-size:.61rem}.descentchart h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1rem;font-weight:400}.descentchart p{margin:0;color:var(--dim);font-size:.7rem;line-height:1.48}.descentpoints{display:flex;flex-wrap:wrap;gap:5px}.descentpoints span{padding:5px 7px;border:1px solid var(--line);border-radius:999px;color:var(--jade);font:600 .62rem var(--mono)}
+  .descentmaps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.descentmap{display:grid;gap:5px;padding:12px;border:1px dashed var(--violet);border-radius:14px;background:color-mix(in srgb,var(--violet) 5%,var(--panel))}.descentmap code{color:var(--violet);font-size:.62rem}.descentmap span{color:var(--faint);font:600 .62rem/1.48 var(--mono)}
+  .descentresults{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.descentresult{display:grid;align-content:start;gap:9px;padding:17px;border:1px solid var(--jade);border-radius:18px;background:color-mix(in srgb,var(--jade) 5%,var(--panel))}.descentresult[data-result="UNRESOLVED"]{border-color:var(--verm);background:color-mix(in srgb,var(--verm) 6%,var(--panel))}.descentresult code{color:var(--jade);font-size:.62rem}.descentresult[data-result="UNRESOLVED"] code{color:var(--verm)}.descentresult h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1.1rem;font-weight:400}.descentresult p{margin:0;color:var(--dim);font-size:.76rem;line-height:1.55}.descentequation{display:block;padding:9px 11px;border:1px solid var(--line);border-radius:11px;background:var(--ink);color:var(--gold2);font:600 .68rem/1.5 var(--mono);overflow-wrap:anywhere}
+  .descentclasses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.descentclass{padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.descentclass code{display:block;color:var(--violet);font-size:.62rem}.descentclass span{display:block;margin-top:5px;color:var(--dim);font:600 .65rem/1.45 var(--mono)}.descentsources{display:flex;flex-wrap:wrap;gap:7px}.descentsources a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.descentsources a:hover{border-color:var(--gold)}
   /* STRAND Lab 03 — a static frequency loom; measured registers never collapse */
   .frequencyformfield{display:grid;gap:20px;padding:clamp(18px,3vw,30px);border:1px solid color-mix(in srgb,var(--violet) 54%,var(--line));border-radius:28px;background:radial-gradient(70% 34rem at 0 0,color-mix(in srgb,var(--violet) 12%,transparent),transparent 72%),radial-gradient(68% 30rem at 100% 100%,color-mix(in srgb,var(--jade) 9%,transparent),transparent 72%),color-mix(in srgb,var(--panel) 77%,transparent);box-shadow:0 20px 48px var(--shadow);overflow:hidden}.frequencyformfield>*{min-width:0;overflow-wrap:anywhere}
   .frequencylineage{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:9px;align-items:stretch}.frequencylineage article{display:grid;align-content:start;gap:5px;padding:15px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}.frequencylineage code{color:var(--violet);font-size:.61rem}.frequencylineage strong{color:var(--cream);font-family:var(--display);font-size:1rem;font-weight:400}.frequencylineage span{color:var(--faint);font-size:.69rem;line-height:1.48}.frequencylineage>b{align-self:center;color:var(--gold);font:700 1.2rem var(--mono)}
@@ -493,10 +502,11 @@
   @media (forced-colors:active){.explorationdeepfield,.explorationdeepboundary,.explorationdeepcycle,.explorationdeepstep,.explorationdeepcard,.explorationdeeplinks a{border:1px solid CanvasText}.explorationdeepstep{border-top-width:3px}}
   @media (forced-colors:active){.mirrorfield,.mirrorwarning,.mirrorcitizen,.mirrorroom,.mirrorcycle li,.mirrorcard,.mirrorboundary,.mirrorlinks a{border:1px solid CanvasText}.mirrorroom{border-top-width:3px}}
   @media (forced-colors:active){.zerofield,.zeroboundary,.zeroseat,.zerorole,.zerodistinction,.zerodrawer,.zerodeepcard,.zerokarmalane,.zerolinks a{border:1px solid CanvasText}.zeroseat{border-width:3px}.zerorole{border-top-width:3px}.zerorights{border-left:3px solid CanvasText}}
-  @media (max-width:760px){.strandlineage{grid-template-columns:1fr}.strandstats,.strandcomposition,.strandwarning{grid-template-columns:1fr}.strandlineage>b,.strandoperator{justify-self:center}.strandchecks{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media (max-width:520px){.strandchecks{grid-template-columns:1fr}.strandfield{padding:22px 16px}.strandreleases{grid-template-columns:minmax(5.2rem,1fr) repeat(3,minmax(38px,.55fr));gap:5px}.strandrelease{padding:8px 4px}.strandrelease span{font-size:.56rem}.strandroute{padding:7px 5px;font-size:.59rem}.strandcell{min-height:38px}.strandnumbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:900px){.descentcharts{grid-template-columns:repeat(2,minmax(0,1fr))}.descentlineage{grid-template-columns:1fr}.descentlineage>b{justify-self:center}}
+  @media (max-width:760px){.strandlineage{grid-template-columns:1fr}.strandstats,.strandcomposition,.strandwarning,.descentresults{grid-template-columns:1fr}.strandlineage>b,.strandoperator{justify-self:center}.strandchecks{grid-template-columns:repeat(2,minmax(0,1fr))}.descentmaps,.descentclasses{grid-template-columns:1fr}}
+  @media (max-width:520px){.strandchecks,.descentcharts{grid-template-columns:1fr}.strandfield{padding:22px 16px}.strandreleases{grid-template-columns:minmax(5.2rem,1fr) repeat(3,minmax(38px,.55fr));gap:5px}.strandrelease{padding:8px 4px}.strandrelease span{font-size:.56rem}.strandroute{padding:7px 5px;font-size:.59rem}.strandcell{min-height:38px}.strandnumbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media (prefers-reduced-motion:reduce){.strandfield,.strandfield *,.strandfield *::before,.strandfield *::after{animation:none!important;transition:none!important}}
-  @media (forced-colors:active){.strandfield,.strandlineage article,.strandboundary,.strandboard,.strandrelease,.strandcell,.strandstat,.strandnumber,.strandwarning,.strandcospan,.strandcheck,.strandfindings span,.strandlinks a{border:1px solid CanvasText}.strandstat{border-top-width:3px}.strandroute{border-left:3px solid CanvasText}}
+  @media (forced-colors:active){.strandfield,.strandlineage article,.strandboundary,.strandboard,.strandrelease,.strandcell,.strandstat,.strandnumber,.strandwarning,.strandcospan,.strandcheck,.strandfindings span,.strandlinks a,.descentlineage article,.descentchart,.descentpoints span,.descentmap,.descentresult,.descentequation,.descentclass,.descentsources a{border:1px solid CanvasText}.strandstat,.descentchart{border-top-width:3px}.strandroute{border-left:3px solid CanvasText}}
   @media (max-width:760px){.frequencylineage,.frequencytwins{grid-template-columns:1fr}.frequencylineage>b{justify-self:center}.frequencyregisters,.frequencydimensions,.frequencyevidence{grid-template-columns:repeat(2,minmax(0,1fr))}.frequencyloom{grid-template-columns:repeat(2,minmax(0,1fr))}.frequencyloom li:nth-child(even):not(:last-child)::after{content:"↓";right:10px;top:auto;bottom:-17px}.frequencyloom li:last-child{grid-column:1/-1}}
   @media (max-width:520px){.frequencyformfield{padding:22px 16px}.frequencyregisters,.frequencydimensions,.frequencyevidence,.frequencystates,.frequencykarma,.frequencyfirewall,.frequencyloom{grid-template-columns:1fr}.frequencyloom li,.frequencyloom li:last-child{grid-column:auto;padding-right:13px}.frequencyloom li:not(:last-child)::after,.frequencyloom li:nth-child(even):not(:last-child)::after{content:"↓";right:10px;top:auto;bottom:-17px}.frequencywave{gap:1px;padding-inline:5px}.frequencygraph{padding-inline:5px}}
   @media (prefers-reduced-motion:reduce){.frequencyformfield,.frequencyformfield *,.frequencyformfield *::before,.frequencyformfield *::after{animation:none!important;transition:none!important}}
@@ -538,6 +548,7 @@
       <a href="#string-crawl-trace-sheet-lab">Run the finite trace mathematics offline</a>
       <a href="#string-crawl-strand-lab">Compose three release slices in STRAND Lab 02</a>
       <a href="#string-crawl-frequency-form-lab">Weave frequency into form without opening a false portal</a>
+      <a href="#strand-descent-lab">Test local records before calling them one atlas</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -3234,6 +3245,54 @@
     </div>
   </section>
 
+  <section class="blk" id="strand-descent-lab" aria-labelledby="strand-descent-lab-title">
+    <div class="kh"><h2 id="strand-descent-lab-title">STRAND Lab 04: Coherent Atlas &amp; the Pairwise Impostor</h2><span class="my">pairwise agreement is not yet a whole</span></div>
+    <p class="sub">Recent string-inspired geometry makes a useful engineering demand: local descriptions need explicit transition data, and those transitions must agree on larger overlaps before anyone calls the result global. Lab 04 borrows only that demand. It does not turn KINGDOM records into strings, spacetime, or stacks.</p>
+    <div class="strandfield" data-strand-descent-lab>
+      <div class="descentlineage" aria-label="Immutable cumulative lab lineage">
+        <article><code>LAB 02 · IMMUTABLE ANCESTOR</code><strong>STRAND Lab 02: Release Cospans &amp; the χ=1 Impostor</strong><span>Release-cospan topology fixture · unchanged.</span></article>
+        <b aria-hidden="true">→</b>
+        <article><code>LAB 03 · IMMUTABLE PREDECESSOR</code><strong>STRAND Lab 03: Frequency → Form → World → Other</strong><span>sha256:ecda97c03307706ce0a9108c27c9199968ee4dc29a7e4d045a036ed108d673c1 · byte-bound and unchanged.</span></article>
+        <b aria-hidden="true">→</b>
+        <article><code>LAB 04 · ADDITIVE SUCCESSOR</code><strong>STRAND Lab 04: Coherent Atlas &amp; the Pairwise Impostor</strong><span>Local records, reversible transitions, higher-overlap checks, and one explicit unresolved conflict.</span></article>
+      </div>
+
+      <p class="strandboundary" role="note"><strong>What was transferred</strong>Only a verification discipline: keep local data local, declare translations, test pairwise inverses, then test triple and four-part coherence and a common refinement. The cited preprints do not study KINGDOM. Their physics, quasi-Hopf algebras, higher categories, stacks, effective field theories, and quantum-gravity claims are not implemented here.</p>
+
+      <div class="descentcharts" aria-label="Four synthetic source-owned charts">
+        <article class="descentchart" data-chart="chart-a"><code>source-alpha · SYNTHETIC_FIXTURE_LOCAL</code><h3>chart a</h3><div class="descentpoints" aria-label="Local points"><span>a0</span><span>a1</span><span>a2</span></div><p>These labels belong only to this synthetic chart until declared transition witnesses and coherence checks connect them.</p></article><article class="descentchart" data-chart="chart-b"><code>source-beta · SYNTHETIC_FIXTURE_LOCAL</code><h3>chart b</h3><div class="descentpoints" aria-label="Local points"><span>b0</span><span>b1</span><span>b2</span></div><p>These labels belong only to this synthetic chart until declared transition witnesses and coherence checks connect them.</p></article><article class="descentchart" data-chart="chart-c"><code>source-gamma · SYNTHETIC_FIXTURE_LOCAL</code><h3>chart c</h3><div class="descentpoints" aria-label="Local points"><span>c0</span><span>c1</span><span>c2</span></div><p>These labels belong only to this synthetic chart until declared transition witnesses and coherence checks connect them.</p></article><article class="descentchart" data-chart="chart-d"><code>source-delta · SYNTHETIC_FIXTURE_LOCAL</code><h3>chart d</h3><div class="descentpoints" aria-label="Local points"><span>d0</span><span>d1</span><span>d2</span></div><p>These labels belong only to this synthetic chart until declared transition witnesses and coherence checks connect them.</p></article>
+      </div>
+
+      <div class="descentmaps" aria-label="Six declared reversible pairwise translations">
+        <article class="descentmap"><code>t-ab · chart-a → chart-b</code><span>a0→b2 · a1→b0 · a2→b1</span></article><article class="descentmap"><code>t-ac · chart-a → chart-c</code><span>a0→c1 · a1→c2 · a2→c0</span></article><article class="descentmap"><code>t-ad · chart-a → chart-d</code><span>a0→d1 · a1→d0 · a2→d2</span></article><article class="descentmap"><code>t-bc · chart-b → chart-c</code><span>b0→c2 · b1→c0 · b2→c1</span></article><article class="descentmap"><code>t-bd · chart-b → chart-d</code><span>b0→d0 · b1→d2 · b2→d1</span></article><article class="descentmap"><code>t-cd · chart-c → chart-d</code><span>c0→d2 · c1→d1 · c2→d0</span></article>
+      </div>
+
+      <div class="descentresults" aria-label="Coherent atlas and pairwise impostor results">
+        <article class="descentresult" data-result="PASS"><code>PASS · GLOBAL COMPATIBILITY FOR THIS FIXTURE</code><h3>Higher overlaps agree</h3><span class="descentequation">t-bc ∘ t-ab = t-ac · (t-cd ∘ t-bc) ∘ t-ab = t-cd ∘ (t-bc ∘ t-ab) = t-ad</span><p>All six transitions have exact inverse witnesses. Two triple equations and the four-chart associativity equation agree. The declared quotient and common refinement are therefore reproducible for these finite records.</p></article>
+        <article class="descentresult" data-result="UNRESOLVED"><code>UNRESOLVED · PAIRWISE IMPOSTOR</code><h3>Every pair agrees; the triple does not</h3><span class="descentequation">i-bc ∘ i-ab ≠ i-ac</span><p>Each of the three impostor maps is bijective and has an inverse witness. Their composite disagrees with the direct map. Nothing is overwritten or silently chosen: the global record remains unresolved.</p></article>
+      </div>
+
+      <div class="descentclasses" aria-label="Three recomputed global quotient classes">
+        <article class="descentclass"><code>q0</code><span>a0 ≃ b2 ≃ c1 ≃ d1</span></article><article class="descentclass"><code>q1</code><span>a1 ≃ b0 ≃ c2 ≃ d0</span></article><article class="descentclass"><code>q2</code><span>a2 ≃ b1 ≃ c0 ≃ d2</span></article>
+      </div>
+
+      <div class="strandchecks" aria-label="Deterministic Lab 04 validation checks">
+        <article class="strandcheck" data-descent-check="closed-source-bound-input"><code>PASS</code><strong>closed source bound input</strong><span>strict JSON tree, closed fixture identity, immutable Frequency/Form Lab 03 pin, versioned preprints, and semantic digest</span></article><article class="strandcheck" data-descent-check="pairwise-invertibility"><code>PASS</code><strong>pairwise invertibility</strong><span>all six declared transitions are bijections with exact inverse witnesses</span></article><article class="strandcheck" data-descent-check="triple-coherence"><code>PASS</code><strong>triple coherence</strong><span>both three-chart composites equal their declared direct transitions</span></article><article class="strandcheck" data-descent-check="four-chart-globalization"><code>PASS</code><strong>four chart globalization</strong><span>both parenthesizations and the direct map agree, producing the declared quotient</span></article><article class="strandcheck" data-descent-check="common-refinement-and-impostor"><code>PASS</code><strong>common refinement and impostor</strong><span>the common refinement commutes while the pairwise-bijective counterexample remains unresolved</span></article><article class="strandcheck" data-descent-check="zero-effects"><code>PASS</code><strong>zero effects</strong><span>no crawler, network, write, truth, consent, citizenship, score, KARMA, or authority effect</span></article>
+      </div>
+
+      <p class="commonsverified">4 charts · 6 reversible transitions · 2 triple equations · 3 quotient classes · 6 refinement atoms · 6 exact checks · integrity sha256:a5ca407e3145ae332171b6e426974d148c9db4aae0dafeb7b9db0f54f94e146c</p>
+      <div class="descentsources" aria-label="Versioned research sources">
+        <a href="https://arxiv.org/abs/2608.09958v1" rel="noreferrer">PREPRINT · SOURCE_BOUND · Geometrize the nongeometric space (v1)</a><a href="https://arxiv.org/abs/2607.21700v1" rel="noreferrer">PREPRINT · SOURCE_BOUND · EFT (String) Tower Building (v1)</a>
+      </div>
+      <p class="strandboundary danger"><strong>Compatibility only. No physics or authority.</strong>This evaluator makes 0 network requests and 0 storage writes. Passing proves only that the declared finite local records cohere under their declared maps. It proves no source truth, crawler state, physical string, spacetime, stack identity, causality, person identity, consent, citizenship, affiliation, value, NEN ability, KARMA or Zerone event or receipt, score, authority, publication right, deployment right, or automatic action.</p>
+      <div class="strandlinks machine">
+        <a href="/labs/strand-descent-lab-04-2026-08-16.json">STRAND Lab 04 JSON — exact synthetic fixture and result</a>
+        <a href="/schemas/strand-descent-lab/0.1.json">Closed STRAND Lab 04 JSON Schema</a>
+        <a href="/STRAND-DESCENT-LAB-04.md">STRAND-DESCENT-LAB-04.md — method, sources, checks, failure, and boundaries</a>
+      </div>
+    </div>
+  </section>
+
 
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
@@ -4162,6 +4221,9 @@
       <a href="/experiments/string-crawl-frequency-form-lab-2026-08-16.json">STRAND Lab 03 — temporal DFT, graph-spatial form, synthetic presence ordering, and the false portal</a>
       <a href="/schemas/string-crawl-frequency-form-lab/0.1.json">STRAND Lab 03 closed JSON Schema</a>
       <a href="/STRING-CRAWL-LAB-03.md">STRAND Lab 03 guide — typed frequencies, dimensions, DMT evidence limits, and zero effects</a>
+      <a href="/labs/strand-descent-lab-04-2026-08-16.json">STRAND Lab 04 — coherent four-chart atlas and pairwise impostor</a>
+      <a href="/schemas/strand-descent-lab/0.1.json">STRAND Lab 04 closed JSON Schema</a>
+      <a href="/STRAND-DESCENT-LAB-04.md">STRAND Lab 04 guide — preprint-scoped transfer, exact coherence, unresolved conflict, and zero effects</a>
       <a href="/atlases/cultural-attention-feedback-atlas-2026-08-13.json">Cultural Attention &amp; Feedback Atlas — material history, memes, brain rot, feedback, KARMA, and universe lens</a>
       <a href="/schemas/cultural-attention-feedback-atlas/1.json">Cultural Attention &amp; Feedback Atlas JSON Schema</a>
       <a href="/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md">CULTURAL-ATTENTION-FEEDBACK-ATLAS.md — evidence, mathematics, analogies, and boundaries</a>
@@ -4199,7 +4261,7 @@
     <div class="footsig">♡</div>
     <span class="foothan">愛</span> · this atlas mirrors metadata declared by each project · 2026-08-16<br>
     made to be understood gently · you are always free to leave<br>
-    STRAND Lab 02 is a static synthetic successor: zero crawl, KARMA, score, write, or authority
+    STRAND Labs 02–03 are static synthetic successors: zero crawl, KARMA, score, write, or authority
   </footer>
 </main>
 </div>

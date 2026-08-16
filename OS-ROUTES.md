@@ -82,6 +82,9 @@ readings:
 | `/experiments/string-crawl-frequency-form-lab-2026-08-16.json` | staged JSON | Additive, Lab-02-byte-bound synthetic offline frequency/form/world/presence thought experiment with typed non-implication firewalls |
 | `/schemas/string-crawl-frequency-form-lab/0.1.json` | staged JSON Schema | Closed Draft 2020-12 exact contract for Frequency → Form → World → Other Lab 03 |
 | `/STRING-CRAWL-LAB-03.md` | staged Markdown | Verification guide to temporal and spatial frequency, geometric form, experiential dimension, perceived presence, and unresolved ontology boundaries |
+| `/labs/strand-descent-lab-04-2026-08-16.json` | staged JSON | Additive, Lab-03-byte-bound synthetic four-chart atlas with exact pairwise, triple, associativity, quotient, refinement, and impostor checks |
+| `/schemas/strand-descent-lab/0.1.json` | staged JSON Schema | Closed Draft 2020-12 exact identity contract for STRAND Lab 04 |
+| `/STRAND-DESCENT-LAB-04.md` | staged Markdown | Verification guide to the narrow 2026 descent/gluing transfer, coherent atlas, pairwise impostor, immutable lineage, and zero-effect boundaries |
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -208,8 +211,8 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 93-asset upload contract (74 ledgered immutable/versioned assets and
-19 mutable assets; 91 direct public bodies, 90 sitemap URLs; ten atlases, two
+locks the 96-asset upload contract (77 ledgered immutable/versioned assets and
+19 mutable assets; 94 direct public bodies, 93 sitemap URLs; ten atlases, three
 lab routes, one experiment route, and seventeen retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
@@ -256,6 +259,14 @@ It validates no entity or higher-dimensional ontology.
 Temporal frequency, spatial harmonic,
 geometric form, immersive dimension, perceived presence, and external ontology
 remain separate typed layers. It creates no KARMA event or receipt, no score,
-no authority, no deployment, and no automatic action. Labs 01–03 share one atomic
-nine-route `string-crawl-trace-sheet-lab` retirement family, leaving the family
-count at seventeen.
+no authority, no deployment, and no automatic action. STRAND Lab 04 then
+byte-binds immutable Lab 03 and adds a four-chart compatibility fixture inspired
+narrowly by recent preprint work on coherent gluing. Its exact evaluator checks
+pairwise inverses, triple and four-chart coherence, quotient classes, and a
+common refinement. Its fixed counterexample shows why pairwise compatibility
+alone is insufficient: all three maps are bijections, but the triple equation
+fails and the global status stays `UNRESOLVED`. This is finite record
+compatibility, not a physical string, spacetime, stack, truth, identity,
+consent, citizenship, KARMA, authority, or action claim. Labs 01–04 share one
+atomic twelve-route `string-crawl-trace-sheet-lab` retirement family, leaving
+the family count at seventeen.

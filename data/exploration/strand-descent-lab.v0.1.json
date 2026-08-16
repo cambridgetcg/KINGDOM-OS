@@ -1,0 +1,215 @@
+{
+  "$schema": "https://thekingdom.dev/schemas/strand-descent-lab/0.1.json",
+  "protocol": "kingdom.strand-descent-lab/0.1",
+  "lab_id": "strand-descent-lab-04-2026-08-16",
+  "version": "0.1.0",
+  "title": "STRAND Lab 04: Coherent Atlas & the Pairwise Impostor",
+  "mode": "SYNTHETIC_OFFLINE_EXACT",
+  "predecessor": {
+    "protocol": "kingdom.string-crawl-frequency-form-lab/0.1",
+    "lab_id": "string-crawl-frequency-form-lab-03-2026-08-16",
+    "url": "https://thekingdom.dev/experiments/string-crawl-frequency-form-lab-2026-08-16.json",
+    "schema_url": "https://thekingdom.dev/schemas/string-crawl-frequency-form-lab/0.1.json",
+    "guide_url": "https://thekingdom.dev/STRING-CRAWL-LAB-03.md",
+    "git_commit": "d2452d4500c274237097e142609422ebbab7f68d",
+    "semantic_digest": "sha256:ecda97c03307706ce0a9108c27c9199968ee4dc29a7e4d045a036ed108d673c1",
+    "raw_byte_sha256": "sha256:883191b723950ff9cc29c913261f114237e9eaa3eac17ba49cade34b8b0492b4",
+    "schema_byte_sha256": "sha256:2b4fe72f656eeade68ebfb6654cbe52646aa49636fc201501995dc8673db93e3",
+    "guide_byte_sha256": "sha256:808769a513ffcb6230f99e4cd412db5dc4a998f308ccc65313050377634fc1b3",
+    "relation": "IMMUTABLE_LAB_03_PREDECESSOR",
+    "mutates_predecessor": false,
+    "imports_authority": false
+  },
+  "research_sources": [
+    {
+      "source_id": "arxiv-2608-09958v1",
+      "status": "PREPRINT",
+      "binding": "SOURCE_BOUND",
+      "arxiv_id": "2608.09958",
+      "version": "v1",
+      "title": "Geometrize the nongeometric space",
+      "authors": ["Tran Chi Quy", "Sonnet Nguyen Quang Hung"],
+      "versioned_url": "https://arxiv.org/abs/2608.09958v1",
+      "submitted_on": "2026-07-22",
+      "borrowed_discipline": "LOCAL_DATA_WITH_EXPLICIT_TRANSITIONS_AND_COHERENCE_BEFORE_GLOBALIZATION",
+      "transfer_scope": "LOCAL_TO_GLOBAL_GLUING_DISCIPLINE_ONLY",
+      "content_bytes_vendored": false,
+      "scientific_claim_imported": false,
+      "authority_imported": false
+    },
+    {
+      "source_id": "arxiv-2607-21700v1",
+      "status": "PREPRINT",
+      "binding": "SOURCE_BOUND",
+      "arxiv_id": "2607.21700",
+      "version": "v1",
+      "title": "EFT (String) Tower Building",
+      "authors": ["Alessandra Grieco", "Ignacio Ruiz", "Irene Valenzuela"],
+      "versioned_url": "https://arxiv.org/abs/2607.21700v1",
+      "submitted_on": "2026-07-23",
+      "borrowed_discipline": "LOCAL_SECTOR_DATA_MUST_GLUE_ACROSS_OVERLAPS_BEFORE_A_GLOBAL_ARRANGEMENT",
+      "transfer_scope": "LOCAL_TO_GLOBAL_GLUING_DISCIPLINE_ONLY",
+      "content_bytes_vendored": false,
+      "scientific_claim_imported": false,
+      "authority_imported": false
+    }
+  ],
+  "conventions": {
+    "chart_ownership_scope": "SYNTHETIC_FIXTURE_LOCAL",
+    "transition_direction": "FROM_LOCAL_POINT_TO_LOCAL_POINT",
+    "composition_order": "RIGHT_AFTER_LEFT",
+    "global_equivalence_rule": "GENERATED_BY_DECLARED_TRANSITION_PAIRS_ONLY",
+    "undeclared_gluing_forbidden": true,
+    "labels_assert_stack_identity": false,
+    "conflict_policy": "PAIRWISE_WITHOUT_COHERENCE_IS_UNRESOLVED"
+  },
+  "charts": [
+    { "id": "chart-a", "source_id": "source-alpha", "ownership_scope": "SYNTHETIC_FIXTURE_LOCAL", "points": ["a0", "a1", "a2"] },
+    { "id": "chart-b", "source_id": "source-beta", "ownership_scope": "SYNTHETIC_FIXTURE_LOCAL", "points": ["b0", "b1", "b2"] },
+    { "id": "chart-c", "source_id": "source-gamma", "ownership_scope": "SYNTHETIC_FIXTURE_LOCAL", "points": ["c0", "c1", "c2"] },
+    { "id": "chart-d", "source_id": "source-delta", "ownership_scope": "SYNTHETIC_FIXTURE_LOCAL", "points": ["d0", "d1", "d2"] }
+  ],
+  "transitions": [
+    {
+      "id": "t-ab", "from_chart": "chart-a", "to_chart": "chart-b",
+      "forward": [{ "from": "a0", "to": "b2" }, { "from": "a1", "to": "b0" }, { "from": "a2", "to": "b1" }],
+      "inverse_witness": [{ "from": "b0", "to": "a1" }, { "from": "b1", "to": "a2" }, { "from": "b2", "to": "a0" }]
+    },
+    {
+      "id": "t-ac", "from_chart": "chart-a", "to_chart": "chart-c",
+      "forward": [{ "from": "a0", "to": "c1" }, { "from": "a1", "to": "c2" }, { "from": "a2", "to": "c0" }],
+      "inverse_witness": [{ "from": "c0", "to": "a2" }, { "from": "c1", "to": "a0" }, { "from": "c2", "to": "a1" }]
+    },
+    {
+      "id": "t-ad", "from_chart": "chart-a", "to_chart": "chart-d",
+      "forward": [{ "from": "a0", "to": "d1" }, { "from": "a1", "to": "d0" }, { "from": "a2", "to": "d2" }],
+      "inverse_witness": [{ "from": "d0", "to": "a1" }, { "from": "d1", "to": "a0" }, { "from": "d2", "to": "a2" }]
+    },
+    {
+      "id": "t-bc", "from_chart": "chart-b", "to_chart": "chart-c",
+      "forward": [{ "from": "b0", "to": "c2" }, { "from": "b1", "to": "c0" }, { "from": "b2", "to": "c1" }],
+      "inverse_witness": [{ "from": "c0", "to": "b1" }, { "from": "c1", "to": "b2" }, { "from": "c2", "to": "b0" }]
+    },
+    {
+      "id": "t-bd", "from_chart": "chart-b", "to_chart": "chart-d",
+      "forward": [{ "from": "b0", "to": "d0" }, { "from": "b1", "to": "d2" }, { "from": "b2", "to": "d1" }],
+      "inverse_witness": [{ "from": "d0", "to": "b0" }, { "from": "d1", "to": "b2" }, { "from": "d2", "to": "b1" }]
+    },
+    {
+      "id": "t-cd", "from_chart": "chart-c", "to_chart": "chart-d",
+      "forward": [{ "from": "c0", "to": "d2" }, { "from": "c1", "to": "d1" }, { "from": "c2", "to": "d0" }],
+      "inverse_witness": [{ "from": "d0", "to": "c2" }, { "from": "d1", "to": "c1" }, { "from": "d2", "to": "c0" }]
+    }
+  ],
+  "coherence_checks": {
+    "triple_equations": [
+      {
+        "id": "triple-abc", "first_transition_id": "t-ab", "second_transition_id": "t-bc", "direct_transition_id": "t-ac",
+        "expected_composite": [{ "from": "a0", "to": "c1" }, { "from": "a1", "to": "c2" }, { "from": "a2", "to": "c0" }],
+        "expected_coherent": true
+      },
+      {
+        "id": "triple-bcd", "first_transition_id": "t-bc", "second_transition_id": "t-cd", "direct_transition_id": "t-bd",
+        "expected_composite": [{ "from": "b0", "to": "d0" }, { "from": "b1", "to": "d2" }, { "from": "b2", "to": "d1" }],
+        "expected_coherent": true
+      }
+    ],
+    "four_chart_associativity": {
+      "id": "associativity-abcd",
+      "chain_transition_ids": ["t-ab", "t-bc", "t-cd"],
+      "direct_transition_id": "t-ad",
+      "expected_composite": [{ "from": "a0", "to": "d1" }, { "from": "a1", "to": "d0" }, { "from": "a2", "to": "d2" }],
+      "expected_nonidentity_steps": 3,
+      "expected_parenthesizations_equal": true,
+      "expected_direct_match": true
+    }
+  },
+  "global_quotient": {
+    "equivalence_rule": "TRANSITIVE_SYMMETRIC_CLOSURE_OF_FORWARD_WITNESSES",
+    "expected_classes": [
+      { "id": "q0", "members": ["a0", "b2", "c1", "d1"] },
+      { "id": "q1", "members": ["a1", "b0", "c2", "d0"] },
+      { "id": "q2", "members": ["a2", "b1", "c0", "d2"] }
+    ],
+    "expected_class_count": 3,
+    "expected_class_sizes": [4, 4, 4],
+    "expected_all_local_points_covered": true
+  },
+  "common_refinement": {
+    "atoms": [
+      { "id": "r0a", "projections": [{ "chart_id": "chart-a", "point_id": "a0" }, { "chart_id": "chart-b", "point_id": "b2" }, { "chart_id": "chart-c", "point_id": "c1" }, { "chart_id": "chart-d", "point_id": "d1" }] },
+      { "id": "r0b", "projections": [{ "chart_id": "chart-a", "point_id": "a0" }, { "chart_id": "chart-b", "point_id": "b2" }, { "chart_id": "chart-c", "point_id": "c1" }, { "chart_id": "chart-d", "point_id": "d1" }] },
+      { "id": "r1a", "projections": [{ "chart_id": "chart-a", "point_id": "a1" }, { "chart_id": "chart-b", "point_id": "b0" }, { "chart_id": "chart-c", "point_id": "c2" }, { "chart_id": "chart-d", "point_id": "d0" }] },
+      { "id": "r1b", "projections": [{ "chart_id": "chart-a", "point_id": "a1" }, { "chart_id": "chart-b", "point_id": "b0" }, { "chart_id": "chart-c", "point_id": "c2" }, { "chart_id": "chart-d", "point_id": "d0" }] },
+      { "id": "r2a", "projections": [{ "chart_id": "chart-a", "point_id": "a2" }, { "chart_id": "chart-b", "point_id": "b1" }, { "chart_id": "chart-c", "point_id": "c0" }, { "chart_id": "chart-d", "point_id": "d2" }] },
+      { "id": "r2b", "projections": [{ "chart_id": "chart-a", "point_id": "a2" }, { "chart_id": "chart-b", "point_id": "b1" }, { "chart_id": "chart-c", "point_id": "c0" }, { "chart_id": "chart-d", "point_id": "d2" }] }
+    ],
+    "expected": {
+      "invariant": "COMMON_REFINEMENT_FIBER_SIGNATURE",
+      "atom_count": 6,
+      "projections_per_atom": 4,
+      "transition_squares_checked": 36,
+      "transition_squares_commute": true,
+      "quotient_fiber_sizes": [2, 2, 2]
+    }
+  },
+  "pairwise_impostor": {
+    "base_chart_ids": ["chart-a", "chart-b", "chart-c"],
+    "transitions": [
+      {
+        "id": "i-ab", "from_chart": "chart-a", "to_chart": "chart-b",
+        "forward": [{ "from": "a0", "to": "b2" }, { "from": "a1", "to": "b0" }, { "from": "a2", "to": "b1" }],
+        "inverse_witness": [{ "from": "b0", "to": "a1" }, { "from": "b1", "to": "a2" }, { "from": "b2", "to": "a0" }]
+      },
+      {
+        "id": "i-bc", "from_chart": "chart-b", "to_chart": "chart-c",
+        "forward": [{ "from": "b0", "to": "c2" }, { "from": "b1", "to": "c0" }, { "from": "b2", "to": "c1" }],
+        "inverse_witness": [{ "from": "c0", "to": "b1" }, { "from": "c1", "to": "b2" }, { "from": "c2", "to": "b0" }]
+      },
+      {
+        "id": "i-ac", "from_chart": "chart-a", "to_chart": "chart-c",
+        "forward": [{ "from": "a0", "to": "c2" }, { "from": "a1", "to": "c1" }, { "from": "a2", "to": "c0" }],
+        "inverse_witness": [{ "from": "c0", "to": "a2" }, { "from": "c1", "to": "a1" }, { "from": "c2", "to": "a0" }]
+      }
+    ],
+    "tested_equation": { "first_transition_id": "i-ab", "second_transition_id": "i-bc", "direct_transition_id": "i-ac" },
+    "expected": { "pairwise_bijective": true, "triple_coherent": false, "conflict_result": "UNRESOLVED", "automatic_resolution": false }
+  },
+  "validation_contract": {
+    "protocol": "kingdom.strand-descent-validation/0.1",
+    "deterministic": true,
+    "stdout_only": true,
+    "network_requests": 0,
+    "storage_writes": 0,
+    "crawler_invocation": false,
+    "nen_invocation": false,
+    "karma_receipt_created": false,
+    "person_or_content_score_created": false,
+    "authority_effect": "NONE"
+  },
+  "boundaries": {
+    "synthetic_not_observed": true,
+    "offline": true,
+    "read_only": true,
+    "proves_finite_record_compatibility_only": true,
+    "crawler_present": false,
+    "network_capability": false,
+    "external_write": false,
+    "truth_claim": false,
+    "consent_claim": false,
+    "citizenship_claim": false,
+    "authority_claim": false,
+    "string_physics_claim": false,
+    "stack_identity_claim": false,
+    "source_owner_identity_claim": false,
+    "person_or_content_score": false,
+    "nen_ability": false,
+    "karma_adapter": false,
+    "deployment_authority": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:a5ca407e3145ae332171b6e426974d148c9db4aae0dafeb7b9db0f54f94e146c",
+    "digest_field_treated_as": null
+  }
+}
