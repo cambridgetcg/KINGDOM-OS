@@ -1,0 +1,393 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thekingdom.dev/schemas/strand-observation-membrane/0.1.json",
+  "$comment": "Closed exact schema for the separate STRAND Observation Membrane. Validation is offline and grants no crawl scope, licence, consent, identity, KARMA, medical, entity, governance, economic, publication, deployment, or authority effect.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "membrane_id",
+    "version",
+    "title",
+    "subtitle",
+    "activated_on",
+    "mode",
+    "separation",
+    "fixed_origin",
+    "activations",
+    "user_agent",
+    "standards",
+    "live_limits",
+    "robots_gate",
+    "route_plan",
+    "synthetic_fixture",
+    "validation_contract",
+    "effect_boundary",
+    "commands",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://thekingdom.dev/schemas/strand-observation-membrane/0.1.json"
+    },
+    "protocol": {
+      "const": "kingdom.strand-observation-membrane/0.1"
+    },
+    "membrane_id": {
+      "const": "strand-observation-membrane-05-2026-08-16"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "title": {
+      "const": "STRAND Observation Membrane 05: The Open Eye"
+    },
+    "subtitle": {
+      "const": "See without seizing"
+    },
+    "activated_on": {
+      "const": "2026-08-16"
+    },
+    "mode": {
+      "const": "SAFE_OBSERVATION_ACTIVE"
+    },
+    "separation": {
+      "const": {
+        "family": "STRAND_OBSERVATION_MEMBRANE",
+        "outside_lab_01_through_04_atomic_family": true,
+        "mutates_lab_01_through_04": false,
+        "imports_lab_authority": false,
+        "claim": "This membrane activates bounded observation tools beside, not inside, the four immutable synthetic labs."
+      }
+    },
+    "fixed_origin": {
+      "const": {
+        "origin": "https://thekingdom.dev:443",
+        "scheme": "https",
+        "hostname": "thekingdom.dev",
+        "port": 443,
+        "scope_basis": "PUBLISHER_DECLARED_EXACT_ORIGIN_NOT_OWNER_VERIFIED",
+        "caller_supplied_url": false,
+        "subdomains_allowed": false,
+        "alternate_ports_allowed": false,
+        "discovery_expansion_allowed": false,
+        "cross_origin_redirect_allowed": false
+      }
+    },
+    "activations": {
+      "const": {
+        "public_controls": {
+          "state": "ACTIVE_STATIC_PUBLIC",
+          "browser_local": true,
+          "browser_network_requests": 0,
+          "browser_storage_writes": 0,
+          "browser_background_watch": false
+        },
+        "offline_verification": {
+          "state": "ACTIVE",
+          "deterministic": true,
+          "strict_total_evaluator": true,
+          "network_requests": 0,
+          "storage_writes": 0
+        },
+        "synthetic_simulation": {
+          "state": "ACTIVE",
+          "deterministic": true,
+          "network_requests": 0,
+          "storage_writes": 0,
+          "models_live_transport": false
+        },
+        "fixed_origin_read_only_live_observation": {
+          "state": "AVAILABLE_EXPLICIT_LOCAL_CALL",
+          "available": true,
+          "invocation": "EXPLICIT_LOCAL_CALL_ONLY",
+          "background_watch": false,
+          "network_requests_without_explicit_call": 0
+        }
+      }
+    },
+    "user_agent": {
+      "const": {
+        "product_token": "KingdomStrandObservation",
+        "version": "0.1",
+        "value": "KingdomStrandObservation/0.1 (+https://thekingdom.dev/STRAND-OBSERVATION-MEMBRANE.md)",
+        "guide_url": "https://thekingdom.dev/STRAND-OBSERVATION-MEMBRANE.md",
+        "truthful": true,
+        "stable": true,
+        "claims_identity_authentication": false,
+        "claims_authorization": false
+      }
+    },
+    "standards": {
+      "const": [
+        {
+          "source_id": "rfc-6454",
+          "title": "The Web Origin Concept",
+          "url": "https://www.rfc-editor.org/rfc/rfc6454.html",
+          "scope": "EXACT_SCHEME_HOST_PORT_ORIGIN_BOUNDARY",
+          "does_not_establish": "PUBLISHER_OWNERSHIP_OR_AUTHORITY"
+        },
+        {
+          "source_id": "rfc-9110",
+          "title": "HTTP Semantics",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+          "scope": "GET_SEMANTICS_STATUS_AND_REDIRECT_CLASSIFICATION",
+          "does_not_establish": "ZERO_REMOTE_PROCESSING_OR_LOGGING"
+        },
+        {
+          "source_id": "rfc-9309",
+          "title": "Robots Exclusion Protocol",
+          "url": "https://www.rfc-editor.org/rfc/rfc9309.html",
+          "scope": "ROBOTS_GROUP_SELECTION_AND_PATH_MATCHING",
+          "does_not_establish": "LICENCE_CONSENT_AUTHORIZATION_OR_IDENTITY"
+        },
+        {
+          "source_id": "rfc-6596",
+          "title": "The Canonical Link Relation",
+          "url": "https://www.rfc-editor.org/rfc/rfc6596.html",
+          "scope": "CANONICAL_LINK_IS_A_RELATION_NOT_A_SCOPE_EXPANSION",
+          "does_not_establish": "OWNER_OR_CONTENT_OWNERSHIP_PROOF"
+        },
+        {
+          "source_id": "rfc-9421",
+          "title": "HTTP Message Signatures",
+          "url": "https://www.rfc-editor.org/rfc/rfc9421.html",
+          "scope": "SIGNATURES_REQUIRE_EXPLICIT_VERIFICATION_NOT_USER_AGENT_INFERENCE",
+          "does_not_establish": "CRAWLER_IDENTITY_IN_THIS_UNSIGNED_PROTOCOL"
+        },
+        {
+          "source_id": "iana-ipv4-special-purpose",
+          "title": "IANA IPv4 Special-Purpose Address Registry",
+          "url": "https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml",
+          "scope": "PUBLIC_ADDRESS_FAIL_CLOSED_CLASSIFICATION",
+          "does_not_establish": "ENDPOINT_TRUST_OR_OWNERSHIP"
+        },
+        {
+          "source_id": "iana-ipv6-special-purpose",
+          "title": "IANA IPv6 Special-Purpose Address Registry",
+          "url": "https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml",
+          "scope": "PUBLIC_ADDRESS_FAIL_CLOSED_CLASSIFICATION",
+          "does_not_establish": "ENDPOINT_TRUST_OR_OWNERSHIP"
+        },
+        {
+          "source_id": "owasp-ssrf-prevention",
+          "title": "OWASP Server Side Request Forgery Prevention Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
+          "scope": "ALLOWLIST_DNS_VALIDATION_AND_REDIRECT_DEFENCE",
+          "does_not_establish": "COMPLETE_INFRASTRUCTURE_SECURITY"
+        }
+      ]
+    },
+    "live_limits": {
+      "const": {
+        "allowed_methods": [
+          "GET"
+        ],
+        "planned_transactions": 4,
+        "maximum_transactions": 4,
+        "maximum_dns_resolution_attempts": 4,
+        "concurrency": 1,
+        "minimum_start_gap_milliseconds": 2000,
+        "maximum_response_bytes": 1048576,
+        "maximum_run_bytes": 2097152,
+        "maximum_run_milliseconds": 60000,
+        "maximum_transaction_milliseconds": 10000,
+        "retries": 0,
+        "redirect_mode": "MANUAL_FAIL_CLOSED_DO_NOT_FOLLOW",
+        "credentials": "OMIT",
+        "cookies": false,
+        "javascript": false,
+        "forms": false,
+        "request_body": false,
+        "persistent_storage": false,
+        "response_bodies": "EPHEMERAL_NOT_EMITTED",
+        "report_destination": "STDOUT_ONLY"
+      }
+    },
+    "robots_gate": {
+      "const": {
+        "route_id": "robots",
+        "must_be_first": true,
+        "required_status": 200,
+        "expected_snapshot_sha256": "sha256:a58329bcbe9775e4552200ac4bc292cc7dc6f1022c8f4c296639eb11b240a751",
+        "selected_product_token": "KingdomStrandObservation",
+        "exact_snapshot_required": true,
+        "remaining_routes_require_allow": true,
+        "failure_policy": "STOP_FAIL_CLOSED",
+        "robots_directives_grant_licence_consent_or_authority": false
+      }
+    },
+    "route_plan": {
+      "const": [
+        {
+          "sequence": 1,
+          "route_id": "robots",
+          "method": "GET",
+          "path": "/robots.txt",
+          "purpose": "REP_GATE",
+          "required_before_remaining": true
+        },
+        {
+          "sequence": 2,
+          "route_id": "sitemap",
+          "method": "GET",
+          "path": "/sitemap.xml",
+          "purpose": "DECLARED_DISCOVERY_SNAPSHOT_ONLY",
+          "required_before_remaining": false
+        },
+        {
+          "sequence": 3,
+          "route_id": "kingdom-discovery",
+          "method": "GET",
+          "path": "/kingdom.json",
+          "purpose": "PUBLIC_DISCOVERY_SNAPSHOT_ONLY",
+          "required_before_remaining": false
+        },
+        {
+          "sequence": 4,
+          "route_id": "membrane-record",
+          "method": "GET",
+          "path": "/observations/strand-observation-membrane-2026-08-16.json",
+          "purpose": "SELF_DESCRIPTION_SNAPSHOT_ONLY",
+          "required_before_remaining": false
+        }
+      ]
+    },
+    "synthetic_fixture": {
+      "const": {
+        "fixture_id": "strand-observation-membrane-four-route-success-v1",
+        "clock": "DECLARED_INTEGER_MILLISECONDS",
+        "responses": [
+          {
+            "route_id": "robots",
+            "start_millisecond": 0,
+            "duration_milliseconds": 12,
+            "status": 200,
+            "content_type": "text/plain; charset=utf-8",
+            "body_bytes": 1091,
+            "redirect_location": null,
+            "robots_snapshot_matches": true,
+            "robots_allows": true
+          },
+          {
+            "route_id": "sitemap",
+            "start_millisecond": 2000,
+            "duration_milliseconds": 15,
+            "status": 200,
+            "content_type": "application/xml; charset=utf-8",
+            "body_bytes": 12754,
+            "redirect_location": null,
+            "robots_snapshot_matches": null,
+            "robots_allows": true
+          },
+          {
+            "route_id": "kingdom-discovery",
+            "start_millisecond": 4000,
+            "duration_milliseconds": 18,
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body_bytes": 356,
+            "redirect_location": null,
+            "robots_snapshot_matches": null,
+            "robots_allows": true
+          },
+          {
+            "route_id": "membrane-record",
+            "start_millisecond": 6000,
+            "duration_milliseconds": 21,
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body_bytes": 8192,
+            "redirect_location": null,
+            "robots_snapshot_matches": null,
+            "robots_allows": true
+          }
+        ],
+        "expected": {
+          "transactions_started": 4,
+          "transactions_completed": 4,
+          "total_body_bytes": 22393,
+          "status_counts": {
+            "200": 4
+          },
+          "minimum_observed_start_gap_milliseconds": 2000,
+          "robots_gate_passes": true,
+          "all_planned_routes_observed": true,
+          "within_limits": true
+        }
+      }
+    },
+    "validation_contract": {
+      "const": {
+        "protocol": "kingdom.strand-observation-membrane-validation/0.1",
+        "deterministic": true,
+        "strict_total": true,
+        "candidate_text_is_untrusted_data": true,
+        "candidate_text_executed": false,
+        "network_requests": 0,
+        "storage_writes": 0,
+        "subprocesses": 0,
+        "stdout_only": true
+      }
+    },
+    "effect_boundary": {
+      "const": {
+        "read_only_network_observation_on_explicit_live_call": true,
+        "remote_server_or_provider_logging_may_occur": true,
+        "remote_server_or_provider_processing_may_occur": true,
+        "import_network_requests": 0,
+        "status_network_requests": 0,
+        "maximum_explicit_live_http_transactions": 4,
+        "maximum_explicit_live_dns_resolution_attempts": 4,
+        "requested_remote_application_state_change": false,
+        "local_persistent_storage_write": false,
+        "body_emitted": false,
+        "credential_or_cookie_use": false,
+        "link_or_sitemap_discovery_expansion": false,
+        "background_watch": false,
+        "mcp_invocation": false,
+        "subprocess_invocation": false,
+        "ability_adoption": false,
+        "ability_invocation": false,
+        "karma_or_karma_receipt_write": false,
+        "nen_invocation_or_write": false,
+        "zerone_event_or_write": false,
+        "person_scoring": false,
+        "content_scoring": false,
+        "human_participant_data": false,
+        "medical_or_dmt_action": false,
+        "diagnosis": false,
+        "treatment_or_drug_guidance": false,
+        "audio_or_visual_entrainment": false,
+        "external_entity_truth_claim": false,
+        "entity_message_or_portal_validation": false,
+        "rewards_rank_punishment_governance_or_economic_effect": false,
+        "crawler_identity_inference": false,
+        "owner_or_content_ownership_proof": false,
+        "licence_consent_or_authorization_inference": false,
+        "authority_change": false,
+        "deployment_or_publication_trigger": false
+      }
+    },
+    "commands": {
+      "const": {
+        "status": "./kingdom strand-observation status --json",
+        "verify": "./kingdom strand-observation verify --json",
+        "simulate": "./kingdom strand-observation simulate --json",
+        "effects": "./kingdom strand-observation effects --json",
+        "falsifiers": "./kingdom strand-observation falsifiers --json",
+        "verify_file": "./kingdom strand-observation verify-file <record.json> --json",
+        "observe_live": "./kingdom strand-observation observe-live --json"
+      }
+    },
+    "integrity": {
+      "const": {
+        "algorithm": "sha256-recursive-sorted-json-keys-v1",
+        "digest": "sha256:553546a3d41eb8b53742f06b3148423b8e63d759c06776c04fc5d0da65df70bf",
+        "digest_field_treated_as": null,
+        "audit_state": "FROZEN"
+      }
+    }
+  }
+}

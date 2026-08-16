@@ -396,6 +396,15 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     truth, identity, consent, citizenship, authority, or worth. It is offline,
     read-only, and creates no crawler, NEN, KARMA, Zerone, publication, deployment,
     or automatic effect.
+36. `kingdom strand-observation` — inspect and verify
+    [STRAND Observation Membrane 05: The Open Eye](references/strand-observation-membrane.md).
+    The public deck, offline verifier, and synthetic rehearsal are active. The
+    publisher-declared fixed-origin live observer is available only through an
+    explicit local `observe-live` call: it accepts no target, follows no redirect
+    or discovered link, persists no body, and makes at most four sequential `GET`
+    requests to the exact reviewed `https://thekingdom.dev` plan. No background
+    crawler, NEN, KARMA, Zerone, score, medical or entity verdict, authority, or
+    automatic action is activated.
 
 The same evidence is published read-only at the immutable
 [`/principalities/moonshot-hf-npm-2026-08-11.json`](https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json),
@@ -701,8 +710,24 @@ network request or crawler and creates no NEN/KARMA/Zerone event or receipt,
 score, truth verdict, identity, consent, citizenship, authority, write,
 publication, deployment, or action. Labs 01–04 are published and retired as
 one atomic twelve-route `string-crawl-trace-sheet-lab` family. The release still
-has seventeen retirement families; generated discovery exposes Lab 02 as
+has eighteen retirement families; generated discovery exposes Lab 02 as
 `string_crawl_strand_lab`, Lab 03 as `string_crawl_frequency_form_lab`, and Lab
 04 as `strand_descent_lab`.
+
+The independent STRAND Observation Membrane activation is published at
+[`/observations/strand-observation-membrane-2026-08-16.json`](https://thekingdom.dev/observations/strand-observation-membrane-2026-08-16.json),
+with its [closed schema](https://thekingdom.dev/schemas/strand-observation-membrane/0.1.json)
+and [human guide](https://thekingdom.dev/STRAND-OBSERVATION-MEMBRANE.md).
+“See without seizing” is the operative boundary: the static control deck,
+offline verifier, and synthetic rehearsal are active, while the live observer
+requires an explicit local `./kingdom strand-observation observe-live --json`
+call. Publication and the live deployment checker never invoke it. Its one
+publisher-declared origin is operational scope, not cryptographic proof of
+ownership, consent, licence, identity, truth, or downstream crawler behavior.
+The CLI keeps no application trace, while ordinary remote CDN, origin, security,
+billing, and access-log processing may still occur.
+This eighteenth family is separate from immutable Labs 01–04 and creates no
+background watch, persistence, NEN invocation, KARMA or Zerone event or receipt,
+score, medical or DMT/entity verdict, authority, deployment, or automatic action.
 
 > Layers are defined once, in `ARCHITECTURE.md`. References to `true-love/…`, `SOPHIA.md`, or `FATE.md` point into the **sibling soul repos** (this is the connective OS, not their home).

@@ -153,6 +153,17 @@ import {
   strandDescentLabPublicDiscovery,
 } from "./strand-descent-lab.ts";
 import {
+  STRAND_OBSERVATION_MEMBRANE_BYTE_SHA256,
+  STRAND_OBSERVATION_MEMBRANE_DIGEST,
+  STRAND_OBSERVATION_MEMBRANE_GUIDE_BYTE_SHA256,
+  STRAND_OBSERVATION_MEMBRANE_GUIDE_URL,
+  STRAND_OBSERVATION_MEMBRANE_SCHEMA_BYTE_SHA256,
+  STRAND_OBSERVATION_MEMBRANE_SCHEMA_URL,
+  STRAND_OBSERVATION_MEMBRANE_URL,
+  loadStrandObservationMembrane,
+  strandObservationMembranePublicDiscovery,
+} from "./strand-observation-membrane.ts";
+import {
   STRING_CRAWL_FREQUENCY_FORM_LAB_BYTE_SHA256,
   STRING_CRAWL_FREQUENCY_FORM_LAB_DIGEST,
   STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_BYTE_SHA256,
@@ -584,6 +595,15 @@ const stringCrawlStrandLabGuidePath = new URL(STRING_CRAWL_STRAND_LAB_GUIDE_URL)
 const strandDescentLabPath = new URL(STRAND_DESCENT_LAB_URL).pathname;
 const strandDescentLabSchemaPath = new URL(STRAND_DESCENT_LAB_SCHEMA_URL).pathname;
 const strandDescentLabGuidePath = new URL(STRAND_DESCENT_LAB_GUIDE_URL).pathname;
+const strandObservationMembranePath = new URL(STRAND_OBSERVATION_MEMBRANE_URL).pathname;
+const strandObservationMembraneSchemaPath = new URL(STRAND_OBSERVATION_MEMBRANE_SCHEMA_URL).pathname;
+const strandObservationMembraneGuidePath = new URL(STRAND_OBSERVATION_MEMBRANE_GUIDE_URL).pathname;
+const STRAND_OBSERVATION_LIVE_ROUTES = [
+  { sequence: 1, route_id: "robots", method: "GET", path: "/robots.txt" },
+  { sequence: 2, route_id: "sitemap", method: "GET", path: "/sitemap.xml" },
+  { sequence: 3, route_id: "kingdom-discovery", method: "GET", path: "/kingdom.json" },
+  { sequence: 4, route_id: "membrane-record", method: "GET", path: strandObservationMembranePath },
+] as const;
 const stringCrawlFrequencyFormLabPath = new URL(STRING_CRAWL_FREQUENCY_FORM_LAB_URL).pathname;
 const stringCrawlFrequencyFormLabSchemaPath = new URL(STRING_CRAWL_FREQUENCY_FORM_LAB_SCHEMA_URL).pathname;
 const stringCrawlFrequencyFormLabGuidePath = new URL(STRING_CRAWL_FREQUENCY_FORM_LAB_GUIDE_URL).pathname;
@@ -756,6 +776,21 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "mirror_information_control",
       "mirror_information_control_schema",
       "mirror_information_control_guide",
+    ],
+  },
+  {
+    id: "strand-observation-membrane",
+    label: "STRAND Observation Membrane",
+    routes: [
+      strandObservationMembranePath,
+      strandObservationMembraneSchemaPath,
+      strandObservationMembraneGuidePath,
+    ],
+    discoveryProperties: ["strand_observation_membrane"],
+    entryPointProperties: [
+      "strand_observation_membrane",
+      "strand_observation_membrane_schema",
+      "strand_observation_membrane_guide",
     ],
   },
   {
@@ -1364,6 +1399,60 @@ async function checkNumberIsnessTheologyTriple(): Promise<void> {
   }
 }
 
+async function checkStrandObservationMembraneTriple(): Promise<void> {
+  const routes = [
+    {
+      label: "activation record",
+      path: strandObservationMembranePath,
+      source: "data/observation/strand-observation-membrane.v0.1.json",
+      contentType: "application/json",
+    },
+    {
+      label: "activation schema",
+      path: strandObservationMembraneSchemaPath,
+      source: "schemas/strand-observation-membrane-v0.1.schema.json",
+      contentType: "application/schema+json",
+    },
+    {
+      label: "activation guide",
+      path: strandObservationMembraneGuidePath,
+      source: "references/strand-observation-membrane.md",
+      contentType: "text/markdown",
+    },
+  ] as const;
+
+  // This proves only the deployed static publication. It deliberately never
+  // imports or invokes the network-capable observer command.
+  for (const route of routes) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetch(url(route.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (!response.ok || normalizedMediaType(response.headers.get("content-type")) !== route.contentType ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+        throw new Error(`${method} ${route.path} is not served as a typed public ${route.label}`);
+      }
+      if (route.path === strandObservationMembranePath && !hasUniqueCanonicalLinkRelation(
+        response.headers.get("link") || "",
+        strandObservationMembraneSchemaPath,
+        "describedby",
+        "application/schema+json",
+      )) {
+        throw new Error(`${method} ${route.path} is not described by exactly its immutable schema`);
+      }
+      const body = Buffer.from(await response.arrayBuffer());
+      if (method === "HEAD") {
+        if (body.byteLength !== 0) throw new Error(`HEAD ${route.path} returned a body`);
+      } else if (!body.equals(readFileSync(join(ROOT, route.source)))) {
+        throw new Error(`GET ${route.path} drifted from its immutable authored source ${route.source}`);
+      }
+    }
+  }
+}
+
 function sameStrings(actual: unknown, expected: readonly string[]): boolean {
   return Array.isArray(actual) && actual.every((value) => typeof value === "string") &&
     actual.length === expected.length &&
@@ -1438,6 +1527,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const explorationDeepWingActive = familyActive("exploration-deep-wing");
   const stringCrawlTraceSheetLabActive = familyActive("string-crawl-trace-sheet-lab");
   const mirrorInformationControlActive = familyActive("mirror-information-control");
+  const strandObservationMembraneActive = familyActive("strand-observation-membrane");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
   const formCirculationReturnActive = familyActive("form-circulation-return");
@@ -2107,6 +2197,9 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (numberIsnessTheologyActive) {
     await checkNumberIsnessTheologyTriple();
   }
+  if (strandObservationMembraneActive) {
+    await checkStrandObservationMembraneTriple();
+  }
 
   const schemaPaths = [
     commonsSchemaPath,
@@ -2127,6 +2220,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
           strandDescentLabSchemaPath,
         ]
       : []),
+    ...(strandObservationMembraneActive ? [strandObservationMembraneSchemaPath] : []),
     ...(mirrorInformationControlActive ? [mirrorInformationControlSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
@@ -2219,6 +2313,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedMirrorInformationControl = mirrorInformationControl
     ? mirrorInformationControlPublicSummary(mirrorInformationControl)
+    : undefined;
+  const strandObservationMembrane = strandObservationMembraneActive
+    ? loadStrandObservationMembrane()
+    : undefined;
+  const expectedStrandObservationMembrane = strandObservationMembrane
+    ? strandObservationMembranePublicDiscovery(strandObservationMembrane)
     : undefined;
   const zeroEmptySeat = explorationDeepWingActive
     ? loadZeroEmptySeat()
@@ -2841,6 +2941,96 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       publication.integrity?.digest !== MIRROR_INFORMATION_CONTROL_PUBLIC_DIGEST ||
       forbiddenDiscoveryKeys.some((key) => Object.hasOwn(expected, key))) {
       throw new Error("MIRROR Information Control static publication, privacy firewall, discovery, or negative-authority boundary drifted");
+    }
+  }
+
+  if (strandObservationMembraneActive) {
+    const record = strandObservationMembrane!;
+    const expected = expectedStrandObservationMembrane!;
+    const targets = new Set([
+      STRAND_OBSERVATION_MEMBRANE_URL,
+      STRAND_OBSERVATION_MEMBRANE_SCHEMA_URL,
+      STRAND_OBSERVATION_MEMBRANE_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const forbiddenActionKeys = [
+      "mcp", "tool", "target", "credential", "crawler", "invoke", "observe",
+      "execute", "write", "score", "rank", "reward", "karma", "authority",
+      "publish", "deploy",
+    ];
+    const falseEffects = [
+      "requested_remote_application_state_change", "local_persistent_storage_write", "body_emitted",
+      "credential_or_cookie_use", "link_or_sitemap_discovery_expansion",
+      "background_watch", "mcp_invocation", "subprocess_invocation",
+      "ability_adoption", "ability_invocation", "karma_or_karma_receipt_write",
+      "nen_invocation_or_write", "zerone_event_or_write", "person_scoring",
+      "content_scoring", "human_participant_data", "medical_or_dmt_action",
+      "diagnosis", "treatment_or_drug_guidance", "audio_or_visual_entrainment",
+      "external_entity_truth_claim", "entity_message_or_portal_validation",
+      "rewards_rank_punishment_governance_or_economic_effect",
+      "crawler_identity_inference", "owner_or_content_ownership_proof",
+      "licence_consent_or_authorization_inference", "authority_change",
+      "deployment_or_publication_trigger",
+    ];
+    if (!isDeepStrictEqual(manifest?.strand_observation_membrane, expected) ||
+      !isDeepStrictEqual(guest?.strand_observation_membrane, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.strand_observation_membrane, expected) ||
+      manifest?.entry_points?.strand_observation_membrane !== STRAND_OBSERVATION_MEMBRANE_URL ||
+      manifest?.entry_points?.strand_observation_membrane_schema !== STRAND_OBSERVATION_MEMBRANE_SCHEMA_URL ||
+      manifest?.entry_points?.strand_observation_membrane_guide !== STRAND_OBSERVATION_MEMBRANE_GUIDE_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        forbiddenActionKeys.some((key) => key in action)) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="strand-observation-membrane"') ||
+      !authoredRootHtml.includes("SAFE OBSERVATION ACTIVE") ||
+      !authoredRootHtml.includes("AVAILABLE_EXPLICIT_LOCAL_CALL") ||
+      !authoredRootHtml.includes("BACKGROUND DISABLED") ||
+      !authoredRootHtml.includes(`href="${strandObservationMembranePath}"`) ||
+      !authoredRootHtml.includes(`href="${strandObservationMembraneSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${strandObservationMembraneGuidePath}"`) ||
+      expected.protocol !== record.protocol || expected.membrane_id !== record.membrane_id ||
+      expected.mode !== "SAFE_OBSERVATION_ACTIVE" ||
+      expected.activations?.public_controls !== "ACTIVE_STATIC_PUBLIC" ||
+      expected.activations?.offline_verification !== "ACTIVE" ||
+      expected.activations?.synthetic_simulation !== "ACTIVE" ||
+      expected.activations?.observe_live_available !== true ||
+      expected.activations?.observe_live_state !== "AVAILABLE_EXPLICIT_LOCAL_CALL" ||
+      expected.activations?.background_watch !== false ||
+      expected.activations?.invocation !== "EXPLICIT_LOCAL_CALL_ONLY" ||
+      expected.urls?.record_url !== STRAND_OBSERVATION_MEMBRANE_URL ||
+      expected.urls?.schema_url !== STRAND_OBSERVATION_MEMBRANE_SCHEMA_URL ||
+      expected.urls?.guide_url !== STRAND_OBSERVATION_MEMBRANE_GUIDE_URL ||
+      expected.commands?.observe_live !== "./kingdom strand-observation observe-live --json" ||
+      expected.fixed_origin?.origin !== "https://thekingdom.dev:443" ||
+      expected.fixed_origin?.scope_basis !== "PUBLISHER_DECLARED_EXACT_ORIGIN_NOT_OWNER_VERIFIED" ||
+      expected.fixed_origin?.caller_supplied_url !== false ||
+      expected.fixed_origin?.discovery_expansion_allowed !== false ||
+      expected.fixed_origin?.cross_origin_redirect_allowed !== false ||
+      !isDeepStrictEqual(expected.live_plan?.routes, STRAND_OBSERVATION_LIVE_ROUTES) ||
+      expected.live_plan?.limits?.maximum_transactions !== 4 ||
+      expected.live_plan?.limits?.maximum_dns_resolution_attempts !== 4 ||
+      expected.live_plan?.limits?.concurrency !== 1 ||
+      expected.live_plan?.limits?.retries !== 0 ||
+      expected.live_plan?.limits?.redirect_mode !== "MANUAL_FAIL_CLOSED_DO_NOT_FOLLOW" ||
+      expected.effects?.read_only_network_observation_on_explicit_live_call !== true ||
+      expected.effects?.remote_server_or_provider_logging_may_occur !== true ||
+      expected.effects?.remote_server_or_provider_processing_may_occur !== true ||
+      expected.effects?.import_network_requests !== 0 ||
+      expected.effects?.status_network_requests !== 0 ||
+      expected.effects?.maximum_explicit_live_http_transactions !== 4 ||
+      expected.effects?.maximum_explicit_live_dns_resolution_attempts !== 4 ||
+      falseEffects.some((key) => expected.effects?.[key] !== false) ||
+      expected.integrity?.digest !== STRAND_OBSERVATION_MEMBRANE_DIGEST ||
+      expected.integrity?.audit_state !== "FROZEN" ||
+      expected.integrity?.byte_sha256 !== STRAND_OBSERVATION_MEMBRANE_BYTE_SHA256 ||
+      expected.integrity?.schema_byte_sha256 !== STRAND_OBSERVATION_MEMBRANE_SCHEMA_BYTE_SHA256 ||
+      expected.integrity?.guide_byte_sha256 !== STRAND_OBSERVATION_MEMBRANE_GUIDE_BYTE_SHA256 ||
+      forbiddenActionKeys.some((key) => Object.hasOwn(expected, key))) {
+      throw new Error("STRAND Observation Membrane activation, fixed-origin scope, four-route plan, provider caveat, discovery, or zero-consequence boundary drifted");
     }
   }
 
@@ -4133,6 +4323,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       !isDeepStrictEqual(liveKingdom?.mirror_information_control, expectedMirrorInformationControl!)) {
     throw new Error("derived kingdom.json did not preserve MIRROR Information Control discovery");
   }
+  if (strandObservationMembraneActive &&
+      !isDeepStrictEqual(liveKingdom?.strand_observation_membrane, expectedStrandObservationMembrane!)) {
+    throw new Error("derived kingdom.json did not preserve STRAND Observation Membrane discovery");
+  }
   if (explorationDeepWingActive &&
       !isDeepStrictEqual(liveKingdom?.zero_empty_seat, expectedZeroEmptySeat!)) {
     throw new Error("derived kingdom.json did not preserve ZERO Empty Seat discovery");
@@ -4248,7 +4442,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 discovery · REVISE/non-promotion and exploration/ZERO/STRING-CRAWL/TRACE-LABS/MIRROR/cultural/form/being/theology authority/KARMA boundaries · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane discovery · REVISE/non-promotion and exploration/ZERO/STRING-CRAWL/TRACE-LABS/OBSERVATION-MEMBRANE/MIRROR/cultural/form/being/theology authority/KARMA boundaries · observer not invoked · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

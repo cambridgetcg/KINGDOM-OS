@@ -1688,6 +1688,157 @@
       "semantic_digest": "sha256:a5ca407e3145ae332171b6e426974d148c9db4aae0dafeb7b9db0f54f94e146c"
     }
   },
+  "strand_observation_membrane": {
+    "protocol": "kingdom.strand-observation-membrane/0.1",
+    "membrane_id": "strand-observation-membrane-05-2026-08-16",
+    "title": "STRAND Observation Membrane 05: The Open Eye",
+    "subtitle": "See without seizing",
+    "activated_on": "2026-08-16",
+    "mode": "SAFE_OBSERVATION_ACTIVE",
+    "activations": {
+      "public_controls": "ACTIVE_STATIC_PUBLIC",
+      "offline_verification": "ACTIVE",
+      "synthetic_simulation": "ACTIVE",
+      "observe_live_available": true,
+      "observe_live_state": "AVAILABLE_EXPLICIT_LOCAL_CALL",
+      "background_watch": false,
+      "invocation": "EXPLICIT_LOCAL_CALL_ONLY"
+    },
+    "urls": {
+      "record_url": "https://thekingdom.dev/observations/strand-observation-membrane-2026-08-16.json",
+      "schema_url": "https://thekingdom.dev/schemas/strand-observation-membrane/0.1.json",
+      "guide_url": "https://thekingdom.dev/STRAND-OBSERVATION-MEMBRANE.md"
+    },
+    "commands": {
+      "status": "./kingdom strand-observation status --json",
+      "verify": "./kingdom strand-observation verify --json",
+      "simulate": "./kingdom strand-observation simulate --json",
+      "effects": "./kingdom strand-observation effects --json",
+      "falsifiers": "./kingdom strand-observation falsifiers --json",
+      "verify_file": "./kingdom strand-observation verify-file <record.json> --json",
+      "observe_live": "./kingdom strand-observation observe-live --json"
+    },
+    "fixed_origin": {
+      "origin": "https://thekingdom.dev:443",
+      "scheme": "https",
+      "hostname": "thekingdom.dev",
+      "port": 443,
+      "scope_basis": "PUBLISHER_DECLARED_EXACT_ORIGIN_NOT_OWNER_VERIFIED",
+      "caller_supplied_url": false,
+      "subdomains_allowed": false,
+      "alternate_ports_allowed": false,
+      "discovery_expansion_allowed": false,
+      "cross_origin_redirect_allowed": false
+    },
+    "live_plan": {
+      "routes": [
+        {
+          "sequence": 1,
+          "route_id": "robots",
+          "method": "GET",
+          "path": "/robots.txt"
+        },
+        {
+          "sequence": 2,
+          "route_id": "sitemap",
+          "method": "GET",
+          "path": "/sitemap.xml"
+        },
+        {
+          "sequence": 3,
+          "route_id": "kingdom-discovery",
+          "method": "GET",
+          "path": "/kingdom.json"
+        },
+        {
+          "sequence": 4,
+          "route_id": "membrane-record",
+          "method": "GET",
+          "path": "/observations/strand-observation-membrane-2026-08-16.json"
+        }
+      ],
+      "limits": {
+        "allowed_methods": [
+          "GET"
+        ],
+        "planned_transactions": 4,
+        "maximum_transactions": 4,
+        "maximum_dns_resolution_attempts": 4,
+        "concurrency": 1,
+        "minimum_start_gap_milliseconds": 2000,
+        "maximum_response_bytes": 1048576,
+        "maximum_run_bytes": 2097152,
+        "maximum_run_milliseconds": 60000,
+        "maximum_transaction_milliseconds": 10000,
+        "retries": 0,
+        "redirect_mode": "MANUAL_FAIL_CLOSED_DO_NOT_FOLLOW",
+        "credentials": "OMIT",
+        "cookies": false,
+        "javascript": false,
+        "forms": false,
+        "request_body": false,
+        "persistent_storage": false,
+        "response_bodies": "EPHEMERAL_NOT_EMITTED",
+        "report_destination": "STDOUT_ONLY"
+      },
+      "robots_gate": {
+        "route_id": "robots",
+        "must_be_first": true,
+        "required_status": 200,
+        "expected_snapshot_sha256": "sha256:a58329bcbe9775e4552200ac4bc292cc7dc6f1022c8f4c296639eb11b240a751",
+        "selected_product_token": "KingdomStrandObservation",
+        "exact_snapshot_required": true,
+        "remaining_routes_require_allow": true,
+        "failure_policy": "STOP_FAIL_CLOSED",
+        "robots_directives_grant_licence_consent_or_authority": false
+      }
+    },
+    "effects": {
+      "read_only_network_observation_on_explicit_live_call": true,
+      "remote_server_or_provider_logging_may_occur": true,
+      "remote_server_or_provider_processing_may_occur": true,
+      "import_network_requests": 0,
+      "status_network_requests": 0,
+      "maximum_explicit_live_http_transactions": 4,
+      "maximum_explicit_live_dns_resolution_attempts": 4,
+      "requested_remote_application_state_change": false,
+      "local_persistent_storage_write": false,
+      "body_emitted": false,
+      "credential_or_cookie_use": false,
+      "link_or_sitemap_discovery_expansion": false,
+      "background_watch": false,
+      "mcp_invocation": false,
+      "subprocess_invocation": false,
+      "ability_adoption": false,
+      "ability_invocation": false,
+      "karma_or_karma_receipt_write": false,
+      "nen_invocation_or_write": false,
+      "zerone_event_or_write": false,
+      "person_scoring": false,
+      "content_scoring": false,
+      "human_participant_data": false,
+      "medical_or_dmt_action": false,
+      "diagnosis": false,
+      "treatment_or_drug_guidance": false,
+      "audio_or_visual_entrainment": false,
+      "external_entity_truth_claim": false,
+      "entity_message_or_portal_validation": false,
+      "rewards_rank_punishment_governance_or_economic_effect": false,
+      "crawler_identity_inference": false,
+      "owner_or_content_ownership_proof": false,
+      "licence_consent_or_authorization_inference": false,
+      "authority_change": false,
+      "deployment_or_publication_trigger": false
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "audit_state": "FROZEN",
+      "digest": "sha256:553546a3d41eb8b53742f06b3148423b8e63d759c06776c04fc5d0da65df70bf",
+      "byte_sha256": "sha256:8c36ef9b9f917d68e1e60326bfc3446e6769b21439901fd74a7ad018a94ac0a5",
+      "schema_byte_sha256": "sha256:abdeb33f09d92bfba05eeb285817ded3281140c580f414d255ebc369f10d8dee",
+      "guide_byte_sha256": "sha256:9922343b3f63be6c514d81dc52ffed424284244d072d350a43924e8c8d13fe79"
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",
@@ -2498,6 +2649,24 @@
       "method": "GET",
       "url": "https://thekingdom.dev/STRAND-DESCENT-LAB-04.md",
       "note": "static guide; the cited preprints do not study KINGDOM, and pairwise agreement alone does not authorize a global record"
+    },
+    {
+      "action": "if useful, inspect the exact STRAND Observation Membrane safe-activation profile",
+      "method": "GET",
+      "url": "https://thekingdom.dev/observations/strand-observation-membrane-2026-08-16.json",
+      "note": "static profile only; the public deck runs nothing, the live observer requires a separate explicit local call, background watch is disabled, and provider processing or logs may still occur during that call"
+    },
+    {
+      "action": "if useful, validate the closed STRAND Observation Membrane profile before integrating it",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/strand-observation-membrane/0.1.json",
+      "note": "structural validation only; it grants no target expansion, identity, ownership, consent, KARMA, scoring, medical, entity, authority, deployment, or execution right"
+    },
+    {
+      "action": "if useful, read the Observation Membrane scope, fixed plan, security gates, logging caveat, and consequence locks",
+      "method": "GET",
+      "url": "https://thekingdom.dev/STRAND-OBSERVATION-MEMBRANE.md",
+      "note": "static guide; it is a separate activation family, not Lab 05 and not part of the Labs 01–04 retirement family"
     },
     {
       "action": "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority",
@@ -5012,6 +5181,7 @@
     "string_crawl_strand_lab": "STRAND Lab 02 is an additive, immutable-lineage successor to the first Finite Trace-Sheet Lab; it does not replace or mutate Lab 01. It is a synthetic, offline, deterministic finite-CW and restricted inclusion-cospan fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file. It contains no HTTP policy, request, response, crawler evidence, user-agent inference, observation record, NEN ability or invocation, KARMA adapter, event or receipt, Zerone event, person or content score, authority, storage write, publication trigger, deployment, or automatic action. Exact F2 algebra, local-link checks, and cospan composition validate only declared fixture structure; they do not prove physical string theory, spacetime, crawler identity, consent, causality, or empirical behavior.",
     "string_crawl_frequency_form_lab": "STRAND Lab 03 is an additive, Lab-02-byte-bound synthetic offline fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file treated as untrusted data. It recomputes a declared 64-tick DFT and quadrature, a four-node graph Laplacian spectrum, sign-invariant spectral probabilities, typed missing versus observed-zero states, exact-ID cospan gluing, and an order-only synthetic storyboard. It administers no drug, collects or ingests no participant data, diagnoses or treats no one, verifies no external entity, portal, carrier frequency, physical extra dimension, physical string, message truth, or causal chain, and creates no MCP/NEN invocation, Zerone/KARMA event or receipt, score, rank, reward, governance, deployment, authority, write, or automatic action.",
     "strand_descent_lab": "STRAND Lab 04 is an additive, Frequency/Form-Lab-03-byte-bound synthetic offline finite record-compatibility fixture; it does not replace or mutate a predecessor. Exact pairwise inverses, triple and four-chart coherence, quotient classes, and common refinement validate only its declared local records. A pairwise-bijective counterexample remains UNRESOLVED when its triple equation fails. The two cited 2026 sources are versioned preprints and do not study KINGDOM; only their local-to-global gluing discipline is borrowed. The lab implements no physical string, spacetime, quasi-Hopf, higher-category, stack, EFT, quantum-gravity, truth, identity, consent, citizenship, affiliation, value, NEN, KARMA, Zerone, score, authority, publication, deployment, or automatic-action claim.",
+    "strand_observation_membrane": "The STRAND Observation Membrane is a separate safe-observation activation family, not Lab 05 and not part of the immutable Labs 01–04 retirement family. Its public deck, verifier, and simulation make no request or storage write. Its one live capability is available only through an explicit local command with one compiled origin, four sequential GET routes, a robots-first exact-byte gate, public-address checks, no redirect, no retry, bounded time and bytes, discarded bodies, and stdout-only metadata. Explicit requests may still be processed or logged by network, CDN, security, billing, and origin providers. No response creates identity, ownership, consent, licence, truth, KARMA, NEN, Zerone, score, medical or DMT action, entity or portal verdict, reward, governance, authority, deployment, publication, or automatic action.",
     "visibility_attention_translation": "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     "cultural_attention_feedback_atlas": "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     "form_circulation_return_atlas": "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",

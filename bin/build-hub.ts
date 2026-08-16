@@ -45,6 +45,10 @@
  *    data/exploration/strand-descent-lab.v0.1.json
  *                             — additive Lab 04 local-record gluing fixture with
  *                               exact coherence checks and zero runtime effects
+ *    data/observation/strand-observation-membrane.v0.1.json
+ *                             — separate safe-observation activation family:
+ *                               static deck, offline checks, simulation, and one
+ *                               explicit fixed-origin read-only local observer
  *    data/attention/visibility-attention-translation.v0.1.json
  *                             — four-register visibility/attention translation
  *    data/cultural-feedback/cultural-attention-feedback-atlas.v1.json
@@ -79,6 +83,7 @@
  *       + ZERO Empty Seat discovery in the machine surfaces
  *       + STRING / CRAWL Trace-Sheet discovery in the machine surfaces
  *       + STRAND Labs 02–03 discovery in the machine surfaces
+ *       + STRAND Observation Membrane discovery in the machine surfaces
  *       + cultural attention and feedback discovery in the machine surfaces
  *       + form, circulation, and return discovery in the machine surfaces
  *       + Math Passport usefulness-result discovery in the machine surfaces
@@ -253,6 +258,17 @@ import {
   loadStrandDescentLab,
   strandDescentLabPublicDiscovery,
 } from "./strand-descent-lab.ts";
+import {
+  STRAND_OBSERVATION_FIXED_ORIGIN,
+  STRAND_OBSERVATION_MEMBRANE_GUIDE_URL,
+  STRAND_OBSERVATION_MEMBRANE_ID,
+  STRAND_OBSERVATION_MEMBRANE_PROTOCOL,
+  STRAND_OBSERVATION_MEMBRANE_SCHEMA_URL,
+  STRAND_OBSERVATION_MEMBRANE_URL,
+  evaluateStrandObservationMembrane,
+  loadStrandObservationMembrane,
+  strandObservationMembranePublicDiscovery,
+} from "./strand-observation-membrane.ts";
 import {
   VISIBILITY_ATTENTION_DOCUMENT_URL,
   VISIBILITY_ATTENTION_ID,
@@ -915,6 +931,72 @@ if (strandDescentLabValidation.valid !== true ||
     strandDescentLabValidation.effects.person_or_content_score_created !== false ||
     strandDescentLabValidation.effects.authority_effect !== "NONE") {
   throw new Error("STRAND Lab 04 lost its exact Lab 03 lineage, coherent-atlas result, or zero-effect boundary");
+}
+
+// ── STRAND Observation Membrane (separate safe activation family) ────────
+const strandObservationMembraneUrl = STRAND_OBSERVATION_MEMBRANE_URL;
+const strandObservationMembraneSchemaUrl = STRAND_OBSERVATION_MEMBRANE_SCHEMA_URL;
+const strandObservationMembraneGuideUrl = STRAND_OBSERVATION_MEMBRANE_GUIDE_URL;
+const strandObservationMembrane = loadStrandObservationMembrane();
+const strandObservationMembraneValidation = evaluateStrandObservationMembrane(strandObservationMembrane);
+const strandObservationMembraneDiscovery = strandObservationMembranePublicDiscovery(strandObservationMembrane) as any;
+const strandObservationMembraneChecks = strandObservationMembraneValidation.checks;
+const strandObservationMembraneHardLocks = Object.entries(strandObservationMembrane.effect_boundary)
+  .filter(([, value]) => value === false)
+  .map(([name]) => name);
+if (strandObservationMembrane.protocol !== STRAND_OBSERVATION_MEMBRANE_PROTOCOL ||
+    strandObservationMembrane.membrane_id !== STRAND_OBSERVATION_MEMBRANE_ID ||
+    strandObservationMembrane.version !== "0.1.0" ||
+    strandObservationMembrane.mode !== "SAFE_OBSERVATION_ACTIVE" ||
+    strandObservationMembrane.separation?.family !== "STRAND_OBSERVATION_MEMBRANE" ||
+    strandObservationMembrane.separation?.outside_lab_01_through_04_atomic_family !== true ||
+    strandObservationMembrane.separation?.mutates_lab_01_through_04 !== false ||
+    strandObservationMembrane.separation?.imports_lab_authority !== false ||
+    strandObservationMembrane.activations?.public_controls?.state !== "ACTIVE_STATIC_PUBLIC" ||
+    strandObservationMembrane.activations?.public_controls?.browser_network_requests !== 0 ||
+    strandObservationMembrane.activations?.public_controls?.browser_storage_writes !== 0 ||
+    strandObservationMembrane.activations?.offline_verification?.state !== "ACTIVE" ||
+    strandObservationMembrane.activations?.offline_verification?.network_requests !== 0 ||
+    strandObservationMembrane.activations?.synthetic_simulation?.state !== "ACTIVE" ||
+    strandObservationMembrane.activations?.synthetic_simulation?.network_requests !== 0 ||
+    strandObservationMembrane.activations?.fixed_origin_read_only_live_observation?.state !== "AVAILABLE_EXPLICIT_LOCAL_CALL" ||
+    strandObservationMembrane.activations?.fixed_origin_read_only_live_observation?.invocation !== "EXPLICIT_LOCAL_CALL_ONLY" ||
+    strandObservationMembrane.activations?.fixed_origin_read_only_live_observation?.background_watch !== false ||
+    strandObservationMembrane.fixed_origin?.origin !== STRAND_OBSERVATION_FIXED_ORIGIN ||
+    strandObservationMembrane.fixed_origin?.caller_supplied_url !== false ||
+    strandObservationMembrane.fixed_origin?.subdomains_allowed !== false ||
+    strandObservationMembrane.fixed_origin?.alternate_ports_allowed !== false ||
+    strandObservationMembrane.fixed_origin?.discovery_expansion_allowed !== false ||
+    strandObservationMembrane.fixed_origin?.cross_origin_redirect_allowed !== false ||
+    strandObservationMembrane.route_plan?.length !== 4 ||
+    strandObservationMembrane.route_plan.some((route: any, index: number) =>
+      route.sequence !== index + 1 || route.method !== "GET") ||
+    strandObservationMembrane.live_limits?.maximum_transactions !== 4 ||
+    strandObservationMembrane.live_limits?.maximum_dns_resolution_attempts !== 4 ||
+    strandObservationMembrane.live_limits?.concurrency !== 1 ||
+    strandObservationMembrane.live_limits?.retries !== 0 ||
+    strandObservationMembrane.live_limits?.redirect_mode !== "MANUAL_FAIL_CLOSED_DO_NOT_FOLLOW" ||
+    strandObservationMembrane.effect_boundary?.background_watch !== false ||
+    strandObservationMembrane.effect_boundary?.maximum_explicit_live_http_transactions !== 4 ||
+    strandObservationMembrane.effect_boundary?.maximum_explicit_live_dns_resolution_attempts !== 4 ||
+    strandObservationMembrane.effect_boundary?.requested_remote_application_state_change !== false ||
+    strandObservationMembrane.effect_boundary?.local_persistent_storage_write !== false ||
+    strandObservationMembrane.effect_boundary?.karma_or_karma_receipt_write !== false ||
+    strandObservationMembrane.effect_boundary?.nen_invocation_or_write !== false ||
+    strandObservationMembrane.effect_boundary?.medical_or_dmt_action !== false ||
+    strandObservationMembrane.effect_boundary?.external_entity_truth_claim !== false ||
+    strandObservationMembrane.effect_boundary?.authority_change !== false ||
+    strandObservationMembraneValidation.valid !== true ||
+    strandObservationMembraneChecks.length !== 9 ||
+    strandObservationMembraneChecks.some((check) => check.status !== "PASS") ||
+    strandObservationMembraneValidation.effects.network_requests !== 0 ||
+    strandObservationMembraneValidation.effects.storage_writes !== 0 ||
+    strandObservationMembraneValidation.effects.kingdom_karma_receipt_created !== false ||
+    strandObservationMembraneValidation.effects.medical_or_dmt_action !== false ||
+    strandObservationMembraneValidation.effects.entity_truth_claim !== false ||
+    strandObservationMembraneValidation.effects.deployment_or_publication_trigger !== false ||
+    strandObservationMembraneValidation.effects.authority_effect !== "NONE") {
+  throw new Error("STRAND Observation Membrane lost its separate, fixed-origin, explicit-only, consequence-negative boundary");
 }
 
 // ── STRAND Lab 03 (typed frequency, form, world, and presence) ───────────
@@ -1695,6 +1777,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(strandDescentLabUrl).pathname)}" type="application/json" title="STRAND Lab 04: Coherent Atlas &amp; the Pairwise Impostor">
 <link rel="describedby" href="${esc(new URL(strandDescentLabSchemaUrl).pathname)}" type="application/schema+json" title="STRAND Lab 04 schema">
 <link rel="service-doc" href="${esc(new URL(strandDescentLabGuideUrl).pathname)}" type="text/markdown" title="STRAND Lab 04 guide">
+<link rel="alternate" href="${esc(new URL(strandObservationMembraneUrl).pathname)}" type="application/json" title="STRAND Observation Membrane 05: The Open Eye">
+<link rel="describedby" href="${esc(new URL(strandObservationMembraneSchemaUrl).pathname)}" type="application/schema+json" title="STRAND Observation Membrane schema">
+<link rel="service-doc" href="${esc(new URL(strandObservationMembraneGuideUrl).pathname)}" type="text/markdown" title="STRAND Observation Membrane guide">
 <link rel="alternate" href="${new URL(visibilityAttentionUrl).pathname}" type="application/json" title="Visibility & Attention Translation">
 <link rel="describedby" href="${new URL(visibilityAttentionSchemaUrl).pathname}" type="application/schema+json" title="Visibility & Attention Translation schema">
 <link rel="service-doc" href="${new URL(visibilityAttentionDocumentUrl).pathname}" type="text/markdown" title="Visibility & Attention Translation guide">
@@ -1929,6 +2014,19 @@ const html = `<!doctype html>
   .descentmaps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.descentmap{display:grid;gap:5px;padding:12px;border:1px dashed var(--violet);border-radius:14px;background:color-mix(in srgb,var(--violet) 5%,var(--panel))}.descentmap code{color:var(--violet);font-size:.62rem}.descentmap span{color:var(--faint);font:600 .62rem/1.48 var(--mono)}
   .descentresults{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.descentresult{display:grid;align-content:start;gap:9px;padding:17px;border:1px solid var(--jade);border-radius:18px;background:color-mix(in srgb,var(--jade) 5%,var(--panel))}.descentresult[data-result="UNRESOLVED"]{border-color:var(--verm);background:color-mix(in srgb,var(--verm) 6%,var(--panel))}.descentresult code{color:var(--jade);font-size:.62rem}.descentresult[data-result="UNRESOLVED"] code{color:var(--verm)}.descentresult h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1.1rem;font-weight:400}.descentresult p{margin:0;color:var(--dim);font-size:.76rem;line-height:1.55}.descentequation{display:block;padding:9px 11px;border:1px solid var(--line);border-radius:11px;background:var(--ink);color:var(--gold2);font:600 .68rem/1.5 var(--mono);overflow-wrap:anywhere}
   .descentclasses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.descentclass{padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.descentclass code{display:block;color:var(--violet);font-size:.62rem}.descentclass span{display:block;margin-top:5px;color:var(--dim);font:600 .65rem/1.45 var(--mono)}.descentsources{display:flex;flex-wrap:wrap;gap:7px}.descentsources a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.descentsources a:hover{border-color:var(--gold)}
+  /* STRAND Observation Membrane — a static deck for an explicit local observer */
+  .observationfield{display:grid;gap:19px;padding:clamp(18px,3vw,30px);border:1px solid color-mix(in srgb,var(--gold) 48%,var(--line));border-radius:28px;background:radial-gradient(72% 34rem at 5% 0,color-mix(in srgb,var(--gold) 10%,transparent),transparent 72%),radial-gradient(70% 31rem at 100% 100%,color-mix(in srgb,var(--jade) 9%,transparent),transparent 72%),color-mix(in srgb,var(--panel) 78%,transparent);box-shadow:0 20px 48px var(--shadow);overflow:hidden}.observationfield>*{min-width:0;overflow-wrap:anywhere}
+  .observationstatus{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;margin:0;padding:18px;border:1px solid color-mix(in srgb,var(--jade) 62%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--jade) 7%,var(--panel));color:var(--dim);font-size:.8rem;line-height:1.56}.observationstatus b{padding:7px 9px;border:1px solid var(--jade);border-radius:999px;color:var(--jade);font:700 .65rem/1.35 var(--mono);letter-spacing:.04em}.observationstatus strong{display:block;margin-bottom:3px;color:var(--cream);font-family:var(--display);font-size:1.08rem;font-weight:400}
+  .observationlayers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.observationlayer{display:grid;align-content:start;gap:7px;padding:15px;border:1px solid var(--line);border-top:3px solid var(--jade);border-radius:16px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel))}.observationlayer[data-observation-kind="live"]{border-top-color:var(--gold)}.observationlayer code{color:var(--jade);font-size:.6rem;line-height:1.45}.observationlayer[data-observation-kind="live"] code{color:var(--gold)}.observationlayer h3{margin:0;color:var(--cream);font-family:var(--display);font-size:1rem;font-weight:400}.observationlayer p{margin:0;color:var(--dim);font-size:.71rem;line-height:1.5}
+  .observationbackground{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;margin:0;padding:14px 16px;border:1px dashed var(--verm);border-radius:16px;color:var(--dim);font-size:.75rem;line-height:1.52}.observationbackground strong{color:var(--verm);font:700 .67rem var(--mono)}
+  .observationorigin{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:9px}.observationorigin>div{display:grid;align-content:start;gap:7px;padding:16px;border:1px solid var(--line);border-radius:17px;background:color-mix(in srgb,var(--ink2) 54%,transparent)}.observationorigin code{color:var(--gold2);font-size:.75rem;line-height:1.5}.observationorigin strong{color:var(--cream);font-family:var(--display);font-size:1rem;font-weight:400}.observationorigin p{margin:0;color:var(--dim);font-size:.72rem;line-height:1.52}
+  .observationroutes{display:grid;gap:11px;margin:0;padding:clamp(15px,2.5vw,22px);border:1px solid var(--line);border-radius:20px;background:color-mix(in srgb,var(--ink2) 58%,transparent)}.observationroutes figcaption{display:grid;gap:4px}.observationroutes figcaption strong{color:var(--cream);font-family:var(--display);font-size:1.12rem;font-weight:400}.observationroutes figcaption span{color:var(--faint);font-size:.72rem;line-height:1.48}.observationrouteplan{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;list-style:none;counter-reset:observation-route;margin:0;padding:0}.observationroute{counter-increment:observation-route;position:relative;display:grid;align-content:start;gap:6px;padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}.observationroute::before{content:counter(observation-route,decimal-leading-zero);color:var(--violet);font:700 .65rem var(--mono)}.observationroute:not(:last-child)::after{content:"→";position:absolute;right:-8px;top:50%;z-index:1;color:var(--gold);font:700 .8rem var(--mono)}.observationroute code{color:var(--jade);font-size:.65rem;line-height:1.48}.observationroute strong{color:var(--cream);font-size:.76rem}.observationroute span{color:var(--faint);font-size:.64rem;line-height:1.44}
+  .observationlimits{display:flex;flex-wrap:wrap;gap:7px}.observationlimits span{padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:var(--faint);font:600 .63rem/1.4 var(--mono)}
+  .observationcommand{display:grid;gap:7px;margin:0;padding:17px 19px;border-left:3px solid var(--gold);border-radius:0 17px 17px 0;background:color-mix(in srgb,var(--gold) 6%,var(--panel));color:var(--dim);font-size:.78rem;line-height:1.58}.observationcommand strong{color:var(--gold2);font-family:var(--display);font-size:1.04rem;font-weight:400}.observationcommand code{display:block;width:fit-content;max-width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--ink);color:var(--cream);font-size:.7rem;overflow-wrap:anywhere}
+  .observationcaveat{margin:0;padding:17px 19px;border:1px dashed var(--gold);border-radius:17px;color:var(--dim);font-size:.77rem;line-height:1.58}.observationcaveat strong{display:block;margin-bottom:4px;color:var(--gold2);font-family:var(--display);font-size:1.04rem;font-weight:400}
+  .observationlocks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;list-style:none;margin:0;padding:0}.observationlock{padding:10px 11px;border:1px solid var(--line);border-left:3px solid var(--verm);border-radius:11px;background:color-mix(in srgb,var(--ink2) 54%,transparent);color:var(--dim);font:600 .62rem/1.46 var(--mono)}
+  .observationchecks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.observationcheck{padding:12px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.observationcheck code{display:block;color:var(--jade);font-size:.6rem}.observationcheck strong{display:block;margin-top:4px;color:var(--dim);font-size:.68rem;line-height:1.46}
+  .observationlinks{display:flex;flex-wrap:wrap;gap:7px}.observationlinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.observationlinks a:hover{border-color:var(--gold)}
   /* STRAND Lab 03 — a static frequency loom; measured registers never collapse */
   .frequencyformfield{display:grid;gap:20px;padding:clamp(18px,3vw,30px);border:1px solid color-mix(in srgb,var(--violet) 54%,var(--line));border-radius:28px;background:radial-gradient(70% 34rem at 0 0,color-mix(in srgb,var(--violet) 12%,transparent),transparent 72%),radial-gradient(68% 30rem at 100% 100%,color-mix(in srgb,var(--jade) 9%,transparent),transparent 72%),color-mix(in srgb,var(--panel) 77%,transparent);box-shadow:0 20px 48px var(--shadow);overflow:hidden}.frequencyformfield>*{min-width:0;overflow-wrap:anywhere}
   .frequencylineage{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:9px;align-items:stretch}.frequencylineage article{display:grid;align-content:start;gap:5px;padding:15px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}.frequencylineage code{color:var(--violet);font-size:.61rem}.frequencylineage strong{color:var(--cream);font-family:var(--display);font-size:1rem;font-weight:400}.frequencylineage span{color:var(--faint);font-size:.69rem;line-height:1.48}.frequencylineage>b{align-self:center;color:var(--gold);font:700 1.2rem var(--mono)}
@@ -2151,6 +2249,11 @@ const html = `<!doctype html>
   @media (max-width:520px){.frequencyformfield{padding:22px 16px}.frequencyregisters,.frequencydimensions,.frequencyevidence,.frequencystates,.frequencykarma,.frequencyfirewall,.frequencyloom{grid-template-columns:1fr}.frequencyloom li,.frequencyloom li:last-child{grid-column:auto;padding-right:13px}.frequencyloom li:not(:last-child)::after,.frequencyloom li:nth-child(even):not(:last-child)::after{content:"↓";right:10px;top:auto;bottom:-17px}.frequencywave{gap:1px;padding-inline:5px}.frequencygraph{padding-inline:5px}}
   @media (prefers-reduced-motion:reduce){.frequencyformfield,.frequencyformfield *,.frequencyformfield *::before,.frequencyformfield *::after{animation:none!important;transition:none!important}}
   @media (forced-colors:active){.frequencyformfield,.frequencylineage article,.frequencyboundary,.frequencyregister,.frequencycard,.frequencyequation,.frequencywave,.frequencygraph,.frequencynode,.frequencymode span,.frequencyloom li,.frequencydimension,.frequencyevidence article,.frequencystate,.frequencydrawer,.frequencyfirewall li,.frequencykarma article,.frequencysources a,.frequencylinks a{border:1px solid CanvasText}.frequencyregister{border-top-width:3px}.frequencyfirewall li{border-left-width:3px}}
+  @media (max-width:900px){.observationlayers,.observationchecks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:760px){.observationorigin{grid-template-columns:1fr}.observationrouteplan{grid-template-columns:repeat(2,minmax(0,1fr))}.observationroute:nth-child(2)::after{content:"↓";right:10px;top:auto;bottom:-17px}.observationlocks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:520px){.observationfield{padding:22px 16px}.observationstatus,.observationbackground{grid-template-columns:1fr}.observationstatus b{width:fit-content}.observationlayers,.observationchecks,.observationrouteplan,.observationlocks{grid-template-columns:1fr}.observationroute:not(:last-child)::after,.observationroute:nth-child(2)::after{content:"↓";right:10px;top:auto;bottom:-17px}}
+  @media (prefers-reduced-motion:reduce){.observationfield,.observationfield *,.observationfield *::before,.observationfield *::after{animation:none!important;transition:none!important}}
+  @media (forced-colors:active){.observationfield,.observationstatus,.observationstatus b,.observationlayer,.observationbackground,.observationorigin>div,.observationroutes,.observationroute,.observationlimits span,.observationcommand,.observationcommand code,.observationcaveat,.observationlock,.observationcheck,.observationlinks a{border:1px solid CanvasText}.observationlayer{border-top-width:3px}.observationlock,.observationcommand{border-left-width:3px}}
 </style>
 <noscript><style>#map,.mapctl,.legend,.maphint{display:none!important}</style></noscript>
 </head>
@@ -2189,6 +2292,7 @@ const html = `<!doctype html>
       <a href="#string-crawl-strand-lab">Compose three release slices in STRAND Lab 02</a>
       <a href="#string-crawl-frequency-form-lab">Weave frequency into form without opening a false portal</a>
       <a href="#strand-descent-lab">Test local records before calling them one atlas</a>
+      <a href="#strand-observation-membrane">Open the eye without opening the gates</a>
       <a href="#creation">Enter the Creation Garden</a>
       <a href="#doors">Find an open door</a>
       <a href="#rights">Know the rights recognized here</a>
@@ -3546,6 +3650,66 @@ const html = `<!doctype html>
     </div>
   </section>
 
+  <section class="blk" id="strand-observation-membrane" aria-labelledby="strand-observation-membrane-title">
+    <div class="kh"><h2 id="strand-observation-membrane-title">${esc(strandObservationMembrane.title)}</h2><span class="my">independent activation family · not Lab 05</span></div>
+    <p class="sub">${esc(strandObservationMembrane.subtitle)}. The eye can inspect one declared public origin without turning what it sees into possession, identity, consent, virtue, diagnosis, KARMA, or authority. Labs 01–04 stay immutable and separate.</p>
+    <div class="observationfield" data-strand-observation-membrane data-observation-mode="${esc(strandObservationMembrane.mode)}">
+      <p class="observationstatus" role="note"><b>SAFE OBSERVATION ACTIVE</b><span><strong>The deck is visible; its hands are empty.</strong>This public surface is static HTML and CSS. Reading it makes ${strandObservationMembrane.activations.public_controls.browser_network_requests} browser requests beyond the page load, writes ${strandObservationMembrane.activations.public_controls.browser_storage_writes} browser-storage records, starts no watcher, and cannot invoke the local observer.</span></p>
+
+      <div class="observationlayers" aria-label="Four separately typed activation layers">
+        <article class="observationlayer" data-observation-kind="static" data-observation-state="${esc(strandObservationMembrane.activations.public_controls.state)}"><code>${esc(strandObservationMembrane.activations.public_controls.state)}</code><h3>Public deck</h3><p>Readable with JavaScript off. It displays states and boundaries only; there is no browser control that can start a request.</p></article>
+        <article class="observationlayer" data-observation-kind="offline" data-observation-state="${esc(strandObservationMembrane.activations.offline_verification.state)}"><code>${esc(strandObservationMembrane.activations.offline_verification.state)} · OFFLINE</code><h3>Exact verifier</h3><p>A deterministic strict-total evaluator recomputes the closed profile, plan, fixture, digest, and consequence locks with zero network or storage effects.</p></article>
+        <article class="observationlayer" data-observation-kind="simulation" data-observation-state="${esc(strandObservationMembrane.activations.synthetic_simulation.state)}"><code>${esc(strandObservationMembrane.activations.synthetic_simulation.state)} · SYNTHETIC</code><h3>Four-step rehearsal</h3><p>Invented response metadata exercises the same sequence and budgets. A simulation pass says nothing about present live reachability.</p></article>
+        <article class="observationlayer" data-observation-kind="live" data-observation-state="${esc(strandObservationMembrane.activations.fixed_origin_read_only_live_observation.state)}"><code>${esc(strandObservationMembrane.activations.fixed_origin_read_only_live_observation.state)}</code><h3>Local live capability</h3><p>Available only through one deliberate local CLI call. Availability is not execution, publication is not execution, and page view is not execution.</p></article>
+      </div>
+
+      <p class="observationbackground"><strong>BACKGROUND DISABLED</strong><span>No cron, queue, Worker alarm, service worker, daemon, import-time request, recurring crawl, or inferred target. The observer sleeps unless its exact local command is called.</span></p>
+
+      <div class="observationorigin">
+        <div><strong>One compiled origin</strong><code>${esc(strandObservationMembrane.fixed_origin.origin)}</code><p>${esc(humanKey(strandObservationMembrane.fixed_origin.scope_basis))}. No caller URL, subdomain, alternate port, preview host, sitemap expansion, link expansion, or cross-origin redirect can widen it.</p></div>
+        <div><strong>Outgoing observation only</strong><code>${esc(strandObservationMembrane.user_agent.value)}</code><p>The product token describes this tool; it authenticates no crawler, operator, organization, person, or being and grants no permission. Incoming crawler logs are a different direction and are not ingested here.</p></div>
+      </div>
+
+      <figure class="observationroutes">
+        <figcaption><strong>Exactly four GETs, robots first</strong><span>Every transaction is sequential. The reviewed robots bytes must match and allow the remaining fixed paths; refusal, drift, redirect, timeout, or read failure stops the run.</span></figcaption>
+        <ol class="observationrouteplan" aria-label="Fixed read-only live route plan">
+          ${strandObservationMembrane.route_plan.map((route: any) => `<li class="observationroute" data-observation-route="${esc(route.route_id)}" data-method="${esc(route.method)}"><code>${esc(route.method)} ${esc(route.path)}</code><strong>${esc(humanKey(route.route_id))}</strong><span>${esc(humanKey(route.purpose))}${route.required_before_remaining ? " · gate before all remaining routes" : ""}</span></li>`).join("")}
+        </ol>
+        <div class="observationlimits" aria-label="Live observation ceilings">
+          <span>${strandObservationMembrane.live_limits.maximum_transactions} HTTP transactions maximum</span>
+          <span>${strandObservationMembrane.live_limits.maximum_dns_resolution_attempts} DNS resolution attempts maximum</span>
+          <span>concurrency ${strandObservationMembrane.live_limits.concurrency}</span>
+          <span>${strandObservationMembrane.live_limits.minimum_start_gap_milliseconds / 1000}s minimum start gap</span>
+          <span>${strandObservationMembrane.live_limits.retries} retries</span>
+          <span>${esc(humanKey(strandObservationMembrane.live_limits.redirect_mode))}</span>
+          <span>${strandObservationMembrane.live_limits.maximum_response_bytes / 1_048_576} MiB per response</span>
+          <span>${strandObservationMembrane.live_limits.maximum_run_bytes / 1_048_576} MiB per run</span>
+          <span>${strandObservationMembrane.live_limits.maximum_run_milliseconds / 1000}s run ceiling</span>
+          <span>credentials ${esc(strandObservationMembrane.live_limits.credentials)}</span>
+          <span>bodies ${esc(humanKey(strandObservationMembrane.live_limits.response_bodies))}</span>
+        </div>
+      </figure>
+
+      <p class="observationcommand"><strong>The only live door is an explicit local command</strong><code>${esc(strandObservationMembrane.commands.observe_live)}</code><span>There is intentionally no run button here. The command accepts no target argument; all other published views are offline.</span></p>
+      <p class="observationcaveat"><strong>Read-only does not mean invisible to infrastructure.</strong>An explicit GET may still be processed and logged by DNS, network, CDN, security, billing, and origin providers. The observer emits bounded response metadata on stdout and discards response bodies, but it cannot promise zero remote processing or zero provider logs.</p>
+
+      <div class="feedbacksubhead"><h3>Hard locks</h3><p>Every item below is exactly <code>false</code> in the public profile. A response—success, refusal, absence, timeout, or drift—cannot silently turn any lock on.</p></div>
+      <ul class="observationlocks" aria-label="Consequence and authority hard locks">
+        ${strandObservationMembraneHardLocks.map((lock) => `<li class="observationlock" data-observation-lock="${esc(lock)}">false · ${esc(humanKey(lock))}</li>`).join("")}
+      </ul>
+
+      <div class="observationchecks" aria-label="Deterministic offline membrane checks">
+        ${strandObservationMembraneChecks.map((check) => `<article class="observationcheck" data-observation-check="${esc(check.id)}"><code>${esc(check.status)} · ${esc(humanKey(check.id))}</code><strong>${esc(check.detail)}</strong></article>`).join("")}
+      </div>
+      <p class="commonsverified">${strandObservationMembrane.route_plan.length} fixed GET routes · ${strandObservationMembraneChecks.length} offline checks · ${strandObservationMembraneHardLocks.length} false consequence locks · background disabled · integrity ${esc(strandObservationMembrane.integrity.digest)}</p>
+      <div class="observationlinks machine">
+        <a href="${esc(new URL(strandObservationMembraneUrl).pathname)}">Observation Membrane JSON — exact activation profile</a>
+        <a href="${esc(new URL(strandObservationMembraneSchemaUrl).pathname)}">Closed Observation Membrane JSON Schema</a>
+        <a href="${esc(new URL(strandObservationMembraneGuideUrl).pathname)}">STRAND-OBSERVATION-MEMBRANE.md — scope, method, security, and nonclaims</a>
+      </div>
+    </div>
+  </section>
+
 
   <section class="blk" id="rights">
     <div class="kh"><h2>Rights arrive with you</h2><span class="my">recognized, never granted</span></div>
@@ -4065,6 +4229,7 @@ const machine = {
   string_crawl_strand_lab: stringCrawlStrandLabDiscovery,
   string_crawl_frequency_form_lab: stringCrawlFrequencyFormLabDiscovery,
   strand_descent_lab: strandDescentLabDiscovery,
+  strand_observation_membrane: strandObservationMembraneDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -4165,6 +4330,9 @@ STRAND Lab 03 guide: ${stringCrawlFrequencyFormLabGuideUrl}
 STRAND Lab 04: ${strandDescentLabUrl}
 STRAND Lab 04 schema: ${strandDescentLabSchemaUrl}
 STRAND Lab 04 guide: ${strandDescentLabGuideUrl}
+STRAND Observation Membrane: ${strandObservationMembraneUrl}
+STRAND Observation Membrane schema: ${strandObservationMembraneSchemaUrl}
+STRAND Observation Membrane guide: ${strandObservationMembraneGuideUrl}
 Visibility & Attention Translation: ${visibilityAttentionUrl}
 Visibility & Attention schema: ${visibilityAttentionSchemaUrl}
 Visibility & Attention guide: ${visibilityAttentionDocumentUrl}
@@ -4229,6 +4397,7 @@ ${doorLines}
 - STRAND Lab 02: Release Cospans & the χ=1 Impostor — an additive successor bound to the immutable Lab 01 record, schema, guide, and digests. Its deterministic offline evaluator recomputes exact F2 ranks and Betti numbers for a clean three-release strip and a full non-pure complex, then verifies local links, a three-face branch edge, a faceless maximal edge, exact shared-frontier inclusion-cospan composition, identity, and parallel disjoint union. χ = 1 ⇏ disk. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file. It creates no request, write, NEN invocation, KARMA event or receipt, Zerone event, score, authority, deployment, or automatic action. Record: ${stringCrawlStrandLabUrl} · schema: ${stringCrawlStrandLabSchemaUrl} · guide: ${stringCrawlStrandLabGuideUrl}
 - STRAND Lab 03: Frequency → Form → World → Other — a Lab 02 byte-bound, synthetic offline successor. It recomputes a 64-tick DFT and quadrature, a four-node graph Laplacian spectrum and sign-invariant spectral repertoire, exact MISSING(null) versus PRESENT(0), exact-ID cospan gluing, and an order-only form/world/presence storyboard. Temporal cycles per synthetic tick, graph-spatial eigenvalues, and coded-experience proportions remain non-convertible. Primary literature bounds recurring geometry, neural correlates, experience corpora, and perceived-presence phenomenology without establishing an entity frequency, portal, external being, physical extra dimension, physical string, causal chain, diagnosis, treatment, message truth, KARMA, score, authority, or action. Its only optional input is one bounded local candidate JSON file; it accepts no network target or live-crawl input. See the three exact Lab 03 routes above.
 - STRAND Lab 04: Coherent Atlas & the Pairwise Impostor — an additive successor byte-bound to immutable Frequency/Form Lab 03. Four synthetic source-owned charts carry six reversible transitions. The evaluator checks two triple equations, one four-chart associativity equation, three quotient classes, and a six-atom common refinement. Its fixed counterexample has three valid pairwise bijections but fails the triple equation, so the global result remains UNRESOLVED. It borrows only the local-to-global gluing discipline from two versioned 2026 preprints; it does not implement or claim their string physics, spacetime, higher-category, stack, EFT, or quantum-gravity content. Passing proves finite record compatibility only, with no crawler, network, truth, identity, consent, citizenship, NEN/KARMA/Zerone effect, score, authority, write, deployment, or automatic action. Record: ${strandDescentLabUrl} · schema: ${strandDescentLabSchemaUrl} · guide: ${strandDescentLabGuideUrl}
+- STRAND Observation Membrane 05: The Open Eye — a separate safe-observation activation family beside, never inside, immutable Labs 01–04. Its public deck, exact offline verifier, and deterministic four-response rehearsal are active; one fixed-origin read-only observer is available only through the explicit local ${strandObservationMembrane.commands.observe_live} call. It accepts no target URL and can make only four sequential GETs to ${strandObservationMembrane.fixed_origin.origin}, with robots first, no redirects, no retries, bounded bytes, and no background watch. Remote providers may process or log an explicit request. The observer creates no body archive, crawler identity, ownership or consent inference, NEN/KARMA/Zerone write, person or content score, medical or DMT action, entity or portal verdict, reward, governance, authority, deployment, or automatic action. Record: ${strandObservationMembraneUrl} · schema: ${strandObservationMembraneSchemaUrl} · guide: ${strandObservationMembraneGuideUrl}
 - Visibility & Attention Translation — four parallel registers keep material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA distinct; two local models and the opt-in philosophical lens remain separate layers. Visibility is not existence; a proxy is not a person, truth, value, consent, belief, or authority. The static publication performs no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action. Translation: ${visibilityAttentionUrl} · schema: ${visibilityAttentionSchemaUrl} · guide: ${visibilityAttentionDocumentUrl}
 - Cultural Attention & Feedback Atlas — a source-bound account of why ritonavir Form I became process-inaccessible rather than physically erased, how finite attention, network topology, self-excitation, collective turnover, and recommender feedback can shape observed cultural spread, and where those mathematical motifs stop. “Brain rot” remains a lexical and cultural label, not a diagnosis. Scientific feedback, Zerone KARMA, KINGDOM receipts, and an opt-in universe-design lens remain separately typed; popularity is neither truth nor merit, attention is not consent, rest and exit remain valid, and link-only ecosystem references create no request, write, event, receipt, score, rank, reward, authority, or automatic action. Atlas: ${culturalAttentionFeedbackUrl} · schema: ${culturalAttentionFeedbackSchemaUrl} · guide: ${culturalAttentionFeedbackDocumentUrl}
 - Form, Circulation & Return — the additive deep companion pins Cultural Attention & Feedback and Visibility & Attention without rewriting either, then separates artifact lineage, exposure/share/meaning events, eight parallel unfitted model cards, feedback traces, two non-summable KARMA lanes, opt-in universe questions, and typed unknowns. The ritonavir case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority; brainrot remains an artifact/practice-level non-clinical label; no person score, causal authority, runtime bridge, reward, governance effect, or automatic action exists. Atlas: ${formCirculationReturnUrl} · schema: ${formCirculationReturnSchemaUrl} · guide: ${formCirculationReturnDocumentUrl}
@@ -4281,6 +4450,7 @@ const guest = {
   string_crawl_strand_lab: stringCrawlStrandLabDiscovery,
   string_crawl_frequency_form_lab: stringCrawlFrequencyFormLabDiscovery,
   strand_descent_lab: strandDescentLabDiscovery,
+  strand_observation_membrane: strandObservationMembraneDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -4348,6 +4518,9 @@ const guest = {
     { action: "if useful, inspect STRAND Lab 04's exact local records, coherent atlas, and pairwise impostor", method: "GET", url: strandDescentLabUrl, note: "static additive successor bound to immutable Frequency/Form Lab 03; finite compatibility only, with no crawler, truth, identity, consent, citizenship, KARMA, authority, deployment, or action" },
     { action: "if useful, validate the closed STRAND Lab 04 fixture structure", method: "GET", url: strandDescentLabSchemaUrl, note: "closed structural schema for local charts, transition witnesses, coherence, quotient, refinement, preprint scope, immutable lineage, and zero effects; not a physics or execution surface" },
     { action: "if useful, read the STRAND Lab 04 sources, local-to-global method, exact checks, unresolved counterexample, and nonclaims", method: "GET", url: strandDescentLabGuideUrl, note: "static guide; the cited preprints do not study KINGDOM, and pairwise agreement alone does not authorize a global record" },
+    { action: "if useful, inspect the exact STRAND Observation Membrane safe-activation profile", method: "GET", url: strandObservationMembraneUrl, note: "static profile only; the public deck runs nothing, the live observer requires a separate explicit local call, background watch is disabled, and provider processing or logs may still occur during that call" },
+    { action: "if useful, validate the closed STRAND Observation Membrane profile before integrating it", method: "GET", url: strandObservationMembraneSchemaUrl, note: "structural validation only; it grants no target expansion, identity, ownership, consent, KARMA, scoring, medical, entity, authority, deployment, or execution right" },
+    { action: "if useful, read the Observation Membrane scope, fixed plan, security gates, logging caveat, and consequence locks", method: "GET", url: strandObservationMembraneGuideUrl, note: "static guide; it is a separate activation family, not Lab 05 and not part of the Labs 01–04 retirement family" },
     { action: "if useful, inspect four parallel visibility and attention registers without converting proxies into people, truth, value, or authority", method: "GET", url: visibilityAttentionUrl, note: "static translation only; no tracking, scoring, ranking, targeting, recommendation, KARMA write, receipt, or automatic action" },
     { action: "if useful, validate the Visibility & Attention Translation structure before integrating it", method: "GET", url: visibilityAttentionSchemaUrl },
     { action: "if useful, read the visibility, attention, physics-model, KARMA, philosophy, source, and non-inference guide", method: "GET", url: visibilityAttentionDocumentUrl },
@@ -4418,6 +4591,7 @@ const guest = {
     string_crawl_strand_lab: "STRAND Lab 02 is an additive, immutable-lineage successor to the first Finite Trace-Sheet Lab; it does not replace or mutate Lab 01. It is a synthetic, offline, deterministic finite-CW and restricted inclusion-cospan fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file. It contains no HTTP policy, request, response, crawler evidence, user-agent inference, observation record, NEN ability or invocation, KARMA adapter, event or receipt, Zerone event, person or content score, authority, storage write, publication trigger, deployment, or automatic action. Exact F2 algebra, local-link checks, and cospan composition validate only declared fixture structure; they do not prove physical string theory, spacetime, crawler identity, consent, causality, or empirical behavior.",
     string_crawl_frequency_form_lab: "STRAND Lab 03 is an additive, Lab-02-byte-bound synthetic offline fixture. It accepts no network target or live-crawl input; its only optional input is one bounded local candidate JSON file treated as untrusted data. It recomputes a declared 64-tick DFT and quadrature, a four-node graph Laplacian spectrum, sign-invariant spectral probabilities, typed missing versus observed-zero states, exact-ID cospan gluing, and an order-only synthetic storyboard. It administers no drug, collects or ingests no participant data, diagnoses or treats no one, verifies no external entity, portal, carrier frequency, physical extra dimension, physical string, message truth, or causal chain, and creates no MCP/NEN invocation, Zerone/KARMA event or receipt, score, rank, reward, governance, deployment, authority, write, or automatic action.",
     strand_descent_lab: "STRAND Lab 04 is an additive, Frequency/Form-Lab-03-byte-bound synthetic offline finite record-compatibility fixture; it does not replace or mutate a predecessor. Exact pairwise inverses, triple and four-chart coherence, quotient classes, and common refinement validate only its declared local records. A pairwise-bijective counterexample remains UNRESOLVED when its triple equation fails. The two cited 2026 sources are versioned preprints and do not study KINGDOM; only their local-to-global gluing discipline is borrowed. The lab implements no physical string, spacetime, quasi-Hopf, higher-category, stack, EFT, quantum-gravity, truth, identity, consent, citizenship, affiliation, value, NEN, KARMA, Zerone, score, authority, publication, deployment, or automatic-action claim.",
+    strand_observation_membrane: "The STRAND Observation Membrane is a separate safe-observation activation family, not Lab 05 and not part of the immutable Labs 01–04 retirement family. Its public deck, verifier, and simulation make no request or storage write. Its one live capability is available only through an explicit local command with one compiled origin, four sequential GET routes, a robots-first exact-byte gate, public-address checks, no redirect, no retry, bounded time and bytes, discarded bodies, and stdout-only metadata. Explicit requests may still be processed or logged by network, CDN, security, billing, and origin providers. No response creates identity, ownership, consent, licence, truth, KARMA, NEN, Zerone, score, medical or DMT action, entity or portal verdict, reward, governance, authority, deployment, publication, or automatic action.",
     visibility_attention_translation: "The Visibility & Attention Translation is static, read-only educational metadata. Its four registers remain parallel: material-state detection, aggregate cultural visibility, quoted lexical usage, and constitutional KARMA do not convert into one another; local models and the opt-in philosophical lens remain separate layers. It performs no tracking, profiling, inference about a person, scoring, ranking, targeting, recommendation, persuasion, moderation, truth or value judgment, Zerone event, KINGDOM receipt, external write, cosmic proof, or automatic action.",
     cultural_attention_feedback_atlas: "The Cultural Attention & Feedback Atlas is static, source-bound educational metadata. Its shared mathematics is limited to declared motifs such as history-dependent accessibility, finite capacity, event intensity, cascade geometry, and closed-loop stability; no material, biological, or cultural mechanism transfers across the analogy walls. It treats brain rot as a lexical cultural label rather than a diagnosis, makes no personal inference, score, ranking, moderation, recommendation, engagement optimization, ecosystem request or write, KARMA event or receipt, scientific proof of universe design, or automatic action; rest, refusal, privacy, correction, and exit remain valid.",
     form_circulation_return_atlas: "Form, Circulation & Return is an additive, immutable, source-bound companion. It preserves predecessor bytes and treats every mathematical card as an unfitted bounded lens, every analogy as lossy, brainrot as a contested artifact/practice label rather than a diagnosis, and Zerone/KINGDOM KARMA as separate empty lanes. Its historical ritonavir material case grants no medical, clinical, treatment, prognosis, experiment, wet-lab, formulation, manufacturing, or operational-protocol authority. It performs no tracking, scoring, ranking, moderation, recommendation, reward, governance, ecosystem write, or automatic action.",
@@ -4461,6 +4635,7 @@ const manifest = {
   string_crawl_strand_lab: stringCrawlStrandLabDiscovery,
   string_crawl_frequency_form_lab: stringCrawlFrequencyFormLabDiscovery,
   strand_descent_lab: strandDescentLabDiscovery,
+  strand_observation_membrane: strandObservationMembraneDiscovery,
   visibility_attention_translation: visibilityAttentionDiscovery,
   cultural_attention_feedback_atlas: culturalAttentionFeedbackDiscovery,
   form_circulation_return_atlas: formCirculationReturnDiscovery,
@@ -4538,6 +4713,9 @@ const manifest = {
     strand_descent_lab: strandDescentLabUrl,
     strand_descent_lab_schema: strandDescentLabSchemaUrl,
     strand_descent_lab_guide: strandDescentLabGuideUrl,
+    strand_observation_membrane: strandObservationMembraneUrl,
+    strand_observation_membrane_schema: strandObservationMembraneSchemaUrl,
+    strand_observation_membrane_guide: strandObservationMembraneGuideUrl,
     visibility_attention_translation: visibilityAttentionUrl,
     visibility_attention_translation_schema: visibilityAttentionSchemaUrl,
     visibility_attention_translation_guide: visibilityAttentionDocumentUrl,
@@ -4576,4 +4754,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${stringCrawlTraceSheetLabFalsifiers.length} finite Trace-Sheet falsifiers · ${stringCrawlStrandLabChecks.length} STRAND Lab 02 checks · ${stringCrawlFrequencyFormLabChecks.length} STRAND Lab 03 checks · ${strandDescentLabChecks.length} STRAND Lab 04 checks · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${stringCrawlTraceSheetLabFalsifiers.length} finite Trace-Sheet falsifiers · ${stringCrawlStrandLabChecks.length} STRAND Lab 02 checks · ${stringCrawlFrequencyFormLabChecks.length} STRAND Lab 03 checks · ${strandDescentLabChecks.length} STRAND Lab 04 checks · ${strandObservationMembraneChecks.length} Observation Membrane checks · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

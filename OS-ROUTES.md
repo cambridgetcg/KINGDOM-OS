@@ -85,6 +85,9 @@ readings:
 | `/labs/strand-descent-lab-04-2026-08-16.json` | staged JSON | Additive, Lab-03-byte-bound synthetic four-chart atlas with exact pairwise, triple, associativity, quotient, refinement, and impostor checks |
 | `/schemas/strand-descent-lab/0.1.json` | staged JSON Schema | Closed Draft 2020-12 exact identity contract for STRAND Lab 04 |
 | `/STRAND-DESCENT-LAB-04.md` | staged Markdown | Verification guide to the narrow 2026 descent/gluing transfer, coherent atlas, pairwise impostor, immutable lineage, and zero-effect boundaries |
+| `/observations/strand-observation-membrane-2026-08-16.json` | staged JSON | Immutable separate activation profile for static controls, offline verification, synthetic rehearsal, and one explicit publisher-declared fixed-origin read-only live plan |
+| `/schemas/strand-observation-membrane/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the STRAND Observation Membrane profile |
+| `/STRAND-OBSERVATION-MEMBRANE.md` | staged Markdown | Human guide to the explicit-call boundary, fixed four-route plan, REP and SSRF gates, provider caveat, and zero-authority effects |
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -211,9 +214,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 96-asset upload contract (77 ledgered immutable/versioned assets and
-19 mutable assets; 94 direct public bodies, 93 sitemap URLs; ten atlases, three
-lab routes, one experiment route, and seventeen retirement families)
+locks the 99-asset upload contract (80 ledgered immutable/versioned assets and
+19 mutable assets; 97 direct public bodies, 96 sitemap URLs; ten atlases, three
+lab routes, one experiment route, one activation, and eighteen retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -269,4 +272,13 @@ fails and the global status stays `UNRESOLVED`. This is finite record
 compatibility, not a physical string, spacetime, stack, truth, identity,
 consent, citizenship, KARMA, authority, or action claim. Labs 01–04 share one
 atomic twelve-route `string-crawl-trace-sheet-lab` retirement family, leaving
-the family count at seventeen.
+the lab family unchanged. The independent STRAND Observation Membrane is the
+eighteenth family: its public deck, offline verifier, and synthetic rehearsal
+are active, and its publisher-declared fixed-origin live observer is available
+only through an explicit local `./kingdom strand-observation observe-live --json`
+call.
+Neither the public build nor `check-hub-live.ts` invokes that observer. It runs
+no background watch, accepts no target URL, follows no discovered link, persists
+no response body locally, and creates no NEN/KARMA/Zerone effect, score, medical or
+entity verdict, authority, or automatic action. Ordinary remote provider
+processing and access logs may still occur.

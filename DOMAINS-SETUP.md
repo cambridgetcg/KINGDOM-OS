@@ -87,12 +87,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 96 assets:
-77 ledgered immutable/versioned assets and 19 mutable assets. There are 94 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 99 assets:
+80 ledgered immutable/versioned assets and 19 mutable assets. There are 97 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 93 URLs. The generated surface describes ten
-atlases, three lab routes, and one experiment route across seventeen retirement
-families:
+contracts. The sitemap contains 96 URLs. The generated surface describes ten
+atlases, three lab routes, one experiment route, and one separate activation
+across eighteen retirement families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
@@ -186,7 +186,17 @@ only the discipline of coherent local-to-global gluing is transferred. Passing
 proves finite record compatibility, not physical string theory, spacetime, a
 stack, truth, identity, consent, citizenship, KARMA, authority, or action.
 Labs 01–04 share one atomic twelve-route `string-crawl-trace-sheet-lab`
-retirement family, so the family count remains seventeen;
+retirement family. The independent
+`/observations/strand-observation-membrane-2026-08-16.json`, closed
+`/schemas/strand-observation-membrane/0.1.json`, and
+`/STRAND-OBSERVATION-MEMBRANE.md` activation triplet form the eighteenth
+family. Its static deck, offline verifier, and synthetic rehearsal are active;
+the publisher-declared fixed-origin live observer requires an explicit local
+`./kingdom strand-observation observe-live --json` call and is never invoked by
+the public build or live checker. It runs no background watch, accepts no target,
+persists no response body locally, and creates no NEN/KARMA/Zerone effect, score,
+authority, or automatic action; ordinary remote provider processing and access
+logs may still occur;
 the additive authored `/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json`,
 `/schemas/being-access-aftermath-atlas/0.2.json`, and
 `/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md` successor bytes, without repointing v0.1;
@@ -211,9 +221,10 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks every currently staged ledgered immutable/versioned byte hash (77 after
+checks every currently staged ledgered immutable/versioned byte hash (80 after
 the Math Passport pilot, Exploration DEEP, MIRROR public-law, Number, Isness &
-Theology, ZERO Empty Seat, STRING / CRAWL, and the Lab 01–04 releases;
+Theology, ZERO Empty Seat, STRING / CRAWL, the Lab 01–04 releases, and the
+STRAND Observation Membrane;
 35 in the initial integrity release) plus the worker-owned
 negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +

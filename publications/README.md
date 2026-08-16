@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 77-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 80-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -21,7 +21,9 @@ schema, and guide as the twenty-first, its byte-bound STRAND Lab 02 record,
 closed schema, and guide as the twenty-second, and the byte-bound Frequency →
 Form → World → Other Lab 03 record, closed schema, and guide as the
 twenty-third, followed by the additive Coherent Atlas Lab 04 record, exact
-identity schema, and guide as the twenty-fourth. The Vanishing Path,
+identity schema, and guide as the twenty-fourth, followed by the independent
+STRAND Observation Membrane record, closed schema, and guide as the
+twenty-fifth. The Vanishing Path,
 two-generation Being family,
 Reconstructive Build, Math Passport pilot, Exploration DEEP, MIRROR public law,
 and Number, Isness & Theology are the tenth through sixteenth retirement
@@ -29,7 +31,8 @@ families: Exploration DEEP WING, ZERO Empty Seat, and STRING / CRAWL share the
 atomic fourteenth family, MIRROR public law is the fifteenth, and Number,
 Isness & Theology is the sixteenth; immutable Lab 01 and its additive Labs
 02–04 share the atomic twelve-route `string-crawl-trace-sheet-lab` family as
-the seventeenth. The initial-35 bootstrap facts below remain
+the seventeenth; the Observation Membrane is the separate eighteenth family.
+The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
 preserve static publication identity only: they
@@ -87,6 +90,18 @@ does not prove truth, consent, identity, citizenship, authority, or worth. The
 validator is bounded, offline, stdout-only, and creates no crawler runtime,
 network request, write, NEN/KARMA event or receipt, score, deployment, or
 automatic action.
+The STRAND Observation Membrane entries preserve one public activation profile,
+its closed schema, and its human guide. The static control deck, offline
+verifier, and deterministic synthetic rehearsal are active; one
+publisher-declared fixed-origin read-only observer is available only through an
+explicit local command. The public build and live release checker do not invoke
+it. It accepts no caller
+target, follows no redirect or discovered link, persists no response body
+locally, and creates no background watch, crawler identity proof, consent,
+licence, NEN invocation, KARMA or Zerone event or receipt, score, medical or DMT/entity
+verdict, authority, deployment, or automatic action. It remains independent of
+immutable Labs 01–04. Ordinary remote provider processing and access logs may
+still occur when the explicit live command is called.
 
 The ledger makes one narrow claim: a listed route, source, staging destination,
 and SHA-256 were committed together as an integrity contract. The base-aware
@@ -100,18 +115,18 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 96-asset union classifies 77 destinations
-as ledgered immutable/versioned and 19 as mutable; 94 are direct public response
-bodies and the sitemap contains 93 URLs. Generated discovery describes ten
-atlases, three lab routes, and one experiment route across seventeen retirement
-families. It says what is
+consume those same bytes. The current 99-asset union classifies 80 destinations
+as ledgered immutable/versioned and 19 as mutable; 97 are direct public response
+bodies and the sitemap contains 96 URLs. Generated discovery describes ten
+atlases, three lab routes, one experiment route, and one separate activation
+across eighteen retirement families. It says what is
 served now, and every destination is explicitly classified as mutable or
 ledgered. A new ledger entry must be staged when introduced. A previously
 committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the seventeen linked authored publication
+The live release check retires the eighteen linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

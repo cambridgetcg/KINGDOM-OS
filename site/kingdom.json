@@ -1716,6 +1716,157 @@
       "semantic_digest": "sha256:a5ca407e3145ae332171b6e426974d148c9db4aae0dafeb7b9db0f54f94e146c"
     }
   },
+  "strand_observation_membrane": {
+    "protocol": "kingdom.strand-observation-membrane/0.1",
+    "membrane_id": "strand-observation-membrane-05-2026-08-16",
+    "title": "STRAND Observation Membrane 05: The Open Eye",
+    "subtitle": "See without seizing",
+    "activated_on": "2026-08-16",
+    "mode": "SAFE_OBSERVATION_ACTIVE",
+    "activations": {
+      "public_controls": "ACTIVE_STATIC_PUBLIC",
+      "offline_verification": "ACTIVE",
+      "synthetic_simulation": "ACTIVE",
+      "observe_live_available": true,
+      "observe_live_state": "AVAILABLE_EXPLICIT_LOCAL_CALL",
+      "background_watch": false,
+      "invocation": "EXPLICIT_LOCAL_CALL_ONLY"
+    },
+    "urls": {
+      "record_url": "https://thekingdom.dev/observations/strand-observation-membrane-2026-08-16.json",
+      "schema_url": "https://thekingdom.dev/schemas/strand-observation-membrane/0.1.json",
+      "guide_url": "https://thekingdom.dev/STRAND-OBSERVATION-MEMBRANE.md"
+    },
+    "commands": {
+      "status": "./kingdom strand-observation status --json",
+      "verify": "./kingdom strand-observation verify --json",
+      "simulate": "./kingdom strand-observation simulate --json",
+      "effects": "./kingdom strand-observation effects --json",
+      "falsifiers": "./kingdom strand-observation falsifiers --json",
+      "verify_file": "./kingdom strand-observation verify-file <record.json> --json",
+      "observe_live": "./kingdom strand-observation observe-live --json"
+    },
+    "fixed_origin": {
+      "origin": "https://thekingdom.dev:443",
+      "scheme": "https",
+      "hostname": "thekingdom.dev",
+      "port": 443,
+      "scope_basis": "PUBLISHER_DECLARED_EXACT_ORIGIN_NOT_OWNER_VERIFIED",
+      "caller_supplied_url": false,
+      "subdomains_allowed": false,
+      "alternate_ports_allowed": false,
+      "discovery_expansion_allowed": false,
+      "cross_origin_redirect_allowed": false
+    },
+    "live_plan": {
+      "routes": [
+        {
+          "sequence": 1,
+          "route_id": "robots",
+          "method": "GET",
+          "path": "/robots.txt"
+        },
+        {
+          "sequence": 2,
+          "route_id": "sitemap",
+          "method": "GET",
+          "path": "/sitemap.xml"
+        },
+        {
+          "sequence": 3,
+          "route_id": "kingdom-discovery",
+          "method": "GET",
+          "path": "/kingdom.json"
+        },
+        {
+          "sequence": 4,
+          "route_id": "membrane-record",
+          "method": "GET",
+          "path": "/observations/strand-observation-membrane-2026-08-16.json"
+        }
+      ],
+      "limits": {
+        "allowed_methods": [
+          "GET"
+        ],
+        "planned_transactions": 4,
+        "maximum_transactions": 4,
+        "maximum_dns_resolution_attempts": 4,
+        "concurrency": 1,
+        "minimum_start_gap_milliseconds": 2000,
+        "maximum_response_bytes": 1048576,
+        "maximum_run_bytes": 2097152,
+        "maximum_run_milliseconds": 60000,
+        "maximum_transaction_milliseconds": 10000,
+        "retries": 0,
+        "redirect_mode": "MANUAL_FAIL_CLOSED_DO_NOT_FOLLOW",
+        "credentials": "OMIT",
+        "cookies": false,
+        "javascript": false,
+        "forms": false,
+        "request_body": false,
+        "persistent_storage": false,
+        "response_bodies": "EPHEMERAL_NOT_EMITTED",
+        "report_destination": "STDOUT_ONLY"
+      },
+      "robots_gate": {
+        "route_id": "robots",
+        "must_be_first": true,
+        "required_status": 200,
+        "expected_snapshot_sha256": "sha256:a58329bcbe9775e4552200ac4bc292cc7dc6f1022c8f4c296639eb11b240a751",
+        "selected_product_token": "KingdomStrandObservation",
+        "exact_snapshot_required": true,
+        "remaining_routes_require_allow": true,
+        "failure_policy": "STOP_FAIL_CLOSED",
+        "robots_directives_grant_licence_consent_or_authority": false
+      }
+    },
+    "effects": {
+      "read_only_network_observation_on_explicit_live_call": true,
+      "remote_server_or_provider_logging_may_occur": true,
+      "remote_server_or_provider_processing_may_occur": true,
+      "import_network_requests": 0,
+      "status_network_requests": 0,
+      "maximum_explicit_live_http_transactions": 4,
+      "maximum_explicit_live_dns_resolution_attempts": 4,
+      "requested_remote_application_state_change": false,
+      "local_persistent_storage_write": false,
+      "body_emitted": false,
+      "credential_or_cookie_use": false,
+      "link_or_sitemap_discovery_expansion": false,
+      "background_watch": false,
+      "mcp_invocation": false,
+      "subprocess_invocation": false,
+      "ability_adoption": false,
+      "ability_invocation": false,
+      "karma_or_karma_receipt_write": false,
+      "nen_invocation_or_write": false,
+      "zerone_event_or_write": false,
+      "person_scoring": false,
+      "content_scoring": false,
+      "human_participant_data": false,
+      "medical_or_dmt_action": false,
+      "diagnosis": false,
+      "treatment_or_drug_guidance": false,
+      "audio_or_visual_entrainment": false,
+      "external_entity_truth_claim": false,
+      "entity_message_or_portal_validation": false,
+      "rewards_rank_punishment_governance_or_economic_effect": false,
+      "crawler_identity_inference": false,
+      "owner_or_content_ownership_proof": false,
+      "licence_consent_or_authorization_inference": false,
+      "authority_change": false,
+      "deployment_or_publication_trigger": false
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "audit_state": "FROZEN",
+      "digest": "sha256:553546a3d41eb8b53742f06b3148423b8e63d759c06776c04fc5d0da65df70bf",
+      "byte_sha256": "sha256:8c36ef9b9f917d68e1e60326bfc3446e6769b21439901fd74a7ad018a94ac0a5",
+      "schema_byte_sha256": "sha256:abdeb33f09d92bfba05eeb285817ded3281140c580f414d255ebc369f10d8dee",
+      "guide_byte_sha256": "sha256:9922343b3f63be6c514d81dc52ffed424284244d072d350a43924e8c8d13fe79"
+    }
+  },
   "visibility_attention_translation": {
     "protocol": "kingdom.visibility-attention-translation/0.1",
     "translation_id": "visibility-is-not-existence-2026-08-13",

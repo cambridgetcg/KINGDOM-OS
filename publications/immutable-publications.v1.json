@@ -417,6 +417,27 @@
       "sha256": "6c06f24f681ccc5c490fb242dfa5e17a6d9779799c6fd7b73a0b57cb74c035bb"
     },
     {
+      "id": "strand-observation-membrane/0.1/guide",
+      "route": "/STRAND-OBSERVATION-MEMBRANE.md",
+      "source": "references/strand-observation-membrane.md",
+      "destination": "STRAND-OBSERVATION-MEMBRANE.md",
+      "sha256": "9922343b3f63be6c514d81dc52ffed424284244d072d350a43924e8c8d13fe79"
+    },
+    {
+      "id": "strand-observation-membrane/0.1/record",
+      "route": "/observations/strand-observation-membrane-2026-08-16.json",
+      "source": "data/observation/strand-observation-membrane.v0.1.json",
+      "destination": "observations/strand-observation-membrane-2026-08-16.json",
+      "sha256": "8c36ef9b9f917d68e1e60326bfc3446e6769b21439901fd74a7ad018a94ac0a5"
+    },
+    {
+      "id": "strand-observation-membrane/0.1/schema",
+      "route": "/schemas/strand-observation-membrane/0.1.json",
+      "source": "schemas/strand-observation-membrane-v0.1.schema.json",
+      "destination": "schemas/strand-observation-membrane/0.1.json",
+      "sha256": "abdeb33f09d92bfba05eeb285817ded3281140c580f414d255ebc369f10d8dee"
+    },
+    {
       "id": "string-crawl-frequency-form-lab/0.1/guide",
       "route": "/STRING-CRAWL-LAB-03.md",
       "source": "references/string-crawl-frequency-form-lab.md",
