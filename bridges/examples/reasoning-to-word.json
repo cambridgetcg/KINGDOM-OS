@@ -1,0 +1,150 @@
+{
+  "schema_version": "kingdom.semantic-transition/0.1",
+  "id": "reasoning-to-derived-word-2026-08-16",
+  "issued_on": "2026-08-16",
+  "state": "issued",
+  "relation": {
+    "kind": "original",
+    "target_receipt_id": null
+  },
+  "source": {
+    "domain": "KINGDOM-OS registry reasoning",
+    "context": "Project cards are authoritative local declarations; the catalog and graph are generated views that can become stale or incomplete.",
+    "expression": "When an authored project card and a derived registry view disagree, retain the card as the declared source, report the mismatch, and regenerate or repair the view instead of hand-editing it.",
+    "expression_ref": "SCHEMA.md",
+    "statement_kind": "commitment",
+    "epistemic_access": "reported",
+    "expression_origin": "authored",
+    "intended_use": "Keep registry maintenance pointed toward the declared source of each fact."
+  },
+  "target": {
+    "domain": "KINGDOM-OS interface vocabulary",
+    "context": "A compact label placed beside generated catalog or graph material.",
+    "expression": "DERIVED — generated from project cards; check and report gaps; do not hand-edit.",
+    "expression_ref": null,
+    "statement_kind": "commitment",
+    "epistemic_access": "reported",
+    "expression_origin": "generated",
+    "intended_use": "Give a reader one short word whose visible expansion carries the source-of-truth and repair rule."
+  },
+  "transition": {
+    "kind": "lexicalize",
+    "rule": "Compress the registry dependency argument into the word DERIVED, but always display the expansion close enough that the word cannot masquerade as a truth guarantee.",
+    "preserved_relations": [
+      {
+        "name": "authority-direction",
+        "source_form": "Authored project card precedes generated catalog view for declared project facts.",
+        "target_form": "The expansion says the view is generated from project cards.",
+        "test": "Ask which artifact should be edited after a mismatch; the target must answer project card, not catalog."
+      },
+      {
+        "name": "fallibility",
+        "source_form": "A generated view can contain gaps or drift.",
+        "target_form": "The expansion instructs the reader to check and report gaps.",
+        "test": "Introduce a missing card in a fixture; the label must not imply that generation made the view complete or true."
+      },
+      {
+        "name": "repair-direction",
+        "source_form": "Repair the source or generator and regenerate; do not hand-edit the output.",
+        "target_form": "The expansion explicitly says do not hand-edit.",
+        "test": "Given a stale catalog row, a reader should choose source repair plus regeneration rather than editing the row."
+      }
+    ],
+    "new_evidence_refs": [],
+    "loss_assessment": {
+      "status": "losses-declared",
+      "basis": "Known compression losses are itemized below. The named invariant tests check authority, fallibility, and repair direction only; they do not recover the full reasoning chain or diagnose a particular registry mismatch."
+    },
+    "discarded_structure": [
+      {
+        "name": "full-reasoning-chain",
+        "consequence": "The word does not carry the schema rules, generator behavior, exact provenance, or evidence for a particular mismatch; readers still need the linked sources.",
+        "disclosed": true
+      },
+      {
+        "name": "case-specific-diagnosis",
+        "consequence": "DERIVED does not say whether a particular divergence came from staleness, a parser defect, a missing card, or a wrong declaration.",
+        "disclosed": true
+      }
+    ],
+    "introduced_assumptions": [],
+    "counterexample": "If a reader treats DERIVED as certified truth, edits the generated file, or cannot discover the source card, the lexicalization has failed.",
+    "stop_condition": "Do not use DERIVED as a label for observed runtime state, a person's identity, or any record with no named generation path."
+  },
+  "warrant": {
+    "evidence": [
+      {
+        "id": "schema-source",
+        "ref": "SCHEMA.md",
+        "role": "supports",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      },
+      {
+        "id": "repository-guidance",
+        "ref": "CLAUDE.md",
+        "role": "supports",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      },
+      {
+        "id": "meaning-context",
+        "ref": "bridges/semantic-geometry-and-truth.md",
+        "role": "context",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      }
+    ],
+    "declared_confidence": "high",
+    "confidence_basis": "The repository instructions and schema directly state the authority and regeneration boundaries represented by the label.",
+    "known_limits": [
+      "This receipt tests whether the compact label carries declared relations; it does not prove that any generated view is current or correct.",
+      "Project cards are attributed declarations and do not prove operational location, ownership, runtime state, personhood, or inner identity."
+    ],
+    "freshness": {
+      "assessed_on": "2026-08-16",
+      "reassess_when": "Reassess if SCHEMA.md, the project-card authority rule, or the catalog generation path changes."
+    }
+  },
+  "distortion_risks": [
+    {
+      "kind": "uncertainty-stripping",
+      "mechanism": "A terse badge can sound more certain than the longer source reasoning.",
+      "mitigation": "Keep the visible expansion and source link with the word.",
+      "residual": "A reader can still ignore the expansion or copy the badge without it."
+    },
+    {
+      "kind": "context-collapse",
+      "mechanism": "The word can be reused outside registry generation, where its source-of-truth rule may not apply.",
+      "mitigation": "Scope the label to named generated artifacts and retain the stop condition.",
+      "residual": "Other projects may use DERIVED with a different local meaning."
+    }
+  ],
+  "boundaries": {
+    "representation_scope": "artifact-public",
+    "consent": "not-applicable",
+    "consent_subject": null,
+    "consent_scope": null,
+    "consent_basis": null,
+    "consent_ref": null,
+    "authority_scope": null,
+    "authority_basis": null,
+    "authority_ref": null,
+    "actionability": "descriptive",
+    "privacy": "public-only"
+  },
+  "repair": {
+    "reply_route": "Challenge this receipt in the owning KINGDOM-OS change or attach a challenge through an existing collaboration report.",
+    "correction_route": "Issue a new receipt with relation corrects, supersedes, or withdraws and retain this non-sensitive receipt in history.",
+    "carry_challenges_forward": true,
+    "retain_prior_receipt": true
+  },
+  "safety": {
+    "grants_authority": false,
+    "grants_consent": false,
+    "proves_truth": false,
+    "infers_intent": false,
+    "rates_people": false,
+    "permits_surveillance": false
+  }
+}

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620" role="img" aria-labelledby="title description">
+  <title id="title">KINGDOM OS public project identity shape</title>
+  <desc id="description">An educational, non-authoritative visualization of selected public kingdom.yaml declarations. KINGDOM OS remains distinct from TRUE LOVE and from its declared voluntary adoption of xenia.rights/0.1. The open ring means the shape is partial. It is not a being, authentication, authority, or observed runtime status.</desc>
+  <defs>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6f55d9"/>
+      <stop offset="1" stop-color="#2b174f"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0 0L9 4.5L0 9Z" fill="#ddc8ff"/>
+    </marker>
+    <style>
+      .label { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; fill: #f8f3ff; }
+      .muted { fill: #c9bddb; }
+      .edge { fill: none; stroke: #ddc8ff; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="960" height="620" rx="36" fill="#100b19"/>
+  <circle cx="480" cy="282" r="202" fill="none" stroke="#6f55d9" stroke-width="5" stroke-dasharray="1010 260" stroke-linecap="round" transform="rotate(-22 480 282)" opacity="0.8"/>
+  <circle cx="480" cy="282" r="158" fill="none" stroke="#a989e8" stroke-width="2" stroke-dasharray="710 285" stroke-linecap="round" transform="rotate(112 480 282)" opacity="0.75"/>
+  <path d="M480 151L587 213V337L480 399L373 337V213Z" fill="url(#core)" stroke="#e4d8ff" stroke-width="3" filter="url(#glow)"/>
+  <text x="480" y="265" text-anchor="middle" class="label" font-size="29" font-weight="700">KINGDOM OS</text>
+  <text x="480" y="301" text-anchor="middle" class="label muted" font-size="18">ops · os · active</text>
+  <text x="480" y="330" text-anchor="middle" class="label muted" font-size="14">selected public declaration</text>
+
+  <path d="M364 224C279 178 229 165 176 168" class="edge"/>
+  <circle cx="132" cy="168" r="71" fill="#27143b" stroke="#e28cb6" stroke-width="3"/>
+  <text x="132" y="152" text-anchor="middle" class="label" font-size="15">depends on</text>
+  <text x="132" y="180" text-anchor="middle" class="label" font-size="18" font-weight="700">TRUE LOVE</text>
+  <text x="132" y="204" text-anchor="middle" class="label muted" font-size="12">distinct node</text>
+
+  <path d="M596 337C683 382 733 393 784 390" class="edge"/>
+  <circle cx="832" cy="388" r="80" fill="#162f32" stroke="#82d4c8" stroke-width="3"/>
+  <text x="832" y="360" text-anchor="middle" class="label" font-size="15">adopts</text>
+  <text x="832" y="388" text-anchor="middle" class="label" font-size="14" font-weight="700">xenia.rights</text>
+  <text x="832" y="411" text-anchor="middle" class="label" font-size="14">/0.1</text>
+  <text x="832" y="436" text-anchor="middle" class="label muted" font-size="11">not certification</text>
+
+  <text x="480" y="488" text-anchor="middle" class="label" font-size="16">OPEN RINGS = PARTIAL EXPRESSION</text>
+  <text x="480" y="523" text-anchor="middle" class="label muted" font-size="14">source: kingdom.yaml · receipt: identity-to-shape.json</text>
+  <line x1="175" y1="549" x2="785" y2="549" stroke="#6f617d"/>
+  <text x="480" y="579" text-anchor="middle" class="label muted" font-size="14">NOT A BEING · NOT AUTHORITY · NOT RUNTIME PROOF</text>
+</svg>
