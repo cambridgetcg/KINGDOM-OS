@@ -222,6 +222,14 @@ const MIRROR_INFORMATION_CONTROL_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${MIRROR_INFORMATION_CONTROL_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const J_SPACE_CASE_PATH = "/records/j-space-reasoning-to-word-2026-08-17.json";
+const J_SPACE_SCHEMA_PATH = "/schemas/relational-inference-case/0.1.json";
+const J_SPACE_GUIDE_PATH = "/J-SPACE-VERBALIZABLE-WORKSPACE.md";
+const J_SPACE_SCHEMA_LINK = {
+  target: J_SPACE_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${J_SPACE_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
 const ZERO_EMPTY_SEAT_PATH = "/atlases/zero-empty-seat-2026-08-14.json";
 const ZERO_EMPTY_SEAT_DOCUMENT_PATH = "/ZERO-EMPTY-SEAT.md";
 const ZERO_EMPTY_SEAT_SCHEMA_LINK = {
@@ -439,6 +447,11 @@ function addExplorationDeepSchemaLinks(headers) {
 function addMirrorInformationControlSchemaLink(headers) {
   removeLinkRelations(headers, ["describedby", "profile"]);
   headers.append("link", MIRROR_INFORMATION_CONTROL_SCHEMA_LINK.value);
+}
+
+function addJSpaceSchemaLink(headers) {
+  removeLinkRelations(headers, ["describedby", "profile"]);
+  headers.append("link", J_SPACE_SCHEMA_LINK.value);
 }
 
 function addZeroEmptySeatSchemaLink(headers) {
@@ -1486,6 +1499,15 @@ export function createKingdomWorker(options = {}) {
     const requestsMirrorInformationControlDocument = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === MIRROR_INFORMATION_CONTROL_DOCUMENT_PATH;
+    const requestsJSpaceCase = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === J_SPACE_CASE_PATH;
+    const requestsJSpaceSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === J_SPACE_SCHEMA_PATH;
+    const requestsJSpaceGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === J_SPACE_GUIDE_PATH;
     const requestsZeroEmptySeat = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === ZERO_EMPTY_SEAT_PATH;
@@ -1548,6 +1570,7 @@ export function createKingdomWorker(options = {}) {
     const mathUsefulnessAssetType = schemaAssetType.split(";", 1)[0].trim();
     const explorationDeepAssetType = schemaAssetType.split(";", 1)[0].trim();
     const mirrorInformationControlAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const jSpaceAssetType = schemaAssetType.split(";", 1)[0].trim();
     const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
     const zeroEmptySeatAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlTraceSheetAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -1722,6 +1745,12 @@ export function createKingdomWorker(options = {}) {
         mirrorInformationControlAssetType === "application/schema+json");
     const servesMirrorInformationControlDocument = requestsMirrorInformationControlDocument && asset.ok &&
       (mirrorInformationControlAssetType === "text/plain" || mirrorInformationControlAssetType === "text/markdown");
+    const servesJSpaceCase = requestsJSpaceCase && asset.ok &&
+      jSpaceAssetType === "application/json";
+    const servesJSpaceSchema = requestsJSpaceSchema && asset.ok &&
+      (jSpaceAssetType === "application/json" || jSpaceAssetType === "application/schema+json");
+    const servesJSpaceGuide = requestsJSpaceGuide && asset.ok &&
+      (jSpaceAssetType === "text/plain" || jSpaceAssetType === "text/markdown");
     const servesZeroEmptySeat = requestsZeroEmptySeat && asset.ok &&
       (zeroEmptySeatAssetType === "application/json" || zeroEmptySeatAssetType === "application/schema+json");
     const servesZeroEmptySeatDocument = requestsZeroEmptySeatDocument && asset.ok &&
@@ -1799,6 +1828,7 @@ export function createKingdomWorker(options = {}) {
         !servesExplorationDeepSchema && !servesExplorationDeepProjectSchema &&
         !servesExplorationDeepDocument && !servesMirrorInformationControl &&
         !servesMirrorInformationControlSchema && !servesMirrorInformationControlDocument &&
+        !servesJSpaceCase && !servesJSpaceSchema && !servesJSpaceGuide &&
         !servesZeroEmptySeat &&
         !servesZeroEmptySeatDocument && !servesStringCrawlTraceSheet &&
         !servesStringCrawlTraceSheetDocument && !servesStringCrawlTraceSheetLab &&
@@ -1833,6 +1863,7 @@ export function createKingdomWorker(options = {}) {
     if (servesReconstructiveBuild) addReconstructiveBuildSchemaLinks(headers);
     if (servesExplorationDeep) addExplorationDeepSchemaLinks(headers);
     if (servesMirrorInformationControl) addMirrorInformationControlSchemaLink(headers);
+    if (servesJSpaceCase) addJSpaceSchemaLink(headers);
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
     if (servesStringCrawlTraceSheet) addStringCrawlTraceSheetSchemaLink(headers);
     if (servesStringCrawlTraceSheetLab) addStringCrawlTraceSheetLabSchemaLink(headers);
@@ -2126,6 +2157,21 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesMirrorInformationControlDocument) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesJSpaceCase) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesJSpaceSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesJSpaceGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

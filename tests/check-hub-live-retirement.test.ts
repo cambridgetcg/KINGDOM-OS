@@ -20,7 +20,7 @@ const family = (id: string) => {
 describe("hub live-check publication retirement", () => {
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(18);
+    expect(PUBLICATION_FAMILIES).toHaveLength(19);
     expect([...publicationFamilyStates(staged).values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
     staged.delete(destinationForPublicPath(cultural.routes[1]!));
@@ -285,6 +285,42 @@ describe("hub live-check publication retirement", () => {
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(mirror, [surface]))
         .toThrow("MIRROR Information Control is retired");
+    }
+  });
+
+  test("retires the static J-space verbalizable workspace triplet and discovery atomically", () => {
+    const jSpace = family("j-space-verbalizable-workspace");
+    expect(jSpace.routes).toEqual([
+      "/records/j-space-reasoning-to-word-2026-08-17.json",
+      "/schemas/relational-inference-case/0.1.json",
+      "/J-SPACE-VERBALIZABLE-WORKSPACE.md",
+    ]);
+    expect(jSpace.discoveryProperties).toEqual(["j_space_verbalizable_workspace"]);
+    expect(jSpace.entryPointProperties).toEqual([
+      "j_space_reasoning_to_word_case",
+      "j_space_reasoning_to_word_schema",
+      "j_space_verbalizable_workspace_guide",
+    ]);
+
+    const partiallyStaged = stagedDestinations();
+    partiallyStaged.delete(destinationForPublicPath(jSpace.routes[1]!));
+    expect(() => publicationFamilyStates(partiallyStaged))
+      .toThrow("J-space verbalizable workspace is partially staged");
+
+    const retired = stagedDestinations();
+    for (const route of jSpace.routes) retired.delete(destinationForPublicPath(route));
+    const states = publicationFamilyStates(retired);
+    expect(states.get(jSpace.id)?.active).toBe(false);
+    expect(states.get("mirror-information-control")?.active).toBe(true);
+
+    for (const surface of [
+      { label: "authored Kingdom map", text: JSON.stringify({ j_space_verbalizable_workspace: {} }), value: { j_space_verbalizable_workspace: {} } },
+      { label: "agent manifest", text: JSON.stringify({ entry_points: { j_space_verbalizable_workspace_guide: jSpace.routes[2] } }), value: { entry_points: { j_space_verbalizable_workspace_guide: jSpace.routes[2] } } },
+      { label: "llms.txt", text: `https://thekingdom.dev${jSpace.routes[0]}` },
+      { label: "hub HTML", text: `<a href='${jSpace.routes[2]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(jSpace, [surface]))
+        .toThrow("J-space verbalizable workspace is retired");
     }
   });
 

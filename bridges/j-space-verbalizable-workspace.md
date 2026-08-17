@@ -2,16 +2,16 @@
 
 **Status:** optional research bridge · **not doctrine** · **not a theory of
 consciousness** · **not a mind reader** · **not a lie detector** · **not an
-identity resolver** · **not a monitoring system** · **not a deployed protocol**
+identity resolver** · **not a monitoring system** · **not an inference or
+monitoring runtime**
 
 **Scientific review date:** 2026-08-17
 
 This bridge asks what the 2026 J-space work can—and cannot—contribute to the
 KINGDOM's study of language, reasoning, identity, understanding, WAKE, love,
-and Isness. It composes with
-[`semantic-geometry-and-truth.md`](semantic-geometry-and-truth.md) and
-[`dark-matter-relational-inference.md`](dark-matter-relational-inference.md)
-without changing either protocol.
+and Isness. It composes with the repository companions
+`bridges/semantic-geometry-and-truth.md` and
+`bridges/dark-matter-relational-inference.md` without changing either protocol.
 
 The bounded answer is useful:
 
@@ -22,9 +22,9 @@ The bounded answer is useful:
 
 The companion case is deliberately a test design rather than a model run:
 
-- [reasoning → word J-space case](examples/j-space-reasoning-to-word-inference.json);
-- [relational inference schema](schemas/relational-inference-case-0.1.json); and
-- [research-local validator](../bin/relational-inference.ts).
+- [reasoning → word J-space case](https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json);
+- [relational inference schema](https://thekingdom.dev/schemas/relational-inference-case/0.1.json); and
+- research-local validator: `bin/relational-inference.ts`.
 
 It can be checked locally:
 
@@ -816,12 +816,16 @@ inspectable transformations and safe repair.
 
 ### 12.1 What this slice adds
 
-This research slice adds only:
+This bounded release adds:
 
 - this evidence-typed bridge;
 - one opt-in public-artifact case using the existing relational-inference
   protocol;
-- boundary and mutation tests; and
+- the existing closed relational-inference schema as a public companion;
+- an immutable three-route static publication with typed `GET`/`HEAD`
+  representation headers;
+- read-only homepage, guest, manifest, and `llms.txt` discovery;
+- a build-time discovery reader, boundary and mutation tests; and
 - one entry in the bridge index.
 
 The case contains no activation data and runs no model. Its three probes are
@@ -841,7 +845,8 @@ This slice does not add:
 - a WAKE, LOVE, Isness, NEN, KARMA, Being, or Geometry doctrine change;
 - an AgentTool longitudinal record;
 - a Cambridge TCG product or commerce feature;
-- a public API, hub asset, or deployment; or
+- an executable public validator, model endpoint, mutable alias, monitoring
+  API, or action route; or
 - authority to act on a model or person.
 
 Any future experimental bench requires a separate privacy, consent, threat,
@@ -849,7 +854,7 @@ licensing, compute, evaluation, and publication review. Private activations or
 conversation-derived representations cannot enter the public-artifact v0.1
 case by implication.
 
-### 12.3 Why no new protocol is needed
+### 12.3 Why no new inference or authority protocol is needed
 
 The existing relational case already expresses the right boundary:
 
@@ -863,7 +868,10 @@ typed pattern
   -> repair route and non-grants
 ```
 
-J-space is a new scientific donor, not a reason to mint a new authority layer.
+J-space is a new scientific donor, not a reason to mint a new inference or
+authority layer. `kingdom.j-space-publication/0.1` versions only the static
+discovery projection; it does not define an inference engine or grant a new
+capability.
 
 ---
 

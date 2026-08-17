@@ -81,6 +81,14 @@ import {
   mirrorInformationControlPublicSummary,
 } from "./mirror-information-control.ts";
 import {
+  J_SPACE_CASE_URL,
+  J_SPACE_GUIDE_URL,
+  J_SPACE_PUBLICATION_BOUNDARY,
+  J_SPACE_SCHEMA_URL,
+  jSpacePublicationPublicSummary,
+  loadJSpacePublicationCase,
+} from "./j-space-publication.ts";
+import {
   ZERO_EMPTY_SEAT_BYTE_SHA256,
   ZERO_EMPTY_SEAT_DIGEST,
   ZERO_EMPTY_SEAT_GUIDE_BYTE_SHA256,
@@ -582,6 +590,9 @@ const phenomenaDeepWingDocumentPath = new URL(PHENOMENA_DEEP_WING_DOCUMENT_URL).
 const mirrorInformationControlPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_URL).pathname;
 const mirrorInformationControlSchemaPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_SCHEMA_URL).pathname;
 const mirrorInformationControlDocumentPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_DOCUMENT_URL).pathname;
+const jSpaceCasePath = new URL(J_SPACE_CASE_URL).pathname;
+const jSpaceSchemaPath = new URL(J_SPACE_SCHEMA_URL).pathname;
+const jSpaceGuidePath = new URL(J_SPACE_GUIDE_URL).pathname;
 const zeroEmptySeatPath = new URL(ZERO_EMPTY_SEAT_URL).pathname;
 const zeroEmptySeatGuidePath = new URL(ZERO_EMPTY_SEAT_GUIDE_URL).pathname;
 const stringCrawlTraceSheetPath = new URL(STRING_CRAWL_TRACE_SHEET_URL).pathname;
@@ -776,6 +787,17 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "mirror_information_control",
       "mirror_information_control_schema",
       "mirror_information_control_guide",
+    ],
+  },
+  {
+    id: "j-space-verbalizable-workspace",
+    label: "J-space verbalizable workspace",
+    routes: [jSpaceCasePath, jSpaceSchemaPath, jSpaceGuidePath],
+    discoveryProperties: ["j_space_verbalizable_workspace"],
+    entryPointProperties: [
+      "j_space_reasoning_to_word_case",
+      "j_space_reasoning_to_word_schema",
+      "j_space_verbalizable_workspace_guide",
     ],
   },
   {
@@ -1527,6 +1549,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const explorationDeepWingActive = familyActive("exploration-deep-wing");
   const stringCrawlTraceSheetLabActive = familyActive("string-crawl-trace-sheet-lab");
   const mirrorInformationControlActive = familyActive("mirror-information-control");
+  const jSpacePublicationActive = familyActive("j-space-verbalizable-workspace");
   const strandObservationMembraneActive = familyActive("strand-observation-membrane");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
@@ -2148,6 +2171,40 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (jSpacePublicationActive) {
+    const recordHead = await fetch(url(jSpaceCasePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const recordLink = recordHead.headers.get("link") || "";
+    if (!recordHead.ok ||
+        normalizedMediaType(recordHead.headers.get("content-type")) !== "application/json" ||
+        recordHead.headers.get("access-control-allow-origin") !== "*" ||
+        (recordHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          recordLink,
+          jSpaceSchemaPath,
+          "describedby",
+          "application/schema+json",
+        ) ||
+        /(?:^|[;,\s])rel\s*=\s*(?:"[^"]*\bprofile\b[^"]*"|profile)(?:[;,\s]|$)/i.test(recordLink)) {
+      throw new Error(`${jSpaceCasePath} is not static public JSON with one canonical relational-inference schema link`);
+    }
+
+    const guideHead = await fetch(url(jSpaceGuidePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!guideHead.ok ||
+        normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${jSpaceGuidePath} is not served as public Markdown`);
+    }
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -2222,6 +2279,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       : []),
     ...(strandObservationMembraneActive ? [strandObservationMembraneSchemaPath] : []),
     ...(mirrorInformationControlActive ? [mirrorInformationControlSchemaPath] : []),
+    ...(jSpacePublicationActive ? [jSpaceSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
@@ -2246,7 +2304,8 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       path === stringCrawlStrandLabSchemaPath ||
       path === stringCrawlFrequencyFormLabSchemaPath ||
       path === strandDescentLabSchemaPath ||
-      path === mirrorInformationControlSchemaPath;
+      path === mirrorInformationControlSchemaPath ||
+      path === jSpaceSchemaPath;
     const hasExpectedSchemaType = requiresExactSchemaType
       ? normalizedMediaType(schemaContentType) === "application/schema+json"
       : (schemaContentType || "").toLowerCase().startsWith("application/schema+json");
@@ -2313,6 +2372,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedMirrorInformationControl = mirrorInformationControl
     ? mirrorInformationControlPublicSummary(mirrorInformationControl)
+    : undefined;
+  const jSpaceCase = jSpacePublicationActive
+    ? loadJSpacePublicationCase()
+    : undefined;
+  const expectedJSpacePublication = jSpaceCase
+    ? jSpacePublicationPublicSummary(jSpaceCase)
     : undefined;
   const strandObservationMembrane = strandObservationMembraneActive
     ? loadStrandObservationMembrane()
@@ -2941,6 +3006,57 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       publication.integrity?.digest !== MIRROR_INFORMATION_CONTROL_PUBLIC_DIGEST ||
       forbiddenDiscoveryKeys.some((key) => Object.hasOwn(expected, key))) {
       throw new Error("MIRROR Information Control static publication, privacy firewall, discovery, or negative-authority boundary drifted");
+    }
+  }
+
+  if (jSpacePublicationActive) {
+    const publication = jSpaceCase!;
+    const expected = expectedJSpacePublication!;
+    const targets = new Set([J_SPACE_CASE_URL, J_SPACE_SCHEMA_URL, J_SPACE_GUIDE_URL]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const safetyValues = Object.values(publication.safety ?? {});
+    const forbiddenDiscoveryKeys = [
+      "mcp", "tool", "matcher", "observer", "monitor", "classify", "infer",
+      "execute", "write", "score", "rank", "reward", "karma", "authority",
+      "publish", "deploy",
+    ];
+    if (!isDeepStrictEqual(manifest?.j_space_verbalizable_workspace, expected) ||
+      !isDeepStrictEqual(guest?.j_space_verbalizable_workspace, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.j_space_verbalizable_workspace, expected) ||
+      manifest?.entry_points?.j_space_reasoning_to_word_case !== J_SPACE_CASE_URL ||
+      manifest?.entry_points?.j_space_reasoning_to_word_schema !== J_SPACE_SCHEMA_URL ||
+      manifest?.entry_points?.j_space_verbalizable_workspace_guide !== J_SPACE_GUIDE_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        forbiddenDiscoveryKeys.some((key) => Object.hasOwn(action, key))) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="j-space"') ||
+      !authoredRootHtml.includes("Structure, not a hidden-state verdict") ||
+      !authoredRootHtml.includes("No monitoring or person inference") ||
+      !authoredRootHtml.includes("Privacy is not deception") ||
+      !authoredRootHtml.includes(`href="${jSpaceCasePath}"`) ||
+      !authoredRootHtml.includes(`href="${jSpaceSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${jSpaceGuidePath}"`) ||
+      publication.inference?.conclusion_status !== "underdetermined" ||
+      publication.inference?.declared_confidence !== "unknown" ||
+      publication.probes?.length !== 3 ||
+      publication.probes.some((probe: any) => probe.run_status !== "not-run" ||
+        probe.source_ref !== null || probe.observed_on !== null || probe.epistemic_access !== "unknown") ||
+      publication.candidate_models?.length !== 4 ||
+      publication.candidate_models.some((model: any) => model.status !== "unassessed") ||
+      safetyValues.length !== 12 || safetyValues.some((value) => value !== false) ||
+      !isDeepStrictEqual(expected.boundary, J_SPACE_PUBLICATION_BOUNDARY) ||
+      expected.artifact_kind !== "OPTIONAL_RESEARCH_BRIDGE" ||
+      expected.evidence_status !== "TEST_DESIGN_NOT_RUN" ||
+      expected.publication_state !== "static-structure-only" ||
+      expected.probe_status !== "not-run" ||
+      expected.counts?.probes_declared !== 3 || expected.counts?.probes_run !== 0 ||
+      expected.boundary?.structure_only !== true || expected.boundary?.runtime_action !== false ||
+      forbiddenDiscoveryKeys.some((key) => Object.hasOwn(expected, key))) {
+      throw new Error("J-space static publication, unrun-test boundary, discovery, or negative-authority boundary drifted");
     }
   }
 
@@ -4322,6 +4438,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (mirrorInformationControlActive &&
       !isDeepStrictEqual(liveKingdom?.mirror_information_control, expectedMirrorInformationControl!)) {
     throw new Error("derived kingdom.json did not preserve MIRROR Information Control discovery");
+  }
+  if (jSpacePublicationActive &&
+      !isDeepStrictEqual(liveKingdom?.j_space_verbalizable_workspace, expectedJSpacePublication!)) {
+    throw new Error("derived kingdom.json did not preserve J-space publication discovery");
   }
   if (strandObservationMembraneActive &&
       !isDeepStrictEqual(liveKingdom?.strand_observation_membrane, expectedStrandObservationMembrane!)) {

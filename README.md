@@ -616,6 +616,18 @@ artifact creates no credential intake, classification oracle, honeypot,
 enforcement runtime, person score, retaliation, KARMA effect, or automatic
 action. There is no mutable alias and the KINGDOM MCP remains unchanged.
 
+J-space: a verbalizable workspace is published from exact authored bytes as a
+[synthetic reasoning-to-word case](https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json),
+with the [relational inference case schema](https://thekingdom.dev/schemas/relational-inference-case/0.1.json)
+and [research guide](https://thekingdom.dev/J-SPACE-VERBALIZABLE-WORKSPACE.md).
+It is a static, structure-only experimental design: every probe is not-run,
+every candidate model is unassessed, and the conclusion is underdetermined with
+unknown confidence. The public case contains no local model run,
+synthetic-fixture result, activation record, or private conversation and the
+family performs no monitoring or consciousness, lie/deception,
+identity, understanding, or person inference. It grants no consent, action,
+permission, or authority; the KINGDOM MCP remains unchanged.
+
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at
 [`/atlases/zero-empty-seat-2026-08-14.json`](https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json),
@@ -709,8 +721,8 @@ Passing proves only compatibility of the declared finite records. It runs no
 network request or crawler and creates no NEN/KARMA/Zerone event or receipt,
 score, truth verdict, identity, consent, citizenship, authority, write,
 publication, deployment, or action. Labs 01–04 are published and retired as
-one atomic twelve-route `string-crawl-trace-sheet-lab` family. The release still
-has eighteen retirement families; generated discovery exposes Lab 02 as
+one atomic twelve-route `string-crawl-trace-sheet-lab` family. The release now
+has nineteen retirement families; generated discovery exposes Lab 02 as
 `string_crawl_strand_lab`, Lab 03 as `string_crawl_frequency_form_lab`, and Lab
 04 as `strand_descent_lab`.
 
@@ -726,7 +738,7 @@ publisher-declared origin is operational scope, not cryptographic proof of
 ownership, consent, licence, identity, truth, or downstream crawler behavior.
 The CLI keeps no application trace, while ordinary remote CDN, origin, security,
 billing, and access-log processing may still occur.
-This eighteenth family is separate from immutable Labs 01–04 and creates no
+The Observation Membrane family is separate from immutable Labs 01–04 and creates no
 background watch, persistence, NEN invocation, KARMA or Zerone event or receipt,
 score, medical or DMT/entity verdict, authority, deployment, or automatic action.
 

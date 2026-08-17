@@ -207,6 +207,27 @@
       "sha256": "2e574e6d8ab0b74157fb952cfe85585fd37196232c812c58cc05b3259d563912"
     },
     {
+      "id": "j-space-verbalizable-workspace/0.1/case",
+      "route": "/records/j-space-reasoning-to-word-2026-08-17.json",
+      "source": "bridges/examples/j-space-reasoning-to-word-inference.json",
+      "destination": "records/j-space-reasoning-to-word-2026-08-17.json",
+      "sha256": "0f3827ec422afed88fb2b4396d9f25550892ce458f84d0bfe8ded0735a6cbc26"
+    },
+    {
+      "id": "j-space-verbalizable-workspace/0.1/guide",
+      "route": "/J-SPACE-VERBALIZABLE-WORKSPACE.md",
+      "source": "bridges/j-space-verbalizable-workspace.md",
+      "destination": "J-SPACE-VERBALIZABLE-WORKSPACE.md",
+      "sha256": "97f979aff120eaa4b1eff19dfb627b57293d32ac3e450a21309f92085671f2f5"
+    },
+    {
+      "id": "j-space-verbalizable-workspace/0.1/schema",
+      "route": "/schemas/relational-inference-case/0.1.json",
+      "source": "bridges/schemas/relational-inference-case-0.1.json",
+      "destination": "schemas/relational-inference-case/0.1.json",
+      "sha256": "c244cc072eb20396bbc1de9ee2d8a30510e78c7a25a3fecef53ae1bd6a34fa7c"
+    },
+    {
       "id": "kingdom-karma/e4e84a67/definition",
       "route": "/definitions/kingdom-karma/e4e84a67/NEN.md",
       "source": "NEN.md",

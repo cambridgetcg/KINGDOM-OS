@@ -87,12 +87,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 99 assets:
-80 ledgered immutable/versioned assets and 19 mutable assets. There are 97 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 102 assets:
+83 ledgered immutable/versioned assets and 19 mutable assets. There are 100 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 96 URLs. The generated surface describes ten
+contracts. The sitemap contains 99 URLs. The generated surface describes ten
 atlases, three lab routes, one experiment route, and one separate activation
-across eighteen retirement families:
+across nineteen retirement families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
@@ -149,6 +149,13 @@ the authored `/protocols/mirror-information-control-2026-08-14.json`, closed
 `/MIRROR-INFORMATION-CONTROL.md` static source law; these routes accept no
 credential, prompt, envelope, or security event and deploy no scanner,
 classifier, registry, decoy, enforcement, response, or retaliation runtime;
+the authored `/records/j-space-reasoning-to-word-2026-08-17.json`, closed
+`/schemas/relational-inference-case/0.1.json`, and research guide
+`/J-SPACE-VERBALIZABLE-WORKSPACE.md`; this static structure-only triplet contains
+no local model run, synthetic-fixture result, or activation record, keeps every
+probe not-run and candidate model unassessed, and creates no monitoring,
+consciousness/lie/identity/understanding
+inference, person score, action, consent, permission, or authority;
 the authored `/atlases/zero-empty-seat-2026-08-14.json`, which reuses the closed
 `/schemas/phenomena-deep-project/0.1.json` inert project profile, and its versioned
 `/ZERO-EMPTY-SEAT.md` guide;
@@ -189,8 +196,8 @@ Labs 01–04 share one atomic twelve-route `string-crawl-trace-sheet-lab`
 retirement family. The independent
 `/observations/strand-observation-membrane-2026-08-16.json`, closed
 `/schemas/strand-observation-membrane/0.1.json`, and
-`/STRAND-OBSERVATION-MEMBRANE.md` activation triplet form the eighteenth
-family. Its static deck, offline verifier, and synthetic rehearsal are active;
+`/STRAND-OBSERVATION-MEMBRANE.md` activation triplet form a separate family.
+Its static deck, offline verifier, and synthetic rehearsal are active;
 the publisher-declared fixed-origin live observer requires an explicit local
 `./kingdom strand-observation observe-live --json` call and is never invoked by
 the public build or live checker. It runs no background watch, accepts no target,
@@ -221,10 +228,10 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks every currently staged ledgered immutable/versioned byte hash (80 after
+checks every currently staged ledgered immutable/versioned byte hash (83 after
 the Math Passport pilot, Exploration DEEP, MIRROR public-law, Number, Isness &
 Theology, ZERO Empty Seat, STRING / CRAWL, the Lab 01–04 releases, and the
-STRAND Observation Membrane;
+STRAND Observation Membrane, plus the static J-space research triplet;
 35 in the initial integrity release) plus the worker-owned
 negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +
@@ -236,7 +243,8 @@ Being, Access & Aftermath Atlas + Number, Isness & Theology Atlas + the opt-in
 Exploration DEEP WING plus its reusable inert project profile + the ZERO Empty
 Seat project plus guide + the STRING / CRAWL Trace-Sheet plus guide + its
 atomic twelve-route Lab 01–04 record, schema, and guide family + the static
-MIRROR Information Control public law for
+MIRROR Information Control public law + the static J-space case, schema, and
+guide for
 schema headers, negative authority, source-history lineage, and cross-surface
 discovery while leaving the existing MCP contract unchanged;
 a split-generation deployment fails instead of looking partially healthy.
