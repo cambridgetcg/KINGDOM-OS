@@ -1,0 +1,186 @@
+{
+  "schema_version": "kingdom.semantic-transition/0.1",
+  "id": "kingdom-os-public-identity-to-shape-2026-08-16",
+  "issued_on": "2026-08-16",
+  "state": "issued",
+  "relation": {
+    "kind": "original",
+    "target_receipt_id": null
+  },
+  "source": {
+    "domain": "KINGDOM project self-description",
+    "context": "Direct inspection of the public kingdom.yaml bytes on the assessment date; the observation concerns what the card says, not whether every declaration corresponds to external reality.",
+    "expression": "The checked card declares kingdom-os as an active ops project in the os layer, dependent on true-love and voluntarily adopting xenia.rights/0.1.",
+    "expression_ref": "kingdom.yaml",
+    "statement_kind": "observation",
+    "epistemic_access": "direct",
+    "expression_origin": "authored",
+    "intended_use": "Provide the bounded public declaration from which a visual project glyph may be rendered."
+  },
+  "target": {
+    "domain": "Accessible vector shape",
+    "context": "A human-readable SVG shows a stable project core, open rings for partial expression, and separate dependency and adoption nodes.",
+    "expression": "An open-ring project glyph labelled KINGDOM OS, ops, os, and active, with distinct linked nodes for depends on TRUE LOVE and adopts xenia.rights/0.1.",
+    "expression_ref": "bridges/examples/kingdom-os-public-identity-shape.svg",
+    "statement_kind": "interpretation",
+    "epistemic_access": "direct",
+    "expression_origin": "visualized",
+    "intended_use": "Demonstrate identity-to-shape as a reversible visual aid over selected public project declarations, never as proof of a being or runtime state."
+  },
+  "transition": {
+    "kind": "visualize",
+    "rule": "Render selected public card fields as labelled geometric roles: the project name at the core, declared classifications in an open ring, and directional links to distinct dependency and adoption nodes.",
+    "preserved_relations": [
+      {
+        "name": "project-anchor",
+        "source_form": "The declared project name is kingdom-os.",
+        "target_form": "The central shape is visibly labelled KINGDOM OS.",
+        "test": "The accessible title and visible core both name KINGDOM OS without assigning that label to a person."
+      },
+      {
+        "name": "dependency-direction",
+        "source_form": "kingdom-os dependsOn true-love.",
+        "target_form": "A directional labelled edge leaves the project core toward a distinct TRUE LOVE node.",
+        "test": "Reversing the edge or merging the nodes must fail review."
+      },
+      {
+        "name": "adoption-scope",
+        "source_form": "The card declares adopts xenia.rights/0.1.",
+        "target_form": "A separate node says adopts xenia.rights/0.1 rather than compliant, certified, or enforced.",
+        "test": "The SVG must contain the word adopts and must not claim that adoption proves practice or conformance."
+      },
+      {
+        "name": "non-exhaustion",
+        "source_form": "The card is an attributed project declaration, not the project, a being, or observed runtime reality.",
+        "target_form": "The ring remains visibly open and the footer says public project declaration, not a being, not authority.",
+        "test": "A cropped textual alternative must still state that the shape is partial and non-authoritative."
+      }
+    ],
+    "new_evidence_refs": [
+      "shape-output"
+    ],
+    "loss_assessment": {
+      "status": "losses-declared",
+      "basis": "Known visualization losses are itemized below. The named tests compare selected labels, edge direction, adoption wording, and non-exhaustion; they do not test runtime reality, personal identity, conformance, or the omitted card fields."
+    },
+    "discarded_structure": [
+      {
+        "name": "full-card-detail",
+        "consequence": "The shape omits the full purpose sentence, owner_sister value, schema rules, and source history; the linked card remains necessary.",
+        "disclosed": true
+      },
+      {
+        "name": "operational-reality",
+        "consequence": "The shape does not observe whether services run, dependencies are reachable, rights are practiced, or the declared active state remains current.",
+        "disclosed": true
+      },
+      {
+        "name": "identity-depth",
+        "consequence": "Narrative history, maintainers, relationships, private context, and every possible expression of the project remain outside the glyph.",
+        "disclosed": true
+      }
+    ],
+    "introduced_assumptions": [
+      "Open circles and gaps are used as a local visual convention for partial, non-exhaustive representation; the source card does not prescribe that convention.",
+      "The selected labels are assumed sufficient for this educational example, not for authentication, authorization, routing, or registry decisions."
+    ],
+    "counterexample": "If two different project cards collide into an indistinguishable security-relevant shape, or a reader infers personhood, current runtime health, conformance, consent, or authority from the glyph, the mapping has failed.",
+    "stop_condition": "Do not invert the glyph into personal identity, biometrics, secrets, worth, authentication, authorization, or a claim about inner state."
+  },
+  "warrant": {
+    "evidence": [
+      {
+        "id": "kingdom-card-source",
+        "ref": "kingdom.yaml",
+        "role": "supports",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      },
+      {
+        "id": "card-schema-support",
+        "ref": "SCHEMA.md",
+        "role": "context",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      },
+      {
+        "id": "shape-output",
+        "ref": "bridges/examples/kingdom-os-public-identity-shape.svg",
+        "role": "supports",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      },
+      {
+        "id": "identity-shape-context",
+        "ref": "bridges/semantic-geometry-and-truth.md",
+        "role": "context",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      }
+    ],
+    "declared_confidence": "high",
+    "confidence_basis": "The labels and relations in the SVG can be compared directly with the public card and with the accessible text embedded in the SVG.",
+    "known_limits": [
+      "Matching the card proves only that the visual encodes those declared fields; it does not prove that the declarations are true in the world.",
+      "Visual conventions are culturally and contextually interpreted, so the same geometry may evoke different associations.",
+      "The SVG is an educational example, not a stable identity or security protocol."
+    ],
+    "freshness": {
+      "assessed_on": "2026-08-16",
+      "reassess_when": "Reassess after any change to kingdom.yaml, the card schema, the rights adoption, or the visual vocabulary."
+    }
+  },
+  "distortion_risks": [
+    {
+      "kind": "identity-collapse",
+      "mechanism": "A memorable glyph can be mistaken for the project itself or, worse, for a person associated with it.",
+      "mitigation": "Keep the source link, open ring, accessible disclaimer, and prohibition on inverse identity inference.",
+      "residual": "A detached copy can lose its disclaimer or be interpreted as an official seal."
+    },
+    {
+      "kind": "authority-laundering",
+      "mechanism": "A polished visual can make self-description or voluntary adoption look certified by an external authority.",
+      "mitigation": "Use declaration and adopts language; never use verified, certified, compliant, or authorized.",
+      "residual": "Visual formality can still create an undeserved aura of endorsement."
+    },
+    {
+      "kind": "staleness",
+      "mechanism": "The glyph can outlive the public card values from which it was drawn.",
+      "mitigation": "Version the receipt, link the card, and reassess whenever the card changes.",
+      "residual": "Copies outside the repository may not receive later corrections."
+    },
+    {
+      "kind": "source-erasure",
+      "mechanism": "The visual compression can hide which source fields and interpretive choices produced each feature.",
+      "mitigation": "Keep this receipt beside the SVG with a field-to-feature mapping and declared losses.",
+      "residual": "The SVG remains easier to circulate than its receipt."
+    }
+  ],
+  "boundaries": {
+    "representation_scope": "artifact-public",
+    "consent": "not-applicable",
+    "consent_subject": null,
+    "consent_scope": null,
+    "consent_basis": null,
+    "consent_ref": null,
+    "authority_scope": null,
+    "authority_basis": null,
+    "authority_ref": null,
+    "actionability": "descriptive",
+    "privacy": "public-only"
+  },
+  "repair": {
+    "reply_route": "Challenge the mapping in the owning KINGDOM-OS change or through an existing collaboration report that references this receipt.",
+    "correction_route": "Issue a linked correcting, superseding, or withdrawing receipt; update the SVG only with the new receipt while retaining non-sensitive prior bytes.",
+    "carry_challenges_forward": true,
+    "retain_prior_receipt": true
+  },
+  "safety": {
+    "grants_authority": false,
+    "grants_consent": false,
+    "proves_truth": false,
+    "infers_intent": false,
+    "rates_people": false,
+    "permits_surveillance": false
+  }
+}

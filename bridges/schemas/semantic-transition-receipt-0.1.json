@@ -1,0 +1,719 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:semantic-transition:0.1",
+  "title": "Kingdom semantic transition receipt",
+  "description": "An opt-in, inspectable record of a transformation between expressions or domains. Structural validity does not prove fidelity, truth, authority, consent, intent, or understanding.",
+  "$comment": "The TypeScript validator is authoritative for real calendar dates, future-issued dates, normalized safe references, decoded duplicate JSON keys, bounded size/depth, unique named entries, epistemic and observation promotion, loss-assessment consistency, consent/authority all-or-none rules, refusal, the prohibition on irreversible action, and cross-receipt existence, chronology, uniqueness, and acyclicity. Evidence references and digests are declared only: this v0.1 validator does not dereference them or verify truth, fidelity, authority, consent, intent, identity, understanding, or evidence adequacy.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "issued_on",
+    "state",
+    "relation",
+    "source",
+    "target",
+    "transition",
+    "warrant",
+    "distortion_risks",
+    "boundaries",
+    "repair",
+    "safety"
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000,
+      "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u001f])\\s*\\S[\\s\\S]*$"
+    },
+    "domain": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 200,
+      "pattern": "^(?![\\s\\S]*[\\u0000-\\u0008\\u000b-\\u001f])\\s*\\S[\\s\\S]*$"
+    },
+    "statement_kind": {
+      "enum": [
+        "observation",
+        "expectation",
+        "commitment",
+        "consequence",
+        "interpretation"
+      ]
+    },
+    "epistemic_access": {
+      "enum": [
+        "direct",
+        "reported",
+        "inferred",
+        "unknown"
+      ]
+    },
+    "expression_origin": {
+      "enum": [
+        "quoted",
+        "authored",
+        "translated",
+        "generated",
+        "visualized"
+      ]
+    },
+    "reference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000,
+      "pattern": "^(?![/\\\\~])(?![\\s\\S]*[?#\\r\\n\\t])[\\s\\S]*\\S$"
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domain",
+        "context",
+        "expression",
+        "expression_ref",
+        "statement_kind",
+        "epistemic_access",
+        "expression_origin",
+        "intended_use"
+      ],
+      "properties": {
+        "domain": {
+          "$ref": "#/$defs/domain"
+        },
+        "context": {
+          "$ref": "#/$defs/text"
+        },
+        "expression": {
+          "$ref": "#/$defs/text"
+        },
+        "expression_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/reference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "statement_kind": {
+          "$ref": "#/$defs/statement_kind"
+        },
+        "epistemic_access": {
+          "$ref": "#/$defs/epistemic_access"
+        },
+        "expression_origin": {
+          "$ref": "#/$defs/expression_origin"
+        },
+        "intended_use": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": "kingdom.semantic-transition/0.1"
+    },
+    "id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "issued_on": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "state": {
+      "enum": [
+        "draft",
+        "issued"
+      ]
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "target_receipt_id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "original",
+            "corrects",
+            "supersedes",
+            "withdraws"
+          ]
+        },
+        "target_receipt_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "original" } } },
+          "then": { "properties": { "target_receipt_id": { "type": "null" } } },
+          "else": { "properties": { "target_receipt_id": { "$ref": "#/$defs/identifier" } } }
+        }
+      ]
+    },
+    "source": {
+      "$ref": "#/$defs/endpoint"
+    },
+    "target": {
+      "$ref": "#/$defs/endpoint"
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "rule",
+        "preserved_relations",
+        "discarded_structure",
+        "loss_assessment",
+        "introduced_assumptions",
+        "new_evidence_refs",
+        "counterexample",
+        "stop_condition"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "encode",
+            "decode",
+            "lexicalize",
+            "translate",
+            "summarize",
+            "infer",
+            "visualize",
+            "operationalize",
+            "metaphorize"
+          ]
+        },
+        "rule": {
+          "$ref": "#/$defs/text"
+        },
+        "preserved_relations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "source_form",
+              "target_form",
+              "test"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/identifier"
+              },
+              "source_form": {
+                "$ref": "#/$defs/text"
+              },
+              "target_form": {
+                "$ref": "#/$defs/text"
+              },
+              "test": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        },
+        "discarded_structure": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "consequence",
+              "disclosed"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/identifier"
+              },
+              "consequence": {
+                "$ref": "#/$defs/text"
+              },
+              "disclosed": {
+                "const": true
+              }
+            }
+          }
+        },
+        "loss_assessment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "basis"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "losses-declared",
+                "none-identified"
+              ]
+            },
+            "basis": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        },
+        "introduced_assumptions": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "new_evidence_refs": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "counterexample": {
+          "$ref": "#/$defs/text"
+        },
+        "stop_condition": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "discarded_structure": { "maxItems": 0 }
+            }
+          },
+          "then": {
+            "properties": {
+              "loss_assessment": {
+                "properties": { "status": { "const": "none-identified" } }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "loss_assessment": {
+                "properties": { "status": { "const": "losses-declared" } }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "warrant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence",
+        "declared_confidence",
+        "confidence_basis",
+        "known_limits",
+        "freshness"
+      ],
+      "properties": {
+        "evidence": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "ref",
+              "role",
+              "observed_on",
+              "sha256"
+            ],
+            "properties": {
+              "id": { "$ref": "#/$defs/identifier" },
+              "ref": { "$ref": "#/$defs/reference" },
+              "role": { "enum": ["supports", "challenges", "context"] },
+              "observed_on": {
+                "type": "string",
+                "format": "date",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              "sha256": {
+                "oneOf": [
+                  { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                  { "type": "null" }
+                ]
+              }
+            }
+          }
+        },
+        "declared_confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unknown"
+          ]
+        },
+        "confidence_basis": {
+          "$ref": "#/$defs/text"
+        },
+        "known_limits": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "freshness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assessed_on",
+            "reassess_when"
+          ],
+          "properties": {
+            "assessed_on": {
+              "type": "string",
+              "format": "date",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "reassess_when": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "declared_confidence": { "const": "high" } }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "contains": {
+                  "type": "object",
+                  "properties": { "role": { "const": "supports" } },
+                  "required": ["role"]
+                },
+                "minContains": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "distortion_risks": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "mechanism",
+          "mitigation",
+          "residual"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "uncertainty-stripping",
+              "source-erasure",
+              "authority-laundering",
+              "scope-expansion",
+              "context-collapse",
+              "equivocation",
+              "hidden-loss",
+              "contradiction",
+              "staleness",
+              "evidence-fabrication",
+              "identity-collapse",
+              "irreversible-action",
+              "other"
+            ]
+          },
+          "mechanism": {
+            "$ref": "#/$defs/text"
+          },
+          "mitigation": {
+            "$ref": "#/$defs/text"
+          },
+          "residual": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "representation_scope",
+        "consent",
+        "consent_subject",
+        "consent_scope",
+        "consent_basis",
+        "consent_ref",
+        "authority_scope",
+        "authority_basis",
+        "authority_ref",
+        "actionability",
+        "privacy"
+      ],
+      "properties": {
+        "representation_scope": {
+          "enum": [
+            "none",
+            "self",
+            "other-public",
+            "other-private",
+            "artifact-public",
+            "collective"
+          ]
+        },
+        "consent": {
+          "enum": [
+            "not-applicable",
+            "self-authored",
+            "explicit-obtained",
+            "refused",
+            "unknown"
+          ]
+        },
+        "consent_subject": {
+          "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }]
+        },
+        "consent_scope": {
+          "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }]
+        },
+        "consent_basis": {
+          "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }]
+        },
+        "consent_ref": {
+          "oneOf": [{ "$ref": "#/$defs/reference" }, { "type": "null" }]
+        },
+        "authority_scope": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authority_basis": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authority_ref": {
+          "oneOf": [{ "$ref": "#/$defs/reference" }, { "type": "null" }]
+        },
+        "actionability": {
+          "enum": [
+            "descriptive",
+            "reversible"
+          ]
+        },
+        "privacy": {
+          "enum": [
+            "public-only",
+            "authorized-private",
+            "redacted"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "consent_subject": { "type": "null" },
+                "consent_scope": { "type": "null" },
+                "consent_basis": { "type": "null" },
+                "consent_ref": { "type": "null" }
+              }
+            },
+            {
+              "properties": {
+                "consent_subject": { "$ref": "#/$defs/text" },
+                "consent_scope": { "$ref": "#/$defs/text" },
+                "consent_basis": { "$ref": "#/$defs/text" },
+                "consent_ref": { "$ref": "#/$defs/reference" }
+              }
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "authority_scope": { "type": "null" },
+                "authority_basis": { "type": "null" },
+                "authority_ref": { "type": "null" }
+              }
+            },
+            {
+              "properties": {
+                "authority_scope": { "$ref": "#/$defs/text" },
+                "authority_basis": { "$ref": "#/$defs/text" },
+                "authority_ref": { "$ref": "#/$defs/reference" }
+              }
+            }
+          ]
+        },
+        {
+          "if": { "properties": { "consent": { "const": "not-applicable" } } },
+          "then": {
+            "properties": {
+              "consent_subject": { "type": "null" },
+              "consent_scope": { "type": "null" },
+              "consent_basis": { "type": "null" },
+              "consent_ref": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "representation_scope": { "enum": ["none", "artifact-public"] } } },
+          "then": { "properties": { "consent": { "const": "not-applicable" } } }
+        },
+        {
+          "if": { "properties": { "representation_scope": { "enum": ["other-public", "other-private", "collective"] } } },
+          "then": { "properties": { "consent": { "not": { "const": "not-applicable" } } } }
+        },
+        {
+          "if": { "properties": { "consent": { "enum": ["self-authored", "explicit-obtained"] } } },
+          "then": {
+            "properties": {
+              "consent_subject": { "$ref": "#/$defs/text" },
+              "consent_scope": { "$ref": "#/$defs/text" },
+              "consent_basis": { "$ref": "#/$defs/text" },
+              "consent_ref": { "$ref": "#/$defs/reference" }
+            }
+          }
+        }
+      ]
+    },
+    "repair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reply_route",
+        "correction_route",
+        "carry_challenges_forward",
+        "retain_prior_receipt"
+      ],
+      "properties": {
+        "reply_route": {
+          "$ref": "#/$defs/text"
+        },
+        "correction_route": {
+          "$ref": "#/$defs/text"
+        },
+        "carry_challenges_forward": {
+          "const": true
+        },
+        "retain_prior_receipt": {
+          "const": true
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "grants_authority",
+        "grants_consent",
+        "proves_truth",
+        "infers_intent",
+        "rates_people",
+        "permits_surveillance"
+      ],
+      "properties": {
+        "grants_authority": {
+          "const": false
+        },
+        "grants_consent": {
+          "const": false
+        },
+        "proves_truth": {
+          "const": false
+        },
+        "infers_intent": {
+          "const": false
+        },
+        "rates_people": {
+          "const": false
+        },
+        "permits_surveillance": {
+          "const": false
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "source": { "properties": { "epistemic_access": { "not": { "const": "direct" } } } },
+          "target": { "properties": { "epistemic_access": { "const": "direct" } } }
+        }
+      },
+      "then": {
+        "properties": {
+          "transition": { "properties": { "new_evidence_refs": { "minItems": 1 } } }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source": { "properties": { "statement_kind": { "not": { "const": "observation" } } } },
+          "target": { "properties": { "statement_kind": { "const": "observation" } } }
+        }
+      },
+      "then": {
+        "properties": {
+          "transition": { "properties": { "new_evidence_refs": { "minItems": 1 } } }
+        }
+      }
+    }
+  ]
+}
