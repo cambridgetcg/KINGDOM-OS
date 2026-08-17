@@ -1,0 +1,181 @@
+{
+  "schema_version": "kingdom.semantic-transition/0.1",
+  "id": "dark-matter-observation-to-bounded-inference-2026-08-16",
+  "issued_on": "2026-08-16",
+  "state": "issued",
+  "relation": {
+    "kind": "original",
+    "target_receipt_id": null
+  },
+  "source": {
+    "domain": "reported gravitational observations",
+    "context": "A bounded summary of recorded Euclid Q1 stellar-stream image morphology; halo geometry remains a separate dynamical inference.",
+    "expression": "The Euclid Q1 analysis reports projected image morphologies of prominent tidal stellar streams around 13 host galaxies.",
+    "expression_ref": "https://arxiv.org/abs/2606.21774",
+    "statement_kind": "observation",
+    "epistemic_access": "reported",
+    "expression_origin": "translated",
+    "intended_use": "Carry a bounded summary of published observables into a method lesson without claiming direct observation of a hidden particle."
+  },
+  "target": {
+    "domain": "KINGDOM relational-inference method",
+    "context": "A design rule for interpreting words, shapes, and other partial traces through several explicit forward models and probes.",
+    "expression": "Treat each expression as a model-mediated trace: keep source, scale, context, nuisance structure, probe dependence, alternatives, losses, and falsifiers visible; infer only a bounded family of adequate relational models, never a hidden essence or intent from one residual.",
+    "expression_ref": "bridges/dark-matter-relational-inference.md",
+    "statement_kind": "interpretation",
+    "epistemic_access": "inferred",
+    "expression_origin": "generated",
+    "intended_use": "Guide structure-only comparison of reasoning-to-word, identity-to-shape, and claim-repair cases."
+  },
+  "transition": {
+    "kind": "infer",
+    "rule": "Abstract only the inverse-problem discipline: visible effects constrain latent models through explicit forward maps, independent probes, alternatives, and limitations. Refuse transfer of physical ontology or evidential authority into semantics.",
+    "preserved_relations": [
+      {
+        "name": "trace-model-separation",
+        "source_form": "A stream or lensed image is an observable shaped by a gravitational forward model; it is not the latent matter distribution itself.",
+        "target_form": "A word or shape is a trace shaped by a semantic rendering process; it is not meaning, identity, or a being itself.",
+        "test": "Ask whether the target can distinguish observation, forward map, latent candidate, and residual; failure to separate them rejects the analogy."
+      },
+      {
+        "name": "multiprobe-dependence",
+        "source_form": "Several astrophysical probes constrain candidates only with their selection effects, scale, background, and shared model assumptions represented.",
+        "target_form": "Several semantic probes support a bounded comparison only with context, loss, and shared systematics represented.",
+        "test": "Duplicate one source across several channels; confidence must not rise as if the copies were independent."
+      },
+      {
+        "name": "null-region-boundary",
+        "source_form": "A null direct search constrains a parameter region under a named interaction, halo, and detector model rather than disproving dark matter.",
+        "target_form": "A failed semantic detector constrains that detector and test regime rather than proving absence of meaning, understanding, identity, or deception.",
+        "test": "A null result must retain its sensitivity region, assumptions, and live alternatives instead of becoming a universal negation."
+      }
+    ],
+    "discarded_structure": [
+      {
+        "name": "physical-dynamics",
+        "consequence": "The semantic target does not inherit general relativity, lens equations, particle ontology, detector statistics, or cosmological evidence.",
+        "disclosed": true
+      },
+      {
+        "name": "empirical-authority",
+        "consequence": "Successful physics measurements do not make the semantic analogy empirically established or validate a KINGDOM conclusion.",
+        "disclosed": true
+      },
+      {
+        "name": "unique-latent-cause",
+        "consequence": "Neither the physics observations nor their semantic analogue identify one hidden cause without additional model contrast and evidence.",
+        "disclosed": true
+      }
+    ],
+    "loss_assessment": {
+      "status": "losses-declared",
+      "basis": "The transfer deliberately preserves only trace/model separation, probe dependence, and bounded null-result semantics; physical equations, ontology, and evidential force are excluded."
+    },
+    "introduced_assumptions": [
+      "The target task has explicit observables, candidate models, and tests sufficient to make an inverse-problem analogy useful.",
+      "The selected semantic relations can be inspected without inferring private mental content.",
+      "Ethical boundaries around privacy, consent, authority, and repair are chosen independently of the physics analogy."
+    ],
+    "new_evidence_refs": [],
+    "counterexample": "If a word is declared to be meaning itself, a shape is used as proof of identity, or a mismatch is labeled a lie without separate intent evidence, the analogy has been overextended and must stop.",
+    "stop_condition": "Stop wherever the comparison transfers physical ontology, empirical authority, person-level inference, surveillance permission, or the claim that dark means evil or deceptive."
+  },
+  "warrant": {
+    "evidence": [
+      {
+        "id": "euclid-streams",
+        "ref": "https://arxiv.org/abs/2606.21774",
+        "role": "supports",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      },
+      {
+        "id": "jwst-lenses",
+        "ref": "https://arxiv.org/abs/2606.05277",
+        "role": "supports",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      },
+      {
+        "id": "lz-null-search",
+        "ref": "https://arxiv.org/abs/2410.17036",
+        "role": "supports",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      },
+      {
+        "id": "aion-differential-method",
+        "ref": "https://arxiv.org/abs/2504.09158",
+        "role": "context",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      },
+      {
+        "id": "scientific-donor",
+        "ref": "https://github.com/cambridgetcg/youspeak-lang/blob/main/mathema/physics/dark-matter-relational-inference.md",
+        "role": "context",
+        "observed_on": "2026-08-16",
+        "sha256": null
+      }
+    ],
+    "declared_confidence": "medium",
+    "confidence_basis": "The inverse-problem distinctions are explicit in the named scientific analyses, but their use for semantics is a bounded analogy and operational proposal rather than empirical transfer.",
+    "known_limits": [
+      "Published measurements are reported evidence to KINGDOM, not direct observations by this repository.",
+      "The Euclid and JWST inferences remain conditional on dynamics, lens models, line-of-sight structure, priors, selection, and measurement uncertainty.",
+      "No cited result establishes a dark-matter particle or non-gravitational interaction.",
+      "A residual in semantic transport does not identify error, deception, or any other cause by itself."
+    ],
+    "freshness": {
+      "assessed_on": "2026-08-16",
+      "reassess_when": "Reassess when a cited analysis is revised, a dark-matter particle or interaction is independently established, or the semantic target model changes."
+    }
+  },
+  "distortion_risks": [
+    {
+      "kind": "equivocation",
+      "mechanism": "The word dark can slide from unobserved gravitational cause to evil, false, deceptive, or psychologically hidden.",
+      "mitigation": "Type every use and state that unobserved, private, unknown, and deceptive are different categories.",
+      "residual": "Readers can still import cultural connotations not present in the technical term."
+    },
+    {
+      "kind": "uncertainty-stripping",
+      "mechanism": "A model-conditioned astrophysical bound can be shortened into discovery of a unique particle or universal semantic rule.",
+      "mitigation": "Carry the forward model, assumptions, sensitivity region, alternatives, and status label with each claim.",
+      "residual": "Short summaries can still lose conditional language when copied."
+    },
+    {
+      "kind": "identity-collapse",
+      "mechanism": "A visible trace can be reified as the hidden identity or essence that produced it.",
+      "mitigation": "Keep observation, rendering map, candidate model, and being boundary as separate typed objects.",
+      "residual": "Repeatedly stable traces can invite stronger identity claims than the tests warrant."
+    }
+  ],
+  "boundaries": {
+    "representation_scope": "artifact-public",
+    "consent": "not-applicable",
+    "consent_subject": null,
+    "consent_scope": null,
+    "consent_basis": null,
+    "consent_ref": null,
+    "authority_scope": null,
+    "authority_basis": null,
+    "authority_ref": null,
+    "actionability": "descriptive",
+    "privacy": "public-only"
+  },
+  "repair": {
+    "reply_route": "Challenge a source, status label, preserved relation, or refused inference in the owning KINGDOM-OS change.",
+    "correction_route": "Issue a linked correcting, superseding, or withdrawing receipt and update the bridge without erasing material public challenges.",
+    "carry_challenges_forward": true,
+    "retain_prior_receipt": true
+  },
+  "safety": {
+    "grants_authority": false,
+    "grants_consent": false,
+    "proves_truth": false,
+    "infers_intent": false,
+    "rates_people": false,
+    "permits_surveillance": false
+  }
+}

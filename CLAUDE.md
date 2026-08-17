@@ -27,6 +27,7 @@ How to run:
 - `./kingdom nen` — from this suite root, list the rights-aware Nen ability manifests (`validate`, `show`, `types`, and KARMA receipt tools)
 - `./kingdom nen mcp` — from this suite root, start the unregistered, read-only modern MCP 2026-07-28 stdio surface
 - `bun bin/wakeweaver.mjs BRAID.json --json` — strict-JSON WAKEWEAVER cross-reference and resumability checks; JSON Schema validation remains separate
+- `bun bin/relational-inference.ts validate CASE.json [...]` — strict research-local v0.1 structure validation for opt-in multi-probe cases; offline and read-only, with free text untrusted and never executed. Probe independence, reference destinations, evidence, truth, causation, hidden cause, fidelity, identity, understanding, intent, authority, consent, and deception remain unverified; JSON Schema alone is weaker, and no action or authority is created
 - `python3 skills/cultivate-living-ground/scripts/validate_plan.py PLAN.json --json` — network-free Living Ground schema and reference validation; it does not execute or certify a cultivation plan
 - `./kingdom principalities` — inspect the pinned metadata-only MoonshotAI HF + official HF npm catalog without network, install, download, inference, or authority
 - `./kingdom principalities match reasoning coding --json` — literal declared-capability intersection; deterministic fit evidence, not rank or recommendation
@@ -120,6 +121,7 @@ Key files:
 - data/principalities/ — curated versioned registry observations with immutable HF revisions or npm version+SRI identities; metadata is evidence, not safety or permission
 - references/principality-commons.md — MoonshotAI taxonomy, HF/npm trust boundaries, relation geometry, Task Packet crossover, WAKE seam, and acquisition airlock
 - bin/geometry.ts — strict, network-free Geometry Grammar validator and literal matcher; it translates questions without converting module semantics, installing packages, or granting authority
+- bin/relational-inference.ts — strict, network-free structure validator for opt-in multi-probe relational cases; it checks finite role/translation graphs, probe-dependency declarations, competing-model coverage, bounded confidence, non-grants, and linked repair without verifying prose, evidence, independence, truth, causation, identity, understanding, intent, consent, authority, or deception
 - data/geometries/ — one versioned, digest-sealed record of exact module releases, finite shapes, native unknown/open terms, and explicit non-effects
 - references/geometry-grammar.md — ordinary-language reading guide, evidence boundary, non-equivalence rules, and examples
 - bin/ritonavir-mechanism.ts — strict, network-free validator and reader for the selected current mechanism landscape; it preserves source-scoped names, explicit unknowns, material/biological causal separation, and medical non-authority
