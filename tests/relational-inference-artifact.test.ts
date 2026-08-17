@@ -163,7 +163,8 @@ describe("self-contained relational inference artifact", () => {
     expect(manifest.contract).toEqual({
       mode: "structure-only",
       network_requests: false,
-      persistent_writes: false,
+      application_content_writes: false,
+      filesystem_metadata_side_effects: "unestablished; reads may update mount-managed access metadata",
       stdin: false,
       urls: false,
       globs: false,
@@ -179,6 +180,7 @@ describe("self-contained relational inference artifact", () => {
       "tests/relational-inference.test.ts",
       "tests/semantic-transitions.test.ts",
       "tests/relational-inference-artifact.test.ts",
+      "tests/dark-matter-observation-boundary.test.ts",
       "bridges/examples/claim-repair-inference.json",
       "bridges/examples/dark-matter-observation-to-latent-hypothesis.json",
       "bridges/examples/identity-to-shape-inference.json",
