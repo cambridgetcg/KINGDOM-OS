@@ -162,13 +162,16 @@ describe("self-contained relational inference artifact", () => {
     });
     expect(manifest.contract).toEqual({
       mode: "structure-only",
-      network_requests: false,
+      application_network_api_requests: false,
+      filesystem_transport: "unestablished; caller paths may resolve through local, automounted, or network-backed filesystems",
       application_content_writes: false,
       filesystem_metadata_side_effects: "unestablished; reads may update mount-managed access metadata",
-      stdin: false,
-      urls: false,
-      globs: false,
-      reflects_paths_or_data: false,
+      stdin_read: false,
+      application_url_fetch: false,
+      application_glob_expansion: false,
+      caller_argv_expansion: "unestablished; invoke through an argv API or quote exact paths because shell expansion happens before validation",
+      verbatim_path_or_content_output: false,
+      validation_result_disclosure: "ordinal validity and exit status only",
     });
 
     for (const source of manifest.source.files) {
