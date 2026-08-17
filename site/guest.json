@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-16",
+  "generated": "2026-08-17",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -872,6 +872,48 @@
     "integrity": {
       "algorithm": "sha256-recursive-sorted-json-keys-v1",
       "digest": "sha256:d91f3926b2ccd5abf083eb4cbea6df4c80ba58fabb35934a9cc1dd2b9dd60aa0"
+    }
+  },
+  "j_space_verbalizable_workspace": {
+    "protocol": "kingdom.j-space-publication/0.1",
+    "id": "j-space-reasoning-to-word-2026-08-17",
+    "title": "J-space: a verbalizable workspace",
+    "artifact_kind": "OPTIONAL_RESEARCH_BRIDGE",
+    "evidence_status": "TEST_DESIGN_NOT_RUN",
+    "publication_state": "static-structure-only",
+    "issued_on": "2026-08-17",
+    "question": "Does a layer- and position-specific pulled-back token direction track one public arithmetic intermediate and causally contribute to a later answer in a fixed synthetic fixture?",
+    "conclusion": "The case specifies an inspectable test of a possible activation-to-expression relation; no probe has run, so none of the proposed relations, mechanisms, or interpretations is established.",
+    "conclusion_status": "underdetermined",
+    "declared_confidence": "unknown",
+    "counts": {
+      "object_roles": 4,
+      "relation_roles": 3,
+      "realizations": 2,
+      "translations": 1,
+      "probes_declared": 3,
+      "probes_run": 0,
+      "candidate_models": 4
+    },
+    "probe_status": "not-run",
+    "urls": {
+      "record": "https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json",
+      "schema": "https://thekingdom.dev/schemas/relational-inference-case/0.1.json",
+      "guide": "https://thekingdom.dev/J-SPACE-VERBALIZABLE-WORKSPACE.md"
+    },
+    "boundary": {
+      "static_read_only": true,
+      "structure_only": true,
+      "local_fixture_model_or_activation_results_included": false,
+      "runtime_monitoring": false,
+      "private_state_inference": false,
+      "consciousness_inference": false,
+      "lie_or_deception_inference": false,
+      "identity_inference": false,
+      "understanding_inference": false,
+      "person_scoring": false,
+      "runtime_action": false,
+      "action_or_authority": false
     }
   },
   "zero_empty_seat": {
@@ -2554,6 +2596,23 @@
       "action": "if useful, read the citizen guide to CROWN, COURT, MIRROR, provenance, capability gates, rights, and safe response",
       "method": "GET",
       "url": "https://thekingdom.dev/MIRROR-INFORMATION-CONTROL.md"
+    },
+    {
+      "action": "if useful, inspect the synthetic J-space reasoning-to-word test design",
+      "method": "GET",
+      "url": "https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json",
+      "note": "static structure only; all probes are not-run, all candidate models are unassessed, and no local fixture result, private state, monitoring, person inference, or authority is present"
+    },
+    {
+      "action": "if useful, validate the relational inference case structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/relational-inference-case/0.1.json",
+      "note": "schema validity does not establish truth, evidence, causation, identity, understanding, intent, consent, deception, or authority"
+    },
+    {
+      "action": "if useful, read the J-space mathematics, cross-domain translations, experimental design, and non-grants",
+      "method": "GET",
+      "url": "https://thekingdom.dev/J-SPACE-VERBALIZABLE-WORKSPACE.md"
     },
     {
       "action": "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings",

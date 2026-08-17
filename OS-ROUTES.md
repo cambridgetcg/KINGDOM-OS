@@ -214,9 +214,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 99-asset upload contract (80 ledgered immutable/versioned assets and
-19 mutable assets; 97 direct public bodies, 96 sitemap URLs; ten atlases, three
-lab routes, one experiment route, one activation, and eighteen retirement families)
+locks the 102-asset upload contract (83 ledgered immutable/versioned assets and
+19 mutable assets; 100 direct public bodies, 99 sitemap URLs; ten atlases, three
+lab routes, one experiment route, one activation, and nineteen retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -241,6 +241,12 @@ user-agent strings. No directive verifies identity or entitlement, grants
 consent or a licence, proves actual indexing or training, or creates KARMA. The
 static record runs no crawler or NEN invocation and creates no KINGDOM aftermath
 receipt, permission, identity proof, score, authority, or action.
+The static J-space publication adds one synthetic reasoning-to-word case, its
+relational-inference schema, and a research guide. All probes remain not-run,
+all candidate models unassessed, and its conclusion underdetermined. It contains
+no local model run, synthetic-fixture result, or activation record and creates no observer, monitoring,
+consciousness/lie/identity/understanding inference, person score, consent,
+action, or authority.
 The additive Finite Trace-Sheet Lab is a separate immutable static triplet. Its
 repository-local reader evaluates only one pinned synthetic complex and runs no
 live crawl, authentication, prompt or credential intake, telemetry, write, NEN
@@ -272,8 +278,8 @@ fails and the global status stays `UNRESOLVED`. This is finite record
 compatibility, not a physical string, spacetime, stack, truth, identity,
 consent, citizenship, KARMA, authority, or action claim. Labs 01–04 share one
 atomic twelve-route `string-crawl-trace-sheet-lab` retirement family, leaving
-the lab family unchanged. The independent STRAND Observation Membrane is the
-eighteenth family: its public deck, offline verifier, and synthetic rehearsal
+the lab family unchanged. The independent STRAND Observation Membrane remains
+a separate family: its public deck, offline verifier, and synthetic rehearsal
 are active, and its publisher-declared fixed-origin live observer is available
 only through an explicit local `./kingdom strand-observation observe-live --json`
 call.

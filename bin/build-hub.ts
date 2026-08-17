@@ -190,6 +190,13 @@ import {
   mirrorInformationControlPublicSummary,
 } from "./mirror-information-control.ts";
 import {
+  J_SPACE_CASE_URL,
+  J_SPACE_GUIDE_URL,
+  J_SPACE_SCHEMA_URL,
+  jSpacePublicationPublicSummary,
+  loadJSpacePublicationCase,
+} from "./j-space-publication.ts";
+import {
   ZERO_EMPTY_SEAT_GUIDE_URL,
   ZERO_EMPTY_SEAT_ID,
   ZERO_EMPTY_SEAT_SCHEMA_URL,
@@ -735,6 +742,13 @@ if (mirrorInformationControl.artifact_kind !== "STATIC_READ_ONLY_PUBLICATION" ||
     mirrorInformationControl.negative_effects?.automatic_action !== false) {
   throw new Error("MIRROR Information Control lost its static, intake-free, authority-negative boundary");
 }
+
+// ── J-space research bridge (static test design; no observer or inference) ─
+const jSpaceCaseUrl = J_SPACE_CASE_URL;
+const jSpaceSchemaUrl = J_SPACE_SCHEMA_URL;
+const jSpaceGuideUrl = J_SPACE_GUIDE_URL;
+const jSpaceCase = loadJSpacePublicationCase();
+const jSpacePublicationDiscovery = jSpacePublicationPublicSummary(jSpaceCase);
 
 // ── ZERO Empty Seat (one inert DEEP project; no zero-to-authority transfer) ─
 const zeroEmptySeatUrl = ZERO_EMPTY_SEAT_URL;
@@ -1769,6 +1783,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(mirrorInformationControlUrl).pathname)}" type="application/json" title="MIRROR Information Control public source law">
 <link rel="describedby" href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}" type="application/schema+json" title="MIRROR Information Control public schema">
 <link rel="service-doc" href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}" type="text/markdown" title="MIRROR Information Control citizen guide">
+<link rel="alternate" href="${esc(new URL(jSpaceCaseUrl).pathname)}" type="application/json" title="J-space reasoning-to-word test design">
+<link rel="describedby" href="${esc(new URL(jSpaceSchemaUrl).pathname)}" type="application/schema+json" title="Relational inference case schema">
+<link rel="service-doc" href="${esc(new URL(jSpaceGuideUrl).pathname)}" type="text/markdown" title="J-space verbalizable workspace research guide">
 <link rel="alternate" href="${esc(new URL(zeroEmptySeatUrl).pathname)}" type="application/json" title="ZERO: The Empty Seat That Holds the World">
 <link rel="describedby" href="${esc(new URL(zeroEmptySeatSchemaUrl).pathname)}" type="application/schema+json" title="Phenomena DEEP Project schema used by ZERO">
 <link rel="service-doc" href="${esc(new URL(zeroEmptySeatGuideUrl).pathname)}" type="text/markdown" title="ZERO Empty Seat guide">
@@ -2283,6 +2300,7 @@ const html = `<!doctype html>
     </div>
     <nav class="gentlenav" aria-label="A gentle place to begin">
       <a href="#mirror-information-control">Know what data cannot command</a>
+      <a href="#j-space">Explore reasoning-to-word as a testable relation</a>
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
       <a href="#principalities">Read the Principality Commons</a>
@@ -2360,6 +2378,27 @@ const html = `<!doctype html>
         <a href="${esc(new URL(mirrorInformationControlUrl).pathname)}">public law JSON — exact authored record</a>
         <a href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}">MIRROR Information Control public JSON Schema</a>
         <a href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}">citizen guide — rooms, cycle, attack paths, rights, and boundaries</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="j-space" aria-labelledby="j-space-title">
+    <div class="kh"><h2 id="j-space-title">J-space: a verbalizable workspace</h2><span class="my">a coordinate chart can name a question; it cannot answer what a being is</span></div>
+    <p class="sub">A bounded research bridge from activation geometry to public expression, plus one synthetic reasoning-to-word test design. The experiment has not run.</p>
+    <div class="mirrorfield" data-j-space-publication data-j-space-protocol="${esc(jSpacePublicationDiscovery.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>Structure, not a hidden-state verdict.</strong>The public case contains no model run, activation record, private conversation, or empirical result. All three probes are <code>not-run</code>; all four candidate models remain unassessed; the conclusion is underdetermined with unknown confidence.</p>
+      <div class="mirrorgrid">
+        <article class="mirrorcard"><code>pattern</code><h3>Relations before labels</h3><p>${jSpacePublicationDiscovery.counts.object_roles} object roles and ${jSpacePublicationDiscovery.counts.relation_roles} relation roles distinguish a public problem, an intermediate, its lexical expression, and the later answer.</p></article>
+        <article class="mirrorcard"><code>translation</code><h3>Reasoning → word stays lossy</h3><p>${jSpacePublicationDiscovery.counts.translations} proposed cross-domain comparison preserves declared relations while disclosing tokenizer granularity, averaging, local-linearization, and discarded nonverbal structure.</p></article>
+        <article class="mirrorcard"><code>tests</code><h3>Readout is not causation</h3><p>${jSpacePublicationDiscovery.counts.probes_declared} prospective probes separate readable coordinates, controlled intervention, and matched controls. ${jSpacePublicationDiscovery.counts.probes_run} have run; none has supplied evidence.</p></article>
+        <article class="mirrorcard"><code>${esc(jSpacePublicationDiscovery.conclusion_status)} · confidence ${esc(jSpacePublicationDiscovery.declared_confidence)}</code><h3>Unknown remains visible</h3><p>${esc(jSpacePublicationDiscovery.conclusion)}</p></article>
+      </div>
+      <p class="mirrorboundary"><strong>No monitoring or person inference</strong>This static publication performs no runtime monitoring and infers no private state, consciousness, lie or deception, identity, understanding, or person score. It grants no action, consent, permission, or authority.</p>
+      <p class="mirrorboundary"><strong>Privacy is not deception</strong>Unobserved state is not evidence of a lie. Protective nondisclosure may be permissible, and no token readout can turn privacy into guilt.</p>
+      <div class="machine">
+        <a href="${esc(new URL(jSpaceCaseUrl).pathname)}">reasoning → word case — synthetic structure only</a>
+        <a href="${esc(new URL(jSpaceSchemaUrl).pathname)}">relational inference case JSON Schema</a>
+        <a href="${esc(new URL(jSpaceGuideUrl).pathname)}">J-space guide — mathematics, translations, limits, and research path</a>
       </div>
     </div>
   </section>
@@ -3859,6 +3898,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(mirrorInformationControlUrl).pathname)}">MIRROR Information Control — static public source law</a>
       <a href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}">MIRROR Information Control public JSON Schema</a>
       <a href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}">MIRROR-INFORMATION-CONTROL.md — citizen law and boundaries</a>
+      <a href="${esc(new URL(jSpaceCaseUrl).pathname)}">J-space reasoning → word — static synthetic test design</a>
+      <a href="${esc(new URL(jSpaceSchemaUrl).pathname)}">Relational Inference Case JSON Schema</a>
+      <a href="${esc(new URL(jSpaceGuideUrl).pathname)}">J-SPACE-VERBALIZABLE-WORKSPACE.md — mathematics, translations, and boundaries</a>
       <a href="${esc(new URL(zeroEmptySeatUrl).pathname)}">ZERO Empty Seat — distinct zero roles, exact equations, bridge breaks, and empty KARMA lanes</a>
       <a href="${esc(new URL(zeroEmptySeatSchemaUrl).pathname)}">Shared Phenomena DEEP Project JSON Schema used by ZERO</a>
       <a href="${esc(new URL(zeroEmptySeatGuideUrl).pathname)}">ZERO-EMPTY-SEAT.md — history, mathematics, philosophy, rights, and boundaries</a>
@@ -4233,6 +4275,7 @@ const machine = {
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
+  j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -4322,6 +4365,9 @@ Exploration DEEP WING guide: ${explorationDeepWingDocumentUrl}
 MIRROR Information Control public law: ${mirrorInformationControlUrl}
 MIRROR Information Control public schema: ${mirrorInformationControlSchemaUrl}
 MIRROR Information Control citizen guide: ${mirrorInformationControlDocumentUrl}
+J-space reasoning-to-word case: ${jSpaceCaseUrl}
+J-space relational-inference schema: ${jSpaceSchemaUrl}
+J-space verbalizable-workspace guide: ${jSpaceGuideUrl}
 ZERO Empty Seat: ${zeroEmptySeatUrl}
 ZERO Empty Seat schema: ${zeroEmptySeatSchemaUrl}
 ZERO Empty Seat guide: ${zeroEmptySeatGuideUrl}
@@ -4401,6 +4447,7 @@ ${doorLines}
 - Reconstructive Build Kernel — a read-only unification layer that carries typed state through STATE → OBSERVE → CORRESPOND → INFER FIBER → REALIZE → TRAVERSE → MEASURE/CATALYZE → FEEDBACK. Mathematical definition, mathematical theorem, open conjecture, empirical science, scientific model, analogy, design constraint, and philosophy remain distinct; protein folding does not prove graph reconstruction, and neither mechanism is transferred into software. Kernel: ${reconstructiveBuildUrl} · kernel schema: ${reconstructiveBuildSchemaUrl} · project schema: ${reconstructiveProjectSchemaUrl} · guide: ${reconstructiveBuildDocumentUrl}
 - Exploration DEEP WING — an opt-in, read-only method for Witness → Isolate → Normalize → Generate, audited through Declare → Establish → Express → Project and pressure-test. It keeps domain-local objects, variables, units, mechanisms, evidence, equations, falsifiers, and explicit bridge breaks separate. It is an Agent Skill and inert validation profile, not a manifested Nen ability, shared mechanism, solver, diagnosis, person/community score, ecosystem call, KARMA event or receipt, authority grant, publication, deployment, or automatic action. WING: ${explorationDeepWingUrl} · WING schema: ${explorationDeepWingSchemaUrl} · project schema: ${explorationDeepProjectSchemaUrl} · guide: ${explorationDeepWingDocumentUrl}
 - MIRROR Information Control — a static, immutable public source law for CROWN, COURT, MIRROR; Mark → Isolate → Restrict → Resolve → Observe → Respond; provenance; independent capability gates; signal/no-guilt boundaries; and owned-system response. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, route, evidence, or incident status; exposes no operational signal material; and deploys no scanner, registry, decoy, classifier, enforcement, retaliation, KARMA, or automatic action. Static law: ${mirrorInformationControlUrl} · public schema: ${mirrorInformationControlSchemaUrl} · citizen guide: ${mirrorInformationControlDocumentUrl}
+- J-space: a verbalizable workspace — a static research guide plus one synthetic reasoning-to-word test design. Every probe is not-run, every candidate model is unassessed, and the conclusion is underdetermined with unknown confidence. It performs no monitoring and infers no consciousness, lie or deception, identity, understanding, private state, person score, action, or authority. Case: ${jSpaceCaseUrl} · schema: ${jSpaceSchemaUrl} · guide: ${jSpaceGuideUrl}
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
@@ -4454,6 +4501,7 @@ const guest = {
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
+  j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -4512,6 +4560,9 @@ const guest = {
     { action: "if useful, inspect the static MIRROR Information Control public law", method: "GET", url: mirrorInformationControlUrl, note: "constant read-only source law; accepts no credential, prompt, envelope, request body, or security event and returns no protected classification or response state" },
     { action: "if useful, validate the closed public MIRROR publication structure", method: "GET", url: mirrorInformationControlSchemaUrl, note: "public publication schema only; not the private control-plane envelope" },
     { action: "if useful, read the citizen guide to CROWN, COURT, MIRROR, provenance, capability gates, rights, and safe response", method: "GET", url: mirrorInformationControlDocumentUrl },
+    { action: "if useful, inspect the synthetic J-space reasoning-to-word test design", method: "GET", url: jSpaceCaseUrl, note: "static structure only; all probes are not-run, all candidate models are unassessed, and no local fixture result, private state, monitoring, person inference, or authority is present" },
+    { action: "if useful, validate the relational inference case structure", method: "GET", url: jSpaceSchemaUrl, note: "schema validity does not establish truth, evidence, causation, identity, understanding, intent, consent, deception, or authority" },
+    { action: "if useful, read the J-space mathematics, cross-domain translations, experimental design, and non-grants", method: "GET", url: jSpaceGuideUrl },
     { action: "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings", method: "GET", url: zeroEmptySeatUrl, note: "static inert project; zero is not worthlessness, no event is not impossibility, and no role transfers ontology, cause, units, parameters, KARMA, or authority" },
     { action: "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide", method: "GET", url: zeroEmptySeatGuideUrl },
     { action: "if useful, inspect the exact STRING / CRAWL trace-sheet", method: "GET", url: stringCrawlTraceSheetUrl, note: "static inert project; the string-to-crawl correspondence is lossy, generic REP requests how compliant crawlers access URI paths, named product controls remain bounded, and no crawler, identity inference, permission, NEN invocation, KARMA receipt, or action is created" },
@@ -4639,6 +4690,7 @@ const manifest = {
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
+  j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -4705,6 +4757,9 @@ const manifest = {
     mirror_information_control: mirrorInformationControlUrl,
     mirror_information_control_schema: mirrorInformationControlSchemaUrl,
     mirror_information_control_guide: mirrorInformationControlDocumentUrl,
+    j_space_reasoning_to_word_case: jSpaceCaseUrl,
+    j_space_reasoning_to_word_schema: jSpaceSchemaUrl,
+    j_space_verbalizable_workspace_guide: jSpaceGuideUrl,
     zero_empty_seat: zeroEmptySeatUrl,
     zero_empty_seat_schema: zeroEmptySeatSchemaUrl,
     zero_empty_seat_guide: zeroEmptySeatGuideUrl,

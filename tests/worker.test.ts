@@ -2879,6 +2879,93 @@ describe("the Kingdom edge discovery surface", () => {
     }
   });
 
+  test("serves the J-space test design only as its exact typed GET/HEAD triplet", async () => {
+    const recordPath = "/records/j-space-reasoning-to-word-2026-08-17.json";
+    const schemaPath = "/schemas/relational-inference-case/0.1.json";
+    const guidePath = "/J-SPACE-VERBALIZABLE-WORKSPACE.md";
+    for (const path of [recordPath, schemaPath, guidePath]) expect(KINGDOM_OS_ROUTES).not.toContain(path);
+
+    const bodies = new Map([
+      [recordPath, '{"schema_version":"kingdom.relational-inference/0.1"}'],
+      [schemaPath, '{"$id":"https://thekingdom.dev/schemas/relational-inference-case/0.1.json"}'],
+      [guidePath, "# J-space: A Verbalizable Workspace"],
+    ]);
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      return new Response(request.method === "HEAD" ? null : bodies.get(path), {
+        headers: {
+          "content-type": path === guidePath
+            ? "Text/Plain; charset=UTF-8"
+            : path === schemaPath
+              ? "Application/Schema+JSON; charset=UTF-8"
+              : "Application/JSON; charset=UTF-8",
+          link: path === recordPath
+            ? `<${schemaPath}>; rel="describedby"; type="text/html", </poisoned>; rel="describedby", </profile-poison>; rel="profile", </elsewhere>; rel="alternate"`
+            : '</elsewhere>; rel="alternate"',
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      for (const path of [recordPath, schemaPath, guidePath]) {
+        const response = await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          environment,
+        );
+        expect(await response.text()).toBe(method === "HEAD" ? "" : bodies.get(path));
+        expect(response.headers.get("content-type")).toBe(
+          path === recordPath
+            ? "application/json; charset=utf-8"
+            : path === schemaPath
+              ? "application/schema+json; charset=utf-8"
+              : "text/markdown; charset=utf-8",
+        );
+        expect(response.headers.get("access-control-allow-origin")).toBe("*");
+        expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+        if (path === recordPath) {
+          const links = (response.headers.get("link") ?? "").split(/,(?=\s*<)/).map((entry) => entry.trim());
+          expect(links.filter((entry) => entry.includes('rel="describedby"'))).toEqual([
+            `<${schemaPath}>; rel="describedby"; type="application/schema+json"`,
+          ]);
+          expect(links).toContain('</elsewhere>; rel="alternate"');
+          expect(response.headers.get("link")).not.toContain("poisoned");
+          expect(response.headers.get("link")).not.toContain('rel="profile"');
+        }
+      }
+    }
+
+    for (const path of [recordPath, schemaPath, guidePath]) {
+      for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+        const original = new Response(`no J-space action route for ${method}`);
+        expect(await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          assets(() => original),
+        )).toBe(original);
+        expect(original.headers.get("access-control-allow-origin")).toBeNull();
+      }
+      const shared = new Response("shared host");
+      expect(await worker.fetch(
+        new Request(`https://we-are.love${path}`),
+        assets(() => shared),
+      )).toBe(shared);
+    }
+
+    for (const alias of [
+      "/records/j-space-reasoning-to-word-latest.json",
+      "/records/j-space-reasoning-to-word-current.json",
+      "/schemas/relational-inference-case/latest.json",
+      "/J-SPACE-VERBALIZABLE-WORKSPACE",
+      "/j-space/monitor",
+      "/j-space/infer",
+    ]) {
+      const original = new Response(alias);
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${alias}`),
+        assets(() => original),
+      )).toBe(original);
+    }
+  });
+
   test("rejects near-match MIRROR media types and replaces poisoned decision-like links", async () => {
     const recordPath = "/protocols/mirror-information-control-2026-08-14.json";
     const schemaPath = "/schemas/mirror-information-control-public/0.1.json";

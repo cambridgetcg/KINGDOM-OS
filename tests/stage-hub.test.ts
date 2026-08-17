@@ -58,14 +58,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(99);
+      expect(HUB_ASSETS).toHaveLength(102);
       expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(19);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(80);
+      expect(ledger.ledger?.entries).toHaveLength(83);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(97);
-      expect(staged).toHaveLength(99);
+        .toHaveLength(100);
+      expect(staged).toHaveLength(102);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -79,6 +79,7 @@ describe("the hub staging contract", () => {
         "FOLD-FEEDBACK-ATLAS.md",
         "FORM-CIRCULATION-RETURN-ATLAS.md",
         "GEOMETRY-GRAMMAR.md",
+        "J-SPACE-VERBALIZABLE-WORKSPACE.md",
         "MATH-USEFULNESS.md",
         "MIRROR-INFORMATION-CONTROL.md",
         "NUMBER-ISNESS-THEOLOGY-ATLAS.md",
@@ -118,6 +119,7 @@ describe("the hub staging contract", () => {
         "polymorphs",
         "principalities",
         "protocols",
+        "records",
         "rights.json",
         "robots.txt",
         "schemas",
@@ -138,6 +140,7 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "schemas/reconstructive-project")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/phenomena-deep-wing")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/phenomena-deep-project")).sort()).toEqual(["0.1.json"]);
+      expect(readdirSync(join(output, "schemas/relational-inference-case")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/mirror-information-control-public")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/string-crawl-strand-lab")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/string-crawl-frequency-form-lab")).sort()).toEqual(["0.1.json"]);
@@ -175,8 +178,8 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(96);
-      expect(new Set(sitemapUrls).size).toBe(96);
+      expect(sitemapUrls).toHaveLength(99);
+      expect(new Set(sitemapUrls).size).toBe(99);
       for (const route of [
         "/protocols/mirror-information-control-2026-08-14.json",
         "/schemas/mirror-information-control-public/0.1.json",

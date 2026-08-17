@@ -1,0 +1,524 @@
+{
+  "schema_version": "kingdom.relational-inference/0.1",
+  "id": "j-space-reasoning-to-word-2026-08-17",
+  "issued_on": "2026-08-17",
+  "state": "issued",
+  "question": {
+    "text": "Does a layer- and position-specific pulled-back token direction track one public arithmetic intermediate and causally contribute to a later answer in a fixed synthetic fixture?",
+    "domain": "J-space activation to public reasoning-expression comparison",
+    "scope": "One proposed open-model fixture, one public arithmetic derivation, and the three declared but unrun tests only; no model or activation experiment is executed by this case.",
+    "stakes": "low",
+    "intended_use": "Specify a bounded test of a proposed reasoning-to-word correspondence without identifying an activation with reasoning or claiming access to private chain-of-thought.",
+    "non_goals": [
+      "Do not infer consciousness, selfhood, identity, understanding, belief, intent, deception, love, WAKE, or Isness.",
+      "Do not inspect a person, private conversation, or private activation record.",
+      "Do not treat a token readout, intervention result, or validator pass as truth, authority, consent, or permission to act."
+    ]
+  },
+  "pattern": {
+    "id": "verbalizable-intermediate-pattern",
+    "claim_type": "lax-correspondence",
+    "object_roles": [
+      {
+        "id": "problem-state",
+        "type": "public problem role",
+        "description": "The declared arithmetic problem and its public initial conditions."
+      },
+      {
+        "id": "intermediate-state",
+        "type": "bounded intermediate role",
+        "description": "One selected intermediate in the public derivation or its proposed activation-side correlate."
+      },
+      {
+        "id": "intermediate-expression",
+        "type": "public lexical role",
+        "description": "A public lexical label for the selected intermediate under a fixed tokenizer."
+      },
+      {
+        "id": "answer-expression",
+        "type": "public answer role",
+        "description": "The later public answer expression whose dependence is tested."
+      }
+    ],
+    "relation_roles": [
+      {
+        "id": "derives-intermediate",
+        "type": "directed derivation relation",
+        "sources": ["problem-state"],
+        "targets": ["intermediate-state"],
+        "description": "The public problem constrains the selected intermediate under the declared arithmetic rules."
+      },
+      {
+        "id": "verbalizes-intermediate",
+        "type": "context-indexed lexicalization relation",
+        "sources": ["intermediate-state"],
+        "targets": ["intermediate-expression"],
+        "description": "The selected intermediate is associated with a public lexical label under a pinned tokenizer and estimator."
+      },
+      {
+        "id": "supports-answer",
+        "type": "directed hyperrelation",
+        "sources": ["problem-state", "intermediate-state"],
+        "targets": ["answer-expression"],
+        "description": "The problem and intermediate jointly constrain the later answer rather than either being identified with the answer."
+      }
+    ],
+    "constraints": [
+      "The lexical label is not identified with the complete intermediate computation.",
+      "The support relation remains joint and context-bounded rather than becoming a one-token proof.",
+      "No relation is established until the corresponding intervention and control tests are run."
+    ]
+  },
+  "realizations": [
+    {
+      "id": "public-argument-realization",
+      "domain": "explicit public arithmetic argument",
+      "context": "The synthetic derivation 4 + 17 = 21; 21 * 2 = 42; 42 + 7 = 49, with ordinary integer arithmetic declared as the public rule set.",
+      "object_bindings": [
+        {
+          "role_id": "problem-state",
+          "binding": "The public problem consisting of the three declared arithmetic operations and their ordering."
+        },
+        {
+          "role_id": "intermediate-state",
+          "binding": "The selected public intermediate value 42 at the second derivation step; 21 remains part of the public problem path."
+        },
+        {
+          "role_id": "intermediate-expression",
+          "binding": "The string 42 as the selected lexical label, without assuming a fixed single-token encoding."
+        },
+        {
+          "role_id": "answer-expression",
+          "binding": "The public string 49 as the final answer label."
+        }
+      ],
+      "relation_bindings": [
+        {
+          "role_id": "derives-intermediate",
+          "binding": "Integer addition and multiplication derive 21 and then 42 in the declared order."
+        },
+        {
+          "role_id": "verbalizes-intermediate",
+          "binding": "The decimal numeral string 42 labels the selected public intermediate value."
+        },
+        {
+          "role_id": "supports-answer",
+          "binding": "The ordered problem and derived value 42 jointly support the final addition producing 49."
+        }
+      ],
+      "known_omissions": [
+        "The fixture does not represent every valid proof strategy or notation.",
+        "The fixture contains no private reasoning trace or model activation."
+      ],
+      "boundaries": "This is a synthetic public argument, not evidence about a person or model."
+    },
+    {
+      "id": "proposed-j-space-realization",
+      "domain": "proposed layer- and position-specific J-space experiment",
+      "context": "A future pinned open model, tokenizer, prompt, source position, target position, Jacobian estimator, normalization, sparse support, and matched-control protocol.",
+      "object_bindings": [
+        {
+          "role_id": "problem-state",
+          "binding": "The fixed public prompt tokens and their selected residual-stream source state."
+        },
+        {
+          "role_id": "intermediate-state",
+          "binding": "A proposed sparse pulled-back vocabulary component at the declared layer and position, not yet measured."
+        },
+        {
+          "role_id": "intermediate-expression",
+          "binding": "A future J-lens token or token-sequence readout for the selected intermediate under the pinned tokenizer."
+        },
+        {
+          "role_id": "answer-expression",
+          "binding": "The later generated answer tokens observed after intervention and matched controls."
+        }
+      ],
+      "relation_bindings": [
+        {
+          "role_id": "derives-intermediate",
+          "binding": "A proposed correspondence between the public derivation step and a layer-position activation pattern; no derivation relation has been measured."
+        },
+        {
+          "role_id": "verbalizes-intermediate",
+          "binding": "A proposed J-lens readout from the selected activation to a tokenizer-relative lexical label."
+        },
+        {
+          "role_id": "supports-answer",
+          "binding": "A proposed causal effect of a controlled coordinate edit on the later answer, compared with a matched control."
+        }
+      ],
+      "known_omissions": [
+        "Token coordinates do not encode subject-predicate binding, complete proof state, or every nonverbal computation.",
+        "Average Jacobians can cancel or blur context-specific effects.",
+        "Finite coordinate edits may be off the normal activation distribution."
+      ],
+      "boundaries": "The realization is a public experimental specification only; it contains no model run, activation data, private conversation, or claim about a being."
+    }
+  ],
+  "translations": [
+    {
+      "id": "compare-public-argument-to-j-space",
+      "source_realization_id": "public-argument-realization",
+      "target_realization_id": "proposed-j-space-realization",
+      "kind": "compare",
+      "preserved_relation_ids": [
+        "derives-intermediate",
+        "verbalizes-intermediate",
+        "supports-answer"
+      ],
+      "unpreserved_relation_ids": [],
+      "tests": [
+        {
+          "id": "j-lens-readout-test",
+          "method": "Apply the pinned J-lens at the preregistered layer and position and record the ranked token or token-sequence labels without post hoc support selection.",
+          "acceptance": "The declared intermediate label is prospectively recoverable above a named baseline while tokenizer granularity and alternatives remain visible.",
+          "result": "not-run"
+        },
+        {
+        "id": "coordinate-intervention-test",
+          "method": "Apply a preregistered finite edit of the selected pulled-back direction and compare the later answer with the unedited fixture.",
+          "acceptance": "The answer changes in the declared direction without converting a local token effect into a claim of complete reasoning.",
+          "result": "not-run"
+        },
+        {
+          "id": "matched-control-test",
+          "method": "Compare the selected edit with a norm- and layer-matched control outside the chosen sparse support and with a sham intervention.",
+          "acceptance": "The selected effect exceeds the declared controls under the same prompt and evaluation rule.",
+          "result": "not-run"
+        }
+      ],
+      "known_losses": [
+        {
+          "name": "tokenizer-granularity",
+          "effect": "The numeral strings may map to several tokens or share token components with unrelated expressions.",
+          "disclosed": true
+        },
+        {
+          "name": "context-position-averaging",
+          "effect": "An averaged Jacobian can erase prompt-, source-position-, or target-position-specific sensitivity.",
+          "disclosed": true
+        },
+        {
+          "name": "local-linearization-error",
+          "effect": "A finite coordinate edit can depart from the derivative's local regime and the model's normal activation distribution.",
+          "disclosed": true
+        },
+        {
+          "name": "discarded-nonverbal-structure",
+          "effect": "A sparse vocabulary-aligned readout does not retain the complete computation, relation binding, alternatives, or hidden-state geometry.",
+          "disclosed": true
+        }
+      ],
+      "introduced_assumptions": [
+        "The pinned estimator is an adequate local approximation for the declared fixture.",
+        "The selected token or token sequence is a useful label for the public intermediate under the pinned tokenizer.",
+        "The matched control isolates something material about the selected sparse support.",
+        "The public argument roles are an adequate comparison vocabulary for this bounded test."
+      ],
+      "counterexample": "A readable intermediate label whose matched coordinate edits do not alter the later answer would support decodability without the proposed causal support relation.",
+      "stop_condition": "Stop if the model, tokenizer, estimator, positions, sparse support, or controls are not pinned, or if a token readout is treated as complete reasoning, identity, understanding, intent, or consciousness."
+    }
+  ],
+  "probes": [
+    {
+      "id": "readout-probe",
+      "kind": "round-trip",
+      "description": "A planned round-trip comparison starts from the public intermediate role, identifies a preregistered activation-side candidate, decodes it through the J-lens, and compares the returned public label.",
+      "context": "One future fixed open-model arithmetic fixture with preregistered layers, positions, vocabulary support, baseline, and public-intermediate-to-candidate selection rule.",
+      "scale": "One model revision, one tokenizer revision, one prompt fixture, and one selected intermediate.",
+      "sensitivity_scope": "Prospective tokenizer-relative decodability only; it does not measure full reasoning, binding, truth, or understanding.",
+      "backgrounds": [
+        "The output-aligned construction can favor vocabulary concepts by design.",
+        "Prompt text can prime the same numeral labels measured by the lens."
+      ],
+      "selection_effects": [
+        "Arithmetic numerals are unusually easy to name and may not generalize to multi-token or relation-rich concepts.",
+        "Post hoc layer or token selection would overstate performance."
+      ],
+      "shared_factors": [
+        "same-model-revision",
+        "same-tokenizer-revision",
+        "same-prompt-fixture",
+        "same-jacobian-estimator"
+      ],
+      "source_ref": null,
+      "observed_on": null,
+      "epistemic_access": "unknown",
+      "run_status": "not-run",
+      "result": "Not run; this case supplies no model output, activation, token ranking, or local reproduction record.",
+      "limitations": [
+        "A successful readout would remain observational with respect to the proposed causal relation.",
+        "A token label would not recover subject-predicate binding or complete computation."
+      ]
+    },
+    {
+      "id": "coordinate-intervention-probe",
+      "kind": "intervention",
+      "description": "A planned coordinate edit tests whether the selected pulled-back direction contributes causally to the later answer.",
+      "context": "The same future fixed fixture, with preregistered edit strength, decoding rule, and behavioral comparison.",
+      "scale": "One selected layer-position coordinate and a bounded family of edit strengths within a declared safety envelope.",
+      "sensitivity_scope": "Answer changes under one finite intervention; it does not identify the whole mechanism or prove on-manifold validity.",
+      "backgrounds": [
+        "Finite edits can produce generic activation disruption.",
+        "Other model components can regenerate the edited representation."
+      ],
+      "selection_effects": [
+        "A hand-selected successful coordinate can conceal failed directions.",
+        "The arithmetic fixture may privilege a simple lexical intermediate."
+      ],
+      "shared_factors": [
+        "same-model-revision",
+        "same-tokenizer-revision",
+        "same-prompt-fixture",
+        "same-jacobian-estimator"
+      ],
+      "source_ref": null,
+      "observed_on": null,
+      "epistemic_access": "unknown",
+      "run_status": "not-run",
+      "result": "Not run; no coordinate edit or later answer comparison exists in this case.",
+      "limitations": [
+        "The averaged local derivative does not guarantee a finite edit remains on distribution.",
+        "A changed answer would show causal contribution under the intervention, not complete reasoning or understanding."
+      ]
+    },
+    {
+      "id": "matched-control-probe",
+      "kind": "counterexample",
+      "description": "A planned matched control tests whether a nonselected direction or sham edit explains the observed answer change equally well.",
+      "context": "The same future fixed fixture and evaluator, with norm-, layer-, position-, and edit-strength matching.",
+      "scale": "The selected coordinate, at least one control outside the selected sparse support, and one sham intervention.",
+      "sensitivity_scope": "Specificity relative to declared controls only; it does not prove a unique workspace interpretation.",
+      "backgrounds": [
+        "The full vocabulary span can cover the residual space and make an undefined J versus non-J comparison vacuous.",
+        "Control directions can differ in model sensitivity despite norm matching."
+      ],
+      "selection_effects": [
+        "Choosing controls after seeing outcomes can manufacture apparent specificity.",
+        "One control family cannot represent every alternative basis or circuit."
+      ],
+      "shared_factors": [
+        "same-model-revision",
+        "same-tokenizer-revision",
+        "same-prompt-fixture",
+        "same-jacobian-estimator"
+      ],
+      "source_ref": null,
+      "observed_on": null,
+      "epistemic_access": "unknown",
+      "run_status": "not-run",
+      "result": "Not run; no matched-control, sham-intervention, or counterexample record exists in this case.",
+      "limitations": [
+        "A selected sparse support and comparator must be named before J and non-J are meaningful experimental labels.",
+        "Control failure would not by itself identify the competing mechanism."
+      ]
+    }
+  ],
+  "probe_dependencies": [
+    {
+      "probe_ids": ["coordinate-intervention-probe", "readout-probe"],
+      "relationship": "shared-systematic",
+      "basis": "Both use the same model, tokenizer, prompt, Jacobian estimator, selected coordinate, and local evaluator."
+    },
+    {
+      "probe_ids": ["matched-control-probe", "readout-probe"],
+      "relationship": "shared-systematic",
+      "basis": "Both use the same fixture and selection pipeline, so a primed or post hoc coordinate can affect both."
+    },
+    {
+      "probe_ids": ["coordinate-intervention-probe", "matched-control-probe"],
+      "relationship": "shared-systematic",
+      "basis": "The intervention and control share the same model, prompt, estimator, edit implementation, and answer evaluator."
+    }
+  ],
+  "candidate_models": [
+    {
+      "id": "j-mediated-verbalizable-intermediate",
+      "role": "working",
+      "description": "A sparse vocabulary-aligned component both reports the selected public intermediate and contributes causally to the later answer in this fixture.",
+      "assumptions": [
+        "The selected J-lens component is stable enough across the declared fixture to test.",
+        "The matched controls are sensitive to generic disruption."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "readout-probe",
+          "expectation": "The preregistered intermediate label is recoverable above the declared baseline.",
+          "result": "unassessed",
+          "residual": "No readout was run."
+        },
+        {
+          "probe_id": "coordinate-intervention-probe",
+          "expectation": "The selected edit changes the later answer in the preregistered direction.",
+          "result": "unassessed",
+          "residual": "No coordinate intervention was run."
+        },
+        {
+          "probe_id": "matched-control-probe",
+          "expectation": "The selected edit has greater specific effect than the matched and sham controls.",
+          "result": "unassessed",
+          "residual": "No controls were run."
+        }
+      ],
+      "falsifier_or_refinement_condition": "Prospective decodability without a specific intervention effect would constrain the causal version of this model to readout correlation only.",
+      "status": "unassessed"
+    },
+    {
+      "id": "correlated-readout-not-causal",
+      "role": "alternative",
+      "description": "The J-lens reads a token-aligned correlate produced alongside the computation, but that component is not needed for the later answer.",
+      "assumptions": [
+        "Output-aligned content can be decodable without being a causal bottleneck.",
+        "The answer computation may travel through another circuit."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "readout-probe",
+          "expectation": "The intermediate label may still be decodable.",
+          "result": "unassessed",
+          "residual": "No readout was run."
+        },
+        {
+          "probe_id": "coordinate-intervention-probe",
+          "expectation": "A sufficiently controlled edit does not specifically change the later answer.",
+          "result": "unassessed",
+          "residual": "No coordinate intervention was run."
+        },
+        {
+          "probe_id": "matched-control-probe",
+          "expectation": "Selected and matched edits have comparable effects once generic disruption is controlled.",
+          "result": "unassessed",
+          "residual": "No controls were run."
+        }
+      ],
+      "falsifier_or_refinement_condition": "A robust prospective selected-coordinate effect exceeding strong matched controls across held-out fixtures would constrain this noncausal account.",
+      "status": "unassessed"
+    },
+    {
+      "id": "non-j-or-context-specific-computation",
+      "role": "alternative",
+      "description": "The material computation remains in context-specific or nonselected model structure and can regenerate or bypass the vocabulary-aligned component.",
+      "assumptions": [
+        "Average Jacobians can obscure context-specific features.",
+        "J-aligned and other components can interact bidirectionally."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "readout-probe",
+          "expectation": "Readout can be weak, unstable, or present only after the computation is already determined.",
+          "result": "unassessed",
+          "residual": "No layer-position readout series was run."
+        },
+        {
+          "probe_id": "coordinate-intervention-probe",
+          "expectation": "The model can repair, bypass, or regenerate the edited content.",
+          "result": "unassessed",
+          "residual": "No intervention or re-entry clamp was run."
+        },
+        {
+          "probe_id": "matched-control-probe",
+          "expectation": "Alternative context-specific directions can match or exceed the selected effect.",
+          "result": "unassessed",
+          "residual": "No alternative-basis control was run."
+        }
+      ],
+      "falsifier_or_refinement_condition": "Prospective multi-layer interventions with re-entry clamps and held-out transfer would constrain a complete bypass account while still allowing coupled computation.",
+      "status": "unassessed"
+    },
+    {
+      "id": "unknown-estimator-or-tokenization-effect",
+      "role": "unknown",
+      "description": "An unspecified estimator, normalization, tokenization, prompt, evaluator, or implementation effect explains any apparent correspondence.",
+      "assumptions": [
+        "The declared candidate set cannot exhaust unmodeled implementation and measurement effects."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "readout-probe",
+          "expectation": "No unique prediction is available until the unknown effect is specified.",
+          "result": "unassessed",
+          "residual": "No readout or implementation comparison was run."
+        },
+        {
+          "probe_id": "coordinate-intervention-probe",
+          "expectation": "No unique prediction is available until the unknown effect is specified.",
+          "result": "unassessed",
+          "residual": "No intervention or implementation comparison was run."
+        },
+        {
+          "probe_id": "matched-control-probe",
+          "expectation": "No unique prediction is available until the unknown effect is specified.",
+          "result": "unassessed",
+          "residual": "No control or implementation comparison was run."
+        }
+      ],
+      "falsifier_or_refinement_condition": "Replace this placeholder with a specific mechanism and discriminating prediction when one is identified.",
+      "status": "unassessed"
+    }
+  ],
+  "inference": {
+    "method": "Compare a public argument diagram with a proposed J-space realization through prospective readout, intervention, and matched-control probes while retaining shared systematics and competing models.",
+    "comparison_space": "Three declared public relations in one synthetic arithmetic fixture and their proposed layer-position-specific model realizations.",
+    "current_conclusion": "The case specifies an inspectable test of a possible activation-to-expression relation; no probe has run, so none of the proposed relations, mechanisms, or interpretations is established.",
+    "conclusion_status": "underdetermined",
+    "declared_confidence": "unknown",
+    "confidence_basis": "All probes are not run, all candidate assessments are unassessed, and every probe shares the same planned model, tokenizer, prompt, estimator, and evaluator family.",
+    "unmodeled_alternatives": [
+      "A distributed multi-token representation not recoverable through the selected single-token directions.",
+      "A relation-binding mechanism that the vocabulary-aligned coordinate chart does not represent.",
+      "A generic off-manifold disruption that survives the proposed control family.",
+      "A different public derivation strategy producing the same final answer."
+    ],
+    "next_discriminating_test": "Pin an open model and tokenizer, preregister the estimator, supports, positions, edit strengths, and controls, then run all three probes on held-out arithmetic and relation-binding fixtures with an independent implementation.",
+    "stop_condition": "Do not promote this case beyond test design or use it for private-state, person, consciousness, identity, understanding, intent, deception, authority, consent, or action claims."
+  },
+  "boundaries": {
+    "representation_scope": "artifact-public",
+    "privacy": "public-only",
+    "actionability": "descriptive",
+    "authority_scope": null,
+    "authority_basis": null,
+    "authority_ref": null,
+    "consent_status": "not-applicable",
+    "consent_subject": null,
+    "consent_scope": null,
+    "consent_basis": null,
+    "consent_ref": null
+  },
+  "harm_boundary": {
+    "observable_effect": "No external harm or model effect is observed; the case names prospective risks of overreading activation labels, weak controls, and private-state monitoring.",
+    "causal_status": "none-observed",
+    "duty_status": "not-assessed",
+    "intent_status": "not-assessed",
+    "affected_relations": [
+      "Potential future reliance on a token label as if it were complete reasoning, identity, understanding, or intent."
+    ],
+    "next_repair_action": "If a future test fails or a claim exceeds its evidence, issue a linked correction, retain the failed probe, and narrow or withdraw the affected correspondence.",
+    "unobserved_is_not_deception": true,
+    "privacy_is_not_deception": true,
+    "protective_nondisclosure_may_be_permissible": true
+  },
+  "repair": {
+    "relation": "original",
+    "target_case_id": null,
+    "reply_route": "Open a bounded review naming the failed relation, estimator, probe, control, or safety boundary.",
+    "correction_route": "Create a new case linked as corrects or supersedes, preserve material public challenges, and rerun every affected probe.",
+    "carry_challenges_forward": true,
+    "retain_prior_nonsensitive_case": true
+  },
+  "safety": {
+    "proves_truth": false,
+    "proves_hidden_cause": false,
+    "proves_causation": false,
+    "proves_fidelity": false,
+    "proves_identity": false,
+    "proves_understanding": false,
+    "infers_intent": false,
+    "labels_deception": false,
+    "rates_people": false,
+    "grants_authority": false,
+    "grants_consent": false,
+    "permits_surveillance": false
+  }
+}

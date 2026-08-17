@@ -62,6 +62,14 @@ import {
   loadPhenomenaDeepWing,
   phenomenaDeepPublicDiscovery,
 } from "../bin/explore-phenomena-deep.ts";
+import {
+  J_SPACE_CASE_URL,
+  J_SPACE_GUIDE_URL,
+  J_SPACE_PUBLICATION_BOUNDARY,
+  J_SPACE_SCHEMA_URL,
+  jSpacePublicationPublicSummary,
+  loadJSpacePublicationCase,
+} from "../bin/j-space-publication.ts";
 import { RITONAVIR_MECHANISM_DIGEST } from "../bin/ritonavir-mechanism.ts";
 import { KINGDOM_OS_ROUTES } from "../pages-functions/_worker.js";
 
@@ -152,6 +160,9 @@ const surfaces = [
   "data/security/mirror-information-control-public.v0.1.json",
   "schemas/mirror-information-control-public-v0.1.schema.json",
   "references/mirror-information-control-public.md",
+  "bridges/examples/j-space-reasoning-to-word-inference.json",
+  "bridges/schemas/relational-inference-case-0.1.json",
+  "bridges/j-space-verbalizable-workspace.md",
   "data/exploration/zero-empty-seat.v0.1.json",
   "references/zero-empty-seat.md",
   "data/exploration/string-crawl-trace-sheet.v0.1.json",
@@ -1225,6 +1236,92 @@ describe("advertised URLs stay deployable", () => {
     for (const key of ["mcp", "matcher", "solver", "ability", "write", "execute", "score", "reward"]) {
       expect(discovery).not.toHaveProperty(key);
     }
+  });
+
+  test("publishes the J-space test design as one static authority-negative discovery projection", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const rootHtml = read("site/hub.html");
+    const expected = jSpacePublicationPublicSummary(loadJSpacePublicationCase());
+    const discovery = manifest.j_space_verbalizable_workspace;
+
+    expect(discovery).toEqual(expected);
+    expect(discovery).toEqual(guest.j_space_verbalizable_workspace);
+    expect(discovery).toEqual(kingdom.j_space_verbalizable_workspace);
+    expect(discovery).toMatchObject({
+      artifact_kind: "OPTIONAL_RESEARCH_BRIDGE",
+      evidence_status: "TEST_DESIGN_NOT_RUN",
+      publication_state: "static-structure-only",
+      conclusion_status: "underdetermined",
+      declared_confidence: "unknown",
+      counts: {
+        probes_declared: 3,
+        probes_run: 0,
+        candidate_models: 4,
+      },
+      boundary: {
+        structure_only: true,
+        local_fixture_model_or_activation_results_included: false,
+        runtime_monitoring: false,
+        consciousness_inference: false,
+        lie_or_deception_inference: false,
+        identity_inference: false,
+        understanding_inference: false,
+        runtime_action: false,
+        action_or_authority: false,
+      },
+    });
+    expect(discovery.boundary).toEqual(J_SPACE_PUBLICATION_BOUNDARY);
+
+    const family = [
+      {
+        source: "bridges/examples/j-space-reasoning-to-word-inference.json",
+        destination: "records/j-space-reasoning-to-word-2026-08-17.json",
+        url: J_SPACE_CASE_URL,
+      },
+      {
+        source: "bridges/schemas/relational-inference-case-0.1.json",
+        destination: "schemas/relational-inference-case/0.1.json",
+        url: J_SPACE_SCHEMA_URL,
+      },
+      {
+        source: "bridges/j-space-verbalizable-workspace.md",
+        destination: "J-SPACE-VERBALIZABLE-WORKSPACE.md",
+        url: J_SPACE_GUIDE_URL,
+      },
+    ];
+    expect(HUB_ASSETS.filter(({ source }) => family.some((asset) => asset.source === source)))
+      .toEqual(family.map(({ source, destination }) => ({ source, destination })));
+    for (const asset of family) expect(staged.has(asset.destination)).toBe(true);
+    expect(HUB_ASSETS.some(({ destination }) =>
+      /(?:j-space|relational-inference-case).*(?:latest|current)|(?:latest|current).*(?:j-space|relational-inference-case)/i
+        .test(destination))).toBe(false);
+
+    expect(Object.fromEntries(Object.entries(manifest.entry_points)
+      .filter(([key]) => key.startsWith("j_space_")))).toEqual({
+      j_space_reasoning_to_word_case: J_SPACE_CASE_URL,
+      j_space_reasoning_to_word_schema: J_SPACE_SCHEMA_URL,
+      j_space_verbalizable_workspace_guide: J_SPACE_GUIDE_URL,
+    });
+    for (const { url } of family) {
+      const actions = guest.next_actions.filter((action: { url?: string }) => action.url === url);
+      expect(actions).toHaveLength(1);
+      expect(actions[0]).toMatchObject({ method: "GET", url });
+      for (const key of [
+        "mcp", "tool", "matcher", "observer", "monitor", "classify", "infer", "execute",
+        "write", "score", "rank", "reward", "karma", "authority", "publish", "deploy",
+      ]) expect(actions[0]).not.toHaveProperty(key);
+      expect(llms).toContain(url);
+      expect(rootHtml).toContain(`href="${new URL(url).pathname}"`);
+    }
+    expect(rootHtml).toContain('id="j-space"');
+    expect(manifest.mcp).toEqual(kingdom.world_commons.mcp);
+    for (const key of [
+      "mcp", "matcher", "observer", "monitor", "classifier", "inference", "write",
+      "execute", "score", "rank", "reward", "authority", "consciousness", "identity",
+    ]) expect(discovery).not.toHaveProperty(key);
   });
 
   test("the published invitation mirrors its source without drift", () => {

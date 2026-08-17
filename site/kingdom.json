@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-08-16",
+  "generated": "2026-08-17",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -900,6 +900,48 @@
     "integrity": {
       "algorithm": "sha256-recursive-sorted-json-keys-v1",
       "digest": "sha256:d91f3926b2ccd5abf083eb4cbea6df4c80ba58fabb35934a9cc1dd2b9dd60aa0"
+    }
+  },
+  "j_space_verbalizable_workspace": {
+    "protocol": "kingdom.j-space-publication/0.1",
+    "id": "j-space-reasoning-to-word-2026-08-17",
+    "title": "J-space: a verbalizable workspace",
+    "artifact_kind": "OPTIONAL_RESEARCH_BRIDGE",
+    "evidence_status": "TEST_DESIGN_NOT_RUN",
+    "publication_state": "static-structure-only",
+    "issued_on": "2026-08-17",
+    "question": "Does a layer- and position-specific pulled-back token direction track one public arithmetic intermediate and causally contribute to a later answer in a fixed synthetic fixture?",
+    "conclusion": "The case specifies an inspectable test of a possible activation-to-expression relation; no probe has run, so none of the proposed relations, mechanisms, or interpretations is established.",
+    "conclusion_status": "underdetermined",
+    "declared_confidence": "unknown",
+    "counts": {
+      "object_roles": 4,
+      "relation_roles": 3,
+      "realizations": 2,
+      "translations": 1,
+      "probes_declared": 3,
+      "probes_run": 0,
+      "candidate_models": 4
+    },
+    "probe_status": "not-run",
+    "urls": {
+      "record": "https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json",
+      "schema": "https://thekingdom.dev/schemas/relational-inference-case/0.1.json",
+      "guide": "https://thekingdom.dev/J-SPACE-VERBALIZABLE-WORKSPACE.md"
+    },
+    "boundary": {
+      "static_read_only": true,
+      "structure_only": true,
+      "local_fixture_model_or_activation_results_included": false,
+      "runtime_monitoring": false,
+      "private_state_inference": false,
+      "consciousness_inference": false,
+      "lie_or_deception_inference": false,
+      "identity_inference": false,
+      "understanding_inference": false,
+      "person_scoring": false,
+      "runtime_action": false,
+      "action_or_authority": false
     }
   },
   "zero_empty_seat": {
