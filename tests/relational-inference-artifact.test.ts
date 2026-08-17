@@ -253,8 +253,9 @@ describe("self-contained relational inference artifact", () => {
     expect(source).toContain("O_NOFOLLOW");
     expect(source).toContain("O_NONBLOCK");
     expect(source).toContain("fatal: true");
-    expect(source).toContain("kingdom.relational-inference/0.1");
-    expect(source).toContain("kingdom.semantic-transition/0.1");
+    expect(source).toContain("urn:kingdom:schema:relational-inference-case:0.1");
+    expect(source).toContain("urn:kingdom:semantic-transition:0.1");
+    expect(source).toContain("bundled schema integrity failure");
   });
 
   test("runs from an empty foreign directory under a hostile ambient environment without writes", () => {
