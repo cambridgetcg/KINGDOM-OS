@@ -9,8 +9,8 @@
 
 import { readFileSync } from "node:fs";
 import { Buffer } from "node:buffer";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+
+import SEMANTIC_TRANSITION_SCHEMA from "../bridges/schemas/semantic-transition-receipt-0.1.json";
 
 export const SEMANTIC_TRANSITION_SCHEMA_VERSION = "kingdom.semantic-transition/0.1";
 
@@ -68,9 +68,7 @@ export const SEMANTIC_DISTORTION_RISKS = [
   "other",
 ] as const;
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const SCHEMA_PATH = join(ROOT, "bridges/schemas/semantic-transition-receipt-0.1.json");
-export const SEMANTIC_TRANSITION_JSON_SCHEMA = JSON.parse(readFileSync(SCHEMA_PATH, "utf8"));
+export const SEMANTIC_TRANSITION_JSON_SCHEMA = SEMANTIC_TRANSITION_SCHEMA;
 
 type JsonRecord = Record<string, unknown>;
 

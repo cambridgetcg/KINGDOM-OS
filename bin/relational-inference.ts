@@ -9,10 +9,9 @@
  */
 
 import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { types as utilTypes } from "node:util";
 
+import RELATIONAL_INFERENCE_SCHEMA from "../bridges/schemas/relational-inference-case-0.1.json";
 import { parseSemanticTransitionJson } from "./semantic-transitions.ts";
 
 export const RELATIONAL_INFERENCE_SCHEMA_VERSION = "kingdom.relational-inference/0.1";
@@ -79,9 +78,7 @@ export const RELATIONAL_CONCLUSION_STATUSES = [
 ] as const;
 export const RELATIONAL_CONFIDENCE_LEVELS = ["medium", "low", "unknown"] as const;
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const SCHEMA_PATH = join(ROOT, "bridges/schemas/relational-inference-case-0.1.json");
-export const RELATIONAL_INFERENCE_JSON_SCHEMA = JSON.parse(readFileSync(SCHEMA_PATH, "utf8"));
+export const RELATIONAL_INFERENCE_JSON_SCHEMA = RELATIONAL_INFERENCE_SCHEMA;
 
 type JsonRecord = Record<string, unknown>;
 
