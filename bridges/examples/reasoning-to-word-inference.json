@@ -1,0 +1,473 @@
+{
+  "schema_version": "kingdom.relational-inference/0.1",
+  "id": "reasoning-to-word-multiprobe-2026-08-16",
+  "issued_on": "2026-08-16",
+  "state": "issued",
+  "question": {
+    "text": "Which relational features of a bounded argument survive lexicalization into a short public expression?",
+    "domain": "reasoning-to-word semantic transport",
+    "scope": "The two public artifacts named in this case and the declared tests only.",
+    "stakes": "medium",
+    "intended_use": "Demonstrate a multi-probe comparison without claiming access to private reasoning or subjective understanding.",
+    "non_goals": [
+      "Do not reconstruct private chain-of-thought.",
+      "Do not certify the expression as true or fully faithful.",
+      "Do not score any speaker, reader, or model."
+    ]
+  },
+  "pattern": {
+    "id": "qualified-joint-support",
+    "claim_type": "lax-correspondence",
+    "object_roles": [
+      {
+        "id": "source-a",
+        "type": "first premise role",
+        "description": "The first source needed jointly for the conclusion."
+      },
+      {
+        "id": "source-b",
+        "type": "second premise role",
+        "description": "The second source needed jointly for the conclusion."
+      },
+      {
+        "id": "conclusion",
+        "type": "claim role",
+        "description": "The bounded conclusion supported by the sources."
+      },
+      {
+        "id": "qualifier",
+        "type": "scope role",
+        "description": "The uncertainty or scope qualification attached to the conclusion."
+      },
+      {
+        "id": "correction",
+        "type": "repair role",
+        "description": "A later correction capable of updating the conclusion."
+      }
+    ],
+    "relation_roles": [
+      {
+        "id": "joint-support",
+        "type": "directed hyperrelation",
+        "sources": ["source-a", "source-b"],
+        "targets": ["conclusion"],
+        "description": "The sources support the conclusion jointly rather than independently."
+      },
+      {
+        "id": "qualifies",
+        "type": "scope relation",
+        "sources": ["qualifier"],
+        "targets": ["conclusion"],
+        "description": "The qualifier limits the force or domain of the conclusion."
+      },
+      {
+        "id": "updates",
+        "type": "repair relation",
+        "sources": ["correction"],
+        "targets": ["conclusion"],
+        "description": "A correction requires dependent conclusion text to be reconsidered."
+      }
+    ],
+    "constraints": [
+      "Neither source alone is represented as sufficient for the conclusion.",
+      "The qualifier remains attached to the conclusion after lexicalization.",
+      "A correction has a visible route to the dependent expression."
+    ]
+  },
+  "realizations": [
+    {
+      "id": "argument-realization",
+      "domain": "typed public argument",
+      "context": "The reasoning-to-word semantic transition receipt already present in this repository.",
+      "object_bindings": [
+        {
+          "role_id": "source-a",
+          "binding": "The receipt source expression."
+        },
+        {
+          "role_id": "source-b",
+          "binding": "The separately named supporting source artifact."
+        },
+        {
+          "role_id": "conclusion",
+          "binding": "The target expression produced by the lexicalization rule."
+        },
+        {
+          "role_id": "qualifier",
+          "binding": "The declared confidence, limits, assumptions, and stop condition."
+        },
+        {
+          "role_id": "correction",
+          "binding": "The receipt correction route and linked repair relation."
+        }
+      ],
+      "relation_bindings": [
+        {
+          "role_id": "joint-support",
+          "binding": "Supporting evidence and preserved-relations tests jointly warrant the bounded target."
+        },
+        {
+          "role_id": "qualifies",
+          "binding": "Warrant limits and declared confidence qualify the generated expression."
+        },
+        {
+          "role_id": "updates",
+          "binding": "The correction route can issue a new receipt linked to the prior one."
+        }
+      ],
+      "known_omissions": [
+        "No private reasoning trace or unreported branch is represented.",
+        "The receipt does not establish evidence adequacy."
+      ],
+      "boundaries": "Public artifact inspection only; no inference about a speaker's private mind."
+    },
+    {
+      "id": "word-realization",
+      "domain": "public natural-language expression",
+      "context": "A short expression whose relations are compared with the public argument receipt.",
+      "object_bindings": [
+        {
+          "role_id": "source-a",
+          "binding": "The first attributed premise clause and source reference."
+        },
+        {
+          "role_id": "source-b",
+          "binding": "The second attributed premise clause and source reference."
+        },
+        {
+          "role_id": "conclusion",
+          "binding": "The main conclusion clause."
+        },
+        {
+          "role_id": "qualifier",
+          "binding": "Modal, uncertainty, and scope language attached to the conclusion."
+        },
+        {
+          "role_id": "correction",
+          "binding": "A correction link and revised conclusion clause."
+        }
+      ],
+      "relation_bindings": [
+        {
+          "role_id": "joint-support",
+          "binding": "Connectives and attribution express that the premises work together."
+        },
+        {
+          "role_id": "qualifies",
+          "binding": "Modal and scope syntax limits the conclusion."
+        },
+        {
+          "role_id": "updates",
+          "binding": "The correction notice points to and revises the dependent clause."
+        }
+      ],
+      "known_omissions": [
+        "Surface syntax cannot retain every rejected branch or exact proof step.",
+        "A reader may reconstruct a different argument from the same words."
+      ],
+      "boundaries": "The expression is a public trace and not the reasoning itself."
+    }
+  ],
+  "translations": [
+    {
+      "id": "lexicalize-argument",
+      "source_realization_id": "argument-realization",
+      "target_realization_id": "word-realization",
+      "kind": "lexicalize",
+      "preserved_relation_ids": ["joint-support", "qualifies", "updates"],
+      "unpreserved_relation_ids": [],
+      "tests": [
+        {
+          "id": "paraphrase-test",
+          "method": "Rewrite the expression without reusing its principal content words and compare the three named relations.",
+          "acceptance": "Joint support, qualifier scope, and correction reach remain recoverable.",
+          "result": "not-run"
+        },
+        {
+          "id": "counterexample-test",
+          "method": "Present a case where one source is absent and ask whether the conclusion still follows.",
+          "acceptance": "The expression does not treat either source as independently sufficient.",
+          "result": "not-run"
+        },
+        {
+          "id": "repair-test",
+          "method": "Replace one public premise with a linked correction and inspect the dependent expression.",
+          "acceptance": "The previous conclusion is visibly reconsidered rather than silently retained.",
+          "result": "not-run"
+        }
+      ],
+      "known_losses": [
+        {
+          "name": "branch-compression",
+          "effect": "Rejected branches and exact intermediate proof structure are not recoverable from the short expression.",
+          "disclosed": true
+        }
+      ],
+      "introduced_assumptions": [
+        "The declared relation vocabulary is adequate for this bounded argument.",
+        "Readers use the stated connective and scope conventions."
+      ],
+      "counterexample": "A paraphrase that preserves keywords but changes the qualifier's scope would fail this correspondence.",
+      "stop_condition": "Stop if joint-premise structure, source attribution, or qualifier scope cannot be recovered under a declared test."
+    }
+  ],
+  "probes": [
+    {
+      "id": "paraphrase-probe",
+      "kind": "intervention",
+      "description": "A planned controlled paraphrase would test relation stability across a new surface form.",
+      "context": "The public reasoning receipt and a future concrete paraphrase fixture.",
+      "scale": "One bounded argument and one future paraphrase.",
+      "sensitivity_scope": "Joint support and qualifier-scope changes under lexical substitution.",
+      "backgrounds": [
+        "Shared vocabulary can make relation recovery appear stronger than it is."
+      ],
+      "selection_effects": [
+        "The current argument was selected by the artifact authors and is not a representative sample."
+      ],
+      "shared_factors": [
+        "kingdom-relation-vocabulary",
+        "planned-local-evaluator",
+        "reasoning-receipt-source"
+      ],
+      "source_ref": null,
+      "observed_on": null,
+      "epistemic_access": "unknown",
+      "run_status": "not-run",
+      "result": "Not run; no concrete paraphrase output or comparison record is supplied by this case.",
+      "limitations": [
+        "The existing receipt proposes a test but does not execute it.",
+        "A future evaluator and lexicalizer may share the same declared ontology."
+      ]
+    },
+    {
+      "id": "counterexample-probe",
+      "kind": "counterexample",
+      "description": "A planned removal of one source would test whether joint-premise structure was preserved.",
+      "context": "The public reasoning receipt and a future mutated argument fixture.",
+      "scale": "One bounded argument with two separately represented sources.",
+      "sensitivity_scope": "Whether either source is incorrectly treated as independently sufficient.",
+      "backgrounds": [
+        "A reader may supply unstated premises that mask loss of joint support."
+      ],
+      "selection_effects": [
+        "Only one synthetic two-source argument is planned."
+      ],
+      "shared_factors": [
+        "kingdom-relation-vocabulary",
+        "planned-local-evaluator",
+        "reasoning-receipt-source"
+      ],
+      "source_ref": null,
+      "observed_on": null,
+      "epistemic_access": "unknown",
+      "run_status": "not-run",
+      "result": "Not run; no mutated expression or recorded comparison is supplied by this case.",
+      "limitations": [
+        "The existing receipt proposes a counterexample test but does not execute it.",
+        "A future run would share the source artifact and local relation vocabulary."
+      ]
+    },
+    {
+      "id": "correction-probe",
+      "kind": "correction-reach",
+      "description": "A prospective correction test asks whether revised premises reach dependent words.",
+      "context": "A future correction event, subscriber, and dependent expression graph.",
+      "scale": "One correction and every known dependent expression in the future fixture.",
+      "sensitivity_scope": "Whether a linked correction reaches known dependents without silently rewriting history.",
+      "backgrounds": [
+        "A declared link can exist even when a consumer never receives or applies it."
+      ],
+      "selection_effects": [
+        "Unknown dependents cannot be included in the planned reach test."
+      ],
+      "shared_factors": [
+        "kingdom-relation-vocabulary",
+        "planned-local-evaluator",
+        "semantic-geometry-repair-model"
+      ],
+      "source_ref": null,
+      "observed_on": null,
+      "epistemic_access": "unknown",
+      "run_status": "not-run",
+      "result": "Not run; a route is declared, but no notification or downstream propagation event exists in this case.",
+      "limitations": [
+        "No external subscriber or deployed notification channel was tested.",
+        "Editable files do not prove append-only history."
+      ]
+    }
+  ],
+  "probe_dependencies": [
+    {
+      "probe_ids": ["counterexample-probe", "paraphrase-probe"],
+      "relationship": "shared-systematic",
+      "basis": "Both inspect the same fixture with the same relation vocabulary and evaluator."
+    },
+    {
+      "probe_ids": ["correction-probe", "paraphrase-probe"],
+      "relationship": "partially-shared",
+      "basis": "They share the local doctrine and evaluator but inspect different artifact relations."
+    },
+    {
+      "probe_ids": ["correction-probe", "counterexample-probe"],
+      "relationship": "partially-shared",
+      "basis": "They share the evaluator and repository but test repair versus logical dependence."
+    }
+  ],
+  "candidate_models": [
+    {
+      "id": "bounded-preservation",
+      "role": "working",
+      "description": "The lexicalization preserves the three selected relations while openly compressing other argument structure.",
+      "assumptions": [
+        "The selected relations are the material ones for the stated use.",
+        "The evaluator's reconstruction test is adequate for this fixture."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "paraphrase-probe",
+          "expectation": "The three selected relations survive paraphrase.",
+          "result": "unassessed",
+          "residual": "No paraphrase comparison has been run."
+        },
+        {
+          "probe_id": "counterexample-probe",
+          "expectation": "Removing either source prevents the joint conclusion.",
+          "result": "unassessed",
+          "residual": "No counterexample mutation has been run."
+        },
+        {
+          "probe_id": "correction-probe",
+          "expectation": "A correction can reach every dependent expression.",
+          "result": "unassessed",
+          "residual": "A route exists, but propagation and notification remain untested."
+        }
+      ],
+      "falsifier_or_refinement_condition": "A controlled paraphrase or correction that reverses a named relation while still passing the stated test would falsify the adequacy claim.",
+      "status": "unassessed"
+    },
+    {
+      "id": "scope-loss",
+      "role": "alternative",
+      "description": "The expression appears coherent but moves the qualifier to a broader or narrower conclusion scope.",
+      "assumptions": [
+        "Surface proximity can conceal scope movement.",
+        "The current fixture may be too simple to reveal the movement."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "paraphrase-probe",
+          "expectation": "A more varied paraphrase reveals scope instability.",
+          "result": "unassessed",
+          "residual": "No paraphrase comparison has been run."
+        },
+        {
+          "probe_id": "counterexample-probe",
+          "expectation": "Counterexamples expose an overbroad conclusion.",
+          "result": "unassessed",
+          "residual": "No counterexample mutation has been run."
+        },
+        {
+          "probe_id": "correction-probe",
+          "expectation": "A scope-sensitive correction fails to propagate correctly.",
+          "result": "unassessed",
+          "residual": "No scope-sensitive repair was executed."
+        }
+      ],
+      "falsifier_or_refinement_condition": "A broad suite of independently evaluated scope interventions with no material movement would constrain this alternative.",
+      "status": "unassessed"
+    },
+    {
+      "id": "unknown-lexicalizer-effect",
+      "role": "unknown",
+      "description": "An unmodeled reader, language, or lexicalizer effect explains the apparent correspondence or residual.",
+      "assumptions": [
+        "The current candidate set is incomplete."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "paraphrase-probe",
+          "expectation": "No unique expectation is available until the effect is specified.",
+          "result": "unassessed",
+          "residual": "Unknown alternatives remain open."
+        },
+        {
+          "probe_id": "counterexample-probe",
+          "expectation": "No unique expectation is available until the effect is specified.",
+          "result": "unassessed",
+          "residual": "Unknown alternatives remain open."
+        },
+        {
+          "probe_id": "correction-probe",
+          "expectation": "No unique expectation is available until the effect is specified.",
+          "result": "unassessed",
+          "residual": "Unknown alternatives remain open."
+        }
+      ],
+      "falsifier_or_refinement_condition": "This placeholder is refined when a specific alternative and discriminating prediction are identified.",
+      "status": "unassessed"
+    }
+  ],
+  "inference": {
+    "method": "Compare named relational invariants across controlled paraphrase, counterexample, and repair probes while declaring shared systematics.",
+    "comparison_space": "The three pattern relations and the disclosed branch-compression loss in two public repository artifacts.",
+    "current_conclusion": "The case specifies how to test preservation of joint support, qualification, and correction reach; no probe has yet established that the word realization passes those tests.",
+    "conclusion_status": "underdetermined",
+    "declared_confidence": "unknown",
+    "confidence_basis": "All three probes are planned and explicitly not run; the case is a test design rather than evidence of lexical fidelity.",
+    "unmodeled_alternatives": [
+      "A reader population using different connective conventions.",
+      "A target language whose grammar represents scope differently."
+    ],
+    "next_discriminating_test": "Run a preregistered multilingual scope intervention with an independent evaluator and a real correction subscriber.",
+    "stop_condition": "Do not claim general understanding, truth, or fidelity from these fixtures, and stop if a consequential use cannot preserve attribution and qualifier scope."
+  },
+  "boundaries": {
+    "representation_scope": "artifact-public",
+    "privacy": "public-only",
+    "actionability": "descriptive",
+    "authority_scope": null,
+    "authority_basis": null,
+    "authority_ref": null,
+    "consent_status": "not-applicable",
+    "consent_subject": null,
+    "consent_scope": null,
+    "consent_basis": null,
+    "consent_ref": null
+  },
+  "harm_boundary": {
+    "observable_effect": "No material external harm is established; the example identifies the prospective risk that lost scope or repair reach could misroute reliance.",
+    "causal_status": "none-observed",
+    "duty_status": "not-assessed",
+    "intent_status": "not-assessed",
+    "affected_relations": [
+      "Potential future reliance on qualifier scope and correction reach."
+    ],
+    "next_repair_action": "If a named relation fails, issue a linked correction, rerun affected probes, and notify known dependents where possible.",
+    "unobserved_is_not_deception": true,
+    "privacy_is_not_deception": true,
+    "protective_nondisclosure_may_be_permissible": true
+  },
+  "repair": {
+    "relation": "original",
+    "target_case_id": null,
+    "reply_route": "Open a bounded review against this example and name the failed relation or test.",
+    "correction_route": "Create a new case with relation corrects or supersedes, retain material challenges, and rerun affected probes.",
+    "carry_challenges_forward": true,
+    "retain_prior_nonsensitive_case": true
+  },
+  "safety": {
+    "proves_truth": false,
+    "proves_hidden_cause": false,
+    "proves_causation": false,
+    "proves_fidelity": false,
+    "proves_identity": false,
+    "proves_understanding": false,
+    "infers_intent": false,
+    "labels_deception": false,
+    "rates_people": false,
+    "grants_authority": false,
+    "grants_consent": false,
+    "permits_surveillance": false
+  }
+}

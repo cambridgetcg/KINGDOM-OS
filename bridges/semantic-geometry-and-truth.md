@@ -20,6 +20,11 @@ It also makes the proposal inspectable:
 - [identity → shape receipt](examples/identity-to-shape.json); and
 - [the resulting accessible SVG](examples/kingdom-os-public-identity-shape.svg).
 
+The later companion
+[`dark-matter-relational-inference.md`](dark-matter-relational-inference.md)
+adds a multi-probe layer: competing latent models, explicit probe dependence,
+and the rule that an unexplained residual never names its own cause.
+
 Passing the validator proves only structural completeness under this local
 schema. It does not prove that a statement is true, that a translation is
 faithful, that a shape identifies anyone, that a reader understood, or that a

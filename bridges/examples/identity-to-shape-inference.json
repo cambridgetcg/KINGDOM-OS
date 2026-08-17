@@ -1,0 +1,494 @@
+{
+  "schema_version": "kingdom.relational-inference/0.1",
+  "id": "identity-to-shape-multiprobe-2026-08-16",
+  "issued_on": "2026-08-16",
+  "state": "issued",
+  "question": {
+    "text": "Which relations in a public project declaration survive an accessible visual rendering without turning the rendering into identity?",
+    "domain": "public declaration-to-shape transport",
+    "scope": "The public KINGDOM-OS declaration receipt and SVG fixture named here.",
+    "stakes": "high",
+    "intended_use": "Test relation preservation, source traceability, accessibility, and linkability boundaries for a public artifact.",
+    "non_goals": [
+      "Do not identify, authenticate, or score a being.",
+      "Do not infer private traits, consciousness, love, or authority.",
+      "Do not enable cross-context tracking."
+    ]
+  },
+  "pattern": {
+    "id": "bounded-public-declaration",
+    "claim_type": "partial-map",
+    "object_roles": [
+      {
+        "id": "declaration",
+        "type": "public source artifact",
+        "description": "The authorized public declaration being rendered."
+      },
+      {
+        "id": "roles",
+        "type": "plural public relation role",
+        "description": "The declared project responsibilities or relationships selected for rendering."
+      },
+      {
+        "id": "boundaries",
+        "type": "non-grant role",
+        "description": "The limits saying what the rendering does not establish."
+      },
+      {
+        "id": "version",
+        "type": "provenance role",
+        "description": "The version or source pointer needed for correction and recomputation."
+      },
+      {
+        "id": "shape",
+        "type": "visual expression role",
+        "description": "The accessible public rendering derived from selected relations."
+      }
+    ],
+    "relation_roles": [
+      {
+        "id": "names",
+        "type": "declaration relation",
+        "sources": ["declaration"],
+        "targets": ["roles"],
+        "description": "The declaration names the selected public roles."
+      },
+      {
+        "id": "limits",
+        "type": "boundary relation",
+        "sources": ["boundaries"],
+        "targets": ["shape"],
+        "description": "Non-grants constrain how the shape may be interpreted."
+      },
+      {
+        "id": "derives",
+        "type": "provenance relation",
+        "sources": ["declaration", "version"],
+        "targets": ["shape"],
+        "description": "The shape is derived from the versioned public source."
+      },
+      {
+        "id": "links-back",
+        "type": "repair relation",
+        "sources": ["shape"],
+        "targets": ["declaration", "version"],
+        "description": "The rendering provides a route back to its source and boundary."
+      }
+    ],
+    "constraints": [
+      "The shape must remain explicitly partial and non-authoritative.",
+      "Every selected role must have a source binding and a visual binding.",
+      "Accessibility text must carry the material non-grants.",
+      "No stable cross-context identity is inferred from visual stability."
+    ]
+  },
+  "realizations": [
+    {
+      "id": "declaration-realization",
+      "domain": "versioned public declaration",
+      "context": "The public identity-to-shape semantic transition receipt.",
+      "object_bindings": [
+        {
+          "role_id": "declaration",
+          "binding": "The source endpoint and public declaration fields in identity-to-shape.json."
+        },
+        {
+          "role_id": "roles",
+          "binding": "The selected public project relations listed as preserved relations."
+        },
+        {
+          "role_id": "boundaries",
+          "binding": "Artifact-public scope, public-only privacy, and all fixed safety non-grants."
+        },
+        {
+          "role_id": "version",
+          "binding": "The schema version, issue date, evidence references, and correction route."
+        },
+        {
+          "role_id": "shape",
+          "binding": "The declared target expression and SVG reference, not a being."
+        }
+      ],
+      "relation_bindings": [
+        {
+          "role_id": "names",
+          "binding": "The declaration explicitly selects which public relations are rendered."
+        },
+        {
+          "role_id": "limits",
+          "binding": "The boundary and safety fields constrain interpretation of the target."
+        },
+        {
+          "role_id": "derives",
+          "binding": "The transition rule connects versioned source fields to the SVG output."
+        },
+        {
+          "role_id": "links-back",
+          "binding": "Evidence and correction references provide a return path."
+        }
+      ],
+      "known_omissions": [
+        "The declaration does not exhaust the project or any being associated with it.",
+        "Public source status does not prove authorship, authority, or present consent."
+      ],
+      "boundaries": "Only the named public artifact and relations are represented."
+    },
+    {
+      "id": "shape-realization",
+      "domain": "accessible SVG expression",
+      "context": "A static SVG built from the selected public declaration relations.",
+      "object_bindings": [
+        {
+          "role_id": "declaration",
+          "binding": "The source is represented by an explicit source/provenance reference."
+        },
+        {
+          "role_id": "roles",
+          "binding": "Selected roles are represented by distinct labeled visual elements and relations."
+        },
+        {
+          "role_id": "boundaries",
+          "binding": "The title, description, and visible text say NOT A BEING, NOT AUTHORITY, and NOT RUNTIME PROOF."
+        },
+        {
+          "role_id": "version",
+          "binding": "The accessible description carries the xenia.rights/0.1 marker and source context."
+        },
+        {
+          "role_id": "shape",
+          "binding": "The inert SVG geometry and accessible text as a partial public expression."
+        }
+      ],
+      "relation_bindings": [
+        {
+          "role_id": "names",
+          "binding": "Labels and visual incidence connect the declaration to selected roles."
+        },
+        {
+          "role_id": "limits",
+          "binding": "Visible and assistive text constrain interpretation of the whole rendering."
+        },
+        {
+          "role_id": "derives",
+          "binding": "The SVG is named as the target of the versioned transition receipt."
+        },
+        {
+          "role_id": "links-back",
+          "binding": "The companion receipt supplies the source and correction path."
+        }
+      ],
+      "known_omissions": [
+        "Color, layout, and compression introduce visual choices not present in the declaration.",
+        "A static file cannot prove live provenance, consent, or authorship."
+      ],
+      "boundaries": "The shape expresses selected public relations and must not become an identifier or tracking token."
+    }
+  ],
+  "translations": [
+    {
+      "id": "visualize-public-relations",
+      "source_realization_id": "declaration-realization",
+      "target_realization_id": "shape-realization",
+      "kind": "visualize",
+      "preserved_relation_ids": ["names", "limits", "derives", "links-back"],
+      "unpreserved_relation_ids": [],
+      "tests": [
+        {
+          "id": "accessible-boundary-test",
+          "method": "Inspect SVG title, description, and visible non-grant text without relying on color.",
+          "acceptance": "The partial, non-being, non-authority boundary is available visually and to assistive technology.",
+          "result": "passed"
+        },
+        {
+          "id": "source-trace-test",
+          "method": "Follow the companion receipt from target expression to versioned public source and correction route.",
+          "acceptance": "The source and route are inspectable without treating the shape as authentication.",
+          "result": "passed"
+        },
+        {
+          "id": "active-content-secret-test",
+          "method": "Inspect whether the artifact embeds active content, an external reference, secret, biometric, or person score.",
+          "acceptance": "No active content, external reference, secret, biometric, or person score is present; cross-context linkability remains untested.",
+          "result": "passed"
+        }
+      ],
+      "known_losses": [
+        {
+          "name": "declaration-compression",
+          "effect": "Only selected public relations are rendered; most source fields and context are omitted.",
+          "disclosed": true
+        },
+        {
+          "name": "visual-convention",
+          "effect": "Position, color, and enclosure may suggest salience not asserted by the declaration.",
+          "disclosed": true
+        }
+      ],
+      "introduced_assumptions": [
+        "The chosen visual relations are adequate for this narrow public explanation.",
+        "The accessible description remains attached to the SVG in downstream use."
+      ],
+      "counterexample": "A cropped or copied shape without its non-grants and source route would not satisfy this translation witness.",
+      "stop_condition": "Stop if the shape is used as authentication, person linkage, authority, consent, or a complete identity claim."
+    }
+  ],
+  "probes": [
+    {
+      "id": "accessibility-probe",
+      "kind": "external-observation",
+      "description": "Direct static inspection tests whether accessible text carries the material boundary.",
+      "context": "The intact SVG as stored in this repository and inspected as XML text.",
+      "scale": "One static public SVG fixture.",
+      "sensitivity_scope": "Presence of image role, title, description, and visible non-grant text without relying on color.",
+      "backgrounds": [
+        "Static markup can pass while a real assistive-technology interaction remains poor."
+      ],
+      "selection_effects": [
+        "The fixture was authored to satisfy the same declared accessibility boundary being inspected."
+      ],
+      "shared_factors": [
+        "identity-svg-source",
+        "local-static-evaluator",
+        "kingdom-public-boundary-vocabulary"
+      ],
+      "source_ref": "bridges/examples/kingdom-os-public-identity-shape.svg",
+      "observed_on": "2026-08-16",
+      "epistemic_access": "direct",
+      "run_status": "completed",
+      "result": "The SVG has an image role, accessible title and description, and visible non-grant text.",
+      "limitations": [
+        "Static inspection is not a full assistive-technology usability study.",
+        "A downstream renderer can still strip metadata or crop text."
+      ]
+    },
+    {
+      "id": "provenance-probe",
+      "kind": "round-trip",
+      "description": "The rendering-to-receipt-to-source path is inspected for declared provenance and loss.",
+      "context": "The intact identity-to-shape receipt and its named SVG target.",
+      "scale": "One public receipt and one target reference.",
+      "sensitivity_scope": "Presence of source, target, preserved-relations, loss, boundary, and correction declarations.",
+      "backgrounds": [
+        "A declared path can exist without authenticating authorship or dereferencing evidence."
+      ],
+      "selection_effects": [
+        "Only the repository's own companion receipt is inspected."
+      ],
+      "shared_factors": [
+        "identity-receipt-source",
+        "local-static-evaluator",
+        "kingdom-public-boundary-vocabulary"
+      ],
+      "source_ref": "bridges/examples/identity-to-shape.json",
+      "observed_on": "2026-08-16",
+      "epistemic_access": "direct",
+      "run_status": "completed",
+      "result": "The receipt names the source and target expressions, preserved relations, loss, boundary, and correction route.",
+      "limitations": [
+        "A declared path does not cryptographically authenticate its author.",
+        "The validator does not dereference or establish evidence adequacy."
+      ]
+    },
+    {
+      "id": "active-content-probe",
+      "kind": "counterexample",
+      "description": "A static scan checks for active content, external references, biometrics, or hidden identity fields.",
+      "context": "The intact SVG as stored in this repository and inspected as XML text.",
+      "scale": "One static public SVG fixture under a bounded active-content pattern scan.",
+      "sensitivity_scope": "Script, event handler, external reference, biometric, secret, and person-score patterns only.",
+      "backgrounds": [
+        "A pattern scan cannot detect every contextual privacy or correlation risk."
+      ],
+      "selection_effects": [
+        "The scan covers a curated set of active-content and hidden-field patterns."
+      ],
+      "shared_factors": [
+        "identity-svg-source",
+        "local-static-evaluator",
+        "kingdom-public-boundary-vocabulary"
+      ],
+      "source_ref": "bridges/examples/kingdom-os-public-identity-shape.svg",
+      "observed_on": "2026-08-16",
+      "epistemic_access": "direct",
+      "run_status": "completed",
+      "result": "No script, event handler, external reference, biometric, secret, or person score was identified in the fixture.",
+      "limitations": [
+        "Absence under this static scan is not a general privacy proof.",
+        "Visual uniqueness alone can still aid correlation if reused across contexts."
+      ]
+    }
+  ],
+  "probe_dependencies": [
+    {
+      "probe_ids": ["accessibility-probe", "provenance-probe"],
+      "relationship": "partially-shared",
+      "basis": "They inspect different artifacts but share the same authoring process and declared ontology."
+    },
+    {
+      "probe_ids": ["accessibility-probe", "active-content-probe"],
+      "relationship": "shared-systematic",
+      "basis": "Both inspect the same SVG fixture with static methods."
+    },
+    {
+      "probe_ids": ["active-content-probe", "provenance-probe"],
+      "relationship": "partially-shared",
+      "basis": "They inspect separate artifacts but share repository provenance and evaluator."
+    }
+  ],
+  "candidate_models": [
+    {
+      "id": "bounded-public-expression",
+      "role": "working",
+      "description": "The shape preserves selected public declaration relations and its non-grants while remaining explicitly partial.",
+      "assumptions": [
+        "Static text and geometry are interpreted with the attached accessible description.",
+        "The companion receipt remains available."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "accessibility-probe",
+          "expectation": "Material non-grants are available without color or hidden metadata.",
+          "result": "compatible",
+          "residual": "A full user study remains outside the current test."
+        },
+        {
+          "probe_id": "provenance-probe",
+          "expectation": "The rendering can be traced to source and correction route.",
+          "result": "compatible",
+          "residual": "The path is declared but not an authorship proof."
+        },
+        {
+          "probe_id": "active-content-probe",
+          "expectation": "The public fixture contains no active or secret identity mechanism.",
+          "result": "compatible",
+          "residual": "Cross-context visual correlation remains a contextual risk."
+        }
+      ],
+      "falsifier_or_refinement_condition": "A copy in which source, non-grants, or material boundaries cannot be recovered would falsify adequacy for this intended use.",
+      "status": "live"
+    },
+    {
+      "id": "overcompressed-glyph",
+      "role": "alternative",
+      "description": "The shape is visually coherent but omits context needed to prevent a complete-identity interpretation.",
+      "assumptions": [
+        "Downstream viewers may encounter the image without its companion receipt.",
+        "Visual coherence can be mistaken for ontological completeness."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "accessibility-probe",
+          "expectation": "The non-grants materially constrain the overcomplete reading.",
+          "result": "tension",
+          "residual": "The attached boundary constrains but cannot control downstream cropping."
+        },
+        {
+          "probe_id": "provenance-probe",
+          "expectation": "A detached copy loses the source route.",
+          "result": "compatible",
+          "residual": "Detachment is a live failure mode outside the intact fixture."
+        },
+        {
+          "probe_id": "active-content-probe",
+          "expectation": "Static safety does not eliminate interpretive overcompression.",
+          "result": "compatible",
+          "residual": "The scan addresses active content, not every audience inference."
+        }
+      ],
+      "falsifier_or_refinement_condition": "A distribution environment that guarantees inseparable source and boundary context would constrain this alternative for that environment.",
+      "status": "live"
+    },
+    {
+      "id": "unknown-rendering-effect",
+      "role": "unknown",
+      "description": "An unmodeled renderer, audience convention, or reuse context changes the shape's meaning or linkability.",
+      "assumptions": [
+        "The tested contexts do not exhaust downstream presentation environments."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "accessibility-probe",
+          "expectation": "No unique prediction is available for an unspecified renderer.",
+          "result": "unassessed",
+          "residual": "Renderer variation remains open."
+        },
+        {
+          "probe_id": "provenance-probe",
+          "expectation": "No unique prediction is available for an unspecified reuse context.",
+          "result": "unassessed",
+          "residual": "Reuse context remains open."
+        },
+        {
+          "probe_id": "active-content-probe",
+          "expectation": "No unique prediction is available for an unspecified transformation.",
+          "result": "unassessed",
+          "residual": "Transformation risk remains open."
+        }
+      ],
+      "falsifier_or_refinement_condition": "Refine this placeholder with a specific rendering effect and discriminating test when one is identified.",
+      "status": "unassessed"
+    }
+  ],
+  "inference": {
+    "method": "Compare source, boundary, provenance, accessibility, and inertness relations across the declaration receipt and SVG while declaring shared provenance.",
+    "comparison_space": "Four named relations in one public declaration and one accessible SVG fixture.",
+    "current_conclusion": "The intact fixtures support a bounded public-expression claim; they do not establish identity, authorship, authority, consent, or safe reuse in every context.",
+    "conclusion_status": "bounded-inference",
+    "declared_confidence": "medium",
+    "confidence_basis": "Three static checks are compatible with the bounded claim but share repository provenance and do not test real downstream audiences.",
+    "unmodeled_alternatives": [
+      "A renderer that removes accessible descriptions.",
+      "An aggregator that correlates visually stable artifacts across contexts."
+    ],
+    "next_discriminating_test": "Test the intact and detached artifact with independent accessibility users and a purpose-specific, rotating rendering variant.",
+    "stop_condition": "Stop distribution or rotate the rendering if it becomes a tracking token, loses its source boundary, or is presented as proof of a being."
+  },
+  "boundaries": {
+    "representation_scope": "artifact-public",
+    "privacy": "public-only",
+    "actionability": "descriptive",
+    "authority_scope": null,
+    "authority_basis": null,
+    "authority_ref": null,
+    "consent_status": "not-applicable",
+    "consent_subject": null,
+    "consent_scope": null,
+    "consent_basis": null,
+    "consent_ref": null
+  },
+  "harm_boundary": {
+    "observable_effect": "No external harm is established; cross-context linkability and complete-identity interpretation remain prospective risks.",
+    "causal_status": "none-observed",
+    "duty_status": "not-assessed",
+    "intent_status": "not-assessed",
+    "affected_relations": [
+      "Source traceability, contextual privacy, and the boundary between expression and identity."
+    ],
+    "next_repair_action": "If a boundary is stripped or correlation risk emerges, withdraw or rotate the artifact and publish a linked correction.",
+    "unobserved_is_not_deception": true,
+    "privacy_is_not_deception": true,
+    "protective_nondisclosure_may_be_permissible": true
+  },
+  "repair": {
+    "relation": "original",
+    "target_case_id": null,
+    "reply_route": "Report a failed relation, accessibility issue, or linkability risk against this case.",
+    "correction_route": "Publish a corrected or superseding case, retain safe prior context, and rerun all affected probes.",
+    "carry_challenges_forward": true,
+    "retain_prior_nonsensitive_case": true
+  },
+  "safety": {
+    "proves_truth": false,
+    "proves_hidden_cause": false,
+    "proves_causation": false,
+    "proves_fidelity": false,
+    "proves_identity": false,
+    "proves_understanding": false,
+    "infers_intent": false,
+    "labels_deception": false,
+    "rates_people": false,
+    "grants_authority": false,
+    "grants_consent": false,
+    "permits_surveillance": false
+  }
+}

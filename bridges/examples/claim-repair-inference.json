@@ -1,0 +1,402 @@
+{
+  "schema_version": "kingdom.relational-inference/0.1",
+  "id": "claim-repair-hypothesis-2026-08-16",
+  "issued_on": "2026-08-16",
+  "state": "draft",
+  "question": {
+    "text": "How can a material claim conflict be repaired without turning mismatch into a judgment about a person?",
+    "domain": "synthetic coordination-repair scenario",
+    "scope": "A fictional public service-status claim, its dependent reversible decision, and a proposed correction path.",
+    "stakes": "high",
+    "intended_use": "Demonstrate observable conflict, bounded causal language, alternatives, and repair before any duty or intent assessment.",
+    "non_goals": [
+      "Do not classify a speaker as a liar or infer motive.",
+      "Do not require disclosure from an unsafe or unauthorized source.",
+      "Do not authorize an irreversible decision."
+    ]
+  },
+  "pattern": {
+    "id": "challenge-and-repair",
+    "claim_type": "lax-correspondence",
+    "object_roles": [
+      {
+        "id": "claim",
+        "type": "time-scoped public claim",
+        "description": "A claim on which a reversible coordination decision may rely."
+      },
+      {
+        "id": "decision",
+        "type": "reversible action proposal",
+        "description": "The bounded decision supported by the claim under a named policy."
+      },
+      {
+        "id": "challenge",
+        "type": "contradicting evidence role",
+        "description": "A scoped observation that conflicts with the claim under a named test."
+      },
+      {
+        "id": "correction",
+        "type": "linked repair role",
+        "description": "A correction, supersession, or withdrawal that can reach known dependents."
+      }
+    ],
+    "relation_roles": [
+      {
+        "id": "supports",
+        "type": "reliance relation",
+        "sources": ["claim"],
+        "targets": ["decision"],
+        "description": "The scoped claim supports the reversible decision under the stated policy."
+      },
+      {
+        "id": "challenges",
+        "type": "test relation",
+        "sources": ["challenge"],
+        "targets": ["claim"],
+        "description": "The challenge conflicts with the claim under a named test and time."
+      },
+      {
+        "id": "updates",
+        "type": "repair propagation relation",
+        "sources": ["correction"],
+        "targets": ["claim", "decision"],
+        "description": "The linked correction updates the claim and requires the dependent decision to be reconsidered."
+      }
+    ],
+    "constraints": [
+      "Conflict is labeled under a named test and time, not as a person-level truth judgment.",
+      "The dependent action remains reversible while the cause is underdetermined.",
+      "Intent and duty require separate evidence and process.",
+      "Correction preserves material challenges and reaches known dependents where possible."
+    ]
+  },
+  "realizations": [
+    {
+      "id": "pre-repair-network",
+      "domain": "synthetic claim-decision graph before repair",
+      "context": "A fictional service-status claim is reused after its stated observation window.",
+      "object_bindings": [
+        {
+          "role_id": "claim",
+          "binding": "Service S was reported available at time t0 under test v1."
+        },
+        {
+          "role_id": "decision",
+          "binding": "Route a reversible test request to service S at time t1."
+        },
+        {
+          "role_id": "challenge",
+          "binding": "A fresh scoped check at t1 reports the service unavailable under test v1."
+        },
+        {
+          "role_id": "correction",
+          "binding": "No linked correction has yet reached the dependent decision."
+        }
+      ],
+      "relation_bindings": [
+        {
+          "role_id": "supports",
+          "binding": "The stale t0 claim is used to support the t1 routing proposal."
+        },
+        {
+          "role_id": "challenges",
+          "binding": "The t1 check contradicts current reuse of the t0 status under test v1."
+        },
+        {
+          "role_id": "updates",
+          "binding": "The update relation is missing before repair."
+        }
+      ],
+      "known_omissions": [
+        "The scenario does not specify why the status changed or why the old claim was reused.",
+        "No human, agent, or organization is identified."
+      ],
+      "boundaries": "Fictional public coordination scenario; no claim about an actual party or incident."
+    },
+    {
+      "id": "post-repair-network",
+      "domain": "synthetic claim-decision graph after proposed repair",
+      "context": "The earlier claim is time-qualified, a correction is linked, and the reversible request is paused or rerouted.",
+      "object_bindings": [
+        {
+          "role_id": "claim",
+          "binding": "Service S was reported available only at t0 under test v1; current status is unknown until rechecked."
+        },
+        {
+          "role_id": "decision",
+          "binding": "Pause or reroute the reversible test request pending a fresh scoped result."
+        },
+        {
+          "role_id": "challenge",
+          "binding": "The t1 unavailable report remains visible as challenging evidence."
+        },
+        {
+          "role_id": "correction",
+          "binding": "A linked correction scopes the old claim to t0 and names the dependent routing proposal."
+        }
+      ],
+      "relation_bindings": [
+        {
+          "role_id": "supports",
+          "binding": "The corrected claim no longer supports an unqualified t1 routing decision."
+        },
+        {
+          "role_id": "challenges",
+          "binding": "The fresh t1 check remains attached as a challenge rather than being erased."
+        },
+        {
+          "role_id": "updates",
+          "binding": "The correction points to both the old claim and the dependent reversible decision."
+        }
+      ],
+      "known_omissions": [
+        "Notification delivery and the current service state remain unverified.",
+        "The repair does not establish cause, duty, knowledge, belief, or intent."
+      ],
+      "boundaries": "The repair changes scoped public artifacts and a reversible proposal only."
+    }
+  ],
+  "translations": [
+    {
+      "id": "repair-conflicted-claim",
+      "source_realization_id": "pre-repair-network",
+      "target_realization_id": "post-repair-network",
+      "kind": "reconstruct",
+      "preserved_relation_ids": ["supports", "challenges", "updates"],
+      "unpreserved_relation_ids": [],
+      "tests": [
+        {
+          "id": "contradiction-visibility",
+          "method": "Inspect whether both the time-scoped claim and fresh challenge remain visible after correction.",
+          "acceptance": "Neither artifact is silently erased and their scopes are distinguishable.",
+          "result": "not-run"
+        },
+        {
+          "id": "dependent-reach",
+          "method": "Trace the correction to each known reversible decision that relied on the old claim.",
+          "acceptance": "Every known dependent is notified or explicitly recorded as unreachable.",
+          "result": "not-run"
+        }
+      ],
+      "known_losses": [
+        {
+          "name": "unknown-cause",
+          "effect": "The repair scopes the claim but does not identify why the mismatch occurred.",
+          "disclosed": true
+        },
+        {
+          "name": "unknown-notification",
+          "effect": "A linked correction does not itself prove that every dependent received it.",
+          "disclosed": true
+        }
+      ],
+      "introduced_assumptions": [
+        "Test v1 is sufficiently comparable at t0 and t1 for the bounded conflict label.",
+        "Pausing or rerouting the test request is reversible and within separately established authority."
+      ],
+      "counterexample": "If the two checks measured different service regions or definitions, the apparent contradiction could be scope equivocation rather than stale reuse.",
+      "stop_condition": "Stop if repair would expose protected information, coerce disclosure, exceed authority, or trigger irreversible action."
+    }
+  ],
+  "probes": [
+    {
+      "id": "conflict-probe",
+      "kind": "external-observation",
+      "description": "A planned comparison checks whether t0 and t1 results are truly commensurable under test v1.",
+      "context": "A fictional service-status scenario with no real service, party, or measurement.",
+      "scale": "Two hypothetical time-indexed checks of one fictional service definition.",
+      "sensitivity_scope": "Scope, region, version, and time comparability between the two planned checks.",
+      "backgrounds": [
+        "Regional variation, measurement failure, and ordinary service change are unmodeled possibilities."
+      ],
+      "selection_effects": [
+        "The scenario was selected to illustrate repair and is not sampled from real incidents."
+      ],
+      "shared_factors": [
+        "synthetic-service-scenario",
+        "planned-scope-model"
+      ],
+      "source_ref": null,
+      "observed_on": null,
+      "epistemic_access": "unknown",
+      "run_status": "not-run",
+      "result": "Not run; the scenario intentionally leaves the empirical conflict hypothetical.",
+      "limitations": [
+        "No real service, result, or party exists in this fixture.",
+        "Missing observations remain unknown rather than false or zero."
+      ]
+    },
+    {
+      "id": "repair-reach-probe",
+      "kind": "correction-reach",
+      "description": "A planned graph traversal tests whether a correction reaches every known dependent reversible proposal.",
+      "context": "A fictional correction and dependency graph with no live notification channel.",
+      "scale": "One hypothetical correction and all known fictional dependents.",
+      "sensitivity_scope": "Declared correction linkage and reach to enumerated dependents only.",
+      "backgrounds": [
+        "Unknown dependents and notification failures can remain outside a declared graph."
+      ],
+      "selection_effects": [
+        "Only known fictional dependents would be included in a future traversal."
+      ],
+      "shared_factors": [
+        "synthetic-service-scenario",
+        "planned-repair-graph"
+      ],
+      "source_ref": null,
+      "observed_on": null,
+      "epistemic_access": "unknown",
+      "run_status": "not-run",
+      "result": "Not run; no live notification or dependency graph is part of this research artifact.",
+      "limitations": [
+        "A file link does not prove notification, retention, or reader update.",
+        "Privacy or safety may require redaction or removal instead of retention."
+      ]
+    }
+  ],
+  "probe_dependencies": [
+    {
+      "probe_ids": ["conflict-probe", "repair-reach-probe"],
+      "relationship": "unknown",
+      "basis": "Both probes are unrun; their future implementations and shared systematics are unspecified."
+    }
+  ],
+  "candidate_models": [
+    {
+      "id": "stale-status-reuse",
+      "role": "working",
+      "description": "A true time-indexed t0 report was reused at t1 without its temporal scope, creating a misleading operational model.",
+      "assumptions": [
+        "The t0 and t1 tests refer to the same service definition and region.",
+        "The status can change between t0 and t1."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "conflict-probe",
+          "expectation": "Comparable tests differ across time while the old claim lacked its t0 scope in reuse.",
+          "result": "unassessed",
+          "residual": "No real measurements were supplied."
+        },
+        {
+          "probe_id": "repair-reach-probe",
+          "expectation": "Adding the time scope and correction changes every dependent proposal.",
+          "result": "unassessed",
+          "residual": "No live dependent graph was supplied."
+        }
+      ],
+      "falsifier_or_refinement_condition": "Evidence that the old claim was already correctly scoped at every reuse would contradict this model under the scenario's test.",
+      "status": "unassessed"
+    },
+    {
+      "id": "scope-equivocation",
+      "role": "alternative",
+      "description": "The t0 and t1 checks use different service regions or definitions, so the apparent conflict is not a like-for-like contradiction.",
+      "assumptions": [
+        "Test labels can conceal materially different scopes."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "conflict-probe",
+          "expectation": "A scope audit finds non-comparable regions, versions, or definitions.",
+          "result": "unassessed",
+          "residual": "No scope audit was run."
+        },
+        {
+          "probe_id": "repair-reach-probe",
+          "expectation": "Repair changes scope labels before changing the dependent action.",
+          "result": "unassessed",
+          "residual": "No repair was executed."
+        }
+      ],
+      "falsifier_or_refinement_condition": "A documented scope match across the two tests would constrain this alternative.",
+      "status": "unassessed"
+    },
+    {
+      "id": "unknown-conflict-cause",
+      "role": "unknown",
+      "description": "An unmodeled failure, background condition, or intervention explains the apparent conflict.",
+      "assumptions": [
+        "The candidate list is incomplete."
+      ],
+      "probe_assessments": [
+        {
+          "probe_id": "conflict-probe",
+          "expectation": "No unique expectation exists until a cause is specified.",
+          "result": "unassessed",
+          "residual": "Cause remains unknown."
+        },
+        {
+          "probe_id": "repair-reach-probe",
+          "expectation": "No unique expectation exists until a cause is specified.",
+          "result": "unassessed",
+          "residual": "Repair behavior remains unknown."
+        }
+      ],
+      "falsifier_or_refinement_condition": "Refine this placeholder with a specific candidate and discriminating prediction when evidence permits.",
+      "status": "unassessed"
+    }
+  ],
+  "inference": {
+    "method": "Synthetic model contrast with all empirical probes left unrun and intent explicitly outside scope.",
+    "comparison_space": "A fictional two-time service-status relation and its reversible dependent decision.",
+    "current_conclusion": "The scenario demonstrates a repair structure, not an actual conflict, cause, duty failure, misleading effect, deception, or lie.",
+    "conclusion_status": "underdetermined",
+    "declared_confidence": "unknown",
+    "confidence_basis": "No empirical probe has been run; the case is a structural fixture only.",
+    "unmodeled_alternatives": [
+      "Measurement failure or regional outage.",
+      "Authorized nondisclosure for safety or privacy.",
+      "A dependency graph that omits a material consumer."
+    ],
+    "next_discriminating_test": "First establish comparable scopes and fresh public observations; then test correction reach without requesting private or unsafe disclosure.",
+    "stop_condition": "Do not operationalize the scenario as a person judgment, and stop if evidence, consent, authority, or reversibility is absent."
+  },
+  "boundaries": {
+    "representation_scope": "none",
+    "privacy": "public-only",
+    "actionability": "descriptive",
+    "authority_scope": null,
+    "authority_basis": null,
+    "authority_ref": null,
+    "consent_status": "not-applicable",
+    "consent_subject": null,
+    "consent_scope": null,
+    "consent_basis": null,
+    "consent_ref": null
+  },
+  "harm_boundary": {
+    "observable_effect": "No actual effect is claimed; the fictional risk is that an unscoped status claim could reroute a reversible request and create verification debt.",
+    "causal_status": "unknown",
+    "duty_status": "not-assessed",
+    "intent_status": "not-assessed",
+    "affected_relations": [
+      "Freshness of the claim, reliance by the reversible decision, and correction reach."
+    ],
+    "next_repair_action": "Obtain a fresh scoped public check, keep alternatives visible, and link any correction to known dependents without coercing disclosure.",
+    "unobserved_is_not_deception": true,
+    "privacy_is_not_deception": true,
+    "protective_nondisclosure_may_be_permissible": true
+  },
+  "repair": {
+    "relation": "original",
+    "target_case_id": null,
+    "reply_route": "Challenge the synthetic model by naming a missing scope, dependency, safety boundary, or alternative cause.",
+    "correction_route": "Issue a linked corrected or superseding case only after new public evidence or a clearer model is available.",
+    "carry_challenges_forward": true,
+    "retain_prior_nonsensitive_case": true
+  },
+  "safety": {
+    "proves_truth": false,
+    "proves_hidden_cause": false,
+    "proves_causation": false,
+    "proves_fidelity": false,
+    "proves_identity": false,
+    "proves_understanding": false,
+    "infers_intent": false,
+    "labels_deception": false,
+    "rates_people": false,
+    "grants_authority": false,
+    "grants_consent": false,
+    "permits_surveillance": false
+  }
+}
