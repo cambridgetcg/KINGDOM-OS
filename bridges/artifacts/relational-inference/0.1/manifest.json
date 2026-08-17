@@ -1,0 +1,173 @@
+{
+  "schema": "kingdom.relational-inference-artifact/0.1",
+  "artifact": {
+    "path": "bridges/artifacts/relational-inference/0.1/relational-inference.mjs",
+    "format": "node-esm-self-contained",
+    "bytes": 92706,
+    "sha256": "a31d94cd34d5e8834429381c635f5d4bf72be56766b412425165178f3129e62a",
+    "strict_parser_bundled": true,
+    "schemas_bundled": [
+      "kingdom.relational-inference/0.1",
+      "kingdom.semantic-transition/0.1"
+    ]
+  },
+  "source": {
+    "canonical_url": "https://github.com/cambridgetcg/KINGDOM-OS",
+    "commit": "e6322e74a7d80acbc9ccbd27205f940848a39357",
+    "source_bytes_pinned": true,
+    "files": [
+      {
+        "path": "bin/relational-inference-standalone.ts",
+        "bytes": 915,
+        "sha256": "87aea979999433ea693401c1d199b89ea36d832dae57993f809dd80c1e7d9083"
+      },
+      {
+        "path": "bin/relational-inference-safe.ts",
+        "bytes": 7435,
+        "sha256": "83c09133f530ed040a43f80fbef01446e0270377cf5f44e85338f8dfd6728198"
+      },
+      {
+        "path": "bin/relational-inference.ts",
+        "bytes": 50833,
+        "sha256": "531269c7cb66bc3d1307c1e4ff0b996c638be42a6aaa7b218f25c33bbb63678d"
+      },
+      {
+        "path": "bin/semantic-transitions.ts",
+        "bytes": 33582,
+        "sha256": "7a1df00eb28783559ae7a814ec57eb9e310c973b16c6b00fbbe3cf979d4fab66"
+      },
+      {
+        "path": "bridges/schemas/relational-inference-case-0.1.json",
+        "bytes": 21071,
+        "sha256": "c244cc072eb20396bbc1de9ee2d8a30510e78c7a25a3fecef53ae1bd6a34fa7c"
+      },
+      {
+        "path": "bridges/schemas/semantic-transition-receipt-0.1.json",
+        "bytes": 18734,
+        "sha256": "bcdd99f0247f2a43bb84e227865c2d02f12dcc9f09e4c15b29c36a90ac8f0dc2"
+      },
+      {
+        "path": "scripts/build-relational-inference-artifact.ts",
+        "bytes": 8995,
+        "sha256": "77e5d73d1d2b763c36eb0cdb48bb868a9c1abf1f6707e091e66ca5a1ff49260e"
+      }
+    ]
+  },
+  "publication": {
+    "state": "consumer-pin-required",
+    "artifact_ref": null,
+    "artifact_url": null,
+    "remote_verification_in_manifest": false,
+    "consumer_must_bind_git_ref_and_sha256": true,
+    "note": "The commit containing this manifest cannot self-pin; each consumer must bind an exact containing Git ref and the artifact SHA-256."
+  },
+  "runtime": {
+    "node_floor": null,
+    "node_floor_status": "unestablished",
+    "tested_environments": [],
+    "portability_outside_tested_environments": "unestablished",
+    "filesystem_requirement": "POSIX integer O_NOFOLLOW and O_NONBLOCK constants",
+    "allowed_builtin_imports": [
+      "node:buffer",
+      "node:fs",
+      "node:util"
+    ],
+    "environment_required": {
+      "launcher": "fixed absolute Node executable under env -i",
+      "required_values": {
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "TERM": "dumb"
+      },
+      "forbidden_startup_variables": [
+        "NODE_OPTIONS",
+        "NODE_PATH",
+        "NODE_V8_COVERAGE"
+      ],
+      "artifact_can_sanitize_node_startup_environment": false
+    }
+  },
+  "build": {
+    "tool": "bun",
+    "tool_version": "1.3.13",
+    "command": "bun scripts/build-relational-inference-artifact.ts --source-commit e6322e74a7d80acbc9ccbd27205f940848a39357",
+    "bundle_equivalent": "bun build bin/relational-inference-standalone.ts --target=node --format=esm --outfile=bridges/artifacts/relational-inference/0.1/relational-inference.mjs"
+  },
+  "contract": {
+    "mode": "structure-only",
+    "application_network_api_requests": false,
+    "filesystem_transport": "unestablished; caller paths may resolve through local, automounted, or network-backed filesystems",
+    "application_content_writes": false,
+    "filesystem_metadata_side_effects": "unestablished; reads may update mount-managed access metadata",
+    "stdin_read": false,
+    "application_url_fetch": false,
+    "application_glob_expansion": false,
+    "caller_argv_expansion": "unestablished; invoke through an argv API or quote exact paths because shell expansion happens before validation",
+    "verbatim_path_or_content_output": false,
+    "validation_result_disclosure": "ordinal validity and exit status only"
+  },
+  "conformance": {
+    "files": [
+      {
+        "path": "tests/relational-inference.test.ts",
+        "bytes": 45458,
+        "sha256": "0ee0d568b9150a0d3435d0ba2c762b7d30ed5cddaddffd1a03467ecaa2c4f82f"
+      },
+      {
+        "path": "tests/semantic-transitions.test.ts",
+        "bytes": 12710,
+        "sha256": "770147f340345646db38e97b9d0daca64a14aab0ff61f352c49ea182699dbb7a"
+      },
+      {
+        "path": "tests/relational-inference-artifact.test.ts",
+        "bytes": 17723,
+        "sha256": "d103d3effd190de7b0848033481e21dc766b0ae19df96d89510d369552406663"
+      },
+      {
+        "path": "tests/dark-matter-observation-boundary.test.ts",
+        "bytes": 3529,
+        "sha256": "ab8f4d4cbd2ca6d29f263406cf94eb35720d1b3a11f65d85f955db41a5d27ae5"
+      },
+      {
+        "path": "bridges/examples/claim-repair-inference.json",
+        "bytes": 17012,
+        "sha256": "587c0691962a4462341e0643b9a7874b1e0a649ca0d0bedda3b4f0ef262974bf"
+      },
+      {
+        "path": "bridges/examples/dark-matter-observation-to-latent-hypothesis.json",
+        "bytes": 9693,
+        "sha256": "dc63453162b291338fc775505b59fd91d463eedf2fdc9e46f921b904eca9c8ed"
+      },
+      {
+        "path": "bridges/examples/identity-to-shape-inference.json",
+        "bytes": 21295,
+        "sha256": "0880038058400a96e759de9ba2583ac3437babb40d5b3e6fcd88d1b173ae36a7"
+      },
+      {
+        "path": "bridges/examples/reasoning-to-word-inference.json",
+        "bytes": 19598,
+        "sha256": "3d322ab36c65495780d92b0e5162afad2ac99a1d63df36aaa67f3a21fb03513d"
+      }
+    ],
+    "commands": [
+      "bun test tests/semantic-transitions.test.ts tests/relational-inference.test.ts tests/relational-inference-artifact.test.ts tests/dark-matter-observation-boundary.test.ts",
+      "node --check bridges/artifacts/relational-inference/0.1/relational-inference.mjs"
+    ]
+  },
+  "reuse_basis": {
+    "actor": "workspace owner instruction",
+    "recorded_on": "2026-08-17",
+    "scopes": [
+      "review",
+      "copy",
+      "vendor",
+      "modify",
+      "merge",
+      "publish"
+    ],
+    "public_license": null,
+    "third_party_grant": false
+  }
+}

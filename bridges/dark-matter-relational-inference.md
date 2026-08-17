@@ -937,7 +937,9 @@ Built in this research slice:
 - an explicit higher-order pattern/realization/translation/probe model;
 - a bounded account of word, shape, understanding, distortion, and repair;
 - an opt-in JSON structure for multi-probe cases;
-- a read-only structural validator; and
+- a structural validator that requests no application content writes;
+- a self-contained Node ESM donor with a source-and-conformance manifest for
+  exact consumer pinning; and
 - worked public-artifact examples and mutation tests.
 
 The research-local door is intentionally validation-only:
@@ -946,10 +948,21 @@ The research-local door is intentionally validation-only:
 bun bin/relational-inference.ts validate bridges/examples/reasoning-to-word-inference.json
 ```
 
-It performs offline, read-only runtime checks. It does not infer, score,
-publish, store, fetch, or act. Promoting it into the canonical `kingdom` CLI
-requires a separate integration in the Codeberg platform home; this GitHub
-World Commons tree does not claim that route.
+The source validator contains no network API or application content-write
+path. It does not infer, score, publish, store, fetch, or act. The
+[self-contained donor](artifacts/relational-inference/0.1/relational-inference.mjs)
+and its [manifest](artifacts/relational-inference/0.1/manifest.json) bundle the
+strict parser and both schemas for a future consumer that pins an exact
+containing Git ref and SHA-256. The donor is not a canonical command: it still
+accepts caller-selected readable files, cannot detect private material, and
+cannot establish filesystem transport, shell expansion, or runtime
+portability. A platform adapter must add an approved-root boundary, reject
+ancestor-link escape, use a fixed Node under a clean environment, and impose
+an outer time/resource bound before exposing it.
+
+Promoting it into the canonical `kingdom` CLI therefore requires a separate
+integration in the Codeberg platform home; this GitHub World Commons tree does
+not claim that route.
 
 Not built:
 
