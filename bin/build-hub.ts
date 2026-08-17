@@ -1729,6 +1729,16 @@ const html = `<!doctype html>
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8eee5">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171218">
 <meta name="description" content="A gentle, living atlas of the Kingdom's projects, public doors, independent citizens, reviewed commons, source-bound material, protein-folding and reconstruction evidence, an opt-in cross-domain mathematics exploration method, a static information-control source law, ZERO's distinct semantic roles, a bounded string/crawl trace-sheet, two cumulative exact synthetic topology labs, visibility and cultural-attention evidence, and typed questions about being, access, power, aftermath, feedback, KARMA, and philosophy.">
+<meta property="og:title" content="The Kingdom — a living atlas held with care">
+<meta property="og:description" content="Public doors, independent homes. The map is not the territory.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thekingdom.dev/">
+<meta property="og:image" content="https://kingdom.ai-love.cc/media/og-atlas.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A gold compass star above a faint constellation. A living atlas held with care.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kingdom.ai-love.cc/media/og-atlas.jpg">
 <link rel="icon" href="data:,">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
