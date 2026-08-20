@@ -1,0 +1,190 @@
+{
+  "protocol": "kingdom.wake-work-witness/post-core-freeze-replacement-map/0.1",
+  "state": "APPLIED_SOURCE_ONLY_AUDIT_RECORD",
+  "applied_on": "2026-08-20",
+  "applies_to": {
+    "atlas_protocol": "kingdom.wake-work-witness-atlas/0.1",
+    "atlas_id": "wake-work-witness-atlas-2026-08-20",
+    "shared_protocol": "kingdom.witnessed-agent-economy/0.1",
+    "kingdom_git_base": "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e"
+  },
+  "frozen_inputs": {
+    "record_schema_hash": "sha256:71401ebb962d8909206b77acb6a07616727bd17663f5028e5d2745d911199005",
+    "schema_set_digest": "sha256:d62e44643c8e1986336416237df26b76663728403d417a5ee9e83b6aa5baaaa5",
+    "corpus_digest": "sha256:b26b5cce4899aa62d6dee03e25471e2c80810008fbd07c2c3ac9170164e5352a",
+    "manifest_file_sha256": "sha256:5dbe42277c41c181a7d30b6ac1ae6002dd11e757833e46242513500a93cc2bcc",
+    "capability_nullifier": "sha256:462b53e09e2f35ed8009fa4d118dde8d87d04a64dfe9ca7279425e9ec73da899",
+    "corpus_file_count": "71",
+    "vector_entry_count": "70"
+  },
+  "producer_commit_facts": {
+    "zerone_upstream_base": "fdd40bf9aca4a82b2cdd904d0161016b8c2a8667",
+    "zerone_producer_head": "094bf70309eaef21aeaa3ac86a3962824008a787",
+    "agenttool_upstream_base": "55342fac97250898c2c4ea884f1a03bec1f8cc8c",
+    "agenttool_protocol_commit": "e4f091ebad59ddf0dbdf70a5574a8a47ac3532b3",
+    "agenttool_workflow_transport_commit": "9c0260dd9b9e8ada50689d8b76c683505b39bdf1",
+    "agenttool_producer_head": "769c96efc1fa20aeb638dc66f4d221ea7c6dfc0e",
+    "kingdom_base_commit": "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e"
+  },
+  "gates": [
+    {
+      "id": "CORE_FREEZE_VERIFIED",
+      "status": "PASS",
+      "evidence": "Core formal byte-hygiene freeze and independent audit GO"
+    },
+    {
+      "id": "AGENTTOOL_FROZEN_MIRROR_VERIFIED",
+      "status": "PASS",
+      "evidence": "AgentTool self-contained 71-file mirror is byte-identical to Core and its independent CI/audit is GO"
+    },
+    {
+      "id": "KINGDOM_REFERENCE_BOUNDARY_VERIFIED",
+      "status": "PASS",
+      "evidence": "KINGDOM pins reference evidence and local derivations without claiming full shared-record production or verification"
+    }
+  ],
+  "producer_state_map": [
+    {
+      "system": "zerone-core",
+      "state": "FORMAL_FROZEN_CORPUS_SOURCE_AND_NORMATIVE_VERIFIER"
+    },
+    {
+      "system": "agenttool",
+      "state": "BYTE_IDENTICAL_FROZEN_CORPUS_MIRROR_AND_VERIFIER"
+    },
+    {
+      "system": "KINGDOM-OS",
+      "state": "REFERENCE_PIN_ONLY_NOT_SHARED_RECORD_PRODUCER_OR_VERIFIER"
+    }
+  ],
+  "family_state_map": [
+    {
+      "kind": "KINGDOM_RELEASE_ROOT",
+      "state": "SHARED_PROTOCOL_PINNED_OFFLINE_FIXTURE_ONLY"
+    },
+    {
+      "kind": "AGENTTOOL_SETTLEMENT_ROOT",
+      "state": "SHARED_PROTOCOL_PINNED_PROJECTION_ONLY_BATCH_ONLY"
+    },
+    {
+      "kind": "AGENTTOOL_CAPABILITY",
+      "state": "SHARED_PROTOCOL_PINNED_NO_LIVE_ENFORCEMENT"
+    },
+    {
+      "kind": "AGENTTOOL_PUBLIC_RECOGNITION",
+      "state": "SHARED_PROTOCOL_PINNED_NO_LIVE_ORDERING"
+    },
+    {
+      "kind": "AGENTTOOL_OFFER",
+      "state": "SHARED_PROTOCOL_PINNED_NO_LIVE_ORDERING"
+    },
+    {
+      "kind": "WAKE_PUBLIC_CHECKPOINT",
+      "state": "SHARED_PROTOCOL_PINNED_NO_LIVE_PROJECTION"
+    },
+    {
+      "kind": "ISSUER_KEY_CONTINUITY",
+      "state": "SHARED_PROTOCOL_PINNED_AUTHORITY_MIGRATION_REQUIRED"
+    },
+    {
+      "kind": "ARTIFACT_LINEAGE",
+      "state": "SHARED_PROTOCOL_PINNED_SOURCE_ONLY"
+    },
+    {
+      "kind": "COLLABORATION_CHECKPOINT",
+      "state": "SHARED_PROTOCOL_PINNED_SOURCE_ONLY_VOLUNTARY"
+    },
+    {
+      "kind": "DISPUTE_TERMINAL",
+      "state": "SHARED_PROTOCOL_PINNED_NO_ADJUDICATION_OR_SETTLEMENT_EFFECT"
+    }
+  ],
+  "operations": [
+    {
+      "ordinal": "01",
+      "id": "verify-frozen-inputs",
+      "status": "APPLIED"
+    },
+    {
+      "ordinal": "02",
+      "id": "finalize-envelope-field-label",
+      "status": "APPLIED",
+      "result": "provisional_envelope_fields renamed atomically to envelope_fields"
+    },
+    {
+      "ordinal": "03",
+      "id": "pin-shared-hashes",
+      "status": "APPLIED",
+      "result": "distinct record-schema, schema-set, corpus, and raw-manifest pins replace null aggregate placeholders"
+    },
+    {
+      "ordinal": "04",
+      "id": "finalize-shared-contract-state",
+      "status": "APPLIED",
+      "result": "shared source state is FROZEN with external_receipt false and no receipt-specific KARMA wire field"
+    },
+    {
+      "ordinal": "05",
+      "id": "finalize-cross-repo-conformance",
+      "status": "APPLIED",
+      "result": "Core and AgentTool own full verification; KINGDOM remains reference-only; Zerone carrier remains dormant"
+    },
+    {
+      "ordinal": "06",
+      "id": "finalize-family-states",
+      "status": "APPLIED",
+      "result": "all ten source states are exact and every family is NOT_CONSENSUS_ADMISSIBLE"
+    },
+    {
+      "ordinal": "07",
+      "id": "close-pending-language-and-checks",
+      "status": "APPLIED",
+      "result": "shared freeze check passes while live-chain activation remains pending and false"
+    },
+    {
+      "ordinal": "08",
+      "id": "pin-atlas-semantic-digest",
+      "status": "APPLIED",
+      "result": "sha256:48b6354c8994ffe18a925582c50558c02f5699e41a21fdb7eee3904d78d9e624 with integrity.digest treated as JSON null"
+    },
+    {
+      "ordinal": "09",
+      "id": "pin-final-raw-bytes",
+      "status": "APPLIED",
+      "result": "atlas, schema, and guide raw-byte SHA-256 pins fixed after semantic content"
+    },
+    {
+      "ordinal": "10",
+      "id": "verify-closed-frozen-source",
+      "status": "APPLIED",
+      "result": "closed verifier, schema, focused tests, relevant full tests, and repository diff checks are required to remain green"
+    }
+  ],
+  "kingdom_release_snapshot": {
+    "entry_count": "90",
+    "ledger_byte_sha256": "sha256:5bbd70251a2433336460f7ee17fcb8f04dbd5f87333b784e32ae4326b7573db2",
+    "entries_tree_root": "sha256:d827fa9187fda3015a15425c723132e6bc10efc2c9ac50cf44a5243b4c50380c",
+    "release_root": "sha256:282ebb2616600dacdea29d44fb531f5d5e7e8f698b7c1ef0dc6bcba07f23500e"
+  },
+  "artifact_pins": {
+    "atlas_semantic_digest": "sha256:48b6354c8994ffe18a925582c50558c02f5699e41a21fdb7eee3904d78d9e624",
+    "atlas_raw_byte_sha256": "sha256:fd76a8535a9aaa49beecec6af1b6f0f68df07f4dd8136b3758d6e83bbb2ec275",
+    "schema_raw_byte_sha256": "sha256:bac44cc07f7a8c361bc679dec1524b9bfa9877bb8c64b674cef52b5105ec6c08",
+    "guide_raw_byte_sha256": "sha256:47b5278eac239ccc5db69984106929fc5998a7f713789718790ae0b2ebecf67d"
+  },
+  "unchanged_invariants": [
+    "mode remains SOURCE_ONLY_OFFLINE_NO_EFFECT",
+    "ready_for_live_chain remains false",
+    "the Zerone carrier remains dormant and every action remains NOT_CONSENSUS_ADMISSIBLE",
+    "settlement remains PROJECTION_ONLY and BATCH_ONLY",
+    "collaboration remains full-prefix and HMAC-blinded with non-public participant-root verification",
+    "all verifier effects remain zero or NONE inside ATLAS_SOURCE_VERIFIER_EXECUTION_ONLY",
+    "privacy exclusions, nonclaims, one-validator caveat, and authority non-amplification remain binding",
+    "public routes, immutable-publications ledger, generated site, commit, push, and deployment remain outside this replacement"
+  ],
+  "nonclaims": [
+    "This audit record documents a source-only transformation; it is not a witnessed record, carrier instruction, consensus admission, or publication action and creates no Zerone transaction.",
+    "Frozen bytes and passing tests create no truth, identity, consent, authority, permission, rights compliance, reputation, KARMA, NEN, score, reward, or economic effect.",
+    "Core and AgentTool corpus equality does not make KINGDOM a third shared-record producer or verifier."
+  ]
+}

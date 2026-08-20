@@ -1,0 +1,45 @@
+{
+  "protocol": "kingdom.wake-work-witness/release-root-vector/0.1",
+  "vector_id": "kingdom-immutable-publications-at-9749f1b",
+  "input": {
+    "ledger_protocol": "kingdom.immutable-publications/1",
+    "ledger_algorithm": "sha256",
+    "baseline_commit": "67fe98efc875a5ed13fb1c23d6e2aab5debe9ccb",
+    "ledger_git_commit": "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e",
+    "ledger_locator": "publications/immutable-publications.v1.json",
+    "entry_count": "90",
+    "ledger_byte_sha256": "sha256:5bbd70251a2433336460f7ee17fcb8f04dbd5f87333b784e32ae4326b7573db2"
+  },
+  "algorithm": {
+    "entry_order": "LEXICOGRAPHIC_BY_UTF8_ID_BYTES",
+    "entry_fields": [
+      "id",
+      "route",
+      "source",
+      "destination",
+      "sha256"
+    ],
+    "field_frame": "uint32be(byte_length) || utf8(value)",
+    "leaf_domain_utf8_nul": "kingdom.wake-work-witness/release-entry/0.1",
+    "node_domain_utf8_nul": "kingdom.wake-work-witness/release-node/0.1",
+    "root_domain_utf8_nul": "kingdom.wake-work-witness/release-root/0.1",
+    "odd_node": "DUPLICATE_FINAL_NODE_AT_EACH_LEVEL",
+    "entry_count_frame": "uint64be(entry_count)"
+  },
+  "expected": {
+    "first_entry_id": "being-access-aftermath/0.1/guide",
+    "first_leaf": "sha256:91b4696c272968148e65aa61f4f57ba17885eb16dfd15059afbe88c6839aee4f",
+    "last_entry_id": "zero-empty-seat/0.1/record",
+    "last_leaf": "sha256:5d15424422cf17bae20de976491165c5a5f87b515d68063b182abdde4b99e9ae",
+    "entries_tree_root": "sha256:d827fa9187fda3015a15425c723132e6bc10efc2c9ac50cf44a5243b4c50380c",
+    "release_root": "sha256:282ebb2616600dacdea29d44fb531f5d5e7e8f698b7c1ef0dc6bcba07f23500e"
+  },
+  "effects": {
+    "scope": "ATLAS_SOURCE_VERIFIER_EXECUTION_ONLY",
+    "network_requests": 0,
+    "storage_writes": 0,
+    "zerone_transactions": 0,
+    "authority_effect": "NONE",
+    "economic_effect": "NONE"
+  }
+}

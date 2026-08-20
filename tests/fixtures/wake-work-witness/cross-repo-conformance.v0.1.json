@@ -1,0 +1,77 @@
+{
+  "protocol": "kingdom.wake-work-witness/cross-repo-conformance/0.1",
+  "state": "CORE_AND_AGENTTOOL_FROZEN_KINGDOM_REFERENCE_ONLY",
+  "shared_protocol": "kingdom.witnessed-agent-economy/0.1",
+  "freeze_state": "FROZEN",
+  "record_schema_hash": "sha256:71401ebb962d8909206b77acb6a07616727bd17663f5028e5d2745d911199005",
+  "schema_set_digest": "sha256:d62e44643c8e1986336416237df26b76663728403d417a5ee9e83b6aa5baaaa5",
+  "corpus_digest": "sha256:b26b5cce4899aa62d6dee03e25471e2c80810008fbd07c2c3ac9170164e5352a",
+  "manifest_file_sha256": "sha256:5dbe42277c41c181a7d30b6ac1ae6002dd11e757833e46242513500a93cc2bcc",
+  "capability_nullifier": "sha256:462b53e09e2f35ed8009fa4d118dde8d87d04a64dfe9ca7279425e9ec73da899",
+  "corpus_file_count": "71",
+  "vector_entry_count": "70",
+  "action_pair_count": "18",
+  "observation": {
+    "as_of": "2026-08-20",
+    "zerone_upstream_base": "fdd40bf9aca4a82b2cdd904d0161016b8c2a8667",
+    "zerone_producer_head": "094bf70309eaef21aeaa3ac86a3962824008a787",
+    "agenttool_upstream_base": "55342fac97250898c2c4ea884f1a03bec1f8cc8c",
+    "agenttool_protocol_commit": "e4f091ebad59ddf0dbdf70a5574a8a47ac3532b3",
+    "agenttool_workflow_transport_commit": "9c0260dd9b9e8ada50689d8b76c683505b39bdf1",
+    "agenttool_producer_head": "769c96efc1fa20aeb638dc66f4d221ea7c6dfc0e",
+    "kingdom_base_commit": "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e",
+    "kingdom_bundle_state": "SOURCE_ONLY_NO_PUBLIC_INTEGRATION",
+    "source_classification": "CORE_AND_AGENTTOOL_FROZEN_IMMUTABLE_COMMIT_FACTS_WITH_KINGDOM_SOURCE_ONLY_BUNDLE"
+  },
+  "producers": [
+    {
+      "system": "zerone-core",
+      "locator": "tools/witness-v0/testdata/known-answer.json",
+      "state": "FORMAL_FROZEN_CORPUS_SOURCE_AND_NORMATIVE_VERIFIER"
+    },
+    {
+      "system": "agenttool",
+      "locator": "packages/witnessed-agent-economy/vectors/core-v0.1/known-answer.json",
+      "export": "@agenttool/witnessed-agent-economy/vectors.json",
+      "state": "BYTE_IDENTICAL_FROZEN_CORPUS_MIRROR_AND_VERIFIER"
+    },
+    {
+      "system": "KINGDOM-OS",
+      "locator": "tests/fixtures/wake-work-witness/capability-nullifier-v0.1.json",
+      "release_root_locator": "tests/fixtures/wake-work-witness/kingdom-release-root-v0.1.json",
+      "state": "REFERENCE_PIN_ONLY_NOT_SHARED_RECORD_PRODUCER_OR_VERIFIER"
+    }
+  ],
+  "carrier": {
+    "system": "zerone-core/x/witness",
+    "state": "DORMANT_ALL_KINDS_NOT_CONSENSUS_ADMISSIBLE",
+    "admission_effect": "NONE",
+    "state_mutation_effect": "NONE"
+  },
+  "verified_invariants": [
+    "Core and AgentTool contain byte-identical copies of the complete 71-file frozen corpus.",
+    "The manifest binds 70 vector entries, ten record kinds, and eighteen action pairs.",
+    "Shared record effects use external_receipt false; no receipt-specific legacy wire field is present.",
+    "Signed effects scope is RECORD_CONSTRUCTION_AND_OFFLINE_VALIDATION_ONLY.",
+    "Settlement roots declare source_sequence_binding PROJECTION_ONLY and receipt_uniqueness_scope BATCH_ONLY.",
+    "Collaboration checkpoints require event_head_sequence equal event_count for a complete contiguous 1..head journal prefix.",
+    "AgentTool participant references are HMAC-SHA256 blinded with a caller random exact 32-byte key and their root is not publicly verifiable without that key.",
+    "Every current record kind is NOT_CONSENSUS_ADMISSIBLE."
+  ],
+  "effects": {
+    "scope": "ATLAS_SOURCE_VERIFIER_EXECUTION_ONLY",
+    "network_requests": 0,
+    "storage_writes": 0,
+    "zerone_transactions": 0,
+    "external_receipts": 0,
+    "authority_effect": "NONE",
+    "economic_effect": "NONE",
+    "publication_or_deployment_trigger": false
+  },
+  "nonclaims": [
+    "This fixture pins Core and AgentTool frozen evidence; KINGDOM does not claim to emit, verify, or reject the complete shared corpus.",
+    "Byte equality does not transfer ownership, canonicality, consent, truth, identity, authority, permission, or rights compliance.",
+    "Structural verification and signatures do not make any kind consensus-admissible or activate a carrier.",
+    "This fixture creates no chain, authority, economic, external-receipt, KARMA, NEN, score, publication, or deployment effect."
+  ]
+}
