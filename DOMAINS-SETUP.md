@@ -87,14 +87,17 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 102 assets:
-83 ledgered immutable/versioned assets and 19 mutable assets. There are 100 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 111 assets:
+90 ledgered immutable/versioned assets and 21 mutable assets. There are 109 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 99 URLs. The generated surface describes ten
+contracts. The sitemap contains 108 URLs. The generated surface describes ten
 atlases, three lab routes, one experiment route, and one separate activation
-across nineteen retirement families:
+across twenty retirement families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
+the mutable `/observatory/` human view and `/research.json` metadata snapshot;
+the immutable `/research/schemas/v0.1/` public-snapshot, source, watchlist,
+observation, work, and signal schemas; and `/RESEARCH-OBSERVATORY-v0.1.md`;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
 `CREATION-LOOP.md`; the authored
 `/principalities/moonshot-hf-npm-2026-08-11.json`,
@@ -228,10 +231,11 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks every currently staged ledgered immutable/versioned byte hash (83 after
+checks every currently staged ledgered immutable/versioned byte hash (90 after
 the Math Passport pilot, Exploration DEEP, MIRROR public-law, Number, Isness &
 Theology, ZERO Empty Seat, STRING / CRAWL, the Lab 01–04 releases, and the
-STRAND Observation Membrane, plus the static J-space research triplet;
+STRAND Observation Membrane, the static J-space research triplet, and the six
+Research Observatory schemas plus its guide;
 35 in the initial integrity release) plus the worker-owned
 negotiation, privacy, Commons + Love Loop +
 Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +

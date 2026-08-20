@@ -89,6 +89,15 @@ import {
   loadJSpacePublicationCase,
 } from "./j-space-publication.ts";
 import {
+  RESEARCH_OBSERVATORY_GUIDE_URL,
+  RESEARCH_OBSERVATORY_PRODUCER_URL,
+  RESEARCH_OBSERVATORY_SCHEMA_URLS,
+  RESEARCH_OBSERVATORY_SNAPSHOT_URL,
+  RESEARCH_OBSERVATORY_URL,
+  loadResearchObservatorySnapshot,
+  researchObservatoryPublicSummary,
+} from "./research-observatory.ts";
+import {
   ZERO_EMPTY_SEAT_BYTE_SHA256,
   ZERO_EMPTY_SEAT_DIGEST,
   ZERO_EMPTY_SEAT_GUIDE_BYTE_SHA256,
@@ -590,6 +599,11 @@ const phenomenaDeepWingDocumentPath = new URL(PHENOMENA_DEEP_WING_DOCUMENT_URL).
 const mirrorInformationControlPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_URL).pathname;
 const mirrorInformationControlSchemaPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_SCHEMA_URL).pathname;
 const mirrorInformationControlDocumentPath = new URL(MIRROR_INFORMATION_CONTROL_PUBLIC_DOCUMENT_URL).pathname;
+const researchObservatoryPath = new URL(RESEARCH_OBSERVATORY_URL).pathname;
+const researchObservatorySnapshotPath = new URL(RESEARCH_OBSERVATORY_SNAPSHOT_URL).pathname;
+const researchObservatoryGuidePath = new URL(RESEARCH_OBSERVATORY_GUIDE_URL).pathname;
+const researchObservatorySchemaPaths = Object.values(RESEARCH_OBSERVATORY_SCHEMA_URLS)
+  .map((schemaUrl) => new URL(schemaUrl).pathname);
 const jSpaceCasePath = new URL(J_SPACE_CASE_URL).pathname;
 const jSpaceSchemaPath = new URL(J_SPACE_SCHEMA_URL).pathname;
 const jSpaceGuidePath = new URL(J_SPACE_GUIDE_URL).pathname;
@@ -801,6 +815,24 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
     ],
   },
   {
+    id: "research-observatory",
+    label: "Research Observatory",
+    routes: [
+      researchObservatoryPath,
+      researchObservatorySnapshotPath,
+      ...researchObservatorySchemaPaths,
+      researchObservatoryGuidePath,
+    ],
+    discoveryProperties: ["research_observatory"],
+    entryPointProperties: [
+      "research_observatory",
+      "research_observatory_snapshot",
+      "research_observatory_schemas",
+      "research_observatory_guide",
+      "research_observatory_producer",
+    ],
+  },
+  {
     id: "strand-observation-membrane",
     label: "STRAND Observation Membrane",
     routes: [
@@ -905,6 +937,7 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
 
 export function destinationForPublicPath(path: string): string {
   if (!path.startsWith("/") || path === "/") throw new Error(`publication route is not a staged path: ${path}`);
+  if (path.endsWith("/")) return `${path.slice(1)}index.html`;
   return path.slice(1);
 }
 
@@ -980,7 +1013,7 @@ async function get(path: string, init: RequestInit = {}): Promise<Response> {
 
 function publicPath(destination: string): string {
   if (destination === "index.html") return "/";
-  if (destination === "os/index.html") return "/os/";
+  if (destination.endsWith("/index.html")) return `/${destination.slice(0, -"index.html".length)}`;
   return `/${destination}`;
 }
 
@@ -1550,6 +1583,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const stringCrawlTraceSheetLabActive = familyActive("string-crawl-trace-sheet-lab");
   const mirrorInformationControlActive = familyActive("mirror-information-control");
   const jSpacePublicationActive = familyActive("j-space-verbalizable-workspace");
+  const researchObservatoryActive = familyActive("research-observatory");
   const strandObservationMembraneActive = familyActive("strand-observation-membrane");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
@@ -2257,6 +2291,40 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (strandObservationMembraneActive) {
     await checkStrandObservationMembraneTriple();
   }
+  if (researchObservatoryActive) {
+    const pageHead = await fetch(url(researchObservatoryPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const snapshotHead = await fetch(url(researchObservatorySnapshotPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const guideHead = await fetch(url(researchObservatoryGuidePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const snapshotLinks = snapshotHead.headers.get("link") || "";
+    if (!pageHead.ok || normalizedMediaType(pageHead.headers.get("content-type")) !== "text/html" ||
+        !(pageHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform") ||
+        (await pageHead.arrayBuffer()).byteLength !== 0 ||
+        !snapshotHead.ok || normalizedMediaType(snapshotHead.headers.get("content-type")) !== "application/json" ||
+        snapshotHead.headers.get("access-control-allow-origin") !== "*" ||
+        (snapshotHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !(snapshotHead.headers.get("cache-control") || "").toLowerCase().includes("no-cache") ||
+        !hasUniqueCanonicalLinkRelation(snapshotLinks, researchObservatorySchemaPaths[0]!, "describedby", "application/schema+json") ||
+        !hasUniqueCanonicalLinkRelation(snapshotLinks, researchObservatoryGuidePath, "service-doc", "text/markdown") ||
+        (await snapshotHead.arrayBuffer()).byteLength !== 0 ||
+        !guideHead.ok || normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        (await guideHead.arrayBuffer()).byteLength !== 0) {
+      throw new Error("Research Observatory page, snapshot, schema links, guide, or HEAD boundary drifted");
+    }
+  }
 
   const schemaPaths = [
     commonsSchemaPath,
@@ -2280,6 +2348,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(strandObservationMembraneActive ? [strandObservationMembraneSchemaPath] : []),
     ...(mirrorInformationControlActive ? [mirrorInformationControlSchemaPath] : []),
     ...(jSpacePublicationActive ? [jSpaceSchemaPath] : []),
+    ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
@@ -2305,13 +2374,15 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       path === stringCrawlFrequencyFormLabSchemaPath ||
       path === strandDescentLabSchemaPath ||
       path === mirrorInformationControlSchemaPath ||
-      path === jSpaceSchemaPath;
+      path === jSpaceSchemaPath ||
+      researchObservatorySchemaPaths.includes(path);
     const hasExpectedSchemaType = requiresExactSchemaType
       ? normalizedMediaType(schemaContentType) === "application/schema+json"
       : (schemaContentType || "").toLowerCase().startsWith("application/schema+json");
     if (!schemaHead.ok || !hasExpectedSchemaType ||
       schemaHead.headers.get("access-control-allow-origin") !== "*" ||
-      (schemaHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      (schemaHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+      (await schemaHead.arrayBuffer()).byteLength !== 0) {
       throw new Error(`${path} is not served as application/schema+json`);
     }
   }
@@ -2319,14 +2390,22 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const manifest: any = JSON.parse(readFileSync(join(ROOT, "site/.well-known/agent.json"), "utf8"));
   const guest: any = JSON.parse(readFileSync(join(ROOT, "site/guest.json"), "utf8"));
   const authoredKingdom: any = JSON.parse(readFileSync(join(ROOT, "site/kingdom.json"), "utf8"));
+  const authoredWayfinder: any = JSON.parse(readFileSync(join(ROOT, "site/wayfinder.json"), "utf8"));
   const llms = readFileSync(join(ROOT, "site/llms.txt"), "utf8");
   const authoredRootHtml = readFileSync(join(ROOT, "site/hub.html"), "utf8");
+  const authoredObservatoryHtml = researchObservatoryActive
+    ? readFileSync(join(ROOT, "site/observatory/index.html"), "utf8")
+    : "";
+  const publishedResearchObservatory: any = researchObservatoryActive
+    ? JSON.parse(readFileSync(join(ROOT, "site/research.json"), "utf8"))
+    : undefined;
   const retirementDiscoverySurfaces: readonly DiscoverySurface[] = [
     { label: "agent manifest", text: JSON.stringify(manifest), value: manifest },
     { label: "guest document", text: JSON.stringify(guest), value: guest },
     { label: "authored Kingdom map", text: JSON.stringify(authoredKingdom), value: authoredKingdom },
     { label: "llms.txt", text: llms },
     { label: "hub HTML", text: authoredRootHtml },
+    { label: "wayfinder", text: JSON.stringify(authoredWayfinder), value: authoredWayfinder },
     { label: "sitemap.xml", text: readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8") },
   ];
   for (const { family, active } of familyStates.values()) {
@@ -2378,6 +2457,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedJSpacePublication = jSpaceCase
     ? jSpacePublicationPublicSummary(jSpaceCase)
+    : undefined;
+  const researchObservatory = researchObservatoryActive
+    ? loadResearchObservatorySnapshot()
+    : undefined;
+  const expectedResearchObservatory = researchObservatory
+    ? researchObservatoryPublicSummary(researchObservatory)
     : undefined;
   const strandObservationMembrane = strandObservationMembraneActive
     ? loadStrandObservationMembrane()
@@ -2491,6 +2576,71 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   }
   const hasGuestGet = (target: string) => Array.isArray(guest?.next_actions) &&
     guest.next_actions.some((action: any) => action?.method === "GET" && action?.url === target);
+
+  if (researchObservatoryActive) {
+    const snapshot = researchObservatory!;
+    const expected = expectedResearchObservatory!;
+    const actionTargets = new Set([
+      RESEARCH_OBSERVATORY_URL,
+      RESEARCH_OBSERVATORY_SNAPSHOT_URL,
+      RESEARCH_OBSERVATORY_SCHEMA_URLS["public-snapshot"],
+      RESEARCH_OBSERVATORY_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => actionTargets.has(action?.url))
+      : [];
+    const wayfinderPath = authoredWayfinder?.paths?.filter((path: any) => path?.id === "research-observatory") ?? [];
+    const allPublicUrls = [
+      RESEARCH_OBSERVATORY_URL,
+      RESEARCH_OBSERVATORY_SNAPSHOT_URL,
+      ...Object.values(RESEARCH_OBSERVATORY_SCHEMA_URLS),
+      RESEARCH_OBSERVATORY_GUIDE_URL,
+      RESEARCH_OBSERVATORY_PRODUCER_URL,
+    ];
+    if (!isDeepStrictEqual(manifest?.research_observatory, expected) ||
+      !isDeepStrictEqual(guest?.research_observatory, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.research_observatory, expected) ||
+      !isDeepStrictEqual(publishedResearchObservatory, snapshot) ||
+      manifest?.entry_points?.research_observatory !== RESEARCH_OBSERVATORY_URL ||
+      manifest?.entry_points?.research_observatory_snapshot !== RESEARCH_OBSERVATORY_SNAPSHOT_URL ||
+      !isDeepStrictEqual(manifest?.entry_points?.research_observatory_schemas, RESEARCH_OBSERVATORY_SCHEMA_URLS) ||
+      manifest?.entry_points?.research_observatory_guide !== RESEARCH_OBSERVATORY_GUIDE_URL ||
+      manifest?.entry_points?.research_observatory_producer !== RESEARCH_OBSERVATORY_PRODUCER_URL ||
+      guestActions.length !== actionTargets.size ||
+      [...actionTargets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET") ||
+      allPublicUrls.some((target) => !llms.includes(target)) ||
+      wayfinderPath.length !== 1 || wayfinderPath[0]?.stops?.length !== 2 ||
+      wayfinderPath[0].stops[0]?.url !== RESEARCH_OBSERVATORY_URL ||
+      wayfinderPath[0].stops[1]?.url !== RESEARCH_OBSERVATORY_SNAPSHOT_URL ||
+      !authoredRootHtml.includes('id="observatory"') ||
+      !authoredRootHtml.includes("visible factor vectors") ||
+      !authoredRootHtml.includes(`href="${researchObservatoryPath}"`) ||
+      !authoredRootHtml.includes(`href="${researchObservatorySnapshotPath}"`) ||
+      !authoredRootHtml.includes(`href="${researchObservatoryGuidePath}"`) ||
+      !authoredObservatoryHtml.includes("The membrane has four gates") ||
+      !authoredObservatoryHtml.includes("Evidence vector") ||
+      !authoredObservatoryHtml.includes("Priority vector") ||
+      !authoredObservatoryHtml.includes("module and guest paths not proposed") ||
+      !authoredObservatoryHtml.includes(`href="${researchObservatorySnapshotPath}"`) ||
+      !authoredObservatoryHtml.includes(`href="${RESEARCH_OBSERVATORY_PRODUCER_URL}"`) ||
+      !authoredObservatoryHtml.includes("Producer v0.1.0 source + append-only captures") ||
+      !authoredObservatoryHtml.includes("raw upstream response bodies are not included") ||
+      expected.urls?.producer !== RESEARCH_OBSERVATORY_PRODUCER_URL ||
+      /<(?:script|form|input|iframe)\b/i.test(authoredObservatoryHtml) ||
+      expected.factor_vectors?.scalar_score !== null ||
+      expected.lifecycle?.snapshot_stops_after !== "discovery" ||
+      expected.lifecycle?.module_path !== "not-proposed" || expected.lifecycle?.guest_path !== "not-proposed" ||
+      expected.boundary?.metadata_only !== true || expected.boundary?.build_time_network !== false ||
+      expected.boundary?.full_text_included !== false ||
+      expected.boundary?.discovered_artifact_execution !== false ||
+      expected.boundary?.evaluation_performed !== false || expected.boundary?.adoption_recorded !== false ||
+      expected.boundary?.use_authorized !== false || expected.boundary?.module_created !== false ||
+      expected.boundary?.guest_admitted !== false || expected.boundary?.automatic_action !== false ||
+      Object.hasOwn(expected, "mcp") || Object.hasOwn(expected, "tool") || Object.hasOwn(expected, "score")) {
+      throw new Error("Research Observatory mode, provenance, factor vectors, lifecycle gates, discovery, or negative-effect boundary drifted");
+    }
+  }
   if (manifest?.love_loops !== LOVE_LOOPS_URL ||
       manifest?.love_loops_source !== LOVE_LOOPS_SOURCE_URL ||
       manifest?.love_loops_creation_document !== LOVE_LOOPS_CREATION_DOCUMENT_URL ||
@@ -4439,6 +4589,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       !isDeepStrictEqual(liveKingdom?.mirror_information_control, expectedMirrorInformationControl!)) {
     throw new Error("derived kingdom.json did not preserve MIRROR Information Control discovery");
   }
+  if (researchObservatoryActive &&
+      !isDeepStrictEqual(liveKingdom?.research_observatory, expectedResearchObservatory!)) {
+    throw new Error("derived kingdom.json did not preserve Research Observatory discovery");
+  }
   if (jSpacePublicationActive &&
       !isDeepStrictEqual(liveKingdom?.j_space_verbalizable_workspace, expectedJSpacePublication!)) {
     throw new Error("derived kingdom.json did not preserve J-space publication discovery");
@@ -4562,7 +4716,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane schemas · coherent creation + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane discovery · REVISE/non-promotion and exploration/ZERO/STRING-CRAWL/TRACE-LABS/OBSERVATION-MEMBRANE/MIRROR/cultural/form/being/theology authority/KARMA boundaries · observer not invoked · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane schemas · coherent creation + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane discovery · REVISE/non-promotion and Observatory/exploration/ZERO/STRING-CRAWL/TRACE-LABS/OBSERVATION-MEMBRANE/MIRROR/cultural/form/being/theology authority/KARMA boundaries · Observatory poller and observer not invoked · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

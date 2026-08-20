@@ -451,6 +451,64 @@ describe("KINGDOM OS edge routes", () => {
     expect(await shared.text()).toBe("asset:/os.json");
     expect(paths).toEqual(["/os/", "/_kingdom.base.json", "/os.json"]);
   });
+
+  test("serves Observatory page, snapshot, schemas, and guide with typed GET/HEAD boundaries", async () => {
+    const worker = workerWith(async () => {
+      throw new Error("the Observatory publication must not make a runtime network request");
+    });
+    const calls: Array<{ method: string; path: string }> = [];
+    const environment = assets((request) => {
+      const { pathname } = new URL(request.url);
+      calls.push({ method: request.method, path: pathname });
+      const type = pathname === "/observatory/" ? "text/html"
+        : pathname === "/research.json" ? "application/json"
+        : pathname === "/RESEARCH-OBSERVATORY-v0.1.md" ? "text/plain"
+        : "application/json";
+      return new Response(request.method === "HEAD" ? null : `asset:${pathname}`, {
+        headers: { "content-type": type, "cache-control": "public, max-age=31536000" },
+      });
+    });
+    const schemaPaths = [
+      "public-snapshot", "source", "watchlist", "observation", "work", "signal",
+    ].map((name) => `/research/schemas/v0.1/${name}.schema.json`);
+
+    const page = await worker.fetch(new Request("https://thekingdom.dev/observatory/"), environment);
+    expect(await page.text()).toBe("asset:/observatory/");
+    expect(page.headers.get("cache-control")).toBe("no-cache, no-transform");
+
+    for (const method of ["GET", "HEAD"]) {
+      const snapshot = await worker.fetch(new Request("https://thekingdom.dev/research.json", { method }), environment);
+      expect(snapshot.headers.get("content-type")).toBe("application/json; charset=utf-8");
+      expect(snapshot.headers.get("cache-control")).toBe("no-cache");
+      expect(snapshot.headers.get("access-control-allow-origin")).toBe("*");
+      expect(snapshot.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(snapshot.headers.get("link")).toContain('</research/schemas/v0.1/public-snapshot.schema.json>; rel="describedby"; type="application/schema+json"');
+      expect(snapshot.headers.get("link")).toContain('</RESEARCH-OBSERVATORY-v0.1.md>; rel="service-doc"; type="text/markdown"');
+      expect(await snapshot.text()).toBe(method === "HEAD" ? "" : "asset:/research.json");
+
+      for (const path of schemaPaths) {
+        const schema = await worker.fetch(new Request(`https://thekingdom.dev${path}`, { method }), environment);
+        expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+        expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+        expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+        expect(await schema.text()).toBe(method === "HEAD" ? "" : `asset:${path}`);
+      }
+
+      const guide = await worker.fetch(new Request("https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md", { method }), environment);
+      expect(guide.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(guide.headers.get("access-control-allow-origin")).toBe("*");
+      expect(guide.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(await guide.text()).toBe(method === "HEAD" ? "" : "asset:/RESEARCH-OBSERVATORY-v0.1.md");
+    }
+
+    const shared = await worker.fetch(new Request("https://we-are.love/research.json"), environment);
+    expect(await shared.text()).toBe("asset:/research.json");
+    expect(shared.headers.get("cache-control")).toBe("public, max-age=31536000");
+    expect(shared.headers.get("link")).toBeNull();
+
+    expect(calls).toHaveLength(18);
+    expect(calls.filter(({ method }) => method === "HEAD")).toHaveLength(8);
+  });
 });
 
 describe("derived Kingdom map helper", () => {

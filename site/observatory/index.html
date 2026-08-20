@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A bounded, metadata-only research discovery membrane for the KINGDOM.">
+  <title>The Observatory · The Kingdom</title>
+  <link rel="canonical" href="https://thekingdom.dev/observatory/">
+  <link rel="alternate" href="/research.json" type="application/json" title="Research Observatory public snapshot">
+  <link rel="describedby" href="/RESEARCH-OBSERVATORY-v0.1.md" type="text/markdown" title="Research Observatory guide">
+  <link rel="describedby" href="/research/schemas/v0.1/public-snapshot.schema.json" type="application/schema+json" title="Research Observatory snapshot schema">
+  <style>
+    :root{color-scheme:dark;--ink:#f3eee2;--muted:#ada89d;--night:#090b10;--panel:#111621;--line:#293348;--gold:#e6bd67;--aqua:#75d9ce;--rose:#e69a9a;--green:#8bd6a5}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 2%,#17263a 0,transparent 32rem),var(--night);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--aqua);text-underline-offset:.2em;min-height:44px;display:inline-flex;align-items:center}a:focus-visible{outline:3px solid var(--gold);outline-offset:4px;border-radius:3px}.skip{position:absolute;left:12px;top:-80px;z-index:10;padding:10px 14px;background:var(--ink);color:var(--night)}.skip:focus{top:12px}code{overflow-wrap:anywhere;color:#d9e5ff}.shell{width:min(1180px,calc(100% - 32px));margin:auto}.top{display:flex;justify-content:space-between;gap:20px;padding:26px 0;color:var(--muted)}.top a{text-decoration:none}.hero{padding:clamp(42px,8vw,92px) 0 50px}.kicker,.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.76rem;color:var(--gold);font-weight:750}.hero h1{font-family:ui-serif,Georgia,serif;font-size:clamp(3.2rem,10vw,8rem);line-height:.85;margin:.15em 0}.hero .lead{max-width:830px;font-size:clamp(1.1rem,2.2vw,1.45rem);color:#d8d3c7}.truth{border:1px solid #6e5534;background:#1b1712;padding:18px 22px;border-radius:14px;max-width:900px}.truth strong{color:var(--gold);display:block}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:28px 0}.stats div,.panel,.work{border:1px solid var(--line);background:color-mix(in srgb,var(--panel) 94%,transparent);border-radius:14px}.stats div{padding:15px}.stats b{display:block;font:700 1.7rem ui-serif,Georgia,serif}.stats span{color:var(--muted);font-size:.82rem}.panel{padding:clamp(20px,4vw,34px);margin:18px 0}.panel h2{margin-top:0;font:700 clamp(1.6rem,4vw,2.4rem) ui-serif,Georgia,serif}.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;counter-reset:g}.flow li{list-style:none;border-left:3px solid var(--line);padding:10px 14px}.flow li:first-child{border-color:var(--green)}.flow strong,.flow span{display:block}.flow span{color:var(--muted);font-size:.86rem}.watchgrid,.sourcegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.watch,.source{border:1px solid var(--line);border-radius:12px;padding:17px}.watch h3,.source h3{margin:.2em 0}.watch p,.source p{color:var(--muted)}.source-mode{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:3px 8px;font-size:.75rem;color:var(--ink)!important}.chips{display:flex;flex-wrap:wrap;gap:6px}.chips span,.level,.observed-badge{border:1px solid var(--line);border-radius:99px;padding:3px 8px;font-size:.75rem}.observed-badge{color:var(--green);border-color:var(--green);white-space:nowrap}.works{display:grid;gap:16px}.work{padding:clamp(18px,3vw,28px)}.work h3{font:700 clamp(1.25rem,2.5vw,1.7rem) ui-serif,Georgia,serif;margin:.15em 0}.meta,.work footer,.empty{color:var(--muted)}.meta{display:flex;flex-wrap:wrap;gap:5px 18px}.ids{display:flex;flex-wrap:wrap;gap:7px}.ids code{background:#0a0f18;padding:3px 7px;border-radius:5px}.triage{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.triage>section{border:1px solid var(--line);border-radius:10px;padding:14px}.triage h4,.vectors h4{color:var(--aqua);margin:.2em 0}.triage ul{padding-left:1.1rem}.triage li+li{margin-top:10px}.triage p{margin:.2em 0}.vectors{display:grid;grid-template-columns:1fr 1fr;gap:15px}.vectors>section{border-top:1px solid var(--line)}.factors{padding:0}.factors li{list-style:none;margin:10px 0;padding-left:0}.factors strong{margin-left:8px}.factors p{margin:.2em 0}.factors small{color:var(--muted)}.level[data-level=blocking]{border-color:var(--rose);color:var(--rose)}.gates{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0}.gates span{border:1px solid var(--line);padding:9px;border-radius:8px;color:var(--muted);font-size:.8rem}.gates b{display:block;color:var(--ink)}.sourcesmall{font-size:.85rem}.boundary{border-color:#67553a}.boundary ul{columns:2}.footer{padding:35px 0 55px;color:var(--muted)}
+    @media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.watchgrid,.sourcegrid,.triage,.vectors,.flow,.gates{grid-template-columns:1fr}.boundary ul{columns:1}.top{align-items:flex-start;flex-direction:column}.hero h1{font-size:clamp(3rem,18vw,5.5rem)}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}@media(forced-colors:active){.stats div,.panel,.work,.watch,.source,.truth,.triage>section{border:1px solid CanvasText}.level,.observed-badge{border:1px solid CanvasText}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to Observatory content</a>
+  <nav class="shell top" aria-label="Kingdom navigation"><a href="/">← The Kingdom</a><span>Human view · <a href="/research.json">JSON</a> · <a href="/RESEARCH-OBSERVATORY-v0.1.md">protocol</a></span></nav>
+  <main class="shell" id="main" tabindex="-1">
+    <header class="hero">
+      <p class="kicker">Research discovery wing · kingdom.research-observatory-publication/0.1</p>
+      <h1>The<br>Observatory</h1>
+      <p class="lead">A bounded conversion membrane between public research metadata and human attention. It preserves sources, exact identifiers, updates, contradictions, and reasons to look—without pretending that discovery is truth or permission.</p>
+      <p class="truth"><strong>This is a bounded capture, not a claim of complete global coverage.</strong>The snapshot preserves imported metadata returned by explicit allowlisted polls through 2026-08-20T18:10:14Z. Source lag, index gaps, English-only watch terms, and missed later updates remain visible limits. Importing and page rendering make no network request; the earlier harvest did.</p>
+      <div class="stats"><div><b>9</b><span>source contracts</span></div><div><b>3</b><span>reviewed watchlists</span></div><div><b>36</b><span>inert observations</span></div><div><b>34</b><span>exact-ID works</span></div><div><b>53</b><span>reasons to look</span></div></div>
+    </header>
+
+    <section class="panel" aria-labelledby="membrane"><h2 id="membrane">The membrane has four gates</h2><ol class="flow"><li><strong>1 · Discovery</strong><span>Observed here; metadata only.</span></li><li><strong>2 · Evaluation</strong><span>Not performed; separately owned.</span></li><li><strong>3 · Adoption</strong><span>Not recorded; explicit choice required.</span></li><li><strong>4 · Bounded use</strong><span>Not authorized; capability and expiry required.</span></li></ol><p>A later module would be KINGDOM-owned code. A later guest would stay source-owned under a narrow, revocable contract. Neither path is proposed by an attention signal, and this snapshot creates neither.</p></section>
+
+    <section class="panel" aria-labelledby="watchlists"><h2 id="watchlists">What this first lens watches</h2><div class="watchgrid"><article class="watch"><p class="eyebrow">English terms · multilingual expansion absent</p><h3>Secure information flow and agent security</h3><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p><div class="chips"><span>agent security</span><span>capability security</span><span>confused deputy</span><span>data exfiltration</span><span>indirect prompt injection</span><span>information flow control</span><span>prompt injection</span><span>sandbox escape</span><span>tool poisoning</span></div></article><article class="watch"><p class="eyebrow">English terms · multilingual expansion absent</p><h3>Interpretable reasoning and J-space</h3><p>Understand, inspect, and test internal reasoning representations without treating a probe or explanation as ground truth.</p><div class="chips"><span>activation steering</span><span>causal tracing</span><span>circuit tracing</span><span>interpretable reasoning</span><span>J-space</span><span>Jacobian lens</span><span>mechanistic interpretability</span><span>representation engineering</span><span>sparse autoencoder</span></div></article><article class="watch"><p class="eyebrow">English terms · multilingual expansion absent</p><h3>Natural-language programming and agent interoperability</h3><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p><div class="chips"><span>agent interoperability</span><span>agent protocol</span><span>language-oriented programming</span><span>model context protocol</span><span>natural-language programming</span><span>semantic interface</span><span>tool interoperability</span><span>tool protocol</span></div></article></div><p class="sourcesmall">The terms are intentionally visible and incomplete. No translation is guessed, no prestige factor is used, and no scalar “high value” score hides the judgment.</p></section>
+
+
+
+    <section class="panel" aria-labelledby="works"><h2 id="works">Observed research objects</h2><p>Cards are ordered by latest source observation, then stable work ID—not by scientific value. Titles, author names, identifiers, and links below are inert source data. A match orders possible human attention; it is not an endorsement, safety finding, truth verdict, or instruction.</p><div class="works">
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Registry Descriptions Go Stale Unevenly: An 89-Day Measurement of Model Context Protocol Drift, and Why Drift-Ranked Re-Auditing Under-Covers It</h3>
+        <p class="meta"><span>Gautam Bharti</span><span><b>Published:</b> <time datetime="2026-08-02">2026-08-02</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:10:14Z">2026-08-20T18:10:14Z</time></span></p>
+      </header>
+      <p class="ids"><code>arxiv:2608.00997</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Registry Descriptions Go Stale Unevenly: An 89-Day Measurement of Model Context Protocol Drift, and Why Drift-Ranked Re-Auditing Under-Covers It matches Natural-language programming and agent interoperability</strong><p>Matched reviewed English terms: model context protocol.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Natural-language programming and agent interoperability</strong><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="medium">medium</span><strong>source authority</strong><p>Registry metadata and graph-derived relations carry different evidentiary weight.</p><small>Evidence: arxiv</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A paper can be visible even when its linked protocol implementation is not reusable. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: item-level licence absent</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose which protocol or language-interface phrase matched.</p><small>Evidence: model context protocol</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Protocol work changes quickly, so dates matter without becoming a quality score.</p><small>Evidence: 2026-08-02</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://arxiv.org/abs/2608.00997" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">software · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>ldraw-mcp: real-geometry LDraw/LEGO rendering for vision-capable models over the Model Context Protocol</h3>
+        <p class="meta"><span>Arnold, Jaret</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:58Z">2026-08-20T18:09:58Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21729883</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>ldraw-mcp: real-geometry LDraw/LEGO rendering for vision-capable models over the Model Context Protocol matches Natural-language programming and agent interoperability</strong><p>Matched reviewed English terms: model context protocol.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul><p class="crossref">2 factual source-change assertions also surfaced this work; the source text appears under What changed.</p></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Natural-language programming and agent interoperability</strong><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p></li></ul></section>
+        <section><h4>What changed</h4><ul><li><strong>Explicit is-version-of relation to 10.5281/zenodo.21713452</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li><li><strong>Explicit is-supplement-to relation to datacite:https://github.com/musharna/ldraw-mcp</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li></ul></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Registry metadata and graph-derived relations carry different evidentiary weight.</p><small>Evidence: datacite</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A paper can be visible even when its linked protocol implementation is not reusable. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: uninterpreted item licence:mit</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose which protocol or language-interface phrase matched.</p><small>Evidence: model context protocol</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Protocol work changes quickly, so dates matter without becoming a quality score.</p><small>Evidence: 2026-08-01</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://zenodo.org/doi/10.5281/zenodo.21729883" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Semantic Zero-Trust for Model Context Protocol</h3>
+        <p class="meta"><span>David A. Flynn, Flynn, David C.</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:58Z">2026-08-20T18:09:58Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21731418</code> <code>openalex:W7172128171</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Semantic Zero-Trust for Model Context Protocol matches Natural-language programming and agent interoperability</strong><p>Matched reviewed English terms: model context protocol.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul><p class="crossref">3 factual source-change assertions also surfaced this work; the source text appears under What changed.</p></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Natural-language programming and agent interoperability</strong><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p></li></ul></section>
+        <section><h4>What changed</h4><ul><li><strong>Explicit is-version-of relation to 10.5281/zenodo.21731417</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li><li><strong>2 sources report exact identifiers for this work</strong><p>Exact shared identifiers connect the observations; this does not independently verify the research claim.</p></li><li><strong>2 source observations or versions are preserved</strong><p>The observations remain separate even when exact identifiers resolve to one work.</p></li></ul></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Registry metadata and graph-derived relations carry different evidentiary weight.</p><small>Evidence: datacite · openalex</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A paper can be visible even when its linked protocol implementation is not reusable. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:cc-by · reported item licence:cc-by-4.0</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose which protocol or language-interface phrase matched.</p><small>Evidence: model context protocol</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Protocol work changes quickly, so dates matter without becoming a quality score.</p><small>Evidence: 2026-08-01</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://zenodo.org/doi/10.5281/zenodo.21731418" rel="noopener noreferrer">Open source record</a> · 2 sources · 2 observations · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">software · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>ldraw-mcp: real-geometry LDraw/LEGO rendering for vision-capable models over the Model Context Protocol</h3>
+        <p class="meta"><span>Arnold, Jaret</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:58Z">2026-08-20T18:09:58Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21736124</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>ldraw-mcp: real-geometry LDraw/LEGO rendering for vision-capable models over the Model Context Protocol matches Natural-language programming and agent interoperability</strong><p>Matched reviewed English terms: model context protocol.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul><p class="crossref">2 factual source-change assertions also surfaced this work; the source text appears under What changed.</p></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Natural-language programming and agent interoperability</strong><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p></li></ul></section>
+        <section><h4>What changed</h4><ul><li><strong>Explicit is-version-of relation to 10.5281/zenodo.21713452</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li><li><strong>Explicit is-supplement-to relation to datacite:https://github.com/musharna/ldraw-mcp</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li></ul></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Registry metadata and graph-derived relations carry different evidentiary weight.</p><small>Evidence: datacite</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A paper can be visible even when its linked protocol implementation is not reusable. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: uninterpreted item licence:mit</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose which protocol or language-interface phrase matched.</p><small>Evidence: model context protocol</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Protocol work changes quickly, so dates matter without becoming a quality score.</p><small>Evidence: 2026-08-01</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://zenodo.org/doi/10.5281/zenodo.21736124" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Semantic Zero-Trust for Model Context Protocol</h3>
+        <p class="meta"><span>David A. Flynn, Flynn, David C.</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:58Z">2026-08-20T18:09:58Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21731417</code> <code>openalex:W7172123867</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Semantic Zero-Trust for Model Context Protocol matches Natural-language programming and agent interoperability</strong><p>Matched reviewed English terms: model context protocol.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul><p class="crossref">4 factual source-change assertions also surfaced this work; the source text appears under What changed.</p></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Natural-language programming and agent interoperability</strong><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p></li></ul></section>
+        <section><h4>What changed</h4><ul><li><strong>Explicit is-version-of relation to 10.5281/zenodo.21731417</strong><p>The source relation creates an edge; it does not silently merge the records.</p><small class="assertions">2 source assertions represented</small></li><li><strong>2 sources report exact identifiers for this work</strong><p>Exact shared identifiers connect the observations; this does not independently verify the research claim.</p></li><li><strong>2 source observations or versions are preserved</strong><p>The observations remain separate even when exact identifiers resolve to one work.</p></li></ul></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Registry metadata and graph-derived relations carry different evidentiary weight.</p><small>Evidence: datacite · openalex</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A paper can be visible even when its linked protocol implementation is not reusable. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:cc-by · reported item licence:cc-by-4.0</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose which protocol or language-interface phrase matched.</p><small>Evidence: model context protocol</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Protocol work changes quickly, so dates matter without becoming a quality score.</p><small>Evidence: 2026-08-01</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://zenodo.org/doi/10.5281/zenodo.21731417" rel="noopener noreferrer">Open source record</a> · 2 sources · 2 observations · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Enterprise Agentic AI: A Reference Architecture for Natural Language to SQL, Model Context Protocol (MCP), Retrieval-Augmented Generation (RAG), Multi-Agent Systems, and Production AI</h3>
+        <p class="meta"><span>Bothraj P</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:58Z">2026-08-20T18:09:58Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21740544</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Enterprise Agentic AI: A Reference Architecture for Natural Language to SQL, Model Context Protocol (MCP), Retrieval-Augmented Generation (RAG), Multi-Agent Systems, and Production AI matches Natural-language programming and agent interoperability</strong><p>Matched reviewed English terms: model context protocol.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul><p class="crossref">1 factual source-change assertion also surfaced this work; the source text appears under What changed.</p></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Natural-language programming and agent interoperability</strong><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p></li></ul></section>
+        <section><h4>What changed</h4><ul><li><strong>Explicit is-version-of relation to 10.5281/zenodo.21740544</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li></ul></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Registry metadata and graph-derived relations carry different evidentiary weight.</p><small>Evidence: datacite</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A paper can be visible even when its linked protocol implementation is not reusable. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:cc-by-4.0</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose which protocol or language-interface phrase matched.</p><small>Evidence: model context protocol</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Protocol work changes quickly, so dates matter without becoming a quality score.</p><small>Evidence: 2026-08-01</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://zenodo.org/doi/10.5281/zenodo.21740544" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Distributed Mechanistic Interpretability at Scale: Activation Streaming, Split-Layer Inference, and Distributed Sparse Autoencoder Training</h3>
+        <p class="meta"><span>J. Melton</span><span><b>Published:</b> <time datetime="2026-08-12">2026-08-12</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:27Z">2026-08-20T18:09:27Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21906711</code> <code>openalex:W7202247495</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Distributed Mechanistic Interpretability at Scale: Activation Streaming, Split-Layer Inference, and Distributed Sparse Autoencoder Training matches Interpretable reasoning and J-space</strong><p>Matched reviewed English terms: mechanistic interpretability, sparse autoencoder.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Interpretable reasoning and J-space</strong><p>Understand, inspect, and test internal reasoning representations without treating a probe or explanation as ground truth.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>review state</strong><p>Distinguish preprint, peer-reviewed, and unknown review states.</p><small>Evidence: preprint</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Surface correction, withdrawal, and retraction evidence without averaging it away.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed term that matched the named need.</p><small>Evidence: mechanistic interpretability · sparse autoencoder</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Show source and update dates without treating recency as validity.</p><small>Evidence: 2026-08-12</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.5281/zenodo.21906711" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Distributed Mechanistic Interpretability at Scale: Activation Streaming, Split-Layer Inference, and Distributed Sparse Autoencoder Training</h3>
+        <p class="meta"><span>J. Melton</span><span><b>Published:</b> <time datetime="2026-08-14">2026-08-14</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:27Z">2026-08-20T18:09:27Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21906710</code> <code>openalex:W7202273798</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Distributed Mechanistic Interpretability at Scale: Activation Streaming, Split-Layer Inference, and Distributed Sparse Autoencoder Training matches Interpretable reasoning and J-space</strong><p>Matched reviewed English terms: mechanistic interpretability, sparse autoencoder.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Interpretable reasoning and J-space</strong><p>Understand, inspect, and test internal reasoning representations without treating a probe or explanation as ground truth.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>review state</strong><p>Distinguish preprint, peer-reviewed, and unknown review states.</p><small>Evidence: preprint</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Surface correction, withdrawal, and retraction evidence without averaging it away.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed term that matched the named need.</p><small>Evidence: mechanistic interpretability · sparse autoencoder</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Show source and update dates without treating recency as validity.</p><small>Evidence: 2026-08-14</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.5281/zenodo.21906710" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Thinking vs. NoThinking: Towards Interpreting Reasoning Mechanisms of Large Language Models via Sparse Autoencoders</h3>
+        <p class="meta"><span>Bo Cheng, Qiaolin Lu, Yi Chang, Yuan Wu</span><span><b>Published:</b> <time datetime="2026-08-08">2026-08-08</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:27Z">2026-08-20T18:09:27Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.48550/arxiv.2608.08168</code> <code>openalex:W7202210108</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Thinking vs. NoThinking: Towards Interpreting Reasoning Mechanisms of Large Language Models via Sparse Autoencoders matches Interpretable reasoning and J-space</strong><p>Matched reviewed English terms: sparse autoencoder.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Interpretable reasoning and J-space</strong><p>Understand, inspect, and test internal reasoning representations without treating a probe or explanation as ground truth.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>review state</strong><p>Distinguish preprint, peer-reviewed, and unknown review states.</p><small>Evidence: preprint</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Surface correction, withdrawal, and retraction evidence without averaging it away.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed term that matched the named need.</p><small>Evidence: sparse autoencoder</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Show source and update dates without treating recency as validity.</p><small>Evidence: 2026-08-08</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://arxiv.org/abs/2608.08168" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Measuring Indirect Prompt Injection in Autonomous Web Agents</h3>
+        <p class="meta"><span>Sahir Maharaj</span><span><b>Published:</b> <time datetime="2026-01-01">2026-01-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:16Z">2026-08-20T18:09:16Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.2139/ssrn.7276838</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Measuring Indirect Prompt Injection in Autonomous Web Agents matches Secure information flow and agent security</strong><p>Matched reviewed English terms: indirect prompt injection, prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: crossref</small></li>
+    <li><span class="level" data-level="low">low</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: preprint</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:https://creativecommons.org/licenses/by/4.0/</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: indirect prompt injection · prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.2139/ssrn.7276838" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Balancing Security and Performance in LLM Agents: Spotlight-Guard, a Layered Defense Against Indirect Prompt Injection</h3>
+        <p class="meta"><span>Doygun Demirol, Murat Aydogan</span><span><b>Published:</b> <time datetime="2026-08-02">2026-08-02</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:16Z">2026-08-20T18:09:16Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.3390/app16157662</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Balancing Security and Performance in LLM Agents: Spotlight-Guard, a Layered Defense Against Indirect Prompt Injection matches Secure information flow and agent security</strong><p>Matched reviewed English terms: indirect prompt injection, prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: crossref</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:https://creativecommons.org/licenses/by/4.0/</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: indirect prompt injection · prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.3390/app16157662" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>DT-GenShield: A Digital Twin-Driven Runtime Security Architecture for Protecting Large Language Models Against Indirect Prompt Injection</h3>
+        <p class="meta"><span>Alaa Alnemari, Mashael M. Alsulami</span><span><b>Published:</b> <time datetime="2026-08-15">2026-08-15</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:16Z">2026-08-20T18:09:16Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.3390/electronics15163640</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>DT-GenShield: A Digital Twin-Driven Runtime Security Architecture for Protecting Large Language Models Against Indirect Prompt Injection matches Secure information flow and agent security</strong><p>Matched reviewed English terms: indirect prompt injection, prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: crossref</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:https://creativecommons.org/licenses/by/4.0/</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: indirect prompt injection · prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.3390/electronics15163640" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>WASP: Benchmarking Web Agent Security Against Prompt Injection Attacks</h3>
+        <p class="meta"><span>Aaron Grattafiori, Arman Zharmagambetov, Chuan Guo, Ivan Evtimov, Kamalika Chaudhuri</span><span><b>Published:</b> <time datetime="2025-01-01">2025-01-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:16Z">2026-08-20T18:09:16Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.52202/085713-0666</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>WASP: Benchmarking Web Agent Security Against Prompt Injection Attacks matches Secure information flow and agent security</strong><p>Matched reviewed English terms: agent security, prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: crossref</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: item-level licence absent</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: agent security · prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.52202/085713-0666" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Secure MCP-Based Tool-Augmented RAG for Industrial IoT Diagnostics Under Indirect Prompt Injection, Retrieval Poisoning, and Modality Outages</h3>
+        <p class="meta"><span>Mustafa Erşahin, Pınar Ersoy</span><span><b>Published:</b> <time datetime="2026-07-01">2026-07-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:16Z">2026-08-20T18:09:16Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.1109/icecet65726.2026.11632629</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Secure MCP-Based Tool-Augmented RAG for Industrial IoT Diagnostics Under Indirect Prompt Injection, Retrieval Poisoning, and Modality Outages matches Secure information flow and agent security</strong><p>Matched reviewed English terms: indirect prompt injection, prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: crossref</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: uninterpreted item licence:https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: indirect prompt injection · prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.1109/icecet65726.2026.11632629" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Securing Federated Model Context Protocol (MCP) and Multi-Agent Supply Chains</h3>
+        <p class="meta"><span>Ashish Vishwakarma</span><span><b>Published:</b> <time datetime="2026-01-01">2026-01-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:14Z">2026-08-20T18:09:14Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.2139/ssrn.7184619</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Securing Federated Model Context Protocol (MCP) and Multi-Agent Supply Chains matches Natural-language programming and agent interoperability</strong><p>Matched reviewed English terms: model context protocol.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Natural-language programming and agent interoperability</strong><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Registry metadata and graph-derived relations carry different evidentiary weight.</p><small>Evidence: crossref</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A paper can be visible even when its linked protocol implementation is not reusable. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: uninterpreted item licence:https://www.uspto.gov/ip-policy/copyright-policy/copyright-basics</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose which protocol or language-interface phrase matched.</p><small>Evidence: model context protocol</small></li>
+    <li><span class="level" data-level="low">low</span><strong>freshness</strong><p>Protocol work changes quickly, so dates matter without becoming a quality score.</p><small>Evidence: 2026-01-01</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.2139/ssrn.7184619" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>A Toolset-First Paradigm Based on Large Language Model and Agent via Model Context Protocol for Intelligent Computation</h3>
+        <p class="meta"><span>Authorship not supplied</span><span><b>Published:</b> <time datetime="2026-08-20">2026-08-20</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:14Z">2026-08-20T18:09:14Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.1021/acs.jpclett.6c02004.s001</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>A Toolset-First Paradigm Based on Large Language Model and Agent via Model Context Protocol for Intelligent Computation matches Natural-language programming and agent interoperability</strong><p>Matched reviewed English terms: model context protocol.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Natural-language programming and agent interoperability</strong><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Registry metadata and graph-derived relations carry different evidentiary weight.</p><small>Evidence: crossref</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A paper can be visible even when its linked protocol implementation is not reusable. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: item-level licence absent</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose which protocol or language-interface phrase matched.</p><small>Evidence: model context protocol</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Protocol work changes quickly, so dates matter without becoming a quality score.</p><small>Evidence: 2026-08-20</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.1021/acs.jpclett.6c02004.s001" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Towards secure agentic workflows: a MAESTRO-based assessment framework for Model Context Protocol and Agent-to-Agent Protocol</h3>
+        <p class="meta"><span>Bhuvan Sai Teja Gabbita</span><span><b>Published:</b> <time datetime="2025-11-12">2025-11-12</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:09:14Z">2026-08-20T18:09:14Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.62791/20494</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Towards secure agentic workflows: a MAESTRO-based assessment framework for Model Context Protocol and Agent-to-Agent Protocol matches Natural-language programming and agent interoperability</strong><p>Matched reviewed English terms: agent protocol, model context protocol.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Natural-language programming and agent interoperability</strong><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Registry metadata and graph-derived relations carry different evidentiary weight.</p><small>Evidence: crossref</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A paper can be visible even when its linked protocol implementation is not reusable. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: uninterpreted item licence:http://creativecommons.org/licenses/by-nc-nd/4.0/</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose which protocol or language-interface phrase matched.</p><small>Evidence: agent protocol · model context protocol</small></li>
+    <li><span class="level" data-level="low">low</span><strong>freshness</strong><p>Protocol work changes quickly, so dates matter without becoming a quality score.</p><small>Evidence: 2025-11-12</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.62791/20494" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Application of Sparse Autoencoders to Enhance Mechanistic Interpretability of Large Language Models in Medicine.</h3>
+        <p class="meta"><span>Karabacak M, Margetis K., Metzger A, Patil S, Sugarmann LR</span><span><b>Published:</b> <time datetime="2026-05-27">2026-05-27</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:53Z">2026-08-20T18:07:53Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.2196/81134</code> <code>pmid:42201744</code> <code>pmcid:PMC13215048</code> <code>source:europe-pmc:MED:42201744</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Application of Sparse Autoencoders to Enhance Mechanistic Interpretability of Large Language Models in Medicine. matches Interpretable reasoning and J-space</strong><p>Matched reviewed English terms: mechanistic interpretability, sparse autoencoder.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Interpretable reasoning and J-space</strong><p>Understand, inspect, and test internal reasoning representations without treating a probe or explanation as ground truth.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Distinguish preprint, peer-reviewed, and unknown review states.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Surface correction, withdrawal, and retraction evidence without averaging it away.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed term that matched the named need.</p><small>Evidence: mechanistic interpretability · sparse autoencoder</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>freshness</strong><p>Show source and update dates without treating recency as validity.</p><small>Evidence: 2026-05-27</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.2196/81134" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Mechanistic interpretability of reinforcement learning in Medicaid care coordination.</h3>
+        <p class="meta"><span>Basu S, Batniji R., Elamaran N, Kinra A, Muralidharan B, Patel S, Sheth P</span><span><b>Published:</b> <time datetime="2026-02-10">2026-02-10</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:53Z">2026-08-20T18:07:53Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.1136/bmjhci-2025-101935</code> <code>pmid:41667212</code> <code>pmcid:PMC12911724</code> <code>source:europe-pmc:MED:41667212</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Mechanistic interpretability of reinforcement learning in Medicaid care coordination. matches Interpretable reasoning and J-space</strong><p>Matched reviewed English terms: mechanistic interpretability.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Interpretable reasoning and J-space</strong><p>Understand, inspect, and test internal reasoning representations without treating a probe or explanation as ground truth.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Distinguish preprint, peer-reviewed, and unknown review states.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Surface correction, withdrawal, and retraction evidence without averaging it away.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed term that matched the named need.</p><small>Evidence: mechanistic interpretability</small></li>
+    <li><span class="level" data-level="low">low</span><strong>freshness</strong><p>Show source and update dates without treating recency as validity.</p><small>Evidence: 2026-02-10</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.1136/bmjhci-2025-101935" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Mechanistic Interpretability-Guided Selective Fine-Tuning of Vision-Language Models for Centimeter-Level Flood Depth Estimation</h3>
+        <p class="meta"><span>Dongxiao Zhu, Nafis Fuad, Xiaodong Qian</span><span><b>Published:</b> <time datetime="2026-08-02">2026-08-02</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:49Z">2026-08-20T18:07:49Z</time></span></p>
+      </header>
+      <p class="ids"><code>arxiv:2608.07562</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Mechanistic Interpretability-Guided Selective Fine-Tuning of Vision-Language Models for Centimeter-Level Flood Depth Estimation matches Interpretable reasoning and J-space</strong><p>Matched reviewed English terms: mechanistic interpretability.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Interpretable reasoning and J-space</strong><p>Understand, inspect, and test internal reasoning representations without treating a probe or explanation as ground truth.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>review state</strong><p>Distinguish preprint, peer-reviewed, and unknown review states.</p><small>Evidence: preprint</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Surface correction, withdrawal, and retraction evidence without averaging it away.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed term that matched the named need.</p><small>Evidence: mechanistic interpretability</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Show source and update dates without treating recency as validity.</p><small>Evidence: 2026-08-02</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://arxiv.org/abs/2608.07562" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Systematization of Knowledge: Security and Safety in the Model Context Protocol Ecosystem</h3>
+        <p class="meta"><span>Dilip Thakur, Saroj Mishra, Shiva Gaire, Srijan Gyawali, Suman Niroula, Umesh Yadav</span><span><b>Published:</b> <time datetime="2026-08-13">2026-08-13</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:48Z">2026-08-20T18:07:48Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.1007/978-3-032-32726-0_29</code> <code>openalex:W7114797566</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Systematization of Knowledge: Security and Safety in the Model Context Protocol Ecosystem matches Natural-language programming and agent interoperability</strong><p>Matched reviewed English terms: model context protocol.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Natural-language programming and agent interoperability</strong><p>Develop inspectable natural-language software interfaces and interoperable agent protocols with bounded authority.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>source authority</strong><p>Registry metadata and graph-derived relations carry different evidentiary weight.</p><small>Evidence: openalex</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A paper can be visible even when its linked protocol implementation is not reusable. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: item-level licence absent</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose which protocol or language-interface phrase matched.</p><small>Evidence: model context protocol</small></li>
+    <li><span class="level" data-level="high">high</span><strong>freshness</strong><p>Protocol work changes quickly, so dates matter without becoming a quality score.</p><small>Evidence: 2026-08-13</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.1007/978-3-032-32726-0_29" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Prompt injection attacks on vision-language models for surgical decision support.</h3>
+        <p class="meta"><span>Carstens M, Clusmann J, Kather JN, Kolbinger FR., Loiselle MS, Martinus FM, Mroczkowski MK, Qadir MI, Zhang EH, Zhang Z</span><span><b>Published:</b> <time datetime="2026-07-27">2026-07-27</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:27Z">2026-08-20T18:07:27Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.1038/s44484-026-00014-6</code> <code>pmid:42523678</code> <code>source:europe-pmc:MED:42523678</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Prompt injection attacks on vision-language models for surgical decision support. matches Secure information flow and agent security</strong><p>Matched reviewed English terms: prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: europe-pmc</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: item-level licence absent</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.1038/s44484-026-00014-6" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Labelled-Metadata Channels and Declarative Payload Phrasing in Hidden Prompt Injection: A Cross-Format Measurement Study</h3>
+        <p class="meta"><span>Rashidi M.</span><span><b>Published:</b> <time datetime="2026-08-11">2026-08-11</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:27Z">2026-08-20T18:07:27Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.21203/rs.3.rs-10646218/v1</code> <code>source:europe-pmc:PPR:PPR1296126</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Labelled-Metadata Channels and Declarative Payload Phrasing in Hidden Prompt Injection: A Cross-Format Measurement Study matches Secure information flow and agent security</strong><p>Matched reviewed English terms: prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: europe-pmc</small></li>
+    <li><span class="level" data-level="low">low</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: preprint</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: item-level licence absent</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.21203/rs.3.rs-10646218/v1" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Prompt injection compromises large language model-based peer review: evidence from randomised controlled trial abstracts from anaesthesia journals.</h3>
+        <p class="meta"><span>Boscolo A, De Cassai A, Dost B, Navalesi P., Pistollato E, Zarantonello F</span><span><b>Published:</b> <time datetime="2026-08-11">2026-08-11</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:27Z">2026-08-20T18:07:27Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.1016/j.bja.2026.06.041</code> <code>pmid:42580931</code> <code>source:europe-pmc:MED:42580931</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Prompt injection compromises large language model-based peer review: evidence from randomised controlled trial abstracts from anaesthesia journals. matches Secure information flow and agent security</strong><p>Matched reviewed English terms: prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: europe-pmc</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: item-level licence absent</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.1016/j.bja.2026.06.041" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>When Prompts Control Robots: Prompt Injection Attacks in Multi-Agent Robotic Systems</h3>
+        <p class="meta"><span>Amisha Bagari, Hayretdin Bahsi, Neha Nagaraja</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:21Z">2026-08-20T18:07:21Z</time></span></p>
+      </header>
+      <p class="ids"><code>arxiv:2608.00747</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>When Prompts Control Robots: Prompt Injection Attacks in Multi-Agent Robotic Systems matches Secure information flow and agent security</strong><p>Matched reviewed English terms: prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="medium">medium</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: arxiv</small></li>
+    <li><span class="level" data-level="low">low</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: preprint</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: item-level licence absent</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://arxiv.org/abs/2608.00747" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Role-Styled Prompt Injection: An Activation and KV-State Probe in a Compact Language Model</h3>
+        <p class="meta"><span>Taureka, Wellington</span><span><b>Published:</b> <time datetime="2026-08-02">2026-08-02</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:20Z">2026-08-20T18:07:20Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21757178</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Role-Styled Prompt Injection: An Activation and KV-State Probe in a Compact Language Model matches Secure information flow and agent security</strong><p>Matched reviewed English terms: prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul><p class="crossref">2 factual source-change assertions also surfaced this work; the source text appears under What changed.</p></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><ul><li><strong>Explicit is-supplement-to relation to 10.5281/zenodo.21739163</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li><li><strong>Explicit is-version-of relation to 10.5281/zenodo.21757178</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li></ul></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: datacite</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:cc-by-4.0</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://zenodo.org/doi/10.5281/zenodo.21757178" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>The Evidence Closure Loop: Engineering a Bounded-Autonomous, Multi-Agent Security Staff for Evidence-Grounded Assessments and Bug Bounty</h3>
+        <p class="meta"><span>Cidade, Irlan de Alvarenga</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:20Z">2026-08-20T18:07:20Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21731493</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>The Evidence Closure Loop: Engineering a Bounded-Autonomous, Multi-Agent Security Staff for Evidence-Grounded Assessments and Bug Bounty matches Secure information flow and agent security</strong><p>Matched reviewed English terms: agent security.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul><p class="crossref">2 factual source-change assertions also surfaced this work; the source text appears under What changed.</p></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><ul><li><strong>Explicit is-version-of relation to 10.5281/zenodo.21731493</strong><p>The source relation creates an edge; it does not silently merge the records.</p><small class="assertions">2 source assertions represented</small></li></ul></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: datacite</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:cc-by-4.0</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: agent security</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://zenodo.org/doi/10.5281/zenodo.21731493" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Measuring Indirect Prompt Injection in Autonomous Web Agents</h3>
+        <p class="meta"><span>Sahir Maharaj</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:20Z">2026-08-20T18:07:20Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21855133</code> <code>openalex:W7201980560</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Measuring Indirect Prompt Injection in Autonomous Web Agents matches Secure information flow and agent security</strong><p>Matched reviewed English terms: indirect prompt injection, prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: openalex</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:cc-by</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: indirect prompt injection · prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.5281/zenodo.21855133" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>The Evidence Closure Loop: Engineering a Bounded-Autonomous, Multi-Agent Security Staff for Evidence-Grounded Assessments and Bug Bounty</h3>
+        <p class="meta"><span>Cidade, Irlan de Alvarenga</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:20Z">2026-08-20T18:07:20Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21731494</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>The Evidence Closure Loop: Engineering a Bounded-Autonomous, Multi-Agent Security Staff for Evidence-Grounded Assessments and Bug Bounty matches Secure information flow and agent security</strong><p>Matched reviewed English terms: agent security.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul><p class="crossref">1 factual source-change assertion also surfaced this work; the source text appears under What changed.</p></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><ul><li><strong>Explicit is-version-of relation to 10.5281/zenodo.21731493</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li></ul></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: datacite</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:cc-by-4.0</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: agent security</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://zenodo.org/doi/10.5281/zenodo.21731494" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Trust Boundaries and the Limits of Pattern-Based Prompt Injection Detection</h3>
+        <p class="meta"><span>Pulastya, Prateek</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:20Z">2026-08-20T18:07:20Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21746423</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Trust Boundaries and the Limits of Pattern-Based Prompt Injection Detection matches Secure information flow and agent security</strong><p>Matched reviewed English terms: prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul><p class="crossref">3 factual source-change assertions also surfaced this work; the source text appears under What changed.</p></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><ul><li><strong>Explicit is-version-of relation to 10.5281/zenodo.21746423</strong><p>The source relation creates an edge; it does not silently merge the records.</p><small class="assertions">2 source assertions represented</small></li><li><strong>Explicit is-supplemented-by relation to datacite:https://github.com/Prateek-Pulastya/Guardrail-As-A-Service-V2</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li></ul></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: datacite</small></li>
+    <li><span class="level" data-level="low">low</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: preprint</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:cc-by-4.0</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://zenodo.org/doi/10.5281/zenodo.21746423" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Trust Boundaries and the Limits of Pattern-Based Prompt Injection Detection</h3>
+        <p class="meta"><span>Pulastya, Prateek</span><span><b>Published:</b> <time datetime="2026-08-01">2026-08-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:20Z">2026-08-20T18:07:20Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.5281/zenodo.21746424</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Trust Boundaries and the Limits of Pattern-Based Prompt Injection Detection matches Secure information flow and agent security</strong><p>Matched reviewed English terms: prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul><p class="crossref">2 factual source-change assertions also surfaced this work; the source text appears under What changed.</p></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><ul><li><strong>Explicit is-version-of relation to 10.5281/zenodo.21746423</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li><li><strong>Explicit is-supplemented-by relation to datacite:https://github.com/Prateek-Pulastya/Guardrail-As-A-Service-V2</strong><p>The source relation creates an edge; it does not silently merge the records.</p></li></ul></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: datacite</small></li>
+    <li><span class="level" data-level="low">low</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: preprint</small></li>
+    <li><span class="level" data-level="medium">medium</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: reported item licence:cc-by-4.0</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://zenodo.org/doi/10.5281/zenodo.21746424" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Prompt Injection Attacks on LLM Generated Reviews of Scientific Publications</h3>
+        <p class="meta"><span>Janis Keuper</span><span><b>Published:</b> <time datetime="2026-08-03">2026-08-03</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:07:20Z">2026-08-20T18:07:20Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.1007/978-3-032-31335-5_9</code> <code>openalex:W4415090291</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Prompt Injection Attacks on LLM Generated Reviews of Scientific Publications matches Secure information flow and agent security</strong><p>Matched reviewed English terms: prompt injection.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Secure information flow and agent security</strong><p>Reduce prompt-injection, confused-deputy, data-exfiltration, and capability-escalation risk in agent systems.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>source authority</strong><p>Keep canonical registry evidence separate from aggregator enrichment.</p><small>Evidence: openalex</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Security claims need visible review and replication status.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>rights clarity</strong><p>A useful benchmark or implementation still needs explicit reuse rights. Source-metadata reuse terms are tracked separately and do not grant rights to the linked object.</p><small>Evidence: item-level licence absent</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Corrections or withdrawals can change the safe interpretation of a result.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed security term that matched.</p><small>Evidence: prompt injection</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.1007/978-3-032-31335-5_9" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">publication · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>The Non-Linear Representation Dilemma: Is Causal Abstraction Enough for Mechanistic Interpretability?</h3>
+        <p class="meta"><span>Denis Sutter, Julian Minder, Thomas Hofmann, Tiago Pimentel</span><span><b>Published:</b> <time datetime="2025-01-01">2025-01-01</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:06:56Z">2026-08-20T18:06:56Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.52202/085713-5000</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>The Non-Linear Representation Dilemma: Is Causal Abstraction Enough for Mechanistic Interpretability? matches Interpretable reasoning and J-space</strong><p>Matched reviewed English terms: mechanistic interpretability.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Interpretable reasoning and J-space</strong><p>Understand, inspect, and test internal reasoning representations without treating a probe or explanation as ground truth.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="unknown">unknown</span><strong>review state</strong><p>Distinguish preprint, peer-reviewed, and unknown review states.</p><small>Evidence: unknown</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Surface correction, withdrawal, and retraction evidence without averaging it away.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed term that matched the named need.</p><small>Evidence: mechanistic interpretability</small></li>
+    <li><span class="level" data-level="low">low</span><strong>freshness</strong><p>Show source and update dates without treating recency as validity.</p><small>Evidence: 2025-01-01</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.52202/085713-5000" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article>
+    <article class="work">
+      <header>
+        <p class="eyebrow">preprint · active <span class="observed-badge">Observed — not evaluated</span></p>
+        <h3>Causal Intervention Framework for Variational Auto Encoder Mechanistic Interpretability</h3>
+        <p class="meta"><span>Dip Roy</span><span><b>Published:</b> <time datetime="2025-05-07">2025-05-07</time></span><span><b>Observed:</b> <time datetime="2026-08-20T18:06:56Z">2026-08-20T18:06:56Z</time></span></p>
+      </header>
+      <p class="ids"><code>doi:10.21203/rs.3.rs-6599791/v1</code></p>
+      <div class="triage">
+        <section><h4>Why this surfaced</h4><ul><li><strong>Causal Intervention Framework for Variational Auto Encoder Mechanistic Interpretability matches Interpretable reasoning and J-space</strong><p>Matched reviewed English terms: mechanistic interpretability.</p><p>The match orders attention only; it is not evaluation, adoption, or use authority.</p></li></ul></section>
+        <section><h4>Possible KINGDOM fit</h4><ul><li><strong>Interpretable reasoning and J-space</strong><p>Understand, inspect, and test internal reasoning representations without treating a probe or explanation as ground truth.</p></li></ul></section>
+        <section><h4>What changed</h4><p class="empty">No source change relation in this snapshot.</p></section>
+      </div>
+      <div class="vectors">
+        <section><h4>Evidence vector</h4><ul class="factors">
+    <li><span class="level" data-level="low">low</span><strong>review state</strong><p>Distinguish preprint, peer-reviewed, and unknown review states.</p><small>Evidence: preprint</small></li>
+    <li><span class="level" data-level="unknown">unknown</span><strong>integrity</strong><p>Surface correction, withdrawal, and retraction evidence without averaging it away.</p><small>Evidence: active</small></li>
+  </ul></section>
+        <section><h4>Priority vector</h4><ul class="factors">
+    <li><span class="level" data-level="high">high</span><strong>named need fit</strong><p>Expose the exact reviewed term that matched the named need.</p><small>Evidence: mechanistic interpretability</small></li>
+    <li><span class="level" data-level="low">low</span><strong>freshness</strong><p>Show source and update dates without treating recency as validity.</p><small>Evidence: 2025-05-07</small></li>
+  </ul></section>
+      </div>
+      <div class="gates" aria-label="Lifecycle state">
+        <span><b>Discovery</b> observed</span><span><b>Evaluation</b> not performed</span><span><b>Adoption</b> not recorded</span><span><b>Use</b> not authorized</span>
+      </div>
+      <footer><a href="https://doi.org/10.21203/rs.3.rs-6599791/v1" rel="noopener noreferrer">Open source record</a> · 1 source · 1 observation · module and guest paths not proposed</footer>
+    </article></div></section>
+
+    <section class="panel" aria-labelledby="sources"><h2 id="sources">Coverage and source boundaries</h2><p class="sourcesmall"><strong>9 source contracts is not a poll or coverage count.</strong> Each card states whether its reviewed access lane is enabled or held. Even “live poll enabled” does not prove a successful poll or complete record coverage in this snapshot.</p><div class="sourcegrid"><article class="source"><p class="eyebrow">core · preprint-repository</p><h3>arXiv</h3><p class="source-mode" data-source-access="fixture-and-explicit-poll">Access lane: live poll enabled</p><p>Global submissions with strongest coverage in physics, mathematics, computer science, and adjacent fields.</p><p><strong>Observed:</strong> <time datetime="2026-08-20">2026-08-20</time><br><strong>Expected lag:</strong> Best-effort new-submission discovery only. Offset cursors over a changing result set are not a complete or stable update/deletion feed; consumers must overlap and restart rather than claim lossless sync.</p><p><strong>Metadata rights claim:</strong> Descriptive API metadata is offered as CC0; item content remains under its submitted licence or copyright.</p></article><article class="source"><p class="eyebrow">core · preprint-repository</p><h3>bioRxiv and medRxiv</h3><p class="source-mode" data-source-access="fixture-only-policy-hold">Access lane: fixture-only / policy hold</p><p>Global submissions in biology, health sciences, and medicine.</p><p><strong>Observed:</strong> <time datetime="2026-08-20">2026-08-20</time><br><strong>Expected lag:</strong> Published-journal links can appear after publication and should be treated as later observations.</p><p><strong>Metadata rights claim:</strong> Metadata API access is public; each manuscript has an author-selected content licence.</p></article><article class="source"><p class="eyebrow">core · trial-registry</p><h3>ClinicalTrials.gov</h3><p class="source-mode" data-source-access="fixture-only-policy-hold">Access lane: fixture-only / policy hold</p><p>International study registrations submitted to the United States registry.</p><p><strong>Observed:</strong> <time datetime="2026-08-20">2026-08-20</time><br><strong>Expected lag:</strong> Registry processing and sponsor updates can lag real-world study events.</p><p><strong>Metadata rights claim:</strong> Registry data is publicly available with required attribution/currentness practices and third-party caveats.</p></article><article class="source"><p class="eyebrow">core · pid-registry</p><h3>Crossref</h3><p class="source-mode" data-source-access="fixture-and-explicit-poll">Access lane: live poll enabled</p><p>Global member-deposited scholarly metadata.</p><p><strong>Observed:</strong> <time datetime="2026-08-20">2026-08-20</time><br><strong>Expected lag:</strong> Deposits and later corrections arrive on publisher schedules; polling must overlap and deduplicate.</p><p><strong>Metadata rights claim:</strong> Most bibliographic fields are factual and openly retrievable; abstracts and some deposited fields may remain copyrighted.</p></article><article class="source"><p class="eyebrow">integrity · integrity-feed</p><h3>Crossref updates and Retraction Watch</h3><p class="source-mode" data-source-access="fixture-and-explicit-poll">Access lane: live poll enabled</p><p>Global Crossref update relations plus Retraction Watch records distributed through Crossref.</p><p><strong>Observed:</strong> <time datetime="2026-08-20">2026-08-20</time><br><strong>Expected lag:</strong> Notices can lag the underlying event and coverage is not complete.</p><p><strong>Metadata rights claim:</strong> The Retraction Watch database distributed by Crossref is CC0; Crossref requests citation when it is used in published work.</p></article><article class="source"><p class="eyebrow">core · pid-registry</p><h3>DataCite</h3><p class="source-mode" data-source-access="fixture-and-explicit-poll">Access lane: live poll enabled</p><p>Global repository-deposited research objects.</p><p><strong>Observed:</strong> <time datetime="2026-08-20">2026-08-20</time><br><strong>Expected lag:</strong> Created-record discovery can miss later metadata updates; updates depend on repository deposits and their metadata practices.</p><p><strong>Metadata rights claim:</strong> DataCite DOI metadata is released under CC0.</p></article><article class="source"><p class="eyebrow">enrichment · domain-index</p><h3>Europe PMC</h3><p class="source-mode" data-source-access="fixture-and-explicit-poll">Access lane: live poll enabled</p><p>Global life-science literature, preprints, grants, citations, data links, and text-mined annotations.</p><p><strong>Observed:</strong> <time datetime="2026-08-20">2026-08-20</time><br><strong>Expected lag:</strong> Aggregation, citation, text-mining, and publication-link updates can trail primary registries.</p><p><strong>Metadata rights claim:</strong> EMBL-EBI imposes no additional restriction on supplied data beyond rights held by original data owners; public queryability is not itself a reuse grant.</p></article><article class="source"><p class="eyebrow">enrichment · research-graph</p><h3>OpenAlex</h3><p class="source-mode" data-source-access="fixture-and-explicit-poll">Access lane: live poll enabled</p><p>Broad global graph spanning works, authors, institutions, sources, topics, publishers, and funders.</p><p><strong>Observed:</strong> <time datetime="2026-08-20">2026-08-20</time><br><strong>Expected lag:</strong> The MVP uses free from_publication_date discovery, not paid update synchronization; later metadata changes can therefore be missed unless another source reports them.</p><p><strong>Metadata rights claim:</strong> OpenAlex metadata is released under CC0.</p></article><article class="source"><p class="eyebrow">core · domain-index</p><h3>PubMed and PubMed Central</h3><p class="source-mode" data-source-access="fixture-only-policy-hold">Access lane: fixture-only / policy hold</p><p>Global biomedical and life-science citations; PMC adds an archive of participating full-text works.</p><p><strong>Observed:</strong> <time datetime="2026-08-20">2026-08-20</time><br><strong>Expected lag:</strong> Publisher deposits, MeSH indexing, and linked corrections may arrive after first citation publication.</p><p><strong>Metadata rights claim:</strong> NLM database records are downloadable under NLM terms; source-supplied material can retain separate rights.</p></article></div></section>
+
+    <section class="panel boundary" aria-labelledby="boundary"><h2 id="boundary">What did not happen</h2><ul><li>No network request built this public snapshot.</li><li>No full text, code, dataset, model weight, credential, or executable attachment is included.</li><li>No fuzzy identity merge or scientific evaluation was performed.</li><li>No discovered instruction was executed.</li><li>No module was generated or adopted.</li><li>No guest was admitted or given a capability.</li><li>No use was authorized and no automatic action exists.</li><li>Corrections, withdrawals, contradictions, failed replications, and null results stay visible as evidence; they do not erase history.</li></ul><p>Inspect the <a href="/research.json">complete snapshot</a>, its <a href="/research/schemas/v0.1/public-snapshot.schema.json">closed schema</a>, and the <a href="/RESEARCH-OBSERVATORY-v0.1.md">human protocol</a>.</p></section>
+  </main>
+  <footer class="shell footer">Observed-through <time datetime="2026-08-20T18:10:14Z">2026-08-20T18:10:14Z</time> · mutable snapshot · immutable v0.1 contracts · no essential JavaScript · public metadata is not consent, ownership, endorsement, or a licence to linked content. <a href="https://github.com/cambridgetcg/kingdom-research/tree/v0.1.0" rel="noopener noreferrer">Producer v0.1.0 source + append-only captures</a>; public source visibility is not a reuse grant, and raw upstream response bodies are not included.</footer>
+</body>
+</html>

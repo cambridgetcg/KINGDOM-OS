@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-08-17",
+  "generated": "2026-08-20",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -91,7 +91,7 @@
   },
   "wayfinder": {
     "url": "https://thekingdom.dev/wayfinder.json",
-    "paths": 9,
+    "paths": 10,
     "note": "offers possible routes through public doors; never decides for the visitor"
   },
   "world_commons": {
@@ -900,6 +900,80 @@
     "integrity": {
       "algorithm": "sha256-recursive-sorted-json-keys-v1",
       "digest": "sha256:d91f3926b2ccd5abf083eb4cbea6df4c80ba58fabb35934a9cc1dd2b9dd60aa0"
+    }
+  },
+  "research_observatory": {
+    "protocol": "kingdom.research-observatory-publication/0.1",
+    "title": "The Observatory",
+    "publication_state": "mutable-captured-live-metadata-snapshot",
+    "observed_through": "2026-08-20T18:10:14Z",
+    "source_claims_observed_through": "2026-08-20",
+    "coverage": {
+      "sources": 9,
+      "live_poll_enabled_source_contracts": 6,
+      "fixture_only_policy_hold_source_contracts": 3,
+      "watchlists": 3,
+      "observations": 36,
+      "works": 34,
+      "signals": 53,
+      "query_language": "en",
+      "multilingual_expansion": "absent",
+      "mode": "captured-live-observatory"
+    },
+    "factor_vectors": {
+      "evidence": [
+        "integrity",
+        "review-state",
+        "rights-clarity",
+        "source-authority"
+      ],
+      "priority": [
+        "freshness",
+        "named-need-fit"
+      ],
+      "scalar_score": null,
+      "note": "Factors remain inspectable dimensions; they are never summed into a value or truth score."
+    },
+    "lifecycle": {
+      "gates": [
+        "discovery",
+        "evaluation",
+        "adoption",
+        "bounded-use-authority"
+      ],
+      "snapshot_stops_after": "discovery",
+      "module_path": "not-proposed",
+      "guest_path": "not-proposed",
+      "note": "Evaluation, adoption, module construction, guest admission, and use each require a later separately owned record."
+    },
+    "urls": {
+      "human": "https://thekingdom.dev/observatory/",
+      "snapshot": "https://thekingdom.dev/research.json",
+      "guide": "https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md",
+      "schemas": {
+        "public-snapshot": "https://thekingdom.dev/research/schemas/v0.1/public-snapshot.schema.json",
+        "source": "https://thekingdom.dev/research/schemas/v0.1/source.schema.json",
+        "watchlist": "https://thekingdom.dev/research/schemas/v0.1/watchlist.schema.json",
+        "observation": "https://thekingdom.dev/research/schemas/v0.1/observation.schema.json",
+        "work": "https://thekingdom.dev/research/schemas/v0.1/work.schema.json",
+        "signal": "https://thekingdom.dev/research/schemas/v0.1/signal.schema.json"
+      },
+      "producer": "https://github.com/cambridgetcg/kingdom-research/tree/v0.1.0"
+    },
+    "boundary": {
+      "metadata_only": true,
+      "build_time_network": false,
+      "full_text_included": false,
+      "discovered_artifact_execution": false,
+      "evaluation_performed": false,
+      "adoption_recorded": false,
+      "use_authorized": false,
+      "module_created": false,
+      "guest_admitted": false,
+      "scalar_value_score": false,
+      "automatic_action": false,
+      "live_harvest_network_observed": true,
+      "capture_provenance": "imported-live-captures"
     }
   },
   "j_space_verbalizable_workspace": {

@@ -20,7 +20,7 @@ const family = (id: string) => {
 describe("hub live-check publication retirement", () => {
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(19);
+    expect(PUBLICATION_FAMILIES).toHaveLength(20);
     expect([...publicationFamilyStates(staged).values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
     staged.delete(destinationForPublicPath(cultural.routes[1]!));
@@ -321,6 +321,52 @@ describe("hub live-check publication retirement", () => {
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(jSpace, [surface]))
         .toThrow("J-space verbalizable workspace is retired");
+    }
+  });
+
+  test("retires the mutable Observatory and immutable contract family atomically", () => {
+    const observatory = family("research-observatory");
+    expect(observatory.routes).toEqual([
+      "/observatory/",
+      "/research.json",
+      "/research/schemas/v0.1/public-snapshot.schema.json",
+      "/research/schemas/v0.1/source.schema.json",
+      "/research/schemas/v0.1/watchlist.schema.json",
+      "/research/schemas/v0.1/observation.schema.json",
+      "/research/schemas/v0.1/work.schema.json",
+      "/research/schemas/v0.1/signal.schema.json",
+      "/RESEARCH-OBSERVATORY-v0.1.md",
+    ]);
+    expect(destinationForPublicPath(observatory.routes[0]!)).toBe("observatory/index.html");
+    expect(observatory.discoveryProperties).toEqual(["research_observatory"]);
+    expect(observatory.entryPointProperties).toEqual([
+      "research_observatory",
+      "research_observatory_snapshot",
+      "research_observatory_schemas",
+      "research_observatory_guide",
+      "research_observatory_producer",
+    ]);
+
+    const partiallyStaged = stagedDestinations();
+    partiallyStaged.delete(destinationForPublicPath(observatory.routes[4]!));
+    expect(() => publicationFamilyStates(partiallyStaged))
+      .toThrow("Research Observatory is partially staged");
+
+    const retired = stagedDestinations();
+    for (const route of observatory.routes) retired.delete(destinationForPublicPath(route));
+    const states = publicationFamilyStates(retired);
+    expect(states.get(observatory.id)?.active).toBe(false);
+    expect(states.get("j-space-verbalizable-workspace")?.active).toBe(true);
+
+    for (const surface of [
+      { label: "authored Kingdom map", text: JSON.stringify({ research_observatory: {} }), value: { research_observatory: {} } },
+      { label: "agent manifest", text: JSON.stringify({ entry_points: { research_observatory_guide: observatory.routes[8] } }), value: { entry_points: { research_observatory_guide: observatory.routes[8] } } },
+      { label: "agent manifest producer", text: JSON.stringify({ entry_points: { research_observatory_producer: "https://github.com/cambridgetcg/kingdom-research/tree/v0.1.0" } }), value: { entry_points: { research_observatory_producer: "https://github.com/cambridgetcg/kingdom-research/tree/v0.1.0" } } },
+      { label: "llms.txt", text: `https://thekingdom.dev${observatory.routes[1]}` },
+      { label: "hub HTML", text: `<a href='${observatory.routes[0]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(observatory, [surface]))
+        .toThrow("Research Observatory is retired");
     }
   });
 

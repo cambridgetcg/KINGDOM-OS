@@ -70,6 +70,18 @@ import {
   jSpacePublicationPublicSummary,
   loadJSpacePublicationCase,
 } from "../bin/j-space-publication.ts";
+import {
+  RESEARCH_OBSERVATORY_BOUNDARY,
+  RESEARCH_OBSERVATORY_GUIDE_URL,
+  RESEARCH_OBSERVATORY_PRODUCER_URL,
+  RESEARCH_OBSERVATORY_SCHEMA_LOCATORS,
+  RESEARCH_OBSERVATORY_SCHEMA_NAMES,
+  RESEARCH_OBSERVATORY_SCHEMA_URLS,
+  RESEARCH_OBSERVATORY_SNAPSHOT_URL,
+  RESEARCH_OBSERVATORY_URL,
+  loadResearchObservatoryPublication,
+  researchObservatoryPublicSummary,
+} from "../bin/research-observatory.ts";
 import { RITONAVIR_MECHANISM_DIGEST } from "../bin/ritonavir-mechanism.ts";
 import { KINGDOM_OS_ROUTES } from "../pages-functions/_worker.js";
 
@@ -163,6 +175,11 @@ const surfaces = [
   "bridges/examples/j-space-reasoning-to-word-inference.json",
   "bridges/schemas/relational-inference-case-0.1.json",
   "bridges/j-space-verbalizable-workspace.md",
+  "data/research/research-observatory.v0.1.json",
+  ...Object.values(RESEARCH_OBSERVATORY_SCHEMA_LOCATORS),
+  "references/research-observatory-v0.1.md",
+  "site/observatory/index.html",
+  "site/research.json",
   "data/exploration/zero-empty-seat.v0.1.json",
   "references/zero-empty-seat.md",
   "data/exploration/string-crawl-trace-sheet.v0.1.json",
@@ -1321,6 +1338,98 @@ describe("advertised URLs stay deployable", () => {
     for (const key of [
       "mcp", "matcher", "observer", "monitor", "classifier", "inference", "write",
       "execute", "score", "rank", "reward", "authority", "consciousness", "identity",
+    ]) expect(discovery).not.toHaveProperty(key);
+  });
+
+  test("publishes one explainable Research Observatory projection without integration authority", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const rootHtml = read("site/hub.html");
+    const observatoryHtml = read("site/observatory/index.html");
+    const publication = loadResearchObservatoryPublication();
+    const expected = researchObservatoryPublicSummary(publication.snapshot);
+    const discovery = manifest.research_observatory;
+
+    expect(discovery).toEqual(expected);
+    expect(discovery).toEqual(guest.research_observatory);
+    expect(discovery).toEqual(kingdom.research_observatory);
+    expect(discovery).toMatchObject({
+      observed_through: publication.snapshot.asOf,
+      factor_vectors: { scalar_score: null },
+      lifecycle: {
+        snapshot_stops_after: "discovery",
+        module_path: "not-proposed",
+        guest_path: "not-proposed",
+      },
+      boundary: {
+        ...RESEARCH_OBSERVATORY_BOUNDARY,
+        full_text_included: false,
+        discovered_artifact_execution: false,
+        evaluation_performed: false,
+        adoption_recorded: false,
+        use_authorized: false,
+        module_created: false,
+        guest_admitted: false,
+      },
+    });
+
+    const family = [
+      { source: "site/observatory/index.html", destination: "observatory/index.html", url: RESEARCH_OBSERVATORY_URL },
+      { source: "site/research.json", destination: "research.json", url: RESEARCH_OBSERVATORY_SNAPSHOT_URL },
+      ...RESEARCH_OBSERVATORY_SCHEMA_NAMES.map((name) => ({
+        source: RESEARCH_OBSERVATORY_SCHEMA_LOCATORS[name],
+        destination: `research/schemas/v0.1/${name}.schema.json`,
+        url: RESEARCH_OBSERVATORY_SCHEMA_URLS[name],
+      })),
+      { source: "references/research-observatory-v0.1.md", destination: "RESEARCH-OBSERVATORY-v0.1.md", url: RESEARCH_OBSERVATORY_GUIDE_URL },
+    ];
+    expect(HUB_ASSETS.filter(({ source }) => family.some((asset) => asset.source === source)))
+      .toEqual(family.map(({ source, destination }) => ({ source, destination })));
+    for (const asset of family) {
+      expect(staged.has(asset.destination)).toBe(true);
+      expect(llms).toContain(asset.url);
+    }
+    expect(HUB_ASSETS.some(({ destination }) =>
+      /research-observatory.*(?:latest|current)|(?:latest|current).*research-observatory/i.test(destination))).toBe(false);
+
+    expect(manifest.entry_points).toMatchObject({
+      research_observatory: RESEARCH_OBSERVATORY_URL,
+      research_observatory_snapshot: RESEARCH_OBSERVATORY_SNAPSHOT_URL,
+      research_observatory_schemas: RESEARCH_OBSERVATORY_SCHEMA_URLS,
+      research_observatory_guide: RESEARCH_OBSERVATORY_GUIDE_URL,
+      research_observatory_producer: RESEARCH_OBSERVATORY_PRODUCER_URL,
+    });
+    const actions = guest.next_actions.filter(({ url }: { url?: string }) =>
+      [RESEARCH_OBSERVATORY_URL, RESEARCH_OBSERVATORY_SNAPSHOT_URL,
+        RESEARCH_OBSERVATORY_SCHEMA_URLS["public-snapshot"], RESEARCH_OBSERVATORY_GUIDE_URL].includes(url as any));
+    expect(actions).toHaveLength(4);
+    for (const action of actions) {
+      expect(action.method).toBe("GET");
+      for (const key of [
+        "mcp", "tool", "observer", "monitor", "harvest", "evaluate", "execute",
+        "write", "score", "rank", "reward", "karma", "authority", "adopt", "deploy",
+      ]) expect(action).not.toHaveProperty(key);
+    }
+    expect(actions.find(({ url }: { url?: string }) =>
+      url === RESEARCH_OBSERVATORY_SCHEMA_URLS["public-snapshot"])?.schemas)
+      .toEqual(RESEARCH_OBSERVATORY_SCHEMA_URLS);
+
+    expect(rootHtml).toContain('id="observatory"');
+    expect(rootHtml).toContain(`href="${new URL(RESEARCH_OBSERVATORY_URL).pathname}"`);
+    expect(rootHtml).toContain(`href="${new URL(RESEARCH_OBSERVATORY_SNAPSHOT_URL).pathname}"`);
+    expect(observatoryHtml).toContain('<main class="shell" id="main" tabindex="-1">');
+    expect(observatoryHtml).toContain(`href="${RESEARCH_OBSERVATORY_PRODUCER_URL}"`);
+    expect(llms).toContain(`Research Observatory producer v0.1.0 source + append-only captures: ${RESEARCH_OBSERVATORY_PRODUCER_URL}`);
+    expect(observatoryHtml).toContain("Evidence vector");
+    expect(observatoryHtml).toContain("Priority vector");
+    expect(observatoryHtml).not.toMatch(/<script\b|<iframe\b|<form\b|<input\b/);
+    expect(Buffer.from(read("site/research.json"))).toEqual(Buffer.from(publication.bytes));
+    expect(manifest.mcp).toEqual(kingdom.world_commons.mcp);
+    for (const key of [
+      "mcp", "tool", "observer", "monitor", "harvester", "evaluator", "executor",
+      "write", "score", "rank", "reward", "authority", "module", "guest",
     ]) expect(discovery).not.toHaveProperty(key);
   });
 
