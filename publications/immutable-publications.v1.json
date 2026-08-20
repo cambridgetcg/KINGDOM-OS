@@ -585,6 +585,90 @@
       "sha256": "4afc5f15c258a0ac4274889783bd2d91445950c92103c60442ed9ed89d1fdc72"
     },
     {
+      "id": "trial-chamber/0.1/guide",
+      "route": "/TRIAL-CHAMBER-v0.1.md",
+      "source": "references/trial-chamber-v0.1.md",
+      "destination": "TRIAL-CHAMBER-v0.1.md",
+      "sha256": "67ab0769f2175bbac7e93a3738436a9012bbfafcd7071d8b4591e72774cf753d"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-adoption-record",
+      "route": "/trials/schemas/v0.1/adoption-record.schema.json",
+      "source": "schemas/trial-chamber/v0.1/adoption-record.schema.json",
+      "destination": "trials/schemas/v0.1/adoption-record.schema.json",
+      "sha256": "f4acc55094115c3f6337e7c925ac719c1fdd5ea968cb44c3dc8e12e6f1be339c"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-evaluation-plan",
+      "route": "/trials/schemas/v0.1/evaluation-plan.schema.json",
+      "source": "schemas/trial-chamber/v0.1/evaluation-plan.schema.json",
+      "destination": "trials/schemas/v0.1/evaluation-plan.schema.json",
+      "sha256": "90d6b249c8b61bf793803781517764b7cad9e0dbd59680b30c1c2f2cc5500a46"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-evaluation-request",
+      "route": "/trials/schemas/v0.1/evaluation-request.schema.json",
+      "source": "schemas/trial-chamber/v0.1/evaluation-request.schema.json",
+      "destination": "trials/schemas/v0.1/evaluation-request.schema.json",
+      "sha256": "d00d2af079b44cb7a92f44d4b81c9e72196041f5b9cad90a4cdcc3fd198a2f07"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-evaluation-result",
+      "route": "/trials/schemas/v0.1/evaluation-result.schema.json",
+      "source": "schemas/trial-chamber/v0.1/evaluation-result.schema.json",
+      "destination": "trials/schemas/v0.1/evaluation-result.schema.json",
+      "sha256": "f62a5dbfee7229e51a54d74d71a332eff29afb41241b0b754e076c0dc98cce62"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-preflight",
+      "route": "/trials/schemas/v0.1/preflight.schema.json",
+      "source": "schemas/trial-chamber/v0.1/preflight.schema.json",
+      "destination": "trials/schemas/v0.1/preflight.schema.json",
+      "sha256": "f4ffd9e7730f7a2a8eb9ac6e2df5be1ba9c268b79277180291a422fa3bb081dd"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-public-snapshot",
+      "route": "/trials/schemas/v0.1/public-snapshot.schema.json",
+      "source": "schemas/trial-chamber/v0.1/public-snapshot.schema.json",
+      "destination": "trials/schemas/v0.1/public-snapshot.schema.json",
+      "sha256": "e73a26e4594ad39858409827cdc01d15d245f6e8558a17d3d89d4569e0867043"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-referral",
+      "route": "/trials/schemas/v0.1/referral.schema.json",
+      "source": "schemas/trial-chamber/v0.1/referral.schema.json",
+      "destination": "trials/schemas/v0.1/referral.schema.json",
+      "sha256": "ee4b570b888a284d75ab33d810f10c7b7621e106deb66ba8316db04338aab578"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-trial-authority",
+      "route": "/trials/schemas/v0.1/trial-authority.schema.json",
+      "source": "schemas/trial-chamber/v0.1/trial-authority.schema.json",
+      "destination": "trials/schemas/v0.1/trial-authority.schema.json",
+      "sha256": "8da46a321ca1f4b82b6d0c0d462d7c2bb7b6431bf169b14b217bf19635af459e"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-trial-run",
+      "route": "/trials/schemas/v0.1/trial-run.schema.json",
+      "source": "schemas/trial-chamber/v0.1/trial-run.schema.json",
+      "destination": "trials/schemas/v0.1/trial-run.schema.json",
+      "sha256": "b6110ef58cb3f2fdb2a2d34fe66413d552343d21a482200dd9763fc770b54e2b"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-use-authority",
+      "route": "/trials/schemas/v0.1/use-authority.schema.json",
+      "source": "schemas/trial-chamber/v0.1/use-authority.schema.json",
+      "destination": "trials/schemas/v0.1/use-authority.schema.json",
+      "sha256": "ab9d72e587bf814773a0a0791749d1fc17d0416903888f8768c88becfd841e92"
+    },
+    {
+      "id": "trial-chamber/0.1/snapshot",
+      "route": "/trials/research-trial-chamber-2026-08-20.json",
+      "source": "data/trials/research-trial-chamber.v0.1.json",
+      "destination": "trials/research-trial-chamber-2026-08-20.json",
+      "sha256": "6e59bf134d129b17fc0f02949d9ef383de6787e2bc39e1714a3c6f01376b1d34"
+    },
+    {
       "id": "visibility-attention/0.1/guide",
       "route": "/VISIBILITY-ATTENTION.md",
       "source": "references/visibility-attention-translation.md",

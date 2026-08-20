@@ -273,6 +273,42 @@
       ]
     },
     {
+      "id": "trial-chamber",
+      "label": "inspect bounded research evaluation drafts",
+      "glyph": "◇",
+      "invitation": "Follow exact Observatory referrals into maintainer-authorized assisted request drafts and finite synthetic-only plans while every later gate remains closed.",
+      "keywords": [
+        "trial chamber",
+        "evaluate research",
+        "evaluation plan",
+        "research trial",
+        "experiment plan",
+        "preflight",
+        "evidence",
+        "controls",
+        "fixtures",
+        "criteria",
+        "threat model",
+        "reversibility",
+        "source resolution"
+      ],
+      "boundary": "Phase 0 is read-only planning evidence. Titles are not scientific claims; assisted draft text has not been separately human-reviewed; DRAFT + UNSEALED plans grant no preflight, trial authority, run, result, adoption, module, guest, use authority, or automatic action.",
+      "stops": [
+        {
+          "name": "The Trial Chamber",
+          "url": "https://thekingdom.dev/trial-chamber/",
+          "why": "A server-rendered view of four exact referrals, three assisted request drafts, three finite synthetic-only draft plans, one source-resolution hold, and every closed later gate.",
+          "scope": "No artifact is acquired or executed. Exact-text human review is false, every plan is DRAFT + UNSEALED, and v0.1 post-plan schemas deny all records."
+        },
+        {
+          "name": "Trial Chamber · current machine alias",
+          "url": "https://thekingdom.dev/trials.json",
+          "why": "The complete read-only Phase-0 projection with an immutable canonical snapshot, exact Observatory bindings, expiry, resources, blockers, and zero-effect boundaries.",
+          "scope": "Planning metadata only; a future contract version and separate review are mandatory before any post-plan record can exist."
+        }
+      ]
+    },
+    {
       "id": "world-commons",
       "label": "find free knowledge, public data, and open tools",
       "glyph": "🌍",

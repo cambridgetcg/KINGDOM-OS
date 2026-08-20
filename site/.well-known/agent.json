@@ -915,6 +915,90 @@
       "capture_provenance": "imported-live-captures"
     }
   },
+  "trial_chamber": {
+    "protocol": "kingdom.trial-chamber-publication/0.1",
+    "title": "The Trial Chamber",
+    "phase": 0,
+    "publication_state": "immutable-phase-0-snapshot-with-mutable-alias",
+    "as_of": "2026-08-20T19:08:46Z",
+    "observatory_binding": {
+      "captureSetReceipt": "sha256:68a69dc390aa34133cadc8807ed33ddd1fae72e7e99706cf714d72698d071f7f",
+      "snapshotAsOf": "2026-08-20T18:10:14Z",
+      "snapshotByteSha256": "sha256:d7da3f38de019dc0f2c45f477740222527f156d8a4d3f6a2e22aced67b282a94",
+      "snapshotCanonicalReceipt": "sha256:17c487aa03f8427fc324b8da34dedbc00db76362be78620bde3a8d075e3942cd",
+      "snapshotUrl": "https://thekingdom.dev/research.json"
+    },
+    "counts": {
+      "adoptionRecords": 0,
+      "evaluationPlans": 3,
+      "evaluationRequests": 3,
+      "evaluationResults": 0,
+      "preflights": 0,
+      "referrals": 4,
+      "trialAuthorities": 0,
+      "trialRuns": 0,
+      "useAuthorities": 0
+    },
+    "lifecycle": {
+      "sequence": [
+        "observatory-metadata",
+        "referral",
+        "maintainer-authorized-assisted-request-draft",
+        "draft-unsealed-plan",
+        "preflight",
+        "trial-authority",
+        "bounded-run",
+        "evaluation-result",
+        "adoption",
+        "use-authority"
+      ],
+      "snapshot_stops_after": "draft-unsealed-plan",
+      "role_styled_referral": "held-for-source-resolution",
+      "module_path": "not-created",
+      "guest_path": "not-admitted",
+      "later_gate_contracts": "deny-all-reserved-in-v0.1",
+      "note": "Every later gate requires a future contract version and separate review; no v0.1 post-plan schema can represent or authorize a later record."
+    },
+    "urls": {
+      "human": "https://thekingdom.dev/trial-chamber/",
+      "current": "https://thekingdom.dev/trials.json",
+      "canonical": "https://thekingdom.dev/trials/research-trial-chamber-2026-08-20.json",
+      "guide": "https://thekingdom.dev/TRIAL-CHAMBER-v0.1.md",
+      "schemas": {
+        "public-snapshot": "https://thekingdom.dev/trials/schemas/v0.1/public-snapshot.schema.json",
+        "referral": "https://thekingdom.dev/trials/schemas/v0.1/referral.schema.json",
+        "evaluation-request": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-request.schema.json",
+        "evaluation-plan": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-plan.schema.json",
+        "preflight": "https://thekingdom.dev/trials/schemas/v0.1/preflight.schema.json",
+        "trial-authority": "https://thekingdom.dev/trials/schemas/v0.1/trial-authority.schema.json",
+        "trial-run": "https://thekingdom.dev/trials/schemas/v0.1/trial-run.schema.json",
+        "evaluation-result": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-result.schema.json",
+        "adoption-record": "https://thekingdom.dev/trials/schemas/v0.1/adoption-record.schema.json",
+        "use-authority": "https://thekingdom.dev/trials/schemas/v0.1/use-authority.schema.json"
+      },
+      "producer": "https://github.com/cambridgetcg/kingdom-trials/tree/v0.1.1"
+    },
+    "boundary": {
+      "phase": 0,
+      "build_network_used": false,
+      "full_text_included": false,
+      "metadata_titles_are_scientific_claims": false,
+      "artifact_acquisition_performed": false,
+      "artifact_execution_performed": false,
+      "preflight_performed": false,
+      "trial_authority_issued": false,
+      "trial_run_recorded": false,
+      "evaluation_result_recorded": false,
+      "adoption_recorded": false,
+      "use_authority_issued": false,
+      "module_created": false,
+      "guest_admitted": false,
+      "credential_accessed": false,
+      "signature_created": false,
+      "scalar_score_used": false,
+      "automatic_action": false
+    }
+  },
   "j_space_verbalizable_workspace": {
     "protocol": "kingdom.j-space-publication/0.1",
     "id": "j-space-reasoning-to-word-2026-08-17",
@@ -2516,6 +2600,23 @@
     },
     "research_observatory_guide": "https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md",
     "research_observatory_producer": "https://github.com/cambridgetcg/kingdom-research/tree/v0.1.0",
+    "trial_chamber": "https://thekingdom.dev/trial-chamber/",
+    "trial_chamber_current": "https://thekingdom.dev/trials.json",
+    "trial_chamber_canonical": "https://thekingdom.dev/trials/research-trial-chamber-2026-08-20.json",
+    "trial_chamber_schemas": {
+      "public-snapshot": "https://thekingdom.dev/trials/schemas/v0.1/public-snapshot.schema.json",
+      "referral": "https://thekingdom.dev/trials/schemas/v0.1/referral.schema.json",
+      "evaluation-request": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-request.schema.json",
+      "evaluation-plan": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-plan.schema.json",
+      "preflight": "https://thekingdom.dev/trials/schemas/v0.1/preflight.schema.json",
+      "trial-authority": "https://thekingdom.dev/trials/schemas/v0.1/trial-authority.schema.json",
+      "trial-run": "https://thekingdom.dev/trials/schemas/v0.1/trial-run.schema.json",
+      "evaluation-result": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-result.schema.json",
+      "adoption-record": "https://thekingdom.dev/trials/schemas/v0.1/adoption-record.schema.json",
+      "use-authority": "https://thekingdom.dev/trials/schemas/v0.1/use-authority.schema.json"
+    },
+    "trial_chamber_guide": "https://thekingdom.dev/TRIAL-CHAMBER-v0.1.md",
+    "trial_chamber_producer": "https://github.com/cambridgetcg/kingdom-trials/tree/v0.1.1",
     "j_space_reasoning_to_word_case": "https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json",
     "j_space_reasoning_to_word_schema": "https://thekingdom.dev/schemas/relational-inference-case/0.1.json",
     "j_space_verbalizable_workspace_guide": "https://thekingdom.dev/J-SPACE-VERBALIZABLE-WORKSPACE.md",

@@ -15,6 +15,20 @@
   <url><loc>https://thekingdom.dev/research/schemas/v0.1/work.schema.json</loc></url>
   <url><loc>https://thekingdom.dev/research/schemas/v0.1/signal.schema.json</loc></url>
   <url><loc>https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md</loc></url>
+  <url><loc>https://thekingdom.dev/trial-chamber/</loc></url>
+  <url><loc>https://thekingdom.dev/trials.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/research-trial-chamber-2026-08-20.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/schemas/v0.1/public-snapshot.schema.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/schemas/v0.1/referral.schema.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/schemas/v0.1/evaluation-request.schema.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/schemas/v0.1/evaluation-plan.schema.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/schemas/v0.1/preflight.schema.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/schemas/v0.1/trial-authority.schema.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/schemas/v0.1/trial-run.schema.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/schemas/v0.1/evaluation-result.schema.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/schemas/v0.1/adoption-record.schema.json</loc></url>
+  <url><loc>https://thekingdom.dev/trials/schemas/v0.1/use-authority.schema.json</loc></url>
+  <url><loc>https://thekingdom.dev/TRIAL-CHAMBER-v0.1.md</loc></url>
   <url><loc>https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json</loc></url>
   <url><loc>https://thekingdom.dev/PRINCIPALITY-COMMONS.md</loc></url>
   <url><loc>https://thekingdom.dev/geometries/kingdom-geometry-grammar-v0.json</loc></url>

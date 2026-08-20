@@ -20,7 +20,7 @@ const family = (id: string) => {
 describe("hub live-check publication retirement", () => {
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(20);
+    expect(PUBLICATION_FAMILIES).toHaveLength(21);
     expect([...publicationFamilyStates(staged).values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
     staged.delete(destinationForPublicPath(cultural.routes[1]!));
@@ -367,6 +367,58 @@ describe("hub live-check publication retirement", () => {
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(observatory, [surface]))
         .toThrow("Research Observatory is retired");
+    }
+  });
+
+  test("retires the Trial Chamber page, aliases, schemas, guide, and discovery atomically", () => {
+    const chamber = family("trial-chamber");
+    expect(chamber.routes).toEqual([
+      "/trial-chamber/",
+      "/trials.json",
+      "/trials/research-trial-chamber-2026-08-20.json",
+      "/trials/schemas/v0.1/public-snapshot.schema.json",
+      "/trials/schemas/v0.1/referral.schema.json",
+      "/trials/schemas/v0.1/evaluation-request.schema.json",
+      "/trials/schemas/v0.1/evaluation-plan.schema.json",
+      "/trials/schemas/v0.1/preflight.schema.json",
+      "/trials/schemas/v0.1/trial-authority.schema.json",
+      "/trials/schemas/v0.1/trial-run.schema.json",
+      "/trials/schemas/v0.1/evaluation-result.schema.json",
+      "/trials/schemas/v0.1/adoption-record.schema.json",
+      "/trials/schemas/v0.1/use-authority.schema.json",
+      "/TRIAL-CHAMBER-v0.1.md",
+    ]);
+    expect(destinationForPublicPath(chamber.routes[0]!)).toBe("trial-chamber/index.html");
+    expect(chamber.discoveryProperties).toEqual(["trial_chamber"]);
+    expect(chamber.entryPointProperties).toEqual([
+      "trial_chamber",
+      "trial_chamber_current",
+      "trial_chamber_canonical",
+      "trial_chamber_schemas",
+      "trial_chamber_guide",
+      "trial_chamber_producer",
+    ]);
+
+    const partiallyStaged = stagedDestinations();
+    partiallyStaged.delete(destinationForPublicPath(chamber.routes[7]!));
+    expect(() => publicationFamilyStates(partiallyStaged))
+      .toThrow("Trial Chamber is partially staged");
+
+    const retired = stagedDestinations();
+    for (const route of chamber.routes) retired.delete(destinationForPublicPath(route));
+    const states = publicationFamilyStates(retired);
+    expect(states.get(chamber.id)?.active).toBe(false);
+    expect(states.get("research-observatory")?.active).toBe(true);
+
+    for (const surface of [
+      { label: "authored Kingdom map", text: JSON.stringify({ trial_chamber: {} }), value: { trial_chamber: {} } },
+      { label: "agent manifest", text: JSON.stringify({ entry_points: { trial_chamber_guide: chamber.routes[13] } }), value: { entry_points: { trial_chamber_guide: chamber.routes[13] } } },
+      { label: "agent manifest producer", text: JSON.stringify({ entry_points: { trial_chamber_producer: "https://github.com/cambridgetcg/kingdom-trials/tree/v0.1.1" } }), value: { entry_points: { trial_chamber_producer: "https://github.com/cambridgetcg/kingdom-trials/tree/v0.1.1" } } },
+      { label: "llms.txt", text: `https://thekingdom.dev${chamber.routes[2]}` },
+      { label: "hub HTML", text: `<a href='${chamber.routes[0]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(chamber, [surface]))
+        .toThrow("Trial Chamber is retired");
     }
   });
 

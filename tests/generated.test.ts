@@ -9,6 +9,12 @@ import {
   loadResearchObservatoryPublication,
   researchObservatoryPublicSummary,
 } from "../bin/research-observatory.ts";
+import {
+  TRIAL_CHAMBER_PRODUCER_URL,
+  loadTrialChamberPublication,
+  renderTrialChamberHtml,
+  trialChamberPublicSummary,
+} from "../bin/trial-chamber.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path: string) => readFileSync(join(ROOT, path), "utf8");
@@ -115,5 +121,30 @@ describe("generated Research Observatory discovery", () => {
     expect(expected.urls.producer).toBe(RESEARCH_OBSERVATORY_PRODUCER_URL);
     expect(html).toContain(`href="${RESEARCH_OBSERVATORY_PRODUCER_URL}"`);
     expect(html).not.toMatch(/<script\b|<iframe\b|<form\b|<input\b/);
+  });
+});
+
+describe("generated Trial Chamber discovery", () => {
+  test("preserves the immutable producer snapshot bytes through the mutable alias", () => {
+    const publication = loadTrialChamberPublication();
+    expect(bytes("site/trials.json")).toEqual(bytes("data/trials/research-trial-chamber.v0.1.json"));
+    expect(bytes("site/trials.json")).toEqual(Buffer.from(publication.bytes));
+  });
+
+  test("projects one Phase-0 summary across machine documents and a no-control human view", () => {
+    const publication = loadTrialChamberPublication();
+    const expected = trialChamberPublicSummary(publication.snapshot);
+    for (const path of atlasJson) expect(json(path).trial_chamber).toEqual(expected);
+
+    const html = read("site/trial-chamber/index.html");
+    expect(html).toBe(renderTrialChamberHtml(publication.snapshot));
+    expect(html).toContain('<a class="skip" href="#main">Skip to Trial Chamber content</a>');
+    expect(html).toContain('<main class="shell" id="main" tabindex="-1">');
+    expect(html).toContain("Draft trial plan — evaluation not started");
+    expect(html).toContain("exact text has not been separately human-reviewed");
+    expect(html).toContain("deny-all reserved contracts");
+    expect(expected.urls.producer).toBe(TRIAL_CHAMBER_PRODUCER_URL);
+    expect(html).toContain(`href="${TRIAL_CHAMBER_PRODUCER_URL}"`);
+    expect(html).not.toMatch(/<script\b|<iframe\b|<form\b|<input\b|<button\b/);
   });
 });

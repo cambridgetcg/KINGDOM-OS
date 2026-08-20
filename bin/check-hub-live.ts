@@ -98,6 +98,16 @@ import {
   researchObservatoryPublicSummary,
 } from "./research-observatory.ts";
 import {
+  TRIAL_CHAMBER_ALIAS_URL,
+  TRIAL_CHAMBER_CANONICAL_URL,
+  TRIAL_CHAMBER_GUIDE_URL,
+  TRIAL_CHAMBER_PRODUCER_URL,
+  TRIAL_CHAMBER_SCHEMA_URLS,
+  TRIAL_CHAMBER_URL,
+  loadTrialChamberSnapshot,
+  trialChamberPublicSummary,
+} from "./trial-chamber.ts";
+import {
   ZERO_EMPTY_SEAT_BYTE_SHA256,
   ZERO_EMPTY_SEAT_DIGEST,
   ZERO_EMPTY_SEAT_GUIDE_BYTE_SHA256,
@@ -604,6 +614,12 @@ const researchObservatorySnapshotPath = new URL(RESEARCH_OBSERVATORY_SNAPSHOT_UR
 const researchObservatoryGuidePath = new URL(RESEARCH_OBSERVATORY_GUIDE_URL).pathname;
 const researchObservatorySchemaPaths = Object.values(RESEARCH_OBSERVATORY_SCHEMA_URLS)
   .map((schemaUrl) => new URL(schemaUrl).pathname);
+const trialChamberPath = new URL(TRIAL_CHAMBER_URL).pathname;
+const trialChamberAliasPath = new URL(TRIAL_CHAMBER_ALIAS_URL).pathname;
+const trialChamberCanonicalPath = new URL(TRIAL_CHAMBER_CANONICAL_URL).pathname;
+const trialChamberGuidePath = new URL(TRIAL_CHAMBER_GUIDE_URL).pathname;
+const trialChamberSchemaPaths = Object.values(TRIAL_CHAMBER_SCHEMA_URLS)
+  .map((schemaUrl) => new URL(schemaUrl).pathname);
 const jSpaceCasePath = new URL(J_SPACE_CASE_URL).pathname;
 const jSpaceSchemaPath = new URL(J_SPACE_SCHEMA_URL).pathname;
 const jSpaceGuidePath = new URL(J_SPACE_GUIDE_URL).pathname;
@@ -830,6 +846,26 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "research_observatory_schemas",
       "research_observatory_guide",
       "research_observatory_producer",
+    ],
+  },
+  {
+    id: "trial-chamber",
+    label: "Trial Chamber",
+    routes: [
+      trialChamberPath,
+      trialChamberAliasPath,
+      trialChamberCanonicalPath,
+      ...trialChamberSchemaPaths,
+      trialChamberGuidePath,
+    ],
+    discoveryProperties: ["trial_chamber"],
+    entryPointProperties: [
+      "trial_chamber",
+      "trial_chamber_current",
+      "trial_chamber_canonical",
+      "trial_chamber_schemas",
+      "trial_chamber_guide",
+      "trial_chamber_producer",
     ],
   },
   {
@@ -1584,6 +1620,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const mirrorInformationControlActive = familyActive("mirror-information-control");
   const jSpacePublicationActive = familyActive("j-space-verbalizable-workspace");
   const researchObservatoryActive = familyActive("research-observatory");
+  const trialChamberActive = familyActive("trial-chamber");
   const strandObservationMembraneActive = familyActive("strand-observation-membrane");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
@@ -2326,6 +2363,46 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (trialChamberActive) {
+    const pageHead = await fetch(url(trialChamberPath), {
+      method: "HEAD", redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const aliasHead = await fetch(url(trialChamberAliasPath), {
+      method: "HEAD", redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const canonicalHead = await fetch(url(trialChamberCanonicalPath), {
+      method: "HEAD", redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const guideHead = await fetch(url(trialChamberGuidePath), {
+      method: "HEAD", redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    for (const [label, response] of [["alias", aliasHead], ["canonical", canonicalHead]] as const) {
+      const links = response.headers.get("link") || "";
+      const cache = (response.headers.get("cache-control") || "").toLowerCase();
+      if (!response.ok || normalizedMediaType(response.headers.get("content-type")) !== "application/json" ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          !cache.includes("no-transform") ||
+          (label === "alias" ? !cache.includes("no-cache") : !cache.includes("immutable")) ||
+          !hasUniqueCanonicalLinkRelation(links, trialChamberCanonicalPath, "canonical", "application/json") ||
+          !hasUniqueCanonicalLinkRelation(links, trialChamberSchemaPaths[0]!, "describedby", "application/schema+json") ||
+          !hasUniqueCanonicalLinkRelation(links, trialChamberGuidePath, "service-doc", "text/markdown") ||
+          (await response.arrayBuffer()).byteLength !== 0) {
+        throw new Error(`Trial Chamber ${label} snapshot or HEAD boundary drifted`);
+      }
+    }
+    if (!pageHead.ok || normalizedMediaType(pageHead.headers.get("content-type")) !== "text/html" ||
+        !(pageHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform") ||
+        (await pageHead.arrayBuffer()).byteLength !== 0 ||
+        !guideHead.ok || normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !(guideHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform") ||
+        (await guideHead.arrayBuffer()).byteLength !== 0) {
+      throw new Error("Trial Chamber page, guide, or HEAD boundary drifted");
+    }
+  }
+
   const schemaPaths = [
     commonsSchemaPath,
     commonsLegacySchemaPath,
@@ -2349,6 +2426,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(mirrorInformationControlActive ? [mirrorInformationControlSchemaPath] : []),
     ...(jSpacePublicationActive ? [jSpaceSchemaPath] : []),
     ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
+    ...(trialChamberActive ? trialChamberSchemaPaths : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
@@ -2375,13 +2453,16 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       path === strandDescentLabSchemaPath ||
       path === mirrorInformationControlSchemaPath ||
       path === jSpaceSchemaPath ||
-      researchObservatorySchemaPaths.includes(path);
+      researchObservatorySchemaPaths.includes(path) ||
+      trialChamberSchemaPaths.includes(path);
     const hasExpectedSchemaType = requiresExactSchemaType
       ? normalizedMediaType(schemaContentType) === "application/schema+json"
       : (schemaContentType || "").toLowerCase().startsWith("application/schema+json");
     if (!schemaHead.ok || !hasExpectedSchemaType ||
       schemaHead.headers.get("access-control-allow-origin") !== "*" ||
       (schemaHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+      (trialChamberSchemaPaths.includes(path) &&
+        !(schemaHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform")) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
       throw new Error(`${path} is not served as application/schema+json`);
     }
@@ -2398,6 +2479,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : "";
   const publishedResearchObservatory: any = researchObservatoryActive
     ? JSON.parse(readFileSync(join(ROOT, "site/research.json"), "utf8"))
+    : undefined;
+  const authoredTrialChamberHtml = trialChamberActive
+    ? readFileSync(join(ROOT, "site/trial-chamber/index.html"), "utf8")
+    : "";
+  const publishedTrialChamber: any = trialChamberActive
+    ? JSON.parse(readFileSync(join(ROOT, "site/trials.json"), "utf8"))
     : undefined;
   const retirementDiscoverySurfaces: readonly DiscoverySurface[] = [
     { label: "agent manifest", text: JSON.stringify(manifest), value: manifest },
@@ -2463,6 +2550,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedResearchObservatory = researchObservatory
     ? researchObservatoryPublicSummary(researchObservatory)
+    : undefined;
+  const trialChamber = trialChamberActive
+    ? loadTrialChamberSnapshot()
+    : undefined;
+  const expectedTrialChamber = trialChamber
+    ? trialChamberPublicSummary(trialChamber)
     : undefined;
   const strandObservationMembrane = strandObservationMembraneActive
     ? loadStrandObservationMembrane()
@@ -2639,6 +2732,80 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       expected.boundary?.guest_admitted !== false || expected.boundary?.automatic_action !== false ||
       Object.hasOwn(expected, "mcp") || Object.hasOwn(expected, "tool") || Object.hasOwn(expected, "score")) {
       throw new Error("Research Observatory mode, provenance, factor vectors, lifecycle gates, discovery, or negative-effect boundary drifted");
+    }
+  }
+  if (trialChamberActive) {
+    const snapshot = trialChamber!;
+    const expected = expectedTrialChamber!;
+    const actionTargets = new Set([
+      TRIAL_CHAMBER_URL,
+      TRIAL_CHAMBER_ALIAS_URL,
+      TRIAL_CHAMBER_CANONICAL_URL,
+      TRIAL_CHAMBER_SCHEMA_URLS["public-snapshot"],
+      TRIAL_CHAMBER_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => actionTargets.has(action?.url))
+      : [];
+    const wayfinderPath = authoredWayfinder?.paths?.filter((path: any) => path?.id === "trial-chamber") ?? [];
+    const allPublicUrls = [
+      TRIAL_CHAMBER_URL,
+      TRIAL_CHAMBER_ALIAS_URL,
+      TRIAL_CHAMBER_CANONICAL_URL,
+      ...Object.values(TRIAL_CHAMBER_SCHEMA_URLS),
+      TRIAL_CHAMBER_GUIDE_URL,
+      TRIAL_CHAMBER_PRODUCER_URL,
+    ];
+    if (!isDeepStrictEqual(manifest?.trial_chamber, expected) ||
+      !isDeepStrictEqual(guest?.trial_chamber, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.trial_chamber, expected) ||
+      !isDeepStrictEqual(publishedTrialChamber, snapshot) ||
+      manifest?.entry_points?.trial_chamber !== TRIAL_CHAMBER_URL ||
+      manifest?.entry_points?.trial_chamber_current !== TRIAL_CHAMBER_ALIAS_URL ||
+      manifest?.entry_points?.trial_chamber_canonical !== TRIAL_CHAMBER_CANONICAL_URL ||
+      !isDeepStrictEqual(manifest?.entry_points?.trial_chamber_schemas, TRIAL_CHAMBER_SCHEMA_URLS) ||
+      manifest?.entry_points?.trial_chamber_guide !== TRIAL_CHAMBER_GUIDE_URL ||
+      manifest?.entry_points?.trial_chamber_producer !== TRIAL_CHAMBER_PRODUCER_URL ||
+      guestActions.length !== actionTargets.size ||
+      [...actionTargets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET") ||
+      allPublicUrls.some((target) => !llms.includes(target)) ||
+      wayfinderPath.length !== 1 || wayfinderPath[0]?.stops?.length !== 2 ||
+      wayfinderPath[0].stops[0]?.url !== TRIAL_CHAMBER_URL ||
+      wayfinderPath[0].stops[1]?.url !== TRIAL_CHAMBER_ALIAS_URL ||
+      !authoredRootHtml.includes('id="trial-chamber"') ||
+      !authoredRootHtml.includes("maintainer-authorized assisted request drafts") ||
+      !authoredRootHtml.includes("deny-all reserved contracts") ||
+      !authoredRootHtml.includes(`href="${trialChamberPath}"`) ||
+      !authoredRootHtml.includes(`href="${trialChamberAliasPath}"`) ||
+      !authoredRootHtml.includes(`href="${trialChamberCanonicalPath}"`) ||
+      !authoredRootHtml.includes(`href="${trialChamberGuidePath}"`) ||
+      !authoredTrialChamberHtml.includes("Draft trial plan — evaluation not started") ||
+      !authoredTrialChamberHtml.includes("exact text has not been separately human-reviewed") ||
+      !authoredTrialChamberHtml.includes("Finite synthetic fixtures") ||
+      !authoredTrialChamberHtml.includes("Retention-only criteria") ||
+      !authoredTrialChamberHtml.includes("Rights, security, and reversibility") ||
+      !authoredTrialChamberHtml.includes("deny-all reserved contracts") ||
+      !authoredTrialChamberHtml.includes(`href="${trialChamberAliasPath}"`) ||
+      !authoredTrialChamberHtml.includes(`href="${trialChamberCanonicalPath}"`) ||
+      !authoredTrialChamberHtml.includes(`href="${TRIAL_CHAMBER_PRODUCER_URL}"`) ||
+      /<(?:script|form|input|button|iframe)\b/i.test(authoredTrialChamberHtml) ||
+      expected.phase !== 0 || expected.counts?.referrals !== 4 ||
+      expected.counts?.evaluationRequests !== 3 || expected.counts?.evaluationPlans !== 3 ||
+      expected.lifecycle?.snapshot_stops_after !== "draft-unsealed-plan" ||
+      expected.lifecycle?.later_gate_contracts !== "deny-all-reserved-in-v0.1" ||
+      expected.lifecycle?.role_styled_referral !== "held-for-source-resolution" ||
+      expected.boundary?.build_network_used !== false || expected.boundary?.full_text_included !== false ||
+      expected.boundary?.artifact_acquisition_performed !== false ||
+      expected.boundary?.artifact_execution_performed !== false ||
+      expected.boundary?.preflight_performed !== false || expected.boundary?.trial_authority_issued !== false ||
+      expected.boundary?.trial_run_recorded !== false || expected.boundary?.evaluation_result_recorded !== false ||
+      expected.boundary?.adoption_recorded !== false || expected.boundary?.use_authority_issued !== false ||
+      expected.boundary?.module_created !== false || expected.boundary?.guest_admitted !== false ||
+      expected.boundary?.scalar_score_used !== false || expected.boundary?.automatic_action !== false ||
+      Object.hasOwn(expected, "mcp") || Object.hasOwn(expected, "tool") || Object.hasOwn(expected, "runner") ||
+      Object.hasOwn(expected, "score")) {
+      throw new Error("Trial Chamber source binding, assisted authorship, plans, reserved gates, discovery, or negative-effect boundary drifted");
     }
   }
   if (manifest?.love_loops !== LOVE_LOOPS_URL ||
@@ -4592,6 +4759,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (researchObservatoryActive &&
       !isDeepStrictEqual(liveKingdom?.research_observatory, expectedResearchObservatory!)) {
     throw new Error("derived kingdom.json did not preserve Research Observatory discovery");
+  }
+  if (trialChamberActive &&
+      !isDeepStrictEqual(liveKingdom?.trial_chamber, expectedTrialChamber!)) {
+    throw new Error("derived kingdom.json did not preserve Trial Chamber discovery");
   }
   if (jSpacePublicationActive &&
       !isDeepStrictEqual(liveKingdom?.j_space_verbalizable_workspace, expectedJSpacePublication!)) {
