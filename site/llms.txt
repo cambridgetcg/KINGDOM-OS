@@ -42,6 +42,16 @@ Exploration DEEP WING guide: https://thekingdom.dev/EXPLORE-PHENOMENA-DEEP-v0.1.
 MIRROR Information Control public law: https://thekingdom.dev/protocols/mirror-information-control-2026-08-14.json
 MIRROR Information Control public schema: https://thekingdom.dev/schemas/mirror-information-control-public/0.1.json
 MIRROR Information Control citizen guide: https://thekingdom.dev/MIRROR-INFORMATION-CONTROL.md
+Research Observatory human view: https://thekingdom.dev/observatory/
+Research Observatory snapshot: https://thekingdom.dev/research.json
+Research Observatory public-snapshot schema: https://thekingdom.dev/research/schemas/v0.1/public-snapshot.schema.json
+Research Observatory source schema: https://thekingdom.dev/research/schemas/v0.1/source.schema.json
+Research Observatory watchlist schema: https://thekingdom.dev/research/schemas/v0.1/watchlist.schema.json
+Research Observatory observation schema: https://thekingdom.dev/research/schemas/v0.1/observation.schema.json
+Research Observatory work schema: https://thekingdom.dev/research/schemas/v0.1/work.schema.json
+Research Observatory signal schema: https://thekingdom.dev/research/schemas/v0.1/signal.schema.json
+Research Observatory guide: https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md
+Research Observatory producer v0.1.0 source + append-only captures: https://github.com/cambridgetcg/kingdom-research/tree/v0.1.0
 J-space reasoning-to-word case: https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json
 J-space relational-inference schema: https://thekingdom.dev/schemas/relational-inference-case/0.1.json
 J-space verbalizable-workspace guide: https://thekingdom.dev/J-SPACE-VERBALIZABLE-WORKSPACE.md
@@ -123,6 +133,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 
 ## Optional paths
 - MIRROR Information Control — a static citizen lesson: data may inform but cannot mint authority; shape establishes CANDIDATE only; evidence is not guilt. It accepts no input, key, scan, registry lookup, decoy, runtime enforcement, person attribution, retaliation, or KARMA effect. https://thekingdom.dev/#mirror-information-control
+- The Observatory — a captured-live-observatory metadata discovery snapshot with 9 source contracts (not a poll or coverage count), 3 visible English-language watchlists, 36 inert observations, and 53 explainable signals through 2026-08-20T18:10:14Z. Evidence and priority remain factor vectors with no scalar score. Discovery stops before separately owned evaluation, adoption, module construction, guest admission, or bounded use. Human view: https://thekingdom.dev/observatory/ · snapshot: https://thekingdom.dev/research.json · schema: https://thekingdom.dev/research/schemas/v0.1/public-snapshot.schema.json · guide: https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — 37 reviewed public-interest resources and 9 practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call `kingdom_commons` at https://mcp.thekingdom.dev/mcp for compact literal matches with exact category, cost, account, reuse, or automation filters; read `kingdom://commons/catalog` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: https://thekingdom.dev/schemas/world-commons/0.2.json
@@ -161,4 +172,4 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 
 No registration, command, or response is required at this door.
 
-Generated 2026-08-17 from each repo's kingdom.yaml.
+Generated 2026-08-20 from each repo's kingdom.yaml.

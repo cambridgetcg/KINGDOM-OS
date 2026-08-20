@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-17",
+  "generated": "2026-08-20",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -872,6 +872,80 @@
     "integrity": {
       "algorithm": "sha256-recursive-sorted-json-keys-v1",
       "digest": "sha256:d91f3926b2ccd5abf083eb4cbea6df4c80ba58fabb35934a9cc1dd2b9dd60aa0"
+    }
+  },
+  "research_observatory": {
+    "protocol": "kingdom.research-observatory-publication/0.1",
+    "title": "The Observatory",
+    "publication_state": "mutable-captured-live-metadata-snapshot",
+    "observed_through": "2026-08-20T18:10:14Z",
+    "source_claims_observed_through": "2026-08-20",
+    "coverage": {
+      "sources": 9,
+      "live_poll_enabled_source_contracts": 6,
+      "fixture_only_policy_hold_source_contracts": 3,
+      "watchlists": 3,
+      "observations": 36,
+      "works": 34,
+      "signals": 53,
+      "query_language": "en",
+      "multilingual_expansion": "absent",
+      "mode": "captured-live-observatory"
+    },
+    "factor_vectors": {
+      "evidence": [
+        "integrity",
+        "review-state",
+        "rights-clarity",
+        "source-authority"
+      ],
+      "priority": [
+        "freshness",
+        "named-need-fit"
+      ],
+      "scalar_score": null,
+      "note": "Factors remain inspectable dimensions; they are never summed into a value or truth score."
+    },
+    "lifecycle": {
+      "gates": [
+        "discovery",
+        "evaluation",
+        "adoption",
+        "bounded-use-authority"
+      ],
+      "snapshot_stops_after": "discovery",
+      "module_path": "not-proposed",
+      "guest_path": "not-proposed",
+      "note": "Evaluation, adoption, module construction, guest admission, and use each require a later separately owned record."
+    },
+    "urls": {
+      "human": "https://thekingdom.dev/observatory/",
+      "snapshot": "https://thekingdom.dev/research.json",
+      "guide": "https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md",
+      "schemas": {
+        "public-snapshot": "https://thekingdom.dev/research/schemas/v0.1/public-snapshot.schema.json",
+        "source": "https://thekingdom.dev/research/schemas/v0.1/source.schema.json",
+        "watchlist": "https://thekingdom.dev/research/schemas/v0.1/watchlist.schema.json",
+        "observation": "https://thekingdom.dev/research/schemas/v0.1/observation.schema.json",
+        "work": "https://thekingdom.dev/research/schemas/v0.1/work.schema.json",
+        "signal": "https://thekingdom.dev/research/schemas/v0.1/signal.schema.json"
+      },
+      "producer": "https://github.com/cambridgetcg/kingdom-research/tree/v0.1.0"
+    },
+    "boundary": {
+      "metadata_only": true,
+      "build_time_network": false,
+      "full_text_included": false,
+      "discovered_artifact_execution": false,
+      "evaluation_performed": false,
+      "adoption_recorded": false,
+      "use_authorized": false,
+      "module_created": false,
+      "guest_admitted": false,
+      "scalar_value_score": false,
+      "automatic_action": false,
+      "live_harvest_network_observed": true,
+      "capture_provenance": "imported-live-captures"
     }
   },
   "j_space_verbalizable_workspace": {
@@ -2394,6 +2468,36 @@
     }
   },
   "next_actions": [
+    {
+      "action": "if useful, open the human Research Observatory",
+      "method": "GET",
+      "url": "https://thekingdom.dev/observatory/",
+      "note": "server-rendered metadata only; the mode, observed-through horizon, source lag, language coverage, and lifecycle stop are explicit"
+    },
+    {
+      "action": "if useful, inspect the complete mutable Research Observatory snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/research.json",
+      "note": "an explainable discovery snapshot, never scientific evaluation, endorsement, adoption, module creation, guest admission, use authority, or automatic action"
+    },
+    {
+      "action": "if useful, validate Research Observatory records before consuming them",
+      "method": "GET",
+      "url": "https://thekingdom.dev/research/schemas/v0.1/public-snapshot.schema.json",
+      "schemas": {
+        "public-snapshot": "https://thekingdom.dev/research/schemas/v0.1/public-snapshot.schema.json",
+        "source": "https://thekingdom.dev/research/schemas/v0.1/source.schema.json",
+        "watchlist": "https://thekingdom.dev/research/schemas/v0.1/watchlist.schema.json",
+        "observation": "https://thekingdom.dev/research/schemas/v0.1/observation.schema.json",
+        "work": "https://thekingdom.dev/research/schemas/v0.1/work.schema.json",
+        "signal": "https://thekingdom.dev/research/schemas/v0.1/signal.schema.json"
+      }
+    },
+    {
+      "action": "if useful, read the Research Observatory source, rights, coverage, lifecycle, module, guest, and use gates",
+      "method": "GET",
+      "url": "https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md"
+    },
     {
       "action": "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours",
       "method": "GET",
@@ -5234,6 +5338,7 @@
     "reconstructive_build_kernel": "The Reconstructive Build Kernel is static, read-only design metadata. It does not prove the graph reconstruction conjecture, predict a protein fold, transfer a biological mechanism into software, execute or deploy a project, fetch a source, score a person or work, write KARMA, create a receipt, import ecosystem authority, prove cosmic design, or take automatic action. Every analogy keeps explicit breaks and every build transition requires a deliberate local choice.",
     "exploration_deep_wing": "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
     "mirror_information_control": "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
+    "research_observatory": "The Observatory publishes inert metadata with explicit mode, observed-through, coverage, source, rights, and language limits. Evidence and priority remain factor vectors with no scalar score. It fetches no full text, executes no discovered artifact or instruction, performs no scientific evaluation, and creates no adoption, module, guest, use authority, external write, or automatic action. Live capture, when present, is an earlier explicit bounded harvest; importing and rendering the public snapshot remain offline.",
     "zero_empty_seat": "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     "string_crawl_trace_sheet": "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     "string_crawl_trace_sheet_lab": "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",

@@ -4,9 +4,15 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { loadRights } from "../bin/rights.ts";
+import {
+  RESEARCH_OBSERVATORY_PRODUCER_URL,
+  loadResearchObservatoryPublication,
+  researchObservatoryPublicSummary,
+} from "../bin/research-observatory.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path: string) => readFileSync(join(ROOT, path), "utf8");
+const bytes = (path: string) => readFileSync(join(ROOT, path));
 const json = (path: string) => JSON.parse(read(path));
 
 const atlasJson = [
@@ -85,5 +91,29 @@ describe("generated rights discovery", () => {
     expect(published).not.toContain("/.well-known/rights.json");
     expect(published).not.toContain("rights-certified");
     expect(published).not.toContain("rights-safe");
+  });
+});
+
+describe("generated Research Observatory discovery", () => {
+  test("preserves the validated producer snapshot bytes exactly", () => {
+    const publication = loadResearchObservatoryPublication();
+    expect(bytes("site/research.json")).toEqual(bytes("data/research/research-observatory.v0.1.json"));
+    expect(bytes("site/research.json")).toEqual(Buffer.from(publication.bytes));
+  });
+
+  test("projects one summary across machine documents and a no-script human view", () => {
+    const expected = researchObservatoryPublicSummary(loadResearchObservatoryPublication().snapshot);
+    for (const path of atlasJson) expect(json(path).research_observatory).toEqual(expected);
+
+    const html = read("site/observatory/index.html");
+    expect(html).toContain('<a class="skip" href="#main">Skip to Observatory content</a>');
+    expect(html).toContain('<main class="shell" id="main" tabindex="-1">');
+    expect(html).toContain(`Observed-through <time datetime="${expected.observed_through}">${expected.observed_through}</time>`);
+    expect(html).toContain("Evaluation</b> not performed");
+    expect(html).toContain("Adoption</b> not recorded");
+    expect(html).toContain("Use</b> not authorized");
+    expect(expected.urls.producer).toBe(RESEARCH_OBSERVATORY_PRODUCER_URL);
+    expect(html).toContain(`href="${RESEARCH_OBSERVATORY_PRODUCER_URL}"`);
+    expect(html).not.toMatch(/<script\b|<iframe\b|<form\b|<input\b/);
   });
 });

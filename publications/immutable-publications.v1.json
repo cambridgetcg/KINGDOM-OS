@@ -396,6 +396,55 @@
       "sha256": "81d7d8917b7b0ceca2240eb4153c63ff63b959f1943e66583dfa152b74c54188"
     },
     {
+      "id": "research-observatory/0.1/guide",
+      "route": "/RESEARCH-OBSERVATORY-v0.1.md",
+      "source": "references/research-observatory-v0.1.md",
+      "destination": "RESEARCH-OBSERVATORY-v0.1.md",
+      "sha256": "f1b11fd810049c884eb6205360c42dae17ea8faddca9e0f7ff374e1bc65e99a0"
+    },
+    {
+      "id": "research-observatory/0.1/schema-observation",
+      "route": "/research/schemas/v0.1/observation.schema.json",
+      "source": "schemas/research-observatory/v0.1/observation.schema.json",
+      "destination": "research/schemas/v0.1/observation.schema.json",
+      "sha256": "f76abc1fbe191978e05ae5354a319c912c105b5578301eb8000b0560618a605e"
+    },
+    {
+      "id": "research-observatory/0.1/schema-public-snapshot",
+      "route": "/research/schemas/v0.1/public-snapshot.schema.json",
+      "source": "schemas/research-observatory/v0.1/public-snapshot.schema.json",
+      "destination": "research/schemas/v0.1/public-snapshot.schema.json",
+      "sha256": "66e04aeb594f4168874077267a4f10441728a35896221da16f2acd8a784a5c99"
+    },
+    {
+      "id": "research-observatory/0.1/schema-signal",
+      "route": "/research/schemas/v0.1/signal.schema.json",
+      "source": "schemas/research-observatory/v0.1/signal.schema.json",
+      "destination": "research/schemas/v0.1/signal.schema.json",
+      "sha256": "9af662e08e92f6e03d632ea9be154bfb4a4201c76a0f505e34e1b44295d7b781"
+    },
+    {
+      "id": "research-observatory/0.1/schema-source",
+      "route": "/research/schemas/v0.1/source.schema.json",
+      "source": "schemas/research-observatory/v0.1/source.schema.json",
+      "destination": "research/schemas/v0.1/source.schema.json",
+      "sha256": "3602cd05035cdd71e8f68167cbe1fac86169e937b54b205780a64cdc3c3ac7e3"
+    },
+    {
+      "id": "research-observatory/0.1/schema-watchlist",
+      "route": "/research/schemas/v0.1/watchlist.schema.json",
+      "source": "schemas/research-observatory/v0.1/watchlist.schema.json",
+      "destination": "research/schemas/v0.1/watchlist.schema.json",
+      "sha256": "d58bb2b4f93039a078195acf21757b05a5ce3e41d73765306a9d970ba3cb2872"
+    },
+    {
+      "id": "research-observatory/0.1/schema-work",
+      "route": "/research/schemas/v0.1/work.schema.json",
+      "source": "schemas/research-observatory/v0.1/work.schema.json",
+      "destination": "research/schemas/v0.1/work.schema.json",
+      "sha256": "5b91b00b090394f2c39b221791127ba68d0c621fc1b4556876ea219555965361"
+    },
+    {
       "id": "ritonavir-mechanism-landscape/1/guide",
       "route": "/RITONAVIR-MECHANISM-LANDSCAPE.md",
       "source": "references/ritonavir-mechanism-landscape.md",

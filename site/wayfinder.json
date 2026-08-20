@@ -1,6 +1,6 @@
 {
   "schema_version": "thekingdom.wayfinder/0.1",
-  "generated": "2026-08-17",
+  "generated": "2026-08-20",
   "canonical_url": "https://thekingdom.dev/wayfinder.json",
   "promise": "Tell the map what you are looking for. It may offer a path; it never decides for you.",
   "privacy": {
@@ -233,6 +233,46 @@
       ]
     },
     {
+      "id": "research-observatory",
+      "label": "discover research and inspect why it matters",
+      "glyph": "⌁",
+      "invitation": "Look across bounded public research metadata while provenance, integrity changes, coverage gaps, and later integration gates remain visible.",
+      "keywords": [
+        "research",
+        "paper",
+        "papers",
+        "publication",
+        "preprint",
+        "dataset",
+        "trial",
+        "study",
+        "science",
+        "source",
+        "citation",
+        "correction",
+        "retraction",
+        "interpretability",
+        "security",
+        "interoperability",
+        "mcp"
+      ],
+      "boundary": "Discovery orders possible human attention only. It is not scientific evaluation, endorsement, adoption, module creation, guest admission, use authority, or an automatic action.",
+      "stops": [
+        {
+          "name": "The Observatory",
+          "url": "https://thekingdom.dev/observatory/",
+          "why": "A server-rendered view of sources, watchlists, exact-identifier works, integrity signals, and evidence and priority factor vectors.",
+          "scope": "The mode and observed-through horizon are explicit; source lag, English-only terms, and incomplete coverage remain visible."
+        },
+        {
+          "name": "Research Observatory · machine snapshot",
+          "url": "https://thekingdom.dev/research.json",
+          "why": "The complete metadata projection with provenance receipts and four separate lifecycle gates.",
+          "scope": "Metadata only; no full text, artifact execution, evaluation, adoption, module, guest, bounded use, or automatic action."
+        }
+      ]
+    },
+    {
       "id": "world-commons",
       "label": "find free knowledge, public data, and open tools",
       "glyph": "🌍",
@@ -247,7 +287,6 @@
         "education",
         "textbook",
         "knowledge",
-        "research",
         "health",
         "humanitarian",
         "map",

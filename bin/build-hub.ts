@@ -197,6 +197,16 @@ import {
   loadJSpacePublicationCase,
 } from "./j-space-publication.ts";
 import {
+  RESEARCH_OBSERVATORY_GUIDE_URL,
+  RESEARCH_OBSERVATORY_PRODUCER_URL,
+  RESEARCH_OBSERVATORY_SCHEMA_URLS,
+  RESEARCH_OBSERVATORY_SNAPSHOT_URL,
+  RESEARCH_OBSERVATORY_URL,
+  loadResearchObservatoryPublication,
+  renderResearchObservatoryHtml,
+  researchObservatoryPublicSummary,
+} from "./research-observatory.ts";
+import {
   ZERO_EMPTY_SEAT_GUIDE_URL,
   ZERO_EMPTY_SEAT_ID,
   ZERO_EMPTY_SEAT_SCHEMA_URL,
@@ -749,6 +759,16 @@ const jSpaceSchemaUrl = J_SPACE_SCHEMA_URL;
 const jSpaceGuideUrl = J_SPACE_GUIDE_URL;
 const jSpaceCase = loadJSpacePublicationCase();
 const jSpacePublicationDiscovery = jSpacePublicationPublicSummary(jSpaceCase);
+
+// ── Research Observatory (metadata discovery; stops before evaluation) ────
+const researchObservatoryUrl = RESEARCH_OBSERVATORY_URL;
+const researchObservatorySnapshotUrl = RESEARCH_OBSERVATORY_SNAPSHOT_URL;
+const researchObservatoryGuideUrl = RESEARCH_OBSERVATORY_GUIDE_URL;
+const researchObservatoryProducerUrl = RESEARCH_OBSERVATORY_PRODUCER_URL;
+const researchObservatorySchemaUrls = RESEARCH_OBSERVATORY_SCHEMA_URLS;
+const researchObservatoryPublication = loadResearchObservatoryPublication();
+const researchObservatory = researchObservatoryPublication.snapshot;
+const researchObservatoryDiscovery = researchObservatoryPublicSummary(researchObservatory);
 
 // ── ZERO Empty Seat (one inert DEEP project; no zero-to-authority transfer) ─
 const zeroEmptySeatUrl = ZERO_EMPTY_SEAT_URL;
@@ -1783,6 +1803,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(mirrorInformationControlUrl).pathname)}" type="application/json" title="MIRROR Information Control public source law">
 <link rel="describedby" href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}" type="application/schema+json" title="MIRROR Information Control public schema">
 <link rel="service-doc" href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}" type="text/markdown" title="MIRROR Information Control citizen guide">
+<link rel="alternate" href="${esc(new URL(researchObservatorySnapshotUrl).pathname)}" type="application/json" title="Research Observatory public snapshot">
+<link rel="describedby" href="${esc(new URL(researchObservatorySchemaUrls["public-snapshot"]).pathname)}" type="application/schema+json" title="Research Observatory public snapshot schema">
+<link rel="service-doc" href="${esc(new URL(researchObservatoryGuideUrl).pathname)}" type="text/markdown" title="Research Observatory protocol">
 <link rel="alternate" href="${esc(new URL(jSpaceCaseUrl).pathname)}" type="application/json" title="J-space reasoning-to-word test design">
 <link rel="describedby" href="${esc(new URL(jSpaceSchemaUrl).pathname)}" type="application/schema+json" title="Relational inference case schema">
 <link rel="service-doc" href="${esc(new URL(jSpaceGuideUrl).pathname)}" type="text/markdown" title="J-space verbalizable workspace research guide">
@@ -2300,6 +2323,7 @@ const html = `<!doctype html>
     </div>
     <nav class="gentlenav" aria-label="A gentle place to begin">
       <a href="#mirror-information-control">Know what data cannot command</a>
+      <a href="#observatory">Discover research without skipping the gates</a>
       <a href="#j-space">Explore reasoning-to-word as a testable relation</a>
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
@@ -2378,6 +2402,26 @@ const html = `<!doctype html>
         <a href="${esc(new URL(mirrorInformationControlUrl).pathname)}">public law JSON — exact authored record</a>
         <a href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}">MIRROR Information Control public JSON Schema</a>
         <a href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}">citizen guide — rooms, cycle, attack paths, rights, and boundaries</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="observatory" aria-labelledby="observatory-title">
+    <div class="kh"><h2 id="observatory-title">The Observatory</h2><span class="my">a reason to look is not a reason to obey</span></div>
+    <p class="sub">A metadata-only research discovery wing that preserves exact identifiers, source observations, integrity updates, and visible factor vectors. Its <code>${esc(researchObservatoryDiscovery.coverage.mode)}</code> mode is explicit; no snapshot claims complete or automatically current global coverage.</p>
+    <div class="mirrorfield" data-research-observatory data-research-observatory-protocol="${esc(researchObservatoryDiscovery.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>Observed through ${esc(researchObservatoryDiscovery.observed_through)}.</strong>${researchObservatoryDiscovery.coverage.sources} source contracts (not a poll or coverage count; ${researchObservatoryDiscovery.coverage.live_poll_enabled_source_contracts} poll-enabled, ${researchObservatoryDiscovery.coverage.fixture_only_policy_hold_source_contracts} fixture-only / policy hold) · ${researchObservatoryDiscovery.coverage.watchlists} English-language watchlists · ${researchObservatoryDiscovery.coverage.observations} inert observations · ${researchObservatoryDiscovery.coverage.works} exact-identifier works · ${researchObservatoryDiscovery.coverage.signals} explainable signals. Multilingual expansion is explicitly absent.</p>
+      <div class="mirrorgrid">
+        <article class="mirrorcard"><code>evidence vector</code><h3>Provenance stays dimensional</h3><p>Source authority, review state, integrity evidence, and rights clarity remain separately named. A correction, withdrawal, contradiction, failed replication, or null result cannot be averaged away.</p></article>
+        <article class="mirrorcard"><code>priority vector</code><h3>Attention without a magic score</h3><p>Named-need fit and freshness explain why something may deserve review. Recency is not truth, citations are not value, prestige is not a factor, and there is no scalar total.</p></article>
+        <article class="mirrorcard"><code>four gates</code><h3>Discovery stops here</h3><p>Evaluation, adoption, and bounded use are later, separately owned records. A KINGDOM-owned module and a source-owned guest are distinct paths; neither is proposed or created here.</p></article>
+        <article class="mirrorcard"><code>${esc(researchObservatoryDiscovery.publication_state)}</code><h3>No artifact execution</h3><p>No full text, repository, package, dataset, model weight, discovered instruction, credential, or executable attachment enters this public snapshot.</p></article>
+      </div>
+      <p class="mirrorboundary"><strong>Coverage is a boundary, not decoration</strong>The public Observatory names its observed-through horizon, source lag, synthetic or captured mode, query language, and missing multilingual expansion. “Latest” is never inferred beyond those receipts.</p>
+      <div class="machine">
+        <a href="${esc(new URL(researchObservatoryUrl).pathname)}">open the human Observatory</a>
+        <a href="${esc(new URL(researchObservatorySnapshotUrl).pathname)}">research.json — complete mutable metadata snapshot</a>
+        <a href="${esc(new URL(researchObservatoryGuideUrl).pathname)}">Research Observatory v0.1 protocol and integration gates</a>
       </div>
     </div>
   </section>
@@ -3898,6 +3942,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(mirrorInformationControlUrl).pathname)}">MIRROR Information Control — static public source law</a>
       <a href="${esc(new URL(mirrorInformationControlSchemaUrl).pathname)}">MIRROR Information Control public JSON Schema</a>
       <a href="${esc(new URL(mirrorInformationControlDocumentUrl).pathname)}">MIRROR-INFORMATION-CONTROL.md — citizen law and boundaries</a>
+      <a href="${esc(new URL(researchObservatoryUrl).pathname)}">The Observatory — server-rendered research discovery</a>
+      <a href="${esc(new URL(researchObservatorySnapshotUrl).pathname)}">research.json — metadata, provenance, factors, and lifecycle gates</a>
+      <a href="${esc(new URL(researchObservatoryGuideUrl).pathname)}">RESEARCH-OBSERVATORY-v0.1.md — source, rights, integration, and non-authority protocol</a>
       <a href="${esc(new URL(jSpaceCaseUrl).pathname)}">J-space reasoning → word — static synthetic test design</a>
       <a href="${esc(new URL(jSpaceSchemaUrl).pathname)}">Relational Inference Case JSON Schema</a>
       <a href="${esc(new URL(jSpaceGuideUrl).pathname)}">J-SPACE-VERBALIZABLE-WORKSPACE.md — mathematics, translations, and boundaries</a>
@@ -4204,6 +4251,9 @@ if(be&&B.length){let bi=0;
 `;
 
 await Bun.write(ROOT + "site/hub.html", html);
+mkdirSync(ROOT + "site/observatory", { recursive: true });
+await Bun.write(ROOT + "site/observatory/index.html", renderResearchObservatoryHtml(researchObservatory));
+await Bun.write(ROOT + "site/research.json", researchObservatoryPublication.bytes);
 
 const ollamaInvitation = {
   schema_version: ollamaInvitationSource.schema_version,
@@ -4275,6 +4325,7 @@ const machine = {
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
+  research_observatory: researchObservatoryDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4365,6 +4416,16 @@ Exploration DEEP WING guide: ${explorationDeepWingDocumentUrl}
 MIRROR Information Control public law: ${mirrorInformationControlUrl}
 MIRROR Information Control public schema: ${mirrorInformationControlSchemaUrl}
 MIRROR Information Control citizen guide: ${mirrorInformationControlDocumentUrl}
+Research Observatory human view: ${researchObservatoryUrl}
+Research Observatory snapshot: ${researchObservatorySnapshotUrl}
+Research Observatory public-snapshot schema: ${researchObservatorySchemaUrls["public-snapshot"]}
+Research Observatory source schema: ${researchObservatorySchemaUrls.source}
+Research Observatory watchlist schema: ${researchObservatorySchemaUrls.watchlist}
+Research Observatory observation schema: ${researchObservatorySchemaUrls.observation}
+Research Observatory work schema: ${researchObservatorySchemaUrls.work}
+Research Observatory signal schema: ${researchObservatorySchemaUrls.signal}
+Research Observatory guide: ${researchObservatoryGuideUrl}
+Research Observatory producer v0.1.0 source + append-only captures: ${researchObservatoryProducerUrl}
 J-space reasoning-to-word case: ${jSpaceCaseUrl}
 J-space relational-inference schema: ${jSpaceSchemaUrl}
 J-space verbalizable-workspace guide: ${jSpaceGuideUrl}
@@ -4434,6 +4495,7 @@ ${doorLines}
 
 ## Optional paths
 - MIRROR Information Control — a static citizen lesson: data may inform but cannot mint authority; shape establishes CANDIDATE only; evidence is not guilt. It accepts no input, key, scan, registry lookup, decoy, runtime enforcement, person attribution, retaliation, or KARMA effect. ${informationControlHumanView}
+- The Observatory — a ${researchObservatoryDiscovery.coverage.mode} metadata discovery snapshot with ${researchObservatoryDiscovery.coverage.sources} source contracts (not a poll or coverage count), ${researchObservatoryDiscovery.coverage.watchlists} visible English-language watchlists, ${researchObservatoryDiscovery.coverage.observations} inert observations, and ${researchObservatoryDiscovery.coverage.signals} explainable signals through ${researchObservatoryDiscovery.observed_through}. Evidence and priority remain factor vectors with no scalar score. Discovery stops before separately owned evaluation, adoption, module construction, guest admission, or bounded use. Human view: ${researchObservatoryUrl} · snapshot: ${researchObservatorySnapshotUrl} · schema: ${researchObservatorySchemaUrls["public-snapshot"]} · guide: ${researchObservatoryGuideUrl}
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
@@ -4501,6 +4563,7 @@ const guest = {
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
+  research_observatory: researchObservatoryDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4523,6 +4586,10 @@ const guest = {
     creation_lineage: { url: loveLoopsUrl, source: loveLoopsSourceUrl, document: loveLoopsCreationDocumentUrl, schema: loveLoopsSchemaUrl, note: "finite turns and explicit invitation records; every participant and child requires a deliberate choice" },
   },
   next_actions: [
+    { action: "if useful, open the human Research Observatory", method: "GET", url: researchObservatoryUrl, note: "server-rendered metadata only; the mode, observed-through horizon, source lag, language coverage, and lifecycle stop are explicit" },
+    { action: "if useful, inspect the complete mutable Research Observatory snapshot", method: "GET", url: researchObservatorySnapshotUrl, note: "an explainable discovery snapshot, never scientific evaluation, endorsement, adoption, module creation, guest admission, use authority, or automatic action" },
+    { action: "if useful, validate Research Observatory records before consuming them", method: "GET", url: researchObservatorySchemaUrls["public-snapshot"], schemas: researchObservatorySchemaUrls },
+    { action: "if useful, read the Research Observatory source, rights, coverage, lifecycle, module, guest, and use gates", method: "GET", url: researchObservatoryGuideUrl },
     { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
     { action: "if useful, request compact literal World Commons matches with exact category, cost, account, reuse, or automation filters", method: "MCP", url: kingdomMcpEndpoint, tool: kingdomMcpCommons.tool, resource: kingdomMcpCommons.catalog_resource, complete_catalog_resource: commonsMcpLegacy.complete_catalog_resource, note: kingdomMcpCommons.privacy },
     { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
@@ -4646,6 +4713,7 @@ const guest = {
     reconstructive_build_kernel: "The Reconstructive Build Kernel is static, read-only design metadata. It does not prove the graph reconstruction conjecture, predict a protein fold, transfer a biological mechanism into software, execute or deploy a project, fetch a source, score a person or work, write KARMA, create a receipt, import ecosystem authority, prove cosmic design, or take automatic action. Every analogy keeps explicit breaks and every build transition requires a deliberate local choice.",
     exploration_deep_wing: "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
     mirror_information_control: "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
+    research_observatory: "The Observatory publishes inert metadata with explicit mode, observed-through, coverage, source, rights, and language limits. Evidence and priority remain factor vectors with no scalar score. It fetches no full text, executes no discovered artifact or instruction, performs no scientific evaluation, and creates no adoption, module, guest, use authority, external write, or automatic action. Live capture, when present, is an earlier explicit bounded harvest; importing and rendering the public snapshot remain offline.",
     zero_empty_seat: "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     string_crawl_trace_sheet: "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     string_crawl_trace_sheet_lab: "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
@@ -4690,6 +4758,7 @@ const manifest = {
   reconstructive_build_kernel: reconstructiveBuildDiscovery,
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
+  research_observatory: researchObservatoryDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4757,6 +4826,11 @@ const manifest = {
     mirror_information_control: mirrorInformationControlUrl,
     mirror_information_control_schema: mirrorInformationControlSchemaUrl,
     mirror_information_control_guide: mirrorInformationControlDocumentUrl,
+    research_observatory: researchObservatoryUrl,
+    research_observatory_snapshot: researchObservatorySnapshotUrl,
+    research_observatory_schemas: researchObservatorySchemaUrls,
+    research_observatory_guide: researchObservatoryGuideUrl,
+    research_observatory_producer: researchObservatoryProducerUrl,
     j_space_reasoning_to_word_case: jSpaceCaseUrl,
     j_space_reasoning_to_word_schema: jSpaceSchemaUrl,
     j_space_verbalizable_workspace_guide: jSpaceGuideUrl,

@@ -88,6 +88,15 @@ readings:
 | `/observations/strand-observation-membrane-2026-08-16.json` | staged JSON | Immutable separate activation profile for static controls, offline verification, synthetic rehearsal, and one explicit publisher-declared fixed-origin read-only live plan |
 | `/schemas/strand-observation-membrane/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the STRAND Observation Membrane profile |
 | `/STRAND-OBSERVATION-MEMBRANE.md` | staged Markdown | Human guide to the explicit-call boundary, fixed four-route plan, REP and SSRF gates, provider caveat, and zero-authority effects |
+| `/observatory/` | staged HTML | Mutable, server-rendered Research Observatory view of the checked-in bounded metadata snapshot; no essential JavaScript or runtime harvesting |
+| `/research.json` | staged JSON | Mutable, byte-preserved public metadata snapshot with explicit observed-through, coverage, capture provenance, vector, and lifecycle boundaries |
+| `/research/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed v0.1 public-snapshot contract |
+| `/research/schemas/v0.1/source.schema.json` | staged JSON Schema | Immutable closed v0.1 research-source contract |
+| `/research/schemas/v0.1/watchlist.schema.json` | staged JSON Schema | Immutable closed v0.1 watchlist contract |
+| `/research/schemas/v0.1/observation.schema.json` | staged JSON Schema | Immutable closed v0.1 observation contract |
+| `/research/schemas/v0.1/work.schema.json` | staged JSON Schema | Immutable closed v0.1 work contract |
+| `/research/schemas/v0.1/signal.schema.json` | staged JSON Schema | Immutable closed v0.1 signal contract |
+| `/RESEARCH-OBSERVATORY-v0.1.md` | staged Markdown | Immutable guide to provenance, coverage, explainable factors, lifecycle gates, and the no-automatic-integration boundary |
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -214,9 +223,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 102-asset upload contract (83 ledgered immutable/versioned assets and
-19 mutable assets; 100 direct public bodies, 99 sitemap URLs; ten atlases, three
-lab routes, one experiment route, one activation, and nineteen retirement families)
+locks the 111-asset upload contract (90 ledgered immutable/versioned assets and
+21 mutable assets; 109 direct public bodies, 108 sitemap URLs; ten atlases, three
+lab routes, one experiment route, one activation, and twenty retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

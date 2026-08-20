@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 83-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 90-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -33,7 +33,10 @@ atomic fourteenth family, MIRROR public law is the fifteenth, and Number,
 Isness & Theology is the sixteenth; immutable Lab 01 and its additive Labs
 02–04 share the atomic twelve-route `string-crawl-trace-sheet-lab` family as
 the seventeenth; the Observation Membrane is the separate eighteenth family;
-and the static J-space triplet is the separate nineteenth family.
+and the static J-space triplet is the separate nineteenth family. The Research
+Observatory adds six closed v0.1 schemas and one guide to the ledger as the
+twentieth family; its server-rendered page and byte-preserved current snapshot
+are separately classified mutable publication surfaces.
 The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -50,6 +53,22 @@ synthetic unrun test design. The case contains no local model run,
 synthetic-fixture result, or activation record, and the family creates no
 runtime monitor, consciousness/lie/identity/understanding inference,
 person score, consent, action, or authority.
+The Research Observatory ledger entries preserve only the public schema family
+and its explanatory guide. The mutable snapshot contains bounded metadata, not
+full text, and the human page renders those checked-in bytes without essential
+JavaScript or a runtime poller. Discovery is not evaluation, adoption, module
+construction, guest admission, use authorization, a scalar value score, or an
+automatic action.
+The current captured-live release has file SHA-256
+`d7da3f38de019dc0f2c45f477740222527f156d8a4d3f6a2e22aced67b282a94`.
+Its canonical-JSON snapshot receipt is
+`sha256:17c487aa03f8427fc324b8da34dedbc00db76362be78620bde3a8d075e3942cd`;
+the embedded capture-set and capture-projection receipts are respectively
+`sha256:68a69dc390aa34133cadc8807ed33ddd1fae72e7e99706cf714d72698d071f7f`
+and
+`sha256:bb254dc70f58e162da4f77904bbc910394394ba3beb791f7f41a04b18c70befe`.
+These values identify the current mutable release rather than creating an
+immutable alias for it.
 The ZERO entries preserve a static inspection surface for historical notation,
 operational nothing, modern mathematical identities, typed information states,
 `NO_ACTION`, and opt-in metaphysical readings only. They create no scientific
@@ -122,18 +141,18 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 102-asset union classifies 83 destinations
-as ledgered immutable/versioned and 19 as mutable; 100 are direct public response
-bodies and the sitemap contains 99 URLs. Generated discovery describes ten
+consume those same bytes. The current 111-asset union classifies 90 destinations
+as ledgered immutable/versioned and 21 as mutable; 109 are direct public response
+bodies and the sitemap contains 108 URLs. Generated discovery describes ten
 atlases, three lab routes, one experiment route, and one separate activation
-across nineteen retirement families. It says what is
+plus the Research Observatory across twenty retirement families. It says what is
 served now, and every destination is explicitly classified as mutable or
 ledgered. A new ledger entry must be staged when introduced. A previously
 committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the nineteen linked authored publication
+The live release check retires the twenty linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

@@ -616,6 +616,20 @@ artifact creates no credential intake, classification oracle, honeypot,
 enforcement runtime, person score, retaliation, KARMA effect, or automatic
 action. There is no mutable alias and the KINGDOM MCP remains unchanged.
 
+The [Research Observatory](https://thekingdom.dev/observatory/) is a mutable,
+server-rendered discovery wing backed by the byte-preserved
+[`research.json`](https://thekingdom.dev/research.json) metadata snapshot. Its
+six closed [v0.1 schemas](https://thekingdom.dev/research/schemas/v0.1/public-snapshot.schema.json)
+and [protocol guide](https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md) are
+immutable. Every snapshot states its mode, observed-through horizon, capture
+provenance, source lag, English-query scope, and absent multilingual expansion.
+Evidence and priority remain separate inspectable factor vectors with no scalar
+value score. Discovery stops before scientific evaluation, adoption, module
+construction, guest admission, or bounded-use authority; no full text or
+discovered artifact is executed and no automatic integration occurs. The page
+needs no JavaScript, the edge worker performs no harvest or poll, and the
+KINGDOM MCP remains unchanged.
+
 J-space: a verbalizable workspace is published from exact authored bytes as a
 [synthetic reasoning-to-word case](https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json),
 with the [relational inference case schema](https://thekingdom.dev/schemas/relational-inference-case/0.1.json)
