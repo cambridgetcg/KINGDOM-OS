@@ -695,6 +695,20 @@ family performs no monitoring or consciousness, lie/deception,
 identity, understanding, or person inference. It grants no consent, action,
 permission, or authority; the KINGDOM MCP remains unchanged.
 
+Language, civilisation, and task fusion is available as a research-local
+[source and design guide](references/language-civilisation-task-fusion.md), a
+closed planned weave, and a strict offline validator. It keeps language,
+script, glyph, grapheme, token, register, community, polity, and model
+representation distinct; treats institutional history, corpus prevalence,
+token cost, benchmark coverage, and learned model weight as different kinds;
+and plans fusion only over attributed public artifacts through a visible task
+graph. The
+reviewed example is entirely `NOT_RUN`: it makes no model-capability or
+translation-fidelity claim, performs no automatic routing, and ranks neither
+languages nor cultures. Use
+`bun bin/language-civilisation-task-fusion.ts verify --json`; there is no
+native OS route, hub publication, agent dispatch, or authority effect.
+
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at
 [`/atlases/zero-empty-seat-2026-08-14.json`](https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json),
