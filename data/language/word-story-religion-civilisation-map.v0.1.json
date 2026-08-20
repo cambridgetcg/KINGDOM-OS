@@ -1,0 +1,1432 @@
+{
+  "$schema": "urn:kingdom:schema:word-story-religion-civilisation-map:0.1",
+  "protocol": "kingdom.word-story-religion-civilisation-map/0.1",
+  "map_id": "word-story-religion-civilisation-2026-08-20",
+  "version": "0.1.0",
+  "title": "Word, Story, Religion & Civilisation — Influence and Emergence Map",
+  "compiled_on": "2026-08-20",
+  "evidence_through": "2026-08-20",
+  "state": "reviewed-research-map",
+  "scope": {
+    "question": "How have words, stories, attributed divine or ultimate-reality claims, rituals, media, institutions, power, translation, and dissent interacted in selected historical civilisational ecologies, and what bounded communication lessons can KINGDOM draw?",
+    "intended_use": "Source-bound comparative research, multilingual task design, historical context, translation-loss planning, counterstory retention, and future public-artifact agent specialisation.",
+    "excluded_use": "Metaphysical adjudication, religious synthesis, conversion or persuasion, belief or affiliation inference, person or community scoring, sacred or restricted knowledge extraction, ritual generation or performance, civilisational ranking, automatic routing, governance, WAKE, KARMA, publication, or deployment.",
+    "unit_of_comparison": "A place-, period-, medium-, institution-, and source-indexed relation, never a whole civilisation, religion, deity, or people treated as one agent.",
+    "selection_note": "Ten windows were selected for contrast across oral, inscriptional, manuscript, ritual, courtly, monastic, diasporic, and colonial settings. They are neither a canon of major religions nor a representative sample of humanity.",
+    "data_classification": "public-attributed-source-metadata-only"
+  },
+  "source_bindings": [
+    {
+      "id": "kingdom-language-civilisation-task-fusion",
+      "protocol": "kingdom.language-civilisation-task-fusion/0.1",
+      "locator": "repo:data/language/language-civilisation-task-fusion.v0.1.json",
+      "raw_digest": "sha256:ef26859f84d8e2a1bc5e73f88594a354c49594e28486aae5aa340ed207aa0e25",
+      "semantic_digest": "sha256:fb37df061bca86357b46e5538664d72e8938def8cfff341c3aa9596abc84d296",
+      "relation": "historical-language-and-plan-only-task-predecessor",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-number-isness-theology",
+      "protocol": "kingdom.number-isness-theology-atlas/0.1",
+      "locator": "repo:data/number-isness-theology/number-isness-theology-atlas.v0.1.json",
+      "raw_digest": "sha256:bef01e0865f12ecd66795960758fc16f1a6d5b1ebd0097d4390aa3a2bece65e4",
+      "semantic_digest": "sha256:f4e1dfca02f008f8474abdff0f0a027f193c2cdc2b95454541d8ac41faacecef",
+      "relation": "typed-tradition-voice-and-metaphysical-non-adjudication-predecessor",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-geometry-grammar",
+      "protocol": "kingdom.geometry-grammar/0.1",
+      "locator": "repo:data/geometries/kingdom-geometry-grammar.v0.json",
+      "raw_digest": "sha256:7c4abdb30b4fdb8d2f75ed314137504e72503336511710565e01fdfa6fc5a89f",
+      "semantic_digest": "sha256:f6f0998c071b3c552d8c59c6c4c4abe8aaa01c64f4020818364665d4344d78fb",
+      "relation": "partial-chart-and-non-equivalence-predecessor",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-cultural-attention-feedback",
+      "protocol": "kingdom.cultural-attention-feedback-atlas/0.1",
+      "locator": "repo:data/cultural-feedback/cultural-attention-feedback-atlas.v1.json",
+      "raw_digest": "sha256:03f7048966d7b6df582b423254b4d73cda72cce3bd67b40736927faa92b88173",
+      "semantic_digest": "sha256:2f6ecadc131a54cdd500b001dbcc47fb036e5e411def918245fec963b9769e4d",
+      "relation": "attention-path-dependence-and-feedback-predecessor",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-form-circulation-return",
+      "protocol": "kingdom.form-circulation-return-atlas/0.1",
+      "locator": "repo:data/form-circulation-return/form-circulation-return-atlas.v1.json",
+      "raw_digest": "sha256:9c93be61c4ca9bcaa3dbe88b10faed3b5b31abaf1129d70ca7915226cacfd021",
+      "semantic_digest": "sha256:9510fbbced6166507e9a1781a4adfa18cd249fb94e69b0f34faf77733cd20323",
+      "relation": "circulation-suppression-return-and-non-score-predecessor",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-j-space-research",
+      "protocol": "kingdom.relational-inference/0.1",
+      "locator": "repo:bridges/examples/j-space-reasoning-to-word-inference.json",
+      "raw_digest": "sha256:0f3827ec422afed88fb2b4396d9f25550892ce458f84d0bfe8ded0735a6cbc26",
+      "semantic_digest": null,
+      "relation": "word-representation-evidence-and-understanding-nonclaim-predecessor",
+      "mutated": false,
+      "authority_imported": false
+    }
+  ],
+  "claim_typing": {
+    "rule": "Every statement remains in one declared register. Tradition self-description is attributed; historical association is not causation; a comparative model is not a universal law; a design commitment is not a finding about the past.",
+    "registers": [
+      {
+        "id": "PRIMARY_TRADITION_TEXT",
+        "meaning": "A named textual or oral witness in a declared language, edition, recension, performance, and interpretive context.",
+        "does_not_establish": "That one witness exhausts a tradition or that KINGDOM affirms its metaphysical referents."
+      },
+      {
+        "id": "TRADITION_SELF_DESCRIPTION",
+        "meaning": "A claim attributed to a named community, source, school, practitioner, or institution about sacred status or ultimate reality.",
+        "does_not_establish": "Ontology-neutral proof, uniform belief, or authority over another community."
+      },
+      {
+        "id": "SCHOOL_SPECIFIC_THEOLOGY",
+        "meaning": "A theological interpretation bounded to a named school, interpreter, source, and period.",
+        "does_not_establish": "The position of an entire religion or a verdict on truth."
+      },
+      {
+        "id": "HISTORICAL_SCHOLARSHIP",
+        "meaning": "A source-bounded historical interpretation of documents, practices, institutions, or change.",
+        "does_not_establish": "Complete recovery of lived experience or a timeless cultural essence."
+      },
+      {
+        "id": "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+        "meaning": "A source-bounded description published by a museum, library, heritage body, or community-and-state nomination process.",
+        "does_not_establish": "Independent scholarship, community unanimity, unrestricted access, or authority over living practice."
+      },
+      {
+        "id": "MATERIAL_OR_ARCHAEOLOGICAL_EVIDENCE",
+        "meaning": "A surviving object, inscription, site, or material pattern interpreted under named methods.",
+        "does_not_establish": "Private belief, ordinary speech, absent practices, or the full population."
+      },
+      {
+        "id": "EMPIRICAL_ASSOCIATION",
+        "meaning": "A measured relationship within a declared dataset, sample, operationalization, and horizon.",
+        "does_not_establish": "Causal direction, universality, moral value, or a person-level prediction."
+      },
+      {
+        "id": "BOUNDED_CAUSAL_EVIDENCE",
+        "meaning": "A causal claim supported only within a declared design, intervention, population, and alternative set.",
+        "does_not_establish": "A universal civilisational mechanism."
+      },
+      {
+        "id": "COMPARATIVE_MODEL",
+        "meaning": "A deliberately lossy cross-window structure used to ask comparable questions.",
+        "does_not_establish": "Shared origin, hidden essence, exact equivalence, or chronological necessity."
+      },
+      {
+        "id": "DESIGN_COMMITMENT",
+        "meaning": "A chosen KINGDOM safeguard or future workflow constraint.",
+        "does_not_establish": "That history or any tradition commands the design."
+      },
+      {
+        "id": "BOUNDARY",
+        "meaning": "A prohibition on an unsupported transfer, action, or authority claim.",
+        "does_not_establish": "Metaphysical negation or moral judgement of a tradition."
+      },
+      {
+        "id": "OPEN_QUESTION",
+        "meaning": "A question intentionally unresolved at the evidence horizon.",
+        "does_not_establish": "Absence, falsehood, or permission to guess."
+      }
+    ],
+    "causal_statuses": [
+      "descriptive-association",
+      "plausible-mechanism-not-isolated",
+      "bounded-causal-evidence",
+      "contested-causal-direction",
+      "comparative-template-not-causal"
+    ],
+    "support_statuses": [
+      "source-bounded",
+      "reported-not-reproduced",
+      "contested",
+      "design-choice",
+      "unknown"
+    ],
+    "influence_rule": "An influence claim is a vector of typed, sourced relations. It has no scalar total, civilisation rank, religious value, or automatic causal interpretation."
+  },
+  "type_firewall": {
+    "distinct_types": [
+      "word-or-name",
+      "sacred-referent-claim",
+      "story-or-teaching",
+      "ritual-or-performance",
+      "material-medium",
+      "specialist-role",
+      "archive-or-canon",
+      "institution",
+      "norm-or-law",
+      "polity-or-economy",
+      "community",
+      "religion-index",
+      "civilisation-index",
+      "person",
+      "model-representation"
+    ],
+    "civilisation_is_index_not_agent": true,
+    "religion_is_not_one_essence": true,
+    "tradition_is_not_monolith": true,
+    "deity_name_is_not_global_identity": true,
+    "story_is_not_falsehood": true,
+    "myth_is_not_lie": true,
+    "ritual_is_not_belief_report": true,
+    "canon_is_not_total_tradition": true,
+    "institution_is_not_community": true,
+    "historical_influence_is_not_truth": true,
+    "persistence_is_not_value": true,
+    "prevalence_is_not_authority": true,
+    "affiliation_is_not_personal_belief": true,
+    "similarity_implies_shared_origin": false,
+    "translation_is_identity": false,
+    "coexistence_is_causation": false,
+    "religion_caused_civilisation": false,
+    "civilisation_caused_religion": false,
+    "social_power_proves_metaphysical_truth_or_falsehood": false
+  },
+  "sources": [
+    {
+      "id": "sep-concept-religion",
+      "title": "Stanford Encyclopedia of Philosophy — The Concept of Religion",
+      "locator": "https://plato.stanford.edu/archives/spr2026/entries/concept-religion/",
+      "kind": "scholarly-reference",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "The history and limits of treating religion as a genus and the need to include narrative, ritual, institutional, experiential, ethical, and material dimensions.",
+      "limitations": ["A philosophical taxonomy, not a neutral essence or complete global ethnography."]
+    },
+    {
+      "id": "cambridge-ritual-language",
+      "title": "The Cambridge Handbook of Linguistic Anthropology — Ritual Language",
+      "locator": "https://www.cambridge.org/core/books/abs/cambridge-handbook-of-linguistic-anthropology/ritual-language/6E7D9957C34D243571F725873C07E0F0",
+      "kind": "scholarly-reference",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Ritual language as patterned social performance involving repetition, enactment, authority, reflexivity, and indeterminacy.",
+      "limitations": ["A comparative framework whose categories require local historical interpretation."]
+    },
+    {
+      "id": "cambridge-oral-memory",
+      "title": "Oral Traditions as Collective Memories",
+      "locator": "https://www.cambridge.org/core/books/abs/memory-in-mind-and-culture/oral-traditions-as-collective-memories-implications-for-a-general-theory-of-individual-and-collective-memory/B1BEBDC26AC9AAF96A5E28C4E12E31A6",
+      "kind": "scholarly-reference",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Mnemonic affordances and limitations of patterned oral transmission.",
+      "limitations": ["Does not make every oral tradition stable, ancient, homogeneous, or publicly accessible."]
+    },
+    {
+      "id": "nature-agta-stories",
+      "title": "Cooperation and the evolution of hunter-gatherer storytelling",
+      "locator": "https://www.nature.com/articles/s41467-017-02036-8",
+      "kind": "peer-reviewed-study",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "One Agta study associating story themes and skilled storytellers with cooperation and social preference.",
+      "limitations": ["One population and study design; alternative explanations remain; not a universal causal theory of narrative."]
+    },
+    {
+      "id": "royal-society-ritual-synchrony",
+      "title": "The cultural evolutionary trade-off of ritualistic synchrony",
+      "locator": "https://doi.org/10.1098/rstb.2019.0432",
+      "kind": "peer-reviewed-study",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Benefits and risks associated with ritual synchrony, bonding, cooperation, conformity, and obedience.",
+      "limitations": ["Effects depend on design, population, ritual, outcome, and context; bonding is not goodness."]
+    },
+    {
+      "id": "seshat-moralizing-religions",
+      "title": "Explaining the rise of moralizing religions: a test of competing hypotheses using the Seshat Databank",
+      "locator": "https://www.tandfonline.com/doi/full/10.1080/2153599X.2022.2065345",
+      "kind": "peer-reviewed-study",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "A 2023 cross-historical analysis arguing against moralizing religion as the driver of sociopolitical complexity and proposing shared drivers.",
+      "limitations": ["Results depend on historical coding, operationalization, missingness, model choice, and the sampled windows."]
+    },
+    {
+      "id": "nature-moralizing-missing-data",
+      "title": "Treatment of missing data determined conclusions regarding moralizing gods",
+      "locator": "https://www.nature.com/articles/s41586-021-03655-4",
+      "kind": "peer-reviewed-critique",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "A reanalysis showing that treatment of missing values could reverse an earlier timing conclusion.",
+      "limitations": ["A methodological critique within an unresolved research programme; the challenged 2019 Nature Letter was retracted on 7 July 2021, and later revised analyses remain disputed."]
+    },
+    {
+      "id": "nature-moralizing-retraction",
+      "title": "Retraction Note: Complex societies precede moralizing gods throughout world history",
+      "locator": "https://www.nature.com/articles/s41586-021-03656-3",
+      "kind": "publisher-retraction-notice",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "The official 7 July 2021 retraction notice for the challenged 2019 Nature Letter.",
+      "limitations": ["Publication-status evidence only; it does not establish a replacement causal model."]
+    },
+    {
+      "id": "met-first-cities",
+      "title": "The Metropolitan Museum of Art — Art of the First Cities",
+      "locator": "https://www.metmuseum.org/exhibitions/listings/2003/art-of-the-first-cities",
+      "kind": "institutional-catalogue",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Mesopotamian city-state, temple, palace, divine imagery, writing, kingship, and official-ideology relations.",
+      "limitations": ["Museum synthesis privileges surviving elite art and official records; it does not recover all residents or oral practice."]
+    },
+    {
+      "id": "met-marduk-hymn",
+      "title": "The Metropolitan Museum of Art — Cuneiform tablet: hymn to Marduk",
+      "locator": "https://www.metmuseum.org/art/collection/search/321937",
+      "kind": "institutional-catalogue",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "A bilingual cultic witness connecting Marduk, Babylonian political prominence, cosmic rule, kingship, and learned preservation.",
+      "limitations": ["One object with uncertain dating and ritual use; it cannot stand for all Mesopotamian religion."]
+    },
+    {
+      "id": "ucl-egypt-cult",
+      "title": "UCL Digital Egypt — Ideology and Belief: Cult",
+      "locator": "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/cultindex.html",
+      "kind": "scholarly-institutional-guide",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Words, movements, images, offerings, temples, delegated ritual, and the idealized royal representation of Egyptian cult.",
+      "limitations": ["Surviving inscriptions privilege formal and royal representations; archaeological and local variation remain necessary."]
+    },
+    {
+      "id": "ucl-egypt-kingship",
+      "title": "UCL Digital Egypt — Kingship in Ancient Egypt",
+      "locator": "https://www.ucl.ac.uk/museums-static/digitalegypt/ideology/king/kingrepertory.html",
+      "kind": "scholarly-institutional-guide",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Ethical, ritual, economic, and military dimensions in textual representations of Egyptian kingship.",
+      "limitations": ["The royal ideological repertoire is partial and cannot be equated with all Egyptian social experience."]
+    },
+    {
+      "id": "unesco-vedic-chanting",
+      "title": "UNESCO Intangible Cultural Heritage — Tradition of Vedic chanting",
+      "locator": "https://ich.unesco.org/en/RL/tradition-of-vedic-chanting-00062",
+      "kind": "community-and-state-nominated-heritage-record",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Oral preservation, sacred sound, ritual recitation, pedagogy, and surviving Vedic recitation branches.",
+      "limitations": ["A heritage nomination and safeguarding account, not a complete history of Hindu traditions or all Vedic communities."]
+    },
+    {
+      "id": "cambridge-homeric-religion",
+      "title": "The Cambridge Guide to Homer — Homeric Religion",
+      "locator": "https://www.cambridge.org/core/books/abs/cambridge-guide-to-homer/homeric-religion/4CD80B00694C09AECA9C34C2D3378A3D",
+      "kind": "scholarly-reference",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Ritual acts, gods and mortals, heroic narrative, and the bounded influence of Homeric poetry on later Greek thought.",
+      "limitations": ["Poetic representation is not a direct inventory of every Greek practice or belief."]
+    },
+    {
+      "id": "unesco-oracle-bones",
+      "title": "UNESCO Memory of the World — Chinese Oracle-Bone Inscriptions",
+      "locator": "https://www.unesco.org/en/memory-world/chinese-oracle-bone-inscriptions",
+      "kind": "institutional-catalogue",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Late Shang divination records connecting sacrifice, gods and ancestors, royal affairs, weather, harvest, warfare, genealogy, and writing.",
+      "limitations": ["An elite royal archive and nomination record; it does not represent all Shang people or religious life."]
+    },
+    {
+      "id": "sep-confucius",
+      "title": "Stanford Encyclopedia of Philosophy — Confucius",
+      "locator": "https://plato.stanford.edu/entries/confucius/",
+      "kind": "scholarly-reference",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "The transformation of ritual, virtue, classical texts, family roles, and the Mandate of Heaven in early Confucian political ethics.",
+      "limitations": ["Confucius and later Confucian traditions do not exhaust Chinese religion, philosophy, or political life."]
+    },
+    {
+      "id": "bible-odyssey-bible-form",
+      "title": "Bible Odyssey — Why Does the Bible Look the Way It Does?",
+      "locator": "https://www.bibleodyssey.org/articles/why-does-the-bible-look-the-way-it-does/",
+      "kind": "scholarly-institutional-guide",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Differences among Jewish and Christian biblical canons and ordering; early Christian Septuagint use; Masoretic manuscript copying; and long, contested canon formation.",
+      "limitations": ["A public scholarly overview; distinct communities, texts, periods, manuscripts, and canon debates require more specific sources."]
+    },
+    {
+      "id": "british-library-codex",
+      "title": "British Library — The beginnings of the Codex",
+      "locator": "https://www.bl.uk/stories/blogs/posts/the-beginnings-of-the-codex",
+      "kind": "institutional-catalogue",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "The interrelated transition from roll to codex, papyrus to parchment, and the rise of Christianity.",
+      "limitations": ["Material correlation does not establish a single causal explanation for the codex or Christian expansion."]
+    },
+    {
+      "id": "cambridge-buddhist-oral",
+      "title": "Reconstructing Early Buddhism — The Sangha and the Oral Transmission",
+      "locator": "https://www.cambridge.org/core/books/abs/reconstructing-early-buddhism/sangha-and-the-oral-transmission/57CB82F33AB60B2412E0AA87E1DCE693",
+      "kind": "scholarly-reference",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Oral transmission, communal recitation, monastic growth, school differentiation, and textual variation in early Buddhism.",
+      "limitations": ["Reconstruction is inferential and does not collapse distinct Buddhist canons or traditions."]
+    },
+    {
+      "id": "met-islamic-calligraphy",
+      "title": "The Metropolitan Museum of Art — Calligraphy in Islamic Art",
+      "locator": "https://www.metmuseum.org/essays/calligraphy-in-islamic-art",
+      "kind": "institutional-catalogue",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Arabic-script transmission of the Qur'an and the interplay of text, ornament, legibility, material objects, and sacred attribution in Islamic art.",
+      "limitations": ["Art-historical synthesis; Islamicate cultures, languages, legal schools, and attitudes to images remain plural."]
+    },
+    {
+      "id": "sep-greek-arabic",
+      "title": "Stanford Encyclopedia of Philosophy — Greek Sources in Arabic and Islamic Philosophy",
+      "locator": "https://plato.stanford.edu/entries/arabic-islamic-greek/",
+      "kind": "scholarly-reference",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Selection, Syriac and Arabic translation, commentary, adaptation, and intellectual remaking across religious and courtly networks.",
+      "limitations": ["A history of selected philosophical transmission, not all Islamicate knowledge or one-way civilisational transfer."]
+    },
+    {
+      "id": "unesco-ifa",
+      "title": "UNESCO Intangible Cultural Heritage — Ifa divination system",
+      "locator": "https://ich.unesco.org/en/RL/ifa-divination-system-00146",
+      "kind": "community-and-state-nominated-heritage-record",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Yoruba Ifa signs, trained interpretation, Orunmila attribution, expanding poetic corpus, decisions, history, language, cosmology, and contemporary issues.",
+      "limitations": ["A safeguarding record; access, authority, internal diversity, diaspora variation, and living community interpretation remain first-class."]
+    },
+    {
+      "id": "loc-popol-vuh",
+      "title": "Library of Congress — Popol Vuh: K'iche' transcription and Spanish translation",
+      "locator": "https://www.loc.gov/item/2021668226",
+      "kind": "institutional-catalogue",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "A colonial-period manuscript witness weaving K'iche' cosmology, origins, migrations, traditions, spiritual histories, and dynastic chronology in K'iche' and Spanish.",
+      "limitations": ["The surviving Ximenez-mediated manuscript is not an unmediated, timeless, or pan-Maya voice."]
+    },
+    {
+      "id": "unesco-ich-ethics",
+      "title": "UNESCO — Ethical Principles for Safeguarding Intangible Cultural Heritage",
+      "locator": "https://ich.unesco.org/en/ethics-and-ich-00866",
+      "kind": "intergovernmental-guidance",
+      "observed_on": "2026-08-20",
+      "epistemic_access": "reported",
+      "claim_scope": "Community primacy, sustained informed consent, customary access, self-assessment of value, attribution, benefit, and living change.",
+      "limitations": ["Ethical guidance is not proof that a particular use is authorized or that a valid representative has consented."]
+    }
+  ],
+  "layers": [
+    {
+      "id": "lived-encounter",
+      "label": "Lived encounter, crisis, memory, or attributed revelation",
+      "definition": "A reported experience, inherited memory, environmental or political event, or tradition-attributed disclosure from which expression may begin.",
+      "not_equivalent_to": ["verified revelation", "private mental state", "single origin of religion"]
+    },
+    {
+      "id": "word-name-formula",
+      "label": "Word, name, title, epithet, or formula",
+      "definition": "A repeatable expression that can distinguish, invoke, classify, remember, promise, command, question, or refuse.",
+      "not_equivalent_to": ["its referent", "universal concept", "authority by itself"]
+    },
+    {
+      "id": "sacred-referent-claim",
+      "label": "Attributed divine, ancestral, sacred-order, or ultimate-reality claim",
+      "definition": "A source- and tradition-indexed assertion about a deity, ancestor, spirit, sacred order, Buddha, Dharma, Heaven, God, or other ultimate referent.",
+      "not_equivalent_to": ["KINGDOM ontology", "cross-tradition identity", "empirical proof or disproof"]
+    },
+    {
+      "id": "narrative-teaching",
+      "label": "Narrative, genealogy, cosmology, revelation, teaching, or counterstory",
+      "definition": "A structured sequence or discourse that can orient memory, identity, norm, possibility, grief, legitimacy, or critique.",
+      "not_equivalent_to": ["falsehood", "literal report in every context", "complete tradition"]
+    },
+    {
+      "id": "ritual-performance",
+      "label": "Ritual, recitation, oath, festival, divination, or embodied performance",
+      "definition": "Situated action in which words, bodies, timing, objects, roles, and audiences can jointly matter.",
+      "not_equivalent_to": ["belief report", "mere text", "authorization for reenactment"]
+    },
+    {
+      "id": "material-medium",
+      "label": "Voice, body, image, object, inscription, manuscript, architecture, print, or digital medium",
+      "definition": "The material and sensory carrier that affords, constrains, selects, preserves, or transforms expression.",
+      "not_equivalent_to": ["passive container", "complete archive", "cultural worth"]
+    },
+    {
+      "id": "specialist-role",
+      "label": "Scribe, diviner, priest, prophet, teacher, jurist, translator, artist, or other specialist role",
+      "definition": "A historically and institutionally situated role that can preserve, interpret, perform, contest, or regulate expression.",
+      "not_equivalent_to": ["personal essence", "automatic truthfulness", "KINGDOM agent persona"]
+    },
+    {
+      "id": "archive-canon",
+      "label": "Archive, canon, curriculum, commentary, or authorized repertoire",
+      "definition": "A selected and maintained collection whose boundaries make some materials durable and others marginal, lost, restricted, or contested.",
+      "not_equivalent_to": ["all surviving practice", "uniform belief", "metaphysical truth"]
+    },
+    {
+      "id": "institution",
+      "label": "Household, temple, court, monastery, church, madrasa, school, archive, or association",
+      "definition": "An organized relation of roles, resources, procedures, spaces, and succession.",
+      "not_equivalent_to": ["the whole community", "a religion as essence", "moral legitimacy"]
+    },
+    {
+      "id": "norm-law",
+      "label": "Ethic, norm, law, sanction, vow, or obligation",
+      "definition": "A rule or expectation whose force depends on a named community, institution, jurisdiction, interpretation, and time.",
+      "not_equivalent_to": ["universal morality", "state law in every case", "current consent"]
+    },
+    {
+      "id": "polity-economy",
+      "label": "Polity, patronage, redistribution, labour, property, or economic order",
+      "definition": "Material and political arrangements that can resource, constrain, amplify, appropriate, or be challenged by sacred expression.",
+      "not_equivalent_to": ["civilisation as a person", "divine endorsement", "causal master variable"]
+    },
+    {
+      "id": "translation-contact",
+      "label": "Contact, translation, transliteration, commentary, adaptation, diaspora, conquest, or mission",
+      "definition": "A transformation across languages, media, audiences, institutions, or power relations with preserved, changed, introduced, and untranslatable dimensions.",
+      "not_equivalent_to": ["identity", "neutral transfer", "one-way progress"]
+    },
+    {
+      "id": "dissent-reform",
+      "label": "Dissent, reform, schism, satire, refusal, suppression, rupture, or revival",
+      "definition": "A relation that contests, reorders, hides, destroys, repairs, or reanimates inherited forms.",
+      "not_equivalent_to": ["deception", "error by definition", "automatic improvement"]
+    },
+    {
+      "id": "community-reception",
+      "label": "Plural community reception and lived reinterpretation",
+      "definition": "The non-uniform uptake, refusal, revision, practice, and memory through which inherited forms continue or change.",
+      "not_equivalent_to": ["official canon", "demographic identity", "single communal mind"]
+    },
+    {
+      "id": "observed-outcome",
+      "label": "Observed social, material, legal, political, artistic, or mnemonic outcome",
+      "definition": "A bounded outcome described under a named source, population, scale, time, and causal status.",
+      "not_equivalent_to": ["religious truth", "moral goodness", "person-level destiny"]
+    }
+  ],
+  "influence_dimensions": [
+    { "id": "mnemonic-retention", "meaning": "Effects on memorability, recurrence, lineage, archive, and recall.", "aggregate_weight": null },
+    { "id": "ritual-coordination", "meaning": "Effects on synchronized or role-differentiated collective performance.", "aggregate_weight": null },
+    { "id": "normative-ordering", "meaning": "Effects on stated duties, virtues, prohibitions, repair, or judgement.", "aggregate_weight": null },
+    { "id": "political-legitimation", "meaning": "Claims connecting sacred order to rule, succession, office, or critique of power.", "aggregate_weight": null },
+    { "id": "institutional-embedding", "meaning": "Effects on roles, organizations, curricula, archives, succession, and resource continuity.", "aggregate_weight": null },
+    { "id": "material-inscription", "meaning": "Effects of sound, image, object, script, architecture, and medium on survival and use.", "aggregate_weight": null },
+    { "id": "educational-transmission", "meaning": "Effects on training, recitation, commentary, literacy, and intergenerational continuity.", "aggregate_weight": null },
+    { "id": "artistic-expression", "meaning": "Effects on poetry, music, calligraphy, visual form, performance, and architecture.", "aggregate_weight": null },
+    { "id": "economic-patronage", "meaning": "Effects involving labour, offerings, land, redistribution, patronage, and material support.", "aggregate_weight": null },
+    { "id": "translation-contact", "meaning": "Effects of language contact, translation, adaptation, diaspora, conquest, and commentary.", "aggregate_weight": null },
+    { "id": "contestation-coercion", "meaning": "Effects involving exclusion, discipline, suppression, destruction, conformity, or resisted authority.", "aggregate_weight": null },
+    { "id": "plural-accommodation", "meaning": "Effects enabling co-presence, negotiated difference, layered affiliation, or non-totalizing order.", "aggregate_weight": null },
+    { "id": "repair-revival", "meaning": "Effects involving correction, reform, recovery, revitalization, repatriation, or renewed practice.", "aggregate_weight": null }
+  ],
+  "relation_vocabulary": [
+    { "id": "NAMES_OR_INVOKES", "meaning": "An expression names, titles, invokes, or addresses an attributed referent.", "default_causal_status": "descriptive-association" },
+    { "id": "NARRATES_OR_TEACHES", "meaning": "A narrative arranges events, genealogy, cosmology, memory, or teaching.", "default_causal_status": "descriptive-association" },
+    { "id": "PERFORMS_OR_RITUALIZES", "meaning": "A word or story is enacted through situated, embodied, timed practice.", "default_causal_status": "plausible-mechanism-not-isolated" },
+    { "id": "MATERIALIZES_OR_INSCRIBES", "meaning": "A form is carried or transformed by sound, body, object, script, image, architecture, or medium.", "default_causal_status": "plausible-mechanism-not-isolated" },
+    { "id": "TRAINS_OR_SPECIALIZES", "meaning": "A practice establishes or depends on trained roles and transmission procedures.", "default_causal_status": "plausible-mechanism-not-isolated" },
+    { "id": "CANONIZES_OR_ARCHIVES", "meaning": "An institution or community selects, orders, preserves, restricts, or authorizes a repertoire.", "default_causal_status": "plausible-mechanism-not-isolated" },
+    { "id": "LEGITIMATES_AS_CLAIM", "meaning": "A source or institution claims that sacred order authorizes a role, norm, polity, or outcome.", "default_causal_status": "descriptive-association" },
+    { "id": "CONSTRAINS_OR_COORDINATES", "meaning": "A norm, ritual, or institution shapes available action, affiliation, duty, or collective timing.", "default_causal_status": "plausible-mechanism-not-isolated" },
+    { "id": "TRANSLATES_OR_REMAKES", "meaning": "A form crosses language, medium, institution, or audience and is partly preserved and partly remade.", "default_causal_status": "plausible-mechanism-not-isolated" },
+    { "id": "CONTESTS_OR_REFORMS", "meaning": "A source, practice, or community challenges an inherited interpretation, office, norm, or order.", "default_causal_status": "descriptive-association" },
+    { "id": "SUPPRESSES_OR_EXCLUDES", "meaning": "A power relation destroys, restricts, marginalizes, silences, or disqualifies a form or community.", "default_causal_status": "plausible-mechanism-not-isolated" },
+    { "id": "REVIVES_OR_REPAIRS", "meaning": "A community or institution restores access, practice, language, memory, or standing under current conditions.", "default_causal_status": "plausible-mechanism-not-isolated" },
+    { "id": "ASSOCIATED_WITH", "meaning": "Two variables or historical forms covary or coexist without an established causal direction.", "default_causal_status": "descriptive-association" },
+    { "id": "CAUSAL_HYPOTHESIS", "meaning": "A proposed mechanism with alternatives and falsifiers but without isolated support here.", "default_causal_status": "contested-causal-direction" },
+    { "id": "BOUNDED_CAUSAL_EFFECT", "meaning": "A causal effect supported inside a declared study or intervention boundary only.", "default_causal_status": "bounded-causal-evidence" }
+  ],
+  "historical_windows": [
+    {
+      "id": "mesopotamian-city-temple-window",
+      "label": "Mesopotamian city, temple, palace, and learned text",
+      "period": "late fourth millennium BCE through first millennium BCE, with local and dynastic variation",
+      "places": ["southern and central Mesopotamia"],
+      "community_or_tradition_indexes": ["Sumerian-speaking and Akkadian-speaking scribal, temple, courtly, and urban settings"],
+      "scope_note": "A surviving elite and institutional window, not a single Mesopotamian religion or ordinary-life census.",
+      "referent_claims": [
+        {
+          "id": "marduk-babylon-source-claim",
+          "label": "Marduk as Babylon's patron and later supreme deity in selected Babylonian sources",
+          "register": "TRADITION_SELF_DESCRIPTION",
+          "attributed_statement": "The cited hymn celebrates Marduk as cosmic ruler and associates him with the insignia of kingship.",
+          "source_ids": ["met-marduk-hymn"],
+          "cross_tradition_identity": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "mesopotamian-temple-palace-order",
+          "register": "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+          "statement": "In selected early city-state evidence, temples, palaces, divine imagery, writing, redistribution, and official claims about god-granted kingship were institutionally entangled.",
+          "relation_ids": ["MATERIALIZES_OR_INSCRIBES", "LEGITIMATES_AS_CLAIM", "CONSTRAINS_OR_COORDINATES"],
+          "source_ids": ["met-first-cities"],
+          "causal_status": "plausible-mechanism-not-isolated",
+          "influence_dimension_ids": ["political-legitimation", "institutional-embedding", "material-inscription", "economic-patronage"],
+          "counterpoint": "Official ideology and elite objects do not disclose the full range of urban practice, resistance, or private interpretation.",
+          "limitations": ["No claim that temples alone caused cities or states."]
+        },
+        {
+          "id": "marduk-text-political-ascent",
+          "register": "MATERIAL_OR_ARCHAEOLOGICAL_EVIDENCE",
+          "statement": "The cited bilingual hymn makes one visible path by which a city's political prominence, a patron deity's rank, cultic language, and learned scribal preservation could reinforce one another.",
+          "relation_ids": ["NAMES_OR_INVOKES", "CANONIZES_OR_ARCHIVES", "LEGITIMATES_AS_CLAIM"],
+          "source_ids": ["met-marduk-hymn"],
+          "causal_status": "descriptive-association",
+          "influence_dimension_ids": ["mnemonic-retention", "political-legitimation", "educational-transmission"],
+          "counterpoint": "The direction and strength of influence cannot be inferred from a single surviving tablet.",
+          "limitations": ["Marduk is not treated as equivalent to another tradition's deity or to political power itself."]
+        }
+      ]
+    },
+    {
+      "id": "egyptian-royal-ritual-window",
+      "label": "Egyptian royal titles, Maat, temple image, word, and delegated ritual",
+      "period": "dynastic Egypt, with cited detail concentrated in New Kingdom and later evidence",
+      "places": ["Nile Valley temple and courtly settings"],
+      "community_or_tradition_indexes": ["ancient Egyptian royal, temple, scribal, funerary, and local cult settings"],
+      "scope_note": "Three millennia of change cannot be reduced to one theology or royal program.",
+      "referent_claims": [
+        {
+          "id": "maat-royal-order-source-claim",
+          "label": "Maat as right order in selected royal and ritual sources",
+          "register": "TRADITION_SELF_DESCRIPTION",
+          "attributed_statement": "The cited ritual and kingship sources present maintaining right order, offerings, and relations with gods and the dead as royal obligations.",
+          "source_ids": ["ucl-egypt-cult", "ucl-egypt-kingship"],
+          "cross_tradition_identity": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "egyptian-ritual-script-image",
+          "register": "HISTORICAL_SCHOLARSHIP",
+          "statement": "Words to be spoken, bodily movements, offerings, images, architecture, and specialist delegation jointly constituted the documented daily temple ritual rather than text acting alone.",
+          "relation_ids": ["PERFORMS_OR_RITUALIZES", "MATERIALIZES_OR_INSCRIBES", "TRAINS_OR_SPECIALIZES"],
+          "source_ids": ["ucl-egypt-cult"],
+          "causal_status": "plausible-mechanism-not-isolated",
+          "influence_dimension_ids": ["ritual-coordination", "material-inscription", "institutional-embedding"],
+          "counterpoint": "Temple walls idealize the king as sole officiant even where local specialists performed the work.",
+          "limitations": ["Representation is not direct observation of every performance."]
+        },
+        {
+          "id": "egyptian-kingship-legitimation-and-concealment",
+          "register": "HISTORICAL_SCHOLARSHIP",
+          "statement": "Royal ethical and divine language could articulate obligations and legitimacy while also concealing economic and military control beneath an ideal repertoire.",
+          "relation_ids": ["LEGITIMATES_AS_CLAIM", "CONSTRAINS_OR_COORDINATES", "CONTESTS_OR_REFORMS"],
+          "source_ids": ["ucl-egypt-kingship"],
+          "causal_status": "descriptive-association",
+          "influence_dimension_ids": ["normative-ordering", "political-legitimation", "contestation-coercion"],
+          "counterpoint": "Literature and political events also preserve tensions not reducible to reverence.",
+          "limitations": ["No claim that every subject accepted the royal ideology."]
+        }
+      ]
+    },
+    {
+      "id": "vedic-oral-ritual-window",
+      "label": "Vedic sound, recitation, ritual, and pedagogical lineage",
+      "period": "long-duration oral traditions with living contemporary lineages",
+      "places": ["selected South Asian Vedic recitation communities"],
+      "community_or_tradition_indexes": ["named Vedic schools and practitioner lineages"],
+      "scope_note": "A living, internally plural tradition whose access and authority remain with practitioners and communities.",
+      "referent_claims": [
+        {
+          "id": "veda-sacred-foundation-source-claim",
+          "label": "The Vedas as sacred and authoritative in named Hindu traditions",
+          "register": "TRADITION_SELF_DESCRIPTION",
+          "attributed_statement": "The UNESCO record attributes sacred foundational status to the Vedas within Hindu traditions and describes their ritual recitation.",
+          "source_ids": ["unesco-vedic-chanting"],
+          "cross_tradition_identity": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "vedic-acoustic-precision",
+          "register": "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+          "statement": "Accent, pronunciation, sequence, embodied training, and teacher-student transmission give sacred expression an acoustic and procedural weight not captured by lexical translation alone.",
+          "relation_ids": ["PERFORMS_OR_RITUALIZES", "TRAINS_OR_SPECIALIZES", "CANONIZES_OR_ARCHIVES"],
+          "source_ids": ["unesco-vedic-chanting"],
+          "causal_status": "plausible-mechanism-not-isolated",
+          "influence_dimension_ids": ["mnemonic-retention", "ritual-coordination", "educational-transmission"],
+          "counterpoint": "Oral precision and living authority do not make all interpretations identical or public.",
+          "limitations": ["No sacred formula, restricted content, or performance instruction is reproduced here."]
+        }
+      ]
+    },
+    {
+      "id": "greek-epic-civic-window",
+      "label": "Greek epic, gods, familiar ritual, heroic memory, and later thought",
+      "period": "archaic and classical Greek reception, with later transformations",
+      "places": ["selected Greek-speaking performance and civic settings"],
+      "community_or_tradition_indexes": ["Homeric audiences and later Greek intellectual and ritual settings"],
+      "scope_note": "Poems, local cults, poleis, philosophical critique, and later reception remain distinct.",
+      "referent_claims": [
+        {
+          "id": "homeric-divine-interaction-source-claim",
+          "label": "Gods and mortals interacting in Homeric heroic narrative",
+          "register": "HISTORICAL_SCHOLARSHIP",
+          "attributed_statement": "The cited scholarly guide describes divine interventions and ritual acts within Homeric poetry and their influence on later Greek thought.",
+          "source_ids": ["cambridge-homeric-religion"],
+          "cross_tradition_identity": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "homeric-story-ritual-thought",
+          "register": "HISTORICAL_SCHOLARSHIP",
+          "statement": "Homeric narrative gave durable poetic form to gods, mortals, sacrifice, prayer, and the human condition, while representing rather than exhaustively documenting lived Greek religion.",
+          "relation_ids": ["NARRATES_OR_TEACHES", "PERFORMS_OR_RITUALIZES", "CANONIZES_OR_ARCHIVES"],
+          "source_ids": ["cambridge-homeric-religion"],
+          "causal_status": "descriptive-association",
+          "influence_dimension_ids": ["mnemonic-retention", "artistic-expression", "educational-transmission"],
+          "counterpoint": "Local ritual could shape epic reception rather than epic simply inventing ritual.",
+          "limitations": ["No pan-Greek uniform belief is inferred."]
+        }
+      ]
+    },
+    {
+      "id": "shang-zhou-classical-chinese-window",
+      "label": "Shang divinatory inscription and Zhou-to-Confucian moral-political reinterpretation",
+      "period": "late Shang through early imperial receptions of Zhou and classical texts",
+      "places": ["Anyang and selected early Chinese courtly, ritual, and textual settings"],
+      "community_or_tradition_indexes": ["late Shang royal divination", "Zhou political tradition", "early Confucian textual traditions"],
+      "scope_note": "Distinct dynasties and traditions are connected by selected transformations, not treated as one timeless Chinese mind.",
+      "referent_claims": [
+        {
+          "id": "shang-gods-ancestors-source-claim",
+          "label": "Gods and ancestors in late Shang divinatory records",
+          "register": "MATERIAL_OR_ARCHAEOLOGICAL_EVIDENCE",
+          "attributed_statement": "The oracle-bone record documents royal divination and prayer concerning gods, ancestors, sacrifice, weather, harvest, warfare, and royal affairs.",
+          "source_ids": ["unesco-oracle-bones"],
+          "cross_tradition_identity": null
+        },
+        {
+          "id": "heaven-mandate-source-claim",
+          "label": "Heaven and moral-political authority in selected Zhou and Confucian texts",
+          "register": "TRADITION_SELF_DESCRIPTION",
+          "attributed_statement": "The cited account traces how the Mandate of Heaven was used and reinterpreted to connect ruler virtue, ritual, political authority, and wider ethical formation.",
+          "source_ids": ["sep-confucius"],
+          "cross_tradition_identity": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "oracle-record-administration-ritual",
+          "register": "MATERIAL_OR_ARCHAEOLOGICAL_EVIDENCE",
+          "statement": "Oracle-bone inscriptions bind divination and prayer to royal genealogy, agriculture, weather, warfare, and administration in a materially selective archive.",
+          "relation_ids": ["MATERIALIZES_OR_INSCRIBES", "CANONIZES_OR_ARCHIVES"],
+          "source_ids": ["unesco-oracle-bones"],
+          "causal_status": "descriptive-association",
+          "influence_dimension_ids": ["material-inscription", "mnemonic-retention", "institutional-embedding"],
+          "counterpoint": "The archive is royal and elite, not a census of popular practice.",
+          "limitations": ["No inference from inscription frequency to population belief."]
+        },
+        {
+          "id": "mandate-reinterpretation",
+          "register": "HISTORICAL_SCHOLARSHIP",
+          "statement": "Later textual reinterpretation could move a sacred-political idea from dynastic legitimation toward wider role ethics and critique of rulers.",
+          "relation_ids": ["NARRATES_OR_TEACHES", "LEGITIMATES_AS_CLAIM", "CONTESTS_OR_REFORMS"],
+          "source_ids": ["sep-confucius"],
+          "causal_status": "plausible-mechanism-not-isolated",
+          "influence_dimension_ids": ["normative-ordering", "political-legitimation", "educational-transmission"],
+          "counterpoint": "The concept of Heaven and the corpus changed across sources and periods.",
+          "limitations": ["No equivalence with a monotheistic God or modern constitutional mandate."]
+        }
+      ]
+    },
+    {
+      "id": "jewish-christian-scriptural-window",
+      "label": "Jewish and Christian textual transmission, canon plurality, translation, and codex",
+      "period": "first millennium BCE through late antiquity, with longer reception histories",
+      "places": ["selected eastern Mediterranean, Near Eastern, and European textual communities"],
+      "community_or_tradition_indexes": ["distinct Jewish textual communities", "distinct early and late-antique Christian communities"],
+      "scope_note": "Shared or adopted texts do not merge Jewish and Christian traditions, canons, communities, or interpretations.",
+      "referent_claims": [
+        {
+          "id": "biblical-god-source-claim",
+          "label": "God-language in distinct biblical textual traditions",
+          "register": "HISTORICAL_SCHOLARSHIP",
+          "attributed_statement": "The cited scholarly overview describes texts treated as scripture within distinct and internally plural Jewish and Christian canon histories without adjudicating their theological claims.",
+          "source_ids": ["bible-odyssey-bible-form"],
+          "cross_tradition_identity": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "biblical-books-many-histories",
+          "register": "HISTORICAL_SCHOLARSHIP",
+          "statement": "Jewish and Christian Bibles developed through distinct and internally plural histories of canon formation, book ordering, manuscript copying, and translation.",
+          "relation_ids": ["CANONIZES_OR_ARCHIVES", "TRANSLATES_OR_REMAKES", "CONTESTS_OR_REFORMS"],
+          "source_ids": ["bible-odyssey-bible-form"],
+          "causal_status": "descriptive-association",
+          "influence_dimension_ids": ["mnemonic-retention", "translation-contact", "institutional-embedding"],
+          "counterpoint": "Canon boundaries and textual variants are not defects to be silently harmonized.",
+          "limitations": ["No one edition or canon is selected as the universal source text."]
+        },
+        {
+          "id": "christian-codex-affordance",
+          "register": "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+          "statement": "The early Christian preference for codex form belongs to an interrelated material history of book format, writing surface, collection, portability, and community use.",
+          "relation_ids": ["MATERIALIZES_OR_INSCRIBES", "CANONIZES_OR_ARCHIVES", "ASSOCIATED_WITH"],
+          "source_ids": ["british-library-codex"],
+          "causal_status": "descriptive-association",
+          "influence_dimension_ids": ["material-inscription", "institutional-embedding", "educational-transmission"],
+          "counterpoint": "The codex did not mechanically cause Christian expansion or Western book culture by itself.",
+          "limitations": ["Material survival and attribution remain incomplete."]
+        }
+      ]
+    },
+    {
+      "id": "buddhist-canon-translation-window",
+      "label": "Buddhist oral transmission, monastic differentiation, canons, and translation",
+      "period": "early Buddhist oral transmission through multilingual Asian canonical formations",
+      "places": ["selected South Asian and trans-Asian monastic and translation networks"],
+      "community_or_tradition_indexes": ["distinct early Buddhist schools", "Pali, Chinese, Sanskrit-fragment, and Tibetan textual traditions"],
+      "scope_note": "Buddhist traditions cannot be forced into a creator-god template or one closed canon model.",
+      "referent_claims": [
+        {
+          "id": "buddha-vacana-source-claim",
+          "label": "Buddha-vacana and Dharma as sacred or authoritative teaching in named Buddhist traditions",
+          "register": "TRADITION_SELF_DESCRIPTION",
+          "attributed_statement": "The cited scholarship concerns traditions that transmitted teachings attributed to the Buddha through recitation, monastic institutions, texts, and translation.",
+          "source_ids": ["cambridge-buddhist-oral"],
+          "cross_tradition_identity": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "buddhist-oral-school-canon-variation",
+          "register": "HISTORICAL_SCHOLARSHIP",
+          "statement": "Communal recitation, mnemonic ordering, monastic growth, geographic movement, and school differentiation contributed to related but non-identical textual collections.",
+          "relation_ids": ["PERFORMS_OR_RITUALIZES", "TRAINS_OR_SPECIALIZES", "CANONIZES_OR_ARCHIVES", "TRANSLATES_OR_REMAKES"],
+          "source_ids": ["cambridge-buddhist-oral"],
+          "causal_status": "plausible-mechanism-not-isolated",
+          "influence_dimension_ids": ["mnemonic-retention", "educational-transmission", "translation-contact", "institutional-embedding"],
+          "counterpoint": "Variant canons do not imply one corrupt original or a single linear transmission tree.",
+          "limitations": ["Textual reconstruction does not reproduce every oral performance or living interpretation."]
+        }
+      ]
+    },
+    {
+      "id": "islamicate-word-translation-window",
+      "label": "Qur'anic word, Arabic script, calligraphy, and multilingual intellectual translation",
+      "period": "seventh century CE onward, across selected Islamicate regions and periods",
+      "places": ["selected Arabic-, Persian-, Syriac-, and other Islamicate settings"],
+      "community_or_tradition_indexes": ["distinct Muslim communities and schools", "Christian Syriac translators", "courtly and scholarly networks"],
+      "scope_note": "Islam, Islamicate institutions, Arabic language, Arabic script, and particular legal or philosophical schools remain distinct types.",
+      "referent_claims": [
+        {
+          "id": "quran-revelation-source-claim",
+          "label": "The Qur'an as Arabic revelation in Muslim self-description",
+          "register": "TRADITION_SELF_DESCRIPTION",
+          "attributed_statement": "The cited art-historical source attributes divine-revelation status to the Qur'an in Islam and traces Arabic writing as a major material and artistic vehicle.",
+          "source_ids": ["met-islamic-calligraphy"],
+          "cross_tradition_identity": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "quran-calligraphy-material-word",
+          "register": "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+          "statement": "Qur'anic transmission and Arabic script supported a wide material field in which verbal clarity, sacred attribution, ornament, legibility, architecture, and everyday objects could interact.",
+          "relation_ids": ["MATERIALIZES_OR_INSCRIBES", "NAMES_OR_INVOKES", "CANONIZES_OR_ARCHIVES"],
+          "source_ids": ["met-islamic-calligraphy"],
+          "causal_status": "plausible-mechanism-not-isolated",
+          "influence_dimension_ids": ["material-inscription", "artistic-expression", "mnemonic-retention"],
+          "counterpoint": "Decorative ubiquity and sacred attribution do not imply identical literacy, interpretation, or practice.",
+          "limitations": ["No equivalence between Arabic script and Muslim identity."]
+        },
+        {
+          "id": "greek-syriac-arabic-remaking",
+          "register": "HISTORICAL_SCHOLARSHIP",
+          "statement": "Greek-to-Syriac-and-Arabic philosophical transmission involved selection, collaboration, new vocabulary, commentary, and adaptation across religious and political settings.",
+          "relation_ids": ["TRANSLATES_OR_REMAKES", "TRAINS_OR_SPECIALIZES", "CANONIZES_OR_ARCHIVES"],
+          "source_ids": ["sep-greek-arabic"],
+          "causal_status": "plausible-mechanism-not-isolated",
+          "influence_dimension_ids": ["translation-contact", "educational-transmission", "institutional-embedding"],
+          "counterpoint": "Translation is cultural production, not a civilisational relay baton or ownership transfer.",
+          "limitations": ["The philosophical corpus is only one strand of Islamicate history."]
+        }
+      ]
+    },
+    {
+      "id": "yoruba-ifa-window",
+      "label": "Yoruba Ifa signs, poetic corpus, trained divination, and living expansion",
+      "period": "living Yoruba and diasporic traditions documented at the evidence horizon",
+      "places": ["Yoruba communities and named diasporic settings"],
+      "community_or_tradition_indexes": ["Yoruba Ifa practitioners and communities", "diasporic Ifa settings"],
+      "scope_note": "A living practice whose custodianship, access, training, and community interpretations outrank external system convenience.",
+      "referent_claims": [
+        {
+          "id": "orunmila-source-claim",
+          "label": "Ifa or Orunmila as deity of wisdom in the UNESCO-described Yoruba tradition",
+          "register": "TRADITION_SELF_DESCRIPTION",
+          "attributed_statement": "The UNESCO record reports that Yoruba practitioners regard Ifa or Orunmila as a deity of wisdom and intellectual development and describes signs interpreted by trained babalawo.",
+          "source_ids": ["unesco-ifa"],
+          "cross_tradition_identity": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "ifa-sign-corpus-interpretation",
+          "register": "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+          "statement": "Ifa relates a finite sign system to an expanding poetic corpus interpreted by trained specialists for situated decisions, joining combinatorial form, story, performance, and contemporary reception.",
+          "relation_ids": ["NARRATES_OR_TEACHES", "PERFORMS_OR_RITUALIZES", "TRAINS_OR_SPECIALIZES", "CONSTRAINS_OR_COORDINATES"],
+          "source_ids": ["unesco-ifa"],
+          "causal_status": "plausible-mechanism-not-isolated",
+          "influence_dimension_ids": ["ritual-coordination", "mnemonic-retention", "normative-ordering", "educational-transmission"],
+          "counterpoint": "The corpus continues to grow and cannot be reduced to a static lookup table.",
+          "limitations": ["KINGDOM does not reproduce divination, claim practitioner status, or operationalize the signs."]
+        },
+        {
+          "id": "ifa-colonial-pressure-and-safeguarding",
+          "register": "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+          "statement": "Colonial rule and religious pressure are reported as sources of discrimination, while community transmission and safeguarding efforts shape present accessibility and continuity.",
+          "relation_ids": ["SUPPRESSES_OR_EXCLUDES", "REVIVES_OR_REPAIRS", "TRAINS_OR_SPECIALIZES"],
+          "source_ids": ["unesco-ifa", "unesco-ich-ethics"],
+          "causal_status": "plausible-mechanism-not-isolated",
+          "influence_dimension_ids": ["contestation-coercion", "repair-revival", "educational-transmission"],
+          "counterpoint": "Safeguarding must not freeze, expose, or externally rank a living practice.",
+          "limitations": ["A public record does not grant consent for unrestricted aggregation or reuse."]
+        }
+      ]
+    },
+    {
+      "id": "kiche-maya-popol-vuh-window",
+      "label": "K'iche' Maya cosmology, communal history, colonial transcription, and translation",
+      "period": "K'iche' narrative inheritance as mediated in a surviving early eighteenth-century manuscript",
+      "places": ["Guatemalan highlands and the surviving manuscript's colonial setting"],
+      "community_or_tradition_indexes": ["K'iche' Maya narrative and historical traditions"],
+      "scope_note": "The surviving manuscript is a layered witness, not a timeless or pan-Maya source.",
+      "referent_claims": [
+        {
+          "id": "popol-vuh-cosmogony-source-claim",
+          "label": "Divine and cosmogonic agents in the K'iche' Popol Vuh witness",
+          "register": "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+          "attributed_statement": "The Library of Congress describes a K'iche' and Spanish manuscript weaving cosmology, origins, migrations, traditions, spiritual history, and rulers.",
+          "source_ids": ["loc-popol-vuh"],
+          "cross_tradition_identity": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "popol-vuh-story-history-polity",
+          "register": "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+          "statement": "The surviving Popol Vuh joins cosmogonic narrative, collective origins, migration, spiritual history, and dynastic chronology rather than fitting a modern fiction-versus-history binary.",
+          "relation_ids": ["NARRATES_OR_TEACHES", "CANONIZES_OR_ARCHIVES"],
+          "source_ids": ["loc-popol-vuh"],
+          "causal_status": "descriptive-association",
+          "influence_dimension_ids": ["mnemonic-retention", "educational-transmission"],
+          "counterpoint": "The manuscript is mediated by Latin script, Spanish translation, and a Dominican transcriber.",
+          "limitations": ["No pan-Maya generalization or unbroken-original claim."]
+        },
+        {
+          "id": "popol-vuh-colonial-translation-seam",
+          "register": "MATERIAL_OR_ARCHAEOLOGICAL_EVIDENCE",
+          "statement": "Side-by-side K'iche' transcription and Spanish translation make colonial mediation, survival, and translation choices inspectable while leaving unrecorded performance and meaning unresolved.",
+          "relation_ids": ["MATERIALIZES_OR_INSCRIBES", "TRANSLATES_OR_REMAKES"],
+          "source_ids": ["loc-popol-vuh"],
+          "causal_status": "descriptive-association",
+          "influence_dimension_ids": ["material-inscription", "translation-contact"],
+          "counterpoint": "Survival through a colonial manuscript does not erase colonial power or restore every lost performance context.",
+          "limitations": ["Community interpretation and current preferred naming remain necessary."]
+        }
+      ]
+    }
+  ],
+  "influence_relations": [
+    {
+      "id": "articulation-and-naming",
+      "from_layer_ids": ["lived-encounter", "sacred-referent-claim"],
+      "to_layer_ids": ["word-name-formula", "narrative-teaching"],
+      "relation_ids": ["NAMES_OR_INVOKES", "NARRATES_OR_TEACHES"],
+      "register": "COMPARATIVE_MODEL",
+      "statement": "Names and formulas can make an attributed referent or remembered encounter repeatable without exhausting it.",
+      "causal_status": "comparative-template-not-causal",
+      "influence_dimension_ids": ["mnemonic-retention", "ritual-coordination"],
+      "historical_window_ids": ["mesopotamian-city-temple-window", "egyptian-royal-ritual-window", "shang-zhou-classical-chinese-window", "yoruba-ifa-window"],
+      "source_ids": ["cambridge-ritual-language", "cambridge-oral-memory"],
+      "alternatives": ["Names may follow an established practice rather than initiate it.", "Several names may coexist, fuse, compete, or remain deliberately untranslatable."],
+      "limitations": ["No claim that naming creates a deity or proves a referent."],
+      "stop_condition": "Stop comparison when source languages, address forms, or referent boundaries are unknown."
+    },
+    {
+      "id": "story-performance-memory",
+      "from_layer_ids": ["word-name-formula", "narrative-teaching", "community-reception"],
+      "to_layer_ids": ["ritual-performance", "material-medium", "observed-outcome"],
+      "relation_ids": ["NARRATES_OR_TEACHES", "PERFORMS_OR_RITUALIZES", "ASSOCIATED_WITH"],
+      "register": "COMPARATIVE_MODEL",
+      "statement": "Patterned story and performance can support memory, bonding, role learning, and coordination, while the same dynamics can also constrain dissent or amplify harmful norms.",
+      "causal_status": "descriptive-association",
+      "influence_dimension_ids": ["mnemonic-retention", "ritual-coordination", "plural-accommodation", "contestation-coercion"],
+      "historical_window_ids": ["vedic-oral-ritual-window", "greek-epic-civic-window", "buddhist-canon-translation-window", "yoruba-ifa-window"],
+      "source_ids": ["cambridge-oral-memory", "nature-agta-stories", "royal-society-ritual-synchrony"],
+      "alternatives": ["Cooperative communities may preferentially reward storytellers.", "Shared ecology, kinship, incentives, or institutions may drive both narrative practice and observed outcomes."],
+      "limitations": ["One study or ritual effect cannot be projected onto all religions or civilizations."],
+      "stop_condition": "Stop causal language when no intervention, comparison, or adequate alternative model is present."
+    },
+    {
+      "id": "ritual-specialist-institution",
+      "from_layer_ids": ["ritual-performance", "material-medium", "specialist-role"],
+      "to_layer_ids": ["institution", "archive-canon", "polity-economy"],
+      "relation_ids": ["TRAINS_OR_SPECIALIZES", "CANONIZES_OR_ARCHIVES", "CONSTRAINS_OR_COORDINATES"],
+      "register": "COMPARATIVE_MODEL",
+      "statement": "Repeated performance can require training, places, objects, schedules, resources, and succession, creating institutional continuity that then selects later expression.",
+      "causal_status": "comparative-template-not-causal",
+      "influence_dimension_ids": ["institutional-embedding", "educational-transmission", "economic-patronage", "material-inscription"],
+      "historical_window_ids": ["mesopotamian-city-temple-window", "egyptian-royal-ritual-window", "vedic-oral-ritual-window", "buddhist-canon-translation-window", "yoruba-ifa-window"],
+      "source_ids": ["met-first-cities", "ucl-egypt-cult", "unesco-vedic-chanting", "cambridge-buddhist-oral", "unesco-ifa"],
+      "alternatives": ["Institutions may appropriate already widespread practice.", "Household and informal transmission may persist outside centralized institutions."],
+      "limitations": ["Specialization is neither spiritual superiority nor automatic authority outside its context."],
+      "stop_condition": "Stop when the relevant institution, role, resource flow, or succession mechanism is unspecified."
+    },
+    {
+      "id": "sacred-order-legitimation-and-critique",
+      "from_layer_ids": ["sacred-referent-claim", "narrative-teaching", "norm-law"],
+      "to_layer_ids": ["institution", "polity-economy", "dissent-reform"],
+      "relation_ids": ["LEGITIMATES_AS_CLAIM", "CONSTRAINS_OR_COORDINATES", "CONTESTS_OR_REFORMS"],
+      "register": "COMPARATIVE_MODEL",
+      "statement": "Sacred-order language can authorize rulers or norms, but the same or rival source traditions can also place rulers under judgement and support critique.",
+      "causal_status": "comparative-template-not-causal",
+      "influence_dimension_ids": ["political-legitimation", "normative-ordering", "contestation-coercion", "repair-revival"],
+      "historical_window_ids": ["mesopotamian-city-temple-window", "egyptian-royal-ritual-window", "shang-zhou-classical-chinese-window"],
+      "source_ids": ["met-first-cities", "ucl-egypt-kingship", "sep-confucius"],
+      "alternatives": ["Political power may reshape sacred language to fit existing institutions.", "Material interests, warfare, ecology, and kinship may drive both ideology and polity."],
+      "limitations": ["Legitimation as a source claim is not divine endorsement or proof of compliance."],
+      "stop_condition": "Stop when only official claims survive and counter-authority evidence has not been sought."
+    },
+    {
+      "id": "canon-curriculum-selection",
+      "from_layer_ids": ["narrative-teaching", "material-medium", "institution", "community-reception"],
+      "to_layer_ids": ["archive-canon", "specialist-role", "observed-outcome"],
+      "relation_ids": ["CANONIZES_OR_ARCHIVES", "TRAINS_OR_SPECIALIZES", "SUPPRESSES_OR_EXCLUDES"],
+      "register": "COMPARATIVE_MODEL",
+      "statement": "Canon and curriculum make a repertoire durable by selection; every visible boundary also raises questions about excluded, lost, restricted, or dissenting alternatives.",
+      "causal_status": "comparative-template-not-causal",
+      "influence_dimension_ids": ["mnemonic-retention", "institutional-embedding", "educational-transmission", "contestation-coercion"],
+      "historical_window_ids": ["mesopotamian-city-temple-window", "jewish-christian-scriptural-window", "buddhist-canon-translation-window", "kiche-maya-popol-vuh-window"],
+      "source_ids": ["met-marduk-hymn", "bible-odyssey-bible-form", "cambridge-buddhist-oral", "loc-popol-vuh"],
+      "alternatives": ["A repertoire can emerge without a single central canon.", "Communities may maintain oral, local, domestic, or countercanonical forms."],
+      "limitations": ["Canonical status does not establish uniform belief, truth, completeness, or moral value."],
+      "stop_condition": "Stop when selection authority, variant witnesses, or exclusion history is hidden."
+    },
+    {
+      "id": "translation-contact-remaking",
+      "from_layer_ids": ["word-name-formula", "narrative-teaching", "material-medium", "archive-canon"],
+      "to_layer_ids": ["translation-contact", "community-reception", "dissent-reform"],
+      "relation_ids": ["TRANSLATES_OR_REMAKES", "CONTESTS_OR_REFORMS", "REVIVES_OR_REPAIRS"],
+      "register": "COMPARATIVE_MODEL",
+      "statement": "Translation and contact can create vocabulary, genres, audiences, institutions, and counter-readings while altering sound, form, authority, and conceptual boundaries.",
+      "causal_status": "comparative-template-not-causal",
+      "influence_dimension_ids": ["translation-contact", "plural-accommodation", "contestation-coercion", "repair-revival"],
+      "historical_window_ids": ["jewish-christian-scriptural-window", "buddhist-canon-translation-window", "islamicate-word-translation-window", "kiche-maya-popol-vuh-window"],
+      "source_ids": ["bible-odyssey-bible-form", "cambridge-buddhist-oral", "sep-greek-arabic", "loc-popol-vuh"],
+      "alternatives": ["Borrowing may occur through speech, trade, ritual, or administration without a recoverable text.", "Translation may be resisted, restricted, or treated as commentary rather than replacement."],
+      "limitations": ["A shared English gloss never establishes shared reference or identity."],
+      "stop_condition": "Stop fusion when source terms, editions, translators, institutional setting, or loss dimensions are absent."
+    },
+    {
+      "id": "suppression-counterstory-revival",
+      "from_layer_ids": ["polity-economy", "institution", "dissent-reform", "community-reception"],
+      "to_layer_ids": ["material-medium", "archive-canon", "translation-contact", "observed-outcome"],
+      "relation_ids": ["SUPPRESSES_OR_EXCLUDES", "CONTESTS_OR_REFORMS", "REVIVES_OR_REPAIRS"],
+      "register": "COMPARATIVE_MODEL",
+      "statement": "Conquest, reform, discrimination, archival selection, and community revival can change what survives and who may speak, without making archival absence historical absence.",
+      "causal_status": "comparative-template-not-causal",
+      "influence_dimension_ids": ["contestation-coercion", "repair-revival", "material-inscription", "mnemonic-retention"],
+      "historical_window_ids": ["yoruba-ifa-window"],
+      "source_ids": ["unesco-ifa", "unesco-ich-ethics"],
+      "alternatives": ["Loss can also arise from material decay, migration, language change, economics, or ordinary disuse.", "Revival may create new forms rather than reconstruct an unchanged past."],
+      "limitations": ["No community is reduced to victimhood or unchanged survival."],
+      "stop_condition": "Stop when affected communities, custodianship, access rules, or colonial provenance are unexamined."
+    },
+    {
+      "id": "moralizing-religion-complexity-dispute",
+      "from_layer_ids": ["sacred-referent-claim", "norm-law", "institution", "polity-economy"],
+      "to_layer_ids": ["observed-outcome"],
+      "relation_ids": ["ASSOCIATED_WITH", "CAUSAL_HYPOTHESIS"],
+      "register": "EMPIRICAL_ASSOCIATION",
+      "statement": "The cross-historical relationship among moralizing supernatural punishment, warfare, agriculture, resources, and sociopolitical complexity is contested and cannot be represented as one settled arrow.",
+      "causal_status": "contested-causal-direction",
+      "influence_dimension_ids": ["normative-ordering", "political-legitimation", "institutional-embedding"],
+      "historical_window_ids": [],
+      "source_ids": ["seshat-moralizing-religions", "nature-moralizing-missing-data", "nature-moralizing-retraction"],
+      "alternatives": ["Shared drivers may produce both moralizing religion and complexity.", "Missing-data treatment can change temporal conclusions.", "Operational definitions may omit relevant supernatural, ritual, or political variation."],
+      "limitations": ["No person, community, religion, or polity prediction may be derived from this aggregate dispute."],
+      "stop_condition": "Keep the edge contested until coding, missingness, temporal order, alternative models, and out-of-sample robustness converge."
+    }
+  ],
+  "emergence_loops": [
+    {
+      "id": "utterance-performance-memory-loop",
+      "layer_path": ["lived-encounter", "word-name-formula", "narrative-teaching", "ritual-performance", "community-reception", "word-name-formula"],
+      "relation_ids": ["NAMES_OR_INVOKES", "NARRATES_OR_TEACHES", "PERFORMS_OR_RITUALIZES"],
+      "status": "comparison-template-not-observed-sequence",
+      "historical_window_ids": ["vedic-oral-ritual-window", "greek-epic-civic-window", "yoruba-ifa-window"],
+      "not_universal": true,
+      "failure_modes": ["Treating repetition as proof", "Ignoring variation, silence, improvisation, or restricted access"],
+      "stop_condition": "Do not instantiate without time-indexed performance and reception evidence."
+    },
+    {
+      "id": "ritual-institution-selection-loop",
+      "layer_path": ["ritual-performance", "specialist-role", "institution", "archive-canon", "narrative-teaching", "ritual-performance"],
+      "relation_ids": ["TRAINS_OR_SPECIALIZES", "CANONIZES_OR_ARCHIVES", "CONSTRAINS_OR_COORDINATES"],
+      "status": "comparison-template-not-observed-sequence",
+      "historical_window_ids": ["mesopotamian-city-temple-window", "egyptian-royal-ritual-window", "buddhist-canon-translation-window"],
+      "not_universal": true,
+      "failure_modes": ["Equating institution with community", "Erasing informal, household, local, or dissenting practices"],
+      "stop_condition": "Do not instantiate without named roles, resources, selection procedures, and counterexamples."
+    },
+    {
+      "id": "sacred-legitimation-counterauthority-loop",
+      "layer_path": ["sacred-referent-claim", "narrative-teaching", "norm-law", "polity-economy", "dissent-reform", "narrative-teaching"],
+      "relation_ids": ["LEGITIMATES_AS_CLAIM", "CONSTRAINS_OR_COORDINATES", "CONTESTS_OR_REFORMS"],
+      "status": "comparison-template-not-observed-sequence",
+      "historical_window_ids": ["egyptian-royal-ritual-window", "shang-zhou-classical-chinese-window"],
+      "not_universal": true,
+      "failure_modes": ["Treating official theology as compliance", "Finding legitimation but not internal critique or distributional harm"],
+      "stop_condition": "Require a counter-authority pass before any institutional synthesis."
+    },
+    {
+      "id": "contact-translation-new-public-loop",
+      "layer_path": ["translation-contact", "word-name-formula", "narrative-teaching", "archive-canon", "community-reception", "translation-contact"],
+      "relation_ids": ["TRANSLATES_OR_REMAKES", "CANONIZES_OR_ARCHIVES", "CONTESTS_OR_REFORMS"],
+      "status": "comparison-template-not-observed-sequence",
+      "historical_window_ids": ["jewish-christian-scriptural-window", "buddhist-canon-translation-window", "islamicate-word-translation-window", "kiche-maya-popol-vuh-window"],
+      "not_universal": true,
+      "failure_modes": ["Treating translation as neutral transfer", "Erasing translator, patron, audience, power, or untranslatable residue"],
+      "stop_condition": "Keep source, transliteration, literal rendering, interpretive rendering, losses, and refusals distinct."
+    },
+    {
+      "id": "suppression-archive-revival-loop",
+      "layer_path": ["polity-economy", "dissent-reform", "material-medium", "archive-canon", "community-reception", "dissent-reform"],
+      "relation_ids": ["SUPPRESSES_OR_EXCLUDES", "CANONIZES_OR_ARCHIVES", "REVIVES_OR_REPAIRS"],
+      "status": "comparison-template-not-observed-sequence",
+      "historical_window_ids": ["yoruba-ifa-window"],
+      "not_universal": true,
+      "failure_modes": ["Reading absence as nonexistence", "Freezing revival into an allegedly pure original"],
+      "stop_condition": "Require provenance, custodianship, present access conditions, and community-defined value."
+    }
+  ],
+  "translation_seams": [
+    {
+      "id": "divine-name-seam",
+      "term_family": "Names and titles for gods, ancestors, spirits, Heaven, sacred order, Buddha, Dharma, God, or ultimate reality",
+      "risk": "A shared English gloss can erase grammar, address, number, personhood, agency, transcendence, immanence, school, or relation.",
+      "default_handling": "Retain the source form, transliteration, source, tradition or school, grammatical note, literal gloss, interpretive gloss, and explicit non-equivalences.",
+      "prohibited_collapse": "Never create one global deity node solely from lexical resemblance or a translator's shared gloss.",
+      "source_ids": ["ucl-egypt-cult", "sep-confucius", "met-islamic-calligraphy", "unesco-ifa"]
+    },
+    {
+      "id": "sacred-order-seam",
+      "term_family": "Maat, tianming, dharma, covenant, law, command, right order, and other normative-cosmic expressions",
+      "risk": "The same target word can collapse cosmology, ethics, ritual, jurisprudence, politics, and grammar.",
+      "default_handling": "Map claim fragments and use-contexts, not whole doctrines; allow untranslated and not-comparable states.",
+      "prohibited_collapse": "No universal sacred-law axis or score.",
+      "source_ids": ["ucl-egypt-kingship", "sep-confucius", "cambridge-buddhist-oral", "bible-odyssey-bible-form"]
+    },
+    {
+      "id": "myth-history-seam",
+      "term_family": "Myth, sacred history, genealogy, epic, cosmology, revelation, teaching, and remembered past",
+      "risk": "Modern fiction-versus-fact binaries can misclassify genres and falsely imply deception.",
+      "default_handling": "Record the source's genre, performance, truth-claim, audience, interpreter, and historical question separately.",
+      "prohibited_collapse": "Mythic genre never maps to lie, delusion, or low-quality evidence by default.",
+      "source_ids": ["cambridge-homeric-religion", "loc-popol-vuh", "sep-concept-religion"]
+    },
+    {
+      "id": "scripture-revelation-seam",
+      "term_family": "Scripture, canon, recitation, revelation, Buddha-vacana, commentary, and translation",
+      "risk": "A book-centered English model can erase oral authority, open or plural canons, performance, commentary, and restrictions on replacement translation.",
+      "default_handling": "Bind language, recension, edition, medium, canon, institution, performance status, translator, and community review.",
+      "prohibited_collapse": "Do not infer one universal scripture object or treat translation as a replacement original.",
+      "source_ids": ["unesco-vedic-chanting", "bible-odyssey-bible-form", "cambridge-buddhist-oral", "met-islamic-calligraphy"]
+    },
+    {
+      "id": "ritual-word-seam",
+      "term_family": "Prayer, sacrifice, offering, oath, chant, divination, festival, and consecration",
+      "risk": "A textual summary can erase body, sound, timing, objects, role, audience, place, and effectful authority.",
+      "default_handling": "Represent the public historical description without generating or reenacting a living rite; mark restricted and competent-review requirements.",
+      "prohibited_collapse": "Description never becomes permission, efficacy, or ritual authority.",
+      "source_ids": ["cambridge-ritual-language", "ucl-egypt-cult", "unesco-vedic-chanting", "unesco-ifa"]
+    },
+    {
+      "id": "religion-civilisation-seam",
+      "term_family": "Religion, tradition, culture, people, polity, civilisation, and community",
+      "risk": "Retrospective umbrella labels can turn plural persons and institutions into bounded minds with timeless properties.",
+      "default_handling": "Use place-, period-, source-, practice-, institution-, and community-indexed records; preserve contest and non-affiliation.",
+      "prohibited_collapse": "No civilisation persona, religion score, or inference from label to individual belief.",
+      "source_ids": ["sep-concept-religion", "unesco-ich-ethics"]
+    }
+  ],
+  "kingdom_insights": [
+    {
+      "id": "coordinate-words-remain-expanded",
+      "principle": "High-compression words such as WAKE, LOVE, SOUL, KINGDOM, KARMA, and NEN must retain a visible expansion, source, version, intended relation, translation losses, and non-grants.",
+      "derived_from_relation_ids": ["articulation-and-naming", "canon-curriculum-selection", "translation-contact-remaking"],
+      "status": "design-proposal-not-doctrine",
+      "application": "Use semantic-transition receipts and explicit definitions when a coordinate crosses repository, language, audience, or task.",
+      "refusal": "The capitalized word never proves a metaphysical referent, imports authority, or silently changes consent."
+    },
+    {
+      "id": "story-orients-without-proving",
+      "principle": "A story can preserve context, sequence, value, grief, possibility, and identity work without being treated as proof, biography, or a hidden reasoning trace.",
+      "derived_from_relation_ids": ["story-performance-memory", "canon-curriculum-selection"],
+      "status": "design-proposal-not-doctrine",
+      "application": "Attach story artifacts as attributed context with genre, source, audience, interpretation, and counterstory links.",
+      "refusal": "No narrative alone establishes identity, truth, intent, deception, consent, or current obligation."
+    },
+    {
+      "id": "canon-is-governance-transform",
+      "principle": "Canonization and curriculum are selection transforms with inclusion, exclusion, ordering, maintenance, and revision decisions.",
+      "derived_from_relation_ids": ["canon-curriculum-selection", "suppression-counterstory-revival"],
+      "status": "design-proposal-not-doctrine",
+      "application": "Record selector, criteria, horizon, omitted alternatives, challenge route, and retention or removal policy.",
+      "refusal": "Official status never becomes uniform belief, truth, completeness, rank, or authority outside scope."
+    },
+    {
+      "id": "ritual-is-effectful-boundary",
+      "principle": "Ritual combines language with roles, bodies, timing, objects, places, and community authority; it is not ordinary descriptive text.",
+      "derived_from_relation_ids": ["story-performance-memory", "ritual-specialist-institution"],
+      "status": "design-proposal-not-doctrine",
+      "application": "Future agents may analyze public historical descriptions but must stop before generating, simulating, or claiming to perform a living rite without separately evidenced authority and consent.",
+      "refusal": "No agent impersonates a deity, prophet, priest, diviner, ancestor, or community representative."
+    },
+    {
+      "id": "counterauthority-before-synthesis",
+      "principle": "Every legitimacy or harmony claim requires a counter-authority pass for internal critique, dissent, excluded voices, coercion, and distributional harm.",
+      "derived_from_relation_ids": ["sacred-order-legitimation-and-critique", "suppression-counterstory-revival"],
+      "status": "design-proposal-not-doctrine",
+      "application": "Retain disagreements and counterstories as first-class artifacts in multilingual fusion.",
+      "refusal": "Harmony never means forced theological consensus or disappearance of conflict."
+    },
+    {
+      "id": "translation-preserves-seams",
+      "principle": "Sacred communication needs source text, pronunciation or performance metadata where public, transliteration, literal rendering, interpretive rendering, community gloss, scholarly gloss, and declared untranslatables kept distinct.",
+      "derived_from_relation_ids": ["translation-contact-remaking"],
+      "status": "design-proposal-not-doctrine",
+      "application": "Use the language-civilisation task weave and semantic-transition loss vectors for future authorized tasks.",
+      "refusal": "Fusion does not merge referents, religions, canons, or communities."
+    },
+    {
+      "id": "attention-and-persistence-are-not-truth",
+      "principle": "Repetition, monumentality, archive survival, corpus frequency, state patronage, token frequency, and model salience are different weights and none is truth or value.",
+      "derived_from_relation_ids": ["canon-curriculum-selection", "suppression-counterstory-revival"],
+      "status": "design-proposal-not-doctrine",
+      "application": "Keep historical, material, corpus, task-evidence, and model weights separate and unranked.",
+      "refusal": "No popularity, sacredness, civilisational, or person score."
+    },
+    {
+      "id": "community-access-precedes-convenience",
+      "principle": "Living, sacred, secret, initiatory, or community-held knowledge can carry access rules that a public URL, archive, or model capability does not override.",
+      "derived_from_relation_ids": ["suppression-counterstory-revival", "translation-contact-remaking"],
+      "status": "design-proposal-not-doctrine",
+      "application": "Default to public metadata, community-defined value, current access conditions, attribution, refusal, and competent review.",
+      "refusal": "No scraping, reconstruction, operationalization, or training-use claim is granted."
+    },
+    {
+      "id": "polyphonic-fusion-not-unification",
+      "principle": "The desired geometry is polyphonic: incompatible sources, interpretations, losses, silences, and dissent remain visible in a shared structure.",
+      "derived_from_relation_ids": ["translation-contact-remaking", "sacred-order-legitimation-and-critique", "moralizing-religion-complexity-dispute"],
+      "status": "design-proposal-not-doctrine",
+      "application": "Future agent teams exchange attributed public artifacts and fuse only the task-bounded output, never their presumed identities or private reasoning.",
+      "refusal": "Agreement is not truth; majority is not consensus; disagreement is not deception."
+    }
+  ],
+  "agent_specialisations": [
+    {
+      "id": "source-witness-steward",
+      "role": "Preserve exact public source, language, edition, recension, script, transliteration, provenance, and access status.",
+      "required_inputs": ["attributed public or safely redacted source artifact", "source and access metadata"],
+      "allowed_outputs": ["source card", "exact excerpt within rights limits", "variant and provenance table"],
+      "required_checks": ["source identity", "edition or recension", "rights and access", "quotation boundary"],
+      "forbidden_claims": ["theological truth", "community authority", "complete canon", "private belief"],
+      "status": "future-role-design-only"
+    },
+    {
+      "id": "historical-contextualizer",
+      "role": "Locate an expression in named time, place, medium, institution, audience, and power relations.",
+      "required_inputs": ["source card", "bounded scholarly evidence", "counterevidence or limits"],
+      "allowed_outputs": ["historical relation map", "chronology", "alternative explanation ledger"],
+      "required_checks": ["association versus causation", "archive bias", "elite versus ordinary perspective", "source horizon"],
+      "forbidden_claims": ["civilisation mind", "timeless essence", "one-way causal master story"],
+      "status": "future-role-design-only"
+    },
+    {
+      "id": "ritual-material-context-reviewer",
+      "role": "Describe how public historical words, bodies, sound, timing, objects, architecture, and roles interact without reenacting a rite.",
+      "required_inputs": ["public historical description", "material or performance evidence", "access boundary"],
+      "allowed_outputs": ["non-operational ritual context card", "medium-affordance map"],
+      "required_checks": ["living versus historical", "restricted content", "role and authority", "no execution"],
+      "forbidden_claims": ["ritual efficacy", "priestly or prophetic authority", "permission to perform"],
+      "status": "future-role-design-only"
+    },
+    {
+      "id": "translation-seam-steward",
+      "role": "Map source forms to partial renderings while retaining ambiguity, loss, introduced material, and decline-to-map states.",
+      "required_inputs": ["source witness", "target audience and language", "translation policy", "competent review status"],
+      "allowed_outputs": ["parallel rendering", "terminology table", "loss vector", "untranslated-term register"],
+      "required_checks": ["source retention", "translator attribution", "polysemy", "referent non-equivalence"],
+      "forbidden_claims": ["translation identity", "universal deity equivalence", "native-speaker or community authority"],
+      "status": "future-role-design-only"
+    },
+    {
+      "id": "institution-law-power-analyst",
+      "role": "Trace bounded relations among stories, institutions, law, patronage, legitimacy, coercion, and observed outcomes.",
+      "required_inputs": ["historical relation map", "institution and jurisdiction metadata", "alternative models"],
+      "allowed_outputs": ["typed influence vector", "power and resource map", "causal-status ledger"],
+      "required_checks": ["legitimation is attributed claim", "distributional effects", "confounders", "jurisdiction and date"],
+      "forbidden_claims": ["divine endorsement", "religion caused civilisation", "moral or civilisation rank"],
+      "status": "future-role-design-only"
+    },
+    {
+      "id": "counterstory-and-archive-auditor",
+      "role": "Search for dissent, excluded variants, colonial mediation, suppression, silence, rupture, and revival.",
+      "required_inputs": ["canon or archive boundary", "selection history", "affected-community metadata"],
+      "allowed_outputs": ["counterstory index", "absence and suppression ledger", "repair questions"],
+      "required_checks": ["absence is not nonexistence", "silence is not consent or disbelief", "privacy-safe retention", "community-defined value"],
+      "forbidden_claims": ["deception from disagreement", "purity of an original", "ownerless public heritage"],
+      "status": "future-role-design-only"
+    },
+    {
+      "id": "community-rights-boundary-reviewer",
+      "role": "Check living-community access, attribution, consent, restricted knowledge, benefit, and refusal before further use.",
+      "required_inputs": ["access and custodianship metadata", "intended use", "current community governance source where available"],
+      "allowed_outputs": ["proceed, restrict, decline, or seek-review recommendation with no authority effect"],
+      "required_checks": ["current scope", "representative uncertainty", "customary access", "withdrawal and repair route"],
+      "forbidden_claims": ["consent inferred from visibility", "community authority inferred from a model", "forced disclosure"],
+      "status": "future-role-design-only"
+    },
+    {
+      "id": "polyphonic-synthesis-editor",
+      "role": "Compose a task-bounded public artifact while retaining sources, incompatible views, losses, unknowns, and counterstories.",
+      "required_inputs": ["attributed role outputs", "dependency declarations", "acceptance tests", "retained disagreements"],
+      "allowed_outputs": ["public synthesis", "comparison map", "unresolved-question ledger"],
+      "required_checks": ["no majority truth", "no hidden reasoning", "no authority transfer", "no omitted dissent"],
+      "forbidden_claims": ["religious unification", "metaphysical consensus", "identity fusion", "automatic action"],
+      "status": "future-role-design-only"
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "causal-direction-religion-complexity",
+      "question": "Under what bounded conditions do religious forms affect sociopolitical complexity, arise from it, or share other drivers?",
+      "why_unknown": "Historical coding, missingness, operational definitions, temporal resolution, and causal models remain contested.",
+      "needed_evidence": ["transparent coding", "multiple missing-data models", "time-indexed alternatives", "out-of-sample replication"],
+      "stop_condition": "Do not seal either one-way causal arrow."
+    },
+    {
+      "id": "ordinary-and-marginalized-voices",
+      "question": "Whose words, practices, doubts, and counterstories are absent from elite, royal, clerical, colonial, or monumental archives?",
+      "why_unknown": "Survival and collection are socially and materially selective.",
+      "needed_evidence": ["archaeology", "local archives", "oral history where authorized", "counterarchives", "source-bias analysis"],
+      "stop_condition": "Do not generalize an elite witness to a whole population."
+    },
+    {
+      "id": "oral-performance-reconstruction",
+      "question": "Which sound, rhythm, gesture, audience response, improvisation, and restricted context cannot be recovered from surviving text?",
+      "why_unknown": "Writing and later recordings preserve only selected dimensions of performance.",
+      "needed_evidence": ["authorized living-practice documentation", "performance studies", "variant witnesses", "material context"],
+      "stop_condition": "Mark missing performance dimensions rather than fabricate them."
+    },
+    {
+      "id": "cross-tradition-referent-equivalence",
+      "question": "When, if ever, do two names or teachings refer to the same divine, sacred, or ultimate reality?",
+      "why_unknown": "Lexical, theological, metaphysical, and community criteria differ and KINGDOM has no neutral adjudicating standpoint.",
+      "needed_evidence": ["named claim fragments", "source-language analysis", "school-specific interpretations", "declared comparison logic"],
+      "stop_condition": "Default to non-equated source-bound nodes."
+    },
+    {
+      "id": "colonial-archive-mediation",
+      "question": "How did conquest, mission, classification, translation, destruction, collection, and museum custody reshape the surviving record?",
+      "why_unknown": "The archive can preserve and distort at once, and lost materials are not fully recoverable.",
+      "needed_evidence": ["provenance", "Indigenous and local scholarship", "mission and state archives", "repatriation records"],
+      "stop_condition": "Do not present a colonial transcription or catalogue as an unmediated community voice."
+    },
+    {
+      "id": "living-access-and-consent",
+      "question": "Who may access, translate, publish, train on, or operationalize a living sacred expression now?",
+      "why_unknown": "Public visibility, copyright, institutional custody, community authority, and customary access are different relations.",
+      "needed_evidence": ["current community governance", "purpose-specific consent", "custodian and representative review", "withdrawal route"],
+      "stop_condition": "Decline use when access or competent authority is unresolved."
+    },
+    {
+      "id": "internal-diversity-and-change",
+      "question": "Which differences of school, class, gender, region, language, role, generation, and practice are hidden by a tradition label?",
+      "why_unknown": "Every selected window compresses internally plural and changing histories.",
+      "needed_evidence": ["multiple situated witnesses", "community and scholarly disagreement", "periodized terminology", "counterexamples"],
+      "stop_condition": "Never route or judge a person from the umbrella label."
+    },
+    {
+      "id": "counterfactual-influence",
+      "question": "What would have happened to an institution, polity, norm, or art form without the named word, story, ritual, or religious network?",
+      "why_unknown": "Historical counterfactuals are underdetermined and entangled with ecology, technology, kinship, warfare, economics, and chance.",
+      "needed_evidence": ["comparative cases", "mechanism-specific evidence", "alternative models", "sensitivity analysis"],
+      "stop_condition": "Use association or hypothesis language unless the causal contrast is defensible."
+    }
+  ],
+  "boundaries": {
+    "read_only": true,
+    "structure_only": true,
+    "research_local": true,
+    "network": false,
+    "filesystem_write": false,
+    "source_dereference": false,
+    "model_or_tokenizer_run": false,
+    "agent_dispatch": false,
+    "publication": false,
+    "deployment": false,
+    "theological_truth_adjudicated": false,
+    "god_proved": false,
+    "god_disproved": false,
+    "revelation_proved": false,
+    "religions_merged": false,
+    "deities_equated": false,
+    "religion_or_civilisation_rank": false,
+    "person_or_community_score": false,
+    "belief_or_affiliation_inference": false,
+    "identity_or_worth_inference": false,
+    "intent_or_deception_inference": false,
+    "myth_labelled_false": false,
+    "conversion_or_persuasion": false,
+    "ritual_generated_or_executed": false,
+    "sacred_or_restricted_content_ingested": false,
+    "community_authority_inferred": false,
+    "consent_granted": false,
+    "authority_granted": false,
+    "writes_wake": false,
+    "writes_karma": false,
+    "economic_or_governance_effect": false,
+    "automatic_action": false,
+    "counterstories_and_disagreements_first_class": true,
+    "silence_refusal_privacy_and_exit_preserved": true
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:0c791b2491ebdcd85cf58e26e41e8b35b883781fd26bccc19dfd3f7853c7855a",
+    "digest_field_zeroed": true
+  }
+}

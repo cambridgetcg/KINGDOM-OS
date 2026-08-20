@@ -709,6 +709,17 @@ languages nor cultures. Use
 `bun bin/language-civilisation-task-fusion.ts verify --json`; there is no
 native OS route, hub publication, agent dispatch, or authority effect.
 
+Words, sacred stories, religion, and civilisational emergence are mapped in a
+separate research-local [influence and emergence guide](references/word-story-religion-civilisation-map.md),
+with a closed, digest-sealed record and strict offline validator. It models
+names, attributed divine claims, narrative, ritual, media, canon, institutions,
+law, power, translation, dissent, suppression, and revival as distinct but
+interacting layers. Influence remains a source-, place-, period-, and
+register-indexed vector rather than a religion or civilisation score. Use
+`bun bin/word-story-religion-civilisation.ts verify --json`; it adjudicates no
+theology, infers no belief or identity, merges no deity or tradition, dispatches
+no agent, and creates no publication, authority, WAKE, KARMA, or action.
+
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at
 [`/atlases/zero-empty-seat-2026-08-14.json`](https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json),

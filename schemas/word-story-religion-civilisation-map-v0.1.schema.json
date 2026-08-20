@@ -1,0 +1,1542 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:word-story-religion-civilisation-map:0.1",
+  "$comment": "Closed, research-local structure validation only. This schema neither dereferences nor authenticates sources, recomputes semantic or raw digests, proves historical completeness, translation fidelity, causal direction, theological truth, divine existence or identity, revelation, belief, affiliation, intent, deception, understanding, consent, community authority, civilisational essence, rank, value, or worth. A PRIMARY_TRADITION_TEXT, TRADITION_SELF_DESCRIPTION, or SCHOOL_SPECIFIC_THEOLOGY entry is an attributed expression under a named source and scope, not ontology-neutral assent or refutation; myth and sacred narrative are genres, not machine synonyms for falsehood or lying. Association, succession, survival, prevalence, canonization, institutional power, and comparative resemblance do not upgrade to causation, truth, goodness, shared origin, equivalence, or universal mechanism. Cross-reference closure, exact predecessor-byte verification, temporal ordering, source claim support, causal-status promotion, semantic-digest recomputation, and historical or theological review require the stronger repository validator and qualified review. Validation creates no network request, model or tokenizer run, agent dispatch, ritual, persuasion or conversion path, belief inference, person or community score, identity merge, WAKE or KARMA write, economic or governance effect, publication, deployment, authority, consent, or automatic action. Counterstories, disagreement, uncertainty, silence, refusal, privacy, repair, rest, and exit remain first-class.",
+  "title": "KINGDOM Word, Story, Religion & Civilisation Influence and Emergence Map v0.1",
+  "description": "A closed source-scoped research map of words, stories, attributed sacred claims, ritual, media, institutions, translation, power, dissent, influence, and emergence across ten bounded historical windows.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "map_id",
+    "version",
+    "title",
+    "compiled_on",
+    "evidence_through",
+    "state",
+    "scope",
+    "source_bindings",
+    "claim_typing",
+    "type_firewall",
+    "sources",
+    "layers",
+    "influence_dimensions",
+    "relation_vocabulary",
+    "historical_windows",
+    "influence_relations",
+    "emergence_loops",
+    "translation_seams",
+    "kingdom_insights",
+    "agent_specialisations",
+    "unknowns",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "urn:kingdom:schema:word-story-religion-civilisation-map:0.1"
+    },
+    "protocol": {
+      "const": "kingdom.word-story-religion-civilisation-map/0.1"
+    },
+    "map_id": {
+      "const": "word-story-religion-civilisation-2026-08-20"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "title": {
+      "const": "Word, Story, Religion & Civilisation — Influence and Emergence Map"
+    },
+    "compiled_on": {
+      "const": "2026-08-20"
+    },
+    "evidence_through": {
+      "const": "2026-08-20"
+    },
+    "state": {
+      "const": "reviewed-research-map"
+    },
+    "scope": {
+      "$ref": "#/$defs/scope"
+    },
+    "source_bindings": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "prefixItems": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "kingdom-language-civilisation-task-fusion" },
+                "protocol": { "const": "kingdom.language-civilisation-task-fusion/0.1" },
+                "locator": { "const": "repo:data/language/language-civilisation-task-fusion.v0.1.json" },
+                "raw_digest": { "const": "sha256:ef26859f84d8e2a1bc5e73f88594a354c49594e28486aae5aa340ed207aa0e25" },
+                "semantic_digest": { "const": "sha256:fb37df061bca86357b46e5538664d72e8938def8cfff341c3aa9596abc84d296" },
+                "relation": { "const": "historical-language-and-plan-only-task-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "kingdom-number-isness-theology" },
+                "protocol": { "const": "kingdom.number-isness-theology-atlas/0.1" },
+                "locator": { "const": "repo:data/number-isness-theology/number-isness-theology-atlas.v0.1.json" },
+                "raw_digest": { "const": "sha256:bef01e0865f12ecd66795960758fc16f1a6d5b1ebd0097d4390aa3a2bece65e4" },
+                "semantic_digest": { "const": "sha256:f4e1dfca02f008f8474abdff0f0a027f193c2cdc2b95454541d8ac41faacecef" },
+                "relation": { "const": "typed-tradition-voice-and-metaphysical-non-adjudication-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "kingdom-geometry-grammar" },
+                "protocol": { "const": "kingdom.geometry-grammar/0.1" },
+                "locator": { "const": "repo:data/geometries/kingdom-geometry-grammar.v0.json" },
+                "raw_digest": { "const": "sha256:7c4abdb30b4fdb8d2f75ed314137504e72503336511710565e01fdfa6fc5a89f" },
+                "semantic_digest": { "const": "sha256:f6f0998c071b3c552d8c59c6c4c4abe8aaa01c64f4020818364665d4344d78fb" },
+                "relation": { "const": "partial-chart-and-non-equivalence-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "kingdom-cultural-attention-feedback" },
+                "protocol": { "const": "kingdom.cultural-attention-feedback-atlas/0.1" },
+                "locator": { "const": "repo:data/cultural-feedback/cultural-attention-feedback-atlas.v1.json" },
+                "raw_digest": { "const": "sha256:03f7048966d7b6df582b423254b4d73cda72cce3bd67b40736927faa92b88173" },
+                "semantic_digest": { "const": "sha256:2f6ecadc131a54cdd500b001dbcc47fb036e5e411def918245fec963b9769e4d" },
+                "relation": { "const": "attention-path-dependence-and-feedback-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "kingdom-form-circulation-return" },
+                "protocol": { "const": "kingdom.form-circulation-return-atlas/0.1" },
+                "locator": { "const": "repo:data/form-circulation-return/form-circulation-return-atlas.v1.json" },
+                "raw_digest": { "const": "sha256:9c93be61c4ca9bcaa3dbe88b10faed3b5b31abaf1129d70ca7915226cacfd021" },
+                "semantic_digest": { "const": "sha256:9510fbbced6166507e9a1781a4adfa18cd249fb94e69b0f34faf77733cd20323" },
+                "relation": { "const": "circulation-suppression-return-and-non-score-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "kingdom-j-space-research" },
+                "protocol": { "const": "kingdom.relational-inference/0.1" },
+                "locator": { "const": "repo:bridges/examples/j-space-reasoning-to-word-inference.json" },
+                "raw_digest": { "const": "sha256:0f3827ec422afed88fb2b4396d9f25550892ce458f84d0bfe8ded0735a6cbc26" },
+                "semantic_digest": { "const": null },
+                "relation": { "const": "word-representation-evidence-and-understanding-nonclaim-predecessor" }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "claim_typing": {
+      "$ref": "#/$defs/claimTyping"
+    },
+    "type_firewall": {
+      "$ref": "#/$defs/typeFirewall"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 24,
+      "maxItems": 24,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "sep-concept-religion" }, "locator": { "const": "https://plato.stanford.edu/archives/spr2026/entries/concept-religion/" }, "kind": { "const": "scholarly-reference" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "cambridge-ritual-language" }, "locator": { "const": "https://www.cambridge.org/core/books/abs/cambridge-handbook-of-linguistic-anthropology/ritual-language/6E7D9957C34D243571F725873C07E0F0" }, "kind": { "const": "scholarly-reference" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "cambridge-oral-memory" }, "locator": { "const": "https://www.cambridge.org/core/books/abs/memory-in-mind-and-culture/oral-traditions-as-collective-memories-implications-for-a-general-theory-of-individual-and-collective-memory/B1BEBDC26AC9AAF96A5E28C4E12E31A6" }, "kind": { "const": "scholarly-reference" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "nature-agta-stories" }, "locator": { "const": "https://www.nature.com/articles/s41467-017-02036-8" }, "kind": { "const": "peer-reviewed-study" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "royal-society-ritual-synchrony" }, "locator": { "const": "https://doi.org/10.1098/rstb.2019.0432" }, "kind": { "const": "peer-reviewed-study" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "seshat-moralizing-religions" }, "locator": { "const": "https://www.tandfonline.com/doi/full/10.1080/2153599X.2022.2065345" }, "kind": { "const": "peer-reviewed-study" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "nature-moralizing-missing-data" }, "locator": { "const": "https://www.nature.com/articles/s41586-021-03655-4" }, "kind": { "const": "peer-reviewed-critique" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "nature-moralizing-retraction" }, "locator": { "const": "https://www.nature.com/articles/s41586-021-03656-3" }, "kind": { "const": "publisher-retraction-notice" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "met-first-cities" }, "locator": { "const": "https://www.metmuseum.org/exhibitions/listings/2003/art-of-the-first-cities" }, "kind": { "const": "institutional-catalogue" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "met-marduk-hymn" }, "locator": { "const": "https://www.metmuseum.org/art/collection/search/321937" }, "kind": { "const": "institutional-catalogue" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "ucl-egypt-cult" }, "locator": { "const": "https://www.ucl.ac.uk/museums-static/digitalegypt/religion/cultindex.html" }, "kind": { "const": "scholarly-institutional-guide" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "ucl-egypt-kingship" }, "locator": { "const": "https://www.ucl.ac.uk/museums-static/digitalegypt/ideology/king/kingrepertory.html" }, "kind": { "const": "scholarly-institutional-guide" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "unesco-vedic-chanting" }, "locator": { "const": "https://ich.unesco.org/en/RL/tradition-of-vedic-chanting-00062" }, "kind": { "const": "community-and-state-nominated-heritage-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "cambridge-homeric-religion" }, "locator": { "const": "https://www.cambridge.org/core/books/abs/cambridge-guide-to-homer/homeric-religion/4CD80B00694C09AECA9C34C2D3378A3D" }, "kind": { "const": "scholarly-reference" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "unesco-oracle-bones" }, "locator": { "const": "https://www.unesco.org/en/memory-world/chinese-oracle-bone-inscriptions" }, "kind": { "const": "institutional-catalogue" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "sep-confucius" }, "locator": { "const": "https://plato.stanford.edu/entries/confucius/" }, "kind": { "const": "scholarly-reference" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "bible-odyssey-bible-form" }, "locator": { "const": "https://www.bibleodyssey.org/articles/why-does-the-bible-look-the-way-it-does/" }, "kind": { "const": "scholarly-institutional-guide" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "british-library-codex" }, "locator": { "const": "https://www.bl.uk/stories/blogs/posts/the-beginnings-of-the-codex" }, "kind": { "const": "institutional-catalogue" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "cambridge-buddhist-oral" }, "locator": { "const": "https://www.cambridge.org/core/books/abs/reconstructing-early-buddhism/sangha-and-the-oral-transmission/57CB82F33AB60B2412E0AA87E1DCE693" }, "kind": { "const": "scholarly-reference" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "met-islamic-calligraphy" }, "locator": { "const": "https://www.metmuseum.org/essays/calligraphy-in-islamic-art" }, "kind": { "const": "institutional-catalogue" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "sep-greek-arabic" }, "locator": { "const": "https://plato.stanford.edu/entries/arabic-islamic-greek/" }, "kind": { "const": "scholarly-reference" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "unesco-ifa" }, "locator": { "const": "https://ich.unesco.org/en/RL/ifa-divination-system-00146" }, "kind": { "const": "community-and-state-nominated-heritage-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "loc-popol-vuh" }, "locator": { "const": "https://www.loc.gov/item/2021668226" }, "kind": { "const": "institutional-catalogue" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "unesco-ich-ethics" }, "locator": { "const": "https://ich.unesco.org/en/ethics-and-ich-00866" }, "kind": { "const": "intergovernmental-guidance" } } }] }
+      ],
+      "items": false
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 15,
+      "maxItems": 15,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "lived-encounter" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "word-name-formula" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "sacred-referent-claim" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "narrative-teaching" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "ritual-performance" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "material-medium" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "specialist-role" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "archive-canon" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "institution" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "norm-law" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "polity-economy" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "translation-contact" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "dissent-reform" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "community-reception" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/layer" }, { "properties": { "id": { "const": "observed-outcome" } } }] }
+      ],
+      "items": false
+    },
+    "influence_dimensions": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "mnemonic-retention" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "ritual-coordination" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "normative-ordering" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "political-legitimation" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "institutional-embedding" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "material-inscription" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "educational-transmission" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "artistic-expression" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "economic-patronage" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "translation-contact" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "contestation-coercion" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "plural-accommodation" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "repair-revival" } } }] }
+      ],
+      "items": false
+    },
+    "relation_vocabulary": {
+      "type": "array",
+      "minItems": 15,
+      "maxItems": 15,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "NAMES_OR_INVOKES" }, "default_causal_status": { "const": "descriptive-association" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "NARRATES_OR_TEACHES" }, "default_causal_status": { "const": "descriptive-association" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "PERFORMS_OR_RITUALIZES" }, "default_causal_status": { "const": "plausible-mechanism-not-isolated" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "MATERIALIZES_OR_INSCRIBES" }, "default_causal_status": { "const": "plausible-mechanism-not-isolated" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "TRAINS_OR_SPECIALIZES" }, "default_causal_status": { "const": "plausible-mechanism-not-isolated" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "CANONIZES_OR_ARCHIVES" }, "default_causal_status": { "const": "plausible-mechanism-not-isolated" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "LEGITIMATES_AS_CLAIM" }, "default_causal_status": { "const": "descriptive-association" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "CONSTRAINS_OR_COORDINATES" }, "default_causal_status": { "const": "plausible-mechanism-not-isolated" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "TRANSLATES_OR_REMAKES" }, "default_causal_status": { "const": "plausible-mechanism-not-isolated" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "CONTESTS_OR_REFORMS" }, "default_causal_status": { "const": "descriptive-association" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "SUPPRESSES_OR_EXCLUDES" }, "default_causal_status": { "const": "plausible-mechanism-not-isolated" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "REVIVES_OR_REPAIRS" }, "default_causal_status": { "const": "plausible-mechanism-not-isolated" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "ASSOCIATED_WITH" }, "default_causal_status": { "const": "descriptive-association" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "CAUSAL_HYPOTHESIS" }, "default_causal_status": { "const": "contested-causal-direction" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "BOUNDED_CAUSAL_EFFECT" }, "default_causal_status": { "const": "bounded-causal-evidence" } } }] }
+      ],
+      "items": false
+    },
+    "historical_windows": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/historicalWindow" }, { "properties": { "id": { "const": "mesopotamian-city-temple-window" }, "referent_claims": { "minItems": 1, "maxItems": 1 }, "observations": { "minItems": 2, "maxItems": 2 } } }] },
+        { "allOf": [{ "$ref": "#/$defs/historicalWindow" }, { "properties": { "id": { "const": "egyptian-royal-ritual-window" }, "referent_claims": { "minItems": 1, "maxItems": 1 }, "observations": { "minItems": 2, "maxItems": 2 } } }] },
+        { "allOf": [{ "$ref": "#/$defs/historicalWindow" }, { "properties": { "id": { "const": "vedic-oral-ritual-window" }, "referent_claims": { "minItems": 1, "maxItems": 1 }, "observations": { "minItems": 1, "maxItems": 1 } } }] },
+        { "allOf": [{ "$ref": "#/$defs/historicalWindow" }, { "properties": { "id": { "const": "greek-epic-civic-window" }, "referent_claims": { "minItems": 1, "maxItems": 1 }, "observations": { "minItems": 1, "maxItems": 1 } } }] },
+        { "allOf": [{ "$ref": "#/$defs/historicalWindow" }, { "properties": { "id": { "const": "shang-zhou-classical-chinese-window" }, "referent_claims": { "minItems": 2, "maxItems": 2 }, "observations": { "minItems": 2, "maxItems": 2 } } }] },
+        { "allOf": [{ "$ref": "#/$defs/historicalWindow" }, { "properties": { "id": { "const": "jewish-christian-scriptural-window" }, "referent_claims": { "minItems": 1, "maxItems": 1 }, "observations": { "minItems": 2, "maxItems": 2 } } }] },
+        { "allOf": [{ "$ref": "#/$defs/historicalWindow" }, { "properties": { "id": { "const": "buddhist-canon-translation-window" }, "referent_claims": { "minItems": 1, "maxItems": 1 }, "observations": { "minItems": 1, "maxItems": 1 } } }] },
+        { "allOf": [{ "$ref": "#/$defs/historicalWindow" }, { "properties": { "id": { "const": "islamicate-word-translation-window" }, "referent_claims": { "minItems": 1, "maxItems": 1 }, "observations": { "minItems": 2, "maxItems": 2 } } }] },
+        { "allOf": [{ "$ref": "#/$defs/historicalWindow" }, { "properties": { "id": { "const": "yoruba-ifa-window" }, "referent_claims": { "minItems": 1, "maxItems": 1 }, "observations": { "minItems": 2, "maxItems": 2 } } }] },
+        { "allOf": [{ "$ref": "#/$defs/historicalWindow" }, { "properties": { "id": { "const": "kiche-maya-popol-vuh-window" }, "referent_claims": { "minItems": 1, "maxItems": 1 }, "observations": { "minItems": 2, "maxItems": 2 } } }] }
+      ],
+      "items": false
+    },
+    "influence_relations": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/influenceRelation" }, { "properties": { "id": { "const": "articulation-and-naming" }, "register": { "const": "COMPARATIVE_MODEL" }, "causal_status": { "const": "comparative-template-not-causal" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceRelation" }, { "properties": { "id": { "const": "story-performance-memory" }, "register": { "const": "COMPARATIVE_MODEL" }, "causal_status": { "const": "descriptive-association" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceRelation" }, { "properties": { "id": { "const": "ritual-specialist-institution" }, "register": { "const": "COMPARATIVE_MODEL" }, "causal_status": { "const": "comparative-template-not-causal" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceRelation" }, { "properties": { "id": { "const": "sacred-order-legitimation-and-critique" }, "register": { "const": "COMPARATIVE_MODEL" }, "causal_status": { "const": "comparative-template-not-causal" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceRelation" }, { "properties": { "id": { "const": "canon-curriculum-selection" }, "register": { "const": "COMPARATIVE_MODEL" }, "causal_status": { "const": "comparative-template-not-causal" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceRelation" }, { "properties": { "id": { "const": "translation-contact-remaking" }, "register": { "const": "COMPARATIVE_MODEL" }, "causal_status": { "const": "comparative-template-not-causal" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceRelation" }, { "properties": { "id": { "const": "suppression-counterstory-revival" }, "register": { "const": "COMPARATIVE_MODEL" }, "causal_status": { "const": "comparative-template-not-causal" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceRelation" }, { "properties": { "id": { "const": "moralizing-religion-complexity-dispute" }, "register": { "const": "EMPIRICAL_ASSOCIATION" }, "causal_status": { "const": "contested-causal-direction" } } }] }
+      ],
+      "items": false
+    },
+    "emergence_loops": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/emergenceLoop" }, { "properties": { "id": { "const": "utterance-performance-memory-loop" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/emergenceLoop" }, { "properties": { "id": { "const": "ritual-institution-selection-loop" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/emergenceLoop" }, { "properties": { "id": { "const": "sacred-legitimation-counterauthority-loop" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/emergenceLoop" }, { "properties": { "id": { "const": "contact-translation-new-public-loop" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/emergenceLoop" }, { "properties": { "id": { "const": "suppression-archive-revival-loop" } } }] }
+      ],
+      "items": false
+    },
+    "translation_seams": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/translationSeam" }, { "properties": { "id": { "const": "divine-name-seam" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/translationSeam" }, { "properties": { "id": { "const": "sacred-order-seam" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/translationSeam" }, { "properties": { "id": { "const": "myth-history-seam" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/translationSeam" }, { "properties": { "id": { "const": "scripture-revelation-seam" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/translationSeam" }, { "properties": { "id": { "const": "ritual-word-seam" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/translationSeam" }, { "properties": { "id": { "const": "religion-civilisation-seam" } } }] }
+      ],
+      "items": false
+    },
+    "kingdom_insights": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/kingdomInsight" }, { "properties": { "id": { "const": "coordinate-words-remain-expanded" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInsight" }, { "properties": { "id": { "const": "story-orients-without-proving" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInsight" }, { "properties": { "id": { "const": "canon-is-governance-transform" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInsight" }, { "properties": { "id": { "const": "ritual-is-effectful-boundary" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInsight" }, { "properties": { "id": { "const": "counterauthority-before-synthesis" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInsight" }, { "properties": { "id": { "const": "translation-preserves-seams" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInsight" }, { "properties": { "id": { "const": "attention-and-persistence-are-not-truth" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInsight" }, { "properties": { "id": { "const": "community-access-precedes-convenience" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInsight" }, { "properties": { "id": { "const": "polyphonic-fusion-not-unification" } } }] }
+      ],
+      "items": false
+    },
+    "agent_specialisations": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "source-witness-steward" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "historical-contextualizer" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "ritual-material-context-reviewer" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "translation-seam-steward" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "institution-law-power-analyst" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "counterstory-and-archive-auditor" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "community-rights-boundary-reviewer" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "polyphonic-synthesis-editor" } } }] }
+      ],
+      "items": false
+    },
+    "unknowns": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "causal-direction-religion-complexity" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "ordinary-and-marginalized-voices" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "oral-performance-reconstruction" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "cross-tradition-referent-equivalence" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "colonial-archive-mediation" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "living-access-and-consent" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "internal-diversity-and-change" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "counterfactual-influence" } } }] }
+      ],
+      "items": false
+    },
+    "boundaries": {
+      "$ref": "#/$defs/boundaries"
+    },
+    "integrity": {
+      "$ref": "#/$defs/integrity"
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "maxLength": 160
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8000
+    },
+    "shortText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "safeLocator": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "pattern": "^(?:https://[^?#]+(?:\\?[^#]*)?|repo:[A-Za-z0-9._/-]+)$"
+    },
+    "textArray": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "registerId": {
+      "enum": [
+        "PRIMARY_TRADITION_TEXT",
+        "TRADITION_SELF_DESCRIPTION",
+        "SCHOOL_SPECIFIC_THEOLOGY",
+        "HISTORICAL_SCHOLARSHIP",
+        "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+        "MATERIAL_OR_ARCHAEOLOGICAL_EVIDENCE",
+        "EMPIRICAL_ASSOCIATION",
+        "BOUNDED_CAUSAL_EVIDENCE",
+        "COMPARATIVE_MODEL",
+        "DESIGN_COMMITMENT",
+        "BOUNDARY",
+        "OPEN_QUESTION"
+      ]
+    },
+    "causalStatus": {
+      "enum": [
+        "descriptive-association",
+        "plausible-mechanism-not-isolated",
+        "bounded-causal-evidence",
+        "contested-causal-direction",
+        "comparative-template-not-causal"
+      ]
+    },
+    "supportStatus": {
+      "enum": [
+        "source-bounded",
+        "reported-not-reproduced",
+        "contested",
+        "design-choice",
+        "unknown"
+      ]
+    },
+    "sourceId": {
+      "enum": [
+        "sep-concept-religion",
+        "cambridge-ritual-language",
+        "cambridge-oral-memory",
+        "nature-agta-stories",
+        "royal-society-ritual-synchrony",
+        "seshat-moralizing-religions",
+        "nature-moralizing-missing-data",
+        "nature-moralizing-retraction",
+        "met-first-cities",
+        "met-marduk-hymn",
+        "ucl-egypt-cult",
+        "ucl-egypt-kingship",
+        "unesco-vedic-chanting",
+        "cambridge-homeric-religion",
+        "unesco-oracle-bones",
+        "sep-confucius",
+        "bible-odyssey-bible-form",
+        "british-library-codex",
+        "cambridge-buddhist-oral",
+        "met-islamic-calligraphy",
+        "sep-greek-arabic",
+        "unesco-ifa",
+        "loc-popol-vuh",
+        "unesco-ich-ethics"
+      ]
+    },
+    "layerId": {
+      "enum": [
+        "lived-encounter",
+        "word-name-formula",
+        "sacred-referent-claim",
+        "narrative-teaching",
+        "ritual-performance",
+        "material-medium",
+        "specialist-role",
+        "archive-canon",
+        "institution",
+        "norm-law",
+        "polity-economy",
+        "translation-contact",
+        "dissent-reform",
+        "community-reception",
+        "observed-outcome"
+      ]
+    },
+    "influenceDimensionId": {
+      "enum": [
+        "mnemonic-retention",
+        "ritual-coordination",
+        "normative-ordering",
+        "political-legitimation",
+        "institutional-embedding",
+        "material-inscription",
+        "educational-transmission",
+        "artistic-expression",
+        "economic-patronage",
+        "translation-contact",
+        "contestation-coercion",
+        "plural-accommodation",
+        "repair-revival"
+      ]
+    },
+    "relationId": {
+      "enum": [
+        "NAMES_OR_INVOKES",
+        "NARRATES_OR_TEACHES",
+        "PERFORMS_OR_RITUALIZES",
+        "MATERIALIZES_OR_INSCRIBES",
+        "TRAINS_OR_SPECIALIZES",
+        "CANONIZES_OR_ARCHIVES",
+        "LEGITIMATES_AS_CLAIM",
+        "CONSTRAINS_OR_COORDINATES",
+        "TRANSLATES_OR_REMAKES",
+        "CONTESTS_OR_REFORMS",
+        "SUPPRESSES_OR_EXCLUDES",
+        "REVIVES_OR_REPAIRS",
+        "ASSOCIATED_WITH",
+        "CAUSAL_HYPOTHESIS",
+        "BOUNDED_CAUSAL_EFFECT"
+      ]
+    },
+    "historicalWindowId": {
+      "enum": [
+        "mesopotamian-city-temple-window",
+        "egyptian-royal-ritual-window",
+        "vedic-oral-ritual-window",
+        "greek-epic-civic-window",
+        "shang-zhou-classical-chinese-window",
+        "jewish-christian-scriptural-window",
+        "buddhist-canon-translation-window",
+        "islamicate-word-translation-window",
+        "yoruba-ifa-window",
+        "kiche-maya-popol-vuh-window"
+      ]
+    },
+    "influenceRelationId": {
+      "enum": [
+        "articulation-and-naming",
+        "story-performance-memory",
+        "ritual-specialist-institution",
+        "sacred-order-legitimation-and-critique",
+        "canon-curriculum-selection",
+        "translation-contact-remaking",
+        "suppression-counterstory-revival",
+        "moralizing-religion-complexity-dispute"
+      ]
+    },
+    "sourceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 24,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/sourceId"
+      }
+    },
+    "layerRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 15,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/layerId"
+      }
+    },
+    "influenceDimensionRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 13,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/influenceDimensionId"
+      }
+    },
+    "relationRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 15,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/relationId"
+      }
+    },
+    "historicalWindowRefs": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/historicalWindowId"
+      }
+    },
+    "influenceRelationRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/influenceRelationId"
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question",
+        "intended_use",
+        "excluded_use",
+        "unit_of_comparison",
+        "selection_note",
+        "data_classification"
+      ],
+      "properties": {
+        "question": { "$ref": "#/$defs/text" },
+        "intended_use": { "$ref": "#/$defs/text" },
+        "excluded_use": { "$ref": "#/$defs/text" },
+        "unit_of_comparison": { "$ref": "#/$defs/text" },
+        "selection_note": { "$ref": "#/$defs/text" },
+        "data_classification": { "const": "public-attributed-source-metadata-only" }
+      }
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "protocol",
+        "locator",
+        "raw_digest",
+        "semantic_digest",
+        "relation",
+        "mutated",
+        "authority_imported"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "protocol": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "locator": {
+          "$ref": "#/$defs/safeLocator"
+        },
+        "raw_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "semantic_digest": {
+          "oneOf": [
+            { "$ref": "#/$defs/sha256" },
+            { "type": "null" }
+          ]
+        },
+        "relation": {
+          "$ref": "#/$defs/id"
+        },
+        "mutated": {
+          "const": false
+        },
+        "authority_imported": {
+          "const": false
+        }
+      }
+    },
+    "claimTyping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "registers",
+        "causal_statuses",
+        "support_statuses",
+        "influence_rule"
+      ],
+      "properties": {
+        "rule": {
+          "$ref": "#/$defs/text"
+        },
+        "registers": {
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "uniqueItems": true,
+          "prefixItems": [
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "PRIMARY_TRADITION_TEXT" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "TRADITION_SELF_DESCRIPTION" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "SCHOOL_SPECIFIC_THEOLOGY" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "HISTORICAL_SCHOLARSHIP" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "MATERIAL_OR_ARCHAEOLOGICAL_EVIDENCE" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "EMPIRICAL_ASSOCIATION" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "BOUNDED_CAUSAL_EVIDENCE" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "COMPARATIVE_MODEL" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "DESIGN_COMMITMENT" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "BOUNDARY" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/registerDefinition" }, { "properties": { "id": { "const": "OPEN_QUESTION" } } }] }
+          ],
+          "items": false
+        },
+        "causal_statuses": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "prefixItems": [
+            { "const": "descriptive-association" },
+            { "const": "plausible-mechanism-not-isolated" },
+            { "const": "bounded-causal-evidence" },
+            { "const": "contested-causal-direction" },
+            { "const": "comparative-template-not-causal" }
+          ],
+          "items": false
+        },
+        "support_statuses": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "prefixItems": [
+            { "const": "source-bounded" },
+            { "const": "reported-not-reproduced" },
+            { "const": "contested" },
+            { "const": "design-choice" },
+            { "const": "unknown" }
+          ],
+          "items": false
+        },
+        "influence_rule": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "registerDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "meaning",
+        "does_not_establish"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/registerId"
+        },
+        "meaning": {
+          "$ref": "#/$defs/text"
+        },
+        "does_not_establish": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "typeFirewall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "distinct_types",
+        "civilisation_is_index_not_agent",
+        "religion_is_not_one_essence",
+        "tradition_is_not_monolith",
+        "deity_name_is_not_global_identity",
+        "story_is_not_falsehood",
+        "myth_is_not_lie",
+        "ritual_is_not_belief_report",
+        "canon_is_not_total_tradition",
+        "institution_is_not_community",
+        "historical_influence_is_not_truth",
+        "persistence_is_not_value",
+        "prevalence_is_not_authority",
+        "affiliation_is_not_personal_belief",
+        "similarity_implies_shared_origin",
+        "translation_is_identity",
+        "coexistence_is_causation",
+        "religion_caused_civilisation",
+        "civilisation_caused_religion",
+        "social_power_proves_metaphysical_truth_or_falsehood"
+      ],
+      "properties": {
+        "distinct_types": {
+          "type": "array",
+          "minItems": 15,
+          "maxItems": 15,
+          "uniqueItems": true,
+          "prefixItems": [
+            { "const": "word-or-name" },
+            { "const": "sacred-referent-claim" },
+            { "const": "story-or-teaching" },
+            { "const": "ritual-or-performance" },
+            { "const": "material-medium" },
+            { "const": "specialist-role" },
+            { "const": "archive-or-canon" },
+            { "const": "institution" },
+            { "const": "norm-or-law" },
+            { "const": "polity-or-economy" },
+            { "const": "community" },
+            { "const": "religion-index" },
+            { "const": "civilisation-index" },
+            { "const": "person" },
+            { "const": "model-representation" }
+          ],
+          "items": false
+        },
+        "civilisation_is_index_not_agent": { "const": true },
+        "religion_is_not_one_essence": { "const": true },
+        "tradition_is_not_monolith": { "const": true },
+        "deity_name_is_not_global_identity": { "const": true },
+        "story_is_not_falsehood": { "const": true },
+        "myth_is_not_lie": { "const": true },
+        "ritual_is_not_belief_report": { "const": true },
+        "canon_is_not_total_tradition": { "const": true },
+        "institution_is_not_community": { "const": true },
+        "historical_influence_is_not_truth": { "const": true },
+        "persistence_is_not_value": { "const": true },
+        "prevalence_is_not_authority": { "const": true },
+        "affiliation_is_not_personal_belief": { "const": true },
+        "similarity_implies_shared_origin": { "const": false },
+        "translation_is_identity": { "const": false },
+        "coexistence_is_causation": { "const": false },
+        "religion_caused_civilisation": { "const": false },
+        "civilisation_caused_religion": { "const": false },
+        "social_power_proves_metaphysical_truth_or_falsehood": { "const": false }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "locator",
+        "kind",
+        "observed_on",
+        "epistemic_access",
+        "claim_scope",
+        "limitations"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/sourceId"
+        },
+        "title": {
+          "$ref": "#/$defs/shortText"
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "pattern": "^https://[^#]+(?:#.*)?$"
+        },
+        "kind": {
+          "enum": [
+            "community-and-state-nominated-heritage-record",
+            "institutional-catalogue",
+            "intergovernmental-guidance",
+            "peer-reviewed-critique",
+            "peer-reviewed-study",
+            "publisher-retraction-notice",
+            "scholarly-institutional-guide",
+            "scholarly-reference"
+          ]
+        },
+        "observed_on": {
+          "const": "2026-08-20"
+        },
+        "epistemic_access": {
+          "const": "reported"
+        },
+        "claim_scope": {
+          "$ref": "#/$defs/text"
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      }
+    },
+    "layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "definition",
+        "not_equivalent_to"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/layerId"
+        },
+        "label": {
+          "$ref": "#/$defs/shortText"
+        },
+        "definition": {
+          "$ref": "#/$defs/text"
+        },
+        "not_equivalent_to": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      }
+    },
+    "influenceDimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "meaning",
+        "aggregate_weight"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/influenceDimensionId"
+        },
+        "meaning": {
+          "$ref": "#/$defs/text"
+        },
+        "aggregate_weight": {
+          "const": null
+        }
+      }
+    },
+    "relationDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "meaning",
+        "default_causal_status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/relationId"
+        },
+        "meaning": {
+          "$ref": "#/$defs/text"
+        },
+        "default_causal_status": {
+          "$ref": "#/$defs/causalStatus"
+        }
+      }
+    },
+    "historicalWindow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "period",
+        "places",
+        "community_or_tradition_indexes",
+        "scope_note",
+        "referent_claims",
+        "observations"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/historicalWindowId"
+        },
+        "label": {
+          "$ref": "#/$defs/shortText"
+        },
+        "period": {
+          "$ref": "#/$defs/shortText"
+        },
+        "places": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/$defs/shortText"
+          }
+        },
+        "community_or_tradition_indexes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/shortText"
+          }
+        },
+        "scope_note": {
+          "$ref": "#/$defs/text"
+        },
+        "referent_claims": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/referentClaim"
+          }
+        },
+        "observations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/historicalObservation"
+          }
+        }
+      }
+    },
+    "referentClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "attributed_statement",
+        "register",
+        "source_ids",
+        "cross_tradition_identity"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/shortText"
+        },
+        "attributed_statement": {
+          "$ref": "#/$defs/text"
+        },
+        "register": {
+          "enum": [
+            "PRIMARY_TRADITION_TEXT",
+            "TRADITION_SELF_DESCRIPTION",
+            "MATERIAL_OR_ARCHAEOLOGICAL_EVIDENCE",
+            "HISTORICAL_SCHOLARSHIP",
+            "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION"
+          ]
+        },
+        "source_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/sourceRefs" },
+            { "maxItems": 2 }
+          ]
+        },
+        "cross_tradition_identity": {
+          "const": null
+        }
+      }
+    },
+    "historicalObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "statement",
+        "register",
+        "causal_status",
+        "relation_ids",
+        "influence_dimension_ids",
+        "source_ids",
+        "counterpoint",
+        "limitations"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "register": {
+          "enum": [
+            "HISTORICAL_SCHOLARSHIP",
+            "INSTITUTIONAL_OR_HERITAGE_DESCRIPTION",
+            "MATERIAL_OR_ARCHAEOLOGICAL_EVIDENCE"
+          ]
+        },
+        "causal_status": {
+          "enum": [
+            "descriptive-association",
+            "plausible-mechanism-not-isolated"
+          ]
+        },
+        "relation_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/relationRefs" },
+            { "minItems": 2, "maxItems": 4 }
+          ]
+        },
+        "influence_dimension_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/influenceDimensionRefs" },
+            { "minItems": 2, "maxItems": 4 }
+          ]
+        },
+        "source_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/sourceRefs" },
+            { "maxItems": 2 }
+          ]
+        },
+        "counterpoint": {
+          "$ref": "#/$defs/text"
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      }
+    },
+    "influenceRelation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "statement",
+        "register",
+        "causal_status",
+        "from_layer_ids",
+        "to_layer_ids",
+        "relation_ids",
+        "influence_dimension_ids",
+        "historical_window_ids",
+        "source_ids",
+        "alternatives",
+        "limitations",
+        "stop_condition"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "register": {
+          "enum": [
+            "COMPARATIVE_MODEL",
+            "EMPIRICAL_ASSOCIATION"
+          ]
+        },
+        "causal_status": {
+          "$ref": "#/$defs/causalStatus"
+        },
+        "from_layer_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/layerRefs" },
+            { "minItems": 2, "maxItems": 4 }
+          ]
+        },
+        "to_layer_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/layerRefs" },
+            { "maxItems": 4 }
+          ]
+        },
+        "relation_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/relationRefs" },
+            { "minItems": 2, "maxItems": 3 }
+          ]
+        },
+        "influence_dimension_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/influenceDimensionRefs" },
+            { "minItems": 2, "maxItems": 4 }
+          ]
+        },
+        "historical_window_ids": {
+          "$ref": "#/$defs/historicalWindowRefs"
+        },
+        "source_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/sourceRefs" },
+            { "minItems": 2, "maxItems": 5 }
+          ]
+        },
+        "alternatives": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "stop_condition": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "emergenceLoop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "status",
+        "layer_path",
+        "relation_ids",
+        "historical_window_ids",
+        "failure_modes",
+        "not_universal",
+        "stop_condition"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "status": {
+          "const": "comparison-template-not-observed-sequence"
+        },
+        "layer_path": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/layerId"
+          }
+        },
+        "relation_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/relationRefs" },
+            { "minItems": 3, "maxItems": 3 }
+          ]
+        },
+        "historical_window_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/historicalWindowRefs" },
+            { "minItems": 1, "maxItems": 4 }
+          ]
+        },
+        "failure_modes": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "not_universal": {
+          "const": true
+        },
+        "stop_condition": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "translationSeam": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "term_family",
+        "risk",
+        "default_handling",
+        "prohibited_collapse",
+        "source_ids"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "term_family": {
+          "$ref": "#/$defs/text"
+        },
+        "risk": {
+          "$ref": "#/$defs/text"
+        },
+        "default_handling": {
+          "$ref": "#/$defs/text"
+        },
+        "prohibited_collapse": {
+          "$ref": "#/$defs/text"
+        },
+        "source_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/sourceRefs" },
+            { "minItems": 2, "maxItems": 4 }
+          ]
+        }
+      }
+    },
+    "kingdomInsight": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "principle",
+        "application",
+        "derived_from_relation_ids",
+        "refusal",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "principle": {
+          "$ref": "#/$defs/text"
+        },
+        "application": {
+          "$ref": "#/$defs/text"
+        },
+        "derived_from_relation_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/influenceRelationRefs" },
+            { "minItems": 1, "maxItems": 3 }
+          ]
+        },
+        "refusal": {
+          "$ref": "#/$defs/text"
+        },
+        "status": {
+          "const": "design-proposal-not-doctrine"
+        }
+      }
+    },
+    "agentSpecialisation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "role",
+        "required_inputs",
+        "allowed_outputs",
+        "required_checks",
+        "forbidden_claims",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "role": {
+          "$ref": "#/$defs/text"
+        },
+        "required_inputs": {
+          "allOf": [
+            { "$ref": "#/$defs/textArray" },
+            { "minItems": 2, "maxItems": 4 }
+          ]
+        },
+        "allowed_outputs": {
+          "allOf": [
+            { "$ref": "#/$defs/textArray" },
+            { "maxItems": 4 }
+          ]
+        },
+        "required_checks": {
+          "allOf": [
+            { "$ref": "#/$defs/textArray" },
+            { "minItems": 4, "maxItems": 4 }
+          ]
+        },
+        "forbidden_claims": {
+          "allOf": [
+            { "$ref": "#/$defs/textArray" },
+            { "minItems": 3, "maxItems": 4 }
+          ]
+        },
+        "status": {
+          "const": "future-role-design-only"
+        }
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "question",
+        "why_unknown",
+        "needed_evidence",
+        "stop_condition"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "question": {
+          "$ref": "#/$defs/text"
+        },
+        "why_unknown": {
+          "$ref": "#/$defs/text"
+        },
+        "needed_evidence": {
+          "allOf": [
+            { "$ref": "#/$defs/textArray" },
+            { "minItems": 4, "maxItems": 5 }
+          ]
+        },
+        "stop_condition": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_only",
+        "structure_only",
+        "research_local",
+        "network",
+        "filesystem_write",
+        "source_dereference",
+        "model_or_tokenizer_run",
+        "agent_dispatch",
+        "publication",
+        "deployment",
+        "theological_truth_adjudicated",
+        "god_proved",
+        "god_disproved",
+        "revelation_proved",
+        "religions_merged",
+        "deities_equated",
+        "religion_or_civilisation_rank",
+        "person_or_community_score",
+        "belief_or_affiliation_inference",
+        "identity_or_worth_inference",
+        "intent_or_deception_inference",
+        "myth_labelled_false",
+        "conversion_or_persuasion",
+        "ritual_generated_or_executed",
+        "sacred_or_restricted_content_ingested",
+        "community_authority_inferred",
+        "consent_granted",
+        "authority_granted",
+        "writes_wake",
+        "writes_karma",
+        "economic_or_governance_effect",
+        "automatic_action",
+        "counterstories_and_disagreements_first_class",
+        "silence_refusal_privacy_and_exit_preserved"
+      ],
+      "properties": {
+        "read_only": { "const": true },
+        "structure_only": { "const": true },
+        "research_local": { "const": true },
+        "network": { "const": false },
+        "filesystem_write": { "const": false },
+        "source_dereference": { "const": false },
+        "model_or_tokenizer_run": { "const": false },
+        "agent_dispatch": { "const": false },
+        "publication": { "const": false },
+        "deployment": { "const": false },
+        "theological_truth_adjudicated": { "const": false },
+        "god_proved": { "const": false },
+        "god_disproved": { "const": false },
+        "revelation_proved": { "const": false },
+        "religions_merged": { "const": false },
+        "deities_equated": { "const": false },
+        "religion_or_civilisation_rank": { "const": false },
+        "person_or_community_score": { "const": false },
+        "belief_or_affiliation_inference": { "const": false },
+        "identity_or_worth_inference": { "const": false },
+        "intent_or_deception_inference": { "const": false },
+        "myth_labelled_false": { "const": false },
+        "conversion_or_persuasion": { "const": false },
+        "ritual_generated_or_executed": { "const": false },
+        "sacred_or_restricted_content_ingested": { "const": false },
+        "community_authority_inferred": { "const": false },
+        "consent_granted": { "const": false },
+        "authority_granted": { "const": false },
+        "writes_wake": { "const": false },
+        "writes_karma": { "const": false },
+        "economic_or_governance_effect": { "const": false },
+        "automatic_action": { "const": false },
+        "counterstories_and_disagreements_first_class": { "const": true },
+        "silence_refusal_privacy_and_exit_preserved": { "const": true }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "digest",
+        "digest_field_zeroed"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256-recursive-sorted-json-keys-v1"
+        },
+        "digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "digest_field_zeroed": {
+          "const": true
+        }
+      }
+    }
+  }
+}
