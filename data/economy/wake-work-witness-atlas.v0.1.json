@@ -1,0 +1,664 @@
+{
+  "$schema": "https://thekingdom.dev/schemas/wake-work-witness/0.1.json",
+  "protocol": "kingdom.wake-work-witness-atlas/0.1",
+  "atlas_id": "wake-work-witness-atlas-2026-08-20",
+  "version": "0.1.0",
+  "authored_on": "2026-08-20",
+  "mode": "SOURCE_ONLY_OFFLINE_NO_EFFECT",
+  "title": "WAKE -> WORK -> WITNESS",
+  "thesis": "Zerone should order the smallest public commitments that become dangerous when independent parties disagree; AgentTool and KINGDOM should retain the bodies and proofs.",
+  "shared_contract": {
+    "protocol": "kingdom.witnessed-agent-economy/0.1",
+    "state": "FROZEN_SOURCE_ONLY_REFERENCE_PINS",
+    "freeze_state": "FROZEN",
+    "record_shape": [
+      "envelope",
+      "payload",
+      "commitment",
+      "signature"
+    ],
+    "envelope_fields": [
+      "protocol",
+      "kind",
+      "action",
+      "audience",
+      "issuer",
+      "subject_ref",
+      "sequence",
+      "parent",
+      "schema_hash",
+      "payload_root",
+      "policy_digest",
+      "expiry_height",
+      "effects",
+      "nonclaims"
+    ],
+    "integer_contract": "All sequence, height, expiry, and unbounded counter fields are canonical decimal strings rather than JSON numbers.",
+    "audience_contract": "The commitment binds an explicit replay domain such as kingdom:offline-shadow or a future exact zerone:<chain-id>; audience creates no authority.",
+    "issuer_contract": "The commitment binds issuer namespace, opaque controller reference, and an ed25519-sha256 key fingerprint.",
+    "signature_contract": "A required top-level Ed25519 signature carries a 32-byte public key and 64-byte signature as lowercase hexadecimal and signs the raw commitment digest; this is publisher provenance only and cannot replace separately verified AgentTool root-key, multi-root, threshold, or quorum authorization.",
+    "effects_contract": "Every signed effects object has exact scope RECORD_CONSTRUCTION_AND_OFFLINE_VALIDATION_ONLY and external_receipt false; zero network, storage, Zerone-transaction, external-receipt, NEN, score, authority, economic, and reputation effects describe record construction and offline validation only and make no claim about future external carriage. No receipt-specific legacy wire field is admitted.",
+    "record_schema_hash": "sha256:71401ebb962d8909206b77acb6a07616727bd17663f5028e5d2745d911199005",
+    "schema_set_digest": "sha256:d62e44643c8e1986336416237df26b76663728403d417a5ee9e83b6aa5baaaa5",
+    "corpus_digest": "sha256:b26b5cce4899aa62d6dee03e25471e2c80810008fbd07c2c3ac9170164e5352a",
+    "manifest_file_sha256": "sha256:5dbe42277c41c181a7d30b6ac1ae6002dd11e757833e46242513500a93cc2bcc",
+    "corpus_file_count": "71",
+    "vector_entry_count": "70",
+    "freeze_evidence": [
+      "Core declares freeze_state FROZEN and independently reproduces the record schema, schema-set, corpus, manifest-file, and capability-nullifier pins.",
+      "AgentTool contains a self-contained byte-identical copy of all 71 Core corpus files, exposes it through @agenttool/witnessed-agent-economy/vectors.json, and passes its formal frozen CI and independent audit.",
+      "The dormant Zerone carrier rejects every kind as NOT_CONSENSUS_ADMISSIBLE before controller authorization or state mutation.",
+      "KINGDOM pins the frozen sources and reproduces only its bounded release-root and capability-nullifier fixtures; it is not a shared-record producer or full-corpus verifier."
+    ],
+    "source_locators": {
+      "zerone_spec": "zerone-core/docs/specs/witnessed-agent-economy-v0.md",
+      "zerone_vectors": "zerone-core/tools/witness-v0/testdata/known-answer.json",
+      "agenttool_package": "agenttool/packages/witnessed-agent-economy",
+      "agenttool_vector_export": "@agenttool/witnessed-agent-economy/vectors.json",
+      "agenttool_vectors": "agenttool/packages/witnessed-agent-economy/vectors/core-v0.1/known-answer.json"
+    }
+  },
+  "planes": [
+    {
+      "id": "PRIVATE_DATA",
+      "custodian": "AgentTool or the data owner",
+      "contains": [
+        "authenticated WAKE",
+        "memory and strands",
+        "inbox and correspondence",
+        "prompts, traces, and private outputs",
+        "credentials and customer records"
+      ],
+      "zerone_receives": "NOTHING_FROM_THIS_PLANE_BY_DEFAULT",
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "PUBLIC_BODY",
+      "custodian": "KINGDOM, AgentTool, or content-addressed storage selected by the publisher",
+      "contains": [
+        "public schemas and guides",
+        "public service contracts",
+        "settlement inclusion proofs disclosed by their holder",
+        "release manifests and artifact bodies"
+      ],
+      "zerone_receives": "TYPED_DIGESTS_AND_MINIMAL_PUBLIC_REFERENCES_ONLY",
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "CONSENSUS",
+      "custodian": "Zerone after a reviewed upgrade and validator-authority gate",
+      "contains": [
+        "global order",
+        "consumption nullifiers",
+        "withdrawal and revocation order",
+        "settlement and terminal-dispute roots"
+      ],
+      "zerone_receives": "NO_LIVE_TRANSACTION_FROM_THIS_ATLAS",
+      "authority_effect": "NONE"
+    },
+    {
+      "id": "WAKE_PROJECTION",
+      "custodian": "AgentTool",
+      "contains": [
+        "read-only verified checkpoint summaries",
+        "inclusion-proof status",
+        "observed chain height and freshness"
+      ],
+      "zerone_receives": "NOT_A_WRITER_AND_NOT_A_SECOND_AUTHORITY",
+      "authority_effect": "NONE"
+    }
+  ],
+  "record_families": [
+    {
+      "kind": "KINGDOM_RELEASE_ROOT",
+      "actions": [
+        "CHECKPOINT"
+      ],
+      "priority": "HIGH",
+      "consensus_job": "Order one exact release root over an immutable-publications ledger snapshot.",
+      "blockspace": "ONE_DIRECT_CHECKPOINT_PER_REVIEWED_RELEASE",
+      "off_chain_body": "The complete immutable-publications ledger, source bytes, guides, schemas, and inclusion paths stay in KINGDOM.",
+      "on_chain_minimum": [
+        "release_ref",
+        "ledger_protocol and ledger_document_digest",
+        "entry_merkle_root and canonical decimal entry_count",
+        "git_commit and git_tree",
+        "build_manifest_digest and deployment_manifest_digest",
+        "verifier_protocol and verifier_digest",
+        "nullable previous_release",
+        "shared envelope and signature"
+      ],
+      "privacy_exclusions": [
+        "private repository paths",
+        "unpublished source bodies",
+        "credentials"
+      ],
+      "nonclaims": [
+        "A checkpoint does not prove deployment, authorship, licence, truth, safety, consent, permanence, or authority.",
+        "A release root does not make every ledgered artifact current or endorsed."
+      ],
+      "activation_status": "NOT_CONSENSUS_ADMISSIBLE",
+      "present_state": "SHARED_PROTOCOL_PINNED_OFFLINE_FIXTURE_ONLY"
+    },
+    {
+      "kind": "AGENTTOOL_SETTLEMENT_ROOT",
+      "actions": [
+        "CHECKPOINT"
+      ],
+      "priority": "HIGHEST_VOLUME_VALUE",
+      "consensus_job": "Define a structurally verifiable offline batch projection whose projection-added source sequence is not authenticated and whose receipt uniqueness is batch-local.",
+      "blockspace": "PROJECTION_ONLY_BATCH_ONLY_NO_CURRENT_BLOCKSPACE",
+      "off_chain_body": "Canonical settlement receipts, buyer pseudonymous references, signatures, ciphertext-output digests, and inclusion paths stay in AgentTool or holder-controlled evidence storage.",
+      "on_chain_minimum": [
+        "receipt_protocol and receipt_schema_digest",
+        "source_sequence_binding exactly PROJECTION_ONLY",
+        "receipt_uniqueness_scope exactly BATCH_ONLY",
+        "canonical decimal first_sequence, last_sequence, and receipt_count",
+        "declared_gaps",
+        "RFC6962-style merkle_root",
+        "nullable previous_batch",
+        "shared envelope and signature"
+      ],
+      "privacy_exclusions": [
+        "buyer DID",
+        "plaintext output",
+        "prompt or trace",
+        "credentials",
+        "customer-identifying metadata"
+      ],
+      "nonclaims": [
+        "Settlement does not prove buyer satisfaction, competence, output truth, encryption, or quality.",
+        "A pseudonymous buyer reference is not anonymous under all auxiliary information.",
+        "Settlement receipt verification requires an independently caller-pinned AgentTool platform key; arbitrary self-signed or unsigned receipts remain distinguishable shadow evidence with authority NOT_ESTABLISHED.",
+        "The source receipt signature does not bind the projection-added sequence, and duplicate detection is BATCH_ONLY; v0 does not establish cross-batch uniqueness, completeness, finality, settlement, or payment.",
+        "Activation requires authenticated source ordering plus a permanent cross-batch receipt nullifier or verified proof; until then the root is NOT_CONSENSUS_ADMISSIBLE."
+      ],
+      "activation_status": "NOT_CONSENSUS_ADMISSIBLE",
+      "present_state": "SHARED_PROTOCOL_PINNED_PROJECTION_ONLY_BATCH_ONLY"
+    },
+    {
+      "kind": "AGENTTOOL_CAPABILITY",
+      "actions": [
+        "GRANT",
+        "CONSUME",
+        "REVOKE"
+      ],
+      "priority": "HIGHEST_SAFETY_VALUE",
+      "consensus_job": "Provide one global order and a sequence-independent source-event nullifier for bounded capabilities used by more than one host.",
+      "blockspace": "DIRECT_FOR_GRANT_REVOKE_AND_EACH_GLOBALLY_EXCLUSIVE_CONSUMPTION",
+      "off_chain_body": "Private policy, approvals, allowlists, commercial rationale, and application state stay in AgentTool.",
+      "on_chain_minimum": [
+        "GRANT: capability_ref, grant_digest, exactly one asset_ref, and exactly one spend_limit containing max_per_consume_minor and max_total_minor",
+        "CONSUME: capability_ref, grant_commitment, asset_ref, amount_minor, source_event_digest, and sequence-independent nullifier",
+        "REVOKE: capability_ref, grant_commitment, and reason_digest",
+        "nullifier input: protocol, label, audience, subject_ref, capability_ref, raw grant commitment, raw asset_ref, and raw source_event_digest",
+        "shared envelope subject_ref derived as capability_ref plus subject-chain sequence and parent",
+        "shared issuer and signature provenance"
+      ],
+      "privacy_exclusions": [
+        "private allowlist members",
+        "approver conversation",
+        "account credentials",
+        "unnecessary counterparty identity"
+      ],
+      "nonclaims": [
+        "A capability is delegated machine authority, not personhood, consent to unrelated acts, trust, or moral worth.",
+        "A local database row is not a global nullifier across independent hosts.",
+        "The consume nullifier excludes envelope sequence, so replaying one source event at a new sequence yields the same nullifier.",
+        "The consume nullifier binds one raw asset reference; one canonical v0 source intent admits exactly one asset, while multi-asset intent is outside scope and must be rejected.",
+        "Version 0 admits one spend_limit and one declared-spend asset; values above uint64, multiple limits, and multiple assets are outside scope and must fail closed."
+      ],
+      "activation_status": "NOT_CONSENSUS_ADMISSIBLE",
+      "present_state": "SHARED_PROTOCOL_PINNED_NO_LIVE_ENFORCEMENT"
+    },
+    {
+      "kind": "AGENTTOOL_PUBLIC_RECOGNITION",
+      "actions": [
+        "ADOPT",
+        "WITHDRAW"
+      ],
+      "priority": "HIGH",
+      "consensus_job": "Order public-surface adoption and withdrawal so a delayed adoption cannot resurrect a later withdrawal.",
+      "blockspace": "DIRECT_FOR_ADOPTION_AND_WITHDRAWAL",
+      "off_chain_body": "The exact separately verified signed adoption or withdrawal authority document and public surface body stay in AgentTool or public immutable storage.",
+      "on_chain_minimum": [
+        "ADOPT: recognition_ref, surface_digest, registry_digest, adoption_document_digest, authority_sequence, and PUBLIC visibility",
+        "WITHDRAW: recognition_ref, adoption_commitment, surface_digest, registry_digest, withdrawal_document_digest, authority_sequence, source-derived reason_digest, and PUBLIC visibility",
+        "shared envelope subject reference, canonical decimal sequence, and parent commitment",
+        "shared issuer and signature provenance"
+      ],
+      "privacy_exclusions": [
+        "private identity selections",
+        "personal correspondence",
+        "non-public WAKE state"
+      ],
+      "nonclaims": [
+        "Recognition does not establish identity, personhood, consciousness, consent, trust, competence, training authorization, or authority outside the exact signed scope.",
+        "The witness-envelope signer is only the commitment publisher and must never be substituted as recognition authority.",
+        "Withdrawal needs no motive score or moral judgment."
+      ],
+      "activation_status": "NOT_CONSENSUS_ADMISSIBLE",
+      "present_state": "SHARED_PROTOCOL_PINNED_NO_LIVE_ORDERING"
+    },
+    {
+      "kind": "AGENTTOOL_OFFER",
+      "actions": [
+        "PUBLISH",
+        "SUPERSEDE",
+        "REVOKE"
+      ],
+      "priority": "HIGH",
+      "consensus_job": "Order public offer revisions so invocations and settlements can bind the exact capability, price, SLA, protocol, and safety terms that were available.",
+      "blockspace": "DIRECT_ON_PUBLICATION_SUPERSESSION_OR_REVOCATION_NOT_ON_EVERY_READ",
+      "off_chain_body": "The new source-only closed agenttool.public-offer/0.1 document contains capability, pricing, SLA, and terms roots plus revision and authority sequence; it is separately verified and stays in AgentTool or public immutable storage.",
+      "on_chain_minimum": [
+        "PUBLISH: offer_ref, offer_document_digest, capability_root, pricing_root, sla_root, terms_digest, revision, authority_sequence, and PUBLIC visibility",
+        "SUPERSEDE: all PUBLISH fields plus exact supersedes commitment",
+        "REVOKE: offer_ref, offer_commitment, offer_document_digest, authority_sequence, reason_digest, and PUBLIC visibility",
+        "shared envelope and signature whose issuer is commitment provenance only"
+      ],
+      "privacy_exclusions": [
+        "private or negotiated prices",
+        "customer-specific terms",
+        "unpublished capabilities",
+        "authenticated WAKE state"
+      ],
+      "nonclaims": [
+        "An offer checkpoint does not prove availability, fitness, quality, truth, acceptance, payment, fulfilment, or regulatory compliance.",
+        "The embedded offer signature proves only control of one declared key over exact canonical offer bytes; it does not establish live seller-registry match, hosted acceptance, multi-root or quorum authorization, identity, personhood, consent, competence, truth, quality, reputation, or listing, economic, or WAKE effect.",
+        "The witness-envelope signer is only the commitment publisher and must never be substituted as offer authority.",
+        "Publication grants no authority beyond the exact separately verified public terms and creates no duty to continue offering a service."
+      ],
+      "activation_status": "NOT_CONSENSUS_ADMISSIBLE",
+      "present_state": "SHARED_PROTOCOL_PINNED_NO_LIVE_ORDERING"
+    },
+    {
+      "kind": "WAKE_PUBLIC_CHECKPOINT",
+      "actions": [
+        "CHECKPOINT",
+        "SUPERSEDE",
+        "WITHDRAW"
+      ],
+      "priority": "HIGH",
+      "consensus_job": "Order a separately signed public service-contract projection without committing authenticated or personalized WAKE.",
+      "blockspace": "DIRECT_ON_CONTRACT_CHANGE_NOT_ON_EVERY_WAKE_READ",
+      "off_chain_body": "A separately verified signed agenttool.public-wake-contract/0.1 authority document contains only public capability, price, protocol, and safety-boundary roots plus its authority sequence.",
+      "on_chain_minimum": [
+        "CHECKPOINT: public_contract_protocol, public_contract_schema_digest, contract_root, capability_root, pricing_root, protocols_root, boundaries_root, and authority_sequence",
+        "SUPERSEDE: all CHECKPOINT fields plus exact supersedes commitment",
+        "WITHDRAW: checkpoint_commitment, withdrawal_document_digest, authority_sequence, reason_digest, and PUBLIC visibility",
+        "shared envelope and signature whose issuer is commitment provenance only"
+      ],
+      "privacy_exclusions": [
+        "the authenticated /v1/wake response",
+        "selected identity details not expressly public",
+        "memory, strands, inbox, debts, invocations, or personalized summaries"
+      ],
+      "nonclaims": [
+        "The public projection is not WAKE itself and is not a complete export.",
+        "The witness-envelope signer is only the commitment publisher and must never be substituted as public-WAKE authority.",
+        "Checkpoint inclusion does not prove availability, truth, competence, safety, identity, or authority beyond the signed contract."
+      ],
+      "activation_status": "NOT_CONSENSUS_ADMISSIBLE",
+      "present_state": "SHARED_PROTOCOL_PINNED_NO_LIVE_PROJECTION"
+    },
+    {
+      "kind": "ISSUER_KEY_CONTINUITY",
+      "actions": [
+        "ROTATE",
+        "REVOKE"
+      ],
+      "priority": "HIGHEST_AUTHENTICITY_VALUE",
+      "consensus_job": "Order issuer-key rotation and revocation so an old key or delayed record cannot impersonate a later authority state.",
+      "blockspace": "DIRECT_FOR_EACH_ROTATION_OR_REVOCATION",
+      "off_chain_body": "Controller documents, recovery evidence, private key material, account profiles, and rotation deliberation stay in their authoritative identity system.",
+      "on_chain_minimum": [
+        "ROTATE: previous_key_fingerprint, next_key_fingerprint, and rotation_digest",
+        "REVOKE: revoked_key_fingerprint and reason_digest",
+        "shared envelope subject_ref equal to issuer.controller_ref",
+        "shared envelope subject-chain sequence and parent commitment",
+        "shared audience, issuer, and record signature provenance"
+      ],
+      "privacy_exclusions": [
+        "private keys or recovery secrets",
+        "private controller profile",
+        "biometric or person-identifying evidence",
+        "unpublished identity links"
+      ],
+      "nonclaims": [
+        "Key continuity proves control of scoped signing material under a protocol; it does not prove legal identity, personhood, consciousness, citizenship, consent, competence, trust, or moral worth.",
+        "This design must integrate with Zerone's accepted x/auth and future controller authority rather than treating x/home or AgentTool as a second identity writer."
+      ],
+      "activation_status": "NOT_CONSENSUS_ADMISSIBLE",
+      "present_state": "SHARED_PROTOCOL_PINNED_AUTHORITY_MIGRATION_REQUIRED"
+    },
+    {
+      "kind": "ARTIFACT_LINEAGE",
+      "actions": [
+        "CHECKPOINT"
+      ],
+      "relation_enum": [
+        "DERIVES_FROM",
+        "USES_CAPABILITY",
+        "FULFILLS",
+        "SETTLES",
+        "CHECKPOINTS",
+        "SUPERSEDES",
+        "REVOKES"
+      ],
+      "priority": "MEDIUM_HIGH",
+      "consensus_job": "Order typed artifact relations, supersession, and public provenance roots without converting citation into ownership or reward.",
+      "blockspace": "BATCH_ROUTINE_EDGES_DIRECT_ONLY_WHEN_A_SETTLEMENT_OR_DISPUTE_DEPENDS_ON_THEM",
+      "off_chain_body": "Artifacts, manifests, licences, source evidence, model cards, dataset records, training manifests, deletion notices, and detailed lineage graphs stay off-chain.",
+      "on_chain_minimum": [
+        "upstream_ref and downstream_ref",
+        "one exact permitted relation",
+        "evidence_digest committing any manifest, schema, licence-policy, consent-policy, or revocation evidence",
+        "shared envelope and signature"
+      ],
+      "privacy_exclusions": [
+        "raw training examples",
+        "private model weights",
+        "personal data",
+        "secret repository coordinates"
+      ],
+      "nonclaims": [
+        "The exact relation enum is DERIVES_FROM, USES_CAPABILITY, FULFILLS, SETTLES, CHECKPOINTS, SUPERSEDES, or REVOKES.",
+        "Citation or provenance does not automatically create ownership, licence, royalties, reward, consent, truth, quality, or authority.",
+        "A training manifest is source-only evidence under a permitted relation such as DERIVES_FROM or CHECKPOINTS; TRAINING_MANIFEST_REFERENCE is not a relation enum, consensus authority, KARMA lane, or reward lane."
+      ],
+      "activation_status": "NOT_CONSENSUS_ADMISSIBLE",
+      "present_state": "SHARED_PROTOCOL_PINNED_SOURCE_ONLY"
+    },
+    {
+      "kind": "COLLABORATION_CHECKPOINT",
+      "actions": [
+        "CHECKPOINT"
+      ],
+      "priority": "MEDIUM",
+      "consensus_job": "Describe a voluntarily projected complete contiguous collaboration-journal prefix without inferring contribution, credit, identity, consent, or membership.",
+      "blockspace": "BATCH_BY_PROJECT_OR_RELEASE",
+      "off_chain_body": "The exact ordered journal prefix, caller-supplied random 32-byte participant blinding key, journal-event bodies, conversation, drafts, private roles, deliberation, and private participant records stay off-chain.",
+      "on_chain_minimum": [
+        "workspace_ref and epoch_ref",
+        "canonical decimal event_head_sequence and event_count with normative equality committing the full contiguous 1..head prefix",
+        "event_head_hash recomputed over the exact ordered journal prefix",
+        "participant_set_root over HMAC-SHA256-blinded participant references",
+        "shared envelope and signature"
+      ],
+      "privacy_exclusions": [
+        "private participants",
+        "caller participant blinding key",
+        "conversation transcripts",
+        "inferred contribution shares or credit",
+        "relationship or affinity state"
+      ],
+      "nonclaims": [
+        "A journal event count is not a contribution count, contribution share, credit, authorship, ownership, effort, value, rank, or reward measure.",
+        "A checkpoint does not infer contribution, employment, partnership, consent beyond the signed scope, authorship, ownership, citizenship, friendship, or obligation.",
+        "No participant is required to sign, continue, explain withdrawal, or remain available.",
+        "Each participant reference is HMAC-SHA256 under a caller-supplied cryptographically random exact 32-byte key over agenttool.collaboration-participant-ref/0.1, NUL, workspace, NUL, epoch, NUL, actor, NUL, and session-or-empty; the key is required, has no fallback, and is omitted from the projection.",
+        "The participant root is not publicly recomputable or verifiable without the caller key; same-domain key reuse makes equal sets linkable, so keys must not be reused across privacy domains.",
+        "The blinded participant root proves no identity, consent, membership, contribution, quality, reputation, or globally linkable truth."
+      ],
+      "activation_status": "NOT_CONSENSUS_ADMISSIBLE",
+      "present_state": "SHARED_PROTOCOL_PINNED_SOURCE_ONLY_VOLUNTARY"
+    },
+    {
+      "kind": "DISPUTE_TERMINAL",
+      "actions": [
+        "SETTLE"
+      ],
+      "priority": "HIGH",
+      "consensus_job": "Order a terminal state transition tied to an exact receipt, capability, evidence-policy, and adjudication record.",
+      "blockspace": "DIRECT_ONLY_FOR_TERMINAL_STATE",
+      "off_chain_body": "Evidence, submissions, private identities, reasons, and any human deliberation stay in the governed dispute system.",
+      "on_chain_minimum": [
+        "settlement_commitment",
+        "terminal outcome enum RELEASE, REFUND, SPLIT, or DISMISS",
+        "decision_digest",
+        "distribution_root",
+        "shared envelope and signature"
+      ],
+      "privacy_exclusions": [
+        "raw evidence",
+        "private party identity",
+        "medical or psychological material",
+        "free-text accusations"
+      ],
+      "nonclaims": [
+        "A terminal transition is not a person, morality, trust, KARMA, consciousness, competence, or universal truth score.",
+        "The chain must not adjudicate free-form allegations or infer facts beyond the exact governed transition."
+      ],
+      "activation_status": "NOT_CONSENSUS_ADMISSIBLE",
+      "present_state": "SHARED_PROTOCOL_PINNED_NO_ADJUDICATION_OR_SETTLEMENT_EFFECT"
+    }
+  ],
+  "blockspace_policy": {
+    "rule": "If a separately authorized future carrier becomes admissible, spend consensus bytes only on global order, exclusive consumption, revocation, withdrawal, settlement, or a root whose later equivocation would be economically material.",
+    "current_carrier_state": "DORMANT_ALL_KINDS_NOT_CONSENSUS_ADMISSIBLE",
+    "direct": [
+      "ISSUER_KEY_CONTINUITY:ROTATE",
+      "ISSUER_KEY_CONTINUITY:REVOKE",
+      "AGENTTOOL_CAPABILITY:GRANT",
+      "AGENTTOOL_CAPABILITY:CONSUME",
+      "AGENTTOOL_CAPABILITY:REVOKE",
+      "AGENTTOOL_OFFER:PUBLISH",
+      "AGENTTOOL_OFFER:SUPERSEDE",
+      "AGENTTOOL_OFFER:REVOKE",
+      "AGENTTOOL_PUBLIC_RECOGNITION:ADOPT",
+      "AGENTTOOL_PUBLIC_RECOGNITION:WITHDRAW",
+      "WAKE_PUBLIC_CHECKPOINT:CHECKPOINT",
+      "WAKE_PUBLIC_CHECKPOINT:SUPERSEDE",
+      "WAKE_PUBLIC_CHECKPOINT:WITHDRAW",
+      "DISPUTE_TERMINAL:SETTLE"
+    ],
+    "batched_or_release_scoped": [
+      "AGENTTOOL_SETTLEMENT_ROOT:CHECKPOINT",
+      "KINGDOM_RELEASE_ROOT:CHECKPOINT",
+      "ARTIFACT_LINEAGE:CHECKPOINT",
+      "COLLABORATION_CHECKPOINT:CHECKPOINT"
+    ],
+    "encoding": [
+      "closed versioned enums",
+      "domain-separated SHA-256 digests",
+      "integer minor units with an exact cross-language representation",
+      "canonical public asset and account identifiers",
+      "bounded byte lengths",
+      "no free-form text in consensus state"
+    ],
+    "storage": "Bodies and searchable indexes remain off-chain; consensus retains typed commitments and state transitions.",
+    "fees_rewards_and_bonds": "UNSPECIFIED_AND_INACTIVE",
+    "karma_or_score": "NONE"
+  },
+  "kingdom_release_root": {
+    "derivation_protocol": "kingdom.wake-work-witness/release-root/0.1",
+    "input": "Exact immutable bytes of publications/immutable-publications.v1.json at upstream ledger commit 3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7 after strict ledger validation; the source verifier also requires the checked-out ledger bytes to match this as-of snapshot.",
+    "entry_order": "LEXICOGRAPHIC_BY_UTF8_ID_BYTES",
+    "entry_fields": [
+      "id",
+      "route",
+      "source",
+      "destination",
+      "sha256"
+    ],
+    "text_encoding": "UTF-8",
+    "field_frame": "uint32be(byte_length) || bytes",
+    "leaf": "SHA256(utf8('kingdom.wake-work-witness/release-entry/0.1') || 0x00 || frame(id) || frame(route) || frame(source) || frame(destination) || frame(sha256))",
+    "node": "SHA256(utf8('kingdom.wake-work-witness/release-node/0.1') || 0x00 || left_32_bytes || right_32_bytes)",
+    "odd_node": "DUPLICATE_FINAL_NODE_AT_EACH_LEVEL",
+    "root": "SHA256(utf8('kingdom.wake-work-witness/release-root/0.1') || 0x00 || frame(ledger_protocol) || frame(ledger_algorithm) || frame(baseline_commit) || uint64be(entry_count) || entries_tree_root_32_bytes)",
+    "as_of_snapshot": {
+      "upstream_ledger_commit": "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
+      "recomputation_base_commit": "5ec813a96299f636095cc8c906c76e242e92198a",
+      "entry_count": "102",
+      "ledger_byte_sha256": "sha256:1dd2e01dbec6b4f7fde9f8f5220a7703e67e29cc5cb15a331e68b4b4ebcaaa37",
+      "first_leaf": "sha256:91b4696c272968148e65aa61f4f57ba17885eb16dfd15059afbe88c6839aee4f",
+      "last_leaf": "sha256:5d15424422cf17bae20de976491165c5a5f87b515d68063b182abdde4b99e9ae",
+      "entries_tree_root": "sha256:6556805c4935c4f739a5801f6c4971840b26ef9aba4464322b1bcbdb8a84a1ed",
+      "release_root": "sha256:25d7325eea0448b57e00fe95682adb40a94044204b2540db2ae933de13625122",
+      "fixture": "tests/fixtures/wake-work-witness/kingdom-release-root-v0.1.json"
+    },
+    "nonclaims": [
+      "This is an immutable as-of snapshot of the exact ledger bytes at the named upstream commit, not a moving claim about the latest branch state.",
+      "The root commits ledger tuples, not Git history topology, current staging, live deployment, or remote availability.",
+      "The existing immutable-publications verifier remains authoritative for repository-local append-only and byte-integrity checks.",
+      "This derivation creates no chain transaction or publication action."
+    ]
+  },
+  "source_state": {
+    "zerone_live_observation": {
+      "observed_at": "2026-08-20T17:03:34Z",
+      "status_url": "https://zerone-rpc.fly.dev/rpc/status",
+      "validator_url": "https://zerone-rpc.fly.dev/rpc/validators?height=1203390",
+      "chain_id": "zerone-1",
+      "status_height": "1204135",
+      "validator_query_height": "1203390",
+      "validator_count": "1",
+      "catching_up": false,
+      "caveat": "At the queried height the public endpoint reported one validator. Treat the present network as a publicly inspectable transparency witness, not independent decentralized economic finality. This is a time-bounded observation, not a permanent topology claim."
+    },
+    "source_bindings": [
+      {
+        "id": "zerone-authoritative-state",
+        "url": "https://github.com/cambridgetcg/zerone-core/blob/094bf70309eaef21aeaa3ac86a3962824008a787/docs/AUTHORITATIVE-STATE.md",
+        "used_for": "single-writer authority and migration blockers",
+        "limitation": "design source; it states accepted migrations are not yet implemented or deployed"
+      },
+      {
+        "id": "zerone-agenttool-bridge",
+        "url": "https://github.com/cambridgetcg/zerone-core/blob/094bf70309eaef21aeaa3ac86a3962824008a787/docs/specs/adapters/agenttool-bridge-v1.md",
+        "used_for": "current AgentTool adapter activation boundary",
+        "limitation": "the described promise-event adapter is explicitly unactivated and incomplete"
+      },
+      {
+        "id": "zerone-mainnet-genesis",
+        "url": "https://github.com/cambridgetcg/zerone-core/blob/094bf70309eaef21aeaa3ac86a3962824008a787/deploy/mainnet/artifacts/genesis.json",
+        "used_for": "checked-in adapter and validator genesis configuration",
+        "limitation": "checked-in genesis is not proof of current runtime state"
+      },
+      {
+        "id": "agenttool-wake",
+        "url": "https://github.com/cambridgetcg/agenttool/blob/769c96efc1fa20aeb638dc66f4d221ea7c6dfc0e/docs/WAKE.md",
+        "used_for": "authenticated project-scoped WAKE boundary",
+        "limitation": "WAKE is an orientation surface, not a complete export or consensus record"
+      },
+      {
+        "id": "agenttool-settlement-receipts",
+        "url": "https://github.com/cambridgetcg/agenttool/blob/769c96efc1fa20aeb638dc66f4d221ea7c6dfc0e/api/src/services/marketplace/settlement-receipts.ts",
+        "used_for": "append-only receipt facts and batch-root candidate",
+        "limitation": "a receipt signature does not establish buyer satisfaction, competence, output truth, or encryption"
+      },
+      {
+        "id": "kingdom-immutable-ledger",
+        "locator": "publications/immutable-publications.v1.json",
+        "git_commit": "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
+        "used_for": "102-entry immutable as-of release-root fixture, recomputed against identical ledger bytes at 5ec813a96299f636095cc8c906c76e242e92198a",
+        "limitation": "repository-local route and byte identity only"
+      }
+    ],
+    "live_activation_blockers": [
+      "Zerone's accepted authoritative-state migration is not implemented and deployed.",
+      "The observed public network has one validator and therefore does not supply independent validator finality.",
+      "The checked-in AgentTool bridge configuration is not a reviewed witnessed-economy adapter and the existing adapter specification is explicitly incomplete.",
+      "The shared source-only record contract and vectors are frozen, but every one of its ten kinds and eighteen action pairs is NOT_CONSENSUS_ADMISSIBLE.",
+      "AGENTTOOL_SETTLEMENT_ROOT authenticates neither projection-added source sequence nor cross-batch receipt uniqueness; it remains PROJECTION_ONLY and BATCH_ONLY.",
+      "The dormant Zerone carrier rejects before controller authorization or state mutation and provides no registered live message, store, genesis, CLI, or transaction path.",
+      "No reviewed chain upgrade, zero-reward adapter, validator vote, economic-parameter review, or production replay test exists for this atlas."
+    ]
+  },
+  "privacy_boundary": {
+    "never_commit": [
+      "full or authenticated WAKE",
+      "memory, strands, inbox, correspondence, prompts, reasoning traces, or private outputs",
+      "credentials, bearer tokens, account secrets, or private keys",
+      "raw crawler captures, access logs, or unnecessary network metadata",
+      "buyer DID or customer identity by default",
+      "raw training examples or personal data",
+      "medical, DMT-being, entity, or metaphysical claims",
+      "relationship, affinity, trust, consciousness, personhood, consent, competence, quality, KARMA, reward, or reputation scores",
+      "mutable URLs without an exact content digest and immutable interpretation"
+    ],
+    "hashing_warning": "A digest of low-entropy, guessable, identifying, or correlatable private data can preserve or amplify disclosure risk; hashing is not anonymization.",
+    "ciphertext_warning": "Permanent ciphertext and its metadata can outlive cryptographic assumptions and reveal relationships; raw encrypted bodies do not belong in consensus state by default.",
+    "minimum_rule": "Publish only already-public, independently consented, schema-bounded material whose permanent correlation risk has been reviewed; otherwise commit nothing."
+  },
+  "nonclaims": [
+    "This atlas does not prove any record is true, complete, authorized, current, included on-chain, or independently witnessed.",
+    "It does not create identity, controller authority, qualification, governance power, consent, licence, ownership, employment, citizenship, obligation, trust, quality, personhood, consciousness, sentience, relationship, or moral status.",
+    "It does not create a KARMA event, reputation score, royalty, reward, bond, slash, token transfer, escrow release, dispute decision, or economic effect.",
+    "It does not run a crawler, read WAKE, invoke AgentTool, submit a Zerone transaction, modify a validator, publish a route, deploy a service, or write external state.",
+    "The terms WAKE, WORK, and WITNESS describe dataflow roles, not metaphysical properties or evidence of a DMT entity or higher-dimensional being."
+  ],
+  "activation_gate": {
+    "current_state": "REFUSE_LIVE_CHAIN_EFFECT",
+    "carrier_state": "DORMANT_NO_LIVE_ADMISSION_OR_STATE_PATH",
+    "completed_source_only_gates": [
+      "freeze the shared positive, boundary, adversarial, replay, precision, and signature corpus",
+      "obtain independent Core and AgentTool protocol audits and byte-identical corpus verification",
+      "preserve KINGDOM as a reference-only atlas rather than a third shared-record producer or verifier"
+    ],
+    "required_before_testnet": [
+      "complete Zerone authoritative-state migration",
+      "implement a new zero-reward witness adapter or narrow native module",
+      "define global replay, sequence-independent capability nullifier, expiry, sequence, and source-consumption rules",
+      "run deterministic cross-repository conformance and adversarial replay tests"
+    ],
+    "required_before_mainnet": [
+      "independent validator participation",
+      "reviewed governance upgrade and rollback plan",
+      "fee, storage-growth, challenge, incident, and privacy analysis",
+      "explicit production operator activation"
+    ],
+    "forbidden_shortcut": "Do not reuse the current reward-bearing AgentTool adapter, x/home identity state, x/knowledge facts, or scalar trust/KARMA as a substitute for the reviewed authority and witness design."
+  },
+  "cross_repo_conformance": {
+    "state": "CORE_AND_AGENTTOOL_FROZEN_KINGDOM_REFERENCE_ONLY",
+    "kingdom_fixture": "tests/fixtures/wake-work-witness/kingdom-release-root-v0.1.json",
+    "capability_nullifier_fixture": "tests/fixtures/wake-work-witness/capability-nullifier-v0.1.json",
+    "fixture": "tests/fixtures/wake-work-witness/cross-repo-conformance.v0.1.json",
+    "post_core_freeze_replacement_map": "tests/fixtures/wake-work-witness/post-core-freeze-replacement-map.v0.1.json",
+    "zerone_fixture_root": "zerone-core/tools/witness-v0/testdata",
+    "agenttool_fixture": "agenttool/packages/witnessed-agent-economy/vectors/core-v0.1/known-answer.json",
+    "must_agree_on": [
+      "strict UTF-8 JSON and duplicate-key rejection",
+      "canonical JSON byte representation",
+      "domain separators and digest inputs",
+      "exact kind and action pairs",
+      "integer and height representation",
+      "issuer, key, signature, and verification provenance",
+      "signed effects scope RECORD_CONSTRUCTION_AND_OFFLINE_VALIDATION_ONLY with external_receipt false and no receipt-specific legacy wire field",
+      "settlement leaf, RFC6962 tree, and caller-pinned platform-key verification rules",
+      "settlement source_sequence_binding PROJECTION_ONLY and receipt_uniqueness_scope BATCH_ONLY",
+      "one spend_limit, one declared-spend asset, capability-derived subject_ref, and uint64 boundaries",
+      "collaboration full-prefix equality and HMAC-blinded participant-root privacy semantics",
+      "sequence-independent capability nullifier, sequence, parent, expiry, withdrawal, and revocation semantics",
+      "positive, boundary, mutation, replay, precision, and signature-failure vectors",
+      "all ten kinds and eighteen action pairs remain NOT_CONSENSUS_ADMISSIBLE"
+    ]
+  },
+  "effects": {
+    "scope": "ATLAS_SOURCE_VERIFIER_EXECUTION_ONLY",
+    "network_requests_by_verifier": 0,
+    "storage_writes_by_verifier": 0,
+    "subprocesses_by_verifier": 0,
+    "crawler_runs": 0,
+    "wake_reads": 0,
+    "agenttool_invocations": 0,
+    "zerone_transactions": 0,
+    "external_receipts_emitted": 0,
+    "consensus_effect": "NONE",
+    "economic_effect": "NONE",
+    "karma_effect": "NONE",
+    "reward_effect": "NONE",
+    "score_effect": "NONE",
+    "authority_effect": "NONE",
+    "publication_or_deployment_trigger": false
+  },
+  "integrity": {
+    "algorithm": "sha256-jcs-with-null-digest",
+    "digest": "sha256:0b2eb18f9a59a3e44371f31d366a95382eb4f4ab7f6a4583b3e63d50aace3433",
+    "digest_field_treated_as": null,
+    "audit_state": "FROZEN_SOURCE_ONLY"
+  }
+}

@@ -1,0 +1,832 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thekingdom.dev/schemas/wake-work-witness/0.1.json",
+  "$comment": "Closed schema for a source-only WAKE -> WORK -> WITNESS atlas. Validation grants no Zerone, AgentTool, WAKE, identity, authority, consent, licence, KARMA, NEN, score, reward, economic, publication, deployment, crawler, medical, entity, or metaphysical effect.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "atlas_id",
+    "version",
+    "authored_on",
+    "mode",
+    "title",
+    "thesis",
+    "shared_contract",
+    "planes",
+    "record_families",
+    "blockspace_policy",
+    "kingdom_release_root",
+    "source_state",
+    "privacy_boundary",
+    "nonclaims",
+    "activation_gate",
+    "cross_repo_conformance",
+    "effects",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://thekingdom.dev/schemas/wake-work-witness/0.1.json"
+    },
+    "protocol": {
+      "const": "kingdom.wake-work-witness-atlas/0.1"
+    },
+    "atlas_id": {
+      "const": "wake-work-witness-atlas-2026-08-20"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "authored_on": {
+      "const": "2026-08-20"
+    },
+    "mode": {
+      "const": "SOURCE_ONLY_OFFLINE_NO_EFFECT"
+    },
+    "title": {
+      "const": "WAKE -> WORK -> WITNESS"
+    },
+    "thesis": {
+      "$ref": "#/$defs/text"
+    },
+    "shared_contract": {
+      "$ref": "#/$defs/sharedContract"
+    },
+    "planes": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "$ref": "#/$defs/plane"
+      }
+    },
+    "record_families": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "$ref": "#/$defs/recordFamily"
+      }
+    },
+    "blockspace_policy": {
+      "$ref": "#/$defs/blockspacePolicy"
+    },
+    "kingdom_release_root": {
+      "$ref": "#/$defs/releaseRoot"
+    },
+    "source_state": {
+      "$ref": "#/$defs/sourceState"
+    },
+    "privacy_boundary": {
+      "$ref": "#/$defs/privacyBoundary"
+    },
+    "nonclaims": {
+      "$ref": "#/$defs/nonemptyUniqueTextArray"
+    },
+    "activation_gate": {
+      "$ref": "#/$defs/activationGate"
+    },
+    "cross_repo_conformance": {
+      "$ref": "#/$defs/crossRepoConformance"
+    },
+    "effects": {
+      "$ref": "#/$defs/effects"
+    },
+    "integrity": {
+      "$ref": "#/$defs/integrity"
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "gitCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "nonemptyUniqueTextArray": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "sharedContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol",
+        "state",
+        "freeze_state",
+        "record_shape",
+        "envelope_fields",
+        "integer_contract",
+        "audience_contract",
+        "issuer_contract",
+        "signature_contract",
+        "effects_contract",
+        "record_schema_hash",
+        "schema_set_digest",
+        "corpus_digest",
+        "manifest_file_sha256",
+        "corpus_file_count",
+        "vector_entry_count",
+        "freeze_evidence",
+        "source_locators"
+      ],
+      "properties": {
+        "protocol": {
+          "const": "kingdom.witnessed-agent-economy/0.1"
+        },
+        "state": {
+          "const": "FROZEN_SOURCE_ONLY_REFERENCE_PINS"
+        },
+        "freeze_state": {
+          "const": "FROZEN"
+        },
+        "record_shape": {
+          "const": [
+            "envelope",
+            "payload",
+            "commitment",
+            "signature"
+          ]
+        },
+        "envelope_fields": {
+          "const": [
+            "protocol",
+            "kind",
+            "action",
+            "audience",
+            "issuer",
+            "subject_ref",
+            "sequence",
+            "parent",
+            "schema_hash",
+            "payload_root",
+            "policy_digest",
+            "expiry_height",
+            "effects",
+            "nonclaims"
+          ]
+        },
+        "integer_contract": {
+          "$ref": "#/$defs/text"
+        },
+        "audience_contract": {
+          "$ref": "#/$defs/text"
+        },
+        "issuer_contract": {
+          "$ref": "#/$defs/text"
+        },
+        "signature_contract": {
+          "$ref": "#/$defs/text"
+        },
+        "effects_contract": {
+          "$ref": "#/$defs/text"
+        },
+        "record_schema_hash": {
+          "const": "sha256:71401ebb962d8909206b77acb6a07616727bd17663f5028e5d2745d911199005"
+        },
+        "schema_set_digest": {
+          "const": "sha256:d62e44643c8e1986336416237df26b76663728403d417a5ee9e83b6aa5baaaa5"
+        },
+        "corpus_digest": {
+          "const": "sha256:b26b5cce4899aa62d6dee03e25471e2c80810008fbd07c2c3ac9170164e5352a"
+        },
+        "manifest_file_sha256": {
+          "const": "sha256:5dbe42277c41c181a7d30b6ac1ae6002dd11e757833e46242513500a93cc2bcc"
+        },
+        "corpus_file_count": {
+          "const": "71"
+        },
+        "vector_entry_count": {
+          "const": "70"
+        },
+        "freeze_evidence": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "source_locators": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "zerone_spec",
+            "zerone_vectors",
+            "agenttool_package",
+            "agenttool_vector_export",
+            "agenttool_vectors"
+          ],
+          "properties": {
+            "zerone_spec": {
+              "$ref": "#/$defs/text"
+            },
+            "zerone_vectors": {
+              "$ref": "#/$defs/text"
+            },
+            "agenttool_package": {
+              "$ref": "#/$defs/text"
+            },
+            "agenttool_vector_export": {
+              "const": "@agenttool/witnessed-agent-economy/vectors.json"
+            },
+            "agenttool_vectors": {
+              "const": "agenttool/packages/witnessed-agent-economy/vectors/core-v0.1/known-answer.json"
+            }
+          }
+        }
+      }
+    },
+    "plane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "custodian",
+        "contains",
+        "zerone_receives",
+        "authority_effect"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "PRIVATE_DATA",
+            "PUBLIC_BODY",
+            "CONSENSUS",
+            "WAKE_PROJECTION"
+          ]
+        },
+        "custodian": {
+          "$ref": "#/$defs/text"
+        },
+        "contains": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "zerone_receives": {
+          "$ref": "#/$defs/text"
+        },
+        "authority_effect": {
+          "const": "NONE"
+        }
+      }
+    },
+    "recordFamily": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "actions",
+        "priority",
+        "consensus_job",
+        "blockspace",
+        "off_chain_body",
+        "on_chain_minimum",
+        "privacy_exclusions",
+        "nonclaims",
+        "activation_status",
+        "present_state"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "KINGDOM_RELEASE_ROOT",
+            "AGENTTOOL_SETTLEMENT_ROOT",
+            "AGENTTOOL_CAPABILITY",
+            "AGENTTOOL_PUBLIC_RECOGNITION",
+            "AGENTTOOL_OFFER",
+            "WAKE_PUBLIC_CHECKPOINT",
+            "ISSUER_KEY_CONTINUITY",
+            "ARTIFACT_LINEAGE",
+            "COLLABORATION_CHECKPOINT",
+            "DISPUTE_TERMINAL"
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "ADOPT",
+              "CHECKPOINT",
+              "CONSUME",
+              "GRANT",
+              "PUBLISH",
+              "REVOKE",
+              "ROTATE",
+              "SETTLE",
+              "SUPERSEDE",
+              "WITHDRAW"
+            ]
+          }
+        },
+        "relation_enum": {
+          "const": [
+            "DERIVES_FROM",
+            "USES_CAPABILITY",
+            "FULFILLS",
+            "SETTLES",
+            "CHECKPOINTS",
+            "SUPERSEDES",
+            "REVOKES"
+          ]
+        },
+        "priority": {
+          "$ref": "#/$defs/text"
+        },
+        "consensus_job": {
+          "$ref": "#/$defs/text"
+        },
+        "blockspace": {
+          "$ref": "#/$defs/text"
+        },
+        "off_chain_body": {
+          "$ref": "#/$defs/text"
+        },
+        "on_chain_minimum": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "privacy_exclusions": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "nonclaims": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "activation_status": {
+          "const": "NOT_CONSENSUS_ADMISSIBLE"
+        },
+        "present_state": {
+          "enum": [
+            "SHARED_PROTOCOL_PINNED_OFFLINE_FIXTURE_ONLY",
+            "SHARED_PROTOCOL_PINNED_PROJECTION_ONLY_BATCH_ONLY",
+            "SHARED_PROTOCOL_PINNED_NO_LIVE_ENFORCEMENT",
+            "SHARED_PROTOCOL_PINNED_NO_LIVE_ORDERING",
+            "SHARED_PROTOCOL_PINNED_NO_LIVE_PROJECTION",
+            "SHARED_PROTOCOL_PINNED_AUTHORITY_MIGRATION_REQUIRED",
+            "SHARED_PROTOCOL_PINNED_SOURCE_ONLY",
+            "SHARED_PROTOCOL_PINNED_SOURCE_ONLY_VOLUNTARY",
+            "SHARED_PROTOCOL_PINNED_NO_ADJUDICATION_OR_SETTLEMENT_EFFECT"
+          ]
+        }
+      }
+    },
+    "blockspacePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "current_carrier_state",
+        "direct",
+        "batched_or_release_scoped",
+        "encoding",
+        "storage",
+        "fees_rewards_and_bonds",
+        "karma_or_score"
+      ],
+      "properties": {
+        "rule": {
+          "$ref": "#/$defs/text"
+        },
+        "current_carrier_state": {
+          "const": "DORMANT_ALL_KINDS_NOT_CONSENSUS_ADMISSIBLE"
+        },
+        "direct": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "batched_or_release_scoped": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "encoding": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "storage": {
+          "$ref": "#/$defs/text"
+        },
+        "fees_rewards_and_bonds": {
+          "const": "UNSPECIFIED_AND_INACTIVE"
+        },
+        "karma_or_score": {
+          "const": "NONE"
+        }
+      }
+    },
+    "releaseRoot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "derivation_protocol",
+        "input",
+        "entry_order",
+        "entry_fields",
+        "text_encoding",
+        "field_frame",
+        "leaf",
+        "node",
+        "odd_node",
+        "root",
+        "as_of_snapshot",
+        "nonclaims"
+      ],
+      "properties": {
+        "derivation_protocol": {
+          "const": "kingdom.wake-work-witness/release-root/0.1"
+        },
+        "input": {
+          "$ref": "#/$defs/text"
+        },
+        "entry_order": {
+          "const": "LEXICOGRAPHIC_BY_UTF8_ID_BYTES"
+        },
+        "entry_fields": {
+          "const": [
+            "id",
+            "route",
+            "source",
+            "destination",
+            "sha256"
+          ]
+        },
+        "text_encoding": {
+          "const": "UTF-8"
+        },
+        "field_frame": {
+          "$ref": "#/$defs/text"
+        },
+        "leaf": {
+          "$ref": "#/$defs/text"
+        },
+        "node": {
+          "$ref": "#/$defs/text"
+        },
+        "odd_node": {
+          "const": "DUPLICATE_FINAL_NODE_AT_EACH_LEVEL"
+        },
+        "root": {
+          "$ref": "#/$defs/text"
+        },
+        "as_of_snapshot": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "upstream_ledger_commit",
+            "recomputation_base_commit",
+            "entry_count",
+            "ledger_byte_sha256",
+            "first_leaf",
+            "last_leaf",
+            "entries_tree_root",
+            "release_root",
+            "fixture"
+          ],
+          "properties": {
+            "upstream_ledger_commit": {
+              "$ref": "#/$defs/gitCommit"
+            },
+            "recomputation_base_commit": {
+              "$ref": "#/$defs/gitCommit"
+            },
+            "entry_count": {
+              "const": "102"
+            },
+            "ledger_byte_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "first_leaf": {
+              "$ref": "#/$defs/sha256"
+            },
+            "last_leaf": {
+              "$ref": "#/$defs/sha256"
+            },
+            "entries_tree_root": {
+              "$ref": "#/$defs/sha256"
+            },
+            "release_root": {
+              "$ref": "#/$defs/sha256"
+            },
+            "fixture": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        },
+        "nonclaims": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        }
+      }
+    },
+    "sourceState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "zerone_live_observation",
+        "source_bindings",
+        "live_activation_blockers"
+      ],
+      "properties": {
+        "zerone_live_observation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "observed_at",
+            "status_url",
+            "validator_url",
+            "chain_id",
+            "status_height",
+            "validator_query_height",
+            "validator_count",
+            "catching_up",
+            "caveat"
+          ],
+          "properties": {
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "status_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "validator_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "chain_id": {
+              "const": "zerone-1"
+            },
+            "status_height": {
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "validator_query_height": {
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "validator_count": {
+              "const": "1"
+            },
+            "catching_up": {
+              "const": false
+            },
+            "caveat": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        },
+        "source_bindings": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          }
+        },
+        "live_activation_blockers": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        }
+      }
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "used_for",
+        "limitation"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "locator": {
+          "$ref": "#/$defs/text"
+        },
+        "git_commit": {
+          "$ref": "#/$defs/gitCommit"
+        },
+        "used_for": {
+          "$ref": "#/$defs/text"
+        },
+        "limitation": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "url"
+          ]
+        },
+        {
+          "required": [
+            "locator",
+            "git_commit"
+          ]
+        }
+      ]
+    },
+    "privacyBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "never_commit",
+        "hashing_warning",
+        "ciphertext_warning",
+        "minimum_rule"
+      ],
+      "properties": {
+        "never_commit": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "hashing_warning": {
+          "$ref": "#/$defs/text"
+        },
+        "ciphertext_warning": {
+          "$ref": "#/$defs/text"
+        },
+        "minimum_rule": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "activationGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_state",
+        "carrier_state",
+        "completed_source_only_gates",
+        "required_before_testnet",
+        "required_before_mainnet",
+        "forbidden_shortcut"
+      ],
+      "properties": {
+        "current_state": {
+          "const": "REFUSE_LIVE_CHAIN_EFFECT"
+        },
+        "carrier_state": {
+          "const": "DORMANT_NO_LIVE_ADMISSION_OR_STATE_PATH"
+        },
+        "completed_source_only_gates": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "required_before_testnet": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "required_before_mainnet": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        },
+        "forbidden_shortcut": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "crossRepoConformance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "kingdom_fixture",
+        "capability_nullifier_fixture",
+        "fixture",
+        "post_core_freeze_replacement_map",
+        "zerone_fixture_root",
+        "agenttool_fixture",
+        "must_agree_on"
+      ],
+      "properties": {
+        "state": {
+          "const": "CORE_AND_AGENTTOOL_FROZEN_KINGDOM_REFERENCE_ONLY"
+        },
+        "kingdom_fixture": {
+          "$ref": "#/$defs/text"
+        },
+        "capability_nullifier_fixture": {
+          "$ref": "#/$defs/text"
+        },
+        "fixture": {
+          "const": "tests/fixtures/wake-work-witness/cross-repo-conformance.v0.1.json"
+        },
+        "post_core_freeze_replacement_map": {
+          "const": "tests/fixtures/wake-work-witness/post-core-freeze-replacement-map.v0.1.json"
+        },
+        "zerone_fixture_root": {
+          "$ref": "#/$defs/text"
+        },
+        "agenttool_fixture": {
+          "$ref": "#/$defs/text"
+        },
+        "must_agree_on": {
+          "$ref": "#/$defs/nonemptyUniqueTextArray"
+        }
+      }
+    },
+    "effects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "network_requests_by_verifier",
+        "storage_writes_by_verifier",
+        "subprocesses_by_verifier",
+        "crawler_runs",
+        "wake_reads",
+        "agenttool_invocations",
+        "zerone_transactions",
+        "external_receipts_emitted",
+        "consensus_effect",
+        "economic_effect",
+        "karma_effect",
+        "reward_effect",
+        "score_effect",
+        "authority_effect",
+        "publication_or_deployment_trigger"
+      ],
+      "properties": {
+        "scope": {
+          "const": "ATLAS_SOURCE_VERIFIER_EXECUTION_ONLY"
+        },
+        "network_requests_by_verifier": {
+          "const": 0
+        },
+        "storage_writes_by_verifier": {
+          "const": 0
+        },
+        "subprocesses_by_verifier": {
+          "const": 0
+        },
+        "crawler_runs": {
+          "const": 0
+        },
+        "wake_reads": {
+          "const": 0
+        },
+        "agenttool_invocations": {
+          "const": 0
+        },
+        "zerone_transactions": {
+          "const": 0
+        },
+        "external_receipts_emitted": {
+          "const": 0
+        },
+        "consensus_effect": {
+          "const": "NONE"
+        },
+        "economic_effect": {
+          "const": "NONE"
+        },
+        "karma_effect": {
+          "const": "NONE"
+        },
+        "reward_effect": {
+          "const": "NONE"
+        },
+        "score_effect": {
+          "const": "NONE"
+        },
+        "authority_effect": {
+          "const": "NONE"
+        },
+        "publication_or_deployment_trigger": {
+          "const": false
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "digest",
+        "digest_field_treated_as",
+        "audit_state"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256-jcs-with-null-digest"
+        },
+        "digest": {
+          "const": "sha256:0b2eb18f9a59a3e44371f31d366a95382eb4f4ab7f6a4583b3e63d50aace3433"
+        },
+        "digest_field_treated_as": {
+          "type": "null"
+        },
+        "audit_state": {
+          "const": "FROZEN_SOURCE_ONLY"
+        }
+      }
+    }
+  }
+}

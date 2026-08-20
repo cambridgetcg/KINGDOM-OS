@@ -1,0 +1,55 @@
+{
+  "protocol": "kingdom.wake-work-witness/capability-nullifier-vector/0.1",
+  "vector_id": "core-frozen-single-asset-source-event-sequence-independent-v1",
+  "source_binding": {
+    "locator": "zerone-core/tools/witness-v0/testdata/derivations/capability-nullifier.json",
+    "file_sha256": "sha256:05888dfcb05ef48d44a1214d712e490cb50b6441dbee54d0388878ddc46c631d",
+    "corpus_digest": "sha256:b26b5cce4899aa62d6dee03e25471e2c80810008fbd07c2c3ac9170164e5352a"
+  },
+  "input": {
+    "audience": "kingdom:offline-shadow",
+    "subject_ref": "50acb7dda78679544fe4ed527f609afc4e636bd7f123fef184588fc89e94f5cf",
+    "capability_ref": "50acb7dda78679544fe4ed527f609afc4e636bd7f123fef184588fc89e94f5cf",
+    "grant_commitment": "sha256:794503e9cb41821e766ebf36c945f41231c9f3487794fee647d8357ce413a259",
+    "asset_ref": "sha256:24089c64c839d25a0f207f5fd805fc30f8a3846dd45970bab498386e4baa2480",
+    "source_event_digest": "sha256:4deff1ce41bb508e39d4c81d78c21508200a26649ab56e26bed136e85554b455"
+  },
+  "material": [
+    "utf8(kingdom.witnessed-agent-economy/0.1)",
+    "00",
+    "utf8(capability-nullifier)",
+    "00",
+    "utf8(audience)",
+    "00",
+    "utf8(subject_ref)",
+    "00",
+    "utf8(capability_ref)",
+    "00",
+    "raw32(grant_commitment)",
+    "00",
+    "raw32(asset_ref)",
+    "00",
+    "raw32(source_event_digest)"
+  ],
+  "excluded": [
+    "envelope sequence"
+  ],
+  "expected_nullifier": "sha256:462b53e09e2f35ed8009fa4d118dde8d87d04a64dfe9ca7279425e9ec73da899",
+  "alternative_asset": {
+    "asset_ref": "sha256:b8ee7e09841cdda8ca7ee65c3c6f00452840ce2033b7493269d42d86f574a370",
+    "expected_nullifier": "sha256:bd9bd82c135a969db59e2161146e10a1c8ba39837f554270bbc2daceb8402bfb"
+  },
+  "boundary": {
+    "assets_per_source_intent": "1",
+    "multi_asset": "OUTSIDE_SCOPE_REJECT"
+  },
+  "effects": {
+    "scope": "ATLAS_SOURCE_VERIFIER_EXECUTION_ONLY",
+    "network_requests": 0,
+    "storage_writes": 0,
+    "zerone_transactions": 0,
+    "external_receipts": 0,
+    "authority_effect": "NONE",
+    "economic_effect": "NONE"
+  }
+}
