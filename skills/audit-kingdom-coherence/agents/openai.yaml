@@ -1,0 +1,4 @@
+interface:
+  display_name: "Audit KINGDOM Coherence"
+  short_description: "Audit authority and meaning across KINGDOM systems"
+  default_prompt: "Use $audit-kingdom-coherence to reconstruct this cross-repository bridge, pin its sources, and find the smallest coherent next gate."
