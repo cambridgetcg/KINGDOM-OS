@@ -207,6 +207,17 @@ import {
   researchObservatoryPublicSummary,
 } from "./research-observatory.ts";
 import {
+  TRIAL_CHAMBER_ALIAS_URL,
+  TRIAL_CHAMBER_CANONICAL_URL,
+  TRIAL_CHAMBER_GUIDE_URL,
+  TRIAL_CHAMBER_PRODUCER_URL,
+  TRIAL_CHAMBER_SCHEMA_URLS,
+  TRIAL_CHAMBER_URL,
+  loadTrialChamberPublication,
+  renderTrialChamberHtml,
+  trialChamberPublicSummary,
+} from "./trial-chamber.ts";
+import {
   ZERO_EMPTY_SEAT_GUIDE_URL,
   ZERO_EMPTY_SEAT_ID,
   ZERO_EMPTY_SEAT_SCHEMA_URL,
@@ -769,6 +780,17 @@ const researchObservatorySchemaUrls = RESEARCH_OBSERVATORY_SCHEMA_URLS;
 const researchObservatoryPublication = loadResearchObservatoryPublication();
 const researchObservatory = researchObservatoryPublication.snapshot;
 const researchObservatoryDiscovery = researchObservatoryPublicSummary(researchObservatory);
+
+// ── Trial Chamber (read-only Phase-0 planning; no execution or authority) ─
+const trialChamberUrl = TRIAL_CHAMBER_URL;
+const trialChamberAliasUrl = TRIAL_CHAMBER_ALIAS_URL;
+const trialChamberCanonicalUrl = TRIAL_CHAMBER_CANONICAL_URL;
+const trialChamberGuideUrl = TRIAL_CHAMBER_GUIDE_URL;
+const trialChamberProducerUrl = TRIAL_CHAMBER_PRODUCER_URL;
+const trialChamberSchemaUrls = TRIAL_CHAMBER_SCHEMA_URLS;
+const trialChamberPublication = loadTrialChamberPublication();
+const trialChamber = trialChamberPublication.snapshot;
+const trialChamberDiscovery = trialChamberPublicSummary(trialChamber);
 
 // ── ZERO Empty Seat (one inert DEEP project; no zero-to-authority transfer) ─
 const zeroEmptySeatUrl = ZERO_EMPTY_SEAT_URL;
@@ -1806,6 +1828,10 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(researchObservatorySnapshotUrl).pathname)}" type="application/json" title="Research Observatory public snapshot">
 <link rel="describedby" href="${esc(new URL(researchObservatorySchemaUrls["public-snapshot"]).pathname)}" type="application/schema+json" title="Research Observatory public snapshot schema">
 <link rel="service-doc" href="${esc(new URL(researchObservatoryGuideUrl).pathname)}" type="text/markdown" title="Research Observatory protocol">
+<link rel="alternate" href="${esc(new URL(trialChamberAliasUrl).pathname)}" type="application/json" title="Trial Chamber current snapshot">
+<link rel="alternate" href="${esc(new URL(trialChamberCanonicalUrl).pathname)}" type="application/json" title="Trial Chamber immutable Phase-0 snapshot">
+<link rel="describedby" href="${esc(new URL(trialChamberSchemaUrls["public-snapshot"]).pathname)}" type="application/schema+json" title="Trial Chamber public snapshot schema">
+<link rel="service-doc" href="${esc(new URL(trialChamberGuideUrl).pathname)}" type="text/markdown" title="Trial Chamber Phase-0 guide">
 <link rel="alternate" href="${esc(new URL(jSpaceCaseUrl).pathname)}" type="application/json" title="J-space reasoning-to-word test design">
 <link rel="describedby" href="${esc(new URL(jSpaceSchemaUrl).pathname)}" type="application/schema+json" title="Relational inference case schema">
 <link rel="service-doc" href="${esc(new URL(jSpaceGuideUrl).pathname)}" type="text/markdown" title="J-space verbalizable workspace research guide">
@@ -2324,6 +2350,7 @@ const html = `<!doctype html>
     <nav class="gentlenav" aria-label="A gentle place to begin">
       <a href="#mirror-information-control">Know what data cannot command</a>
       <a href="#observatory">Discover research without skipping the gates</a>
+      <a href="#trial-chamber">Inspect a draft trial without opening the gate</a>
       <a href="#j-space">Explore reasoning-to-word as a testable relation</a>
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
@@ -2422,6 +2449,27 @@ const html = `<!doctype html>
         <a href="${esc(new URL(researchObservatoryUrl).pathname)}">open the human Observatory</a>
         <a href="${esc(new URL(researchObservatorySnapshotUrl).pathname)}">research.json — complete mutable metadata snapshot</a>
         <a href="${esc(new URL(researchObservatoryGuideUrl).pathname)}">Research Observatory v0.1 protocol and integration gates</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="trial-chamber" aria-labelledby="trial-chamber-title">
+    <div class="kh"><h2 id="trial-chamber-title">The Trial Chamber</h2><span class="my">a draft plan is not permission to run</span></div>
+    <p class="sub">A read-only Phase-0 planning membrane between Observatory metadata and any future experiment. It publishes ${trialChamberDiscovery.counts.referrals} exact referrals, ${trialChamberDiscovery.counts.evaluationRequests} maintainer-authorized assisted request drafts, and ${trialChamberDiscovery.counts.evaluationPlans} DRAFT + UNSEALED synthetic-only plans. Their exact text has not been separately human-reviewed.</p>
+    <div class="mirrorfield" data-trial-chamber data-trial-chamber-protocol="${esc(trialChamberDiscovery.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>Evaluation has not started.</strong> Role-Styled Prompt Injection remains held for source resolution. There are zero preflights, trial authorities, runs, results, adoption records, and use authorities. No artifact has been acquired, inspected, or executed.</p>
+      <div class="mirrorgrid">
+        <article class="mirrorcard"><code>exact source binding</code><h3>Titles remain metadata</h3><p>Each referral pins the Observatory bytes, work, primary identifier, observations, source records, payload receipts, and signals. A source metadata title is not converted into a scientific claim.</p></article>
+        <article class="mirrorcard"><code>DRAFT · UNSEALED · NO-RUN</code><h3>Planning evidence only</h3><p>Questions, fixtures, measures, retention-only criteria, controls, threats, rights blocks, security blocks, reversibility, resources, and stop conditions remain visible without creating a result.</p></article>
+        <article class="mirrorcard"><code>SELF-AUTHORED-SYNTHETIC-ONLY</code><h3>No source method is being reenacted</h3><p>The source works' methods and artifacts have not been inspected. Every proposed fixture is finite and synthetic, and every passing effect is retention for separate review only.</p></article>
+        <article class="mirrorcard"><code>deny-all reserved contracts</code><h3>Later gates cannot be represented</h3><p>The six v0.1 post-plan schemas accept zero records. A future contract version and separate human review are mandatory before any preflight, authority, run, result, adoption, or use record.</p></article>
+      </div>
+      <p class="mirrorboundary"><strong>Expiry closes; it does not approve</strong> The Phase-0 projection expires <time datetime="${esc(trialChamber.expiresAt)}">${esc(trialChamber.expiresAt)}</time>, then freezes and requires new human review. No module is created, no guest is admitted, no scalar score is used, and no automatic action exists.</p>
+      <div class="machine">
+        <a href="${esc(new URL(trialChamberUrl).pathname)}">open the human Trial Chamber</a>
+        <a href="${esc(new URL(trialChamberAliasUrl).pathname)}">trials.json — current read-only alias</a>
+        <a href="${esc(new URL(trialChamberCanonicalUrl).pathname)}">immutable Phase-0 Trial Chamber snapshot</a>
+        <a href="${esc(new URL(trialChamberGuideUrl).pathname)}">Trial Chamber v0.1 guide and non-authority boundary</a>
       </div>
     </div>
   </section>
@@ -3945,6 +3993,10 @@ const html = `<!doctype html>
       <a href="${esc(new URL(researchObservatoryUrl).pathname)}">The Observatory — server-rendered research discovery</a>
       <a href="${esc(new URL(researchObservatorySnapshotUrl).pathname)}">research.json — metadata, provenance, factors, and lifecycle gates</a>
       <a href="${esc(new URL(researchObservatoryGuideUrl).pathname)}">RESEARCH-OBSERVATORY-v0.1.md — source, rights, integration, and non-authority protocol</a>
+      <a href="${esc(new URL(trialChamberUrl).pathname)}">The Trial Chamber — read-only Phase-0 evaluation planning</a>
+      <a href="${esc(new URL(trialChamberAliasUrl).pathname)}">trials.json — current alias for exact referrals and draft plans</a>
+      <a href="${esc(new URL(trialChamberCanonicalUrl).pathname)}">immutable Trial Chamber Phase-0 snapshot</a>
+      <a href="${esc(new URL(trialChamberGuideUrl).pathname)}">TRIAL-CHAMBER-v0.1.md — gate, expiry, authorship, and non-authority guide</a>
       <a href="${esc(new URL(jSpaceCaseUrl).pathname)}">J-space reasoning → word — static synthetic test design</a>
       <a href="${esc(new URL(jSpaceSchemaUrl).pathname)}">Relational Inference Case JSON Schema</a>
       <a href="${esc(new URL(jSpaceGuideUrl).pathname)}">J-SPACE-VERBALIZABLE-WORKSPACE.md — mathematics, translations, and boundaries</a>
@@ -4254,6 +4306,9 @@ await Bun.write(ROOT + "site/hub.html", html);
 mkdirSync(ROOT + "site/observatory", { recursive: true });
 await Bun.write(ROOT + "site/observatory/index.html", renderResearchObservatoryHtml(researchObservatory));
 await Bun.write(ROOT + "site/research.json", researchObservatoryPublication.bytes);
+mkdirSync(ROOT + "site/trial-chamber", { recursive: true });
+await Bun.write(ROOT + "site/trial-chamber/index.html", renderTrialChamberHtml(trialChamber));
+await Bun.write(ROOT + "site/trials.json", trialChamberPublication.bytes);
 
 const ollamaInvitation = {
   schema_version: ollamaInvitationSource.schema_version,
@@ -4326,6 +4381,7 @@ const machine = {
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
   research_observatory: researchObservatoryDiscovery,
+  trial_chamber: trialChamberDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4426,6 +4482,21 @@ Research Observatory work schema: ${researchObservatorySchemaUrls.work}
 Research Observatory signal schema: ${researchObservatorySchemaUrls.signal}
 Research Observatory guide: ${researchObservatoryGuideUrl}
 Research Observatory producer v0.1.0 source + append-only captures: ${researchObservatoryProducerUrl}
+Trial Chamber human view: ${trialChamberUrl}
+Trial Chamber current alias: ${trialChamberAliasUrl}
+Trial Chamber immutable Phase-0 snapshot: ${trialChamberCanonicalUrl}
+Trial Chamber public-snapshot schema: ${trialChamberSchemaUrls["public-snapshot"]}
+Trial Chamber referral schema: ${trialChamberSchemaUrls.referral}
+Trial Chamber evaluation-request schema: ${trialChamberSchemaUrls["evaluation-request"]}
+Trial Chamber evaluation-plan schema: ${trialChamberSchemaUrls["evaluation-plan"]}
+Trial Chamber reserved deny-all preflight schema: ${trialChamberSchemaUrls.preflight}
+Trial Chamber reserved deny-all trial-authority schema: ${trialChamberSchemaUrls["trial-authority"]}
+Trial Chamber reserved deny-all trial-run schema: ${trialChamberSchemaUrls["trial-run"]}
+Trial Chamber reserved deny-all evaluation-result schema: ${trialChamberSchemaUrls["evaluation-result"]}
+Trial Chamber reserved deny-all adoption-record schema: ${trialChamberSchemaUrls["adoption-record"]}
+Trial Chamber reserved deny-all use-authority schema: ${trialChamberSchemaUrls["use-authority"]}
+Trial Chamber guide: ${trialChamberGuideUrl}
+Trial Chamber producer v0.1.1 source: ${trialChamberProducerUrl}
 J-space reasoning-to-word case: ${jSpaceCaseUrl}
 J-space relational-inference schema: ${jSpaceSchemaUrl}
 J-space verbalizable-workspace guide: ${jSpaceGuideUrl}
@@ -4496,6 +4567,7 @@ ${doorLines}
 ## Optional paths
 - MIRROR Information Control — a static citizen lesson: data may inform but cannot mint authority; shape establishes CANDIDATE only; evidence is not guilt. It accepts no input, key, scan, registry lookup, decoy, runtime enforcement, person attribution, retaliation, or KARMA effect. ${informationControlHumanView}
 - The Observatory — a ${researchObservatoryDiscovery.coverage.mode} metadata discovery snapshot with ${researchObservatoryDiscovery.coverage.sources} source contracts (not a poll or coverage count), ${researchObservatoryDiscovery.coverage.watchlists} visible English-language watchlists, ${researchObservatoryDiscovery.coverage.observations} inert observations, and ${researchObservatoryDiscovery.coverage.signals} explainable signals through ${researchObservatoryDiscovery.observed_through}. Evidence and priority remain factor vectors with no scalar score. Discovery stops before separately owned evaluation, adoption, module construction, guest admission, or bounded use. Human view: ${researchObservatoryUrl} · snapshot: ${researchObservatorySnapshotUrl} · schema: ${researchObservatorySchemaUrls["public-snapshot"]} · guide: ${researchObservatoryGuideUrl}
+- The Trial Chamber — a read-only Phase-0 projection of ${trialChamberDiscovery.counts.referrals} exact Observatory referrals, ${trialChamberDiscovery.counts.evaluationRequests} maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and ${trialChamberDiscovery.counts.evaluationPlans} DRAFT + UNSEALED finite synthetic-only plans. Evaluation has not started. Role-Styled remains held; every post-plan array is empty and every corresponding v0.1 schema is deny-all, so a future contract version and separate human review are mandatory. No artifact acquisition, execution, preflight, authority, result, scalar score, adoption, module, guest, use authority, or automatic action exists. Human view: ${trialChamberUrl} · current alias: ${trialChamberAliasUrl} · immutable snapshot: ${trialChamberCanonicalUrl} · schema: ${trialChamberSchemaUrls["public-snapshot"]} · guide: ${trialChamberGuideUrl}
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
@@ -4564,6 +4636,7 @@ const guest = {
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
   research_observatory: researchObservatoryDiscovery,
+  trial_chamber: trialChamberDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4590,6 +4663,11 @@ const guest = {
     { action: "if useful, inspect the complete mutable Research Observatory snapshot", method: "GET", url: researchObservatorySnapshotUrl, note: "an explainable discovery snapshot, never scientific evaluation, endorsement, adoption, module creation, guest admission, use authority, or automatic action" },
     { action: "if useful, validate Research Observatory records before consuming them", method: "GET", url: researchObservatorySchemaUrls["public-snapshot"], schemas: researchObservatorySchemaUrls },
     { action: "if useful, read the Research Observatory source, rights, coverage, lifecycle, module, guest, and use gates", method: "GET", url: researchObservatoryGuideUrl },
+    { action: "if useful, inspect the human Trial Chamber", method: "GET", url: trialChamberUrl, note: "read-only Phase-0 planning; assisted draft text is not separately human-reviewed, evaluation has not started, and no page control can advance a gate" },
+    { action: "if useful, inspect the current Trial Chamber machine alias", method: "GET", url: trialChamberAliasUrl, note: "exact Observatory referrals and finite synthetic-only DRAFT + UNSEALED plans; no artifact, run, result, adoption, module, guest, or use authority" },
+    { action: "if useful, pin the immutable Trial Chamber Phase-0 snapshot", method: "GET", url: trialChamberCanonicalUrl, note: "byte-preserved planning evidence; expiry freezes rather than approves" },
+    { action: "if useful, validate Trial Chamber records and deny-all reserved gates", method: "GET", url: trialChamberSchemaUrls["public-snapshot"], schemas: trialChamberSchemaUrls, note: "v0.1 post-plan schemas accept zero records; a future contract version and separate human review are mandatory" },
+    { action: "if useful, read the Trial Chamber authorship, source-binding, rights, security, expiry, and non-authority guide", method: "GET", url: trialChamberGuideUrl },
     { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
     { action: "if useful, request compact literal World Commons matches with exact category, cost, account, reuse, or automation filters", method: "MCP", url: kingdomMcpEndpoint, tool: kingdomMcpCommons.tool, resource: kingdomMcpCommons.catalog_resource, complete_catalog_resource: commonsMcpLegacy.complete_catalog_resource, note: kingdomMcpCommons.privacy },
     { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
@@ -4714,6 +4792,7 @@ const guest = {
     exploration_deep_wing: "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
     mirror_information_control: "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
     research_observatory: "The Observatory publishes inert metadata with explicit mode, observed-through, coverage, source, rights, and language limits. Evidence and priority remain factor vectors with no scalar score. It fetches no full text, executes no discovered artifact or instruction, performs no scientific evaluation, and creates no adoption, module, guest, use authority, external write, or automatic action. Live capture, when present, is an earlier explicit bounded harvest; importing and rendering the public snapshot remain offline.",
+    trial_chamber: "The Trial Chamber publishes exact Observatory referrals, maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and finite synthetic-only DRAFT + UNSEALED plans. Evaluation has not started. Role-Styled remains held for source resolution. The six post-plan v0.1 schemas are deny-all reserved contracts and cannot represent a preflight, authority, run, result, adoption, or use record; a future contract version and separate human review are mandatory. It acquires or executes no artifact, accesses no credential, uses no scalar score, creates no module or guest, and grants no authority or automatic action.",
     zero_empty_seat: "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     string_crawl_trace_sheet: "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     string_crawl_trace_sheet_lab: "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
@@ -4759,6 +4838,7 @@ const manifest = {
   exploration_deep_wing: explorationDeepWingDiscovery,
   mirror_information_control: mirrorInformationControlDiscovery,
   research_observatory: researchObservatoryDiscovery,
+  trial_chamber: trialChamberDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4831,6 +4911,12 @@ const manifest = {
     research_observatory_schemas: researchObservatorySchemaUrls,
     research_observatory_guide: researchObservatoryGuideUrl,
     research_observatory_producer: researchObservatoryProducerUrl,
+    trial_chamber: trialChamberUrl,
+    trial_chamber_current: trialChamberAliasUrl,
+    trial_chamber_canonical: trialChamberCanonicalUrl,
+    trial_chamber_schemas: trialChamberSchemaUrls,
+    trial_chamber_guide: trialChamberGuideUrl,
+    trial_chamber_producer: trialChamberProducerUrl,
     j_space_reasoning_to_word_case: jSpaceCaseUrl,
     j_space_reasoning_to_word_schema: jSpaceSchemaUrl,
     j_space_verbalizable_workspace_guide: jSpaceGuideUrl,

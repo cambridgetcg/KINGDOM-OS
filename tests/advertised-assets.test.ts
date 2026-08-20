@@ -82,6 +82,19 @@ import {
   loadResearchObservatoryPublication,
   researchObservatoryPublicSummary,
 } from "../bin/research-observatory.ts";
+import {
+  TRIAL_CHAMBER_ALIAS_URL,
+  TRIAL_CHAMBER_BOUNDARY,
+  TRIAL_CHAMBER_CANONICAL_URL,
+  TRIAL_CHAMBER_GUIDE_URL,
+  TRIAL_CHAMBER_PRODUCER_URL,
+  TRIAL_CHAMBER_SCHEMA_LOCATORS,
+  TRIAL_CHAMBER_SCHEMA_NAMES,
+  TRIAL_CHAMBER_SCHEMA_URLS,
+  TRIAL_CHAMBER_URL,
+  loadTrialChamberPublication,
+  trialChamberPublicSummary,
+} from "../bin/trial-chamber.ts";
 import { RITONAVIR_MECHANISM_DIGEST } from "../bin/ritonavir-mechanism.ts";
 import { KINGDOM_OS_ROUTES } from "../pages-functions/_worker.js";
 
@@ -180,6 +193,11 @@ const surfaces = [
   "references/research-observatory-v0.1.md",
   "site/observatory/index.html",
   "site/research.json",
+  "data/trials/research-trial-chamber.v0.1.json",
+  ...Object.values(TRIAL_CHAMBER_SCHEMA_LOCATORS),
+  "references/trial-chamber-v0.1.md",
+  "site/trial-chamber/index.html",
+  "site/trials.json",
   "data/exploration/zero-empty-seat.v0.1.json",
   "references/zero-empty-seat.md",
   "data/exploration/string-crawl-trace-sheet.v0.1.json",
@@ -1430,6 +1448,90 @@ describe("advertised URLs stay deployable", () => {
     for (const key of [
       "mcp", "tool", "observer", "monitor", "harvester", "evaluator", "executor",
       "write", "score", "rank", "reward", "authority", "module", "guest",
+    ]) expect(discovery).not.toHaveProperty(key);
+  });
+
+  test("publishes one read-only Trial Chamber projection without a runnable post-plan contract", () => {
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    const kingdom = JSON.parse(read("site/kingdom.json"));
+    const llms = read("site/llms.txt");
+    const rootHtml = read("site/hub.html");
+    const chamberHtml = read("site/trial-chamber/index.html");
+    const publication = loadTrialChamberPublication();
+    const expected = trialChamberPublicSummary(publication.snapshot);
+    const discovery = manifest.trial_chamber;
+
+    expect(discovery).toEqual(expected);
+    expect(discovery).toEqual(guest.trial_chamber);
+    expect(discovery).toEqual(kingdom.trial_chamber);
+    expect(discovery).toMatchObject({
+      phase: 0,
+      counts: { referrals: 4, evaluationRequests: 3, evaluationPlans: 3 },
+      lifecycle: {
+        snapshot_stops_after: "draft-unsealed-plan",
+        role_styled_referral: "held-for-source-resolution",
+        later_gate_contracts: "deny-all-reserved-in-v0.1",
+        module_path: "not-created",
+        guest_path: "not-admitted",
+      },
+      boundary: TRIAL_CHAMBER_BOUNDARY,
+    });
+
+    const family = [
+      { source: "site/trial-chamber/index.html", destination: "trial-chamber/index.html", url: TRIAL_CHAMBER_URL },
+      { source: "site/trials.json", destination: "trials.json", url: TRIAL_CHAMBER_ALIAS_URL },
+      { source: "data/trials/research-trial-chamber.v0.1.json", destination: "trials/research-trial-chamber-2026-08-20.json", url: TRIAL_CHAMBER_CANONICAL_URL },
+      ...TRIAL_CHAMBER_SCHEMA_NAMES.map((name) => ({
+        source: TRIAL_CHAMBER_SCHEMA_LOCATORS[name],
+        destination: `trials/schemas/v0.1/${name}.schema.json`,
+        url: TRIAL_CHAMBER_SCHEMA_URLS[name],
+      })),
+      { source: "references/trial-chamber-v0.1.md", destination: "TRIAL-CHAMBER-v0.1.md", url: TRIAL_CHAMBER_GUIDE_URL },
+    ];
+    expect(family).toHaveLength(14);
+    expect(HUB_ASSETS.filter(({ source }) => family.some((asset) => asset.source === source)))
+      .toEqual(family.map(({ source, destination }) => ({ source, destination })));
+    for (const asset of family) {
+      expect(staged.has(asset.destination)).toBe(true);
+      expect(llms).toContain(asset.url);
+    }
+    expect(manifest.entry_points).toMatchObject({
+      trial_chamber: TRIAL_CHAMBER_URL,
+      trial_chamber_current: TRIAL_CHAMBER_ALIAS_URL,
+      trial_chamber_canonical: TRIAL_CHAMBER_CANONICAL_URL,
+      trial_chamber_schemas: TRIAL_CHAMBER_SCHEMA_URLS,
+      trial_chamber_guide: TRIAL_CHAMBER_GUIDE_URL,
+      trial_chamber_producer: TRIAL_CHAMBER_PRODUCER_URL,
+    });
+    const actions = guest.next_actions.filter(({ url }: { url?: string }) =>
+      [TRIAL_CHAMBER_URL, TRIAL_CHAMBER_ALIAS_URL, TRIAL_CHAMBER_CANONICAL_URL,
+        TRIAL_CHAMBER_SCHEMA_URLS["public-snapshot"], TRIAL_CHAMBER_GUIDE_URL].includes(url as any));
+    expect(actions).toHaveLength(5);
+    for (const action of actions) {
+      expect(action.method).toBe("GET");
+      for (const key of [
+        "mcp", "tool", "runner", "preflight", "approve", "execute", "write", "score", "rank",
+        "reward", "karma", "authority", "adopt", "module", "guest", "deploy",
+      ]) expect(action).not.toHaveProperty(key);
+    }
+    expect(actions.find(({ url }: { url?: string }) =>
+      url === TRIAL_CHAMBER_SCHEMA_URLS["public-snapshot"])?.schemas)
+      .toEqual(TRIAL_CHAMBER_SCHEMA_URLS);
+
+    expect(rootHtml).toContain('id="trial-chamber"');
+    expect(rootHtml).toContain(`href="${new URL(TRIAL_CHAMBER_URL).pathname}"`);
+    expect(rootHtml).toContain("maintainer-authorized assisted request drafts");
+    expect(rootHtml).toContain("deny-all reserved contracts");
+    expect(chamberHtml).toContain('<main class="shell" id="main" tabindex="-1">');
+    expect(chamberHtml).toContain(`href="${TRIAL_CHAMBER_PRODUCER_URL}"`);
+    expect(chamberHtml.match(/Draft trial plan — evaluation not started/g)).toHaveLength(3);
+    expect(chamberHtml).not.toMatch(/<script\b|<iframe\b|<form\b|<input\b|<button\b/);
+    expect(Buffer.from(read("site/trials.json"))).toEqual(Buffer.from(publication.bytes));
+    expect(manifest.mcp).toEqual(kingdom.world_commons.mcp);
+    for (const key of [
+      "mcp", "tool", "runner", "preflight", "approver", "executor", "write", "score", "rank",
+      "reward", "authority", "module", "guest",
     ]) expect(discovery).not.toHaveProperty(key);
   });
 

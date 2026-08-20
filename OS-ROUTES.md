@@ -97,6 +97,30 @@ readings:
 | `/research/schemas/v0.1/work.schema.json` | staged JSON Schema | Immutable closed v0.1 work contract |
 | `/research/schemas/v0.1/signal.schema.json` | staged JSON Schema | Immutable closed v0.1 signal contract |
 | `/RESEARCH-OBSERVATORY-v0.1.md` | staged Markdown | Immutable guide to provenance, coverage, explainable factors, lifecycle gates, and the no-automatic-integration boundary |
+| `/trial-chamber/` | staged HTML | Mutable, server-rendered Phase-0 view of four exact Observatory referrals, three assisted request drafts, three draft unsealed plans, and zero later-gate records |
+| `/trials.json` | staged JSON | Mutable byte-preserved alias of the current Trial Chamber snapshot |
+| `/trials/research-trial-chamber-2026-08-20.json` | staged JSON | Immutable Phase-0 Trial Chamber snapshot byte-bound to the Observatory publication |
+| `/trials/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed v0.1 Trial Chamber public-snapshot contract |
+| `/trials/schemas/v0.1/referral.schema.json` | staged JSON Schema | Immutable closed v0.1 exact-referral contract |
+| `/trials/schemas/v0.1/evaluation-request.schema.json` | staged JSON Schema | Immutable closed v0.1 assisted request-draft contract |
+| `/trials/schemas/v0.1/evaluation-plan.schema.json` | staged JSON Schema | Immutable closed v0.1 draft, unsealed, no-run plan contract |
+| `/trials/schemas/v0.1/preflight.schema.json` | staged JSON Schema | Immutable Phase-0 deny-all placeholder; v0.1 cannot represent or authorize a preflight |
+| `/trials/schemas/v0.1/trial-authority.schema.json` | staged JSON Schema | Immutable Phase-0 deny-all placeholder; v0.1 cannot represent or authorize trial authority |
+| `/trials/schemas/v0.1/trial-run.schema.json` | staged JSON Schema | Immutable Phase-0 deny-all placeholder; v0.1 cannot represent or authorize a run |
+| `/trials/schemas/v0.1/evaluation-result.schema.json` | staged JSON Schema | Immutable Phase-0 deny-all placeholder; v0.1 cannot represent or authorize a result |
+| `/trials/schemas/v0.1/adoption-record.schema.json` | staged JSON Schema | Immutable Phase-0 deny-all placeholder; v0.1 cannot represent or authorize adoption |
+| `/trials/schemas/v0.1/use-authority.schema.json` | staged JSON Schema | Immutable Phase-0 deny-all placeholder; v0.1 cannot represent or authorize use authority |
+| `/TRIAL-CHAMBER-v0.1.md` | staged Markdown | Immutable guide to assisted authorship, synthetic plans, expiry, later-gate denial, and the no-execution boundary |
+
+The Trial Chamber routes are inspectable publication surfaces, not an evaluator
+or control plane. Metadata titles are not scientific claims. The three request
+texts are maintainer-authorized assisted drafts whose exact text has not been
+human-reviewed; each corresponding plan is `DRAFT`, `UNSEALED`, `NO-RUN`,
+finite, and synthetic-only. Role-Styled remains held with no request or plan.
+There is no artifact acquisition, execution, preflight, trial authority, run,
+result, adoption, guest admission, module, use authority, scalar score, or
+automatic action. Every post-plan schema rejects every specimen, so a future
+contract version and separate review are mandatory before any later gate.
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -223,9 +247,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 111-asset upload contract (90 ledgered immutable/versioned assets and
-21 mutable assets; 109 direct public bodies, 108 sitemap URLs; ten atlases, three
-lab routes, one experiment route, one activation, and twenty retirement families)
+locks the 125-asset upload contract (102 ledgered immutable/versioned assets and
+23 mutable assets; 123 direct public bodies, 122 sitemap URLs; ten atlases, three
+lab routes, one experiment route, one activation, and twenty-one retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

@@ -630,6 +630,22 @@ discovered artifact is executed and no automatic integration occurs. The page
 needs no JavaScript, the edge worker performs no harvest or poll, and the
 KINGDOM MCP remains unchanged.
 
+The [Trial Chamber](https://thekingdom.dev/trial-chamber/) carries four exact
+Observatory referrals into an inspectable Phase-0 publication. Three referrals
+have maintainer-authorized assisted request drafts and finite, synthetic-only
+plans that remain `DRAFT`, `UNSEALED`, and `NO-RUN`; their exact text has not
+been human-reviewed. Role-Styled is held for source resolution with all six
+hold reasons and has no request or plan. The byte-preserved
+[`trials.json`](https://thekingdom.dev/trials.json) alias points to an
+[immutable dated snapshot](https://thekingdom.dev/trials/research-trial-chamber-2026-08-20.json),
+ten closed [v0.1 schemas](https://thekingdom.dev/trials/schemas/v0.1/public-snapshot.schema.json),
+and a [Phase-0 guide](https://thekingdom.dev/TRIAL-CHAMBER-v0.1.md). Evaluation
+has not started: there are zero preflights, authorities, runs, results,
+adoptions, or use authorities. All six post-plan schemas deny every record;
+crossing any later gate requires a future contract version and separate human
+review. The page runs no JavaScript, exposes no approval or execution control,
+and the KINGDOM MCP remains unchanged.
+
 J-space: a verbalizable workspace is published from exact authored bytes as a
 [synthetic reasoning-to-word case](https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json),
 with the [relational inference case schema](https://thekingdom.dev/schemas/relational-inference-case/0.1.json)

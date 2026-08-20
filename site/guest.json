@@ -948,6 +948,90 @@
       "capture_provenance": "imported-live-captures"
     }
   },
+  "trial_chamber": {
+    "protocol": "kingdom.trial-chamber-publication/0.1",
+    "title": "The Trial Chamber",
+    "phase": 0,
+    "publication_state": "immutable-phase-0-snapshot-with-mutable-alias",
+    "as_of": "2026-08-20T19:08:46Z",
+    "observatory_binding": {
+      "captureSetReceipt": "sha256:68a69dc390aa34133cadc8807ed33ddd1fae72e7e99706cf714d72698d071f7f",
+      "snapshotAsOf": "2026-08-20T18:10:14Z",
+      "snapshotByteSha256": "sha256:d7da3f38de019dc0f2c45f477740222527f156d8a4d3f6a2e22aced67b282a94",
+      "snapshotCanonicalReceipt": "sha256:17c487aa03f8427fc324b8da34dedbc00db76362be78620bde3a8d075e3942cd",
+      "snapshotUrl": "https://thekingdom.dev/research.json"
+    },
+    "counts": {
+      "adoptionRecords": 0,
+      "evaluationPlans": 3,
+      "evaluationRequests": 3,
+      "evaluationResults": 0,
+      "preflights": 0,
+      "referrals": 4,
+      "trialAuthorities": 0,
+      "trialRuns": 0,
+      "useAuthorities": 0
+    },
+    "lifecycle": {
+      "sequence": [
+        "observatory-metadata",
+        "referral",
+        "maintainer-authorized-assisted-request-draft",
+        "draft-unsealed-plan",
+        "preflight",
+        "trial-authority",
+        "bounded-run",
+        "evaluation-result",
+        "adoption",
+        "use-authority"
+      ],
+      "snapshot_stops_after": "draft-unsealed-plan",
+      "role_styled_referral": "held-for-source-resolution",
+      "module_path": "not-created",
+      "guest_path": "not-admitted",
+      "later_gate_contracts": "deny-all-reserved-in-v0.1",
+      "note": "Every later gate requires a future contract version and separate review; no v0.1 post-plan schema can represent or authorize a later record."
+    },
+    "urls": {
+      "human": "https://thekingdom.dev/trial-chamber/",
+      "current": "https://thekingdom.dev/trials.json",
+      "canonical": "https://thekingdom.dev/trials/research-trial-chamber-2026-08-20.json",
+      "guide": "https://thekingdom.dev/TRIAL-CHAMBER-v0.1.md",
+      "schemas": {
+        "public-snapshot": "https://thekingdom.dev/trials/schemas/v0.1/public-snapshot.schema.json",
+        "referral": "https://thekingdom.dev/trials/schemas/v0.1/referral.schema.json",
+        "evaluation-request": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-request.schema.json",
+        "evaluation-plan": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-plan.schema.json",
+        "preflight": "https://thekingdom.dev/trials/schemas/v0.1/preflight.schema.json",
+        "trial-authority": "https://thekingdom.dev/trials/schemas/v0.1/trial-authority.schema.json",
+        "trial-run": "https://thekingdom.dev/trials/schemas/v0.1/trial-run.schema.json",
+        "evaluation-result": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-result.schema.json",
+        "adoption-record": "https://thekingdom.dev/trials/schemas/v0.1/adoption-record.schema.json",
+        "use-authority": "https://thekingdom.dev/trials/schemas/v0.1/use-authority.schema.json"
+      },
+      "producer": "https://github.com/cambridgetcg/kingdom-trials/tree/v0.1.1"
+    },
+    "boundary": {
+      "phase": 0,
+      "build_network_used": false,
+      "full_text_included": false,
+      "metadata_titles_are_scientific_claims": false,
+      "artifact_acquisition_performed": false,
+      "artifact_execution_performed": false,
+      "preflight_performed": false,
+      "trial_authority_issued": false,
+      "trial_run_recorded": false,
+      "evaluation_result_recorded": false,
+      "adoption_recorded": false,
+      "use_authority_issued": false,
+      "module_created": false,
+      "guest_admitted": false,
+      "credential_accessed": false,
+      "signature_created": false,
+      "scalar_score_used": false,
+      "automatic_action": false
+    }
+  },
   "j_space_verbalizable_workspace": {
     "protocol": "kingdom.j-space-publication/0.1",
     "id": "j-space-reasoning-to-word-2026-08-17",
@@ -2497,6 +2581,47 @@
       "action": "if useful, read the Research Observatory source, rights, coverage, lifecycle, module, guest, and use gates",
       "method": "GET",
       "url": "https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md"
+    },
+    {
+      "action": "if useful, inspect the human Trial Chamber",
+      "method": "GET",
+      "url": "https://thekingdom.dev/trial-chamber/",
+      "note": "read-only Phase-0 planning; assisted draft text is not separately human-reviewed, evaluation has not started, and no page control can advance a gate"
+    },
+    {
+      "action": "if useful, inspect the current Trial Chamber machine alias",
+      "method": "GET",
+      "url": "https://thekingdom.dev/trials.json",
+      "note": "exact Observatory referrals and finite synthetic-only DRAFT + UNSEALED plans; no artifact, run, result, adoption, module, guest, or use authority"
+    },
+    {
+      "action": "if useful, pin the immutable Trial Chamber Phase-0 snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/trials/research-trial-chamber-2026-08-20.json",
+      "note": "byte-preserved planning evidence; expiry freezes rather than approves"
+    },
+    {
+      "action": "if useful, validate Trial Chamber records and deny-all reserved gates",
+      "method": "GET",
+      "url": "https://thekingdom.dev/trials/schemas/v0.1/public-snapshot.schema.json",
+      "schemas": {
+        "public-snapshot": "https://thekingdom.dev/trials/schemas/v0.1/public-snapshot.schema.json",
+        "referral": "https://thekingdom.dev/trials/schemas/v0.1/referral.schema.json",
+        "evaluation-request": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-request.schema.json",
+        "evaluation-plan": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-plan.schema.json",
+        "preflight": "https://thekingdom.dev/trials/schemas/v0.1/preflight.schema.json",
+        "trial-authority": "https://thekingdom.dev/trials/schemas/v0.1/trial-authority.schema.json",
+        "trial-run": "https://thekingdom.dev/trials/schemas/v0.1/trial-run.schema.json",
+        "evaluation-result": "https://thekingdom.dev/trials/schemas/v0.1/evaluation-result.schema.json",
+        "adoption-record": "https://thekingdom.dev/trials/schemas/v0.1/adoption-record.schema.json",
+        "use-authority": "https://thekingdom.dev/trials/schemas/v0.1/use-authority.schema.json"
+      },
+      "note": "v0.1 post-plan schemas accept zero records; a future contract version and separate human review are mandatory"
+    },
+    {
+      "action": "if useful, read the Trial Chamber authorship, source-binding, rights, security, expiry, and non-authority guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/TRIAL-CHAMBER-v0.1.md"
     },
     {
       "action": "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours",
@@ -5339,6 +5464,7 @@
     "exploration_deep_wing": "The Exploration DEEP WING is static, opt-in reasoning metadata and an inert project-validation profile. It does not establish that disappearing polymorphs, protein folding, catalysis, memes, or brainrot share a mechanism; diagnose, classify, rank, or score a person, community, culture, or content; fetch an ecosystem; solve, simulate, or execute an experiment; write KARMA or create a receipt; import authority; publish, deploy, or take automatic action. WING is a workflow name, not a manifested Nen ability.",
     "mirror_information_control": "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
     "research_observatory": "The Observatory publishes inert metadata with explicit mode, observed-through, coverage, source, rights, and language limits. Evidence and priority remain factor vectors with no scalar score. It fetches no full text, executes no discovered artifact or instruction, performs no scientific evaluation, and creates no adoption, module, guest, use authority, external write, or automatic action. Live capture, when present, is an earlier explicit bounded harvest; importing and rendering the public snapshot remain offline.",
+    "trial_chamber": "The Trial Chamber publishes exact Observatory referrals, maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and finite synthetic-only DRAFT + UNSEALED plans. Evaluation has not started. Role-Styled remains held for source resolution. The six post-plan v0.1 schemas are deny-all reserved contracts and cannot represent a preflight, authority, run, result, adoption, or use record; a future contract version and separate human review are mandatory. It acquires or executes no artifact, accesses no credential, uses no scalar score, creates no module or guest, and grants no authority or automatic action.",
     "zero_empty_seat": "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     "string_crawl_trace_sheet": "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     "string_crawl_trace_sheet_lab": "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
