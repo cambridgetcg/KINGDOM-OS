@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 90-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 102-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -36,6 +36,9 @@ the seventeenth; the Observation Membrane is the separate eighteenth family;
 and the static J-space triplet is the separate nineteenth family. The Research
 Observatory adds six closed v0.1 schemas and one guide to the ledger as the
 twentieth family; its server-rendered page and byte-preserved current snapshot
+are separately classified mutable publication surfaces. The Trial Chamber adds
+one immutable dated Phase-0 snapshot, ten closed schemas, and one guide as the
+twenty-first family; its server-rendered page and byte-preserved current alias
 are separately classified mutable publication surfaces.
 The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
@@ -69,6 +72,15 @@ and
 `sha256:bb254dc70f58e162da4f77904bbc910394394ba3beb791f7f41a04b18c70befe`.
 These values identify the current mutable release rather than creating an
 immutable alias for it.
+The Trial Chamber ledger entries preserve an exact Phase-0 referral and draft
+planning publication. Three request texts are maintainer-authorized assisted
+drafts whose exact text has not been human-reviewed, and their finite
+synthetic-only plans remain `DRAFT`, `UNSEALED`, and `NO-RUN`. Role-Styled is
+held with no request or plan. There are zero later-gate records, and the six
+post-plan schemas reject every specimen; a future contract version and separate
+review are mandatory before any preflight, authority, run, result, adoption, or
+use authority. The family creates no artifact acquisition, execution, module,
+guest admission, scalar score, deployment, or automatic action.
 The ZERO entries preserve a static inspection surface for historical notation,
 operational nothing, modern mathematical identities, typed information states,
 `NO_ACTION`, and opt-in metaphysical readings only. They create no scientific
@@ -141,18 +153,19 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 111-asset union classifies 90 destinations
-as ledgered immutable/versioned and 21 as mutable; 109 are direct public response
-bodies and the sitemap contains 108 URLs. Generated discovery describes ten
+consume those same bytes. The current 125-asset union classifies 102 destinations
+as ledgered immutable/versioned and 23 as mutable; 123 are direct public response
+bodies and the sitemap contains 122 URLs. Generated discovery describes ten
 atlases, three lab routes, one experiment route, and one separate activation
-plus the Research Observatory across twenty retirement families. It says what is
+plus the Research Observatory and Trial Chamber across twenty-one retirement
+families. It says what is
 served now, and every destination is explicitly classified as mutable or
 ledgered. A new ledger entry must be staged when introduced. A previously
 committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the twenty linked authored publication
+The live release check retires the twenty-one linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

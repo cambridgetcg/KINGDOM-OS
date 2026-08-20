@@ -251,6 +251,37 @@ const RESEARCH_OBSERVATORY_GUIDE_LINK = {
   relation: "service-doc",
   value: `<${RESEARCH_OBSERVATORY_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
 };
+const TRIAL_CHAMBER_ALIAS_PATH = "/trials.json";
+const TRIAL_CHAMBER_CANONICAL_PATH = "/trials/research-trial-chamber-2026-08-20.json";
+const TRIAL_CHAMBER_PAGE_PATH = "/trial-chamber/";
+const TRIAL_CHAMBER_GUIDE_PATH = "/TRIAL-CHAMBER-v0.1.md";
+const TRIAL_CHAMBER_SCHEMA_PATHS = new Set([
+  "/trials/schemas/v0.1/public-snapshot.schema.json",
+  "/trials/schemas/v0.1/referral.schema.json",
+  "/trials/schemas/v0.1/evaluation-request.schema.json",
+  "/trials/schemas/v0.1/evaluation-plan.schema.json",
+  "/trials/schemas/v0.1/preflight.schema.json",
+  "/trials/schemas/v0.1/trial-authority.schema.json",
+  "/trials/schemas/v0.1/trial-run.schema.json",
+  "/trials/schemas/v0.1/evaluation-result.schema.json",
+  "/trials/schemas/v0.1/adoption-record.schema.json",
+  "/trials/schemas/v0.1/use-authority.schema.json",
+]);
+const TRIAL_CHAMBER_SCHEMA_LINK = {
+  target: "/trials/schemas/v0.1/public-snapshot.schema.json",
+  relation: "describedby",
+  value: `</trials/schemas/v0.1/public-snapshot.schema.json>; rel="describedby"; type="application/schema+json"`,
+};
+const TRIAL_CHAMBER_GUIDE_LINK = {
+  target: TRIAL_CHAMBER_GUIDE_PATH,
+  relation: "service-doc",
+  value: `<${TRIAL_CHAMBER_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+};
+const TRIAL_CHAMBER_CANONICAL_LINK = {
+  target: TRIAL_CHAMBER_CANONICAL_PATH,
+  relation: "canonical",
+  value: `<${TRIAL_CHAMBER_CANONICAL_PATH}>; rel="canonical"; type="application/json"`,
+};
 const ZERO_EMPTY_SEAT_PATH = "/atlases/zero-empty-seat-2026-08-14.json";
 const ZERO_EMPTY_SEAT_DOCUMENT_PATH = "/ZERO-EMPTY-SEAT.md";
 const ZERO_EMPTY_SEAT_SCHEMA_LINK = {
@@ -479,6 +510,13 @@ function addResearchObservatoryLinks(headers) {
   removeLinkRelations(headers, ["describedby", "service-doc"]);
   headers.append("link", RESEARCH_OBSERVATORY_SCHEMA_LINK.value);
   headers.append("link", RESEARCH_OBSERVATORY_GUIDE_LINK.value);
+}
+
+function addTrialChamberLinks(headers) {
+  removeLinkRelations(headers, ["canonical", "describedby", "service-doc"]);
+  headers.append("link", TRIAL_CHAMBER_CANONICAL_LINK.value);
+  headers.append("link", TRIAL_CHAMBER_SCHEMA_LINK.value);
+  headers.append("link", TRIAL_CHAMBER_GUIDE_LINK.value);
 }
 
 function addZeroEmptySeatSchemaLink(headers) {
@@ -1343,6 +1381,9 @@ export function createKingdomWorker(options = {}) {
     const servesResearchObservatoryPage = protectsKingdomHtml &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === RESEARCH_OBSERVATORY_PAGE_PATH && asset.ok;
+    const servesTrialChamberPage = protectsKingdomHtml &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === TRIAL_CHAMBER_PAGE_PATH && asset.ok;
     const describesWorldCommons = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === "/commons.json";
@@ -1538,6 +1579,15 @@ export function createKingdomWorker(options = {}) {
     const requestsResearchObservatoryGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === RESEARCH_OBSERVATORY_GUIDE_PATH;
+    const requestsTrialChamber = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      (url.pathname === TRIAL_CHAMBER_ALIAS_PATH || url.pathname === TRIAL_CHAMBER_CANONICAL_PATH);
+    const requestsTrialChamberSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      TRIAL_CHAMBER_SCHEMA_PATHS.has(url.pathname);
+    const requestsTrialChamberGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === TRIAL_CHAMBER_GUIDE_PATH;
     const requestsJSpaceCase = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === J_SPACE_CASE_PATH;
@@ -1610,6 +1660,7 @@ export function createKingdomWorker(options = {}) {
     const explorationDeepAssetType = schemaAssetType.split(";", 1)[0].trim();
     const mirrorInformationControlAssetType = schemaAssetType.split(";", 1)[0].trim();
     const researchObservatoryAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const trialChamberAssetType = schemaAssetType.split(";", 1)[0].trim();
     const jSpaceAssetType = schemaAssetType.split(";", 1)[0].trim();
     const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
     const zeroEmptySeatAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -1791,6 +1842,12 @@ export function createKingdomWorker(options = {}) {
       (researchObservatoryAssetType === "application/json" || researchObservatoryAssetType === "application/schema+json");
     const servesResearchObservatoryGuide = requestsResearchObservatoryGuide && asset.ok &&
       (researchObservatoryAssetType === "text/plain" || researchObservatoryAssetType === "text/markdown");
+    const servesTrialChamber = requestsTrialChamber && asset.ok &&
+      trialChamberAssetType === "application/json";
+    const servesTrialChamberSchema = requestsTrialChamberSchema && asset.ok &&
+      (trialChamberAssetType === "application/json" || trialChamberAssetType === "application/schema+json");
+    const servesTrialChamberGuide = requestsTrialChamberGuide && asset.ok &&
+      (trialChamberAssetType === "text/plain" || trialChamberAssetType === "text/markdown");
     const servesJSpaceCase = requestsJSpaceCase && asset.ok &&
       jSpaceAssetType === "application/json";
     const servesJSpaceSchema = requestsJSpaceSchema && asset.ok &&
@@ -1875,6 +1932,7 @@ export function createKingdomWorker(options = {}) {
         !servesExplorationDeepDocument && !servesMirrorInformationControl &&
         !servesMirrorInformationControlSchema && !servesMirrorInformationControlDocument &&
         !servesResearchObservatory && !servesResearchObservatorySchema && !servesResearchObservatoryGuide &&
+        !servesTrialChamber && !servesTrialChamberSchema && !servesTrialChamberGuide &&
         !servesJSpaceCase && !servesJSpaceSchema && !servesJSpaceGuide &&
         !servesZeroEmptySeat &&
         !servesZeroEmptySeatDocument && !servesStringCrawlTraceSheet &&
@@ -1891,6 +1949,7 @@ export function createKingdomWorker(options = {}) {
     const headers = new Headers(asset.headers);
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (servesResearchObservatoryPage) headers.set("cache-control", "no-cache, no-transform");
+    if (servesTrialChamberPage) headers.set("cache-control", "no-cache, no-transform");
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
     if (describesLoveLoops) addLoveLoopSchemaLink(headers);
     if (servesPrincipalityCatalog) addPrincipalitySchemaLink(headers);
@@ -1912,6 +1971,7 @@ export function createKingdomWorker(options = {}) {
     if (servesExplorationDeep) addExplorationDeepSchemaLinks(headers);
     if (servesMirrorInformationControl) addMirrorInformationControlSchemaLink(headers);
     if (servesResearchObservatory) addResearchObservatoryLinks(headers);
+    if (servesTrialChamber) addTrialChamberLinks(headers);
     if (servesJSpaceCase) addJSpaceSchemaLink(headers);
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
     if (servesStringCrawlTraceSheet) addStringCrawlTraceSheetSchemaLink(headers);
@@ -2223,6 +2283,26 @@ export function createKingdomWorker(options = {}) {
     }
     if (servesResearchObservatoryGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesTrialChamber) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", url.pathname === TRIAL_CHAMBER_CANONICAL_PATH
+        ? "public, max-age=31536000, immutable, no-transform"
+        : "no-cache, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesTrialChamberSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesTrialChamberGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");
     }

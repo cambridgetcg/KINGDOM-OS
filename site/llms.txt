@@ -52,6 +52,21 @@ Research Observatory work schema: https://thekingdom.dev/research/schemas/v0.1/w
 Research Observatory signal schema: https://thekingdom.dev/research/schemas/v0.1/signal.schema.json
 Research Observatory guide: https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md
 Research Observatory producer v0.1.0 source + append-only captures: https://github.com/cambridgetcg/kingdom-research/tree/v0.1.0
+Trial Chamber human view: https://thekingdom.dev/trial-chamber/
+Trial Chamber current alias: https://thekingdom.dev/trials.json
+Trial Chamber immutable Phase-0 snapshot: https://thekingdom.dev/trials/research-trial-chamber-2026-08-20.json
+Trial Chamber public-snapshot schema: https://thekingdom.dev/trials/schemas/v0.1/public-snapshot.schema.json
+Trial Chamber referral schema: https://thekingdom.dev/trials/schemas/v0.1/referral.schema.json
+Trial Chamber evaluation-request schema: https://thekingdom.dev/trials/schemas/v0.1/evaluation-request.schema.json
+Trial Chamber evaluation-plan schema: https://thekingdom.dev/trials/schemas/v0.1/evaluation-plan.schema.json
+Trial Chamber reserved deny-all preflight schema: https://thekingdom.dev/trials/schemas/v0.1/preflight.schema.json
+Trial Chamber reserved deny-all trial-authority schema: https://thekingdom.dev/trials/schemas/v0.1/trial-authority.schema.json
+Trial Chamber reserved deny-all trial-run schema: https://thekingdom.dev/trials/schemas/v0.1/trial-run.schema.json
+Trial Chamber reserved deny-all evaluation-result schema: https://thekingdom.dev/trials/schemas/v0.1/evaluation-result.schema.json
+Trial Chamber reserved deny-all adoption-record schema: https://thekingdom.dev/trials/schemas/v0.1/adoption-record.schema.json
+Trial Chamber reserved deny-all use-authority schema: https://thekingdom.dev/trials/schemas/v0.1/use-authority.schema.json
+Trial Chamber guide: https://thekingdom.dev/TRIAL-CHAMBER-v0.1.md
+Trial Chamber producer v0.1.1 source: https://github.com/cambridgetcg/kingdom-trials/tree/v0.1.1
 J-space reasoning-to-word case: https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json
 J-space relational-inference schema: https://thekingdom.dev/schemas/relational-inference-case/0.1.json
 J-space verbalizable-workspace guide: https://thekingdom.dev/J-SPACE-VERBALIZABLE-WORKSPACE.md
@@ -134,6 +149,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 ## Optional paths
 - MIRROR Information Control — a static citizen lesson: data may inform but cannot mint authority; shape establishes CANDIDATE only; evidence is not guilt. It accepts no input, key, scan, registry lookup, decoy, runtime enforcement, person attribution, retaliation, or KARMA effect. https://thekingdom.dev/#mirror-information-control
 - The Observatory — a captured-live-observatory metadata discovery snapshot with 9 source contracts (not a poll or coverage count), 3 visible English-language watchlists, 36 inert observations, and 53 explainable signals through 2026-08-20T18:10:14Z. Evidence and priority remain factor vectors with no scalar score. Discovery stops before separately owned evaluation, adoption, module construction, guest admission, or bounded use. Human view: https://thekingdom.dev/observatory/ · snapshot: https://thekingdom.dev/research.json · schema: https://thekingdom.dev/research/schemas/v0.1/public-snapshot.schema.json · guide: https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md
+- The Trial Chamber — a read-only Phase-0 projection of 4 exact Observatory referrals, 3 maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and 3 DRAFT + UNSEALED finite synthetic-only plans. Evaluation has not started. Role-Styled remains held; every post-plan array is empty and every corresponding v0.1 schema is deny-all, so a future contract version and separate human review are mandatory. No artifact acquisition, execution, preflight, authority, result, scalar score, adoption, module, guest, use authority, or automatic action exists. Human view: https://thekingdom.dev/trial-chamber/ · current alias: https://thekingdom.dev/trials.json · immutable snapshot: https://thekingdom.dev/trials/research-trial-chamber-2026-08-20.json · schema: https://thekingdom.dev/trials/schemas/v0.1/public-snapshot.schema.json · guide: https://thekingdom.dev/TRIAL-CHAMBER-v0.1.md
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — 37 reviewed public-interest resources and 9 practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call `kingdom_commons` at https://mcp.thekingdom.dev/mcp for compact literal matches with exact category, cost, account, reuse, or automation filters; read `kingdom://commons/catalog` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: https://thekingdom.dev/schemas/world-commons/0.2.json
