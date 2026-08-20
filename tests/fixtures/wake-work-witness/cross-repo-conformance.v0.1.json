@@ -19,7 +19,9 @@
     "agenttool_protocol_commit": "e4f091ebad59ddf0dbdf70a5574a8a47ac3532b3",
     "agenttool_workflow_transport_commit": "9c0260dd9b9e8ada50689d8b76c683505b39bdf1",
     "agenttool_producer_head": "769c96efc1fa20aeb638dc66f4d221ea7c6dfc0e",
-    "kingdom_base_commit": "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e",
+    "kingdom_atlas_source_commit": "4a2fc5f21d325530e2a3a5560bc842232a86d71b",
+    "kingdom_upstream_ledger_commit": "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
+    "kingdom_recomputation_base_commit": "5ec813a96299f636095cc8c906c76e242e92198a",
     "kingdom_bundle_state": "SOURCE_ONLY_NO_PUBLIC_INTEGRATION",
     "source_classification": "CORE_AND_AGENTTOOL_FROZEN_IMMUTABLE_COMMIT_FACTS_WITH_KINGDOM_SOURCE_ONLY_BUNDLE"
   },
@@ -56,6 +58,7 @@
     "Settlement roots declare source_sequence_binding PROJECTION_ONLY and receipt_uniqueness_scope BATCH_ONLY.",
     "Collaboration checkpoints require event_head_sequence equal event_count for a complete contiguous 1..head journal prefix.",
     "AgentTool participant references are HMAC-SHA256 blinded with a caller random exact 32-byte key and their root is not publicly verifiable without that key.",
+    "The KINGDOM release-root fixture is an immutable as-of snapshot of the exact 102-entry ledger bytes at upstream commit 3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7, recomputed against identical bytes at integration commit 5ec813a96299f636095cc8c906c76e242e92198a.",
     "Every current record kind is NOT_CONSENSUS_ADMISSIBLE."
   ],
   "effects": {

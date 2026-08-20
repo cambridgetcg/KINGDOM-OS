@@ -434,7 +434,7 @@
         "node",
         "odd_node",
         "root",
-        "current_snapshot",
+        "as_of_snapshot",
         "nonclaims"
       ],
       "properties": {
@@ -474,11 +474,12 @@
         "root": {
           "$ref": "#/$defs/text"
         },
-        "current_snapshot": {
+        "as_of_snapshot": {
           "type": "object",
           "additionalProperties": false,
           "required": [
-            "git_commit",
+            "upstream_ledger_commit",
+            "recomputation_base_commit",
             "entry_count",
             "ledger_byte_sha256",
             "first_leaf",
@@ -488,11 +489,14 @@
             "fixture"
           ],
           "properties": {
-            "git_commit": {
+            "upstream_ledger_commit": {
+              "$ref": "#/$defs/gitCommit"
+            },
+            "recomputation_base_commit": {
               "$ref": "#/$defs/gitCommit"
             },
             "entry_count": {
-              "const": "90"
+              "const": "102"
             },
             "ledger_byte_sha256": {
               "$ref": "#/$defs/sha256"
@@ -814,7 +818,7 @@
           "const": "sha256-jcs-with-null-digest"
         },
         "digest": {
-          "const": "sha256:48b6354c8994ffe18a925582c50558c02f5699e41a21fdb7eee3904d78d9e624"
+          "const": "sha256:0b2eb18f9a59a3e44371f31d366a95382eb4f4ab7f6a4583b3e63d50aace3433"
         },
         "digest_field_treated_as": {
           "type": "null"

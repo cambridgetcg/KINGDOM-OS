@@ -6,7 +6,9 @@
     "atlas_protocol": "kingdom.wake-work-witness-atlas/0.1",
     "atlas_id": "wake-work-witness-atlas-2026-08-20",
     "shared_protocol": "kingdom.witnessed-agent-economy/0.1",
-    "kingdom_git_base": "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e"
+    "kingdom_atlas_source_commit": "4a2fc5f21d325530e2a3a5560bc842232a86d71b",
+    "kingdom_upstream_ledger_commit": "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
+    "kingdom_recomputation_base_commit": "5ec813a96299f636095cc8c906c76e242e92198a"
   },
   "frozen_inputs": {
     "record_schema_hash": "sha256:71401ebb962d8909206b77acb6a07616727bd17663f5028e5d2745d911199005",
@@ -17,14 +19,16 @@
     "corpus_file_count": "71",
     "vector_entry_count": "70"
   },
-  "producer_commit_facts": {
+  "provenance_commit_facts": {
     "zerone_upstream_base": "fdd40bf9aca4a82b2cdd904d0161016b8c2a8667",
     "zerone_producer_head": "094bf70309eaef21aeaa3ac86a3962824008a787",
     "agenttool_upstream_base": "55342fac97250898c2c4ea884f1a03bec1f8cc8c",
     "agenttool_protocol_commit": "e4f091ebad59ddf0dbdf70a5574a8a47ac3532b3",
     "agenttool_workflow_transport_commit": "9c0260dd9b9e8ada50689d8b76c683505b39bdf1",
     "agenttool_producer_head": "769c96efc1fa20aeb638dc66f4d221ea7c6dfc0e",
-    "kingdom_base_commit": "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e"
+    "kingdom_atlas_source_commit": "4a2fc5f21d325530e2a3a5560bc842232a86d71b",
+    "kingdom_upstream_ledger_commit": "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
+    "kingdom_recomputation_base_commit": "5ec813a96299f636095cc8c906c76e242e92198a"
   },
   "gates": [
     {
@@ -145,7 +149,7 @@
       "ordinal": "08",
       "id": "pin-atlas-semantic-digest",
       "status": "APPLIED",
-      "result": "sha256:48b6354c8994ffe18a925582c50558c02f5699e41a21fdb7eee3904d78d9e624 with integrity.digest treated as JSON null"
+      "result": "sha256:0b2eb18f9a59a3e44371f31d366a95382eb4f4ab7f6a4583b3e63d50aace3433 with integrity.digest treated as JSON null"
     },
     {
       "ordinal": "09",
@@ -161,16 +165,18 @@
     }
   ],
   "kingdom_release_snapshot": {
-    "entry_count": "90",
-    "ledger_byte_sha256": "sha256:5bbd70251a2433336460f7ee17fcb8f04dbd5f87333b784e32ae4326b7573db2",
-    "entries_tree_root": "sha256:d827fa9187fda3015a15425c723132e6bc10efc2c9ac50cf44a5243b4c50380c",
-    "release_root": "sha256:282ebb2616600dacdea29d44fb531f5d5e7e8f698b7c1ef0dc6bcba07f23500e"
+    "upstream_ledger_commit": "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
+    "recomputation_base_commit": "5ec813a96299f636095cc8c906c76e242e92198a",
+    "entry_count": "102",
+    "ledger_byte_sha256": "sha256:1dd2e01dbec6b4f7fde9f8f5220a7703e67e29cc5cb15a331e68b4b4ebcaaa37",
+    "entries_tree_root": "sha256:6556805c4935c4f739a5801f6c4971840b26ef9aba4464322b1bcbdb8a84a1ed",
+    "release_root": "sha256:25d7325eea0448b57e00fe95682adb40a94044204b2540db2ae933de13625122"
   },
   "artifact_pins": {
-    "atlas_semantic_digest": "sha256:48b6354c8994ffe18a925582c50558c02f5699e41a21fdb7eee3904d78d9e624",
-    "atlas_raw_byte_sha256": "sha256:fd76a8535a9aaa49beecec6af1b6f0f68df07f4dd8136b3758d6e83bbb2ec275",
-    "schema_raw_byte_sha256": "sha256:bac44cc07f7a8c361bc679dec1524b9bfa9877bb8c64b674cef52b5105ec6c08",
-    "guide_raw_byte_sha256": "sha256:47b5278eac239ccc5db69984106929fc5998a7f713789718790ae0b2ebecf67d"
+    "atlas_semantic_digest": "sha256:0b2eb18f9a59a3e44371f31d366a95382eb4f4ab7f6a4583b3e63d50aace3433",
+    "atlas_raw_byte_sha256": "sha256:a951a3529758f11a5bd3a83ae3c46272226b191c1d3b4768af1b562eabcb164c",
+    "schema_raw_byte_sha256": "sha256:ce1a674b33617b81bb7d1aa3264068c6c7d6b0554ac2734eeb182803b728dd6d",
+    "guide_raw_byte_sha256": "sha256:6ab9bc3211154a74f053020299b3d52406fea86b4d5f040f7b1c25c6b33c3783"
   },
   "unchanged_invariants": [
     "mode remains SOURCE_ONLY_OFFLINE_NO_EFFECT",
@@ -180,7 +186,7 @@
     "collaboration remains full-prefix and HMAC-blinded with non-public participant-root verification",
     "all verifier effects remain zero or NONE inside ATLAS_SOURCE_VERIFIER_EXECUTION_ONLY",
     "privacy exclusions, nonclaims, one-validator caveat, and authority non-amplification remain binding",
-    "public routes, immutable-publications ledger, generated site, commit, push, and deployment remain outside this replacement"
+    "public routes, immutable-publications ledger, staging, generated site, serving, and deployment remain outside this replacement; tracked Git source is not public-site activation"
   ],
   "nonclaims": [
     "This audit record documents a source-only transformation; it is not a witnessed record, carrier instruction, consensus admission, or publication action and creates no Zerone transaction.",

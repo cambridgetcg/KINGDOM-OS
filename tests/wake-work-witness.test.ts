@@ -36,7 +36,7 @@ import {
   WITNESS_CONFORMANCE_VECTOR_PATH,
   WITNESS_CONFORMANCE_VECTOR_BYTE_SHA256,
   WITNESS_CONFORMANCE_PROVENANCE,
-  WITNESS_PRODUCER_COMMIT_FACTS,
+  WITNESS_PROVENANCE_COMMIT_FACTS,
   WITNESS_KIND_ACTIONS,
   WITNESS_LINEAGE_RELATIONS,
   deriveCurrentKingdomReleaseRoot,
@@ -301,7 +301,7 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
     expect(verifyKingdomReleaseRootVector(vector, root)).toEqual([]);
     expect(fileSha256(KINGDOM_RELEASE_ROOT_VECTOR_PATH)).toBe(KINGDOM_RELEASE_ROOT_VECTOR_BYTE_SHA256);
     expect(root).toMatchObject({
-      entry_count: "90",
+      entry_count: "102",
       ledger_byte_sha256: vector.input.ledger_byte_sha256,
       first_entry_id: vector.expected.first_entry_id,
       first_leaf: vector.expected.first_leaf,
@@ -387,7 +387,7 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
     const action = authored(); action.record_families[3].actions = ["GRANT", "REVOKE"]; mutations.push([action, "ACTION_MATRIX_MISMATCH"]);
     const privacy = authored(); privacy.privacy_boundary.never_commit = ["credentials"]; mutations.push([privacy, "PRIVACY_BOUNDARY_MISSING"]);
     const validator = authored(); validator.source_state.zerone_live_observation.validator_count = "2"; mutations.push([validator, "VALIDATOR_CAVEAT_MISSING"]);
-    const root = authored(); root.kingdom_release_root.current_snapshot.release_root = `sha256:${"1".repeat(64)}`; mutations.push([root, "RELEASE_ROOT_VECTOR_MISMATCH"]);
+    const root = authored(); root.kingdom_release_root.as_of_snapshot.release_root = `sha256:${"1".repeat(64)}`; mutations.push([root, "RELEASE_ROOT_VECTOR_MISMATCH"]);
     const effects = authored(); effects.effects.zerone_transactions = 1; mutations.push([effects, "NONZERO_OR_DRIFTED_EFFECTS"]);
     const effectScope = authored(); effectScope.shared_contract.effects_contract = "zero forever"; mutations.push([effectScope, "SIGNED_EFFECT_SCOPE_MISSING"]);
     const admissible = authored(); admissible.record_families[0].activation_status = "ADMISSIBLE"; mutations.push([admissible, "CONTRACT_DRIFT"]);
@@ -397,6 +397,10 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
   });
 
   test("is total and fail-closed for hostile non-JSON values", () => {
+    const revokedObject = Proxy.revocable({}, {});
+    revokedObject.revoke();
+    const revokedArray = Proxy.revocable([], {});
+    revokedArray.revoke();
     const hostile: unknown[] = [
       null,
       undefined,
@@ -404,6 +408,8 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
       new Date(),
       new Uint8Array([1]),
       Object.create(null),
+      revokedObject.proxy,
+      revokedArray.proxy,
       new Proxy(structuredClone(authored()), {
         get(target, property, receiver) {
           if (property === "integrity") throw new Error("stateful integrity trap");
@@ -416,6 +422,7 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
     for (const value of hostile) {
       expect(() => verifyWakeWorkWitnessAtlas(value)).not.toThrow();
       expect(verifyWakeWorkWitnessAtlas(value).length).toBeGreaterThan(0);
+      expect(() => evaluateWakeWorkWitnessAtlas(value)).not.toThrow();
       const evaluation = evaluateWakeWorkWitnessAtlas(value);
       expect(evaluation.valid).toBe(false);
       expect(evaluation.ready_for_live_chain).toBe(false);
@@ -434,7 +441,7 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
     expect(() => loadWakeWorkWitnessAtlas(link)).toThrow(/non-symlink/);
   });
 
-  test("keeps the source-only atlas byte-pinned and unpublished", () => {
+  test("keeps the tracked source-only atlas byte-pinned and outside public integration", () => {
     const atlas = loadWakeWorkWitnessAtlas();
     expect(atlas.integrity).toEqual({
       algorithm: "sha256-jcs-with-null-digest",
@@ -471,7 +478,7 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
       mode: "SOURCE_ONLY_OFFLINE_NO_EFFECT",
       shared_protocol: WITNESSED_AGENT_ECONOMY_PROTOCOL,
       live_chain_effect: false,
-      current_release_root: KINGDOM_RELEASE_ROOT_EXPECTED,
+      as_of_release_root: KINGDOM_RELEASE_ROOT_EXPECTED,
     });
     expect(discovery.record_kinds).toEqual(Object.keys(WITNESS_KIND_ACTIONS));
   });
@@ -496,6 +503,9 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
     expect(vector.observation.agenttool_protocol_commit).toBe("e4f091ebad59ddf0dbdf70a5574a8a47ac3532b3");
     expect(vector.observation.agenttool_workflow_transport_commit).toBe("9c0260dd9b9e8ada50689d8b76c683505b39bdf1");
     expect(vector.observation.agenttool_producer_head).toBe("769c96efc1fa20aeb638dc66f4d221ea7c6dfc0e");
+    expect(vector.observation.kingdom_atlas_source_commit).toBe("4a2fc5f21d325530e2a3a5560bc842232a86d71b");
+    expect(vector.observation.kingdom_upstream_ledger_commit).toBe("3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7");
+    expect(vector.observation.kingdom_recomputation_base_commit).toBe("5ec813a96299f636095cc8c906c76e242e92198a");
     expect(fileSha256(WITNESS_CONFORMANCE_VECTOR_PATH)).toBe(WITNESS_CONFORMANCE_VECTOR_BYTE_SHA256);
     expect(vector.nonclaims.join(" ")).toContain("KINGDOM does not claim to emit, verify, or reject the complete shared corpus");
     expect(vector.verified_invariants.join(" ")).toContain("PROJECTION_ONLY");
@@ -533,7 +543,7 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
       ["KINGDOM-OS", "REFERENCE_PIN_ONLY_NOT_SHARED_RECORD_PRODUCER_OR_VERIFIER"],
     ]);
     expect(plan.gates.every((entry: any) => entry.status === "PASS")).toBe(true);
-    expect(plan.producer_commit_facts).toEqual(WITNESS_PRODUCER_COMMIT_FACTS);
+    expect(plan.provenance_commit_facts).toEqual(WITNESS_PROVENANCE_COMMIT_FACTS);
     expect(plan.artifact_pins).toEqual({
       atlas_semantic_digest: WAKE_WORK_WITNESS_DIGEST,
       atlas_raw_byte_sha256: WAKE_WORK_WITNESS_BYTE_SHA256,
@@ -542,12 +552,13 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
     });
     expect(JSON.stringify(plan)).not.toContain(ZERO_SHA256);
     expect(plan.unchanged_invariants.join(" ")).toContain("ready_for_live_chain remains false");
-    expect(plan.unchanged_invariants.join(" ")).toContain("public routes, immutable-publications ledger, generated site");
+    expect(plan.unchanged_invariants.join(" ")).toContain("public routes, immutable-publications ledger, staging, generated site");
     const mapMutations = [
       (() => { const value = structuredClone(plan); value.unknown = true; return value; })(),
       (() => { const value = structuredClone(plan); value.operations[0].unknown = true; return value; })(),
       (() => { const value = structuredClone(plan); value.operations[1].result = "drift"; return value; })(),
       (() => { const value = structuredClone(plan); value.producer_state_map[0].locator = "drift"; return value; })(),
+      (() => { const value = structuredClone(plan); value.provenance_commit_facts.agenttool_producer_head = "0".repeat(40); return value; })(),
       (() => { const value = structuredClone(plan); value.nonclaims[0] = "no Zerone transaction but altered"; return value; })(),
     ];
     for (const mutation of mapMutations) {

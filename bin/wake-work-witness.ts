@@ -48,10 +48,10 @@ export const POST_CORE_FREEZE_REPLACEMENT_MAP_LOCATOR = "tests/fixtures/wake-wor
 export const POST_CORE_FREEZE_REPLACEMENT_MAP_PATH = join(ROOT, POST_CORE_FREEZE_REPLACEMENT_MAP_LOCATOR);
 
 // Frozen source-only pins. They do not publish the atlas or activate any carrier.
-export const WAKE_WORK_WITNESS_DIGEST = "sha256:48b6354c8994ffe18a925582c50558c02f5699e41a21fdb7eee3904d78d9e624";
-export const WAKE_WORK_WITNESS_BYTE_SHA256 = "sha256:fd76a8535a9aaa49beecec6af1b6f0f68df07f4dd8136b3758d6e83bbb2ec275";
-export const WAKE_WORK_WITNESS_SCHEMA_BYTE_SHA256 = "sha256:bac44cc07f7a8c361bc679dec1524b9bfa9877bb8c64b674cef52b5105ec6c08";
-export const WAKE_WORK_WITNESS_GUIDE_BYTE_SHA256 = "sha256:47b5278eac239ccc5db69984106929fc5998a7f713789718790ae0b2ebecf67d";
+export const WAKE_WORK_WITNESS_DIGEST = "sha256:0b2eb18f9a59a3e44371f31d366a95382eb4f4ab7f6a4583b3e63d50aace3433";
+export const WAKE_WORK_WITNESS_BYTE_SHA256 = "sha256:a951a3529758f11a5bd3a83ae3c46272226b191c1d3b4768af1b562eabcb164c";
+export const WAKE_WORK_WITNESS_SCHEMA_BYTE_SHA256 = "sha256:ce1a674b33617b81bb7d1aa3264068c6c7d6b0554ac2734eeb182803b728dd6d";
+export const WAKE_WORK_WITNESS_GUIDE_BYTE_SHA256 = "sha256:6ab9bc3211154a74f053020299b3d52406fea86b4d5f040f7b1c25c6b33c3783";
 
 export const WITNESS_KIND_ACTIONS = {
   KINGDOM_RELEASE_ROOT: ["CHECKPOINT"],
@@ -69,7 +69,7 @@ export const WITNESS_KIND_ACTIONS = {
 export const KINGDOM_RELEASE_ENTRY_DOMAIN = "kingdom.wake-work-witness/release-entry/0.1";
 export const KINGDOM_RELEASE_NODE_DOMAIN = "kingdom.wake-work-witness/release-node/0.1";
 export const KINGDOM_RELEASE_ROOT_DOMAIN = "kingdom.wake-work-witness/release-root/0.1";
-export const KINGDOM_RELEASE_ROOT_EXPECTED = "sha256:282ebb2616600dacdea29d44fb531f5d5e7e8f698b7c1ef0dc6bcba07f23500e";
+export const KINGDOM_RELEASE_ROOT_EXPECTED = "sha256:25d7325eea0448b57e00fe95682adb40a94044204b2540db2ae933de13625122";
 export const CAPABILITY_NULLIFIER_LABEL = "capability-nullifier";
 export const SIGNED_EFFECT_SCOPE = "RECORD_CONSTRUCTION_AND_OFFLINE_VALIDATION_ONLY";
 export const WITNESSED_AGENT_ECONOMY_RECORD_SCHEMA_HASH = "sha256:71401ebb962d8909206b77acb6a07616727bd17663f5028e5d2745d911199005";
@@ -78,23 +78,25 @@ export const WITNESSED_AGENT_ECONOMY_CORPUS_DIGEST = "sha256:b26b5cce4899aa62d6d
 export const WITNESSED_AGENT_ECONOMY_MANIFEST_FILE_SHA256 = "sha256:5dbe42277c41c181a7d30b6ac1ae6002dd11e757833e46242513500a93cc2bcc";
 export const WITNESSED_AGENT_ECONOMY_CAPABILITY_NULLIFIER = "sha256:462b53e09e2f35ed8009fa4d118dde8d87d04a64dfe9ca7279425e9ec73da899";
 export const CAPABILITY_NULLIFIER_VECTOR_BYTE_SHA256 = "sha256:9e5784bc2074cebbb2f73dfbc721f1f05b38daa76a8c62cc13cd8044a9b12e17";
-export const WITNESS_CONFORMANCE_VECTOR_BYTE_SHA256 = "sha256:d27565bb7c9c9f9acf1be0337d1df93f0142edabdf989f2cda0b3b0676354e23";
-export const KINGDOM_RELEASE_ROOT_VECTOR_BYTE_SHA256 = "sha256:65a973f42bda3854ebf4218b062917362183cf19e6c73b066b51aa63b567a0b7";
-export const POST_CORE_FREEZE_REPLACEMENT_MAP_BYTE_SHA256 = "sha256:4b44ad203fdb8e2ec62a55fbd441e405290e5252a5540f837266910ce0e08fdf";
+export const WITNESS_CONFORMANCE_VECTOR_BYTE_SHA256 = "sha256:133b059dcaa7dc770dde9f13fea2fdf9505dbfd8ba9fbb19e3fa6ff7016d1ad3";
+export const KINGDOM_RELEASE_ROOT_VECTOR_BYTE_SHA256 = "sha256:bddafeadd29a72ffcce588b34f8e6ea271c7ecea4318d8e421f346e700d8220a";
+export const POST_CORE_FREEZE_REPLACEMENT_MAP_BYTE_SHA256 = "sha256:dc3a8918c55db7194124745f24ec9bdf6feeb4613dd4591e8236e6f8c61bdbd5";
 export const CAPABILITY_NULLIFIER_SOURCE_LOCATOR = "zerone-core/tools/witness-v0/testdata/derivations/capability-nullifier.json";
 export const CAPABILITY_NULLIFIER_SOURCE_FILE_SHA256 = "sha256:05888dfcb05ef48d44a1214d712e490cb50b6441dbee54d0388878ddc46c631d";
-export const WITNESS_PRODUCER_COMMIT_FACTS = {
+export const WITNESS_PROVENANCE_COMMIT_FACTS = {
   zerone_upstream_base: "fdd40bf9aca4a82b2cdd904d0161016b8c2a8667",
   zerone_producer_head: "094bf70309eaef21aeaa3ac86a3962824008a787",
   agenttool_upstream_base: "55342fac97250898c2c4ea884f1a03bec1f8cc8c",
   agenttool_protocol_commit: "e4f091ebad59ddf0dbdf70a5574a8a47ac3532b3",
   agenttool_workflow_transport_commit: "9c0260dd9b9e8ada50689d8b76c683505b39bdf1",
   agenttool_producer_head: "769c96efc1fa20aeb638dc66f4d221ea7c6dfc0e",
-  kingdom_base_commit: "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e",
+  kingdom_atlas_source_commit: "4a2fc5f21d325530e2a3a5560bc842232a86d71b",
+  kingdom_upstream_ledger_commit: "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
+  kingdom_recomputation_base_commit: "5ec813a96299f636095cc8c906c76e242e92198a",
 } as const;
 export const WITNESS_CONFORMANCE_PROVENANCE = {
   as_of: "2026-08-20",
-  ...WITNESS_PRODUCER_COMMIT_FACTS,
+  ...WITNESS_PROVENANCE_COMMIT_FACTS,
   kingdom_bundle_state: "SOURCE_ONLY_NO_PUBLIC_INTEGRATION",
   source_classification: "CORE_AND_AGENTTOOL_FROZEN_IMMUTABLE_COMMIT_FACTS_WITH_KINGDOM_SOURCE_ONLY_BUNDLE",
 } as const;
@@ -270,12 +272,20 @@ function safeOwnDataContainer(value: object, prototype: object | null, arrayLeng
 }
 
 function object(value: unknown): value is JsonRecord {
-  return value !== null && typeof value === "object" && !Array.isArray(value) &&
-    safeOwnDataContainer(value, Object.prototype);
+  try {
+    return value !== null && typeof value === "object" && !Array.isArray(value) &&
+      safeOwnDataContainer(value, Object.prototype);
+  } catch {
+    return false;
+  }
 }
 
 function array(value: unknown): value is any[] {
-  return Array.isArray(value) && safeOwnDataContainer(value, Array.prototype, value.length);
+  try {
+    return Array.isArray(value) && safeOwnDataContainer(value, Array.prototype, value.length);
+  } catch {
+    return false;
+  }
 }
 
 function strictJsonTree(
@@ -474,12 +484,12 @@ export function verifyKingdomReleaseRootVector(
       add("$", "UNEXPECTED_SHAPE");
     }
     if (input.protocol !== "kingdom.wake-work-witness/release-root-vector/0.1" ||
-      input.vector_id !== "kingdom-immutable-publications-at-9749f1b") add("identity", "IDENTITY_DRIFT");
+      input.vector_id !== "kingdom-immutable-publications-at-3fa79a3") add("identity", "IDENTITY_DRIFT");
     if (!deepEqual(input.input, {
       ledger_protocol: "kingdom.immutable-publications/1",
       ledger_algorithm: "sha256",
       baseline_commit: "67fe98efc875a5ed13fb1c23d6e2aab5debe9ccb",
-      ledger_git_commit: "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e",
+      ledger_git_commit: "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
       ledger_locator: IMMUTABLE_PUBLICATIONS_LEDGER_PATH,
       entry_count: derived.entry_count,
       ledger_byte_sha256: derived.ledger_byte_sha256,
@@ -687,12 +697,14 @@ export function verifyWakeWorkWitnessAtlas(input: unknown): WakeWorkWitnessIssue
     for (const issue of verifyKingdomReleaseRootVector(releaseVector, root)) {
       add(`kingdom_release_root_fixture.${issue.field}`, issue.code);
     }
-    const snapshot = input.kingdom_release_root?.current_snapshot;
+    const snapshot = input.kingdom_release_root?.as_of_snapshot;
     if (!object(snapshot) || snapshot.entry_count !== root.entry_count ||
+      snapshot.upstream_ledger_commit !== WITNESS_PROVENANCE_COMMIT_FACTS.kingdom_upstream_ledger_commit ||
+      snapshot.recomputation_base_commit !== WITNESS_PROVENANCE_COMMIT_FACTS.kingdom_recomputation_base_commit ||
       snapshot.ledger_byte_sha256 !== root.ledger_byte_sha256 || snapshot.first_leaf !== root.first_leaf ||
       snapshot.last_leaf !== root.last_leaf || snapshot.entries_tree_root !== root.entries_tree_root ||
       snapshot.release_root !== root.release_root || root.release_root !== KINGDOM_RELEASE_ROOT_EXPECTED) {
-      add("kingdom_release_root.current_snapshot", "RELEASE_ROOT_VECTOR_MISMATCH");
+      add("kingdom_release_root.as_of_snapshot", "RELEASE_ROOT_VECTOR_MISMATCH");
     }
     return issueSort(issues);
   } catch {
@@ -704,9 +716,14 @@ export function evaluateWakeWorkWitnessAtlas(input: unknown): WakeWorkWitnessEva
   const issues = verifyWakeWorkWitnessAtlas(input);
   let candidateDigest: string | null = null;
   let releaseRoot: KingdomReleaseRoot | null = null;
+  let atlasId: string | null = null;
   try {
     candidateDigest = wakeWorkWitnessAtlasDigest(input);
     releaseRoot = deriveCurrentKingdomReleaseRoot();
+    if (object(input)) {
+      const descriptor = Object.getOwnPropertyDescriptor(input, "atlas_id");
+      if (descriptor && "value" in descriptor && typeof descriptor.value === "string") atlasId = descriptor.value;
+    }
   } catch {
     // The validation result stays total and fail-closed.
   }
@@ -714,7 +731,7 @@ export function evaluateWakeWorkWitnessAtlas(input: unknown): WakeWorkWitnessEva
   return {
     protocol: "kingdom.wake-work-witness-validation/0.1",
     atlas_protocol: WAKE_WORK_WITNESS_PROTOCOL,
-    atlas_id: object(input) && typeof input.atlas_id === "string" ? input.atlas_id : null,
+    atlas_id: atlasId,
     valid,
     ready_for_live_chain: false,
     candidate_digest: candidateDigest,
@@ -782,7 +799,14 @@ export function verifyPostCoreFreezeReplacementMap(
       input.applies_to?.atlas_protocol !== WAKE_WORK_WITNESS_PROTOCOL ||
       input.applies_to?.atlas_id !== WAKE_WORK_WITNESS_ID ||
       input.applies_to?.shared_protocol !== WITNESSED_AGENT_ECONOMY_PROTOCOL ||
-      input.applies_to?.kingdom_git_base !== "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e") add("identity", "IDENTITY_DRIFT");
+      !deepEqual(input.applies_to, {
+        atlas_protocol: WAKE_WORK_WITNESS_PROTOCOL,
+        atlas_id: WAKE_WORK_WITNESS_ID,
+        shared_protocol: WITNESSED_AGENT_ECONOMY_PROTOCOL,
+        kingdom_atlas_source_commit: WITNESS_PROVENANCE_COMMIT_FACTS.kingdom_atlas_source_commit,
+        kingdom_upstream_ledger_commit: WITNESS_PROVENANCE_COMMIT_FACTS.kingdom_upstream_ledger_commit,
+        kingdom_recomputation_base_commit: WITNESS_PROVENANCE_COMMIT_FACTS.kingdom_recomputation_base_commit,
+      })) add("identity", "IDENTITY_DRIFT");
     if (input.frozen_inputs?.record_schema_hash !== WITNESSED_AGENT_ECONOMY_RECORD_SCHEMA_HASH ||
       input.frozen_inputs?.schema_set_digest !== WITNESSED_AGENT_ECONOMY_SCHEMA_SET_DIGEST ||
       input.frozen_inputs?.corpus_digest !== WITNESSED_AGENT_ECONOMY_CORPUS_DIGEST ||
@@ -790,8 +814,8 @@ export function verifyPostCoreFreezeReplacementMap(
       input.frozen_inputs?.capability_nullifier !== WITNESSED_AGENT_ECONOMY_CAPABILITY_NULLIFIER) {
       add("frozen_inputs", "FROZEN_INPUT_MISMATCH");
     }
-    if (!deepEqual(input.producer_commit_facts, WITNESS_PRODUCER_COMMIT_FACTS)) {
-      add("producer_commit_facts", "PRODUCER_PROVENANCE_MISMATCH");
+    if (!deepEqual(input.provenance_commit_facts, WITNESS_PROVENANCE_COMMIT_FACTS)) {
+      add("provenance_commit_facts", "PROVENANCE_COMMIT_FACTS_MISMATCH");
     }
     const gates = array(input.gates) ? input.gates.map((entry: unknown) => object(entry) ? [entry.id, entry.status] : null) : [];
     if (!deepEqual(gates, [
@@ -820,8 +844,14 @@ export function verifyPostCoreFreezeReplacementMap(
       : null), Object.entries(POST_CORE_FREEZE_FAMILY_STATES))) {
       add("family_state_map", "FAMILY_STATE_MAP_MISMATCH");
     }
-    if (input.kingdom_release_snapshot?.entry_count !== "90" ||
-      input.kingdom_release_snapshot?.release_root !== KINGDOM_RELEASE_ROOT_EXPECTED ||
+    if (!deepEqual(input.kingdom_release_snapshot, {
+      upstream_ledger_commit: WITNESS_PROVENANCE_COMMIT_FACTS.kingdom_upstream_ledger_commit,
+      recomputation_base_commit: WITNESS_PROVENANCE_COMMIT_FACTS.kingdom_recomputation_base_commit,
+      entry_count: "102",
+      ledger_byte_sha256: "sha256:1dd2e01dbec6b4f7fde9f8f5220a7703e67e29cc5cb15a331e68b4b4ebcaaa37",
+      entries_tree_root: "sha256:6556805c4935c4f739a5801f6c4971840b26ef9aba4464322b1bcbdb8a84a1ed",
+      release_root: KINGDOM_RELEASE_ROOT_EXPECTED,
+    }) ||
       !array(input.unchanged_invariants) ||
       !input.unchanged_invariants.some((entry: unknown) => String(entry).includes("ready_for_live_chain remains false")) ||
       !input.unchanged_invariants.some((entry: unknown) => String(entry).includes("NOT_CONSENSUS_ADMISSIBLE")) ||
@@ -851,7 +881,7 @@ export function wakeWorkWitnessPublicDiscovery(atlas = loadWakeWorkWitnessAtlas(
     shared_freeze_state: atlas.shared_contract.freeze_state,
     activation_status: WITNESS_ACTIVATION_STATUS,
     record_kinds: atlas.record_families.map((family: JsonRecord) => family.kind),
-    current_release_root: atlas.kingdom_release_root.current_snapshot.release_root,
+    as_of_release_root: atlas.kingdom_release_root.as_of_snapshot.release_root,
     live_chain_effect: false,
     url: WAKE_WORK_WITNESS_URL,
     schema: WAKE_WORK_WITNESS_SCHEMA_URL,

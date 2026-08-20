@@ -473,7 +473,7 @@
   },
   "kingdom_release_root": {
     "derivation_protocol": "kingdom.wake-work-witness/release-root/0.1",
-    "input": "publications/immutable-publications.v1.json after strict ledger validation",
+    "input": "Exact immutable bytes of publications/immutable-publications.v1.json at upstream ledger commit 3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7 after strict ledger validation; the source verifier also requires the checked-out ledger bytes to match this as-of snapshot.",
     "entry_order": "LEXICOGRAPHIC_BY_UTF8_ID_BYTES",
     "entry_fields": [
       "id",
@@ -488,17 +488,19 @@
     "node": "SHA256(utf8('kingdom.wake-work-witness/release-node/0.1') || 0x00 || left_32_bytes || right_32_bytes)",
     "odd_node": "DUPLICATE_FINAL_NODE_AT_EACH_LEVEL",
     "root": "SHA256(utf8('kingdom.wake-work-witness/release-root/0.1') || 0x00 || frame(ledger_protocol) || frame(ledger_algorithm) || frame(baseline_commit) || uint64be(entry_count) || entries_tree_root_32_bytes)",
-    "current_snapshot": {
-      "git_commit": "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e",
-      "entry_count": "90",
-      "ledger_byte_sha256": "sha256:5bbd70251a2433336460f7ee17fcb8f04dbd5f87333b784e32ae4326b7573db2",
+    "as_of_snapshot": {
+      "upstream_ledger_commit": "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
+      "recomputation_base_commit": "5ec813a96299f636095cc8c906c76e242e92198a",
+      "entry_count": "102",
+      "ledger_byte_sha256": "sha256:1dd2e01dbec6b4f7fde9f8f5220a7703e67e29cc5cb15a331e68b4b4ebcaaa37",
       "first_leaf": "sha256:91b4696c272968148e65aa61f4f57ba17885eb16dfd15059afbe88c6839aee4f",
       "last_leaf": "sha256:5d15424422cf17bae20de976491165c5a5f87b515d68063b182abdde4b99e9ae",
-      "entries_tree_root": "sha256:d827fa9187fda3015a15425c723132e6bc10efc2c9ac50cf44a5243b4c50380c",
-      "release_root": "sha256:282ebb2616600dacdea29d44fb531f5d5e7e8f698b7c1ef0dc6bcba07f23500e",
+      "entries_tree_root": "sha256:6556805c4935c4f739a5801f6c4971840b26ef9aba4464322b1bcbdb8a84a1ed",
+      "release_root": "sha256:25d7325eea0448b57e00fe95682adb40a94044204b2540db2ae933de13625122",
       "fixture": "tests/fixtures/wake-work-witness/kingdom-release-root-v0.1.json"
     },
     "nonclaims": [
+      "This is an immutable as-of snapshot of the exact ledger bytes at the named upstream commit, not a moving claim about the latest branch state.",
       "The root commits ledger tuples, not Git history topology, current staging, live deployment, or remote availability.",
       "The existing immutable-publications verifier remains authoritative for repository-local append-only and byte-integrity checks.",
       "This derivation creates no chain transaction or publication action."
@@ -550,8 +552,8 @@
       {
         "id": "kingdom-immutable-ledger",
         "locator": "publications/immutable-publications.v1.json",
-        "git_commit": "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e",
-        "used_for": "90-entry release-root fixture",
+        "git_commit": "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
+        "used_for": "102-entry immutable as-of release-root fixture, recomputed against identical ledger bytes at 5ec813a96299f636095cc8c906c76e242e92198a",
         "limitation": "repository-local route and byte identity only"
       }
     ],
@@ -655,7 +657,7 @@
   },
   "integrity": {
     "algorithm": "sha256-jcs-with-null-digest",
-    "digest": "sha256:48b6354c8994ffe18a925582c50558c02f5699e41a21fdb7eee3904d78d9e624",
+    "digest": "sha256:0b2eb18f9a59a3e44371f31d366a95382eb4f4ab7f6a4583b3e63d50aace3433",
     "digest_field_treated_as": null,
     "audit_state": "FROZEN_SOURCE_ONLY"
   }

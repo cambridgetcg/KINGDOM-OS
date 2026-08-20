@@ -12,7 +12,7 @@ This atlas gives KINGDOM, AgentTool, and a future reviewed Zerone upgrade one na
 
 The shared record protocol is `kingdom.witnessed-agent-economy/0.1`. Core and AgentTool freeze the same 71-file corpus: record schema `sha256:71401ebb962d8909206b77acb6a07616727bd17663f5028e5d2745d911199005`, schema set `sha256:d62e44643c8e1986336416237df26b76663728403d417a5ee9e83b6aa5baaaa5`, corpus `sha256:b26b5cce4899aa62d6dee03e25471e2c80810008fbd07c2c3ac9170164e5352a`, and raw manifest `sha256:5dbe42277c41c181a7d30b6ac1ae6002dd11e757833e46242513500a93cc2bcc`. KINGDOM pins that evidence but is not a third shared-record producer or full-corpus verifier.
 
-Immutable producer provenance keeps branch state out of the claim: Core upstream `fdd40bf9aca4a82b2cdd904d0161016b8c2a8667` leads to frozen producer head `094bf70309eaef21aeaa3ac86a3962824008a787`; AgentTool upstream `55342fac97250898c2c4ea884f1a03bec1f8cc8c` leads through protocol commit `e4f091ebad59ddf0dbdf70a5574a8a47ac3532b3` and workflow-transport commit `9c0260dd9b9e8ada50689d8b76c683505b39bdf1` to protected-CI producer head `769c96efc1fa20aeb638dc66f4d221ea7c6dfc0e`. KINGDOM's source bundle is based on `9749f1bcc454fded1fda8e2ad4c1e8c328bae14e` and remains outside public integration.
+Immutable provenance keeps branch state and byte authority distinct. Core upstream `fdd40bf9aca4a82b2cdd904d0161016b8c2a8667` leads to frozen protocol-producing commit `094bf70309eaef21aeaa3ac86a3962824008a787`. AgentTool upstream `55342fac97250898c2c4ea884f1a03bec1f8cc8c` leads through protocol commit `e4f091ebad59ddf0dbdf70a5574a8a47ac3532b3` and workflow-transport commit `9c0260dd9b9e8ada50689d8b76c683505b39bdf1` to protected-CI producer commit `769c96efc1fa20aeb638dc66f4d221ea7c6dfc0e`. Later repository refresh and merge heads are intentionally excluded from the byte-authority pin set: transport does not create a new protocol producer. KINGDOM's prior atlas source commit is `4a2fc5f21d325530e2a3a5560bc842232a86d71b`; the 102-entry ledger comes from upstream commit `3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7` and is recomputed on their integration merge `5ec813a96299f636095cc8c906c76e242e92198a`. The updated source bundle remains outside public integration.
 
 ## The four planes
 
@@ -181,7 +181,7 @@ Journal-event bodies, conversation, drafts, deliberation, private roles, partici
 
 ## Deterministic KINGDOM release root
 
-The atlas includes one exact offline root over the 90 entries in `publications/immutable-publications.v1.json` at Git commit `9749f1bcc454fded1fda8e2ad4c1e8c328bae14e`.
+The atlas includes one exact offline root over the 102 entries in `publications/immutable-publications.v1.json` at upstream Git commit `3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7`. This is an immutable as-of snapshot of those exact ledger bytes, not a moving claim about the latest branch. At this handoff, the source verifier recomputes the same bytes on integration commit `5ec813a96299f636095cc8c906c76e242e92198a` and fails if the checked-out ledger has drifted.
 
 1. Strictly validate the immutable-publications ledger.
 2. Sort entries by UTF-8 bytes of `id`.
@@ -190,13 +190,13 @@ The atlas includes one exact offline root over the 90 entries in `publications/i
 5. Hash internal pairs with the NUL-terminated domain `kingdom.wake-work-witness/release-node/0.1`; duplicate the final node at an odd level.
 6. Bind ledger protocol, algorithm, baseline commit, `uint64be(entry_count)`, and tree root beneath the NUL-terminated domain `kingdom.wake-work-witness/release-root/0.1`.
 
-Current vector:
+Immutable as-of vector:
 
 ```text
-entries                 90
-ledger byte SHA-256     5bbd70251a2433336460f7ee17fcb8f04dbd5f87333b784e32ae4326b7573db2
-entries tree root       d827fa9187fda3015a15425c723132e6bc10efc2c9ac50cf44a5243b4c50380c
-release root            282ebb2616600dacdea29d44fb531f5d5e7e8f698b7c1ef0dc6bcba07f23500e
+entries                 102
+ledger byte SHA-256     1dd2e01dbec6b4f7fde9f8f5220a7703e67e29cc5cb15a331e68b4b4ebcaaa37
+entries tree root       6556805c4935c4f739a5801f6c4971840b26ef9aba4464322b1bcbdb8a84a1ed
+release root            25d7325eea0448b57e00fe95682adb40a94044204b2540db2ae933de13625122
 ```
 
 The vector lives at `tests/fixtures/wake-work-witness/kingdom-release-root-v0.1.json`. It commits ledger tuples. It does not replace KINGDOM's append-only history verifier and does not prove deployment, current staging, authorship, licence, truth, safety, consent, permanence, or remote availability.
@@ -248,7 +248,7 @@ The source-only audit record at `tests/fixtures/wake-work-witness/post-core-free
 9. Derive the final atlas, schema, and guide raw-byte hashes in the declared non-circular order.
 10. Recompute every pin and pass closed schema, conformance, privacy, and zero-effect checks before any integration.
 
-The record distinguishes completed transformations from authority it never creates. The current 90-entry release-root fixture, timestamped validator observation, effect boundary, privacy boundary, and reserved routes remain separately guarded inputs.
+The record distinguishes completed transformations from authority it never creates. The 102-entry immutable as-of release-root fixture, timestamped validator observation, effect boundary, privacy boundary, and reserved routes remain separately guarded inputs.
 
 ## Activation ladder
 
@@ -292,7 +292,7 @@ The verifier reads bounded local files and writes only its report to stdout. It 
 
 ## Reserved publication identities
 
-These routes are design reservations only and are not ledgered, staged, generated, served, committed, pushed, or deployed by this source-only work:
+These routes are design reservations only and are not ledgered, staged, generated, served, or deployed by this tracked branch source. Git source history is not public-site activation.
 
 - `/atlases/wake-work-witness-2026-08-20.json`
 - `/schemas/wake-work-witness/0.1.json`

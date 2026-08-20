@@ -1,14 +1,14 @@
 {
   "protocol": "kingdom.wake-work-witness/release-root-vector/0.1",
-  "vector_id": "kingdom-immutable-publications-at-9749f1b",
+  "vector_id": "kingdom-immutable-publications-at-3fa79a3",
   "input": {
     "ledger_protocol": "kingdom.immutable-publications/1",
     "ledger_algorithm": "sha256",
     "baseline_commit": "67fe98efc875a5ed13fb1c23d6e2aab5debe9ccb",
-    "ledger_git_commit": "9749f1bcc454fded1fda8e2ad4c1e8c328bae14e",
+    "ledger_git_commit": "3fa79a38bdb2542f3125c3b9c96c5973ed63dcf7",
     "ledger_locator": "publications/immutable-publications.v1.json",
-    "entry_count": "90",
-    "ledger_byte_sha256": "sha256:5bbd70251a2433336460f7ee17fcb8f04dbd5f87333b784e32ae4326b7573db2"
+    "entry_count": "102",
+    "ledger_byte_sha256": "sha256:1dd2e01dbec6b4f7fde9f8f5220a7703e67e29cc5cb15a331e68b4b4ebcaaa37"
   },
   "algorithm": {
     "entry_order": "LEXICOGRAPHIC_BY_UTF8_ID_BYTES",
@@ -31,8 +31,8 @@
     "first_leaf": "sha256:91b4696c272968148e65aa61f4f57ba17885eb16dfd15059afbe88c6839aee4f",
     "last_entry_id": "zero-empty-seat/0.1/record",
     "last_leaf": "sha256:5d15424422cf17bae20de976491165c5a5f87b515d68063b182abdde4b99e9ae",
-    "entries_tree_root": "sha256:d827fa9187fda3015a15425c723132e6bc10efc2c9ac50cf44a5243b4c50380c",
-    "release_root": "sha256:282ebb2616600dacdea29d44fb531f5d5e7e8f698b7c1ef0dc6bcba07f23500e"
+    "entries_tree_root": "sha256:6556805c4935c4f739a5801f6c4971840b26ef9aba4464322b1bcbdb8a84a1ed",
+    "release_root": "sha256:25d7325eea0448b57e00fe95682adb40a94044204b2540db2ae933de13625122"
   },
   "effects": {
     "scope": "ATLAS_SOURCE_VERIFIER_EXECUTION_ONLY",
