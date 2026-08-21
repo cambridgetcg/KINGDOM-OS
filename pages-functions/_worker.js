@@ -302,6 +302,42 @@ const UK_GOVERNMENT_ENGINE_CANONICAL_LINK = {
   relation: "canonical",
   value: `<${UK_GOVERNMENT_ENGINE_CANONICAL_PATH}>; rel="canonical"; type="application/json"`,
 };
+const UK_GOVERNMENT_TRANSFORMATION_ENGINE_PAGE_PATH = "/government-transformation-engine/";
+const UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_PATH = "/government-transformations.json";
+const UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_PATH =
+  "/government/uk-government-transformation-engine-2026-08-21.json";
+const UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_PATH =
+  "/government/transformations/schemas/v0.1/public-snapshot.schema.json";
+const UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_PATH =
+  "/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md";
+const UK_GOVERNMENT_TRANSFORMATION_ENGINE_PATHS = new Set([
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_PAGE_PATH,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_PATH,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_PATH,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_PATH,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_PATH,
+]);
+const UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_LINK = {
+  target: UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+const UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_LINK = {
+  target: UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_PATH,
+  relation: "service-doc",
+  value: `<${UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+};
+const UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_LINK = {
+  target: UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_PATH,
+  relation: "canonical",
+  value: `<${UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_PATH}>; rel="canonical"; type="application/json"`,
+};
+const UK_GOVERNMENT_TRANSFORMATION_ENGINE_MUTATING_METHODS = new Set([
+  "POST",
+  "PUT",
+  "PATCH",
+  "DELETE",
+]);
 const ZERO_EMPTY_SEAT_PATH = "/atlases/zero-empty-seat-2026-08-14.json";
 const ZERO_EMPTY_SEAT_DOCUMENT_PATH = "/ZERO-EMPTY-SEAT.md";
 const ZERO_EMPTY_SEAT_SCHEMA_LINK = {
@@ -544,6 +580,13 @@ function addUkGovernmentEngineLinks(headers) {
   headers.append("link", UK_GOVERNMENT_ENGINE_CANONICAL_LINK.value);
   headers.append("link", UK_GOVERNMENT_ENGINE_SCHEMA_LINK.value);
   headers.append("link", UK_GOVERNMENT_ENGINE_GUIDE_LINK.value);
+}
+
+function addUkGovernmentTransformationEngineLinks(headers) {
+  removeLinkRelations(headers, ["canonical", "describedby", "service-doc"]);
+  headers.append("link", UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_LINK.value);
+  headers.append("link", UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_LINK.value);
+  headers.append("link", UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_LINK.value);
 }
 
 function addZeroEmptySeatSchemaLink(headers) {
@@ -1331,6 +1374,19 @@ export function createKingdomWorker(options = {}) {
     const includeRights = hasKingdomRightsAssets(url);
     const accept = (request.headers.get("accept") || "").toLowerCase();
 
+    if (includeRights && UK_GOVERNMENT_TRANSFORMATION_ENGINE_PATHS.has(url.pathname) &&
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_MUTATING_METHODS.has(request.method)) {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
     if (includeRights && KINGDOM_OS_ROUTE_SET.has(url.pathname)) {
       try {
         if (url.pathname === "/os.json") {
@@ -1414,6 +1470,9 @@ export function createKingdomWorker(options = {}) {
     const servesUkGovernmentEnginePage = protectsKingdomHtml &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === UK_GOVERNMENT_ENGINE_PAGE_PATH && asset.ok;
+    const servesUkGovernmentTransformationEnginePage = protectsKingdomHtml &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === UK_GOVERNMENT_TRANSFORMATION_ENGINE_PAGE_PATH && asset.ok;
     const describesWorldCommons = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === "/commons.json";
@@ -1628,6 +1687,16 @@ export function createKingdomWorker(options = {}) {
     const requestsUkGovernmentEngineGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === UK_GOVERNMENT_ENGINE_GUIDE_PATH;
+    const requestsUkGovernmentTransformationEngine = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      (url.pathname === UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_PATH ||
+        url.pathname === UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_PATH);
+    const requestsUkGovernmentTransformationEngineSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_PATH;
+    const requestsUkGovernmentTransformationEngineGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_PATH;
     const requestsJSpaceCase = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === J_SPACE_CASE_PATH;
@@ -1896,6 +1965,18 @@ export function createKingdomWorker(options = {}) {
         ukGovernmentEngineAssetType === "application/schema+json");
     const servesUkGovernmentEngineGuide = requestsUkGovernmentEngineGuide && asset.ok &&
       (ukGovernmentEngineAssetType === "text/plain" || ukGovernmentEngineAssetType === "text/markdown");
+    const ukGovernmentTransformationEngineAssetType =
+      (asset.headers.get("content-type") || "").split(";", 1)[0].trim().toLowerCase();
+    const servesUkGovernmentTransformationEngine = requestsUkGovernmentTransformationEngine && asset.ok &&
+      ukGovernmentTransformationEngineAssetType === "application/json";
+    const servesUkGovernmentTransformationEngineSchema =
+      requestsUkGovernmentTransformationEngineSchema && asset.ok &&
+      (ukGovernmentTransformationEngineAssetType === "application/json" ||
+        ukGovernmentTransformationEngineAssetType === "application/schema+json");
+    const servesUkGovernmentTransformationEngineGuide =
+      requestsUkGovernmentTransformationEngineGuide && asset.ok &&
+      (ukGovernmentTransformationEngineAssetType === "text/plain" ||
+        ukGovernmentTransformationEngineAssetType === "text/markdown");
     const servesJSpaceCase = requestsJSpaceCase && asset.ok &&
       jSpaceAssetType === "application/json";
     const servesJSpaceSchema = requestsJSpaceSchema && asset.ok &&
@@ -1982,6 +2063,9 @@ export function createKingdomWorker(options = {}) {
         !servesResearchObservatory && !servesResearchObservatorySchema && !servesResearchObservatoryGuide &&
         !servesTrialChamber && !servesTrialChamberSchema && !servesTrialChamberGuide &&
         !servesUkGovernmentEngine && !servesUkGovernmentEngineSchema && !servesUkGovernmentEngineGuide &&
+        !servesUkGovernmentTransformationEngine &&
+        !servesUkGovernmentTransformationEngineSchema &&
+        !servesUkGovernmentTransformationEngineGuide &&
         !servesJSpaceCase && !servesJSpaceSchema && !servesJSpaceGuide &&
         !servesZeroEmptySeat &&
         !servesZeroEmptySeatDocument && !servesStringCrawlTraceSheet &&
@@ -2000,6 +2084,9 @@ export function createKingdomWorker(options = {}) {
     if (servesResearchObservatoryPage) headers.set("cache-control", "no-cache, no-transform");
     if (servesTrialChamberPage) headers.set("cache-control", "no-cache, no-transform");
     if (servesUkGovernmentEnginePage) headers.set("cache-control", "no-cache, no-transform");
+    if (servesUkGovernmentTransformationEnginePage) {
+      headers.set("cache-control", "no-cache, no-transform");
+    }
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
     if (describesLoveLoops) addLoveLoopSchemaLink(headers);
     if (servesPrincipalityCatalog) addPrincipalitySchemaLink(headers);
@@ -2023,6 +2110,9 @@ export function createKingdomWorker(options = {}) {
     if (servesResearchObservatory) addResearchObservatoryLinks(headers);
     if (servesTrialChamber) addTrialChamberLinks(headers);
     if (servesUkGovernmentEngine) addUkGovernmentEngineLinks(headers);
+    if (servesUkGovernmentTransformationEngine) {
+      addUkGovernmentTransformationEngineLinks(headers);
+    }
     if (servesJSpaceCase) addJSpaceSchemaLink(headers);
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
     if (servesStringCrawlTraceSheet) addStringCrawlTraceSheetSchemaLink(headers);
@@ -2372,6 +2462,27 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesUkGovernmentEngineGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesUkGovernmentTransformationEngine) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control",
+        url.pathname === UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_PATH
+          ? "public, max-age=31536000, immutable, no-transform"
+          : "no-cache, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesUkGovernmentTransformationEngineSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesUkGovernmentTransformationEngineGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");

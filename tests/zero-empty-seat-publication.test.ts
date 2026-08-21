@@ -19,7 +19,7 @@ describe("ZERO Empty Seat public experience", () => {
   test("adds exactly the immutable record and guide routes while reusing the shared schema", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-  expect(urls).toHaveLength(127);
+  expect(urls).toHaveLength(132);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain(ZERO_EMPTY_SEAT_URL);
     expect(urls).toContain(ZERO_EMPTY_SEAT_GUIDE_URL);
@@ -138,14 +138,14 @@ describe("ZERO Empty Seat public experience", () => {
     });
   });
 
-  test("documents the final 130/105/25/128/127 publication contract", () => {
+  test("documents the final 135/108/27/133/132 publication contract", () => {
     const docs = ["CLAUDE.md", "DOMAINS-SETUP.md", "OS-ROUTES.md", "publications/README.md"].map(read);
     for (const document of docs) {
-      expect(document).toContain("130");
-      expect(document).toContain("105");
-      expect(document).toContain("127");
-      expect(document).toContain("25");
-      expect(document).toContain("128");
+      expect(document).toContain("135");
+      expect(document).toContain("108");
+      expect(document).toContain("132");
+      expect(document).toContain("27");
+      expect(document).toContain("133");
     }
     expect(read("README.md")).toContain("/atlases/zero-empty-seat-2026-08-14.json");
     expect(read("OS-ROUTES.md")).toContain("| `/ZERO-EMPTY-SEAT.md` |");

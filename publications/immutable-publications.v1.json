@@ -228,6 +228,27 @@
       "sha256": "1751b2ac331d6a1283cbf57b5b6961d9071f528298f97589fcbd7cf36407e139"
     },
     {
+      "id": "government-transformation-engine/0.1/guide",
+      "route": "/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md",
+      "source": "references/uk-government-transformation-engine-v0.1.md",
+      "destination": "UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md",
+      "sha256": "cf025c3ed0baaca5ef08dc5ba5187f50ae1aa8596878f1a28e34be7d62a1d9c8"
+    },
+    {
+      "id": "government-transformation-engine/0.1/schema",
+      "route": "/government/transformations/schemas/v0.1/public-snapshot.schema.json",
+      "source": "schemas/government-transformation-engine/v0.1/public-snapshot.schema.json",
+      "destination": "government/transformations/schemas/v0.1/public-snapshot.schema.json",
+      "sha256": "9949457e87db784c734b195195c7f3cdc2afb138ada400f61583ebd0a6cf7be6"
+    },
+    {
+      "id": "government-transformation-engine/0.1/snapshot",
+      "route": "/government/uk-government-transformation-engine-2026-08-21.json",
+      "source": "data/government/uk-government-transformation-engine.v0.1.json",
+      "destination": "government/uk-government-transformation-engine-2026-08-21.json",
+      "sha256": "fef3ca1719cb7fd02c09c558db6f239cad29a173b921763a10a59e042a4cdf00"
+    },
+    {
       "id": "j-space-verbalizable-workspace/0.1/case",
       "route": "/records/j-space-reasoning-to-word-2026-08-17.json",
       "source": "bridges/examples/j-space-reasoning-to-word-inference.json",

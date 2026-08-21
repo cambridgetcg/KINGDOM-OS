@@ -1122,6 +1122,451 @@
       "transactionExecution": false
     }
   },
+  "uk_government_transformation_engine": {
+    "protocol": "kingdom.government-transformation-orientation-public-snapshot/0.1",
+    "title": "Government Transformation Engine: United Kingdom",
+    "contract_version": "0.1.0",
+    "publication_state": "immutable-dated-snapshot-with-mutable-alias",
+    "state_at_publication": "within-review-window",
+    "reader_time_state_embedded": false,
+    "as_of": "2026-08-21",
+    "next_review_due": "2026-09-21",
+    "jurisdiction": {
+      "code": "UK",
+      "label": "United Kingdom",
+      "scope": "orientation-only"
+    },
+    "authorship": {
+      "compiledBy": "codex-assisted-publication",
+      "exactTextHumanReviewed": false,
+      "humanDirectionRecorded": true,
+      "humanReviewCompleted": false,
+      "humanReviewRequired": true,
+      "origin": "maintainer-authorized-assisted-publication"
+    },
+    "counts": {
+      "authorityDependencyEdges": 17,
+      "authorityDependencyNodes": 25,
+      "causalEdges": 24,
+      "causalNodes": 30,
+      "desiredOutcomes": 3,
+      "dossiers": 3,
+      "evidenceAtoms": 30,
+      "externalContextBindings": 4,
+      "humanGates": 6,
+      "jurisdictionBranches": 4,
+      "options": 9,
+      "planeAssessments": 18,
+      "routeOrientations": 4
+    },
+    "base_government_engine": {
+      "canonical_url": "https://thekingdom.dev/government/uk-government-engine-2026-08-21.json",
+      "byte_receipt": "sha256:1751b2ac331d6a1283cbf57b5b6961d9071f528298f97589fcbd7cf36407e139",
+      "canonical_receipt": "sha256:cc2c22e356cef0160ed5da1e2fd756bad5801f574c4cb064dec157b9207b9739",
+      "exact_text_human_reviewed": false,
+      "official_source_handling": "link-only"
+    },
+    "adoption": {
+      "authorityLocation": "outside-this-system",
+      "state": "not-adopted"
+    },
+    "trial_chamber": {
+      "compatibility": "unavailable",
+      "result": null,
+      "useAsAuthority": false
+    },
+    "dossiers": [
+      {
+        "id": "dossier:four-nation-public-service-information",
+        "title": "Synthetic four-nation public-service information proposition",
+        "synthetic": true,
+        "hold": {
+          "reasonCode": "four-nation-specialist-competence-review-required",
+          "state": "held",
+          "stopsProgression": true
+        },
+        "plane_statuses": [
+          {
+            "id": "assessment:four-nation-delivery",
+            "plane_id": "plane:delivery",
+            "status": "specialist-review-required",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:four-nation-delivery-owner"
+            ]
+          },
+          {
+            "id": "assessment:four-nation-jurisdiction",
+            "plane_id": "plane:jurisdiction",
+            "status": "specialist-review-required",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:england-competence",
+              "question:ni-competence",
+              "question:scotland-competence",
+              "question:wales-competence"
+            ]
+          },
+          {
+            "id": "assessment:four-nation-law",
+            "plane_id": "plane:law",
+            "status": "specialist-review-required",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:four-nation-current-law"
+            ]
+          },
+          {
+            "id": "assessment:four-nation-mandate",
+            "plane_id": "plane:mandate",
+            "status": "insufficient-evidence",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:four-nation-accountability"
+            ]
+          },
+          {
+            "id": "assessment:four-nation-money",
+            "plane_id": "plane:money",
+            "status": "not-assessed",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:four-nation-funding"
+            ]
+          },
+          {
+            "id": "assessment:four-nation-remedy",
+            "plane_id": "plane:remedy",
+            "status": "not-assessed",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:four-nation-remedy"
+            ]
+          }
+        ],
+        "human_gates": [
+          {
+            "id": "gate:four-nation-competence-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:four-nation-service-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          }
+        ],
+        "graphs": {
+          "authority_dependencies": {
+            "nodes": 9,
+            "edges": 6,
+            "automatic_progression": false
+          },
+          "causal_hypotheses": {
+            "nodes": 10,
+            "edges": 8,
+            "claims_causal_truth": false
+          }
+        },
+        "options": {
+          "business_as_usual": 1,
+          "alternatives": 2,
+          "selected": false,
+          "preferred_option_id": null
+        },
+        "external_context": []
+      },
+      {
+        "id": "dossier:hmrc-decision-notice-explanatory-content",
+        "title": "Synthetic HMRC decision-notice explanatory-content redesign",
+        "synthetic": true,
+        "hold": {
+          "reasonCode": "route-deadline-and-eligibility-insufficient-evidence",
+          "state": "held",
+          "stopsProgression": true
+        },
+        "plane_statuses": [
+          {
+            "id": "assessment:notice-delivery",
+            "plane_id": "plane:delivery",
+            "status": "insufficient-evidence",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:notice-accessibility",
+              "question:notice-content-governance"
+            ]
+          },
+          {
+            "id": "assessment:notice-jurisdiction",
+            "plane_id": "plane:jurisdiction",
+            "status": "insufficient-evidence",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:notice-jurisdiction"
+            ]
+          },
+          {
+            "id": "assessment:notice-law",
+            "plane_id": "plane:law",
+            "status": "insufficient-evidence",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:notice-current-law"
+            ]
+          },
+          {
+            "id": "assessment:notice-mandate",
+            "plane_id": "plane:mandate",
+            "status": "insufficient-evidence",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:notice-accountability"
+            ]
+          },
+          {
+            "id": "assessment:notice-money",
+            "plane_id": "plane:money",
+            "status": "insufficient-evidence",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:notice-liability-boundary"
+            ]
+          },
+          {
+            "id": "assessment:notice-remedy",
+            "plane_id": "plane:remedy",
+            "status": "insufficient-evidence",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:notice-deadline",
+              "question:notice-eligibility",
+              "question:notice-route"
+            ]
+          }
+        ],
+        "human_gates": [
+          {
+            "id": "gate:notice-accessibility-research",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:notice-specialist-tax-legal-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          }
+        ],
+        "graphs": {
+          "authority_dependencies": {
+            "nodes": 10,
+            "edges": 6,
+            "automatic_progression": false
+          },
+          "causal_hypotheses": {
+            "nodes": 10,
+            "edges": 8,
+            "claims_causal_truth": false
+          }
+        },
+        "options": {
+          "business_as_usual": 1,
+          "alternatives": 2,
+          "selected": false,
+          "preferred_option_id": null
+        },
+        "external_context": [
+          {
+            "bridge_id": "bridge:taxsorted-tax-system",
+            "collection": "pipelineStages",
+            "record_id": "stage-review-and-appeal",
+            "taint": "external-context-only",
+            "supports_claim_ids": []
+          },
+          {
+            "bridge_id": "bridge:taxsorted-tax-system",
+            "collection": "pipelineStages",
+            "record_id": "stage-service-complaint",
+            "taint": "external-context-only",
+            "supports_claim_ids": []
+          }
+        ]
+      },
+      {
+        "id": "dossier:public-money-transparency-information-service",
+        "title": "Synthetic public-money transparency information service",
+        "synthetic": true,
+        "hold": {
+          "reasonCode": "labelled-pound-traceability-not-established",
+          "state": "held",
+          "stopsProgression": true
+        },
+        "plane_statuses": [
+          {
+            "id": "assessment:money-service-delivery",
+            "plane_id": "plane:delivery",
+            "status": "insufficient-evidence",
+            "specialist_review_required": false,
+            "unresolved_question_ids": [
+              "question:money-service-scope"
+            ]
+          },
+          {
+            "id": "assessment:money-service-jurisdiction",
+            "plane_id": "plane:jurisdiction",
+            "status": "specialist-review-required",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:money-territorial-scope"
+            ]
+          },
+          {
+            "id": "assessment:money-service-law",
+            "plane_id": "plane:law",
+            "status": "insufficient-evidence",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:money-instrument-authority"
+            ]
+          },
+          {
+            "id": "assessment:money-service-mandate",
+            "plane_id": "plane:mandate",
+            "status": "insufficient-evidence",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:money-accountability-owner"
+            ]
+          },
+          {
+            "id": "assessment:money-service-money",
+            "plane_id": "plane:money",
+            "status": "contested",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:labelled-pound-trace"
+            ]
+          },
+          {
+            "id": "assessment:money-service-remedy",
+            "plane_id": "plane:remedy",
+            "status": "not-assessed",
+            "specialist_review_required": true,
+            "unresolved_question_ids": [
+              "question:money-content-correction-route"
+            ]
+          }
+        ],
+        "human_gates": [
+          {
+            "id": "gate:money-evaluation-design",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:money-public-authority-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          }
+        ],
+        "graphs": {
+          "authority_dependencies": {
+            "nodes": 6,
+            "edges": 5,
+            "automatic_progression": false
+          },
+          "causal_hypotheses": {
+            "nodes": 10,
+            "edges": 8,
+            "claims_causal_truth": false
+          }
+        },
+        "options": {
+          "business_as_usual": 1,
+          "alternatives": 2,
+          "selected": false,
+          "preferred_option_id": null
+        },
+        "external_context": [
+          {
+            "bridge_id": "bridge:taxsorted-public-funding",
+            "collection": "fundingMechanisms",
+            "record_id": "mechanism-parliamentary-supply",
+            "taint": "external-context-only",
+            "supports_claim_ids": []
+          },
+          {
+            "bridge_id": "bridge:taxsorted-public-funding",
+            "collection": "transparencyGaps",
+            "record_id": "gap-pooled-pound-traceability",
+            "taint": "external-context-only",
+            "supports_claim_ids": []
+          }
+        ]
+      }
+    ],
+    "urls": {
+      "canonical": "https://thekingdom.dev/government/uk-government-transformation-engine-2026-08-21.json",
+      "guide": "https://thekingdom.dev/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md",
+      "human": "https://thekingdom.dev/government-transformation-engine/",
+      "mutableAlias": "https://thekingdom.dev/government-transformations.json",
+      "producer": "https://github.com/cambridgetcg/kingdom-government-transformation-engine/tree/v0.1.0",
+      "repository": "https://github.com/cambridgetcg/kingdom-government-transformation-engine",
+      "schema": "https://thekingdom.dev/government/transformations/schemas/v0.1/public-snapshot.schema.json"
+    },
+    "boundary": {
+      "acceptsFreeText": false,
+      "accountAccess": false,
+      "advice": false,
+      "approval": false,
+      "authorityCreation": false,
+      "automatedAction": false,
+      "automatedDecision": false,
+      "automaticProgression": false,
+      "credentialAccess": false,
+      "credentialCollection": false,
+      "currentOfficeholders": false,
+      "deadlineDetermination": false,
+      "decisionAuthority": false,
+      "deployment": false,
+      "eligibilityDetermination": false,
+      "externalCrosswalkAsGovernmentEvidence": false,
+      "externalEffects": false,
+      "filing": false,
+      "governmentAffiliation": false,
+      "identityAccess": false,
+      "identityCollection": false,
+      "legalAdvice": false,
+      "legalConclusion": false,
+      "liabilityDetermination": false,
+      "liveData": false,
+      "llmRuntime": false,
+      "mcpExposure": false,
+      "networkAtBuildOrRuntime": false,
+      "officialEndorsement": false,
+      "partyProfiles": false,
+      "payment": false,
+      "peopleProfiles": false,
+      "personalData": false,
+      "personalDataCollection": false,
+      "preferredOptionSelection": false,
+      "procurement": false,
+      "publicForm": false,
+      "ranking": false,
+      "runtimeFetch": false,
+      "scoring": false,
+      "spending": false,
+      "submissions": false,
+      "taxAdvice": false,
+      "taxConclusion": false,
+      "transaction": false
+    }
+  },
   "j_space_verbalizable_workspace": {
     "protocol": "kingdom.j-space-publication/0.1",
     "id": "j-space-reasoning-to-word-2026-08-17",
@@ -2741,6 +3186,35 @@
       "action": "if useful, read the UK Government Engine source, review, TaxSorted crosswalk, unknown, and non-authority guide",
       "method": "GET",
       "url": "https://thekingdom.dev/UK-GOVERNMENT-ENGINE-v0.1.md"
+    },
+    {
+      "action": "if useful, inspect the human UK Government Transformation Engine",
+      "method": "GET",
+      "url": "https://thekingdom.dev/government-transformation-engine/",
+      "note": "independent synthetic Phase-0 orientation dossiers; held, static, incomplete, not separately human-reviewed, and not analysis, advice, approval, readiness, adoption or action"
+    },
+    {
+      "action": "if useful, inspect the UK Government Transformation Engine mutable alias",
+      "method": "GET",
+      "url": "https://thekingdom.dev/government-transformations.json",
+      "note": "byte-preserved alias for state at publication only; after the next review due date the active family must be replaced or retired"
+    },
+    {
+      "action": "if useful, pin the immutable UK Government Transformation Engine snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/government/uk-government-transformation-engine-2026-08-21.json",
+      "note": "historical orientation remains recoverable; immutable availability does not establish reader-time currency"
+    },
+    {
+      "action": "if useful, validate the closed UK Government Transformation Engine snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/government/transformations/schemas/v0.1/public-snapshot.schema.json",
+      "note": "structural validity does not create evidence, causal truth, authority, selection, a decision or progression"
+    },
+    {
+      "action": "if useful, read the UK Government Transformation Engine freshness, evidence, graph, TaxSorted firewall, and non-authority guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md"
     },
     {
       "action": "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours",
@@ -5585,6 +6059,7 @@
     "research_observatory": "The Observatory publishes inert metadata with explicit mode, observed-through, coverage, source, rights, and language limits. Evidence and priority remain factor vectors with no scalar score. It fetches no full text, executes no discovered artifact or instruction, performs no scientific evaluation, and creates no adoption, module, guest, use authority, external write, or automatic action. Live capture, when present, is an earlier explicit bounded harvest; importing and rendering the public snapshot remain offline.",
     "trial_chamber": "The Trial Chamber publishes exact Observatory referrals, maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and finite synthetic-only DRAFT + UNSEALED plans. Evaluation has not started. Role-Styled remains held for source resolution. The six post-plan v0.1 schemas are deny-all reserved contracts and cannot represent a preflight, authority, run, result, adoption, or use record; a future contract version and separate human review are mandatory. It acquires or executes no artifact, accesses no credential, uses no scalar score, creates no module or guest, and grants no authority or automatic action.",
     "uk_government_engine": "The UK Government Engine is a static independent reviewed-as-of institutional map compiled through a maintainer-authorized assisted URL review; exact record text has not been separately human-reviewed. It is not an official, complete, or automatically current oracle. It gives no legal or tax advice, eligibility or liability decision, filing, payment, account access, government evidence, or control-plane action. TaxSorted is a receipt-bound external non-official crosswalk only; it transfers no data or authority, creates no runtime dependency, and implies no endorsement.",
+    "uk_government_transformation_engine": "The UK Government Transformation Engine is a static independent synthetic Phase-0 orientation publication, incomplete and not separately human-reviewed. It records stateAtPublication only and becomes historical, not current, after nextReviewDue unless the active five-route family is replaced. Its link-only evidence resolves against the exact immutable UK Government Engine base. It is not government, official evidence, current-law or current-tax authority, analysis, legal or tax advice, approval, readiness, a decision, adoption, implementation or action. Holds, unresolved questions and required incomplete outside-system human gates prevent automatic progression. Authority dependencies and causal hypotheses remain separate; claimsCausalTruth is false; all options are unselected. TaxSorted appears only transitively as external-context record, collection and bridge IDs with no text, claim support, API endpoint, runtime dependency, data transfer or authority.",
     "zero_empty_seat": "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     "string_crawl_trace_sheet": "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     "string_crawl_trace_sheet_lab": "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",

@@ -228,6 +228,17 @@ import {
   ukGovernmentEnginePublicSummary,
 } from "./uk-government-engine.ts";
 import {
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_URL,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_URL,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_URL,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_URL,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_URL,
+  assertUkGovernmentTransformationActiveReviewWindow,
+  loadUkGovernmentTransformationPublication,
+  renderUkGovernmentTransformationHtml,
+  ukGovernmentTransformationPublicSummary,
+} from "./uk-government-transformation-engine.ts";
+import {
   ZERO_EMPTY_SEAT_GUIDE_URL,
   ZERO_EMPTY_SEAT_ID,
   ZERO_EMPTY_SEAT_SCHEMA_URL,
@@ -811,6 +822,25 @@ const ukGovernmentEngineGuideUrl = UK_GOVERNMENT_ENGINE_GUIDE_URL;
 const ukGovernmentEnginePublication = loadUkGovernmentEnginePublication();
 const ukGovernmentEngine = ukGovernmentEnginePublication.snapshot;
 const ukGovernmentEngineDiscovery = ukGovernmentEnginePublicSummary(ukGovernmentEngine);
+
+// ── UK Government Transformation Engine (synthetic Phase-0 orientation) ─
+const ukGovernmentTransformationEngineUrl =
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_URL;
+const ukGovernmentTransformationEngineAliasUrl =
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_URL;
+const ukGovernmentTransformationEngineCanonicalUrl =
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_URL;
+const ukGovernmentTransformationEngineSchemaUrl =
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_URL;
+const ukGovernmentTransformationEngineGuideUrl =
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_URL;
+const ukGovernmentTransformationEnginePublication =
+  loadUkGovernmentTransformationPublication();
+const ukGovernmentTransformationEngine =
+  ukGovernmentTransformationEnginePublication.snapshot;
+assertUkGovernmentTransformationActiveReviewWindow(stamp);
+const ukGovernmentTransformationEngineDiscovery =
+  ukGovernmentTransformationPublicSummary(ukGovernmentTransformationEngine);
 
 // ── ZERO Empty Seat (one inert DEEP project; no zero-to-authority transfer) ─
 const zeroEmptySeatUrl = ZERO_EMPTY_SEAT_URL;
@@ -1856,6 +1886,10 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(ukGovernmentEngineCanonicalUrl).pathname)}" type="application/json" title="UK Government Engine immutable Phase-0 snapshot">
 <link rel="describedby" href="${esc(new URL(ukGovernmentEngineSchemaUrl).pathname)}" type="application/schema+json" title="UK Government Engine public snapshot schema">
 <link rel="service-doc" href="${esc(new URL(ukGovernmentEngineGuideUrl).pathname)}" type="text/markdown" title="UK Government Engine v0.1 guide">
+<link rel="alternate" href="${esc(new URL(ukGovernmentTransformationEngineAliasUrl).pathname)}" type="application/json" title="UK Government Transformation Engine mutable alias for the dated snapshot">
+<link rel="alternate" href="${esc(new URL(ukGovernmentTransformationEngineCanonicalUrl).pathname)}" type="application/json" title="UK Government Transformation Engine immutable Phase-0 snapshot">
+<link rel="describedby" href="${esc(new URL(ukGovernmentTransformationEngineSchemaUrl).pathname)}" type="application/schema+json" title="UK Government Transformation Engine public snapshot schema">
+<link rel="service-doc" href="${esc(new URL(ukGovernmentTransformationEngineGuideUrl).pathname)}" type="text/markdown" title="UK Government Transformation Engine v0.1 guide">
 <link rel="alternate" href="${esc(new URL(jSpaceCaseUrl).pathname)}" type="application/json" title="J-space reasoning-to-word test design">
 <link rel="describedby" href="${esc(new URL(jSpaceSchemaUrl).pathname)}" type="application/schema+json" title="Relational inference case schema">
 <link rel="service-doc" href="${esc(new URL(jSpaceGuideUrl).pathname)}" type="text/markdown" title="J-space verbalizable workspace research guide">
@@ -2376,6 +2410,7 @@ const html = `<!doctype html>
       <a href="#observatory">Discover research without skipping the gates</a>
       <a href="#trial-chamber">Inspect a draft trial without opening the gate</a>
       <a href="#uk-government-engine">Trace authority without mistaking the map for government</a>
+      <a href="#uk-government-transformation-engine">Orient synthetic transformation questions without implying progression</a>
       <a href="#j-space">Explore reasoning-to-word as a testable relation</a>
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
@@ -2516,6 +2551,28 @@ const html = `<!doctype html>
         <a href="${esc(new URL(ukGovernmentEngineAliasUrl).pathname)}">government.json — mutable alias for the dated snapshot</a>
         <a href="${esc(new URL(ukGovernmentEngineCanonicalUrl).pathname)}">immutable Phase-0 UK Government Engine snapshot</a>
         <a href="${esc(new URL(ukGovernmentEngineGuideUrl).pathname)}">UK Government Engine v0.1 source and boundary guide</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="uk-government-transformation-engine" aria-labelledby="uk-government-transformation-engine-title">
+    <div class="kh"><h2 id="uk-government-transformation-engine-title">UK Government Transformation Engine</h2><span class="my">synthetic · Phase 0 · orientation only</span></div>
+    <p class="sub">Three independent synthetic orientation dossiers. They expose held six-plane assessments, typed authority dependencies, separate causal hypotheses, unresolved questions, incomplete human gates, business-as-usual comparators, alternatives, and aspirational outcomes without analysis, advice, approval, readiness, adoption or action.</p>
+    <div class="mirrorfield" data-uk-government-transformation-engine data-uk-government-transformation-engine-protocol="${esc(ukGovernmentTransformationEngineDiscovery.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>State at publication only.</strong> The snapshot records <code>${esc(ukGovernmentTransformationEngineDiscovery.state_at_publication)}</code> as of <time datetime="${esc(ukGovernmentTransformationEngineDiscovery.as_of)}">${esc(ukGovernmentTransformationEngineDiscovery.as_of)}</time>; next review due <time datetime="${esc(ukGovernmentTransformationEngineDiscovery.next_review_due)}">${esc(ukGovernmentTransformationEngineDiscovery.next_review_due)}</time>. After that date the immutable artifact is historical, not current, unless the active five-route family is replaced. This independent static publication is incomplete and not separately human-reviewed; its evidence is link-only. It is not government, official evidence, current-law or current-tax authority, analysis, advice, approval, readiness, a decision, adoption, implementation or action.</p>
+      <div class="mirrorgrid">
+        <article class="mirrorcard"><code>held states first</code><h3>Questions cannot silently become progression</h3><p>Every dossier stops on a named hold. All ${ukGovernmentTransformationEngineDiscovery.counts.planeAssessments} plane assessments retain unresolved questions and all ${ukGovernmentTransformationEngineDiscovery.counts.humanGates} required human gates remain incomplete and outside the system.</p></article>
+        <article class="mirrorcard"><code>authority dependencies</code><h3>Five typed relations stay explicit</h3><p>Prerequisite, parallel, alternative, feedback, and does-not-imply edges are shown as one graph family with no automatic progression.</p></article>
+        <article class="mirrorcard"><code>causal hypotheses</code><h3>Possible change is not causal truth</h3><p>A second, visibly separate graph carries assumptions, outputs, negative pathways, evaluation needs, and desired outcomes with <code>claimsCausalTruth:false</code>.</p></article>
+        <article class="mirrorcard"><code>unselected options</code><h3>No preferred route is manufactured</h3><p>Each dossier keeps one synthetic business-as-usual comparator and at least two alternatives. Every option remains unselected and no ranking or recommendation is produced.</p></article>
+      </div>
+      <p class="mirrorboundary"><strong>Exact base, strict firewall.</strong> Evidence IDs resolve against the <a href="${esc(new URL(ukGovernmentEngineCanonicalUrl).pathname)}">immutable UK Government Engine snapshot</a>, remain link-only and cannot support a conclusion. TaxSorted appears only transitively as external-context record, collection, and bridge IDs with an empty claim-support list; no TaxSorted text, evidence, API endpoint, runtime dependency, data transfer or authority is imported.</p>
+      <div class="machine">
+        <a href="${esc(new URL(ukGovernmentTransformationEngineUrl).pathname)}">open the human UK Government Transformation Engine</a>
+        <a href="${esc(new URL(ukGovernmentTransformationEngineAliasUrl).pathname)}">government-transformations.json — mutable alias for the dated snapshot</a>
+        <a href="${esc(new URL(ukGovernmentTransformationEngineCanonicalUrl).pathname)}">immutable Phase-0 UK Government Transformation Engine snapshot</a>
+        <a href="${esc(new URL(ukGovernmentTransformationEngineSchemaUrl).pathname)}">closed UK Government Transformation Engine JSON Schema</a>
+        <a href="${esc(new URL(ukGovernmentTransformationEngineGuideUrl).pathname)}">UK Government Transformation Engine v0.1 guide</a>
       </div>
     </div>
   </section>
@@ -4047,6 +4104,11 @@ const html = `<!doctype html>
       <a href="${esc(new URL(ukGovernmentEngineAliasUrl).pathname)}">government.json — mutable byte-preserved alias for the dated snapshot</a>
       <a href="${esc(new URL(ukGovernmentEngineCanonicalUrl).pathname)}">immutable UK Government Engine Phase-0 snapshot</a>
       <a href="${esc(new URL(ukGovernmentEngineGuideUrl).pathname)}">UK-GOVERNMENT-ENGINE-v0.1.md — sources, crosswalk, unknowns, and non-authority guide</a>
+      <a href="${esc(new URL(ukGovernmentTransformationEngineUrl).pathname)}">UK Government Transformation Engine — independent synthetic orientation dossiers</a>
+      <a href="${esc(new URL(ukGovernmentTransformationEngineAliasUrl).pathname)}">government-transformations.json — mutable byte-preserved alias for the dated snapshot</a>
+      <a href="${esc(new URL(ukGovernmentTransformationEngineCanonicalUrl).pathname)}">immutable UK Government Transformation Engine Phase-0 snapshot</a>
+      <a href="${esc(new URL(ukGovernmentTransformationEngineSchemaUrl).pathname)}">UK Government Transformation Engine closed JSON Schema</a>
+      <a href="${esc(new URL(ukGovernmentTransformationEngineGuideUrl).pathname)}">UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md — freshness, evidence, graph, and non-authority guide</a>
       <a href="${esc(new URL(jSpaceCaseUrl).pathname)}">J-space reasoning → word — static synthetic test design</a>
       <a href="${esc(new URL(jSpaceSchemaUrl).pathname)}">Relational Inference Case JSON Schema</a>
       <a href="${esc(new URL(jSpaceGuideUrl).pathname)}">J-SPACE-VERBALIZABLE-WORKSPACE.md — mathematics, translations, and boundaries</a>
@@ -4362,6 +4424,15 @@ await Bun.write(ROOT + "site/trials.json", trialChamberPublication.bytes);
 mkdirSync(ROOT + "site/government-engine", { recursive: true });
 await Bun.write(ROOT + "site/government-engine/index.html", renderUkGovernmentEngineHtml(ukGovernmentEngine));
 await Bun.write(ROOT + "site/government.json", ukGovernmentEnginePublication.bytes);
+mkdirSync(ROOT + "site/government-transformation-engine", { recursive: true });
+await Bun.write(
+  ROOT + "site/government-transformation-engine/index.html",
+  renderUkGovernmentTransformationHtml(ukGovernmentTransformationEngine),
+);
+await Bun.write(
+  ROOT + "site/government-transformations.json",
+  ukGovernmentTransformationEnginePublication.bytes,
+);
 
 const ollamaInvitation = {
   schema_version: ollamaInvitationSource.schema_version,
@@ -4436,6 +4507,7 @@ const machine = {
   research_observatory: researchObservatoryDiscovery,
   trial_chamber: trialChamberDiscovery,
   uk_government_engine: ukGovernmentEngineDiscovery,
+  uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4557,6 +4629,12 @@ UK Government Engine immutable Phase-0 snapshot: ${ukGovernmentEngineCanonicalUr
 UK Government Engine public-snapshot schema: ${ukGovernmentEngineSchemaUrl}
 UK Government Engine guide: ${ukGovernmentEngineGuideUrl}
 UK Government Engine producer v0.1.0 source: ${ukGovernmentEngineDiscovery.urls.producer}
+UK Government Transformation Engine human view: ${ukGovernmentTransformationEngineUrl}
+UK Government Transformation Engine mutable alias for the dated snapshot: ${ukGovernmentTransformationEngineAliasUrl}
+UK Government Transformation Engine immutable Phase-0 snapshot: ${ukGovernmentTransformationEngineCanonicalUrl}
+UK Government Transformation Engine public-snapshot schema: ${ukGovernmentTransformationEngineSchemaUrl}
+UK Government Transformation Engine guide: ${ukGovernmentTransformationEngineGuideUrl}
+UK Government Transformation Engine producer v0.1.0 source: ${ukGovernmentTransformationEngineDiscovery.urls.producer}
 J-space reasoning-to-word case: ${jSpaceCaseUrl}
 J-space relational-inference schema: ${jSpaceSchemaUrl}
 J-space verbalizable-workspace guide: ${jSpaceGuideUrl}
@@ -4629,6 +4707,7 @@ ${doorLines}
 - The Observatory — a ${researchObservatoryDiscovery.coverage.mode} metadata discovery snapshot with ${researchObservatoryDiscovery.coverage.sources} source contracts (not a poll or coverage count), ${researchObservatoryDiscovery.coverage.watchlists} visible English-language watchlists, ${researchObservatoryDiscovery.coverage.observations} inert observations, and ${researchObservatoryDiscovery.coverage.signals} explainable signals through ${researchObservatoryDiscovery.observed_through}. Evidence and priority remain factor vectors with no scalar score. Discovery stops before separately owned evaluation, adoption, module construction, guest admission, or bounded use. Human view: ${researchObservatoryUrl} · snapshot: ${researchObservatorySnapshotUrl} · schema: ${researchObservatorySchemaUrls["public-snapshot"]} · guide: ${researchObservatoryGuideUrl}
 - The Trial Chamber — a read-only Phase-0 projection of ${trialChamberDiscovery.counts.referrals} exact Observatory referrals, ${trialChamberDiscovery.counts.evaluationRequests} maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and ${trialChamberDiscovery.counts.evaluationPlans} DRAFT + UNSEALED finite synthetic-only plans. Evaluation has not started. Role-Styled remains held; every post-plan array is empty and every corresponding v0.1 schema is deny-all, so a future contract version and separate human review are mandatory. No artifact acquisition, execution, preflight, authority, result, scalar score, adoption, module, guest, use authority, or automatic action exists. Human view: ${trialChamberUrl} · current alias: ${trialChamberAliasUrl} · immutable snapshot: ${trialChamberCanonicalUrl} · schema: ${trialChamberSchemaUrls["public-snapshot"]} · guide: ${trialChamberGuideUrl}
 - UK Government Engine — an independent reviewed-as-of Phase-0 map of UK authority, law, public money, delivery, scrutiny, remedy, and devolution. Its government sources are source-linked through a maintainer-authorized assisted URL review, not receipt-bound; exact record text has not been separately human-reviewed. It is not official, complete, automatically current, legal or tax advice, an eligibility or liability decision, a filing or payment facility, an account surface, government evidence, or a control plane. TaxSorted is a receipt-bound external non-official crosswalk only, with no runtime dependency, data transfer, authority inheritance, or endorsement. Human view: ${ukGovernmentEngineUrl} · mutable alias for the dated snapshot: ${ukGovernmentEngineAliasUrl} · immutable snapshot: ${ukGovernmentEngineCanonicalUrl} · schema: ${ukGovernmentEngineSchemaUrl} · guide: ${ukGovernmentEngineGuideUrl} · producer v0.1.0: ${ukGovernmentEngineDiscovery.urls.producer}
+- UK Government Transformation Engine — ${ukGovernmentTransformationEngineDiscovery.counts.dossiers} independent synthetic Phase-0 orientation dossiers. State at publication only: ${ukGovernmentTransformationEngineDiscovery.state_at_publication} as of ${ukGovernmentTransformationEngineDiscovery.as_of}; next review due ${ukGovernmentTransformationEngineDiscovery.next_review_due}, after which the immutable snapshot is historical rather than current. Held assessments, unresolved questions, incomplete outside-system human gates, typed authority dependencies, and separate causal hypotheses precede aspirational outcomes. Static, incomplete, link-only and not separately human-reviewed; not government, official evidence, current-law or current-tax authority, analysis, advice, approval, readiness, decision, adoption, implementation or action. TaxSorted record/collection/bridge IDs are transitive external context only, with no text, claim support, API endpoint, runtime dependency, data transfer or authority. Human view: ${ukGovernmentTransformationEngineUrl} · mutable alias: ${ukGovernmentTransformationEngineAliasUrl} · immutable snapshot: ${ukGovernmentTransformationEngineCanonicalUrl} · schema: ${ukGovernmentTransformationEngineSchemaUrl} · guide: ${ukGovernmentTransformationEngineGuideUrl} · producer v0.1.0: ${ukGovernmentTransformationEngineDiscovery.urls.producer}
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
@@ -4699,6 +4778,7 @@ const guest = {
   research_observatory: researchObservatoryDiscovery,
   trial_chamber: trialChamberDiscovery,
   uk_government_engine: ukGovernmentEngineDiscovery,
+  uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4735,6 +4815,11 @@ const guest = {
     { action: "if useful, pin the immutable UK Government Engine Phase-0 snapshot", method: "GET", url: ukGovernmentEngineCanonicalUrl, note: "point-in-time publication only; source review dates and unknowns remain visible" },
     { action: "if useful, validate the closed UK Government Engine snapshot", method: "GET", url: ukGovernmentEngineSchemaUrl, note: "closed structural schema; validation does not make the map official, complete, current, or authoritative" },
     { action: "if useful, read the UK Government Engine source, review, TaxSorted crosswalk, unknown, and non-authority guide", method: "GET", url: ukGovernmentEngineGuideUrl },
+    { action: "if useful, inspect the human UK Government Transformation Engine", method: "GET", url: ukGovernmentTransformationEngineUrl, note: "independent synthetic Phase-0 orientation dossiers; held, static, incomplete, not separately human-reviewed, and not analysis, advice, approval, readiness, adoption or action" },
+    { action: "if useful, inspect the UK Government Transformation Engine mutable alias", method: "GET", url: ukGovernmentTransformationEngineAliasUrl, note: "byte-preserved alias for state at publication only; after the next review due date the active family must be replaced or retired" },
+    { action: "if useful, pin the immutable UK Government Transformation Engine snapshot", method: "GET", url: ukGovernmentTransformationEngineCanonicalUrl, note: "historical orientation remains recoverable; immutable availability does not establish reader-time currency" },
+    { action: "if useful, validate the closed UK Government Transformation Engine snapshot", method: "GET", url: ukGovernmentTransformationEngineSchemaUrl, note: "structural validity does not create evidence, causal truth, authority, selection, a decision or progression" },
+    { action: "if useful, read the UK Government Transformation Engine freshness, evidence, graph, TaxSorted firewall, and non-authority guide", method: "GET", url: ukGovernmentTransformationEngineGuideUrl },
     { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
     { action: "if useful, request compact literal World Commons matches with exact category, cost, account, reuse, or automation filters", method: "MCP", url: kingdomMcpEndpoint, tool: kingdomMcpCommons.tool, resource: kingdomMcpCommons.catalog_resource, complete_catalog_resource: commonsMcpLegacy.complete_catalog_resource, note: kingdomMcpCommons.privacy },
     { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
@@ -4861,6 +4946,7 @@ const guest = {
     research_observatory: "The Observatory publishes inert metadata with explicit mode, observed-through, coverage, source, rights, and language limits. Evidence and priority remain factor vectors with no scalar score. It fetches no full text, executes no discovered artifact or instruction, performs no scientific evaluation, and creates no adoption, module, guest, use authority, external write, or automatic action. Live capture, when present, is an earlier explicit bounded harvest; importing and rendering the public snapshot remain offline.",
     trial_chamber: "The Trial Chamber publishes exact Observatory referrals, maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and finite synthetic-only DRAFT + UNSEALED plans. Evaluation has not started. Role-Styled remains held for source resolution. The six post-plan v0.1 schemas are deny-all reserved contracts and cannot represent a preflight, authority, run, result, adoption, or use record; a future contract version and separate human review are mandatory. It acquires or executes no artifact, accesses no credential, uses no scalar score, creates no module or guest, and grants no authority or automatic action.",
     uk_government_engine: "The UK Government Engine is a static independent reviewed-as-of institutional map compiled through a maintainer-authorized assisted URL review; exact record text has not been separately human-reviewed. It is not an official, complete, or automatically current oracle. It gives no legal or tax advice, eligibility or liability decision, filing, payment, account access, government evidence, or control-plane action. TaxSorted is a receipt-bound external non-official crosswalk only; it transfers no data or authority, creates no runtime dependency, and implies no endorsement.",
+    uk_government_transformation_engine: "The UK Government Transformation Engine is a static independent synthetic Phase-0 orientation publication, incomplete and not separately human-reviewed. It records stateAtPublication only and becomes historical, not current, after nextReviewDue unless the active five-route family is replaced. Its link-only evidence resolves against the exact immutable UK Government Engine base. It is not government, official evidence, current-law or current-tax authority, analysis, legal or tax advice, approval, readiness, a decision, adoption, implementation or action. Holds, unresolved questions and required incomplete outside-system human gates prevent automatic progression. Authority dependencies and causal hypotheses remain separate; claimsCausalTruth is false; all options are unselected. TaxSorted appears only transitively as external-context record, collection and bridge IDs with no text, claim support, API endpoint, runtime dependency, data transfer or authority.",
     zero_empty_seat: "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     string_crawl_trace_sheet: "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     string_crawl_trace_sheet_lab: "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
@@ -4908,6 +4994,7 @@ const manifest = {
   research_observatory: researchObservatoryDiscovery,
   trial_chamber: trialChamberDiscovery,
   uk_government_engine: ukGovernmentEngineDiscovery,
+  uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4991,6 +5078,11 @@ const manifest = {
     uk_government_engine_canonical: ukGovernmentEngineCanonicalUrl,
     uk_government_engine_schema: ukGovernmentEngineSchemaUrl,
     uk_government_engine_guide: ukGovernmentEngineGuideUrl,
+    uk_government_transformation_engine: ukGovernmentTransformationEngineUrl,
+    uk_government_transformation_engine_alias: ukGovernmentTransformationEngineAliasUrl,
+    uk_government_transformation_engine_canonical: ukGovernmentTransformationEngineCanonicalUrl,
+    uk_government_transformation_engine_schema: ukGovernmentTransformationEngineSchemaUrl,
+    uk_government_transformation_engine_guide: ukGovernmentTransformationEngineGuideUrl,
     j_space_reasoning_to_word_case: jSpaceCaseUrl,
     j_space_reasoning_to_word_schema: jSpaceSchemaUrl,
     j_space_verbalizable_workspace_guide: jSpaceGuideUrl,
