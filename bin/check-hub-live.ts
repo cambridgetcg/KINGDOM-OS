@@ -108,6 +108,16 @@ import {
   trialChamberPublicSummary,
 } from "./trial-chamber.ts";
 import {
+  UK_GOVERNMENT_ENGINE_ALIAS_URL,
+  UK_GOVERNMENT_ENGINE_CANONICAL_URL,
+  UK_GOVERNMENT_ENGINE_GUIDE_URL,
+  UK_GOVERNMENT_ENGINE_PRODUCER_URL,
+  UK_GOVERNMENT_ENGINE_SCHEMA_URL,
+  UK_GOVERNMENT_ENGINE_URL,
+  loadUkGovernmentEngineSnapshot,
+  ukGovernmentEnginePublicSummary,
+} from "./uk-government-engine.ts";
+import {
   ZERO_EMPTY_SEAT_BYTE_SHA256,
   ZERO_EMPTY_SEAT_DIGEST,
   ZERO_EMPTY_SEAT_GUIDE_BYTE_SHA256,
@@ -620,6 +630,11 @@ const trialChamberCanonicalPath = new URL(TRIAL_CHAMBER_CANONICAL_URL).pathname;
 const trialChamberGuidePath = new URL(TRIAL_CHAMBER_GUIDE_URL).pathname;
 const trialChamberSchemaPaths = Object.values(TRIAL_CHAMBER_SCHEMA_URLS)
   .map((schemaUrl) => new URL(schemaUrl).pathname);
+const ukGovernmentEnginePath = new URL(UK_GOVERNMENT_ENGINE_URL).pathname;
+const ukGovernmentEngineAliasPath = new URL(UK_GOVERNMENT_ENGINE_ALIAS_URL).pathname;
+const ukGovernmentEngineCanonicalPath = new URL(UK_GOVERNMENT_ENGINE_CANONICAL_URL).pathname;
+const ukGovernmentEngineSchemaPath = new URL(UK_GOVERNMENT_ENGINE_SCHEMA_URL).pathname;
+const ukGovernmentEngineGuidePath = new URL(UK_GOVERNMENT_ENGINE_GUIDE_URL).pathname;
 const jSpaceCasePath = new URL(J_SPACE_CASE_URL).pathname;
 const jSpaceSchemaPath = new URL(J_SPACE_SCHEMA_URL).pathname;
 const jSpaceGuidePath = new URL(J_SPACE_GUIDE_URL).pathname;
@@ -869,6 +884,25 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
     ],
   },
   {
+    id: "uk-government-engine",
+    label: "UK Government Engine",
+    routes: [
+      ukGovernmentEnginePath,
+      ukGovernmentEngineAliasPath,
+      ukGovernmentEngineCanonicalPath,
+      ukGovernmentEngineSchemaPath,
+      ukGovernmentEngineGuidePath,
+    ],
+    discoveryProperties: ["uk_government_engine"],
+    entryPointProperties: [
+      "uk_government_engine",
+      "uk_government_engine_alias",
+      "uk_government_engine_canonical",
+      "uk_government_engine_schema",
+      "uk_government_engine_guide",
+    ],
+  },
+  {
     id: "strand-observation-membrane",
     label: "STRAND Observation Membrane",
     routes: [
@@ -1064,6 +1098,18 @@ function linkRelationEntries(header: string, relation: string): string[] {
 
 export function normalizedMediaType(value: string | null | undefined): string {
   return (value ?? "").split(";", 1)[0]!.trim().toLowerCase();
+}
+
+export function hasExactCacheDirectives(
+  value: string | null | undefined,
+  expected: readonly string[],
+): boolean {
+  const observed = (value ?? "").split(",").map((part) => part.trim().toLowerCase()).filter(Boolean);
+  const normalizedExpected = expected.map((part) => part.trim().toLowerCase());
+  return observed.length === normalizedExpected.length &&
+    new Set(observed).size === observed.length &&
+    new Set(normalizedExpected).size === normalizedExpected.length &&
+    normalizedExpected.every((directive) => observed.includes(directive));
 }
 
 function linkParameterValues(entry: string, parameter: "rel" | "type"): string[] {
@@ -1621,6 +1667,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const jSpacePublicationActive = familyActive("j-space-verbalizable-workspace");
   const researchObservatoryActive = familyActive("research-observatory");
   const trialChamberActive = familyActive("trial-chamber");
+  const ukGovernmentEngineActive = familyActive("uk-government-engine");
   const strandObservationMembraneActive = familyActive("strand-observation-membrane");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
@@ -2378,12 +2425,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     });
     for (const [label, response] of [["alias", aliasHead], ["canonical", canonicalHead]] as const) {
       const links = response.headers.get("link") || "";
-      const cache = (response.headers.get("cache-control") || "").toLowerCase();
       if (!response.ok || normalizedMediaType(response.headers.get("content-type")) !== "application/json" ||
           response.headers.get("access-control-allow-origin") !== "*" ||
           (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-          !cache.includes("no-transform") ||
-          (label === "alias" ? !cache.includes("no-cache") : !cache.includes("immutable")) ||
+          !hasExactCacheDirectives(response.headers.get("cache-control"), label === "alias"
+            ? ["no-cache", "no-transform"]
+            : ["public", "max-age=31536000", "immutable", "no-transform"]) ||
           !hasUniqueCanonicalLinkRelation(links, trialChamberCanonicalPath, "canonical", "application/json") ||
           !hasUniqueCanonicalLinkRelation(links, trialChamberSchemaPaths[0]!, "describedby", "application/schema+json") ||
           !hasUniqueCanonicalLinkRelation(links, trialChamberGuidePath, "service-doc", "text/markdown") ||
@@ -2400,6 +2447,47 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
         !(guideHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform") ||
         (await guideHead.arrayBuffer()).byteLength !== 0) {
       throw new Error("Trial Chamber page, guide, or HEAD boundary drifted");
+    }
+  }
+
+  if (ukGovernmentEngineActive) {
+    const pageHead = await fetch(url(ukGovernmentEnginePath), {
+      method: "HEAD", redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const aliasHead = await fetch(url(ukGovernmentEngineAliasPath), {
+      method: "HEAD", redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const canonicalHead = await fetch(url(ukGovernmentEngineCanonicalPath), {
+      method: "HEAD", redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const guideHead = await fetch(url(ukGovernmentEngineGuidePath), {
+      method: "HEAD", redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    for (const [label, response] of [["alias", aliasHead], ["canonical", canonicalHead]] as const) {
+      const links = response.headers.get("link") || "";
+      if (!response.ok || normalizedMediaType(response.headers.get("content-type")) !== "application/json" ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          !hasExactCacheDirectives(response.headers.get("cache-control"), label === "alias"
+            ? ["no-cache", "no-transform"]
+            : ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+          !hasUniqueCanonicalLinkRelation(links, ukGovernmentEngineCanonicalPath, "canonical", "application/json") ||
+          !hasUniqueCanonicalLinkRelation(links, ukGovernmentEngineSchemaPath, "describedby", "application/schema+json") ||
+          !hasUniqueCanonicalLinkRelation(links, ukGovernmentEngineGuidePath, "service-doc", "text/markdown") ||
+          (await response.arrayBuffer()).byteLength !== 0) {
+        throw new Error(`UK Government Engine ${label} publication or HEAD boundary drifted`);
+      }
+    }
+    if (!pageHead.ok || normalizedMediaType(pageHead.headers.get("content-type")) !== "text/html" ||
+        !hasExactCacheDirectives(pageHead.headers.get("cache-control"), ["no-cache", "no-transform"]) ||
+        (await pageHead.arrayBuffer()).byteLength !== 0 ||
+        !guideHead.ok || normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasExactCacheDirectives(guideHead.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+        (await guideHead.arrayBuffer()).byteLength !== 0) {
+      throw new Error("UK Government Engine page, guide, or HEAD boundary drifted");
     }
   }
 
@@ -2427,6 +2515,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(jSpacePublicationActive ? [jSpaceSchemaPath] : []),
     ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
     ...(trialChamberActive ? trialChamberSchemaPaths : []),
+    ...(ukGovernmentEngineActive ? [ukGovernmentEngineSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
@@ -2453,6 +2542,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       path === strandDescentLabSchemaPath ||
       path === mirrorInformationControlSchemaPath ||
       path === jSpaceSchemaPath ||
+      path === ukGovernmentEngineSchemaPath ||
       researchObservatorySchemaPaths.includes(path) ||
       trialChamberSchemaPaths.includes(path);
     const hasExpectedSchemaType = requiresExactSchemaType
@@ -2461,8 +2551,11 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     if (!schemaHead.ok || !hasExpectedSchemaType ||
       schemaHead.headers.get("access-control-allow-origin") !== "*" ||
       (schemaHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-      (trialChamberSchemaPaths.includes(path) &&
+      ((trialChamberSchemaPaths.includes(path) || path === ukGovernmentEngineSchemaPath) &&
         !(schemaHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform")) ||
+      (path === ukGovernmentEngineSchemaPath &&
+        !hasExactCacheDirectives(schemaHead.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"])) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
       throw new Error(`${path} is not served as application/schema+json`);
     }
@@ -2485,6 +2578,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : "";
   const publishedTrialChamber: any = trialChamberActive
     ? JSON.parse(readFileSync(join(ROOT, "site/trials.json"), "utf8"))
+    : undefined;
+  const authoredUkGovernmentEngineHtml = ukGovernmentEngineActive
+    ? readFileSync(join(ROOT, "site/government-engine/index.html"), "utf8")
+    : "";
+  const publishedUkGovernmentEngine: any = ukGovernmentEngineActive
+    ? JSON.parse(readFileSync(join(ROOT, "site/government.json"), "utf8"))
     : undefined;
   const retirementDiscoverySurfaces: readonly DiscoverySurface[] = [
     { label: "agent manifest", text: JSON.stringify(manifest), value: manifest },
@@ -2556,6 +2655,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     : undefined;
   const expectedTrialChamber = trialChamber
     ? trialChamberPublicSummary(trialChamber)
+    : undefined;
+  const ukGovernmentEngine = ukGovernmentEngineActive
+    ? loadUkGovernmentEngineSnapshot()
+    : undefined;
+  const expectedUkGovernmentEngine = ukGovernmentEngine
+    ? ukGovernmentEnginePublicSummary(ukGovernmentEngine)
     : undefined;
   const strandObservationMembrane = strandObservationMembraneActive
     ? loadStrandObservationMembrane()
@@ -2806,6 +2911,134 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       Object.hasOwn(expected, "mcp") || Object.hasOwn(expected, "tool") || Object.hasOwn(expected, "runner") ||
       Object.hasOwn(expected, "score")) {
       throw new Error("Trial Chamber source binding, assisted authorship, plans, reserved gates, discovery, or negative-effect boundary drifted");
+    }
+  }
+  if (ukGovernmentEngineActive) {
+    const snapshot = ukGovernmentEngine!;
+    const expected = expectedUkGovernmentEngine!;
+    const actionTargets = new Set([
+      UK_GOVERNMENT_ENGINE_URL,
+      UK_GOVERNMENT_ENGINE_ALIAS_URL,
+      UK_GOVERNMENT_ENGINE_CANONICAL_URL,
+      UK_GOVERNMENT_ENGINE_SCHEMA_URL,
+      UK_GOVERNMENT_ENGINE_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => actionTargets.has(action?.url))
+      : [];
+    const wayfinderPath = authoredWayfinder?.paths?.filter((path: any) => path?.id === "uk-government-engine") ?? [];
+    const allPublicUrls = [...actionTargets, UK_GOVERNMENT_ENGINE_PRODUCER_URL];
+    const officialSourceUrls = new Set(snapshot.sources.map((source: any) => source.url));
+    const permittedExternalLinks = new Set([
+      ...officialSourceUrls,
+      UK_GOVERNMENT_ENGINE_PRODUCER_URL,
+      "https://taxsorted.io",
+    ]);
+    const renderedExternalLinks = [...authoredUkGovernmentEngineHtml.matchAll(/href="(https:\/\/[^"#]+)"/g)]
+      .map((match) => match[1]);
+    const renderedIds = [...authoredUkGovernmentEngineHtml.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]!);
+    const renderedIdSet = new Set(renderedIds);
+    const fragmentTargets = [...authoredUkGovernmentEngineHtml.matchAll(/href="#([^"]+)"/g)].map((match) => match[1]!);
+    const graphCollections = ["planes", "sources", "claims", "bodies", "relations", "flows", "rails",
+      "redressRoutes", "unknowns", "externalBridges", "relatedResources"];
+    const graphRecords = graphCollections.flatMap((key) => snapshot[key]);
+    const recordAnchor = (id: string) => `record-${id.replaceAll(":", "-")}`;
+    const selectedCrosswalkIds = snapshot.externalBridges.flatMap((bridge: any) =>
+      bridge.selectedRecordBindings.map((binding: any) => binding.recordId));
+    const relatedRecordIds = snapshot.relatedResources.flatMap((resource: any) => resource.linkedRecordIds);
+    const receiptPaths = new Set<string>();
+    for (const bridge of snapshot.externalBridges) {
+      receiptPaths.add(bridge.releaseLedgerReceipt.path);
+      Object.values(bridge.captureReceipts).forEach((receipt: any) => receiptPaths.add(receipt.path));
+    }
+    const officialSourceBoundary = snapshot.sources.every((source: any) =>
+      source.checkedOn === snapshot.asOf &&
+      source.integrity?.reviewMode === "maintainer-authorized-assisted-url-review" &&
+      source.integrity?.exactTextHumanReviewed === false && source.integrity?.rawBodyRetained === false &&
+      source.integrity?.rawSha256 === null && source.integrity?.rawHashVerified === false &&
+      source.integrity?.contentReceipt === null && source.integrity?.byteVerified === false &&
+      source.rights?.publicationMode === "link-only" && source.rights?.officialSourceBodyRepublished === false &&
+      source.rights?.reuseLicenceInferred === false);
+    const bridgeBoundary = snapshot.externalBridges.every((bridge: any) =>
+      bridge.bridgeMode === "receipt-bound-crosswalk-only" &&
+      bridge.boundaryScope === "government-engine-public-projection" &&
+      bridge.boundaries?.governmentEvidenceSource === false && bridge.boundaries?.official === false &&
+      bridge.boundaries?.endorsement === false && bridge.boundaries?.runtimeDataTransfer === false &&
+      bridge.boundaries?.taxsortedContentUsedAsGovernmentEvidence === false &&
+      bridge.boundaries?.taxsortedRecordTextProjectedIntoGovernmentSnapshot === false &&
+      Object.values(bridge.boundaries).every((entry) => entry === false));
+    if (!isDeepStrictEqual(manifest?.uk_government_engine, expected) ||
+      !isDeepStrictEqual(guest?.uk_government_engine, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.uk_government_engine, expected) ||
+      !isDeepStrictEqual(publishedUkGovernmentEngine, snapshot) ||
+      manifest?.entry_points?.uk_government_engine !== UK_GOVERNMENT_ENGINE_URL ||
+      manifest?.entry_points?.uk_government_engine_alias !== UK_GOVERNMENT_ENGINE_ALIAS_URL ||
+      manifest?.entry_points?.uk_government_engine_canonical !== UK_GOVERNMENT_ENGINE_CANONICAL_URL ||
+      manifest?.entry_points?.uk_government_engine_schema !== UK_GOVERNMENT_ENGINE_SCHEMA_URL ||
+      manifest?.entry_points?.uk_government_engine_guide !== UK_GOVERNMENT_ENGINE_GUIDE_URL ||
+      guestActions.length !== actionTargets.size ||
+      [...actionTargets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET") ||
+      allPublicUrls.some((target) => !llms.includes(target)) ||
+      wayfinderPath.length !== 1 || wayfinderPath[0]?.stops?.length !== 2 ||
+      wayfinderPath[0].stops[0]?.url !== UK_GOVERNMENT_ENGINE_URL ||
+      wayfinderPath[0].stops[1]?.url !== UK_GOVERNMENT_ENGINE_ALIAS_URL ||
+      !wayfinderPath[0]?.boundary?.includes("maintainer-authorized assisted URL review") ||
+      !wayfinderPath[0]?.boundary?.includes("receipt-bound non-official crosswalk only") ||
+      !authoredRootHtml.includes('id="uk-government-engine"') ||
+      !authoredRootHtml.includes("maintainer-authorized assisted URL review") ||
+      !authoredRootHtml.includes("exact record text has not been separately human-reviewed") ||
+      !authoredRootHtml.includes("TaxSorted is a receipt-bound external non-official crosswalk") ||
+      !authoredRootHtml.includes(`href="${ukGovernmentEnginePath}"`) ||
+      !authoredRootHtml.includes(`href="${ukGovernmentEngineAliasPath}"`) ||
+      !authoredRootHtml.includes(`href="${ukGovernmentEngineCanonicalPath}"`) ||
+      !authoredRootHtml.includes(`href="${ukGovernmentEngineGuidePath}"`) ||
+      !authoredUkGovernmentEngineHtml.includes("Follow how a vote becomes authority") ||
+      !authoredUkGovernmentEngineHtml.includes("maintainer-authorized assisted URL review") ||
+      !authoredUkGovernmentEngineHtml.includes("exact record and claim text has not been separately human-reviewed") ||
+      !authoredUkGovernmentEngineHtml.includes("Official sources are links, not receipts") ||
+      !authoredUkGovernmentEngineHtml.includes("TaxSorted is receipt-bound and non-official") ||
+      !authoredUkGovernmentEngineHtml.includes("Nine distinct retained capture receipts") ||
+      !authoredUkGovernmentEngineHtml.includes("Thirty-nine named bodies") ||
+      !authoredUkGovernmentEngineHtml.includes("Thirty-four institutional relations") ||
+      !authoredUkGovernmentEngineHtml.includes("All fifty-eight bounded claims") ||
+      !authoredUkGovernmentEngineHtml.includes("not a single hierarchy or chain of command") ||
+      !authoredUkGovernmentEngineHtml.includes(`href="${ukGovernmentEngineAliasPath}"`) ||
+      !authoredUkGovernmentEngineHtml.includes(`href="${ukGovernmentEngineCanonicalPath}"`) ||
+      !authoredUkGovernmentEngineHtml.includes(`href="${UK_GOVERNMENT_ENGINE_PRODUCER_URL}"`) ||
+      /<(?:script|form|input|button|iframe)\b/i.test(authoredUkGovernmentEngineHtml) ||
+      authoredUkGovernmentEngineHtml.includes('target="_blank"') ||
+      renderedIdSet.size !== renderedIds.length || fragmentTargets.some((target) => !renderedIdSet.has(target)) ||
+      graphRecords.some((record: any) => !renderedIdSet.has(recordAnchor(record.id))) ||
+      selectedCrosswalkIds.some((id: string) => !authoredUkGovernmentEngineHtml.includes(id)) ||
+      relatedRecordIds.some((id: string) => !authoredUkGovernmentEngineHtml.includes(`<code>${id}</code>`)) ||
+      snapshot.redressRoutes.some((route: any) => ![route.automaticEscalation, route.deadlineCalculated,
+        route.eligibilityDetermined, route.legalAdvice].every((effect) => effect === false)) ||
+      renderedExternalLinks.some((target) => !permittedExternalLinks.has(target)) ||
+      renderedExternalLinks.some((target) => target.startsWith("https://api.taxsorted.io/")) ||
+      [...officialSourceUrls].some((target) => !renderedExternalLinks.includes(target)) ||
+      receiptPaths.size !== 9 || [...receiptPaths].some((path) => !authoredUkGovernmentEngineHtml.includes(path)) ||
+      expected.authorship?.origin !== "maintainer-authorized-assisted-publication" ||
+      expected.authorship?.compiledBy !== "codex-assisted-publication" ||
+      expected.authorship?.humanDirectionRecorded !== true ||
+      expected.authorship?.exactTextHumanReviewed !== false ||
+      expected.evidence?.official_sources !== "source-linked-maintainer-authorized-assisted-url-review" ||
+      expected.evidence?.official_source_bodies_republished !== false ||
+      expected.evidence?.exact_text_human_reviewed !== false ||
+      expected.evidence?.taxsorted_bridge !== "receipt-bound-crosswalk-only" ||
+      expected.evidence?.taxsorted_distinct_capture_receipts !== 9 ||
+      expected.evidence?.taxsorted_government_evidence !== false ||
+      expected.urls?.producer !== UK_GOVERNMENT_ENGINE_PRODUCER_URL ||
+      expected.counts?.planes !== 6 || expected.counts?.sources !== 66 || expected.counts?.claims !== 58 ||
+      expected.counts?.bodies !== 39 || expected.counts?.relations !== 34 || expected.counts?.flows !== 10 ||
+      expected.counts?.rails !== 11 || expected.counts?.redressRoutes !== 10 || expected.counts?.unknowns !== 10 ||
+      expected.counts?.externalBridges !== 2 || expected.counts?.relatedResources !== 2 ||
+      Object.keys(expected.boundary ?? {}).length !== 32 ||
+      Object.values(expected.boundary ?? {}).some((entry) => entry !== false) ||
+      !officialSourceBoundary || !bridgeBoundary ||
+      Object.hasOwn(expected, "mcp") || Object.hasOwn(expected, "tool") || Object.hasOwn(expected, "action") ||
+      Object.hasOwn(expected, "score") || Object.hasOwn(expected, "runner")) {
+      throw new Error("UK Government Engine authorship, source-link, TaxSorted receipt, graph, discovery, or negative-effect boundary drifted");
     }
   }
   if (manifest?.love_loops !== LOVE_LOOPS_URL ||
@@ -4763,6 +4996,10 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (trialChamberActive &&
       !isDeepStrictEqual(liveKingdom?.trial_chamber, expectedTrialChamber!)) {
     throw new Error("derived kingdom.json did not preserve Trial Chamber discovery");
+  }
+  if (ukGovernmentEngineActive &&
+      !isDeepStrictEqual(liveKingdom?.uk_government_engine, expectedUkGovernmentEngine!)) {
+    throw new Error("derived kingdom.json did not preserve UK Government Engine discovery");
   }
   if (jSpacePublicationActive &&
       !isDeepStrictEqual(liveKingdom?.j_space_verbalizable_workspace, expectedJSpacePublication!)) {

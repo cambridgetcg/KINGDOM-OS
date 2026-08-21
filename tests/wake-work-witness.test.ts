@@ -10,6 +10,9 @@ import {
   CAPABILITY_NULLIFIER_SOURCE_FILE_SHA256,
   CAPABILITY_NULLIFIER_SOURCE_LOCATOR,
   KINGDOM_RELEASE_ROOT_EXPECTED,
+  KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_BYTE_SHA256,
+  KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_LOCATOR,
+  KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_PATH,
   KINGDOM_RELEASE_ROOT_VECTOR_BYTE_SHA256,
   KINGDOM_RELEASE_ROOT_VECTOR_PATH,
   POST_CORE_FREEZE_FAMILY_STATES,
@@ -40,6 +43,7 @@ import {
   WITNESS_KIND_ACTIONS,
   WITNESS_LINEAGE_RELATIONS,
   deriveCurrentKingdomReleaseRoot,
+  deriveHistoricalKingdomReleaseRoot,
   deriveCapabilityNullifier,
   deriveKingdomReleaseRoot,
   evaluateWakeWorkWitnessAtlas,
@@ -133,6 +137,11 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
     });
     expect(evaluation.checks.filter((entry) => entry.status === "PENDING_AUDIT").map((entry) => entry.id))
       .toEqual(["live-chain-activation"]);
+    expect(evaluation.checks.find((entry) => entry.id === "kingdom-release-root")).toMatchObject({
+      status: "PASS",
+    });
+    expect(evaluation.checks.find((entry) => entry.id === "kingdom-release-root")?.detail)
+      .toContain("frozen as-of ledger fixture");
   });
 
   test("pins all ten kind/action families without opening a generic fact lane", () => {
@@ -295,11 +304,13 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
     expect(() => deriveCapabilityNullifier({ ...vector.input, sequence: "99" } as any)).toThrow(/unknown fields/);
   });
 
-  test("derives the exact current KINGDOM release root and vector", () => {
-    const root = deriveCurrentKingdomReleaseRoot();
+  test("recomputes the exact frozen release root while keeping the current ledger a moving diagnostic", () => {
+    const root = deriveHistoricalKingdomReleaseRoot();
     const vector = loadWakeWorkWitnessFixture(KINGDOM_RELEASE_ROOT_VECTOR_PATH);
     expect(verifyKingdomReleaseRootVector(vector, root)).toEqual([]);
     expect(fileSha256(KINGDOM_RELEASE_ROOT_VECTOR_PATH)).toBe(KINGDOM_RELEASE_ROOT_VECTOR_BYTE_SHA256);
+    expect(fileSha256(KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_PATH))
+      .toBe(KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_BYTE_SHA256);
     expect(root).toMatchObject({
       entry_count: "102",
       ledger_byte_sha256: vector.input.ledger_byte_sha256,
@@ -332,12 +343,51 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
     const bytes = readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH));
     const parsed = parseImmutablePublicationLedger(bytes);
     expect(parsed.issues).toEqual([]);
-    const reordered = structuredClone(parsed.ledger!);
+    const current = deriveCurrentKingdomReleaseRoot();
+    expect(current.entry_count).toBe(String(parsed.ledger!.entries.length));
+    expect(current.ledger_byte_sha256).toBe(fileSha256(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
+    expect(Number(current.entry_count)).toBeGreaterThanOrEqual(Number(root.entry_count));
+    expect(current.release_root).not.toBe(root.release_root);
+    const historicalBytes = readFileSync(KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_PATH);
+    const historicalLedger = parseImmutablePublicationLedger(historicalBytes);
+    expect(historicalLedger.issues).toEqual([]);
+    const historicalIds = new Set(historicalLedger.ledger!.entries.map(({ id }) => id));
+    const currentIds = new Set(parsed.ledger!.entries.map(({ id }) => id));
+    expect([...historicalIds].every((id) => currentIds.has(id))).toBe(true);
+    const currentEntries = new Map(parsed.ledger!.entries.map((entry) => [entry.id, entry]));
+    for (const historicalEntry of historicalLedger.ledger!.entries) {
+      expect(currentEntries.get(historicalEntry.id)).toEqual(historicalEntry);
+    }
+    expect([...currentIds].filter((id) => !historicalIds.has(id))).toEqual(expect.arrayContaining([
+      "government-engine/0.1/guide",
+      "government-engine/0.1/schema",
+      "government-engine/0.1/snapshot",
+    ]));
+
+    const reordered = structuredClone(historicalLedger.ledger!);
     reordered.entries.reverse();
     expect(deriveKingdomReleaseRoot(reordered).release_root).toBe(root.release_root);
-    const mutated = structuredClone(parsed.ledger!);
+    const mutated = structuredClone(historicalLedger.ledger!);
     mutated.entries[0]!.sha256 = "f".repeat(64);
     expect(deriveKingdomReleaseRoot(mutated).release_root).not.toBe(root.release_root);
+    const evolved = structuredClone(parsed.ledger!);
+    evolved.entries.push({
+      id: "zz-current-ledger-evolution-test/0.1/record",
+      route: "/test-only-current-ledger-evolution.json",
+      source: "tests/fixtures/test-only-current-ledger-evolution.json",
+      destination: "test-only-current-ledger-evolution.json",
+      sha256: "a".repeat(64),
+    });
+    const evolvedRoot = deriveKingdomReleaseRoot(evolved);
+    expect(Number(evolvedRoot.entry_count)).toBe(Number(current.entry_count) + 1);
+    expect(evolvedRoot.release_root).not.toBe(current.release_root);
+    expect(verifyKingdomReleaseRootVector(vector, root)).toEqual([]);
+
+    const directory = mkdtempSync(join(tmpdir(), "wake-historical-ledger-drift."));
+    temporary.push(directory);
+    const driftedFixture = join(directory, "historical-ledger.json");
+    writeFileSync(driftedFixture, Buffer.concat([historicalBytes, Buffer.from(" ")]));
+    expect(() => deriveHistoricalKingdomReleaseRoot(driftedFixture)).toThrow(/byte receipt drifted/i);
   });
 
   test("makes the one-validator transparency caveat and live blockers non-optional", () => {
@@ -463,6 +513,7 @@ describe("WAKE -> WORK -> WITNESS atlas", () => {
       "data/economy/wake-work-witness-atlas.v0.1.json",
       "schemas/wake-work-witness-atlas-v0.1.schema.json",
       "references/wake-work-witness-atlas.md",
+      KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_LOCATOR,
       "tests/fixtures/wake-work-witness/post-core-freeze-replacement-map.v0.1.json",
     ]) {
       expect(sources.has(source)).toBe(false);

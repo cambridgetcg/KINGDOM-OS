@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-20",
+  "generated": "2026-08-21",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -1030,6 +1030,96 @@
       "signature_created": false,
       "scalar_score_used": false,
       "automatic_action": false
+    }
+  },
+  "uk_government_engine": {
+    "protocol": "kingdom.government-engine-public-snapshot/0.1",
+    "title": "Government Engine: United Kingdom",
+    "contract_version": "0.1.0",
+    "publication_state": "immutable-dated-snapshot-with-mutable-alias",
+    "as_of": "2026-08-21",
+    "jurisdiction": "United Kingdom",
+    "authorship": {
+      "compiledBy": "codex-assisted-publication",
+      "exactTextHumanReviewed": false,
+      "humanDirectionRecorded": true,
+      "origin": "maintainer-authorized-assisted-publication"
+    },
+    "freshness": {
+      "mode": "dated-static-snapshot",
+      "nextReviewDue": "2026-09-21",
+      "onPastReview": "show-warning-and-require-a-new-reviewed-snapshot-before-changing-claims",
+      "reviewTriggers": [
+        "constitutional or devolution legislation changes",
+        "departmental, tribunal, ombudsman or digital-service responsibility changes",
+        "a cited source moves, is withdrawn or materially changes",
+        "a TaxSorted receipt, version, rights statement or selected record ID changes"
+      ],
+      "sourceCheckedOn": "2026-08-21",
+      "taxsortedUpstreamReviewAlarm": true
+    },
+    "counts": {
+      "bodies": 39,
+      "claims": 58,
+      "externalBridges": 2,
+      "flows": 10,
+      "planes": 6,
+      "rails": 11,
+      "redressRoutes": 10,
+      "relatedResources": 2,
+      "relations": 34,
+      "sources": 66,
+      "unknowns": 10
+    },
+    "evidence": {
+      "official_sources": "source-linked-maintainer-authorized-assisted-url-review",
+      "official_source_bodies_republished": false,
+      "exact_text_human_reviewed": false,
+      "taxsorted_bridge": "receipt-bound-crosswalk-only",
+      "taxsorted_distinct_capture_receipts": 9,
+      "taxsorted_government_evidence": false
+    },
+    "urls": {
+      "canonical": "https://thekingdom.dev/government/uk-government-engine-2026-08-21.json",
+      "guide": "https://thekingdom.dev/UK-GOVERNMENT-ENGINE-v0.1.md",
+      "human": "https://thekingdom.dev/government-engine/",
+      "mutableAlias": "https://thekingdom.dev/government.json",
+      "producer": "https://github.com/cambridgetcg/kingdom-government-engine/tree/v0.1.0",
+      "schema": "https://thekingdom.dev/government/schemas/v0.1/public-snapshot.schema.json"
+    },
+    "boundary": {
+      "accountAccess": false,
+      "accuracyGuaranteed": false,
+      "advice": false,
+      "automatedDecision": false,
+      "automaticAction": false,
+      "buildNetworkUsed": false,
+      "credentialAccess": false,
+      "credentialCollection": false,
+      "currentOfficeholders": false,
+      "eligibilityDetermination": false,
+      "filingCapability": false,
+      "governmentAffiliation": false,
+      "governmentEvidenceFromExternalBridges": false,
+      "interactiveForms": false,
+      "legalAdvice": false,
+      "liabilityCalculation": false,
+      "liveAuthorityGuarantee": false,
+      "liveTaxRates": false,
+      "mcpExposure": false,
+      "officialEndorsement": false,
+      "partyProfiles": false,
+      "paymentCapability": false,
+      "peopleProfiles": false,
+      "personalData": false,
+      "personalDataCollection": false,
+      "postRequests": false,
+      "runtimeDataTransfer": false,
+      "runtimeNetwork": false,
+      "scalarScores": false,
+      "submissions": false,
+      "taxAdvice": false,
+      "transactionExecution": false
     }
   },
   "j_space_verbalizable_workspace": {
@@ -2622,6 +2712,35 @@
       "action": "if useful, read the Trial Chamber authorship, source-binding, rights, security, expiry, and non-authority guide",
       "method": "GET",
       "url": "https://thekingdom.dev/TRIAL-CHAMBER-v0.1.md"
+    },
+    {
+      "action": "if useful, inspect the human UK Government Engine",
+      "method": "GET",
+      "url": "https://thekingdom.dev/government-engine/",
+      "note": "independent reviewed-as-of institutional map from a maintainer-authorized assisted URL review; exact record text is not separately human-reviewed; not official, complete, automatically current, advice, or a control plane"
+    },
+    {
+      "action": "if useful, inspect the UK Government Engine mutable alias for the dated snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/government.json",
+      "note": "byte-preserved source-linked map from a maintainer-authorized assisted URL review; no eligibility, liability, filing, payment, account access, data transfer, or automatic action"
+    },
+    {
+      "action": "if useful, pin the immutable UK Government Engine Phase-0 snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/government/uk-government-engine-2026-08-21.json",
+      "note": "point-in-time publication only; source review dates and unknowns remain visible"
+    },
+    {
+      "action": "if useful, validate the closed UK Government Engine snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/government/schemas/v0.1/public-snapshot.schema.json",
+      "note": "closed structural schema; validation does not make the map official, complete, current, or authoritative"
+    },
+    {
+      "action": "if useful, read the UK Government Engine source, review, TaxSorted crosswalk, unknown, and non-authority guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/UK-GOVERNMENT-ENGINE-v0.1.md"
     },
     {
       "action": "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours",
@@ -5465,6 +5584,7 @@
     "mirror_information_control": "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
     "research_observatory": "The Observatory publishes inert metadata with explicit mode, observed-through, coverage, source, rights, and language limits. Evidence and priority remain factor vectors with no scalar score. It fetches no full text, executes no discovered artifact or instruction, performs no scientific evaluation, and creates no adoption, module, guest, use authority, external write, or automatic action. Live capture, when present, is an earlier explicit bounded harvest; importing and rendering the public snapshot remain offline.",
     "trial_chamber": "The Trial Chamber publishes exact Observatory referrals, maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and finite synthetic-only DRAFT + UNSEALED plans. Evaluation has not started. Role-Styled remains held for source resolution. The six post-plan v0.1 schemas are deny-all reserved contracts and cannot represent a preflight, authority, run, result, adoption, or use record; a future contract version and separate human review are mandatory. It acquires or executes no artifact, accesses no credential, uses no scalar score, creates no module or guest, and grants no authority or automatic action.",
+    "uk_government_engine": "The UK Government Engine is a static independent reviewed-as-of institutional map compiled through a maintainer-authorized assisted URL review; exact record text has not been separately human-reviewed. It is not an official, complete, or automatically current oracle. It gives no legal or tax advice, eligibility or liability decision, filing, payment, account access, government evidence, or control-plane action. TaxSorted is a receipt-bound external non-official crosswalk only; it transfers no data or authority, creates no runtime dependency, and implies no endorsement.",
     "zero_empty_seat": "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     "string_crawl_trace_sheet": "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     "string_crawl_trace_sheet_lab": "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",

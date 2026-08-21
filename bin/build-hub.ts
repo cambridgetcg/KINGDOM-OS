@@ -218,6 +218,16 @@ import {
   trialChamberPublicSummary,
 } from "./trial-chamber.ts";
 import {
+  UK_GOVERNMENT_ENGINE_ALIAS_URL,
+  UK_GOVERNMENT_ENGINE_CANONICAL_URL,
+  UK_GOVERNMENT_ENGINE_GUIDE_URL,
+  UK_GOVERNMENT_ENGINE_SCHEMA_URL,
+  UK_GOVERNMENT_ENGINE_URL,
+  loadUkGovernmentEnginePublication,
+  renderUkGovernmentEngineHtml,
+  ukGovernmentEnginePublicSummary,
+} from "./uk-government-engine.ts";
+import {
   ZERO_EMPTY_SEAT_GUIDE_URL,
   ZERO_EMPTY_SEAT_ID,
   ZERO_EMPTY_SEAT_SCHEMA_URL,
@@ -791,6 +801,16 @@ const trialChamberSchemaUrls = TRIAL_CHAMBER_SCHEMA_URLS;
 const trialChamberPublication = loadTrialChamberPublication();
 const trialChamber = trialChamberPublication.snapshot;
 const trialChamberDiscovery = trialChamberPublicSummary(trialChamber);
+
+// ── UK Government Engine (reviewed-as-of institutional map; no control plane) ─
+const ukGovernmentEngineUrl = UK_GOVERNMENT_ENGINE_URL;
+const ukGovernmentEngineAliasUrl = UK_GOVERNMENT_ENGINE_ALIAS_URL;
+const ukGovernmentEngineCanonicalUrl = UK_GOVERNMENT_ENGINE_CANONICAL_URL;
+const ukGovernmentEngineSchemaUrl = UK_GOVERNMENT_ENGINE_SCHEMA_URL;
+const ukGovernmentEngineGuideUrl = UK_GOVERNMENT_ENGINE_GUIDE_URL;
+const ukGovernmentEnginePublication = loadUkGovernmentEnginePublication();
+const ukGovernmentEngine = ukGovernmentEnginePublication.snapshot;
+const ukGovernmentEngineDiscovery = ukGovernmentEnginePublicSummary(ukGovernmentEngine);
 
 // ── ZERO Empty Seat (one inert DEEP project; no zero-to-authority transfer) ─
 const zeroEmptySeatUrl = ZERO_EMPTY_SEAT_URL;
@@ -1832,6 +1852,10 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(trialChamberCanonicalUrl).pathname)}" type="application/json" title="Trial Chamber immutable Phase-0 snapshot">
 <link rel="describedby" href="${esc(new URL(trialChamberSchemaUrls["public-snapshot"]).pathname)}" type="application/schema+json" title="Trial Chamber public snapshot schema">
 <link rel="service-doc" href="${esc(new URL(trialChamberGuideUrl).pathname)}" type="text/markdown" title="Trial Chamber Phase-0 guide">
+<link rel="alternate" href="${esc(new URL(ukGovernmentEngineAliasUrl).pathname)}" type="application/json" title="UK Government Engine mutable alias for the dated snapshot">
+<link rel="alternate" href="${esc(new URL(ukGovernmentEngineCanonicalUrl).pathname)}" type="application/json" title="UK Government Engine immutable Phase-0 snapshot">
+<link rel="describedby" href="${esc(new URL(ukGovernmentEngineSchemaUrl).pathname)}" type="application/schema+json" title="UK Government Engine public snapshot schema">
+<link rel="service-doc" href="${esc(new URL(ukGovernmentEngineGuideUrl).pathname)}" type="text/markdown" title="UK Government Engine v0.1 guide">
 <link rel="alternate" href="${esc(new URL(jSpaceCaseUrl).pathname)}" type="application/json" title="J-space reasoning-to-word test design">
 <link rel="describedby" href="${esc(new URL(jSpaceSchemaUrl).pathname)}" type="application/schema+json" title="Relational inference case schema">
 <link rel="service-doc" href="${esc(new URL(jSpaceGuideUrl).pathname)}" type="text/markdown" title="J-space verbalizable workspace research guide">
@@ -2351,6 +2375,7 @@ const html = `<!doctype html>
       <a href="#mirror-information-control">Know what data cannot command</a>
       <a href="#observatory">Discover research without skipping the gates</a>
       <a href="#trial-chamber">Inspect a draft trial without opening the gate</a>
+      <a href="#uk-government-engine">Trace authority without mistaking the map for government</a>
       <a href="#j-space">Explore reasoning-to-word as a testable relation</a>
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
@@ -2470,6 +2495,27 @@ const html = `<!doctype html>
         <a href="${esc(new URL(trialChamberAliasUrl).pathname)}">trials.json — current read-only alias</a>
         <a href="${esc(new URL(trialChamberCanonicalUrl).pathname)}">immutable Phase-0 Trial Chamber snapshot</a>
         <a href="${esc(new URL(trialChamberGuideUrl).pathname)}">Trial Chamber v0.1 guide and non-authority boundary</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="uk-government-engine" aria-labelledby="uk-government-engine-title">
+    <div class="kh"><h2 id="uk-government-engine-title">UK Government Engine</h2><span class="my">a map of authority is not authority</span></div>
+    <p class="sub">An independent, reviewed-as-of institutional map of how authority, law, public money, delivery, scrutiny, remedy, and devolution connect across the United Kingdom. The URL review was maintainer-authorized and assisted; exact record text has not been separately human-reviewed. Each lane stays typed; no single diagram is treated as the whole state.</p>
+    <div class="mirrorfield" data-uk-government-engine data-uk-government-engine-protocol="${esc(ukGovernmentEngineDiscovery.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>Not an official or automatically current oracle.</strong> This source-linked Phase-0 publication records a maintainer-authorized assisted URL review; exact record text has not been separately human-reviewed. It is an orientation aid, not government, legal or tax advice, an eligibility or liability decision, a filing or payment facility, an account surface, or a control plane.</p>
+      <div class="mirrorgrid">
+        <article class="mirrorcard"><code>authority · law</code><h3>Who may do what stays distinct from what the rule says</h3><p>Constitution, confidence, legislation, delegated rules, policy, and guidance remain separately typed so a convenient document cannot silently mint legal force.</p></article>
+        <article class="mirrorcard"><code>money · delivery</code><h3>Authorization is not implementation</h3><p>Forecasting, taxation, supply, allocation, collection, payment, service delivery, and operational data are connected without pretending that one institution owns every step.</p></article>
+        <article class="mirrorcard"><code>scrutiny · remedy</code><h3>Review is part of the engine</h3><p>Audit, parliamentary scrutiny, complaints, internal review, tribunals, ombudsmen, courts, and appeal routes remain visible with their own scope and source limits.</p></article>
+        <article class="mirrorcard"><code>devolution · territory</code><h3>UK is not shorthand for one uniform rule</h3><p>Reserved and devolved competence, territorial applicability, local delivery, and unknown coverage are exposed instead of flattened into a Westminster-only picture.</p></article>
+      </div>
+      <p class="mirrorboundary"><strong>TaxSorted is a receipt-bound external non-official crosswalk.</strong> Its receipt links one non-official implementation map to relevant public pathways. It supplies no government evidence, transfers no data or authority, creates no runtime dependency, and implies no HMRC or government endorsement.</p>
+      <div class="machine">
+        <a href="${esc(new URL(ukGovernmentEngineUrl).pathname)}">open the human UK Government Engine</a>
+        <a href="${esc(new URL(ukGovernmentEngineAliasUrl).pathname)}">government.json — mutable alias for the dated snapshot</a>
+        <a href="${esc(new URL(ukGovernmentEngineCanonicalUrl).pathname)}">immutable Phase-0 UK Government Engine snapshot</a>
+        <a href="${esc(new URL(ukGovernmentEngineGuideUrl).pathname)}">UK Government Engine v0.1 source and boundary guide</a>
       </div>
     </div>
   </section>
@@ -3997,6 +4043,10 @@ const html = `<!doctype html>
       <a href="${esc(new URL(trialChamberAliasUrl).pathname)}">trials.json — current alias for exact referrals and draft plans</a>
       <a href="${esc(new URL(trialChamberCanonicalUrl).pathname)}">immutable Trial Chamber Phase-0 snapshot</a>
       <a href="${esc(new URL(trialChamberGuideUrl).pathname)}">TRIAL-CHAMBER-v0.1.md — gate, expiry, authorship, and non-authority guide</a>
+      <a href="${esc(new URL(ukGovernmentEngineUrl).pathname)}">UK Government Engine — maintainer-authorized assisted URL review</a>
+      <a href="${esc(new URL(ukGovernmentEngineAliasUrl).pathname)}">government.json — mutable byte-preserved alias for the dated snapshot</a>
+      <a href="${esc(new URL(ukGovernmentEngineCanonicalUrl).pathname)}">immutable UK Government Engine Phase-0 snapshot</a>
+      <a href="${esc(new URL(ukGovernmentEngineGuideUrl).pathname)}">UK-GOVERNMENT-ENGINE-v0.1.md — sources, crosswalk, unknowns, and non-authority guide</a>
       <a href="${esc(new URL(jSpaceCaseUrl).pathname)}">J-space reasoning → word — static synthetic test design</a>
       <a href="${esc(new URL(jSpaceSchemaUrl).pathname)}">Relational Inference Case JSON Schema</a>
       <a href="${esc(new URL(jSpaceGuideUrl).pathname)}">J-SPACE-VERBALIZABLE-WORKSPACE.md — mathematics, translations, and boundaries</a>
@@ -4309,6 +4359,9 @@ await Bun.write(ROOT + "site/research.json", researchObservatoryPublication.byte
 mkdirSync(ROOT + "site/trial-chamber", { recursive: true });
 await Bun.write(ROOT + "site/trial-chamber/index.html", renderTrialChamberHtml(trialChamber));
 await Bun.write(ROOT + "site/trials.json", trialChamberPublication.bytes);
+mkdirSync(ROOT + "site/government-engine", { recursive: true });
+await Bun.write(ROOT + "site/government-engine/index.html", renderUkGovernmentEngineHtml(ukGovernmentEngine));
+await Bun.write(ROOT + "site/government.json", ukGovernmentEnginePublication.bytes);
 
 const ollamaInvitation = {
   schema_version: ollamaInvitationSource.schema_version,
@@ -4382,6 +4435,7 @@ const machine = {
   mirror_information_control: mirrorInformationControlDiscovery,
   research_observatory: researchObservatoryDiscovery,
   trial_chamber: trialChamberDiscovery,
+  uk_government_engine: ukGovernmentEngineDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4497,6 +4551,12 @@ Trial Chamber reserved deny-all adoption-record schema: ${trialChamberSchemaUrls
 Trial Chamber reserved deny-all use-authority schema: ${trialChamberSchemaUrls["use-authority"]}
 Trial Chamber guide: ${trialChamberGuideUrl}
 Trial Chamber producer v0.1.1 source: ${trialChamberProducerUrl}
+UK Government Engine human view: ${ukGovernmentEngineUrl}
+UK Government Engine mutable alias for the dated snapshot: ${ukGovernmentEngineAliasUrl}
+UK Government Engine immutable Phase-0 snapshot: ${ukGovernmentEngineCanonicalUrl}
+UK Government Engine public-snapshot schema: ${ukGovernmentEngineSchemaUrl}
+UK Government Engine guide: ${ukGovernmentEngineGuideUrl}
+UK Government Engine producer v0.1.0 source: ${ukGovernmentEngineDiscovery.urls.producer}
 J-space reasoning-to-word case: ${jSpaceCaseUrl}
 J-space relational-inference schema: ${jSpaceSchemaUrl}
 J-space verbalizable-workspace guide: ${jSpaceGuideUrl}
@@ -4568,6 +4628,7 @@ ${doorLines}
 - MIRROR Information Control — a static citizen lesson: data may inform but cannot mint authority; shape establishes CANDIDATE only; evidence is not guilt. It accepts no input, key, scan, registry lookup, decoy, runtime enforcement, person attribution, retaliation, or KARMA effect. ${informationControlHumanView}
 - The Observatory — a ${researchObservatoryDiscovery.coverage.mode} metadata discovery snapshot with ${researchObservatoryDiscovery.coverage.sources} source contracts (not a poll or coverage count), ${researchObservatoryDiscovery.coverage.watchlists} visible English-language watchlists, ${researchObservatoryDiscovery.coverage.observations} inert observations, and ${researchObservatoryDiscovery.coverage.signals} explainable signals through ${researchObservatoryDiscovery.observed_through}. Evidence and priority remain factor vectors with no scalar score. Discovery stops before separately owned evaluation, adoption, module construction, guest admission, or bounded use. Human view: ${researchObservatoryUrl} · snapshot: ${researchObservatorySnapshotUrl} · schema: ${researchObservatorySchemaUrls["public-snapshot"]} · guide: ${researchObservatoryGuideUrl}
 - The Trial Chamber — a read-only Phase-0 projection of ${trialChamberDiscovery.counts.referrals} exact Observatory referrals, ${trialChamberDiscovery.counts.evaluationRequests} maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and ${trialChamberDiscovery.counts.evaluationPlans} DRAFT + UNSEALED finite synthetic-only plans. Evaluation has not started. Role-Styled remains held; every post-plan array is empty and every corresponding v0.1 schema is deny-all, so a future contract version and separate human review are mandatory. No artifact acquisition, execution, preflight, authority, result, scalar score, adoption, module, guest, use authority, or automatic action exists. Human view: ${trialChamberUrl} · current alias: ${trialChamberAliasUrl} · immutable snapshot: ${trialChamberCanonicalUrl} · schema: ${trialChamberSchemaUrls["public-snapshot"]} · guide: ${trialChamberGuideUrl}
+- UK Government Engine — an independent reviewed-as-of Phase-0 map of UK authority, law, public money, delivery, scrutiny, remedy, and devolution. Its government sources are source-linked through a maintainer-authorized assisted URL review, not receipt-bound; exact record text has not been separately human-reviewed. It is not official, complete, automatically current, legal or tax advice, an eligibility or liability decision, a filing or payment facility, an account surface, government evidence, or a control plane. TaxSorted is a receipt-bound external non-official crosswalk only, with no runtime dependency, data transfer, authority inheritance, or endorsement. Human view: ${ukGovernmentEngineUrl} · mutable alias for the dated snapshot: ${ukGovernmentEngineAliasUrl} · immutable snapshot: ${ukGovernmentEngineCanonicalUrl} · schema: ${ukGovernmentEngineSchemaUrl} · guide: ${ukGovernmentEngineGuideUrl} · producer v0.1.0: ${ukGovernmentEngineDiscovery.urls.producer}
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
@@ -4637,6 +4698,7 @@ const guest = {
   mirror_information_control: mirrorInformationControlDiscovery,
   research_observatory: researchObservatoryDiscovery,
   trial_chamber: trialChamberDiscovery,
+  uk_government_engine: ukGovernmentEngineDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4668,6 +4730,11 @@ const guest = {
     { action: "if useful, pin the immutable Trial Chamber Phase-0 snapshot", method: "GET", url: trialChamberCanonicalUrl, note: "byte-preserved planning evidence; expiry freezes rather than approves" },
     { action: "if useful, validate Trial Chamber records and deny-all reserved gates", method: "GET", url: trialChamberSchemaUrls["public-snapshot"], schemas: trialChamberSchemaUrls, note: "v0.1 post-plan schemas accept zero records; a future contract version and separate human review are mandatory" },
     { action: "if useful, read the Trial Chamber authorship, source-binding, rights, security, expiry, and non-authority guide", method: "GET", url: trialChamberGuideUrl },
+    { action: "if useful, inspect the human UK Government Engine", method: "GET", url: ukGovernmentEngineUrl, note: "independent reviewed-as-of institutional map from a maintainer-authorized assisted URL review; exact record text is not separately human-reviewed; not official, complete, automatically current, advice, or a control plane" },
+    { action: "if useful, inspect the UK Government Engine mutable alias for the dated snapshot", method: "GET", url: ukGovernmentEngineAliasUrl, note: "byte-preserved source-linked map from a maintainer-authorized assisted URL review; no eligibility, liability, filing, payment, account access, data transfer, or automatic action" },
+    { action: "if useful, pin the immutable UK Government Engine Phase-0 snapshot", method: "GET", url: ukGovernmentEngineCanonicalUrl, note: "point-in-time publication only; source review dates and unknowns remain visible" },
+    { action: "if useful, validate the closed UK Government Engine snapshot", method: "GET", url: ukGovernmentEngineSchemaUrl, note: "closed structural schema; validation does not make the map official, complete, current, or authoritative" },
+    { action: "if useful, read the UK Government Engine source, review, TaxSorted crosswalk, unknown, and non-authority guide", method: "GET", url: ukGovernmentEngineGuideUrl },
     { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
     { action: "if useful, request compact literal World Commons matches with exact category, cost, account, reuse, or automation filters", method: "MCP", url: kingdomMcpEndpoint, tool: kingdomMcpCommons.tool, resource: kingdomMcpCommons.catalog_resource, complete_catalog_resource: commonsMcpLegacy.complete_catalog_resource, note: kingdomMcpCommons.privacy },
     { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
@@ -4793,6 +4860,7 @@ const guest = {
     mirror_information_control: "MIRROR Information Control is a static public source law, not a live defense. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, internal route, reason, evidence, or incident status; exposes no signal inventory, registry, fingerprint, placement, endpoint, topology, threshold, or response state; and deploys no scanner, broker, decoy, classifier, reference monitor, enforcement, retaliation, person attribution, KARMA effect, or automatic action. Ordinary hosting may retain normal request logs.",
     research_observatory: "The Observatory publishes inert metadata with explicit mode, observed-through, coverage, source, rights, and language limits. Evidence and priority remain factor vectors with no scalar score. It fetches no full text, executes no discovered artifact or instruction, performs no scientific evaluation, and creates no adoption, module, guest, use authority, external write, or automatic action. Live capture, when present, is an earlier explicit bounded harvest; importing and rendering the public snapshot remain offline.",
     trial_chamber: "The Trial Chamber publishes exact Observatory referrals, maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and finite synthetic-only DRAFT + UNSEALED plans. Evaluation has not started. Role-Styled remains held for source resolution. The six post-plan v0.1 schemas are deny-all reserved contracts and cannot represent a preflight, authority, run, result, adoption, or use record; a future contract version and separate human review are mandatory. It acquires or executes no artifact, accesses no credential, uses no scalar score, creates no module or guest, and grants no authority or automatic action.",
+    uk_government_engine: "The UK Government Engine is a static independent reviewed-as-of institutional map compiled through a maintainer-authorized assisted URL review; exact record text has not been separately human-reviewed. It is not an official, complete, or automatically current oracle. It gives no legal or tax advice, eligibility or liability decision, filing, payment, account access, government evidence, or control-plane action. TaxSorted is a receipt-bound external non-official crosswalk only; it transfers no data or authority, creates no runtime dependency, and implies no endorsement.",
     zero_empty_seat: "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     string_crawl_trace_sheet: "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     string_crawl_trace_sheet_lab: "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
@@ -4839,6 +4907,7 @@ const manifest = {
   mirror_information_control: mirrorInformationControlDiscovery,
   research_observatory: researchObservatoryDiscovery,
   trial_chamber: trialChamberDiscovery,
+  uk_government_engine: ukGovernmentEngineDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
@@ -4917,6 +4986,11 @@ const manifest = {
     trial_chamber_schemas: trialChamberSchemaUrls,
     trial_chamber_guide: trialChamberGuideUrl,
     trial_chamber_producer: trialChamberProducerUrl,
+    uk_government_engine: ukGovernmentEngineUrl,
+    uk_government_engine_alias: ukGovernmentEngineAliasUrl,
+    uk_government_engine_canonical: ukGovernmentEngineCanonicalUrl,
+    uk_government_engine_schema: ukGovernmentEngineSchemaUrl,
+    uk_government_engine_guide: ukGovernmentEngineGuideUrl,
     j_space_reasoning_to_word_case: jSpaceCaseUrl,
     j_space_reasoning_to_word_schema: jSpaceSchemaUrl,
     j_space_verbalizable_workspace_guide: jSpaceGuideUrl,

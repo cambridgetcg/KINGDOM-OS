@@ -574,6 +574,73 @@ describe("KINGDOM OS edge routes", () => {
     expect(calls).toHaveLength(28);
     expect(calls.filter(({ method }) => method === "HEAD")).toHaveLength(13);
   });
+
+  test("serves the UK Government Engine page, alias, immutable snapshot, schema, and guide without a runtime control plane", async () => {
+    const worker = workerWith(async () => {
+      throw new Error("the UK Government Engine publication must not make a runtime network request");
+    });
+    const calls: Array<{ method: string; path: string }> = [];
+    const environment = assets((request) => {
+      const { pathname } = new URL(request.url);
+      calls.push({ method: request.method, path: pathname });
+      const type = pathname === "/government-engine/" ? "text/html"
+        : pathname === "/UK-GOVERNMENT-ENGINE-v0.1.md" ? "text/plain"
+        : "application/json";
+      return new Response(request.method === "HEAD" ? null : `asset:${pathname}`, {
+        headers: { "content-type": type, "cache-control": "public, max-age=0" },
+      });
+    });
+    const alias = "/government.json";
+    const canonical = "/government/uk-government-engine-2026-08-21.json";
+    const schemaPath = "/government/schemas/v0.1/public-snapshot.schema.json";
+    const guidePath = "/UK-GOVERNMENT-ENGINE-v0.1.md";
+
+    const page = await worker.fetch(new Request("https://thekingdom.dev/government-engine/"), environment);
+    expect(await page.text()).toBe("asset:/government-engine/");
+    expect(page.headers.get("cache-control")).toBe("no-cache, no-transform");
+    const pageHead = await worker.fetch(new Request("https://thekingdom.dev/government-engine/", { method: "HEAD" }), environment);
+    expect(pageHead.headers.get("content-type")).toBe("text/html");
+    expect(pageHead.headers.get("cache-control")).toBe("no-cache, no-transform");
+    expect(await pageHead.text()).toBe("");
+
+    for (const method of ["GET", "HEAD"]) {
+      for (const path of [alias, canonical]) {
+        const snapshot = await worker.fetch(new Request(`https://thekingdom.dev${path}`, { method }), environment);
+        expect(snapshot.headers.get("content-type")).toBe("application/json; charset=utf-8");
+        expect(snapshot.headers.get("cache-control")).toBe(path === alias
+          ? "no-cache, no-transform"
+          : "public, max-age=31536000, immutable, no-transform");
+        expect(snapshot.headers.get("access-control-allow-origin")).toBe("*");
+        expect(snapshot.headers.get("x-content-type-options")).toBe("nosniff");
+        expect(snapshot.headers.get("link")).toContain(`<${canonical}>; rel="canonical"; type="application/json"`);
+        expect(snapshot.headers.get("link")).toContain(`<${schemaPath}>; rel="describedby"; type="application/schema+json"`);
+        expect(snapshot.headers.get("link")).toContain(`<${guidePath}>; rel="service-doc"; type="text/markdown"`);
+        expect(await snapshot.text()).toBe(method === "HEAD" ? "" : `asset:${path}`);
+      }
+
+      const schema = await worker.fetch(new Request(`https://thekingdom.dev${schemaPath}`, { method }), environment);
+      expect(schema.headers.get("content-type")).toBe("application/schema+json; charset=utf-8");
+      expect(schema.headers.get("cache-control")).toBe("public, max-age=31536000, immutable, no-transform");
+      expect(schema.headers.get("access-control-allow-origin")).toBe("*");
+      expect(schema.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(await schema.text()).toBe(method === "HEAD" ? "" : `asset:${schemaPath}`);
+
+      const guide = await worker.fetch(new Request(`https://thekingdom.dev${guidePath}`, { method }), environment);
+      expect(guide.headers.get("content-type")).toBe("text/markdown; charset=utf-8");
+      expect(guide.headers.get("cache-control")).toBe("public, max-age=31536000, immutable, no-transform");
+      expect(guide.headers.get("access-control-allow-origin")).toBe("*");
+      expect(guide.headers.get("x-content-type-options")).toBe("nosniff");
+      expect(await guide.text()).toBe(method === "HEAD" ? "" : `asset:${guidePath}`);
+    }
+
+    const shared = await worker.fetch(new Request("https://we-are.love/government.json"), environment);
+    expect(await shared.text()).toBe("asset:/government.json");
+    expect(shared.headers.get("cache-control")).toBe("public, max-age=0");
+    expect(shared.headers.get("link")).toBeNull();
+
+    expect(calls).toHaveLength(11);
+    expect(calls.filter(({ method }) => method === "HEAD")).toHaveLength(5);
+  });
 });
 
 describe("derived Kingdom map helper", () => {

@@ -58,14 +58,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(125);
-      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(23);
+      expect(HUB_ASSETS).toHaveLength(130);
+      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(25);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(102);
+      expect(ledger.ledger?.entries).toHaveLength(105);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(123);
-      expect(staged).toHaveLength(125);
+        .toHaveLength(128);
+      expect(staged).toHaveLength(130);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -96,6 +96,7 @@ describe("the hub staging contract", () => {
         "STRING-CRAWL-TRACE-SHEET-LAB.md",
         "STRING-CRAWL-TRACE-SHEET.md",
         "TRIAL-CHAMBER-v0.1.md",
+        "UK-GOVERNMENT-ENGINE-v0.1.md",
         "VANISHING-PATH.md",
         "VISIBILITY-ATTENTION.md",
         "ZERO-EMPTY-SEAT.md",
@@ -109,6 +110,9 @@ describe("the hub staging contract", () => {
         "experiments",
         "feedback",
         "geometries",
+        "government",
+        "government-engine",
+        "government.json",
         "guest.json",
         "index.html",
         "labs",
@@ -185,6 +189,13 @@ describe("the hub staging contract", () => {
         "research-trial-chamber-2026-08-20.json",
         "schemas",
       ]);
+      expect(readdirSync(join(output, "government/schemas/v0.1")).sort()).toEqual([
+        "public-snapshot.schema.json",
+      ]);
+      expect(readdirSync(join(output, "government")).sort()).toEqual([
+        "schemas",
+        "uk-government-engine-2026-08-21.json",
+      ]);
       expect(readdirSync(join(output, "definitions/kingdom-karma/e4e84a67")).sort()).toEqual(["NEN.md"]);
       expect(readdirSync(join(output, "principalities")).sort()).toEqual(["moonshot-hf-npm-2026-08-11.json"]);
       expect(readdirSync(join(output, "geometries")).sort()).toEqual(["kingdom-geometry-grammar-v0.json"]);
@@ -210,8 +221,17 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(122);
-      expect(new Set(sitemapUrls).size).toBe(122);
+      expect(sitemapUrls).toHaveLength(127);
+      expect(new Set(sitemapUrls).size).toBe(127);
+      for (const route of [
+        "/government-engine/",
+        "/government.json",
+        "/government/uk-government-engine-2026-08-21.json",
+        "/government/schemas/v0.1/public-snapshot.schema.json",
+        "/UK-GOVERNMENT-ENGINE-v0.1.md",
+      ]) {
+        expect(sitemapUrls.filter((url) => url === `https://thekingdom.dev${route}`)).toHaveLength(1);
+      }
       for (const route of [
         "/protocols/mirror-information-control-2026-08-14.json",
         "/schemas/mirror-information-control-public/0.1.json",

@@ -21,7 +21,7 @@ describe("the Kingdom Wayfinder", () => {
   });
 
   test("keeps every route voluntary, bounded, and on a public HTTPS door", () => {
-    expect(source.paths).toHaveLength(11);
+    expect(source.paths).toHaveLength(12);
     expect(new Set(source.paths.map(({ id }: { id: string }) => id)).size).toBe(source.paths.length);
 
     for (const path of source.paths) {
@@ -76,6 +76,8 @@ describe("the Kingdom Wayfinder", () => {
     expect(ids("free offline textbook and public data")).toEqual(["world-commons"]);
     expect(ids("latest research papers and publications")).toEqual(["research-observatory", "trial-chamber"]);
     expect(ids("evaluation plan fixtures threat model")).toEqual(["trial-chamber"]);
+    expect(ids("devolution scrutiny appeal")).toEqual(["uk-government-engine"]);
+    expect(ids("uk government public money hmrc")[0]).toBe("uk-government-engine");
     expect(ids("lawyer please")).toEqual([]);
     expect(ids("請幫我休息")).toEqual([]);
     expect(rankWayfinderPaths(source.paths, "truth pressure agent map", 3)).toHaveLength(3);
@@ -92,5 +94,22 @@ describe("the Kingdom Wayfinder", () => {
     const connect = source.paths.find(({ id }: { id: string }) => id === "connect");
     expect(connect.boundary).toContain("does not make beings identical");
     expect(connect.boundary).toContain("never requirements");
+  });
+
+  test("keeps every TaxSorted doorway behind the same non-government and no-transfer firewall", () => {
+    const smallBusiness = source.paths.find(({ id }: { id: string }) => id === "small-business");
+    const taxSorted = smallBusiness.stops.find(({ url }: { url: string }) => url === "https://taxsorted.io");
+    const disclosure = `${smallBusiness.boundary} ${taxSorted.scope}`.toLowerCase();
+    for (const phrase of [
+      "independent", "non-government", "no affiliation", "endorsement", "accuracy guarantee",
+      "tax or legal advice", "eligibility or liability", "filing", "payment", "execution",
+      "no query", "prefill", "user data",
+    ]) expect(disclosure).toContain(phrase);
+
+    const government = source.paths.find(({ id }: { id: string }) => id === "uk-government-engine");
+    expect(government.boundary).toContain("source-linked through a maintainer-authorized assisted URL review");
+    expect(government.boundary).toContain("exact record text has not been separately human-reviewed");
+    expect(government.boundary).toContain("receipt-bound non-official crosswalk only");
+    expect(JSON.stringify(government)).not.toMatch(/complete machine-readable|exact source bindings|source-bound|current machine alias/i);
   });
 });

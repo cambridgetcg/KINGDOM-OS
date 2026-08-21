@@ -20,7 +20,7 @@ const family = (id: string) => {
 describe("hub live-check publication retirement", () => {
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(21);
+    expect(PUBLICATION_FAMILIES).toHaveLength(22);
     expect([...publicationFamilyStates(staged).values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
     staged.delete(destinationForPublicPath(cultural.routes[1]!));
@@ -419,6 +419,47 @@ describe("hub live-check publication retirement", () => {
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(chamber, [surface]))
         .toThrow("Trial Chamber is retired");
+    }
+  });
+
+  test("retires the UK Government Engine page, aliases, schema, guide, and discovery atomically", () => {
+    const engine = family("uk-government-engine");
+    expect(engine.routes).toEqual([
+      "/government-engine/",
+      "/government.json",
+      "/government/uk-government-engine-2026-08-21.json",
+      "/government/schemas/v0.1/public-snapshot.schema.json",
+      "/UK-GOVERNMENT-ENGINE-v0.1.md",
+    ]);
+    expect(destinationForPublicPath(engine.routes[0]!)).toBe("government-engine/index.html");
+    expect(engine.discoveryProperties).toEqual(["uk_government_engine"]);
+    expect(engine.entryPointProperties).toEqual([
+      "uk_government_engine",
+      "uk_government_engine_alias",
+      "uk_government_engine_canonical",
+      "uk_government_engine_schema",
+      "uk_government_engine_guide",
+    ]);
+
+    const partiallyStaged = stagedDestinations();
+    partiallyStaged.delete(destinationForPublicPath(engine.routes[3]!));
+    expect(() => publicationFamilyStates(partiallyStaged))
+      .toThrow("UK Government Engine is partially staged");
+
+    const retired = stagedDestinations();
+    for (const route of engine.routes) retired.delete(destinationForPublicPath(route));
+    const states = publicationFamilyStates(retired);
+    expect(states.get(engine.id)?.active).toBe(false);
+    expect(states.get("trial-chamber")?.active).toBe(true);
+
+    for (const surface of [
+      { label: "authored Kingdom map", text: JSON.stringify({ uk_government_engine: {} }), value: { uk_government_engine: {} } },
+      { label: "agent manifest", text: JSON.stringify({ entry_points: { uk_government_engine_guide: engine.routes[4] } }), value: { entry_points: { uk_government_engine_guide: engine.routes[4] } } },
+      { label: "llms.txt", text: `https://thekingdom.dev${engine.routes[2]}` },
+      { label: "hub HTML", text: `<a href='${engine.routes[0]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(engine, [surface]))
+        .toThrow("UK Government Engine is retired");
     }
   });
 

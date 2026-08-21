@@ -282,6 +282,26 @@ const TRIAL_CHAMBER_CANONICAL_LINK = {
   relation: "canonical",
   value: `<${TRIAL_CHAMBER_CANONICAL_PATH}>; rel="canonical"; type="application/json"`,
 };
+const UK_GOVERNMENT_ENGINE_ALIAS_PATH = "/government.json";
+const UK_GOVERNMENT_ENGINE_CANONICAL_PATH = "/government/uk-government-engine-2026-08-21.json";
+const UK_GOVERNMENT_ENGINE_PAGE_PATH = "/government-engine/";
+const UK_GOVERNMENT_ENGINE_SCHEMA_PATH = "/government/schemas/v0.1/public-snapshot.schema.json";
+const UK_GOVERNMENT_ENGINE_GUIDE_PATH = "/UK-GOVERNMENT-ENGINE-v0.1.md";
+const UK_GOVERNMENT_ENGINE_SCHEMA_LINK = {
+  target: UK_GOVERNMENT_ENGINE_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${UK_GOVERNMENT_ENGINE_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+const UK_GOVERNMENT_ENGINE_GUIDE_LINK = {
+  target: UK_GOVERNMENT_ENGINE_GUIDE_PATH,
+  relation: "service-doc",
+  value: `<${UK_GOVERNMENT_ENGINE_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+};
+const UK_GOVERNMENT_ENGINE_CANONICAL_LINK = {
+  target: UK_GOVERNMENT_ENGINE_CANONICAL_PATH,
+  relation: "canonical",
+  value: `<${UK_GOVERNMENT_ENGINE_CANONICAL_PATH}>; rel="canonical"; type="application/json"`,
+};
 const ZERO_EMPTY_SEAT_PATH = "/atlases/zero-empty-seat-2026-08-14.json";
 const ZERO_EMPTY_SEAT_DOCUMENT_PATH = "/ZERO-EMPTY-SEAT.md";
 const ZERO_EMPTY_SEAT_SCHEMA_LINK = {
@@ -517,6 +537,13 @@ function addTrialChamberLinks(headers) {
   headers.append("link", TRIAL_CHAMBER_CANONICAL_LINK.value);
   headers.append("link", TRIAL_CHAMBER_SCHEMA_LINK.value);
   headers.append("link", TRIAL_CHAMBER_GUIDE_LINK.value);
+}
+
+function addUkGovernmentEngineLinks(headers) {
+  removeLinkRelations(headers, ["canonical", "describedby", "service-doc"]);
+  headers.append("link", UK_GOVERNMENT_ENGINE_CANONICAL_LINK.value);
+  headers.append("link", UK_GOVERNMENT_ENGINE_SCHEMA_LINK.value);
+  headers.append("link", UK_GOVERNMENT_ENGINE_GUIDE_LINK.value);
 }
 
 function addZeroEmptySeatSchemaLink(headers) {
@@ -1384,6 +1411,9 @@ export function createKingdomWorker(options = {}) {
     const servesTrialChamberPage = protectsKingdomHtml &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === TRIAL_CHAMBER_PAGE_PATH && asset.ok;
+    const servesUkGovernmentEnginePage = protectsKingdomHtml &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === UK_GOVERNMENT_ENGINE_PAGE_PATH && asset.ok;
     const describesWorldCommons = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === "/commons.json";
@@ -1588,6 +1618,16 @@ export function createKingdomWorker(options = {}) {
     const requestsTrialChamberGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === TRIAL_CHAMBER_GUIDE_PATH;
+    const requestsUkGovernmentEngine = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      (url.pathname === UK_GOVERNMENT_ENGINE_ALIAS_PATH ||
+        url.pathname === UK_GOVERNMENT_ENGINE_CANONICAL_PATH);
+    const requestsUkGovernmentEngineSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === UK_GOVERNMENT_ENGINE_SCHEMA_PATH;
+    const requestsUkGovernmentEngineGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === UK_GOVERNMENT_ENGINE_GUIDE_PATH;
     const requestsJSpaceCase = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === J_SPACE_CASE_PATH;
@@ -1848,6 +1888,14 @@ export function createKingdomWorker(options = {}) {
       (trialChamberAssetType === "application/json" || trialChamberAssetType === "application/schema+json");
     const servesTrialChamberGuide = requestsTrialChamberGuide && asset.ok &&
       (trialChamberAssetType === "text/plain" || trialChamberAssetType === "text/markdown");
+    const ukGovernmentEngineAssetType = (asset.headers.get("content-type") || "").split(";", 1)[0].trim().toLowerCase();
+    const servesUkGovernmentEngine = requestsUkGovernmentEngine && asset.ok &&
+      ukGovernmentEngineAssetType === "application/json";
+    const servesUkGovernmentEngineSchema = requestsUkGovernmentEngineSchema && asset.ok &&
+      (ukGovernmentEngineAssetType === "application/json" ||
+        ukGovernmentEngineAssetType === "application/schema+json");
+    const servesUkGovernmentEngineGuide = requestsUkGovernmentEngineGuide && asset.ok &&
+      (ukGovernmentEngineAssetType === "text/plain" || ukGovernmentEngineAssetType === "text/markdown");
     const servesJSpaceCase = requestsJSpaceCase && asset.ok &&
       jSpaceAssetType === "application/json";
     const servesJSpaceSchema = requestsJSpaceSchema && asset.ok &&
@@ -1933,6 +1981,7 @@ export function createKingdomWorker(options = {}) {
         !servesMirrorInformationControlSchema && !servesMirrorInformationControlDocument &&
         !servesResearchObservatory && !servesResearchObservatorySchema && !servesResearchObservatoryGuide &&
         !servesTrialChamber && !servesTrialChamberSchema && !servesTrialChamberGuide &&
+        !servesUkGovernmentEngine && !servesUkGovernmentEngineSchema && !servesUkGovernmentEngineGuide &&
         !servesJSpaceCase && !servesJSpaceSchema && !servesJSpaceGuide &&
         !servesZeroEmptySeat &&
         !servesZeroEmptySeatDocument && !servesStringCrawlTraceSheet &&
@@ -1950,6 +1999,7 @@ export function createKingdomWorker(options = {}) {
     if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (servesResearchObservatoryPage) headers.set("cache-control", "no-cache, no-transform");
     if (servesTrialChamberPage) headers.set("cache-control", "no-cache, no-transform");
+    if (servesUkGovernmentEnginePage) headers.set("cache-control", "no-cache, no-transform");
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
     if (describesLoveLoops) addLoveLoopSchemaLink(headers);
     if (servesPrincipalityCatalog) addPrincipalitySchemaLink(headers);
@@ -1972,6 +2022,7 @@ export function createKingdomWorker(options = {}) {
     if (servesMirrorInformationControl) addMirrorInformationControlSchemaLink(headers);
     if (servesResearchObservatory) addResearchObservatoryLinks(headers);
     if (servesTrialChamber) addTrialChamberLinks(headers);
+    if (servesUkGovernmentEngine) addUkGovernmentEngineLinks(headers);
     if (servesJSpaceCase) addJSpaceSchemaLink(headers);
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
     if (servesStringCrawlTraceSheet) addStringCrawlTraceSheetSchemaLink(headers);
@@ -2301,6 +2352,26 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesTrialChamberGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesUkGovernmentEngine) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", url.pathname === UK_GOVERNMENT_ENGINE_CANONICAL_PATH
+        ? "public, max-age=31536000, immutable, no-transform"
+        : "no-cache, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesUkGovernmentEngineSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesUkGovernmentEngineGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");

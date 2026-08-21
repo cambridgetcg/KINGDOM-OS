@@ -1,6 +1,6 @@
 {
   "schema_version": "thekingdom.wayfinder/0.1",
-  "generated": "2026-08-20",
+  "generated": "2026-08-21",
   "canonical_url": "https://thekingdom.dev/wayfinder.json",
   "promise": "Tell the map what you are looking for. It may offer a path; it never decides for you.",
   "privacy": {
@@ -87,13 +87,13 @@
         "finance",
         "self-employed"
       ],
-      "boundary": "These are product doorways, not a substitute for regulated legal, tax, or financial advice. Check each service's scope before relying on it.",
+      "boundary": "These are independent product doorways, not government services or a substitute for regulated legal, tax, or financial advice. No affiliation, endorsement, accuracy guarantee, eligibility or liability determination, filing, payment, or execution is implied. This Wayfinder passes no query, prefill, or user data to them.",
       "stops": [
         {
           "name": "TaxSorted",
           "url": "https://taxsorted.io",
           "why": "A plain-language tax doorway built to make the first step less expensive and intimidating.",
-          "scope": "Informational product surface; jurisdiction and professional-advice boundaries still apply."
+          "scope": "Independent, non-government informational product surface with no affiliation or endorsement. It gives no accuracy guarantee, tax or legal advice, eligibility or liability determination, filing, payment, or execution through this route; Wayfinder shares no query, prefill, or user data."
         },
         {
           "name": "CashLoom",
@@ -305,6 +305,42 @@
           "url": "https://thekingdom.dev/trials.json",
           "why": "The complete read-only Phase-0 projection with an immutable canonical snapshot, exact Observatory bindings, expiry, resources, blockers, and zero-effect boundaries.",
           "scope": "Planning metadata only; a future contract version and separate review are mandatory before any post-plan record can exist."
+        }
+      ]
+    },
+    {
+      "id": "uk-government-engine",
+      "label": "trace how UK government authority moves",
+      "glyph": "⌘",
+      "invitation": "Follow a reviewed-as-of map of UK institutions, authority, law, public money, delivery, scrutiny, and remedy without treating the map as government or advice.",
+      "keywords": [
+        "uk government",
+        "government engine",
+        "parliament",
+        "appropriation",
+        "supply estimates",
+        "hmrc",
+        "treasury",
+        "devolution",
+        "civil service",
+        "scrutiny",
+        "appeal",
+        "ombudsman",
+        "taxsorted"
+      ],
+      "boundary": "This independent map is source-linked through a maintainer-authorized assisted URL review; exact record text has not been separately human-reviewed. It is not an official, complete, or automatically current oracle and provides no legal or tax advice, eligibility or liability decision, filing, payment, account access, or control-plane action. TaxSorted is a receipt-bound non-official crosswalk only.",
+      "stops": [
+        {
+          "name": "UK Government Engine",
+          "url": "https://thekingdom.dev/government-engine/",
+          "why": "A server-rendered view of separately typed authority, law, money, delivery, oversight, remedy, and devolution lanes with visible source, assisted-review, and authorship boundaries.",
+          "scope": "Read-only reviewed-as-of institutional map; no person profile, official status, advice, eligibility or liability decision, filing, payment, account access, or automatic action."
+        },
+        {
+          "name": "UK Government Engine · mutable machine alias",
+          "url": "https://thekingdom.dev/government.json",
+          "why": "The machine-readable dated map, its immutable identity, source links, assisted review dates and authorship, declared unknowns, and the bounded TaxSorted crosswalk receipt.",
+          "scope": "Static publication metadata only. TaxSorted supplies no government evidence and is neither a runtime dependency nor an endorsement or data-transfer path."
         }
       ]
     },
