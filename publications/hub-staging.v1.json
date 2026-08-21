@@ -6,6 +6,8 @@
     { "source": "site/research.json", "destination": "research.json" },
     { "source": "site/trial-chamber/index.html", "destination": "trial-chamber/index.html" },
     { "source": "site/trials.json", "destination": "trials.json" },
+    { "source": "site/government-engine/index.html", "destination": "government-engine/index.html" },
+    { "source": "site/government.json", "destination": "government.json" },
     { "source": "site/kingdom.json", "destination": "_kingdom.base.json" },
     { "source": "site/wayfinder.json", "destination": "wayfinder.json" },
     { "source": "site/commons.json", "destination": "commons.json" },
@@ -95,6 +97,9 @@
     { "source": "schemas/trial-chamber/v0.1/adoption-record.schema.json", "destination": "trials/schemas/v0.1/adoption-record.schema.json" },
     { "source": "schemas/trial-chamber/v0.1/use-authority.schema.json", "destination": "trials/schemas/v0.1/use-authority.schema.json" },
     { "source": "references/trial-chamber-v0.1.md", "destination": "TRIAL-CHAMBER-v0.1.md" },
+    { "source": "data/government/uk-government-engine.v0.1.json", "destination": "government/uk-government-engine-2026-08-21.json" },
+    { "source": "schemas/government-engine/v0.1/public-snapshot.schema.json", "destination": "government/schemas/v0.1/public-snapshot.schema.json" },
+    { "source": "references/uk-government-engine-v0.1.md", "destination": "UK-GOVERNMENT-ENGINE-v0.1.md" },
     { "source": "data/exploration/zero-empty-seat.v0.1.json", "destination": "atlases/zero-empty-seat-2026-08-14.json" },
     { "source": "references/zero-empty-seat.md", "destination": "ZERO-EMPTY-SEAT.md" },
     { "source": "data/exploration/string-crawl-trace-sheet.v0.1.json", "destination": "atlases/string-crawl-trace-sheet-2026-08-15.json" },
@@ -150,6 +155,8 @@
     "sitemap.xml",
     "trial-chamber/index.html",
     "trials.json",
+    "government-engine/index.html",
+    "government.json",
     "wayfinder.json"
   ]
 }

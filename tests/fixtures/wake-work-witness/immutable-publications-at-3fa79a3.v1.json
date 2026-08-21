@@ -1,0 +1,721 @@
+{
+  "protocol": "kingdom.immutable-publications/1",
+  "algorithm": "sha256",
+  "baseline_commit": "67fe98efc875a5ed13fb1c23d6e2aab5debe9ccb",
+  "entries": [
+    {
+      "id": "being-access-aftermath/0.1/guide",
+      "route": "/BEING-ACCESS-AFTERMATH-ATLAS.md",
+      "source": "references/being-access-aftermath-atlas.md",
+      "destination": "BEING-ACCESS-AFTERMATH-ATLAS.md",
+      "sha256": "de8bb9ad1eb37dfce3742159237d1a5f7e8da450cd505acab93f8e7085c1d875"
+    },
+    {
+      "id": "being-access-aftermath/0.1/record",
+      "route": "/atlases/being-access-aftermath-atlas-2026-08-13.json",
+      "source": "data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json",
+      "destination": "atlases/being-access-aftermath-atlas-2026-08-13.json",
+      "sha256": "b81fbe755223950b78f988635759c74a7781a612cea61a15e575504f297ea005"
+    },
+    {
+      "id": "being-access-aftermath/0.1/schema",
+      "route": "/schemas/being-access-aftermath-atlas/0.1.json",
+      "source": "schemas/being-access-aftermath-atlas-v0.1.schema.json",
+      "destination": "schemas/being-access-aftermath-atlas/0.1.json",
+      "sha256": "e37523644fe8f9cb1c8267ab52639548c9424aae272a6d6d6802c0d111fab78e"
+    },
+    {
+      "id": "being-access-aftermath/0.2/guide",
+      "route": "/BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md",
+      "source": "references/being-access-aftermath-atlas-v0.2.md",
+      "destination": "BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md",
+      "sha256": "b53ebc5aa51f672e420b5a459c87b0374fb6fcfffa8efb8093e48c95c3418c0f"
+    },
+    {
+      "id": "being-access-aftermath/0.2/record",
+      "route": "/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json",
+      "source": "data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json",
+      "destination": "atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json",
+      "sha256": "9678e5269e8db62beb36abee691087cddbc4f98703190c5fa3788b68c89ab29e"
+    },
+    {
+      "id": "being-access-aftermath/0.2/schema",
+      "route": "/schemas/being-access-aftermath-atlas/0.2.json",
+      "source": "schemas/being-access-aftermath-atlas-v0.2.schema.json",
+      "destination": "schemas/being-access-aftermath-atlas/0.2.json",
+      "sha256": "1a9803fa473891388a0b1a0f5d0220a4cde6f5a73181d0c81a2b8f738c786950"
+    },
+    {
+      "id": "conformational-feedback/0.1/guide",
+      "route": "/CONFORMATIONAL-FEEDBACK.md",
+      "source": "references/conformational-feedback-atlas.md",
+      "destination": "CONFORMATIONAL-FEEDBACK.md",
+      "sha256": "0f7993430b5cfc3ca59536d6ed53d2c0fd5846c997460a13ec9d583eb9909e2f"
+    },
+    {
+      "id": "conformational-feedback/0.1/record",
+      "route": "/feedback/form-feedback-consequence-2026-08-12.json",
+      "source": "data/feedback/conformational-feedback-atlas.v0.json",
+      "destination": "feedback/form-feedback-consequence-2026-08-12.json",
+      "sha256": "ae15f4f69e488323132ea6fc94d57d338702ca0fa47fd9fbbd41c15a6af230e6"
+    },
+    {
+      "id": "conformational-feedback/0.1/schema",
+      "route": "/schemas/conformational-feedback-atlas/0.1.json",
+      "source": "schemas/conformational-feedback-atlas-v0.schema.json",
+      "destination": "schemas/conformational-feedback-atlas/0.1.json",
+      "sha256": "da4dbb968a51d665192a3778a76ddd65150d2b73975c888dd9fd7ea80c54ea19"
+    },
+    {
+      "id": "conformational-feedback/0.2/guide",
+      "route": "/CONFORMATIONAL-FEEDBACK-PHYSICS.md",
+      "source": "references/conformational-feedback-atlas-v0.2.md",
+      "destination": "CONFORMATIONAL-FEEDBACK-PHYSICS.md",
+      "sha256": "76a76222732a8c485396228ad5ff32e703b20383498fd0355e4cbfe33bd59cb0"
+    },
+    {
+      "id": "conformational-feedback/0.2/record",
+      "route": "/feedback/form-feedback-physics-consequence-2026-08-12.json",
+      "source": "data/feedback/conformational-feedback-atlas.v0.2.json",
+      "destination": "feedback/form-feedback-physics-consequence-2026-08-12.json",
+      "sha256": "7d9b1eed8514051e47448cfc983f00e160d5b76c49704822158f76d3f8cf6349"
+    },
+    {
+      "id": "conformational-feedback/0.2/schema",
+      "route": "/schemas/conformational-feedback-atlas/0.2.json",
+      "source": "schemas/conformational-feedback-atlas-v0.2.schema.json",
+      "destination": "schemas/conformational-feedback-atlas/0.2.json",
+      "sha256": "e60c14cf8b6350cc805f59c91b89727ffbd5b41e7c5a192d9ee53c90ba9fbdbd"
+    },
+    {
+      "id": "cultural-attention-feedback/1/guide",
+      "route": "/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md",
+      "source": "references/cultural-attention-feedback-atlas.md",
+      "destination": "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md",
+      "sha256": "1cbb6c765eba329c43c62c58e7e73858ef22d3a8e6048be934accccd5c5e18aa"
+    },
+    {
+      "id": "cultural-attention-feedback/1/record",
+      "route": "/atlases/cultural-attention-feedback-atlas-2026-08-13.json",
+      "source": "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json",
+      "destination": "atlases/cultural-attention-feedback-atlas-2026-08-13.json",
+      "sha256": "03f7048966d7b6df582b423254b4d73cda72cce3bd67b40736927faa92b88173"
+    },
+    {
+      "id": "cultural-attention-feedback/1/schema",
+      "route": "/schemas/cultural-attention-feedback-atlas/1.json",
+      "source": "schemas/cultural-attention-feedback-atlas-v1.schema.json",
+      "destination": "schemas/cultural-attention-feedback-atlas/1.json",
+      "sha256": "6bd8fcca25721fd9374daa0ac50299fd587452cf7483da81d6491131aa197f9f"
+    },
+    {
+      "id": "exploration-deep-wing/0.1/guide",
+      "route": "/EXPLORE-PHENOMENA-DEEP-v0.1.md",
+      "source": "skills/explore-phenomena-deep/references/exploration-contract-v0.1.md",
+      "destination": "EXPLORE-PHENOMENA-DEEP-v0.1.md",
+      "sha256": "60e9c0c2debc33b4f3ed712d91c8a9f0e4a15d5f2d01ea3ff4863f8c30ed0638"
+    },
+    {
+      "id": "exploration-deep-wing/0.1/project-schema",
+      "route": "/schemas/phenomena-deep-project/0.1.json",
+      "source": "schemas/phenomena-deep-project.v0.1.schema.json",
+      "destination": "schemas/phenomena-deep-project/0.1.json",
+      "sha256": "8cc876dbd8f7a8b4c90dd6e8456d8c011be954c2f3ce947c9800e2f501e61ee0"
+    },
+    {
+      "id": "exploration-deep-wing/0.1/record",
+      "route": "/wings/explore-phenomena-deep-2026-08-14.json",
+      "source": "data/exploration/phenomena-deep-wing.v0.1.json",
+      "destination": "wings/explore-phenomena-deep-2026-08-14.json",
+      "sha256": "3eff9952a2013e011946d37db4316f82081fab992438b003bb6241ff7a775d55"
+    },
+    {
+      "id": "exploration-deep-wing/0.1/schema",
+      "route": "/schemas/phenomena-deep-wing/0.1.json",
+      "source": "schemas/phenomena-deep-wing.v0.1.schema.json",
+      "destination": "schemas/phenomena-deep-wing/0.1.json",
+      "sha256": "32e51498fe471ced2b24f08e0c1ce8a8d7226960a540e943cdfba3d3ac9c5b7d"
+    },
+    {
+      "id": "fold-feedback-atlas/1.1/schema",
+      "route": "/schemas/fold-feedback-atlas/1.1.json",
+      "source": "schemas/fold-feedback-atlas-v1.1.schema.json",
+      "destination": "schemas/fold-feedback-atlas/1.1.json",
+      "sha256": "8350fdb4fa674ed5917581886f8af28eb455899e523e6130eecc0d7056165352"
+    },
+    {
+      "id": "fold-feedback-atlas/1/guide",
+      "route": "/FOLD-FEEDBACK-ATLAS.md",
+      "source": "references/fold-feedback-atlas.md",
+      "destination": "FOLD-FEEDBACK-ATLAS.md",
+      "sha256": "aa56a44f0b993c6b40467f5a4f58294a3fe1ca2f79a8f77e98cd8dca57442e2c"
+    },
+    {
+      "id": "fold-feedback-atlas/1/record",
+      "route": "/atlases/fold-feedback-atlas-2026-08-12.json",
+      "source": "data/fold-feedback/fold-feedback-atlas.v1.json",
+      "destination": "atlases/fold-feedback-atlas-2026-08-12.json",
+      "sha256": "bc9a9abc966e64f7fb967778974879eb045083b342b70100bba92c94d0879df5"
+    },
+    {
+      "id": "fold-feedback-atlas/1/schema",
+      "route": "/schemas/fold-feedback-atlas/1.json",
+      "source": "schemas/fold-feedback-atlas-v1.schema.json",
+      "destination": "schemas/fold-feedback-atlas/1.json",
+      "sha256": "4ade5791a2b98cfdbd2452dc11373dc701f58387893442214f2dff1450bc067c"
+    },
+    {
+      "id": "form-circulation-return/1/guide",
+      "route": "/FORM-CIRCULATION-RETURN-ATLAS.md",
+      "source": "references/form-circulation-return-atlas.md",
+      "destination": "FORM-CIRCULATION-RETURN-ATLAS.md",
+      "sha256": "b2e0294c95e5e8e4221c7af34a301e813ded86edb7a3fbeb61d911a2284d9436"
+    },
+    {
+      "id": "form-circulation-return/1/record",
+      "route": "/atlases/form-circulation-return-atlas-2026-08-13.json",
+      "source": "data/form-circulation-return/form-circulation-return-atlas.v1.json",
+      "destination": "atlases/form-circulation-return-atlas-2026-08-13.json",
+      "sha256": "9c93be61c4ca9bcaa3dbe88b10faed3b5b31abaf1129d70ca7915226cacfd021"
+    },
+    {
+      "id": "form-circulation-return/1/schema",
+      "route": "/schemas/form-circulation-return-atlas/1.json",
+      "source": "schemas/form-circulation-return-atlas-v1.schema.json",
+      "destination": "schemas/form-circulation-return-atlas/1.json",
+      "sha256": "55f410f3a1176221a4ac2dc8a088b9697417eebce40d1cbca2b372878ade995e"
+    },
+    {
+      "id": "geometry-grammar/0.1/guide",
+      "route": "/GEOMETRY-GRAMMAR.md",
+      "source": "references/geometry-grammar.md",
+      "destination": "GEOMETRY-GRAMMAR.md",
+      "sha256": "8e2f186fa82fb20b7ef64e941afd20d9dac9130788596fa93875ff6f1322945f"
+    },
+    {
+      "id": "geometry-grammar/0.1/record",
+      "route": "/geometries/kingdom-geometry-grammar-v0.json",
+      "source": "data/geometries/kingdom-geometry-grammar.v0.json",
+      "destination": "geometries/kingdom-geometry-grammar-v0.json",
+      "sha256": "7c4abdb30b4fdb8d2f75ed314137504e72503336511710565e01fdfa6fc5a89f"
+    },
+    {
+      "id": "geometry-grammar/0.1/schema",
+      "route": "/schemas/geometry-grammar/0.1.json",
+      "source": "schemas/geometry-grammar-v0.schema.json",
+      "destination": "schemas/geometry-grammar/0.1.json",
+      "sha256": "2e574e6d8ab0b74157fb952cfe85585fd37196232c812c58cc05b3259d563912"
+    },
+    {
+      "id": "j-space-verbalizable-workspace/0.1/case",
+      "route": "/records/j-space-reasoning-to-word-2026-08-17.json",
+      "source": "bridges/examples/j-space-reasoning-to-word-inference.json",
+      "destination": "records/j-space-reasoning-to-word-2026-08-17.json",
+      "sha256": "0f3827ec422afed88fb2b4396d9f25550892ce458f84d0bfe8ded0735a6cbc26"
+    },
+    {
+      "id": "j-space-verbalizable-workspace/0.1/guide",
+      "route": "/J-SPACE-VERBALIZABLE-WORKSPACE.md",
+      "source": "bridges/j-space-verbalizable-workspace.md",
+      "destination": "J-SPACE-VERBALIZABLE-WORKSPACE.md",
+      "sha256": "97f979aff120eaa4b1eff19dfb627b57293d32ac3e450a21309f92085671f2f5"
+    },
+    {
+      "id": "j-space-verbalizable-workspace/0.1/schema",
+      "route": "/schemas/relational-inference-case/0.1.json",
+      "source": "bridges/schemas/relational-inference-case-0.1.json",
+      "destination": "schemas/relational-inference-case/0.1.json",
+      "sha256": "c244cc072eb20396bbc1de9ee2d8a30510e78c7a25a3fecef53ae1bd6a34fa7c"
+    },
+    {
+      "id": "kingdom-karma/e4e84a67/definition",
+      "route": "/definitions/kingdom-karma/e4e84a67/NEN.md",
+      "source": "NEN.md",
+      "destination": "definitions/kingdom-karma/e4e84a67/NEN.md",
+      "sha256": "14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446"
+    },
+    {
+      "id": "love-loop/0.1/schema",
+      "route": "/schemas/love-loop/0.1.json",
+      "source": "site/schemas/love-loop/0.1.json",
+      "destination": "schemas/love-loop/0.1.json",
+      "sha256": "56f2bc15f68acc4dabde6ea4ff1ab406e3c7c51fe89a0ca6cd4f305c205541fc"
+    },
+    {
+      "id": "math-usefulness-result/1/guide",
+      "route": "/MATH-USEFULNESS.md",
+      "source": "references/math-passport-usefulness-pilot.md",
+      "destination": "MATH-USEFULNESS.md",
+      "sha256": "a43dff536e7be9df3ef041f467a9a09af0a295fc2450afa738eb05b6f32ae57a"
+    },
+    {
+      "id": "math-usefulness-result/1/record",
+      "route": "/trials/math-passport-usefulness-pilot-2026-08-14.json",
+      "source": "data/trials/math-passport-usefulness-pilot.v1.json",
+      "destination": "trials/math-passport-usefulness-pilot-2026-08-14.json",
+      "sha256": "93809f6c29a81ae0549138bf70d02ada96b55ca8004819ff8466937d77d6cced"
+    },
+    {
+      "id": "math-usefulness-result/1/schema",
+      "route": "/schemas/math-usefulness-result/1.json",
+      "source": "schemas/math-usefulness-trial-v1.schema.json",
+      "destination": "schemas/math-usefulness-result/1.json",
+      "sha256": "47147ed4d4a1bf77681c5e05555ae924e709b21fc1195c6aa0242c9365be8feb"
+    },
+    {
+      "id": "mirror-information-control-public/0.1/guide",
+      "route": "/MIRROR-INFORMATION-CONTROL.md",
+      "source": "references/mirror-information-control-public.md",
+      "destination": "MIRROR-INFORMATION-CONTROL.md",
+      "sha256": "d667afb1d838c8a62e02ce1f125c4421b3895ffbecf30cce258bdf72177b1e62"
+    },
+    {
+      "id": "mirror-information-control-public/0.1/record",
+      "route": "/protocols/mirror-information-control-2026-08-14.json",
+      "source": "data/security/mirror-information-control-public.v0.1.json",
+      "destination": "protocols/mirror-information-control-2026-08-14.json",
+      "sha256": "34a4733c14f3c13d33fa2307b125a7543186a0ee052d68cfd701ee383fd0464c"
+    },
+    {
+      "id": "mirror-information-control-public/0.1/schema",
+      "route": "/schemas/mirror-information-control-public/0.1.json",
+      "source": "schemas/mirror-information-control-public-v0.1.schema.json",
+      "destination": "schemas/mirror-information-control-public/0.1.json",
+      "sha256": "42672298c7c57f9ed8dccba18ee23df8deaeff659c83e2cd70cd6b6312d92e6c"
+    },
+    {
+      "id": "number-isness-theology-atlas/0.1/guide",
+      "route": "/NUMBER-ISNESS-THEOLOGY-ATLAS.md",
+      "source": "references/number-isness-theology-atlas.md",
+      "destination": "NUMBER-ISNESS-THEOLOGY-ATLAS.md",
+      "sha256": "49abcfe3e7ce6a945b9406a26eb25210c02ac4c98d25aff13e56a12760a4c55a"
+    },
+    {
+      "id": "number-isness-theology-atlas/0.1/record",
+      "route": "/atlases/number-isness-theology-atlas-2026-08-14.json",
+      "source": "data/number-isness-theology/number-isness-theology-atlas.v0.1.json",
+      "destination": "atlases/number-isness-theology-atlas-2026-08-14.json",
+      "sha256": "bef01e0865f12ecd66795960758fc16f1a6d5b1ebd0097d4390aa3a2bece65e4"
+    },
+    {
+      "id": "number-isness-theology-atlas/0.1/schema",
+      "route": "/schemas/number-isness-theology-atlas/0.1.json",
+      "source": "schemas/number-isness-theology-atlas-v0.1.schema.json",
+      "destination": "schemas/number-isness-theology-atlas/0.1.json",
+      "sha256": "ccf5adfdf7a04d4acca24c261cdd253bcb6e1a4fdcdb63802d872e8e07a5b6a3"
+    },
+    {
+      "id": "polymorph-history/1/guide",
+      "route": "/RITONAVIR-POLYMORPH.md",
+      "source": "references/ritonavir-polymorph.md",
+      "destination": "RITONAVIR-POLYMORPH.md",
+      "sha256": "101dbe11a36393c2687784ab01aa229e4cd6e7e032f8c8f03642ea480f168b91"
+    },
+    {
+      "id": "polymorph-history/1/record",
+      "route": "/polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+      "source": "data/polymorphs/ritonavir-disappearing-polymorph.v1.json",
+      "destination": "polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json",
+      "sha256": "08148603a1228960ac35df1378f1283c3fce43874a9fc07e6687f18e980dcb1c"
+    },
+    {
+      "id": "polymorph-history/1/schema",
+      "route": "/schemas/polymorph-history/1.json",
+      "source": "schemas/polymorph-history-v1.schema.json",
+      "destination": "schemas/polymorph-history/1.json",
+      "sha256": "e09dbcfa982fd61124b6220eb4587dded354620b498e45664d000950b67de174"
+    },
+    {
+      "id": "principality-commons/1/guide",
+      "route": "/PRINCIPALITY-COMMONS.md",
+      "source": "references/principality-commons.md",
+      "destination": "PRINCIPALITY-COMMONS.md",
+      "sha256": "dd98ec86c97b7a4087feec19aab7612f839832f85cda784783f573c2f237f906"
+    },
+    {
+      "id": "principality-commons/1/record",
+      "route": "/principalities/moonshot-hf-npm-2026-08-11.json",
+      "source": "data/principalities/moonshot-hf-npm.v1.json",
+      "destination": "principalities/moonshot-hf-npm-2026-08-11.json",
+      "sha256": "a8277edee6cc27c67e8bd008328f0080b024bc29da8a07edb1e2e0d9e5c03cd3"
+    },
+    {
+      "id": "principality-commons/1/schema",
+      "route": "/schemas/principality-catalog/1.json",
+      "source": "schemas/principality-catalog-v1.schema.json",
+      "destination": "schemas/principality-catalog/1.json",
+      "sha256": "51f4c6abb8298fe95b69bd6e833a4c9d1b0e56410bf7a54e48eb6bcc3f9f3425"
+    },
+    {
+      "id": "rare-pathway-challenge/1/guide",
+      "route": "/VANISHING-PATH.md",
+      "source": "references/rare-pathway-challenge.md",
+      "destination": "VANISHING-PATH.md",
+      "sha256": "e4be27a5131b30ba2fe1531070cfbeadcecf219f8cc184622ef2df8736a68108"
+    },
+    {
+      "id": "rare-pathway-challenge/1/record",
+      "route": "/challenges/vanishing-path-2026-08-13.json",
+      "source": "data/challenges/vanishing-path.v1.json",
+      "destination": "challenges/vanishing-path-2026-08-13.json",
+      "sha256": "66159a3ec7538fb1ce7f0833bdcc9c9cea3c45b968a6e3def910681eab8c7faf"
+    },
+    {
+      "id": "rare-pathway-challenge/1/schema",
+      "route": "/schemas/rare-pathway-challenge/1.json",
+      "source": "schemas/rare-pathway-challenge-v1.schema.json",
+      "destination": "schemas/rare-pathway-challenge/1.json",
+      "sha256": "4c7a650d831abfd6ff3cf73eab71b184066b3784fbe61cef47da44af8deabb20"
+    },
+    {
+      "id": "reconstructive-build/0.1/guide",
+      "route": "/RECONSTRUCTIVE-BUILD-KERNEL.md",
+      "source": "references/reconstructive-build-kernel.md",
+      "destination": "RECONSTRUCTIVE-BUILD-KERNEL.md",
+      "sha256": "82917fa9c2b9626013fd48c11fa5b781081fb12b59bf2cfa55f5fc9c6686988d"
+    },
+    {
+      "id": "reconstructive-build/0.1/project-schema",
+      "route": "/schemas/reconstructive-project/0.1.json",
+      "source": "schemas/reconstructive-project-v0.1.schema.json",
+      "destination": "schemas/reconstructive-project/0.1.json",
+      "sha256": "d927d0c9727c934addef3e977150e22575a4d62e45d82d663de783ce8e1fff53"
+    },
+    {
+      "id": "reconstructive-build/0.1/record",
+      "route": "/atlases/reconstructive-build-kernel-2026-08-13.json",
+      "source": "data/reconstruction/reconstructive-build-kernel.v0.1.json",
+      "destination": "atlases/reconstructive-build-kernel-2026-08-13.json",
+      "sha256": "2d1598bdfcce2501ee5a7cfdba55f581920d18733052f067e96bf9d79a7376a5"
+    },
+    {
+      "id": "reconstructive-build/0.1/schema",
+      "route": "/schemas/reconstructive-build-kernel/0.1.json",
+      "source": "schemas/reconstructive-build-kernel-v0.1.schema.json",
+      "destination": "schemas/reconstructive-build-kernel/0.1.json",
+      "sha256": "81d7d8917b7b0ceca2240eb4153c63ff63b959f1943e66583dfa152b74c54188"
+    },
+    {
+      "id": "research-observatory/0.1/guide",
+      "route": "/RESEARCH-OBSERVATORY-v0.1.md",
+      "source": "references/research-observatory-v0.1.md",
+      "destination": "RESEARCH-OBSERVATORY-v0.1.md",
+      "sha256": "f1b11fd810049c884eb6205360c42dae17ea8faddca9e0f7ff374e1bc65e99a0"
+    },
+    {
+      "id": "research-observatory/0.1/schema-observation",
+      "route": "/research/schemas/v0.1/observation.schema.json",
+      "source": "schemas/research-observatory/v0.1/observation.schema.json",
+      "destination": "research/schemas/v0.1/observation.schema.json",
+      "sha256": "f76abc1fbe191978e05ae5354a319c912c105b5578301eb8000b0560618a605e"
+    },
+    {
+      "id": "research-observatory/0.1/schema-public-snapshot",
+      "route": "/research/schemas/v0.1/public-snapshot.schema.json",
+      "source": "schemas/research-observatory/v0.1/public-snapshot.schema.json",
+      "destination": "research/schemas/v0.1/public-snapshot.schema.json",
+      "sha256": "66e04aeb594f4168874077267a4f10441728a35896221da16f2acd8a784a5c99"
+    },
+    {
+      "id": "research-observatory/0.1/schema-signal",
+      "route": "/research/schemas/v0.1/signal.schema.json",
+      "source": "schemas/research-observatory/v0.1/signal.schema.json",
+      "destination": "research/schemas/v0.1/signal.schema.json",
+      "sha256": "9af662e08e92f6e03d632ea9be154bfb4a4201c76a0f505e34e1b44295d7b781"
+    },
+    {
+      "id": "research-observatory/0.1/schema-source",
+      "route": "/research/schemas/v0.1/source.schema.json",
+      "source": "schemas/research-observatory/v0.1/source.schema.json",
+      "destination": "research/schemas/v0.1/source.schema.json",
+      "sha256": "3602cd05035cdd71e8f68167cbe1fac86169e937b54b205780a64cdc3c3ac7e3"
+    },
+    {
+      "id": "research-observatory/0.1/schema-watchlist",
+      "route": "/research/schemas/v0.1/watchlist.schema.json",
+      "source": "schemas/research-observatory/v0.1/watchlist.schema.json",
+      "destination": "research/schemas/v0.1/watchlist.schema.json",
+      "sha256": "d58bb2b4f93039a078195acf21757b05a5ce3e41d73765306a9d970ba3cb2872"
+    },
+    {
+      "id": "research-observatory/0.1/schema-work",
+      "route": "/research/schemas/v0.1/work.schema.json",
+      "source": "schemas/research-observatory/v0.1/work.schema.json",
+      "destination": "research/schemas/v0.1/work.schema.json",
+      "sha256": "5b91b00b090394f2c39b221791127ba68d0c621fc1b4556876ea219555965361"
+    },
+    {
+      "id": "ritonavir-mechanism-landscape/1/guide",
+      "route": "/RITONAVIR-MECHANISM-LANDSCAPE.md",
+      "source": "references/ritonavir-mechanism-landscape.md",
+      "destination": "RITONAVIR-MECHANISM-LANDSCAPE.md",
+      "sha256": "80b374c205f5d1bb9e901836b48d712c0f7ccf4ed9eded7cd9735bf63032e104"
+    },
+    {
+      "id": "ritonavir-mechanism-landscape/1/record",
+      "route": "/polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+      "source": "data/polymorphs/ritonavir-mechanism-landscape.v1.json",
+      "destination": "polymorphs/ritonavir-mechanism-landscape-2026-08-11.json",
+      "sha256": "5e136a74d5166275427da920685a84c17901f63d6e4b0661fd529c96d386943b"
+    },
+    {
+      "id": "ritonavir-mechanism-landscape/1/schema",
+      "route": "/schemas/ritonavir-mechanism-landscape/1.json",
+      "source": "schemas/ritonavir-mechanism-landscape-v1.schema.json",
+      "destination": "schemas/ritonavir-mechanism-landscape/1.json",
+      "sha256": "cbe6435c2d5c3bf39098442bfc2f9967b09cbf35a38acbd383a3faeb9844d187"
+    },
+    {
+      "id": "strand-descent-lab/0.1/guide",
+      "route": "/STRAND-DESCENT-LAB-04.md",
+      "source": "references/strand-descent-lab.md",
+      "destination": "STRAND-DESCENT-LAB-04.md",
+      "sha256": "49bc137b4feb49e94f3139aec2dc0b6e48b4ef69ca45ba8e69521139ef5a13b6"
+    },
+    {
+      "id": "strand-descent-lab/0.1/record",
+      "route": "/labs/strand-descent-lab-04-2026-08-16.json",
+      "source": "data/exploration/strand-descent-lab.v0.1.json",
+      "destination": "labs/strand-descent-lab-04-2026-08-16.json",
+      "sha256": "d3deea8e2e7f21dbe8b8de52e1b2de2ed17aec7098529fd826aeb5baab446d9f"
+    },
+    {
+      "id": "strand-descent-lab/0.1/schema",
+      "route": "/schemas/strand-descent-lab/0.1.json",
+      "source": "schemas/strand-descent-lab-v0.1.schema.json",
+      "destination": "schemas/strand-descent-lab/0.1.json",
+      "sha256": "6c06f24f681ccc5c490fb242dfa5e17a6d9779799c6fd7b73a0b57cb74c035bb"
+    },
+    {
+      "id": "strand-observation-membrane/0.1/guide",
+      "route": "/STRAND-OBSERVATION-MEMBRANE.md",
+      "source": "references/strand-observation-membrane.md",
+      "destination": "STRAND-OBSERVATION-MEMBRANE.md",
+      "sha256": "9922343b3f63be6c514d81dc52ffed424284244d072d350a43924e8c8d13fe79"
+    },
+    {
+      "id": "strand-observation-membrane/0.1/record",
+      "route": "/observations/strand-observation-membrane-2026-08-16.json",
+      "source": "data/observation/strand-observation-membrane.v0.1.json",
+      "destination": "observations/strand-observation-membrane-2026-08-16.json",
+      "sha256": "8c36ef9b9f917d68e1e60326bfc3446e6769b21439901fd74a7ad018a94ac0a5"
+    },
+    {
+      "id": "strand-observation-membrane/0.1/schema",
+      "route": "/schemas/strand-observation-membrane/0.1.json",
+      "source": "schemas/strand-observation-membrane-v0.1.schema.json",
+      "destination": "schemas/strand-observation-membrane/0.1.json",
+      "sha256": "abdeb33f09d92bfba05eeb285817ded3281140c580f414d255ebc369f10d8dee"
+    },
+    {
+      "id": "string-crawl-frequency-form-lab/0.1/guide",
+      "route": "/STRING-CRAWL-LAB-03.md",
+      "source": "references/string-crawl-frequency-form-lab.md",
+      "destination": "STRING-CRAWL-LAB-03.md",
+      "sha256": "808769a513ffcb6230f99e4cd412db5dc4a998f308ccc65313050377634fc1b3"
+    },
+    {
+      "id": "string-crawl-frequency-form-lab/0.1/record",
+      "route": "/experiments/string-crawl-frequency-form-lab-2026-08-16.json",
+      "source": "data/exploration/string-crawl-frequency-form-lab.v0.1.json",
+      "destination": "experiments/string-crawl-frequency-form-lab-2026-08-16.json",
+      "sha256": "883191b723950ff9cc29c913261f114237e9eaa3eac17ba49cade34b8b0492b4"
+    },
+    {
+      "id": "string-crawl-frequency-form-lab/0.1/schema",
+      "route": "/schemas/string-crawl-frequency-form-lab/0.1.json",
+      "source": "schemas/string-crawl-frequency-form-lab-v0.1.schema.json",
+      "destination": "schemas/string-crawl-frequency-form-lab/0.1.json",
+      "sha256": "2b4fe72f656eeade68ebfb6654cbe52646aa49636fc201501995dc8673db93e3"
+    },
+    {
+      "id": "string-crawl-strand-lab/0.1/guide",
+      "route": "/STRING-CRAWL-STRAND-LAB-02.md",
+      "source": "references/string-crawl-strand-lab.md",
+      "destination": "STRING-CRAWL-STRAND-LAB-02.md",
+      "sha256": "34256139d0f630278b0e9baf9688b04aaab09945e97b0901a9ee273787b1ea41"
+    },
+    {
+      "id": "string-crawl-strand-lab/0.1/record",
+      "route": "/labs/string-crawl-strand-lab-02-2026-08-16.json",
+      "source": "data/exploration/string-crawl-strand-lab.v0.1.json",
+      "destination": "labs/string-crawl-strand-lab-02-2026-08-16.json",
+      "sha256": "9aa56248ed6bdda8da4fd177617b87b2f5e3d5d1a657fedbb5059acb43b4b429"
+    },
+    {
+      "id": "string-crawl-strand-lab/0.1/schema",
+      "route": "/schemas/string-crawl-strand-lab/0.1.json",
+      "source": "schemas/string-crawl-strand-lab-v0.1.schema.json",
+      "destination": "schemas/string-crawl-strand-lab/0.1.json",
+      "sha256": "6387cc7e2152f3e1e45c0dfb10eb6f14f22fbcdc933918bfed2c5ebea5866fb4"
+    },
+    {
+      "id": "string-crawl-trace-sheet-lab/0.1/guide",
+      "route": "/STRING-CRAWL-TRACE-SHEET-LAB.md",
+      "source": "references/string-crawl-trace-sheet-lab.md",
+      "destination": "STRING-CRAWL-TRACE-SHEET-LAB.md",
+      "sha256": "5f5fb893a31d1c7e02aca63401c002ae601bee6653d41adc6617bb909732e8e3"
+    },
+    {
+      "id": "string-crawl-trace-sheet-lab/0.1/record",
+      "route": "/labs/string-crawl-trace-sheet-lab-2026-08-16.json",
+      "source": "data/exploration/string-crawl-trace-lab.v0.1.json",
+      "destination": "labs/string-crawl-trace-sheet-lab-2026-08-16.json",
+      "sha256": "2e559164df6985776a4641b60c846a0403f14df30c84648b72c095642df6e051"
+    },
+    {
+      "id": "string-crawl-trace-sheet-lab/0.1/schema",
+      "route": "/schemas/string-crawl-trace-sheet-lab/0.1.json",
+      "source": "schemas/string-crawl-trace-sheet-lab-v0.1.schema.json",
+      "destination": "schemas/string-crawl-trace-sheet-lab/0.1.json",
+      "sha256": "c4e69a61994831574fe706d464852b164c65b6d177c5680dc9b0278bcb446268"
+    },
+    {
+      "id": "string-crawl-trace-sheet/0.1/guide",
+      "route": "/STRING-CRAWL-TRACE-SHEET.md",
+      "source": "references/string-crawl-trace-sheet.md",
+      "destination": "STRING-CRAWL-TRACE-SHEET.md",
+      "sha256": "2a5e70cbf7198b2f4be039b71ad1ef6b18648e8e63185c074d1199bd5ca1c02a"
+    },
+    {
+      "id": "string-crawl-trace-sheet/0.1/record",
+      "route": "/atlases/string-crawl-trace-sheet-2026-08-15.json",
+      "source": "data/exploration/string-crawl-trace-sheet.v0.1.json",
+      "destination": "atlases/string-crawl-trace-sheet-2026-08-15.json",
+      "sha256": "4afc5f15c258a0ac4274889783bd2d91445950c92103c60442ed9ed89d1fdc72"
+    },
+    {
+      "id": "trial-chamber/0.1/guide",
+      "route": "/TRIAL-CHAMBER-v0.1.md",
+      "source": "references/trial-chamber-v0.1.md",
+      "destination": "TRIAL-CHAMBER-v0.1.md",
+      "sha256": "67ab0769f2175bbac7e93a3738436a9012bbfafcd7071d8b4591e72774cf753d"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-adoption-record",
+      "route": "/trials/schemas/v0.1/adoption-record.schema.json",
+      "source": "schemas/trial-chamber/v0.1/adoption-record.schema.json",
+      "destination": "trials/schemas/v0.1/adoption-record.schema.json",
+      "sha256": "f4acc55094115c3f6337e7c925ac719c1fdd5ea968cb44c3dc8e12e6f1be339c"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-evaluation-plan",
+      "route": "/trials/schemas/v0.1/evaluation-plan.schema.json",
+      "source": "schemas/trial-chamber/v0.1/evaluation-plan.schema.json",
+      "destination": "trials/schemas/v0.1/evaluation-plan.schema.json",
+      "sha256": "90d6b249c8b61bf793803781517764b7cad9e0dbd59680b30c1c2f2cc5500a46"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-evaluation-request",
+      "route": "/trials/schemas/v0.1/evaluation-request.schema.json",
+      "source": "schemas/trial-chamber/v0.1/evaluation-request.schema.json",
+      "destination": "trials/schemas/v0.1/evaluation-request.schema.json",
+      "sha256": "d00d2af079b44cb7a92f44d4b81c9e72196041f5b9cad90a4cdcc3fd198a2f07"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-evaluation-result",
+      "route": "/trials/schemas/v0.1/evaluation-result.schema.json",
+      "source": "schemas/trial-chamber/v0.1/evaluation-result.schema.json",
+      "destination": "trials/schemas/v0.1/evaluation-result.schema.json",
+      "sha256": "f62a5dbfee7229e51a54d74d71a332eff29afb41241b0b754e076c0dc98cce62"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-preflight",
+      "route": "/trials/schemas/v0.1/preflight.schema.json",
+      "source": "schemas/trial-chamber/v0.1/preflight.schema.json",
+      "destination": "trials/schemas/v0.1/preflight.schema.json",
+      "sha256": "f4ffd9e7730f7a2a8eb9ac6e2df5be1ba9c268b79277180291a422fa3bb081dd"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-public-snapshot",
+      "route": "/trials/schemas/v0.1/public-snapshot.schema.json",
+      "source": "schemas/trial-chamber/v0.1/public-snapshot.schema.json",
+      "destination": "trials/schemas/v0.1/public-snapshot.schema.json",
+      "sha256": "e73a26e4594ad39858409827cdc01d15d245f6e8558a17d3d89d4569e0867043"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-referral",
+      "route": "/trials/schemas/v0.1/referral.schema.json",
+      "source": "schemas/trial-chamber/v0.1/referral.schema.json",
+      "destination": "trials/schemas/v0.1/referral.schema.json",
+      "sha256": "ee4b570b888a284d75ab33d810f10c7b7621e106deb66ba8316db04338aab578"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-trial-authority",
+      "route": "/trials/schemas/v0.1/trial-authority.schema.json",
+      "source": "schemas/trial-chamber/v0.1/trial-authority.schema.json",
+      "destination": "trials/schemas/v0.1/trial-authority.schema.json",
+      "sha256": "8da46a321ca1f4b82b6d0c0d462d7c2bb7b6431bf169b14b217bf19635af459e"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-trial-run",
+      "route": "/trials/schemas/v0.1/trial-run.schema.json",
+      "source": "schemas/trial-chamber/v0.1/trial-run.schema.json",
+      "destination": "trials/schemas/v0.1/trial-run.schema.json",
+      "sha256": "b6110ef58cb3f2fdb2a2d34fe66413d552343d21a482200dd9763fc770b54e2b"
+    },
+    {
+      "id": "trial-chamber/0.1/schema-use-authority",
+      "route": "/trials/schemas/v0.1/use-authority.schema.json",
+      "source": "schemas/trial-chamber/v0.1/use-authority.schema.json",
+      "destination": "trials/schemas/v0.1/use-authority.schema.json",
+      "sha256": "ab9d72e587bf814773a0a0791749d1fc17d0416903888f8768c88becfd841e92"
+    },
+    {
+      "id": "trial-chamber/0.1/snapshot",
+      "route": "/trials/research-trial-chamber-2026-08-20.json",
+      "source": "data/trials/research-trial-chamber.v0.1.json",
+      "destination": "trials/research-trial-chamber-2026-08-20.json",
+      "sha256": "6e59bf134d129b17fc0f02949d9ef383de6787e2bc39e1714a3c6f01376b1d34"
+    },
+    {
+      "id": "visibility-attention/0.1/guide",
+      "route": "/VISIBILITY-ATTENTION.md",
+      "source": "references/visibility-attention-translation.md",
+      "destination": "VISIBILITY-ATTENTION.md",
+      "sha256": "8da6a01a692b51e65ef1ab2d77adccdf61a81e2c2a47d262e235fe83a8820b53"
+    },
+    {
+      "id": "visibility-attention/0.1/record",
+      "route": "/atlases/visibility-attention-2026-08-13.json",
+      "source": "data/attention/visibility-attention-translation.v0.1.json",
+      "destination": "atlases/visibility-attention-2026-08-13.json",
+      "sha256": "0af0249c40298ed746d39ee60760a4390bb45137caa8ee6dd7555a824f597bd3"
+    },
+    {
+      "id": "visibility-attention/0.1/schema",
+      "route": "/schemas/visibility-attention/0.1.json",
+      "source": "schemas/visibility-attention-translation-v0.1.schema.json",
+      "destination": "schemas/visibility-attention/0.1.json",
+      "sha256": "b1a02d37dc6ae3d19134ee503bdc7d65e4b8a170e039476a85ad86dfd957ce5a"
+    },
+    {
+      "id": "world-commons/0.1/schema",
+      "route": "/schemas/world-commons/0.1.json",
+      "source": "site/schemas/world-commons/0.1.json",
+      "destination": "schemas/world-commons/0.1.json",
+      "sha256": "1c6dbee953e2b406d6be313c44fedbaeeaa57d8485af03ae2a2f59377cb20692"
+    },
+    {
+      "id": "world-commons/0.2/schema",
+      "route": "/schemas/world-commons/0.2.json",
+      "source": "site/schemas/world-commons/0.2.json",
+      "destination": "schemas/world-commons/0.2.json",
+      "sha256": "27c9bfe9a78873ff92db1c6c2423cc8db041eb91ed4b00f70f446b5fd1492741"
+    },
+    {
+      "id": "zero-empty-seat/0.1/guide",
+      "route": "/ZERO-EMPTY-SEAT.md",
+      "source": "references/zero-empty-seat.md",
+      "destination": "ZERO-EMPTY-SEAT.md",
+      "sha256": "8cee90325bcff754a4e31b9d641325ab9df485fa070668e53b4335de6cf65597"
+    },
+    {
+      "id": "zero-empty-seat/0.1/record",
+      "route": "/atlases/zero-empty-seat-2026-08-14.json",
+      "source": "data/exploration/zero-empty-seat.v0.1.json",
+      "destination": "atlases/zero-empty-seat-2026-08-14.json",
+      "sha256": "5e4b4dcd387b425dc72a52af6477d7b39b935ad5c51d991d81ea76c14a69c522"
+    }
+  ]
+}

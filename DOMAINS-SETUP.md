@@ -87,12 +87,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 125 assets:
-102 ledgered immutable/versioned assets and 23 mutable assets. There are 123 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 130 assets:
+105 ledgered immutable/versioned assets and 25 mutable assets. There are 128 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 122 URLs. The generated surface describes ten
+contracts. The sitemap contains 127 URLs. The generated surface describes ten
 atlases, three lab routes, one experiment route, and one separate activation
-across twenty-one retirement families:
+across twenty-two retirement families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 the mutable `/observatory/` human view and `/research.json` metadata snapshot;
@@ -101,6 +101,10 @@ observation, work, and signal schemas; and `/RESEARCH-OBSERVATORY-v0.1.md`;
 the mutable `/trial-chamber/` human view and `/trials.json` alias; the immutable
 dated Trial Chamber snapshot, ten `/trials/schemas/v0.1/` contracts, and
 `/TRIAL-CHAMBER-v0.1.md` guide;
+the mutable `/government-engine/` human view and `/government.json` alias; the
+immutable dated UK Government Engine snapshot, its single closed
+`/government/schemas/v0.1/public-snapshot.schema.json` contract, and
+`/UK-GOVERNMENT-ENGINE-v0.1.md` guide;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
 `CREATION-LOOP.md`; the authored
 `/principalities/moonshot-hf-npm-2026-08-11.json`,

@@ -207,6 +207,27 @@
       "sha256": "2e574e6d8ab0b74157fb952cfe85585fd37196232c812c58cc05b3259d563912"
     },
     {
+      "id": "government-engine/0.1/guide",
+      "route": "/UK-GOVERNMENT-ENGINE-v0.1.md",
+      "source": "references/uk-government-engine-v0.1.md",
+      "destination": "UK-GOVERNMENT-ENGINE-v0.1.md",
+      "sha256": "d048260d9837e25a3f62c367cb66fd941d7cf6d29fa33eea74b6d260a2ed54cc"
+    },
+    {
+      "id": "government-engine/0.1/schema",
+      "route": "/government/schemas/v0.1/public-snapshot.schema.json",
+      "source": "schemas/government-engine/v0.1/public-snapshot.schema.json",
+      "destination": "government/schemas/v0.1/public-snapshot.schema.json",
+      "sha256": "2f646d15e4a1d7b96e9bcefdfe90b9e9d170a860fd2eca83f2120a67ece20c50"
+    },
+    {
+      "id": "government-engine/0.1/snapshot",
+      "route": "/government/uk-government-engine-2026-08-21.json",
+      "source": "data/government/uk-government-engine.v0.1.json",
+      "destination": "government/uk-government-engine-2026-08-21.json",
+      "sha256": "1751b2ac331d6a1283cbf57b5b6961d9071f528298f97589fcbd7cf36407e139"
+    },
+    {
       "id": "j-space-verbalizable-workspace/0.1/case",
       "route": "/records/j-space-reasoning-to-word-2026-08-17.json",
       "source": "bridges/examples/j-space-reasoning-to-word-inference.json",

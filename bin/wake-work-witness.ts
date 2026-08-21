@@ -40,6 +40,9 @@ export const WAKE_WORK_WITNESS_GUIDE_LOCATOR = "references/wake-work-witness-atl
 export const WAKE_WORK_WITNESS_GUIDE_PATH = join(ROOT, WAKE_WORK_WITNESS_GUIDE_LOCATOR);
 export const KINGDOM_RELEASE_ROOT_VECTOR_LOCATOR = "tests/fixtures/wake-work-witness/kingdom-release-root-v0.1.json";
 export const KINGDOM_RELEASE_ROOT_VECTOR_PATH = join(ROOT, KINGDOM_RELEASE_ROOT_VECTOR_LOCATOR);
+export const KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_LOCATOR =
+  "tests/fixtures/wake-work-witness/immutable-publications-at-3fa79a3.v1.json";
+export const KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_PATH = join(ROOT, KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_LOCATOR);
 export const CAPABILITY_NULLIFIER_VECTOR_LOCATOR = "tests/fixtures/wake-work-witness/capability-nullifier-v0.1.json";
 export const CAPABILITY_NULLIFIER_VECTOR_PATH = join(ROOT, CAPABILITY_NULLIFIER_VECTOR_LOCATOR);
 export const WITNESS_CONFORMANCE_VECTOR_LOCATOR = "tests/fixtures/wake-work-witness/cross-repo-conformance.v0.1.json";
@@ -80,6 +83,8 @@ export const WITNESSED_AGENT_ECONOMY_CAPABILITY_NULLIFIER = "sha256:462b53e09e2f
 export const CAPABILITY_NULLIFIER_VECTOR_BYTE_SHA256 = "sha256:9e5784bc2074cebbb2f73dfbc721f1f05b38daa76a8c62cc13cd8044a9b12e17";
 export const WITNESS_CONFORMANCE_VECTOR_BYTE_SHA256 = "sha256:133b059dcaa7dc770dde9f13fea2fdf9505dbfd8ba9fbb19e3fa6ff7016d1ad3";
 export const KINGDOM_RELEASE_ROOT_VECTOR_BYTE_SHA256 = "sha256:bddafeadd29a72ffcce588b34f8e6ea271c7ecea4318d8e421f346e700d8220a";
+export const KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_BYTE_SHA256 =
+  "sha256:1dd2e01dbec6b4f7fde9f8f5220a7703e67e29cc5cb15a331e68b4b4ebcaaa37";
 export const POST_CORE_FREEZE_REPLACEMENT_MAP_BYTE_SHA256 = "sha256:dc3a8918c55db7194124745f24ec9bdf6feeb4613dd4591e8236e6f8c61bdbd5";
 export const CAPABILITY_NULLIFIER_SOURCE_LOCATOR = "zerone-core/tools/witness-v0/testdata/derivations/capability-nullifier.json";
 export const CAPABILITY_NULLIFIER_SOURCE_FILE_SHA256 = "sha256:05888dfcb05ef48d44a1214d712e490cb50b6441dbee54d0388878ddc46c631d";
@@ -472,9 +477,28 @@ export function deriveCurrentKingdomReleaseRoot(): KingdomReleaseRoot {
   return deriveKingdomReleaseRootFromBytes(bytes);
 }
 
+/** Recompute the atlas's frozen as-of root from the exact ledger bytes at its
+ * named upstream commit. This is deliberately separate from the moving
+ * checked-out ledger diagnostic: append-only publication growth must not make
+ * an immutable historical atlas invalidate itself. */
+export function deriveHistoricalKingdomReleaseRoot(
+  path = KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_PATH,
+): KingdomReleaseRoot {
+  const bytes = readStrictRegularFile(path, "historical immutable-publications ledger fixture", 512 * 1024);
+  if (sha256Prefixed(bytes) !== KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_BYTE_SHA256) {
+    fail("historical immutable-publications ledger fixture byte receipt drifted");
+  }
+  const root = deriveKingdomReleaseRootFromBytes(bytes);
+  if (root.entry_count !== "102" || root.ledger_byte_sha256 !== KINGDOM_RELEASE_ROOT_LEDGER_FIXTURE_BYTE_SHA256 ||
+      root.release_root !== KINGDOM_RELEASE_ROOT_EXPECTED) {
+    fail("historical immutable-publications ledger fixture root drifted");
+  }
+  return root;
+}
+
 export function verifyKingdomReleaseRootVector(
   input: unknown,
-  derived = deriveCurrentKingdomReleaseRoot(),
+  derived = deriveHistoricalKingdomReleaseRoot(),
 ): WakeWorkWitnessIssue[] {
   try {
     const issues: WakeWorkWitnessIssue[] = [];
@@ -692,7 +716,7 @@ export function verifyWakeWorkWitnessAtlas(input: unknown): WakeWorkWitnessIssue
       sha256Prefixed(readStrictRegularFile(WAKE_WORK_WITNESS_GUIDE_PATH, "WAKE WORK WITNESS guide", MAX_ATLAS_BYTES)) !==
         WAKE_WORK_WITNESS_GUIDE_BYTE_SHA256) add("integrity", "FROZEN_INTEGRITY_MISMATCH");
 
-    const root = deriveCurrentKingdomReleaseRoot();
+    const root = deriveHistoricalKingdomReleaseRoot();
     const releaseVector = loadWakeWorkWitnessFixture(KINGDOM_RELEASE_ROOT_VECTOR_PATH);
     for (const issue of verifyKingdomReleaseRootVector(releaseVector, root)) {
       add(`kingdom_release_root_fixture.${issue.field}`, issue.code);
@@ -719,7 +743,7 @@ export function evaluateWakeWorkWitnessAtlas(input: unknown): WakeWorkWitnessEva
   let atlasId: string | null = null;
   try {
     candidateDigest = wakeWorkWitnessAtlasDigest(input);
-    releaseRoot = deriveCurrentKingdomReleaseRoot();
+    releaseRoot = deriveHistoricalKingdomReleaseRoot();
     if (object(input)) {
       const descriptor = Object.getOwnPropertyDescriptor(input, "atlas_id");
       if (descriptor && "value" in descriptor && typeof descriptor.value === "string") atlasId = descriptor.value;
@@ -744,7 +768,9 @@ export function evaluateWakeWorkWitnessAtlas(input: unknown): WakeWorkWitnessEva
       {
         id: "kingdom-release-root",
         status: releaseRoot?.release_root === KINGDOM_RELEASE_ROOT_EXPECTED ? "PASS" : "FAIL",
-        detail: releaseRoot ? `${releaseRoot.entry_count} ledger entries derive ${releaseRoot.release_root}.` : "Release-root derivation failed closed.",
+        detail: releaseRoot
+          ? `The frozen as-of ledger fixture has ${releaseRoot.entry_count} entries and derives ${releaseRoot.release_root}.`
+          : "Frozen as-of release-root derivation failed closed.",
       },
       {
         id: "shared-contract-freeze",

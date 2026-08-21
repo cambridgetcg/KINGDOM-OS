@@ -244,7 +244,7 @@ describe("Research Observatory publication boundary", () => {
   });
 
   test("stages one nine-route family with only the page and snapshot mutable", () => {
-    expect(HUB_ASSETS).toHaveLength(125);
+    expect(HUB_ASSETS).toHaveLength(130);
     const researchAssets = HUB_ASSETS.filter(({ destination }) =>
       destination === "observatory/index.html" || destination === "research.json" ||
       destination === "RESEARCH-OBSERVATORY-v0.1.md" || destination.startsWith("research/schemas/v0.1/"));
@@ -264,7 +264,7 @@ describe("Research Observatory publication boundary", () => {
         destination: `research/schemas/v0.1/${name}.schema.json`,
       });
     }
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(23);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(25);
     expect(MUTABLE_HUB_DESTINATIONS).toContain("observatory/index.html");
     expect(MUTABLE_HUB_DESTINATIONS).toContain("research.json");
     expect(MUTABLE_HUB_DESTINATIONS).not.toContain("RESEARCH-OBSERVATORY-v0.1.md");
@@ -289,7 +289,7 @@ describe("Research Observatory publication boundary", () => {
 
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(122);
+    expect(sitemapUrls).toHaveLength(127);
     const publicUrls = [
       RESEARCH_OBSERVATORY_URL,
       RESEARCH_OBSERVATORY_SNAPSHOT_URL,

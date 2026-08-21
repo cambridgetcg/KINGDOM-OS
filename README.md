@@ -646,6 +646,22 @@ crossing any later gate requires a future contract version and separate human
 review. The page runs no JavaScript, exposes no approval or execution control,
 and the KINGDOM MCP remains unchanged.
 
+The [UK Government Engine](https://thekingdom.dev/government-engine/) publishes
+an independent reviewed-as-of map of UK authority, law, public money, delivery,
+scrutiny, remedy, and devolution. Government sources are source-linked through
+a maintainer-authorized assisted URL review, not receipt-bound; exact record
+text has not been separately human-reviewed. Its byte-preserved
+[`government.json`](https://thekingdom.dev/government.json) alias points to an
+[immutable dated snapshot](https://thekingdom.dev/government/uk-government-engine-2026-08-21.json),
+one closed [v0.1 schema](https://thekingdom.dev/government/schemas/v0.1/public-snapshot.schema.json),
+and a [source and boundary guide](https://thekingdom.dev/UK-GOVERNMENT-ENGINE-v0.1.md).
+It is not official, complete, automatically current, legal or tax advice, an
+eligibility or liability decision, a filing or payment facility, an account
+surface, or a control plane. TaxSorted appears only as a receipt-bound external
+non-official crosswalk: it is not government evidence, a runtime dependency, a
+data-transfer path, or an endorsement. The page needs no JavaScript and the
+KINGDOM MCP remains unchanged.
+
 J-space: a verbalizable workspace is published from exact authored bytes as a
 [synthetic reasoning-to-word case](https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json),
 with the [relational inference case schema](https://thekingdom.dev/schemas/relational-inference-case/0.1.json)

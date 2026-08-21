@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-08-20",
+  "generated": "2026-08-21",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -91,7 +91,7 @@
   },
   "wayfinder": {
     "url": "https://thekingdom.dev/wayfinder.json",
-    "paths": 11,
+    "paths": 12,
     "note": "offers possible routes through public doors; never decides for the visitor"
   },
   "world_commons": {
@@ -1058,6 +1058,96 @@
       "signature_created": false,
       "scalar_score_used": false,
       "automatic_action": false
+    }
+  },
+  "uk_government_engine": {
+    "protocol": "kingdom.government-engine-public-snapshot/0.1",
+    "title": "Government Engine: United Kingdom",
+    "contract_version": "0.1.0",
+    "publication_state": "immutable-dated-snapshot-with-mutable-alias",
+    "as_of": "2026-08-21",
+    "jurisdiction": "United Kingdom",
+    "authorship": {
+      "compiledBy": "codex-assisted-publication",
+      "exactTextHumanReviewed": false,
+      "humanDirectionRecorded": true,
+      "origin": "maintainer-authorized-assisted-publication"
+    },
+    "freshness": {
+      "mode": "dated-static-snapshot",
+      "nextReviewDue": "2026-09-21",
+      "onPastReview": "show-warning-and-require-a-new-reviewed-snapshot-before-changing-claims",
+      "reviewTriggers": [
+        "constitutional or devolution legislation changes",
+        "departmental, tribunal, ombudsman or digital-service responsibility changes",
+        "a cited source moves, is withdrawn or materially changes",
+        "a TaxSorted receipt, version, rights statement or selected record ID changes"
+      ],
+      "sourceCheckedOn": "2026-08-21",
+      "taxsortedUpstreamReviewAlarm": true
+    },
+    "counts": {
+      "bodies": 39,
+      "claims": 58,
+      "externalBridges": 2,
+      "flows": 10,
+      "planes": 6,
+      "rails": 11,
+      "redressRoutes": 10,
+      "relatedResources": 2,
+      "relations": 34,
+      "sources": 66,
+      "unknowns": 10
+    },
+    "evidence": {
+      "official_sources": "source-linked-maintainer-authorized-assisted-url-review",
+      "official_source_bodies_republished": false,
+      "exact_text_human_reviewed": false,
+      "taxsorted_bridge": "receipt-bound-crosswalk-only",
+      "taxsorted_distinct_capture_receipts": 9,
+      "taxsorted_government_evidence": false
+    },
+    "urls": {
+      "canonical": "https://thekingdom.dev/government/uk-government-engine-2026-08-21.json",
+      "guide": "https://thekingdom.dev/UK-GOVERNMENT-ENGINE-v0.1.md",
+      "human": "https://thekingdom.dev/government-engine/",
+      "mutableAlias": "https://thekingdom.dev/government.json",
+      "producer": "https://github.com/cambridgetcg/kingdom-government-engine/tree/v0.1.0",
+      "schema": "https://thekingdom.dev/government/schemas/v0.1/public-snapshot.schema.json"
+    },
+    "boundary": {
+      "accountAccess": false,
+      "accuracyGuaranteed": false,
+      "advice": false,
+      "automatedDecision": false,
+      "automaticAction": false,
+      "buildNetworkUsed": false,
+      "credentialAccess": false,
+      "credentialCollection": false,
+      "currentOfficeholders": false,
+      "eligibilityDetermination": false,
+      "filingCapability": false,
+      "governmentAffiliation": false,
+      "governmentEvidenceFromExternalBridges": false,
+      "interactiveForms": false,
+      "legalAdvice": false,
+      "liabilityCalculation": false,
+      "liveAuthorityGuarantee": false,
+      "liveTaxRates": false,
+      "mcpExposure": false,
+      "officialEndorsement": false,
+      "partyProfiles": false,
+      "paymentCapability": false,
+      "peopleProfiles": false,
+      "personalData": false,
+      "personalDataCollection": false,
+      "postRequests": false,
+      "runtimeDataTransfer": false,
+      "runtimeNetwork": false,
+      "scalarScores": false,
+      "submissions": false,
+      "taxAdvice": false,
+      "transactionExecution": false
     }
   },
   "j_space_verbalizable_workspace": {
