@@ -3,8 +3,11 @@ import { createHash } from "node:crypto";
 
 import { HUB_ASSETS } from "../bin/stage-hub.ts";
 import {
+  assertActivePublicationReviewWindow,
+  assertPublicationFamilyReleaseWindows,
   assertRetiredRouteResponse,
   assertRetiredFamilyDiscoveryAbsent,
+  checkHubLive,
   destinationForPublicPath,
   PUBLICATION_FAMILIES,
   publicationFamilyStates,
@@ -18,9 +21,55 @@ const family = (id: string) => {
 };
 
 describe("hub live-check publication retirement", () => {
+  test("rejects an overdue active family through the production live-check before fetching", async () => {
+    const originalFetch = globalThis.fetch;
+    let fetchCalls = 0;
+    globalThis.fetch = (async () => {
+      fetchCalls += 1;
+      throw new Error("network must remain untouched before the release-window gate");
+    }) as typeof fetch;
+    try {
+      await expect(checkHubLive("https://thekingdom.dev", {
+        checkedOn: "2026-09-22",
+      })).rejects.toThrow("replace or fully retire");
+      expect(fetchCalls).toBe(0);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
+
+  test("requires an overdue active publication to be replaced or fully retired", () => {
+    for (const checkedOn of ["2026-08-21", "2026-09-21"]) {
+      expect(() => assertActivePublicationReviewWindow({
+        active: true,
+        checkedOn,
+        label: "UK Government Transformation Engine",
+        nextReviewDue: "2026-09-21",
+      })).not.toThrow();
+    }
+    expect(() => assertActivePublicationReviewWindow({
+      active: true,
+      checkedOn: "2026-09-22",
+      label: "UK Government Transformation Engine",
+      nextReviewDue: "2026-09-21",
+    })).toThrow("replace or fully retire");
+    expect(() => assertActivePublicationReviewWindow({
+      active: false,
+      checkedOn: "2030-01-01",
+      label: "UK Government Transformation Engine",
+      nextReviewDue: "2026-09-21",
+    })).not.toThrow();
+    expect(() => assertActivePublicationReviewWindow({
+      active: true,
+      checkedOn: "2026-02-30",
+      label: "UK Government Transformation Engine",
+      nextReviewDue: "2026-09-21",
+    })).toThrow("real YYYY-MM-DD dates");
+  });
+
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(22);
+    expect(PUBLICATION_FAMILIES).toHaveLength(23);
     expect([...publicationFamilyStates(staged).values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
     staged.delete(destinationForPublicPath(cultural.routes[1]!));
@@ -424,6 +473,7 @@ describe("hub live-check publication retirement", () => {
 
   test("retires the UK Government Engine page, aliases, schema, guide, and discovery atomically", () => {
     const engine = family("uk-government-engine");
+    const transformation = family("uk-government-transformation-engine");
     expect(engine.routes).toEqual([
       "/government-engine/",
       "/government.json",
@@ -448,8 +498,10 @@ describe("hub live-check publication retirement", () => {
 
     const retired = stagedDestinations();
     for (const route of engine.routes) retired.delete(destinationForPublicPath(route));
+    for (const route of transformation.routes) retired.delete(destinationForPublicPath(route));
     const states = publicationFamilyStates(retired);
     expect(states.get(engine.id)?.active).toBe(false);
+    expect(states.get(transformation.id)?.active).toBe(false);
     expect(states.get("trial-chamber")?.active).toBe(true);
 
     for (const surface of [
@@ -460,6 +512,90 @@ describe("hub live-check publication retirement", () => {
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(engine, [surface]))
         .toThrow("UK Government Engine is retired");
+    }
+  });
+
+  test("binds the UK Government Transformation Engine family to its active base atlas", () => {
+    const base = family("uk-government-engine");
+    const transformation = family("uk-government-transformation-engine");
+    expect(transformation.routes).toEqual([
+      "/government-transformation-engine/",
+      "/government-transformations.json",
+      "/government/uk-government-transformation-engine-2026-08-21.json",
+      "/government/transformations/schemas/v0.1/public-snapshot.schema.json",
+      "/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md",
+    ]);
+    expect(destinationForPublicPath(transformation.routes[0]!))
+      .toBe("government-transformation-engine/index.html");
+    expect(transformation.discoveryProperties).toEqual(["uk_government_transformation_engine"]);
+    expect(transformation.entryPointProperties).toEqual([
+      "uk_government_transformation_engine",
+      "uk_government_transformation_engine_alias",
+      "uk_government_transformation_engine_canonical",
+      "uk_government_transformation_engine_schema",
+      "uk_government_transformation_engine_guide",
+    ]);
+    expect(transformation.dependsOn).toEqual(["uk-government-engine"]);
+
+    const active = stagedDestinations();
+    for (const route of transformation.routes) active.add(destinationForPublicPath(route));
+    const activeStates = publicationFamilyStates(active);
+    expect(activeStates.get(transformation.id)?.active).toBe(true);
+    expect(() => assertPublicationFamilyReleaseWindows(
+      activeStates,
+      "2026-09-21",
+    )).not.toThrow();
+    expect(() => assertPublicationFamilyReleaseWindows(
+      activeStates,
+      "2026-09-22",
+    )).toThrow("replace or fully retire");
+
+    const partial = new Set(active);
+    partial.delete(destinationForPublicPath(transformation.routes[3]!));
+    expect(() => publicationFamilyStates(partial))
+      .toThrow("UK Government Transformation Engine is partially staged");
+
+    const orphaned = new Set(active);
+    for (const route of base.routes) orphaned.delete(destinationForPublicPath(route));
+    expect(() => publicationFamilyStates(orphaned))
+      .toThrow("UK Government Transformation Engine requires active UK Government Engine");
+
+    const retiredTogether = new Set(orphaned);
+    for (const route of transformation.routes) {
+      retiredTogether.delete(destinationForPublicPath(route));
+    }
+    const retiredStates = publicationFamilyStates(retiredTogether);
+    expect(retiredStates.get(base.id)?.active).toBe(false);
+    expect(retiredStates.get(transformation.id)?.active).toBe(false);
+    expect(() => assertPublicationFamilyReleaseWindows(
+      retiredStates,
+      "2026-09-22",
+    )).not.toThrow();
+
+    for (const surface of [
+      {
+        label: "authored Kingdom map",
+        text: JSON.stringify({ uk_government_transformation_engine: {} }),
+        value: { uk_government_transformation_engine: {} },
+      },
+      {
+        label: "agent manifest",
+        text: JSON.stringify({
+          entry_points: {
+            uk_government_transformation_engine_guide: transformation.routes[4],
+          },
+        }),
+        value: {
+          entry_points: {
+            uk_government_transformation_engine_guide: transformation.routes[4],
+          },
+        },
+      },
+      { label: "llms.txt", text: `https://thekingdom.dev${transformation.routes[2]}` },
+      { label: "hub HTML", text: `<a href='${transformation.routes[0]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(transformation, [surface]))
+        .toThrow("UK Government Transformation Engine is retired");
     }
   });
 

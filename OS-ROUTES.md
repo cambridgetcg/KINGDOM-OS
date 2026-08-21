@@ -116,6 +116,11 @@ readings:
 | `/government/uk-government-engine-2026-08-21.json` | staged JSON | Immutable source-linked Phase-0 snapshot from a maintainer-authorized assisted URL review; exact record text is not separately human-reviewed |
 | `/government/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed v0.1 contract for the full UK Government Engine public snapshot structure |
 | `/UK-GOVERNMENT-ENGINE-v0.1.md` | staged Markdown | Immutable guide to source scope, reviewed-as-of status, TaxSorted receipt boundary, unknowns, and negative authority |
+| `/government-transformation-engine/` | staged HTML | Mutable, server-rendered, no-JavaScript view of bounded synthetic UK government transformation orientation dossiers |
+| `/government-transformations.json` | staged JSON | Mutable byte-preserved alias of the dated UK Government Transformation Engine publication |
+| `/government/uk-government-transformation-engine-2026-08-21.json` | staged JSON | Immutable synthetic orientation snapshot dependent on the dated UK Government Engine atlas |
+| `/government/transformations/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed v0.1 contract for the full Transformation Engine public snapshot structure |
+| `/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md` | staged Markdown | Immutable guide to the base-atlas dependency, dual graph types, held states, human gates, evidence limits, and negative authority |
 
 The Trial Chamber routes are inspectable publication surfaces, not an evaluator
 or control plane. Metadata titles are not scientific claims. The three request
@@ -135,6 +140,21 @@ or tax advice, eligibility or liability decision, filing, payment, account
 access, government evidence, or control-plane action. The TaxSorted link is a
 receipt-bound external non-official crosswalk only: it transfers no data or
 authority, creates no runtime dependency, and implies no government endorsement.
+
+The UK Government Transformation Engine is a one-way dependent companion: its
+five routes must retire whenever the five-route UK Government Engine family is
+retired. It publishes independent synthetic orientation dossiers, not
+government or analysis, advice, approval, assurance, readiness,
+prioritisation, scoring, or control. Authority-dependency graphs and causal-
+hypothesis graphs remain separate, each with a linear accessible equivalent;
+held states, category distinctions, human gates, and evidence limitations stay
+visible. Every state is state at publication only; after the declared
+`nextReviewDue` it is historical and not current. Future build and live-release
+checks require the active five-route family to be replaced or fully retired;
+published bytes do not consult a runtime clock. The routes accept no input or upload, make no runtime network request,
+and perform no filing, payment, account access, external write, execution, or
+automatic action. TaxSorted is transitive external context only and supplies no
+evidence, API endpoint, runtime dependency, data transfer, or authority.
 
 The MIRROR publication routes are static and read-only. They accept no request
 body, credential, prompt, envelope, or security event; publish no signal
@@ -261,9 +281,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 130-asset upload contract (105 ledgered immutable/versioned assets and
-25 mutable assets; 128 direct public bodies, 127 sitemap URLs; ten atlases, three
-lab routes, one experiment route, one activation, and twenty-two retirement families)
+locks the 135-asset upload contract (108 ledgered immutable/versioned assets and
+27 mutable assets; 133 direct public bodies, 132 sitemap URLs; ten atlases, three
+lab routes, one experiment route, one activation, and twenty-three retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

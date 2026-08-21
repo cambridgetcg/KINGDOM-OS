@@ -118,6 +118,19 @@ import {
   ukGovernmentEnginePublicSummary,
 } from "./uk-government-engine.ts";
 import {
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_URL,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_BYTE_SHA256,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_URL,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_URL,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_NEXT_REVIEW_DUE,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_PRODUCER_URL,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_URL,
+  UK_GOVERNMENT_TRANSFORMATION_ENGINE_URL,
+  loadUkGovernmentTransformationSnapshot,
+  renderUkGovernmentTransformationHtml,
+  ukGovernmentTransformationPublicSummary,
+} from "./uk-government-transformation-engine.ts";
+import {
   ZERO_EMPTY_SEAT_BYTE_SHA256,
   ZERO_EMPTY_SEAT_DIGEST,
   ZERO_EMPTY_SEAT_GUIDE_BYTE_SHA256,
@@ -635,6 +648,16 @@ const ukGovernmentEngineAliasPath = new URL(UK_GOVERNMENT_ENGINE_ALIAS_URL).path
 const ukGovernmentEngineCanonicalPath = new URL(UK_GOVERNMENT_ENGINE_CANONICAL_URL).pathname;
 const ukGovernmentEngineSchemaPath = new URL(UK_GOVERNMENT_ENGINE_SCHEMA_URL).pathname;
 const ukGovernmentEngineGuidePath = new URL(UK_GOVERNMENT_ENGINE_GUIDE_URL).pathname;
+const ukGovernmentTransformationEnginePath =
+  new URL(UK_GOVERNMENT_TRANSFORMATION_ENGINE_URL).pathname;
+const ukGovernmentTransformationEngineAliasPath =
+  new URL(UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_URL).pathname;
+const ukGovernmentTransformationEngineCanonicalPath =
+  new URL(UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_URL).pathname;
+const ukGovernmentTransformationEngineSchemaPath =
+  new URL(UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_URL).pathname;
+const ukGovernmentTransformationEngineGuidePath =
+  new URL(UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_URL).pathname;
 const jSpaceCasePath = new URL(J_SPACE_CASE_URL).pathname;
 const jSpaceSchemaPath = new URL(J_SPACE_SCHEMA_URL).pathname;
 const jSpaceGuidePath = new URL(J_SPACE_GUIDE_URL).pathname;
@@ -670,12 +693,41 @@ export type PublicationFamily = {
   routes: readonly string[];
   discoveryProperties: readonly string[];
   entryPointProperties: readonly string[];
+  dependsOn?: readonly string[];
 };
 
 export type PublicationFamilyState = {
   family: PublicationFamily;
   active: boolean;
 };
+
+function realIsoDate(value: string): boolean {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/u.exec(value);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 &&
+    date.getUTCDate() === day;
+}
+
+export function assertActivePublicationReviewWindow(options: {
+  active: boolean;
+  checkedOn: string;
+  label: string;
+  nextReviewDue: string;
+}): void {
+  if (!realIsoDate(options.checkedOn) || !realIsoDate(options.nextReviewDue)) {
+    throw new Error(`${options.label} review window requires real YYYY-MM-DD dates`);
+  }
+  if (options.active && options.checkedOn > options.nextReviewDue) {
+    throw new Error(
+      `${options.label} active publication passed nextReviewDue ${options.nextReviewDue}; ` +
+      "replace or fully retire its publication family before release",
+    );
+  }
+}
 
 export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
   {
@@ -903,6 +955,26 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
     ],
   },
   {
+    id: "uk-government-transformation-engine",
+    label: "UK Government Transformation Engine",
+    routes: [
+      ukGovernmentTransformationEnginePath,
+      ukGovernmentTransformationEngineAliasPath,
+      ukGovernmentTransformationEngineCanonicalPath,
+      ukGovernmentTransformationEngineSchemaPath,
+      ukGovernmentTransformationEngineGuidePath,
+    ],
+    discoveryProperties: ["uk_government_transformation_engine"],
+    entryPointProperties: [
+      "uk_government_transformation_engine",
+      "uk_government_transformation_engine_alias",
+      "uk_government_transformation_engine_canonical",
+      "uk_government_transformation_engine_schema",
+      "uk_government_transformation_engine_guide",
+    ],
+    dependsOn: ["uk-government-engine"],
+  },
+  {
     id: "strand-observation-membrane",
     label: "STRAND Observation Membrane",
     routes: [
@@ -1023,7 +1095,39 @@ export function publicationFamilyStates(stagedDestinations: ReadonlySet<string>)
     }
     states.set(family.id, { family, active: staged.length === family.routes.length });
   }
+  for (const { family, active } of states.values()) {
+    if (!active) continue;
+    for (const dependencyId of family.dependsOn ?? []) {
+      const dependency = states.get(dependencyId);
+      if (!dependency) {
+        throw new Error(`${family.label} declares unknown publication dependency ${dependencyId}`);
+      }
+      if (!dependency.active) {
+        throw new Error(
+          `${family.label} requires active ${dependency.family.label}; retire the dependent family too`,
+        );
+      }
+    }
+  }
   return states;
+}
+
+export function assertPublicationFamilyReleaseWindows(
+  states: ReadonlyMap<string, PublicationFamilyState>,
+  checkedOn: string,
+): void {
+  const transformation = states.get("uk-government-transformation-engine");
+  if (!transformation) {
+    throw new Error(
+      "UK Government Transformation Engine publication family is not registered",
+    );
+  }
+  assertActivePublicationReviewWindow({
+    active: transformation.active,
+    checkedOn,
+    label: transformation.family.label,
+    nextReviewDue: UK_GOVERNMENT_TRANSFORMATION_ENGINE_NEXT_REVIEW_DUE,
+  });
 }
 
 function record(value: unknown): value is Record<string, unknown> {
@@ -1642,13 +1746,20 @@ export function assertRetiredRouteResponse(options: {
   }
 }
 
-export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): Promise<void> {
+export async function checkHubLive(
+  requestedOrigin = "https://thekingdom.dev",
+  options: { checkedOn?: string } = {},
+): Promise<void> {
   configureOrigin(requestedOrigin);
   try {
   let exact = 0;
   const exactPaths = new Set<string>();
   const stagedDestinations = new Set(HUB_ASSETS.map((asset) => asset.destination));
   const familyStates = publicationFamilyStates(stagedDestinations);
+  assertPublicationFamilyReleaseWindows(
+    familyStates,
+    options.checkedOn ?? new Date().toISOString().slice(0, 10),
+  );
   const familyActive = (id: string): boolean => {
     const state = familyStates.get(id);
     if (!state) throw new Error(`unknown publication family: ${id}`);
@@ -1668,6 +1779,8 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const researchObservatoryActive = familyActive("research-observatory");
   const trialChamberActive = familyActive("trial-chamber");
   const ukGovernmentEngineActive = familyActive("uk-government-engine");
+  const ukGovernmentTransformationEngineActive =
+    familyActive("uk-government-transformation-engine");
   const strandObservationMembraneActive = familyActive("strand-observation-membrane");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
@@ -2491,6 +2604,118 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     }
   }
 
+  if (ukGovernmentTransformationEngineActive) {
+    const routeContracts = [
+      {
+        label: "page",
+        path: ukGovernmentTransformationEnginePath,
+        contentType: "text/html",
+        cache: ["no-cache", "no-transform"],
+        cors: false,
+        nosniff: false,
+      },
+      {
+        label: "alias",
+        path: ukGovernmentTransformationEngineAliasPath,
+        contentType: "application/json",
+        cache: ["no-cache", "no-transform"],
+        cors: true,
+        nosniff: true,
+      },
+      {
+        label: "canonical",
+        path: ukGovernmentTransformationEngineCanonicalPath,
+        contentType: "application/json",
+        cache: ["public", "max-age=31536000", "immutable", "no-transform"],
+        cors: true,
+        nosniff: true,
+      },
+      {
+        label: "schema",
+        path: ukGovernmentTransformationEngineSchemaPath,
+        contentType: "application/schema+json",
+        cache: ["public", "max-age=31536000", "immutable", "no-transform"],
+        cors: true,
+        nosniff: true,
+      },
+      {
+        label: "guide",
+        path: ukGovernmentTransformationEngineGuidePath,
+        contentType: "text/markdown",
+        cache: ["public", "max-age=31536000", "immutable", "no-transform"],
+        cors: true,
+        nosniff: true,
+      },
+    ] as const;
+    for (const contract of routeContracts) {
+      const response = await fetch(url(contract.path), {
+        method: "HEAD",
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const links = response.headers.get("link") || "";
+      const publicationLinksValid = contract.label !== "alias" &&
+          contract.label !== "canonical"
+        ? true
+        : hasUniqueCanonicalLinkRelation(
+            links,
+            ukGovernmentTransformationEngineCanonicalPath,
+            "canonical",
+            "application/json",
+          ) &&
+          hasUniqueCanonicalLinkRelation(
+            links,
+            ukGovernmentTransformationEngineSchemaPath,
+            "describedby",
+            "application/schema+json",
+          ) &&
+          hasUniqueCanonicalLinkRelation(
+            links,
+            ukGovernmentTransformationEngineGuidePath,
+            "service-doc",
+            "text/markdown",
+          );
+      if (!response.ok ||
+          normalizedMediaType(response.headers.get("content-type")) !==
+            contract.contentType ||
+          !hasExactCacheDirectives(
+            response.headers.get("cache-control"),
+            contract.cache,
+          ) ||
+          (contract.cors &&
+            response.headers.get("access-control-allow-origin") !== "*") ||
+          (contract.nosniff &&
+            (response.headers.get("x-content-type-options") || "")
+              .toLowerCase() !== "nosniff") ||
+          !publicationLinksValid ||
+          (await response.arrayBuffer()).byteLength !== 0) {
+        throw new Error(
+          "UK Government Transformation Engine " + contract.label +
+          " publication or HEAD boundary drifted",
+        );
+      }
+      for (const method of ["POST", "PUT", "PATCH", "DELETE"] as const) {
+        const mutation = await fetch(url(contract.path), {
+          method,
+          redirect: "error",
+          signal: AbortSignal.timeout(TIMEOUT_MS),
+        });
+        if (mutation.status !== 405 ||
+            mutation.headers.get("allow") !== "GET, HEAD" ||
+            mutation.headers.get("cache-control") !== "no-store" ||
+            mutation.headers.get("access-control-allow-origin") !== "*" ||
+            (mutation.headers.get("x-content-type-options") || "")
+              .toLowerCase() !== "nosniff" ||
+            (await mutation.arrayBuffer()).byteLength !== 0) {
+          throw new Error(
+            method + " " + contract.path +
+            " did not remain a zero-body 405 read-only boundary",
+          );
+        }
+      }
+    }
+  }
+
   const schemaPaths = [
     commonsSchemaPath,
     commonsLegacySchemaPath,
@@ -2516,6 +2741,9 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
     ...(trialChamberActive ? trialChamberSchemaPaths : []),
     ...(ukGovernmentEngineActive ? [ukGovernmentEngineSchemaPath] : []),
+    ...(ukGovernmentTransformationEngineActive
+      ? [ukGovernmentTransformationEngineSchemaPath]
+      : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
@@ -2543,6 +2771,7 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       path === mirrorInformationControlSchemaPath ||
       path === jSpaceSchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
+      path === ukGovernmentTransformationEngineSchemaPath ||
       researchObservatorySchemaPaths.includes(path) ||
       trialChamberSchemaPaths.includes(path);
     const hasExpectedSchemaType = requiresExactSchemaType
@@ -2551,9 +2780,12 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
     if (!schemaHead.ok || !hasExpectedSchemaType ||
       schemaHead.headers.get("access-control-allow-origin") !== "*" ||
       (schemaHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
-      ((trialChamberSchemaPaths.includes(path) || path === ukGovernmentEngineSchemaPath) &&
+      ((trialChamberSchemaPaths.includes(path) ||
+        path === ukGovernmentEngineSchemaPath ||
+        path === ukGovernmentTransformationEngineSchemaPath) &&
         !(schemaHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform")) ||
-      (path === ukGovernmentEngineSchemaPath &&
+      ((path === ukGovernmentEngineSchemaPath ||
+        path === ukGovernmentTransformationEngineSchemaPath) &&
         !hasExactCacheDirectives(schemaHead.headers.get("cache-control"),
           ["public", "max-age=31536000", "immutable", "no-transform"])) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
@@ -2585,6 +2817,22 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const publishedUkGovernmentEngine: any = ukGovernmentEngineActive
     ? JSON.parse(readFileSync(join(ROOT, "site/government.json"), "utf8"))
     : undefined;
+  const authoredUkGovernmentTransformationEngineHtml =
+    ukGovernmentTransformationEngineActive
+      ? readFileSync(
+          join(ROOT, "site/government-transformation-engine/index.html"),
+          "utf8",
+        )
+      : "";
+  const publishedUkGovernmentTransformationEngine: any =
+    ukGovernmentTransformationEngineActive
+      ? JSON.parse(
+          readFileSync(
+            join(ROOT, "site/government-transformations.json"),
+            "utf8",
+          ),
+        )
+      : undefined;
   const retirementDiscoverySurfaces: readonly DiscoverySurface[] = [
     { label: "agent manifest", text: JSON.stringify(manifest), value: manifest },
     { label: "guest document", text: JSON.stringify(guest), value: guest },
@@ -2662,6 +2910,16 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   const expectedUkGovernmentEngine = ukGovernmentEngine
     ? ukGovernmentEnginePublicSummary(ukGovernmentEngine)
     : undefined;
+  const ukGovernmentTransformationEngine =
+    ukGovernmentTransformationEngineActive
+      ? loadUkGovernmentTransformationSnapshot()
+      : undefined;
+  const expectedUkGovernmentTransformationEngine =
+    ukGovernmentTransformationEngine
+      ? ukGovernmentTransformationPublicSummary(
+          ukGovernmentTransformationEngine,
+        )
+      : undefined;
   const strandObservationMembrane = strandObservationMembraneActive
     ? loadStrandObservationMembrane()
     : undefined;
@@ -3039,6 +3297,234 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
       Object.hasOwn(expected, "mcp") || Object.hasOwn(expected, "tool") || Object.hasOwn(expected, "action") ||
       Object.hasOwn(expected, "score") || Object.hasOwn(expected, "runner")) {
       throw new Error("UK Government Engine authorship, source-link, TaxSorted receipt, graph, discovery, or negative-effect boundary drifted");
+    }
+  }
+  if (ukGovernmentTransformationEngineActive) {
+    const snapshot = ukGovernmentTransformationEngine!;
+    const expected = expectedUkGovernmentTransformationEngine!;
+    const actionTargets = new Set([
+      UK_GOVERNMENT_TRANSFORMATION_ENGINE_URL,
+      UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_URL,
+      UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_URL,
+      UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_URL,
+      UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) =>
+          actionTargets.has(action?.url))
+      : [];
+    const wayfinderPath = authoredWayfinder?.paths?.filter((path: any) =>
+      path?.id === "uk-government-transformation-engine") ?? [];
+    const publicUrls = [
+      ...actionTargets,
+      UK_GOVERNMENT_TRANSFORMATION_ENGINE_PRODUCER_URL,
+    ];
+    const entryPoints = Object.entries(manifest?.entry_points ?? {})
+      .filter(([key]) =>
+        key.startsWith("uk_government_transformation_engine"));
+    const externalLinks = [
+      ...authoredUkGovernmentTransformationEngineHtml.matchAll(
+        /href="(https:\/\/[^"#]+)"/g,
+      ),
+    ].map((match) => match[1]);
+    const contexts = snapshot.dossiers.flatMap((dossier: any) =>
+      dossier.externalContext);
+    const projectedContexts = expected.dossiers.flatMap((dossier: any) =>
+      dossier.external_context);
+    const exactBaseIds = snapshot.dossiers.flatMap((dossier: any) =>
+      dossier.evidenceAtoms.map((atom: any) => ({
+        id: atom.baseEntityId,
+        duplicated: atom.baseEntityType + ":" + atom.baseEntityId,
+      })));
+    const baseCrosswalkTexts = ukGovernmentEngine!.externalBridges.flatMap(
+      (bridge: any) =>
+        bridge.selectedRecordBindings.map((binding: any) => binding.purpose),
+    );
+    if (!isDeepStrictEqual(
+        manifest?.uk_government_transformation_engine,
+        expected,
+      ) ||
+      !isDeepStrictEqual(
+        guest?.uk_government_transformation_engine,
+        expected,
+      ) ||
+      !isDeepStrictEqual(
+        authoredKingdom?.uk_government_transformation_engine,
+        expected,
+      ) ||
+      !isDeepStrictEqual(publishedUkGovernmentTransformationEngine, snapshot) ||
+      authoredUkGovernmentTransformationEngineHtml !==
+        renderUkGovernmentTransformationHtml(snapshot) ||
+      manifest?.entry_points?.uk_government_transformation_engine !==
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_URL ||
+      manifest?.entry_points?.uk_government_transformation_engine_alias !==
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_URL ||
+      manifest?.entry_points?.uk_government_transformation_engine_canonical !==
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_URL ||
+      manifest?.entry_points?.uk_government_transformation_engine_schema !==
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_URL ||
+      manifest?.entry_points?.uk_government_transformation_engine_guide !==
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_URL ||
+      entryPoints.length !== 5 ||
+      guestActions.length !== actionTargets.size ||
+      [...actionTargets].some((target) =>
+        guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) =>
+        action?.method !== "GET" ||
+        "mcp" in action ||
+        "tool" in action ||
+        "schemas" in action ||
+        "write" in action ||
+        "score" in action ||
+        "rank" in action ||
+        "recommendation" in action) ||
+      publicUrls.some((target) => !llms.includes(target)) ||
+      wayfinderPath.length !== 1 ||
+      wayfinderPath[0]?.stops?.length !== 2 ||
+      wayfinderPath[0]?.stops[0]?.url !==
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_URL ||
+      wayfinderPath[0]?.stops[1]?.url !==
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_URL ||
+      !wayfinderPath[0]?.boundary?.includes(
+        "state at publication only",
+      ) ||
+      !wayfinderPath[0]?.boundary?.includes(
+        "TaxSorted is transitive external context only",
+      ) ||
+      !authoredRootHtml.includes(
+        'id="uk-government-transformation-engine"',
+      ) ||
+      !authoredRootHtml.includes(
+        "Three independent synthetic orientation dossiers",
+      ) ||
+      !authoredRootHtml.includes("State at publication only") ||
+      !authoredRootHtml.includes("claimsCausalTruth:false") ||
+      !authoredRootHtml.includes(
+        "TaxSorted appears only transitively as external-context",
+      ) ||
+      !authoredRootHtml.includes(
+        'href="' + ukGovernmentTransformationEnginePath + '"',
+      ) ||
+      !authoredRootHtml.includes(
+        'href="' + ukGovernmentTransformationEngineAliasPath + '"',
+      ) ||
+      !authoredRootHtml.includes(
+        'href="' + ukGovernmentTransformationEngineCanonicalPath + '"',
+      ) ||
+      !authoredRootHtml.includes(
+        'href="' + ukGovernmentTransformationEngineSchemaPath + '"',
+      ) ||
+      !authoredRootHtml.includes(
+        'href="' + ukGovernmentTransformationEngineGuidePath + '"',
+      ) ||
+      !authoredUkGovernmentTransformationEngineHtml.includes(
+        "Synthetic · Phase 0 · Orientation only",
+      ) ||
+      !authoredUkGovernmentTransformationEngineHtml.includes(
+        "State at publication only:",
+      ) ||
+      !authoredUkGovernmentTransformationEngineHtml.includes(
+        "next review due",
+      ) ||
+      (authoredUkGovernmentTransformationEngineHtml.match(
+        /class="graph authority-graph"/g,
+      ) ?? []).length !== 3 ||
+      (authoredUkGovernmentTransformationEngineHtml.match(
+        /class="graph causal-graph"/g,
+      ) ?? []).length !== 3 ||
+      (authoredUkGovernmentTransformationEngineHtml.match(
+        /Complete linear edge equivalent/g,
+      ) ?? []).length !== 6 ||
+      (authoredUkGovernmentTransformationEngineHtml.match(
+        /claimsCausalTruth:false/g,
+      ) ?? []).length !== 3 ||
+      /<(?:script|form|input|button|iframe)\b/i.test(
+        authoredUkGovernmentTransformationEngineHtml,
+      ) ||
+      authoredUkGovernmentTransformationEngineHtml.includes(
+        'target="_blank"',
+      ) ||
+      externalLinks.length !== 1 ||
+      externalLinks[0] !==
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_PRODUCER_URL ||
+      authoredUkGovernmentTransformationEngineHtml.includes(
+        "https://api.taxsorted.io",
+      ) ||
+      contexts.length !== 4 ||
+      contexts.some((context: any) =>
+        context.taint !== "external-context-only" ||
+        !Array.isArray(context.supportsClaimIds) ||
+        context.supportsClaimIds.length !== 0 ||
+        !authoredUkGovernmentTransformationEngineHtml.includes(
+          "<code>" + context.bridgeId + "</code>",
+        ) ||
+        !authoredUkGovernmentTransformationEngineHtml.includes(
+          "<code>" + context.collection + "</code>",
+        ) ||
+        !authoredUkGovernmentTransformationEngineHtml.includes(
+          "<code>" + context.recordId + "</code>",
+        )) ||
+      projectedContexts.length !== 4 ||
+      projectedContexts.some((context: any) =>
+        context.taint !== "external-context-only" ||
+        !Array.isArray(context.supports_claim_ids) ||
+        context.supports_claim_ids.length !== 0) ||
+      baseCrosswalkTexts.some((text: string) =>
+        authoredUkGovernmentTransformationEngineHtml.includes(text)) ||
+      exactBaseIds.some(({ id, duplicated }: any) =>
+        !authoredUkGovernmentTransformationEngineHtml.includes(
+          "<code>" + id + "</code>",
+        ) ||
+        authoredUkGovernmentTransformationEngineHtml.includes(
+          "<code>" + duplicated + "</code>",
+        )) ||
+      expected.state_at_publication !== "within-review-window" ||
+      expected.reader_time_state_embedded !== false ||
+      expected.as_of !== "2026-08-21" ||
+      expected.next_review_due !==
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_NEXT_REVIEW_DUE ||
+      expected.base_government_engine?.canonical_url !==
+        UK_GOVERNMENT_ENGINE_CANONICAL_URL ||
+      expected.base_government_engine?.exact_text_human_reviewed !== false ||
+      expected.base_government_engine?.official_source_handling !==
+        "link-only" ||
+      expected.counts?.dossiers !== 3 ||
+      expected.counts?.planeAssessments !== 18 ||
+      expected.counts?.evidenceAtoms !== 30 ||
+      expected.counts?.humanGates !== 6 ||
+      expected.dossiers.some((dossier: any) =>
+        dossier.synthetic !== true ||
+        dossier.hold?.state !== "held" ||
+        dossier.hold?.stopsProgression !== true ||
+        dossier.plane_statuses.some((assessment: any) =>
+          assessment.unresolved_question_ids.length === 0 ||
+          assessment.status === "orientation-supported") ||
+        dossier.human_gates.some((gate: any) =>
+          gate.required !== true ||
+          gate.completed !== false ||
+          gate.authority_outside_system !== true) ||
+        dossier.graphs?.authority_dependencies?.automatic_progression !==
+          false ||
+        dossier.graphs?.causal_hypotheses?.claims_causal_truth !== false ||
+        dossier.options?.selected !== false ||
+        dossier.options?.preferred_option_id !== null) ||
+      Object.values(expected.boundary ?? {}).some((entry) => entry !== false) ||
+      Object.hasOwn(expected, "mcp") ||
+      Object.hasOwn(expected, "tool") ||
+      Object.hasOwn(expected, "action") ||
+      Object.hasOwn(expected, "score") ||
+      Object.hasOwn(expected, "rank") ||
+      sha256(
+        readFileSync(
+          join(
+            ROOT,
+            "data/government/uk-government-transformation-engine.v0.1.json",
+          ),
+        ),
+      ) !== UK_GOVERNMENT_TRANSFORMATION_ENGINE_BYTE_SHA256) {
+      throw new Error(
+        "UK Government Transformation Engine base admission, freshness, dual graph, TaxSorted taint, discovery, or negative-authority boundary drifted",
+      );
     }
   }
   if (manifest?.love_loops !== LOVE_LOOPS_URL ||
@@ -5000,6 +5486,15 @@ export async function checkHubLive(requestedOrigin = "https://thekingdom.dev"): 
   if (ukGovernmentEngineActive &&
       !isDeepStrictEqual(liveKingdom?.uk_government_engine, expectedUkGovernmentEngine!)) {
     throw new Error("derived kingdom.json did not preserve UK Government Engine discovery");
+  }
+  if (ukGovernmentTransformationEngineActive &&
+      !isDeepStrictEqual(
+        liveKingdom?.uk_government_transformation_engine,
+        expectedUkGovernmentTransformationEngine!,
+      )) {
+    throw new Error(
+      "derived kingdom.json did not preserve UK Government Transformation Engine discovery",
+    );
   }
   if (jSpacePublicationActive &&
       !isDeepStrictEqual(liveKingdom?.j_space_verbalizable_workspace, expectedJSpacePublication!)) {

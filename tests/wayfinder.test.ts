@@ -21,7 +21,7 @@ describe("the Kingdom Wayfinder", () => {
   });
 
   test("keeps every route voluntary, bounded, and on a public HTTPS door", () => {
-    expect(source.paths).toHaveLength(12);
+    expect(source.paths).toHaveLength(13);
     expect(new Set(source.paths.map(({ id }: { id: string }) => id)).size).toBe(source.paths.length);
 
     for (const path of source.paths) {
@@ -78,6 +78,8 @@ describe("the Kingdom Wayfinder", () => {
     expect(ids("evaluation plan fixtures threat model")).toEqual(["trial-chamber"]);
     expect(ids("devolution scrutiny appeal")).toEqual(["uk-government-engine"]);
     expect(ids("uk government public money hmrc")[0]).toBe("uk-government-engine");
+    expect(ids("government transformation authority dependency causal hypothesis")[0])
+      .toBe("uk-government-transformation-engine");
     expect(ids("lawyer please")).toEqual([]);
     expect(ids("請幫我休息")).toEqual([]);
     expect(rankWayfinderPaths(source.paths, "truth pressure agent map", 3)).toHaveLength(3);
@@ -111,5 +113,21 @@ describe("the Kingdom Wayfinder", () => {
     expect(government.boundary).toContain("exact record text has not been separately human-reviewed");
     expect(government.boundary).toContain("receipt-bound non-official crosswalk only");
     expect(JSON.stringify(government)).not.toMatch(/complete machine-readable|exact source bindings|source-bound|current machine alias/i);
+
+    const transformation = source.paths.find(
+      ({ id }: { id: string }) => id === "uk-government-transformation-engine",
+    );
+    const transformationText = JSON.stringify(transformation).toLowerCase();
+    for (const phrase of [
+      "synthetic orientation dossiers",
+      "state at publication only",
+      "historical and not current",
+      "neither government nor analysis",
+      "advice",
+      "approval",
+      "readiness",
+      "taxsorted is transitive external context only",
+      "no taxsorted api endpoint",
+    ]) expect(transformationText).toContain(phrase);
   });
 });

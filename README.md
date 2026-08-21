@@ -662,6 +662,27 @@ non-official crosswalk: it is not government evidence, a runtime dependency, a
 data-transfer path, or an endorsement. The page needs no JavaScript and the
 KINGDOM MCP remains unchanged.
 
+The [UK Government Transformation Engine](https://thekingdom.dev/government-transformation-engine/)
+is a dependent, read-only companion to that dated institutional atlas. It
+publishes finite synthetic orientation dossiers with two separate graphs per
+dossier: authority dependencies and causal hypotheses. Held states, category
+distinctions, evidence limitations, and human gates remain explicit, with a
+linear accessible equivalent for every graph. The byte-preserved
+[`government-transformations.json`](https://thekingdom.dev/government-transformations.json)
+alias points to an [immutable dated snapshot](https://thekingdom.dev/government/uk-government-transformation-engine-2026-08-21.json),
+one closed [v0.1 schema](https://thekingdom.dev/government/transformations/schemas/v0.1/public-snapshot.schema.json),
+and a [source and boundary guide](https://thekingdom.dev/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md).
+Every dossier state is state at publication only; after the declared
+`nextReviewDue` date it is historical and not current. A future release must
+replace or fully retire the active five-route family, while the immutable
+ledger and pinned producer tag preserve its receipts without a runtime clock.
+This independent synthetic surface is neither government nor analysis,
+advice, approval, assurance, a readiness assessment, prioritisation, scoring,
+or a control plane. It has no JavaScript, form, input, upload, runtime network
+request, account path, execution, or automatic action. TaxSorted is transitive
+external context only: it supplies no evidence, API endpoint, runtime
+dependency, data transfer, or authority here. The KINGDOM MCP remains unchanged.
+
 J-space: a verbalizable workspace is published from exact authored bytes as a
 [synthetic reasoning-to-word case](https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json),
 with the [relational inference case schema](https://thekingdom.dev/schemas/relational-inference-case/0.1.json)

@@ -141,17 +141,17 @@ describe("MIRROR citizen gate publication", () => {
   });
 
   test("adds only one immutable static publication triplet", () => {
-    expect(HUB_ASSETS).toHaveLength(130);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(25);
+    expect(HUB_ASSETS).toHaveLength(135);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(27);
     expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(128);
+      .toHaveLength(133);
     expect(HUB_ASSETS.filter(({ destination }) => /mirror-information-control/i.test(destination)).map(({ destination }) => destination)).toEqual([
       "protocols/mirror-information-control-2026-08-14.json",
       "schemas/mirror-information-control-public/0.1.json",
       "MIRROR-INFORMATION-CONTROL.md",
     ]);
-    expect(json("publications/immutable-publications.v1.json").entries).toHaveLength(105);
-    expect((read("pages-content/sitemap.xml").match(/<url>/g) || [])).toHaveLength(127);
+    expect(json("publications/immutable-publications.v1.json").entries).toHaveLength(108);
+    expect((read("pages-content/sitemap.xml").match(/<url>/g) || [])).toHaveLength(132);
     expect(read("pages-functions/_worker.js")).toContain("mirror-information-control");
     expect(json("site/.well-known/agent.json").entry_points.information_control)
       .toBe("https://thekingdom.dev/#mirror-information-control");

@@ -87,12 +87,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 130 assets:
-105 ledgered immutable/versioned assets and 25 mutable assets. There are 128 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 135 assets:
+108 ledgered immutable/versioned assets and 27 mutable assets. There are 133 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 127 URLs. The generated surface describes ten
+contracts. The sitemap contains 132 URLs. The generated surface describes ten
 atlases, three lab routes, one experiment route, and one separate activation
-across twenty-two retirement families:
+across twenty-three retirement families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 the mutable `/observatory/` human view and `/research.json` metadata snapshot;
@@ -105,6 +105,15 @@ the mutable `/government-engine/` human view and `/government.json` alias; the
 immutable dated UK Government Engine snapshot, its single closed
 `/government/schemas/v0.1/public-snapshot.schema.json` contract, and
 `/UK-GOVERNMENT-ENGINE-v0.1.md` guide;
+the mutable `/government-transformation-engine/` human view and
+`/government-transformations.json` alias; the immutable dated UK Government
+Transformation Engine snapshot, its single closed
+`/government/transformations/schemas/v0.1/public-snapshot.schema.json`
+contract, and `/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md` guide; this
+five-route family depends on and must retire with the active UK Government
+Engine family; every dossier state is state at publication only, and a build or
+live release after its declared `nextReviewDue` must replace or fully retire the
+family rather than presenting the dated state as current;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
 `CREATION-LOOP.md`; the authored
 `/principalities/moonshot-hf-npm-2026-08-11.json`,

@@ -165,19 +165,19 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 130-asset union classifies 105 destinations
-as ledgered immutable/versioned and 25 as mutable; 128 are direct public response
-bodies and the sitemap contains 127 URLs. Generated discovery describes ten
+consume those same bytes. The current 135-asset union classifies 108 destinations
+as ledgered immutable/versioned and 27 as mutable; 133 are direct public response
+bodies and the sitemap contains 132 URLs. Generated discovery describes ten
 atlases, three lab routes, one experiment route, and one separate activation
-plus the Research Observatory, Trial Chamber, and UK Government Engine across
-twenty-two retirement families. It says what is
+plus the Research Observatory, Trial Chamber, UK Government Engine, and dependent
+UK Government Transformation Engine across twenty-three retirement families. It says what is
 served now, and every destination is explicitly classified as mutable or
 ledgered. A new ledger entry must be staged when introduced. A previously
 committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the twenty-two linked authored publication
+The live release check retires the twenty-three linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

@@ -8,6 +8,8 @@
     { "source": "site/trials.json", "destination": "trials.json" },
     { "source": "site/government-engine/index.html", "destination": "government-engine/index.html" },
     { "source": "site/government.json", "destination": "government.json" },
+    { "source": "site/government-transformation-engine/index.html", "destination": "government-transformation-engine/index.html" },
+    { "source": "site/government-transformations.json", "destination": "government-transformations.json" },
     { "source": "site/kingdom.json", "destination": "_kingdom.base.json" },
     { "source": "site/wayfinder.json", "destination": "wayfinder.json" },
     { "source": "site/commons.json", "destination": "commons.json" },
@@ -100,6 +102,9 @@
     { "source": "data/government/uk-government-engine.v0.1.json", "destination": "government/uk-government-engine-2026-08-21.json" },
     { "source": "schemas/government-engine/v0.1/public-snapshot.schema.json", "destination": "government/schemas/v0.1/public-snapshot.schema.json" },
     { "source": "references/uk-government-engine-v0.1.md", "destination": "UK-GOVERNMENT-ENGINE-v0.1.md" },
+    { "source": "data/government/uk-government-transformation-engine.v0.1.json", "destination": "government/uk-government-transformation-engine-2026-08-21.json" },
+    { "source": "schemas/government-transformation-engine/v0.1/public-snapshot.schema.json", "destination": "government/transformations/schemas/v0.1/public-snapshot.schema.json" },
+    { "source": "references/uk-government-transformation-engine-v0.1.md", "destination": "UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md" },
     { "source": "data/exploration/zero-empty-seat.v0.1.json", "destination": "atlases/zero-empty-seat-2026-08-14.json" },
     { "source": "references/zero-empty-seat.md", "destination": "ZERO-EMPTY-SEAT.md" },
     { "source": "data/exploration/string-crawl-trace-sheet.v0.1.json", "destination": "atlases/string-crawl-trace-sheet-2026-08-15.json" },
@@ -157,6 +162,8 @@
     "trials.json",
     "government-engine/index.html",
     "government.json",
+    "government-transformation-engine/index.html",
+    "government-transformations.json",
     "wayfinder.json"
   ]
 }

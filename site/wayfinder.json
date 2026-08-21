@@ -345,6 +345,39 @@
       ]
     },
     {
+      "id": "uk-government-transformation-engine",
+      "label": "orient around selected UK government transformations",
+      "glyph": "⇝",
+      "invitation": "Inspect bounded synthetic orientation dossiers that keep authority dependencies, causal hypotheses, held states, human gates, and evidence limits visible without converting orientation into a decision.",
+      "keywords": [
+        "uk government transformation",
+        "transformation engine",
+        "authority dependency",
+        "causal hypothesis",
+        "implementation",
+        "delivery",
+        "evidence",
+        "human gate",
+        "held state",
+        "orientation dossier"
+      ],
+      "boundary": "This independent read-only surface publishes synthetic orientation dossiers linked to the dated UK Government Engine. Every state is state at publication only; after the declared next-review date it is historical and not current. It is neither government nor analysis, advice, approval, assurance, readiness assessment, prioritisation, scoring, or a control plane. It makes no project, person, eligibility, liability, funding, procurement, policy, legal, tax, deployment, or operational determination. TaxSorted is transitive external context only: no TaxSorted content is evidence here and no TaxSorted API endpoint or runtime dependency is exposed.",
+      "stops": [
+        {
+          "name": "UK Government Transformation Engine",
+          "url": "https://thekingdom.dev/government-transformation-engine/",
+          "why": "A no-JavaScript view of separate authority-dependency and causal-hypothesis graphs for each finite synthetic dossier, with held categories, human gates, and linear accessible equivalents.",
+          "scope": "Read-only orientation metadata only; no analysis, advice, approval, readiness verdict, score, traffic light, control, input, upload, runtime fetch, or automatic action."
+        },
+        {
+          "name": "UK Government Transformation Engine · mutable machine alias",
+          "url": "https://thekingdom.dev/government-transformations.json",
+          "why": "The machine-readable dated dossiers, their immutable identity, base-atlas dependency, evidence limitations, held states, and negative-effect boundaries.",
+          "scope": "Static synthetic publication only. The dated UK Government Engine is the direct institutional context; TaxSorted remains transitive context and supplies no evidence, API route, data transfer, or authority."
+        }
+      ]
+    },
+    {
       "id": "world-commons",
       "label": "find free knowledge, public data, and open tools",
       "glyph": "🌍",
