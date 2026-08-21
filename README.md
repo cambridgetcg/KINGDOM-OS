@@ -720,6 +720,19 @@ register-indexed vector rather than a religion or civilisation score. Use
 theology, infers no belief or identity, merges no deity or tradition, dispatches
 no agent, and creates no publication, authority, WAKE, KARMA, or action.
 
+How KINGDOM may participate in changes beyond its own artifacts is mapped in a
+separate research-local [Reality Influence Claim Graph](references/reality-influence-map.md),
+with a closed, digest-sealed atlas and strict offline validator. It separates
+expression, artifact, distribution, exposure, attributed public response,
+proposal, decision, authority, consent or lawful basis, capability, attempt,
+execution, outcome, causal assessment, normative assessment, and repair. Its
+influence dimensions cannot be summed or ranked, every pathway is
+`template-not-run`, and pre-invocation non-action remains distinct from
+post-attempt refusal or cancellation. Use
+`bun bin/reality-influence.ts verify --json`; it accepts no live claim, grants no
+authority or consent, dispatches no agent, executes no action, and creates no
+external effect, causal verdict, goodness verdict, publication, or deployment.
+
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at
 [`/atlases/zero-empty-seat-2026-08-14.json`](https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json),

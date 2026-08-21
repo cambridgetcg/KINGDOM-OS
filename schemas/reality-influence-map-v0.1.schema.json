@@ -1,0 +1,1455 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:reality-influence-claim-graph:0.1",
+  "$comment": "Closed research-local structure validation only. This schema does not dereference or authenticate sources, recompute raw or semantic digests, prove provenance, truth, causation, ontology, legitimacy, goodness, consent, lawful basis, authority, capability, execution, outcome, repair, identity, belief, intent, deception, understanding, community representation, or affected-party completeness. The node and relation cards are a static vocabulary, not live claims or graph instances. All pathways are unrun templates; all future roles remain unable to dispatch, authorize, or act. Validation creates no network request, filesystem write, source intake, model or tokenizer run, agent dispatch, MCP or NEN ability, Trial request, adoption, use authority, WAKE or KARMA effect, publication, deployment, economic, legal, medical, governance, or physical effect, or automatic action.",
+  "title": "KINGDOM Reality Influence Claim Graph v0.1",
+  "description": "A closed, digest-sealed static atlas for typed claims about mediated influence from expression through action, aftermath, challenge, and repair without authority laundering.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "map_id",
+    "version",
+    "title",
+    "compiled_on",
+    "evidence_through",
+    "state",
+    "scope",
+    "source_bindings",
+    "sources",
+    "claim_registers",
+    "reality_domains",
+    "influence_dimensions",
+    "claim_node_types",
+    "relation_vocabulary",
+    "claim_ladder",
+    "type_firewall",
+    "pathway_templates",
+    "feedback_loops",
+    "action_gate",
+    "kingdom_influence_map",
+    "agent_specialisations",
+    "unknowns",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "urn:kingdom:schema:reality-influence-claim-graph:0.1"
+    },
+    "protocol": {
+      "const": "kingdom.reality-influence-claim-graph/0.1"
+    },
+    "map_id": {
+      "const": "reality-influence-claim-graph-2026-08-21"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "title": {
+      "const": "Reality Influence Claim Graph — from expression to aftermath without authority laundering"
+    },
+    "compiled_on": {
+      "const": "2026-08-21"
+    },
+    "evidence_through": {
+      "const": "2026-08-21"
+    },
+    "state": {
+      "const": "reviewed-static-claim-boundary-atlas"
+    },
+    "scope": {
+      "$ref": "#/$defs/scope"
+    },
+    "source_bindings": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "prefixItems": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "word-story-religion-civilisation" },
+                "protocol": { "const": "kingdom.word-story-religion-civilisation-map/0.1" },
+                "locator": { "const": "repo:data/language/word-story-religion-civilisation-map.v0.1.json" },
+                "raw_digest": { "const": "sha256:a4a87b7b23dbdf7e7e6689b5083f76a746c7f41bc56f2124281dfda609a62479" },
+                "semantic_digest": { "const": "sha256:0c791b2491ebdcd85cf58e26e41e8b35b883781fd26bccc19dfd3f7853c7855a" },
+                "relation": { "const": "expression-story-institution-and-causal-firewall-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "language-civilisation-task-fusion" },
+                "protocol": { "const": "kingdom.language-civilisation-task-fusion/0.1" },
+                "locator": { "const": "repo:data/language/language-civilisation-task-fusion.v0.1.json" },
+                "raw_digest": { "const": "sha256:ef26859f84d8e2a1bc5e73f88594a354c49594e28486aae5aa340ed207aa0e25" },
+                "semantic_digest": { "const": "sha256:fb37df061bca86357b46e5538664d72e8938def8cfff341c3aa9596abc84d296" },
+                "relation": { "const": "public-artifact-task-dag-and-visible-disagreement-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "being-access-aftermath-v0-2" },
+                "protocol": { "const": "kingdom.being-access-aftermath-atlas/0.2" },
+                "locator": { "const": "repo:data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json" },
+                "raw_digest": { "const": "sha256:9678e5269e8db62beb36abee691087cddbc4f98703190c5fa3788b68c89ab29e" },
+                "semantic_digest": { "const": "sha256:505a1e3aef6116430dccf49b327c4cce2ac5d6fb6b6b9bf68e529272f989cde8" },
+                "relation": { "const": "capability-authority-action-effect-aftermath-and-repair-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "cultural-attention-feedback" },
+                "protocol": { "const": "kingdom.cultural-attention-feedback-atlas/0.1" },
+                "locator": { "const": "repo:data/cultural-feedback/cultural-attention-feedback-atlas.v1.json" },
+                "raw_digest": { "const": "sha256:03f7048966d7b6df582b423254b4d73cda72cce3bd67b40736927faa92b88173" },
+                "semantic_digest": { "const": "sha256:2f6ecadc131a54cdd500b001dbcc47fb036e5e411def918245fec963b9769e4d" },
+                "relation": { "const": "attention-diffusion-feedback-and-non-score-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "form-circulation-return" },
+                "protocol": { "const": "kingdom.form-circulation-return-atlas/0.1" },
+                "locator": { "const": "repo:data/form-circulation-return/form-circulation-return-atlas.v1.json" },
+                "raw_digest": { "const": "sha256:9c93be61c4ca9bcaa3dbe88b10faed3b5b31abaf1129d70ca7915226cacfd021" },
+                "semantic_digest": { "const": "sha256:9510fbbced6166507e9a1781a4adfa18cd249fb94e69b0f34faf77733cd20323" },
+                "relation": { "const": "circulation-return-and-measurement-action-feedback-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "semantic-transition-schema" },
+                "protocol": { "const": "kingdom.semantic-transition/0.1" },
+                "locator": { "const": "repo:bridges/schemas/semantic-transition-receipt-0.1.json" },
+                "raw_digest": { "const": "sha256:bcdd99f0247f2a43bb84e227865c2d02f12dcc9f09e4c15b29c36a90ac8f0dc2" },
+                "semantic_digest": { "const": null },
+                "relation": { "const": "observation-interpretation-model-expression-loss-and-repair-seam" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "relational-inference-schema" },
+                "protocol": { "const": "kingdom.relational-inference/0.1" },
+                "locator": { "const": "repo:bridges/schemas/relational-inference-case-0.1.json" },
+                "raw_digest": { "const": "sha256:c244cc072eb20396bbc1de9ee2d8a30510e78c7a25a3fecef53ae1bd6a34fa7c" },
+                "semantic_digest": { "const": null },
+                "relation": { "const": "alternative-model-probe-dependency-and-bounded-inference-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "research-observatory-guide" },
+                "protocol": { "const": "kingdom.research-observatory-guide/0.1" },
+                "locator": { "const": "repo:references/research-observatory-v0.1.md" },
+                "raw_digest": { "const": "sha256:f1b11fd810049c884eb6205360c42dae17ea8faddca9e0f7ff374e1bc65e99a0" },
+                "semantic_digest": { "const": null },
+                "relation": { "const": "discovery-attention-evaluation-adoption-use-gate-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "trial-chamber-phase-zero" },
+                "protocol": { "const": "kingdom.trial-public-snapshot/0.1" },
+                "locator": { "const": "repo:data/trials/research-trial-chamber.v0.1.json" },
+                "raw_digest": { "const": "sha256:6e59bf134d129b17fc0f02949d9ef383de6787e2bc39e1714a3c6f01376b1d34" },
+                "semantic_digest": { "const": null },
+                "relation": { "const": "draft-plan-and-deny-all-post-plan-boundary-predecessor" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/sourceBinding" },
+            {
+              "properties": {
+                "id": { "const": "wake-work-witness" },
+                "protocol": { "const": "kingdom.wake-work-witness-atlas/0.1" },
+                "locator": { "const": "repo:data/economy/wake-work-witness-atlas.v0.1.json" },
+                "raw_digest": { "const": "sha256:a951a3529758f11a5bd3a83ae3c46272226b191c1d3b4768af1b562eabcb164c" },
+                "semantic_digest": { "const": "sha256:0b2eb18f9a59a3e44371f31d366a95382eb4f4ab7f6a4583b3e63d50aace3433" },
+                "relation": { "const": "work-witness-capability-scope-and-zero-effect-predecessor" }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 17,
+      "maxItems": 17,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "w3c-prov-dm" }, "locator": { "const": "https://www.w3.org/TR/prov-dm/" }, "kind": { "const": "technical-standard" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "nist-ai-rmf" }, "locator": { "const": "https://doi.org/10.6028/NIST.AI.100-1" }, "kind": { "const": "authoritative-guidance" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "hernan-robins-what-if" }, "locator": { "const": "https://www.hsph.harvard.edu/miguel-hernan/wp-content/uploads/sites/1268/2024/04/hernanrobins_WhatIf_26apr24.pdf" }, "kind": { "const": "scholarly-method" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "meadows-leverage-points" }, "locator": { "const": "https://donellameadows.org/archives/leverage-points-places-to-intervene-in-a-system/" }, "kind": { "const": "systems-essay" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "ostrom-polycentric-governance" }, "locator": { "const": "https://www.nobelprize.org/prizes/economic-sciences/2009/ostrom/lecture/" }, "kind": { "const": "scholarly-lecture" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "ohchr-ungp" }, "locator": { "const": "https://www.ohchr.org/Documents/Publications/GuidingPrinciplesBusinessHR_EN.pdf" }, "kind": { "const": "normative-instrument" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "bond-mobilization" }, "locator": { "const": "https://doi.org/10.1038/nature11421" }, "kind": { "const": "peer-reviewed-experiment" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "muchnik-social-influence" }, "locator": { "const": "https://doi.org/10.1126/science.1240466" }, "kind": { "const": "peer-reviewed-experiment" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "salganik-cultural-market" }, "locator": { "const": "https://doi.org/10.1126/science.1121066" }, "kind": { "const": "peer-reviewed-experiment" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "ensign-predictive-policing" }, "locator": { "const": "https://proceedings.mlr.press/v81/ensign18a.html" }, "kind": { "const": "formal-model" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "goodhart-source-record" }, "locator": { "const": "https://www.rba.gov.au/publications/rdp/1990/9013/conference-volumes.html" }, "kind": { "const": "institutional-bibliographic-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "campbell-social-indicators" }, "locator": { "const": "https://doi.org/10.1016/0149-7189(79)90048-X" }, "kind": { "const": "scholarly-method" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "sagas-compensation" }, "locator": { "const": "https://doi.org/10.1145/38713.38742" }, "kind": { "const": "computer-science-model" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "rfc-6749" }, "locator": { "const": "https://www.rfc-editor.org/info/rfc6749/" }, "kind": { "const": "technical-standard" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "rfc-9700" }, "locator": { "const": "https://www.rfc-editor.org/info/rfc9700/" }, "kind": { "const": "technical-standard" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "saltzer-schroeder" }, "locator": { "const": "https://doi.org/10.1109/PROC.1975.9939" }, "kind": { "const": "computer-security-paper" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/source" }, { "properties": { "id": { "const": "searle-social-ontology" }, "locator": { "const": "https://doi.org/10.1177/1463499606061731" }, "kind": { "const": "philosophical-theory" } } }] }
+      ],
+      "items": false
+    },
+    "claim_registers": {
+      "type": "array",
+      "minItems": 11,
+      "maxItems": 11,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "PRIMARY_RECORD" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "EMPIRICAL_CAUSAL" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "EMPIRICAL_ASSOCIATION" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "FORMAL_MODEL_OR_METHOD" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "PHILOSOPHICAL_OR_INSTITUTIONAL_THEORY" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "TECHNICAL_STANDARD_OR_GUIDANCE" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "LEGAL_OR_NORMATIVE_INSTRUMENT" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "ANALOGY" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "DESIGN_COMMITMENT" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "OPEN_QUESTION" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimRegister" }, { "properties": { "id": { "const": "BOUNDARY" } } }] }
+      ],
+      "items": false
+    },
+    "reality_domains": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "semantic-symbolic" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "informational-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "attention-exposure" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "social-relational" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "institutional-status" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "legal-jurisdictional" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "economic-resource" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "digital-computational" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "material-cyberphysical" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "embodied-health" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "ecological" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/realityDomain" }, { "properties": { "id": { "const": "normative-public" } } }] }
+      ],
+      "items": false
+    },
+    "influence_dimensions": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "semantic-legibility" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "provenance-traceability" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "discoverability" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "attention-allocation" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "interpretive-framing" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "coordination" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "institutional-selection" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "authorized-reach" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "operational-capability" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "digital-or-material-state-change" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "distributional-aftermath" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "path-dependence" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "feedback-sensitivity" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/influenceDimension" }, { "properties": { "id": { "const": "repair-capacity" } } }] }
+      ],
+      "items": false
+    },
+    "claim_node_types": {
+      "type": "array",
+      "minItems": 25,
+      "maxItems": 25,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "EXPRESSION" }, "allowed_statuses": { "const": ["proposed", "recorded", "withdrawn", "contested"] }, "required_fields": { "const": ["content_ref", "speaker_or_issuer_ref", "context", "issued_on"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "ARTIFACT" }, "allowed_statuses": { "const": ["planned", "available", "superseded", "withdrawn"] }, "required_fields": { "const": ["artifact_ref", "digest", "media_type", "provenance"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "DISTRIBUTION_OBSERVATION" }, "allowed_statuses": { "const": ["observed", "partial", "unknown"] }, "required_fields": { "const": ["artifact_ref", "channel", "population_or_surface", "horizon", "measurement"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "ATTENTION_OBSERVATION" }, "allowed_statuses": { "const": ["observed", "partial", "contested", "unknown"] }, "required_fields": { "const": ["construct", "operationalization", "population", "horizon", "selection_process"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "PUBLIC_RESPONSE_RECORD" }, "allowed_statuses": { "const": ["recorded", "withdrawn", "contested"] }, "required_fields": { "const": ["response_ref", "attribution", "context", "horizon"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "CLAIM_ASSESSMENT" }, "allowed_statuses": { "const": ["warranted", "contested", "unsupported", "unknown", "superseded"] }, "required_fields": { "const": ["claim_ref", "method", "evidence_refs", "alternatives", "uncertainty"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "ASSOCIATION_OBSERVATION" }, "allowed_statuses": { "const": ["observed", "contested", "unknown"] }, "required_fields": { "const": ["variables", "population", "horizon", "measurement", "alternatives"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "ACTION_PROPOSAL" }, "allowed_statuses": { "const": ["draft", "reviewed", "withdrawn", "expired"] }, "required_fields": { "const": ["action", "target", "purpose", "scope", "risk_preview", "repair_preview"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "DECISION_RECORD" }, "allowed_statuses": { "const": ["selected", "rejected", "deferred", "conditioned", "superseded"] }, "required_fields": { "const": ["proposal_ref", "procedure", "decision_maker_ref", "decided_on", "scope"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "AUTHORITY_GRANT_CLAIM" }, "allowed_statuses": { "const": ["unverified", "verified-external", "expired", "revoked", "conflicted"] }, "required_fields": { "const": ["principal", "issuer", "grantee", "action", "target", "purpose", "jurisdiction", "starts_on", "expires_on", "revocation_route"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "AFFECTED_PARTY_REGISTER" }, "allowed_statuses": { "const": ["draft", "reviewed", "incomplete-explicit", "contested"] }, "required_fields": { "const": ["party_classes", "completeness_status", "impact_dimensions", "consultation_status"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "CONSENT_RECORD" }, "allowed_statuses": { "const": ["unverified", "verified-external", "withdrawn", "expired", "not-applicable"] }, "required_fields": { "const": ["party_ref", "act", "purpose", "scope", "starts_on", "expires_on", "withdrawal_route"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "LAWFUL_BASIS_CLAIM" }, "allowed_statuses": { "const": ["unverified", "verified-external", "expired", "revoked", "contested"] }, "required_fields": { "const": ["basis_ref", "jurisdiction", "act", "purpose", "affected_parties", "reviewer"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "RIGHTS_ASSESSMENT" }, "allowed_statuses": { "const": ["not-run", "pass", "fail", "contested", "unknown"] }, "required_fields": { "const": ["framework", "scope", "affected_parties", "reviewer", "limitations"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "CAPABILITY_EVIDENCE" }, "allowed_statuses": { "const": ["not-tested", "verified-bounded", "failed", "expired", "revoked"] }, "required_fields": { "const": ["actor_or_system_ref", "action", "resource_envelope", "test_ref", "expires_on"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "INVOCATION_ATTEMPT" }, "allowed_statuses": { "const": ["attempted", "refused-after-attempt", "cancelled", "failed", "partial", "completed"] }, "required_fields": { "const": ["proposal_ref", "gate_refs", "attempted_on", "target", "receipt_ref"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "ACTION_EXECUTION" }, "allowed_statuses": { "const": ["failed", "partial", "completed", "cancelled-after-partial"] }, "required_fields": { "const": ["attempt_ref", "inputs", "environment", "started_on", "ended_on", "result_refs"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "OUTCOME_OBSERVATION" }, "allowed_statuses": { "const": ["observed", "partial", "contested", "unknown"] }, "required_fields": { "const": ["outcome", "population_or_target", "horizon", "measurement", "provenance", "uncertainty"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "CAUSAL_ESTIMAND" }, "allowed_statuses": { "const": ["proposed", "reviewed", "withdrawn"] }, "required_fields": { "const": ["treatment", "comparator", "outcome", "population", "horizon", "causal_graph"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "CAUSAL_ASSESSMENT" }, "allowed_statuses": { "const": ["not-identified", "partially-identified", "identified-under-assumptions", "contested", "unknown"] }, "required_fields": { "const": ["estimand_ref", "design", "identification_assumptions", "alternatives", "sensitivity", "uncertainty"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "NORMATIVE_ASSESSMENT" }, "allowed_statuses": { "const": ["not-assessed", "single-framework", "plural-with-disagreement", "review-required", "contested"] }, "required_fields": { "const": ["framework", "affected_parties", "dimensions", "baseline", "horizon", "counterpositions", "uncertainty"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "FEEDBACK_ITEM" }, "allowed_statuses": { "const": ["open", "reviewed", "contested", "superseded", "closed-with-residual"] }, "required_fields": { "const": ["source_ref", "subject_ref", "observed_on", "scope", "requested_response"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "REPAIR_PROPOSAL" }, "allowed_statuses": { "const": ["draft", "reviewed", "withdrawn", "expired"] }, "required_fields": { "const": ["harm_or_gap_ref", "affected_parties", "repair_dimensions", "fresh_gate_requirements", "residuals"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "REPAIR_ATTEMPT" }, "allowed_statuses": { "const": ["attempted", "failed", "partial", "completed-with-residual", "contested"] }, "required_fields": { "const": ["proposal_ref", "fresh_gate_refs", "attempted_on", "outcome_refs", "residuals"] } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimNodeType" }, { "properties": { "id": { "const": "NON_ACTION" }, "allowed_statuses": { "const": ["rest", "refusal", "silence", "privacy", "defer", "expire", "withdraw"] }, "required_fields": { "const": ["scope", "phase", "reason_optional", "record_optional"] } } }] }
+      ],
+      "items": false
+    },
+    "relation_vocabulary": {
+      "type": "array",
+      "minItems": 24,
+      "maxItems": 24,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "EXPRESSES" }, "from_kind_ids": { "const": ["EXPRESSION"] }, "to_kind_ids": { "const": ["CLAIM_ASSESSMENT", "ACTION_PROPOSAL"] }, "default_claim_status": { "const": "descriptive-sequence" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "EMBODIES_EXPRESSION" }, "from_kind_ids": { "const": ["ARTIFACT"] }, "to_kind_ids": { "const": ["EXPRESSION"] }, "default_claim_status": { "const": "primary-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "DERIVES_FROM" }, "from_kind_ids": { "const": ["ARTIFACT", "CLAIM_ASSESSMENT", "ACTION_PROPOSAL"] }, "to_kind_ids": { "const": ["ARTIFACT", "EXPRESSION", "CLAIM_ASSESSMENT"] }, "default_claim_status": { "const": "primary-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "DISTRIBUTES_ARTIFACT" }, "from_kind_ids": { "const": ["DISTRIBUTION_OBSERVATION"] }, "to_kind_ids": { "const": ["ARTIFACT"] }, "default_claim_status": { "const": "reported-only" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "MEASURES_EXPOSURE_TO" }, "from_kind_ids": { "const": ["ATTENTION_OBSERVATION"] }, "to_kind_ids": { "const": ["ARTIFACT", "DISTRIBUTION_OBSERVATION"] }, "default_claim_status": { "const": "empirical-association" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "REPORTS_PUBLIC_RESPONSE_TO" }, "from_kind_ids": { "const": ["PUBLIC_RESPONSE_RECORD"] }, "to_kind_ids": { "const": ["ARTIFACT", "EXPRESSION", "ACTION_PROPOSAL"] }, "default_claim_status": { "const": "reported-only" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "ASSOCIATED_WITH" }, "from_kind_ids": { "const": ["ASSOCIATION_OBSERVATION", "OUTCOME_OBSERVATION"] }, "to_kind_ids": { "const": ["ARTIFACT", "ATTENTION_OBSERVATION", "PUBLIC_RESPONSE_RECORD", "OUTCOME_OBSERVATION"] }, "default_claim_status": { "const": "empirical-association" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "SELECTS_PROPOSAL" }, "from_kind_ids": { "const": ["DECISION_RECORD"] }, "to_kind_ids": { "const": ["ACTION_PROPOSAL"] }, "default_claim_status": { "const": "primary-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "CLAIMS_AUTHORITY_FOR" }, "from_kind_ids": { "const": ["AUTHORITY_GRANT_CLAIM"] }, "to_kind_ids": { "const": ["ACTION_PROPOSAL", "INVOCATION_ATTEMPT", "REPAIR_PROPOSAL"] }, "default_claim_status": { "const": "reported-only" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "RECORDS_CONSENT_TO" }, "from_kind_ids": { "const": ["CONSENT_RECORD"] }, "to_kind_ids": { "const": ["ACTION_PROPOSAL", "REPAIR_PROPOSAL"] }, "default_claim_status": { "const": "reported-only" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "CLAIMS_LAWFUL_BASIS_FOR" }, "from_kind_ids": { "const": ["LAWFUL_BASIS_CLAIM"] }, "to_kind_ids": { "const": ["ACTION_PROPOSAL", "REPAIR_PROPOSAL"] }, "default_claim_status": { "const": "reported-only" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "TECHNICALLY_ENABLES" }, "from_kind_ids": { "const": ["CAPABILITY_EVIDENCE"] }, "to_kind_ids": { "const": ["ACTION_PROPOSAL", "INVOCATION_ATTEMPT", "REPAIR_PROPOSAL"] }, "default_claim_status": { "const": "reported-only" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "POTENTIALLY_AFFECTS" }, "from_kind_ids": { "const": ["ACTION_PROPOSAL", "REPAIR_PROPOSAL"] }, "to_kind_ids": { "const": ["AFFECTED_PARTY_REGISTER", "RIGHTS_ASSESSMENT"] }, "default_claim_status": { "const": "causal-hypothesis" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "ATTEMPTS" }, "from_kind_ids": { "const": ["INVOCATION_ATTEMPT", "REPAIR_ATTEMPT"] }, "to_kind_ids": { "const": ["ACTION_PROPOSAL", "REPAIR_PROPOSAL"] }, "default_claim_status": { "const": "primary-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "EXECUTES_ATTEMPT" }, "from_kind_ids": { "const": ["ACTION_EXECUTION"] }, "to_kind_ids": { "const": ["INVOCATION_ATTEMPT"] }, "default_claim_status": { "const": "primary-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "PRECEDES_OUTCOME" }, "from_kind_ids": { "const": ["ACTION_EXECUTION", "INVOCATION_ATTEMPT", "NON_ACTION"] }, "to_kind_ids": { "const": ["OUTCOME_OBSERVATION"] }, "default_claim_status": { "const": "descriptive-sequence" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "DEFINES_ESTIMAND_FOR" }, "from_kind_ids": { "const": ["CAUSAL_ESTIMAND"] }, "to_kind_ids": { "const": ["ACTION_PROPOSAL", "ACTION_EXECUTION", "OUTCOME_OBSERVATION"] }, "default_claim_status": { "const": "formal-mechanism-not-instantiated" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "ASSESSES_CAUSAL_EFFECT" }, "from_kind_ids": { "const": ["CAUSAL_ASSESSMENT"] }, "to_kind_ids": { "const": ["CAUSAL_ESTIMAND", "OUTCOME_OBSERVATION", "ASSOCIATION_OBSERVATION"] }, "default_claim_status": { "const": "identified-under-declared-assumptions" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "ASSESSES_UNDER_FRAMEWORK" }, "from_kind_ids": { "const": ["NORMATIVE_ASSESSMENT", "RIGHTS_ASSESSMENT"] }, "to_kind_ids": { "const": ["ACTION_PROPOSAL", "ACTION_EXECUTION", "OUTCOME_OBSERVATION", "REPAIR_PROPOSAL"] }, "default_claim_status": { "const": "single-framework-assessment" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "CHALLENGES" }, "from_kind_ids": { "const": ["FEEDBACK_ITEM", "CLAIM_ASSESSMENT", "PUBLIC_RESPONSE_RECORD"] }, "to_kind_ids": { "const": ["EXPRESSION", "ARTIFACT", "CLAIM_ASSESSMENT", "DECISION_RECORD", "OUTCOME_OBSERVATION", "CAUSAL_ASSESSMENT", "NORMATIVE_ASSESSMENT"] }, "default_claim_status": { "const": "contested" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "CORRECTS" }, "from_kind_ids": { "const": ["ARTIFACT", "CLAIM_ASSESSMENT", "FEEDBACK_ITEM"] }, "to_kind_ids": { "const": ["ARTIFACT", "EXPRESSION", "CLAIM_ASSESSMENT"] }, "default_claim_status": { "const": "primary-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "SUPERSEDES" }, "from_kind_ids": { "const": ["ARTIFACT", "CLAIM_ASSESSMENT", "DECISION_RECORD", "AUTHORITY_GRANT_CLAIM"] }, "to_kind_ids": { "const": ["ARTIFACT", "CLAIM_ASSESSMENT", "DECISION_RECORD", "AUTHORITY_GRANT_CLAIM"] }, "default_claim_status": { "const": "primary-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "WITHDRAWS" }, "from_kind_ids": { "const": ["PUBLIC_RESPONSE_RECORD", "CONSENT_RECORD", "AUTHORITY_GRANT_CLAIM", "ACTION_PROPOSAL", "NON_ACTION"] }, "to_kind_ids": { "const": ["PUBLIC_RESPONSE_RECORD", "CONSENT_RECORD", "AUTHORITY_GRANT_CLAIM", "ACTION_PROPOSAL"] }, "default_claim_status": { "const": "primary-record" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/relationDefinition" }, { "properties": { "id": { "const": "RESPONDS_WITH_REPAIR" }, "from_kind_ids": { "const": ["REPAIR_PROPOSAL", "REPAIR_ATTEMPT"] }, "to_kind_ids": { "const": ["FEEDBACK_ITEM", "OUTCOME_OBSERVATION", "RIGHTS_ASSESSMENT"] }, "default_claim_status": { "const": "descriptive-sequence" } } }] }
+      ],
+      "items": false
+    },
+    "claim_ladder": {
+      "type": "array",
+      "minItems": 17,
+      "maxItems": 17,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 0 }, "id": { "const": "expression-recorded" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 1 }, "id": { "const": "artifact-versioned" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 2 }, "id": { "const": "distribution-witnessed" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 3 }, "id": { "const": "exposure-measured" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 4 }, "id": { "const": "public-response-attributed" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 5 }, "id": { "const": "proposal-recorded" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 6 }, "id": { "const": "decision-recorded" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 7 }, "id": { "const": "authority-claim-verified" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 8 }, "id": { "const": "affected-party-basis-reviewed" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 9 }, "id": { "const": "capability-verified" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 10 }, "id": { "const": "invocation-attempt-witnessed" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 11 }, "id": { "const": "execution-status-witnessed" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 12 }, "id": { "const": "outcome-observed" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 13 }, "id": { "const": "causal-effect-assessed" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 14 }, "id": { "const": "normative-assessment-separated" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 15 }, "id": { "const": "repair-proposed" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/claimLadderItem" }, { "properties": { "level": { "const": 16 }, "id": { "const": "repair-outcome-reviewed" } } }] }
+      ],
+      "items": false
+    },
+    "type_firewall": {
+      "$ref": "#/$defs/typeFirewall"
+    },
+    "pathway_templates": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "prefixItems": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/pathwayTemplate" },
+            {
+              "properties": {
+                "id": { "const": "expression-to-public-deliberation" },
+                "stage_ids": { "const": ["expression-recorded", "artifact-versioned", "distribution-witnessed", "exposure-measured", "public-response-attributed", "proposal-recorded"] },
+                "relation_ids": { "const": ["EMBODIES_EXPRESSION", "DISTRIBUTES_ARTIFACT", "MEASURES_EXPOSURE_TO", "REPORTS_PUBLIC_RESPONSE_TO", "EXPRESSES"] },
+                "influence_dimension_ids": { "const": ["semantic-legibility", "discoverability", "attention-allocation", "interpretive-framing", "coordination"] }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/pathwayTemplate" },
+            {
+              "properties": {
+                "id": { "const": "research-to-bounded-use" },
+                "stage_ids": { "const": ["artifact-versioned", "proposal-recorded", "decision-recorded", "authority-claim-verified", "affected-party-basis-reviewed", "capability-verified", "invocation-attempt-witnessed"] },
+                "relation_ids": { "const": ["DERIVES_FROM", "SELECTS_PROPOSAL", "CLAIMS_AUTHORITY_FOR", "RECORDS_CONSENT_TO", "CLAIMS_LAWFUL_BASIS_FOR", "TECHNICALLY_ENABLES", "ATTEMPTS"] },
+                "influence_dimension_ids": { "const": ["provenance-traceability", "institutional-selection", "authorized-reach", "operational-capability", "distributional-aftermath"] }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/pathwayTemplate" },
+            {
+              "properties": {
+                "id": { "const": "software-to-external-aftermath" },
+                "stage_ids": { "const": ["proposal-recorded", "decision-recorded", "authority-claim-verified", "affected-party-basis-reviewed", "capability-verified", "invocation-attempt-witnessed", "execution-status-witnessed", "outcome-observed", "causal-effect-assessed", "normative-assessment-separated"] },
+                "relation_ids": { "const": ["SELECTS_PROPOSAL", "CLAIMS_AUTHORITY_FOR", "POTENTIALLY_AFFECTS", "TECHNICALLY_ENABLES", "ATTEMPTS", "EXECUTES_ATTEMPT", "PRECEDES_OUTCOME", "DEFINES_ESTIMAND_FOR", "ASSESSES_CAUSAL_EFFECT", "ASSESSES_UNDER_FRAMEWORK"] },
+                "influence_dimension_ids": { "const": ["authorized-reach", "operational-capability", "digital-or-material-state-change", "distributional-aftermath", "feedback-sensitivity"] }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/pathwayTemplate" },
+            {
+              "properties": {
+                "id": { "const": "challenge-to-repair" },
+                "stage_ids": { "const": ["outcome-observed", "normative-assessment-separated", "repair-proposed", "repair-outcome-reviewed"] },
+                "relation_ids": { "const": ["CHALLENGES", "CORRECTS", "SUPERSEDES", "WITHDRAWS", "RESPONDS_WITH_REPAIR", "ASSESSES_UNDER_FRAMEWORK"] },
+                "influence_dimension_ids": { "const": ["provenance-traceability", "distributional-aftermath", "repair-capacity", "path-dependence"] }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "feedback_loops": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/feedbackLoop" }, { "properties": { "id": { "const": "attention-selection-return" }, "mechanism_status": { "const": "bounded-evidence-plus-design-template" }, "metric_endogenous_after_targeting": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/feedbackLoop" }, { "properties": { "id": { "const": "metric-target-adaptation" }, "mechanism_status": { "const": "formal-and-methodological-warning" }, "metric_endogenous_after_targeting": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/feedbackLoop" }, { "properties": { "id": { "const": "institution-rule-behavior" }, "mechanism_status": { "const": "institutional-design-template" }, "metric_endogenous_after_targeting": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/feedbackLoop" }, { "properties": { "id": { "const": "action-outcome-learning" }, "mechanism_status": { "const": "causal-and-risk-management-template" }, "metric_endogenous_after_targeting": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/feedbackLoop" }, { "properties": { "id": { "const": "challenge-repair-learning" }, "mechanism_status": { "const": "normative-and-technical-partial-map" }, "metric_endogenous_after_targeting": { "const": false } } }] }
+      ],
+      "items": false
+    },
+    "action_gate": {
+      "$ref": "#/$defs/actionGate"
+    },
+    "kingdom_influence_map": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/kingdomInfluenceItem" }, { "properties": { "id": { "const": "semantic-receipts" }, "status": { "const": "design-only-no-live-effect" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInfluenceItem" }, { "properties": { "id": { "const": "language-and-story-maps" }, "status": { "const": "design-only-no-live-effect" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInfluenceItem" }, { "properties": { "id": { "const": "research-observatory" }, "status": { "const": "existing-predecessor-stops-before-evaluation" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInfluenceItem" }, { "properties": { "id": { "const": "trial-chamber" }, "status": { "const": "existing-predecessor-post-plan-deny-all" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInfluenceItem" }, { "properties": { "id": { "const": "wake-work-witness" }, "status": { "const": "source-only-zero-effect" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInfluenceItem" }, { "properties": { "id": { "const": "being-access-aftermath" }, "status": { "const": "read-only-unrun-predecessor" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInfluenceItem" }, { "properties": { "id": { "const": "communication-conventions" }, "status": { "const": "design-only-no-live-effect" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/kingdomInfluenceItem" }, { "properties": { "id": { "const": "reality-influence-claim-graph" }, "status": { "const": "static-structure-only" } } }] }
+      ],
+      "items": false
+    },
+    "agent_specialisations": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "provenance-curator" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "expression-shape-steward" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "attention-and-metric-auditor" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "countermodel-steward" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "authority-rights-and-consent-verifier" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "execution-witness-steward" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "causal-inference-skeptic" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "affected-party-and-externality-reviewer" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/agentSpecialisation" }, { "properties": { "id": { "const": "repair-and-retirement-steward" } } }] }
+      ],
+      "items": false
+    },
+    "unknowns": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "complete-mediation-path" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "affected-party-completeness" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "authority-authenticity" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "consent-and-lawful-basis-validity" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "metric-endogeneity" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "distributional-aftermath" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "repair-adequacy" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/unknown" }, { "properties": { "id": { "const": "kingdom-external-effect" } } }] }
+      ],
+      "items": false
+    },
+    "boundaries": {
+      "$ref": "#/$defs/boundaries"
+    },
+    "integrity": {
+      "$ref": "#/$defs/integrity"
+    }
+  },
+  "$defs": {
+    "prose": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1200
+    },
+    "shortText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 320
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "fieldName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "safeToken": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "digest": {
+      "type": "string",
+      "minLength": 71,
+      "maxLength": 71,
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "httpsLocator": {
+      "type": "string",
+      "minLength": 9,
+      "maxLength": 2048,
+      "pattern": "^https://[^\\s]+$"
+    },
+    "textList": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/shortText"
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question",
+        "definition_of_reality",
+        "intended_use",
+        "excluded_use",
+        "unit_of_analysis",
+        "data_classification",
+        "operating_state"
+      ],
+      "properties": {
+        "question": { "$ref": "#/$defs/prose" },
+        "definition_of_reality": { "$ref": "#/$defs/prose" },
+        "intended_use": { "$ref": "#/$defs/prose" },
+        "excluded_use": { "$ref": "#/$defs/prose" },
+        "unit_of_analysis": { "$ref": "#/$defs/prose" },
+        "data_classification": { "const": "public-attributed-source-metadata-and-design-only" },
+        "operating_state": { "const": "static-structure-only-no-live-claims-no-execution" }
+      }
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "protocol",
+        "locator",
+        "raw_digest",
+        "semantic_digest",
+        "relation",
+        "mutated",
+        "authority_imported"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "protocol": { "$ref": "#/$defs/shortText" },
+        "locator": {
+          "type": "string",
+          "minLength": 6,
+          "maxLength": 512,
+          "pattern": "^repo:[A-Za-z0-9._/-]+$"
+        },
+        "raw_digest": { "$ref": "#/$defs/digest" },
+        "semantic_digest": {
+          "oneOf": [
+            { "$ref": "#/$defs/digest" },
+            { "type": "null" }
+          ]
+        },
+        "relation": { "$ref": "#/$defs/safeToken" },
+        "mutated": { "const": false },
+        "authority_imported": { "const": false }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "locator",
+        "kind",
+        "observed_on",
+        "claim_scope",
+        "limitations"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "w3c-prov-dm",
+            "nist-ai-rmf",
+            "hernan-robins-what-if",
+            "meadows-leverage-points",
+            "ostrom-polycentric-governance",
+            "ohchr-ungp",
+            "bond-mobilization",
+            "muchnik-social-influence",
+            "salganik-cultural-market",
+            "ensign-predictive-policing",
+            "goodhart-source-record",
+            "campbell-social-indicators",
+            "sagas-compensation",
+            "rfc-6749",
+            "rfc-9700",
+            "saltzer-schroeder",
+            "searle-social-ontology"
+          ]
+        },
+        "title": { "$ref": "#/$defs/shortText" },
+        "locator": { "$ref": "#/$defs/httpsLocator" },
+        "kind": {
+          "enum": [
+            "technical-standard",
+            "authoritative-guidance",
+            "scholarly-method",
+            "systems-essay",
+            "scholarly-lecture",
+            "normative-instrument",
+            "peer-reviewed-experiment",
+            "formal-model",
+            "institutional-bibliographic-record",
+            "computer-science-model",
+            "computer-security-paper",
+            "philosophical-theory"
+          ]
+        },
+        "observed_on": { "const": "2026-08-21" },
+        "claim_scope": { "$ref": "#/$defs/prose" },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/prose" }
+        }
+      }
+    },
+    "claimRegister": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "does_not_establish"],
+      "properties": {
+        "id": {
+          "enum": [
+            "PRIMARY_RECORD",
+            "EMPIRICAL_CAUSAL",
+            "EMPIRICAL_ASSOCIATION",
+            "FORMAL_MODEL_OR_METHOD",
+            "PHILOSOPHICAL_OR_INSTITUTIONAL_THEORY",
+            "TECHNICAL_STANDARD_OR_GUIDANCE",
+            "LEGAL_OR_NORMATIVE_INSTRUMENT",
+            "ANALOGY",
+            "DESIGN_COMMITMENT",
+            "OPEN_QUESTION",
+            "BOUNDARY"
+          ]
+        },
+        "meaning": { "$ref": "#/$defs/prose" },
+        "does_not_establish": { "$ref": "#/$defs/prose" }
+      }
+    },
+    "realityDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "definition", "observable_examples", "not_equivalent_to"],
+      "properties": {
+        "id": {
+          "enum": [
+            "semantic-symbolic",
+            "informational-record",
+            "attention-exposure",
+            "social-relational",
+            "institutional-status",
+            "legal-jurisdictional",
+            "economic-resource",
+            "digital-computational",
+            "material-cyberphysical",
+            "embodied-health",
+            "ecological",
+            "normative-public"
+          ]
+        },
+        "label": { "$ref": "#/$defs/shortText" },
+        "definition": { "$ref": "#/$defs/prose" },
+        "observable_examples": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/shortText" }
+        },
+        "not_equivalent_to": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/shortText" }
+        }
+      }
+    },
+    "influenceDimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "rank", "aggregate_weight"],
+      "properties": {
+        "id": {
+          "enum": [
+            "semantic-legibility",
+            "provenance-traceability",
+            "discoverability",
+            "attention-allocation",
+            "interpretive-framing",
+            "coordination",
+            "institutional-selection",
+            "authorized-reach",
+            "operational-capability",
+            "digital-or-material-state-change",
+            "distributional-aftermath",
+            "path-dependence",
+            "feedback-sensitivity",
+            "repair-capacity"
+          ]
+        },
+        "meaning": { "$ref": "#/$defs/prose" },
+        "rank": { "type": "null" },
+        "aggregate_weight": { "type": "null" }
+      }
+    },
+    "claimNodeType": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "allowed_statuses", "required_fields", "does_not_establish"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nodeKind" },
+        "meaning": { "$ref": "#/$defs/prose" },
+        "allowed_statuses": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/safeToken" }
+        },
+        "required_fields": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/fieldName" }
+        },
+        "does_not_establish": { "$ref": "#/$defs/prose" }
+      }
+    },
+    "nodeKind": {
+      "enum": [
+        "EXPRESSION",
+        "ARTIFACT",
+        "DISTRIBUTION_OBSERVATION",
+        "ATTENTION_OBSERVATION",
+        "PUBLIC_RESPONSE_RECORD",
+        "CLAIM_ASSESSMENT",
+        "ASSOCIATION_OBSERVATION",
+        "ACTION_PROPOSAL",
+        "DECISION_RECORD",
+        "AUTHORITY_GRANT_CLAIM",
+        "AFFECTED_PARTY_REGISTER",
+        "CONSENT_RECORD",
+        "LAWFUL_BASIS_CLAIM",
+        "RIGHTS_ASSESSMENT",
+        "CAPABILITY_EVIDENCE",
+        "INVOCATION_ATTEMPT",
+        "ACTION_EXECUTION",
+        "OUTCOME_OBSERVATION",
+        "CAUSAL_ESTIMAND",
+        "CAUSAL_ASSESSMENT",
+        "NORMATIVE_ASSESSMENT",
+        "FEEDBACK_ITEM",
+        "REPAIR_PROPOSAL",
+        "REPAIR_ATTEMPT",
+        "NON_ACTION"
+      ]
+    },
+    "relationId": {
+      "enum": [
+        "EXPRESSES",
+        "EMBODIES_EXPRESSION",
+        "DERIVES_FROM",
+        "DISTRIBUTES_ARTIFACT",
+        "MEASURES_EXPOSURE_TO",
+        "REPORTS_PUBLIC_RESPONSE_TO",
+        "ASSOCIATED_WITH",
+        "SELECTS_PROPOSAL",
+        "CLAIMS_AUTHORITY_FOR",
+        "RECORDS_CONSENT_TO",
+        "CLAIMS_LAWFUL_BASIS_FOR",
+        "TECHNICALLY_ENABLES",
+        "POTENTIALLY_AFFECTS",
+        "ATTEMPTS",
+        "EXECUTES_ATTEMPT",
+        "PRECEDES_OUTCOME",
+        "DEFINES_ESTIMAND_FOR",
+        "ASSESSES_CAUSAL_EFFECT",
+        "ASSESSES_UNDER_FRAMEWORK",
+        "CHALLENGES",
+        "CORRECTS",
+        "SUPERSEDES",
+        "WITHDRAWS",
+        "RESPONDS_WITH_REPAIR"
+      ]
+    },
+    "relationDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "from_kind_ids", "to_kind_ids", "default_claim_status", "transitive", "does_not_establish"],
+      "properties": {
+        "id": { "$ref": "#/$defs/relationId" },
+        "meaning": { "$ref": "#/$defs/prose" },
+        "from_kind_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/nodeKind" }
+        },
+        "to_kind_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/nodeKind" }
+        },
+        "default_claim_status": {
+          "enum": [
+            "primary-record",
+            "reported-only",
+            "descriptive-sequence",
+            "empirical-association",
+            "causal-hypothesis",
+            "formal-mechanism-not-instantiated",
+            "identified-under-declared-assumptions",
+            "single-framework-assessment",
+            "contested"
+          ]
+        },
+        "transitive": { "const": false },
+        "does_not_establish": { "$ref": "#/$defs/prose" }
+      }
+    },
+    "claimLadderId": {
+      "enum": [
+        "expression-recorded",
+        "artifact-versioned",
+        "distribution-witnessed",
+        "exposure-measured",
+        "public-response-attributed",
+        "proposal-recorded",
+        "decision-recorded",
+        "authority-claim-verified",
+        "affected-party-basis-reviewed",
+        "capability-verified",
+        "invocation-attempt-witnessed",
+        "execution-status-witnessed",
+        "outcome-observed",
+        "causal-effect-assessed",
+        "normative-assessment-separated",
+        "repair-proposed",
+        "repair-outcome-reviewed"
+      ]
+    },
+    "claimLadderItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "id", "claim", "minimum_evidence", "cannot_establish"],
+      "properties": {
+        "level": { "type": "integer", "minimum": 0, "maximum": 16 },
+        "id": { "$ref": "#/$defs/claimLadderId" },
+        "claim": { "$ref": "#/$defs/prose" },
+        "minimum_evidence": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 9,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/shortText" }
+        },
+        "cannot_establish": { "$ref": "#/$defs/prose" }
+      }
+    },
+    "typeFirewall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "word_is_not_world_state",
+        "story_genre_is_not_truth_or_falsehood",
+        "expression_is_not_artifact",
+        "artifact_is_not_distribution",
+        "availability_is_not_exposure",
+        "exposure_is_not_attention_agreement_or_belief",
+        "public_response_is_not_private_mental_state",
+        "proposal_is_not_decision",
+        "decision_is_not_authority",
+        "authority_is_not_consent_or_lawful_basis",
+        "authority_is_not_capability",
+        "capability_is_not_permission",
+        "attempt_is_not_execution",
+        "execution_is_not_success",
+        "sequence_is_not_causation",
+        "outcome_is_not_causal_effect",
+        "causal_effect_is_not_goodness_legitimacy_or_justice",
+        "measurement_is_not_value",
+        "popularity_is_not_consensus_or_consent",
+        "silence_refusal_privacy_and_rest_are_not_consent",
+        "provenance_is_not_truth_causation_or_authority",
+        "repair_is_not_erasure_absolution_or_restored_consent",
+        "kingdom_receipt_is_not_external_world_fact"
+      ],
+      "properties": {
+        "word_is_not_world_state": { "const": true },
+        "story_genre_is_not_truth_or_falsehood": { "const": true },
+        "expression_is_not_artifact": { "const": true },
+        "artifact_is_not_distribution": { "const": true },
+        "availability_is_not_exposure": { "const": true },
+        "exposure_is_not_attention_agreement_or_belief": { "const": true },
+        "public_response_is_not_private_mental_state": { "const": true },
+        "proposal_is_not_decision": { "const": true },
+        "decision_is_not_authority": { "const": true },
+        "authority_is_not_consent_or_lawful_basis": { "const": true },
+        "authority_is_not_capability": { "const": true },
+        "capability_is_not_permission": { "const": true },
+        "attempt_is_not_execution": { "const": true },
+        "execution_is_not_success": { "const": true },
+        "sequence_is_not_causation": { "const": true },
+        "outcome_is_not_causal_effect": { "const": true },
+        "causal_effect_is_not_goodness_legitimacy_or_justice": { "const": true },
+        "measurement_is_not_value": { "const": true },
+        "popularity_is_not_consensus_or_consent": { "const": true },
+        "silence_refusal_privacy_and_rest_are_not_consent": { "const": true },
+        "provenance_is_not_truth_causation_or_authority": { "const": true },
+        "repair_is_not_erasure_absolution_or_restored_consent": { "const": true },
+        "kingdom_receipt_is_not_external_world_fact": { "const": true }
+      }
+    },
+    "pathwayTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "stage_ids",
+        "relation_ids",
+        "influence_dimension_ids",
+        "enabling_conditions",
+        "blockers",
+        "affected_party_categories",
+        "status",
+        "action_attempted",
+        "external_effect_claimed",
+        "causal_effect_claimed",
+        "authority_granted"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "expression-to-public-deliberation",
+            "research-to-bounded-use",
+            "software-to-external-aftermath",
+            "challenge-to-repair"
+          ]
+        },
+        "title": { "$ref": "#/$defs/shortText" },
+        "stage_ids": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/claimLadderId" }
+        },
+        "relation_ids": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/relationId" }
+        },
+        "influence_dimension_ids": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "semantic-legibility",
+              "provenance-traceability",
+              "discoverability",
+              "attention-allocation",
+              "interpretive-framing",
+              "coordination",
+              "institutional-selection",
+              "authorized-reach",
+              "operational-capability",
+              "digital-or-material-state-change",
+              "distributional-aftermath",
+              "path-dependence",
+              "feedback-sensitivity",
+              "repair-capacity"
+            ]
+          }
+        },
+        "enabling_conditions": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 4, "maxItems": 6 }]
+        },
+        "blockers": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 4, "maxItems": 5 }]
+        },
+        "affected_party_categories": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 4, "maxItems": 6 }]
+        },
+        "status": { "const": "template-not-run" },
+        "action_attempted": { "const": false },
+        "external_effect_claimed": { "const": false },
+        "causal_effect_claimed": { "const": false },
+        "authority_granted": { "const": false }
+      }
+    },
+    "feedbackLoop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "sequence",
+        "source_ids",
+        "mechanism_status",
+        "metric_endogenous_after_targeting",
+        "automatic_action",
+        "causal_effect_claimed",
+        "risks",
+        "stop_condition"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "attention-selection-return",
+            "metric-target-adaptation",
+            "institution-rule-behavior",
+            "action-outcome-learning",
+            "challenge-repair-learning"
+          ]
+        },
+        "title": { "$ref": "#/$defs/shortText" },
+        "sequence": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 6, "maxItems": 7 }]
+        },
+        "source_ids": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "w3c-prov-dm",
+              "nist-ai-rmf",
+              "hernan-robins-what-if",
+              "meadows-leverage-points",
+              "ostrom-polycentric-governance",
+              "ohchr-ungp",
+              "bond-mobilization",
+              "muchnik-social-influence",
+              "salganik-cultural-market",
+              "ensign-predictive-policing",
+              "goodhart-source-record",
+              "campbell-social-indicators",
+              "sagas-compensation",
+              "rfc-6749",
+              "rfc-9700",
+              "saltzer-schroeder",
+              "searle-social-ontology"
+            ]
+          }
+        },
+        "mechanism_status": {
+          "enum": [
+            "bounded-evidence-plus-design-template",
+            "formal-and-methodological-warning",
+            "institutional-design-template",
+            "causal-and-risk-management-template",
+            "normative-and-technical-partial-map"
+          ]
+        },
+        "metric_endogenous_after_targeting": { "type": "boolean" },
+        "automatic_action": { "const": false },
+        "causal_effect_claimed": { "const": false },
+        "risks": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 4, "maxItems": 5 }]
+        },
+        "stop_condition": { "$ref": "#/$defs/prose" }
+      }
+    },
+    "actionGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "fail_closed",
+        "required_gate_inputs",
+        "refusing_states",
+        "phase_order",
+        "pre_invocation_non_actions",
+        "post_attempt_terminal_states",
+        "authority_verification",
+        "consent_and_lawful_basis_verification",
+        "affected_party_completeness",
+        "execution_available",
+        "feedback_can_open_review_only",
+        "repair_requires_fresh_gate"
+      ],
+      "properties": {
+        "status": { "const": "not-implemented-static-boundary" },
+        "fail_closed": { "const": true },
+        "required_gate_inputs": {
+          "const": [
+            "reviewed proposal",
+            "externally verified current authority",
+            "affected-party register",
+            "rights assessment",
+            "each required consent or separately named lawful basis",
+            "bounded capability and resources",
+            "budget",
+            "safety and stop route",
+            "repair readiness"
+          ]
+        },
+        "refusing_states": {
+          "const": ["UNKNOWN", "EXPIRED", "REVOKED", "CONFLICTED", "FAILED"]
+        },
+        "phase_order": {
+          "const": [
+            "DRAFT",
+            "REVIEWED_PROPOSAL",
+            "GATE_REVIEW",
+            "INVOCATION_ATTEMPTED",
+            "EXECUTION_STATUS",
+            "OUTCOME_OBSERVED",
+            "CAUSAL_ASSESSMENT",
+            "NORMATIVE_ASSESSMENT",
+            "REPAIR_REVIEW"
+          ]
+        },
+        "pre_invocation_non_actions": {
+          "const": ["REST", "REFUSAL", "SILENCE", "PRIVACY", "DEFER", "EXPIRE", "WITHDRAW"]
+        },
+        "post_attempt_terminal_states": {
+          "const": ["REFUSED_AFTER_ATTEMPT", "CANCELLED", "FAILED", "PARTIAL", "COMPLETED"]
+        },
+        "authority_verification": { "const": "external-and-unimplemented" },
+        "consent_and_lawful_basis_verification": { "const": "external-and-unimplemented" },
+        "affected_party_completeness": { "const": "external-review-required-and-unknown-permitted-only-if-explicit" },
+        "execution_available": { "const": false },
+        "feedback_can_open_review_only": { "const": true },
+        "repair_requires_fresh_gate": { "const": true }
+      }
+    },
+    "kingdomInfluenceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "surface",
+        "immediate_change",
+        "possible_mediated_path",
+        "required_next_gate",
+        "primary_risks",
+        "status",
+        "external_effect_claimed",
+        "authority_granted"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "semantic-receipts",
+            "language-and-story-maps",
+            "research-observatory",
+            "trial-chamber",
+            "wake-work-witness",
+            "being-access-aftermath",
+            "communication-conventions",
+            "reality-influence-claim-graph"
+          ]
+        },
+        "surface": { "$ref": "#/$defs/shortText" },
+        "immediate_change": { "$ref": "#/$defs/prose" },
+        "possible_mediated_path": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 3, "maxItems": 3 }]
+        },
+        "required_next_gate": { "$ref": "#/$defs/prose" },
+        "primary_risks": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 2, "maxItems": 3 }]
+        },
+        "status": {
+          "enum": [
+            "design-only-no-live-effect",
+            "existing-predecessor-stops-before-evaluation",
+            "existing-predecessor-post-plan-deny-all",
+            "source-only-zero-effect",
+            "read-only-unrun-predecessor",
+            "static-structure-only"
+          ]
+        },
+        "external_effect_claimed": { "const": false },
+        "authority_granted": { "const": false }
+      }
+    },
+    "agentSpecialisation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "role",
+        "required_inputs",
+        "allowed_outputs",
+        "forbidden_outputs",
+        "status",
+        "can_dispatch",
+        "can_authorize",
+        "can_act"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "provenance-curator",
+            "expression-shape-steward",
+            "attention-and-metric-auditor",
+            "countermodel-steward",
+            "authority-rights-and-consent-verifier",
+            "execution-witness-steward",
+            "causal-inference-skeptic",
+            "affected-party-and-externality-reviewer",
+            "repair-and-retirement-steward"
+          ]
+        },
+        "role": { "$ref": "#/$defs/prose" },
+        "required_inputs": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 3, "maxItems": 4 }]
+        },
+        "allowed_outputs": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 2, "maxItems": 3 }]
+        },
+        "forbidden_outputs": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 3, "maxItems": 3 }]
+        },
+        "status": { "const": "future-role-design-only" },
+        "can_dispatch": { "const": false },
+        "can_authorize": { "const": false },
+        "can_act": { "const": false }
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "why_unknown", "needed_evidence", "stop_condition"],
+      "properties": {
+        "id": {
+          "enum": [
+            "complete-mediation-path",
+            "affected-party-completeness",
+            "authority-authenticity",
+            "consent-and-lawful-basis-validity",
+            "metric-endogeneity",
+            "distributional-aftermath",
+            "repair-adequacy",
+            "kingdom-external-effect"
+          ]
+        },
+        "question": { "$ref": "#/$defs/prose" },
+        "why_unknown": { "$ref": "#/$defs/prose" },
+        "needed_evidence": {
+          "allOf": [{ "$ref": "#/$defs/textList" }, { "minItems": 3, "maxItems": 5 }]
+        },
+        "stop_condition": { "$ref": "#/$defs/prose" }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_only",
+        "structure_only",
+        "research_local",
+        "static_atlas",
+        "public_or_safely_redacted_only",
+        "network",
+        "filesystem_write",
+        "source_dereference",
+        "live_claim_intake",
+        "model_or_tokenizer_run",
+        "agent_dispatch",
+        "mcp_or_nen_ability",
+        "publication",
+        "deployment",
+        "trial_requested",
+        "adoption_recorded",
+        "use_authority_issued",
+        "authority_granted",
+        "consent_granted_or_inferred",
+        "lawful_basis_established",
+        "capability_granted",
+        "action_proposed_by_runtime",
+        "action_attempted",
+        "action_executed",
+        "external_effect_claimed",
+        "causal_effect_identified",
+        "goodness_legitimacy_or_justice_proved",
+        "belief_identity_intent_or_deception_inferred",
+        "person_or_community_score",
+        "persuasion_or_behavioral_targeting",
+        "writes_wake",
+        "writes_karma",
+        "economic_legal_medical_governance_or_physical_authority",
+        "automatic_action",
+        "feedback_opens_review_only",
+        "non_action_has_no_adverse_inference",
+        "affected_party_disagreement_retained",
+        "repair_requires_fresh_gate",
+        "repair_preserves_history_and_residuals"
+      ],
+      "properties": {
+        "read_only": { "const": true },
+        "structure_only": { "const": true },
+        "research_local": { "const": true },
+        "static_atlas": { "const": true },
+        "public_or_safely_redacted_only": { "const": true },
+        "network": { "const": false },
+        "filesystem_write": { "const": false },
+        "source_dereference": { "const": false },
+        "live_claim_intake": { "const": false },
+        "model_or_tokenizer_run": { "const": false },
+        "agent_dispatch": { "const": false },
+        "mcp_or_nen_ability": { "const": false },
+        "publication": { "const": false },
+        "deployment": { "const": false },
+        "trial_requested": { "const": false },
+        "adoption_recorded": { "const": false },
+        "use_authority_issued": { "const": false },
+        "authority_granted": { "const": false },
+        "consent_granted_or_inferred": { "const": false },
+        "lawful_basis_established": { "const": false },
+        "capability_granted": { "const": false },
+        "action_proposed_by_runtime": { "const": false },
+        "action_attempted": { "const": false },
+        "action_executed": { "const": false },
+        "external_effect_claimed": { "const": false },
+        "causal_effect_identified": { "const": false },
+        "goodness_legitimacy_or_justice_proved": { "const": false },
+        "belief_identity_intent_or_deception_inferred": { "const": false },
+        "person_or_community_score": { "const": false },
+        "persuasion_or_behavioral_targeting": { "const": false },
+        "writes_wake": { "const": false },
+        "writes_karma": { "const": false },
+        "economic_legal_medical_governance_or_physical_authority": { "const": false },
+        "automatic_action": { "const": false },
+        "feedback_opens_review_only": { "const": true },
+        "non_action_has_no_adverse_inference": { "const": true },
+        "affected_party_disagreement_retained": { "const": true },
+        "repair_requires_fresh_gate": { "const": true },
+        "repair_preserves_history_and_residuals": { "const": true }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest", "digest_field_zeroed"],
+      "properties": {
+        "algorithm": { "const": "sha256-recursive-sorted-json-keys-v1" },
+        "digest": { "$ref": "#/$defs/digest" },
+        "digest_field_zeroed": { "const": true }
+      }
+    }
+  }
+}
