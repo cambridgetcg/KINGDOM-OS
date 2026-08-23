@@ -48,10 +48,10 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
   test("stages one immutable Lab 02 triplet within the eleven-atlas shape", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(138);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(27);
+    expect(HUB_ASSETS).toHaveLength(143);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(29);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(136);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(141);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(11);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("labs/"))).toContainEqual(PUBLIC_TRIPLET[0]);
     expect(PUBLIC_TRIPLET.some(({ destination }) =>
@@ -62,7 +62,7 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
 
   test("pins the exact record, schema, and guide bytes in the append-only route ledger", () => {
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(111);
+    expect(ledger.entries).toHaveLength(114);
     const entries = ledger.entries.filter((entry: { source?: string }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === entry.source));
     expect(entries).toEqual([
@@ -92,7 +92,7 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
 
   test("retires byte-bound Labs 01–04 as one twelve-route family", () => {
     const family = PUBLICATION_FAMILIES.find(({ id }) => id === "string-crawl-trace-sheet-lab");
-    expect(PUBLICATION_FAMILIES).toHaveLength(24);
+    expect(PUBLICATION_FAMILIES).toHaveLength(25);
     expect(family).toEqual({
       id: "string-crawl-trace-sheet-lab",
       label: "STRING / CRAWL STRAND Labs 01–04",
@@ -136,8 +136,8 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
   test("advertises the three versioned routes exactly once and no mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(135);
-    expect(new Set(urls).size).toBe(135);
+    expect(urls).toHaveLength(140);
+    expect(new Set(urls).size).toBe(140);
     for (const { destination } of PUBLIC_TRIPLET) {
       expect(urls.filter((url) => url === `${ORIGIN}/${destination}`)).toHaveLength(1);
     }

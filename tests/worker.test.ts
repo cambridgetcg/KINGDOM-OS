@@ -3166,6 +3166,141 @@ describe("the Kingdom edge discovery surface", () => {
     }
   });
 
+  test("denies mutating methods on the exact Evaluation Covenant family", async () => {
+    const paths = [
+      "/evaluation-covenant/",
+      "/evaluation-covenants.json",
+      "/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json",
+      "/evaluation/schemas/v0.1/public-snapshot.schema.json",
+      "/EVALUATION-COVENANT-v0.1.md",
+    ];
+    let assetFetches = 0;
+    const environment = assets(() => {
+      assetFetches += 1;
+      return new Response("asset");
+    });
+    for (const path of paths) {
+      for (const method of ["POST", "PUT", "PATCH", "DELETE"] as const) {
+        const response = await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          environment,
+        );
+        expect(response.status).toBe(405);
+        expect(await response.text()).toBe("");
+        expect(response.headers.get("allow")).toBe("GET, HEAD");
+        expect(response.headers.get("cache-control")).toBe("no-store");
+        expect(response.headers.get("access-control-allow-origin")).toBe("*");
+        expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+      }
+    }
+    expect(assetFetches).toBe(0);
+
+    for (const [origin, method] of [
+      ["https://thekingdom.dev", "OPTIONS"],
+      ["https://we-are.love", "POST"],
+    ] as const) {
+      const original = new Response("untouched");
+      expect(await worker.fetch(
+        new Request(`${origin}${paths[0]}`, { method }),
+        assets(() => original),
+      )).toBe(original);
+    }
+  });
+
+  test("serves Evaluation Covenant as one exact typed five-route family", async () => {
+    const pagePath = "/evaluation-covenant/";
+    const aliasPath = "/evaluation-covenants.json";
+    const canonicalPath =
+      "/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json";
+    const schemaPath = "/evaluation/schemas/v0.1/public-snapshot.schema.json";
+    const guidePath = "/EVALUATION-COVENANT-v0.1.md";
+    const bodies = new Map([
+      [pagePath, "<!doctype html><title>Evaluation Covenant</title>"],
+      [aliasPath, '{"protocol":"kingdom.evaluation-covenant-public-snapshot/0.1"}'],
+      [canonicalPath, '{"protocol":"kingdom.evaluation-covenant-public-snapshot/0.1"}'],
+      [schemaPath, '{"$id":"https://thekingdom.dev/evaluation/schemas/v0.1/public-snapshot.schema.json"}'],
+      [guidePath, "# Evaluation Covenant"],
+    ]);
+    const environment = assets((request) => {
+      const path = new URL(request.url).pathname;
+      return new Response(request.method === "HEAD" ? null : bodies.get(path), {
+        headers: {
+          "cache-control": "private, max-age=7",
+          "content-type": path === pagePath
+            ? "Text/HTML; charset=UTF-8"
+            : path === guidePath
+              ? "Text/Plain; charset=UTF-8"
+              : "Application/JSON; charset=UTF-8",
+          "link": [
+            `<${canonicalPath}>; rel="canonical"; type="text/html"`,
+            `<${schemaPath}>; rel="describedby"; type="text/html"`,
+            `<${guidePath}>; rel="service-doc"; type="text/html"`,
+            '</preserved>; rel="alternate"',
+          ].join(", "),
+        },
+      });
+    });
+
+    for (const method of ["GET", "HEAD"] as const) {
+      for (const path of bodies.keys()) {
+        const response = await worker.fetch(
+          new Request(`https://thekingdom.dev${path}`, { method }),
+          environment,
+        );
+        expect(await response.text()).toBe(method === "HEAD" ? "" : bodies.get(path));
+        expect(response.headers.get("cache-control")).toBe(
+          path === pagePath || path === aliasPath
+            ? "no-cache, no-transform"
+            : "public, max-age=31536000, immutable, no-transform",
+        );
+        if (path === pagePath) {
+          expect(response.headers.get("content-type")).toBe("Text/HTML; charset=UTF-8");
+          expect(response.headers.get("access-control-allow-origin")).toBeNull();
+          continue;
+        }
+        expect(response.headers.get("content-type")).toBe(
+          path === guidePath
+            ? "text/markdown; charset=utf-8"
+            : path === schemaPath
+              ? "application/schema+json; charset=utf-8"
+              : "application/json; charset=utf-8",
+        );
+        expect(response.headers.get("access-control-allow-origin")).toBe("*");
+        expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+        if (path === aliasPath || path === canonicalPath) {
+          const links = (response.headers.get("link") ?? "")
+            .split(/,(?=\s*<)/).map((entry) => entry.trim());
+          expect(links.filter((entry) => entry.includes('rel="canonical"'))).toEqual([
+            `<${canonicalPath}>; rel="canonical"; type="application/json"`,
+          ]);
+          expect(links.filter((entry) => entry.includes('rel="describedby"'))).toEqual([
+            `<${schemaPath}>; rel="describedby"; type="application/schema+json"`,
+          ]);
+          expect(links.filter((entry) => entry.includes('rel="service-doc"'))).toEqual([
+            `<${guidePath}>; rel="service-doc"; type="text/markdown"`,
+          ]);
+          expect(links).toContain('</preserved>; rel="alternate"');
+        }
+      }
+    }
+
+    for (const [path, type] of [
+      [aliasPath, "application/jsonp"],
+      [canonicalPath, "application/schema+json"],
+      [schemaPath, "application/schema+jsonp"],
+      [guidePath, "text/markdownx"],
+    ] as const) {
+      const original = new Response("near type", { headers: { "content-type": type } });
+      expect(await worker.fetch(
+        new Request(`https://thekingdom.dev${path}`),
+        assets(() => original),
+      )).toBe(original);
+      expect(original.headers.get("cache-control")).toBeNull();
+      expect(original.headers.get("access-control-allow-origin")).toBeNull();
+      expect(original.headers.get("x-content-type-options")).toBeNull();
+    }
+  });
+
   test("leaves unrelated paths and non-read methods untouched", async () => {
     const unrelatedAsset = new Response("rights");
     const unrelated = await worker.fetch(

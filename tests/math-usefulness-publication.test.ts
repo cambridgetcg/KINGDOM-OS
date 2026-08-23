@@ -28,7 +28,7 @@ const PUBLIC_TRIPLET = [
 
 describe("Math Passport usefulness publication", () => {
   test("stages exactly one immutable triplet without a mutable alias", () => {
-    expect(HUB_ASSETS).toHaveLength(138);
+    expect(HUB_ASSETS).toHaveLength(143);
     for (const asset of PUBLIC_TRIPLET) {
       expect(HUB_ASSETS.filter(({ destination }) => destination === asset.destination)).toEqual([asset]);
     }
@@ -39,7 +39,7 @@ describe("Math Passport usefulness publication", () => {
 
   test("appends the exact source identities to the route-integrity ledger", () => {
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(111);
+    expect(ledger.entries).toHaveLength(114);
     const expected = [
       ["math-usefulness-result/1/guide", "/MATH-USEFULNESS.md", PUBLIC_TRIPLET[2]],
       ["math-usefulness-result/1/record", "/trials/math-passport-usefulness-pilot-2026-08-14.json", PUBLIC_TRIPLET[0]],
@@ -92,7 +92,7 @@ describe("Math Passport usefulness publication", () => {
       expect(html).toContain(`href="${new URL(url).pathname}"`);
       expect(sitemap).toContain(`<loc>${url}</loc>`);
     }
-    expect(sitemap.match(/<loc>/g)).toHaveLength(135);
+    expect(sitemap.match(/<loc>/g)).toHaveLength(140);
     expect(manifest.mcp).toEqual(kingdom.world_commons.mcp);
   });
 
