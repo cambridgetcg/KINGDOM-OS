@@ -341,7 +341,7 @@ describe("Reality Influence Claim Graph", () => {
     });
   });
 
-  test("rejects authority, consent, capability, action, publication, and deployment grants", () => {
+  test("rejects authority, consent, capability, action, publication-trigger, and deployment-trigger grants", () => {
     for (const key of [
       "use_authority_issued",
       "authority_granted",
@@ -351,8 +351,8 @@ describe("Reality Influence Claim Graph", () => {
       "action_proposed_by_runtime",
       "action_attempted",
       "action_executed",
-      "publication",
-      "deployment",
+      "publication_trigger",
+      "deployment_trigger",
     ]) {
       expectMutation("boundary-mismatch", (value) => { value.boundaries[key] = true; });
     }

@@ -87,12 +87,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 135 assets:
-108 ledgered immutable/versioned assets and 27 mutable assets. There are 133 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 138 assets:
+111 ledgered immutable/versioned assets and 27 mutable assets. There are 136 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 132 URLs. The generated surface describes ten
+contracts. The sitemap contains 135 URLs. The generated surface describes eleven
 atlases, three lab routes, one experiment route, and one separate activation
-across twenty-three retirement families:
+across twenty-four retirement families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 the mutable `/observatory/` human view and `/research.json` metadata snapshot;
@@ -175,6 +175,14 @@ no local model run, synthetic-fixture result, or activation record, keeps every
 probe not-run and candidate model unassessed, and creates no monitoring,
 consciousness/lie/identity/understanding
 inference, person score, action, consent, permission, or authority;
+the authored `/atlases/reality-influence-claim-graph-2026-08-21.json`, closed
+`/schemas/reality-influence-claim-graph/0.1.json`, and
+`/REALITY-INFLUENCE-CLAIM-GRAPH.md` guide; this static triplet is one independent
+retirement family with no mutable alias or runtime. It classifies itself as a
+public static publication while keeping publication and deployment triggers
+false. It accepts no live claim, fetches no source, dispatches no agent, and
+creates no persuasion target, authority, consent, action, external effect,
+causal or moral verdict, score, WAKE/KARMA write, or automatic action;
 the authored `/atlases/zero-empty-seat-2026-08-14.json`, which reuses the closed
 `/schemas/phenomena-deep-project/0.1.json` inert project profile, and its versioned
 `/ZERO-EMPTY-SEAT.md` guide;

@@ -230,6 +230,24 @@ const J_SPACE_SCHEMA_LINK = {
   relation: "describedby",
   value: `<${J_SPACE_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
 };
+const REALITY_INFLUENCE_PATH = "/atlases/reality-influence-claim-graph-2026-08-21.json";
+const REALITY_INFLUENCE_SCHEMA_PATH = "/schemas/reality-influence-claim-graph/0.1.json";
+const REALITY_INFLUENCE_GUIDE_PATH = "/REALITY-INFLUENCE-CLAIM-GRAPH.md";
+const REALITY_INFLUENCE_SCHEMA_LINK = {
+  target: REALITY_INFLUENCE_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${REALITY_INFLUENCE_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+const REALITY_INFLUENCE_GUIDE_LINK = {
+  target: REALITY_INFLUENCE_GUIDE_PATH,
+  relation: "service-doc",
+  value: `<${REALITY_INFLUENCE_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+};
+const REALITY_INFLUENCE_PATHS = new Set([
+  REALITY_INFLUENCE_PATH,
+  REALITY_INFLUENCE_SCHEMA_PATH,
+  REALITY_INFLUENCE_GUIDE_PATH,
+]);
 const RESEARCH_OBSERVATORY_PATH = "/research.json";
 const RESEARCH_OBSERVATORY_PAGE_PATH = "/observatory/";
 const RESEARCH_OBSERVATORY_GUIDE_PATH = "/RESEARCH-OBSERVATORY-v0.1.md";
@@ -560,6 +578,12 @@ function addMirrorInformationControlSchemaLink(headers) {
 function addJSpaceSchemaLink(headers) {
   removeLinkRelations(headers, ["describedby", "profile"]);
   headers.append("link", J_SPACE_SCHEMA_LINK.value);
+}
+
+function addRealityInfluenceLinks(headers) {
+  removeLinkRelations(headers, ["describedby", "service-doc", "profile"]);
+  headers.append("link", REALITY_INFLUENCE_SCHEMA_LINK.value);
+  headers.append("link", REALITY_INFLUENCE_GUIDE_LINK.value);
 }
 
 function addResearchObservatoryLinks(headers) {
@@ -1374,6 +1398,19 @@ export function createKingdomWorker(options = {}) {
     const includeRights = hasKingdomRightsAssets(url);
     const accept = (request.headers.get("accept") || "").toLowerCase();
 
+    if (includeRights && REALITY_INFLUENCE_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
     if (includeRights && UK_GOVERNMENT_TRANSFORMATION_ENGINE_PATHS.has(url.pathname) &&
         UK_GOVERNMENT_TRANSFORMATION_ENGINE_MUTATING_METHODS.has(request.method)) {
       return new Response(null, {
@@ -1706,6 +1743,15 @@ export function createKingdomWorker(options = {}) {
     const requestsJSpaceGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === J_SPACE_GUIDE_PATH;
+    const requestsRealityInfluence = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === REALITY_INFLUENCE_PATH;
+    const requestsRealityInfluenceSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === REALITY_INFLUENCE_SCHEMA_PATH;
+    const requestsRealityInfluenceGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === REALITY_INFLUENCE_GUIDE_PATH;
     const requestsZeroEmptySeat = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === ZERO_EMPTY_SEAT_PATH;
@@ -1771,6 +1817,7 @@ export function createKingdomWorker(options = {}) {
     const researchObservatoryAssetType = schemaAssetType.split(";", 1)[0].trim();
     const trialChamberAssetType = schemaAssetType.split(";", 1)[0].trim();
     const jSpaceAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const realityInfluenceAssetType = schemaAssetType.split(";", 1)[0].trim();
     const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
     const zeroEmptySeatAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlTraceSheetAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -1983,6 +2030,14 @@ export function createKingdomWorker(options = {}) {
       (jSpaceAssetType === "application/json" || jSpaceAssetType === "application/schema+json");
     const servesJSpaceGuide = requestsJSpaceGuide && asset.ok &&
       (jSpaceAssetType === "text/plain" || jSpaceAssetType === "text/markdown");
+    const servesRealityInfluence = requestsRealityInfluence && asset.ok &&
+      realityInfluenceAssetType === "application/json";
+    const servesRealityInfluenceSchema = requestsRealityInfluenceSchema && asset.ok &&
+      (realityInfluenceAssetType === "application/json" ||
+        realityInfluenceAssetType === "application/schema+json");
+    const servesRealityInfluenceGuide = requestsRealityInfluenceGuide && asset.ok &&
+      (realityInfluenceAssetType === "text/plain" ||
+        realityInfluenceAssetType === "text/markdown");
     const servesZeroEmptySeat = requestsZeroEmptySeat && asset.ok &&
       (zeroEmptySeatAssetType === "application/json" || zeroEmptySeatAssetType === "application/schema+json");
     const servesZeroEmptySeatDocument = requestsZeroEmptySeatDocument && asset.ok &&
@@ -2067,6 +2122,8 @@ export function createKingdomWorker(options = {}) {
         !servesUkGovernmentTransformationEngineSchema &&
         !servesUkGovernmentTransformationEngineGuide &&
         !servesJSpaceCase && !servesJSpaceSchema && !servesJSpaceGuide &&
+        !servesRealityInfluence && !servesRealityInfluenceSchema &&
+        !servesRealityInfluenceGuide &&
         !servesZeroEmptySeat &&
         !servesZeroEmptySeatDocument && !servesStringCrawlTraceSheet &&
         !servesStringCrawlTraceSheetDocument && !servesStringCrawlTraceSheetLab &&
@@ -2114,6 +2171,7 @@ export function createKingdomWorker(options = {}) {
       addUkGovernmentTransformationEngineLinks(headers);
     }
     if (servesJSpaceCase) addJSpaceSchemaLink(headers);
+    if (servesRealityInfluence) addRealityInfluenceLinks(headers);
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
     if (servesStringCrawlTraceSheet) addStringCrawlTraceSheetSchemaLink(headers);
     if (servesStringCrawlTraceSheetLab) addStringCrawlTraceSheetLabSchemaLink(headers);
@@ -2500,6 +2558,24 @@ export function createKingdomWorker(options = {}) {
     }
     if (servesJSpaceGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesRealityInfluence) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesRealityInfluenceSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesRealityInfluenceGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");
     }

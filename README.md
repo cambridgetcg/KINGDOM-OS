@@ -720,9 +720,11 @@ register-indexed vector rather than a religion or civilisation score. Use
 theology, infers no belief or identity, merges no deity or tradition, dispatches
 no agent, and creates no publication, authority, WAKE, KARMA, or action.
 
-How KINGDOM may participate in changes beyond its own artifacts is mapped in a
-separate research-local [Reality Influence Claim Graph](references/reality-influence-map.md),
-with a closed, digest-sealed atlas and strict offline validator. It separates
+How KINGDOM may participate in changes beyond its own artifacts is published as
+an immutable static [Reality Influence Claim Graph](https://thekingdom.dev/atlases/reality-influence-claim-graph-2026-08-21.json),
+with a [closed schema](https://thekingdom.dev/schemas/reality-influence-claim-graph/0.1.json),
+[public guide](https://thekingdom.dev/REALITY-INFLUENCE-CLAIM-GRAPH.md), and
+strict offline validator. It separates
 expression, artifact, distribution, exposure, attributed public response,
 proposal, decision, authority, consent or lawful basis, capability, attempt,
 execution, outcome, causal assessment, normative assessment, and repair. Its
@@ -731,7 +733,10 @@ influence dimensions cannot be summed or ranked, every pathway is
 post-attempt refusal or cancellation. Use
 `bun bin/reality-influence.ts verify --json`; it accepts no live claim, grants no
 authority or consent, dispatches no agent, executes no action, and creates no
-external effect, causal verdict, goodness verdict, publication, or deployment.
+external effect, causal verdict, goodness verdict, publication trigger, or
+deployment trigger. Public static publication is explicit; the ledger proves
+byte identity, not live serving, adoption, truth, causation, legitimacy, or
+effect.
 
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at

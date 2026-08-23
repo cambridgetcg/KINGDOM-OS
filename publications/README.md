@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 105-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 111-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -43,7 +43,12 @@ are separately classified mutable publication surfaces. The UK Government
 Engine adds one immutable dated snapshot, one closed schema, and one guide as
 the twenty-second family; its server-rendered page and byte-preserved mutable
 alias of the dated publication are separately classified mutable publication
-surfaces.
+surfaces. The UK Government Transformation Engine adds one immutable dated
+snapshot, one closed schema, and one guide as the twenty-third family; its
+server-rendered page and byte-preserved mutable alias are separately classified
+mutable publication surfaces. The Reality Influence Claim Graph adds one
+immutable static atlas, one closed schema, and one guide as the twenty-fourth
+family, with no mutable alias or runtime surface.
 The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -60,6 +65,14 @@ synthetic unrun test design. The case contains no local model run,
 synthetic-fixture result, or activation record, and the family creates no
 runtime monitor, consciousness/lie/identity/understanding inference,
 person score, consent, action, or authority.
+The Reality Influence Claim Graph entries preserve a static expression-to-
+aftermath claim vocabulary. The family is honestly classified as a public
+static publication while its publication and deployment triggers remain false.
+It accepts no live claim, dereferences no source, dispatches no agent, and
+creates no persuasion target, authority, consent, execution, external effect,
+causal or moral verdict, person or community score, WAKE/KARMA write, or
+automatic action. Its ledger tuple proves byte identity, not live serving,
+adoption, truth, causation, legitimacy, or effect.
 The Research Observatory ledger entries preserve only the public schema family
 and its explanatory guide. The mutable snapshot contains bounded metadata, not
 full text, and the human page renders those checked-in bytes without essential
@@ -165,19 +178,20 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 135-asset union classifies 108 destinations
-as ledgered immutable/versioned and 27 as mutable; 133 are direct public response
-bodies and the sitemap contains 132 URLs. Generated discovery describes ten
+consume those same bytes. The current 138-asset union classifies 111 destinations
+as ledgered immutable/versioned and 27 as mutable; 136 are direct public response
+bodies and the sitemap contains 135 URLs. Generated discovery describes eleven
 atlases, three lab routes, one experiment route, and one separate activation
 plus the Research Observatory, Trial Chamber, UK Government Engine, and dependent
-UK Government Transformation Engine across twenty-three retirement families. It says what is
+UK Government Transformation Engine and Reality Influence Claim Graph across
+twenty-four retirement families. It says what is
 served now, and every destination is explicitly classified as mutable or
 ledgered. A new ledger entry must be staged when introduced. A previously
 committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the twenty-three linked authored publication
+The live release check retires the twenty-four linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

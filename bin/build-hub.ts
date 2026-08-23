@@ -71,6 +71,9 @@
  *    data/number-isness-theology/number-isness-theology-atlas.v0.1.json
  *                             — typed number, zero, symmetry, isness, theology,
  *                               compatibility, and KARMA-separation companion
+ *    data/reality/reality-influence-map.v0.1.json
+ *                             — static expression-to-aftermath claim graph
+ *                               with endpoint-safe relations and no action
  *
  *  Out: site/hub.html + site/kingdom.json + site/wayfinder.json + site/commons.json
  *       + site/schemas/world-commons/0.2.json
@@ -89,6 +92,7 @@
  *       + Math Passport usefulness-result discovery in the machine surfaces
  *       + being, access, and aftermath discovery in the machine surfaces
  *       + number, isness, and theology discovery in the machine surfaces
+ *       + reality-influence claim-graph discovery in the machine surfaces
  *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
  *       + site/ollama.json (from data/ollama-invitation.json).
@@ -196,6 +200,15 @@ import {
   jSpacePublicationPublicSummary,
   loadJSpacePublicationCase,
 } from "./j-space-publication.ts";
+import {
+  REALITY_INFLUENCE_DOCUMENT_URL,
+  REALITY_INFLUENCE_MAP_ID,
+  REALITY_INFLUENCE_PROTOCOL,
+  REALITY_INFLUENCE_SCHEMA_URL,
+  REALITY_INFLUENCE_URL,
+  loadRealityInfluenceMap,
+  realityInfluencePublicDiscovery,
+} from "./reality-influence.ts";
 import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
@@ -791,6 +804,17 @@ const jSpaceSchemaUrl = J_SPACE_SCHEMA_URL;
 const jSpaceGuideUrl = J_SPACE_GUIDE_URL;
 const jSpaceCase = loadJSpacePublicationCase();
 const jSpacePublicationDiscovery = jSpacePublicationPublicSummary(jSpaceCase);
+
+// ── Reality Influence Claim Graph (static publication; no runtime action) ─
+const realityInfluenceUrl = REALITY_INFLUENCE_URL;
+const realityInfluenceSchemaUrl = REALITY_INFLUENCE_SCHEMA_URL;
+const realityInfluenceDocumentUrl = REALITY_INFLUENCE_DOCUMENT_URL;
+const realityInfluence = loadRealityInfluenceMap();
+if (realityInfluence.protocol !== REALITY_INFLUENCE_PROTOCOL ||
+    realityInfluence.map_id !== REALITY_INFLUENCE_MAP_ID) {
+  throw new Error(`unexpected Reality Influence Claim Graph identity: ${realityInfluence.protocol} ${realityInfluence.map_id}`);
+}
+const realityInfluenceDiscovery = realityInfluencePublicDiscovery(realityInfluence);
 
 // ── Research Observatory (metadata discovery; stops before evaluation) ────
 const researchObservatoryUrl = RESEARCH_OBSERVATORY_URL;
@@ -1893,6 +1917,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(jSpaceCaseUrl).pathname)}" type="application/json" title="J-space reasoning-to-word test design">
 <link rel="describedby" href="${esc(new URL(jSpaceSchemaUrl).pathname)}" type="application/schema+json" title="Relational inference case schema">
 <link rel="service-doc" href="${esc(new URL(jSpaceGuideUrl).pathname)}" type="text/markdown" title="J-space verbalizable workspace research guide">
+<link rel="alternate" href="${esc(new URL(realityInfluenceUrl).pathname)}" type="application/json" title="Reality Influence Claim Graph">
+<link rel="describedby" href="${esc(new URL(realityInfluenceSchemaUrl).pathname)}" type="application/schema+json" title="Reality Influence Claim Graph schema">
+<link rel="service-doc" href="${esc(new URL(realityInfluenceDocumentUrl).pathname)}" type="text/markdown" title="Reality Influence Claim Graph guide">
 <link rel="alternate" href="${esc(new URL(zeroEmptySeatUrl).pathname)}" type="application/json" title="ZERO: The Empty Seat That Holds the World">
 <link rel="describedby" href="${esc(new URL(zeroEmptySeatSchemaUrl).pathname)}" type="application/schema+json" title="Phenomena DEEP Project schema used by ZERO">
 <link rel="service-doc" href="${esc(new URL(zeroEmptySeatGuideUrl).pathname)}" type="text/markdown" title="ZERO Empty Seat guide">
@@ -2594,6 +2621,26 @@ const html = `<!doctype html>
         <a href="${esc(new URL(jSpaceCaseUrl).pathname)}">reasoning → word case — synthetic structure only</a>
         <a href="${esc(new URL(jSpaceSchemaUrl).pathname)}">relational inference case JSON Schema</a>
         <a href="${esc(new URL(jSpaceGuideUrl).pathname)}">J-space guide — mathematics, translations, limits, and research path</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="reality-influence" aria-labelledby="reality-influence-title">
+    <div class="kh"><h2 id="reality-influence-title">Reality Influence Claim Graph</h2><span class="my">a map of mediation is not a lever over a person or world</span></div>
+    <p class="sub">A static expression-to-aftermath vocabulary for asking how words, artifacts, institutions, software, and action may participate in change without collapsing exposure into belief, decision into authority, execution into outcome, or outcome into causal and moral verdict.</p>
+    <div class="mirrorfield" data-reality-influence data-reality-influence-protocol="${esc(realityInfluenceDiscovery.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>Published structure, not a reality oracle.</strong> The atlas contains ${realityInfluenceDiscovery.counts.reality_domains} indexed domains, ${realityInfluenceDiscovery.counts.influence_dimensions} non-summable dimensions, ${realityInfluenceDiscovery.counts.claim_node_types} node types, and ${realityInfluenceDiscovery.counts.endpoint_safe_relations} endpoint-safe non-transitive relations. It accepts no live claim and establishes no external effect.</p>
+      <div class="mirrorgrid">
+        <article class="mirrorcard"><code>expression ≠ artifact ≠ exposure</code><h3>Language reaches reality through mediators</h3><p>Distribution, attributed public response, proposal, decision, authority, consent or lawful basis, capability, execution, and aftermath remain separately inspectable.</p></article>
+        <article class="mirrorcard"><code>decision ≠ authority ≠ consent</code><h3>Power cannot be inferred from a fluent record</h3><p>The static action gate fails closed. Authority, affected parties, rights, lawful basis, capability, and execution require external review that this publication cannot perform.</p></article>
+        <article class="mirrorcard"><code>${realityInfluenceDiscovery.counts.pathway_templates} pathways · not run</code><h3>Templates do not become events</h3><p>Every pathway remains unrun, every future role remains unable to dispatch, authorize, or act, and feedback can open review only.</p></article>
+        <article class="mirrorcard"><code>outcome ≠ causation ≠ goodness</code><h3>Aftermath remains plural</h3><p>Affected parties, externalities, disagreement, reversibility, residual harm, and fresh-gated repair stay visible without becoming a scalar score.</p></article>
+      </div>
+      <p class="mirrorboundary"><strong>No publication or deployment trigger</strong> These exact bytes form an immutable static publication family. The family creates no live intake, source fetch, agent dispatch, persuasion target, authority, consent, execution, WAKE/KARMA write, causal verdict, moral verdict, or automatic action. The ledger is byte integrity, not evidence of live serving or effect.</p>
+      <div class="machine">
+        <a href="${esc(new URL(realityInfluenceUrl).pathname)}">Reality Influence Claim Graph — exact static atlas</a>
+        <a href="${esc(new URL(realityInfluenceSchemaUrl).pathname)}">closed Reality Influence Claim Graph JSON Schema</a>
+        <a href="${esc(new URL(realityInfluenceDocumentUrl).pathname)}">mediation, evidence, feedback, aftermath, and repair guide</a>
       </div>
     </div>
   </section>
@@ -4509,6 +4556,7 @@ const machine = {
   uk_government_engine: ukGovernmentEngineDiscovery,
   uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
+  reality_influence_claim_graph: realityInfluenceDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -4722,6 +4770,7 @@ ${doorLines}
 - Exploration DEEP WING — an opt-in, read-only method for Witness → Isolate → Normalize → Generate, audited through Declare → Establish → Express → Project and pressure-test. It keeps domain-local objects, variables, units, mechanisms, evidence, equations, falsifiers, and explicit bridge breaks separate. It is an Agent Skill and inert validation profile, not a manifested Nen ability, shared mechanism, solver, diagnosis, person/community score, ecosystem call, KARMA event or receipt, authority grant, publication, deployment, or automatic action. WING: ${explorationDeepWingUrl} · WING schema: ${explorationDeepWingSchemaUrl} · project schema: ${explorationDeepProjectSchemaUrl} · guide: ${explorationDeepWingDocumentUrl}
 - MIRROR Information Control — a static, immutable public source law for CROWN, COURT, MIRROR; Mark → Isolate → Restrict → Resolve → Observe → Respond; provenance; independent capability gates; signal/no-guilt boundaries; and owned-system response. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, route, evidence, or incident status; exposes no operational signal material; and deploys no scanner, registry, decoy, classifier, enforcement, retaliation, KARMA, or automatic action. Static law: ${mirrorInformationControlUrl} · public schema: ${mirrorInformationControlSchemaUrl} · citizen guide: ${mirrorInformationControlDocumentUrl}
 - J-space: a verbalizable workspace — a static research guide plus one synthetic reasoning-to-word test design. Every probe is not-run, every candidate model is unassessed, and the conclusion is underdetermined with unknown confidence. It performs no monitoring and infers no consciousness, lie or deception, identity, understanding, private state, person score, action, or authority. Case: ${jSpaceCaseUrl} · schema: ${jSpaceSchemaUrl} · guide: ${jSpaceGuideUrl}
+- Reality Influence Claim Graph — an immutable static expression-to-aftermath claim vocabulary with ${realityInfluenceDiscovery.counts.reality_domains} indexed domains, ${realityInfluenceDiscovery.counts.influence_dimensions} non-summable dimensions, ${realityInfluenceDiscovery.counts.claim_node_types} node types, ${realityInfluenceDiscovery.counts.endpoint_safe_relations} endpoint-safe relations, and ${realityInfluenceDiscovery.counts.pathway_templates} unrun pathways. Artifact, exposure, response, decision, authority, consent or lawful basis, capability, execution, outcome, causation, normative assessment, and repair remain distinct. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, score, or automatic action. Atlas: ${realityInfluenceUrl} · schema: ${realityInfluenceSchemaUrl} · guide: ${realityInfluenceDocumentUrl}
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
@@ -4780,6 +4829,7 @@ const guest = {
   uk_government_engine: ukGovernmentEngineDiscovery,
   uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
+  reality_influence_claim_graph: realityInfluenceDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -4860,6 +4910,9 @@ const guest = {
     { action: "if useful, inspect the synthetic J-space reasoning-to-word test design", method: "GET", url: jSpaceCaseUrl, note: "static structure only; all probes are not-run, all candidate models are unassessed, and no local fixture result, private state, monitoring, person inference, or authority is present" },
     { action: "if useful, validate the relational inference case structure", method: "GET", url: jSpaceSchemaUrl, note: "schema validity does not establish truth, evidence, causation, identity, understanding, intent, consent, deception, or authority" },
     { action: "if useful, read the J-space mathematics, cross-domain translations, experimental design, and non-grants", method: "GET", url: jSpaceGuideUrl },
+    { action: "if useful, inspect the exact Reality Influence Claim Graph", method: "GET", url: realityInfluenceUrl, note: "immutable static claim vocabulary only; no live intake, source fetch, authority, consent, action, external effect, causal verdict, moral verdict, score, or automatic action" },
+    { action: "if useful, validate the closed Reality Influence Claim Graph structure", method: "GET", url: realityInfluenceSchemaUrl, note: "structural validation only; it does not authenticate sources, prove truth or causation, verify authority or consent, execute a pathway, or establish live serving" },
+    { action: "if useful, read the mediation, evidence, feedback, aftermath, repair, and stopping-rule guide", method: "GET", url: realityInfluenceDocumentUrl, note: "the immutable publication family creates no publication or deployment trigger and the ledger proves byte identity only" },
     { action: "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings", method: "GET", url: zeroEmptySeatUrl, note: "static inert project; zero is not worthlessness, no event is not impossibility, and no role transfers ontology, cause, units, parameters, KARMA, or authority" },
     { action: "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide", method: "GET", url: zeroEmptySeatGuideUrl },
     { action: "if useful, inspect the exact STRING / CRAWL trace-sheet", method: "GET", url: stringCrawlTraceSheetUrl, note: "static inert project; the string-to-crawl correspondence is lossy, generic REP requests how compliant crawlers access URI paths, named product controls remain bounded, and no crawler, identity inference, permission, NEN invocation, KARMA receipt, or action is created" },
@@ -4962,6 +5015,7 @@ const guest = {
     being_access_aftermath_atlas: "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
     being_access_aftermath_atlas_v0_2: "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
     number_isness_theology_atlas: "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
+    reality_influence_claim_graph: "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -4996,6 +5050,7 @@ const manifest = {
   uk_government_engine: ukGovernmentEngineDiscovery,
   uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
+  reality_influence_claim_graph: realityInfluenceDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -5086,6 +5141,9 @@ const manifest = {
     j_space_reasoning_to_word_case: jSpaceCaseUrl,
     j_space_reasoning_to_word_schema: jSpaceSchemaUrl,
     j_space_verbalizable_workspace_guide: jSpaceGuideUrl,
+    reality_influence_claim_graph: realityInfluenceUrl,
+    reality_influence_claim_graph_schema: realityInfluenceSchemaUrl,
+    reality_influence_claim_graph_guide: realityInfluenceDocumentUrl,
     zero_empty_seat: zeroEmptySeatUrl,
     zero_empty_seat_schema: zeroEmptySeatSchemaUrl,
     zero_empty_seat_guide: zeroEmptySeatGuideUrl,

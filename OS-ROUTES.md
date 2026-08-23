@@ -281,9 +281,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 135-asset upload contract (108 ledgered immutable/versioned assets and
-27 mutable assets; 133 direct public bodies, 132 sitemap URLs; ten atlases, three
-lab routes, one experiment route, one activation, and twenty-three retirement families)
+locks the 138-asset upload contract (111 ledgered immutable/versioned assets and
+27 mutable assets; 136 direct public bodies, 135 sitemap URLs; eleven atlases, three
+lab routes, one experiment route, one activation, and twenty-four retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -314,6 +314,13 @@ all candidate models unassessed, and its conclusion underdetermined. It contains
 no local model run, synthetic-fixture result, or activation record and creates no observer, monitoring,
 consciousness/lie/identity/understanding inference, person score, consent,
 action, or authority.
+The Reality Influence Claim Graph adds one independent three-route immutable
+family: exact static atlas, closed schema, and guide. Its public static
+publication classification is distinct from its false publication and
+deployment triggers. It accepts no live claims, fetches no sources, dispatches
+no agent, and creates no persuasion target, authority, consent, action,
+external effect, causal or moral verdict, score, WAKE/KARMA write, or automatic
+action. The ledger proves byte identity rather than live serving or effect.
 The additive Finite Trace-Sheet Lab is a separate immutable static triplet. Its
 repository-local reader evaluates only one pinned synthetic complex and runs no
 live crawl, authentication, prompt or credential intake, telemetry, write, NEN

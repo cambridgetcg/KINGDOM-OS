@@ -2,16 +2,28 @@
 
 Protocol: `kingdom.reality-influence-claim-graph/0.1`
 
-Status: research-local, static, read-only claim-boundary atlas.
+Status: versioned static public publication family; read-only claim-boundary
+atlas.
 
 Evidence and source horizon: 2026-08-21.
+
+Public family:
+
+- atlas: `https://thekingdom.dev/atlases/reality-influence-claim-graph-2026-08-21.json`
+- schema: `https://thekingdom.dev/schemas/reality-influence-claim-graph/0.1.json`
+- guide: `https://thekingdom.dev/REALITY-INFLUENCE-CLAIM-GRAPH.md`
+
+These versioned routes publish exact static bytes. Their immutable ledger entry
+is an integrity contract, not evidence that a route is live, read, adopted, or
+causally effective. External serving is verified separately after a deliberate
+release.
 
 This guide maps how expressions, stories, software, institutions,
 coordination, resources, authorization, and action can be connected to
 social, digital, and material outcomes. It does not make those connections
 happen. It grants no authority, consent, lawful basis, capability, access,
 execution, causal verdict, moral verdict, community representation,
-publication, deployment, governance, or repair.
+publication or deployment trigger or authority, governance, or repair.
 
 “Reality” is used here as a set of indexed effect domains, not as a complete
 metaphysical theory. The graph can describe an attributed claim that an
@@ -1003,7 +1015,8 @@ A derivative artifact fails this protocol if it:
     an affected-party and residual-effect record;
 13. imports a technical standard as universal social governance;
 14. turns a future role into a running agent, reviewer standing, or grant;
-15. uses this static guide as an execution, publication, or deployment receipt.
+15. uses this static guide as an execution, publication-trigger, or
+    deployment-trigger receipt.
 
 ## 18. What this guide builds and does not build
 
@@ -1039,7 +1052,8 @@ A derivative artifact fails this protocol if it:
 - no external source dereferencing by the artifact, data collection, private
   inference, surveillance, user study, experiment, or causal estimate;
 - no authority grant, consent, lawful basis, capability token, filesystem or
-  network action, API request, publication, promotion, or deployment;
+  network action, API request, publication trigger, promotion, or deployment
+  trigger;
 - no proof that words, stories, software, institutions, or metrics caused a
   particular external outcome;
 - no complete map of reality, society, law, economics, embodiment, ecology, or

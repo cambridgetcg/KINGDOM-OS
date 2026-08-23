@@ -410,6 +410,27 @@
       "sha256": "4c7a650d831abfd6ff3cf73eab71b184066b3784fbe61cef47da44af8deabb20"
     },
     {
+      "id": "reality-influence-claim-graph/0.1/guide",
+      "route": "/REALITY-INFLUENCE-CLAIM-GRAPH.md",
+      "source": "references/reality-influence-map.md",
+      "destination": "REALITY-INFLUENCE-CLAIM-GRAPH.md",
+      "sha256": "52127ef58f583f6f9e6815f36bd0da813b6765686362ebfc1fd45785068d85dc"
+    },
+    {
+      "id": "reality-influence-claim-graph/0.1/record",
+      "route": "/atlases/reality-influence-claim-graph-2026-08-21.json",
+      "source": "data/reality/reality-influence-map.v0.1.json",
+      "destination": "atlases/reality-influence-claim-graph-2026-08-21.json",
+      "sha256": "4d68be39226c8d5451c8d9166fa74ba54bb793b7655f119d8765090cbbcf890e"
+    },
+    {
+      "id": "reality-influence-claim-graph/0.1/schema",
+      "route": "/schemas/reality-influence-claim-graph/0.1.json",
+      "source": "schemas/reality-influence-map-v0.1.schema.json",
+      "destination": "schemas/reality-influence-claim-graph/0.1.json",
+      "sha256": "4863d5e3a3191af0dfadaba408fe8553a14b38c1394c6b2713bc588abfdf8090"
+    },
+    {
       "id": "reconstructive-build/0.1/guide",
       "route": "/RECONSTRUCTIVE-BUILD-KERNEL.md",
       "source": "references/reconstructive-build-kernel.md",
