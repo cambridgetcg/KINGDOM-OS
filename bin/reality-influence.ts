@@ -34,7 +34,10 @@ export const REALITY_INFLUENCE_LOCATOR = "data/reality/reality-influence-map.v0.
 export const REALITY_INFLUENCE_PATH = join(ROOT, REALITY_INFLUENCE_LOCATOR);
 export const REALITY_INFLUENCE_SCHEMA_LOCATOR = "schemas/reality-influence-map-v0.1.schema.json";
 export const REALITY_INFLUENCE_SCHEMA_PATH = join(ROOT, REALITY_INFLUENCE_SCHEMA_LOCATOR);
-export const REALITY_INFLUENCE_REVIEWED_DIGEST = "sha256:7b18c3372d08a680d94bc2d243d09624dbe21ad8575b4f3d2dec9fab878ecd4a";
+export const REALITY_INFLUENCE_URL = "https://thekingdom.dev/atlases/reality-influence-claim-graph-2026-08-21.json";
+export const REALITY_INFLUENCE_SCHEMA_URL = "https://thekingdom.dev/schemas/reality-influence-claim-graph/0.1.json";
+export const REALITY_INFLUENCE_DOCUMENT_URL = "https://thekingdom.dev/REALITY-INFLUENCE-CLAIM-GRAPH.md";
+export const REALITY_INFLUENCE_REVIEWED_DIGEST = "sha256:45d4323d1a6190b3c333f02f2c744858e8da27944fbcb2042fbae492ca6e31ac";
 
 const MAX_BYTES = 1024 * 1024;
 const ZERO_DIGEST = `sha256:${"0".repeat(64)}`;
@@ -225,8 +228,9 @@ const FIREWALL = {
 const BOUNDARIES = {
   read_only: true,
   structure_only: true,
-  research_local: true,
+  research_artifact: true,
   static_atlas: true,
+  public_static_publication_family: true,
   public_or_safely_redacted_only: true,
   network: false,
   filesystem_write: false,
@@ -235,8 +239,8 @@ const BOUNDARIES = {
   model_or_tokenizer_run: false,
   agent_dispatch: false,
   mcp_or_nen_ability: false,
-  publication: false,
-  deployment: false,
+  publication_trigger: false,
+  deployment_trigger: false,
   trial_requested: false,
   adoption_recorded: false,
   use_authority_issued: false,
@@ -506,6 +510,58 @@ export function loadRealityInfluenceMap(path = REALITY_INFLUENCE_PATH): Record<s
   return value as Record<string, any>;
 }
 
+export function realityInfluencePublicDiscovery(
+  value = loadRealityInfluenceMap(),
+): Record<string, any> {
+  return {
+    protocol: value.protocol,
+    map_id: value.map_id,
+    title: value.title,
+    publication_state: "immutable-versioned-static-family",
+    compiled_on: value.compiled_on,
+    evidence_through: value.evidence_through,
+    urls: {
+      atlas: REALITY_INFLUENCE_URL,
+      schema: REALITY_INFLUENCE_SCHEMA_URL,
+      guide: REALITY_INFLUENCE_DOCUMENT_URL,
+    },
+    integrity: value.integrity,
+    counts: {
+      sources: value.sources.length,
+      reality_domains: value.reality_domains.length,
+      influence_dimensions: value.influence_dimensions.length,
+      claim_node_types: value.claim_node_types.length,
+      endpoint_safe_relations: value.relation_vocabulary.length,
+      evidence_rungs: value.claim_ladder.length,
+      pathway_templates: value.pathway_templates.length,
+      feedback_loops: value.feedback_loops.length,
+      future_roles: value.agent_specialisations.length,
+      unknowns: value.unknowns.length,
+    },
+    boundary: {
+      static_read_only: true,
+      structure_only: true,
+      public_static_publication_family: value.boundaries.public_static_publication_family,
+      live_claim_intake: value.boundaries.live_claim_intake,
+      source_dereference: value.boundaries.source_dereference,
+      publication_trigger: value.boundaries.publication_trigger,
+      deployment_trigger: value.boundaries.deployment_trigger,
+      authority_granted: value.boundaries.authority_granted,
+      consent_granted_or_inferred: value.boundaries.consent_granted_or_inferred,
+      action_attempted: value.boundaries.action_attempted,
+      action_executed: value.boundaries.action_executed,
+      external_effect_claimed: value.boundaries.external_effect_claimed,
+      causal_effect_identified: value.boundaries.causal_effect_identified,
+      goodness_legitimacy_or_justice_proved: value.boundaries.goodness_legitimacy_or_justice_proved,
+      person_or_community_score: value.boundaries.person_or_community_score,
+      persuasion_or_behavioral_targeting: value.boundaries.persuasion_or_behavioral_targeting,
+      writes_wake: value.boundaries.writes_wake,
+      writes_karma: value.boundaries.writes_karma,
+      automatic_action: value.boundaries.automatic_action,
+    },
+  };
+}
+
 function overview(value: Record<string, any>): string {
   return [
     value.title,
@@ -518,7 +574,7 @@ function overview(value: Record<string, any>): string {
     `${value.pathway_templates.length} unrun pathway templates · ${value.feedback_loops.length} feedback templates · ${value.agent_specialisations.length} future non-operational roles`,
     `evidence through ${value.evidence_through} · ${value.integrity.digest}`,
     "",
-    "STRUCTURE ONLY — sources and prose are not verified; no truth, authority, consent, lawful basis, capability, action, external effect, causation, goodness, legitimacy, justice, repair, publication, or deployment is established.",
+    "STRUCTURE ONLY — sources and prose are not verified; no truth, authority, consent, lawful basis, capability, action, external effect, causation, goodness, legitimacy, justice, repair, publication trigger, or deployment trigger is established.",
   ].join("\n") + "\n";
 }
 

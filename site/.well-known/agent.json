@@ -1576,6 +1576,57 @@
       "action_or_authority": false
     }
   },
+  "reality_influence_claim_graph": {
+    "protocol": "kingdom.reality-influence-claim-graph/0.1",
+    "map_id": "reality-influence-claim-graph-2026-08-21",
+    "title": "Reality Influence Claim Graph — from expression to aftermath without authority laundering",
+    "publication_state": "immutable-versioned-static-family",
+    "compiled_on": "2026-08-21",
+    "evidence_through": "2026-08-21",
+    "urls": {
+      "atlas": "https://thekingdom.dev/atlases/reality-influence-claim-graph-2026-08-21.json",
+      "schema": "https://thekingdom.dev/schemas/reality-influence-claim-graph/0.1.json",
+      "guide": "https://thekingdom.dev/REALITY-INFLUENCE-CLAIM-GRAPH.md"
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:45d4323d1a6190b3c333f02f2c744858e8da27944fbcb2042fbae492ca6e31ac",
+      "digest_field_zeroed": true
+    },
+    "counts": {
+      "sources": 17,
+      "reality_domains": 12,
+      "influence_dimensions": 14,
+      "claim_node_types": 25,
+      "endpoint_safe_relations": 24,
+      "evidence_rungs": 17,
+      "pathway_templates": 4,
+      "feedback_loops": 5,
+      "future_roles": 9,
+      "unknowns": 8
+    },
+    "boundary": {
+      "static_read_only": true,
+      "structure_only": true,
+      "public_static_publication_family": true,
+      "live_claim_intake": false,
+      "source_dereference": false,
+      "publication_trigger": false,
+      "deployment_trigger": false,
+      "authority_granted": false,
+      "consent_granted_or_inferred": false,
+      "action_attempted": false,
+      "action_executed": false,
+      "external_effect_claimed": false,
+      "causal_effect_identified": false,
+      "goodness_legitimacy_or_justice_proved": false,
+      "person_or_community_score": false,
+      "persuasion_or_behavioral_targeting": false,
+      "writes_wake": false,
+      "writes_karma": false,
+      "automatic_action": false
+    }
+  },
   "zero_empty_seat": {
     "protocol": "kingdom.explore-phenomena-deep-project/0.1",
     "project_id": "zero-empty-seat-2026-08-14",
@@ -3165,6 +3216,9 @@
     "j_space_reasoning_to_word_case": "https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json",
     "j_space_reasoning_to_word_schema": "https://thekingdom.dev/schemas/relational-inference-case/0.1.json",
     "j_space_verbalizable_workspace_guide": "https://thekingdom.dev/J-SPACE-VERBALIZABLE-WORKSPACE.md",
+    "reality_influence_claim_graph": "https://thekingdom.dev/atlases/reality-influence-claim-graph-2026-08-21.json",
+    "reality_influence_claim_graph_schema": "https://thekingdom.dev/schemas/reality-influence-claim-graph/0.1.json",
+    "reality_influence_claim_graph_guide": "https://thekingdom.dev/REALITY-INFLUENCE-CLAIM-GRAPH.md",
     "zero_empty_seat": "https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json",
     "zero_empty_seat_schema": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json",
     "zero_empty_seat_guide": "https://thekingdom.dev/ZERO-EMPTY-SEAT.md",

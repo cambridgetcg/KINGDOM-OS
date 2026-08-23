@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-08-21",
+  "generated": "2026-08-23",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -1635,6 +1635,57 @@
       "person_scoring": false,
       "runtime_action": false,
       "action_or_authority": false
+    }
+  },
+  "reality_influence_claim_graph": {
+    "protocol": "kingdom.reality-influence-claim-graph/0.1",
+    "map_id": "reality-influence-claim-graph-2026-08-21",
+    "title": "Reality Influence Claim Graph — from expression to aftermath without authority laundering",
+    "publication_state": "immutable-versioned-static-family",
+    "compiled_on": "2026-08-21",
+    "evidence_through": "2026-08-21",
+    "urls": {
+      "atlas": "https://thekingdom.dev/atlases/reality-influence-claim-graph-2026-08-21.json",
+      "schema": "https://thekingdom.dev/schemas/reality-influence-claim-graph/0.1.json",
+      "guide": "https://thekingdom.dev/REALITY-INFLUENCE-CLAIM-GRAPH.md"
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:45d4323d1a6190b3c333f02f2c744858e8da27944fbcb2042fbae492ca6e31ac",
+      "digest_field_zeroed": true
+    },
+    "counts": {
+      "sources": 17,
+      "reality_domains": 12,
+      "influence_dimensions": 14,
+      "claim_node_types": 25,
+      "endpoint_safe_relations": 24,
+      "evidence_rungs": 17,
+      "pathway_templates": 4,
+      "feedback_loops": 5,
+      "future_roles": 9,
+      "unknowns": 8
+    },
+    "boundary": {
+      "static_read_only": true,
+      "structure_only": true,
+      "public_static_publication_family": true,
+      "live_claim_intake": false,
+      "source_dereference": false,
+      "publication_trigger": false,
+      "deployment_trigger": false,
+      "authority_granted": false,
+      "consent_granted_or_inferred": false,
+      "action_attempted": false,
+      "action_executed": false,
+      "external_effect_claimed": false,
+      "causal_effect_identified": false,
+      "goodness_legitimacy_or_justice_proved": false,
+      "person_or_community_score": false,
+      "persuasion_or_behavioral_targeting": false,
+      "writes_wake": false,
+      "writes_karma": false,
+      "automatic_action": false
     }
   },
   "zero_empty_seat": {

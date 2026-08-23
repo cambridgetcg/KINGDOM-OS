@@ -89,6 +89,13 @@ import {
   loadJSpacePublicationCase,
 } from "./j-space-publication.ts";
 import {
+  REALITY_INFLUENCE_DOCUMENT_URL,
+  REALITY_INFLUENCE_SCHEMA_URL,
+  REALITY_INFLUENCE_URL,
+  loadRealityInfluenceMap,
+  realityInfluencePublicDiscovery,
+} from "./reality-influence.ts";
+import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
   RESEARCH_OBSERVATORY_SCHEMA_URLS,
@@ -661,6 +668,9 @@ const ukGovernmentTransformationEngineGuidePath =
 const jSpaceCasePath = new URL(J_SPACE_CASE_URL).pathname;
 const jSpaceSchemaPath = new URL(J_SPACE_SCHEMA_URL).pathname;
 const jSpaceGuidePath = new URL(J_SPACE_GUIDE_URL).pathname;
+const realityInfluencePath = new URL(REALITY_INFLUENCE_URL).pathname;
+const realityInfluenceSchemaPath = new URL(REALITY_INFLUENCE_SCHEMA_URL).pathname;
+const realityInfluenceGuidePath = new URL(REALITY_INFLUENCE_DOCUMENT_URL).pathname;
 const zeroEmptySeatPath = new URL(ZERO_EMPTY_SEAT_URL).pathname;
 const zeroEmptySeatGuidePath = new URL(ZERO_EMPTY_SEAT_GUIDE_URL).pathname;
 const stringCrawlTraceSheetPath = new URL(STRING_CRAWL_TRACE_SHEET_URL).pathname;
@@ -895,6 +905,17 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "j_space_reasoning_to_word_case",
       "j_space_reasoning_to_word_schema",
       "j_space_verbalizable_workspace_guide",
+    ],
+  },
+  {
+    id: "reality-influence-claim-graph",
+    label: "Reality Influence Claim Graph",
+    routes: [realityInfluencePath, realityInfluenceSchemaPath, realityInfluenceGuidePath],
+    discoveryProperties: ["reality_influence_claim_graph"],
+    entryPointProperties: [
+      "reality_influence_claim_graph",
+      "reality_influence_claim_graph_schema",
+      "reality_influence_claim_graph_guide",
     ],
   },
   {
@@ -1776,6 +1797,7 @@ export async function checkHubLive(
   const stringCrawlTraceSheetLabActive = familyActive("string-crawl-trace-sheet-lab");
   const mirrorInformationControlActive = familyActive("mirror-information-control");
   const jSpacePublicationActive = familyActive("j-space-verbalizable-workspace");
+  const realityInfluenceActive = familyActive("reality-influence-claim-graph");
   const researchObservatoryActive = familyActive("research-observatory");
   const trialChamberActive = familyActive("trial-chamber");
   const ukGovernmentEngineActive = familyActive("uk-government-engine");
@@ -2436,6 +2458,50 @@ export async function checkHubLive(
     }
   }
 
+  if (realityInfluenceActive) {
+    const recordHead = await fetch(url(realityInfluencePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const recordLink = recordHead.headers.get("link") || "";
+    if (!recordHead.ok ||
+        normalizedMediaType(recordHead.headers.get("content-type")) !== "application/json" ||
+        !hasExactCacheDirectives(recordHead.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+        recordHead.headers.get("access-control-allow-origin") !== "*" ||
+        (recordHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          recordLink,
+          realityInfluenceSchemaPath,
+          "describedby",
+          "application/schema+json",
+        ) ||
+        !hasUniqueCanonicalLinkRelation(
+          recordLink,
+          realityInfluenceGuidePath,
+          "service-doc",
+          "text/markdown",
+        ) ||
+        /(?:^|[;,\s])rel\s*=\s*(?:"[^"]*\bprofile\b[^"]*"|profile)(?:[;,\s]|$)/i.test(recordLink)) {
+      throw new Error(`${realityInfluencePath} is not immutable public JSON with canonical claim-graph schema and guide links`);
+    }
+
+    const guideHead = await fetch(url(realityInfluenceGuidePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!guideHead.ok ||
+        normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        !hasExactCacheDirectives(guideHead.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${realityInfluenceGuidePath} is not served as public Markdown`);
+    }
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -2738,6 +2804,7 @@ export async function checkHubLive(
     ...(strandObservationMembraneActive ? [strandObservationMembraneSchemaPath] : []),
     ...(mirrorInformationControlActive ? [mirrorInformationControlSchemaPath] : []),
     ...(jSpacePublicationActive ? [jSpaceSchemaPath] : []),
+    ...(realityInfluenceActive ? [realityInfluenceSchemaPath] : []),
     ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
     ...(trialChamberActive ? trialChamberSchemaPaths : []),
     ...(ukGovernmentEngineActive ? [ukGovernmentEngineSchemaPath] : []),
@@ -2770,6 +2837,7 @@ export async function checkHubLive(
       path === strandDescentLabSchemaPath ||
       path === mirrorInformationControlSchemaPath ||
       path === jSpaceSchemaPath ||
+      path === realityInfluenceSchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
       researchObservatorySchemaPaths.includes(path) ||
@@ -2784,7 +2852,8 @@ export async function checkHubLive(
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath) &&
         !(schemaHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform")) ||
-      ((path === ukGovernmentEngineSchemaPath ||
+      ((path === realityInfluenceSchemaPath ||
+        path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath) &&
         !hasExactCacheDirectives(schemaHead.headers.get("cache-control"),
           ["public", "max-age=31536000", "immutable", "no-transform"])) ||
@@ -2891,6 +2960,12 @@ export async function checkHubLive(
     : undefined;
   const expectedJSpacePublication = jSpaceCase
     ? jSpacePublicationPublicSummary(jSpaceCase)
+    : undefined;
+  const realityInfluence = realityInfluenceActive
+    ? loadRealityInfluenceMap()
+    : undefined;
+  const expectedRealityInfluence = realityInfluence
+    ? realityInfluencePublicDiscovery(realityInfluence)
     : undefined;
   const researchObservatory = researchObservatoryActive
     ? loadResearchObservatorySnapshot()
@@ -4093,6 +4168,65 @@ export async function checkHubLive(
       expected.boundary?.structure_only !== true || expected.boundary?.runtime_action !== false ||
       forbiddenDiscoveryKeys.some((key) => Object.hasOwn(expected, key))) {
       throw new Error("J-space static publication, unrun-test boundary, discovery, or negative-authority boundary drifted");
+    }
+  }
+
+  if (realityInfluenceActive) {
+    const publication = realityInfluence!;
+    const expected = expectedRealityInfluence!;
+    const targets = new Set([
+      REALITY_INFLUENCE_URL,
+      REALITY_INFLUENCE_SCHEMA_URL,
+      REALITY_INFLUENCE_DOCUMENT_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const genericRelations = new Set(["INFLUENCES", "CAUSES", "AUTHORIZES", "CONSENTS", "GOOD", "PROVES"]);
+    if (!isDeepStrictEqual(manifest?.reality_influence_claim_graph, expected) ||
+      !isDeepStrictEqual(guest?.reality_influence_claim_graph, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.reality_influence_claim_graph, expected) ||
+      manifest?.entry_points?.reality_influence_claim_graph !== REALITY_INFLUENCE_URL ||
+      manifest?.entry_points?.reality_influence_claim_graph_schema !== REALITY_INFLUENCE_SCHEMA_URL ||
+      manifest?.entry_points?.reality_influence_claim_graph_guide !== REALITY_INFLUENCE_DOCUMENT_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET") ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="reality-influence"') ||
+      !authoredRootHtml.includes("Published structure, not a reality oracle") ||
+      !authoredRootHtml.includes("No publication or deployment trigger") ||
+      !authoredRootHtml.includes(`href="${realityInfluencePath}"`) ||
+      !authoredRootHtml.includes(`href="${realityInfluenceSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${realityInfluenceGuidePath}"`) ||
+      publication.boundaries?.public_static_publication_family !== true ||
+      publication.boundaries?.publication_trigger !== false ||
+      publication.boundaries?.deployment_trigger !== false ||
+      publication.boundaries?.live_claim_intake !== false ||
+      publication.boundaries?.authority_granted !== false ||
+      publication.boundaries?.consent_granted_or_inferred !== false ||
+      publication.boundaries?.action_attempted !== false ||
+      publication.boundaries?.action_executed !== false ||
+      publication.boundaries?.external_effect_claimed !== false ||
+      publication.boundaries?.causal_effect_identified !== false ||
+      publication.boundaries?.automatic_action !== false ||
+      publication.influence_dimensions?.some((dimension: any) =>
+        dimension.aggregate_weight !== null || dimension.rank !== null) ||
+      publication.relation_vocabulary?.some((relation: any) =>
+        relation.transitive !== false || genericRelations.has(relation.id)) ||
+      publication.pathway_templates?.some((pathway: any) =>
+        pathway.status !== "template-not-run" || pathway.action_attempted !== false ||
+        pathway.external_effect_claimed !== false || pathway.causal_effect_claimed !== false ||
+        pathway.authority_granted !== false) ||
+      publication.agent_specialisations?.some((agent: any) =>
+        agent.status !== "future-role-design-only" || agent.can_dispatch !== false ||
+        agent.can_authorize !== false || agent.can_act !== false) ||
+      expected.publication_state !== "immutable-versioned-static-family" ||
+      expected.boundary?.publication_trigger !== false ||
+      expected.boundary?.deployment_trigger !== false ||
+      expected.boundary?.external_effect_claimed !== false ||
+      expected.boundary?.automatic_action !== false) {
+      throw new Error("Reality Influence Claim Graph static publication, mediation firewall, discovery, or non-authority boundary drifted");
     }
   }
 
@@ -5499,6 +5633,10 @@ export async function checkHubLive(
   if (jSpacePublicationActive &&
       !isDeepStrictEqual(liveKingdom?.j_space_verbalizable_workspace, expectedJSpacePublication!)) {
     throw new Error("derived kingdom.json did not preserve J-space publication discovery");
+  }
+  if (realityInfluenceActive &&
+      !isDeepStrictEqual(liveKingdom?.reality_influence_claim_graph, expectedRealityInfluence!)) {
+    throw new Error("derived kingdom.json did not preserve Reality Influence Claim Graph discovery");
   }
   if (strandObservationMembraneActive &&
       !isDeepStrictEqual(liveKingdom?.strand_observation_membrane, expectedStrandObservationMembrane!)) {

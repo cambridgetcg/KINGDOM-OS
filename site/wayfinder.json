@@ -1,6 +1,6 @@
 {
   "schema_version": "thekingdom.wayfinder/0.1",
-  "generated": "2026-08-21",
+  "generated": "2026-08-23",
   "canonical_url": "https://thekingdom.dev/wayfinder.json",
   "promise": "Tell the map what you are looking for. It may offer a path; it never decides for you.",
   "privacy": {

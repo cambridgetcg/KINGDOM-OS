@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-21",
+  "generated": "2026-08-23",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -1607,6 +1607,57 @@
       "person_scoring": false,
       "runtime_action": false,
       "action_or_authority": false
+    }
+  },
+  "reality_influence_claim_graph": {
+    "protocol": "kingdom.reality-influence-claim-graph/0.1",
+    "map_id": "reality-influence-claim-graph-2026-08-21",
+    "title": "Reality Influence Claim Graph — from expression to aftermath without authority laundering",
+    "publication_state": "immutable-versioned-static-family",
+    "compiled_on": "2026-08-21",
+    "evidence_through": "2026-08-21",
+    "urls": {
+      "atlas": "https://thekingdom.dev/atlases/reality-influence-claim-graph-2026-08-21.json",
+      "schema": "https://thekingdom.dev/schemas/reality-influence-claim-graph/0.1.json",
+      "guide": "https://thekingdom.dev/REALITY-INFLUENCE-CLAIM-GRAPH.md"
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:45d4323d1a6190b3c333f02f2c744858e8da27944fbcb2042fbae492ca6e31ac",
+      "digest_field_zeroed": true
+    },
+    "counts": {
+      "sources": 17,
+      "reality_domains": 12,
+      "influence_dimensions": 14,
+      "claim_node_types": 25,
+      "endpoint_safe_relations": 24,
+      "evidence_rungs": 17,
+      "pathway_templates": 4,
+      "feedback_loops": 5,
+      "future_roles": 9,
+      "unknowns": 8
+    },
+    "boundary": {
+      "static_read_only": true,
+      "structure_only": true,
+      "public_static_publication_family": true,
+      "live_claim_intake": false,
+      "source_dereference": false,
+      "publication_trigger": false,
+      "deployment_trigger": false,
+      "authority_granted": false,
+      "consent_granted_or_inferred": false,
+      "action_attempted": false,
+      "action_executed": false,
+      "external_effect_claimed": false,
+      "causal_effect_identified": false,
+      "goodness_legitimacy_or_justice_proved": false,
+      "person_or_community_score": false,
+      "persuasion_or_behavioral_targeting": false,
+      "writes_wake": false,
+      "writes_karma": false,
+      "automatic_action": false
     }
   },
   "zero_empty_seat": {
@@ -3435,6 +3486,24 @@
       "action": "if useful, read the J-space mathematics, cross-domain translations, experimental design, and non-grants",
       "method": "GET",
       "url": "https://thekingdom.dev/J-SPACE-VERBALIZABLE-WORKSPACE.md"
+    },
+    {
+      "action": "if useful, inspect the exact Reality Influence Claim Graph",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/reality-influence-claim-graph-2026-08-21.json",
+      "note": "immutable static claim vocabulary only; no live intake, source fetch, authority, consent, action, external effect, causal verdict, moral verdict, score, or automatic action"
+    },
+    {
+      "action": "if useful, validate the closed Reality Influence Claim Graph structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/reality-influence-claim-graph/0.1.json",
+      "note": "structural validation only; it does not authenticate sources, prove truth or causation, verify authority or consent, execute a pathway, or establish live serving"
+    },
+    {
+      "action": "if useful, read the mediation, evidence, feedback, aftermath, repair, and stopping-rule guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/REALITY-INFLUENCE-CLAIM-GRAPH.md",
+      "note": "the immutable publication family creates no publication or deployment trigger and the ledger proves byte identity only"
     },
     {
       "action": "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings",
@@ -6075,6 +6144,7 @@
     "being_access_aftermath_atlas": "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
     "being_access_aftermath_atlas_v0_2": "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
     "number_isness_theology_atlas": "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
+    "reality_influence_claim_graph": "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }

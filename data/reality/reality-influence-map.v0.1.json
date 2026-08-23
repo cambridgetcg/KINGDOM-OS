@@ -10,8 +10,8 @@
   "scope": {
     "question": "Through which typed and inspectable mediators can a KINGDOM expression or artifact participate in changes to semantic, informational, social, institutional, digital, material, ecological, or affected-party states?",
     "definition_of_reality": "A family of source-, domain-, observer-, place-, and time-indexed states and reported experiences; not one global coordinate and not a complete metaphysical theory.",
-    "intended_use": "Research, communication design, claim typing, action-gate review, affected-party and externality planning, causal-question formulation, feedback inspection, and future public-artifact agent specialisation.",
-    "excluded_use": "A reality oracle, persuasion or behavior-control engine, authority or consent generator, action router, person or community score, causal verdict, moral verdict, governance system, WAKE or KARMA writer, publication, deployment, or live effect claim.",
+    "intended_use": "Public static inspection, research, communication design, claim typing, action-gate review, affected-party and externality planning, causal-question formulation, feedback inspection, and future public-artifact agent specialisation.",
+    "excluded_use": "A reality oracle, persuasion or behavior-control engine, authority or consent generator, action router, person or community score, causal verdict, moral verdict, governance system, WAKE or KARMA writer, publication or deployment trigger, or live effect claim.",
     "unit_of_analysis": "One typed claim node or relation under a declared scope, horizon, provenance, uncertainty, and non-grant; never a person, community, world, religion, or civilization reduced to a scalar.",
     "data_classification": "public-attributed-source-metadata-and-design-only",
     "operating_state": "static-structure-only-no-live-claims-no-execution"
@@ -531,8 +531,9 @@
   "boundaries": {
     "read_only": true,
     "structure_only": true,
-    "research_local": true,
+    "research_artifact": true,
     "static_atlas": true,
+    "public_static_publication_family": true,
     "public_or_safely_redacted_only": true,
     "network": false,
     "filesystem_write": false,
@@ -541,8 +542,8 @@
     "model_or_tokenizer_run": false,
     "agent_dispatch": false,
     "mcp_or_nen_ability": false,
-    "publication": false,
-    "deployment": false,
+    "publication_trigger": false,
+    "deployment_trigger": false,
     "trial_requested": false,
     "adoption_recorded": false,
     "use_authority_issued": false,
@@ -571,7 +572,7 @@
   },
   "integrity": {
     "algorithm": "sha256-recursive-sorted-json-keys-v1",
-    "digest": "sha256:7b18c3372d08a680d94bc2d243d09624dbe21ad8575b4f3d2dec9fab878ecd4a",
+    "digest": "sha256:45d4323d1a6190b3c333f02f2c744858e8da27944fbcb2042fbae492ca6e31ac",
     "digest_field_zeroed": true
   }
 }

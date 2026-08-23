@@ -37,7 +37,7 @@ describe("Fold & Feedback Atlas publication", () => {
       source: "references/fold-feedback-atlas.md",
       destination: "FOLD-FEEDBACK-ATLAS.md",
     });
-    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(10);
+    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(11);
     expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
     expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
   });
