@@ -695,6 +695,44 @@ family performs no monitoring or consciousness, lie/deception,
 identity, understanding, or person inference. It grants no consent, action,
 permission, or authority; the KINGDOM MCP remains unchanged.
 
+Language, civilisation, and task fusion is available as a research-local
+[source and design guide](references/language-civilisation-task-fusion.md), a
+closed planned weave, and a strict offline validator. It keeps language,
+script, glyph, grapheme, token, register, community, polity, and model
+representation distinct; treats institutional history, corpus prevalence,
+token cost, benchmark coverage, and learned model weight as different kinds;
+and plans fusion only over attributed public artifacts through a visible task
+graph. The
+reviewed example is entirely `NOT_RUN`: it makes no model-capability or
+translation-fidelity claim, performs no automatic routing, and ranks neither
+languages nor cultures. Use
+`bun bin/language-civilisation-task-fusion.ts verify --json`; there is no
+native OS route, hub publication, agent dispatch, or authority effect.
+
+Words, sacred stories, religion, and civilisational emergence are mapped in a
+separate research-local [influence and emergence guide](references/word-story-religion-civilisation-map.md),
+with a closed, digest-sealed record and strict offline validator. It models
+names, attributed divine claims, narrative, ritual, media, canon, institutions,
+law, power, translation, dissent, suppression, and revival as distinct but
+interacting layers. Influence remains a source-, place-, period-, and
+register-indexed vector rather than a religion or civilisation score. Use
+`bun bin/word-story-religion-civilisation.ts verify --json`; it adjudicates no
+theology, infers no belief or identity, merges no deity or tradition, dispatches
+no agent, and creates no publication, authority, WAKE, KARMA, or action.
+
+How KINGDOM may participate in changes beyond its own artifacts is mapped in a
+separate research-local [Reality Influence Claim Graph](references/reality-influence-map.md),
+with a closed, digest-sealed atlas and strict offline validator. It separates
+expression, artifact, distribution, exposure, attributed public response,
+proposal, decision, authority, consent or lawful basis, capability, attempt,
+execution, outcome, causal assessment, normative assessment, and repair. Its
+influence dimensions cannot be summed or ranked, every pathway is
+`template-not-run`, and pre-invocation non-action remains distinct from
+post-attempt refusal or cancellation. Use
+`bun bin/reality-influence.ts verify --json`; it accepts no live claim, grants no
+authority or consent, dispatches no agent, executes no action, and creates no
+external effect, causal verdict, goodness verdict, publication, or deployment.
+
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at
 [`/atlases/zero-empty-seat-2026-08-14.json`](https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json),
