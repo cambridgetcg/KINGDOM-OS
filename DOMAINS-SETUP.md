@@ -87,12 +87,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 138 assets:
-111 ledgered immutable/versioned assets and 27 mutable assets. There are 136 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 143 assets:
+114 ledgered immutable/versioned assets and 29 mutable assets. There are 141 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 135 URLs. The generated surface describes eleven
+contracts. The sitemap contains 140 URLs. The generated surface describes eleven
 atlases, three lab routes, one experiment route, and one separate activation
-across twenty-four retirement families:
+across twenty-five retirement families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 the mutable `/observatory/` human view and `/research.json` metadata snapshot;
@@ -114,6 +114,14 @@ five-route family depends on and must retire with the active UK Government
 Engine family; every dossier state is state at publication only, and a build or
 live release after its declared `nextReviewDue` must replace or fully retire the
 family rather than presenting the dated state as current;
+the mutable `/evaluation-covenant/` human view and `/evaluation-covenants.json`
+alias; the immutable dated Evaluation Covenant snapshot, its single closed
+`/evaluation/schemas/v0.1/public-snapshot.schema.json` contract, and
+`/EVALUATION-COVENANT-v0.1.md` guide; this five-route family depends on and must
+retire with the active UK Government Transformation Engine family, inherits its
+`nextReviewDue`, and remains synthetic Phase-0 design only: draft, unsealed,
+unregistered, with no run, data, participants, result, observed outcome, selection,
+decision, action, adoption, implementation, or authority;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
 `CREATION-LOOP.md`; the authored
 `/principalities/moonshot-hf-npm-2026-08-11.json`,

@@ -138,6 +138,19 @@ import {
   ukGovernmentTransformationPublicSummary,
 } from "./uk-government-transformation-engine.ts";
 import {
+  EVALUATION_COVENANT_ALIAS_URL,
+  EVALUATION_COVENANT_BYTE_SHA256,
+  EVALUATION_COVENANT_CANONICAL_URL,
+  EVALUATION_COVENANT_GUIDE_URL,
+  EVALUATION_COVENANT_NEXT_REVIEW_DUE,
+  EVALUATION_COVENANT_PRODUCER_URL,
+  EVALUATION_COVENANT_SCHEMA_URL,
+  EVALUATION_COVENANT_URL,
+  evaluationCovenantPublicSummary,
+  loadEvaluationCovenantSnapshot,
+  renderEvaluationCovenantHtml,
+} from "./evaluation-covenant.ts";
+import {
   ZERO_EMPTY_SEAT_BYTE_SHA256,
   ZERO_EMPTY_SEAT_DIGEST,
   ZERO_EMPTY_SEAT_GUIDE_BYTE_SHA256,
@@ -665,6 +678,14 @@ const ukGovernmentTransformationEngineSchemaPath =
   new URL(UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_URL).pathname;
 const ukGovernmentTransformationEngineGuidePath =
   new URL(UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_URL).pathname;
+const evaluationCovenantPath = "/evaluation-covenant/";
+const evaluationCovenantAliasPath = "/evaluation-covenants.json";
+const evaluationCovenantCanonicalPath =
+  "/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json";
+const evaluationCovenantSchemaPath =
+  "/evaluation/schemas/v0.1/public-snapshot.schema.json";
+const evaluationCovenantGuidePath = "/EVALUATION-COVENANT-v0.1.md";
+const evaluationCovenantNextReviewDue = EVALUATION_COVENANT_NEXT_REVIEW_DUE;
 const jSpaceCasePath = new URL(J_SPACE_CASE_URL).pathname;
 const jSpaceSchemaPath = new URL(J_SPACE_SCHEMA_URL).pathname;
 const jSpaceGuidePath = new URL(J_SPACE_GUIDE_URL).pathname;
@@ -704,6 +725,7 @@ export type PublicationFamily = {
   discoveryProperties: readonly string[];
   entryPointProperties: readonly string[];
   dependsOn?: readonly string[];
+  nextReviewDue?: string;
 };
 
 export type PublicationFamilyState = {
@@ -994,6 +1016,28 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "uk_government_transformation_engine_guide",
     ],
     dependsOn: ["uk-government-engine"],
+    nextReviewDue: UK_GOVERNMENT_TRANSFORMATION_ENGINE_NEXT_REVIEW_DUE,
+  },
+  {
+    id: "evaluation-covenant",
+    label: "Evaluation Covenant",
+    routes: [
+      evaluationCovenantPath,
+      evaluationCovenantAliasPath,
+      evaluationCovenantCanonicalPath,
+      evaluationCovenantSchemaPath,
+      evaluationCovenantGuidePath,
+    ],
+    discoveryProperties: ["evaluation_covenant"],
+    entryPointProperties: [
+      "evaluation_covenant",
+      "evaluation_covenant_alias",
+      "evaluation_covenant_canonical",
+      "evaluation_covenant_schema",
+      "evaluation_covenant_guide",
+    ],
+    dependsOn: ["uk-government-transformation-engine"],
+    nextReviewDue: evaluationCovenantNextReviewDue,
   },
   {
     id: "strand-observation-membrane",
@@ -1137,18 +1181,15 @@ export function assertPublicationFamilyReleaseWindows(
   states: ReadonlyMap<string, PublicationFamilyState>,
   checkedOn: string,
 ): void {
-  const transformation = states.get("uk-government-transformation-engine");
-  if (!transformation) {
-    throw new Error(
-      "UK Government Transformation Engine publication family is not registered",
-    );
+  for (const { family, active } of states.values()) {
+    if (!family.nextReviewDue) continue;
+    assertActivePublicationReviewWindow({
+      active,
+      checkedOn,
+      label: family.label,
+      nextReviewDue: family.nextReviewDue,
+    });
   }
-  assertActivePublicationReviewWindow({
-    active: transformation.active,
-    checkedOn,
-    label: transformation.family.label,
-    nextReviewDue: UK_GOVERNMENT_TRANSFORMATION_ENGINE_NEXT_REVIEW_DUE,
-  });
 }
 
 function record(value: unknown): value is Record<string, unknown> {
@@ -1803,6 +1844,7 @@ export async function checkHubLive(
   const ukGovernmentEngineActive = familyActive("uk-government-engine");
   const ukGovernmentTransformationEngineActive =
     familyActive("uk-government-transformation-engine");
+  const evaluationCovenantActive = familyActive("evaluation-covenant");
   const strandObservationMembraneActive = familyActive("strand-observation-membrane");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
@@ -2782,6 +2824,118 @@ export async function checkHubLive(
     }
   }
 
+  if (evaluationCovenantActive) {
+    const routeContracts = [
+      {
+        label: "page",
+        path: evaluationCovenantPath,
+        contentType: "text/html",
+        cache: ["no-cache", "no-transform"],
+        cors: false,
+        nosniff: false,
+      },
+      {
+        label: "alias",
+        path: evaluationCovenantAliasPath,
+        contentType: "application/json",
+        cache: ["no-cache", "no-transform"],
+        cors: true,
+        nosniff: true,
+      },
+      {
+        label: "canonical",
+        path: evaluationCovenantCanonicalPath,
+        contentType: "application/json",
+        cache: ["public", "max-age=31536000", "immutable", "no-transform"],
+        cors: true,
+        nosniff: true,
+      },
+      {
+        label: "schema",
+        path: evaluationCovenantSchemaPath,
+        contentType: "application/schema+json",
+        cache: ["public", "max-age=31536000", "immutable", "no-transform"],
+        cors: true,
+        nosniff: true,
+      },
+      {
+        label: "guide",
+        path: evaluationCovenantGuidePath,
+        contentType: "text/markdown",
+        cache: ["public", "max-age=31536000", "immutable", "no-transform"],
+        cors: true,
+        nosniff: true,
+      },
+    ] as const;
+    for (const contract of routeContracts) {
+      const response = await fetch(url(contract.path), {
+        method: "HEAD",
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const links = response.headers.get("link") || "";
+      const publicationLinksValid = contract.label !== "alias" &&
+          contract.label !== "canonical"
+        ? true
+        : hasUniqueCanonicalLinkRelation(
+            links,
+            evaluationCovenantCanonicalPath,
+            "canonical",
+            "application/json",
+          ) &&
+          hasUniqueCanonicalLinkRelation(
+            links,
+            evaluationCovenantSchemaPath,
+            "describedby",
+            "application/schema+json",
+          ) &&
+          hasUniqueCanonicalLinkRelation(
+            links,
+            evaluationCovenantGuidePath,
+            "service-doc",
+            "text/markdown",
+          );
+      if (!response.ok ||
+          normalizedMediaType(response.headers.get("content-type")) !==
+            contract.contentType ||
+          !hasExactCacheDirectives(
+            response.headers.get("cache-control"),
+            contract.cache,
+          ) ||
+          (contract.cors &&
+            response.headers.get("access-control-allow-origin") !== "*") ||
+          (contract.nosniff &&
+            (response.headers.get("x-content-type-options") || "")
+              .toLowerCase() !== "nosniff") ||
+          !publicationLinksValid ||
+          (await response.arrayBuffer()).byteLength !== 0) {
+        throw new Error(
+          "Evaluation Covenant " + contract.label +
+          " publication or HEAD boundary drifted",
+        );
+      }
+      for (const method of ["POST", "PUT", "PATCH", "DELETE"] as const) {
+        const mutation = await fetch(url(contract.path), {
+          method,
+          redirect: "error",
+          signal: AbortSignal.timeout(TIMEOUT_MS),
+        });
+        if (mutation.status !== 405 ||
+            mutation.headers.get("allow") !== "GET, HEAD" ||
+            mutation.headers.get("cache-control") !== "no-store" ||
+            mutation.headers.get("access-control-allow-origin") !== "*" ||
+            (mutation.headers.get("x-content-type-options") || "")
+              .toLowerCase() !== "nosniff" ||
+            (await mutation.arrayBuffer()).byteLength !== 0) {
+          throw new Error(
+            method + " " + contract.path +
+            " did not remain a zero-body 405 read-only boundary",
+          );
+        }
+      }
+    }
+  }
+
   const schemaPaths = [
     commonsSchemaPath,
     commonsLegacySchemaPath,
@@ -2811,6 +2965,7 @@ export async function checkHubLive(
     ...(ukGovernmentTransformationEngineActive
       ? [ukGovernmentTransformationEngineSchemaPath]
       : []),
+    ...(evaluationCovenantActive ? [evaluationCovenantSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
@@ -2840,6 +2995,7 @@ export async function checkHubLive(
       path === realityInfluenceSchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
+      path === evaluationCovenantSchemaPath ||
       researchObservatorySchemaPaths.includes(path) ||
       trialChamberSchemaPaths.includes(path);
     const hasExpectedSchemaType = requiresExactSchemaType
@@ -2850,11 +3006,13 @@ export async function checkHubLive(
       (schemaHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
       ((trialChamberSchemaPaths.includes(path) ||
         path === ukGovernmentEngineSchemaPath ||
-        path === ukGovernmentTransformationEngineSchemaPath) &&
+        path === ukGovernmentTransformationEngineSchemaPath ||
+        path === evaluationCovenantSchemaPath) &&
         !(schemaHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform")) ||
       ((path === realityInfluenceSchemaPath ||
         path === ukGovernmentEngineSchemaPath ||
-        path === ukGovernmentTransformationEngineSchemaPath) &&
+        path === ukGovernmentTransformationEngineSchemaPath ||
+        path === evaluationCovenantSchemaPath) &&
         !hasExactCacheDirectives(schemaHead.headers.get("cache-control"),
           ["public", "max-age=31536000", "immutable", "no-transform"])) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
@@ -2902,6 +3060,12 @@ export async function checkHubLive(
           ),
         )
       : undefined;
+  const authoredEvaluationCovenantHtml = evaluationCovenantActive
+    ? readFileSync(join(ROOT, "site/evaluation-covenant/index.html"), "utf8")
+    : "";
+  const publishedEvaluationCovenant: any = evaluationCovenantActive
+    ? JSON.parse(readFileSync(join(ROOT, "site/evaluation-covenants.json"), "utf8"))
+    : undefined;
   const retirementDiscoverySurfaces: readonly DiscoverySurface[] = [
     { label: "agent manifest", text: JSON.stringify(manifest), value: manifest },
     { label: "guest document", text: JSON.stringify(guest), value: guest },
@@ -2995,6 +3159,12 @@ export async function checkHubLive(
           ukGovernmentTransformationEngine,
         )
       : undefined;
+  const evaluationCovenant = evaluationCovenantActive
+    ? loadEvaluationCovenantSnapshot()
+    : undefined;
+  const expectedEvaluationCovenant = evaluationCovenant
+    ? evaluationCovenantPublicSummary(evaluationCovenant)
+    : undefined;
   const strandObservationMembrane = strandObservationMembraneActive
     ? loadStrandObservationMembrane()
     : undefined;
@@ -3599,6 +3769,139 @@ export async function checkHubLive(
       ) !== UK_GOVERNMENT_TRANSFORMATION_ENGINE_BYTE_SHA256) {
       throw new Error(
         "UK Government Transformation Engine base admission, freshness, dual graph, TaxSorted taint, discovery, or negative-authority boundary drifted",
+      );
+    }
+  }
+  if (evaluationCovenantActive) {
+    const snapshot = evaluationCovenant!;
+    const expected = expectedEvaluationCovenant!;
+    const actionTargets = new Set([
+      EVALUATION_COVENANT_URL,
+      EVALUATION_COVENANT_ALIAS_URL,
+      EVALUATION_COVENANT_CANONICAL_URL,
+      EVALUATION_COVENANT_SCHEMA_URL,
+      EVALUATION_COVENANT_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => actionTargets.has(action?.url))
+      : [];
+    const entryPoints = Object.entries(manifest?.entry_points ?? {})
+      .filter(([key]) => key.startsWith("evaluation_covenant"));
+    const wayfinderPath = authoredWayfinder?.paths?.filter((path: any) =>
+      path?.id === "evaluation-covenant") ?? [];
+    const externalLinks = [
+      ...authoredEvaluationCovenantHtml.matchAll(/href="(https:\/\/[^"#]+)"/g),
+    ].map((match) => match[1]);
+    const sourceUrls = snapshot.sources.map((source: any) => source.url);
+    const permittedExternalLinks = new Set([
+      EVALUATION_COVENANT_PRODUCER_URL,
+      ...sourceUrls,
+    ]);
+    const allDesigns = snapshot.designs;
+    const allQuestions = allDesigns.flatMap((design: any) => design.evaluationQuestions);
+    const allMeasures = allDesigns.flatMap((design: any) => design.measures);
+    const allEstimands = allDesigns.flatMap((design: any) => design.estimands);
+    const allComparators = allDesigns.flatMap((design: any) => design.comparators);
+    const allGates = allDesigns.flatMap((design: any) => design.humanGates);
+    const allStops = allDesigns.flatMap((design: any) => design.stopRules);
+    const allGuardrails = allDesigns.flatMap((design: any) => design.guardrails);
+    if (!isDeepStrictEqual(manifest?.evaluation_covenant, expected) ||
+      !isDeepStrictEqual(guest?.evaluation_covenant, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.evaluation_covenant, expected) ||
+      !isDeepStrictEqual(publishedEvaluationCovenant, snapshot) ||
+      authoredEvaluationCovenantHtml !== renderEvaluationCovenantHtml(snapshot) ||
+      manifest?.entry_points?.evaluation_covenant !== EVALUATION_COVENANT_URL ||
+      manifest?.entry_points?.evaluation_covenant_alias !== EVALUATION_COVENANT_ALIAS_URL ||
+      manifest?.entry_points?.evaluation_covenant_canonical !== EVALUATION_COVENANT_CANONICAL_URL ||
+      manifest?.entry_points?.evaluation_covenant_schema !== EVALUATION_COVENANT_SCHEMA_URL ||
+      manifest?.entry_points?.evaluation_covenant_guide !== EVALUATION_COVENANT_GUIDE_URL ||
+      entryPoints.length !== 5 ||
+      guestActions.length !== actionTargets.size ||
+      [...actionTargets].some((target) =>
+        guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        "mcp" in action || "tool" in action || "schemas" in action || "write" in action ||
+        "score" in action || "rank" in action || "recommendation" in action || "selection" in action) ||
+      [...actionTargets, EVALUATION_COVENANT_PRODUCER_URL].some((target) => !llms.includes(target)) ||
+      wayfinderPath.length !== 1 || wayfinderPath[0]?.stops?.length !== 2 ||
+      wayfinderPath[0]?.stops[0]?.url !== EVALUATION_COVENANT_URL ||
+      wayfinderPath[0]?.stops[1]?.url !== EVALUATION_COVENANT_ALIAS_URL ||
+      !wayfinderPath[0]?.boundary?.includes("no observed outcome") ||
+      !wayfinderPath[0]?.boundary?.includes("Desired-outcome IDs remain hypotheses") ||
+      !authoredRootHtml.includes('id="evaluation-covenant"') ||
+      !authoredRootHtml.includes('href="' + evaluationCovenantPath + '"') ||
+      !authoredRootHtml.includes('href="' + evaluationCovenantAliasPath + '"') ||
+      !authoredRootHtml.includes('href="' + evaluationCovenantCanonicalPath + '"') ||
+      !authoredRootHtml.includes('href="' + evaluationCovenantSchemaPath + '"') ||
+      !authoredRootHtml.includes('href="' + evaluationCovenantGuidePath + '"') ||
+      !authoredRootHtml.includes("What would count as evidence—before results can tempt us?") ||
+      !authoredRootHtml.includes("no observed outcome") ||
+      !authoredEvaluationCovenantHtml.includes(
+        "Evaluation Covenant · Phase 0 · Draft · Unsealed · Unregistered · No Run",
+      ) ||
+      !authoredEvaluationCovenantHtml.includes("Design the learning before the result exists.") ||
+      !authoredEvaluationCovenantHtml.includes(
+        "What would count as evidence—before results can tempt us?",
+      ) ||
+      !authoredEvaluationCovenantHtml.includes("State at publication only:") ||
+      !authoredEvaluationCovenantHtml.includes("next review due") ||
+      !authoredEvaluationCovenantHtml.includes("desired-outcome hypothesis") ||
+      !authoredEvaluationCovenantHtml.includes("not an observed outcome") ||
+      /<(?:script|form|input|button|iframe)\b/i.test(authoredEvaluationCovenantHtml) ||
+      authoredEvaluationCovenantHtml.includes('target="_blank"') ||
+      externalLinks.length !== permittedExternalLinks.size ||
+      externalLinks.some((url: string) => !permittedExternalLinks.has(url)) ||
+      [...permittedExternalLinks].some((url) =>
+        externalLinks.filter((candidate) => candidate === url).length !== 1) ||
+      expected.protocol !== "kingdom.evaluation-covenant-public-snapshot/0.1" ||
+      expected.state_at_publication !== "WITHIN-REVIEW-WINDOW" ||
+      expected.reader_time_state_embedded !== false ||
+      expected.as_of !== "2026-08-23" ||
+      expected.next_review_due !== EVALUATION_COVENANT_NEXT_REVIEW_DUE ||
+      expected.parent_transformation_engine?.canonical_url !==
+        UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_URL ||
+      expected.parent_transformation_engine?.use_as_evidence !== false ||
+      expected.counts?.designs !== 3 || expected.counts?.evaluationQuestions !== 9 ||
+      expected.counts?.estimands !== 10 || expected.counts?.measures !== 14 ||
+      expected.counts?.guardrails !== 9 || expected.counts?.affectedPartyClasses !== 10 ||
+      expected.counts?.humanGates !== 18 || expected.counts?.methodSources !== 10 ||
+      expected.counts?.comparators !== 9 || expected.counts?.stopRules !== 10 ||
+      expected.counts?.deviations !== 0 ||
+      expected.designs.some((design: any) => design.synthetic !== true ||
+        design.state?.designState !== "DRAFT" || design.state?.sealState !== "UNSEALED" ||
+        design.state?.registrationState !== "UNREGISTERED" || design.state?.runState !== "NO-RUN" ||
+        design.state?.resultState !== "NO-RESULT" || design.claims_causal_truth !== false ||
+        design.no_data !== true || design.no_participants !== true ||
+        design.no_observed_outcome !== true || design.questions.some((question: any) =>
+          question.answer_state !== "NOT-ANSWERED" || question.result !== null) ||
+        design.human_gates.some((gate: any) => gate.required !== true || gate.completed !== false ||
+          gate.authority_outside_system !== true)) ||
+      allQuestions.some((question: any) => question.result !== null || question.answerState !== "NOT-ANSWERED") ||
+      allMeasures.some((measure: any) => measure.value !== null || measure.targetStatus !== "NOT-A-TARGET") ||
+      allEstimands.some((estimand: any) => estimand.estimate !== null || estimand.uncertainty !== null ||
+        estimand.causalStatus !== "NOT-CLAIMED") ||
+      allComparators.some((comparator: any) => comparator.assigned !== false ||
+        comparator.implemented !== false || comparator.selected !== false || comparator.exposureState !== "NONE") ||
+      allGates.some((gate: any) => gate.required !== true || gate.completed !== false ||
+        gate.authorityOutsideSystem !== true) ||
+      allStops.some((stop: any) => stop.automatic !== false || stop.observed !== false ||
+        stop.owner !== "OUTSIDE-SYSTEM") ||
+      allGuardrails.some((guardrail: any) => guardrail.result !== null ||
+        guardrail.breachState !== "NOT-OBSERVED" || guardrail.stopsInterpretation !== true) ||
+      snapshot.sources.some((source: any) => source.bodyRetained !== false ||
+        source.exactTextHumanReviewed !== false || source.supportsAuthority !== false ||
+        source.supportsDossierOutcome !== false || source.supportsEstimand !== false ||
+        source.supportsResult !== false) ||
+      Object.values(expected.boundary ?? {}).some((entry) => entry !== false) ||
+      Object.hasOwn(expected, "mcp") || Object.hasOwn(expected, "tool") ||
+      Object.hasOwn(expected, "action") || Object.hasOwn(expected, "score") ||
+      Object.hasOwn(expected, "rank") || Object.hasOwn(expected, "recommendation") ||
+      sha256(readFileSync(join(
+        ROOT,
+        "data/evaluation/uk-government-transformation-evaluation-covenants.v0.1.json",
+      ))) !== EVALUATION_COVENANT_BYTE_SHA256) {
+      throw new Error(
+        "Evaluation Covenant parent admission, receipts, no-result semantics, discovery, or negative-authority boundary drifted",
       );
     }
   }
@@ -5629,6 +5932,10 @@ export async function checkHubLive(
     throw new Error(
       "derived kingdom.json did not preserve UK Government Transformation Engine discovery",
     );
+  }
+  if (evaluationCovenantActive &&
+      !isDeepStrictEqual(liveKingdom?.evaluation_covenant, expectedEvaluationCovenant!)) {
+    throw new Error("derived kingdom.json did not preserve Evaluation Covenant discovery");
   }
   if (jSpacePublicationActive &&
       !isDeepStrictEqual(liveKingdom?.j_space_verbalizable_workspace, expectedJSpacePublication!)) {

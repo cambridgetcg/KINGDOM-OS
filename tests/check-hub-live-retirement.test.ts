@@ -69,7 +69,7 @@ describe("hub live-check publication retirement", () => {
 
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(24);
+    expect(PUBLICATION_FAMILIES).toHaveLength(25);
     expect([...publicationFamilyStates(staged).values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
     staged.delete(destinationForPublicPath(cultural.routes[1]!));
@@ -474,6 +474,7 @@ describe("hub live-check publication retirement", () => {
   test("retires the UK Government Engine page, aliases, schema, guide, and discovery atomically", () => {
     const engine = family("uk-government-engine");
     const transformation = family("uk-government-transformation-engine");
+    const covenant = family("evaluation-covenant");
     expect(engine.routes).toEqual([
       "/government-engine/",
       "/government.json",
@@ -499,9 +500,11 @@ describe("hub live-check publication retirement", () => {
     const retired = stagedDestinations();
     for (const route of engine.routes) retired.delete(destinationForPublicPath(route));
     for (const route of transformation.routes) retired.delete(destinationForPublicPath(route));
+    for (const route of covenant.routes) retired.delete(destinationForPublicPath(route));
     const states = publicationFamilyStates(retired);
     expect(states.get(engine.id)?.active).toBe(false);
     expect(states.get(transformation.id)?.active).toBe(false);
+    expect(states.get(covenant.id)?.active).toBe(false);
     expect(states.get("trial-chamber")?.active).toBe(true);
 
     for (const surface of [
@@ -518,6 +521,7 @@ describe("hub live-check publication retirement", () => {
   test("binds the UK Government Transformation Engine family to its active base atlas", () => {
     const base = family("uk-government-engine");
     const transformation = family("uk-government-transformation-engine");
+    const covenant = family("evaluation-covenant");
     expect(transformation.routes).toEqual([
       "/government-transformation-engine/",
       "/government-transformations.json",
@@ -564,9 +568,13 @@ describe("hub live-check publication retirement", () => {
     for (const route of transformation.routes) {
       retiredTogether.delete(destinationForPublicPath(route));
     }
+    for (const route of covenant.routes) {
+      retiredTogether.delete(destinationForPublicPath(route));
+    }
     const retiredStates = publicationFamilyStates(retiredTogether);
     expect(retiredStates.get(base.id)?.active).toBe(false);
     expect(retiredStates.get(transformation.id)?.active).toBe(false);
+    expect(retiredStates.get(covenant.id)?.active).toBe(false);
     expect(() => assertPublicationFamilyReleaseWindows(
       retiredStates,
       "2026-09-22",
@@ -596,6 +604,88 @@ describe("hub live-check publication retirement", () => {
     ]) {
       expect(() => assertRetiredFamilyDiscoveryAbsent(transformation, [surface]))
         .toThrow("UK Government Transformation Engine is retired");
+    }
+  });
+
+  test("binds the Evaluation Covenant family to Transformation and its inherited review window", () => {
+    const transformation = family("uk-government-transformation-engine");
+    const covenant = family("evaluation-covenant");
+    expect(covenant.routes).toEqual([
+      "/evaluation-covenant/",
+      "/evaluation-covenants.json",
+      "/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json",
+      "/evaluation/schemas/v0.1/public-snapshot.schema.json",
+      "/EVALUATION-COVENANT-v0.1.md",
+    ]);
+    expect(destinationForPublicPath(covenant.routes[0]!))
+      .toBe("evaluation-covenant/index.html");
+    expect(covenant.discoveryProperties).toEqual(["evaluation_covenant"]);
+    expect(covenant.entryPointProperties).toEqual([
+      "evaluation_covenant",
+      "evaluation_covenant_alias",
+      "evaluation_covenant_canonical",
+      "evaluation_covenant_schema",
+      "evaluation_covenant_guide",
+    ]);
+    expect(covenant.dependsOn).toEqual(["uk-government-transformation-engine"]);
+    expect(covenant.nextReviewDue).toBe("2026-09-21");
+
+    const active = stagedDestinations();
+    const activeStates = publicationFamilyStates(active);
+    expect(activeStates.get(covenant.id)?.active).toBe(true);
+    expect(() => assertPublicationFamilyReleaseWindows(
+      new Map([[covenant.id, { family: covenant, active: true }]]),
+      "2026-09-21",
+    )).not.toThrow();
+    expect(() => assertPublicationFamilyReleaseWindows(
+      new Map([[covenant.id, { family: covenant, active: true }]]),
+      "2026-09-22",
+    )).toThrow("Evaluation Covenant active publication passed nextReviewDue 2026-09-21");
+
+    const partial = new Set(active);
+    partial.delete(destinationForPublicPath(covenant.routes[2]!));
+    expect(() => publicationFamilyStates(partial))
+      .toThrow("Evaluation Covenant is partially staged");
+
+    const orphaned = new Set(active);
+    for (const route of transformation.routes) {
+      orphaned.delete(destinationForPublicPath(route));
+    }
+    expect(() => publicationFamilyStates(orphaned))
+      .toThrow("Evaluation Covenant requires active UK Government Transformation Engine");
+
+    const retiredTogether = new Set(orphaned);
+    for (const route of covenant.routes) {
+      retiredTogether.delete(destinationForPublicPath(route));
+    }
+    const retiredStates = publicationFamilyStates(retiredTogether);
+    expect(retiredStates.get(transformation.id)?.active).toBe(false);
+    expect(retiredStates.get(covenant.id)?.active).toBe(false);
+    expect(() => assertPublicationFamilyReleaseWindows(
+      retiredStates,
+      "2026-09-22",
+    )).not.toThrow();
+
+    for (const surface of [
+      {
+        label: "authored Kingdom map",
+        text: JSON.stringify({ evaluation_covenant: {} }),
+        value: { evaluation_covenant: {} },
+      },
+      {
+        label: "agent manifest",
+        text: JSON.stringify({
+          entry_points: { evaluation_covenant_guide: covenant.routes[4] },
+        }),
+        value: {
+          entry_points: { evaluation_covenant_guide: covenant.routes[4] },
+        },
+      },
+      { label: "llms.txt", text: `https://thekingdom.dev${covenant.routes[2]}` },
+      { label: "hub HTML", text: `<a href='${covenant.routes[0]}'>stale</a>` },
+    ]) {
+      expect(() => assertRetiredFamilyDiscoveryAbsent(covenant, [surface]))
+        .toThrow("Evaluation Covenant is retired");
     }
   });
 

@@ -121,6 +121,11 @@ readings:
 | `/government/uk-government-transformation-engine-2026-08-21.json` | staged JSON | Immutable synthetic orientation snapshot dependent on the dated UK Government Engine atlas |
 | `/government/transformations/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed v0.1 contract for the full Transformation Engine public snapshot structure |
 | `/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md` | staged Markdown | Immutable guide to the base-atlas dependency, dual graph types, held states, human gates, evidence limits, and negative authority |
+| `/evaluation-covenant/` | staged HTML | Mutable, server-rendered, no-JavaScript view of synthetic Phase-0 draft Evaluation Covenants |
+| `/evaluation-covenants.json` | staged JSON | Mutable byte-preserved alias of the dated Evaluation Covenant publication |
+| `/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json` | staged JSON | Immutable synthetic design snapshot dependent on the dated UK Government Transformation Engine |
+| `/evaluation/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed v0.1 contract for the complete Evaluation Covenant public snapshot structure |
+| `/EVALUATION-COVENANT-v0.1.md` | staged Markdown | Immutable guide to pre-result evaluation design, dependency, freshness, evidence and non-authority boundaries |
 
 The Trial Chamber routes are inspectable publication surfaces, not an evaluator
 or control plane. Metadata titles are not scientific claims. The three request
@@ -281,9 +286,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 138-asset upload contract (111 ledgered immutable/versioned assets and
-27 mutable assets; 136 direct public bodies, 135 sitemap URLs; eleven atlases, three
-lab routes, one experiment route, one activation, and twenty-four retirement families)
+locks the 143-asset upload contract (114 ledgered immutable/versioned assets and
+29 mutable assets; 141 direct public bodies, 140 sitemap URLs; eleven atlases, three
+lab routes, one experiment route, one activation, and twenty-five retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

@@ -252,6 +252,18 @@ import {
   ukGovernmentTransformationPublicSummary,
 } from "./uk-government-transformation-engine.ts";
 import {
+  EVALUATION_COVENANT_ALIAS_URL,
+  EVALUATION_COVENANT_CANONICAL_URL,
+  EVALUATION_COVENANT_GUIDE_URL,
+  EVALUATION_COVENANT_PRODUCER_URL,
+  EVALUATION_COVENANT_SCHEMA_URL,
+  EVALUATION_COVENANT_URL,
+  assertEvaluationCovenantActiveReviewWindow,
+  evaluationCovenantPublicSummary,
+  loadEvaluationCovenantPublication,
+  renderEvaluationCovenantHtml,
+} from "./evaluation-covenant.ts";
+import {
   ZERO_EMPTY_SEAT_GUIDE_URL,
   ZERO_EMPTY_SEAT_ID,
   ZERO_EMPTY_SEAT_SCHEMA_URL,
@@ -865,6 +877,19 @@ const ukGovernmentTransformationEngine =
 assertUkGovernmentTransformationActiveReviewWindow(stamp);
 const ukGovernmentTransformationEngineDiscovery =
   ukGovernmentTransformationPublicSummary(ukGovernmentTransformationEngine);
+
+// ── Evaluation Covenant (synthetic Phase-0 design; no run or result) ────────
+const evaluationCovenantUrl = EVALUATION_COVENANT_URL;
+const evaluationCovenantAliasUrl = EVALUATION_COVENANT_ALIAS_URL;
+const evaluationCovenantCanonicalUrl = EVALUATION_COVENANT_CANONICAL_URL;
+const evaluationCovenantSchemaUrl = EVALUATION_COVENANT_SCHEMA_URL;
+const evaluationCovenantGuideUrl = EVALUATION_COVENANT_GUIDE_URL;
+const evaluationCovenantProducerUrl = EVALUATION_COVENANT_PRODUCER_URL;
+const evaluationCovenantPublication = loadEvaluationCovenantPublication();
+const evaluationCovenant = evaluationCovenantPublication.snapshot;
+assertEvaluationCovenantActiveReviewWindow(stamp);
+const evaluationCovenantDiscovery =
+  evaluationCovenantPublicSummary(evaluationCovenant);
 
 // ── ZERO Empty Seat (one inert DEEP project; no zero-to-authority transfer) ─
 const zeroEmptySeatUrl = ZERO_EMPTY_SEAT_URL;
@@ -1914,6 +1939,10 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(ukGovernmentTransformationEngineCanonicalUrl).pathname)}" type="application/json" title="UK Government Transformation Engine immutable Phase-0 snapshot">
 <link rel="describedby" href="${esc(new URL(ukGovernmentTransformationEngineSchemaUrl).pathname)}" type="application/schema+json" title="UK Government Transformation Engine public snapshot schema">
 <link rel="service-doc" href="${esc(new URL(ukGovernmentTransformationEngineGuideUrl).pathname)}" type="text/markdown" title="UK Government Transformation Engine v0.1 guide">
+<link rel="alternate" href="${esc(new URL(evaluationCovenantAliasUrl).pathname)}" type="application/json" title="Evaluation Covenant mutable alias for the dated snapshot">
+<link rel="alternate" href="${esc(new URL(evaluationCovenantCanonicalUrl).pathname)}" type="application/json" title="Evaluation Covenant immutable Phase-0 snapshot">
+<link rel="describedby" href="${esc(new URL(evaluationCovenantSchemaUrl).pathname)}" type="application/schema+json" title="Evaluation Covenant public snapshot schema">
+<link rel="service-doc" href="${esc(new URL(evaluationCovenantGuideUrl).pathname)}" type="text/markdown" title="Evaluation Covenant v0.1 guide">
 <link rel="alternate" href="${esc(new URL(jSpaceCaseUrl).pathname)}" type="application/json" title="J-space reasoning-to-word test design">
 <link rel="describedby" href="${esc(new URL(jSpaceSchemaUrl).pathname)}" type="application/schema+json" title="Relational inference case schema">
 <link rel="service-doc" href="${esc(new URL(jSpaceGuideUrl).pathname)}" type="text/markdown" title="J-space verbalizable workspace research guide">
@@ -2438,6 +2467,7 @@ const html = `<!doctype html>
       <a href="#trial-chamber">Inspect a draft trial without opening the gate</a>
       <a href="#uk-government-engine">Trace authority without mistaking the map for government</a>
       <a href="#uk-government-transformation-engine">Orient synthetic transformation questions without implying progression</a>
+      <a href="#evaluation-covenant">Design the learning before a result exists</a>
       <a href="#j-space">Explore reasoning-to-word as a testable relation</a>
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
@@ -2600,6 +2630,28 @@ const html = `<!doctype html>
         <a href="${esc(new URL(ukGovernmentTransformationEngineCanonicalUrl).pathname)}">immutable Phase-0 UK Government Transformation Engine snapshot</a>
         <a href="${esc(new URL(ukGovernmentTransformationEngineSchemaUrl).pathname)}">closed UK Government Transformation Engine JSON Schema</a>
         <a href="${esc(new URL(ukGovernmentTransformationEngineGuideUrl).pathname)}">UK Government Transformation Engine v0.1 guide</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="evaluation-covenant" aria-labelledby="evaluation-covenant-title">
+    <div class="kh"><h2 id="evaluation-covenant-title">Evaluation Covenant</h2><span class="my">synthetic · Phase 0 · design only</span></div>
+    <p class="sub"><strong>What would count as evidence—before results can tempt us?</strong> The covenant holds evaluation design apart from the result it might later be used to interpret.</p>
+    <div class="mirrorfield" data-evaluation-covenant data-evaluation-covenant-protocol="${esc(evaluationCovenantDiscovery.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>Evaluation Covenant · Phase 0 · Draft · Unsealed · Unregistered · No Run.</strong> State at publication only, as of <time datetime="${esc(evaluationCovenantDiscovery.as_of)}">${esc(evaluationCovenantDiscovery.as_of)}</time>; next review due <time datetime="${esc(evaluationCovenantDiscovery.next_review_due)}">${esc(evaluationCovenantDiscovery.next_review_due)}</time>. After that date the immutable artifact is historical, not current, unless the active five-route family is replaced. Assisted exact text has not been separately human-reviewed.</p>
+      <div class="mirrorgrid">
+        <article class="mirrorcard"><code>before results</code><h3>Design the learning first</h3><p>Evidence criteria belong before an observed result can attract a preferred interpretation. This surface records design only.</p></article>
+        <article class="mirrorcard"><code>draft · unsealed</code><h3>No preregistration is implied</h3><p>Publication does not seal, register, approve, or adopt a covenant. Any later registration remains a separate human act outside this system.</p></article>
+        <article class="mirrorcard"><code>no run · no data</code><h3>No participant or result exists</h3><p>There are no participants, observations, measurements, estimates, results, observed outcomes, causal findings, or evaluation conclusions here. Desired-outcome IDs remain hypotheses inherited from the Transformation Engine, not observations.</p></article>
+        <article class="mirrorcard"><code>no selection · no action</code><h3>A design cannot decide</h3><p>No option is selected; no decision, authority, adoption, implementation, control-plane instruction, or automatic action is created.</p></article>
+      </div>
+      <p class="mirrorboundary"><strong>Dependent and non-progressing.</strong> This synthetic publication depends on the <a href="${esc(new URL(ukGovernmentTransformationEngineCanonicalUrl).pathname)}">immutable UK Government Transformation Engine snapshot</a>. It cannot turn that parent's hypotheses into evidence, a result, an outcome, readiness, approval, or authority.</p>
+      <div class="machine">
+        <a href="${esc(new URL(evaluationCovenantUrl).pathname)}">open the human Evaluation Covenant</a>
+        <a href="${esc(new URL(evaluationCovenantAliasUrl).pathname)}">evaluation-covenants.json — mutable alias for the dated snapshot</a>
+        <a href="${esc(new URL(evaluationCovenantCanonicalUrl).pathname)}">immutable Phase-0 Evaluation Covenant snapshot</a>
+        <a href="${esc(new URL(evaluationCovenantSchemaUrl).pathname)}">closed Evaluation Covenant JSON Schema</a>
+        <a href="${esc(new URL(evaluationCovenantGuideUrl).pathname)}">Evaluation Covenant v0.1 guide</a>
       </div>
     </div>
   </section>
@@ -4156,6 +4208,11 @@ const html = `<!doctype html>
       <a href="${esc(new URL(ukGovernmentTransformationEngineCanonicalUrl).pathname)}">immutable UK Government Transformation Engine Phase-0 snapshot</a>
       <a href="${esc(new URL(ukGovernmentTransformationEngineSchemaUrl).pathname)}">UK Government Transformation Engine closed JSON Schema</a>
       <a href="${esc(new URL(ukGovernmentTransformationEngineGuideUrl).pathname)}">UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md — freshness, evidence, graph, and non-authority guide</a>
+      <a href="${esc(new URL(evaluationCovenantUrl).pathname)}">Evaluation Covenant — synthetic pre-result evaluation design</a>
+      <a href="${esc(new URL(evaluationCovenantAliasUrl).pathname)}">evaluation-covenants.json — mutable alias for the dated design snapshot</a>
+      <a href="${esc(new URL(evaluationCovenantCanonicalUrl).pathname)}">immutable Evaluation Covenant Phase-0 snapshot</a>
+      <a href="${esc(new URL(evaluationCovenantSchemaUrl).pathname)}">Evaluation Covenant closed JSON Schema</a>
+      <a href="${esc(new URL(evaluationCovenantGuideUrl).pathname)}">EVALUATION-COVENANT-v0.1.md — design, freshness, evidence, and non-authority guide</a>
       <a href="${esc(new URL(jSpaceCaseUrl).pathname)}">J-space reasoning → word — static synthetic test design</a>
       <a href="${esc(new URL(jSpaceSchemaUrl).pathname)}">Relational Inference Case JSON Schema</a>
       <a href="${esc(new URL(jSpaceGuideUrl).pathname)}">J-SPACE-VERBALIZABLE-WORKSPACE.md — mathematics, translations, and boundaries</a>
@@ -4480,6 +4537,15 @@ await Bun.write(
   ROOT + "site/government-transformations.json",
   ukGovernmentTransformationEnginePublication.bytes,
 );
+mkdirSync(ROOT + "site/evaluation-covenant", { recursive: true });
+await Bun.write(
+  ROOT + "site/evaluation-covenant/index.html",
+  renderEvaluationCovenantHtml(evaluationCovenant),
+);
+await Bun.write(
+  ROOT + "site/evaluation-covenants.json",
+  evaluationCovenantPublication.bytes,
+);
 
 const ollamaInvitation = {
   schema_version: ollamaInvitationSource.schema_version,
@@ -4555,6 +4621,7 @@ const machine = {
   trial_chamber: trialChamberDiscovery,
   uk_government_engine: ukGovernmentEngineDiscovery,
   uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
+  evaluation_covenant: evaluationCovenantDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
@@ -4683,6 +4750,12 @@ UK Government Transformation Engine immutable Phase-0 snapshot: ${ukGovernmentTr
 UK Government Transformation Engine public-snapshot schema: ${ukGovernmentTransformationEngineSchemaUrl}
 UK Government Transformation Engine guide: ${ukGovernmentTransformationEngineGuideUrl}
 UK Government Transformation Engine producer v0.1.0 source: ${ukGovernmentTransformationEngineDiscovery.urls.producer}
+Evaluation Covenant human view: ${evaluationCovenantUrl}
+Evaluation Covenant mutable alias for the dated snapshot: ${evaluationCovenantAliasUrl}
+Evaluation Covenant immutable Phase-0 snapshot: ${evaluationCovenantCanonicalUrl}
+Evaluation Covenant public-snapshot schema: ${evaluationCovenantSchemaUrl}
+Evaluation Covenant guide: ${evaluationCovenantGuideUrl}
+Evaluation Covenant producer v0.1.0 source: ${evaluationCovenantProducerUrl}
 J-space reasoning-to-word case: ${jSpaceCaseUrl}
 J-space relational-inference schema: ${jSpaceSchemaUrl}
 J-space verbalizable-workspace guide: ${jSpaceGuideUrl}
@@ -4756,6 +4829,7 @@ ${doorLines}
 - The Trial Chamber — a read-only Phase-0 projection of ${trialChamberDiscovery.counts.referrals} exact Observatory referrals, ${trialChamberDiscovery.counts.evaluationRequests} maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and ${trialChamberDiscovery.counts.evaluationPlans} DRAFT + UNSEALED finite synthetic-only plans. Evaluation has not started. Role-Styled remains held; every post-plan array is empty and every corresponding v0.1 schema is deny-all, so a future contract version and separate human review are mandatory. No artifact acquisition, execution, preflight, authority, result, scalar score, adoption, module, guest, use authority, or automatic action exists. Human view: ${trialChamberUrl} · current alias: ${trialChamberAliasUrl} · immutable snapshot: ${trialChamberCanonicalUrl} · schema: ${trialChamberSchemaUrls["public-snapshot"]} · guide: ${trialChamberGuideUrl}
 - UK Government Engine — an independent reviewed-as-of Phase-0 map of UK authority, law, public money, delivery, scrutiny, remedy, and devolution. Its government sources are source-linked through a maintainer-authorized assisted URL review, not receipt-bound; exact record text has not been separately human-reviewed. It is not official, complete, automatically current, legal or tax advice, an eligibility or liability decision, a filing or payment facility, an account surface, government evidence, or a control plane. TaxSorted is a receipt-bound external non-official crosswalk only, with no runtime dependency, data transfer, authority inheritance, or endorsement. Human view: ${ukGovernmentEngineUrl} · mutable alias for the dated snapshot: ${ukGovernmentEngineAliasUrl} · immutable snapshot: ${ukGovernmentEngineCanonicalUrl} · schema: ${ukGovernmentEngineSchemaUrl} · guide: ${ukGovernmentEngineGuideUrl} · producer v0.1.0: ${ukGovernmentEngineDiscovery.urls.producer}
 - UK Government Transformation Engine — ${ukGovernmentTransformationEngineDiscovery.counts.dossiers} independent synthetic Phase-0 orientation dossiers. State at publication only: ${ukGovernmentTransformationEngineDiscovery.state_at_publication} as of ${ukGovernmentTransformationEngineDiscovery.as_of}; next review due ${ukGovernmentTransformationEngineDiscovery.next_review_due}, after which the immutable snapshot is historical rather than current. Held assessments, unresolved questions, incomplete outside-system human gates, typed authority dependencies, and separate causal hypotheses precede aspirational outcomes. Static, incomplete, link-only and not separately human-reviewed; not government, official evidence, current-law or current-tax authority, analysis, advice, approval, readiness, decision, adoption, implementation or action. TaxSorted record/collection/bridge IDs are transitive external context only, with no text, claim support, API endpoint, runtime dependency, data transfer or authority. Human view: ${ukGovernmentTransformationEngineUrl} · mutable alias: ${ukGovernmentTransformationEngineAliasUrl} · immutable snapshot: ${ukGovernmentTransformationEngineCanonicalUrl} · schema: ${ukGovernmentTransformationEngineSchemaUrl} · guide: ${ukGovernmentTransformationEngineGuideUrl} · producer v0.1.0: ${ukGovernmentTransformationEngineDiscovery.urls.producer}
+- Evaluation Covenant — “${evaluationCovenantDiscovery.question}” Synthetic Phase-0 design only; ${evaluationCovenantDiscovery.state_at_publication} as of ${evaluationCovenantDiscovery.as_of}, with next review due ${evaluationCovenantDiscovery.next_review_due}. Assisted exact text has not been separately human-reviewed. There is no seal, registration, run, data, participant, result, observed outcome, selection, decision, action, authority, adoption, implementation, or external effect. Desired-outcome IDs remain hypotheses inherited from the Transformation Engine, not observations. Publication and structural validation do not progress a covenant or turn the parent Transformation Engine's hypotheses into evidence. Human view: ${evaluationCovenantUrl} · mutable alias: ${evaluationCovenantAliasUrl} · immutable snapshot: ${evaluationCovenantCanonicalUrl} · schema: ${evaluationCovenantSchemaUrl} · guide: ${evaluationCovenantGuideUrl} · producer v0.1.0: ${evaluationCovenantProducerUrl}
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
@@ -4828,6 +4902,7 @@ const guest = {
   trial_chamber: trialChamberDiscovery,
   uk_government_engine: ukGovernmentEngineDiscovery,
   uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
+  evaluation_covenant: evaluationCovenantDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
@@ -4870,6 +4945,11 @@ const guest = {
     { action: "if useful, pin the immutable UK Government Transformation Engine snapshot", method: "GET", url: ukGovernmentTransformationEngineCanonicalUrl, note: "historical orientation remains recoverable; immutable availability does not establish reader-time currency" },
     { action: "if useful, validate the closed UK Government Transformation Engine snapshot", method: "GET", url: ukGovernmentTransformationEngineSchemaUrl, note: "structural validity does not create evidence, causal truth, authority, selection, a decision or progression" },
     { action: "if useful, read the UK Government Transformation Engine freshness, evidence, graph, TaxSorted firewall, and non-authority guide", method: "GET", url: ukGovernmentTransformationEngineGuideUrl },
+    { action: "if useful, inspect the human Evaluation Covenant", method: "GET", url: evaluationCovenantUrl, note: "synthetic Phase-0 design only; draft, unsealed, unregistered, unrun, and not separately human-reviewed" },
+    { action: "if useful, inspect the Evaluation Covenant mutable alias", method: "GET", url: evaluationCovenantAliasUrl, note: "byte-preserved alias for state at publication only; publication does not seal, register, run, evaluate, select, decide, authorize, adopt, implement, or act" },
+    { action: "if useful, pin the immutable Evaluation Covenant snapshot", method: "GET", url: evaluationCovenantCanonicalUrl, note: "historical design remains recoverable; immutable availability does not establish reader-time currency or a result" },
+    { action: "if useful, validate the closed Evaluation Covenant snapshot", method: "GET", url: evaluationCovenantSchemaUrl, note: "structural validity does not create evidence, registration, participants, data, a result, observed outcome, selection, decision, action, or authority" },
+    { action: "if useful, read the Evaluation Covenant design, dependency, freshness, evidence, and non-authority guide", method: "GET", url: evaluationCovenantGuideUrl },
     { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
     { action: "if useful, request compact literal World Commons matches with exact category, cost, account, reuse, or automation filters", method: "MCP", url: kingdomMcpEndpoint, tool: kingdomMcpCommons.tool, resource: kingdomMcpCommons.catalog_resource, complete_catalog_resource: commonsMcpLegacy.complete_catalog_resource, note: kingdomMcpCommons.privacy },
     { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
@@ -5000,6 +5080,7 @@ const guest = {
     trial_chamber: "The Trial Chamber publishes exact Observatory referrals, maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and finite synthetic-only DRAFT + UNSEALED plans. Evaluation has not started. Role-Styled remains held for source resolution. The six post-plan v0.1 schemas are deny-all reserved contracts and cannot represent a preflight, authority, run, result, adoption, or use record; a future contract version and separate human review are mandatory. It acquires or executes no artifact, accesses no credential, uses no scalar score, creates no module or guest, and grants no authority or automatic action.",
     uk_government_engine: "The UK Government Engine is a static independent reviewed-as-of institutional map compiled through a maintainer-authorized assisted URL review; exact record text has not been separately human-reviewed. It is not an official, complete, or automatically current oracle. It gives no legal or tax advice, eligibility or liability decision, filing, payment, account access, government evidence, or control-plane action. TaxSorted is a receipt-bound external non-official crosswalk only; it transfers no data or authority, creates no runtime dependency, and implies no endorsement.",
     uk_government_transformation_engine: "The UK Government Transformation Engine is a static independent synthetic Phase-0 orientation publication, incomplete and not separately human-reviewed. It records stateAtPublication only and becomes historical, not current, after nextReviewDue unless the active five-route family is replaced. Its link-only evidence resolves against the exact immutable UK Government Engine base. It is not government, official evidence, current-law or current-tax authority, analysis, legal or tax advice, approval, readiness, a decision, adoption, implementation or action. Holds, unresolved questions and required incomplete outside-system human gates prevent automatic progression. Authority dependencies and causal hypotheses remain separate; claimsCausalTruth is false; all options are unselected. TaxSorted appears only transitively as external-context record, collection and bridge IDs with no text, claim support, API endpoint, runtime dependency, data transfer or authority.",
+    evaluation_covenant: "Evaluation Covenant is a static independent synthetic Phase-0 design-only publication dependent on the dated UK Government Transformation Engine. Assisted exact text has not been separately human-reviewed. Every covenant remains draft, unsealed, unregistered, and unrun. There are no data, participants, results, observed outcomes, selections, decisions, actions, authority, adoption, implementation, or external effects. Desired-outcome IDs remain hypotheses inherited from the Transformation Engine, not observations. It records state at publication only and becomes historical, not current, after the inherited nextReviewDue unless the active five-route family is replaced. Publication and schema validation cannot seal, register, execute, evaluate, select, approve, authorize, adopt, implement, or act, and cannot convert a parent hypothesis into evidence or causal truth.",
     zero_empty_seat: "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     string_crawl_trace_sheet: "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     string_crawl_trace_sheet_lab: "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
@@ -5049,6 +5130,7 @@ const manifest = {
   trial_chamber: trialChamberDiscovery,
   uk_government_engine: ukGovernmentEngineDiscovery,
   uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
+  evaluation_covenant: evaluationCovenantDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
@@ -5138,6 +5220,11 @@ const manifest = {
     uk_government_transformation_engine_canonical: ukGovernmentTransformationEngineCanonicalUrl,
     uk_government_transformation_engine_schema: ukGovernmentTransformationEngineSchemaUrl,
     uk_government_transformation_engine_guide: ukGovernmentTransformationEngineGuideUrl,
+    evaluation_covenant: evaluationCovenantUrl,
+    evaluation_covenant_alias: evaluationCovenantAliasUrl,
+    evaluation_covenant_canonical: evaluationCovenantCanonicalUrl,
+    evaluation_covenant_schema: evaluationCovenantSchemaUrl,
+    evaluation_covenant_guide: evaluationCovenantGuideUrl,
     j_space_reasoning_to_word_case: jSpaceCaseUrl,
     j_space_reasoning_to_word_schema: jSpaceSchemaUrl,
     j_space_verbalizable_workspace_guide: jSpaceGuideUrl,

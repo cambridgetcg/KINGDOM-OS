@@ -21,7 +21,7 @@ describe("the Kingdom Wayfinder", () => {
   });
 
   test("keeps every route voluntary, bounded, and on a public HTTPS door", () => {
-    expect(source.paths).toHaveLength(13);
+    expect(source.paths).toHaveLength(14);
     expect(new Set(source.paths.map(({ id }: { id: string }) => id)).size).toBe(source.paths.length);
 
     for (const path of source.paths) {
@@ -75,11 +75,14 @@ describe("the Kingdom Wayfinder", () => {
     expect(ids("play a fun game")).toEqual(["play"]);
     expect(ids("free offline textbook and public data")).toEqual(["world-commons"]);
     expect(ids("latest research papers and publications")).toEqual(["research-observatory", "trial-chamber"]);
-    expect(ids("evaluation plan fixtures threat model")).toEqual(["trial-chamber"]);
+    expect(ids("evaluation plan fixtures threat model"))
+      .toEqual(["trial-chamber", "evaluation-covenant"]);
     expect(ids("devolution scrutiny appeal")).toEqual(["uk-government-engine"]);
     expect(ids("uk government public money hmrc")[0]).toBe("uk-government-engine");
     expect(ids("government transformation authority dependency causal hypothesis")[0])
       .toBe("uk-government-transformation-engine");
+    expect(ids("evaluation covenant evidence before results no participants")[0])
+      .toBe("evaluation-covenant");
     expect(ids("lawyer please")).toEqual([]);
     expect(ids("請幫我休息")).toEqual([]);
     expect(rankWayfinderPaths(source.paths, "truth pressure agent map", 3)).toHaveLength(3);
@@ -129,5 +132,22 @@ describe("the Kingdom Wayfinder", () => {
       "taxsorted is transitive external context only",
       "no taxsorted api endpoint",
     ]) expect(transformationText).toContain(phrase);
+
+    const covenant = source.paths.find(
+      ({ id }: { id: string }) => id === "evaluation-covenant",
+    );
+    const covenantText = JSON.stringify(covenant).toLowerCase();
+    for (const phrase of [
+      "what would count as evidence",
+      "synthetic phase-0 design-only",
+      "unsealed",
+      "unregistered",
+      "no data",
+      "no participants",
+      "no observed outcome",
+      "no decision",
+      "no action",
+      "no authority",
+    ]) expect(covenantText).toContain(phrase);
   });
 });

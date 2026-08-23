@@ -20,7 +20,7 @@ const PUBLIC_URLS = [J_SPACE_CASE_URL, J_SPACE_SCHEMA_URL, J_SPACE_GUIDE_URL] as
 
 describe("J-space static research publication", () => {
   test("stages one immutable three-route family and no observer or validator runtime", () => {
-    expect(HUB_ASSETS).toHaveLength(138);
+    expect(HUB_ASSETS).toHaveLength(143);
     expect(HUB_ASSETS).toContainEqual({
       source: "bridges/examples/j-space-reasoning-to-word-inference.json",
       destination: "records/j-space-reasoning-to-word-2026-08-17.json",
@@ -39,7 +39,7 @@ describe("J-space static research publication", () => {
       /j-space.*(?:latest|current)|(?:monitor|observer|mcp).*j-space/i.test(destination))).toBe(false);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(111);
+    expect(ledger.entries).toHaveLength(114);
     expect(ledger.entries.filter((entry: any) => entry.id.startsWith("j-space-verbalizable-workspace/0.1/"))).toEqual([
       {
         id: "j-space-verbalizable-workspace/0.1/case",
@@ -125,7 +125,7 @@ describe("J-space static research publication", () => {
 
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(135);
+    expect(sitemapUrls).toHaveLength(140);
     expect(new Set(sitemapUrls).size).toBe(sitemapUrls.length);
     for (const url of PUBLIC_URLS) expect(sitemapUrls).toContain(url);
     expect(sitemapUrls.filter((url) => /j-space|relational-inference-case/i.test(url))).toEqual(PUBLIC_URLS);

@@ -1567,6 +1567,367 @@
       "transaction": false
     }
   },
+  "evaluation_covenant": {
+    "protocol": "kingdom.evaluation-covenant-public-snapshot/0.1",
+    "title": "Evaluation Covenant",
+    "contract_version": "0.1.0",
+    "publication_state": "immutable-dated-snapshot-with-mutable-alias",
+    "state_at_publication": "WITHIN-REVIEW-WINDOW",
+    "reader_time_state_embedded": false,
+    "as_of": "2026-08-23",
+    "next_review_due": "2026-09-21",
+    "phase": {
+      "id": "0-static-synthetic-design",
+      "scope": "evaluation-design-only"
+    },
+    "covenant_state": {
+      "adoptionEffect": "NONE",
+      "approvalState": "NOT-APPROVED",
+      "designState": "DRAFT",
+      "registrationState": "UNREGISTERED",
+      "resultState": "NO-RESULT",
+      "runState": "NO-RUN",
+      "sealState": "UNSEALED",
+      "useAuthorityEffect": "NONE"
+    },
+    "authorship": {
+      "compiledBy": "codex-assisted-publication",
+      "exactTextHumanReviewed": false,
+      "humanDirectionRecorded": true,
+      "humanReviewCompleted": false,
+      "humanReviewRequired": true,
+      "origin": "maintainer-authorized-assisted-publication"
+    },
+    "counts": {
+      "affectedPartyClasses": 10,
+      "comparators": 9,
+      "designs": 3,
+      "deviations": 0,
+      "estimands": 10,
+      "evaluationQuestions": 9,
+      "guardrails": 9,
+      "humanGates": 18,
+      "measures": 14,
+      "methodSources": 10,
+      "stopRules": 10
+    },
+    "question": "What would count as evidence—before results can tempt us?",
+    "parent_transformation_engine": {
+      "canonical_url": "https://thekingdom.dev/government/uk-government-transformation-engine-2026-08-21.json",
+      "byte_receipt": "sha256:fef3ca1719cb7fd02c09c558db6f239cad29a173b921763a10a59e042a4cdf00",
+      "canonical_receipt": "sha256:7d9df6d5b6292b46abfbc076847f7e033b8d889be7a868dcbeac5d901b75c715",
+      "use_as_evidence": false
+    },
+    "designs": [
+      {
+        "id": "design:four-nation-information-orientation",
+        "title": "Synthetic four-nation information-orientation evaluation design",
+        "synthetic": true,
+        "state": {
+          "adoptionEffect": "NONE",
+          "approvalState": "NOT-APPROVED",
+          "designState": "DRAFT",
+          "registrationState": "UNREGISTERED",
+          "resultState": "NO-RESULT",
+          "runState": "NO-RUN",
+          "sealState": "UNSEALED",
+          "useAuthorityEffect": "NONE"
+        },
+        "parent_dossier_id": "dossier:four-nation-public-service-information",
+        "desired_outcome_hypothesis_id": "outcome:four-nation-divergence-visible",
+        "claims_causal_truth": false,
+        "questions": [
+          {
+            "id": "question:four-nation-economic",
+            "type": "economic",
+            "answer_state": "NOT-ANSWERED",
+            "result": null
+          },
+          {
+            "id": "question:four-nation-impact",
+            "type": "impact",
+            "answer_state": "NOT-ANSWERED",
+            "result": null
+          },
+          {
+            "id": "question:four-nation-process",
+            "type": "process",
+            "answer_state": "NOT-ANSWERED",
+            "result": null
+          }
+        ],
+        "human_gates": [
+          {
+            "id": "gate:covenant-four-nation-affected-party-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:covenant-four-nation-analytical-qa",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:covenant-four-nation-independent-design-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:covenant-four-nation-privacy-ethics-rights",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:four-nation-competence-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:four-nation-service-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          }
+        ],
+        "no_data": true,
+        "no_participants": true,
+        "no_observed_outcome": true
+      },
+      {
+        "id": "design:hmrc-notice-route-orientation",
+        "title": "Synthetic HMRC notice-route orientation evaluation design",
+        "synthetic": true,
+        "state": {
+          "adoptionEffect": "NONE",
+          "approvalState": "NOT-APPROVED",
+          "designState": "DRAFT",
+          "registrationState": "UNREGISTERED",
+          "resultState": "NO-RESULT",
+          "runState": "NO-RUN",
+          "sealState": "UNSEALED",
+          "useAuthorityEffect": "NONE"
+        },
+        "parent_dossier_id": "dossier:hmrc-decision-notice-explanatory-content",
+        "desired_outcome_hypothesis_id": "outcome:notice-route-distinction",
+        "claims_causal_truth": false,
+        "questions": [
+          {
+            "id": "question:notice-economic",
+            "type": "economic",
+            "answer_state": "NOT-ANSWERED",
+            "result": null
+          },
+          {
+            "id": "question:notice-impact",
+            "type": "impact",
+            "answer_state": "NOT-ANSWERED",
+            "result": null
+          },
+          {
+            "id": "question:notice-process",
+            "type": "process",
+            "answer_state": "NOT-ANSWERED",
+            "result": null
+          }
+        ],
+        "human_gates": [
+          {
+            "id": "gate:covenant-notice-affected-party-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:covenant-notice-analytical-qa",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:covenant-notice-independent-design-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:covenant-notice-privacy-ethics-rights",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:notice-accessibility-research",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:notice-specialist-tax-legal-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          }
+        ],
+        "no_data": true,
+        "no_participants": true,
+        "no_observed_outcome": true
+      },
+      {
+        "id": "design:public-money-category-orientation",
+        "title": "Synthetic public-money category-orientation evaluation design",
+        "synthetic": true,
+        "state": {
+          "adoptionEffect": "NONE",
+          "approvalState": "NOT-APPROVED",
+          "designState": "DRAFT",
+          "registrationState": "UNREGISTERED",
+          "resultState": "NO-RESULT",
+          "runState": "NO-RUN",
+          "sealState": "UNSEALED",
+          "useAuthorityEffect": "NONE"
+        },
+        "parent_dossier_id": "dossier:public-money-transparency-information-service",
+        "desired_outcome_hypothesis_id": "outcome:money-category-separation",
+        "claims_causal_truth": false,
+        "questions": [
+          {
+            "id": "question:money-economic",
+            "type": "economic",
+            "answer_state": "NOT-ANSWERED",
+            "result": null
+          },
+          {
+            "id": "question:money-impact",
+            "type": "impact",
+            "answer_state": "NOT-ANSWERED",
+            "result": null
+          },
+          {
+            "id": "question:money-process",
+            "type": "process",
+            "answer_state": "NOT-ANSWERED",
+            "result": null
+          }
+        ],
+        "human_gates": [
+          {
+            "id": "gate:covenant-money-affected-party-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:covenant-money-analytical-qa",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:covenant-money-independent-design-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:covenant-money-privacy-ethics-rights",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:money-evaluation-design",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          },
+          {
+            "id": "gate:money-public-authority-review",
+            "required": true,
+            "completed": false,
+            "authority_outside_system": true
+          }
+        ],
+        "no_data": true,
+        "no_participants": true,
+        "no_observed_outcome": true
+      }
+    ],
+    "urls": {
+      "canonical": "https://thekingdom.dev/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json",
+      "guide": "https://thekingdom.dev/EVALUATION-COVENANT-v0.1.md",
+      "human": "https://thekingdom.dev/evaluation-covenant/",
+      "mutableAlias": "https://thekingdom.dev/evaluation-covenants.json",
+      "producer": "https://github.com/cambridgetcg/kingdom-evaluation-covenant/tree/v0.1.0",
+      "repository": "https://github.com/cambridgetcg/kingdom-evaluation-covenant",
+      "schema": "https://thekingdom.dev/evaluation/schemas/v0.1/public-snapshot.schema.json"
+    },
+    "boundary": {
+      "acceptsFreeText": false,
+      "accountAccess": false,
+      "adoption": false,
+      "advice": false,
+      "approval": false,
+      "artifactAcquisition": false,
+      "artifactExecution": false,
+      "automatedAction": false,
+      "automatedDecision": false,
+      "automaticProgression": false,
+      "causalClaim": false,
+      "credentialAccess": false,
+      "credentialCollection": false,
+      "dataCollection": false,
+      "datasetAcquisition": false,
+      "decisionAuthority": false,
+      "deployment": false,
+      "economicConclusion": false,
+      "eligibilityDetermination": false,
+      "ethicsApproval": false,
+      "evaluationRegistration": false,
+      "evaluationResult": false,
+      "evaluationRun": false,
+      "externalEffects": false,
+      "filing": false,
+      "governmentAffiliation": false,
+      "identityAccess": false,
+      "identityCollection": false,
+      "legalAdvice": false,
+      "legalConclusion": false,
+      "liabilityDetermination": false,
+      "liveData": false,
+      "llmRuntime": false,
+      "mcpExposure": false,
+      "networkAtBuildOrRuntime": false,
+      "officialEndorsement": false,
+      "optionSelection": false,
+      "participantRecruitment": false,
+      "payment": false,
+      "personalData": false,
+      "personalDataCollection": false,
+      "preferredOption": false,
+      "procurement": false,
+      "publicForm": false,
+      "ranking": false,
+      "recommendation": false,
+      "runtimeFetch": false,
+      "scalarScore": false,
+      "sealCreated": false,
+      "spending": false,
+      "submission": false,
+      "taxAdvice": false,
+      "taxConclusion": false,
+      "transaction": false,
+      "trialAuthority": false,
+      "trialPlanCreated": false,
+      "trialRun": false,
+      "useAuthority": false,
+      "valueForMoneyConclusion": false
+    }
+  },
   "j_space_verbalizable_workspace": {
     "protocol": "kingdom.j-space-publication/0.1",
     "id": "j-space-reasoning-to-word-2026-08-17",
@@ -3266,6 +3627,35 @@
       "action": "if useful, read the UK Government Transformation Engine freshness, evidence, graph, TaxSorted firewall, and non-authority guide",
       "method": "GET",
       "url": "https://thekingdom.dev/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md"
+    },
+    {
+      "action": "if useful, inspect the human Evaluation Covenant",
+      "method": "GET",
+      "url": "https://thekingdom.dev/evaluation-covenant/",
+      "note": "synthetic Phase-0 design only; draft, unsealed, unregistered, unrun, and not separately human-reviewed"
+    },
+    {
+      "action": "if useful, inspect the Evaluation Covenant mutable alias",
+      "method": "GET",
+      "url": "https://thekingdom.dev/evaluation-covenants.json",
+      "note": "byte-preserved alias for state at publication only; publication does not seal, register, run, evaluate, select, decide, authorize, adopt, implement, or act"
+    },
+    {
+      "action": "if useful, pin the immutable Evaluation Covenant snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json",
+      "note": "historical design remains recoverable; immutable availability does not establish reader-time currency or a result"
+    },
+    {
+      "action": "if useful, validate the closed Evaluation Covenant snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/evaluation/schemas/v0.1/public-snapshot.schema.json",
+      "note": "structural validity does not create evidence, registration, participants, data, a result, observed outcome, selection, decision, action, or authority"
+    },
+    {
+      "action": "if useful, read the Evaluation Covenant design, dependency, freshness, evidence, and non-authority guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/EVALUATION-COVENANT-v0.1.md"
     },
     {
       "action": "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours",
@@ -6129,6 +6519,7 @@
     "trial_chamber": "The Trial Chamber publishes exact Observatory referrals, maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and finite synthetic-only DRAFT + UNSEALED plans. Evaluation has not started. Role-Styled remains held for source resolution. The six post-plan v0.1 schemas are deny-all reserved contracts and cannot represent a preflight, authority, run, result, adoption, or use record; a future contract version and separate human review are mandatory. It acquires or executes no artifact, accesses no credential, uses no scalar score, creates no module or guest, and grants no authority or automatic action.",
     "uk_government_engine": "The UK Government Engine is a static independent reviewed-as-of institutional map compiled through a maintainer-authorized assisted URL review; exact record text has not been separately human-reviewed. It is not an official, complete, or automatically current oracle. It gives no legal or tax advice, eligibility or liability decision, filing, payment, account access, government evidence, or control-plane action. TaxSorted is a receipt-bound external non-official crosswalk only; it transfers no data or authority, creates no runtime dependency, and implies no endorsement.",
     "uk_government_transformation_engine": "The UK Government Transformation Engine is a static independent synthetic Phase-0 orientation publication, incomplete and not separately human-reviewed. It records stateAtPublication only and becomes historical, not current, after nextReviewDue unless the active five-route family is replaced. Its link-only evidence resolves against the exact immutable UK Government Engine base. It is not government, official evidence, current-law or current-tax authority, analysis, legal or tax advice, approval, readiness, a decision, adoption, implementation or action. Holds, unresolved questions and required incomplete outside-system human gates prevent automatic progression. Authority dependencies and causal hypotheses remain separate; claimsCausalTruth is false; all options are unselected. TaxSorted appears only transitively as external-context record, collection and bridge IDs with no text, claim support, API endpoint, runtime dependency, data transfer or authority.",
+    "evaluation_covenant": "Evaluation Covenant is a static independent synthetic Phase-0 design-only publication dependent on the dated UK Government Transformation Engine. Assisted exact text has not been separately human-reviewed. Every covenant remains draft, unsealed, unregistered, and unrun. There are no data, participants, results, observed outcomes, selections, decisions, actions, authority, adoption, implementation, or external effects. Desired-outcome IDs remain hypotheses inherited from the Transformation Engine, not observations. It records state at publication only and becomes historical, not current, after the inherited nextReviewDue unless the active five-route family is replaced. Publication and schema validation cannot seal, register, execute, evaluate, select, approve, authorize, adopt, implement, or act, and cannot convert a parent hypothesis into evidence or causal truth.",
     "zero_empty_seat": "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     "string_crawl_trace_sheet": "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     "string_crawl_trace_sheet_lab": "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",

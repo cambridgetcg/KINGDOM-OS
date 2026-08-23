@@ -356,6 +356,41 @@ const UK_GOVERNMENT_TRANSFORMATION_ENGINE_MUTATING_METHODS = new Set([
   "PATCH",
   "DELETE",
 ]);
+const EVALUATION_COVENANT_PAGE_PATH = "/evaluation-covenant/";
+const EVALUATION_COVENANT_ALIAS_PATH = "/evaluation-covenants.json";
+const EVALUATION_COVENANT_CANONICAL_PATH =
+  "/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json";
+const EVALUATION_COVENANT_SCHEMA_PATH =
+  "/evaluation/schemas/v0.1/public-snapshot.schema.json";
+const EVALUATION_COVENANT_GUIDE_PATH = "/EVALUATION-COVENANT-v0.1.md";
+const EVALUATION_COVENANT_PATHS = new Set([
+  EVALUATION_COVENANT_PAGE_PATH,
+  EVALUATION_COVENANT_ALIAS_PATH,
+  EVALUATION_COVENANT_CANONICAL_PATH,
+  EVALUATION_COVENANT_SCHEMA_PATH,
+  EVALUATION_COVENANT_GUIDE_PATH,
+]);
+const EVALUATION_COVENANT_SCHEMA_LINK = {
+  target: EVALUATION_COVENANT_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${EVALUATION_COVENANT_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+const EVALUATION_COVENANT_GUIDE_LINK = {
+  target: EVALUATION_COVENANT_GUIDE_PATH,
+  relation: "service-doc",
+  value: `<${EVALUATION_COVENANT_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+};
+const EVALUATION_COVENANT_CANONICAL_LINK = {
+  target: EVALUATION_COVENANT_CANONICAL_PATH,
+  relation: "canonical",
+  value: `<${EVALUATION_COVENANT_CANONICAL_PATH}>; rel="canonical"; type="application/json"`,
+};
+const EVALUATION_COVENANT_MUTATING_METHODS = new Set([
+  "POST",
+  "PUT",
+  "PATCH",
+  "DELETE",
+]);
 const ZERO_EMPTY_SEAT_PATH = "/atlases/zero-empty-seat-2026-08-14.json";
 const ZERO_EMPTY_SEAT_DOCUMENT_PATH = "/ZERO-EMPTY-SEAT.md";
 const ZERO_EMPTY_SEAT_SCHEMA_LINK = {
@@ -611,6 +646,13 @@ function addUkGovernmentTransformationEngineLinks(headers) {
   headers.append("link", UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_LINK.value);
   headers.append("link", UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_LINK.value);
   headers.append("link", UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_LINK.value);
+}
+
+function addEvaluationCovenantLinks(headers) {
+  removeLinkRelations(headers, ["canonical", "describedby", "service-doc"]);
+  headers.append("link", EVALUATION_COVENANT_CANONICAL_LINK.value);
+  headers.append("link", EVALUATION_COVENANT_SCHEMA_LINK.value);
+  headers.append("link", EVALUATION_COVENANT_GUIDE_LINK.value);
 }
 
 function addZeroEmptySeatSchemaLink(headers) {
@@ -1423,6 +1465,18 @@ export function createKingdomWorker(options = {}) {
         },
       });
     }
+    if (includeRights && EVALUATION_COVENANT_PATHS.has(url.pathname) &&
+        EVALUATION_COVENANT_MUTATING_METHODS.has(request.method)) {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
 
     if (includeRights && KINGDOM_OS_ROUTE_SET.has(url.pathname)) {
       try {
@@ -1510,6 +1564,9 @@ export function createKingdomWorker(options = {}) {
     const servesUkGovernmentTransformationEnginePage = protectsKingdomHtml &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === UK_GOVERNMENT_TRANSFORMATION_ENGINE_PAGE_PATH && asset.ok;
+    const servesEvaluationCovenantPage = protectsKingdomHtml &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === EVALUATION_COVENANT_PAGE_PATH && asset.ok;
     const describesWorldCommons = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === "/commons.json";
@@ -1734,6 +1791,16 @@ export function createKingdomWorker(options = {}) {
     const requestsUkGovernmentTransformationEngineGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_PATH;
+    const requestsEvaluationCovenant = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      (url.pathname === EVALUATION_COVENANT_ALIAS_PATH ||
+        url.pathname === EVALUATION_COVENANT_CANONICAL_PATH);
+    const requestsEvaluationCovenantSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === EVALUATION_COVENANT_SCHEMA_PATH;
+    const requestsEvaluationCovenantGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === EVALUATION_COVENANT_GUIDE_PATH;
     const requestsJSpaceCase = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === J_SPACE_CASE_PATH;
@@ -2024,6 +2091,16 @@ export function createKingdomWorker(options = {}) {
       requestsUkGovernmentTransformationEngineGuide && asset.ok &&
       (ukGovernmentTransformationEngineAssetType === "text/plain" ||
         ukGovernmentTransformationEngineAssetType === "text/markdown");
+    const evaluationCovenantAssetType =
+      (asset.headers.get("content-type") || "").split(";", 1)[0].trim().toLowerCase();
+    const servesEvaluationCovenant = requestsEvaluationCovenant && asset.ok &&
+      evaluationCovenantAssetType === "application/json";
+    const servesEvaluationCovenantSchema = requestsEvaluationCovenantSchema && asset.ok &&
+      (evaluationCovenantAssetType === "application/json" ||
+        evaluationCovenantAssetType === "application/schema+json");
+    const servesEvaluationCovenantGuide = requestsEvaluationCovenantGuide && asset.ok &&
+      (evaluationCovenantAssetType === "text/plain" ||
+        evaluationCovenantAssetType === "text/markdown");
     const servesJSpaceCase = requestsJSpaceCase && asset.ok &&
       jSpaceAssetType === "application/json";
     const servesJSpaceSchema = requestsJSpaceSchema && asset.ok &&
@@ -2121,6 +2198,8 @@ export function createKingdomWorker(options = {}) {
         !servesUkGovernmentTransformationEngine &&
         !servesUkGovernmentTransformationEngineSchema &&
         !servesUkGovernmentTransformationEngineGuide &&
+        !servesEvaluationCovenant && !servesEvaluationCovenantSchema &&
+        !servesEvaluationCovenantGuide &&
         !servesJSpaceCase && !servesJSpaceSchema && !servesJSpaceGuide &&
         !servesRealityInfluence && !servesRealityInfluenceSchema &&
         !servesRealityInfluenceGuide &&
@@ -2142,6 +2221,9 @@ export function createKingdomWorker(options = {}) {
     if (servesTrialChamberPage) headers.set("cache-control", "no-cache, no-transform");
     if (servesUkGovernmentEnginePage) headers.set("cache-control", "no-cache, no-transform");
     if (servesUkGovernmentTransformationEnginePage) {
+      headers.set("cache-control", "no-cache, no-transform");
+    }
+    if (servesEvaluationCovenantPage) {
       headers.set("cache-control", "no-cache, no-transform");
     }
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
@@ -2170,6 +2252,7 @@ export function createKingdomWorker(options = {}) {
     if (servesUkGovernmentTransformationEngine) {
       addUkGovernmentTransformationEngineLinks(headers);
     }
+    if (servesEvaluationCovenant) addEvaluationCovenantLinks(headers);
     if (servesJSpaceCase) addJSpaceSchemaLink(headers);
     if (servesRealityInfluence) addRealityInfluenceLinks(headers);
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
@@ -2541,6 +2624,27 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesUkGovernmentTransformationEngineGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesEvaluationCovenant) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control",
+        url.pathname === EVALUATION_COVENANT_CANONICAL_PATH
+          ? "public, max-age=31536000, immutable, no-transform"
+          : "no-cache, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesEvaluationCovenantSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesEvaluationCovenantGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");

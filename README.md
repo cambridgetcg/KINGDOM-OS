@@ -683,6 +683,25 @@ request, account path, execution, or automatic action. TaxSorted is transitive
 external context only: it supplies no evidence, API endpoint, runtime
 dependency, data transfer, or authority here. The KINGDOM MCP remains unchanged.
 
+The [Evaluation Covenant](https://thekingdom.dev/evaluation-covenant/) asks one
+question before any result exists: **What would count as evidence—before results
+can tempt us?** It is a dependent synthetic Phase-0 design publication for the
+dated UK Government Transformation Engine. Every covenant remains `DRAFT`,
+`UNSEALED`, `UNREGISTERED`, and `NO-RUN`; assisted exact text has not been
+separately human-reviewed. There are no data, participants, results, observed outcomes,
+selections, decisions, actions, authority, adoption, implementation, or external
+effects. Desired-outcome IDs remain hypotheses inherited from the Transformation
+Engine, not observations. The byte-preserved
+[`evaluation-covenants.json`](https://thekingdom.dev/evaluation-covenants.json)
+alias points to an [immutable dated snapshot](https://thekingdom.dev/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json),
+one closed [v0.1 schema](https://thekingdom.dev/evaluation/schemas/v0.1/public-snapshot.schema.json),
+and a [design and boundary guide](https://thekingdom.dev/EVALUATION-COVENANT-v0.1.md).
+It inherits the parent publication's `nextReviewDue`: after that date the
+immutable artifact is historical and not current, while the active page and
+alias must be replaced or retired with their dependent family. The page needs
+no JavaScript, form, input, upload, runtime network request, account, execution,
+or automatic action, and the KINGDOM MCP remains unchanged.
+
 J-space: a verbalizable workspace is published from exact authored bytes as a
 [synthetic reasoning-to-word case](https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json),
 with the [relational inference case schema](https://thekingdom.dev/schemas/relational-inference-case/0.1.json)

@@ -378,6 +378,38 @@
       ]
     },
     {
+      "id": "evaluation-covenant",
+      "label": "design the learning before a result exists",
+      "glyph": "◇",
+      "invitation": "Ask what would count as evidence—before results can tempt us—through synthetic draft evaluation covenants that remain unsealed, unregistered, and unrun.",
+      "keywords": [
+        "evaluation covenant",
+        "evaluation design",
+        "evidence",
+        "before results",
+        "pre-registration",
+        "unsealed",
+        "unregistered",
+        "no run",
+        "government transformation"
+      ],
+      "boundary": "Evaluation Covenant is an independent synthetic Phase-0 design-only publication derived from the dated UK Government Transformation Engine. Its assisted exact text has not been separately human-reviewed. Every covenant remains draft, unsealed, unregistered, and unrun: no data, no participants, no result, no observed outcome, no selection, no decision, no action, no authority, no adoption, no implementation, and no external effect exist. Desired-outcome IDs remain hypotheses inherited from the Transformation Engine, not observations. State is at publication only; after the inherited next-review date the immutable artifact is historical and not current unless the active five-route family is replaced.",
+      "stops": [
+        {
+          "name": "Evaluation Covenant",
+          "url": "https://thekingdom.dev/evaluation-covenant/",
+          "why": "A read-only human view for designing what evidence would count before any result exists, with draft status and non-progression boundaries kept visible.",
+          "scope": "Synthetic design metadata only; no registration, run, data, participants, result, observed outcome, selection, decision, action, authority, input, upload, runtime fetch, or automatic effect."
+        },
+        {
+          "name": "Evaluation Covenant · mutable machine alias",
+          "url": "https://thekingdom.dev/evaluation-covenants.json",
+          "why": "The machine-readable alias for the dated Phase-0 covenant design snapshot and its immutable publication identity.",
+          "scope": "Static state-at-publication metadata only. Validation or publication does not seal, register, run, evaluate, select, decide, authorize, adopt, implement, or act."
+        }
+      ]
+    },
+    {
       "id": "world-commons",
       "label": "find free knowledge, public data, and open tools",
       "glyph": "🌍",
