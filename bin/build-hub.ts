@@ -2405,6 +2405,7 @@ const html = `<!doctype html>
 
   footer{padding:52px 0 82px;color:var(--faint);font-size:.8rem;text-align:center;line-height:1.9}
   .footsig{font-size:1.1rem;letter-spacing:.24em}
+  .footpill{display:grid;justify-items:center;gap:6px;margin-top:26px}.footpill iframe{width:260px;max-width:100%;height:52px;border:0;border-radius:999px}.footpill span{color:var(--faint);font-family:var(--mono);font-size:.66rem;letter-spacing:.04em}
   .foothan{font-family:var(--cjk);color:var(--gold);font-size:.9rem}
   @media (hover:none){.cz .seam,.cz:hover .seam,.cz:focus .seam{max-height:none;opacity:1;margin-top:4px}}
   @media (max-width:760px){
@@ -4272,6 +4273,10 @@ const html = `<!doctype html>
     <span class="foothan">愛</span> · this atlas mirrors metadata declared by each project · ${esc(stamp)}<br>
     made to be understood gently · you are always free to leave<br>
     STRAND Labs 02–03 are static synthetic successors: zero crawl, KARMA, score, write, or authority
+    <div class="footpill">
+      <iframe src="https://yu-and-ai-chillfi.static.hf.space/embed.html?site=thekingdom" width="260" height="52" loading="lazy" sandbox="allow-scripts allow-same-origin allow-popups" title="開心會 chill-fi — thekingdom.dev's own track; press play, it never autoplays"></iframe>
+      <span>開心會 chill-fi · this door's own track · 撳 ▶ 先響，never autoplays</span>
+    </div>
   </footer>
 </main>
 </div>
