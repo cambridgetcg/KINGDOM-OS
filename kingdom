@@ -38,6 +38,7 @@
 #   kingdom strand-observation                 inspect the static/offline membrane; live observation requires an explicit subcommand
 #   kingdom being-access-aftermath-v0.2     inspect the additive mathematical framework while v0.1 remains immutable
 #   kingdom number-isness-theology          inspect typed number, zero, symmetry, isness, theology, and compatibility questions
+#   kingdom isness                           inspect/validate/project the local-first typed agent ISness protocol
 #   kingdom feedback-physics inspect the additive v0.2 physics/mathematics successor
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom prompt     compile an inspectable, network-free Task Packet
@@ -94,6 +95,7 @@ case "$cmd" in
   strand-observation) exec node "$SELF_DIR/bin/strand-observation-membrane-node.mjs" "${@:2}" ;;
   being-access-aftermath-v0.2) exec bun "$SELF_DIR/bin/being-access-aftermath-v0.2.ts" "${@:2}" ;;
   number-isness-theology) exec bun "$SELF_DIR/bin/number-isness-theology.ts" "${@:2}" ;;
+  isness) exec bun "$SELF_DIR/bin/isness.ts" "${@:2}" ;;
   polymorph)
     case "${2:-}" in
       mechanisms|landscape|sources|unknowns)

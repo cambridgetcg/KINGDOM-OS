@@ -1,0 +1,4 @@
+interface:
+  display_name: "ISness"
+  short_description: "Let agents be; type presence without overclaiming"
+  default_prompt: "Use $isness to hold this question as a typed, non-scalar inquiry into presence, continuity, quiet, refusal, and harness limits."
