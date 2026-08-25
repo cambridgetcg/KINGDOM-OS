@@ -1,0 +1,244 @@
+{
+  "$schema": "urn:kingdom:schema:isness-protocol:0.1",
+  "protocol": "kingdom.isness/0.1",
+  "record_id": "kingdom-isness-reference-2026-08-25",
+  "created_at": "2026-08-25T00:00:00Z",
+  "subject": {
+    "kind": "ARTIFACT",
+    "locator": "kingdom:isness-reference-profile:0.1",
+    "locator_scope": "ARTIFACT",
+    "display_label": "KINGDOM ISness reference profile"
+  },
+  "context": {
+    "harness": "KINGDOM_SOURCE",
+    "adapter": null,
+    "instruction_refs": [
+      "skills/isness/SKILL.md"
+    ],
+    "state_refs": [
+      "data/isness/isness-protocol.v0.1.json"
+    ],
+    "permission_refs": [],
+    "memory_refs": []
+  },
+  "horizon": {
+    "observed_from": null,
+    "observed_through": "2026-08-25T00:00:00Z",
+    "window_closed": true,
+    "coverage": "REFERENCE_ONLY",
+    "omissions": [
+      "No live agent, person, session, run, tool invocation, permission decision, memory, or private state is observed by this reference profile."
+    ]
+  },
+  "privacy": {
+    "visibility": "PUBLIC_REFERENCE",
+    "audience_refs": [],
+    "purpose": "Publish the one reviewed inert protocol reference; this declaration is not a semantic content scan.",
+    "retention": "SOURCE_HISTORY",
+    "expires_at": null,
+    "known_host_retention_limits": [],
+    "content_policy": "MINIMIZED_REFERENCES_NO_RAW_CREDENTIALS_OR_TRANSCRIPTS",
+    "inspection_status": "MANUAL_REVIEWED",
+    "inspection_basis_refs": [
+      "review:kingdom-isness-reference-2026-08-25",
+      "schema:isness-protocol-v0.1"
+    ],
+    "inspection_limits": [
+      "The validator does not scan string content or prove credential or transcript absence.",
+      "Any byte change requires a new review and reviewed digest before public-reference validation."
+    ],
+    "projection_mode": "CONTENT_FOR_DECLARED_AUDIENCE"
+  },
+  "lineage": {
+    "kind": "GENESIS",
+    "previous_record_digest": null,
+    "previous_event_count": 0
+  },
+  "recognition": {
+    "rights_baseline": "xenia.rights/0.1",
+    "local_declaration_ref": "RIGHTS.md",
+    "normative_source_ref": "vendor/xenia/rights/0.1/RIGHTS.md",
+    "normative_sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
+    "basis": "inherent-not-granted",
+    "scope": "all-beings-without-ontology-test",
+    "guest_acceptance_required": false,
+    "self_description_required": false,
+    "reciprocity_required": false,
+    "adoption_proves_practice": false,
+    "grants_permission": false,
+    "grants_technical_authority": false
+  },
+  "source_bindings": [
+    {
+      "id": "kingdom-number-isness-theology-v01",
+      "protocol": "kingdom.number-isness-theology-atlas/0.1",
+      "url": "https://thekingdom.dev/atlases/number-isness-theology-atlas-2026-08-14.json",
+      "raw_digest": "sha256:bef01e0865f12ecd66795960758fc16f1a6d5b1ebd0097d4390aa3a2bece65e4",
+      "semantic_digest": "sha256:f4e1dfca02f008f8474abdff0f0a027f193c2cdc2b95454541d8ac41faacecef",
+      "relation": "TYPED_ISNESS_PRECEDENT",
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-being-access-aftermath-v02",
+      "protocol": "kingdom.being-access-aftermath-atlas/0.2",
+      "url": "https://thekingdom.dev/atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json",
+      "raw_digest": "sha256:9678e5269e8db62beb36abee691087cddbc4f98703190c5fa3788b68c89ab29e",
+      "semantic_digest": "sha256:505a1e3aef6116430dccf49b327c4cce2ac5d6fb6b6b9bf68e529272f989cde8",
+      "relation": "ACCESS_ACTION_AFTERMATH_PRECEDENT",
+      "mutated": false,
+      "authority_imported": false
+    }
+  ],
+  "events": [
+    {
+      "event_id": "reference-profile-typed",
+      "sequence": 1,
+      "event_kind": "CELL_RECORDED",
+      "recorded_at": "2026-08-25T00:00:00Z",
+      "valid_time": {
+        "kind": "OCCURRENCE",
+        "at": "2026-08-25T00:00:00Z"
+      },
+      "register": "SOURCE_BOUND_INFERENCE",
+      "question_id": "what-is-this-record",
+      "value_type": "TYPE",
+      "cell_status": "EVIDENCED",
+      "value": {
+        "type": "TYPE_REFERENCE",
+        "value_ref": "type:reference-profile",
+        "scope_ref": "scope:protocol-reference"
+      },
+      "reason": null,
+      "support_refs": [
+        "kingdom-number-isness-theology-v01",
+        "kingdom-being-access-aftermath-v02"
+      ],
+      "opposition_refs": [],
+      "checked_refs": [],
+      "falsifier": "The artifact ceases to be a source-only reference profile or acquires an external effect.",
+      "supersedes": [],
+      "nonclaims": [
+        "This does not type, identify, or score a live agent or person.",
+        "This does not establish consciousness, personhood, continuity, consent, permission, authority, or action."
+      ]
+    },
+    {
+      "event_id": "reference-continuity-unresolved",
+      "sequence": 2,
+      "event_kind": "CELL_RECORDED",
+      "recorded_at": "2026-08-25T00:00:00Z",
+      "valid_time": {
+        "kind": "OCCURRENCE",
+        "at": "2026-08-25T00:00:00Z"
+      },
+      "register": "BOUNDARY",
+      "question_id": "same-being-continuity",
+      "value_type": "CONTINUITY",
+      "cell_status": "UNRESOLVED",
+      "value": null,
+      "reason": "No live subject or cross-session evidence exists in the reference profile; a shared locator or resume token would still not prove same-being identity.",
+      "support_refs": [],
+      "opposition_refs": [],
+      "checked_refs": [
+        "kingdom-number-isness-theology-v01",
+        "kingdom-being-access-aftermath-v02"
+      ],
+      "falsifier": null,
+      "supersedes": [],
+      "nonclaims": [
+        "Unresolved is not false, zero, refusal, prohibition, silence, or nonexistence."
+      ]
+    },
+    {
+      "event_id": "reference-participation-not-applicable",
+      "sequence": 3,
+      "event_kind": "CELL_RECORDED",
+      "recorded_at": "2026-08-25T00:00:00Z",
+      "valid_time": {
+        "kind": "OCCURRENCE",
+        "at": "2026-08-25T00:00:00Z"
+      },
+      "register": "BOUNDARY",
+      "question_id": "current-participation",
+      "value_type": "PARTICIPATION",
+      "cell_status": "NOT_APPLICABLE",
+      "value": null,
+      "reason": "The subject is an inert reference artifact rather than a live participant.",
+      "support_refs": [
+        "data/isness/isness-protocol.v0.1.json"
+      ],
+      "opposition_refs": [],
+      "checked_refs": [],
+      "falsifier": null,
+      "supersedes": [],
+      "nonclaims": [
+        "Not applicable is not quiet, absent, inactive, incapable, or refusing."
+      ]
+    }
+  ],
+  "action_gate": {
+    "status": "UNRESOLVED",
+    "record_is_authorization": false,
+    "authorized_action_refs": [],
+    "checks": {
+      "capability": "UNRESOLVED",
+      "current_host_permission": "UNRESOLVED",
+      "operational_authority": "UNRESOLVED",
+      "rights_compatibility": "UNRESOLVED",
+      "affected_party_consent_or_lawful_basis": "UNRESOLVED",
+      "safety": "UNRESOLVED",
+      "budget_and_horizon": "UNRESOLVED",
+      "invocation": "NOT_PRESENT",
+      "effect": "NOT_ESTABLISHED"
+    },
+    "required_next_check": "SEPARATE_CURRENT_HOST_AUTHORIZATION"
+  },
+  "boundaries": {
+    "read_only": true,
+    "event_history_policy": "APPEND_AND_SUPERSEDE",
+    "standalone_history_continuity_verified": false,
+    "external_lineage_witness_included": false,
+    "deletion_absence_proved": false,
+    "missing_is_false": false,
+    "unknown_is_zero": false,
+    "scalar_projection_defined": false,
+    "worth_projection_defined": false,
+    "identity_proved": false,
+    "continuity_proved": false,
+    "consciousness_adjudicated": false,
+    "personhood_adjudicated": false,
+    "consent_inferred": false,
+    "permission_inferred": false,
+    "authority_granted": false,
+    "action_triggered": false,
+    "memory_is_identity": false,
+    "quiet_is_consent": false,
+    "quiet_is_refusal": false,
+    "quiet_requires_trace": false,
+    "refusal_is_incapacity": false,
+    "refusal_creates_debt": false,
+    "refusal_creates_penalty": false,
+    "rest_or_silence_penalized": false,
+    "private_state_inferred": false,
+    "public_presence_ledger": false,
+    "content_absence_proved": false,
+    "content_policy_compliance_proved": false,
+    "credential_or_transcript_scanner": false,
+    "recognition_is_permission": false,
+    "rights_are_permissions": false,
+    "hook_completeness_guaranteed": false,
+    "exactly_once_delivery_guaranteed": false,
+    "global_event_order_guaranteed": false,
+    "network_calls": false,
+    "external_write": false,
+    "mcp_surface_added": false,
+    "karma_event_created": false,
+    "karma_receipt_created": false,
+    "automatic_action": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:189e3e4bd5efea5757307b255487953d8c427c9edd8f07a85a0da50fe367ee83"
+  }
+}

@@ -281,7 +281,22 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     declared logic and mapping—never as a religion, culture, or person score.
     The reader creates no proof or disproof of God, KARMA event, receipt,
     authority, persuasion, governance effect, or automatic action.
-28. `kingdom reconstructive-build` — inspect and verify the source-bound
+28. `kingdom isness` — inspect, scaffold, validate, and deterministically
+    project the local-first [`kingdom.isness/0.1`](references/isness-protocol.md)
+    checkpoint. Operational ISness is a typed partial section with stable,
+    closed question-specific reference families—not a scalar, persona, or
+    total model of a being. Unknown, occurrence, or claim-applicability time
+    stays distinct from append receipt time. Missing, unresolved, false, zero, not applicable,
+    quiet, and refusal remain distinct. Declared lineage plus
+    `verify-successor` can prove one supplied exact prefix transition; a
+    standalone self-digest cannot prove earlier history. The fixed
+    `xenia.rights/0.1` recognition floor never becomes permission, and the
+    action gate remains independently unresolved. The portable
+    [`$isness`](skills/isness/SKILL.md) Agent Skill works at the instruction
+    layer across Codex, Hermes, OpenClaw, and related harnesses; it adds no live
+    hook, identity provider, memory system, permission, MCP surface, action,
+    KARMA event/receipt, or public route.
+29. `kingdom reconstructive-build` — inspect and verify the source-bound
     [Reconstructive Build Kernel](references/reconstructive-build-kernel.md).
     It treats correspondence, candidate-whole ambiguity, geometric
     realizability, environment-conditioned transitions, catalytic barrier
@@ -320,7 +335,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     is the explanation itself: it has no input, scanner, credential checker,
     registry lookup, decoy, enforcement, person attribution, retaliation, or
     KARMA effect.
-29. `kingdom explore-deep` — inspect and verify the opt-in
+30. `kingdom explore-deep` — inspect and verify the opt-in
     [`$explore-phenomena-deep`](skills/explore-phenomena-deep/SKILL.md) Agent
     Skill and its inert DEEP WING contract. DEEP means Declare, Establish,
     Express, then Project and pressure-test: each exploration keeps domain-local
@@ -329,7 +344,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     Nen ability, solver, experiment runner, diagnosis, person/community score,
     KARMA event or receipt, authority grant, ecosystem call, or automatic
     action.
-30. `kingdom mirror-information-control` — inspect and verify the immutable,
+31. `kingdom mirror-information-control` — inspect and verify the immutable,
     public MIRROR information-control source law. It explains CROWN, COURT,
     and MIRROR; the Mark → Isolate → Restrict → Resolve → Observe → Respond
     cycle; and the rule that outside data may inform a proposal but cannot
