@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 132-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 135-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -60,6 +60,12 @@ adds one immutable snapshot, one closed schema, one guide, one output manifest,
 eight SVG diagrams, and three WAV declared sonifications as the twenty-seventh
 family; its server-rendered page and byte-preserved alias are the only mutable
 surfaces. All seventeen routes retire atomically.
+The Civilisation Flow Nuance Atlas adds one immutable atlas, one closed schema,
+and one guide as the twenty-eighth family, with no mutable alias or runtime
+surface. It depends directly on the active Civilisation → Reality Projection
+family and exposes qualitative reading vocabulary without claiming a live path,
+causal model, simulation, prediction, score, target, authority, action, or
+external effect.
 The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -101,6 +107,23 @@ design mapping. They create no new historical or causal claim, metaphysical
 verdict, belief inference, score, persuasion target, authority, action,
 publication trigger, deployment trigger, or external effect; nine important
 domains remain explicitly unsupported by the pinned predecessors.
+The Civilisation Flow Nuance Atlas entries preserve a qualitative grammar of
+fourteen stages, thirteen non-automatic transitions, six predecessor-bound
+overlays, and nine open-domain bindings. Dynamics, topology, typed absence,
+material conditions, emotion observation, social position, power, affected
+parties, time, accumulation, uncertainty, counterflow, and repair remain
+non-summable and observation-bounded. The atlas observes no live society,
+infers no person or group state, fits or runs no causal model or simulator, and
+creates no intervention, tactic, authority, action, publication trigger,
+deployment trigger, or external effect.
+Its generated hub projection uses a six-family policy index, linked shared
+templates, compact registries, and card-local conceptual summaries; the guide
+and immutable JSON remain the exhaustive surfaces. The 375,000-byte flow
+section, 1,350,000-byte whole-hub, 390,000-byte pre-flow delta, 6,500 flow
+element, and 17,000 whole-hub element limits are release-drift regression
+ceilings only. They do not prove accessibility, safety, comprehension, or
+semantic completeness; separate no-JavaScript, meaning, link, and boundary
+tests carry those claims.
 The Research Observatory ledger entries preserve only the public schema family
 and its explanatory guide. The mutable snapshot contains bounded metadata, not
 full text, and the human page renders those checked-in bytes without essential
@@ -206,22 +229,23 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 163-asset union classifies 132 destinations
-as ledgered immutable/versioned and 31 as mutable; 161 are direct public response
-bodies and the sitemap contains 149 URLs. Generated discovery describes twelve
+consume those same bytes. The current 166-asset union classifies 135 destinations
+as ledgered immutable/versioned and 31 as mutable; 164 are direct public response
+bodies and the sitemap contains 152 URLs. Generated discovery describes thirteen
 atlases, four primary lab JSON routes plus Shape & Resonance manifest/media, one
 experiment route, and one separate activation
 plus the Research Observatory, Trial Chamber, UK Government Engine, dependent
 UK Government Transformation Engine and Evaluation Covenant, and Reality
 Influence Claim Graph plus its thin Civilisation → Reality Projection and the
-Shape & Resonance Lab across twenty-seven retirement families. It says what is
+dependent Civilisation Flow Nuance Atlas and Shape & Resonance Lab across
+twenty-eight retirement families. It says what is
 served now, and every destination is explicitly classified as mutable or
 ledgered. A new ledger entry must be staged when introduced. A previously
 committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the twenty-seven linked authored publication
+The live release check retires the twenty-eight linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

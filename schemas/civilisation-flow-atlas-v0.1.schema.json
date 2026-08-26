@@ -1,0 +1,1453 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:civilisation-flow-nuance-atlas:0.1",
+  "title": "KINGDOM Civilisation Flow Nuance Atlas 0.1",
+  "description": "A closed static design atlas for inspecting stages, missing transitions, qualitative dynamics, material conditions, asymmetric power, affected-party aftermath, and repair without creating a causal model, score, prediction, target, authority, or action.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "atlas_id",
+    "version",
+    "title",
+    "compiled_on",
+    "evidence_through",
+    "state",
+    "scope",
+    "predecessor_bindings",
+    "flow_rules",
+    "nuance_dimensions",
+    "affected_party_vocabulary",
+    "flow_dynamics_vocabulary",
+    "topology_vocabulary",
+    "negative_flow_vocabulary",
+    "material_condition_vocabulary",
+    "emotion_observation_vocabulary",
+    "affect_context_vocabulary",
+    "social_position_vocabulary",
+    "power_asymmetry_vocabulary",
+    "evidence_uncertainty_vocabulary",
+    "action_gate_vocabulary",
+    "policy_templates",
+    "nuance_templates",
+    "contract_templates",
+    "flow",
+    "stages",
+    "transitions",
+    "crosswalk_flow_overlays",
+    "open_domain_bindings",
+    "unknowns",
+    "boundaries",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": { "const": "urn:kingdom:schema:civilisation-flow-nuance-atlas:0.1" },
+    "protocol": { "const": "kingdom.civilisation-flow-nuance-atlas/0.1" },
+    "atlas_id": { "const": "civilisation-flow-nuance-atlas-2026-08-26" },
+    "version": { "const": "0.1.0" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "compiled_on": { "const": "2026-08-26" },
+    "evidence_through": { "const": "2026-08-21" },
+    "state": { "const": "reviewed-static-flow-nuance-atlas" },
+    "scope": { "$ref": "#/$defs/scope" },
+    "predecessor_bindings": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        {
+          "const": {
+            "id": "word-story-religion-civilisation",
+            "protocol": "kingdom.word-story-religion-civilisation-map/0.1",
+            "map_id": "word-story-religion-civilisation-2026-08-20",
+            "locator": "repo:data/language/word-story-religion-civilisation-map.v0.1.json",
+            "raw_digest": "sha256:a4a87b7b23dbdf7e7e6689b5083f76a746c7f41bc56f2124281dfda609a62479",
+            "semantic_digest": "sha256:0c791b2491ebdcd85cf58e26e41e8b35b883781fd26bccc19dfd3f7853c7855a",
+            "relation": "historical-language-story-and-institution-concept-predecessor",
+            "mutated": false,
+            "republished": false,
+            "authority_imported": false
+          }
+        },
+        {
+          "const": {
+            "id": "reality-influence-claim-graph",
+            "protocol": "kingdom.reality-influence-claim-graph/0.1",
+            "map_id": "reality-influence-claim-graph-2026-08-21",
+            "locator": "repo:data/reality/reality-influence-map.v0.1.json",
+            "raw_digest": "sha256:4d68be39226c8d5451c8d9166fa74ba54bb793b7655f119d8765090cbbcf890e",
+            "semantic_digest": "sha256:45d4323d1a6190b3c333f02f2c744858e8da27944fbcb2042fbae492ca6e31ac",
+            "relation": "typed-claim-stage-gate-aftermath-and-repair-predecessor",
+            "mutated": false,
+            "republished": false,
+            "authority_imported": false
+          }
+        },
+        {
+          "const": {
+            "id": "civilisation-reality-projection",
+            "protocol": "kingdom.civilisation-reality-projection/0.1",
+            "map_id": "civilisation-reality-projection-2026-08-25",
+            "locator": "repo:data/reality/civilisation-reality-projection.v0.1.json",
+            "raw_digest": "sha256:acc5d16b0981266fe9908714af4791fe2266d063a363f89e43f7a208b0b4b48e",
+            "semantic_digest": "sha256:03c20d3976a7b449c009cac7736ab73aa9f17fa619951d3753ecbb69bcc1496b",
+            "relation": "six-crosswalk-and-open-domain-design-predecessor",
+            "mutated": false,
+            "republished": false,
+            "authority_imported": false
+          }
+        }
+      ],
+      "items": false
+    },
+    "flow_rules": { "$ref": "#/$defs/flowRules" },
+    "nuance_dimensions": { "$ref": "#/$defs/nuanceDimensionArray" },
+    "affected_party_vocabulary": { "$ref": "#/$defs/affectedPartyArray" },
+    "flow_dynamics_vocabulary": { "$ref": "#/$defs/lensArray" },
+    "topology_vocabulary": { "$ref": "#/$defs/lensArray" },
+    "negative_flow_vocabulary": { "$ref": "#/$defs/negativeFlowArray" },
+    "material_condition_vocabulary": { "$ref": "#/$defs/lensArray" },
+    "emotion_observation_vocabulary": { "$ref": "#/$defs/emotionObservationArray" },
+    "affect_context_vocabulary": { "$ref": "#/$defs/lensArray" },
+    "social_position_vocabulary": { "$ref": "#/$defs/lensArray" },
+    "power_asymmetry_vocabulary": { "$ref": "#/$defs/lensArray" },
+    "evidence_uncertainty_vocabulary": { "$ref": "#/$defs/uncertaintyArray" },
+    "action_gate_vocabulary": { "$ref": "#/$defs/actionGateArray" },
+    "policy_templates": {
+      "type": "array",
+      "minItems": 24,
+      "maxItems": 64,
+      "items": { "$ref": "#/$defs/policyTemplate" }
+    },
+    "nuance_templates": { "$ref": "#/$defs/nuanceTemplates" },
+    "contract_templates": { "$ref": "#/$defs/contractTemplates" },
+    "flow": { "$ref": "#/$defs/flow" },
+    "stages": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "items": { "$ref": "#/$defs/stage" }
+    },
+    "transitions": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": { "$ref": "#/$defs/transition" }
+    },
+    "crosswalk_flow_overlays": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "$ref": "#/$defs/overlay" }
+    },
+    "open_domain_bindings": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": { "$ref": "#/$defs/openDomain" }
+    },
+    "unknowns": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 12,
+      "items": { "$ref": "#/$defs/unknown" }
+    },
+    "boundaries": { "$ref": "#/$defs/boundaries" },
+    "integrity": { "$ref": "#/$defs/integrity" }
+  },
+  "$defs": {
+    "text": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "textArray": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": { "$ref": "#/$defs/text" }
+    },
+    "textArray0": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "$ref": "#/$defs/text" }
+    },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 120 },
+    "upperId": { "type": "string", "pattern": "^[A-Z]+(?:_[A-Z0-9]+)*$", "maxLength": 120 },
+    "idArray": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "idArray0": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "upperIdArray0": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/upperId" }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question",
+        "intended_use",
+        "excluded_use",
+        "unit_of_analysis",
+        "analytical_shape",
+        "shared_story_definition",
+        "flow_definition",
+        "new_vocabulary_register",
+        "external_empirical_sources_added",
+        "evidence_horizon_scope",
+        "data_classification"
+      ],
+      "properties": {
+        "question": { "$ref": "#/$defs/text" },
+        "intended_use": { "$ref": "#/$defs/textArray" },
+        "excluded_use": { "$ref": "#/$defs/textArray" },
+        "unit_of_analysis": { "$ref": "#/$defs/text" },
+        "analytical_shape": { "const": "temporal-multilayer-directed-seam-and-overlay-design-lens" },
+        "shared_story_definition": { "$ref": "#/$defs/text" },
+        "flow_definition": { "$ref": "#/$defs/text" },
+        "new_vocabulary_register": { "const": "DESIGN_COMMITMENT" },
+        "external_empirical_sources_added": { "const": false },
+        "evidence_horizon_scope": { "const": "predecessor-claims-only" },
+        "data_classification": { "const": "public-static-design-atlas-no-person-data" }
+      }
+    },
+    "flowRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_claims_remain_in_predecessors",
+        "predecessors_remain_immutable",
+        "shared_story_is_not_shared_belief",
+        "stages_are_not_an_automatic_sequence",
+        "transitions_are_not_transitive",
+        "claim_graph_direction_is_not_time_direction",
+        "flow_does_not_erase_structure",
+        "structure_does_not_imply_stasis",
+        "form_stock_and_institution_are_memory_and_constraint_lenses_not_ontological_verdicts",
+        "boundary_choice_can_hide_displaced_effects",
+        "authority_dependency_is_not_causal_influence",
+        "decision_is_not_authority",
+        "authority_is_not_capability",
+        "capability_is_not_permission",
+        "attempt_is_not_execution",
+        "execution_is_not_success",
+        "sequence_is_not_causation",
+        "outcome_is_not_causal_effect",
+        "causal_effect_is_not_legitimacy_goodness_or_justice",
+        "emotion_is_not_inferred_from_expression_or_participation",
+        "power_position_is_not_motive_worth_legitimacy_or_authority",
+        "dynamics_are_qualitative_lenses_not_effect_sizes_or_predictions",
+        "topology_representation_is_not_occurrence",
+        "material_context_is_not_deterministic_cause",
+        "absence_requires_adequate_observation_coverage",
+        "absence_is_not_zero_nonexistence_disbelief_or_consent",
+        "influence_aftermath_and_uncertainty_are_non_summable",
+        "repair_is_not_erasure_absolution_restored_consent_or_completed_justice",
+        "non_action_has_no_adverse_inference",
+        "unsupported_domains_remain_open"
+      ],
+      "properties": {
+        "source_claims_remain_in_predecessors": { "const": true },
+        "predecessors_remain_immutable": { "const": true },
+        "shared_story_is_not_shared_belief": { "const": true },
+        "stages_are_not_an_automatic_sequence": { "const": true },
+        "transitions_are_not_transitive": { "const": true },
+        "claim_graph_direction_is_not_time_direction": { "const": true },
+        "flow_does_not_erase_structure": { "const": true },
+        "structure_does_not_imply_stasis": { "const": true },
+        "form_stock_and_institution_are_memory_and_constraint_lenses_not_ontological_verdicts": { "const": true },
+        "boundary_choice_can_hide_displaced_effects": { "const": true },
+        "authority_dependency_is_not_causal_influence": { "const": true },
+        "decision_is_not_authority": { "const": true },
+        "authority_is_not_capability": { "const": true },
+        "capability_is_not_permission": { "const": true },
+        "attempt_is_not_execution": { "const": true },
+        "execution_is_not_success": { "const": true },
+        "sequence_is_not_causation": { "const": true },
+        "outcome_is_not_causal_effect": { "const": true },
+        "causal_effect_is_not_legitimacy_goodness_or_justice": { "const": true },
+        "emotion_is_not_inferred_from_expression_or_participation": { "const": true },
+        "power_position_is_not_motive_worth_legitimacy_or_authority": { "const": true },
+        "dynamics_are_qualitative_lenses_not_effect_sizes_or_predictions": { "const": true },
+        "topology_representation_is_not_occurrence": { "const": true },
+        "material_context_is_not_deterministic_cause": { "const": true },
+        "absence_requires_adequate_observation_coverage": { "const": true },
+        "absence_is_not_zero_nonexistence_disbelief_or_consent": { "const": true },
+        "influence_aftermath_and_uncertainty_are_non_summable": { "const": true },
+        "repair_is_not_erasure_absolution_restored_consent_or_completed_justice": { "const": true },
+        "non_action_has_no_adverse_inference": { "const": true },
+        "unsupported_domains_remain_open": { "const": true }
+      }
+    },
+    "nuanceDimensionArray": {
+      "type": "array",
+      "minItems": 24,
+      "maxItems": 24,
+      "items": { "$ref": "#/$defs/nuanceDimension" }
+    },
+    "nuanceDimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "aggregate_weight", "rank"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "meaning": { "$ref": "#/$defs/text" },
+        "aggregate_weight": { "const": null },
+        "rank": { "const": null }
+      }
+    },
+    "affectedPartyArray": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": { "$ref": "#/$defs/affectedParty" }
+    },
+    "affectedParty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "omission_risk"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "meaning": { "$ref": "#/$defs/text" },
+        "omission_risk": { "$ref": "#/$defs/text" }
+      }
+    },
+    "lensArray": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": { "$ref": "#/$defs/lens" }
+    },
+    "lens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "label", "question", "observables", "does_not_establish",
+        "aggregate_weight", "rank", "effect_size", "prediction",
+        "optimization_target"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "label": { "$ref": "#/$defs/text" },
+        "question": { "$ref": "#/$defs/text" },
+        "observables": { "$ref": "#/$defs/textArray" },
+        "does_not_establish": { "$ref": "#/$defs/textArray" },
+        "aggregate_weight": { "const": null },
+        "rank": { "const": null },
+        "effect_size": { "const": null },
+        "prediction": { "const": false },
+        "optimization_target": { "const": false }
+      }
+    },
+    "negativeFlowArray": {
+      "type": "array",
+      "minItems": 11,
+      "maxItems": 11,
+      "items": { "$ref": "#/$defs/negativeFlow" }
+    },
+    "negativeFlow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "adequate_coverage_required", "does_not_establish"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "meaning": { "$ref": "#/$defs/text" },
+        "adequate_coverage_required": { "const": true },
+        "does_not_establish": { "$ref": "#/$defs/textArray" }
+      }
+    },
+    "emotionObservationArray": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "$ref": "#/$defs/emotionObservation" }
+    },
+    "emotionObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "required_context", "does_not_establish"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "meaning": { "$ref": "#/$defs/text" },
+        "required_context": { "$ref": "#/$defs/textArray" },
+        "does_not_establish": { "$ref": "#/$defs/textArray" }
+      }
+    },
+    "uncertaintyArray": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": { "$ref": "#/$defs/uncertainty" }
+    },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "aggregation_weight"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "meaning": { "$ref": "#/$defs/text" },
+        "aggregation_weight": { "const": null }
+      }
+    },
+    "actionGateArray": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": { "$ref": "#/$defs/actionGate" }
+    },
+    "actionGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "meaning", "external_verification_required", "atlas_satisfies"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "meaning": { "$ref": "#/$defs/text" },
+        "external_verification_required": { "const": true },
+        "atlas_satisfies": { "const": false }
+      }
+    },
+    "policyTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "family", "question", "does_not_establish"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "family": {
+          "enum": [
+            "promotion-evidence",
+            "negative-flow",
+            "party-aftermath",
+            "repair",
+            "dimension-boundary",
+            "translation-threshold-path"
+          ]
+        },
+        "question": { "$ref": "#/$defs/text" },
+        "does_not_establish": { "$ref": "#/$defs/text" }
+      }
+    },
+    "flow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage_ids", "transition_ids", "status", "may_branch", "may_join",
+        "may_skip", "may_stall", "may_stop", "may_reverse", "may_recur",
+        "may_never_start", "complete_path_claimed", "automatic_runtime"
+      ],
+      "properties": {
+        "stage_ids": { "$ref": "#/$defs/idArray" },
+        "transition_ids": { "$ref": "#/$defs/idArray" },
+        "status": { "const": "analytical-order-not-deterministic-path" },
+        "may_branch": { "const": true },
+        "may_join": { "const": true },
+        "may_skip": { "const": true },
+        "may_stall": { "const": true },
+        "may_stop": { "const": true },
+        "may_reverse": { "const": true },
+        "may_recur": { "const": true },
+        "may_never_start": { "const": true },
+        "complete_path_claimed": { "const": false },
+        "automatic_runtime": { "const": false }
+      }
+    },
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "label", "definition", "analytical_status",
+        "predecessor_domain_ids", "predecessor_dimension_ids",
+        "predecessor_node_type_ids", "predecessor_ladder_ids", "nuance",
+        "evidence_profile",
+        "authority_dependency", "causal_influence", "automatic_advance"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "label": { "$ref": "#/$defs/text" },
+        "definition": { "$ref": "#/$defs/text" },
+        "analytical_status": {
+          "enum": [
+            "typed-predecessor-stage-design-lens",
+            "analytical-context-no-dedicated-reality-node"
+          ]
+        },
+        "predecessor_domain_ids": { "$ref": "#/$defs/idArray" },
+        "predecessor_dimension_ids": { "$ref": "#/$defs/idArray" },
+        "predecessor_node_type_ids": { "$ref": "#/$defs/upperIdArray0" },
+        "predecessor_ladder_ids": { "$ref": "#/$defs/idArray0" },
+        "nuance": { "$ref": "#/$defs/fullNuance" },
+        "evidence_profile": { "$ref": "#/$defs/evidenceProfile" },
+        "authority_dependency": { "$ref": "#/$defs/authorityDependency" },
+        "causal_influence": { "$ref": "#/$defs/causalInfluence" },
+        "automatic_advance": { "const": false }
+      }
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "from_stage_ids", "to_stage_ids", "predecessor_relation_ids",
+        "relation_gap_status", "relation_direction_note", "transition_status",
+        "nuance", "evidence_profile", "authority_dependency", "causal_influence", "automatic",
+        "transitive"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "from_stage_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "to_stage_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "predecessor_relation_ids": { "$ref": "#/$defs/upperIdArray0" },
+        "relation_gap_status": {
+          "enum": ["typed-predecessor-relations-listed", "no-direct-predecessor-relation"]
+        },
+        "relation_direction_note": { "$ref": "#/$defs/text" },
+        "transition_status": { "const": "design-question-not-observed-or-causal-transition" },
+        "nuance": { "$ref": "#/$defs/templatedNuance" },
+        "evidence_profile": { "$ref": "#/$defs/evidenceProfile" },
+        "authority_dependency": { "$ref": "#/$defs/templatedAuthorityDependency" },
+        "causal_influence": { "$ref": "#/$defs/templatedCausalInfluence" },
+        "automatic": { "const": false },
+        "transitive": { "const": false }
+      }
+    },
+    "overlay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "projection_binding_id", "projection_crosswalk_id", "stage_ids",
+        "transition_ids", "nuance", "evidence_profile", "authority_dependency",
+        "causal_influence", "new_claim_created", "authority_granted",
+        "external_effect_claimed"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "projection_binding_id": { "const": "civilisation-reality-projection" },
+        "projection_crosswalk_id": { "$ref": "#/$defs/id" },
+        "stage_ids": { "$ref": "#/$defs/idArray" },
+        "transition_ids": { "$ref": "#/$defs/idArray0" },
+        "nuance": { "$ref": "#/$defs/templatedNuance" },
+        "evidence_profile": { "$ref": "#/$defs/evidenceProfile" },
+        "authority_dependency": { "$ref": "#/$defs/templatedAuthorityDependency" },
+        "causal_influence": { "$ref": "#/$defs/templatedCausalInfluence" },
+        "new_claim_created": { "const": false },
+        "authority_granted": { "const": false },
+        "external_effect_claimed": { "const": false }
+      }
+    },
+    "openDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "projection_binding_id", "projection_open_domain_id",
+        "flow_touchpoint_ids", "status", "needed_evidence", "nonclaim",
+        "stop_condition"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "projection_binding_id": { "const": "civilisation-reality-projection" },
+        "projection_open_domain_id": { "$ref": "#/$defs/id" },
+        "flow_touchpoint_ids": { "$ref": "#/$defs/idArray" },
+        "status": { "const": "remains-open-no-mechanism-added" },
+        "needed_evidence": { "$ref": "#/$defs/textArray" },
+        "nonclaim": { "$ref": "#/$defs/text" },
+        "stop_condition": { "$ref": "#/$defs/text" }
+      }
+    },
+    "nuanceTemplates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transition-default", "overlay-default"],
+      "properties": {
+        "transition-default": { "$ref": "#/$defs/nuanceTemplate" },
+        "overlay-default": { "$ref": "#/$defs/nuanceTemplate" }
+      }
+    },
+    "nuanceTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "temporal_profile", "accumulation_profile", "distribution",
+        "distortions", "counterflows", "failure_modes", "repair_routes",
+        "repair_residuals", "repair_recurrence_checks",
+        "repair_fresh_gate_required", "evidence_requirements",
+        "uncertainty_aggregation", "stop_conditions",
+        "stall_or_block_conditions", "reversibility",
+        "explicit_non_implications"
+      ],
+      "properties": {
+        "temporal_profile": { "$ref": "#/$defs/temporalProfile" },
+        "accumulation_profile": { "$ref": "#/$defs/accumulationProfile" },
+        "distribution": { "$ref": "#/$defs/distribution" },
+        "distortions": { "$ref": "#/$defs/textArray" },
+        "counterflows": { "$ref": "#/$defs/textArray" },
+        "failure_modes": { "$ref": "#/$defs/textArray" },
+        "repair_routes": { "$ref": "#/$defs/textArray" },
+        "repair_residuals": { "$ref": "#/$defs/textArray" },
+        "repair_recurrence_checks": { "$ref": "#/$defs/textArray" },
+        "repair_fresh_gate_required": { "const": true },
+        "evidence_requirements": { "$ref": "#/$defs/textArray" },
+        "uncertainty_aggregation": { "const": null },
+        "stop_conditions": { "$ref": "#/$defs/textArray" },
+        "stall_or_block_conditions": { "$ref": "#/$defs/textArray" },
+        "reversibility": { "$ref": "#/$defs/reversibility" },
+        "explicit_non_implications": { "$ref": "#/$defs/textArray" }
+      }
+    },
+    "templatedNuance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "template_ref", "carriers", "transformations", "gates", "observables",
+        "affected_party_ids", "affected_party_aftermath", "emotion_observation",
+        "affect_context", "social_position", "power_asymmetry",
+        "material_conditions", "flow_dynamics", "topology", "negative_flow",
+        "negative_flow_profiles", "translation_profile", "threshold_profile",
+        "path_dependence_profile", "repair_profile", "evidence_uncertainty",
+        "alternative_paths"
+      ],
+      "properties": {
+        "template_ref": { "enum": ["transition-default", "overlay-default"] },
+        "carriers": { "$ref": "#/$defs/textArray" },
+        "transformations": { "$ref": "#/$defs/textArray" },
+        "gates": { "$ref": "#/$defs/textArray" },
+        "observables": { "$ref": "#/$defs/textArray" },
+        "affected_party_ids": { "$ref": "#/$defs/idArray" },
+        "affected_party_aftermath": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": { "$ref": "#/$defs/affectedPartyAftermath" }
+        },
+        "emotion_observation": { "$ref": "#/$defs/dimensionSelection" },
+        "affect_context": { "$ref": "#/$defs/dimensionSelection" },
+        "social_position": { "$ref": "#/$defs/dimensionSelection" },
+        "power_asymmetry": { "$ref": "#/$defs/dimensionSelection" },
+        "material_conditions": { "$ref": "#/$defs/dimensionSelection" },
+        "flow_dynamics": { "$ref": "#/$defs/dimensionSelection" },
+        "topology": { "$ref": "#/$defs/dimensionSelection" },
+        "negative_flow": { "$ref": "#/$defs/dimensionSelection" },
+        "negative_flow_profiles": {
+          "type": "array",
+          "maxItems": 11,
+          "items": { "$ref": "#/$defs/negativeFlowProfile" }
+        },
+        "translation_profile": { "$ref": "#/$defs/translationProfile" },
+        "threshold_profile": { "$ref": "#/$defs/thresholdProfile" },
+        "path_dependence_profile": { "$ref": "#/$defs/pathDependenceProfile" },
+        "repair_profile": { "$ref": "#/$defs/repairProfile" },
+        "evidence_uncertainty": { "$ref": "#/$defs/dimensionSelection" },
+        "alternative_paths": { "$ref": "#/$defs/textArray" }
+      }
+    },
+    "fullNuance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "carriers", "transformations", "gates", "temporal_profile",
+        "accumulation_profile", "observables", "affected_party_ids",
+        "distribution", "affected_party_aftermath", "emotion_observation",
+        "affect_context", "social_position", "power_asymmetry",
+        "material_conditions", "flow_dynamics", "topology",
+        "negative_flow", "negative_flow_profiles", "translation_profile",
+        "threshold_profile", "path_dependence_profile", "distortions", "counterflows",
+        "failure_modes", "repair_routes", "repair_residuals",
+        "repair_recurrence_checks", "repair_fresh_gate_required",
+        "repair_profile",
+        "evidence_requirements", "evidence_uncertainty",
+        "uncertainty_aggregation", "alternative_paths", "stop_conditions",
+        "stall_or_block_conditions", "reversibility",
+        "explicit_non_implications"
+      ],
+      "properties": {
+        "carriers": { "$ref": "#/$defs/textArray" },
+        "transformations": { "$ref": "#/$defs/textArray" },
+        "gates": { "$ref": "#/$defs/textArray" },
+        "temporal_profile": { "$ref": "#/$defs/temporalProfile" },
+        "accumulation_profile": { "$ref": "#/$defs/accumulationProfile" },
+        "observables": { "$ref": "#/$defs/textArray" },
+        "affected_party_ids": { "$ref": "#/$defs/idArray" },
+        "distribution": { "$ref": "#/$defs/distribution" },
+        "affected_party_aftermath": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": { "$ref": "#/$defs/affectedPartyAftermath" }
+        },
+        "emotion_observation": { "$ref": "#/$defs/dimensionSelection" },
+        "affect_context": { "$ref": "#/$defs/dimensionSelection" },
+        "social_position": { "$ref": "#/$defs/dimensionSelection" },
+        "power_asymmetry": { "$ref": "#/$defs/dimensionSelection" },
+        "material_conditions": { "$ref": "#/$defs/dimensionSelection" },
+        "flow_dynamics": { "$ref": "#/$defs/dimensionSelection" },
+        "topology": { "$ref": "#/$defs/dimensionSelection" },
+        "negative_flow": { "$ref": "#/$defs/dimensionSelection" },
+        "negative_flow_profiles": {
+          "type": "array",
+          "maxItems": 11,
+          "items": { "$ref": "#/$defs/negativeFlowProfile" }
+        },
+        "translation_profile": { "$ref": "#/$defs/translationProfile" },
+        "threshold_profile": { "$ref": "#/$defs/thresholdProfile" },
+        "path_dependence_profile": { "$ref": "#/$defs/pathDependenceProfile" },
+        "distortions": { "$ref": "#/$defs/textArray" },
+        "counterflows": { "$ref": "#/$defs/textArray" },
+        "failure_modes": { "$ref": "#/$defs/textArray" },
+        "repair_routes": { "$ref": "#/$defs/textArray" },
+        "repair_residuals": { "$ref": "#/$defs/textArray" },
+        "repair_recurrence_checks": { "$ref": "#/$defs/textArray" },
+        "repair_fresh_gate_required": { "const": true },
+        "repair_profile": { "$ref": "#/$defs/repairProfile" },
+        "evidence_requirements": { "$ref": "#/$defs/textArray" },
+        "evidence_uncertainty": { "$ref": "#/$defs/dimensionSelection" },
+        "uncertainty_aggregation": { "const": null },
+        "alternative_paths": { "$ref": "#/$defs/textArray" },
+        "stop_conditions": { "$ref": "#/$defs/textArray" },
+        "stall_or_block_conditions": { "$ref": "#/$defs/textArray" },
+        "reversibility": { "$ref": "#/$defs/reversibility" },
+        "explicit_non_implications": { "$ref": "#/$defs/textArray" }
+      }
+    },
+    "dimensionSelection": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "refs", "reason_ref", "boundary_ref", "evidence_requirements"],
+          "properties": {
+            "status": { "const": "applicable-question" },
+            "refs": { "$ref": "#/$defs/idArray" },
+            "reason_ref": { "$ref": "#/$defs/id" },
+            "boundary_ref": { "$ref": "#/$defs/id" },
+            "evidence_requirements": { "$ref": "#/$defs/idArray" },
+            "card_note": { "$ref": "#/$defs/text" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reason_ref", "boundary_ref"],
+          "properties": {
+            "status": { "enum": ["not-applicable", "unassessed"] },
+            "reason_ref": { "$ref": "#/$defs/id" },
+            "boundary_ref": { "$ref": "#/$defs/id" },
+            "card_note": { "$ref": "#/$defs/text" }
+          }
+        }
+      ]
+    },
+    "evidenceLinkSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "prompt_refs"],
+      "properties": {
+        "source": {
+          "enum": [
+            "card-nuance-observables",
+            "card-nuance-alternative-paths",
+            "policy-templates"
+          ]
+        },
+        "prompt_refs": { "$ref": "#/$defs/idArray0" }
+      },
+      "if": {
+        "properties": { "source": { "const": "policy-templates" } },
+        "required": ["source"]
+      },
+      "then": { "properties": { "prompt_refs": { "minItems": 1 } } },
+      "else": { "properties": { "prompt_refs": { "maxItems": 0 } } }
+    },
+    "evidenceProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_register", "claim_status", "causal_status", "evidence_refs",
+        "evidence_ref_status", "expected_traces", "negative_cases",
+        "counterevidence", "falsifiers", "transport_bounds",
+        "promotion_requirement", "external_empirical_support_claimed",
+        "mechanism_promoted"
+      ],
+      "properties": {
+        "claim_register": { "enum": ["DESIGN_COMMITMENT", "OPEN_QUESTION", "BOUNDARY"] },
+        "claim_status": { "const": "design-question-not-observed" },
+        "causal_status": { "const": "formal-mechanism-not-instantiated" },
+        "evidence_refs": { "$ref": "#/$defs/textArray0" },
+        "evidence_ref_status": {
+          "enum": [
+            "qualified-predecessor-refs-listed",
+            "no-direct-predecessor-evidence-design-only"
+          ]
+        },
+        "expected_traces": { "$ref": "#/$defs/evidenceLinkSet" },
+        "negative_cases": { "$ref": "#/$defs/evidenceLinkSet" },
+        "counterevidence": { "$ref": "#/$defs/idArray" },
+        "falsifiers": { "$ref": "#/$defs/idArray" },
+        "transport_bounds": { "$ref": "#/$defs/idArray" },
+        "promotion_requirement": { "$ref": "#/$defs/id" },
+        "external_empirical_support_claimed": { "const": false },
+        "mechanism_promoted": { "const": false }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "evidence_ref_status": { "const": "qualified-predecessor-refs-listed" }
+            },
+            "required": ["evidence_ref_status"]
+          },
+          "then": { "properties": { "evidence_refs": { "minItems": 1 } } },
+          "else": { "properties": { "evidence_refs": { "maxItems": 0 } } }
+        }
+      ]
+    },
+    "affectedPartyAftermath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "affected_party_id", "status", "reason_ref", "claim_status", "benefits", "burdens", "risks",
+        "option_voice_and_exit_effects", "horizon", "evidence", "unknowns",
+        "residuals", "aggregate_score", "netted"
+      ],
+      "properties": {
+        "affected_party_id": { "$ref": "#/$defs/id" },
+        "status": { "enum": ["applicable-question", "not-applicable", "unassessed"] },
+        "reason_ref": { "$ref": "#/$defs/id" },
+        "claim_status": { "const": "design-question-not-observed" },
+        "benefits": { "$ref": "#/$defs/idArray0" },
+        "burdens": { "$ref": "#/$defs/idArray0" },
+        "risks": { "$ref": "#/$defs/idArray0" },
+        "option_voice_and_exit_effects": { "$ref": "#/$defs/idArray0" },
+        "horizon": { "$ref": "#/$defs/idArray0" },
+        "evidence": { "$ref": "#/$defs/textArray0" },
+        "unknowns": { "$ref": "#/$defs/idArray0" },
+        "residuals": { "$ref": "#/$defs/idArray0" },
+        "aggregate_score": { "const": null },
+        "netted": { "const": false }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "status": { "const": "applicable-question" } },
+            "required": ["status"]
+          },
+          "then": {
+            "allOf": [
+              {
+                "anyOf": [
+                  { "properties": { "benefits": { "minItems": 1 } } },
+                  { "properties": { "burdens": { "minItems": 1 } } },
+                  { "properties": { "risks": { "minItems": 1 } } },
+                  { "properties": { "option_voice_and_exit_effects": { "minItems": 1 } } },
+                  { "properties": { "horizon": { "minItems": 1 } } },
+                  { "properties": { "residuals": { "minItems": 1 } } }
+                ]
+              },
+              {
+                "anyOf": [
+                  { "properties": { "evidence": { "minItems": 1 } } },
+                  { "properties": { "unknowns": { "minItems": 1 } } }
+                ]
+              }
+            ]
+          },
+          "else": {
+            "properties": {
+              "benefits": { "maxItems": 0 },
+              "burdens": { "maxItems": 0 },
+              "risks": { "maxItems": 0 },
+              "option_voice_and_exit_effects": { "maxItems": 0 },
+              "horizon": { "maxItems": 0 },
+              "evidence": { "maxItems": 0 },
+              "unknowns": { "maxItems": 0 },
+              "residuals": { "maxItems": 0 }
+            }
+          }
+        }
+      ]
+    },
+    "inactiveProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason_ref", "boundary_ref"],
+      "properties": {
+        "status": { "enum": ["not-applicable", "unassessed"] },
+        "reason_ref": { "$ref": "#/$defs/id" },
+        "boundary_ref": { "$ref": "#/$defs/id" }
+      }
+    },
+    "translationProfile": {
+      "oneOf": [
+        { "$ref": "#/$defs/translationProfileApplicable" },
+        { "$ref": "#/$defs/inactiveProfile" }
+      ]
+    },
+    "translationProfileApplicable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status", "reason_ref", "claim_status", "source_language", "target_language",
+        "source_register", "target_register", "source_genre", "target_genre",
+        "source_version", "translator_position_refs", "patron_position_refs",
+        "audience_party_refs", "preserved", "changed", "introduced", "omitted",
+        "untranslatable", "counterreadings", "rights_and_access",
+        "fidelity_claimed", "representational_authority_granted"
+      ],
+      "properties": {
+        "status": { "const": "applicable-question" },
+        "reason_ref": { "$ref": "#/$defs/id" },
+        "claim_status": { "const": "design-question-not-observed" },
+        "source_language": { "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }] },
+        "target_language": { "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }] },
+        "source_register": { "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }] },
+        "target_register": { "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }] },
+        "source_genre": { "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }] },
+        "target_genre": { "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }] },
+        "source_version": { "oneOf": [{ "$ref": "#/$defs/text" }, { "type": "null" }] },
+        "translator_position_refs": { "$ref": "#/$defs/idArray0" },
+        "patron_position_refs": { "$ref": "#/$defs/idArray0" },
+        "audience_party_refs": { "$ref": "#/$defs/idArray0" },
+        "preserved": { "$ref": "#/$defs/idArray0" },
+        "changed": { "$ref": "#/$defs/idArray0" },
+        "introduced": { "$ref": "#/$defs/idArray0" },
+        "omitted": { "$ref": "#/$defs/idArray0" },
+        "untranslatable": { "$ref": "#/$defs/idArray0" },
+        "counterreadings": { "$ref": "#/$defs/idArray0" },
+        "rights_and_access": { "$ref": "#/$defs/idArray0" },
+        "fidelity_claimed": { "const": false },
+        "representational_authority_granted": { "const": false }
+      },
+      "if": {
+        "properties": { "status": { "const": "applicable-question" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "source_language": { "$ref": "#/$defs/text" },
+          "target_language": { "$ref": "#/$defs/text" },
+          "source_register": { "$ref": "#/$defs/text" },
+          "target_register": { "$ref": "#/$defs/text" },
+          "source_genre": { "$ref": "#/$defs/text" },
+          "target_genre": { "$ref": "#/$defs/text" },
+          "source_version": { "$ref": "#/$defs/text" },
+          "translator_position_refs": { "minItems": 1 },
+          "patron_position_refs": { "minItems": 1 },
+          "audience_party_refs": { "minItems": 1 },
+          "counterreadings": { "minItems": 1 },
+          "rights_and_access": { "minItems": 1 }
+        }
+      },
+      "else": {
+        "properties": {
+          "source_language": { "type": "null" },
+          "target_language": { "type": "null" },
+          "source_register": { "type": "null" },
+          "target_register": { "type": "null" },
+          "source_genre": { "type": "null" },
+          "target_genre": { "type": "null" },
+          "source_version": { "type": "null" },
+          "translator_position_refs": { "maxItems": 0 },
+          "patron_position_refs": { "maxItems": 0 },
+          "audience_party_refs": { "maxItems": 0 },
+          "preserved": { "maxItems": 0 },
+          "changed": { "maxItems": 0 },
+          "introduced": { "maxItems": 0 },
+          "omitted": { "maxItems": 0 },
+          "untranslatable": { "maxItems": 0 },
+          "counterreadings": { "maxItems": 0 },
+          "rights_and_access": { "maxItems": 0 }
+        }
+      }
+    },
+    "thresholdProfile": {
+      "oneOf": [
+        { "$ref": "#/$defs/thresholdProfileApplicable" },
+        { "$ref": "#/$defs/inactiveProfile" }
+      ]
+    },
+    "thresholdProfileApplicable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status", "reason_ref", "claim_status", "trigger", "unit", "population",
+        "opportunity_set", "heterogeneous_distribution", "observation_horizon",
+        "reset_or_hysteresis", "evidence", "person_estimate",
+        "effect_size_estimated", "prediction"
+      ],
+      "properties": {
+        "status": { "const": "applicable-question" },
+        "reason_ref": { "$ref": "#/$defs/id" },
+        "claim_status": { "const": "design-question-not-estimated" },
+        "trigger": { "$ref": "#/$defs/idArray0" },
+        "unit": { "$ref": "#/$defs/idArray0" },
+        "population": { "$ref": "#/$defs/idArray0" },
+        "opportunity_set": { "$ref": "#/$defs/idArray0" },
+        "heterogeneous_distribution": { "$ref": "#/$defs/idArray0" },
+        "observation_horizon": { "$ref": "#/$defs/idArray0" },
+        "reset_or_hysteresis": { "$ref": "#/$defs/idArray0" },
+        "evidence": { "$ref": "#/$defs/idArray0" },
+        "person_estimate": { "const": false },
+        "effect_size_estimated": { "const": false },
+        "prediction": { "const": false }
+      },
+      "if": {
+        "properties": { "status": { "const": "applicable-question" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "trigger": { "minItems": 1 },
+          "unit": { "minItems": 1 },
+          "population": { "minItems": 1 },
+          "opportunity_set": { "minItems": 1 },
+          "heterogeneous_distribution": { "minItems": 1 },
+          "observation_horizon": { "minItems": 1 },
+          "reset_or_hysteresis": { "minItems": 1 },
+          "evidence": { "minItems": 1 }
+        }
+      },
+      "else": {
+        "properties": {
+          "trigger": { "maxItems": 0 },
+          "unit": { "maxItems": 0 },
+          "population": { "maxItems": 0 },
+          "opportunity_set": { "maxItems": 0 },
+          "heterogeneous_distribution": { "maxItems": 0 },
+          "observation_horizon": { "maxItems": 0 },
+          "reset_or_hysteresis": { "maxItems": 0 },
+          "evidence": { "maxItems": 0 }
+        }
+      }
+    },
+    "pathDependenceProfile": {
+      "oneOf": [
+        { "$ref": "#/$defs/pathDependenceProfileApplicable" },
+        { "$ref": "#/$defs/inactiveProfile" }
+      ]
+    },
+    "pathDependenceProfileApplicable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status", "reason_ref", "claim_status", "reinforcement_mechanism",
+        "switching_cost", "sunk_resource", "option_loss", "alternative_timing",
+        "reversal_evidence", "evidence", "path_dependence_established"
+      ],
+      "properties": {
+        "status": { "const": "applicable-question" },
+        "reason_ref": { "$ref": "#/$defs/id" },
+        "claim_status": { "const": "design-question-not-established" },
+        "reinforcement_mechanism": { "$ref": "#/$defs/idArray0" },
+        "switching_cost": { "$ref": "#/$defs/idArray0" },
+        "sunk_resource": { "$ref": "#/$defs/idArray0" },
+        "option_loss": { "$ref": "#/$defs/idArray0" },
+        "alternative_timing": { "$ref": "#/$defs/idArray0" },
+        "reversal_evidence": { "$ref": "#/$defs/idArray0" },
+        "evidence": { "$ref": "#/$defs/idArray0" },
+        "path_dependence_established": { "const": false }
+      },
+      "if": {
+        "properties": { "status": { "const": "applicable-question" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "reinforcement_mechanism": { "minItems": 1 },
+          "switching_cost": { "minItems": 1 },
+          "sunk_resource": { "minItems": 1 },
+          "option_loss": { "minItems": 1 },
+          "alternative_timing": { "minItems": 1 },
+          "reversal_evidence": { "minItems": 1 },
+          "evidence": { "minItems": 1 }
+        }
+      },
+      "else": {
+        "properties": {
+          "reinforcement_mechanism": { "maxItems": 0 },
+          "switching_cost": { "maxItems": 0 },
+          "sunk_resource": { "maxItems": 0 },
+          "option_loss": { "maxItems": 0 },
+          "alternative_timing": { "maxItems": 0 },
+          "reversal_evidence": { "maxItems": 0 },
+          "evidence": { "maxItems": 0 }
+        }
+      }
+    },
+    "negativeFlowProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status_ref", "applicability_status", "claim_status", "expected_trace",
+        "opportunity_or_at_risk_set", "horizon", "method",
+        "coverage_and_sensitivity", "access_limits", "evidence", "alternatives",
+        "reason_ref", "adverse_inference"
+      ],
+      "properties": {
+        "status_ref": { "$ref": "#/$defs/id" },
+        "applicability_status": { "const": "applicable-question" },
+        "claim_status": { "enum": ["design-question-not-observed", "unknown"] },
+        "expected_trace": { "$ref": "#/$defs/id" },
+        "opportunity_or_at_risk_set": { "$ref": "#/$defs/id" },
+        "horizon": { "$ref": "#/$defs/id" },
+        "method": { "$ref": "#/$defs/id" },
+        "coverage_and_sensitivity": { "$ref": "#/$defs/id" },
+        "access_limits": { "$ref": "#/$defs/id" },
+        "evidence": { "$ref": "#/$defs/textArray0" },
+        "alternatives": { "$ref": "#/$defs/idArray" },
+        "reason_ref": { "$ref": "#/$defs/id" },
+        "adverse_inference": { "const": false }
+      }
+    },
+    "repairProfile": {
+      "oneOf": [
+        { "$ref": "#/$defs/repairProfileApplicable" },
+        { "$ref": "#/$defs/inactiveProfile" }
+      ]
+    },
+    "repairProfileApplicable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status", "reason_ref", "claim_status", "proposal_source", "fresh_gate_refs",
+        "attempt", "execution_or_outcome_observation", "party_indexed_residuals",
+        "dissent", "recurrence", "review_or_retirement", "repair_completed",
+        "causal_effect_claimed", "erasure_or_absolution_claimed",
+        "restored_consent_claimed"
+      ],
+      "properties": {
+        "status": { "const": "applicable-question" },
+        "reason_ref": { "$ref": "#/$defs/id" },
+        "claim_status": { "const": "design-question-not-run" },
+        "proposal_source": { "const": "card-repair-routes" },
+        "fresh_gate_refs": { "$ref": "#/$defs/idArray0" },
+        "attempt": { "$ref": "#/$defs/idArray0" },
+        "execution_or_outcome_observation": { "$ref": "#/$defs/idArray0" },
+        "party_indexed_residuals": {
+          "type": "array",
+          "maxItems": 12,
+          "items": { "$ref": "#/$defs/repairResidual" }
+        },
+        "dissent": { "$ref": "#/$defs/idArray0" },
+        "recurrence": { "$ref": "#/$defs/idArray0" },
+        "review_or_retirement": { "$ref": "#/$defs/idArray0" },
+        "repair_completed": { "const": false },
+        "causal_effect_claimed": { "const": false },
+        "erasure_or_absolution_claimed": { "const": false },
+        "restored_consent_claimed": { "const": false }
+      },
+      "if": {
+        "properties": { "status": { "const": "applicable-question" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "fresh_gate_refs": { "minItems": 1 },
+          "attempt": { "minItems": 1 },
+          "execution_or_outcome_observation": { "minItems": 1 },
+          "party_indexed_residuals": { "minItems": 1 },
+          "dissent": { "minItems": 1 },
+          "recurrence": { "minItems": 1 },
+          "review_or_retirement": { "minItems": 1 }
+        }
+      },
+      "else": {
+        "properties": {
+          "fresh_gate_refs": { "maxItems": 0 },
+          "attempt": { "maxItems": 0 },
+          "execution_or_outcome_observation": { "maxItems": 0 },
+          "party_indexed_residuals": { "maxItems": 0 },
+          "dissent": { "maxItems": 0 },
+          "recurrence": { "maxItems": 0 },
+          "review_or_retirement": { "maxItems": 0 }
+        }
+      }
+    },
+    "repairResidual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["affected_party_id", "residual_source", "evidence_or_unknowns"],
+      "properties": {
+        "affected_party_id": { "$ref": "#/$defs/id" },
+        "residual_source": { "const": "card-repair-residuals" },
+        "evidence_or_unknowns": { "$ref": "#/$defs/idArray" }
+      }
+    },
+    "temporalProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "onset", "duration", "latency", "overlap", "decay", "recurrence",
+        "censoring", "resolution", "timing_claim_status", "prediction"
+      ],
+      "properties": {
+        "onset": { "$ref": "#/$defs/text" },
+        "duration": { "$ref": "#/$defs/text" },
+        "latency": { "$ref": "#/$defs/text" },
+        "overlap": { "$ref": "#/$defs/text" },
+        "decay": { "$ref": "#/$defs/text" },
+        "recurrence": { "$ref": "#/$defs/text" },
+        "censoring": { "$ref": "#/$defs/text" },
+        "resolution": { "$ref": "#/$defs/text" },
+        "timing_claim_status": { "const": "qualitative-audit-lens-only" },
+        "prediction": { "const": false }
+      }
+    },
+    "accumulationProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "quantity_kind", "unit", "additivity", "inflows", "outflows",
+        "decay_or_reset", "scope", "stock_flow_status",
+        "summable_social_constructs", "effect_size_claimed"
+      ],
+      "properties": {
+        "quantity_kind": { "$ref": "#/$defs/text" },
+        "unit": { "$ref": "#/$defs/text" },
+        "additivity": {
+          "enum": ["non-additive", "not-established", "bounded-declared-units-only"]
+        },
+        "inflows": { "$ref": "#/$defs/textArray" },
+        "outflows": { "$ref": "#/$defs/textArray" },
+        "decay_or_reset": { "$ref": "#/$defs/textArray" },
+        "scope": { "$ref": "#/$defs/text" },
+        "stock_flow_status": {
+          "enum": ["analytical-lens-only", "not-applicable", "unknown"]
+        },
+        "summable_social_constructs": {
+          "const": []
+        },
+        "effect_size_claimed": { "const": false }
+      }
+    },
+    "distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "benefits", "burdens", "risks", "voice_and_options", "horizons",
+        "aggregate_score"
+      ],
+      "properties": {
+        "benefits": { "$ref": "#/$defs/textArray" },
+        "burdens": { "$ref": "#/$defs/textArray" },
+        "risks": { "$ref": "#/$defs/textArray" },
+        "voice_and_options": { "$ref": "#/$defs/textArray" },
+        "horizons": { "$ref": "#/$defs/textArray" },
+        "aggregate_score": { "const": null }
+      }
+    },
+    "reversibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "recoverable_elements", "residual_or_irreversible_elements", "prerequisites"],
+      "properties": {
+        "status": {
+          "enum": ["reversible-in-part", "partially-reversible", "irreversible-elements-present", "unknown"]
+        },
+        "recoverable_elements": { "$ref": "#/$defs/textArray" },
+        "residual_or_irreversible_elements": { "$ref": "#/$defs/textArray" },
+        "prerequisites": { "$ref": "#/$defs/textArray" }
+      }
+    },
+    "contractTemplates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transition-authority", "transition-causal",
+        "overlay-authority", "overlay-causal"
+      ],
+      "properties": {
+        "transition-authority": { "$ref": "#/$defs/authorityTemplate" },
+        "transition-causal": { "$ref": "#/$defs/causalTemplate" },
+        "overlay-authority": { "$ref": "#/$defs/authorityTemplate" },
+        "overlay-causal": { "$ref": "#/$defs/causalTemplate" }
+      }
+    },
+    "authorityTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_for", "non_implications"],
+      "properties": {
+        "required_for": { "$ref": "#/$defs/textArray" },
+        "non_implications": { "$ref": "#/$defs/textArray" }
+      }
+    },
+    "causalTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_mediators", "alternative_causes", "non_implications"],
+      "properties": {
+        "candidate_mediators": { "$ref": "#/$defs/textArray" },
+        "alternative_causes": { "$ref": "#/$defs/textArray" },
+        "non_implications": { "$ref": "#/$defs/textArray" }
+      }
+    },
+    "templatedAuthorityDependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "template_ref", "gate_input_ids"],
+      "properties": {
+        "status": { "const": "external-gate-required-before-effectful-use" },
+        "template_ref": { "enum": ["transition-authority", "overlay-authority"] },
+        "gate_input_ids": { "$ref": "#/$defs/idArray" }
+      }
+    },
+    "templatedCausalInfluence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status", "template_ref", "estimand_required_before_promotion",
+        "comparator_required_before_promotion",
+        "assumptions_required_before_promotion", "causal_effect_claimed"
+      ],
+      "properties": {
+        "status": { "const": "not-assessed-by-static-atlas" },
+        "template_ref": { "enum": ["transition-causal", "overlay-causal"] },
+        "estimand_required_before_promotion": { "const": true },
+        "comparator_required_before_promotion": { "const": true },
+        "assumptions_required_before_promotion": { "const": true },
+        "causal_effect_claimed": { "const": false }
+      }
+    },
+    "authorityDependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "required_for", "gate_input_ids", "non_implications"],
+      "properties": {
+        "status": {
+          "enum": [
+            "no-authority-created-by-static-description",
+            "external-gate-required-before-effectful-use",
+            "context-dependent-and-unresolved"
+          ]
+        },
+        "required_for": { "$ref": "#/$defs/textArray" },
+        "gate_input_ids": { "$ref": "#/$defs/idArray" },
+        "non_implications": { "$ref": "#/$defs/textArray" }
+      }
+    },
+    "causalInfluence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status", "candidate_mediators", "alternative_causes",
+        "estimand_required_before_promotion", "comparator_required_before_promotion",
+        "assumptions_required_before_promotion", "causal_effect_claimed",
+        "non_implications"
+      ],
+      "properties": {
+        "status": { "const": "not-assessed-by-static-atlas" },
+        "candidate_mediators": { "$ref": "#/$defs/textArray" },
+        "alternative_causes": { "$ref": "#/$defs/textArray" },
+        "estimand_required_before_promotion": { "const": true },
+        "comparator_required_before_promotion": { "const": true },
+        "assumptions_required_before_promotion": { "const": true },
+        "causal_effect_claimed": { "const": false },
+        "non_implications": { "$ref": "#/$defs/textArray" }
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "why_unknown", "needed_evidence", "stop_condition"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "question": { "$ref": "#/$defs/text" },
+        "why_unknown": { "$ref": "#/$defs/text" },
+        "needed_evidence": { "$ref": "#/$defs/textArray" },
+        "stop_condition": { "$ref": "#/$defs/text" }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_only", "structure_only", "static_atlas",
+        "public_static_publication_family", "network", "filesystem_write",
+        "source_dereference", "live_intake", "person_profiles",
+        "group_susceptibility_estimates", "score_or_rank",
+        "causal_effect_identified", "deterministic_prediction",
+        "effect_size_estimated", "targeting", "persuasion_optimization",
+        "propaganda_or_counterpropaganda_instructions",
+        "coercive_or_revolutionary_strategy", "metaphysical_verdict",
+        "belief_identity_intent_emotion_or_motive_inferred",
+        "authority_granted", "consent_or_lawful_basis_established",
+        "capability_granted", "action_proposed", "action_attempted",
+        "action_executed", "external_effect_claimed", "writes_wake",
+        "writes_karma", "publication_trigger", "deployment_trigger",
+        "automatic_action", "predecessor_mutation", "predecessor_republication",
+        "unsupported_domains_filled", "feedback_opens_review_only",
+        "repair_requires_fresh_gate", "repair_preserves_history_residuals_and_recurrence",
+        "absence_requires_adequate_coverage", "non_action_has_no_adverse_inference"
+      ],
+      "properties": {
+        "read_only": { "const": true },
+        "structure_only": { "const": true },
+        "static_atlas": { "const": true },
+        "public_static_publication_family": { "const": true },
+        "network": { "const": false },
+        "filesystem_write": { "const": false },
+        "source_dereference": { "const": false },
+        "live_intake": { "const": false },
+        "person_profiles": { "const": false },
+        "group_susceptibility_estimates": { "const": false },
+        "score_or_rank": { "const": false },
+        "causal_effect_identified": { "const": false },
+        "deterministic_prediction": { "const": false },
+        "effect_size_estimated": { "const": false },
+        "targeting": { "const": false },
+        "persuasion_optimization": { "const": false },
+        "propaganda_or_counterpropaganda_instructions": { "const": false },
+        "coercive_or_revolutionary_strategy": { "const": false },
+        "metaphysical_verdict": { "const": false },
+        "belief_identity_intent_emotion_or_motive_inferred": { "const": false },
+        "authority_granted": { "const": false },
+        "consent_or_lawful_basis_established": { "const": false },
+        "capability_granted": { "const": false },
+        "action_proposed": { "const": false },
+        "action_attempted": { "const": false },
+        "action_executed": { "const": false },
+        "external_effect_claimed": { "const": false },
+        "writes_wake": { "const": false },
+        "writes_karma": { "const": false },
+        "publication_trigger": { "const": false },
+        "deployment_trigger": { "const": false },
+        "automatic_action": { "const": false },
+        "predecessor_mutation": { "const": false },
+        "predecessor_republication": { "const": false },
+        "unsupported_domains_filled": { "const": false },
+        "feedback_opens_review_only": { "const": true },
+        "repair_requires_fresh_gate": { "const": true },
+        "repair_preserves_history_residuals_and_recurrence": { "const": true },
+        "absence_requires_adequate_coverage": { "const": true },
+        "non_action_has_no_adverse_inference": { "const": true }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest", "digest_field_zeroed"],
+      "properties": {
+        "algorithm": { "const": "sha256-recursive-sorted-json-keys-v1" },
+        "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "digest_field_zeroed": { "const": true }
+      }
+    }
+  }
+}

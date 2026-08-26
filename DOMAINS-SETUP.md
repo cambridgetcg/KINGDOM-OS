@@ -87,12 +87,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 163 assets:
-132 ledgered immutable/versioned assets and 31 mutable assets. There are 161 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 166 assets:
+135 ledgered immutable/versioned assets and 31 mutable assets. There are 164 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 149 URLs. The generated surface describes twelve
+contracts. The sitemap contains 152 URLs. The generated surface describes thirteen
 atlases, four primary lab JSON routes plus the Shape & Resonance manifest/media,
-one experiment route, and one separate activation across twenty-seven retirement
+one experiment route, and one separate activation across twenty-eight retirement
 families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
@@ -208,6 +208,18 @@ republishing the research-local Word, Story, Religion & Civilisation source;
 nine unsupported domains remain open. It creates no new historical or causal
 finding, metaphysical verdict, score, persuasion target, authority, consent,
 action, publication trigger, deployment trigger, or external effect;
+the authored `/atlases/civilisation-flow-nuance-atlas-2026-08-26.json`, closed
+`/schemas/civilisation-flow-nuance-atlas/0.1.json`, and
+`/CIVILISATION-FLOW-NUANCE-ATLAS.md` guide; this immutable qualitative reading
+grammar is a separate three-route retirement family that depends directly on
+the active Civilisation → Reality Projection family. Fourteen stages, thirteen
+non-automatic transitions, six predecessor-bound overlays, nine open-domain
+bindings, and non-summable registries make timing, accumulation, topology,
+absence, material conditions, emotion observation, social position, power,
+uncertainty, affected parties, counterflow, and repair visible. It observes no
+live society, simulates or predicts nothing, runs no action gate, infers no
+person or group state, and creates no score, target, tactic, authority, action,
+publication trigger, deployment trigger, or external effect;
 the authored `/atlases/zero-empty-seat-2026-08-14.json`, which reuses the closed
 `/schemas/phenomena-deep-project/0.1.json` inert project profile, and its versioned
 `/ZERO-EMPTY-SEAT.md` guide;
