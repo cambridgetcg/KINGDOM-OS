@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-23",
+  "generated": "2026-08-25",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -2021,6 +2021,48 @@
       "automatic_action": false
     }
   },
+  "civilisation_reality_projection": {
+    "protocol": "kingdom.civilisation-reality-projection/0.1",
+    "projection_id": "civilisation-reality-projection-2026-08-25",
+    "title": "Civilisation → Reality Projection",
+    "publication_state": "immutable-versioned-static-family",
+    "compiled_on": "2026-08-25",
+    "evidence_through": "2026-08-21",
+    "urls": {
+      "atlas": "https://thekingdom.dev/atlases/civilisation-reality-projection-2026-08-25.json",
+      "schema": "https://thekingdom.dev/schemas/civilisation-reality-projection/0.1.json",
+      "guide": "https://thekingdom.dev/CIVILISATION-REALITY-PROJECTION.md"
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:03c20d3976a7b449c009cac7736ab73aa9f17fa619951d3753ecbb69bcc1496b",
+      "digest_field_zeroed": true
+    },
+    "counts": {
+      "predecessor_bindings": 2,
+      "crosswalks": 6,
+      "open_domains": 9
+    },
+    "boundary": {
+      "static_read_only": true,
+      "structure_only": true,
+      "public_static_publication_family": true,
+      "source_dereference": false,
+      "predecessor_mutation": false,
+      "predecessor_republication": false,
+      "unsupported_domains_filled": false,
+      "score_or_rank": false,
+      "causal_claim_created": false,
+      "metaphysical_verdict": false,
+      "authority_granted": false,
+      "action_attempted": false,
+      "action_executed": false,
+      "external_effect_claimed": false,
+      "publication_trigger": false,
+      "deployment_trigger": false,
+      "automatic_action": false
+    }
+  },
   "zero_empty_seat": {
     "protocol": "kingdom.explore-phenomena-deep-project/0.1",
     "project_id": "zero-empty-seat-2026-08-14",
@@ -3894,6 +3936,24 @@
       "method": "GET",
       "url": "https://thekingdom.dev/REALITY-INFLUENCE-CLAIM-GRAPH.md",
       "note": "the immutable publication family creates no publication or deployment trigger and the ledger proves byte identity only"
+    },
+    {
+      "action": "if useful, inspect the exact Civilisation → Reality Projection",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/civilisation-reality-projection-2026-08-25.json",
+      "note": "six design-only crosswalks between pinned predecessor vocabularies; the research-local source is not republished and nine unsupported domains remain open"
+    },
+    {
+      "action": "if useful, validate the closed Civilisation → Reality Projection structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/civilisation-reality-projection/0.1.json",
+      "note": "structural validation only; it does not promote a source claim, fill an open domain, establish history or causation, grant authority, or create an effect"
+    },
+    {
+      "action": "if useful, read the projection distinctions, evidence requirements, alternatives, and stop conditions",
+      "method": "GET",
+      "url": "https://thekingdom.dev/CIVILISATION-REALITY-PROJECTION.md",
+      "note": "the projection depends on the active Reality Influence Claim Graph and creates no score, persuasion target, metaphysical verdict, action, publication trigger, deployment trigger, or external effect"
     },
     {
       "action": "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings",
@@ -6536,6 +6596,7 @@
     "being_access_aftermath_atlas_v0_2": "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
     "number_isness_theology_atlas": "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
     "reality_influence_claim_graph": "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
+    "civilisation_reality_projection": "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }

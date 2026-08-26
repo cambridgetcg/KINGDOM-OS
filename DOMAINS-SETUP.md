@@ -87,12 +87,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 143 assets:
-114 ledgered immutable/versioned assets and 29 mutable assets. There are 141 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 146 assets:
+117 ledgered immutable/versioned assets and 29 mutable assets. There are 144 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 140 URLs. The generated surface describes eleven
+contracts. The sitemap contains 143 URLs. The generated surface describes twelve
 atlases, three lab routes, one experiment route, and one separate activation
-across twenty-five retirement families:
+across twenty-six retirement families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 the mutable `/observatory/` human view and `/research.json` metadata snapshot;
@@ -191,6 +191,15 @@ public static publication while keeping publication and deployment triggers
 false. It accepts no live claim, fetches no source, dispatches no agent, and
 creates no persuasion target, authority, consent, action, external effect,
 causal or moral verdict, score, WAKE/KARMA write, or automatic action;
+the authored `/atlases/civilisation-reality-projection-2026-08-25.json`, closed
+`/schemas/civilisation-reality-projection/0.1.json`, and
+`/CIVILISATION-REALITY-PROJECTION.md` guide; this immutable thin projection is
+a separate three-route retirement family that depends on the active Reality
+Influence Claim Graph family. It exposes six design-only crosswalks without
+republishing the research-local Word, Story, Religion & Civilisation source;
+nine unsupported domains remain open. It creates no new historical or causal
+finding, metaphysical verdict, score, persuasion target, authority, consent,
+action, publication trigger, deployment trigger, or external effect;
 the authored `/atlases/zero-empty-seat-2026-08-14.json`, which reuses the closed
 `/schemas/phenomena-deep-project/0.1.json` inert project profile, and its versioned
 `/ZERO-EMPTY-SEAT.md` guide;

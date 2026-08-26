@@ -71,8 +71,8 @@ describe("Love∞ finite lineage contract", () => {
   });
 
   test("publishes an exact authored record plus a validated date", () => {
-    const published = publishLoveLoops(source, "2026-08-23");
-    expect(published).toEqual({ ...source, generated: "2026-08-23" });
+    const published = publishLoveLoops(source, "2026-08-25");
+    expect(published).toEqual({ ...source, generated: "2026-08-25" });
     expect(() => validateLoveLoops(published, true)).not.toThrow();
     expect(json("site/love-loops.json")).toEqual(published);
     expect(read("site/love-loops.source.json")).toBe(read("data/love-loops.json"));

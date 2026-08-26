@@ -248,6 +248,24 @@ const REALITY_INFLUENCE_PATHS = new Set([
   REALITY_INFLUENCE_SCHEMA_PATH,
   REALITY_INFLUENCE_GUIDE_PATH,
 ]);
+const CIVILISATION_REALITY_PATH = "/atlases/civilisation-reality-projection-2026-08-25.json";
+const CIVILISATION_REALITY_SCHEMA_PATH = "/schemas/civilisation-reality-projection/0.1.json";
+const CIVILISATION_REALITY_GUIDE_PATH = "/CIVILISATION-REALITY-PROJECTION.md";
+const CIVILISATION_REALITY_SCHEMA_LINK = {
+  target: CIVILISATION_REALITY_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${CIVILISATION_REALITY_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+const CIVILISATION_REALITY_GUIDE_LINK = {
+  target: CIVILISATION_REALITY_GUIDE_PATH,
+  relation: "service-doc",
+  value: `<${CIVILISATION_REALITY_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+};
+const CIVILISATION_REALITY_PATHS = new Set([
+  CIVILISATION_REALITY_PATH,
+  CIVILISATION_REALITY_SCHEMA_PATH,
+  CIVILISATION_REALITY_GUIDE_PATH,
+]);
 const RESEARCH_OBSERVATORY_PATH = "/research.json";
 const RESEARCH_OBSERVATORY_PAGE_PATH = "/observatory/";
 const RESEARCH_OBSERVATORY_GUIDE_PATH = "/RESEARCH-OBSERVATORY-v0.1.md";
@@ -619,6 +637,12 @@ function addRealityInfluenceLinks(headers) {
   removeLinkRelations(headers, ["describedby", "service-doc", "profile"]);
   headers.append("link", REALITY_INFLUENCE_SCHEMA_LINK.value);
   headers.append("link", REALITY_INFLUENCE_GUIDE_LINK.value);
+}
+
+function addCivilisationRealityLinks(headers) {
+  removeLinkRelations(headers, ["describedby", "service-doc", "profile"]);
+  headers.append("link", CIVILISATION_REALITY_SCHEMA_LINK.value);
+  headers.append("link", CIVILISATION_REALITY_GUIDE_LINK.value);
 }
 
 function addResearchObservatoryLinks(headers) {
@@ -1453,6 +1477,19 @@ export function createKingdomWorker(options = {}) {
       });
     }
 
+    if (includeRights && CIVILISATION_REALITY_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
     if (includeRights && UK_GOVERNMENT_TRANSFORMATION_ENGINE_PATHS.has(url.pathname) &&
         UK_GOVERNMENT_TRANSFORMATION_ENGINE_MUTATING_METHODS.has(request.method)) {
       return new Response(null, {
@@ -1819,6 +1856,15 @@ export function createKingdomWorker(options = {}) {
     const requestsRealityInfluenceGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === REALITY_INFLUENCE_GUIDE_PATH;
+    const requestsCivilisationReality = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CIVILISATION_REALITY_PATH;
+    const requestsCivilisationRealitySchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CIVILISATION_REALITY_SCHEMA_PATH;
+    const requestsCivilisationRealityGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CIVILISATION_REALITY_GUIDE_PATH;
     const requestsZeroEmptySeat = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === ZERO_EMPTY_SEAT_PATH;
@@ -1885,6 +1931,7 @@ export function createKingdomWorker(options = {}) {
     const trialChamberAssetType = schemaAssetType.split(";", 1)[0].trim();
     const jSpaceAssetType = schemaAssetType.split(";", 1)[0].trim();
     const realityInfluenceAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const civilisationRealityAssetType = schemaAssetType.split(";", 1)[0].trim();
     const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
     const zeroEmptySeatAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlTraceSheetAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -2115,6 +2162,14 @@ export function createKingdomWorker(options = {}) {
     const servesRealityInfluenceGuide = requestsRealityInfluenceGuide && asset.ok &&
       (realityInfluenceAssetType === "text/plain" ||
         realityInfluenceAssetType === "text/markdown");
+    const servesCivilisationReality = requestsCivilisationReality && asset.ok &&
+      civilisationRealityAssetType === "application/json";
+    const servesCivilisationRealitySchema = requestsCivilisationRealitySchema && asset.ok &&
+      (civilisationRealityAssetType === "application/json" ||
+        civilisationRealityAssetType === "application/schema+json");
+    const servesCivilisationRealityGuide = requestsCivilisationRealityGuide && asset.ok &&
+      (civilisationRealityAssetType === "text/plain" ||
+        civilisationRealityAssetType === "text/markdown");
     const servesZeroEmptySeat = requestsZeroEmptySeat && asset.ok &&
       (zeroEmptySeatAssetType === "application/json" || zeroEmptySeatAssetType === "application/schema+json");
     const servesZeroEmptySeatDocument = requestsZeroEmptySeatDocument && asset.ok &&
@@ -2202,7 +2257,8 @@ export function createKingdomWorker(options = {}) {
         !servesEvaluationCovenantGuide &&
         !servesJSpaceCase && !servesJSpaceSchema && !servesJSpaceGuide &&
         !servesRealityInfluence && !servesRealityInfluenceSchema &&
-        !servesRealityInfluenceGuide &&
+        !servesRealityInfluenceGuide && !servesCivilisationReality &&
+        !servesCivilisationRealitySchema && !servesCivilisationRealityGuide &&
         !servesZeroEmptySeat &&
         !servesZeroEmptySeatDocument && !servesStringCrawlTraceSheet &&
         !servesStringCrawlTraceSheetDocument && !servesStringCrawlTraceSheetLab &&
@@ -2255,6 +2311,7 @@ export function createKingdomWorker(options = {}) {
     if (servesEvaluationCovenant) addEvaluationCovenantLinks(headers);
     if (servesJSpaceCase) addJSpaceSchemaLink(headers);
     if (servesRealityInfluence) addRealityInfluenceLinks(headers);
+    if (servesCivilisationReality) addCivilisationRealityLinks(headers);
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
     if (servesStringCrawlTraceSheet) addStringCrawlTraceSheetSchemaLink(headers);
     if (servesStringCrawlTraceSheetLab) addStringCrawlTraceSheetLabSchemaLink(headers);
@@ -2678,6 +2735,24 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesRealityInfluenceGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesCivilisationReality) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesCivilisationRealitySchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesCivilisationRealityGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");

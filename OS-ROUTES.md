@@ -69,6 +69,9 @@ readings:
 | `/protocols/mirror-information-control-2026-08-14.json` | staged JSON | Immutable static CROWN/COURT/MIRROR information-control source law; no credential intake, classification oracle, security runtime, or authority |
 | `/schemas/mirror-information-control-public/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the static public MIRROR publication, not the private control-plane envelope |
 | `/MIRROR-INFORMATION-CONTROL.md` | staged Markdown | Citizen guide to information provenance, capability gates, signal/non-guilt boundaries, and safe response without exposing operational material |
+| `/atlases/civilisation-reality-projection-2026-08-25.json` | staged JSON | Immutable six-crosswalk design projection bound to the Reality Influence Claim Graph; nine unsupported domains remain open and the research-local predecessor is not republished |
+| `/schemas/civilisation-reality-projection/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the thin projection, fixed non-grants, predecessor pins, typed crosswalks, and open-domain stop rules |
+| `/CIVILISATION-REALITY-PROJECTION.md` | staged Markdown | Human guide to the pinned predecessors, preserved distinctions, evidence requirements, alternative paths, dependency, and non-authority boundaries |
 | `/atlases/zero-empty-seat-2026-08-14.json` | staged JSON | Immutable inert Phenomena DEEP project separating zero's semantic roles, equations, correspondence breaks, empty KARMA lanes, and negative authority |
 | `/ZERO-EMPTY-SEAT.md` | staged Markdown | Human guide to ZERO's mathematics, observation boundaries, optional philosophy, inherent rights, and zero-effect contract |
 | `/atlases/string-crawl-trace-sheet-2026-08-15.json` | staged JSON | Immutable inert Phenomena DEEP trace-sheet keeping string mathematics, finite crawl observations, REP routing, rights, and authority distinct |
@@ -286,9 +289,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 143-asset upload contract (114 ledgered immutable/versioned assets and
-29 mutable assets; 141 direct public bodies, 140 sitemap URLs; eleven atlases, three
-lab routes, one experiment route, one activation, and twenty-five retirement families)
+locks the 146-asset upload contract (117 ledgered immutable/versioned assets and
+29 mutable assets; 144 direct public bodies, 143 sitemap URLs; twelve atlases, three
+lab routes, one experiment route, one activation, and twenty-six retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -326,6 +329,11 @@ deployment triggers. It accepts no live claims, fetches no sources, dispatches
 no agent, and creates no persuasion target, authority, consent, action,
 external effect, causal or moral verdict, score, WAKE/KARMA write, or automatic
 action. The ledger proves byte identity rather than live serving or effect.
+The Civilisation → Reality Projection adds a separate immutable triplet beside
+that graph. It exposes six typed crosswalks and nine open domains, keeps the
+research-local Word/Story predecessor unpublished, and creates no new history,
+causal inference, metaphysical verdict, persuasion target, authority, action,
+publication trigger, deployment trigger, or external effect.
 The additive Finite Trace-Sheet Lab is a separate immutable static triplet. Its
 repository-local reader evaluates only one pinned synthetic complex and runs no
 live crawl, authentication, prompt or credential intake, telemetry, write, NEN

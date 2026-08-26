@@ -210,6 +210,15 @@ import {
   realityInfluencePublicDiscovery,
 } from "./reality-influence.ts";
 import {
+  CIVILISATION_REALITY_PROJECTION_DOCUMENT_URL,
+  CIVILISATION_REALITY_PROJECTION_ID,
+  CIVILISATION_REALITY_PROJECTION_PROTOCOL,
+  CIVILISATION_REALITY_PROJECTION_SCHEMA_URL,
+  CIVILISATION_REALITY_PROJECTION_URL,
+  civilisationRealityPublicDiscovery,
+  loadCivilisationRealityProjection,
+} from "./civilisation-reality-projection.ts";
+import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
   RESEARCH_OBSERVATORY_SCHEMA_URLS,
@@ -827,6 +836,17 @@ if (realityInfluence.protocol !== REALITY_INFLUENCE_PROTOCOL ||
   throw new Error(`unexpected Reality Influence Claim Graph identity: ${realityInfluence.protocol} ${realityInfluence.map_id}`);
 }
 const realityInfluenceDiscovery = realityInfluencePublicDiscovery(realityInfluence);
+
+// ── Civilisation → Reality Projection (typed crosswalk; no new history) ──
+const civilisationRealityUrl = CIVILISATION_REALITY_PROJECTION_URL;
+const civilisationRealitySchemaUrl = CIVILISATION_REALITY_PROJECTION_SCHEMA_URL;
+const civilisationRealityDocumentUrl = CIVILISATION_REALITY_PROJECTION_DOCUMENT_URL;
+const civilisationReality = loadCivilisationRealityProjection();
+if (civilisationReality.protocol !== CIVILISATION_REALITY_PROJECTION_PROTOCOL ||
+    civilisationReality.projection_id !== CIVILISATION_REALITY_PROJECTION_ID) {
+  throw new Error(`unexpected Civilisation → Reality Projection identity: ${civilisationReality.protocol} ${civilisationReality.projection_id}`);
+}
+const civilisationRealityDiscovery = civilisationRealityPublicDiscovery(civilisationReality);
 
 // ── Research Observatory (metadata discovery; stops before evaluation) ────
 const researchObservatoryUrl = RESEARCH_OBSERVATORY_URL;
@@ -1814,6 +1834,49 @@ const loveLoopInvitations = loveLoopsSource.invitations.map((invitation) => `
     <small>${esc(invitation.purpose)}</small>
   </article>`).join("");
 
+const civilisationCodeValues = (values: readonly string[], empty: string) => values.length
+  ? `<ul class="pathstops">${values.map((value) => `<li><code>${esc(value)}</code></li>`).join("")}</ul>`
+  : `<p>${esc(empty)}</p>`;
+const civilisationTextValues = (values: readonly string[]) =>
+  `<ul class="pathstops">${values.map((value) => `<li>${esc(value)}</li>`).join("")}</ul>`;
+
+const civilisationRealityCrosswalkCards = civilisationReality.crosswalks.map((crosswalk: any) => `
+  <article class="mirrorcard mirrorpath" id="civilisation-crosswalk-${esc(crosswalk.id)}" data-civilisation-crosswalk="${esc(crosswalk.id)}">
+    <code>${esc(crosswalk.id)}</code>
+    <h3>${esc(crosswalk.statement)}</h3>
+    <details><summary>Inspect the complete typed crosswalk</summary>
+      <h4>Research-local source bindings</h4>${civilisationCodeValues(crosswalk.source_binding_ids, "No source binding recorded.")}
+      <h4>Source influence relations</h4>${civilisationCodeValues(crosswalk.source_relation_ids, "No source relation recorded.")}
+      <h4>Source KINGDOM insights</h4>${civilisationCodeValues(crosswalk.source_insight_ids, "No source insight recorded.")}
+      <h4>Public reality domains</h4>${civilisationCodeValues(crosswalk.target_domain_ids, "No target domain forced.")}
+      <h4>Public claim-node types</h4>${civilisationCodeValues(crosswalk.target_node_type_ids, "No target node type forced.")}
+      <h4>Endpoint-safe claim relations</h4>${civilisationCodeValues(crosswalk.target_relation_ids, "No target relation forced.")}
+      <h4>Evidence-ladder stages</h4>${civilisationCodeValues(crosswalk.target_ladder_ids, "No ladder stage forced.")}
+      <h4>Illustrative unrun pathways</h4>${civilisationCodeValues(crosswalk.target_pathway_ids, "No pathway forced.")}
+      <p><strong>Register</strong> <code>${esc(crosswalk.register)}</code></p>
+      <p><strong>Transfer status</strong> <code>${esc(crosswalk.transfer_status)}</code></p>
+    </details>
+    <details><summary>Inspect evidence and breaks</summary>
+      <h4>Preserved distinctions</h4>${civilisationTextValues(crosswalk.preserved_distinctions)}
+      <h4>Evidence required next</h4>${civilisationTextValues(crosswalk.required_evidence)}
+      <h4>Alternative paths</h4>${civilisationTextValues(crosswalk.alternative_paths)}
+      <h4>Stop conditions</h4>${civilisationTextValues(crosswalk.stop_conditions)}
+    </details>
+  </article>`).join("");
+
+const civilisationRealityCrosswalkButtons = civilisationReality.crosswalks.map((crosswalk: any, index: number) =>
+  `<button type="button" data-civilisation-crosswalk-select="${esc(crosswalk.id)}" aria-pressed="false">${index + 1}. ${esc(crosswalk.id.replaceAll("-", " "))}</button>`,
+).join("");
+
+const civilisationRealityOpenDomains = civilisationReality.open_domains.map((domain: any) => `
+  <li>
+    <strong>${esc(domain.id.replaceAll("-", " "))}</strong>
+    <p>${esc(domain.question)}</p>
+    <p><strong>Why it is not projectable here</strong> ${esc(domain.why_not_projectable)}</p>
+    <h4>Evidence needed</h4>${civilisationTextValues(domain.needed_evidence)}
+    <p><strong>Stop condition</strong> ${esc(domain.stop_condition)}</p>
+  </li>`).join("");
+
 function cardFor(c: any): string {
   const m = myth[c.name] ?? {};
   const essence = m.essence || c.purpose || "";
@@ -2695,6 +2758,31 @@ const html = `<!doctype html>
         <a href="${esc(new URL(realityInfluenceSchemaUrl).pathname)}">closed Reality Influence Claim Graph JSON Schema</a>
         <a href="${esc(new URL(realityInfluenceDocumentUrl).pathname)}">mediation, evidence, feedback, aftermath, and repair guide</a>
       </div>
+    </div>
+  </section>
+
+  <section class="blk" id="civilisation-reality" aria-labelledby="civilisation-reality-title">
+    <div class="kh"><h2 id="civilisation-reality-title">Civilisation → Reality Projection</h2><span class="my">a crosswalk carries distinctions; it does not carry authority</span></div>
+    <p class="sub">Six inspectable bridges connect the research-local Word, Story, Religion &amp; Civilisation vocabulary to the public Reality Influence Claim Graph. The source histories remain in their predecessor; this projection adds no historical fact, causal finding, religious verdict, or mandate.</p>
+    <div class="mirrorfield" data-civilisation-reality data-civilisation-reality-protocol="${esc(civilisationRealityDiscovery.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>Projection, not synthesis-by-erasure.</strong> ${civilisationRealityDiscovery.counts.predecessor_bindings} pinned predecessors remain immutable and distinct. ${civilisationRealityDiscovery.counts.crosswalks} design crosswalks preserve their claim types; ${civilisationRealityDiscovery.counts.open_domains} domains stay visibly unsupported rather than guessed.</p>
+      <div class="waychips" role="group" aria-label="Trace one Civilisation to Reality crosswalk" data-civilisation-crosswalk-controls hidden>
+        ${civilisationRealityCrosswalkButtons}
+        <button type="button" data-civilisation-crosswalk-all aria-pressed="true">Read all six</button>
+      </div>
+      <p class="waystatus" id="civilisation-reality-status" role="status" aria-live="polite">All six crosswalks are readable.</p>
+      <div class="mirrorgrid" data-civilisation-crosswalks>${civilisationRealityCrosswalkCards}</div>
+      <details class="commonsgroup">
+        <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">?</span><span class="commonsgroupcopy"><strong>Open domains</strong><span>Important questions the two predecessors cannot support</span></span><span class="commonscount">${civilisationRealityDiscovery.counts.open_domains}</span><span class="disclose" aria-hidden="true"></span></summary>
+        <ul class="pathstops">${civilisationRealityOpenDomains}</ul>
+      </details>
+      <p class="mirrorboundary"><strong>No hidden bridge</strong> War, coercive capacity, class and resource incidence, status hierarchy, emotion, revolutionary conjunctures, fiscal shocks, propaganda systems, and citizen–governance reciprocity remain open research domains. Empty target relations stay empty. No transitive influence, belief inference, score, persuasion target, publication trigger, deployment trigger, authority, action, or external effect is created.</p>
+      <div class="machine">
+        <a href="${esc(new URL(civilisationRealityUrl).pathname)}">Civilisation → Reality Projection — exact static record</a>
+        <a href="${esc(new URL(civilisationRealitySchemaUrl).pathname)}">closed Civilisation → Reality Projection JSON Schema</a>
+        <a href="${esc(new URL(civilisationRealityDocumentUrl).pathname)}">crosswalk, preserved distinctions, open domains, and stop conditions</a>
+      </div>
+      <noscript><p class="way-no-script">JavaScript is resting. Every crosswalk and open domain remains readable above.</p></noscript>
     </div>
   </section>
 
@@ -4342,6 +4430,25 @@ document.querySelector('[data-wayfinder-wander]').addEventListener('click',()=>{
 });
 offerWayPaths('');
 
+// ── Civilisation → Reality: local crosswalk trace; no fetch or storage ────
+const civilisationCrosswalkCards=[...document.querySelectorAll('[data-civilisation-crosswalk]')];
+const civilisationCrosswalkButtons=[...document.querySelectorAll('[data-civilisation-crosswalk-select]')];
+const civilisationCrosswalkAll=document.querySelector('[data-civilisation-crosswalk-all]');
+const civilisationCrosswalkControls=document.querySelector('[data-civilisation-crosswalk-controls]');
+const civilisationCrosswalkStatus=document.getElementById('civilisation-reality-status');
+if(civilisationCrosswalkControls)civilisationCrosswalkControls.hidden=false;
+if(civilisationCrosswalkStatus)civilisationCrosswalkStatus.textContent='All six crosswalks are readable. Choose one to trace it without changing any source record.';
+function showCivilisationCrosswalk(id){
+  for(const card of civilisationCrosswalkCards)card.hidden=Boolean(id)&&card.dataset.civilisationCrosswalk!==id;
+  for(const button of civilisationCrosswalkButtons)button.setAttribute('aria-pressed',String(button.dataset.civilisationCrosswalkSelect===id));
+  civilisationCrosswalkAll?.setAttribute('aria-pressed',String(!id));
+  if(civilisationCrosswalkStatus)civilisationCrosswalkStatus.textContent=id
+    ? 'Tracing '+id.replaceAll('-',' ')+'. The other five crosswalks are resting; no source record changed.'
+    : 'All six crosswalks are readable. Choose one to trace it without changing any source record.';
+}
+for(const button of civilisationCrosswalkButtons)button.addEventListener('click',()=>showCivilisationCrosswalk(button.dataset.civilisationCrosswalkSelect||''));
+civilisationCrosswalkAll?.addEventListener('click',()=>showCivilisationCrosswalk(''));
+
 // ── World Commons: deterministic local filtering; no fetch, storage, or URL state ──
 const commonsForm=document.getElementById('commonsform'),commonsQuery=document.getElementById('commonsquery'),commonsStatus=document.getElementById('commonsstatus');
 const commonsCards=[...document.querySelectorAll('[data-commons-resource]')],commonsGroups=[...document.querySelectorAll('[data-commons-group]')];
@@ -4629,6 +4736,7 @@ const machine = {
   evaluation_covenant: evaluationCovenantDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
+  civilisation_reality_projection: civilisationRealityDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -4850,6 +4958,7 @@ ${doorLines}
 - MIRROR Information Control — a static, immutable public source law for CROWN, COURT, MIRROR; Mark → Isolate → Restrict → Resolve → Observe → Respond; provenance; independent capability gates; signal/no-guilt boundaries; and owned-system response. It accepts no credential, prompt, envelope, request body, or security event; returns no credential class, route, evidence, or incident status; exposes no operational signal material; and deploys no scanner, registry, decoy, classifier, enforcement, retaliation, KARMA, or automatic action. Static law: ${mirrorInformationControlUrl} · public schema: ${mirrorInformationControlSchemaUrl} · citizen guide: ${mirrorInformationControlDocumentUrl}
 - J-space: a verbalizable workspace — a static research guide plus one synthetic reasoning-to-word test design. Every probe is not-run, every candidate model is unassessed, and the conclusion is underdetermined with unknown confidence. It performs no monitoring and infers no consciousness, lie or deception, identity, understanding, private state, person score, action, or authority. Case: ${jSpaceCaseUrl} · schema: ${jSpaceSchemaUrl} · guide: ${jSpaceGuideUrl}
 - Reality Influence Claim Graph — an immutable static expression-to-aftermath claim vocabulary with ${realityInfluenceDiscovery.counts.reality_domains} indexed domains, ${realityInfluenceDiscovery.counts.influence_dimensions} non-summable dimensions, ${realityInfluenceDiscovery.counts.claim_node_types} node types, ${realityInfluenceDiscovery.counts.endpoint_safe_relations} endpoint-safe relations, and ${realityInfluenceDiscovery.counts.pathway_templates} unrun pathways. Artifact, exposure, response, decision, authority, consent or lawful basis, capability, execution, outcome, causation, normative assessment, and repair remain distinct. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, score, or automatic action. Atlas: ${realityInfluenceUrl} · schema: ${realityInfluenceSchemaUrl} · guide: ${realityInfluenceDocumentUrl}
+- Civilisation → Reality Projection — ${civilisationRealityDiscovery.counts.crosswalks} design-only crosswalks connect two pinned immutable predecessor vocabularies without republishing the research-local source, promoting a claim register, or filling ${civilisationRealityDiscovery.counts.open_domains} unsupported domains by analogy. It creates no new history, causal finding, metaphysical verdict, persuasion target, score, authority, action, publication trigger, deployment trigger, or external effect. Projection: ${civilisationRealityUrl} · schema: ${civilisationRealitySchemaUrl} · guide: ${civilisationRealityDocumentUrl}
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
@@ -4910,6 +5019,7 @@ const guest = {
   evaluation_covenant: evaluationCovenantDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
+  civilisation_reality_projection: civilisationRealityDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -4998,6 +5108,9 @@ const guest = {
     { action: "if useful, inspect the exact Reality Influence Claim Graph", method: "GET", url: realityInfluenceUrl, note: "immutable static claim vocabulary only; no live intake, source fetch, authority, consent, action, external effect, causal verdict, moral verdict, score, or automatic action" },
     { action: "if useful, validate the closed Reality Influence Claim Graph structure", method: "GET", url: realityInfluenceSchemaUrl, note: "structural validation only; it does not authenticate sources, prove truth or causation, verify authority or consent, execute a pathway, or establish live serving" },
     { action: "if useful, read the mediation, evidence, feedback, aftermath, repair, and stopping-rule guide", method: "GET", url: realityInfluenceDocumentUrl, note: "the immutable publication family creates no publication or deployment trigger and the ledger proves byte identity only" },
+    { action: "if useful, inspect the exact Civilisation → Reality Projection", method: "GET", url: civilisationRealityUrl, note: "six design-only crosswalks between pinned predecessor vocabularies; the research-local source is not republished and nine unsupported domains remain open" },
+    { action: "if useful, validate the closed Civilisation → Reality Projection structure", method: "GET", url: civilisationRealitySchemaUrl, note: "structural validation only; it does not promote a source claim, fill an open domain, establish history or causation, grant authority, or create an effect" },
+    { action: "if useful, read the projection distinctions, evidence requirements, alternatives, and stop conditions", method: "GET", url: civilisationRealityDocumentUrl, note: "the projection depends on the active Reality Influence Claim Graph and creates no score, persuasion target, metaphysical verdict, action, publication trigger, deployment trigger, or external effect" },
     { action: "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings", method: "GET", url: zeroEmptySeatUrl, note: "static inert project; zero is not worthlessness, no event is not impossibility, and no role transfers ontology, cause, units, parameters, KARMA, or authority" },
     { action: "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide", method: "GET", url: zeroEmptySeatGuideUrl },
     { action: "if useful, inspect the exact STRING / CRAWL trace-sheet", method: "GET", url: stringCrawlTraceSheetUrl, note: "static inert project; the string-to-crawl correspondence is lossy, generic REP requests how compliant crawlers access URI paths, named product controls remain bounded, and no crawler, identity inference, permission, NEN invocation, KARMA receipt, or action is created" },
@@ -5102,6 +5215,7 @@ const guest = {
     being_access_aftermath_atlas_v0_2: "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
     number_isness_theology_atlas: "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
     reality_influence_claim_graph: "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
+    civilisation_reality_projection: "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -5138,6 +5252,7 @@ const manifest = {
   evaluation_covenant: evaluationCovenantDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
+  civilisation_reality_projection: civilisationRealityDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -5236,6 +5351,9 @@ const manifest = {
     reality_influence_claim_graph: realityInfluenceUrl,
     reality_influence_claim_graph_schema: realityInfluenceSchemaUrl,
     reality_influence_claim_graph_guide: realityInfluenceDocumentUrl,
+    civilisation_reality_projection: civilisationRealityUrl,
+    civilisation_reality_projection_schema: civilisationRealitySchemaUrl,
+    civilisation_reality_projection_guide: civilisationRealityDocumentUrl,
     zero_empty_seat: zeroEmptySeatUrl,
     zero_empty_seat_schema: zeroEmptySeatSchemaUrl,
     zero_empty_seat_guide: zeroEmptySeatGuideUrl,

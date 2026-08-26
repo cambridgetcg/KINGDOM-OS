@@ -59,10 +59,10 @@ describe("STRAND Observation Membrane public integration", () => {
   test("stages and advertises one immutable activation triplet with exact frozen pins", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(143);
+    expect(HUB_ASSETS).toHaveLength(146);
     expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(29);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(141);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(144);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("observations/")))
       .toEqual([PUBLIC_TRIPLET[0]]);
     for (const asset of PUBLIC_TRIPLET) {
@@ -72,7 +72,7 @@ describe("STRAND Observation Membrane public integration", () => {
       /strand-observation-membrane.*(?:latest|current)/i.test(destination))).toBe(false);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(114);
+    expect(ledger.entries).toHaveLength(117);
     expect(ledger.entries.filter(({ id }: { id?: string }) =>
       id?.startsWith("strand-observation-membrane/0.1/"))).toEqual([
       {
@@ -103,8 +103,8 @@ describe("STRAND Observation Membrane public integration", () => {
 
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(140);
-    expect(new Set(sitemapUrls).size).toBe(140);
+    expect(sitemapUrls).toHaveLength(143);
+    expect(new Set(sitemapUrls).size).toBe(143);
     for (const url of PUBLIC_URLS) {
       expect(sitemapUrls.filter((candidate) => candidate === url)).toHaveLength(1);
     }
@@ -285,7 +285,7 @@ describe("STRAND Observation Membrane public integration", () => {
   test("keeps its three-route retirement family independent from the twelve Lab routes", () => {
     const family = PUBLICATION_FAMILIES.find(({ id }) => id === "strand-observation-membrane");
     const labs = PUBLICATION_FAMILIES.find(({ id }) => id === "string-crawl-trace-sheet-lab");
-    expect(PUBLICATION_FAMILIES).toHaveLength(25);
+    expect(PUBLICATION_FAMILIES).toHaveLength(26);
     expect(family).toEqual({
       id: "strand-observation-membrane",
       label: "STRAND Observation Membrane",

@@ -772,6 +772,17 @@ deployment trigger. Public static publication is explicit; the ledger proves
 byte identity, not live serving, adoption, truth, causation, legitimacy, or
 effect.
 
+The immutable [Civilisation → Reality Projection](https://thekingdom.dev/atlases/civilisation-reality-projection-2026-08-25.json)
+is the deliberately thin bridge between that public graph and the research-local
+Word, Story, Religion & Civilisation map. Its [closed schema](https://thekingdom.dev/schemas/civilisation-reality-projection/0.1.json)
+and [guide](https://thekingdom.dev/CIVILISATION-REALITY-PROJECTION.md) preserve
+qualified predecessor IDs, six design-only crosswalks, evidence requirements,
+alternative paths, stop conditions, and nine unsupported domains. Use
+`bun bin/civilisation-reality-projection.ts verify --json`; the command is
+network-free and creates no historical or causal finding, metaphysical verdict,
+score, persuasion target, authority, action, publication trigger, deployment
+trigger, or external effect.
+
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at
 [`/atlases/zero-empty-seat-2026-08-14.json`](https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json),
