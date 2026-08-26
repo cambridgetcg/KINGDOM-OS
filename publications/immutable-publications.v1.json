@@ -46,6 +46,27 @@
       "sha256": "1a9803fa473891388a0b1a0f5d0220a4cde6f5a73181d0c81a2b8f738c786950"
     },
     {
+      "id": "civilisation-reality-projection/0.1/guide",
+      "route": "/CIVILISATION-REALITY-PROJECTION.md",
+      "source": "references/civilisation-reality-projection.md",
+      "destination": "CIVILISATION-REALITY-PROJECTION.md",
+      "sha256": "d2af8f391ef8dd827d067165ee25fc4f636d047b9ef389ac21795d946af3d127"
+    },
+    {
+      "id": "civilisation-reality-projection/0.1/record",
+      "route": "/atlases/civilisation-reality-projection-2026-08-25.json",
+      "source": "data/reality/civilisation-reality-projection.v0.1.json",
+      "destination": "atlases/civilisation-reality-projection-2026-08-25.json",
+      "sha256": "acc5d16b0981266fe9908714af4791fe2266d063a363f89e43f7a208b0b4b48e"
+    },
+    {
+      "id": "civilisation-reality-projection/0.1/schema",
+      "route": "/schemas/civilisation-reality-projection/0.1.json",
+      "source": "schemas/civilisation-reality-projection-v0.1.schema.json",
+      "destination": "schemas/civilisation-reality-projection/0.1.json",
+      "sha256": "ce87bb3f8f64f6d8fb2af2f33ea3b3fe20312b0262a2617ab49009b526a5c45a"
+    },
+    {
       "id": "conformational-feedback/0.1/guide",
       "route": "/CONFORMATIONAL-FEEDBACK.md",
       "source": "references/conformational-feedback-atlas.md",

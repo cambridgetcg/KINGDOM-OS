@@ -96,6 +96,13 @@ import {
   realityInfluencePublicDiscovery,
 } from "./reality-influence.ts";
 import {
+  CIVILISATION_REALITY_PROJECTION_DOCUMENT_URL,
+  CIVILISATION_REALITY_PROJECTION_SCHEMA_URL,
+  CIVILISATION_REALITY_PROJECTION_URL,
+  civilisationRealityPublicDiscovery,
+  loadCivilisationRealityProjection,
+} from "./civilisation-reality-projection.ts";
+import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
   RESEARCH_OBSERVATORY_SCHEMA_URLS,
@@ -692,6 +699,9 @@ const jSpaceGuidePath = new URL(J_SPACE_GUIDE_URL).pathname;
 const realityInfluencePath = new URL(REALITY_INFLUENCE_URL).pathname;
 const realityInfluenceSchemaPath = new URL(REALITY_INFLUENCE_SCHEMA_URL).pathname;
 const realityInfluenceGuidePath = new URL(REALITY_INFLUENCE_DOCUMENT_URL).pathname;
+const civilisationRealityPath = new URL(CIVILISATION_REALITY_PROJECTION_URL).pathname;
+const civilisationRealitySchemaPath = new URL(CIVILISATION_REALITY_PROJECTION_SCHEMA_URL).pathname;
+const civilisationRealityGuidePath = new URL(CIVILISATION_REALITY_PROJECTION_DOCUMENT_URL).pathname;
 const zeroEmptySeatPath = new URL(ZERO_EMPTY_SEAT_URL).pathname;
 const zeroEmptySeatGuidePath = new URL(ZERO_EMPTY_SEAT_GUIDE_URL).pathname;
 const stringCrawlTraceSheetPath = new URL(STRING_CRAWL_TRACE_SHEET_URL).pathname;
@@ -939,6 +949,18 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "reality_influence_claim_graph_schema",
       "reality_influence_claim_graph_guide",
     ],
+  },
+  {
+    id: "civilisation-reality-projection",
+    label: "Civilisation → Reality Projection",
+    routes: [civilisationRealityPath, civilisationRealitySchemaPath, civilisationRealityGuidePath],
+    discoveryProperties: ["civilisation_reality_projection"],
+    entryPointProperties: [
+      "civilisation_reality_projection",
+      "civilisation_reality_projection_schema",
+      "civilisation_reality_projection_guide",
+    ],
+    dependsOn: ["reality-influence-claim-graph"],
   },
   {
     id: "research-observatory",
@@ -1260,6 +1282,10 @@ function linkRelationEntries(header: string, relation: string): string[] {
     const relations = (match?.[1] || match?.[2] || "").toLowerCase().split(/\s+/);
     return relations.includes(relation);
   });
+}
+
+export function hasLinkRelationName(header: string, relation: string): boolean {
+  return linkRelationEntries(header, relation.toLowerCase()).length > 0;
 }
 
 export function normalizedMediaType(value: string | null | undefined): string {
@@ -1839,6 +1865,7 @@ export async function checkHubLive(
   const mirrorInformationControlActive = familyActive("mirror-information-control");
   const jSpacePublicationActive = familyActive("j-space-verbalizable-workspace");
   const realityInfluenceActive = familyActive("reality-influence-claim-graph");
+  const civilisationRealityActive = familyActive("civilisation-reality-projection");
   const researchObservatoryActive = familyActive("research-observatory");
   const trialChamberActive = familyActive("trial-chamber");
   const ukGovernmentEngineActive = familyActive("uk-government-engine");
@@ -2544,6 +2571,50 @@ export async function checkHubLive(
     }
   }
 
+  if (civilisationRealityActive) {
+    const recordHead = await fetch(url(civilisationRealityPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const recordLink = recordHead.headers.get("link") || "";
+    if (!recordHead.ok ||
+        normalizedMediaType(recordHead.headers.get("content-type")) !== "application/json" ||
+        !hasExactCacheDirectives(recordHead.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+        recordHead.headers.get("access-control-allow-origin") !== "*" ||
+        (recordHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          recordLink,
+          civilisationRealitySchemaPath,
+          "describedby",
+          "application/schema+json",
+        ) ||
+        !hasUniqueCanonicalLinkRelation(
+          recordLink,
+          civilisationRealityGuidePath,
+          "service-doc",
+          "text/markdown",
+        ) ||
+        hasLinkRelationName(recordLink, "profile")) {
+      throw new Error(`${civilisationRealityPath} is not immutable public JSON with canonical projection schema and guide links`);
+    }
+
+    const guideHead = await fetch(url(civilisationRealityGuidePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!guideHead.ok ||
+        normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        !hasExactCacheDirectives(guideHead.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff") {
+      throw new Error(`${civilisationRealityGuidePath} is not served as immutable public Markdown`);
+    }
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -2959,6 +3030,7 @@ export async function checkHubLive(
     ...(mirrorInformationControlActive ? [mirrorInformationControlSchemaPath] : []),
     ...(jSpacePublicationActive ? [jSpaceSchemaPath] : []),
     ...(realityInfluenceActive ? [realityInfluenceSchemaPath] : []),
+    ...(civilisationRealityActive ? [civilisationRealitySchemaPath] : []),
     ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
     ...(trialChamberActive ? trialChamberSchemaPaths : []),
     ...(ukGovernmentEngineActive ? [ukGovernmentEngineSchemaPath] : []),
@@ -2993,6 +3065,7 @@ export async function checkHubLive(
       path === mirrorInformationControlSchemaPath ||
       path === jSpaceSchemaPath ||
       path === realityInfluenceSchemaPath ||
+      path === civilisationRealitySchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
       path === evaluationCovenantSchemaPath ||
@@ -3010,6 +3083,7 @@ export async function checkHubLive(
         path === evaluationCovenantSchemaPath) &&
         !(schemaHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform")) ||
       ((path === realityInfluenceSchemaPath ||
+        path === civilisationRealitySchemaPath ||
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath ||
         path === evaluationCovenantSchemaPath) &&
@@ -3130,6 +3204,12 @@ export async function checkHubLive(
     : undefined;
   const expectedRealityInfluence = realityInfluence
     ? realityInfluencePublicDiscovery(realityInfluence)
+    : undefined;
+  const civilisationReality = civilisationRealityActive
+    ? loadCivilisationRealityProjection()
+    : undefined;
+  const expectedCivilisationReality = civilisationReality
+    ? civilisationRealityPublicDiscovery(civilisationReality)
     : undefined;
   const researchObservatory = researchObservatoryActive
     ? loadResearchObservatorySnapshot()
@@ -4530,6 +4610,56 @@ export async function checkHubLive(
       expected.boundary?.external_effect_claimed !== false ||
       expected.boundary?.automatic_action !== false) {
       throw new Error("Reality Influence Claim Graph static publication, mediation firewall, discovery, or non-authority boundary drifted");
+    }
+  }
+
+  if (civilisationRealityActive) {
+    const publication = civilisationReality!;
+    const expected = expectedCivilisationReality!;
+    const targets = new Set([
+      CIVILISATION_REALITY_PROJECTION_URL,
+      CIVILISATION_REALITY_PROJECTION_SCHEMA_URL,
+      CIVILISATION_REALITY_PROJECTION_DOCUMENT_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    if (!isDeepStrictEqual(manifest?.civilisation_reality_projection, expected) ||
+      !isDeepStrictEqual(guest?.civilisation_reality_projection, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.civilisation_reality_projection, expected) ||
+      manifest?.entry_points?.civilisation_reality_projection !== CIVILISATION_REALITY_PROJECTION_URL ||
+      manifest?.entry_points?.civilisation_reality_projection_schema !== CIVILISATION_REALITY_PROJECTION_SCHEMA_URL ||
+      manifest?.entry_points?.civilisation_reality_projection_guide !== CIVILISATION_REALITY_PROJECTION_DOCUMENT_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET") ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="civilisation-reality"') ||
+      !authoredRootHtml.includes("Projection, not synthesis-by-erasure") ||
+      !authoredRootHtml.includes("No hidden bridge") ||
+      !authoredRootHtml.includes(`href="${civilisationRealityPath}"`) ||
+      !authoredRootHtml.includes(`href="${civilisationRealitySchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${civilisationRealityGuidePath}"`) ||
+      publication.predecessor_bindings?.some((binding: any) =>
+        binding.mutated !== false || binding.authority_imported !== false) ||
+      publication.crosswalks?.some((crosswalk: any) =>
+        crosswalk.register !== "DESIGN_COMMITMENT" ||
+        crosswalk.transfer_status !== "projection-not-historical-or-causal-finding" ||
+        crosswalk.external_effect_claimed !== false ||
+        crosswalk.authority_granted !== false) ||
+      publication.open_domains?.some((domain: any) =>
+        domain.coverage_status !== "not-supported-by-pinned-predecessors") ||
+      publication.boundaries?.public_static_publication_family !== true ||
+      publication.boundaries?.publication_trigger !== false ||
+      publication.boundaries?.deployment_trigger !== false ||
+      publication.boundaries?.external_effect_claimed !== false ||
+      publication.boundaries?.automatic_action !== false ||
+      expected.publication_state !== "immutable-versioned-static-family" ||
+      expected.boundary?.publication_trigger !== false ||
+      expected.boundary?.deployment_trigger !== false ||
+      expected.boundary?.external_effect_claimed !== false ||
+      expected.boundary?.automatic_action !== false) {
+      throw new Error("Civilisation → Reality static projection, predecessor firewall, discovery, or non-authority boundary drifted");
     }
   }
 
@@ -5944,6 +6074,10 @@ export async function checkHubLive(
   if (realityInfluenceActive &&
       !isDeepStrictEqual(liveKingdom?.reality_influence_claim_graph, expectedRealityInfluence!)) {
     throw new Error("derived kingdom.json did not preserve Reality Influence Claim Graph discovery");
+  }
+  if (civilisationRealityActive &&
+      !isDeepStrictEqual(liveKingdom?.civilisation_reality_projection, expectedCivilisationReality!)) {
+    throw new Error("derived kingdom.json did not preserve Civilisation → Reality Projection discovery");
   }
   if (strandObservationMembraneActive &&
       !isDeepStrictEqual(liveKingdom?.strand_observation_membrane, expectedStrandObservationMembrane!)) {

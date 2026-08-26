@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 114-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 117-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -51,7 +51,11 @@ immutable static atlas, one closed schema, and one guide as the twenty-fourth
 family, with no mutable alias or runtime surface. The Evaluation Covenant adds
 one immutable dated snapshot, one closed schema, and one guide as the
 twenty-fifth family; its server-rendered page and byte-preserved mutable alias
-are separately classified mutable publication surfaces.
+are separately classified mutable publication surfaces. The Civilisation →
+Reality Projection adds one immutable atlas, one closed schema, and one guide
+as the twenty-sixth family, with no mutable alias or runtime surface; it
+crosswalks two pinned predecessor vocabularies without republishing the
+research-local source or filling unsupported domains.
 The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -76,6 +80,11 @@ creates no persuasion target, authority, consent, execution, external effect,
 causal or moral verdict, person or community score, WAKE/KARMA write, or
 automatic action. Its ledger tuple proves byte identity, not live serving,
 adoption, truth, causation, legitimacy, or effect.
+The Civilisation → Reality Projection entries preserve only a six-crosswalk
+design mapping. They create no new historical or causal claim, metaphysical
+verdict, belief inference, score, persuasion target, authority, action,
+publication trigger, deployment trigger, or external effect; nine important
+domains remain explicitly unsupported by the pinned predecessors.
 The Research Observatory ledger entries preserve only the public schema family
 and its explanatory guide. The mutable snapshot contains bounded metadata, not
 full text, and the human page renders those checked-in bytes without essential
@@ -181,20 +190,21 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 143-asset union classifies 114 destinations
-as ledgered immutable/versioned and 29 as mutable; 141 are direct public response
-bodies and the sitemap contains 140 URLs. Generated discovery describes eleven
+consume those same bytes. The current 146-asset union classifies 117 destinations
+as ledgered immutable/versioned and 29 as mutable; 144 are direct public response
+bodies and the sitemap contains 143 URLs. Generated discovery describes twelve
 atlases, three lab routes, one experiment route, and one separate activation
 plus the Research Observatory, Trial Chamber, UK Government Engine, dependent
 UK Government Transformation Engine and Evaluation Covenant, and Reality
-Influence Claim Graph across twenty-five retirement families. It says what is
+Influence Claim Graph plus its thin Civilisation → Reality Projection across
+twenty-six retirement families. It says what is
 served now, and every destination is explicitly classified as mutable or
 ledgered. A new ledger entry must be staged when introduced. A previously
 committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the twenty-five linked authored publication
+The live release check retires the twenty-six linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

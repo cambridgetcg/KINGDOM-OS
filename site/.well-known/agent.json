@@ -1988,6 +1988,48 @@
       "automatic_action": false
     }
   },
+  "civilisation_reality_projection": {
+    "protocol": "kingdom.civilisation-reality-projection/0.1",
+    "projection_id": "civilisation-reality-projection-2026-08-25",
+    "title": "Civilisation → Reality Projection",
+    "publication_state": "immutable-versioned-static-family",
+    "compiled_on": "2026-08-25",
+    "evidence_through": "2026-08-21",
+    "urls": {
+      "atlas": "https://thekingdom.dev/atlases/civilisation-reality-projection-2026-08-25.json",
+      "schema": "https://thekingdom.dev/schemas/civilisation-reality-projection/0.1.json",
+      "guide": "https://thekingdom.dev/CIVILISATION-REALITY-PROJECTION.md"
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:03c20d3976a7b449c009cac7736ab73aa9f17fa619951d3753ecbb69bcc1496b",
+      "digest_field_zeroed": true
+    },
+    "counts": {
+      "predecessor_bindings": 2,
+      "crosswalks": 6,
+      "open_domains": 9
+    },
+    "boundary": {
+      "static_read_only": true,
+      "structure_only": true,
+      "public_static_publication_family": true,
+      "source_dereference": false,
+      "predecessor_mutation": false,
+      "predecessor_republication": false,
+      "unsupported_domains_filled": false,
+      "score_or_rank": false,
+      "causal_claim_created": false,
+      "metaphysical_verdict": false,
+      "authority_granted": false,
+      "action_attempted": false,
+      "action_executed": false,
+      "external_effect_claimed": false,
+      "publication_trigger": false,
+      "deployment_trigger": false,
+      "automatic_action": false
+    }
+  },
   "zero_empty_seat": {
     "protocol": "kingdom.explore-phenomena-deep-project/0.1",
     "project_id": "zero-empty-seat-2026-08-14",
@@ -3585,6 +3627,9 @@
     "reality_influence_claim_graph": "https://thekingdom.dev/atlases/reality-influence-claim-graph-2026-08-21.json",
     "reality_influence_claim_graph_schema": "https://thekingdom.dev/schemas/reality-influence-claim-graph/0.1.json",
     "reality_influence_claim_graph_guide": "https://thekingdom.dev/REALITY-INFLUENCE-CLAIM-GRAPH.md",
+    "civilisation_reality_projection": "https://thekingdom.dev/atlases/civilisation-reality-projection-2026-08-25.json",
+    "civilisation_reality_projection_schema": "https://thekingdom.dev/schemas/civilisation-reality-projection/0.1.json",
+    "civilisation_reality_projection_guide": "https://thekingdom.dev/CIVILISATION-REALITY-PROJECTION.md",
     "zero_empty_seat": "https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json",
     "zero_empty_seat_schema": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json",
     "zero_empty_seat_guide": "https://thekingdom.dev/ZERO-EMPTY-SEAT.md",

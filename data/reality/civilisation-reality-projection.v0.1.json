@@ -1,0 +1,583 @@
+{
+  "$schema": "urn:kingdom:schema:civilisation-reality-projection:0.1",
+  "protocol": "kingdom.civilisation-reality-projection/0.1",
+  "projection_id": "civilisation-reality-projection-2026-08-25",
+  "version": "0.1.0",
+  "title": "Civilisation → Reality Projection",
+  "compiled_on": "2026-08-25",
+  "evidence_through": "2026-08-21",
+  "state": "reviewed-thin-additive-crosswalk",
+  "scope": {
+    "question": "Where do the existing Word, Story, Religion & Civilisation map and the Reality Influence Claim Graph meet without pretending that either predecessor already explains war, power, class, emotion, revolution, propaganda, or governance?",
+    "intended_use": [
+      "Trace six exact conceptual seams between two immutable public KINGDOM predecessors.",
+      "Make translation loss and unsupported domains visible before any broader civilisation atlas is proposed.",
+      "Provide a small inspectable discovery surface for humans and machines."
+    ],
+    "excluded_use": [
+      "A theory, score, ranking, prediction, simulator, or causal model of civilisation.",
+      "A theological adjudication, belief inference, persuasion system, propaganda design, or person or group targeting tool.",
+      "A source of authority, consent, lawful basis, operational instruction, action, publication trigger, or deployment trigger."
+    ],
+    "unit_of_analysis": "One explicitly lossy crosswalk between named source concepts in the civilisation map and named target concepts in the reality claim graph.",
+    "projection_rule": "A crosswalk records a possible reading between already-published concepts; it neither merges their types nor extends, proves, or transfers either predecessor's claims.",
+    "open_domain_rule": "If the two bound predecessors do not carry enough typed evidence for a requested domain, the domain remains open and no placeholder mechanism is invented.",
+    "data_classification": "public-static-research-crosswalk"
+  },
+  "projection_rules": {
+    "source_claims_remain_in_predecessor": true,
+    "qualified_predecessor_ids_required": true,
+    "no_transitive_influence": true,
+    "no_cross_register_promotion": true,
+    "association_is_not_causation": true,
+    "historical_claim_is_not_design_mandate": true,
+    "design_commitment_is_not_historical_finding": true,
+    "metaphysical_non_adjudication": true,
+    "influence_is_non_summable": true,
+    "no_person_community_religion_or_civilisation_score": true
+  },
+  "predecessor_bindings": [
+    {
+      "id": "word-story-religion-civilisation",
+      "protocol": "kingdom.word-story-religion-civilisation-map/0.1",
+      "map_id": "word-story-religion-civilisation-2026-08-20",
+      "locator": "repo:data/language/word-story-religion-civilisation-map.v0.1.json",
+      "raw_digest": "sha256:a4a87b7b23dbdf7e7e6689b5083f76a746c7f41bc56f2124281dfda609a62479",
+      "semantic_digest": "sha256:0c791b2491ebdcd85cf58e26e41e8b35b883781fd26bccc19dfd3f7853c7855a",
+      "relation": "source-concept-predecessor",
+      "mutated": false,
+      "republished": false,
+      "authority_imported": false
+    },
+    {
+      "id": "reality-influence-claim-graph",
+      "protocol": "kingdom.reality-influence-claim-graph/0.1",
+      "map_id": "reality-influence-claim-graph-2026-08-21",
+      "locator": "repo:data/reality/reality-influence-map.v0.1.json",
+      "raw_digest": "sha256:4d68be39226c8d5451c8d9166fa74ba54bb793b7655f119d8765090cbbcf890e",
+      "semantic_digest": "sha256:45d4323d1a6190b3c333f02f2c744858e8da27944fbcb2042fbae492ca6e31ac",
+      "relation": "target-claim-boundary-predecessor",
+      "mutated": false,
+      "republished": false,
+      "authority_imported": false
+    }
+  ],
+  "crosswalks": [
+    {
+      "id": "naming-to-expression",
+      "source_binding_ids": [
+        "word-story-religion-civilisation"
+      ],
+      "source_relation_ids": [
+        "articulation-and-naming"
+      ],
+      "source_insight_ids": [
+        "coordinate-words-remain-expanded"
+      ],
+      "target_domain_ids": [
+        "semantic-symbolic",
+        "informational-record"
+      ],
+      "target_node_type_ids": [
+        "EXPRESSION",
+        "CLAIM_ASSESSMENT"
+      ],
+      "target_relation_ids": [
+        "EXPRESSES"
+      ],
+      "target_ladder_ids": [
+        "expression-recorded"
+      ],
+      "target_pathway_ids": [
+        "expression-to-public-deliberation"
+      ],
+      "register": "DESIGN_COMMITMENT",
+      "transfer_status": "projection-not-historical-or-causal-finding",
+      "statement": "A word, name, or invocation may be represented as an attributed expression record before any artifact, circulation, uptake, belief, authority, or effect claim.",
+      "preserved_distinctions": [
+        "Word or name remains distinct from sacred referent, truth, belief, understanding, uptake, and world state.",
+        "An EXPRESSION node does not import every language-specific or tradition-specific semantic coordinate."
+      ],
+      "required_evidence": [
+        "An attributable expression and its bounded context.",
+        "Separate records for any later artifact, distribution, response, decision, or outcome claim."
+      ],
+      "alternative_paths": [
+        "The expression may remain private, untranslated, contested, refused, forgotten, or never materialized.",
+        "Different communities may retain non-equivalent referent and interpretation charts."
+      ],
+      "stop_conditions": [
+        "Stop before claiming referent identity, theological truth, belief, understanding, agreement, or causal influence.",
+        "Stop when attribution or the relevant language and community context cannot be supported."
+      ],
+      "external_effect_claimed": false,
+      "authority_granted": false
+    },
+    {
+      "id": "story-to-public-deliberation",
+      "source_binding_ids": [
+        "word-story-religion-civilisation"
+      ],
+      "source_relation_ids": [
+        "story-performance-memory"
+      ],
+      "source_insight_ids": [
+        "story-orients-without-proving"
+      ],
+      "target_domain_ids": [
+        "semantic-symbolic",
+        "informational-record",
+        "attention-exposure",
+        "normative-public"
+      ],
+      "target_node_type_ids": [
+        "EXPRESSION",
+        "ARTIFACT",
+        "DISTRIBUTION_OBSERVATION",
+        "ATTENTION_OBSERVATION",
+        "PUBLIC_RESPONSE_RECORD"
+      ],
+      "target_relation_ids": [
+        "EMBODIES_EXPRESSION",
+        "DISTRIBUTES_ARTIFACT",
+        "MEASURES_EXPOSURE_TO",
+        "REPORTS_PUBLIC_RESPONSE_TO"
+      ],
+      "target_ladder_ids": [
+        "expression-recorded",
+        "artifact-versioned",
+        "distribution-witnessed",
+        "exposure-measured",
+        "public-response-attributed"
+      ],
+      "target_pathway_ids": [
+        "expression-to-public-deliberation"
+      ],
+      "register": "DESIGN_COMMITMENT",
+      "transfer_status": "projection-not-historical-or-causal-finding",
+      "statement": "A story or teaching may be traced as expression, versioned artifact, witnessed distribution and exposure, and attributed public response only when each stage has separate evidence.",
+      "preserved_distinctions": [
+        "Narrative memory, ritual performance, exposure, response, private belief, agreement, and collective decision remain different events.",
+        "Orientation or public response does not prove truth, consensus, consent, legitimacy, or causal influence."
+      ],
+      "required_evidence": [
+        "Versioned artifact provenance and separately scoped distribution, exposure, and response witnesses.",
+        "Alternative explanations and explicit limits for any association claim."
+      ],
+      "alternative_paths": [
+        "A story may circulate without measurable exposure or public response.",
+        "Similar public responses may arise from institutions, material conditions, prior commitments, other stories, or unobserved causes."
+      ],
+      "stop_conditions": [
+        "Stop at the last independently evidenced stage in the public-deliberation pathway.",
+        "Stop before inferring private belief, consensus, consent, legitimacy, persuasion, or causal effect."
+      ],
+      "external_effect_claimed": false,
+      "authority_granted": false
+    },
+    {
+      "id": "canon-to-selection-feedback",
+      "source_binding_ids": [
+        "word-story-religion-civilisation"
+      ],
+      "source_relation_ids": [
+        "canon-curriculum-selection"
+      ],
+      "source_insight_ids": [
+        "canon-is-governance-transform",
+        "attention-and-persistence-are-not-truth"
+      ],
+      "target_domain_ids": [
+        "attention-exposure",
+        "social-relational",
+        "institutional-status",
+        "normative-public"
+      ],
+      "target_node_type_ids": [
+        "ARTIFACT",
+        "DISTRIBUTION_OBSERVATION",
+        "ATTENTION_OBSERVATION",
+        "ACTION_PROPOSAL",
+        "DECISION_RECORD",
+        "FEEDBACK_ITEM"
+      ],
+      "target_relation_ids": [
+        "DERIVES_FROM",
+        "SELECTS_PROPOSAL",
+        "CHALLENGES",
+        "CORRECTS",
+        "SUPERSEDES",
+        "WITHDRAWS"
+      ],
+      "target_ladder_ids": [
+        "artifact-versioned",
+        "distribution-witnessed",
+        "exposure-measured",
+        "proposal-recorded",
+        "decision-recorded"
+      ],
+      "target_pathway_ids": [
+        "expression-to-public-deliberation",
+        "research-to-bounded-use"
+      ],
+      "register": "DESIGN_COMMITMENT",
+      "transfer_status": "projection-not-historical-or-causal-finding",
+      "statement": "Canon and curriculum selection may be inspected as artifact selection, distribution, attention, proposal, decision, challenge, correction, supersession, and withdrawal records rather than as a single truth or influence score.",
+      "preserved_distinctions": [
+        "Selection of texts, selection of a proposal, institutional authorization, and actual adoption are not the same operation.",
+        "Neither predecessor supplies a complete account of who controls selection, who is excluded, or how material incentives alter the loop."
+      ],
+      "required_evidence": [
+        "Versioned selection criteria, decision provenance, distribution and attention observations, and records of challenge or omission.",
+        "Evidence about selectors, affected communities, alternatives, incentives, exclusions, and changes after feedback."
+      ],
+      "alternative_paths": [
+        "Persistence may follow copying cost, patronage, infrastructure, censorship, curriculum design, community care, accident, or path dependence.",
+        "Attention can increase, fragment, shift to counterstories, or decouple from institutional selection."
+      ],
+      "stop_conditions": [
+        "Stop before turning selection, persistence, visibility, or attention into truth, merit, consensus, consent, or legitimacy.",
+        "Stop when selectors, alternatives, exclusions, or affected parties are materially unknown."
+      ],
+      "external_effect_claimed": false,
+      "authority_granted": false
+    },
+    {
+      "id": "legitimation-to-decision-authority-separation",
+      "source_binding_ids": [
+        "word-story-religion-civilisation"
+      ],
+      "source_relation_ids": [
+        "sacred-order-legitimation-and-critique"
+      ],
+      "source_insight_ids": [
+        "counterauthority-before-synthesis",
+        "story-orients-without-proving"
+      ],
+      "target_domain_ids": [
+        "institutional-status",
+        "legal-jurisdictional",
+        "normative-public"
+      ],
+      "target_node_type_ids": [
+        "ACTION_PROPOSAL",
+        "DECISION_RECORD",
+        "AUTHORITY_GRANT_CLAIM",
+        "AFFECTED_PARTY_REGISTER",
+        "CONSENT_RECORD",
+        "LAWFUL_BASIS_CLAIM",
+        "RIGHTS_ASSESSMENT",
+        "CAPABILITY_EVIDENCE"
+      ],
+      "target_relation_ids": [
+        "SELECTS_PROPOSAL",
+        "CLAIMS_AUTHORITY_FOR",
+        "RECORDS_CONSENT_TO",
+        "CLAIMS_LAWFUL_BASIS_FOR",
+        "POTENTIALLY_AFFECTS",
+        "TECHNICALLY_ENABLES"
+      ],
+      "target_ladder_ids": [
+        "proposal-recorded",
+        "decision-recorded",
+        "authority-claim-verified",
+        "affected-party-basis-reviewed",
+        "capability-verified"
+      ],
+      "target_pathway_ids": [
+        "research-to-bounded-use"
+      ],
+      "register": "DESIGN_COMMITMENT",
+      "transfer_status": "projection-not-historical-or-causal-finding",
+      "statement": "A sacred-order legitimation or critique may be traced as an attributed claim, while proposal, decision, authority, consent or lawful basis, rights review, capability, execution, legitimacy, and justice remain separate questions.",
+      "preserved_distinctions": [
+        "The reality graph does not adjudicate sacred authority or import it as legal, technical, democratic, or moral authority.",
+        "Recording a decision or authority claim does not make the decision authorized, legitimate, just, consensual, or executable."
+      ],
+      "required_evidence": [
+        "Attributed legitimation and counterauthority claims in their own registers.",
+        "Separate current records for decision procedure, authority, jurisdiction, affected parties, consent or lawful basis, rights, capability, and review."
+      ],
+      "alternative_paths": [
+        "The same sacred narrative may authorize, constrain, criticize, or remain irrelevant to different institutions and communities.",
+        "A decision can be reversed, refused, blocked, unauthorized, unlawful, incapable of execution, or normatively contested."
+      ],
+      "stop_conditions": [
+        "Stop before treating sacred, historical, legal, democratic, technical, or moral authority as interchangeable.",
+        "Stop before any action unless a separate current gate independently verifies every required authority, rights, affected-party, capability, and consent or lawful-basis input."
+      ],
+      "external_effect_claimed": false,
+      "authority_granted": false
+    },
+    {
+      "id": "translation-to-claim-assessment",
+      "source_binding_ids": [
+        "word-story-religion-civilisation"
+      ],
+      "source_relation_ids": [
+        "translation-contact-remaking"
+      ],
+      "source_insight_ids": [
+        "translation-preserves-seams",
+        "polyphonic-fusion-not-unification"
+      ],
+      "target_domain_ids": [
+        "semantic-symbolic",
+        "informational-record",
+        "normative-public"
+      ],
+      "target_node_type_ids": [
+        "EXPRESSION",
+        "ARTIFACT",
+        "CLAIM_ASSESSMENT",
+        "NORMATIVE_ASSESSMENT",
+        "ACTION_PROPOSAL"
+      ],
+      "target_relation_ids": [
+        "DERIVES_FROM",
+        "ASSESSES_UNDER_FRAMEWORK",
+        "CHALLENGES",
+        "CORRECTS"
+      ],
+      "target_ladder_ids": [
+        "expression-recorded",
+        "artifact-versioned",
+        "normative-assessment-separated",
+        "proposal-recorded"
+      ],
+      "target_pathway_ids": [],
+      "register": "DESIGN_COMMITMENT",
+      "transfer_status": "projection-not-historical-or-causal-finding",
+      "statement": "A translated or remade expression may retain provenance to a source artifact and carry a bounded assessment under a declared framework while non-equivalence, dissent, and correction remain visible.",
+      "preserved_distinctions": [
+        "Provenance does not establish semantic fidelity, understanding, identity of referents, truth, or permission to speak for a tradition or community.",
+        "A framework-specific assessment is not a universal judgment and cannot silently replace the source voice."
+      ],
+      "required_evidence": [
+        "Versioned source and translation artifacts, translator position and method, declared framework, known losses, and community or specialist counterreadings where relevant.",
+        "Separate evidence for any claimed reception, institutional selection, decision, or outcome."
+      ],
+      "alternative_paths": [
+        "A term may require multiple parallel translations, retained original wording, refusal to translate, or a declared unresolved seam.",
+        "Communities may contest the source edition, translation, referent, genre, authority, or assessment framework."
+      ],
+      "stop_conditions": [
+        "Stop when a translation would collapse distinct deities, traditions, concepts, genres, communities, or claim registers.",
+        "Stop before inferring understanding, shared belief, doctrinal identity, consent, or authority from lexical overlap."
+      ],
+      "external_effect_claimed": false,
+      "authority_granted": false
+    },
+    {
+      "id": "counterstory-to-challenge-repair",
+      "source_binding_ids": [
+        "word-story-religion-civilisation"
+      ],
+      "source_relation_ids": [
+        "suppression-counterstory-revival"
+      ],
+      "source_insight_ids": [
+        "counterauthority-before-synthesis",
+        "community-access-precedes-convenience"
+      ],
+      "target_domain_ids": [
+        "semantic-symbolic",
+        "informational-record",
+        "attention-exposure",
+        "social-relational",
+        "institutional-status",
+        "normative-public"
+      ],
+      "target_node_type_ids": [
+        "EXPRESSION",
+        "ARTIFACT",
+        "CLAIM_ASSESSMENT",
+        "OUTCOME_OBSERVATION",
+        "NORMATIVE_ASSESSMENT",
+        "FEEDBACK_ITEM",
+        "REPAIR_PROPOSAL",
+        "REPAIR_ATTEMPT",
+        "ACTION_PROPOSAL",
+        "NON_ACTION"
+      ],
+      "target_relation_ids": [
+        "CHALLENGES",
+        "CORRECTS",
+        "SUPERSEDES",
+        "WITHDRAWS",
+        "RESPONDS_WITH_REPAIR",
+        "ASSESSES_UNDER_FRAMEWORK"
+      ],
+      "target_ladder_ids": [
+        "expression-recorded",
+        "artifact-versioned",
+        "outcome-observed",
+        "normative-assessment-separated",
+        "repair-proposed",
+        "repair-outcome-reviewed",
+        "proposal-recorded"
+      ],
+      "target_pathway_ids": [
+        "challenge-to-repair"
+      ],
+      "register": "DESIGN_COMMITMENT",
+      "transfer_status": "projection-not-historical-or-causal-finding",
+      "statement": "A documented counterstory may challenge an artifact, claim, or assessment and may be followed by distinct correction, supersession, withdrawal, repair proposal, repair attempt, outcome observation, and renewed review records.",
+      "preserved_distinctions": [
+        "Challenge is not disproof, revival is not restoration, and repair is not erasure, absolution, recovered consent, or proof that harm ended.",
+        "Suppression, archive survival, counterstory reception, institutional change, and material aftermath require separate evidence."
+      ],
+      "required_evidence": [
+        "Attributed suppressed and counterstory artifacts, preservation and access history, institutional response, affected-party record, and separately witnessed repair attempt and aftermath.",
+        "Counterevidence, residual harm, dissent about repair, and a fresh gate for any further intervention."
+      ],
+      "alternative_paths": [
+        "A challenge may remain unanswered, be refused, coexist with the challenged record, produce correction without material repair, or reveal disagreement that cannot be synthesized.",
+        "Revival may serve memory, critique, identity, art, ritual, politics, or new institutional purposes without restoring an earlier world."
+      ],
+      "stop_conditions": [
+        "Stop before erasing the challenged record, opposition, residual harm, affected-party disagreement, or the limits of the repair evidence.",
+        "Stop when repair would require unverified authority, consent or lawful basis, capability, affected-party coverage, or a new action gate."
+      ],
+      "external_effect_claimed": false,
+      "authority_granted": false
+    }
+  ],
+  "open_domains": [
+    {
+      "id": "war-and-organised-violence",
+      "question": "How do organised violence, military competition, defeat, occupation, and peace settlements reshape institutions, stories, resources, and citizenship?",
+      "coverage_status": "not-supported-by-pinned-predecessors",
+      "why_not_projectable": "The civilisation predecessor names contestation and coercion only inside selected word, story, religion, and civilisation windows; the reality predecessor is a claim-boundary graph, not a theory or history of war.",
+      "needed_evidence": [
+        "Conflict-specific primary records and comparative historical research.",
+        "Separate evidence for coercion, institutions, resources, affected parties, and aftermath."
+      ],
+      "stop_condition": "Do not infer a war mechanism, prediction, strategy, legitimacy, or authorization from story/religion relations or generic reality-domain labels."
+    },
+    {
+      "id": "coercion-and-security-capacity",
+      "question": "How do policing, military, surveillance, incarceration, and other coercive capacities interact with administrative capacity and rights?",
+      "coverage_status": "not-supported-by-pinned-predecessors",
+      "why_not_projectable": "Neither predecessor models coercive organizations, command structures, force, compliance, state capacity, or lawful and unlawful uses of force.",
+      "needed_evidence": [
+        "Institution-specific legal, administrative, fiscal, and operational records.",
+        "Affected-party testimony and independent rights and aftermath assessment."
+      ],
+      "stop_condition": "Do not translate a legitimacy claim, institution label, or capability record into permission to coerce or evidence that coercion was lawful, necessary, proportionate, or effective."
+    },
+    {
+      "id": "class-and-resource-asymmetry",
+      "question": "How do unequal ownership, labour relations, taxation, debt, patronage, and access to essentials shape participation and institutional power?",
+      "coverage_status": "not-supported-by-pinned-predecessors",
+      "why_not_projectable": "The predecessors can name economic patronage and economic-resource domains but do not provide class analysis, incidence, ownership, labour, or distributional evidence.",
+      "needed_evidence": [
+        "Distributional, ownership, labour, fiscal, and material-flow evidence.",
+        "Competing class concepts and explicit units of comparison."
+      ],
+      "stop_condition": "Do not infer class position, interests, exploitation, benefit, burden, or resource incidence from cultural, religious, attention, or institutional labels alone."
+    },
+    {
+      "id": "status-hierarchy-and-elite-fracture",
+      "question": "How do status orders, inherited rank, elite competition, coalition fracture, and mobility shape legitimacy and institutional change?",
+      "coverage_status": "not-supported-by-pinned-predecessors",
+      "why_not_projectable": "Specialist roles and institutions appear in the civilisation map, but neither predecessor supplies a general status model, elite-network evidence, or fracture mechanism.",
+      "needed_evidence": [
+        "Context-specific status categories and institutional records.",
+        "Evidence distinguishing hierarchy, prestige, class, office, faction, and coercive position."
+      ],
+      "stop_condition": "Do not rank people or groups, impute elite membership or motive, or infer coalition fracture from specialist roles, public claims, or status language."
+    },
+    {
+      "id": "collective-emotion-and-affect",
+      "question": "How do fear, anger, humiliation, grief, hope, love, care, hate, and belonging interact with attention, participation, restraint, and violence?",
+      "coverage_status": "not-supported-by-pinned-predecessors",
+      "why_not_projectable": "Public response records do not reveal private or collective mental states, and the civilisation map does not establish an emotion mechanism.",
+      "needed_evidence": [
+        "Ethically collected, context-specific affect evidence with privacy and inference limits.",
+        "Separate treatment of expression, self-report, behaviour, physiology, institution, and cultural vocabulary."
+      ],
+      "stop_condition": "Do not infer an individual or collective emotion, diagnosis, intent, consent, hostility, or susceptibility from expressions, stories, exposure, response, silence, refusal, identity, or group membership."
+    },
+    {
+      "id": "revolution-and-regime-change",
+      "question": "Under what conjunctures do strain, elite fracture, organisation, legitimating frames, coercive openings, and international conditions produce reform, revolution, repression, or collapse?",
+      "coverage_status": "not-supported-by-pinned-predecessors",
+      "why_not_projectable": "Dissent and reform are represented as layers and claims, not as a tested model of revolutionary conjuncture, regime survival, or transition.",
+      "needed_evidence": [
+        "Comparative revolution and regime-transition research with negative cases.",
+        "Event sequences separating structural conditions, organisation, framing, coercion, contingency, and aftermath."
+      ],
+      "stop_condition": "Do not predict, incite, suppress, optimize, or authorize regime change from dissent, counterstory, legitimation, or public-response records."
+    },
+    {
+      "id": "fiscal-and-economic-shocks",
+      "question": "How do taxation limits, debt, inflation, unemployment, scarcity, trade disruption, and ecological shocks alter state capacity, trust, class relations, and conflict?",
+      "coverage_status": "not-supported-by-pinned-predecessors",
+      "why_not_projectable": "The reality graph indexes economic and ecological domains but contains no shock model, fiscal series, distributional mechanism, or comparative causal evidence.",
+      "needed_evidence": [
+        "Time-bounded fiscal, economic, ecological, institutional, and distributional records.",
+        "Competing causal explanations, counterfactual assumptions, and lag structure."
+      ],
+      "stop_condition": "Do not infer shock, scarcity, fiscal capacity, distributional burden, social response, conflict, or policy effect from an indexed domain or temporal sequence."
+    },
+    {
+      "id": "propaganda-media-and-information-power",
+      "question": "How do media ownership, distribution systems, censorship, repetition, targeting, disinformation, and counter-speech affect public knowledge and coordination?",
+      "coverage_status": "not-supported-by-pinned-predecessors",
+      "why_not_projectable": "The predecessors distinguish expression, artifact, distribution, exposure, response, selection, and suppression, but do not establish propaganda mechanisms or identify belief, persuasion, deception, or behavioural effects.",
+      "needed_evidence": [
+        "Platform, ownership, distribution, content, exposure, audience, experimental or quasi-experimental, and institutional evidence kept separately typed.",
+        "Rights, privacy, provenance, counterevidence, affected-party, and anti-targeting safeguards."
+      ],
+      "stop_condition": "Do not infer belief, persuasion, deception, susceptibility, intent, or behavioural effect, and do not create targeting, censorship, propaganda, counter-propaganda, or amplification instructions."
+    },
+    {
+      "id": "citizen-governance-dynamics",
+      "question": "How do authorization, voice, participation, representation, public service performance, procedural justice, contestation, correction, and non-domination interact over time?",
+      "coverage_status": "not-supported-by-pinned-predecessors",
+      "why_not_projectable": "The reality graph separates claims, decisions, authority, consent, outcomes, assessment, and repair, but it does not provide empirical citizen-governance dynamics or confer jurisdiction on KINGDOM.",
+      "needed_evidence": [
+        "Jurisdiction-specific constitutional, legal, administrative, participatory, service, and affected-party evidence.",
+        "Explicit legitimacy concepts, institutional alternatives, dissent channels, correction rights, and non-jurisdiction boundaries."
+      ],
+      "stop_condition": "Do not treat participation as consent, decision as authority, performance as legitimacy, visibility as representation, governance vocabulary as jurisdiction, or KINGDOM as a sovereign government."
+    }
+  ],
+  "boundaries": {
+    "read_only": true,
+    "structure_only": true,
+    "public_static_publication_family": true,
+    "network": false,
+    "filesystem_write": false,
+    "source_dereference": false,
+    "predecessor_files_read_for_verification": true,
+    "predecessor_mutation": false,
+    "predecessor_republication": false,
+    "historical_completeness_claimed": false,
+    "unsupported_domains_filled": false,
+    "score_or_rank": false,
+    "causal_claim_created": false,
+    "metaphysical_verdict": false,
+    "belief_identity_intent_or_emotion_inferred": false,
+    "person_or_group_targeting": false,
+    "persuasion_or_propaganda_design": false,
+    "prediction_or_simulation": false,
+    "authority_granted": false,
+    "consent_or_lawful_basis_established": false,
+    "action_proposed": false,
+    "action_attempted": false,
+    "action_executed": false,
+    "external_effect_claimed": false,
+    "writes_wake": false,
+    "writes_karma": false,
+    "publication_trigger": false,
+    "deployment_trigger": false,
+    "automatic_action": false
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:03c20d3976a7b449c009cac7736ab73aa9f17fa619951d3753ecbb69bcc1496b",
+    "digest_field_zeroed": true
+  }
+}

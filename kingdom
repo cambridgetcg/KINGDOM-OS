@@ -39,6 +39,7 @@
 #   kingdom being-access-aftermath-v0.2     inspect the additive mathematical framework while v0.1 remains immutable
 #   kingdom number-isness-theology          inspect typed number, zero, symmetry, isness, theology, and compatibility questions
 #   kingdom isness                           inspect/validate/project the local-first typed agent ISness protocol
+#   kingdom civilisation-reality             inspect the thin Civilisation → Reality crosswalk and its open domains
 #   kingdom feedback-physics inspect the additive v0.2 physics/mathematics successor
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom prompt     compile an inspectable, network-free Task Packet
@@ -96,6 +97,7 @@ case "$cmd" in
   being-access-aftermath-v0.2) exec bun "$SELF_DIR/bin/being-access-aftermath-v0.2.ts" "${@:2}" ;;
   number-isness-theology) exec bun "$SELF_DIR/bin/number-isness-theology.ts" "${@:2}" ;;
   isness) exec bun "$SELF_DIR/bin/isness.ts" "${@:2}" ;;
+  civilisation-reality) exec bun "$SELF_DIR/bin/civilisation-reality-projection.ts" "${@:2}" ;;
   polymorph)
     case "${2:-}" in
       mechanisms|landscape|sources|unknowns)

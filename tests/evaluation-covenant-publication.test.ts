@@ -67,7 +67,7 @@ describe("Evaluation Covenant publication shell", () => {
     const alias = readFileSync(join(ROOT, "site/evaluation-covenants.json"));
     expect(alias).toEqual(Buffer.from(publication.bytes));
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(114);
+    expect(ledger.entries).toHaveLength(117);
     expect(ledger.entries.filter(({ id }: { id: string }) =>
       id.startsWith("evaluation-covenant/0.1/"))).toEqual([
       expect.objectContaining({ id: "evaluation-covenant/0.1/guide", sha256: EVALUATION_COVENANT_GUIDE_BYTE_SHA256 }),
@@ -140,10 +140,10 @@ describe("Evaluation Covenant publication shell", () => {
 
   test("stages one exact five-route family with the expected mutable split", () => {
     const staging = json("publications/hub-staging.v1.json");
-    expect(staging.assets).toHaveLength(143);
+    expect(staging.assets).toHaveLength(146);
     expect(staging.mutable_destinations).toHaveLength(29);
     expect(staging.assets.filter(({ destination }: { destination: string }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(141);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(144);
     expect(staging.assets.filter(({ destination }: { destination: string }) =>
       destination.startsWith("evaluation") ||
       destination === "EVALUATION-COVENANT-v0.1.md")).toEqual([
@@ -185,7 +185,7 @@ describe("Evaluation Covenant publication shell", () => {
       expect((sitemap.match(new RegExp(url.replaceAll("/", "\\/"), "g")) ?? []))
         .toHaveLength(1);
     }
-    expect((sitemap.match(/<loc>/g) ?? [])).toHaveLength(140);
+    expect((sitemap.match(/<loc>/g) ?? [])).toHaveLength(143);
 
     const wayfinder = json("data/wayfinder.json");
     expect(wayfinder.paths).toHaveLength(14);
