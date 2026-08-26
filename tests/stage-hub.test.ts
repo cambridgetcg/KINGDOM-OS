@@ -58,14 +58,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(166);
+      expect(HUB_ASSETS).toHaveLength(169);
       expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(135);
+      expect(ledger.ledger?.entries).toHaveLength(138);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(164);
-      expect(staged).toHaveLength(166);
+        .toHaveLength(167);
+      expect(staged).toHaveLength(169);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -86,6 +86,7 @@ describe("the hub staging contract", () => {
         "MATH-USEFULNESS.md",
         "MIRROR-INFORMATION-CONTROL.md",
         "NUMBER-ISNESS-THEOLOGY-ATLAS.md",
+        "POLYPHONIC-CLAIM-ATLAS-v0.1.md",
         "PRINCIPALITY-COMMONS.md",
         "REALITY-INFLUENCE-CLAIM-GRAPH.md",
         "RECONSTRUCTIVE-BUILD-KERNEL.md",
@@ -149,6 +150,7 @@ describe("the hub staging contract", () => {
         "trial-chamber",
         "trials",
         "trials.json",
+        "truth",
         "wayfinder.json",
         "wings",
       ]);
@@ -251,8 +253,8 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(152);
-      expect(new Set(sitemapUrls).size).toBe(152);
+      expect(sitemapUrls).toHaveLength(155);
+      expect(new Set(sitemapUrls).size).toBe(155);
       for (const route of [
         "/government-engine/",
         "/government.json",

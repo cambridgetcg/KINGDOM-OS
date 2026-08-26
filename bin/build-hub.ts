@@ -228,6 +228,14 @@ import {
   loadCivilisationFlowNuanceAtlas,
 } from "./civilisation-flow-atlas.ts";
 import {
+  POLYPHONIC_CLAIM_ATLAS_GUIDE_URL,
+  POLYPHONIC_CLAIM_ATLAS_SCHEMA_URL,
+  POLYPHONIC_CLAIM_ATLAS_SOURCE,
+  POLYPHONIC_CLAIM_ATLAS_URL,
+  loadPolyphonicClaimAtlas,
+  polyphonicClaimAtlasPublicDiscovery,
+} from "./polyphonic-claim-atlas.ts";
+import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
   RESEARCH_OBSERVATORY_SCHEMA_URLS,
@@ -880,6 +888,15 @@ if (civilisationFlow.protocol !== CIVILISATION_FLOW_NUANCE_ATLAS_PROTOCOL ||
   throw new Error(`unexpected Civilisation Flow Nuance Atlas identity: ${civilisationFlow.protocol} ${civilisationFlow.atlas_id}`);
 }
 const civilisationFlowDiscovery = civilisationFlowNuancePublicDiscovery(civilisationFlow);
+
+// ── Polyphonic Claim Atlas (frozen static synthetic triplet; no runtime) ──
+const polyphonicClaimAtlasUrl = POLYPHONIC_CLAIM_ATLAS_URL;
+const polyphonicClaimAtlasSchemaUrl = POLYPHONIC_CLAIM_ATLAS_SCHEMA_URL;
+const polyphonicClaimAtlasGuideUrl = POLYPHONIC_CLAIM_ATLAS_GUIDE_URL;
+const polyphonicClaimAtlasSourceUrl = POLYPHONIC_CLAIM_ATLAS_SOURCE.tag;
+const polyphonicClaimAtlas = loadPolyphonicClaimAtlas();
+const polyphonicClaimAtlasDiscovery =
+  polyphonicClaimAtlasPublicDiscovery(polyphonicClaimAtlas);
 
 // ── Research Observatory (metadata discovery; stops before evaluation) ────
 const researchObservatoryUrl = RESEARCH_OBSERVATORY_URL;
@@ -2453,6 +2470,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(numberIsnessTheologyUrl).pathname)}" type="application/json" title="Number, Isness &amp; Theology Atlas">
 <link rel="describedby" href="${esc(new URL(numberIsnessTheologySchemaUrl).pathname)}" type="application/schema+json" title="Number, Isness &amp; Theology Atlas schema">
 <link rel="service-doc" href="${esc(new URL(numberIsnessTheologyDocumentUrl).pathname)}" type="text/markdown" title="Number, Isness &amp; Theology Atlas guide">
+<link rel="alternate" href="${esc(new URL(polyphonicClaimAtlasUrl).pathname)}" type="application/json" title="Polyphonic Claim Atlas immutable Phase-0 record">
+<link rel="describedby" href="${esc(new URL(polyphonicClaimAtlasSchemaUrl).pathname)}" type="application/schema+json" title="Polyphonic Claim Atlas schema">
+<link rel="service-doc" href="${esc(new URL(polyphonicClaimAtlasGuideUrl).pathname)}" type="text/markdown" title="Polyphonic Claim Atlas guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -4860,6 +4880,10 @@ const html = `<!doctype html>
       <a href="${esc(new URL(numberIsnessTheologyUrl).pathname)}">Number, Isness &amp; Theology — typed mathematics, theology, and claim-level compatibility</a>
       <a href="${esc(new URL(numberIsnessTheologySchemaUrl).pathname)}">Number, Isness &amp; Theology JSON Schema</a>
       <a href="${esc(new URL(numberIsnessTheologyDocumentUrl).pathname)}">NUMBER-ISNESS-THEOLOGY-ATLAS.md — sources, bridges, KARMA separation, and non-inference boundaries</a>
+      <a data-polyphonic-claim-atlas-link="record" href="${esc(new URL(polyphonicClaimAtlasUrl).pathname)}">Polyphonic Claim Atlas — immutable static synthetic Phase-0 record</a>
+      <a data-polyphonic-claim-atlas-link="schema" href="${esc(new URL(polyphonicClaimAtlasSchemaUrl).pathname)}">Polyphonic Claim Atlas — closed structural schema</a>
+      <a data-polyphonic-claim-atlas-link="guide" href="${esc(new URL(polyphonicClaimAtlasGuideUrl).pathname)}">POLYPHONIC-CLAIM-ATLAS-v0.1.md — reading and boundary guide</a>
+      <a data-polyphonic-claim-atlas-source-link href="${esc(polyphonicClaimAtlasSourceUrl)}" rel="external noreferrer">Polyphonic Claim Atlas — pinned producer source tag v0.1.1</a>
       <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
       <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
       <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
@@ -5289,6 +5313,7 @@ const machine = {
   reality_influence_claim_graph: realityInfluenceDiscovery,
   civilisation_reality_projection: civilisationRealityDiscovery,
   civilisation_flow_nuance_atlas: civilisationFlowDiscovery,
+  polyphonic_claim_atlas: polyphonicClaimAtlasDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -5476,6 +5501,10 @@ Being, Access & Aftermath guide v0.2: ${beingAccessAftermathV02DocumentUrl}
 Number, Isness & Theology Atlas: ${numberIsnessTheologyUrl}
 Number, Isness & Theology schema: ${numberIsnessTheologySchemaUrl}
 Number, Isness & Theology guide: ${numberIsnessTheologyDocumentUrl}
+Polyphonic Claim Atlas immutable Phase-0 record: ${polyphonicClaimAtlasUrl}
+Polyphonic Claim Atlas schema: ${polyphonicClaimAtlasSchemaUrl}
+Polyphonic Claim Atlas guide: ${polyphonicClaimAtlasGuideUrl}
+Polyphonic Claim Atlas pinned producer source (site-authored locator; no truth, authority, runtime, or currentness import): ${polyphonicClaimAtlasSourceUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -5520,6 +5549,7 @@ ${doorLines}
 - Reality Influence Claim Graph — an immutable static expression-to-aftermath claim vocabulary with ${realityInfluenceDiscovery.counts.reality_domains} indexed domains, ${realityInfluenceDiscovery.counts.influence_dimensions} non-summable dimensions, ${realityInfluenceDiscovery.counts.claim_node_types} node types, ${realityInfluenceDiscovery.counts.endpoint_safe_relations} endpoint-safe relations, and ${realityInfluenceDiscovery.counts.pathway_templates} unrun pathways. Artifact, exposure, response, decision, authority, consent or lawful basis, capability, execution, outcome, causation, normative assessment, and repair remain distinct. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, score, or automatic action. Atlas: ${realityInfluenceUrl} · schema: ${realityInfluenceSchemaUrl} · guide: ${realityInfluenceDocumentUrl}
 - Civilisation → Reality Projection — ${civilisationRealityDiscovery.counts.crosswalks} design-only crosswalks connect two pinned immutable predecessor vocabularies without republishing the research-local source, promoting a claim register, or filling ${civilisationRealityDiscovery.counts.open_domains} unsupported domains by analogy. It creates no new history, causal finding, metaphysical verdict, persuasion target, score, authority, action, publication trigger, deployment trigger, or external effect. Projection: ${civilisationRealityUrl} · schema: ${civilisationRealitySchemaUrl} · guide: ${civilisationRealityDocumentUrl}
 - Civilisation Flow Nuance Atlas — ${civilisationFlow.stages.length} distinguishable stages, ${civilisationFlow.transitions.length} non-automatic transitions, ${civilisationFlow.crosswalk_flow_overlays.length} predecessor-bound overlays, and qualitative registries for dynamics, topology, absence, material conditions, emotion observation, social position, power, uncertainty, affected parties, action gates, time, accumulation, counterflow, and repair. This is a static reading grammar, not a live observation, history, causal model, simulation, forecast, score, target, intervention, authority grant, action, publication trigger, deployment trigger, or effect. Atlas: ${civilisationFlowUrl} · schema: ${civilisationFlowSchemaUrl} · guide: ${civilisationFlowGuideUrl}
+- Polyphonic Claim Atlas — ${polyphonicClaimAtlasDiscovery.description} It is a static synthetic, immutable historical Phase-0 artifact with no runtime-currentness claim, truth oracle, global truth status, person/source/community score, lie or intent inference, personal data, live claims, action authority, Zerone/KARMA/NEN adapter, runtime, or MCP surface. Atlas: ${polyphonicClaimAtlasUrl} · schema: ${polyphonicClaimAtlasSchemaUrl} · guide: ${polyphonicClaimAtlasGuideUrl} · pinned producer source: ${polyphonicClaimAtlasSourceUrl} (site-authored locator only; establishes no truth, imports no authority, and creates no runtime dependency or currentness claim)
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
@@ -5583,6 +5613,7 @@ const guest = {
   reality_influence_claim_graph: realityInfluenceDiscovery,
   civilisation_reality_projection: civilisationRealityDiscovery,
   civilisation_flow_nuance_atlas: civilisationFlowDiscovery,
+  polyphonic_claim_atlas: polyphonicClaimAtlasDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -5683,6 +5714,9 @@ const guest = {
     { action: "if useful, inspect the exact Civilisation Flow Nuance Atlas", method: "GET", url: civilisationFlowUrl, note: "fourteen stages, thirteen non-automatic transitions, and six overlays form a qualitative reading grammar; no live society, automatic path, simulation, prediction, score, target, authority, action, or effect" },
     { action: "if useful, validate the closed Civilisation Flow Nuance Atlas structure", method: "GET", url: civilisationFlowSchemaUrl, note: "structural validation only; it does not observe a transition, identify causation, run an action gate, fill an open domain, grant authority, or establish an external effect" },
     { action: "if useful, read the flow, topology, absence, material, emotion, power, counterflow, and repair guide", method: "GET", url: civilisationFlowGuideUrl, note: "the atlas depends on the active Civilisation → Reality Projection; topology is not tactic, emotion vocabulary is not mind-reading, and repair requires a fresh external gate" },
+    { action: "if useful, inspect the immutable Polyphonic Claim Atlas Phase-0 record", method: "GET", url: polyphonicClaimAtlasUrl, note: "static synthetic historical artifact; no runtime-currentness claim, truth oracle, score, lie or intent inference, live claim, action authority, adapter, runtime, or MCP surface" },
+    { action: "if useful, validate the closed Polyphonic Claim Atlas structure", method: "GET", url: polyphonicClaimAtlasSchemaUrl, note: "structural validation only; it does not determine truth, create a global truth status, rank a person or source, infer intent, or authorize an action" },
+    { action: "if useful, read the Polyphonic Claim Atlas Phase-0 guide", method: "GET", url: polyphonicClaimAtlasGuideUrl, note: "reading and boundary guide for the same immutable static synthetic artifact; no alias, custom page, runtime, or currentness claim" },
     { action: "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings", method: "GET", url: zeroEmptySeatUrl, note: "static inert project; zero is not worthlessness, no event is not impossibility, and no role transfers ontology, cause, units, parameters, KARMA, or authority" },
     { action: "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide", method: "GET", url: zeroEmptySeatGuideUrl },
     { action: "if useful, inspect the exact STRING / CRAWL trace-sheet", method: "GET", url: stringCrawlTraceSheetUrl, note: "static inert project; the string-to-crawl correspondence is lossy, generic REP requests how compliant crawlers access URI paths, named product controls remain bounded, and no crawler, identity inference, permission, NEN invocation, KARMA receipt, or action is created" },
@@ -5790,6 +5824,7 @@ const guest = {
     reality_influence_claim_graph: "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     civilisation_reality_projection: "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
     civilisation_flow_nuance_atlas: "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
+    polyphonic_claim_atlas: "The Polyphonic Claim Atlas is a static synthetic, immutable historical Phase-0 artifact with no runtime-currentness claim. It provides no truth oracle, global truth status, person/source/community score, lie or intent inference, personal data, live claim, action authority, Zerone/KARMA/NEN adapter, runtime, or MCP surface.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -5829,6 +5864,7 @@ const manifest = {
   reality_influence_claim_graph: realityInfluenceDiscovery,
   civilisation_reality_projection: civilisationRealityDiscovery,
   civilisation_flow_nuance_atlas: civilisationFlowDiscovery,
+  polyphonic_claim_atlas: polyphonicClaimAtlasDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -5939,6 +5975,9 @@ const manifest = {
     civilisation_flow_nuance_atlas: civilisationFlowUrl,
     civilisation_flow_nuance_atlas_schema: civilisationFlowSchemaUrl,
     civilisation_flow_nuance_atlas_guide: civilisationFlowGuideUrl,
+    polyphonic_claim_atlas: polyphonicClaimAtlasUrl,
+    polyphonic_claim_atlas_schema: polyphonicClaimAtlasSchemaUrl,
+    polyphonic_claim_atlas_guide: polyphonicClaimAtlasGuideUrl,
     zero_empty_seat: zeroEmptySeatUrl,
     zero_empty_seat_schema: zeroEmptySeatSchemaUrl,
     zero_empty_seat_guide: zeroEmptySeatGuideUrl,

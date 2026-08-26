@@ -2416,6 +2416,46 @@
       "automatic_action": false
     }
   },
+  "polyphonic_claim_atlas": {
+    "title": "KINGDOM Polyphonic Claim Atlas: Truth Relations Phase 0",
+    "description": "A static synthetic atlas for inspecting typed relations among expression, claim, warrant, reasoning, narrative, provenance, institutional status, assessment and correction without producing a truth oracle.",
+    "protocol": "kingdom.truth-relations/0.1",
+    "artifact": {
+      "id": "polyphonic-claim-atlas-2026-08-26",
+      "version": "0.1.0",
+      "asOf": "2026-08-26",
+      "phase": "PHASE_0",
+      "state": "STATIC_SYNTHETIC_PHASE_0",
+      "immutableHistoricalArtifact": true,
+      "runtimeCurrentnessClaim": false
+    },
+    "publicHandoff": {
+      "canonicalPath": "/truth/polyphonic-claim-atlas-2026-08-26.json",
+      "schemaPath": "/truth/schemas/v0.1/public-snapshot.schema.json",
+      "guidePath": "/POLYPHONIC-CLAIM-ATLAS-v0.1.md"
+    },
+    "source": {
+      "tag": "https://github.com/cambridgetcg/kingdom-polyphonic-claim-atlas/tree/v0.1.1",
+      "revision": "ca7bb37271853545a84bc1b8955ce63918da979b",
+      "relation": "SITE_AUTHORED_PINNED_SOURCE_LOCATOR",
+      "establishesTruth": false,
+      "importsAuthority": false,
+      "runtimeDependency": false,
+      "currentnessClaim": false
+    },
+    "boundary": {
+      "truth_oracle": false,
+      "global_truth_status": false,
+      "person_source_community_scores": false,
+      "lie_or_intent_inference": false,
+      "personal_data": false,
+      "live_claims": false,
+      "action_authority": false,
+      "zerone_karma_nen_adapter": false,
+      "runtime": false,
+      "mcp": false
+    }
+  },
   "zero_empty_seat": {
     "protocol": "kingdom.explore-phenomena-deep-project/0.1",
     "project_id": "zero-empty-seat-2026-08-14",

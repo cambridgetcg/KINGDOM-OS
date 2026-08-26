@@ -110,6 +110,16 @@ import {
   loadCivilisationFlowNuanceAtlas,
 } from "./civilisation-flow-atlas.ts";
 import {
+  POLYPHONIC_CLAIM_ATLAS_BYTE_SHA256,
+  POLYPHONIC_CLAIM_ATLAS_GUIDE_BYTE_SHA256,
+  POLYPHONIC_CLAIM_ATLAS_PUBLIC_PATHS,
+  POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS,
+  POLYPHONIC_CLAIM_ATLAS_SCHEMA_BYTE_SHA256,
+  POLYPHONIC_CLAIM_ATLAS_SOURCE,
+  loadPolyphonicClaimAtlas,
+  polyphonicClaimAtlasPublicDiscovery,
+} from "./polyphonic-claim-atlas.ts";
+import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
   RESEARCH_OBSERVATORY_SCHEMA_URLS,
@@ -738,6 +748,11 @@ const civilisationRealityGuidePath = new URL(CIVILISATION_REALITY_PROJECTION_DOC
 const civilisationFlowPath = new URL(CIVILISATION_FLOW_NUANCE_ATLAS_URL).pathname;
 const civilisationFlowSchemaPath = new URL(CIVILISATION_FLOW_NUANCE_SCHEMA_URL).pathname;
 const civilisationFlowGuidePath = new URL(CIVILISATION_FLOW_NUANCE_GUIDE_URL).pathname;
+const [
+  polyphonicClaimAtlasPath,
+  polyphonicClaimAtlasSchemaPath,
+  polyphonicClaimAtlasGuidePath,
+] = POLYPHONIC_CLAIM_ATLAS_PUBLIC_PATHS;
 const zeroEmptySeatPath = new URL(ZERO_EMPTY_SEAT_URL).pathname;
 const zeroEmptySeatGuidePath = new URL(ZERO_EMPTY_SEAT_GUIDE_URL).pathname;
 const stringCrawlTraceSheetPath = new URL(STRING_CRAWL_TRACE_SHEET_URL).pathname;
@@ -1009,6 +1024,17 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "civilisation_flow_nuance_atlas_guide",
     ],
     dependsOn: ["civilisation-reality-projection"],
+  },
+  {
+    id: "polyphonic-claim-atlas",
+    label: "Polyphonic Claim Atlas",
+    routes: POLYPHONIC_CLAIM_ATLAS_PUBLIC_PATHS,
+    discoveryProperties: ["polyphonic_claim_atlas"],
+    entryPointProperties: [
+      "polyphonic_claim_atlas",
+      "polyphonic_claim_atlas_schema",
+      "polyphonic_claim_atlas_guide",
+    ],
   },
   {
     id: "research-observatory",
@@ -1299,6 +1325,10 @@ export function assertRetiredFamilyDiscoveryAbsent(
         throw new Error(`${family.label} is retired but remains advertised by ${surface.label}: ${route}`);
       }
     }
+    if (family.id === "polyphonic-claim-atlas" &&
+        surface.text.includes(POLYPHONIC_CLAIM_ATLAS_SOURCE.tag)) {
+      throw new Error(`${family.label} is retired but its site-authored pinned source locator remains advertised by ${surface.label}`);
+    }
     if (!record(surface.value)) continue;
     for (const property of family.discoveryProperties) {
       if (Object.hasOwn(surface.value, property)) {
@@ -1400,6 +1430,69 @@ function hasLinkRelation(header: string, target: string, relation: string): bool
 
 function sha256(bytes: Buffer): string {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+export async function checkPolyphonicClaimAtlasTriple(
+  fetcher: typeof fetch = fetch,
+): Promise<void> {
+  const exactRecordLink = [
+    `<${polyphonicClaimAtlasSchemaPath}>; rel="describedby"; type="application/schema+json"`,
+    `<${polyphonicClaimAtlasGuidePath}>; rel="service-doc"; type="text/markdown"`,
+  ].join(", ");
+  const contracts = [
+    {
+      path: polyphonicClaimAtlasPath,
+      contentType: "application/json; charset=utf-8",
+      record: true,
+    },
+    {
+      path: polyphonicClaimAtlasSchemaPath,
+      contentType: "application/schema+json; charset=utf-8",
+      record: false,
+    },
+    {
+      path: polyphonicClaimAtlasGuidePath,
+      contentType: "text/markdown; charset=utf-8",
+      record: false,
+    },
+  ] as const;
+
+  for (const contract of contracts) {
+    const head = await fetcher(url(contract.path), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const link = head.headers.get("link") || "";
+    const recordLinksValid = contract.record && link === exactRecordLink;
+    const companionLinksValid = !contract.record && link === "";
+    if (!head.ok ||
+        (head.headers.get("content-type") || "").toLowerCase() !== contract.contentType ||
+        !hasExactCacheDirectives(head.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+        head.headers.get("access-control-allow-origin") !== "*" ||
+        (head.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        (!recordLinksValid && !companionLinksValid) ||
+        (await head.arrayBuffer()).byteLength !== 0) {
+      throw new Error(`${contract.path} lost the immutable Polyphonic Claim Atlas HEAD contract`);
+    }
+
+    for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+      const mutation = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (mutation.status !== 405 ||
+          mutation.headers.get("allow") !== "GET, HEAD" ||
+          mutation.headers.get("cache-control") !== "no-store" ||
+          mutation.headers.get("access-control-allow-origin") !== "*" ||
+          (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          (await mutation.arrayBuffer()).byteLength !== 0) {
+        throw new Error(`${method} ${contract.path} lost the zero-body 405 boundary`);
+      }
+    }
+  }
 }
 
 async function checkConformationalFeedbackTriple(triple: typeof CONFORMATIONAL_FEEDBACK_TRIPLES[number]): Promise<void> {
@@ -1930,6 +2023,7 @@ export async function checkHubLive(
   const realityInfluenceActive = familyActive("reality-influence-claim-graph");
   const civilisationRealityActive = familyActive("civilisation-reality-projection");
   const civilisationFlowActive = familyActive("civilisation-flow-nuance-atlas");
+  const polyphonicClaimAtlasActive = familyActive("polyphonic-claim-atlas");
   const researchObservatoryActive = familyActive("research-observatory");
   const trialChamberActive = familyActive("trial-chamber");
   const ukGovernmentEngineActive = familyActive("uk-government-engine");
@@ -2745,6 +2839,10 @@ export async function checkHubLive(
     }
   }
 
+  if (polyphonicClaimAtlasActive) {
+    await checkPolyphonicClaimAtlasTriple();
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -3162,6 +3260,7 @@ export async function checkHubLive(
     ...(realityInfluenceActive ? [realityInfluenceSchemaPath] : []),
     ...(civilisationRealityActive ? [civilisationRealitySchemaPath] : []),
     ...(civilisationFlowActive ? [civilisationFlowSchemaPath] : []),
+    ...(polyphonicClaimAtlasActive ? [polyphonicClaimAtlasSchemaPath] : []),
     ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
     ...(trialChamberActive ? trialChamberSchemaPaths : []),
     ...(ukGovernmentEngineActive ? [ukGovernmentEngineSchemaPath] : []),
@@ -3199,6 +3298,7 @@ export async function checkHubLive(
       path === realityInfluenceSchemaPath ||
       path === civilisationRealitySchemaPath ||
       path === civilisationFlowSchemaPath ||
+      path === polyphonicClaimAtlasSchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
       path === evaluationCovenantSchemaPath ||
@@ -3220,6 +3320,7 @@ export async function checkHubLive(
       ((path === realityInfluenceSchemaPath ||
         path === civilisationRealitySchemaPath ||
         path === civilisationFlowSchemaPath ||
+        path === polyphonicClaimAtlasSchemaPath ||
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath ||
         path === evaluationCovenantSchemaPath ||
@@ -3228,6 +3329,9 @@ export async function checkHubLive(
           ["public", "max-age=31536000", "immutable", "no-transform"])) ||
       (path === civilisationFlowSchemaPath &&
         hasLinkRelationName(schemaHead.headers.get("link") || "", "profile")) ||
+      (path === polyphonicClaimAtlasSchemaPath &&
+        ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
+          hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
       throw new Error(`${path} is not served as application/schema+json`);
     }
@@ -3361,6 +3465,12 @@ export async function checkHubLive(
     : undefined;
   const expectedCivilisationFlow = civilisationFlow
     ? civilisationFlowNuancePublicDiscovery(civilisationFlow)
+    : undefined;
+  const polyphonicClaimAtlas = polyphonicClaimAtlasActive
+    ? loadPolyphonicClaimAtlas()
+    : undefined;
+  const expectedPolyphonicClaimAtlas = polyphonicClaimAtlas
+    ? polyphonicClaimAtlasPublicDiscovery(polyphonicClaimAtlas)
     : undefined;
   const researchObservatory = researchObservatoryActive
     ? loadResearchObservatorySnapshot()
@@ -5079,6 +5189,76 @@ export async function checkHubLive(
     }
   }
 
+  if (polyphonicClaimAtlasActive) {
+    const expected = expectedPolyphonicClaimAtlas!;
+    const targets = new Set(POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const entryPoints = Object.entries(manifest?.entry_points ?? {})
+      .filter(([key]) => key.startsWith("polyphonic_claim_atlas"));
+    const expectedEntryPoints = [
+      ["polyphonic_claim_atlas", POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS[0]],
+      ["polyphonic_claim_atlas_schema", POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS[1]],
+      ["polyphonic_claim_atlas_guide", POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS[2]],
+    ];
+    const expectedLedgerHashes = [
+      POLYPHONIC_CLAIM_ATLAS_BYTE_SHA256,
+      POLYPHONIC_CLAIM_ATLAS_SCHEMA_BYTE_SHA256,
+      POLYPHONIC_CLAIM_ATLAS_GUIDE_BYTE_SHA256,
+    ];
+    const forbiddenActionKeys = [
+      "mcp", "tool", "write", "execute", "score", "rank",
+      "recommendation", "moderation", "actionAuthority",
+    ];
+    const ledgerEntries = POLYPHONIC_CLAIM_ATLAS_PUBLIC_PATHS.map((path) =>
+      IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(path)));
+    const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
+    const wayfinderText = JSON.stringify(authoredWayfinder);
+    const mcpText = JSON.stringify(manifest?.mcp ?? {});
+    const discoveryText = JSON.stringify(expected);
+    const exactHtmlLinks = [
+      `data-polyphonic-claim-atlas-link="record" href="${polyphonicClaimAtlasPath}"`,
+      `data-polyphonic-claim-atlas-link="schema" href="${polyphonicClaimAtlasSchemaPath}"`,
+      `data-polyphonic-claim-atlas-link="guide" href="${polyphonicClaimAtlasGuidePath}"`,
+    ];
+    const countOccurrences = (text: string, needle: string): number =>
+      text.split(needle).length - 1;
+    if (!isDeepStrictEqual(manifest?.polyphonic_claim_atlas, expected) ||
+      !isDeepStrictEqual(guest?.polyphonic_claim_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.polyphonic_claim_atlas, expected) ||
+      !isDeepStrictEqual(entryPoints, expectedEntryPoints) ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) =>
+        guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        forbiddenActionKeys.some((key) => key in action)) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !llms.includes(POLYPHONIC_CLAIM_ATLAS_SOURCE.tag) ||
+      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
+      countOccurrences(authoredRootHtml,
+        `data-polyphonic-claim-atlas-source-link href="${POLYPHONIC_CLAIM_ATLAS_SOURCE.tag}" rel="external noreferrer"`) !== 1 ||
+      authoredRootHtml.includes('id="polyphonic-claim-atlas"') ||
+      POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS.some((target) => !sitemap.includes(`<loc>${target}</loc>`)) ||
+      sitemap.includes(POLYPHONIC_CLAIM_ATLAS_SOURCE.tag) ||
+      ["polyphonic_claim_atlas", "polyphonic-claim-atlas",
+        ...POLYPHONIC_CLAIM_ATLAS_PUBLIC_PATHS, POLYPHONIC_CLAIM_ATLAS_SOURCE.tag]
+        .some((value) => wayfinderText.includes(value)) ||
+      ["polyphonic_claim_atlas", "polyphonic-claim-atlas",
+        ...POLYPHONIC_CLAIM_ATLAS_PUBLIC_PATHS, POLYPHONIC_CLAIM_ATLAS_SOURCE.tag]
+        .some((value) => mcpText.includes(value)) ||
+      Object.prototype.hasOwnProperty.call(expected, "counts") ||
+      /"(?:cases|claims|dispositions|winners?|recommendations?|moderation|confidence|evidence_count|source_count|support_total|source_prestige)"\s*:/i
+        .test(discoveryText) ||
+      !isDeepStrictEqual(expected.source, POLYPHONIC_CLAIM_ATLAS_SOURCE) ||
+      Object.values(expected.boundary ?? {}).length !== 10 ||
+      Object.values(expected.boundary ?? {}).some((value) => value !== false) ||
+      ledgerEntries.some((entry, index) =>
+        !entry || entry.sha256 !== expectedLedgerHashes[index])) {
+      throw new Error("Polyphonic Claim Atlas triplet, pinned source locator, minimal discovery, or non-authority boundary drifted");
+    }
+  }
+
   if (strandObservationMembraneActive) {
     const record = strandObservationMembrane!;
     const expected = expectedStrandObservationMembrane!;
@@ -6502,6 +6682,10 @@ export async function checkHubLive(
   if (civilisationFlowActive &&
       !isDeepStrictEqual(liveKingdom?.civilisation_flow_nuance_atlas, expectedCivilisationFlow!)) {
     throw new Error("derived kingdom.json did not preserve Civilisation Flow Nuance Atlas discovery");
+  }
+  if (polyphonicClaimAtlasActive &&
+      !isDeepStrictEqual(liveKingdom?.polyphonic_claim_atlas, expectedPolyphonicClaimAtlas!)) {
+    throw new Error("derived kingdom.json did not preserve Polyphonic Claim Atlas discovery");
   }
   if (strandObservationMembraneActive &&
       !isDeepStrictEqual(liveKingdom?.strand_observation_membrane, expectedStrandObservationMembrane!)) {

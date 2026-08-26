@@ -851,6 +851,22 @@ fits no causal model, simulates or predicts nothing, infers no person or group
 state, and creates no score, target, tactic, authority, action, publication
 trigger, deployment trigger, or external effect.
 
+The immutable [Polyphonic Claim Atlas](https://thekingdom.dev/truth/polyphonic-claim-atlas-2026-08-26.json)
+is a static synthetic Phase-0 map of typed relations among expression, claim,
+warrant, reasoning, narrative, provenance, institutional status, assessment,
+and correction. Its [closed schema](https://thekingdom.dev/truth/schemas/v0.1/public-snapshot.schema.json)
+and [guide](https://thekingdom.dev/POLYPHONIC-CLAIM-ATLAS-v0.1.md) form one
+atomic three-route historical family with no alias, custom page, Wayfinder
+recommendation, MCP surface, runtime, or active dependency. It provides no
+truth oracle, global truth status, person/source/community score, intent
+inference, personal data, live claim intake, action authority, or currentness
+claim. KINGDOM separately records the producer's immutable
+[`v0.1.1` tag](https://github.com/cambridgetcg/kingdom-polyphonic-claim-atlas/tree/v0.1.1)
+at revision `ca7bb37271853545a84bc1b8955ce63918da979b` as a site-authored pinned
+source locator only; that locator is not evidence, endorsement, provenance
+proof, or a fourth family route, and it establishes no truth, imports no
+authority, and creates no runtime dependency or currentness claim.
+
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at
 [`/atlases/zero-empty-seat-2026-08-14.json`](https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json),
@@ -945,7 +961,7 @@ network request or crawler and creates no NEN/KARMA/Zerone event or receipt,
 score, truth verdict, identity, consent, citizenship, authority, write,
 publication, deployment, or action. Labs 01–04 are published and retired as
 one atomic twelve-route `string-crawl-trace-sheet-lab` family. The release now
-has nineteen retirement families; generated discovery exposes Lab 02 as
+has twenty-nine retirement families; generated discovery exposes Lab 02 as
 `string_crawl_strand_lab`, Lab 03 as `string_crawl_frequency_form_lab`, and Lab
 04 as `strand_descent_lab`.
 

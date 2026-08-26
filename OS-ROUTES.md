@@ -75,6 +75,9 @@ readings:
 | `/atlases/civilisation-flow-nuance-atlas-2026-08-26.json` | staged JSON | Immutable qualitative flow grammar with fourteen stages, thirteen non-automatic transitions, six predecessor-bound overlays, nine open-domain bindings, and no live observation or simulation |
 | `/schemas/civilisation-flow-nuance-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for flow, topology, absence, material, emotion, power, uncertainty, action-gate, counterflow, repair, lineage, and fixed non-effect boundaries |
 | `/CIVILISATION-FLOW-NUANCE-ATLAS.md` | staged Markdown | Human guide to reading possible flow without turning adjacency into traversal, sequence into causation, topology into tactics, emotion into mind-reading, or repair into erasure |
+| `/truth/polyphonic-claim-atlas-2026-08-26.json` | staged JSON | Immutable static-synthetic Phase-0 record of typed claim relations; historical fixture only, not a truth oracle or currentness claim |
+| `/truth/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed Draft 2020-12 structural contract for the Polyphonic Claim Atlas |
+| `/POLYPHONIC-CLAIM-ATLAS-v0.1.md` | staged Markdown | Immutable guide to reading boundaries, typed separations, and the no-score/no-action contract |
 | `/atlases/zero-empty-seat-2026-08-14.json` | staged JSON | Immutable inert Phenomena DEEP project separating zero's semantic roles, equations, correspondence breaks, empty KARMA lanes, and negative authority |
 | `/ZERO-EMPTY-SEAT.md` | staged Markdown | Human guide to ZERO's mathematics, observation boundaries, optional philosophy, inherent rights, and zero-effect contract |
 | `/atlases/string-crawl-trace-sheet-2026-08-15.json` | staged JSON | Immutable inert Phenomena DEEP trace-sheet keeping string mathematics, finite crawl observations, REP routing, rights, and authority distinct |
@@ -325,10 +328,11 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 166-asset upload contract (135 ledgered immutable/versioned assets and
-31 mutable assets; 164 direct public bodies, 152 sitemap URLs; thirteen atlases,
+locks the 169-asset upload contract (138 ledgered immutable/versioned assets and
+31 mutable assets; 167 direct public bodies, 155 sitemap URLs; thirteen atlases,
 four primary lab JSON routes plus the Shape & Resonance manifest/media, one
-experiment route, one activation, and twenty-eight retirement families)
+experiment route, one activation, and twenty-nine retirement families, including
+the immutable static-synthetic Polyphonic Claim Atlas record/schema/guide triplet)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -379,6 +383,12 @@ time, accumulation, uncertainty, counterflow, affected parties, and repair.
 It observes no live society, fits no causal model, runs no simulator or action
 gate, infers no person or group state, and creates no score, target, tactic,
 authority, action, publication trigger, deployment trigger, or external effect.
+The Polyphonic Claim Atlas adds one independent immutable record/schema/guide
+triplet. It is a static synthetic historical fixture with no mutable alias,
+custom human page, Wayfinder recommendation, MCP surface, runtime, active
+dependency, truth oracle, person/source/community score, live claim intake,
+action authority, or currentness claim. Its separate site-authored source
+locator pins producer tag `v0.1.1` and imports neither truth nor authority.
 The additive Finite Trace-Sheet Lab is a separate immutable static triplet. Its
 repository-local reader evaluates only one pinned synthetic complex and runs no
 live crawl, authentication, prompt or credential intake, telemetry, write, NEN

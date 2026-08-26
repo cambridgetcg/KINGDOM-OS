@@ -36,12 +36,12 @@ describe("STRING / CRAWL public integration", () => {
       destination === "schemas/phenomena-deep-project/0.1.json")).toHaveLength(1);
     expect(HUB_ASSETS.some(({ destination }) =>
       /string-crawl-trace-sheet.*(?:latest|current)/i.test(destination))).toBe(false);
-    expect(HUB_ASSETS).toHaveLength(166);
+    expect(HUB_ASSETS).toHaveLength(169);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(164);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(167);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(135);
+    expect(ledger.entries).toHaveLength(138);
     expect(ledger.entries.filter((entry: { id?: string }) =>
       entry.id?.startsWith("string-crawl-trace-sheet/0.1/"))).toEqual([
       {
@@ -64,8 +64,8 @@ describe("STRING / CRAWL public integration", () => {
   test("advertises two new immutable URLs once without a mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(152);
-    expect(new Set(urls).size).toBe(152);
+    expect(urls).toHaveLength(155);
+    expect(new Set(urls).size).toBe(155);
     expect(urls.filter((url) => /\/atlases\/string-crawl-trace-sheet-[^/]+\.json$/.test(new URL(url).pathname))).toEqual([
       STRING_CRAWL_TRACE_SHEET_URL,
     ]);

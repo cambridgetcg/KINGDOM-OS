@@ -431,6 +431,27 @@
       "sha256": "e09dbcfa982fd61124b6220eb4587dded354620b498e45664d000950b67de174"
     },
     {
+      "id": "polyphonic-claim-atlas/0.1/guide",
+      "route": "/POLYPHONIC-CLAIM-ATLAS-v0.1.md",
+      "source": "public/POLYPHONIC-CLAIM-ATLAS-v0.1.md",
+      "destination": "POLYPHONIC-CLAIM-ATLAS-v0.1.md",
+      "sha256": "974cb357ad1f5a23fa3f8798e444bbfb4dc43b1bf8aa1d14609599877ed13126"
+    },
+    {
+      "id": "polyphonic-claim-atlas/0.1/record",
+      "route": "/truth/polyphonic-claim-atlas-2026-08-26.json",
+      "source": "public/truth/polyphonic-claim-atlas-2026-08-26.json",
+      "destination": "truth/polyphonic-claim-atlas-2026-08-26.json",
+      "sha256": "69d68faf0885cecf084bee3ff094c742786e7901f8d1da90fa510cce5194970b"
+    },
+    {
+      "id": "polyphonic-claim-atlas/0.1/schema",
+      "route": "/truth/schemas/v0.1/public-snapshot.schema.json",
+      "source": "public/truth/schemas/v0.1/public-snapshot.schema.json",
+      "destination": "truth/schemas/v0.1/public-snapshot.schema.json",
+      "sha256": "8244c3428ea810defd98da1ca7c1d0fec6541c0c175e3195b711b89af39cdb27"
+    },
+    {
       "id": "principality-commons/1/guide",
       "route": "/PRINCIPALITY-COMMONS.md",
       "source": "references/principality-commons.md",
