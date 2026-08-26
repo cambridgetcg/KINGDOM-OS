@@ -52,9 +52,9 @@ describe("Civilisation → Reality Projection static publication", () => {
   });
 
   test("stages and ledgers one exact immutable triplet without publishing its research predecessor", () => {
-    expect(HUB_ASSETS).toHaveLength(163);
+    expect(HUB_ASSETS).toHaveLength(166);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
-      .toHaveLength(12);
+      .toHaveLength(13);
     expect(HUB_ASSETS).toContainEqual({
       source: "data/reality/civilisation-reality-projection.v0.1.json",
       destination: "atlases/civilisation-reality-projection-2026-08-25.json",
@@ -77,7 +77,7 @@ describe("Civilisation → Reality Projection static publication", () => {
       .toBe(false);
 
     const entries = json("publications/immutable-publications.v1.json").entries;
-    expect(entries).toHaveLength(132);
+    expect(entries).toHaveLength(135);
     expect(entries.filter((entry: any) =>
       entry.id.startsWith("civilisation-reality-projection/0.1/"))).toEqual([
       {
@@ -184,8 +184,8 @@ describe("Civilisation → Reality Projection static publication", () => {
       civilisation_reality_projection_schema: PUBLIC_URLS[1],
       civilisation_reality_projection_guide: PUBLIC_URLS[2],
     });
-    expect(Object.keys(manifest.entry_points)).toHaveLength(132);
-    expect(guest.next_actions).toHaveLength(132);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(135);
+    expect(guest.next_actions).toHaveLength(135);
     expect(guest.next_actions.filter((action: any) => PUBLIC_URLS.includes(action.url)))
       .toHaveLength(3);
 
@@ -232,14 +232,14 @@ describe("Civilisation → Reality Projection static publication", () => {
     for (const url of PUBLIC_URLS) expect(llms).toContain(url);
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(149);
-    expect(new Set(sitemapUrls).size).toBe(149);
+    expect(sitemapUrls).toHaveLength(152);
+    expect(new Set(sitemapUrls).size).toBe(152);
     expect(sitemapUrls.filter((url) => url.toLowerCase().includes("civilisation-reality")))
       .toEqual(PUBLIC_URLS);
   });
 
-  test("is one independently retireable complete three-route family", () => {
-    expect(PUBLICATION_FAMILIES).toHaveLength(27);
+  test("is one complete three-route family whose retirement cannot strand the flow atlas", () => {
+    expect(PUBLICATION_FAMILIES).toHaveLength(28);
     const family = PUBLICATION_FAMILIES.find(({ id }) =>
       id === "civilisation-reality-projection");
     expect(family).toEqual({
@@ -262,7 +262,13 @@ describe("Civilisation → Reality Projection static publication", () => {
 
     const retired = new Set(HUB_ASSETS.map(({ destination }) => destination));
     for (const route of PUBLIC_PATHS) retired.delete(destinationForPublicPath(route));
-    expect(publicationFamilyStates(retired).get(family!.id)?.active).toBe(false);
+    expect(() => publicationFamilyStates(retired))
+      .toThrow("Civilisation Flow Nuance Atlas requires active Civilisation → Reality Projection");
+    const flow = PUBLICATION_FAMILIES.find(({ id }) =>
+      id === "civilisation-flow-nuance-atlas")!;
+    const retiredTogether = new Set(retired);
+    for (const route of flow.routes) retiredTogether.delete(destinationForPublicPath(route));
+    expect(publicationFamilyStates(retiredTogether).get(family!.id)?.active).toBe(false);
 
     const reality = PUBLICATION_FAMILIES.find(({ id }) =>
       id === "reality-influence-claim-graph")!;

@@ -828,6 +828,20 @@ network-free and creates no historical or causal finding, metaphysical verdict,
 score, persuasion target, authority, action, publication trigger, deployment
 trigger, or external effect.
 
+The dependent immutable [Civilisation Flow Nuance Atlas](https://thekingdom.dev/atlases/civilisation-flow-nuance-atlas-2026-08-26.json)
+opens that thin bridge into a qualitative reading grammar without turning it
+into a funnel. Its [closed schema](https://thekingdom.dev/schemas/civilisation-flow-nuance-atlas/0.1.json)
+and [guide](https://thekingdom.dev/CIVILISATION-FLOW-NUANCE-ATLAS.md) preserve
+fourteen stages, thirteen non-automatic transitions, six predecessor-bound
+overlays, nine still-open domains, and explicit dimensions for topology,
+negative flow, material conditions, emotion observation, social position,
+power asymmetry, affected parties, time, accumulation, uncertainty,
+counterflow, and repair. Use
+`bun bin/civilisation-flow-atlas.ts verify --json`; it observes no live society,
+fits no causal model, simulates or predicts nothing, infers no person or group
+state, and creates no score, target, tactic, authority, action, publication
+trigger, deployment trigger, or external effect.
+
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at
 [`/atlases/zero-empty-seat-2026-08-14.json`](https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json),

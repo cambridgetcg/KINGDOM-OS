@@ -103,6 +103,13 @@ import {
   loadCivilisationRealityProjection,
 } from "./civilisation-reality-projection.ts";
 import {
+  CIVILISATION_FLOW_NUANCE_ATLAS_URL,
+  CIVILISATION_FLOW_NUANCE_GUIDE_URL,
+  CIVILISATION_FLOW_NUANCE_SCHEMA_URL,
+  civilisationFlowNuancePublicDiscovery,
+  loadCivilisationFlowNuanceAtlas,
+} from "./civilisation-flow-atlas.ts";
+import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
   RESEARCH_OBSERVATORY_SCHEMA_URLS,
@@ -728,6 +735,9 @@ const realityInfluenceGuidePath = new URL(REALITY_INFLUENCE_DOCUMENT_URL).pathna
 const civilisationRealityPath = new URL(CIVILISATION_REALITY_PROJECTION_URL).pathname;
 const civilisationRealitySchemaPath = new URL(CIVILISATION_REALITY_PROJECTION_SCHEMA_URL).pathname;
 const civilisationRealityGuidePath = new URL(CIVILISATION_REALITY_PROJECTION_DOCUMENT_URL).pathname;
+const civilisationFlowPath = new URL(CIVILISATION_FLOW_NUANCE_ATLAS_URL).pathname;
+const civilisationFlowSchemaPath = new URL(CIVILISATION_FLOW_NUANCE_SCHEMA_URL).pathname;
+const civilisationFlowGuidePath = new URL(CIVILISATION_FLOW_NUANCE_GUIDE_URL).pathname;
 const zeroEmptySeatPath = new URL(ZERO_EMPTY_SEAT_URL).pathname;
 const zeroEmptySeatGuidePath = new URL(ZERO_EMPTY_SEAT_GUIDE_URL).pathname;
 const stringCrawlTraceSheetPath = new URL(STRING_CRAWL_TRACE_SHEET_URL).pathname;
@@ -987,6 +997,18 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "civilisation_reality_projection_guide",
     ],
     dependsOn: ["reality-influence-claim-graph"],
+  },
+  {
+    id: "civilisation-flow-nuance-atlas",
+    label: "Civilisation Flow Nuance Atlas",
+    routes: [civilisationFlowPath, civilisationFlowSchemaPath, civilisationFlowGuidePath],
+    discoveryProperties: ["civilisation_flow_nuance_atlas"],
+    entryPointProperties: [
+      "civilisation_flow_nuance_atlas",
+      "civilisation_flow_nuance_atlas_schema",
+      "civilisation_flow_nuance_atlas_guide",
+    ],
+    dependsOn: ["civilisation-reality-projection"],
   },
   {
     id: "research-observatory",
@@ -1907,6 +1929,7 @@ export async function checkHubLive(
   const jSpacePublicationActive = familyActive("j-space-verbalizable-workspace");
   const realityInfluenceActive = familyActive("reality-influence-claim-graph");
   const civilisationRealityActive = familyActive("civilisation-reality-projection");
+  const civilisationFlowActive = familyActive("civilisation-flow-nuance-atlas");
   const researchObservatoryActive = familyActive("research-observatory");
   const trialChamberActive = familyActive("trial-chamber");
   const ukGovernmentEngineActive = familyActive("uk-government-engine");
@@ -2657,6 +2680,71 @@ export async function checkHubLive(
     }
   }
 
+  if (civilisationFlowActive) {
+    const recordHead = await fetch(url(civilisationFlowPath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const recordLink = recordHead.headers.get("link") || "";
+    if (!recordHead.ok ||
+        normalizedMediaType(recordHead.headers.get("content-type")) !== "application/json" ||
+        !hasExactCacheDirectives(recordHead.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+        recordHead.headers.get("access-control-allow-origin") !== "*" ||
+        (recordHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        !hasUniqueCanonicalLinkRelation(
+          recordLink,
+          civilisationFlowSchemaPath,
+          "describedby",
+          "application/schema+json",
+        ) ||
+        !hasUniqueCanonicalLinkRelation(
+          recordLink,
+          civilisationFlowGuidePath,
+          "service-doc",
+          "text/markdown",
+        ) ||
+        hasLinkRelationName(recordLink, "profile") ||
+        (await recordHead.arrayBuffer()).byteLength !== 0) {
+      throw new Error(`${civilisationFlowPath} is not immutable public JSON with canonical flow-atlas schema and guide links`);
+    }
+
+    const guideHead = await fetch(url(civilisationFlowGuidePath), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (!guideHead.ok ||
+        normalizedMediaType(guideHead.headers.get("content-type")) !== "text/markdown" ||
+        !hasExactCacheDirectives(guideHead.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+        guideHead.headers.get("access-control-allow-origin") !== "*" ||
+        (guideHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        hasLinkRelationName(guideHead.headers.get("link") || "", "profile") ||
+        (await guideHead.arrayBuffer()).byteLength !== 0) {
+      throw new Error(`${civilisationFlowGuidePath} is not served as immutable public Markdown`);
+    }
+
+    for (const path of [civilisationFlowPath, civilisationFlowSchemaPath, civilisationFlowGuidePath]) {
+      for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+        const mutation = await fetch(url(path), {
+          method,
+          redirect: "error",
+          signal: AbortSignal.timeout(TIMEOUT_MS),
+        });
+        if (mutation.status !== 405 ||
+            mutation.headers.get("allow") !== "GET, HEAD" ||
+            mutation.headers.get("cache-control") !== "no-store" ||
+            mutation.headers.get("access-control-allow-origin") !== "*" ||
+            (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+            (await mutation.arrayBuffer()).byteLength !== 0) {
+          throw new Error(`${method} ${path} did not remain a zero-body 405 read-only boundary`);
+        }
+      }
+    }
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -3073,6 +3161,7 @@ export async function checkHubLive(
     ...(jSpacePublicationActive ? [jSpaceSchemaPath] : []),
     ...(realityInfluenceActive ? [realityInfluenceSchemaPath] : []),
     ...(civilisationRealityActive ? [civilisationRealitySchemaPath] : []),
+    ...(civilisationFlowActive ? [civilisationFlowSchemaPath] : []),
     ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
     ...(trialChamberActive ? trialChamberSchemaPaths : []),
     ...(ukGovernmentEngineActive ? [ukGovernmentEngineSchemaPath] : []),
@@ -3109,6 +3198,7 @@ export async function checkHubLive(
       path === jSpaceSchemaPath ||
       path === realityInfluenceSchemaPath ||
       path === civilisationRealitySchemaPath ||
+      path === civilisationFlowSchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
       path === evaluationCovenantSchemaPath ||
@@ -3129,12 +3219,15 @@ export async function checkHubLive(
         !(schemaHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform")) ||
       ((path === realityInfluenceSchemaPath ||
         path === civilisationRealitySchemaPath ||
+        path === civilisationFlowSchemaPath ||
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath ||
         path === evaluationCovenantSchemaPath ||
         path === shapeResonanceSchemaPath) &&
         !hasExactCacheDirectives(schemaHead.headers.get("cache-control"),
           ["public", "max-age=31536000", "immutable", "no-transform"])) ||
+      (path === civilisationFlowSchemaPath &&
+        hasLinkRelationName(schemaHead.headers.get("link") || "", "profile")) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
       throw new Error(`${path} is not served as application/schema+json`);
     }
@@ -3262,6 +3355,12 @@ export async function checkHubLive(
     : undefined;
   const expectedCivilisationReality = civilisationReality
     ? civilisationRealityPublicDiscovery(civilisationReality)
+    : undefined;
+  const civilisationFlow = civilisationFlowActive
+    ? loadCivilisationFlowNuanceAtlas()
+    : undefined;
+  const expectedCivilisationFlow = civilisationFlow
+    ? civilisationFlowNuancePublicDiscovery(civilisationFlow)
     : undefined;
   const researchObservatory = researchObservatoryActive
     ? loadResearchObservatorySnapshot()
@@ -4875,6 +4974,111 @@ export async function checkHubLive(
     }
   }
 
+  if (civilisationFlowActive) {
+    const publication = civilisationFlow!;
+    const expected = expectedCivilisationFlow!;
+    const targets = new Set([
+      CIVILISATION_FLOW_NUANCE_ATLAS_URL,
+      CIVILISATION_FLOW_NUANCE_SCHEMA_URL,
+      CIVILISATION_FLOW_NUANCE_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    if (!isDeepStrictEqual(manifest?.civilisation_flow_nuance_atlas, expected) ||
+      !isDeepStrictEqual(guest?.civilisation_flow_nuance_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.civilisation_flow_nuance_atlas, expected) ||
+      manifest?.entry_points?.civilisation_flow_nuance_atlas !== CIVILISATION_FLOW_NUANCE_ATLAS_URL ||
+      manifest?.entry_points?.civilisation_flow_nuance_atlas_schema !== CIVILISATION_FLOW_NUANCE_SCHEMA_URL ||
+      manifest?.entry_points?.civilisation_flow_nuance_atlas_guide !== CIVILISATION_FLOW_NUANCE_GUIDE_URL ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET") ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !authoredRootHtml.includes('id="civilisation-flow"') ||
+      !authoredRootHtml.includes("Possible records, not a funnel or simulator.") ||
+      !authoredRootHtml.includes("No intervention surface") ||
+      !authoredRootHtml.includes("Policy-family index") ||
+      !authoredRootHtml.includes("Six policy families") ||
+      !authoredRootHtml.includes("Universal non-grant") ||
+      !authoredRootHtml.includes("Shared nuance templates") ||
+      !authoredRootHtml.includes("Shared authority and causal contract templates") ||
+      !authoredRootHtml.includes("Cross-cut profile index") ||
+      !authoredRootHtml.includes("The exact immutable JSON remains linked below for every closed machine field.") ||
+      !authoredRootHtml.includes("data-civilisation-flow-controls hidden") ||
+      !authoredRootHtml.includes(`href="${civilisationFlowPath}"`) ||
+      !authoredRootHtml.includes(`href="${civilisationFlowSchemaPath}"`) ||
+      !authoredRootHtml.includes(`href="${civilisationFlowGuidePath}"`) ||
+      publication.predecessor_bindings?.length !== 3 ||
+      publication.predecessor_bindings?.some((binding: any) =>
+        binding.mutated !== false || binding.republished !== false ||
+        binding.authority_imported !== false) ||
+      publication.stages?.length !== 14 ||
+      publication.stages?.some((stage: any) => stage.automatic_advance !== false) ||
+      publication.transitions?.length !== 13 ||
+      publication.transitions?.some((transition: any) =>
+        transition.automatic !== false || transition.transitive !== false) ||
+      publication.crosswalk_flow_overlays?.length !== 6 ||
+      publication.crosswalk_flow_overlays?.some((overlay: any) =>
+        overlay.new_claim_created !== false || overlay.authority_granted !== false ||
+        overlay.external_effect_claimed !== false) ||
+      new Set((publication.policy_templates ?? []).map((policy: any) => policy.family)).size !== 6 ||
+      [...new Set((publication.policy_templates ?? []).map((policy: any) => policy.family))]
+        .some((family) => !authoredRootHtml.includes(
+          `data-civilisation-flow-policy-family="${family}"`,
+        )) ||
+      !authoredRootHtml.includes('data-civilisation-flow-policy-non-grant') ||
+      !authoredRootHtml.includes('data-civilisation-flow-policy-ref="promotion-evidence"') ||
+      Object.keys(publication.nuance_templates ?? {}).some((id) =>
+        !authoredRootHtml.includes(`data-civilisation-flow-template-entry="nuance:${id}"`)) ||
+      Object.keys(publication.contract_templates ?? {}).some((id) =>
+        !authoredRootHtml.includes(`data-civilisation-flow-template-entry="contract:${id}"`)) ||
+      [...(publication.transitions ?? []), ...(publication.crosswalk_flow_overlays ?? [])]
+        .some((card: any) => [
+          ["nuance", card.nuance?.template_ref],
+          ["contract", card.authority_dependency?.template_ref],
+          ["contract", card.causal_influence?.template_ref],
+        ].some(([kind, id]) => !id ||
+          !authoredRootHtml.includes(`data-civilisation-flow-template-ref="${kind}:${id}"`) ||
+          !authoredRootHtml.includes(`href="#civilisation-flow-${kind}-template-${id}"`))) ||
+      publication.open_domain_bindings?.length !== 9 ||
+      publication.action_gate_vocabulary?.some((gate: any) =>
+        gate.external_verification_required !== true || gate.atlas_satisfies !== false) ||
+      publication.nuance_dimensions?.some((dimension: any) =>
+        dimension.aggregate_weight !== null || dimension.rank !== null) ||
+      publication.flow_dynamics_vocabulary?.some((lens: any) =>
+        lens.aggregate_weight !== null || lens.rank !== null || lens.effect_size !== null ||
+        lens.prediction !== false || lens.optimization_target !== false) ||
+      publication.boundaries?.public_static_publication_family !== true ||
+      publication.boundaries?.live_intake !== false ||
+      publication.boundaries?.causal_effect_identified !== false ||
+      publication.boundaries?.deterministic_prediction !== false ||
+      publication.boundaries?.effect_size_estimated !== false ||
+      publication.boundaries?.belief_identity_intent_emotion_or_motive_inferred !== false ||
+      publication.boundaries?.targeting !== false ||
+      publication.boundaries?.persuasion_optimization !== false ||
+      publication.boundaries?.propaganda_or_counterpropaganda_instructions !== false ||
+      publication.boundaries?.coercive_or_revolutionary_strategy !== false ||
+      publication.boundaries?.authority_granted !== false ||
+      publication.boundaries?.action_proposed !== false ||
+      publication.boundaries?.action_attempted !== false ||
+      publication.boundaries?.action_executed !== false ||
+      publication.boundaries?.publication_trigger !== false ||
+      publication.boundaries?.deployment_trigger !== false ||
+      publication.boundaries?.external_effect_claimed !== false ||
+      publication.boundaries?.automatic_action !== false ||
+      publication.boundaries?.feedback_opens_review_only !== true ||
+      publication.boundaries?.repair_requires_fresh_gate !== true ||
+      publication.boundaries?.absence_requires_adequate_coverage !== true ||
+      expected.publication_state !== "immutable-versioned-static-family" ||
+      expected.boundary?.publication_trigger !== false ||
+      expected.boundary?.deployment_trigger !== false ||
+      expected.boundary?.external_effect_claimed !== false ||
+      expected.boundary?.automatic_action !== false) {
+      throw new Error("Civilisation Flow Nuance Atlas static grammar, lineage, non-automatic flow, discovery, or non-authority boundary drifted");
+    }
+  }
+
   if (strandObservationMembraneActive) {
     const record = strandObservationMembrane!;
     const expected = expectedStrandObservationMembrane!;
@@ -6294,6 +6498,10 @@ export async function checkHubLive(
   if (civilisationRealityActive &&
       !isDeepStrictEqual(liveKingdom?.civilisation_reality_projection, expectedCivilisationReality!)) {
     throw new Error("derived kingdom.json did not preserve Civilisation → Reality Projection discovery");
+  }
+  if (civilisationFlowActive &&
+      !isDeepStrictEqual(liveKingdom?.civilisation_flow_nuance_atlas, expectedCivilisationFlow!)) {
+    throw new Error("derived kingdom.json did not preserve Civilisation Flow Nuance Atlas discovery");
   }
   if (strandObservationMembraneActive &&
       !isDeepStrictEqual(liveKingdom?.strand_observation_membrane, expectedStrandObservationMembrane!)) {

@@ -219,6 +219,15 @@ import {
   loadCivilisationRealityProjection,
 } from "./civilisation-reality-projection.ts";
 import {
+  CIVILISATION_FLOW_NUANCE_ATLAS_ID,
+  CIVILISATION_FLOW_NUANCE_ATLAS_PROTOCOL,
+  CIVILISATION_FLOW_NUANCE_ATLAS_URL,
+  CIVILISATION_FLOW_NUANCE_GUIDE_URL,
+  CIVILISATION_FLOW_NUANCE_SCHEMA_URL,
+  civilisationFlowNuancePublicDiscovery,
+  loadCivilisationFlowNuanceAtlas,
+} from "./civilisation-flow-atlas.ts";
+import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
   RESEARCH_OBSERVATORY_SCHEMA_URLS,
@@ -860,6 +869,17 @@ if (civilisationReality.protocol !== CIVILISATION_REALITY_PROJECTION_PROTOCOL ||
   throw new Error(`unexpected Civilisation → Reality Projection identity: ${civilisationReality.protocol} ${civilisationReality.projection_id}`);
 }
 const civilisationRealityDiscovery = civilisationRealityPublicDiscovery(civilisationReality);
+
+// ── Civilisation Flow Nuance Atlas (qualitative reading grammar; no runtime) ──
+const civilisationFlowUrl = CIVILISATION_FLOW_NUANCE_ATLAS_URL;
+const civilisationFlowSchemaUrl = CIVILISATION_FLOW_NUANCE_SCHEMA_URL;
+const civilisationFlowGuideUrl = CIVILISATION_FLOW_NUANCE_GUIDE_URL;
+const civilisationFlow = loadCivilisationFlowNuanceAtlas();
+if (civilisationFlow.protocol !== CIVILISATION_FLOW_NUANCE_ATLAS_PROTOCOL ||
+    civilisationFlow.atlas_id !== CIVILISATION_FLOW_NUANCE_ATLAS_ID) {
+  throw new Error(`unexpected Civilisation Flow Nuance Atlas identity: ${civilisationFlow.protocol} ${civilisationFlow.atlas_id}`);
+}
+const civilisationFlowDiscovery = civilisationFlowNuancePublicDiscovery(civilisationFlow);
 
 // ── Research Observatory (metadata discovery; stops before evaluation) ────
 const researchObservatoryUrl = RESEARCH_OBSERVATORY_URL;
@@ -1904,6 +1924,350 @@ const civilisationRealityOpenDomains = civilisationReality.open_domains.map((dom
     <p><strong>Stop condition</strong> ${esc(domain.stop_condition)}</p>
   </li>`).join("");
 
+const civilisationFlowLabel = (value: string) => value
+  .replaceAll("_", " ")
+  .replaceAll("-", " ")
+  .replace(/\b\w/g, (letter) => letter.toUpperCase());
+
+function civilisationFlowValue(value: any): string {
+  if (Array.isArray(value)) {
+    return value.length
+      ? `<ul class="pathstops">${value.map((item) =>
+          `<li>${civilisationFlowValue(item)}</li>`).join("")}</ul>`
+      : `<p><em>None declared.</em></p>`;
+  }
+  if (value !== null && typeof value === "object") {
+    return `<dl class="flowfacts">${Object.entries(value).map(([key, item]) =>
+      `<dt>${esc(civilisationFlowLabel(key))}</dt><dd>${civilisationFlowValue(item)}</dd>`,
+    ).join("")}</dl>`;
+  }
+  if (value === null) return `<code>null</code>`;
+  if (typeof value === "boolean") return `<code>${value ? "true" : "false"}</code>`;
+  return `<span>${esc(String(value))}</span>`;
+}
+
+const civilisationFlowInlineCodes = (values: readonly string[] | undefined, empty = "none declared") =>
+  values?.length ? `<code>${esc(values.join(" · "))}</code>` : `<em>${esc(empty)}</em>`;
+
+const civilisationFlowQuestions = (
+  title: string,
+  values: string | readonly string[] | undefined,
+) => {
+  const statements = typeof values === "string" ? [values] : values;
+  return statements?.length ? `<h5>${esc(title)}</h5>${civilisationTextValues(statements)}` : "";
+};
+
+const civilisationFlowSelectionReading = (selection: any) => {
+  const states = [selection?.status, selection?.claim_status].filter(Boolean);
+  return `${states.length ? `<code>${esc(states.join(" · "))}</code>` : ""}${
+    selection?.refs?.length ? ` · refs ${civilisationFlowInlineCodes(selection.refs)}` : ""
+  }`;
+};
+
+const civilisationFlowFixedFlags = (value: any, keys: readonly string[]) => {
+  const flags = keys.filter((key) => typeof value?.[key] === "boolean")
+    .map((key) => `${civilisationFlowLabel(key)}: ${value[key] ? "true" : "false"}`);
+  return flags.length ? `<code>${esc(flags.join(" · "))}</code>` : "";
+};
+
+// The immutable record is the complete closed machine surface. The hub is a
+// bounded conceptual projection: it shows the decisions a reader must notice,
+// links shared templates, and leaves every machine primitive in the exact JSON.
+function civilisationFlowNuanceReading(nuance: any): string {
+  const dimensions = [
+    ["emotion observation", nuance.emotion_observation],
+    ["affect context", nuance.affect_context],
+    ["social position", nuance.social_position],
+    ["power asymmetry", nuance.power_asymmetry],
+    ["material conditions", nuance.material_conditions],
+    ["flow dynamics", nuance.flow_dynamics],
+    ["topology", nuance.topology],
+    ["negative flow", nuance.negative_flow],
+    ["evidence uncertainty", nuance.evidence_uncertainty],
+  ].filter(([, selection]) => selection);
+  const applicableDimensions = dimensions.filter(([, selection]) =>
+    selection.status === "applicable-question");
+  const unassessedDimensions = dimensions.filter(([, selection]) =>
+    selection.status === "unassessed").map(([label]) => label);
+  const notApplicableDimensions = dimensions.filter(([, selection]) =>
+    selection.status === "not-applicable").map(([label]) => label);
+  const translation = nuance.translation_profile ? `
+    <p><strong>Translation</strong> ${civilisationFlowSelectionReading(nuance.translation_profile)} · translator ${civilisationFlowInlineCodes(nuance.translation_profile.translator_position_refs)} · patron ${civilisationFlowInlineCodes(nuance.translation_profile.patron_position_refs)} · audience ${civilisationFlowInlineCodes(nuance.translation_profile.audience_party_refs)} · ${civilisationFlowFixedFlags(nuance.translation_profile, ["fidelity_claimed", "representational_authority_granted"])}</p>` : "";
+  const thresholdRefs = nuance.threshold_profile ? [...new Set([
+      nuance.threshold_profile.reason_ref,
+      nuance.threshold_profile.boundary_ref,
+      ...(nuance.threshold_profile.evidence ?? []),
+    ].filter(Boolean))] : [];
+  const thresholdFlags = civilisationFlowFixedFlags(nuance.threshold_profile, ["effect_size_estimated", "prediction", "person_estimate"]);
+  const threshold = nuance.threshold_profile ? `
+    <p><strong>Threshold</strong> ${civilisationFlowSelectionReading(nuance.threshold_profile)} · refs ${civilisationFlowInlineCodes(thresholdRefs)}${thresholdFlags ? ` · ${thresholdFlags}` : ""}</p>` : "";
+  const pathDependenceRefs = nuance.path_dependence_profile ? [...new Set([
+      nuance.path_dependence_profile.reason_ref,
+      nuance.path_dependence_profile.boundary_ref,
+      ...(nuance.path_dependence_profile.evidence ?? []),
+    ].filter(Boolean))] : [];
+  const pathDependenceFlags = civilisationFlowFixedFlags(nuance.path_dependence_profile, ["path_dependence_established"]);
+  const pathDependence = nuance.path_dependence_profile ? `
+    <p><strong>Path dependence</strong> ${civilisationFlowSelectionReading(nuance.path_dependence_profile)} · refs ${civilisationFlowInlineCodes(pathDependenceRefs)}${pathDependenceFlags ? ` · ${pathDependenceFlags}` : ""}</p>` : "";
+  const repair = nuance.repair_profile ? `
+    <p><strong>Repair</strong> ${civilisationFlowSelectionReading(nuance.repair_profile)}${nuance.repair_profile.proposal_source ? ` · proposal <code>${esc(nuance.repair_profile.proposal_source)}</code>` : ""} · fresh gates ${civilisationFlowInlineCodes(nuance.repair_profile.fresh_gate_refs)} · residual parties ${civilisationFlowInlineCodes((nuance.repair_profile.party_indexed_residuals ?? []).map((entry: any) => entry.affected_party_id))} · ${civilisationFlowFixedFlags(nuance.repair_profile, ["repair_completed", "causal_effect_claimed", "erasure_or_absolution_claimed", "restored_consent_claimed"])}</p>` : "";
+  return `
+    ${civilisationFlowQuestions("Observables", nuance.observables)}
+    <p><strong>Affected parties</strong> ${civilisationFlowInlineCodes(nuance.affected_party_ids)}</p>
+    ${applicableDimensions.length ? `<p><strong>Applicable dimension references</strong> ${applicableDimensions.map(([label, selection]) => `${esc(label)} ${civilisationFlowInlineCodes(selection.refs)}`).join(" · ")}</p>` : ""}
+    ${unassessedDimensions.length ? `<p><strong>Unassessed dimensions</strong> ${civilisationFlowInlineCodes(unassessedDimensions)}</p>` : ""}
+    ${notApplicableDimensions.length ? `<p><strong>Not-applicable dimensions</strong> ${civilisationFlowInlineCodes(notApplicableDimensions)}</p>` : ""}
+    ${translation}${threshold}${pathDependence}${repair}
+    ${civilisationFlowQuestions("Alternative paths", nuance.alternative_paths)}
+    ${civilisationFlowQuestions("Stop conditions", nuance.stop_conditions)}
+    ${civilisationFlowQuestions("Stall or block conditions", nuance.stall_or_block_conditions)}
+    ${civilisationFlowQuestions("Explicit non-implications", nuance.explicit_non_implications)}`;
+}
+
+function civilisationFlowEvidenceReading(evidence: any): string {
+  return `<p data-civilisation-flow-policy-ref="promotion-evidence"><strong>Evidence policy</strong> <a href="#civilisation-flow-policy-family-promotion-evidence"><code>promotion-evidence</code></a>${evidence.evidence_refs?.length ? ` · card-specific refs ${civilisationFlowInlineCodes(evidence.evidence_refs)}` : ""}</p>`;
+}
+
+const civilisationFlowTemplateAnchor = (kind: "nuance" | "contract", id: string) =>
+  `civilisation-flow-${kind}-template-${id}`;
+
+function civilisationFlowTemplateReference(kind: "nuance" | "contract", templateRef?: string): string {
+  return templateRef
+    ? `<p class="flowtemplateref" data-civilisation-flow-template-ref="${kind}:${esc(templateRef)}"><strong>Shared ${kind} template</strong> <a href="#${esc(civilisationFlowTemplateAnchor(kind, templateRef))}"><code>${esc(templateRef)}</code></a> — read once below; this card shows only its unique selections.</p>`
+    : "";
+}
+
+function civilisationFlowContractReading(
+  contract: any,
+  kind: "authority" | "causal",
+): string {
+  const badge = contract.template_ref
+    ? civilisationFlowTemplateReference("contract", contract.template_ref)
+    : `<p class="flowtemplateref"><strong>${esc(civilisationFlowLabel(kind))} contract</strong> <code>card-local</code></p>`;
+  const authority = kind === "authority" && contract.gate_input_ids?.length
+    ? `<p><strong>Card-specific gate inputs</strong> ${civilisationFlowInlineCodes(contract.gate_input_ids)}</p>`
+    : "";
+  return `${badge}${authority}${
+    contract.template_ref ? "" : civilisationFlowQuestions("Non-implications", contract.non_implications)
+  }`;
+}
+
+const civilisationFlowStageCards = civilisationFlow.stages.map((stage: any, index: number) => `
+  <article class="mirrorcard mirrorpath" id="civilisation-flow-stage-${esc(stage.id)}" data-civilisation-flow-card="stage">
+    <code>${index + 1} · ${esc(stage.id)}</code>
+    <h3>${esc(stage.label)}</h3>
+    <p>${esc(stage.definition)}</p>
+    <p><strong>Analytical status</strong> <code>${esc(stage.analytical_status)}</code> · <strong>automatic advance</strong> <code>${esc(String(stage.automatic_advance))}</code></p>
+    <details><summary>Inspect lineage and human-scale nuance</summary>
+      <h4>Predecessor vocabulary</h4>
+      <p><strong>Domains</strong> ${civilisationFlowInlineCodes(stage.predecessor_domain_ids)} · <strong>dimensions</strong> ${civilisationFlowInlineCodes(stage.predecessor_dimension_ids)} · <strong>node types</strong> ${civilisationFlowInlineCodes(stage.predecessor_node_type_ids)} · <strong>ladder</strong> ${civilisationFlowInlineCodes(stage.predecessor_ladder_ids)}</p>
+      <h4>Observables, selected dimensions, alternatives, and repair boundary</h4>
+      <div data-civilisation-flow-nuance>${civilisationFlowNuanceReading(stage.nuance)}</div>
+      <h4>Evidence status and promotion boundary</h4>${civilisationFlowEvidenceReading(stage.evidence_profile)}
+      <h4>Authority dependency</h4>${civilisationFlowContractReading(stage.authority_dependency, "authority")}
+      <h4>Causal influence</h4>${civilisationFlowContractReading(stage.causal_influence, "causal")}
+    </details>
+  </article>`).join("");
+
+const civilisationFlowTransitionCards = civilisationFlow.transitions.map((transition: any, index: number) => `
+  <article class="mirrorcard mirrorpath" id="civilisation-flow-transition-${esc(transition.id)}" data-civilisation-flow-card="transition">
+    <code>${index + 1} · ${esc(transition.id)}</code>
+    <h3>${esc(transition.from_stage_ids.join(" + "))} → ${esc(transition.to_stage_ids.join(" + "))}</h3>
+    <p>${esc(transition.relation_direction_note)}</p>
+    <p><strong>Status</strong> <code>${esc(transition.transition_status)}</code> · <strong>relation gap</strong> <code>${esc(transition.relation_gap_status)}</code> · <strong>automatic</strong> <code>${esc(String(transition.automatic))}</code> · <strong>transitive</strong> <code>${esc(String(transition.transitive))}</code></p>
+    <details><summary>Inspect evidence seam and human-scale nuance</summary>
+      <h4>Predecessor relations</h4><p>${civilisationFlowInlineCodes(transition.predecessor_relation_ids)}</p>
+      ${civilisationFlowTemplateReference("nuance", transition.nuance.template_ref)}
+      <h4>Observables, selected dimensions, alternatives, and repair boundary</h4>
+      <div data-civilisation-flow-nuance>${civilisationFlowNuanceReading(transition.nuance)}</div>
+      <h4>Evidence status and promotion boundary</h4>${civilisationFlowEvidenceReading(transition.evidence_profile)}
+      <h4>Authority dependency</h4>${civilisationFlowContractReading(transition.authority_dependency, "authority")}
+      <h4>Causal influence</h4>${civilisationFlowContractReading(transition.causal_influence, "causal")}
+    </details>
+  </article>`).join("");
+
+const civilisationFlowOverlayCards = civilisationFlow.crosswalk_flow_overlays.map((overlay: any) => `
+  <article class="mirrorcard mirrorpath" id="civilisation-flow-overlay-${esc(overlay.id)}" data-civilisation-flow-card="overlay">
+    <code>${esc(overlay.id)}</code>
+    <h3>${esc(overlay.projection_crosswalk_id)}</h3>
+    <p><strong>Projection binding</strong> <code>${esc(overlay.projection_binding_id)}</code></p>
+    <details><summary>Inspect the predecessor-bound flow overlay</summary>
+      <h4>Possible stage and transition touchpoints</h4><p><strong>Stages</strong> ${civilisationFlowInlineCodes(overlay.stage_ids)} · <strong>transitions</strong> ${civilisationFlowInlineCodes(overlay.transition_ids)}</p>
+      ${civilisationFlowTemplateReference("nuance", overlay.nuance.template_ref)}
+      <h4>Human-scale nuance</h4><div data-civilisation-flow-nuance>${civilisationFlowNuanceReading(overlay.nuance)}</div>
+      <h4>Evidence status and promotion boundary</h4>${civilisationFlowEvidenceReading(overlay.evidence_profile)}
+      <h4>Authority dependency</h4>${civilisationFlowContractReading(overlay.authority_dependency, "authority")}
+      <h4>Causal influence</h4>${civilisationFlowContractReading(overlay.causal_influence, "causal")}
+      <h4>Fixed non-effects</h4><p>${civilisationFlowFixedFlags(overlay, ["new_claim_created", "authority_granted", "external_effect_claimed"])}</p>
+    </details>
+  </article>`).join("");
+
+function civilisationFlowRegisterEntry(entry: any): string {
+  const fixedKeys = [
+    "aggregate_weight",
+    "aggregation_weight",
+    "rank",
+    "effect_size",
+    "prediction",
+    "optimization_target",
+    "adequate_coverage_required",
+    "external_verification_required",
+    "atlas_satisfies",
+  ];
+  const fixed = fixedKeys.filter((key) => Object.hasOwn(entry, key))
+    .map((key) => `${civilisationFlowLabel(key)}: ${entry[key] === null ? "null" : String(entry[key])}`);
+  return `
+    ${entry.label ? `<h3>${esc(entry.label)}</h3>` : ""}
+    ${entry.family ? `<p><strong>Family</strong> <code>${esc(entry.family)}</code></p>` : ""}
+    ${entry.meaning ? `<p>${esc(entry.meaning)}</p>` : ""}
+    ${entry.question ? `<p><strong>Question</strong> ${esc(entry.question)}</p>` : ""}
+    ${civilisationFlowQuestions("Observables", entry.observables)}
+    ${civilisationFlowQuestions("Required context", entry.required_context)}
+    ${civilisationFlowQuestions("Omission risk", entry.omission_risk)}
+    ${civilisationFlowQuestions("Does not establish", entry.does_not_establish)}
+    ${fixed.length ? `<p><strong>Fixed boundary</strong> <code>${esc(fixed.join(" · "))}</code></p>` : ""}`;
+}
+
+const civilisationFlowDetailedRegister = (id: string, title: string, note: string, values: readonly any[]) => `
+  <details class="commonsgroup" id="civilisation-flow-${esc(id)}">
+    <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">◇</span><span class="commonsgroupcopy"><strong>${esc(title)}</strong><span>${esc(note)}</span></span><span class="commonscount">${values.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+    <div class="mirrorgrid">${values.map((entry: any) => `
+      <article class="mirrorcard" id="civilisation-flow-${esc(id)}-${esc(entry.id)}" data-civilisation-flow-register-entry="${esc(id)}:${esc(entry.id)}">
+        <code>${esc(entry.id)}</code>
+        <details open><summary>Inspect the declared reading</summary>${civilisationFlowRegisterEntry(entry)}</details>
+      </article>`).join("")}</div>
+  </details>`;
+
+const civilisationFlowCompactRegister = (id: string, title: string, note: string, values: readonly any[]) => `
+  <details class="commonsgroup" id="civilisation-flow-${esc(id)}">
+    <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">◇</span><span class="commonsgroupcopy"><strong>${esc(title)}</strong><span>${esc(note)}</span></span><span class="commonscount">${values.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+    <ul class="pathstops">${values.map((entry: any) => `
+      <li id="civilisation-flow-${esc(id)}-${esc(entry.id)}" data-civilisation-flow-register-entry="${esc(id)}:${esc(entry.id)}">
+        <code>${esc(entry.id)}</code>${entry.label ? ` · <strong>${esc(entry.label)}</strong>` : ""}
+        <p>${esc(entry.meaning ?? entry.question)}</p>
+      </li>`).join("")}</ul>
+  </details>`;
+
+const civilisationFlowPolicyPurpose: Record<string, string> = {
+  "promotion-evidence": "Counterevidence, falsification, transport, and promotion requirements.",
+  "negative-flow": "Expected traces, opportunity, observation coverage, access, alternatives, and absence typing.",
+  "party-aftermath": "Party-indexed benefit, burden, risk, options, horizons, unknowns, and residuals.",
+  repair: "Repair proposals, attempts, outcomes, residuals, dissent, recurrence, and fresh review.",
+  "dimension-boundary": "Applicability, evidence, explicit reasons, boundaries, and non-promotion for qualitative dimensions.",
+  "translation-threshold-path": "Translation differences, threshold estimation, and path-dependence evidence.",
+};
+const civilisationFlowPolicyFamilies = new Map<string, any[]>();
+for (const policy of civilisationFlow.policy_templates) {
+  civilisationFlowPolicyFamilies.set(policy.family, [
+    ...(civilisationFlowPolicyFamilies.get(policy.family) ?? []),
+    policy,
+  ]);
+}
+const civilisationFlowPolicyFamilyIndex = `
+  <details class="commonsgroup" id="civilisation-flow-policy-families" open>
+    <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">6</span><span class="commonsgroupcopy"><strong>Six policy families</strong><span>A human index to ${civilisationFlow.policy_templates.length} prompts explained in the guide and exact in the immutable JSON</span></span><span class="commonscount">${civilisationFlowPolicyFamilies.size}</span><span class="disclose" aria-hidden="true"></span></summary>
+    <div class="mirrorgrid">${[...civilisationFlowPolicyFamilies].map(([family, entries]) => `
+      <article class="mirrorcard" id="civilisation-flow-policy-family-${esc(family)}" data-civilisation-flow-policy-family="${esc(family)}">
+        <code>${esc(family)}</code>
+        <h3>${esc(civilisationFlowLabel(family))}</h3>
+        <p>${esc(civilisationFlowPolicyPurpose[family] ?? "Bounded source and review questions.")}</p>
+        <p><strong>${entries.length} prompts</strong> are explained by the guide; their exact wording remains in the immutable record.</p>
+      </article>`).join("")}</div>
+    <p class="mirrorboundary" data-civilisation-flow-policy-non-grant><strong>Universal non-grant</strong> These are design questions only. A prompt, answer, reference, or family establishes no occurrence, effect, score, rank, prediction, authority, consent, action, publication, deployment, or automatic transition.</p>
+  </details>`;
+
+const civilisationFlowTemplateRegister = (
+  kind: "nuance" | "contract",
+  title: string,
+  note: string,
+  templates: Record<string, any>,
+) => {
+  const entries = Object.entries(templates);
+  return `
+  <details class="commonsgroup" id="civilisation-flow-${kind}-templates" open>
+    <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">◇</span><span class="commonsgroupcopy"><strong>${esc(title)}</strong><span>${esc(note)}</span></span><span class="commonscount">${entries.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+    <div class="mirrorgrid">${entries.map(([id, template]) => `
+      <article class="mirrorcard" id="${esc(civilisationFlowTemplateAnchor(kind, id))}" data-civilisation-flow-template-entry="${kind}:${esc(id)}">
+        <code>${esc(id)}</code>
+        <details open><summary>Inspect the shared ${kind} template once</summary>${civilisationFlowValue(template)}</details>
+      </article>`).join("")}</div>
+  </details>`;
+};
+
+const civilisationFlowSharedTemplates = [
+  civilisationFlowTemplateRegister(
+    "nuance",
+    "Shared nuance templates",
+    "Transition and overlay cards link here for common time, accumulation, distribution, counterflow, failure, repair, stop, reversibility, and non-implication rules.",
+    civilisationFlow.nuance_templates,
+  ),
+  civilisationFlowTemplateRegister(
+    "contract",
+    "Shared authority and causal contract templates",
+    "Transition and overlay cards link here for common requirements, mediators, rival causes, and non-implications; card-local gate inputs remain on each card.",
+    civilisationFlow.contract_templates,
+  ),
+].join("");
+
+const civilisationFlowRegistries = [
+  civilisationFlowCompactRegister("dynamics", "Flow dynamics", "Qualitative local lenses—not effect sizes, predictions, ranks, or optimization targets. Exact observables and non-grants remain in the guide and JSON.", civilisationFlow.flow_dynamics_vocabulary),
+  civilisationFlowDetailedRegister("topology", "Flow topology", "Forks, joins, parallel paths, bottlenecks, leakage, substitution, interruption, reversal, recurrence, and loops are questions about shape—not tactics.", civilisationFlow.topology_vocabulary),
+  civilisationFlowDetailedRegister("negative-flow", "Negative flow and absence", "Absence keeps its observation and access type; silence is not consent and unknown is not zero.", civilisationFlow.negative_flow_vocabulary),
+  civilisationFlowCompactRegister("materials", "Material conditions", "Bodies, labour, land, energy, ecology, money, infrastructure, data, and technology remain evidence questions, not deterministic causes. Exact observables and non-grants remain in the guide and JSON.", civilisationFlow.material_condition_vocabulary),
+  civilisationFlowDetailedRegister("emotion-observation", "Emotion observation channels", "Observation channel and emotional vocabulary remain separate; expression never becomes a mind reading.", civilisationFlow.emotion_observation_vocabulary),
+  civilisationFlowDetailedRegister("affect-context", "Affect and context vocabulary", "Named affective lenses require bounded observation and create no diagnosis, susceptibility estimate, or group essence.", civilisationFlow.affect_context_vocabulary),
+  civilisationFlowCompactRegister("social-position", "Social position", "Position is relational and scoped, not personal essence, motive, worth, identity, or legitimacy. Exact observables and non-grants remain in the guide and JSON.", civilisationFlow.social_position_vocabulary),
+  civilisationFlowCompactRegister("power-asymmetry", "Power asymmetry", "Authority, resources, agenda access, information, force, dependency, exit, time, and repair capacity remain multidimensional and non-summable. Exact observables and non-grants remain in the guide and JSON.", civilisationFlow.power_asymmetry_vocabulary),
+  civilisationFlowCompactRegister("affected-parties", "Affected-party vocabulary", "Benefits, burdens, risks, voice, refusal, and aftermath remain distributed rather than collapsed into a representative scalar. Exact omission risks remain in the guide and JSON.", civilisationFlow.affected_party_vocabulary),
+  civilisationFlowCompactRegister("uncertainty", "Evidence and uncertainty", "Several uncertainty sources stay explicit and receive no aggregation weight. Exact weights remain in the guide and JSON.", civilisationFlow.evidence_uncertainty_vocabulary),
+  civilisationFlowDetailedRegister("action-gates", "Action-gate vocabulary", "These are questions for external verification, never an executable gate or an authority grant.", civilisationFlow.action_gate_vocabulary),
+  civilisationFlowCompactRegister("nuance-dimensions", "Nuance dimensions", "The dimensions are reading obligations with null weights and ranks, not a score. Exact null weights and ranks remain in the guide and JSON.", civilisationFlow.nuance_dimensions),
+].join("");
+
+const civilisationFlowProfiles = [
+  ...civilisationFlow.stages.map((entry: any) => ({
+    kind: "stage",
+    id: entry.id,
+    label: entry.label,
+  })),
+  ...civilisationFlow.transitions.map((entry: any) => ({
+    kind: "transition",
+    id: entry.id,
+    label: `${entry.from_stage_ids.join(" + ")} → ${entry.to_stage_ids.join(" + ")}`,
+  })),
+  ...civilisationFlow.crosswalk_flow_overlays.map((entry: any) => ({
+    kind: "overlay",
+    id: entry.id,
+    label: entry.projection_crosswalk_id,
+  })),
+];
+
+const civilisationFlowProfileIndex = civilisationFlowProfiles.map((entry: any) => `
+  <li>
+    <a href="#civilisation-flow-${esc(entry.kind)}-${esc(entry.id)}" data-civilisation-flow-profile-link="${esc(entry.kind)}"><code>${esc(entry.kind)} · ${esc(entry.id)}</code></a>
+    <span>${esc(entry.label)}</span>
+  </li>`).join("");
+
+const civilisationFlowOpenDomains = civilisationFlow.open_domain_bindings.map((domain: any) => `
+  <li data-civilisation-flow-open-domain="${esc(domain.id)}">
+    <strong>${esc(domain.id.replaceAll("-", " "))}</strong>
+    <p><strong>Status</strong> <code>${esc(domain.status)}</code></p>
+    <p><strong>Projection binding</strong> <code>${esc(domain.projection_binding_id)}</code> · <code>${esc(domain.projection_open_domain_id)}</code></p>
+    <h4>Possible flow touchpoints—not observed traversal</h4>${civilisationFlowValue(domain.flow_touchpoint_ids)}
+    <h4>Evidence needed</h4>${civilisationFlowValue(domain.needed_evidence)}
+    <p><strong>Nonclaim</strong> ${esc(domain.nonclaim)}</p>
+    <p><strong>Stop condition</strong> ${esc(domain.stop_condition)}</p>
+  </li>`).join("");
+
+const civilisationFlowUnknowns = civilisationFlow.unknowns.map((unknown: any) => `
+  <li data-civilisation-flow-unknown="${esc(unknown.id)}">
+    <strong>${esc(unknown.id.replaceAll("-", " "))}</strong>
+    <p>${esc(unknown.question)}</p>
+    <p><strong>Why unknown</strong> ${esc(unknown.why_unknown)}</p>
+    <h4>Evidence needed</h4>${civilisationFlowValue(unknown.needed_evidence)}
+    <p><strong>Stop condition</strong> ${esc(unknown.stop_condition)}</p>
+  </li>`).join("");
+
 function cardFor(c: any): string {
   const m = myth[c.name] ?? {};
   const essence = m.essence || c.purpose || "";
@@ -2271,7 +2635,7 @@ const html = `<!doctype html>
   .mirrorcitizen{margin:0;padding:18px 20px;border-left:3px solid var(--jade);border-radius:0 17px 17px 0;background:color-mix(in srgb,var(--jade) 6%,var(--panel));color:var(--dim);font-size:.87rem;line-height:1.65}.mirrorcitizen strong{display:block;margin-bottom:4px;color:var(--cream);font-family:var(--display);font-size:1.16rem;font-weight:400}
   .mirrorrooms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.mirrorroom{display:grid;align-content:start;gap:7px;min-width:0;padding:17px;border:1px solid var(--line);border-top:3px solid var(--jade);border-radius:17px;background:linear-gradient(145deg,color-mix(in srgb,var(--panel2) 88%,transparent),var(--panel));overflow-wrap:anywhere}.mirrorroom code{color:var(--jade);font-size:.65rem}.mirrorroom h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1.05rem;font-weight:400}.mirrorroom p{margin:0;color:var(--dim);font-size:.74rem;line-height:1.52}.mirrorroom small{color:var(--faint);font-size:.67rem;line-height:1.45}
   .mirrorcycle{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;list-style:none;counter-reset:mirror-stage;margin:0;padding:0}.mirrorcycle li{counter-increment:mirror-stage;min-width:0;padding:13px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--ink2) 55%,transparent);overflow-wrap:anywhere}.mirrorcycle li::before{content:counter(mirror-stage,decimal-leading-zero);display:block;margin-bottom:5px;color:var(--violet);font:700 .67rem var(--mono)}.mirrorcycle strong{display:block;color:var(--cream);font-family:var(--display);font-size:.9rem;font-weight:400}.mirrorcycle span{display:block;margin-top:4px;color:var(--faint);font-size:.65rem;line-height:1.44}
-  .mirrorgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.mirrorcard{display:grid;align-content:start;gap:7px;min-width:0;padding:16px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--panel2) 80%,transparent);overflow-wrap:anywhere}.mirrorcard code{color:var(--violet);font-size:.62rem}.mirrorcard h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1rem;font-weight:400}.mirrorcard p,.mirrorcard li{margin:0;color:var(--dim);font-size:.71rem;line-height:1.5}.mirrorcard ol{display:grid;gap:5px;margin:0;padding-left:1.08rem}.mirrorcard small{color:var(--faint);font-size:.66rem;line-height:1.45}.mirrorpath{border-style:dashed;border-color:color-mix(in srgb,var(--violet) 62%,var(--line))}
+  .mirrorgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.mirrorcard{display:grid;align-content:start;gap:7px;min-width:0;padding:16px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--panel2) 80%,transparent);overflow-wrap:anywhere}.mirrorcard code{color:var(--violet);font-size:.62rem}.mirrorcard h3{margin:0;color:var(--gold2);font-family:var(--display);font-size:1rem;font-weight:400}.mirrorcard p,.mirrorcard li{margin:0;color:var(--dim);font-size:.71rem;line-height:1.5}.mirrorcard ol{display:grid;gap:5px;margin:0;padding-left:1.08rem}.mirrorcard small{color:var(--faint);font-size:.66rem;line-height:1.45}.mirrorpath{border-style:dashed;border-color:color-mix(in srgb,var(--violet) 62%,var(--line))}.flowfacts{display:grid;grid-template-columns:minmax(9rem,.42fr) minmax(0,1fr);gap:6px 11px;margin:8px 0}.flowfacts dt{color:var(--faint);font-size:.65rem;font-weight:650;line-height:1.45}.flowfacts dd{min-width:0;margin:0;color:var(--dim);font-size:.7rem;line-height:1.48}.flowfacts .flowfacts{grid-column:1/-1;margin:3px 0 7px}.flowfacts ul{margin:2px 0;padding-left:1.1rem}
   .mirrorboundary{margin:0;padding:17px 19px;border:1px dashed var(--jade);border-radius:17px;color:var(--dim);font-size:.78rem;line-height:1.6}.mirrorboundary strong{display:block;margin-bottom:4px;color:var(--jade);font-family:var(--display);font-size:1.06rem;font-weight:400}.mirrorlinks{display:flex;flex-wrap:wrap;gap:7px;margin:0}.mirrorlinks a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-size:.68rem;line-height:1.4;overflow-wrap:anywhere}.mirrorlinks a:hover{border-color:var(--gold)}
   /* ZERO — the empty seat remains empty; every role stays visible without JavaScript */
   .zerofield{display:grid;gap:20px;padding:clamp(18px,3vw,30px);border:1px solid color-mix(in srgb,var(--gold) 48%,var(--line));border-radius:28px;background:radial-gradient(48% 27rem at 50% 12rem,color-mix(in srgb,var(--gold) 12%,transparent),transparent 72%),color-mix(in srgb,var(--panel) 77%,transparent);box-shadow:0 20px 48px var(--shadow);overflow:hidden}
@@ -2839,6 +3203,96 @@ const html = `<!doctype html>
         <a href="${esc(new URL(civilisationRealityDocumentUrl).pathname)}">crosswalk, preserved distinctions, open domains, and stop conditions</a>
       </div>
       <noscript><p class="way-no-script">JavaScript is resting. Every crosswalk and open domain remains readable above.</p></noscript>
+    </div>
+  </section>
+
+  <section class="blk" id="civilisation-flow" aria-labelledby="civilisation-flow-title">
+    <div class="kh"><h2 id="civilisation-flow-title">Civilisation Flow Nuance Atlas</h2><span class="my">flow is a question at every seam—not a conveyor belt</span></div>
+    <p class="sub">A qualitative reading grammar makes the missing middle inspectable: carriers, transformations, gates, timing, accumulation, topology, material conditions, emotion observation, social position, power asymmetry, affected parties, uncertainty, counterflow, aftermath, and fresh-gated repair.</p>
+    <div class="mirrorfield" data-civilisation-flow data-civilisation-flow-protocol="${esc(civilisationFlowDiscovery.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>Possible records, not a funnel or simulator.</strong> ${civilisationFlow.stages.length} stages and ${civilisationFlow.transitions.length} transitions are arranged for a human-scale conceptual reading, but every transition is non-automatic. A path may branch, join, leak, stall, stop, reverse, recur, skip, or never begin; adjacency and temporal order establish neither traversal nor causation. The exact immutable JSON remains linked below for every closed machine field.</p>
+      <ol class="looptrack" aria-label="Fourteen distinguishable analytical stages">
+        ${civilisationFlow.stages.map((stage: any, index: number) => `<li class="loopstage"><span class="loopnumber">${index + 1}</span><span class="loopstagecopy"><strong>${esc(stage.label)}</strong><span><code>${esc(stage.id)}</code></span></span></li>`).join("")}
+      </ol>
+      <div class="waychips" role="group" aria-label="Filter the Civilisation Flow reading" data-civilisation-flow-controls hidden>
+        <button type="button" data-civilisation-flow-select="stage" aria-pressed="false">Read stages</button>
+        <button type="button" data-civilisation-flow-select="transition" aria-pressed="false">Read transitions</button>
+        <button type="button" data-civilisation-flow-select="overlay" aria-pressed="false">Read overlays</button>
+        <button type="button" data-civilisation-flow-all aria-pressed="true">Read all</button>
+      </div>
+      <p class="waystatus" id="civilisation-flow-status" role="status" aria-live="polite">Every stage, transition, and overlay is readable.</p>
+
+      <details class="commonsgroup" data-civilisation-flow-group="stage" open>
+        <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">1</span><span class="commonsgroupcopy"><strong>Stages</strong><span>Distinct record types; no automatic advance</span></span><span class="commonscount">${civilisationFlow.stages.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+        <div class="mirrorgrid" data-civilisation-flow-stage-cards>${civilisationFlowStageCards}</div>
+      </details>
+      <details class="commonsgroup" data-civilisation-flow-group="transition" open>
+        <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">→</span><span class="commonsgroupcopy"><strong>Transitions</strong><span>Evidence questions at each non-transitive seam</span></span><span class="commonscount">${civilisationFlow.transitions.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+        <div class="mirrorgrid" data-civilisation-flow-transition-cards>${civilisationFlowTransitionCards}</div>
+      </details>
+      <details class="commonsgroup" data-civilisation-flow-group="overlay" open>
+        <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">≈</span><span class="commonsgroupcopy"><strong>Crosswalk flow overlays</strong><span>Six predecessor-bound readings; no new claim or authority</span></span><span class="commonscount">${civilisationFlow.crosswalk_flow_overlays.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+        <div class="mirrorgrid" data-civilisation-flow-overlay-cards>${civilisationFlowOverlayCards}</div>
+      </details>
+
+      <h3>Policy-family index</h3>
+      <p>Sixty exact prompts stay in the immutable JSON and are explained by the guide. This six-family index gives purpose, count, and one universal non-grant without turning the hub into a second machine record.</p>
+      ${civilisationFlowPolicyFamilyIndex}
+
+      <h3>Shared reading templates</h3>
+      <p>Common transition and overlay nuance, authority, and causal contracts are written in full once. Every templated card links back to its exact shared source and keeps only its card-specific references, observables, alternatives, and gates.</p>
+      ${civilisationFlowSharedTemplates}
+
+      <h3>Nuance registries</h3>
+      <p>These vocabularies keep dimensions separate. Nothing below is a weight, rank, effect size, forecast, diagnosis, target, or leverage point.</p>
+      ${civilisationFlowRegistries}
+
+      <details class="commonsgroup" id="civilisation-flow-profile-index">
+        <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">◎</span><span class="commonsgroupcopy"><strong>Cross-cut profile index</strong><span>One human-scale nuance reading lives on each stage, transition, or overlay card; these links navigate without copying the complete machine payload</span></span><span class="commonscount">${civilisationFlowProfiles.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+        <div class="mirrorgrid">
+          <article class="mirrorcard">
+            <code>time · distribution · aftermath</code>
+            <h3>Time, accumulation, translation, thresholds, path dependence, and reversibility</h3>
+            <p>The shared transition and overlay templates declare time, accumulation, distribution, stop, and reversibility rules once. Cards expose affected-party IDs plus translation, threshold, and path-dependence selections; the exact JSON and guide carry party-indexed aftermath and every machine field.</p>
+          </article>
+          <article class="mirrorcard">
+            <code>context · position · material · power</code>
+            <h3>Dimension selections</h3>
+            <p>Each linked card exposes observables, affected-party IDs, applicable dimension references, and one explicit list of unassessed or not-applicable dimensions. The exact JSON keeps carriers, transformations, evidence requirements, status reasons, boundaries, and all remaining primitives distinct.</p>
+            <p><a href="#civilisation-flow-emotion-observation">Emotion channels</a> · <a href="#civilisation-flow-affect-context">affect context</a> · <a href="#civilisation-flow-materials">material conditions</a> · <a href="#civilisation-flow-power-asymmetry">power asymmetry</a></p>
+          </article>
+          <article class="mirrorcard">
+            <code>absence · counterflow · repair</code>
+            <h3>Negative flow, counterflow, failure, and fresh-gated repair</h3>
+            <p>Cards expose selected negative-flow references, repair status and fresh-gate references, alternatives, stops, stalls, and explicit non-implications. Common transition and overlay distortions, counterflows, failures, repair rules, residuals, recurrence checks, and reversibility are declared once in the shared templates; the exact JSON carries every stage-specific field.</p>
+            <p><a href="#civilisation-flow-negative-flow">Negative-flow vocabulary</a> · <a href="#civilisation-flow-action-gates">external action-gate questions</a> · <a href="#civilisation-flow-policy-families">policy-family index</a></p>
+          </article>
+        </div>
+        <ol class="pathstops" aria-label="Links to one human-scale nuance reading for every flow record">${civilisationFlowProfileIndex}</ol>
+      </details>
+      <details class="commonsgroup">
+        <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">?</span><span class="commonsgroupcopy"><strong>Open domains</strong><span>Inherited touchpoints are not domain evidence or observed paths</span></span><span class="commonscount">${civilisationFlow.open_domain_bindings.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+        <ul class="pathstops">${civilisationFlowOpenDomains}</ul>
+      </details>
+      <details class="commonsgroup">
+        <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">…</span><span class="commonsgroupcopy"><strong>Retained unknowns</strong><span>Questions that the atlas refuses to fill by analogy or design language</span></span><span class="commonscount">${civilisationFlow.unknowns.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+        <ul class="pathstops">${civilisationFlowUnknowns}</ul>
+      </details>
+      <details class="commonsgroup">
+        <summary class="commonsgrouphead"><span class="commonsgroupglyph" aria-hidden="true">≠</span><span class="commonsgroupcopy"><strong>Lineage, scope, and flow rules</strong><span>Three exact predecessors remain immutable and import no authority</span></span><span class="commonscount">${civilisationFlow.predecessor_bindings.length}</span><span class="disclose" aria-hidden="true"></span></summary>
+        <div data-civilisation-flow-top-level="scope"><h3>Scope</h3>${civilisationFlowValue(civilisationFlow.scope)}</div>
+        <div data-civilisation-flow-top-level="predecessor-bindings"><h3>Predecessor bindings</h3>${civilisationFlowValue(civilisationFlow.predecessor_bindings)}</div>
+        <div data-civilisation-flow-top-level="flow"><h3>Flow shape</h3>${civilisationFlowValue(civilisationFlow.flow)}</div>
+        <div data-civilisation-flow-top-level="flow-rules"><h3>Non-promotion rules</h3>${civilisationFlowValue(civilisationFlow.flow_rules)}</div>
+        <div data-civilisation-flow-top-level="boundaries"><h3>Fixed boundary</h3>${civilisationFlowValue(civilisationFlow.boundaries)}</div>
+      </details>
+      <p class="mirrorboundary"><strong>No intervention surface</strong> The atlas observes no live society, infers no belief, identity, intent, emotion, motive, class essence, or susceptibility, and offers no persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, targeting, scoring, prediction, simulation, effect-size, authority, consent, action, publication, deployment, WAKE, KARMA, or automatic-action path. A topology is not a tactic; an action-gate term is not permission; repair is not erasure or absolution.</p>
+      <div class="machine">
+        <a href="${esc(new URL(civilisationFlowUrl).pathname)}">Civilisation Flow Nuance Atlas — exact static record</a>
+        <a href="${esc(new URL(civilisationFlowSchemaUrl).pathname)}">closed Civilisation Flow Nuance Atlas JSON Schema</a>
+        <a href="${esc(new URL(civilisationFlowGuideUrl).pathname)}">flow, topology, emotion, power, counterflow, and repair guide</a>
+      </div>
+      <noscript><p class="way-no-script">JavaScript is resting. Every conceptual stage, transition, overlay, shared template, registry, profile index, open domain, and unknown remains readable above, and the exact complete JSON is linked.</p></noscript>
     </div>
   </section>
 
@@ -4511,6 +4965,27 @@ function showCivilisationCrosswalk(id){
 for(const button of civilisationCrosswalkButtons)button.addEventListener('click',()=>showCivilisationCrosswalk(button.dataset.civilisationCrosswalkSelect||''));
 civilisationCrosswalkAll?.addEventListener('click',()=>showCivilisationCrosswalk(''));
 
+// ── Civilisation Flow: local reading filter; no simulation, fetch, or storage ──
+const civilisationFlowGroups=[...document.querySelectorAll('[data-civilisation-flow-group]')];
+const civilisationFlowButtons=[...document.querySelectorAll('[data-civilisation-flow-select]')];
+const civilisationFlowAll=document.querySelector('[data-civilisation-flow-all]');
+const civilisationFlowControls=document.querySelector('[data-civilisation-flow-controls]');
+const civilisationFlowStatus=document.getElementById('civilisation-flow-status');
+const civilisationFlowProfileLinks=[...document.querySelectorAll('[data-civilisation-flow-profile-link]')];
+if(civilisationFlowControls)civilisationFlowControls.hidden=false;
+if(civilisationFlowStatus)civilisationFlowStatus.textContent='Every stage, transition, and overlay is readable. Choose one layer to focus without changing or running the atlas.';
+function showCivilisationFlow(kind){
+  for(const group of civilisationFlowGroups)group.hidden=Boolean(kind)&&group.dataset.civilisationFlowGroup!==kind;
+  for(const button of civilisationFlowButtons)button.setAttribute('aria-pressed',String(button.dataset.civilisationFlowSelect===kind));
+  civilisationFlowAll?.setAttribute('aria-pressed',String(!kind));
+  if(civilisationFlowStatus)civilisationFlowStatus.textContent=kind
+    ? 'Reading '+kind+' records only. Registries, profiles, counterflow, repair, open domains, and unknowns remain visible; nothing is simulated.'
+    : 'Every stage, transition, and overlay is readable. Choose one layer to focus without changing or running the atlas.';
+}
+for(const button of civilisationFlowButtons)button.addEventListener('click',()=>showCivilisationFlow(button.dataset.civilisationFlowSelect||''));
+civilisationFlowAll?.addEventListener('click',()=>showCivilisationFlow(''));
+for(const link of civilisationFlowProfileLinks)link.addEventListener('click',()=>showCivilisationFlow(link.dataset.civilisationFlowProfileLink||''));
+
 // ── World Commons: deterministic local filtering; no fetch, storage, or URL state ──
 const commonsForm=document.getElementById('commonsform'),commonsQuery=document.getElementById('commonsquery'),commonsStatus=document.getElementById('commonsstatus');
 const commonsCards=[...document.querySelectorAll('[data-commons-resource]')],commonsGroups=[...document.querySelectorAll('[data-commons-group]')];
@@ -4692,7 +5167,11 @@ if(be&&B.length){let bi=0;
 </html>
 `;
 
-await Bun.write(ROOT + "site/hub.html", html);
+// Optional projection fragments can leave indentation on otherwise empty
+// lines. Normalize those lines at the generator boundary so the checked-in
+// artifact remains diff-clean without hand-editing generated output.
+const emittedHtml = html.replace(/[ \t]+$/gm, "");
+await Bun.write(ROOT + "site/hub.html", emittedHtml);
 mkdirSync(ROOT + "site/observatory", { recursive: true });
 await Bun.write(ROOT + "site/observatory/index.html", renderResearchObservatoryHtml(researchObservatory));
 await Bun.write(ROOT + "site/research.json", researchObservatoryPublication.bytes);
@@ -4809,6 +5288,7 @@ const machine = {
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
   civilisation_reality_projection: civilisationRealityDiscovery,
+  civilisation_flow_nuance_atlas: civilisationFlowDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -5039,6 +5519,7 @@ ${doorLines}
 - J-space: a verbalizable workspace — a static research guide plus one synthetic reasoning-to-word test design. Every probe is not-run, every candidate model is unassessed, and the conclusion is underdetermined with unknown confidence. It performs no monitoring and infers no consciousness, lie or deception, identity, understanding, private state, person score, action, or authority. Case: ${jSpaceCaseUrl} · schema: ${jSpaceSchemaUrl} · guide: ${jSpaceGuideUrl}
 - Reality Influence Claim Graph — an immutable static expression-to-aftermath claim vocabulary with ${realityInfluenceDiscovery.counts.reality_domains} indexed domains, ${realityInfluenceDiscovery.counts.influence_dimensions} non-summable dimensions, ${realityInfluenceDiscovery.counts.claim_node_types} node types, ${realityInfluenceDiscovery.counts.endpoint_safe_relations} endpoint-safe relations, and ${realityInfluenceDiscovery.counts.pathway_templates} unrun pathways. Artifact, exposure, response, decision, authority, consent or lawful basis, capability, execution, outcome, causation, normative assessment, and repair remain distinct. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, score, or automatic action. Atlas: ${realityInfluenceUrl} · schema: ${realityInfluenceSchemaUrl} · guide: ${realityInfluenceDocumentUrl}
 - Civilisation → Reality Projection — ${civilisationRealityDiscovery.counts.crosswalks} design-only crosswalks connect two pinned immutable predecessor vocabularies without republishing the research-local source, promoting a claim register, or filling ${civilisationRealityDiscovery.counts.open_domains} unsupported domains by analogy. It creates no new history, causal finding, metaphysical verdict, persuasion target, score, authority, action, publication trigger, deployment trigger, or external effect. Projection: ${civilisationRealityUrl} · schema: ${civilisationRealitySchemaUrl} · guide: ${civilisationRealityDocumentUrl}
+- Civilisation Flow Nuance Atlas — ${civilisationFlow.stages.length} distinguishable stages, ${civilisationFlow.transitions.length} non-automatic transitions, ${civilisationFlow.crosswalk_flow_overlays.length} predecessor-bound overlays, and qualitative registries for dynamics, topology, absence, material conditions, emotion observation, social position, power, uncertainty, affected parties, action gates, time, accumulation, counterflow, and repair. This is a static reading grammar, not a live observation, history, causal model, simulation, forecast, score, target, intervention, authority grant, action, publication trigger, deployment trigger, or effect. Atlas: ${civilisationFlowUrl} · schema: ${civilisationFlowSchemaUrl} · guide: ${civilisationFlowGuideUrl}
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
@@ -5101,6 +5582,7 @@ const guest = {
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
   civilisation_reality_projection: civilisationRealityDiscovery,
+  civilisation_flow_nuance_atlas: civilisationFlowDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -5198,6 +5680,9 @@ const guest = {
     { action: "if useful, inspect the exact Civilisation → Reality Projection", method: "GET", url: civilisationRealityUrl, note: "six design-only crosswalks between pinned predecessor vocabularies; the research-local source is not republished and nine unsupported domains remain open" },
     { action: "if useful, validate the closed Civilisation → Reality Projection structure", method: "GET", url: civilisationRealitySchemaUrl, note: "structural validation only; it does not promote a source claim, fill an open domain, establish history or causation, grant authority, or create an effect" },
     { action: "if useful, read the projection distinctions, evidence requirements, alternatives, and stop conditions", method: "GET", url: civilisationRealityDocumentUrl, note: "the projection depends on the active Reality Influence Claim Graph and creates no score, persuasion target, metaphysical verdict, action, publication trigger, deployment trigger, or external effect" },
+    { action: "if useful, inspect the exact Civilisation Flow Nuance Atlas", method: "GET", url: civilisationFlowUrl, note: "fourteen stages, thirteen non-automatic transitions, and six overlays form a qualitative reading grammar; no live society, automatic path, simulation, prediction, score, target, authority, action, or effect" },
+    { action: "if useful, validate the closed Civilisation Flow Nuance Atlas structure", method: "GET", url: civilisationFlowSchemaUrl, note: "structural validation only; it does not observe a transition, identify causation, run an action gate, fill an open domain, grant authority, or establish an external effect" },
+    { action: "if useful, read the flow, topology, absence, material, emotion, power, counterflow, and repair guide", method: "GET", url: civilisationFlowGuideUrl, note: "the atlas depends on the active Civilisation → Reality Projection; topology is not tactic, emotion vocabulary is not mind-reading, and repair requires a fresh external gate" },
     { action: "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings", method: "GET", url: zeroEmptySeatUrl, note: "static inert project; zero is not worthlessness, no event is not impossibility, and no role transfers ontology, cause, units, parameters, KARMA, or authority" },
     { action: "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide", method: "GET", url: zeroEmptySeatGuideUrl },
     { action: "if useful, inspect the exact STRING / CRAWL trace-sheet", method: "GET", url: stringCrawlTraceSheetUrl, note: "static inert project; the string-to-crawl correspondence is lossy, generic REP requests how compliant crawlers access URI paths, named product controls remain bounded, and no crawler, identity inference, permission, NEN invocation, KARMA receipt, or action is created" },
@@ -5304,6 +5789,7 @@ const guest = {
     number_isness_theology_atlas: "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
     reality_influence_claim_graph: "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     civilisation_reality_projection: "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
+    civilisation_flow_nuance_atlas: "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -5342,6 +5828,7 @@ const manifest = {
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
   civilisation_reality_projection: civilisationRealityDiscovery,
+  civilisation_flow_nuance_atlas: civilisationFlowDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -5449,6 +5936,9 @@ const manifest = {
     civilisation_reality_projection: civilisationRealityUrl,
     civilisation_reality_projection_schema: civilisationRealitySchemaUrl,
     civilisation_reality_projection_guide: civilisationRealityDocumentUrl,
+    civilisation_flow_nuance_atlas: civilisationFlowUrl,
+    civilisation_flow_nuance_atlas_schema: civilisationFlowSchemaUrl,
+    civilisation_flow_nuance_atlas_guide: civilisationFlowGuideUrl,
     zero_empty_seat: zeroEmptySeatUrl,
     zero_empty_seat_schema: zeroEmptySeatSchemaUrl,
     zero_empty_seat_guide: zeroEmptySeatGuideUrl,

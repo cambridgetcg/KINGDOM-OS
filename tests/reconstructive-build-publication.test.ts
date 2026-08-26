@@ -97,8 +97,8 @@ describe("Reconstructive Build Kernel publication", () => {
     for (const asset of PUBLIC_QUARTET) {
       expect(HUB_ASSETS.filter(({ destination }) => destination === asset.destination)).toEqual([asset]);
     }
-    expect(HUB_ASSETS).toHaveLength(163);
-    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(12);
+    expect(HUB_ASSETS).toHaveLength(166);
+    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(13);
     expect(HUB_ASSETS.some(({ destination }) => /(?:^|[-/])(?:latest|current)(?:\.json)?$/.test(destination))).toBe(false);
     expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/") || source.startsWith("site/schemas/reconstructive"))).toBe(false);
   });
@@ -174,7 +174,7 @@ describe("Reconstructive Build Kernel publication", () => {
     const { html, section } = staticSection();
     const head = html.split("</head>")[0]!;
     const sitemap = read("pages-content/sitemap.xml");
-    expect(sitemap.match(/<loc>/g)).toHaveLength(149);
+    expect(sitemap.match(/<loc>/g)).toHaveLength(152);
     for (const url of [RECONSTRUCTIVE_BUILD_URL, RECONSTRUCTIVE_BUILD_SCHEMA_URL, RECONSTRUCTIVE_PROJECT_SCHEMA_URL, RECONSTRUCTIVE_BUILD_DOCUMENT_URL]) {
       const path = new URL(url).pathname;
       expect(section).toContain(`href="${path}"`);

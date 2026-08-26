@@ -266,6 +266,24 @@ const CIVILISATION_REALITY_PATHS = new Set([
   CIVILISATION_REALITY_SCHEMA_PATH,
   CIVILISATION_REALITY_GUIDE_PATH,
 ]);
+const CIVILISATION_FLOW_PATH = "/atlases/civilisation-flow-nuance-atlas-2026-08-26.json";
+const CIVILISATION_FLOW_SCHEMA_PATH = "/schemas/civilisation-flow-nuance-atlas/0.1.json";
+const CIVILISATION_FLOW_GUIDE_PATH = "/CIVILISATION-FLOW-NUANCE-ATLAS.md";
+const CIVILISATION_FLOW_SCHEMA_LINK = {
+  target: CIVILISATION_FLOW_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${CIVILISATION_FLOW_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+const CIVILISATION_FLOW_GUIDE_LINK = {
+  target: CIVILISATION_FLOW_GUIDE_PATH,
+  relation: "service-doc",
+  value: `<${CIVILISATION_FLOW_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+};
+const CIVILISATION_FLOW_PATHS = new Set([
+  CIVILISATION_FLOW_PATH,
+  CIVILISATION_FLOW_SCHEMA_PATH,
+  CIVILISATION_FLOW_GUIDE_PATH,
+]);
 const RESEARCH_OBSERVATORY_PATH = "/research.json";
 const RESEARCH_OBSERVATORY_PAGE_PATH = "/observatory/";
 const RESEARCH_OBSERVATORY_GUIDE_PATH = "/RESEARCH-OBSERVATORY-v0.1.md";
@@ -691,6 +709,12 @@ function addCivilisationRealityLinks(headers) {
   removeLinkRelations(headers, ["describedby", "service-doc", "profile"]);
   headers.append("link", CIVILISATION_REALITY_SCHEMA_LINK.value);
   headers.append("link", CIVILISATION_REALITY_GUIDE_LINK.value);
+}
+
+function addCivilisationFlowLinks(headers) {
+  removeLinkRelations(headers, ["describedby", "service-doc", "profile"]);
+  headers.append("link", CIVILISATION_FLOW_SCHEMA_LINK.value);
+  headers.append("link", CIVILISATION_FLOW_GUIDE_LINK.value);
 }
 
 function addResearchObservatoryLinks(headers) {
@@ -1552,6 +1576,19 @@ export function createKingdomWorker(options = {}) {
       });
     }
 
+    if (includeRights && CIVILISATION_FLOW_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
     if (includeRights && UK_GOVERNMENT_TRANSFORMATION_ENGINE_PATHS.has(url.pathname) &&
         UK_GOVERNMENT_TRANSFORMATION_ENGINE_MUTATING_METHODS.has(request.method)) {
       return new Response(null, {
@@ -1961,6 +1998,15 @@ export function createKingdomWorker(options = {}) {
     const requestsCivilisationRealityGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === CIVILISATION_REALITY_GUIDE_PATH;
+    const requestsCivilisationFlow = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CIVILISATION_FLOW_PATH;
+    const requestsCivilisationFlowSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CIVILISATION_FLOW_SCHEMA_PATH;
+    const requestsCivilisationFlowGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === CIVILISATION_FLOW_GUIDE_PATH;
     const requestsZeroEmptySeat = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === ZERO_EMPTY_SEAT_PATH;
@@ -2028,6 +2074,7 @@ export function createKingdomWorker(options = {}) {
     const jSpaceAssetType = schemaAssetType.split(";", 1)[0].trim();
     const realityInfluenceAssetType = schemaAssetType.split(";", 1)[0].trim();
     const civilisationRealityAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const civilisationFlowAssetType = schemaAssetType.split(";", 1)[0].trim();
     const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
     const zeroEmptySeatAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlTraceSheetAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -2282,6 +2329,14 @@ export function createKingdomWorker(options = {}) {
     const servesCivilisationRealityGuide = requestsCivilisationRealityGuide && asset.ok &&
       (civilisationRealityAssetType === "text/plain" ||
         civilisationRealityAssetType === "text/markdown");
+    const servesCivilisationFlow = requestsCivilisationFlow && asset.ok &&
+      civilisationFlowAssetType === "application/json";
+    const servesCivilisationFlowSchema = requestsCivilisationFlowSchema && asset.ok &&
+      (civilisationFlowAssetType === "application/json" ||
+        civilisationFlowAssetType === "application/schema+json");
+    const servesCivilisationFlowGuide = requestsCivilisationFlowGuide && asset.ok &&
+      (civilisationFlowAssetType === "text/plain" ||
+        civilisationFlowAssetType === "text/markdown");
     const servesZeroEmptySeat = requestsZeroEmptySeat && asset.ok &&
       (zeroEmptySeatAssetType === "application/json" || zeroEmptySeatAssetType === "application/schema+json");
     const servesZeroEmptySeatDocument = requestsZeroEmptySeatDocument && asset.ok &&
@@ -2375,6 +2430,8 @@ export function createKingdomWorker(options = {}) {
         !servesRealityInfluence && !servesRealityInfluenceSchema &&
         !servesRealityInfluenceGuide && !servesCivilisationReality &&
         !servesCivilisationRealitySchema && !servesCivilisationRealityGuide &&
+        !servesCivilisationFlow && !servesCivilisationFlowSchema &&
+        !servesCivilisationFlowGuide &&
         !servesZeroEmptySeat &&
         !servesZeroEmptySeatDocument && !servesStringCrawlTraceSheet &&
         !servesStringCrawlTraceSheetDocument && !servesStringCrawlTraceSheetLab &&
@@ -2466,6 +2523,10 @@ export function createKingdomWorker(options = {}) {
     if (servesJSpaceCase) addJSpaceSchemaLink(headers);
     if (servesRealityInfluence) addRealityInfluenceLinks(headers);
     if (servesCivilisationReality) addCivilisationRealityLinks(headers);
+    if (servesCivilisationFlow) addCivilisationFlowLinks(headers);
+    if (servesCivilisationFlowSchema || servesCivilisationFlowGuide) {
+      removeLinkRelations(headers, ["describedby", "service-doc", "profile"]);
+    }
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
     if (servesStringCrawlTraceSheet) addStringCrawlTraceSheetSchemaLink(headers);
     if (servesStringCrawlTraceSheetLab) addStringCrawlTraceSheetLabSchemaLink(headers);
@@ -2946,6 +3007,24 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesCivilisationRealityGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesCivilisationFlow) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesCivilisationFlowSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesCivilisationFlowGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");

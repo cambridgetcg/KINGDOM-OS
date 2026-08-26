@@ -46,6 +46,27 @@
       "sha256": "1a9803fa473891388a0b1a0f5d0220a4cde6f5a73181d0c81a2b8f738c786950"
     },
     {
+      "id": "civilisation-flow-nuance-atlas/0.1/guide",
+      "route": "/CIVILISATION-FLOW-NUANCE-ATLAS.md",
+      "source": "references/civilisation-flow-atlas.md",
+      "destination": "CIVILISATION-FLOW-NUANCE-ATLAS.md",
+      "sha256": "309c885453be097767c622b5bc15ce4feca8b4d96e49cbd06b94038226ea263b"
+    },
+    {
+      "id": "civilisation-flow-nuance-atlas/0.1/record",
+      "route": "/atlases/civilisation-flow-nuance-atlas-2026-08-26.json",
+      "source": "data/reality/civilisation-flow-atlas.v0.1.json",
+      "destination": "atlases/civilisation-flow-nuance-atlas-2026-08-26.json",
+      "sha256": "f391942a8df09854d2b3329fa074627c29ae6fc01b3948f026a60af9ac536f02"
+    },
+    {
+      "id": "civilisation-flow-nuance-atlas/0.1/schema",
+      "route": "/schemas/civilisation-flow-nuance-atlas/0.1.json",
+      "source": "schemas/civilisation-flow-atlas-v0.1.schema.json",
+      "destination": "schemas/civilisation-flow-nuance-atlas/0.1.json",
+      "sha256": "5becfaeb21a75a1351bc8bcbee36be6985dad7748d392d8646fc65859076c292"
+    },
+    {
       "id": "civilisation-reality-projection/0.1/guide",
       "route": "/CIVILISATION-REALITY-PROJECTION.md",
       "source": "references/civilisation-reality-projection.md",

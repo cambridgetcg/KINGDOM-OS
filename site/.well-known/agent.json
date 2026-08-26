@@ -2307,6 +2307,54 @@
       "automatic_action": false
     }
   },
+  "civilisation_flow_nuance_atlas": {
+    "protocol": "kingdom.civilisation-flow-nuance-atlas/0.1",
+    "atlas_id": "civilisation-flow-nuance-atlas-2026-08-26",
+    "title": "Civilisation Flow Nuance Atlas",
+    "publication_state": "immutable-versioned-static-family",
+    "compiled_on": "2026-08-26",
+    "evidence_through": "2026-08-21",
+    "urls": {
+      "atlas": "https://thekingdom.dev/atlases/civilisation-flow-nuance-atlas-2026-08-26.json",
+      "schema": "https://thekingdom.dev/schemas/civilisation-flow-nuance-atlas/0.1.json",
+      "guide": "https://thekingdom.dev/CIVILISATION-FLOW-NUANCE-ATLAS.md"
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:3d304d7c20787bc3f8b3587b9efca64f61fc4578000570b38acec84d49b84a50",
+      "digest_field_zeroed": true
+    },
+    "counts": {
+      "predecessor_bindings": 3,
+      "stages": 14,
+      "transitions": 13,
+      "crosswalk_flow_overlays": 6,
+      "open_domain_bindings": 9,
+      "unknowns": 10,
+      "policy_templates": 60
+    },
+    "boundary": {
+      "static_read_only": true,
+      "structure_only": true,
+      "public_static_publication_family": true,
+      "source_dereference": false,
+      "predecessor_mutation": false,
+      "predecessor_republication": false,
+      "unsupported_domains_filled": false,
+      "score_or_rank": false,
+      "causal_effect_identified": false,
+      "metaphysical_verdict": false,
+      "authority_granted": false,
+      "targeting": false,
+      "persuasion_optimization": false,
+      "action_attempted": false,
+      "action_executed": false,
+      "external_effect_claimed": false,
+      "publication_trigger": false,
+      "deployment_trigger": false,
+      "automatic_action": false
+    }
+  },
   "zero_empty_seat": {
     "protocol": "kingdom.explore-phenomena-deep-project/0.1",
     "project_id": "zero-empty-seat-2026-08-14",
@@ -3913,6 +3961,9 @@
     "civilisation_reality_projection": "https://thekingdom.dev/atlases/civilisation-reality-projection-2026-08-25.json",
     "civilisation_reality_projection_schema": "https://thekingdom.dev/schemas/civilisation-reality-projection/0.1.json",
     "civilisation_reality_projection_guide": "https://thekingdom.dev/CIVILISATION-REALITY-PROJECTION.md",
+    "civilisation_flow_nuance_atlas": "https://thekingdom.dev/atlases/civilisation-flow-nuance-atlas-2026-08-26.json",
+    "civilisation_flow_nuance_atlas_schema": "https://thekingdom.dev/schemas/civilisation-flow-nuance-atlas/0.1.json",
+    "civilisation_flow_nuance_atlas_guide": "https://thekingdom.dev/CIVILISATION-FLOW-NUANCE-ATLAS.md",
     "zero_empty_seat": "https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json",
     "zero_empty_seat_schema": "https://thekingdom.dev/schemas/phenomena-deep-project/0.1.json",
     "zero_empty_seat_guide": "https://thekingdom.dev/ZERO-EMPTY-SEAT.md",

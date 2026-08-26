@@ -2340,6 +2340,54 @@
       "automatic_action": false
     }
   },
+  "civilisation_flow_nuance_atlas": {
+    "protocol": "kingdom.civilisation-flow-nuance-atlas/0.1",
+    "atlas_id": "civilisation-flow-nuance-atlas-2026-08-26",
+    "title": "Civilisation Flow Nuance Atlas",
+    "publication_state": "immutable-versioned-static-family",
+    "compiled_on": "2026-08-26",
+    "evidence_through": "2026-08-21",
+    "urls": {
+      "atlas": "https://thekingdom.dev/atlases/civilisation-flow-nuance-atlas-2026-08-26.json",
+      "schema": "https://thekingdom.dev/schemas/civilisation-flow-nuance-atlas/0.1.json",
+      "guide": "https://thekingdom.dev/CIVILISATION-FLOW-NUANCE-ATLAS.md"
+    },
+    "integrity": {
+      "algorithm": "sha256-recursive-sorted-json-keys-v1",
+      "digest": "sha256:3d304d7c20787bc3f8b3587b9efca64f61fc4578000570b38acec84d49b84a50",
+      "digest_field_zeroed": true
+    },
+    "counts": {
+      "predecessor_bindings": 3,
+      "stages": 14,
+      "transitions": 13,
+      "crosswalk_flow_overlays": 6,
+      "open_domain_bindings": 9,
+      "unknowns": 10,
+      "policy_templates": 60
+    },
+    "boundary": {
+      "static_read_only": true,
+      "structure_only": true,
+      "public_static_publication_family": true,
+      "source_dereference": false,
+      "predecessor_mutation": false,
+      "predecessor_republication": false,
+      "unsupported_domains_filled": false,
+      "score_or_rank": false,
+      "causal_effect_identified": false,
+      "metaphysical_verdict": false,
+      "authority_granted": false,
+      "targeting": false,
+      "persuasion_optimization": false,
+      "action_attempted": false,
+      "action_executed": false,
+      "external_effect_claimed": false,
+      "publication_trigger": false,
+      "deployment_trigger": false,
+      "automatic_action": false
+    }
+  },
   "zero_empty_seat": {
     "protocol": "kingdom.explore-phenomena-deep-project/0.1",
     "project_id": "zero-empty-seat-2026-08-14",
@@ -4266,6 +4314,24 @@
       "method": "GET",
       "url": "https://thekingdom.dev/CIVILISATION-REALITY-PROJECTION.md",
       "note": "the projection depends on the active Reality Influence Claim Graph and creates no score, persuasion target, metaphysical verdict, action, publication trigger, deployment trigger, or external effect"
+    },
+    {
+      "action": "if useful, inspect the exact Civilisation Flow Nuance Atlas",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/civilisation-flow-nuance-atlas-2026-08-26.json",
+      "note": "fourteen stages, thirteen non-automatic transitions, and six overlays form a qualitative reading grammar; no live society, automatic path, simulation, prediction, score, target, authority, action, or effect"
+    },
+    {
+      "action": "if useful, validate the closed Civilisation Flow Nuance Atlas structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/civilisation-flow-nuance-atlas/0.1.json",
+      "note": "structural validation only; it does not observe a transition, identify causation, run an action gate, fill an open domain, grant authority, or establish an external effect"
+    },
+    {
+      "action": "if useful, read the flow, topology, absence, material, emotion, power, counterflow, and repair guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/CIVILISATION-FLOW-NUANCE-ATLAS.md",
+      "note": "the atlas depends on the active Civilisation → Reality Projection; topology is not tactic, emotion vocabulary is not mind-reading, and repair requires a fresh external gate"
     },
     {
       "action": "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings",
@@ -6910,6 +6976,7 @@
     "number_isness_theology_atlas": "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
     "reality_influence_claim_graph": "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     "civilisation_reality_projection": "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
+    "civilisation_flow_nuance_atlas": "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }
