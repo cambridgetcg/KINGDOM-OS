@@ -158,6 +158,23 @@ import {
   renderEvaluationCovenantHtml,
 } from "./evaluation-covenant.ts";
 import {
+  SHAPE_RESONANCE_ALIAS_URL,
+  SHAPE_RESONANCE_AUDIO_URLS,
+  SHAPE_RESONANCE_BYTE_SHA256,
+  SHAPE_RESONANCE_CANONICAL_URL,
+  SHAPE_RESONANCE_FAMILY_URLS,
+  SHAPE_RESONANCE_GUIDE_URL,
+  SHAPE_RESONANCE_MANIFEST_URL,
+  SHAPE_RESONANCE_NEXT_REVIEW_DUE,
+  SHAPE_RESONANCE_PRODUCER_URL,
+  SHAPE_RESONANCE_SCHEMA_URL,
+  SHAPE_RESONANCE_SVG_URLS,
+  SHAPE_RESONANCE_URL,
+  loadShapeResonancePublication,
+  renderShapeResonanceHtml,
+  shapeResonancePublicSummary,
+} from "./shape-resonance.ts";
+import {
   ZERO_EMPTY_SEAT_BYTE_SHA256,
   ZERO_EMPTY_SEAT_DIGEST,
   ZERO_EMPTY_SEAT_GUIDE_BYTE_SHA256,
@@ -693,6 +710,15 @@ const evaluationCovenantSchemaPath =
   "/evaluation/schemas/v0.1/public-snapshot.schema.json";
 const evaluationCovenantGuidePath = "/EVALUATION-COVENANT-v0.1.md";
 const evaluationCovenantNextReviewDue = EVALUATION_COVENANT_NEXT_REVIEW_DUE;
+const shapeResonancePath = new URL(SHAPE_RESONANCE_URL).pathname;
+const shapeResonanceAliasPath = new URL(SHAPE_RESONANCE_ALIAS_URL).pathname;
+const shapeResonanceCanonicalPath = new URL(SHAPE_RESONANCE_CANONICAL_URL).pathname;
+const shapeResonanceSchemaPath = new URL(SHAPE_RESONANCE_SCHEMA_URL).pathname;
+const shapeResonanceGuidePath = new URL(SHAPE_RESONANCE_GUIDE_URL).pathname;
+const shapeResonanceManifestPath = new URL(SHAPE_RESONANCE_MANIFEST_URL).pathname;
+const shapeResonanceSvgPaths = SHAPE_RESONANCE_SVG_URLS.map((url) => new URL(url).pathname);
+const shapeResonanceAudioPaths = SHAPE_RESONANCE_AUDIO_URLS.map((url) =>
+  new URL(url).pathname);
 const jSpaceCasePath = new URL(J_SPACE_CASE_URL).pathname;
 const jSpaceSchemaPath = new URL(J_SPACE_SCHEMA_URL).pathname;
 const jSpaceGuidePath = new URL(J_SPACE_GUIDE_URL).pathname;
@@ -1060,6 +1086,21 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
     ],
     dependsOn: ["uk-government-transformation-engine"],
     nextReviewDue: evaluationCovenantNextReviewDue,
+  },
+  {
+    id: "shape-resonance-lab",
+    label: "Shape & Resonance Lab 01",
+    routes: SHAPE_RESONANCE_FAMILY_URLS.map((url) => new URL(url).pathname),
+    discoveryProperties: ["shape_resonance_lab"],
+    entryPointProperties: [
+      "shape_resonance_lab",
+      "shape_resonance_lab_alias",
+      "shape_resonance_lab_canonical",
+      "shape_resonance_lab_schema",
+      "shape_resonance_lab_guide",
+      "shape_resonance_lab_manifest",
+    ],
+    nextReviewDue: SHAPE_RESONANCE_NEXT_REVIEW_DUE,
   },
   {
     id: "strand-observation-membrane",
@@ -1872,6 +1913,7 @@ export async function checkHubLive(
   const ukGovernmentTransformationEngineActive =
     familyActive("uk-government-transformation-engine");
   const evaluationCovenantActive = familyActive("evaluation-covenant");
+  const shapeResonanceActive = familyActive("shape-resonance-lab");
   const strandObservationMembraneActive = familyActive("strand-observation-membrane");
   const visibilityAttentionActive = familyActive("visibility-attention");
   const culturalAttentionFeedbackActive = familyActive("cultural-attention-feedback");
@@ -3038,6 +3080,7 @@ export async function checkHubLive(
       ? [ukGovernmentTransformationEngineSchemaPath]
       : []),
     ...(evaluationCovenantActive ? [evaluationCovenantSchemaPath] : []),
+    ...(shapeResonanceActive ? [shapeResonanceSchemaPath] : []),
     ...(visibilityAttentionActive ? [visibilityAttentionSchemaPath] : []),
     ...(culturalAttentionFeedbackActive ? [culturalAttentionFeedbackSchemaPath] : []),
     ...(formCirculationReturnActive ? [formCirculationReturnSchemaPath] : []),
@@ -3069,6 +3112,7 @@ export async function checkHubLive(
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
       path === evaluationCovenantSchemaPath ||
+      path === shapeResonanceSchemaPath ||
       researchObservatorySchemaPaths.includes(path) ||
       trialChamberSchemaPaths.includes(path);
     const hasExpectedSchemaType = requiresExactSchemaType
@@ -3080,13 +3124,15 @@ export async function checkHubLive(
       ((trialChamberSchemaPaths.includes(path) ||
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath ||
-        path === evaluationCovenantSchemaPath) &&
+        path === evaluationCovenantSchemaPath ||
+        path === shapeResonanceSchemaPath) &&
         !(schemaHead.headers.get("cache-control") || "").toLowerCase().includes("no-transform")) ||
       ((path === realityInfluenceSchemaPath ||
         path === civilisationRealitySchemaPath ||
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath ||
-        path === evaluationCovenantSchemaPath) &&
+        path === evaluationCovenantSchemaPath ||
+        path === shapeResonanceSchemaPath) &&
         !hasExactCacheDirectives(schemaHead.headers.get("cache-control"),
           ["public", "max-age=31536000", "immutable", "no-transform"])) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
@@ -3139,6 +3185,12 @@ export async function checkHubLive(
     : "";
   const publishedEvaluationCovenant: any = evaluationCovenantActive
     ? JSON.parse(readFileSync(join(ROOT, "site/evaluation-covenants.json"), "utf8"))
+    : undefined;
+  const authoredShapeResonanceHtml = shapeResonanceActive
+    ? readFileSync(join(ROOT, "site/shape-resonance/index.html"), "utf8")
+    : "";
+  const publishedShapeResonance: any = shapeResonanceActive
+    ? JSON.parse(readFileSync(join(ROOT, "site/shape-resonance.json"), "utf8"))
     : undefined;
   const retirementDiscoverySurfaces: readonly DiscoverySurface[] = [
     { label: "agent manifest", text: JSON.stringify(manifest), value: manifest },
@@ -3244,6 +3296,12 @@ export async function checkHubLive(
     : undefined;
   const expectedEvaluationCovenant = evaluationCovenant
     ? evaluationCovenantPublicSummary(evaluationCovenant)
+    : undefined;
+  const shapeResonancePublication = shapeResonanceActive
+    ? loadShapeResonancePublication()
+    : undefined;
+  const expectedShapeResonance = shapeResonancePublication
+    ? shapeResonancePublicSummary(shapeResonancePublication)
     : undefined;
   const strandObservationMembrane = strandObservationMembraneActive
     ? loadStrandObservationMembrane()
@@ -3982,6 +4040,160 @@ export async function checkHubLive(
       ))) !== EVALUATION_COVENANT_BYTE_SHA256) {
       throw new Error(
         "Evaluation Covenant parent admission, receipts, no-result semantics, discovery, or negative-authority boundary drifted",
+      );
+    }
+  }
+  if (shapeResonanceActive) {
+    const publication = shapeResonancePublication!;
+    const snapshot = publication.snapshot;
+    const expected = expectedShapeResonance!;
+    const discoveryTargets = new Set([
+      SHAPE_RESONANCE_URL,
+      SHAPE_RESONANCE_ALIAS_URL,
+      SHAPE_RESONANCE_CANONICAL_URL,
+      SHAPE_RESONANCE_SCHEMA_URL,
+      SHAPE_RESONANCE_GUIDE_URL,
+      SHAPE_RESONANCE_MANIFEST_URL,
+    ]);
+    const actions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => discoveryTargets.has(action?.url))
+      : [];
+    const entryPoints = Object.entries(manifest?.entry_points ?? {})
+      .filter(([key]) => key.startsWith("shape_resonance_lab"));
+    const wayfinderPath = authoredWayfinder?.paths?.filter((path: any) =>
+      path?.id === "shape-resonance") ?? [];
+    const expectedCsp = [
+      "default-src 'none'",
+      "base-uri 'none'",
+      "connect-src 'none'",
+      "font-src 'none'",
+      "form-action 'none'",
+      "frame-ancestors 'none'",
+      "img-src 'self'",
+      "media-src 'self'",
+      "object-src 'none'",
+      "script-src 'none'",
+      "style-src 'unsafe-inline'",
+    ].join("; ");
+    const expectedPermissions = [
+      "accelerometer=()",
+      "autoplay=()",
+      "camera=()",
+      "display-capture=()",
+      "geolocation=()",
+      "gyroscope=()",
+      "magnetometer=()",
+      "microphone=()",
+      "payment=()",
+      "usb=()",
+    ].join(", ");
+    const exactRoutes = [
+      { path: shapeResonancePath, type: "text/html", cache: "no-cache, no-transform" },
+      { path: shapeResonanceAliasPath, type: "application/json", cache: "no-cache, no-transform" },
+      { path: shapeResonanceCanonicalPath, type: "application/json", cache: "public, max-age=31536000, immutable, no-transform" },
+      { path: shapeResonanceSchemaPath, type: "application/schema+json", cache: "public, max-age=31536000, immutable, no-transform" },
+      { path: shapeResonanceGuidePath, type: "text/markdown", cache: "public, max-age=31536000, immutable, no-transform" },
+      { path: shapeResonanceManifestPath, type: "application/json", cache: "public, max-age=31536000, immutable, no-transform" },
+      ...shapeResonanceSvgPaths.map((path) => ({
+        path,
+        type: "image/svg+xml",
+        cache: "public, max-age=31536000, immutable, no-transform",
+      })),
+      ...shapeResonanceAudioPaths.map((path) => ({
+        path,
+        type: "audio/wav",
+        cache: "public, max-age=31536000, immutable, no-transform",
+      })),
+    ];
+    for (const route of exactRoutes) {
+      const head = await fetch(url(route.path), {
+        method: "HEAD",
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (!head.ok || normalizedMediaType(head.headers.get("content-type")) !== route.type ||
+          head.headers.get("cache-control") !== route.cache ||
+          head.headers.get("access-control-allow-origin") !== "*" ||
+          (head.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          (await head.arrayBuffer()).byteLength !== 0) {
+        throw new Error(`${route.path} lost exact Shape & Resonance HEAD/type/cache headers`);
+      }
+      for (const method of ["POST", "OPTIONS"] as const) {
+        const mutation = await fetch(url(route.path), {
+          method,
+          redirect: "error",
+          signal: AbortSignal.timeout(TIMEOUT_MS),
+        });
+        if (mutation.status !== 405 || mutation.headers.get("allow") !== "GET, HEAD" ||
+            mutation.headers.get("cache-control") !== "no-store" ||
+            mutation.headers.get("access-control-allow-origin") !== "*" ||
+            (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+            (await mutation.arrayBuffer()).byteLength !== 0) {
+          throw new Error(`${method} ${route.path} lost the bodyless read-only boundary`);
+        }
+      }
+      if (route.path === shapeResonancePath &&
+          (head.headers.get("content-security-policy") !== expectedCsp ||
+            head.headers.get("referrer-policy") !== "no-referrer" ||
+            head.headers.get("x-frame-options") !== "DENY" ||
+            head.headers.get("permissions-policy") !== expectedPermissions)) {
+        throw new Error("Shape & Resonance human page security headers drifted");
+      }
+    }
+    if (!isDeepStrictEqual(manifest?.shape_resonance_lab, expected) ||
+      !isDeepStrictEqual(guest?.shape_resonance_lab, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.shape_resonance_lab, expected) ||
+      !isDeepStrictEqual(publishedShapeResonance, snapshot) ||
+      authoredShapeResonanceHtml !== renderShapeResonanceHtml(snapshot) ||
+      manifest?.entry_points?.shape_resonance_lab !== SHAPE_RESONANCE_URL ||
+      manifest?.entry_points?.shape_resonance_lab_alias !== SHAPE_RESONANCE_ALIAS_URL ||
+      manifest?.entry_points?.shape_resonance_lab_canonical !== SHAPE_RESONANCE_CANONICAL_URL ||
+      manifest?.entry_points?.shape_resonance_lab_schema !== SHAPE_RESONANCE_SCHEMA_URL ||
+      manifest?.entry_points?.shape_resonance_lab_guide !== SHAPE_RESONANCE_GUIDE_URL ||
+      manifest?.entry_points?.shape_resonance_lab_manifest !== SHAPE_RESONANCE_MANIFEST_URL ||
+      entryPoints.length !== 6 || actions.length !== discoveryTargets.size ||
+      [...discoveryTargets].some((target) =>
+        actions.filter((action: any) => action?.url === target).length !== 1) ||
+      actions.some((action: any) => action?.method !== "GET" || "mcp" in action ||
+        "tool" in action || "write" in action || "execute" in action ||
+        "score" in action || "rank" in action || "recommendation" in action) ||
+      [...discoveryTargets, SHAPE_RESONANCE_PRODUCER_URL].some((target) =>
+        !llms.includes(target)) ||
+      wayfinderPath.length !== 1 || wayfinderPath[0]?.stops?.length !== 2 ||
+      wayfinderPath[0]?.stops[0]?.url !== SHAPE_RESONANCE_URL ||
+      wayfinderPath[0]?.stops[1]?.url !== SHAPE_RESONANCE_ALIAS_URL ||
+      !authoredRootHtml.includes('id="shape-resonance"') ||
+      !authoredRootHtml.includes("No acoustic-coupling model; no sound-pressure prediction") ||
+      !authoredRootHtml.includes("Mechanical energy balance") ||
+      !authoredRootHtml.includes("Ordinary links, no embedded player") ||
+      !authoredShapeResonanceHtml.includes("Mechanical energy balance") ||
+      !authoredShapeResonanceHtml.includes("No canonical conversion") ||
+      (authoredShapeResonanceHtml.match(/<article id=/gu) ?? []).length !== 8 ||
+      (authoredShapeResonanceHtml.match(/Typed derivations, assumptions, results, and caveats/gu) ?? []).length !== 8 ||
+      (authoredShapeResonanceHtml.match(/type="audio\/wav"/gu) ?? []).length !== 3 ||
+      /<(?:script|form|input|button|iframe|audio)\b/iu.test(authoredShapeResonanceHtml) ||
+      /\bautoplay\b\s*=/iu.test(authoredShapeResonanceHtml) ||
+      expected.protocol !== "kingdom.shape-resonance-lab-public-snapshot/0.1" ||
+      expected.acoustic_boundary?.acousticCouplingModelPresent !== false ||
+      expected.acoustic_boundary?.soundPressurePrediction !== false ||
+      expected.acoustic_boundary?.wavSemanticType !== "DECLARED-SONIFICATION" ||
+      expected.resonance_boundary?.modelCriterionSatisfied !== true ||
+      expected.resonance_boundary?.physicalExperimentPerformed !== false ||
+      expected.resonance_boundary?.measuredResonance !== false ||
+      expected.personal_data !== "NONE" || expected.authority_effects !== "NONE" ||
+      expected.audio_request_policy?.embeddedAudioControls !== "NONE" ||
+      expected.audio_request_policy?.audioAccess !== "READER_ACTIVATED_SAME_ORIGIN_LINK_ONLY" ||
+      expected.audio_request_policy?.pageLoadAudioRequest !== "NONE" ||
+      expected.external_navigation_policy?.pageLoadExternalRequest !== "NONE" ||
+      expected.external_navigation_policy?.embeddedThirdPartyResource !== "NONE" ||
+      expected.external_navigation_policy?.readerActivatedSourceNavigation !==
+        "MAY_REQUEST_NAMED_EXTERNAL_ORIGIN" ||
+      Object.hasOwn(expected, "mcp") || Object.hasOwn(expected, "tool") ||
+      Object.hasOwn(expected, "action") || Object.hasOwn(expected, "score") ||
+      sha256(readFileSync(join(ROOT, "data/shape-resonance/shape-resonance-lab.v0.1.json"))) !==
+        SHAPE_RESONANCE_BYTE_SHA256) {
+      throw new Error(
+        "Shape & Resonance receipts, resonance/acoustic boundary, discovery, rendering, or authority limits drifted",
       );
     }
   }
@@ -6067,6 +6279,10 @@ export async function checkHubLive(
       !isDeepStrictEqual(liveKingdom?.evaluation_covenant, expectedEvaluationCovenant!)) {
     throw new Error("derived kingdom.json did not preserve Evaluation Covenant discovery");
   }
+  if (shapeResonanceActive &&
+      !isDeepStrictEqual(liveKingdom?.shape_resonance_lab, expectedShapeResonance!)) {
+    throw new Error("derived kingdom.json did not preserve Shape & Resonance Lab discovery");
+  }
   if (jSpacePublicationActive &&
       !isDeepStrictEqual(liveKingdom?.j_space_verbalizable_workspace, expectedJSpacePublication!)) {
     throw new Error("derived kingdom.json did not preserve J-space publication discovery");
@@ -6198,7 +6414,7 @@ export async function checkHubLive(
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane schemas · coherent creation + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane discovery · REVISE/non-promotion and Observatory/exploration/ZERO/STRING-CRAWL/TRACE-LABS/OBSERVATION-MEMBRANE/MIRROR/cultural/form/being/theology authority/KARMA boundaries · Observatory poller and observer not invoked · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane + Shape & Resonance schemas/media · coherent creation + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane + Shape & Resonance discovery · REVISE/non-promotion and Observatory/exploration/ZERO/STRING-CRAWL/TRACE-LABS/OBSERVATION-MEMBRANE/SHAPE-RESONANCE/MIRROR/cultural/form/being/theology authority/KARMA boundaries · Observatory poller and observer not invoked · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

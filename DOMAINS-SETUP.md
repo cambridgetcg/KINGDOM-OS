@@ -87,12 +87,13 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 146 assets:
-117 ledgered immutable/versioned assets and 29 mutable assets. There are 144 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 163 assets:
+132 ledgered immutable/versioned assets and 31 mutable assets. There are 161 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 143 URLs. The generated surface describes twelve
-atlases, three lab routes, one experiment route, and one separate activation
-across twenty-six retirement families:
+contracts. The sitemap contains 149 URLs. The generated surface describes twelve
+atlases, four primary lab JSON routes plus the Shape & Resonance manifest/media,
+one experiment route, and one separate activation across twenty-seven retirement
+families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 the mutable `/observatory/` human view and `/research.json` metadata snapshot;
@@ -122,6 +123,13 @@ retire with the active UK Government Transformation Engine family, inherits its
 `nextReviewDue`, and remains synthetic Phase-0 design only: draft, unsealed,
 unregistered, with no run, data, participants, result, observed outcome, selection,
 decision, action, adoption, implementation, or authority;
+the mutable `/shape-resonance/` human view and `/shape-resonance.json` alias;
+the immutable dated Shape & Resonance snapshot, closed schema, guide, output
+manifest, eight SVG diagrams, and three WAV declared sonifications; all
+seventeen routes retire atomically, the active page/alias/discovery must be
+replaced or fully retired after `2027-08-26`, v0.1 has no acoustic-coupling
+model or sound-pressure prediction, audio access is reader-activated
+same-origin link only, and no personal data, authority, or action is created;
 `love-loops.json`; `love-loops.source.json`; `/schemas/love-loop/0.1.json`;
 `CREATION-LOOP.md`; the authored
 `/principalities/moonshot-hf-npm-2026-08-11.json`,

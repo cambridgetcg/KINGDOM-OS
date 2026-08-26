@@ -379,8 +379,8 @@ describe("UK Government Engine Phase-0 publication", () => {
       { source: UK_GOVERNMENT_ENGINE_GUIDE_LOCATOR, destination: "UK-GOVERNMENT-ENGINE-v0.1.md" },
     ];
     expect(HUB_ASSETS.filter(({ source }) => family.some((asset) => asset.source === source))).toEqual(family);
-    expect(HUB_ASSETS).toHaveLength(146);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(29);
+    expect(HUB_ASSETS).toHaveLength(163);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
     expect(MUTABLE_HUB_DESTINATIONS).toContain("government-engine/index.html");
     expect(MUTABLE_HUB_DESTINATIONS).toContain("government.json");
     expect(MUTABLE_HUB_DESTINATIONS).not.toContain("government/uk-government-engine-2026-08-21.json");

@@ -257,6 +257,28 @@
       ]
     },
     {
+      "id": "shape-resonance",
+      "label": "explore shape, vibration, sound, and musical geometry",
+      "glyph": "∿",
+      "invitation": "Ask what a shape can sing while every mathematical, physical, signal, perceptual, and cultural bridge remains explicit.",
+      "keywords": ["shape", "vibration", "resonance", "sound", "music", "math", "geometry", "modes", "frequency", "energy", "harmony", "rhythm", "sonification", "spectrum"],
+      "boundary": "Shape & Resonance Lab 01 is static synthetic Phase-0 modeling, not an acoustic measurement or universal music theory. v0.1 has no acoustic-coupling model and predicts no sound pressure. Physical resonance is not musical harmony; mechanical energy is not loudness, feeling, value, or metaphorical energy. WAVs are declared sonifications reached only through ordinary reader-activated same-origin links: no page-load audio request, embedded player, autoplay, microphone, recording, upload, participant data, healing, consciousness, sacred-geometry, universal-aesthetic, authority, or automatic action.",
+      "stops": [
+        {
+          "name": "Shape & Resonance Lab 01",
+          "url": "https://thekingdom.dev/shape-resonance/",
+          "why": "A complete no-JavaScript view of eight finite exhibits, derivations, assumptions, Mechanical energy balance, six refused conversions, one synthetic driven-response resonance assessment, static diagrams, and optional declared-sonification links.",
+          "scope": "State at publication only. Every diagram has an adjacent linear equivalent; every WAV link has receipts, carrier and spectral caveats, and a complete non-audio equivalent. No physical object, listener, participant, or external system is observed."
+        },
+        {
+          "name": "Shape & Resonance Lab 01 · mutable machine alias",
+          "url": "https://thekingdom.dev/shape-resonance.json",
+          "why": "The byte-preserved alias for the dated synthetic snapshot, with exact units, derivations, media receipts, falsifiers, source firewall, and immutable publication routes.",
+          "scope": "Synthetic model metadata only. Structural validity and byte identity do not create acoustic coupling, sound-pressure prediction, measured resonance, preference, healing, licence, currentness, authority, or action."
+        }
+      ]
+    },
+    {
       "id": "world-commons",
       "label": "find free knowledge, public data, and open tools",
       "glyph": "🌍",

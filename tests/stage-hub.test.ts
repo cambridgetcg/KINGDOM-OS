@@ -58,14 +58,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(146);
-      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(29);
+      expect(HUB_ASSETS).toHaveLength(163);
+      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(117);
+      expect(ledger.ledger?.entries).toHaveLength(132);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(144);
-      expect(staged).toHaveLength(146);
+        .toHaveLength(161);
+      expect(staged).toHaveLength(163);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -92,6 +92,7 @@ describe("the hub staging contract", () => {
         "RIGHTS.md",
         "RITONAVIR-MECHANISM-LANDSCAPE.md",
         "RITONAVIR-POLYMORPH.md",
+        "SHAPE-RESONANCE-LAB-v0.1.md",
         "STRAND-DESCENT-LAB-04.md",
         "STRAND-OBSERVATION-MEMBRANE.md",
         "STRING-CRAWL-LAB-03.md",
@@ -141,6 +142,8 @@ describe("the hub staging contract", () => {
         "rights.json",
         "robots.txt",
         "schemas",
+        "shape-resonance",
+        "shape-resonance.json",
         "sitemap.xml",
         "trial-chamber",
         "trials",
@@ -246,8 +249,8 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(143);
-      expect(new Set(sitemapUrls).size).toBe(143);
+      expect(sitemapUrls).toHaveLength(149);
+      expect(new Set(sitemapUrls).size).toBe(149);
       for (const route of [
         "/government-engine/",
         "/government.json",
@@ -568,9 +571,31 @@ describe("the hub staging contract", () => {
         destination: "STRAND-DESCENT-LAB-04.md",
       });
       expect(readdirSync(join(output, "labs")).sort()).toEqual([
+        "shape-resonance",
+        "shape-resonance-lab-2026-08-26.json",
         "strand-descent-lab-04-2026-08-16.json",
         "string-crawl-strand-lab-02-2026-08-16.json",
         "string-crawl-trace-sheet-lab-2026-08-16.json",
+      ]);
+      expect(readdirSync(join(output, "labs/shape-resonance")).sort()).toEqual([
+        "assets",
+        "audio",
+        "output-manifest.json",
+      ]);
+      expect(readdirSync(join(output, "labs/shape-resonance/assets")).sort()).toEqual([
+        "boundary-variants.svg",
+        "cospectral-graphs.svg",
+        "graph-to-hz.svg",
+        "membrane-plate.svg",
+        "musical-geometry.svg",
+        "phase-magnitude.svg",
+        "rhythm-cycle.svg",
+        "square-degeneracy.svg",
+      ]);
+      expect(readdirSync(join(output, "labs/shape-resonance/audio")).sort()).toEqual([
+        "graph-modes.wav",
+        "phase-forward.wav",
+        "phase-reversed.wav",
       ]);
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("wings/"))).toHaveLength(1);
       expect(HUB_ASSETS.some(({ destination }) => /wings\/.*(?:latest|current).*\.json$/i.test(destination))).toBe(false);
