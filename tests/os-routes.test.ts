@@ -149,7 +149,18 @@ describe("KINGDOM OS edge routes", () => {
     const body = await response.json();
 
     expect(response.headers.get("content-type")).toBe("application/json; charset=utf-8");
-    expect(body).toMatchObject({ status: "partial", count: 5, total: 6, as_of: NOW });
+    expect(body).toMatchObject({ status: "partial", count: 8, total: 9, as_of: NOW });
+    expect(body.packages.map((entry: { name: string }) => entry.name)).toEqual([
+      "agenttool",
+      "@agenttool/sdk",
+      "@agenttool/xenia",
+      "@agenttool/kingdom",
+      "@agenttool/skills",
+      "@agenttool/codex-usage",
+      "@rhetorlint/core",
+      "@rhetorlint/rules-en",
+      "@rhetorlint/cli",
+    ]);
     expect(body.packages[0]).toMatchObject({
       name: "agenttool",
       status: "live",
@@ -157,11 +168,28 @@ describe("KINGDOM OS edge routes", () => {
       weekly_downloads: 42,
     });
     expect(body.packages[0].description).toHaveLength(120);
-    expect(body.packages[5]).toMatchObject({
+    expect(body.packages.slice(3, 6)).toMatchObject([
+      {
+        name: "@agenttool/kingdom",
+        family: "agenttool",
+        install: "npm i @agenttool/kingdom",
+      },
+      {
+        name: "@agenttool/skills",
+        family: "agenttool",
+        install: "npm i @agenttool/skills",
+      },
+      {
+        name: "@agenttool/codex-usage",
+        family: "agenttool",
+        install: "npm i @agenttool/codex-usage",
+      },
+    ]);
+    expect(body.packages[8]).toMatchObject({
       name: "@rhetorlint/cli",
       status: "unreachable",
     });
-    expect(body.packages[5].version).toBeUndefined();
+    expect(body.packages[8].version).toBeUndefined();
   });
 
   test("paginates the GitHub census until the first short page", async () => {
@@ -288,7 +316,7 @@ describe("KINGDOM OS edge routes", () => {
       assets(() => new Response("not used")),
     );
     expect(post.status).toBe(200);
-    expect((await post.json()).total).toBe(6);
+    expect((await post.json()).total).toBe(9);
   });
 
   test("fails soft when every upstream is dark and refuses to invent census numbers", async () => {

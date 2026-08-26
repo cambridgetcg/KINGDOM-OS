@@ -113,9 +113,18 @@ overlays only live census measurements.
 
 The recovered system console lives at `/os/`. Its machine readings are
 `/os.json` (citizens, doors, law, protocols, and trust),
-`/packages.json` (the six-package npm roster), and the derived
+`/packages.json` (the nine-package npm roster), and the derived
 `/kingdom.json`. See `OS-ROUTES.md` for provenance, fail-soft behavior, and
 known fidelity limits.
+
+The curated npm roster covers `agenttool`, `@agenttool/sdk`,
+`@agenttool/xenia`, `@agenttool/kingdom`, `@agenttool/skills`,
+`@agenttool/codex-usage`, and the three RhetorLint packages. Publication here
+reports registry metadata and inert `npm i` text; it does not install or
+register a package, invoke a runtime, or grant permission, consent, or
+authority. Package publication also does not adopt, replace, or extend
+`kingdom.isness/0.1`, whose protocols remain distinct and independently
+versioned.
 
 `WORLD-COMMONS-ROADMAP.md` explains how the reviewed directory can grow into
 small, provenance-preserving adapters without quietly turning discovery into
