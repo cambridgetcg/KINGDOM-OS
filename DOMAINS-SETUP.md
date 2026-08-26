@@ -87,12 +87,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 166 assets:
-135 ledgered immutable/versioned assets and 31 mutable assets. There are 164 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 169 assets:
+138 ledgered immutable/versioned assets and 31 mutable assets. There are 167 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 152 URLs. The generated surface describes thirteen
+contracts. The sitemap contains 155 URLs. The generated surface describes thirteen
 atlases, four primary lab JSON routes plus the Shape & Resonance manifest/media,
-one experiment route, and one separate activation across twenty-eight retirement
+one experiment route, and one separate activation across twenty-nine retirement
 families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
@@ -220,6 +220,16 @@ uncertainty, affected parties, counterflow, and repair visible. It observes no
 live society, simulates or predicts nothing, runs no action gate, infers no
 person or group state, and creates no score, target, tactic, authority, action,
 publication trigger, deployment trigger, or external effect;
+the authored immutable `/truth/polyphonic-claim-atlas-2026-08-26.json`, closed
+`/truth/schemas/v0.1/public-snapshot.schema.json`, and
+`/POLYPHONIC-CLAIM-ATLAS-v0.1.md` guide; this static synthetic Phase-0 family
+has no alias, custom page, Wayfinder recommendation, MCP surface, runtime,
+currentness claim, truth oracle, person/source/community score, intent
+inference, live claim intake, action authority, or active dependency. The
+separate site-authored source locator pins immutable producer tag
+`https://github.com/cambridgetcg/kingdom-polyphonic-claim-atlas/tree/v0.1.1`
+at revision `ca7bb37271853545a84bc1b8955ce63918da979b`; it establishes no truth,
+imports no authority, and creates no runtime dependency or currentness claim;
 the authored `/atlases/zero-empty-seat-2026-08-14.json`, which reuses the closed
 `/schemas/phenomena-deep-project/0.1.json` inert project profile, and its versioned
 `/ZERO-EMPTY-SEAT.md` guide;

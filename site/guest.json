@@ -2388,6 +2388,46 @@
       "automatic_action": false
     }
   },
+  "polyphonic_claim_atlas": {
+    "title": "KINGDOM Polyphonic Claim Atlas: Truth Relations Phase 0",
+    "description": "A static synthetic atlas for inspecting typed relations among expression, claim, warrant, reasoning, narrative, provenance, institutional status, assessment and correction without producing a truth oracle.",
+    "protocol": "kingdom.truth-relations/0.1",
+    "artifact": {
+      "id": "polyphonic-claim-atlas-2026-08-26",
+      "version": "0.1.0",
+      "asOf": "2026-08-26",
+      "phase": "PHASE_0",
+      "state": "STATIC_SYNTHETIC_PHASE_0",
+      "immutableHistoricalArtifact": true,
+      "runtimeCurrentnessClaim": false
+    },
+    "publicHandoff": {
+      "canonicalPath": "/truth/polyphonic-claim-atlas-2026-08-26.json",
+      "schemaPath": "/truth/schemas/v0.1/public-snapshot.schema.json",
+      "guidePath": "/POLYPHONIC-CLAIM-ATLAS-v0.1.md"
+    },
+    "source": {
+      "tag": "https://github.com/cambridgetcg/kingdom-polyphonic-claim-atlas/tree/v0.1.1",
+      "revision": "ca7bb37271853545a84bc1b8955ce63918da979b",
+      "relation": "SITE_AUTHORED_PINNED_SOURCE_LOCATOR",
+      "establishesTruth": false,
+      "importsAuthority": false,
+      "runtimeDependency": false,
+      "currentnessClaim": false
+    },
+    "boundary": {
+      "truth_oracle": false,
+      "global_truth_status": false,
+      "person_source_community_scores": false,
+      "lie_or_intent_inference": false,
+      "personal_data": false,
+      "live_claims": false,
+      "action_authority": false,
+      "zerone_karma_nen_adapter": false,
+      "runtime": false,
+      "mcp": false
+    }
+  },
   "zero_empty_seat": {
     "protocol": "kingdom.explore-phenomena-deep-project/0.1",
     "project_id": "zero-empty-seat-2026-08-14",
@@ -4332,6 +4372,24 @@
       "method": "GET",
       "url": "https://thekingdom.dev/CIVILISATION-FLOW-NUANCE-ATLAS.md",
       "note": "the atlas depends on the active Civilisation → Reality Projection; topology is not tactic, emotion vocabulary is not mind-reading, and repair requires a fresh external gate"
+    },
+    {
+      "action": "if useful, inspect the immutable Polyphonic Claim Atlas Phase-0 record",
+      "method": "GET",
+      "url": "https://thekingdom.dev/truth/polyphonic-claim-atlas-2026-08-26.json",
+      "note": "static synthetic historical artifact; no runtime-currentness claim, truth oracle, score, lie or intent inference, live claim, action authority, adapter, runtime, or MCP surface"
+    },
+    {
+      "action": "if useful, validate the closed Polyphonic Claim Atlas structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/truth/schemas/v0.1/public-snapshot.schema.json",
+      "note": "structural validation only; it does not determine truth, create a global truth status, rank a person or source, infer intent, or authorize an action"
+    },
+    {
+      "action": "if useful, read the Polyphonic Claim Atlas Phase-0 guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/POLYPHONIC-CLAIM-ATLAS-v0.1.md",
+      "note": "reading and boundary guide for the same immutable static synthetic artifact; no alias, custom page, runtime, or currentness claim"
     },
     {
       "action": "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings",
@@ -6977,6 +7035,7 @@
     "reality_influence_claim_graph": "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     "civilisation_reality_projection": "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
     "civilisation_flow_nuance_atlas": "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
+    "polyphonic_claim_atlas": "The Polyphonic Claim Atlas is a static synthetic, immutable historical Phase-0 artifact with no runtime-currentness claim. It provides no truth oracle, global truth status, person/source/community score, lie or intent inference, personal data, live claim, action authority, Zerone/KARMA/NEN adapter, runtime, or MCP surface.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }
