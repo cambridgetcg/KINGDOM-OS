@@ -7,7 +7,7 @@ readings:
 |---|---|---|
 | `/os/` | staged HTML | Human console; recovered artifact with reviewed security and truth hardening |
 | `/os.json` | edge JSON | Live identity, door, law, protocol, and trust readings |
-| `/packages.json` | edge JSON | Live npm metadata and weekly downloads for six named packages |
+| `/packages.json` | edge JSON | Live npm metadata and weekly downloads for nine named packages |
 | `/kingdom.json` | edge JSON | Authored map with measured counts and matching door checks overlaid |
 | `/_kingdom.base.json` | staged JSON | Generated, Commons-aware input to the derived map |
 | `/love-loops.json` | staged JSON | Read-only, finite-turn Love∞ lineage |
@@ -280,7 +280,12 @@ unchanged.
 - Protocols read the mindicraft manifest and margin route. The margin check is
   GET-only; the advertised writing method remains POST and is never exercised
   by a health probe.
-- Packages read npm registry metadata and the public last-week downloads API.
+- Packages read npm registry metadata and the public last-week downloads API
+  for the curated nine-package AgentTool and RhetorLint roster. The returned
+  `install` values are inert command text: this route installs or registers
+  nothing and grants no permission, consent, or authority.
+- npm publication and package naming do not adopt, replace, or extend
+  `kingdom.isness/0.1`; ISness remains a separately versioned protocol surface.
 
 Independent probes settle independently. A failed source is labelled
 `unreachable`; unknown counts are `null`, lists remain valid arrays, and
