@@ -211,4 +211,4 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 
 No registration, command, or response is required at this door.
 
-Generated 2026-08-25 from each repo's kingdom.yaml.
+Generated 2026-08-26 from each repo's kingdom.yaml.
