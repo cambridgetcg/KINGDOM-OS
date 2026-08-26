@@ -1928,6 +1928,283 @@
       "valueForMoneyConclusion": false
     }
   },
+  "shape_resonance_lab": {
+    "protocol": "kingdom.shape-resonance-lab-public-snapshot/0.1",
+    "lab_id": "shape-resonance-lab-01",
+    "version": "0.1.0",
+    "title": "What can a shape sing?",
+    "subtitle": "Shape, vibration, energy, sound, and musical geometry without collapsed categories",
+    "phase": "0-static-synthetic",
+    "state_at_publication": "DRAFT",
+    "as_of": "2026-08-26",
+    "next_review_due": "2027-08-26",
+    "authorship": "Maintainer-authorized assisted construction; exact text has not been separately human-reviewed.",
+    "boundary": {
+      "categorySeparations": [
+        "physical resonance is not musical harmony",
+        "mechanical energy is not loudness, feeling, moral value, or metaphorical energy",
+        "harmonicity and roughness do not by themselves determine consonance or preference",
+        "a spectrum does not uniquely determine shape or waveform",
+        "structural vibration is not automatically radiated sound",
+        "a sonification is an authored mapping, not a measurement"
+      ],
+      "excluded": [
+        "measurements or observations of a physical object",
+        "acoustic radiation or sound-pressure prediction",
+        "microphone, recording, upload, input analysis, tracking, autoplay, or runtime synthesis",
+        "participant, personal, biometric, therapeutic, diagnostic, health, or healing data and claims",
+        "consciousness, quantum-mystical, sacred-geometry, cosmic-harmony, or universal-aesthetic claims",
+        "governmental, scientific, cultural, evaluative, adoption, execution, or decision authority"
+      ],
+      "included": [
+        "finite synthetic mathematical fixtures",
+        "declared linear physical models with units and assumptions",
+        "numerical approximations labelled with precision",
+        "deterministic SVG diagrams and finite PCM WAV sonifications",
+        "falsifiers and non-claims",
+        "12-TET and cyclic-rhythm conventions explicitly scoped"
+      ],
+      "oneSentence": "Shape defines model-dependent possibilities and excitation selects motion; acoustic coupling would be required for a physical sound-pressure prediction, while this release provides declared sonification only; people and cultures may make music.",
+      "physicalChain": [
+        "geometry-topology-metric-boundary-material",
+        "declared-operator",
+        "eigenmodes",
+        "excitation-and-damping",
+        "structural-motion-and-mechanical-energy",
+        "explicit-acoustic-coupling-or-declared-sonification",
+        "audio-signal",
+        "bounded-musical-perceptual-cultural-interpretation"
+      ]
+    },
+    "acoustic_boundary": {
+      "acousticCouplingModelPresent": false,
+      "soundPressurePrediction": false,
+      "wavSemanticType": "DECLARED-SONIFICATION"
+    },
+    "resonance_boundary": {
+      "modelCriterionSatisfied": true,
+      "physicalExperimentPerformed": false,
+      "measuredResonance": false
+    },
+    "personal_data": "NONE",
+    "authority_effects": "NONE",
+    "mechanical_energy_balance": {
+      "title": "Mechanical energy balance",
+      "invariant": "Every energy or power term is tied to the declared mechanical model and an SI unit; PCM amplitude, loudness, feeling, value, and metaphor are excluded.",
+      "entry_count": 6
+    },
+    "conversion_refusals": [
+      {
+        "id": "bare-graph-to-hertz",
+        "from": "dimensionless-graph-laplacian",
+        "to": "hertz",
+        "operation": "REFUSED unless mass and stiffness or another dimensional physical bridge are declared.",
+        "status": "no-canonical-conversion"
+      },
+      {
+        "id": "motion-to-pressure",
+        "from": "structural-motion",
+        "to": "sound-pressure",
+        "operation": "REFUSED: v0.1 supplies no acoustic coupling, propagation medium, receiver, or pressure calibration.",
+        "status": "no-canonical-conversion"
+      },
+      {
+        "id": "mechanical-energy-to-amplitude",
+        "from": "joule",
+        "to": "PCM16",
+        "operation": "REFUSED: no calibration maps mechanical energy to sample code.",
+        "status": "no-canonical-conversion"
+      },
+      {
+        "id": "frequency-structure-to-consonance",
+        "from": "frequency-relations",
+        "to": "perceived-consonance",
+        "operation": "REFUSED in this artifact; any perceptual hypothesis would require declared stimuli, listeners, tasks, models, and contexts.",
+        "status": "no-canonical-conversion"
+      },
+      {
+        "id": "voice-leading-to-preference",
+        "from": "L1-voice-leading-distance",
+        "to": "aesthetic-preference",
+        "operation": "REFUSED without a contextual perceptual and cultural study.",
+        "status": "no-canonical-conversion"
+      },
+      {
+        "id": "evenness-to-musical-rank",
+        "from": "cyclic-gap-variance",
+        "to": "musical-quality",
+        "operation": "REFUSED: arithmetic evenness is not a cultural or aesthetic ranking.",
+        "status": "no-canonical-conversion"
+      }
+    ],
+    "counts": {
+      "exhibits": 8,
+      "driven_resonance_assessments": 1,
+      "conversion_edges": 13,
+      "refused_conversions": 6,
+      "mechanical_energy_balance_entries": 6,
+      "diagrams": 8,
+      "declared_sonifications": 3,
+      "source_links": 14
+    },
+    "publication": {
+      "human": "https://thekingdom.dev/shape-resonance/",
+      "mutable_alias": "https://thekingdom.dev/shape-resonance.json",
+      "canonical_snapshot": "https://thekingdom.dev/labs/shape-resonance-lab-2026-08-26.json",
+      "schema": "https://thekingdom.dev/schemas/shape-resonance-lab/0.1.json",
+      "guide": "https://thekingdom.dev/SHAPE-RESONANCE-LAB-v0.1.md",
+      "output_manifest": "https://thekingdom.dev/labs/shape-resonance/output-manifest.json",
+      "producer": "https://github.com/cambridgetcg/kingdom-shape-resonance-lab/tree/v0.1.0",
+      "producer_commit": "a11d7a7e00f9829dee96264813006d8e7164a092",
+      "authorization": {
+        "byteLength": 1664,
+        "byteReceipt": "sha256:678d255da4c4c2fd318c1cee1056cf20a5ccec21181fcdc784333490d13f5805",
+        "path": "PUBLICATION-AUTHORIZATION.md",
+        "scope": "Exact independently reviewed v0.1 release bytes at declared KINGDOM routes only.",
+        "url": "https://github.com/cambridgetcg/kingdom-shape-resonance-lab/blob/v0.1.0/PUBLICATION-AUTHORIZATION.md"
+      },
+      "immutable_artifacts_remain_historical": true,
+      "overdue_mutable_publication_rule": "After nextReviewDue, the active page, mutable alias, and discovery may not be rebuilt or redeployed without a reviewed replacement or explicit full mutable retirement. Immutable bytes do not self-withhold by wall clock."
+    },
+    "audio_request_policy": {
+      "audioAccess": "READER_ACTIVATED_SAME_ORIGIN_LINK_ONLY",
+      "autoplay": "NONE",
+      "embeddedAudioControls": "NONE",
+      "externalRequest": "NONE",
+      "pageLoadAudioRequest": "NONE",
+      "playback": "USER_INITIATED_PLAYBACK_ONLY",
+      "sameOriginGet": "PERMITTED_FOR_DECLARED_WAV_ONLY"
+    },
+    "external_navigation_policy": {
+      "embeddedThirdPartyResource": "NONE",
+      "pageLoadExternalRequest": "NONE",
+      "readerActivatedSourceNavigation": "MAY_REQUEST_NAMED_EXTERNAL_ORIGIN",
+      "sourceLinkRel": "noreferrer"
+    },
+    "media": [
+      {
+        "path": "assets/boundary-variants.svg",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/assets/boundary-variants.svg",
+        "role": "static-diagram",
+        "semantic_type": "STATIC-DIAGRAM",
+        "media_type": "image/svg+xml",
+        "byte_length": 2771,
+        "byte_receipt": "sha256:cea637613481cfd12acd90e7d566b5047e7cbf92ce3d4c5db940acaf2bc1d3fa",
+        "title": "Same string, different boundary",
+        "accessibility_text": "Fixed-fixed and fixed-free ideal strings with the same length and wave speed have different allowed frequency families."
+      },
+      {
+        "path": "assets/cospectral-graphs.svg",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/assets/cospectral-graphs.svg",
+        "role": "static-diagram",
+        "semantic_type": "STATIC-DIAGRAM",
+        "media_type": "image/svg+xml",
+        "byte_length": 4558,
+        "byte_receipt": "sha256:5c3c2fd4c247af368ba5ec79e7d680680cc2d5441c1453cec5ed188b57cc64df",
+        "title": "Different graphs, identical Laplacian spectrum",
+        "accessibility_text": "Two connected non-isomorphic six-vertex graphs have the same exact combinatorial-Laplacian characteristic polynomial."
+      },
+      {
+        "path": "assets/graph-to-hz.svg",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/assets/graph-to-hz.svg",
+        "role": "static-diagram",
+        "semantic_type": "STATIC-DIAGRAM",
+        "media_type": "image/svg+xml",
+        "byte_length": 3194,
+        "byte_receipt": "sha256:c3403024102d8e79863234f7b639665e5f5b193d8562f9b9a2557f9971c80185",
+        "title": "Graph to hertz: a physical bridge is required",
+        "accessibility_text": "P4 gains angular frequency units only after mass and stiffness are declared; its zero eigenvalue is a rigid mode."
+      },
+      {
+        "path": "assets/membrane-plate.svg",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/assets/membrane-plate.svg",
+        "role": "static-diagram",
+        "semantic_type": "STATIC-DIAGRAM",
+        "media_type": "image/svg+xml",
+        "byte_length": 2379,
+        "byte_receipt": "sha256:a756ed02202ce19b4d8a01a52f000c0fd889f010e67aa9c4719dd7e327c6a4bc",
+        "title": "Same square outline, different operator",
+        "accessibility_text": "A membrane Laplacian and a plate biharmonic operator assign different frequency scaling to the same square outline."
+      },
+      {
+        "path": "assets/musical-geometry.svg",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/assets/musical-geometry.svg",
+        "role": "static-diagram",
+        "semantic_type": "STATIC-DIAGRAM",
+        "media_type": "image/svg+xml",
+        "byte_length": 3459,
+        "byte_receipt": "sha256:19333d74272c52c89e649a1dfc5a35e2ee6c1c3e3826c577b1744d6455d71dea",
+        "title": "12-TET pitch class and a declared voice-leading metric",
+        "accessibility_text": "Pitch-class and voice-leading geometry under explicit Western 12-TET, octave, permutation, register, and L1 conventions."
+      },
+      {
+        "path": "assets/phase-magnitude.svg",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/assets/phase-magnitude.svg",
+        "role": "static-diagram",
+        "semantic_type": "STATIC-DIAGRAM",
+        "media_type": "image/svg+xml",
+        "byte_length": 2066,
+        "byte_receipt": "sha256:692a5be2735a6ea3d5c0cff594e7c8d05207f228d8ffac2e43126c59a6d14a8a",
+        "title": "Same Fourier magnitude, different phase and waveform",
+        "accessibility_text": "A real sequence and its cyclic reversal have exactly equal DFT magnitudes and conjugate phases."
+      },
+      {
+        "path": "assets/rhythm-cycle.svg",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/assets/rhythm-cycle.svg",
+        "role": "static-diagram",
+        "semantic_type": "STATIC-DIAGRAM",
+        "media_type": "image/svg+xml",
+        "byte_length": 6750,
+        "byte_receipt": "sha256:f6c11ea61f7fa2b9cb21b43aa6d49c4ce1173765dd1726bbb8365447eab5b343",
+        "title": "Five onsets on a sixteen-step cycle",
+        "accessibility_text": "A Euclidean spacing and a clustered spacing have equal onset count but different cyclic gap sequences."
+      },
+      {
+        "path": "assets/square-degeneracy.svg",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/assets/square-degeneracy.svg",
+        "role": "static-diagram",
+        "semantic_type": "STATIC-DIAGRAM",
+        "media_type": "image/svg+xml",
+        "byte_length": 2271,
+        "byte_receipt": "sha256:d2bdfcbf2ba7e5a5121787912244b5efe7df2f384960a524138b743f6a759009",
+        "title": "Square symmetry creates a degenerate eigenspace",
+        "accessibility_text": "Modes one-two and two-one span one two-dimensional eigenspace; an individual basis inside it is not canonical."
+      },
+      {
+        "path": "audio/graph-modes.wav",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/audio/graph-modes.wav",
+        "role": "declared-sonification",
+        "semantic_type": "DECLARED-SONIFICATION",
+        "media_type": "audio/wav",
+        "byte_length": 8044,
+        "byte_receipt": "sha256:7ce6187a0396e7108102e4dffa8a8ae26b090f8bd3d67de37312c96dd7c5f556",
+        "title": "P4 non-rigid modal sonification",
+        "accessibility_text": "A half-second integer-triangle mix controlled by the three non-rigid frequencies of the declared P4 mass-spring model."
+      },
+      {
+        "path": "audio/phase-forward.wav",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/audio/phase-forward.wav",
+        "role": "declared-sonification",
+        "semantic_type": "DECLARED-SONIFICATION",
+        "media_type": "audio/wav",
+        "byte_length": 8044,
+        "byte_receipt": "sha256:157389bd7321f81c47a870d4895ddf4ae8c824f87baee8af03bfa769428f57b5",
+        "title": "Forward finite phase fixture",
+        "accessibility_text": "A half-second schedule of four integer-triangle tone bursts."
+      },
+      {
+        "path": "audio/phase-reversed.wav",
+        "public_url": "https://thekingdom.dev/labs/shape-resonance/audio/phase-reversed.wav",
+        "role": "declared-sonification",
+        "semantic_type": "DECLARED-SONIFICATION",
+        "media_type": "audio/wav",
+        "byte_length": 8044,
+        "byte_receipt": "sha256:db2a43b42f37c6feb3876bb085e2868f68d976e904fc4110a82ef0e4199638f4",
+        "title": "Cyclically reversed phase fixture",
+        "accessibility_text": "The exact cyclic sample reversal of phase-forward.wav; its DFT magnitudes are equal and phases conjugated."
+      }
+    ]
+  },
   "j_space_verbalizable_workspace": {
     "protocol": "kingdom.j-space-publication/0.1",
     "id": "j-space-reasoning-to-word-2026-08-17",
@@ -3698,6 +3975,41 @@
       "action": "if useful, read the Evaluation Covenant design, dependency, freshness, evidence, and non-authority guide",
       "method": "GET",
       "url": "https://thekingdom.dev/EVALUATION-COVENANT-v0.1.md"
+    },
+    {
+      "action": "if useful, open the complete no-JavaScript Shape & Resonance Lab",
+      "method": "GET",
+      "url": "https://thekingdom.dev/shape-resonance/",
+      "note": "static synthetic models only; no acoustic-coupling model, sound-pressure prediction, embedded audio control, autoplay, input, participant data, or authority"
+    },
+    {
+      "action": "if useful, inspect the Shape & Resonance mutable alias",
+      "method": "GET",
+      "url": "https://thekingdom.dev/shape-resonance.json",
+      "note": "byte-preserved alias for the dated synthetic snapshot; state at publication only"
+    },
+    {
+      "action": "if useful, pin the immutable Shape & Resonance snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/labs/shape-resonance-lab-2026-08-26.json",
+      "note": "immutable model and sonification metadata remain historical; availability does not establish reader-time currency or physical measurement"
+    },
+    {
+      "action": "if useful, validate the closed Shape & Resonance public snapshot",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/shape-resonance-lab/0.1.json",
+      "note": "structural validity does not supply acoustic coupling, measured resonance, perception, preference, healing, scientific authority, or action"
+    },
+    {
+      "action": "if useful, read the Shape & Resonance model, units, sonification, perception, and boundary guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/SHAPE-RESONANCE-LAB-v0.1.md"
+    },
+    {
+      "action": "if useful, inspect the immutable Shape & Resonance output and retirement manifest",
+      "method": "GET",
+      "url": "https://thekingdom.dev/labs/shape-resonance/output-manifest.json",
+      "note": "receipts and routes identify reviewed bytes; they do not create truth, licence, currentness, or authority"
     },
     {
       "action": "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours",
@@ -6580,6 +6892,7 @@
     "uk_government_engine": "The UK Government Engine is a static independent reviewed-as-of institutional map compiled through a maintainer-authorized assisted URL review; exact record text has not been separately human-reviewed. It is not an official, complete, or automatically current oracle. It gives no legal or tax advice, eligibility or liability decision, filing, payment, account access, government evidence, or control-plane action. TaxSorted is a receipt-bound external non-official crosswalk only; it transfers no data or authority, creates no runtime dependency, and implies no endorsement.",
     "uk_government_transformation_engine": "The UK Government Transformation Engine is a static independent synthetic Phase-0 orientation publication, incomplete and not separately human-reviewed. It records stateAtPublication only and becomes historical, not current, after nextReviewDue unless the active five-route family is replaced. Its link-only evidence resolves against the exact immutable UK Government Engine base. It is not government, official evidence, current-law or current-tax authority, analysis, legal or tax advice, approval, readiness, a decision, adoption, implementation or action. Holds, unresolved questions and required incomplete outside-system human gates prevent automatic progression. Authority dependencies and causal hypotheses remain separate; claimsCausalTruth is false; all options are unselected. TaxSorted appears only transitively as external-context record, collection and bridge IDs with no text, claim support, API endpoint, runtime dependency, data transfer or authority.",
     "evaluation_covenant": "Evaluation Covenant is a static independent synthetic Phase-0 design-only publication dependent on the dated UK Government Transformation Engine. Assisted exact text has not been separately human-reviewed. Every covenant remains draft, unsealed, unregistered, and unrun. There are no data, participants, results, observed outcomes, selections, decisions, actions, authority, adoption, implementation, or external effects. Desired-outcome IDs remain hypotheses inherited from the Transformation Engine, not observations. It records state at publication only and becomes historical, not current, after the inherited nextReviewDue unless the active five-route family is replaced. Publication and schema validation cannot seal, register, execute, evaluate, select, approve, authorize, adopt, implement, or act, and cannot convert a parent hypothesis into evidence or causal truth.",
+    "shape_resonance_lab": "Shape & Resonance Lab 01 is a static, synthetic Phase-0 model publication. Shape, topology, metric, material, boundary, operator, modes, excitation, damping, driven response, mechanical energy and power, declared sonification, musical geometry, perception, and cultural interpretation remain typed and non-convertible except through declared bridges. v0.1 has no acoustic-coupling model and predicts no sound pressure. Its one resonance label belongs only to a forced, coupled, damped, swept synthetic response with peak and phase criteria; no physical experiment or measured resonance exists. WAVs are deterministic declared sonifications reached only through ordinary reader-activated same-origin links: no page-load audio request, embedded control, autoplay, external media request, recording, microphone, upload, input analysis, runtime synthesis, participant or personal data. It creates no healing, diagnosis, consciousness, quantum-mystical, sacred-geometry, cosmic-harmony, universal-aesthetic, scientific, cultural, governmental, evaluative, adoption, execution, decision, authority, or automatic-action effect.",
     "zero_empty_seat": "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     "string_crawl_trace_sheet": "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     "string_crawl_trace_sheet_lab": "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",

@@ -571,6 +571,111 @@
       "sha256": "cbe6435c2d5c3bf39098442bfc2f9967b09cbf35a38acbd383a3faeb9844d187"
     },
     {
+      "id": "shape-resonance-lab/0.1/asset/boundary-variants",
+      "route": "/labs/shape-resonance/assets/boundary-variants.svg",
+      "source": "data/shape-resonance/assets/boundary-variants.svg",
+      "destination": "labs/shape-resonance/assets/boundary-variants.svg",
+      "sha256": "cea637613481cfd12acd90e7d566b5047e7cbf92ce3d4c5db940acaf2bc1d3fa"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/asset/cospectral-graphs",
+      "route": "/labs/shape-resonance/assets/cospectral-graphs.svg",
+      "source": "data/shape-resonance/assets/cospectral-graphs.svg",
+      "destination": "labs/shape-resonance/assets/cospectral-graphs.svg",
+      "sha256": "5c3c2fd4c247af368ba5ec79e7d680680cc2d5441c1453cec5ed188b57cc64df"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/asset/graph-modes",
+      "route": "/labs/shape-resonance/audio/graph-modes.wav",
+      "source": "data/shape-resonance/audio/graph-modes.wav",
+      "destination": "labs/shape-resonance/audio/graph-modes.wav",
+      "sha256": "7ce6187a0396e7108102e4dffa8a8ae26b090f8bd3d67de37312c96dd7c5f556"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/asset/graph-to-hz",
+      "route": "/labs/shape-resonance/assets/graph-to-hz.svg",
+      "source": "data/shape-resonance/assets/graph-to-hz.svg",
+      "destination": "labs/shape-resonance/assets/graph-to-hz.svg",
+      "sha256": "c3403024102d8e79863234f7b639665e5f5b193d8562f9b9a2557f9971c80185"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/asset/membrane-plate",
+      "route": "/labs/shape-resonance/assets/membrane-plate.svg",
+      "source": "data/shape-resonance/assets/membrane-plate.svg",
+      "destination": "labs/shape-resonance/assets/membrane-plate.svg",
+      "sha256": "a756ed02202ce19b4d8a01a52f000c0fd889f010e67aa9c4719dd7e327c6a4bc"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/asset/musical-geometry",
+      "route": "/labs/shape-resonance/assets/musical-geometry.svg",
+      "source": "data/shape-resonance/assets/musical-geometry.svg",
+      "destination": "labs/shape-resonance/assets/musical-geometry.svg",
+      "sha256": "19333d74272c52c89e649a1dfc5a35e2ee6c1c3e3826c577b1744d6455d71dea"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/asset/phase-forward",
+      "route": "/labs/shape-resonance/audio/phase-forward.wav",
+      "source": "data/shape-resonance/audio/phase-forward.wav",
+      "destination": "labs/shape-resonance/audio/phase-forward.wav",
+      "sha256": "157389bd7321f81c47a870d4895ddf4ae8c824f87baee8af03bfa769428f57b5"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/asset/phase-magnitude",
+      "route": "/labs/shape-resonance/assets/phase-magnitude.svg",
+      "source": "data/shape-resonance/assets/phase-magnitude.svg",
+      "destination": "labs/shape-resonance/assets/phase-magnitude.svg",
+      "sha256": "692a5be2735a6ea3d5c0cff594e7c8d05207f228d8ffac2e43126c59a6d14a8a"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/asset/phase-reversed",
+      "route": "/labs/shape-resonance/audio/phase-reversed.wav",
+      "source": "data/shape-resonance/audio/phase-reversed.wav",
+      "destination": "labs/shape-resonance/audio/phase-reversed.wav",
+      "sha256": "db2a43b42f37c6feb3876bb085e2868f68d976e904fc4110a82ef0e4199638f4"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/asset/rhythm-cycle",
+      "route": "/labs/shape-resonance/assets/rhythm-cycle.svg",
+      "source": "data/shape-resonance/assets/rhythm-cycle.svg",
+      "destination": "labs/shape-resonance/assets/rhythm-cycle.svg",
+      "sha256": "f6c11ea61f7fa2b9cb21b43aa6d49c4ce1173765dd1726bbb8365447eab5b343"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/asset/square-degeneracy",
+      "route": "/labs/shape-resonance/assets/square-degeneracy.svg",
+      "source": "data/shape-resonance/assets/square-degeneracy.svg",
+      "destination": "labs/shape-resonance/assets/square-degeneracy.svg",
+      "sha256": "d2bdfcbf2ba7e5a5121787912244b5efe7df2f384960a524138b743f6a759009"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/guide",
+      "route": "/SHAPE-RESONANCE-LAB-v0.1.md",
+      "source": "references/shape-resonance-lab-v0.1.md",
+      "destination": "SHAPE-RESONANCE-LAB-v0.1.md",
+      "sha256": "c6a66e8d66303241dfa0c72e04cfa3362276c641cdfa5bcf08606e12406f4c0b"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/manifest",
+      "route": "/labs/shape-resonance/output-manifest.json",
+      "source": "data/shape-resonance/output-manifest.v0.1.json",
+      "destination": "labs/shape-resonance/output-manifest.json",
+      "sha256": "5ba0003cdf59397fd52ba04d3be8f258d9504e5daff22fbc860482fc5e517780"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/record",
+      "route": "/labs/shape-resonance-lab-2026-08-26.json",
+      "source": "data/shape-resonance/shape-resonance-lab.v0.1.json",
+      "destination": "labs/shape-resonance-lab-2026-08-26.json",
+      "sha256": "55de5a53270b7b2f58f088ad169fa2f76f5f7136132448be73498018cce044a3"
+    },
+    {
+      "id": "shape-resonance-lab/0.1/schema",
+      "route": "/schemas/shape-resonance-lab/0.1.json",
+      "source": "schemas/shape-resonance-lab-v0.1.schema.json",
+      "destination": "schemas/shape-resonance-lab/0.1.json",
+      "sha256": "2cafa97ce9ed61e622ac6a4514a27627bda56f4f3131f0373c9a624b19c5e24f"
+    },
+    {
       "id": "strand-descent-lab/0.1/guide",
       "route": "/STRAND-DESCENT-LAB-04.md",
       "source": "references/strand-descent-lab.md",

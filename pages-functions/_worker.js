@@ -409,6 +409,54 @@ const EVALUATION_COVENANT_MUTATING_METHODS = new Set([
   "PATCH",
   "DELETE",
 ]);
+const SHAPE_RESONANCE_PAGE_PATH = "/shape-resonance/";
+const SHAPE_RESONANCE_ALIAS_PATH = "/shape-resonance.json";
+const SHAPE_RESONANCE_CANONICAL_PATH =
+  "/labs/shape-resonance-lab-2026-08-26.json";
+const SHAPE_RESONANCE_SCHEMA_PATH = "/schemas/shape-resonance-lab/0.1.json";
+const SHAPE_RESONANCE_GUIDE_PATH = "/SHAPE-RESONANCE-LAB-v0.1.md";
+const SHAPE_RESONANCE_MANIFEST_PATH =
+  "/labs/shape-resonance/output-manifest.json";
+const SHAPE_RESONANCE_SVG_PATHS = new Set([
+  "/labs/shape-resonance/assets/boundary-variants.svg",
+  "/labs/shape-resonance/assets/cospectral-graphs.svg",
+  "/labs/shape-resonance/assets/graph-to-hz.svg",
+  "/labs/shape-resonance/assets/membrane-plate.svg",
+  "/labs/shape-resonance/assets/musical-geometry.svg",
+  "/labs/shape-resonance/assets/phase-magnitude.svg",
+  "/labs/shape-resonance/assets/rhythm-cycle.svg",
+  "/labs/shape-resonance/assets/square-degeneracy.svg",
+]);
+const SHAPE_RESONANCE_AUDIO_PATHS = new Set([
+  "/labs/shape-resonance/audio/graph-modes.wav",
+  "/labs/shape-resonance/audio/phase-forward.wav",
+  "/labs/shape-resonance/audio/phase-reversed.wav",
+]);
+const SHAPE_RESONANCE_PATHS = new Set([
+  SHAPE_RESONANCE_PAGE_PATH,
+  SHAPE_RESONANCE_ALIAS_PATH,
+  SHAPE_RESONANCE_CANONICAL_PATH,
+  SHAPE_RESONANCE_SCHEMA_PATH,
+  SHAPE_RESONANCE_GUIDE_PATH,
+  SHAPE_RESONANCE_MANIFEST_PATH,
+  ...SHAPE_RESONANCE_SVG_PATHS,
+  ...SHAPE_RESONANCE_AUDIO_PATHS,
+]);
+const SHAPE_RESONANCE_SCHEMA_LINK = {
+  target: SHAPE_RESONANCE_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${SHAPE_RESONANCE_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+const SHAPE_RESONANCE_GUIDE_LINK = {
+  target: SHAPE_RESONANCE_GUIDE_PATH,
+  relation: "service-doc",
+  value: `<${SHAPE_RESONANCE_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+};
+const SHAPE_RESONANCE_CANONICAL_LINK = {
+  target: SHAPE_RESONANCE_CANONICAL_PATH,
+  relation: "canonical",
+  value: `<${SHAPE_RESONANCE_CANONICAL_PATH}>; rel="canonical"; type="application/json"`,
+};
 const ZERO_EMPTY_SEAT_PATH = "/atlases/zero-empty-seat-2026-08-14.json";
 const ZERO_EMPTY_SEAT_DOCUMENT_PATH = "/ZERO-EMPTY-SEAT.md";
 const ZERO_EMPTY_SEAT_SCHEMA_LINK = {
@@ -677,6 +725,20 @@ function addEvaluationCovenantLinks(headers) {
   headers.append("link", EVALUATION_COVENANT_CANONICAL_LINK.value);
   headers.append("link", EVALUATION_COVENANT_SCHEMA_LINK.value);
   headers.append("link", EVALUATION_COVENANT_GUIDE_LINK.value);
+}
+
+function addShapeResonanceLinks(headers) {
+  removeLinkRelations(headers, ["canonical", "describedby", "service-doc"]);
+  headers.append("link", SHAPE_RESONANCE_CANONICAL_LINK.value);
+  headers.append("link", SHAPE_RESONANCE_SCHEMA_LINK.value);
+  headers.append("link", SHAPE_RESONANCE_GUIDE_LINK.value);
+}
+
+function addShapeResonanceMediaLinks(headers) {
+  removeLinkRelations(headers, ["canonical", "describedby", "service-doc", "profile"]);
+  headers.append("link",
+    `<${SHAPE_RESONANCE_CANONICAL_PATH}>; rel="describedby"; type="application/json"`);
+  headers.append("link", SHAPE_RESONANCE_GUIDE_LINK.value);
 }
 
 function addZeroEmptySeatSchemaLink(headers) {
@@ -1514,6 +1576,18 @@ export function createKingdomWorker(options = {}) {
         },
       });
     }
+    if (includeRights && SHAPE_RESONANCE_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
 
     if (includeRights && KINGDOM_OS_ROUTE_SET.has(url.pathname)) {
       try {
@@ -1604,6 +1678,9 @@ export function createKingdomWorker(options = {}) {
     const servesEvaluationCovenantPage = protectsKingdomHtml &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === EVALUATION_COVENANT_PAGE_PATH && asset.ok;
+    const servesShapeResonancePage = protectsKingdomHtml &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === SHAPE_RESONANCE_PAGE_PATH && asset.ok;
     const describesWorldCommons = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === "/commons.json";
@@ -1838,6 +1915,25 @@ export function createKingdomWorker(options = {}) {
     const requestsEvaluationCovenantGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === EVALUATION_COVENANT_GUIDE_PATH;
+    const requestsShapeResonance = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      (url.pathname === SHAPE_RESONANCE_ALIAS_PATH ||
+        url.pathname === SHAPE_RESONANCE_CANONICAL_PATH);
+    const requestsShapeResonanceSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === SHAPE_RESONANCE_SCHEMA_PATH;
+    const requestsShapeResonanceGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === SHAPE_RESONANCE_GUIDE_PATH;
+    const requestsShapeResonanceManifest = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === SHAPE_RESONANCE_MANIFEST_PATH;
+    const requestsShapeResonanceSvg = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      SHAPE_RESONANCE_SVG_PATHS.has(url.pathname);
+    const requestsShapeResonanceAudio = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      SHAPE_RESONANCE_AUDIO_PATHS.has(url.pathname);
     const requestsJSpaceCase = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === J_SPACE_CASE_PATH;
@@ -2148,6 +2244,22 @@ export function createKingdomWorker(options = {}) {
     const servesEvaluationCovenantGuide = requestsEvaluationCovenantGuide && asset.ok &&
       (evaluationCovenantAssetType === "text/plain" ||
         evaluationCovenantAssetType === "text/markdown");
+    const shapeResonanceAssetType =
+      (asset.headers.get("content-type") || "").split(";", 1)[0].trim().toLowerCase();
+    const servesShapeResonance = requestsShapeResonance && asset.ok &&
+      shapeResonanceAssetType === "application/json";
+    const servesShapeResonanceSchema = requestsShapeResonanceSchema && asset.ok &&
+      (shapeResonanceAssetType === "application/json" ||
+        shapeResonanceAssetType === "application/schema+json");
+    const servesShapeResonanceGuide = requestsShapeResonanceGuide && asset.ok &&
+      (shapeResonanceAssetType === "text/plain" ||
+        shapeResonanceAssetType === "text/markdown");
+    const servesShapeResonanceManifest = requestsShapeResonanceManifest && asset.ok &&
+      shapeResonanceAssetType === "application/json";
+    const servesShapeResonanceSvg = requestsShapeResonanceSvg && asset.ok &&
+      shapeResonanceAssetType === "image/svg+xml";
+    const servesShapeResonanceAudio = requestsShapeResonanceAudio && asset.ok &&
+      shapeResonanceAssetType === "audio/wav";
     const servesJSpaceCase = requestsJSpaceCase && asset.ok &&
       jSpaceAssetType === "application/json";
     const servesJSpaceSchema = requestsJSpaceSchema && asset.ok &&
@@ -2255,6 +2367,10 @@ export function createKingdomWorker(options = {}) {
         !servesUkGovernmentTransformationEngineGuide &&
         !servesEvaluationCovenant && !servesEvaluationCovenantSchema &&
         !servesEvaluationCovenantGuide &&
+        !servesShapeResonance && !servesShapeResonanceSchema &&
+        !servesShapeResonanceGuide && !servesShapeResonanceManifest &&
+        !servesShapeResonanceSvg &&
+        !servesShapeResonanceAudio &&
         !servesJSpaceCase && !servesJSpaceSchema && !servesJSpaceGuide &&
         !servesRealityInfluence && !servesRealityInfluenceSchema &&
         !servesRealityInfluenceGuide && !servesCivilisationReality &&
@@ -2281,6 +2397,39 @@ export function createKingdomWorker(options = {}) {
     }
     if (servesEvaluationCovenantPage) {
       headers.set("cache-control", "no-cache, no-transform");
+    }
+    if (servesShapeResonancePage) {
+      headers.set("content-type", "text/html; charset=utf-8");
+      headers.set("cache-control", "no-cache, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+      headers.set("content-security-policy", [
+        "default-src 'none'",
+        "base-uri 'none'",
+        "connect-src 'none'",
+        "font-src 'none'",
+        "form-action 'none'",
+        "frame-ancestors 'none'",
+        "img-src 'self'",
+        "media-src 'self'",
+        "object-src 'none'",
+        "script-src 'none'",
+        "style-src 'unsafe-inline'",
+      ].join("; "));
+      headers.set("referrer-policy", "no-referrer");
+      headers.set("x-frame-options", "DENY");
+      headers.set("permissions-policy", [
+        "accelerometer=()",
+        "autoplay=()",
+        "camera=()",
+        "display-capture=()",
+        "geolocation=()",
+        "gyroscope=()",
+        "magnetometer=()",
+        "microphone=()",
+        "payment=()",
+        "usb=()",
+      ].join(", "));
     }
     if (describesWorldCommons) addWorldCommonsSchemaLink(headers);
     if (describesLoveLoops) addLoveLoopSchemaLink(headers);
@@ -2309,6 +2458,11 @@ export function createKingdomWorker(options = {}) {
       addUkGovernmentTransformationEngineLinks(headers);
     }
     if (servesEvaluationCovenant) addEvaluationCovenantLinks(headers);
+    if (servesShapeResonance) addShapeResonanceLinks(headers);
+    if (servesShapeResonanceSvg || servesShapeResonanceAudio) {
+      addShapeResonanceMediaLinks(headers);
+    }
+    if (servesShapeResonanceManifest) addShapeResonanceMediaLinks(headers);
     if (servesJSpaceCase) addJSpaceSchemaLink(headers);
     if (servesRealityInfluence) addRealityInfluenceLinks(headers);
     if (servesCivilisationReality) addCivilisationRealityLinks(headers);
@@ -2703,6 +2857,45 @@ export function createKingdomWorker(options = {}) {
     }
     if (servesEvaluationCovenantGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesShapeResonance) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control",
+        url.pathname === SHAPE_RESONANCE_CANONICAL_PATH
+          ? "public, max-age=31536000, immutable, no-transform"
+          : "no-cache, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesShapeResonanceSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesShapeResonanceGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesShapeResonanceManifest) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesShapeResonanceSvg) {
+      headers.set("content-type", "image/svg+xml; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesShapeResonanceAudio) {
+      headers.set("content-type", "audio/wav");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");
       headers.set("x-content-type-options", "nosniff");

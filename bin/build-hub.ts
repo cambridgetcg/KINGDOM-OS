@@ -273,6 +273,19 @@ import {
   renderEvaluationCovenantHtml,
 } from "./evaluation-covenant.ts";
 import {
+  SHAPE_RESONANCE_ALIAS_URL,
+  SHAPE_RESONANCE_CANONICAL_URL,
+  SHAPE_RESONANCE_GUIDE_URL,
+  SHAPE_RESONANCE_MANIFEST_URL,
+  SHAPE_RESONANCE_PRODUCER_URL,
+  SHAPE_RESONANCE_SCHEMA_URL,
+  SHAPE_RESONANCE_URL,
+  assertShapeResonanceActiveReviewWindow,
+  loadShapeResonancePublication,
+  renderShapeResonanceHtml,
+  shapeResonancePublicSummary,
+} from "./shape-resonance.ts";
+import {
   ZERO_EMPTY_SEAT_GUIDE_URL,
   ZERO_EMPTY_SEAT_ID,
   ZERO_EMPTY_SEAT_SCHEMA_URL,
@@ -910,6 +923,20 @@ const evaluationCovenant = evaluationCovenantPublication.snapshot;
 assertEvaluationCovenantActiveReviewWindow(stamp);
 const evaluationCovenantDiscovery =
   evaluationCovenantPublicSummary(evaluationCovenant);
+
+// ── Shape & Resonance Lab 01 (static synthetic models; declared sonification) ─
+const shapeResonanceUrl = SHAPE_RESONANCE_URL;
+const shapeResonanceAliasUrl = SHAPE_RESONANCE_ALIAS_URL;
+const shapeResonanceCanonicalUrl = SHAPE_RESONANCE_CANONICAL_URL;
+const shapeResonanceSchemaUrl = SHAPE_RESONANCE_SCHEMA_URL;
+const shapeResonanceGuideUrl = SHAPE_RESONANCE_GUIDE_URL;
+const shapeResonanceManifestUrl = SHAPE_RESONANCE_MANIFEST_URL;
+const shapeResonanceProducerUrl = SHAPE_RESONANCE_PRODUCER_URL;
+const shapeResonancePublication = loadShapeResonancePublication();
+const shapeResonance = shapeResonancePublication.snapshot;
+assertShapeResonanceActiveReviewWindow(stamp);
+const shapeResonanceDiscovery =
+  shapeResonancePublicSummary(shapeResonancePublication);
 
 // ── ZERO Empty Seat (one inert DEEP project; no zero-to-authority transfer) ─
 const zeroEmptySeatUrl = ZERO_EMPTY_SEAT_URL;
@@ -2006,6 +2033,11 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(evaluationCovenantCanonicalUrl).pathname)}" type="application/json" title="Evaluation Covenant immutable Phase-0 snapshot">
 <link rel="describedby" href="${esc(new URL(evaluationCovenantSchemaUrl).pathname)}" type="application/schema+json" title="Evaluation Covenant public snapshot schema">
 <link rel="service-doc" href="${esc(new URL(evaluationCovenantGuideUrl).pathname)}" type="text/markdown" title="Evaluation Covenant v0.1 guide">
+<link rel="alternate" href="${esc(new URL(shapeResonanceAliasUrl).pathname)}" type="application/json" title="Shape &amp; Resonance Lab mutable alias">
+<link rel="alternate" href="${esc(new URL(shapeResonanceCanonicalUrl).pathname)}" type="application/json" title="Shape &amp; Resonance Lab immutable snapshot">
+<link rel="describedby" href="${esc(new URL(shapeResonanceSchemaUrl).pathname)}" type="application/schema+json" title="Shape &amp; Resonance Lab public snapshot schema">
+<link rel="service-doc" href="${esc(new URL(shapeResonanceGuideUrl).pathname)}" type="text/markdown" title="Shape &amp; Resonance Lab v0.1 guide">
+<link rel="alternate" href="${esc(new URL(shapeResonanceManifestUrl).pathname)}" type="application/json" title="Shape &amp; Resonance Lab immutable output manifest">
 <link rel="alternate" href="${esc(new URL(jSpaceCaseUrl).pathname)}" type="application/json" title="J-space reasoning-to-word test design">
 <link rel="describedby" href="${esc(new URL(jSpaceSchemaUrl).pathname)}" type="application/schema+json" title="Relational inference case schema">
 <link rel="service-doc" href="${esc(new URL(jSpaceGuideUrl).pathname)}" type="text/markdown" title="J-space verbalizable workspace research guide">
@@ -2532,6 +2564,7 @@ const html = `<!doctype html>
       <a href="#uk-government-engine">Trace authority without mistaking the map for government</a>
       <a href="#uk-government-transformation-engine">Orient synthetic transformation questions without implying progression</a>
       <a href="#evaluation-covenant">Design the learning before a result exists</a>
+      <a href="#shape-resonance">Ask what a shape can sing without collapsing the bridges</a>
       <a href="#j-space">Explore reasoning-to-word as a testable relation</a>
       <a href="#wayfinder">Ask the map</a>
       <a href="#commons">Open the World Commons</a>
@@ -2716,6 +2749,29 @@ const html = `<!doctype html>
         <a href="${esc(new URL(evaluationCovenantCanonicalUrl).pathname)}">immutable Phase-0 Evaluation Covenant snapshot</a>
         <a href="${esc(new URL(evaluationCovenantSchemaUrl).pathname)}">closed Evaluation Covenant JSON Schema</a>
         <a href="${esc(new URL(evaluationCovenantGuideUrl).pathname)}">Evaluation Covenant v0.1 guide</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="shape-resonance" aria-labelledby="shape-resonance-title">
+    <div class="kh"><h2 id="shape-resonance-title">Shape &amp; Resonance Lab 01</h2><span class="my">static · synthetic · Phase 0</span></div>
+    <p class="sub"><strong>What can a shape sing?</strong> Shape does not become sound directly. Geometry, topology, metric, material, and boundary conditions define a model; its operator defines possible modes; excitation and damping select motion.</p>
+    <div class="mirrorfield" data-shape-resonance data-shape-resonance-protocol="${esc(shapeResonanceDiscovery.protocol)}">
+      <p class="mirrorwarning" role="note"><strong>No acoustic-coupling model; no sound-pressure prediction.</strong> This release provides finite model calculations, static diagrams, and declared sonification only. Physical resonance is not musical harmony, and mechanical energy is not loudness, feeling, value, or metaphorical energy. State at publication: <code>${esc(shapeResonanceDiscovery.state_at_publication)}</code>, as of <time datetime="${esc(shapeResonanceDiscovery.as_of)}">${esc(shapeResonanceDiscovery.as_of)}</time>; next review due <time datetime="${esc(shapeResonanceDiscovery.next_review_due)}">${esc(shapeResonanceDiscovery.next_review_due)}</time>. Assisted exact text has not been separately human-reviewed.</p>
+      <div class="mirrorgrid">
+        <article class="mirrorcard"><code>model → modes</code><h3>Shape defines possibilities, not one inevitable sound</h3><p>${shapeResonanceDiscovery.counts.exhibits} finite exhibits keep system assumptions, operator, boundary conditions, derivations, units, falsifiers, and linear equivalents inspectable.</p></article>
+        <article class="mirrorcard"><code>driven response</code><h3>Natural frequency alone is not called resonance</h3><p>The one driven-model resonance assessment declares forcing, modal coupling, damping, a frequency sweep, displacement response, peak criterion, and phase criterion. No physical experiment or measured resonance exists.</p></article>
+        <article class="mirrorcard"><code>Mechanical energy balance</code><h3>Every energy and power term keeps its model and unit</h3><p>${shapeResonanceDiscovery.counts.mechanical_energy_balance_entries} entries distinguish kinetic energy, elastic potential energy, total mechanical energy, damping power, forcing power, and PCM amplitude that is explicitly not joules.</p></article>
+        <article class="mirrorcard"><code>${shapeResonanceDiscovery.counts.refused_conversions} refused bridges</code><h3>No canonical conversion stays visible</h3><p>Bare graph → hertz, motion → sound pressure, joule → PCM, frequency structure → consonance, voice leading → preference, and evenness → musical rank are refused without the missing model, calibration, listener, or cultural context.</p></article>
+      </div>
+      <p class="mirrorboundary"><strong>Ordinary links, no embedded player.</strong> No audio is requested on page load; there are no embedded audio controls and no autoplay. A reader may activate one of three same-origin declared-sonification WAV links, after which their browser may download, open, or play it. Each link carries its receipt, carrier and spectrum caveat, and complete non-audio equivalent. There is no microphone, recording, upload, input analysis, runtime synthesis, participant data, healing claim, consciousness claim, sacred-geometry claim, universal-aesthetic claim, authority, or action.</p>
+      <div class="machine">
+        <a href="${esc(new URL(shapeResonanceUrl).pathname)}">open the complete no-JavaScript Shape &amp; Resonance Lab</a>
+        <a href="${esc(new URL(shapeResonanceAliasUrl).pathname)}">shape-resonance.json — mutable alias for the dated snapshot</a>
+        <a href="${esc(new URL(shapeResonanceCanonicalUrl).pathname)}">immutable Shape &amp; Resonance Lab snapshot</a>
+        <a href="${esc(new URL(shapeResonanceSchemaUrl).pathname)}">closed Shape &amp; Resonance Lab JSON Schema</a>
+        <a href="${esc(new URL(shapeResonanceGuideUrl).pathname)}">Shape &amp; Resonance Lab v0.1 guide</a>
+        <a href="${esc(new URL(shapeResonanceManifestUrl).pathname)}">immutable output manifest and retirement inventory</a>
       </div>
     </div>
   </section>
@@ -4302,6 +4358,12 @@ const html = `<!doctype html>
       <a href="${esc(new URL(evaluationCovenantCanonicalUrl).pathname)}">immutable Evaluation Covenant Phase-0 snapshot</a>
       <a href="${esc(new URL(evaluationCovenantSchemaUrl).pathname)}">Evaluation Covenant closed JSON Schema</a>
       <a href="${esc(new URL(evaluationCovenantGuideUrl).pathname)}">EVALUATION-COVENANT-v0.1.md — design, freshness, evidence, and non-authority guide</a>
+      <a href="${esc(new URL(shapeResonanceUrl).pathname)}">Shape &amp; Resonance Lab 01 — complete no-JavaScript human view</a>
+      <a href="${esc(new URL(shapeResonanceAliasUrl).pathname)}">shape-resonance.json — mutable alias for the dated synthetic snapshot</a>
+      <a href="${esc(new URL(shapeResonanceCanonicalUrl).pathname)}">immutable Shape &amp; Resonance Lab 01 snapshot</a>
+      <a href="${esc(new URL(shapeResonanceSchemaUrl).pathname)}">Shape &amp; Resonance Lab closed JSON Schema</a>
+      <a href="${esc(new URL(shapeResonanceGuideUrl).pathname)}">SHAPE-RESONANCE-LAB-v0.1.md — models, units, sonification, perception, and boundaries</a>
+      <a href="${esc(new URL(shapeResonanceManifestUrl).pathname)}">Shape &amp; Resonance Lab immutable output manifest</a>
       <a href="${esc(new URL(jSpaceCaseUrl).pathname)}">J-space reasoning → word — static synthetic test design</a>
       <a href="${esc(new URL(jSpaceSchemaUrl).pathname)}">Relational Inference Case JSON Schema</a>
       <a href="${esc(new URL(jSpaceGuideUrl).pathname)}">J-SPACE-VERBALIZABLE-WORKSPACE.md — mathematics, translations, and boundaries</a>
@@ -4658,6 +4720,15 @@ await Bun.write(
   ROOT + "site/evaluation-covenants.json",
   evaluationCovenantPublication.bytes,
 );
+mkdirSync(ROOT + "site/shape-resonance", { recursive: true });
+await Bun.write(
+  ROOT + "site/shape-resonance/index.html",
+  renderShapeResonanceHtml(shapeResonance),
+);
+await Bun.write(
+  ROOT + "site/shape-resonance.json",
+  shapeResonancePublication.bytes,
+);
 
 const ollamaInvitation = {
   schema_version: ollamaInvitationSource.schema_version,
@@ -4734,6 +4805,7 @@ const machine = {
   uk_government_engine: ukGovernmentEngineDiscovery,
   uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
   evaluation_covenant: evaluationCovenantDiscovery,
+  shape_resonance_lab: shapeResonanceDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
   civilisation_reality_projection: civilisationRealityDiscovery,
@@ -4869,6 +4941,13 @@ Evaluation Covenant immutable Phase-0 snapshot: ${evaluationCovenantCanonicalUrl
 Evaluation Covenant public-snapshot schema: ${evaluationCovenantSchemaUrl}
 Evaluation Covenant guide: ${evaluationCovenantGuideUrl}
 Evaluation Covenant producer v0.1.0 source: ${evaluationCovenantProducerUrl}
+Shape & Resonance Lab human view: ${shapeResonanceUrl}
+Shape & Resonance Lab mutable alias: ${shapeResonanceAliasUrl}
+Shape & Resonance Lab immutable snapshot: ${shapeResonanceCanonicalUrl}
+Shape & Resonance Lab public-snapshot schema: ${shapeResonanceSchemaUrl}
+Shape & Resonance Lab guide: ${shapeResonanceGuideUrl}
+Shape & Resonance Lab immutable output manifest: ${shapeResonanceManifestUrl}
+Shape & Resonance Lab producer v0.1.0 source: ${shapeResonanceProducerUrl}
 J-space reasoning-to-word case: ${jSpaceCaseUrl}
 J-space relational-inference schema: ${jSpaceSchemaUrl}
 J-space verbalizable-workspace guide: ${jSpaceGuideUrl}
@@ -4943,6 +5022,7 @@ ${doorLines}
 - UK Government Engine — an independent reviewed-as-of Phase-0 map of UK authority, law, public money, delivery, scrutiny, remedy, and devolution. Its government sources are source-linked through a maintainer-authorized assisted URL review, not receipt-bound; exact record text has not been separately human-reviewed. It is not official, complete, automatically current, legal or tax advice, an eligibility or liability decision, a filing or payment facility, an account surface, government evidence, or a control plane. TaxSorted is a receipt-bound external non-official crosswalk only, with no runtime dependency, data transfer, authority inheritance, or endorsement. Human view: ${ukGovernmentEngineUrl} · mutable alias for the dated snapshot: ${ukGovernmentEngineAliasUrl} · immutable snapshot: ${ukGovernmentEngineCanonicalUrl} · schema: ${ukGovernmentEngineSchemaUrl} · guide: ${ukGovernmentEngineGuideUrl} · producer v0.1.0: ${ukGovernmentEngineDiscovery.urls.producer}
 - UK Government Transformation Engine — ${ukGovernmentTransformationEngineDiscovery.counts.dossiers} independent synthetic Phase-0 orientation dossiers. State at publication only: ${ukGovernmentTransformationEngineDiscovery.state_at_publication} as of ${ukGovernmentTransformationEngineDiscovery.as_of}; next review due ${ukGovernmentTransformationEngineDiscovery.next_review_due}, after which the immutable snapshot is historical rather than current. Held assessments, unresolved questions, incomplete outside-system human gates, typed authority dependencies, and separate causal hypotheses precede aspirational outcomes. Static, incomplete, link-only and not separately human-reviewed; not government, official evidence, current-law or current-tax authority, analysis, advice, approval, readiness, decision, adoption, implementation or action. TaxSorted record/collection/bridge IDs are transitive external context only, with no text, claim support, API endpoint, runtime dependency, data transfer or authority. Human view: ${ukGovernmentTransformationEngineUrl} · mutable alias: ${ukGovernmentTransformationEngineAliasUrl} · immutable snapshot: ${ukGovernmentTransformationEngineCanonicalUrl} · schema: ${ukGovernmentTransformationEngineSchemaUrl} · guide: ${ukGovernmentTransformationEngineGuideUrl} · producer v0.1.0: ${ukGovernmentTransformationEngineDiscovery.urls.producer}
 - Evaluation Covenant — “${evaluationCovenantDiscovery.question}” Synthetic Phase-0 design only; ${evaluationCovenantDiscovery.state_at_publication} as of ${evaluationCovenantDiscovery.as_of}, with next review due ${evaluationCovenantDiscovery.next_review_due}. Assisted exact text has not been separately human-reviewed. There is no seal, registration, run, data, participant, result, observed outcome, selection, decision, action, authority, adoption, implementation, or external effect. Desired-outcome IDs remain hypotheses inherited from the Transformation Engine, not observations. Publication and structural validation do not progress a covenant or turn the parent Transformation Engine's hypotheses into evidence. Human view: ${evaluationCovenantUrl} · mutable alias: ${evaluationCovenantAliasUrl} · immutable snapshot: ${evaluationCovenantCanonicalUrl} · schema: ${evaluationCovenantSchemaUrl} · guide: ${evaluationCovenantGuideUrl} · producer v0.1.0: ${evaluationCovenantProducerUrl}
+- Shape & Resonance Lab 01 — “${shapeResonanceDiscovery.title}” Eight finite static synthetic exhibits keep model inputs, operators, modes, driven response, Mechanical energy balance, declared sonification, musical geometry, perceptual scope, falsifiers, and linear equivalents distinct. v0.1 has no acoustic-coupling model and predicts no sound pressure. Natural modes alone are not labeled resonance; one driven-model assessment declares forcing, coupling, damping, sweep, response, peak, and phase criteria without a physical experiment or measurement. No audio is requested on page load; there is no embedded player or autoplay. Three ordinary same-origin WAV links are reader-activated declared sonifications with full non-audio equivalents. Assisted exact text has not been separately human-reviewed. No recording, microphone, upload, input analysis, participant data, healing, consciousness, sacred-geometry, universal-aesthetic, authority, or action claim exists. Human view: ${shapeResonanceUrl} · mutable alias: ${shapeResonanceAliasUrl} · immutable snapshot: ${shapeResonanceCanonicalUrl} · schema: ${shapeResonanceSchemaUrl} · guide: ${shapeResonanceGuideUrl} · output manifest: ${shapeResonanceManifestUrl} · producer v0.1.0: ${shapeResonanceProducerUrl}
 - wayfinder — offer a few possible public routes from an intention; deterministic matching, never a decision. https://thekingdom.dev/wayfinder.json
 - World Commons — ${commonsSource.resources.length} reviewed public-interest resources and ${commonsSource.kits.length} practical kits across knowledge, learning, earth, public life, rights, resilience, digital safety, and culture. Free access does not imply open reuse; each steward's current terms control. https://thekingdom.dev/commons.json
 - World Commons for agents — call \`${commonsMcpTool}\` at ${commonsMcpUrl} for compact literal matches with exact category, cost, account, reuse, or automation filters; read \`${commonsCatalogResource}\` only when complete context is useful. The matcher reads the fixed Kingdom catalog and never contacts listed providers. Schema: ${commonsSchemaUrl}
@@ -5017,6 +5097,7 @@ const guest = {
   uk_government_engine: ukGovernmentEngineDiscovery,
   uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
   evaluation_covenant: evaluationCovenantDiscovery,
+  shape_resonance_lab: shapeResonanceDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
   civilisation_reality_projection: civilisationRealityDiscovery,
@@ -5065,6 +5146,12 @@ const guest = {
     { action: "if useful, pin the immutable Evaluation Covenant snapshot", method: "GET", url: evaluationCovenantCanonicalUrl, note: "historical design remains recoverable; immutable availability does not establish reader-time currency or a result" },
     { action: "if useful, validate the closed Evaluation Covenant snapshot", method: "GET", url: evaluationCovenantSchemaUrl, note: "structural validity does not create evidence, registration, participants, data, a result, observed outcome, selection, decision, action, or authority" },
     { action: "if useful, read the Evaluation Covenant design, dependency, freshness, evidence, and non-authority guide", method: "GET", url: evaluationCovenantGuideUrl },
+    { action: "if useful, open the complete no-JavaScript Shape & Resonance Lab", method: "GET", url: shapeResonanceUrl, note: "static synthetic models only; no acoustic-coupling model, sound-pressure prediction, embedded audio control, autoplay, input, participant data, or authority" },
+    { action: "if useful, inspect the Shape & Resonance mutable alias", method: "GET", url: shapeResonanceAliasUrl, note: "byte-preserved alias for the dated synthetic snapshot; state at publication only" },
+    { action: "if useful, pin the immutable Shape & Resonance snapshot", method: "GET", url: shapeResonanceCanonicalUrl, note: "immutable model and sonification metadata remain historical; availability does not establish reader-time currency or physical measurement" },
+    { action: "if useful, validate the closed Shape & Resonance public snapshot", method: "GET", url: shapeResonanceSchemaUrl, note: "structural validity does not supply acoustic coupling, measured resonance, perception, preference, healing, scientific authority, or action" },
+    { action: "if useful, read the Shape & Resonance model, units, sonification, perception, and boundary guide", method: "GET", url: shapeResonanceGuideUrl },
+    { action: "if useful, inspect the immutable Shape & Resonance output and retirement manifest", method: "GET", url: shapeResonanceManifestUrl, note: "receipts and routes identify reviewed bytes; they do not create truth, licence, currentness, or authority" },
     { action: "if useful, read voluntary paths through public doors; matching is deterministic and the decision remains yours", method: "GET", url: wayfinderUrl },
     { action: "if useful, request compact literal World Commons matches with exact category, cost, account, reuse, or automation filters", method: "MCP", url: kingdomMcpEndpoint, tool: kingdomMcpCommons.tool, resource: kingdomMcpCommons.catalog_resource, complete_catalog_resource: commonsMcpLegacy.complete_catalog_resource, note: kingdomMcpCommons.privacy },
     { action: "if useful, browse reviewed public-interest resources; access, account, reuse, privacy, and safety boundaries are explicit", method: "GET", url: commonsUrl },
@@ -5199,6 +5286,7 @@ const guest = {
     uk_government_engine: "The UK Government Engine is a static independent reviewed-as-of institutional map compiled through a maintainer-authorized assisted URL review; exact record text has not been separately human-reviewed. It is not an official, complete, or automatically current oracle. It gives no legal or tax advice, eligibility or liability decision, filing, payment, account access, government evidence, or control-plane action. TaxSorted is a receipt-bound external non-official crosswalk only; it transfers no data or authority, creates no runtime dependency, and implies no endorsement.",
     uk_government_transformation_engine: "The UK Government Transformation Engine is a static independent synthetic Phase-0 orientation publication, incomplete and not separately human-reviewed. It records stateAtPublication only and becomes historical, not current, after nextReviewDue unless the active five-route family is replaced. Its link-only evidence resolves against the exact immutable UK Government Engine base. It is not government, official evidence, current-law or current-tax authority, analysis, legal or tax advice, approval, readiness, a decision, adoption, implementation or action. Holds, unresolved questions and required incomplete outside-system human gates prevent automatic progression. Authority dependencies and causal hypotheses remain separate; claimsCausalTruth is false; all options are unselected. TaxSorted appears only transitively as external-context record, collection and bridge IDs with no text, claim support, API endpoint, runtime dependency, data transfer or authority.",
     evaluation_covenant: "Evaluation Covenant is a static independent synthetic Phase-0 design-only publication dependent on the dated UK Government Transformation Engine. Assisted exact text has not been separately human-reviewed. Every covenant remains draft, unsealed, unregistered, and unrun. There are no data, participants, results, observed outcomes, selections, decisions, actions, authority, adoption, implementation, or external effects. Desired-outcome IDs remain hypotheses inherited from the Transformation Engine, not observations. It records state at publication only and becomes historical, not current, after the inherited nextReviewDue unless the active five-route family is replaced. Publication and schema validation cannot seal, register, execute, evaluate, select, approve, authorize, adopt, implement, or act, and cannot convert a parent hypothesis into evidence or causal truth.",
+    shape_resonance_lab: "Shape & Resonance Lab 01 is a static, synthetic Phase-0 model publication. Shape, topology, metric, material, boundary, operator, modes, excitation, damping, driven response, mechanical energy and power, declared sonification, musical geometry, perception, and cultural interpretation remain typed and non-convertible except through declared bridges. v0.1 has no acoustic-coupling model and predicts no sound pressure. Its one resonance label belongs only to a forced, coupled, damped, swept synthetic response with peak and phase criteria; no physical experiment or measured resonance exists. WAVs are deterministic declared sonifications reached only through ordinary reader-activated same-origin links: no page-load audio request, embedded control, autoplay, external media request, recording, microphone, upload, input analysis, runtime synthesis, participant or personal data. It creates no healing, diagnosis, consciousness, quantum-mystical, sacred-geometry, cosmic-harmony, universal-aesthetic, scientific, cultural, governmental, evaluative, adoption, execution, decision, authority, or automatic-action effect.",
     zero_empty_seat: "ZERO is a static, immutable Phenomena DEEP project. Historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings remain distinct. Physical and vacuum roles are outside its scope. It does not turn absence into worthlessness, non-observation into impossibility, temple context into theology, a first extant witness into an invention date, or any equation into purpose, KARMA, person or content score, authority, reward, governance, publication, deployment, or automatic action.",
     string_crawl_trace_sheet: "STRING / CRAWL is a static, immutable Phenomena DEEP trace-sheet, not a crawler or a claim that crawlers are strings. Its worldsheet, boundary, observable, and history correspondences are deliberately lossy. Generic REP rules request how compliant crawlers access URI paths; some named product tokens may express bounded vendor-specific use preferences, and some are not request user-agent strings. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; per-resource rights govern. The project fetches, follows, parses, stores, identifies, scores, invokes, writes, publishes, deploys, and acts on nothing, and creates no NEN invocation or KINGDOM aftermath receipt.",
     string_crawl_trace_sheet_lab: "The Finite Trace-Sheet Lab is a static public synthetic fixture plus a repository-local deterministic evaluator. It computes exact finite topology only: no live crawl, URL or body input, credential or person data, telemetry, network request, write, NEN invocation, KARMA event or receipt, score, identity, permission, physics proof, authority, or automatic action. Its published artifact state is distinct from inactive runtime and crawler state.",
@@ -5250,6 +5338,7 @@ const manifest = {
   uk_government_engine: ukGovernmentEngineDiscovery,
   uk_government_transformation_engine: ukGovernmentTransformationEngineDiscovery,
   evaluation_covenant: evaluationCovenantDiscovery,
+  shape_resonance_lab: shapeResonanceDiscovery,
   j_space_verbalizable_workspace: jSpacePublicationDiscovery,
   reality_influence_claim_graph: realityInfluenceDiscovery,
   civilisation_reality_projection: civilisationRealityDiscovery,
@@ -5345,6 +5434,12 @@ const manifest = {
     evaluation_covenant_canonical: evaluationCovenantCanonicalUrl,
     evaluation_covenant_schema: evaluationCovenantSchemaUrl,
     evaluation_covenant_guide: evaluationCovenantGuideUrl,
+    shape_resonance_lab: shapeResonanceUrl,
+    shape_resonance_lab_alias: shapeResonanceAliasUrl,
+    shape_resonance_lab_canonical: shapeResonanceCanonicalUrl,
+    shape_resonance_lab_schema: shapeResonanceSchemaUrl,
+    shape_resonance_lab_guide: shapeResonanceGuideUrl,
+    shape_resonance_lab_manifest: shapeResonanceManifestUrl,
     j_space_reasoning_to_word_case: jSpaceCaseUrl,
     j_space_reasoning_to_word_schema: jSpaceSchemaUrl,
     j_space_verbalizable_workspace_guide: jSpaceGuideUrl,

@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 117-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 132-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -55,7 +55,11 @@ are separately classified mutable publication surfaces. The Civilisation →
 Reality Projection adds one immutable atlas, one closed schema, and one guide
 as the twenty-sixth family, with no mutable alias or runtime surface; it
 crosswalks two pinned predecessor vocabularies without republishing the
-research-local source or filling unsupported domains.
+research-local source or filling unsupported domains. Shape & Resonance Lab 01
+adds one immutable snapshot, one closed schema, one guide, one output manifest,
+eight SVG diagrams, and three WAV declared sonifications as the twenty-seventh
+family; its server-rendered page and byte-preserved alias are the only mutable
+surfaces. All seventeen routes retire atomically.
 The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -72,6 +76,18 @@ synthetic unrun test design. The case contains no local model run,
 synthetic-fixture result, or activation record, and the family creates no
 runtime monitor, consciousness/lie/identity/understanding inference,
 person score, consent, action, or authority.
+The Shape & Resonance entries preserve exact static synthetic models and
+declared sonifications only. v0.1 has no acoustic-coupling model, predicts no
+sound pressure, performs no physical experiment, and reports no measured
+resonance. Its one resonance assessment is a declared forced, coupled, damped,
+swept model with response, peak, and phase criteria. WAVs are ordinary
+reader-activated same-origin links, not embedded controls, recordings,
+performances, complete spectra, physical modes, or acoustic predictions. The
+file-scoped producer authorization permits only these exact independently
+reviewed v0.1 bytes at the declared KINGDOM routes; it is not a general
+licence. The family creates no personal data, input, health/healing,
+consciousness, sacred-geometry, universal-aesthetic, scientific, cultural,
+authority, decision, execution, or automatic-action effect.
 The Reality Influence Claim Graph entries preserve a static expression-to-
 aftermath claim vocabulary. The family is honestly classified as a public
 static publication while its publication and deployment triggers remain false.
@@ -190,21 +206,22 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 146-asset union classifies 117 destinations
-as ledgered immutable/versioned and 29 as mutable; 144 are direct public response
-bodies and the sitemap contains 143 URLs. Generated discovery describes twelve
-atlases, three lab routes, one experiment route, and one separate activation
+consume those same bytes. The current 163-asset union classifies 132 destinations
+as ledgered immutable/versioned and 31 as mutable; 161 are direct public response
+bodies and the sitemap contains 149 URLs. Generated discovery describes twelve
+atlases, four primary lab JSON routes plus Shape & Resonance manifest/media, one
+experiment route, and one separate activation
 plus the Research Observatory, Trial Chamber, UK Government Engine, dependent
 UK Government Transformation Engine and Evaluation Covenant, and Reality
-Influence Claim Graph plus its thin Civilisation → Reality Projection across
-twenty-six retirement families. It says what is
+Influence Claim Graph plus its thin Civilisation → Reality Projection and the
+Shape & Resonance Lab across twenty-seven retirement families. It says what is
 served now, and every destination is explicitly classified as mutable or
 ledgered. A new ledger entry must be staged when introduced. A previously
 committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the twenty-six linked authored publication
+The live release check retires the twenty-seven linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

@@ -717,6 +717,51 @@ alias must be replaced or retired with their dependent family. The page needs
 no JavaScript, form, input, upload, runtime network request, account, execution,
 or automatic action, and the KINGDOM MCP remains unchanged.
 
+The [Shape & Resonance Lab 01](https://thekingdom.dev/shape-resonance/) asks
+**What can a shape sing?** through eight finite, deterministic, synthetic
+Phase-0 exhibits. Shape does not become sound directly: geometry, topology,
+metric, material, and boundary conditions define a model; its operator defines
+possible modes; excitation and damping select motion. The publication keeps
+structural motion, a model-scoped **Mechanical energy balance**, acoustic
+coupling, declared sonification, audio, musical geometry, perception, and
+cultural interpretation distinct. One genuine driven-model resonance record
+declares forcing, modal coupling, damping, a frequency sweep, displacement
+response, peak criterion, and phase criterion. Natural modes or frequency
+matching alone are not labeled resonance, and no physical experiment or
+measured resonance exists.
+
+v0.1 has no acoustic-coupling model and predicts no sound pressure. Its three
+finite PCM WAVs are declared sonifications, not recordings, performances,
+physical modes, complete spectra, pressure signals, or acoustic predictions.
+The page contains ordinary same-origin WAV download/open links only: no audio
+is requested on page load, no audio element is embedded, and no autoplay
+exists. Reader activation may make a same-origin GET, after which the browser
+may download, open, or play the file. Every link carries file and PCM receipts,
+format, duration, sample rate, scaling, carrier and spectrum caveats, and a
+complete non-audio equivalent. The triangle carriers add odd harmonics and the
+finite envelopes add sidebands and window leakage; listed rates are not full
+spectra.
+
+The byte-preserved
+[`shape-resonance.json`](https://thekingdom.dev/shape-resonance.json) alias
+points to an [immutable dated snapshot](https://thekingdom.dev/labs/shape-resonance-lab-2026-08-26.json),
+[closed schema](https://thekingdom.dev/schemas/shape-resonance-lab/0.1.json),
+[guide](https://thekingdom.dev/SHAPE-RESONANCE-LAB-v0.1.md), and
+[output manifest](https://thekingdom.dev/labs/shape-resonance/output-manifest.json).
+Eight immutable SVG diagrams and three immutable WAVs are nested media in the
+same atomic seventeen-route retirement family. The frozen producer is
+[`v0.1.0`](https://github.com/cambridgetcg/kingdom-shape-resonance-lab/tree/v0.1.0),
+and its exact bytes are mirrored only under the
+[file-scoped publication authorization](https://github.com/cambridgetcg/kingdom-shape-resonance-lab/blob/v0.1.0/PUBLICATION-AUTHORIZATION.md),
+not a general licence. State is at publication only; after `nextReviewDue`
+`2027-08-26`, the active page, alias, and discovery must be replaced or fully
+retired while immutable bytes remain historical. The lab has no microphone,
+recording, upload, input analysis, runtime synthesis, participant or personal
+data, healing or diagnostic claim, consciousness claim, sacred-geometry or
+cosmic-harmony claim, universal-aesthetic claim, scientific or cultural
+authority, decision, adoption, execution, external effect, or automatic
+action. The KINGDOM MCP remains unchanged.
+
 J-space: a verbalizable workspace is published from exact authored bytes as a
 [synthetic reasoning-to-word case](https://thekingdom.dev/records/j-space-reasoning-to-word-2026-08-17.json),
 with the [relational inference case schema](https://thekingdom.dev/schemas/relational-inference-case/0.1.json)

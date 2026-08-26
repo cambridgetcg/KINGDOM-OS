@@ -129,6 +129,14 @@ readings:
 | `/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json` | staged JSON | Immutable synthetic design snapshot dependent on the dated UK Government Transformation Engine |
 | `/evaluation/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed v0.1 contract for the complete Evaluation Covenant public snapshot structure |
 | `/EVALUATION-COVENANT-v0.1.md` | staged Markdown | Immutable guide to pre-result evaluation design, dependency, freshness, evidence and non-authority boundaries |
+| `/shape-resonance/` | staged HTML | Mutable, complete no-JavaScript Shape & Resonance Lab 01 view; same-origin WAVs are ordinary reader-activated links, never embedded players |
+| `/shape-resonance.json` | staged JSON | Mutable byte-preserved alias of the dated static synthetic lab snapshot |
+| `/labs/shape-resonance-lab-2026-08-26.json` | staged JSON | Immutable eight-exhibit model snapshot with exact units, derivations, falsifiers, media receipts, and negative authority |
+| `/schemas/shape-resonance-lab/0.1.json` | staged JSON Schema | Immutable closed Draft 2020-12 contract for the complete public snapshot |
+| `/SHAPE-RESONANCE-LAB-v0.1.md` | staged Markdown | Immutable guide to models, modes, driven resonance, Mechanical energy balance, sonification, perception, sources, and limits |
+| `/labs/shape-resonance/output-manifest.json` | staged JSON | Immutable receipt and seventeen-route atomic retirement manifest |
+| `/labs/shape-resonance/assets/*.svg` | staged SVG | Eight exact inert diagrams; each has title/description and an adjacent page table/text equivalent |
+| `/labs/shape-resonance/audio/*.wav` | staged WAV | Three deterministic mono PCM16 declared sonifications; ordinary reader-activated same-origin links only, never acoustic predictions |
 
 The Trial Chamber routes are inspectable publication surfaces, not an evaluator
 or control plane. Metadata titles are not scientific claims. The three request
@@ -139,6 +147,26 @@ There is no artifact acquisition, execution, preflight, trial authority, run,
 result, adoption, guest admission, module, use authority, scalar score, or
 automatic action. Every post-plan schema rejects every specimen, so a future
 contract version and separate review are mandatory before any later gate.
+
+The Shape & Resonance family is one independently retireable seventeen-route
+publication: two mutable routes and fifteen ledgered immutable routes. Eight
+SVG diagrams and three WAVs cannot be partially staged or left live after the
+page, alias, record, schema, guide, or output manifest retires. v0.1 contains
+no acoustic-coupling model and predicts no sound pressure. Its only resonance
+assessment is a forced, coupled, damped, swept synthetic model with explicit
+response, peak, and phase criteria; no physical experiment or measured
+resonance exists. WAVs are declared sonifications reached through ordinary
+reader-activated links, not embedded controls: document load requests no
+audio and autoplay is absent. The exact page route adds a strict no-script
+CSP, no-referrer, frame denial, and a restrictive Permissions Policy while
+allowing only same-origin images/media and inline site CSS. All other methods
+on every family route stop with a bodyless `405` before asset storage. The
+family records state at publication only and must be replaced or fully retired
+after `2027-08-26`; immutable bytes remain historical. It adds no input,
+participant or personal data, microphone, recording, upload, runtime
+synthesis, healing, consciousness, sacred-geometry, universal-aesthetic,
+scientific, cultural, authority, decision, execution, or automatic-action
+surface, and the KINGDOM MCP remains unchanged.
 
 The UK Government Engine routes publish an independent institutional map, not
 an official, complete, or automatically current oracle. Government sources are
@@ -289,9 +317,10 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 146-asset upload contract (117 ledgered immutable/versioned assets and
-29 mutable assets; 144 direct public bodies, 143 sitemap URLs; twelve atlases, three
-lab routes, one experiment route, one activation, and twenty-six retirement families)
+locks the 163-asset upload contract (132 ledgered immutable/versioned assets and
+31 mutable assets; 161 direct public bodies, 149 sitemap URLs; twelve atlases,
+four primary lab JSON routes plus the Shape & Resonance manifest/media, one
+experiment route, one activation, and twenty-seven retirement families)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
