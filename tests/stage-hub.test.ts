@@ -58,14 +58,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(172);
+      expect(HUB_ASSETS).toHaveLength(175);
       expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(141);
+      expect(ledger.ledger?.entries).toHaveLength(144);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(170);
-      expect(staged).toHaveLength(172);
+        .toHaveLength(173);
+      expect(staged).toHaveLength(175);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -84,6 +84,7 @@ describe("the hub staging contract", () => {
         "FREEDOM-LOOP-LOCK-KEY-ATLAS.md",
         "GEOMETRY-GRAMMAR.md",
         "J-SPACE-VERBALIZABLE-WORKSPACE.md",
+        "LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
         "MATH-USEFULNESS.md",
         "MIRROR-INFORMATION-CONTROL.md",
         "NUMBER-ISNESS-THEOLOGY-ATLAS.md",
@@ -156,6 +157,8 @@ describe("the hub staging contract", () => {
         "wings",
       ]);
       expect(readdirSync(join(output, "schemas/love-loop")).sort()).toEqual(["0.1.json"]);
+      expect(readdirSync(join(output, "schemas/loops-locks-freedom-relations-atlas")).sort())
+        .toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/conformational-feedback-atlas")).sort()).toEqual(["0.1.json", "0.2.json"]);
       expect(readdirSync(join(output, "schemas/cultural-attention-feedback-atlas")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/geometry-grammar")).sort()).toEqual(["0.1.json"]);
@@ -255,8 +258,16 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(158);
-      expect(new Set(sitemapUrls).size).toBe(158);
+      expect(sitemapUrls).toHaveLength(161);
+      expect(new Set(sitemapUrls).size).toBe(161);
+      for (const route of [
+        "/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json",
+        "/schemas/loops-locks-freedom-relations-atlas/0.1.json",
+        "/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
+      ]) {
+        expect(sitemapUrls.filter((url) => url === `https://thekingdom.dev${route}`))
+          .toHaveLength(1);
+      }
       for (const route of [
         "/government-engine/",
         "/government.json",
@@ -309,6 +320,7 @@ describe("the hub staging contract", () => {
         "fold-feedback-atlas-2026-08-12.json",
         "form-circulation-return-atlas-2026-08-13.json",
         "freedom-loop-lock-key-atlas-2026-08-28.json",
+        "loops-locks-freedom-relations-atlas-2026-08-28.json",
         "number-isness-theology-atlas-2026-08-14.json",
         "reality-influence-claim-graph-2026-08-21.json",
         "reconstructive-build-kernel-2026-08-13.json",
@@ -640,7 +652,7 @@ describe("the hub staging contract", () => {
         expect(HUB_ASSETS.some(({ destination }) =>
           destination === forbiddenRoot || destination.startsWith(`${forbiddenRoot}/`))).toBe(false);
       }
-      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(14);
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(15);
       expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
       for (const asset of HUB_ASSETS) {

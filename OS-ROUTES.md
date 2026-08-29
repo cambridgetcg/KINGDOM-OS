@@ -81,6 +81,9 @@ readings:
 | `/truth/polyphonic-claim-atlas-2026-08-26.json` | staged JSON | Immutable static-synthetic Phase-0 record of typed claim relations; historical fixture only, not a truth oracle or currentness claim |
 | `/truth/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed Draft 2020-12 structural contract for the Polyphonic Claim Atlas |
 | `/POLYPHONIC-CLAIM-ATLAS-v0.1.md` | staged Markdown | Immutable guide to reading boundaries, typed separations, and the no-score/no-action contract |
+| `/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json` | staged JSON | Frozen immutable static-synthetic Phase-0 relations atlas separating loop, lock, key, control, consent, capability, and freedom vocabularies without importing truth or authority |
+| `/schemas/loops-locks-freedom-relations-atlas/0.1.json` | staged JSON Schema | Immutable closed Draft 2020-12 structural contract for the Loops, Locks & Freedom Relations Atlas |
+| `/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md` | staged Markdown | Full linear human entry to the frozen atlas, its mathematical fixtures, typed non-equivalences, and zero-runtime/no-action boundaries |
 | `/atlases/zero-empty-seat-2026-08-14.json` | staged JSON | Immutable inert Phenomena DEEP project separating zero's semantic roles, equations, correspondence breaks, empty KARMA lanes, and negative authority |
 | `/ZERO-EMPTY-SEAT.md` | staged Markdown | Human guide to ZERO's mathematics, observation boundaries, optional philosophy, inherent rights, and zero-effect contract |
 | `/atlases/string-crawl-trace-sheet-2026-08-15.json` | staged JSON | Immutable inert Phenomena DEEP trace-sheet keeping string mathematics, finite crawl observations, REP routing, rights, and authority distinct |
@@ -331,14 +334,19 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 172-asset upload contract (141 ledgered immutable/versioned assets and
-31 mutable assets; 170 direct public bodies, 158 sitemap URLs; fourteen atlases,
+locks the 175-asset upload contract (144 ledgered immutable/versioned assets and
+31 mutable assets; 173 direct public bodies, 161 sitemap URLs, 144 manifest
+entry points, and 144 guest actions; fifteen atlases,
 four primary lab JSON routes plus the Shape & Resonance manifest/media, one
-experiment route, one activation, and thirty retirement families, including
-the standalone immutable FREEDOM Loop, Lock & Key and immutable
-static-synthetic Polyphonic Claim Atlas record/schema/guide triplets)
-and refuses bytes that drift from the
-repository-local immutable route-integrity ledger. Every staged asset is
+experiment route, one activation, and thirty-one active retirement families,
+including the standalone FREEDOM Loop, Lock & Key Atlas, immutable
+static-synthetic Polyphonic Claim Atlas, and frozen Loops, Locks & Freedom
+Relations Atlas record/schema/guide triples. These are independent static atlases
+with different lineages and mathematical kernels. Neither supersedes, validates,
+aliases, depends on, or supplies authority to the other; overlapping words are
+not wire or semantic equivalences. Neither is a preferred default. The staging
+test refuses bytes that drift from the repository-local immutable route-integrity
+ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
 runbook additionally refuse removal or mutation of a previously committed
 ledger entry, while allowing its route to cease being staged; changing a source
@@ -393,6 +401,17 @@ custom human page, Wayfinder recommendation, MCP surface, runtime, active
 dependency, truth oracle, person/source/community score, live claim intake,
 action authority, or currentness claim. Its separate site-authored source
 locator pins producer tag `v0.1.1` and imports neither truth nor authority.
+The Loops, Locks & Freedom Relations Atlas adds a thirty-first independent,
+frozen immutable static-synthetic record/schema/guide triplet. The full linear
+guide is its human entry point; there is no custom page, mutable alias,
+Wayfinder recommendation, MCP surface, runtime, dependency, or action
+authority. Its separate site-authored pinned source locator records producer
+tag [`v0.1.1`](https://github.com/cambridgetcg/kingdom-loops-locks-freedom-relations-atlas/tree/v0.1.1)
+at revision `d8534096224d9e82825653af0f9e12fd123e85b5`; it establishes no truth,
+imports no authority or currentness, and creates no runtime dependency.
+The required 2026-08-29 hub regeneration changes Wayfinder only at its global
+`generated` date and adds no Loops, Locks & Freedom path, source, keyword,
+recommendation, or capability.
 The additive Finite Trace-Sheet Lab is a separate immutable static triplet. Its
 repository-local reader evaluates only one pinned synthetic complex and runs no
 live crawl, authentication, prompt or credential intake, telemetry, write, NEN

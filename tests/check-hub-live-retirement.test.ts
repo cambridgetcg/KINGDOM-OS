@@ -2,6 +2,8 @@ import { describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
 
 import { HUB_ASSETS } from "../bin/stage-hub.ts";
+import { LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE } from
+  "../bin/loops-locks-freedom-relations-atlas.ts";
 import {
   assertActivePublicationReviewWindow,
   assertPublicationFamilyReleaseWindows,
@@ -69,7 +71,7 @@ describe("hub live-check publication retirement", () => {
 
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(30);
+    expect(PUBLICATION_FAMILIES).toHaveLength(31);
     const states = publicationFamilyStates(staged);
     expect([...states.values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");
@@ -77,6 +79,116 @@ describe("hub live-check publication retirement", () => {
 
     expect(() => publicationFamilyStates(staged))
       .toThrow("Cultural Attention & Feedback Atlas is partially staged");
+  });
+
+  test("retires both freedom-related atlases independently in all four states", () => {
+    const upstream = family("freedom-loop-lock-key-atlas");
+    const relations = family("loops-locks-freedom-relations-atlas");
+    expect(upstream.dependsOn ?? []).toEqual([]);
+    expect(relations.dependsOn ?? []).toEqual([]);
+
+    const scenarios = [
+      { label: "both active", retired: [] as const, upstreamActive: true, relationsActive: true },
+      { label: "upstream only retired", retired: [upstream] as const,
+        upstreamActive: false, relationsActive: true },
+      { label: "Relations only retired", retired: [relations] as const,
+        upstreamActive: true, relationsActive: false },
+      { label: "both retired", retired: [upstream, relations] as const,
+        upstreamActive: false, relationsActive: false },
+    ];
+
+    for (const scenario of scenarios) {
+      const staged = stagedDestinations();
+      for (const retired of scenario.retired) {
+        for (const route of retired.routes) staged.delete(destinationForPublicPath(route));
+      }
+      const states = publicationFamilyStates(staged);
+      expect(states.get(upstream.id)?.active).toBe(scenario.upstreamActive);
+      expect(states.get(relations.id)?.active).toBe(scenario.relationsActive);
+
+      for (const route of upstream.routes) {
+        expect(staged.has(destinationForPublicPath(route))).toBe(scenario.upstreamActive);
+      }
+      for (const route of relations.routes) {
+        expect(staged.has(destinationForPublicPath(route))).toBe(scenario.relationsActive);
+      }
+
+      const value: Record<string, any> = { entry_points: {} };
+      const advertised: string[] = [];
+      if (scenario.upstreamActive) {
+        value[upstream.discoveryProperties[0]!] = { static_only: true };
+        for (const [index, property] of upstream.entryPointProperties.entries()) {
+          const url = `https://thekingdom.dev${upstream.routes[index]}`;
+          value.entry_points[property] = url;
+          advertised.push(url);
+        }
+      }
+      if (scenario.relationsActive) {
+        value[relations.discoveryProperties[0]!] = { static_only: true };
+        for (const [index, property] of relations.entryPointProperties.entries()) {
+          const url = `https://thekingdom.dev${relations.routes[index]}`;
+          value.entry_points[property] = url;
+          advertised.push(url);
+        }
+        advertised.push(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag);
+      }
+      const surface = {
+        label: scenario.label,
+        text: `${JSON.stringify(value)} ${advertised.join(" ")}`,
+        value,
+      };
+      if (!scenario.upstreamActive) {
+        expect(() => assertRetiredFamilyDiscoveryAbsent(upstream, [surface]))
+          .not.toThrow();
+      } else {
+        expect(value).toHaveProperty(upstream.discoveryProperties[0]!);
+      }
+      if (!scenario.relationsActive) {
+        expect(() => assertRetiredFamilyDiscoveryAbsent(relations, [surface]))
+          .not.toThrow();
+      } else {
+        expect(value).toHaveProperty(relations.discoveryProperties[0]!);
+        expect(surface.text).toContain(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag);
+      }
+    }
+
+    const upstreamOnlySurface = {
+      label: "upstream-only discovery",
+      text: `https://thekingdom.dev${upstream.routes[0]}`,
+      value: {
+        [upstream.discoveryProperties[0]!]: { static_only: true },
+        entry_points: { [upstream.entryPointProperties[0]!]:
+          `https://thekingdom.dev${upstream.routes[0]}` },
+      },
+    };
+    expect(() => assertRetiredFamilyDiscoveryAbsent(relations, [upstreamOnlySurface]))
+      .not.toThrow();
+
+    const relationsOnlySurface = {
+      label: "Relations-only discovery",
+      text: [
+        `https://thekingdom.dev${relations.routes[0]}`,
+        LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag,
+      ].join(" "),
+      value: {
+        [relations.discoveryProperties[0]!]: { static_only: true },
+        entry_points: { [relations.entryPointProperties[0]!]:
+          `https://thekingdom.dev${relations.routes[0]}` },
+      },
+    };
+    expect(() => assertRetiredFamilyDiscoveryAbsent(upstream, [relationsOnlySurface]))
+      .not.toThrow();
+    const relationsSourceOnlySurface = {
+      label: "Relations source-only discovery",
+      text: LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag,
+      value: { entry_points: {} },
+    };
+    expect(() => assertRetiredFamilyDiscoveryAbsent(relations, [relationsSourceOnlySurface]))
+      .toThrow("site-authored pinned source locator remains advertised");
+
+    const cleanSurface = { label: "clean union", text: "{}", value: { entry_points: {} } };
+    expect(() => assertRetiredFamilyDiscoveryAbsent(upstream, [cleanSurface])).not.toThrow();
+    expect(() => assertRetiredFamilyDiscoveryAbsent(relations, [cleanSurface])).not.toThrow();
   });
 
   test("treats a fully unstaged family as retired and rejects lingering discovery", () => {

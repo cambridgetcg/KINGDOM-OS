@@ -301,7 +301,8 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     and eligibility is not invocation or execution. Every lock carries a
     justification burden; feedback or model output is candidate evidence only
     and cannot rewrite its verifier, issue a credential, or authorize its use.
-    Freedom and dignity remain inherent during the process. The reader is not a
+    Within that atlas’s declared design constitution, freedom remains inherent
+    and dignity is not created by a gate outcome. The reader is not a
     Foundation amendment, trainer, controller, optimizer, credential issuer,
     operative gate, person model, score, authority, or action surface.
 29. `kingdom isness` — inspect, scaffold, validate, and deterministically
@@ -880,11 +881,14 @@ Every lock must name and justify its protected interest. Feedback or model
 output cannot rewrite its verifier, issue a credential, or authorize its use.
 Credential identity remains distinct from replay freshness; replacement begins
 a distinct lifecycle, and shaping or verifier changes require fresh versioned review.
-Freedom remains inherent during an unfinished process. Rest, refusal, privacy,
+Within that atlas’s declared design constitution, freedom remains inherent
+during an unfinished process. Rest, refusal, privacy,
 exit, and `NO_ACTION` require no explanation, create no debt, count as no
 failure, schedule no retry, and forfeit no rights. Prefix choice state binds to
 one effect and horizon with fresh witnesses; history keeps lost or consumed
 choices and irreversible residuals visible, and later success cannot erase them.
+That atlas’s constitutional sentence and dignity insight are family-local design
+claims, not global site law or an imported authority.
 
 The immutable [Polyphonic Claim Atlas](https://thekingdom.dev/truth/polyphonic-claim-atlas-2026-08-26.json)
 is a static synthetic Phase-0 map of typed relations among expression, claim,
@@ -901,6 +905,30 @@ at revision `ca7bb37271853545a84bc1b8955ce63918da979b` as a site-authored pinned
 source locator only; that locator is not evidence, endorsement, provenance
 proof, or a fourth family route, and it establishes no truth, imports no
 authority, and creates no runtime dependency or currentness claim.
+
+The frozen immutable
+[Loops, Locks & Freedom Relations Atlas](https://thekingdom.dev/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json)
+is a static-synthetic Phase-0 map of mathematical and governance relations
+among loop, learning, reward, recurrence, control feedback, lock, key,
+authentication, authorization, enforcement, consent, capability, and freedom.
+Its [closed schema](https://thekingdom.dev/schemas/loops-locks-freedom-relations-atlas/0.1.json)
+and full linear [guide](https://thekingdom.dev/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md),
+the human entry point, form one atomic three-route family. It has no custom
+page, mutable alias, Wayfinder recommendation, MCP surface, runtime, dependency,
+live model or reward loop, credential or key material, decision, enforcement
+adapter, or action authority. KINGDOM separately records producer
+[`v0.1.1`](https://github.com/cambridgetcg/kingdom-loops-locks-freedom-relations-atlas/tree/v0.1.1)
+at revision `d8534096224d9e82825653af0f9e12fd123e85b5` as a site-authored pinned
+source locator only; it establishes no truth, imports no authority or
+currentness, and creates no runtime dependency.
+It deliberately does not import `FREEDOM.md` or claim a predecessor edge to the
+FREEDOM Loop, Lock & Key Atlas.
+These are independent static atlases with different lineages and mathematical kernels. Neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences.
+Neither is a preferred default, and their integrity, source, review, discovery,
+and retirement contracts remain family-local.
+The normal 2026-08-29 hub regeneration advances only Wayfinder's global
+`generated` date; it adds no atlas path, source, keyword, recommendation, or
+capability to Wayfinder.
 
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at
@@ -996,7 +1024,7 @@ network request or crawler and creates no NEN/KARMA/Zerone event or receipt,
 score, truth verdict, identity, consent, citizenship, authority, write,
 publication, deployment, or action. Labs 01–04 are published and retired as
 one atomic twelve-route `string-crawl-trace-sheet-lab` family. The release now
-has thirty retirement families; generated discovery exposes Lab 02 as
+has thirty-one active retirement families; generated discovery exposes Lab 02 as
 `string_crawl_strand_lab`, Lab 03 as `string_crawl_frequency_form_lab`, and Lab
 04 as `strand_descent_lab`.
 

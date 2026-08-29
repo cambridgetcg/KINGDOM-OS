@@ -110,9 +110,11 @@ import {
   loadCivilisationFlowNuanceAtlas,
 } from "./civilisation-flow-atlas.ts";
 import {
+  FREEDOM_LOOP_LOCK_KEY_ATLAS_ID,
   FREEDOM_LOOP_LOCK_KEY_GUIDE_LOCATOR,
   FREEDOM_LOOP_LOCK_KEY_GUIDE_URL,
   FREEDOM_LOOP_LOCK_KEY_LOCATOR,
+  FREEDOM_LOOP_LOCK_KEY_PROTOCOL,
   FREEDOM_LOOP_LOCK_KEY_SCHEMA_LOCATOR,
   FREEDOM_LOOP_LOCK_KEY_SCHEMA_URL,
   FREEDOM_LOOP_LOCK_KEY_URL,
@@ -129,6 +131,18 @@ import {
   loadPolyphonicClaimAtlas,
   polyphonicClaimAtlasPublicDiscovery,
 } from "./polyphonic-claim-atlas.ts";
+import {
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_BYTE_SHA256,
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_BYTE_SHA256,
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_ID,
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PROTOCOL,
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_PATHS,
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS,
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_BYTE_SHA256,
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE,
+  loadLoopsLocksFreedomRelationsAtlas,
+  loopsLocksFreedomRelationsAtlasPublicDiscovery,
+} from "./loops-locks-freedom-relations-atlas.ts";
 import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
@@ -766,6 +780,11 @@ const [
   polyphonicClaimAtlasSchemaPath,
   polyphonicClaimAtlasGuidePath,
 ] = POLYPHONIC_CLAIM_ATLAS_PUBLIC_PATHS;
+const [
+  loopsLocksFreedomRelationsAtlasPath,
+  loopsLocksFreedomRelationsAtlasSchemaPath,
+  loopsLocksFreedomRelationsAtlasGuidePath,
+] = LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_PATHS;
 const zeroEmptySeatPath = new URL(ZERO_EMPTY_SEAT_URL).pathname;
 const zeroEmptySeatGuidePath = new URL(ZERO_EMPTY_SEAT_GUIDE_URL).pathname;
 const stringCrawlTraceSheetPath = new URL(STRING_CRAWL_TRACE_SHEET_URL).pathname;
@@ -1065,6 +1084,17 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
     ],
   },
   {
+    id: "loops-locks-freedom-relations-atlas",
+    label: "Loops, Locks & Freedom Relations Atlas",
+    routes: LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_PATHS,
+    discoveryProperties: ["loops_locks_freedom_relations_atlas"],
+    entryPointProperties: [
+      "loops_locks_freedom_relations_atlas",
+      "loops_locks_freedom_relations_atlas_schema",
+      "loops_locks_freedom_relations_atlas_guide",
+    ],
+  },
+  {
     id: "research-observatory",
     label: "Research Observatory",
     routes: [
@@ -1357,6 +1387,10 @@ export function assertRetiredFamilyDiscoveryAbsent(
         surface.text.includes(POLYPHONIC_CLAIM_ATLAS_SOURCE.tag)) {
       throw new Error(`${family.label} is retired but its site-authored pinned source locator remains advertised by ${surface.label}`);
     }
+    if (family.id === "loops-locks-freedom-relations-atlas" &&
+        surface.text.includes(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag)) {
+      throw new Error(`${family.label} is retired but its site-authored pinned source locator remains advertised by ${surface.label}`);
+    }
     if (!record(surface.value)) continue;
     for (const property of family.discoveryProperties) {
       if (Object.hasOwn(surface.value, property)) {
@@ -1588,6 +1622,71 @@ export async function checkFreedomLoopLockKeyAtlasTriple(
           (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
           (await mutation.arrayBuffer()).byteLength !== 0) {
         throw new Error(`${method} ${contract.path} lost the zero-body FREEDOM Loop, Lock & Key 405 boundary`);
+      }
+    }
+  }
+}
+
+export async function checkLoopsLocksFreedomRelationsAtlasTriple(
+  fetcher: typeof fetch = fetch,
+): Promise<void> {
+  const exactRecordLink = [
+    `<${loopsLocksFreedomRelationsAtlasSchemaPath}>; rel="describedby"; type="application/schema+json"`,
+    `<${loopsLocksFreedomRelationsAtlasGuidePath}>; rel="service-doc"; type="text/markdown"`,
+  ].join(", ");
+  const contracts = [
+    {
+      path: loopsLocksFreedomRelationsAtlasPath,
+      contentType: "application/json; charset=utf-8",
+      record: true,
+    },
+    {
+      path: loopsLocksFreedomRelationsAtlasSchemaPath,
+      contentType: "application/schema+json; charset=utf-8",
+      record: false,
+    },
+    {
+      path: loopsLocksFreedomRelationsAtlasGuidePath,
+      contentType: "text/markdown; charset=utf-8",
+      record: false,
+    },
+  ] as const;
+
+  for (const contract of contracts) {
+    const head = await fetcher(url(contract.path), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const link = head.headers.get("link") || "";
+    const recordLinksValid = contract.record && link === exactRecordLink;
+    const companionLinksValid = !contract.record && link === "";
+    if (!head.ok ||
+        (head.headers.get("content-type") || "").toLowerCase() !== contract.contentType ||
+        !hasExactCacheDirectives(head.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+        head.headers.get("access-control-allow-origin") !== "*" ||
+        (head.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        (!recordLinksValid && !companionLinksValid) ||
+        (await head.arrayBuffer()).byteLength !== 0) {
+      throw new Error(
+        `${contract.path} lost the immutable Loops, Locks & Freedom Relations Atlas HEAD contract`,
+      );
+    }
+
+    for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+      const mutation = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (mutation.status !== 405 ||
+          mutation.headers.get("allow") !== "GET, HEAD" ||
+          mutation.headers.get("cache-control") !== "no-store" ||
+          mutation.headers.get("access-control-allow-origin") !== "*" ||
+          (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          (await mutation.arrayBuffer()).byteLength !== 0) {
+        throw new Error(`${method} ${contract.path} lost the zero-body 405 boundary`);
       }
     }
   }
@@ -2123,6 +2222,8 @@ export async function checkHubLive(
   const civilisationFlowActive = familyActive("civilisation-flow-nuance-atlas");
   const polyphonicClaimAtlasActive = familyActive("polyphonic-claim-atlas");
   const freedomLoopLockKeyActive = familyActive("freedom-loop-lock-key-atlas");
+  const loopsLocksFreedomRelationsAtlasActive =
+    familyActive("loops-locks-freedom-relations-atlas");
   const researchObservatoryActive = familyActive("research-observatory");
   const trialChamberActive = familyActive("trial-chamber");
   const ukGovernmentEngineActive = familyActive("uk-government-engine");
@@ -2946,6 +3047,10 @@ export async function checkHubLive(
     await checkFreedomLoopLockKeyAtlasTriple();
   }
 
+  if (loopsLocksFreedomRelationsAtlasActive) {
+    await checkLoopsLocksFreedomRelationsAtlasTriple();
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -3365,6 +3470,9 @@ export async function checkHubLive(
     ...(civilisationFlowActive ? [civilisationFlowSchemaPath] : []),
     ...(polyphonicClaimAtlasActive ? [polyphonicClaimAtlasSchemaPath] : []),
     ...(freedomLoopLockKeyActive ? [freedomLoopLockKeySchemaPath] : []),
+    ...(loopsLocksFreedomRelationsAtlasActive
+      ? [loopsLocksFreedomRelationsAtlasSchemaPath]
+      : []),
     ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
     ...(trialChamberActive ? trialChamberSchemaPaths : []),
     ...(ukGovernmentEngineActive ? [ukGovernmentEngineSchemaPath] : []),
@@ -3404,6 +3512,7 @@ export async function checkHubLive(
       path === civilisationFlowSchemaPath ||
       path === polyphonicClaimAtlasSchemaPath ||
       path === freedomLoopLockKeySchemaPath ||
+      path === loopsLocksFreedomRelationsAtlasSchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
       path === evaluationCovenantSchemaPath ||
@@ -3427,6 +3536,7 @@ export async function checkHubLive(
         path === civilisationFlowSchemaPath ||
         path === polyphonicClaimAtlasSchemaPath ||
         path === freedomLoopLockKeySchemaPath ||
+        path === loopsLocksFreedomRelationsAtlasSchemaPath ||
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath ||
         path === evaluationCovenantSchemaPath ||
@@ -3439,6 +3549,9 @@ export async function checkHubLive(
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (path === freedomLoopLockKeySchemaPath &&
+        ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
+          hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
+      (path === loopsLocksFreedomRelationsAtlasSchemaPath &&
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
@@ -3586,6 +3699,12 @@ export async function checkHubLive(
     : undefined;
   const expectedFreedomLoopLockKey = freedomLoopLockKey
     ? freedomLoopLockKeyAtlasPublicDiscovery(freedomLoopLockKey)
+    : undefined;
+  const loopsLocksFreedomRelationsAtlas = loopsLocksFreedomRelationsAtlasActive
+    ? loadLoopsLocksFreedomRelationsAtlas()
+    : undefined;
+  const expectedLoopsLocksFreedomRelationsAtlas = loopsLocksFreedomRelationsAtlas
+    ? loopsLocksFreedomRelationsAtlasPublicDiscovery(loopsLocksFreedomRelationsAtlas)
     : undefined;
   const researchObservatory = researchObservatoryActive
     ? loadResearchObservatorySnapshot()
@@ -5608,6 +5727,184 @@ export async function checkHubLive(
     }
   }
 
+  if (loopsLocksFreedomRelationsAtlasActive) {
+    const expected = expectedLoopsLocksFreedomRelationsAtlas!;
+    const targets = new Set(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const entryPoints = Object.entries(manifest?.entry_points ?? {})
+      .filter(([key]) => key.startsWith("loops_locks_freedom_relations_atlas"));
+    const expectedEntryPoints = [
+      ["loops_locks_freedom_relations_atlas",
+        LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS[0]],
+      ["loops_locks_freedom_relations_atlas_schema",
+        LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS[1]],
+      ["loops_locks_freedom_relations_atlas_guide",
+        LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS[2]],
+    ];
+    const expectedLedgerHashes = [
+      LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_BYTE_SHA256,
+      LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_BYTE_SHA256,
+      LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_BYTE_SHA256,
+    ];
+    const forbiddenActionKeys = [
+      "mcp", "tool", "write", "execute", "score", "rank",
+      "recommendation", "moderation", "actionAuthority",
+    ];
+    const ledgerEntries = LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_PATHS.map(
+      (path) => IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(path)),
+    );
+    const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
+    const wayfinderText = JSON.stringify(authoredWayfinder);
+    const mcpText = JSON.stringify(manifest?.mcp ?? {});
+    const discoveryText = JSON.stringify(expected);
+    const exactHtmlLinks = [
+      `data-loops-locks-freedom-relations-atlas-link="record" href="${loopsLocksFreedomRelationsAtlasPath}"`,
+      `data-loops-locks-freedom-relations-atlas-link="schema" href="${loopsLocksFreedomRelationsAtlasSchemaPath}"`,
+      `data-loops-locks-freedom-relations-atlas-link="guide" href="${loopsLocksFreedomRelationsAtlasGuidePath}"`,
+    ];
+    const countOccurrences = (text: string, needle: string): number =>
+      text.split(needle).length - 1;
+    const forbiddenDiscoveryFields =
+      /"(?:counts|fixtures|nonEquivalences|equationCards|scoreValue|rankValue|winner|credentialMaterial|actionCommand|policyDecision)"\s*:/i;
+    if (!isDeepStrictEqual(
+      manifest?.loops_locks_freedom_relations_atlas,
+      expected,
+    ) ||
+      !isDeepStrictEqual(guest?.loops_locks_freedom_relations_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.loops_locks_freedom_relations_atlas, expected) ||
+      !isDeepStrictEqual(entryPoints, expectedEntryPoints) ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) =>
+        guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        forbiddenActionKeys.some((key) => key in action)) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      !llms.includes(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag) ||
+      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
+      countOccurrences(authoredRootHtml,
+        `data-loops-locks-freedom-relations-atlas-source-link href="${LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag}" rel="external noreferrer"`) !== 1 ||
+      authoredRootHtml.includes('id="loops-locks-freedom-relations-atlas"') ||
+      LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS.some((target) =>
+        !sitemap.includes(`<loc>${target}</loc>`)) ||
+      sitemap.includes(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag) ||
+      ["loops_locks_freedom_relations_atlas",
+        "loops-locks-freedom-relations-atlas",
+        ...LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_PATHS,
+        LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag]
+        .some((value) => wayfinderText.includes(value)) ||
+      ["loops_locks_freedom_relations_atlas",
+        "loops-locks-freedom-relations-atlas",
+        ...LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_PATHS,
+        LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag]
+        .some((value) => mcpText.includes(value)) ||
+      Object.prototype.hasOwnProperty.call(expected, "counts") ||
+      forbiddenDiscoveryFields.test(discoveryText) ||
+      !isDeepStrictEqual(
+        expected.source,
+        LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE,
+      ) ||
+      Object.values(expected.boundary ?? {}).length !== 10 ||
+      Object.values(expected.boundary ?? {}).some((value) => value !== false) ||
+      ledgerEntries.some((entry, index) =>
+        !entry || entry.sha256 !== expectedLedgerHashes[index])) {
+      throw new Error(
+        "Loops, Locks & Freedom Relations Atlas triplet, pinned source locator, minimal discovery, or non-authority boundary drifted",
+      );
+    }
+  }
+
+  if (freedomLoopLockKeyActive && loopsLocksFreedomRelationsAtlasActive) {
+    const freedomExpected = expectedFreedomLoopLockKey!;
+    const relationsExpected = expectedLoopsLocksFreedomRelationsAtlas!;
+    const freedomRecord = freedomLoopLockKey!;
+    const relationsRecord = loopsLocksFreedomRelationsAtlas!;
+    const freedomUrls = [
+      FREEDOM_LOOP_LOCK_KEY_URL,
+      FREEDOM_LOOP_LOCK_KEY_SCHEMA_URL,
+      FREEDOM_LOOP_LOCK_KEY_GUIDE_URL,
+    ];
+    const relationsUrls = [...LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS];
+    const forbiddenDiscoveryKeys = new Set([
+      "canonical", "preferred", "winner", "supersedes", "validates", "aliases",
+      "depends_on", "dependsOn", "score", "truth", "relationship", "relationships",
+      "conversion", "equivalence", "predecessor", "successor",
+    ]);
+    const containsForbiddenKey = (value: unknown): boolean => {
+      if (Array.isArray(value)) return value.some(containsForbiddenKey);
+      if (value === null || typeof value !== "object") return false;
+      return Object.entries(value as Record<string, unknown>).some(([key, nested]) =>
+        forbiddenDiscoveryKeys.has(key) || containsForbiddenKey(nested));
+    };
+    const independenceSentence =
+      "These are independent static atlases with different lineages and mathematical kernels. Neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences.";
+    const freedomBoundary = guest?.implementation_boundaries?.freedom_loop_lock_key_atlas;
+    const relationsBoundary =
+      guest?.implementation_boundaries?.loops_locks_freedom_relations_atlas;
+    const freedomFamily = PUBLICATION_FAMILIES.find(
+      (family) => family.id === "freedom-loop-lock-key-atlas",
+    );
+    const relationsFamily = PUBLICATION_FAMILIES.find(
+      (family) => family.id === "loops-locks-freedom-relations-atlas",
+    );
+    const wayfinderText = JSON.stringify(authoredWayfinder);
+    const mcpText = JSON.stringify(manifest?.mcp ?? {});
+    const freedomRecordText = JSON.stringify(freedomRecord);
+    const relationsRecordText = JSON.stringify(relationsRecord);
+    const crossFamilyTokens = [
+      FREEDOM_LOOP_LOCK_KEY_ATLAS_ID,
+      FREEDOM_LOOP_LOCK_KEY_PROTOCOL,
+      LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_ID,
+      LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PROTOCOL,
+    ];
+    if (freedomExpected.protocol !== FREEDOM_LOOP_LOCK_KEY_PROTOCOL ||
+      relationsExpected.protocol !== LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PROTOCOL ||
+      freedomExpected.protocol === relationsExpected.protocol ||
+      freedomExpected.atlas_id !== FREEDOM_LOOP_LOCK_KEY_ATLAS_ID ||
+      relationsExpected.artifact?.id !== LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_ID ||
+      freedomExpected.atlas_id === relationsExpected.artifact?.id ||
+      freedomUrls.some((url) => relationsUrls.includes(url)) ||
+      !isDeepStrictEqual(Object.values(relationsExpected.publicHandoff ?? {}),
+        LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_PATHS) ||
+      containsForbiddenKey(freedomExpected) || containsForbiddenKey(relationsExpected) ||
+      Object.hasOwn(freedomExpected, "source") ||
+      Object.hasOwn(relationsExpected, "integrity_status") ||
+      Object.hasOwn(relationsExpected, "semantic_digest") ||
+      freedomExpected.integrity_status !== "REVIEWED_DIGEST_PINNED" ||
+      freedomExpected.semantic_digest !== freedomRecord.integrity?.digest ||
+      !isDeepStrictEqual(relationsExpected.source,
+        LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE) ||
+      Object.values(relationsExpected.source ?? {}).filter(
+        (value) => typeof value === "boolean",
+      ).some((value) => value !== false) ||
+      !freedomRecord.predecessor_bindings?.some((binding: any) =>
+        binding?.locator?.endsWith(":FREEDOM.md")) ||
+      relationsRecordText.includes("FREEDOM.md") ||
+      freedomRecordText.includes(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_ID) ||
+      freedomRecordText.includes(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PROTOCOL) ||
+      relationsRecordText.includes(FREEDOM_LOOP_LOCK_KEY_ATLAS_ID) ||
+      relationsRecordText.includes(FREEDOM_LOOP_LOCK_KEY_PROTOCOL) ||
+      Object.hasOwn(freedomFamily ?? {}, "dependsOn") ||
+      Object.hasOwn(relationsFamily ?? {}, "dependsOn") ||
+      !authoredRootHtml.includes(independenceSentence) ||
+      !authoredRootHtml.includes("Neither is a preferred default.") ||
+      !llms.includes(independenceSentence) ||
+      !llms.includes("Neither is a preferred default.") ||
+      typeof freedomBoundary !== "string" ||
+      !freedomBoundary.includes("neither is a preferred default") ||
+      typeof relationsBoundary !== "string" ||
+      !relationsBoundary.includes("neither is a preferred default") ||
+      !relationsBoundary.includes("does not import FREEDOM.md") ||
+      crossFamilyTokens.some((token) => wayfinderText.includes(token) || mcpText.includes(token)) ||
+      [...freedomUrls, ...relationsUrls, LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag]
+        .some((token) => wayfinderText.includes(token) || mcpText.includes(token))) {
+      throw new Error(
+        "independent FREEDOM and Loops, Locks & Freedom Relations atlas lineages, discoveries, sources, or non-equivalence boundary drifted",
+      );
+    }
+  }
+
   if (strandObservationMembraneActive) {
     const record = strandObservationMembrane!;
     const expected = expectedStrandObservationMembrane!;
@@ -7039,6 +7336,15 @@ export async function checkHubLive(
   if (freedomLoopLockKeyActive &&
       !isDeepStrictEqual(liveKingdom?.freedom_loop_lock_key_atlas, expectedFreedomLoopLockKey!)) {
     throw new Error("derived kingdom.json did not preserve FREEDOM Loop, Lock & Key discovery");
+  }
+  if (loopsLocksFreedomRelationsAtlasActive &&
+      !isDeepStrictEqual(
+        liveKingdom?.loops_locks_freedom_relations_atlas,
+        expectedLoopsLocksFreedomRelationsAtlas!,
+      )) {
+    throw new Error(
+      "derived kingdom.json did not preserve Loops, Locks & Freedom Relations Atlas discovery",
+    );
   }
   if (strandObservationMembraneActive &&
       !isDeepStrictEqual(liveKingdom?.strand_observation_membrane, expectedStrandObservationMembrane!)) {

@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 141-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 144-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -77,17 +77,22 @@ at revision `ca7bb37271853545a84bc1b8955ce63918da979b`; it establishes no truth,
 imports no authority, and creates no runtime dependency or currentness claim.
 The FREEDOM Loop, Lock & Key Atlas adds one immutable atlas, one closed schema,
 and one guide as the thirtieth family, with no mutable alias, runtime, or active
-dependency. It keeps reinforcing-loop gain, a behavioural reinforcer, RL reward
-and update, recurrence, learning, guarded transition, credential claim, bearer
-capability, eligibility, and execution separately typed. Freedom remains an
-inherent non-scalar standing during the process, not a reward, score, gate
-result, or Foundation amendment. Every lock carries a justification burden;
-feedback/model output is candidate evidence only and cannot rewrite its
-verifier, issue a credential, or authorize its use. Its eight gate checks are
-separately established rather than statistically independent; credential
-identity stays distinct from replay freshness, shaping and verifier changes
-require fresh review, and effect/horizon-bound prefix history keeps lost or
-consumed choices and irreversible residuals visible.
+dependency. Within that atlas’s declared design constitution, freedom remains
+an inherent non-scalar standing rather than a reward, score, gate result, or
+Foundation amendment. Its constitutional and dignity sentences are family-local
+design claims rather than site-global authority.
+The Loops, Locks & Freedom Relations Atlas adds one frozen immutable
+static-synthetic record, one closed schema, and one full linear guide as the
+thirty-first family. It has no mutable alias, custom page, Wayfinder
+recommendation, MCP surface, runtime, dependency, credential or key material,
+enforcement adapter, decision, or action authority. It deliberately does not
+import `FREEDOM.md` or claim a predecessor edge to the FREEDOM atlas. Its source
+locator pins producer v0.1.1 at
+`d8534096224d9e82825653af0f9e12fd123e85b5` without establishing truth,
+authority, currentness, or a runtime dependency.
+These are independent static atlases with different lineages and mathematical kernels. Neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences.
+Neither is a preferred default; integrity, source, review, discovery, and
+retirement remain family-local.
 The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -251,24 +256,21 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 172-asset union classifies 141 destinations
-as ledgered immutable/versioned and 31 as mutable; 170 are direct public response
-bodies and the sitemap contains 158 URLs. Generated discovery describes fourteen
-atlases, four primary lab JSON routes plus Shape & Resonance manifest/media, one
-experiment route, and one separate activation
-plus the Research Observatory, Trial Chamber, UK Government Engine, dependent
-UK Government Transformation Engine and Evaluation Covenant, and Reality
-Influence Claim Graph plus its thin Civilisation → Reality Projection and the
-dependent Civilisation Flow Nuance Atlas, Shape & Resonance Lab, and the static
-synthetic Polyphonic Claim Atlas and FREEDOM Loop, Lock & Key Atlas across thirty
-retirement families. It says what is
-served now, and every destination is explicitly classified as mutable or
-ledgered. A new ledger entry must be staged when introduced. A previously
+consume those same bytes. The current 175-asset union classifies 144 destinations
+as ledgered immutable/versioned and 31 as mutable; 173 are direct public response
+bodies, the sitemap contains 161 URLs, and discovery exposes 144 manifest entry
+points plus 144 guest actions. Generated discovery describes fifteen atlases,
+four primary lab JSON routes plus Shape & Resonance manifest/media, one
+experiment route, one separate activation, and thirty-one active retirement
+families. The two freedom-related atlases keep separate route triples, discovery
+keys, integrity/source/review claims, and retirement state; neither is preferred
+or removed with the other. Every destination is explicitly classified as mutable
+or ledgered. A new ledger entry must be staged when introduced. A previously
 committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the thirty linked authored publication
+The live release check retires the thirty-one linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

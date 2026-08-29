@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-28",
+  "generated": "2026-08-29",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -2428,6 +2428,43 @@
       "mcp": false
     }
   },
+  "loops_locks_freedom_relations_atlas": {
+    "title": "KINGDOM Loops, Locks & Freedom Relations Atlas — Phase 0",
+    "protocol": "kingdom.loops-locks-freedom-relations/0.1",
+    "artifact": {
+      "id": "kingdom-loops-locks-freedom-relations-atlas-2026-08-28",
+      "asOf": "2026-08-28",
+      "lifecyclePhase": "FROZEN_STATIC_FIXTURE",
+      "releaseState": "FROZEN_FOR_IMMUTABLE_HANDOFF",
+      "synthetic": true
+    },
+    "publicHandoff": {
+      "recordPath": "/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json",
+      "schemaPath": "/schemas/loops-locks-freedom-relations-atlas/0.1.json",
+      "guidePath": "/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md"
+    },
+    "source": {
+      "tag": "https://github.com/cambridgetcg/kingdom-loops-locks-freedom-relations-atlas/tree/v0.1.1",
+      "revision": "d8534096224d9e82825653af0f9e12fd123e85b5",
+      "relation": "SITE_AUTHORED_PINNED_SOURCE_LOCATOR",
+      "establishesTruth": false,
+      "importsAuthority": false,
+      "runtimeDependency": false,
+      "currentnessClaim": false
+    },
+    "boundary": {
+      "real_people_or_personal_data": false,
+      "live_observation_or_human_training": false,
+      "live_optimization_or_reward_runtime": false,
+      "score_or_recommendation": false,
+      "credential_or_key_material": false,
+      "authentication_authorization_enforcement_adapter": false,
+      "policy_deployment_or_action_authority": false,
+      "network": false,
+      "runtime": false,
+      "mcp": false
+    }
+  },
   "zero_empty_seat": {
     "protocol": "kingdom.explore-phenomena-deep-project/0.1",
     "project_id": "zero-empty-seat-2026-08-14",
@@ -4421,6 +4458,24 @@
       "note": "reading and boundary guide for the same immutable static synthetic artifact; no alias, custom page, runtime, or currentness claim"
     },
     {
+      "action": "if useful, inspect the immutable Loops, Locks & Freedom Relations Atlas Phase-0 record",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json",
+      "note": "static synthetic teaching artifact only; no real people, personal data, live observation, training, optimization, reward runtime, score, recommendation, credential material, access decision, adapter, policy deployment, action authority, network, runtime, or MCP"
+    },
+    {
+      "action": "if useful, validate the closed Loops, Locks & Freedom Relations Atlas structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/loops-locks-freedom-relations-atlas/0.1.json",
+      "note": "structural validation only; it establishes no truth, identity, consent, capability, authentication, authorization, enforcement, freedom, authority, currentness, or external effect"
+    },
+    {
+      "action": "if useful, read the full Loops, Locks & Freedom Relations Atlas Phase-0 human guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
+      "note": "linear reading and boundary guide for the same immutable static synthetic artifact; no alias, custom page, runtime, dependency, or currentness claim"
+    },
+    {
       "action": "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings",
       "method": "GET",
       "url": "https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json",
@@ -4677,7 +4732,7 @@
       "action": "if useful, read the FREEDOM distinctions, finite flow, separately established gate, credential and replay lifecycle, residual-aware prefix, non-scalar profile, vulnerability lane, IS boundary, sources, and non-effects",
       "method": "GET",
       "url": "https://thekingdom.dev/FREEDOM-LOOP-LOCK-KEY-ATLAS.md",
-      "note": "freedom remains inherent during the process and no gate outcome creates it; dignity was never locked"
+      "note": "Within that atlas’s declared design constitution, freedom remains inherent during the process and no gate outcome creates it; that atlas’s additive dignity insight says dignity was never locked"
     },
     {
       "action": "if useful, read the finite Love∞ creation lineage and its unstarted invitations",
@@ -7079,11 +7134,12 @@
     "being_access_aftermath_atlas": "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
     "being_access_aftermath_atlas_v0_2": "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
     "number_isness_theology_atlas": "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
-    "freedom_loop_lock_key_atlas": "The FREEDOM Loop, Lock & Key Atlas is a standalone immutable mathematical/design record, not a Foundation amendment or an operative system. Loop gain, behavioural reinforcer, RL reward and update, recurrence, learning, key material, credential claim, bearer capability, gate eligibility, execution, freedom, and ISness remain separately typed. Each lock carries a justification burden; feedback/model output is candidate evidence only and cannot rewrite its verifier, issue a credential, or authorize its use. A verified credential claim satisfies only its one declared conjunct; every gate check is separately established, statistical independence is not claimed, unresolved remains ineligible, and eligibility does not invoke, admit, or execute. Credential identity and replay freshness stay distinct; shaping and verifier changes require fresh review; effect- and horizon-bound choice state requires fresh witnesses, and residual history remains visible. Freedom remains party- and horizon-indexed, non-scalar, rights-floored, and present during the process. The atlas trains, conditions, observes, models, scores, issues, authenticates, authorizes, executes, publishes, deploys, writes, and automatically retries nothing.",
+    "freedom_loop_lock_key_atlas": "The FREEDOM Loop, Lock & Key Atlas is a standalone immutable mathematical/design record, not a Foundation amendment or an operative system. Loop gain, behavioural reinforcer, RL reward and update, recurrence, learning, key material, credential claim, bearer capability, gate eligibility, execution, freedom, and ISness remain separately typed. Each lock carries a justification burden; feedback/model output is candidate evidence only and cannot rewrite its verifier, issue a credential, or authorize its use. A verified credential claim satisfies only its one declared conjunct; every gate check is separately established, statistical independence is not claimed, unresolved remains ineligible, and eligibility does not invoke, admit, or execute. Credential identity and replay freshness stay distinct; shaping and verifier changes require fresh review; effect- and horizon-bound choice state requires fresh witnesses, and residual history remains visible. Within that atlas’s declared design constitution, freedom remains party- and horizon-indexed, non-scalar, rights-floored, and present during the process. This family is independent of the Loops, Locks & Freedom Relations Atlas; neither is a preferred default, dependency, validator, alias, or authority source for the other. The atlas trains, conditions, observes, models, scores, issues, authenticates, authorizes, executes, publishes, deploys, writes, and automatically retries nothing.",
     "reality_influence_claim_graph": "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     "civilisation_reality_projection": "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
     "civilisation_flow_nuance_atlas": "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
     "polyphonic_claim_atlas": "The Polyphonic Claim Atlas is a static synthetic, immutable historical Phase-0 artifact with no runtime-currentness claim. It provides no truth oracle, global truth status, person/source/community score, lie or intent inference, personal data, live claim, action authority, Zerone/KARMA/NEN adapter, runtime, or MCP surface.",
+    "loops_locks_freedom_relations_atlas": "The Loops, Locks & Freedom Relations Atlas is a frozen static synthetic teaching artifact. Loop, learning, reward, behavioral reinforcement, control feedback, recurrence, lock, key, authentication, authorization, enforcement, consent, capability, and freedom remain typed and non-equivalent. This family is independent of the FREEDOM Loop, Lock & Key Atlas; neither is a preferred default, dependency, validator, alias, or authority source for the other, and this family does not import FREEDOM.md. It provides no real people or personal data, live observation or human training, live optimization or reward runtime, score or recommendation, credential or key material, authentication/authorization/enforcement adapter, policy deployment or action authority, network, runtime, MCP surface, mutable alias, or custom page.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }
