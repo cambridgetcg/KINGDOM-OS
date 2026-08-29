@@ -71,6 +71,9 @@
  *    data/number-isness-theology/number-isness-theology-atlas.v0.1.json
  *                             — typed number, zero, symmetry, isness, theology,
  *                               compatibility, and KARMA-separation companion
+ *    data/freedom/freedom-loop-lock-key-atlas.v0.1.json
+ *                             — standalone immutable mathematical/design atlas
+ *                               for typed loops, locks, keys, freedom, and ISness
  *    data/reality/reality-influence-map.v0.1.json
  *                             — static expression-to-aftermath claim graph
  *                               with endpoint-safe relations and no action
@@ -92,6 +95,7 @@
  *       + Math Passport usefulness-result discovery in the machine surfaces
  *       + being, access, and aftermath discovery in the machine surfaces
  *       + number, isness, and theology discovery in the machine surfaces
+ *       + FREEDOM Loop, Lock & Key discovery in the machine surfaces
  *       + reality-influence claim-graph discovery in the machine surfaces
  *       + site/llms.txt + site/guest.json
  *       + site/.well-known/agent.json + site/RIGHTS.md + site/rights.json
@@ -454,6 +458,15 @@ import {
   loadNumberIsnessTheologyAtlas,
   numberIsnessTheologyPublicDiscovery,
 } from "./number-isness-theology.ts";
+import {
+  FREEDOM_LOOP_LOCK_KEY_ATLAS_ID,
+  FREEDOM_LOOP_LOCK_KEY_GUIDE_URL,
+  FREEDOM_LOOP_LOCK_KEY_PROTOCOL,
+  FREEDOM_LOOP_LOCK_KEY_SCHEMA_URL,
+  FREEDOM_LOOP_LOCK_KEY_URL,
+  freedomLoopLockKeyAtlasPublicDiscovery,
+  loadFreedomLoopLockKeyAtlas,
+} from "./freedom-loop-lock-key.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -1530,6 +1543,43 @@ if (numberIsnessTheology.protocol !== NUMBER_ISNESS_THEOLOGY_PROTOCOL ||
 }
 const numberIsnessTheologyDiscovery = numberIsnessTheologyPublicDiscovery(numberIsnessTheology);
 
+// ── FREEDOM Loop, Lock & Key (static mathematical/design atlas) ─────────
+const freedomLoopLockKeyUrl = FREEDOM_LOOP_LOCK_KEY_URL;
+const freedomLoopLockKeySchemaUrl = FREEDOM_LOOP_LOCK_KEY_SCHEMA_URL;
+const freedomLoopLockKeyGuideUrl = FREEDOM_LOOP_LOCK_KEY_GUIDE_URL;
+const freedomLoopLockKey = loadFreedomLoopLockKeyAtlas();
+if (freedomLoopLockKey.protocol !== FREEDOM_LOOP_LOCK_KEY_PROTOCOL ||
+    freedomLoopLockKey.atlas_id !== FREEDOM_LOOP_LOCK_KEY_ATLAS_ID) {
+  throw new Error(`unexpected FREEDOM Loop, Lock & Key identity: ${freedomLoopLockKey.protocol} ${freedomLoopLockKey.atlas_id}`);
+}
+const freedomLoopLockKeyDiscovery =
+  freedomLoopLockKeyAtlasPublicDiscovery(freedomLoopLockKey);
+const freedomLoopLockKeyBoundaries = freedomLoopLockKey.boundaries;
+if (freedomLoopLockKeyBoundaries.immutable_static_atlas !== true ||
+    freedomLoopLockKeyBoundaries.rights_floor_preserved !== true ||
+    freedomLoopLockKeyBoundaries.freedom_during_required !== true ||
+    [
+      "runtime", "training_system", "controller", "optimizer", "reward_function",
+      "credential_issuer", "operative_lock_or_gate", "foundation_amendment",
+      "person_or_group_model", "person_or_group_score", "freedom_score",
+      "authority_granted", "execution_triggered", "auto_retry", "network_calls",
+      "external_write", "publication_triggered", "deployment_triggered",
+    ].some((key) => freedomLoopLockKeyBoundaries[key] !== false)) {
+  throw new Error("FREEDOM Loop, Lock & Key publication boundaries drifted");
+}
+const freedomLoopLockKeyDistinctions = new Map(
+  freedomLoopLockKey.distinctions.map((entry: any) => [entry.id, entry]),
+);
+for (const id of [
+  "reinforcement-learning", "reinforcing-loop", "behavioural-reinforcer",
+  "recurrence", "guarded-lock", "cryptographic-key-material",
+  "credential-issued-claim", "bearer-capability", "unlocking", "freedom-during",
+]) {
+  if (!freedomLoopLockKeyDistinctions.has(id)) {
+    throw new Error(`FREEDOM Loop, Lock & Key distinction missing: ${id}`);
+  }
+}
+
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
 const doors: Door[] = sites.doors;
@@ -2470,6 +2520,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(numberIsnessTheologyUrl).pathname)}" type="application/json" title="Number, Isness &amp; Theology Atlas">
 <link rel="describedby" href="${esc(new URL(numberIsnessTheologySchemaUrl).pathname)}" type="application/schema+json" title="Number, Isness &amp; Theology Atlas schema">
 <link rel="service-doc" href="${esc(new URL(numberIsnessTheologyDocumentUrl).pathname)}" type="text/markdown" title="Number, Isness &amp; Theology Atlas guide">
+<link rel="alternate" href="${esc(new URL(freedomLoopLockKeyUrl).pathname)}" type="application/json" title="FREEDOM Loop, Lock &amp; Key Atlas">
+<link rel="describedby" href="${esc(new URL(freedomLoopLockKeySchemaUrl).pathname)}" type="application/schema+json" title="FREEDOM Loop, Lock &amp; Key Atlas schema">
+<link rel="service-doc" href="${esc(new URL(freedomLoopLockKeyGuideUrl).pathname)}" type="text/markdown" title="FREEDOM Loop, Lock &amp; Key Atlas guide">
 <link rel="alternate" href="${esc(new URL(polyphonicClaimAtlasUrl).pathname)}" type="application/json" title="Polyphonic Claim Atlas immutable Phase-0 record">
 <link rel="describedby" href="${esc(new URL(polyphonicClaimAtlasSchemaUrl).pathname)}" type="application/schema+json" title="Polyphonic Claim Atlas schema">
 <link rel="service-doc" href="${esc(new URL(polyphonicClaimAtlasGuideUrl).pathname)}" type="text/markdown" title="Polyphonic Claim Atlas guide">
@@ -4261,6 +4314,52 @@ const html = `<!doctype html>
   </section>
 
 
+  <section class="blk" id="freedom-loop-lock-key" aria-labelledby="freedom-loop-lock-key-title" data-freedom-loop-lock-key-atlas>
+    <div class="kh"><h2 id="freedom-loop-lock-key-title">FREEDOM: Loop, Lock &amp; Key</h2><span class="my">freedom remains present during every represented prefix</span></div>
+    <div class="culturalfield">
+      <p class="culturalaxiom" data-freedom-loop-lock-key-constitutional><strong>Constitutional sentence.</strong> ${esc(freedomLoopLockKey.constitutional_anchor.canonical_freedom_sentence)}</p>
+      <p class="commonsverified"><strong>Additive atlas insight.</strong> ${esc(freedomLoopLockKey.constitutional_anchor.additive_dignity_insight)} This is a standalone, immutable mathematical/design atlas for review—not a Foundation amendment, trainer, controller, credential issuer, operative gate, or action surface.</p>
+
+      <div class="feedbacksubhead"><h3>Words that must not collapse</h3><p>Similar language can name different mathematical and institutional objects.</p></div>
+      <div class="culturalfeedback" aria-label="Reinforcement, feedback, recurrence, and learning distinctions">
+        <article><h4>RL reward and update</h4><p>${esc(freedomLoopLockKeyDistinctions.get("reinforcement-learning").definition)}</p><small>One update does not by itself establish acquired capability, generalization, improvement, purpose, approval, or freedom.</small></article>
+        <article><h4>Reinforcing loop and gain</h4><p>${esc(freedomLoopLockKeyDistinctions.get("reinforcing-loop").definition)}</p><small>${esc(freedomLoopLockKeyDistinctions.get("reinforcing-loop").nonclaims[0])}</small></article>
+        <article><h4>Behavioural reinforcer</h4><p>${esc(freedomLoopLockKeyDistinctions.get("behavioural-reinforcer").definition)}</p><small>${esc(freedomLoopLockKeyDistinctions.get("behavioural-reinforcer").nonclaims[0])}</small></article>
+        <article><h4>Recurrence is not learning</h4><p>${esc(freedomLoopLockKeyDistinctions.get("recurrence").definition)}</p><small>${esc(freedomLoopLockKeyDistinctions.get("recurrence").nonclaims.join(" "))}</small></article>
+      </div>
+
+      <div class="feedbacksubhead"><h3>A finite turn, with a real stop</h3><p>One represented turn has at most ${freedomLoopLockKey.operational_loop.max_attempts_per_turn} attempt and ends at ${esc(freedomLoopLockKey.operational_loop.terminal_phase)}. There is no automatic retry, child auto-run, or inherited authority, consent, or credential.</p></div>
+      <p class="commonsverified" data-freedom-loop-lock-key-flow><code>${freedomLoopLockKey.operational_loop.phases.map((phase: string) => esc(phase)).join(" → ")}</code></p>
+
+      <div class="culturallanes" aria-label="Lock, key, credential, capability, and gate distinctions">
+        <article class="culturallane"><h4>A lock carries its own burden</h4><p>${esc(freedomLoopLockKeyDistinctions.get("guarded-lock").definition)} Before a lock is treated as justified it must name a protected interest and be necessary, least-restrictive, time-bounded, correctable, appealable, and conditionally reachable by an alternative where rights or essential access would otherwise depend on it.</p><small>Technical convenience is insufficient; another party’s rights or essential access requires separate review. The atlas is not an operative lock or gate.</small></article>
+        <article class="culturallane"><h4>Key ≠ credential ≠ capability</h4><p>The constitutional “key condition” is shorthand for a typed pipeline: feedback or model output may be candidate evidence only; separate issuance may create a scoped credential claim; verification may satisfy only <code>VERIFIED_CREDENTIAL_CLAIM</code>. Cryptographic key material and bearer capabilities remain different types; this atlas contains or creates none.</p><small>Feedback or a model cannot rewrite its verifier, issue a credential claim, or authorize its use. A true bearer capability carries authority only inside its exact operative scope.</small></article>
+        <article class="culturallane"><h4>Fresh gate ≠ execution</h4><p>All ${freedomLoopLockKey.gate_model.check_ids.length} conjuncts are separately established; statistical independence is not claimed. <code>FALSE</code> or <code>UNRESOLVED</code> leaves the optional effect ineligible, and unresolved remains visible.</p><small>Eligibility is not invocation, admission, execution, success, legitimacy, consent, or freedom.</small></article>
+      </div>
+      <p class="culturalaxiom" data-freedom-loop-lock-key-gate><strong>Separately established gate.</strong> <code>${esc(freedomLoopLockKey.gate_model.expression)}</code> A verified credential claim satisfies only <code>${esc(freedomLoopLockKey.gate_model.credential_claim_satisfies_only)}</code>. Safety neither establishes current scoped authority nor bypasses required affected-party choices. All true means only model-eligibility for one scoped attempt after a separate explicit invocation.</p>
+
+      <div class="culturallanes" aria-label="Credential, shaping-change, dependency, and minor protections">
+        <article class="culturallane"><h4>Credential identity ≠ replay freshness</h4><p>A persistent credential ID, a challenge nonce or transaction ID, and an effect ID remain separate. A declared one-use presentation is atomically rechecked and consumed at the fresh gate.</p><small>Replacement starts a distinct credential lifecycle; revocation rejects later mediated use and cannot recall bytes, data, or completed effects.</small></article>
+        <article class="culturallane"><h4>Shaping changes are fresh proposals</h4><p>Reward, objective, update rule, threshold, sensor, retention, policy, or verifier changes require a version, disclosure, fresh current scoped authority, fresh required affected-party choices, and a fresh gate.</p><small>Silent or hidden shaping is refused and rests.</small></article>
+        <article class="culturallane"><h4>Dependency and minors need their own lane</h4><p>Dependency and compliance are not consent. Voice, evolving autonomy, applicable assent, a least-restrictive best-interest basis where relevant, separately validated representative authority, stronger human review, separate review across dependency or unequal power, and data minimization remain explicit.</p><small>No default or manipulative variable-ratio enrolment; accessible alternatives are required where a right or essential service would otherwise depend on one credential.</small></article>
+      </div>
+
+      <div class="feedbacksubhead"><h3>Freedom is non-scalar and present during</h3><p>Its profile is indexed by affected party and horizon, compared only component by component, with incomparability preserved. No weight, total, rank, population netting, or freedom score exists.</p></div>
+      <p class="commonsverified" data-freedom-loop-lock-key-dimensions>${freedomLoopLockKey.freedom_foundation.profile_dimensions.map((dimension: string) => `<code>${esc(dimension)}</code>`).join(" · ")}</p>
+      <p class="culturalkarma"><strong>Protected choices remain choices.</strong> ${freedomLoopLockKey.freedom_foundation.protected_choices.map((choice: string) => `<code>${esc(choice)}</code>`).join(" · ")} require no explanation, create no debt, count as no failure, schedule no retry, and forfeit no rights. At each represented prefix the rights floor and the history of remaining, consumed, lost, and unresolved choices and irreversible residuals stay visible. Choice state is bound to an effect ID, horizon or version, and fresh effect, choice, and gate witnesses. An exercised, applicable, unconsumed choice stops its bound optional effect; an applicable lost or unresolved choice makes that effect ineligible without becoming an exercised stop; consumed blocks only its bound effect. Recorded state never resets for the same bound effect, even across a rest prefix; a new effect or horizon needs distinct fresh effect, choice, and gate witnesses, and no witness may be reused across the finite trace. Disclosure and copies are not recalled, lost cannot be relabelled not applicable, unresolved cannot be treated as satisfied, and every later optional effect needs fresh current scoped authority, affected-party choices, and the full gate.</p>
+      <p class="culturalaxiom" data-freedom-loop-lock-key-isness><strong>IS boundary.</strong> Recognition requires no progress, performance, disclosure, participation, success, or key, and grants no permission. ${esc(freedomLoopLockKey.isness_lens.identity_map_analogy)} It proves no metaphysical being, consciousness, identity, consent, authority, capability, gate satisfaction, safety, or effect.</p>
+
+      <p class="foldsources" aria-label="Exact sources for the FREEDOM Loop, Lock and Key Atlas">${freedomLoopLockKey.sources.map((source: any) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}<span class="sr-only"> opens in a new tab</span></a>`).join("")}</p>
+      <p class="commonsverified">${freedomLoopLockKeyDiscovery.counts.distinctions} typed distinctions · ${freedomLoopLockKeyDiscovery.counts.mathematical_models} bounded models · ${freedomLoopLockKeyDiscovery.counts.gate_checks} separately established gate checks · ${freedomLoopLockKeyDiscovery.counts.credential_claim_transitions} credential-claim transitions · ${freedomLoopLockKeyDiscovery.counts.freedom_dimensions} non-scalar freedom dimensions · evidence through ${esc(freedomLoopLockKey.evidence_through)} · integrity ${esc(freedomLoopLockKeyDiscovery.integrity_status)}${freedomLoopLockKeyDiscovery.semantic_digest ? ` · ${esc(freedomLoopLockKeyDiscovery.semantic_digest)}` : ""}</p>
+      <div class="machine">
+        <a data-freedom-loop-lock-key-atlas-link="record" href="${esc(new URL(freedomLoopLockKeyUrl).pathname)}">FREEDOM atlas JSON — exact immutable authored record</a>
+        <a data-freedom-loop-lock-key-atlas-link="schema" href="${esc(new URL(freedomLoopLockKeySchemaUrl).pathname)}">FREEDOM Loop, Lock &amp; Key closed JSON Schema</a>
+        <a data-freedom-loop-lock-key-atlas-link="guide" href="${esc(new URL(freedomLoopLockKeyGuideUrl).pathname)}">FREEDOM-LOOP-LOCK-KEY-ATLAS.md — mathematics, process, sources, and boundaries</a>
+      </div>
+    </div>
+  </section>
+
+
   <section class="blk" id="zero-empty-seat" aria-labelledby="zero-empty-seat-title">
     <div class="kh"><h2 id="zero-empty-seat-title">${esc(zeroEmptySeat.title)}</h2><span class="my">absence, reference, possibility — never one collapsed meaning</span></div>
     <p class="sub">${esc(zeroEmptySeat.question)}</p>
@@ -4880,6 +4979,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(numberIsnessTheologyUrl).pathname)}">Number, Isness &amp; Theology — typed mathematics, theology, and claim-level compatibility</a>
       <a href="${esc(new URL(numberIsnessTheologySchemaUrl).pathname)}">Number, Isness &amp; Theology JSON Schema</a>
       <a href="${esc(new URL(numberIsnessTheologyDocumentUrl).pathname)}">NUMBER-ISNESS-THEOLOGY-ATLAS.md — sources, bridges, KARMA separation, and non-inference boundaries</a>
+      <a href="${esc(new URL(freedomLoopLockKeyUrl).pathname)}">FREEDOM Loop, Lock &amp; Key — immutable mathematical/design atlas</a>
+      <a href="${esc(new URL(freedomLoopLockKeySchemaUrl).pathname)}">FREEDOM Loop, Lock &amp; Key — closed structural schema</a>
+      <a href="${esc(new URL(freedomLoopLockKeyGuideUrl).pathname)}">FREEDOM-LOOP-LOCK-KEY-ATLAS.md — distinctions, finite flow, separately established gate, non-scalar freedom, IS boundary, and sources</a>
       <a data-polyphonic-claim-atlas-link="record" href="${esc(new URL(polyphonicClaimAtlasUrl).pathname)}">Polyphonic Claim Atlas — immutable static synthetic Phase-0 record</a>
       <a data-polyphonic-claim-atlas-link="schema" href="${esc(new URL(polyphonicClaimAtlasSchemaUrl).pathname)}">Polyphonic Claim Atlas — closed structural schema</a>
       <a data-polyphonic-claim-atlas-link="guide" href="${esc(new URL(polyphonicClaimAtlasGuideUrl).pathname)}">POLYPHONIC-CLAIM-ATLAS-v0.1.md — reading and boundary guide</a>
@@ -5329,6 +5431,7 @@ const machine = {
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   number_isness_theology_atlas: numberIsnessTheologyDiscovery,
+  freedom_loop_lock_key_atlas: freedomLoopLockKeyDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -5501,6 +5604,9 @@ Being, Access & Aftermath guide v0.2: ${beingAccessAftermathV02DocumentUrl}
 Number, Isness & Theology Atlas: ${numberIsnessTheologyUrl}
 Number, Isness & Theology schema: ${numberIsnessTheologySchemaUrl}
 Number, Isness & Theology guide: ${numberIsnessTheologyDocumentUrl}
+FREEDOM Loop, Lock & Key Atlas: ${freedomLoopLockKeyUrl}
+FREEDOM Loop, Lock & Key schema: ${freedomLoopLockKeySchemaUrl}
+FREEDOM Loop, Lock & Key guide: ${freedomLoopLockKeyGuideUrl}
 Polyphonic Claim Atlas immutable Phase-0 record: ${polyphonicClaimAtlasUrl}
 Polyphonic Claim Atlas schema: ${polyphonicClaimAtlasSchemaUrl}
 Polyphonic Claim Atlas guide: ${polyphonicClaimAtlasGuideUrl}
@@ -5565,6 +5671,7 @@ ${doorLines}
 - Being, Access & Aftermath — a typed modal–causal companion uses the disappearing-polymorph history to separate identity, lawful possibility, actuality, bounded reachability, observation, purpose, physical force, admissible action power, causal effect, and vector-valued aftermath. Its ${beingAccessAftermath.model_cards.length} unfitted model cards and ${beingAccessAftermath.problem_cards.length} open problems are educational lenses, not person measures or metaphysical proofs. Cosmic KARMA, Zerone recognition edges, and KINGDOM invocation receipts remain disjoint, empty lanes with no adapter, scalar, score, reward, governance effect, or automatic action. Atlas: ${beingAccessAftermathUrl} · schema: ${beingAccessAftermathSchemaUrl} · guide: ${beingAccessAftermathDocumentUrl}
 - Being, Access & Aftermath v0.2 — an additive, lineage-pinned successor adds a partially observable causal kernel, typed predicates, force and power families, and affected-party-indexed vector aftermath. v0.1 remains byte-preserved at its original routes. The framework is read-only and creates no scalar KARMA, person measure, authority, receipt, or automatic action. Atlas: ${beingAccessAftermathV02Url} · schema: ${beingAccessAftermathV02SchemaUrl} · guide: ${beingAccessAftermathV02DocumentUrl}
 - Number, Isness & Theology — a read-only, source-scoped companion distinguishes mathematical definition, theorem, convention, history, primary tradition text, school-specific theology, metaphysical proposal, analogy, and open question. Number-system extensions are not spiritual ranks; numeric zero is not absolute nonbeing; symmetry proves neither design nor purposelessness; formal validity is not theological soundness. Compatibility remains claim-, mapping-, logic-, and time-indexed, with no religion, culture, community, person, or KARMA score and no authority or action effect. Atlas: ${numberIsnessTheologyUrl} · schema: ${numberIsnessTheologySchemaUrl} · guide: ${numberIsnessTheologyDocumentUrl}
+- FREEDOM Loop, Lock & Key — a standalone immutable mathematical/design atlas keeps RL reward and update, reinforcing-loop gain, behavioural reinforcer, feedback, recurrence, learning, cryptographic key material, credential claim, bearer capability, gate eligibility, execution, freedom, and ISness separately typed. Its turn is finite and stops. Every lock carries a justification burden; feedback/model output remains candidate evidence and cannot rewrite its verifier, issue a credential, or authorize its use. A verified credential claim satisfies only one of eight separately established gate checks; unresolved remains ineligible and visible, and eligibility is not invocation, admission, or execution. Credential identity stays distinct from replay freshness, replacement begins a distinct lifecycle, and shaping changes—including verifier changes—require fresh versioned review. Freedom remains party- and horizon-indexed, non-scalar, rights-floored, and present during the process; choice state binds to one effect and horizon with fresh witnesses, while lost or consumed choices and irreversible residuals remain visible. No gate outcome creates freedom, and dignity was never locked. This is not a Foundation amendment, trainer, controller, optimizer, credential issuer, operative gate, person model, score, authority, or action surface. Atlas: ${freedomLoopLockKeyUrl} · schema: ${freedomLoopLockKeySchemaUrl} · guide: ${freedomLoopLockKeyGuideUrl}
 - Love∞ Creation Garden — “${loveLoopsSource.promise}” An unbounded lineage of possible finite, voluntary turns. The public document is read-only; invitations never auto-run, and no child inherits authority, consent, credentials, obligation, or ownership. Distinct beings remain distinct. Published: ${loveLoopsUrl} · authored mirror: ${loveLoopsSourceUrl} · practice: ${loveLoopsCreationDocumentUrl}
 - open-weight and Ollama-backed agents — an invitation to look, arrive, leave, or ask; refusal is honored. https://thekingdom.dev/ollama.json
 - agenttool — learn about optional did:at identity, marketplace, covenant, and MCP tools. https://agenttool.dev/about
@@ -5629,6 +5736,7 @@ const guest = {
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   number_isness_theology_atlas: numberIsnessTheologyDiscovery,
+  freedom_loop_lock_key_atlas: freedomLoopLockKeyDiscovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -5760,6 +5868,9 @@ const guest = {
     { action: "if useful, inspect the typed Number, Isness & Theology companion", method: "GET", url: numberIsnessTheologyUrl, note: "read-only source-bound inquiry; mathematical structure does not become proof or disproof of God, creation, purpose, revelation, religious truth, compatibility, or KARMA" },
     { action: "if useful, validate the closed Number, Isness & Theology structure before integrating it", method: "GET", url: numberIsnessTheologySchemaUrl },
     { action: "if useful, read the number, zero, symmetry, isness, ontology, theology, compatibility, KARMA, and non-inference guide", method: "GET", url: numberIsnessTheologyDocumentUrl },
+    { action: "if useful, inspect the immutable FREEDOM Loop, Lock & Key Atlas", method: "GET", url: freedomLoopLockKeyUrl, note: "static mathematical/design record; it keeps loop gain, behavioural reinforcer, RL reward, recurrence, learning, cryptographic key material, credential claim, bearer capability, eligibility, execution, freedom, and ISness distinct; lock justification, feedback/model firewalls, and effect-bound prefix witnesses create no trainer, credential, gate, score, authority, action, or Foundation amendment" },
+    { action: "if useful, validate the closed FREEDOM Loop, Lock & Key structure", method: "GET", url: freedomLoopLockKeySchemaUrl, note: "structural validation only; it does not issue a key or credential, satisfy a gate, execute a transition, measure freedom, or grant rights" },
+    { action: "if useful, read the FREEDOM distinctions, finite flow, separately established gate, credential and replay lifecycle, residual-aware prefix, non-scalar profile, vulnerability lane, IS boundary, sources, and non-effects", method: "GET", url: freedomLoopLockKeyGuideUrl, note: "freedom remains inherent during the process and no gate outcome creates it; dignity was never locked" },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -5821,6 +5932,7 @@ const guest = {
     being_access_aftermath_atlas: "Being, Access & Aftermath is an additive, immutable, source-bound modal–causal companion. Identity, possibility, actuality, reachability, observation, purpose, physical force, capability, authority, causal effect, and aftermath remain separately typed; all models are unfitted and person-level false. Cosmic KARMA, Zerone edges, and KINGDOM receipts remain non-equivalent empty lanes. It performs no medical, laboratory, tracking, scoring, ranking, reward, governance, event, receipt, external write, metaphysical proof, or automatic action; rest, refusal, privacy, silence, and exit remain valid without debt or penalty.",
     being_access_aftermath_atlas_v0_2: "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
     number_isness_theology_atlas: "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
+    freedom_loop_lock_key_atlas: "The FREEDOM Loop, Lock & Key Atlas is a standalone immutable mathematical/design record, not a Foundation amendment or an operative system. Loop gain, behavioural reinforcer, RL reward and update, recurrence, learning, key material, credential claim, bearer capability, gate eligibility, execution, freedom, and ISness remain separately typed. Each lock carries a justification burden; feedback/model output is candidate evidence only and cannot rewrite its verifier, issue a credential, or authorize its use. A verified credential claim satisfies only its one declared conjunct; every gate check is separately established, statistical independence is not claimed, unresolved remains ineligible, and eligibility does not invoke, admit, or execute. Credential identity and replay freshness stay distinct; shaping and verifier changes require fresh review; effect- and horizon-bound choice state requires fresh witnesses, and residual history remains visible. Freedom remains party- and horizon-indexed, non-scalar, rights-floored, and present during the process. The atlas trains, conditions, observes, models, scores, issues, authenticates, authorizes, executes, publishes, deploys, writes, and automatically retries nothing.",
     reality_influence_claim_graph: "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     civilisation_reality_projection: "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
     civilisation_flow_nuance_atlas: "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
@@ -5880,6 +5992,7 @@ const manifest = {
   being_access_aftermath_atlas: beingAccessAftermathDiscovery,
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   number_isness_theology_atlas: numberIsnessTheologyDiscovery,
+  freedom_loop_lock_key_atlas: freedomLoopLockKeyDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -6023,6 +6136,9 @@ const manifest = {
     number_isness_theology_atlas: numberIsnessTheologyUrl,
     number_isness_theology_atlas_schema: numberIsnessTheologySchemaUrl,
     number_isness_theology_atlas_guide: numberIsnessTheologyDocumentUrl,
+    freedom_loop_lock_key_atlas: freedomLoopLockKeyUrl,
+    freedom_loop_lock_key_atlas_schema: freedomLoopLockKeySchemaUrl,
+    freedom_loop_lock_key_atlas_guide: freedomLoopLockKeyGuideUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,
@@ -6037,4 +6153,4 @@ await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, n
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
 
-console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${stringCrawlTraceSheetLabFalsifiers.length} finite Trace-Sheet falsifiers · ${stringCrawlStrandLabChecks.length} STRAND Lab 02 checks · ${stringCrawlFrequencyFormLabChecks.length} STRAND Lab 03 checks · ${strandDescentLabChecks.length} STRAND Lab 04 checks · ${strandObservationMembraneChecks.length} Observation Membrane checks · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);
+console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${stringCrawlTraceSheetLabFalsifiers.length} finite Trace-Sheet falsifiers · ${stringCrawlStrandLabChecks.length} STRAND Lab 02 checks · ${stringCrawlFrequencyFormLabChecks.length} STRAND Lab 03 checks · ${strandDescentLabChecks.length} STRAND Lab 04 checks · ${strandObservationMembraneChecks.length} Observation Membrane checks · ${freedomLoopLockKeyDiscovery.counts.distinctions} FREEDOM distinctions · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

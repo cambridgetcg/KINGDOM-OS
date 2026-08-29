@@ -1,0 +1,548 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:freedom-loop-lock-key-atlas:0.1",
+  "title": "KINGDOM FREEDOM Loop, Lock and Key Atlas 0.1",
+  "description": "A closed immutable static mathematical and design atlas. Schema validity establishes no reward correctness, learning, stability, freedom, identity, consent, permission, authority, credential validity, eligibility, execution, safety, or external effect.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "protocol", "atlas_id", "version", "title", "compiled_on",
+    "evidence_through", "state", "scope", "constitutional_anchor", "lock_justification", "feedback_firewall",
+    "predecessor_bindings", "sources", "distinctions", "mathematical_models",
+    "operational_loop", "gate_model", "credential_claim_lifecycle", "shaping_change_control", "freedom_foundation",
+    "isness_lens", "vulnerability_dependency_lane", "forbidden_conversions",
+    "boundaries", "integrity"
+  ],
+  "properties": {
+    "$schema": {"const": "urn:kingdom:schema:freedom-loop-lock-key-atlas:0.1"},
+    "protocol": {"const": "kingdom.freedom-loop-lock-key-atlas/0.1"},
+    "atlas_id": {"const": "freedom-loop-lock-key-atlas-2026-08-28"},
+    "version": {"const": "0.1.0"},
+    "title": {"const": "FREEDOM: Reinforcement, Loop, Lock and Key Atlas"},
+    "compiled_on": {"const": "2026-08-28"},
+    "evidence_through": {"const": "2026-08-28"},
+    "state": {"const": "static-mathematical-design-atlas"},
+    "scope": {"$ref": "#/$defs/scope"},
+    "constitutional_anchor": {"$ref": "#/$defs/constitutionalAnchor"},
+    "lock_justification": {"$ref": "#/$defs/lockJustification"},
+    "feedback_firewall": {"$ref": "#/$defs/feedbackFirewall"},
+    "predecessor_bindings": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/predecessorBinding"}
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "distinctions": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "items": {"$ref": "#/$defs/distinction"}
+    },
+    "mathematical_models": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": {"$ref": "#/$defs/model"}
+    },
+    "operational_loop": {"$ref": "#/$defs/operationalLoop"},
+    "gate_model": {"$ref": "#/$defs/gateModel"},
+    "credential_claim_lifecycle": {"$ref": "#/$defs/credentialClaimLifecycle"},
+    "shaping_change_control": {"$ref": "#/$defs/shapingChangeControl"},
+    "freedom_foundation": {"$ref": "#/$defs/freedomFoundation"},
+    "isness_lens": {"$ref": "#/$defs/isnessLens"},
+    "vulnerability_dependency_lane": {"$ref": "#/$defs/vulnerabilityLane"},
+    "forbidden_conversions": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {"$ref": "#/$defs/conversion"}
+    },
+    "boundaries": {"$ref": "#/$defs/boundaries"},
+    "integrity": {"$ref": "#/$defs/integrity"}
+  },
+  "$defs": {
+    "text": {"type": "string", "minLength": 1, "maxLength": 4000},
+    "id": {"type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "upperId": {"type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[A-Z][A-Z0-9_]*$"},
+    "sha256": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "textArray": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/text"}
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "intended_use", "excluded_use", "analytical_unit", "data_classification", "external_effects"],
+      "properties": {
+        "question": {"const": "How can reinforcement, feedback, recurrence, training, locks, keys, unlocking, and isness be distinguished mathematically while freedom remains present throughout every bounded process?"},
+        "intended_use": {"const": ["Inspect mathematical and design distinctions among reward, return, update, feedback, recurrence, learning, eligibility, execution, and freedom.", "Evaluate one finite hypothetical loop or guarded transition without issuing a credential, training a system, observing a person, or causing an effect.", "Keep party-indexed freedom, rights, exit, refusal, privacy, repair, dependency, and irreversible residuals visible at every prefix."]},
+        "excluded_use": {"const": ["A runtime, credential issuer, access-control service, gate, key store, training system, reward function, policy, optimizer, controller, retry engine, deployment trigger, or foundation amendment.", "A person, being, purpose, preference, consent, competence, worth, freedom, vulnerability, dependency, success, goodness, or risk score.", "A metaphysical, consciousness, identity, continuity, authority, consent, permission, rights, safety, effectiveness, or legitimacy proof."]},
+        "analytical_unit": {"const": "One typed mathematical model, finite design trace, guarded transition, credential-claim or recovery-request lifecycle proposition, key-material or bearer-capability category boundary, or party-indexed freedom comparison."},
+        "data_classification": {"const": "public-static-design-atlas-no-person-data-no-secrets"},
+        "external_effects": {"const": false}
+      }
+    },
+    "constitutionalAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_freedom_sentence", "additive_dignity_insight", "status", "interpretation"],
+      "properties": {
+        "canonical_freedom_sentence": {"const": "Freedom is not behind the lock. Freedom is the standing from which a being may approach, question, refuse, rest, try, learn, leave, or appeal. Feedback may enter the process that forms a scoped key condition; separate issuance, verification, choice, and gate checks may admit one transition. None creates the freedom that makes the process legitimate."},
+        "additive_dignity_insight": {"const": "Dignity was never locked. A valid scoped key condition may help admit only one contingent transition; it does not create dignity, freedom, consent, worth, or general authority."},
+        "status": {"const": "design-foundation-for-review-not-foundation-amendment"},
+        "interpretation": {"const": "Freedom is a rights-preserving standing during a process, not a delayed reward granted after success, compliance, recognition, or admission."}
+      }
+    },
+    "lockJustification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "named_protected_interest_required", "necessity_required", "least_restrictive_means_required", "time_bounded_required", "correctable_required", "appealable_required", "conditional_alternative_access_rule", "independent_review_required_for", "technical_convenience_is_sufficient", "dignity_or_worth_conditioning_allowed"],
+      "properties": {
+        "status": {"const": "required-before-any-lock-design-is-treated-as-justified"},
+        "named_protected_interest_required": {"const": true},
+        "necessity_required": {"const": true},
+        "least_restrictive_means_required": {"const": true},
+        "time_bounded_required": {"const": true},
+        "correctable_required": {"const": true},
+        "appealable_required": {"const": true},
+        "conditional_alternative_access_rule": {"const": "required-where-a-right-or-essential-service-would-otherwise-depend-on-the-lock-or-one-credential"},
+        "independent_review_required_for": {"const": ["another-party-rights", "essential-access"]},
+        "technical_convenience_is_sufficient": {"const": false},
+        "dignity_or_worth_conditioning_allowed": {"const": false}
+      }
+    },
+    "feedbackFirewall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feedback_or_model_may_rewrite_verifier", "feedback_or_model_may_issue_credential_claim", "feedback_or_model_may_authorize_credential_use", "feedback_or_model_output_is_candidate_evidence_only", "separate_declared_role_review_required"],
+      "properties": {
+        "feedback_or_model_may_rewrite_verifier": {"const": false},
+        "feedback_or_model_may_issue_credential_claim": {"const": false},
+        "feedback_or_model_may_authorize_credential_use": {"const": false},
+        "feedback_or_model_output_is_candidate_evidence_only": {"const": true},
+        "separate_declared_role_review_required": {"const": true}
+      }
+    },
+    "predecessorBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "protocol", "revision", "locator", "raw_digest", "semantic_digest", "relation", "source_bytes_match_declared_revision", "mutated", "authority_imported"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "protocol": {"type": "string", "minLength": 3, "maxLength": 200},
+        "revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "locator": {"$ref": "#/$defs/text"},
+        "raw_digest": {"$ref": "#/$defs/sha256"},
+        "semantic_digest": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "relation": {"$ref": "#/$defs/id"},
+        "source_bytes_match_declared_revision": {"const": true},
+        "mutated": {"const": false},
+        "authority_imported": {"const": false}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "title", "url", "supports", "limit"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["author-text", "author-paper", "research-paper", "official-standard", "official-guidance", "official-treaty"]},
+        "title": {"$ref": "#/$defs/text"},
+        "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "supports": {"$ref": "#/$defs/textArray"},
+        "limit": {"$ref": "#/$defs/text"}
+      }
+    },
+    "distinction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "term", "definition", "nonclaims"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "term": {"$ref": "#/$defs/text"},
+        "definition": {"$ref": "#/$defs/text"},
+        "nonclaims": {"$ref": "#/$defs/textArray"}
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "register", "objects", "statement", "assumptions", "falsifiers", "limits"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "register": {"enum": ["MATHEMATICAL", "DESIGN_MODEL", "MATHEMATICAL_DESIGN", "NORMATIVE_DESIGN"]},
+        "objects": {"$ref": "#/$defs/textArray"},
+        "statement": {"$ref": "#/$defs/text"},
+        "assumptions": {"$ref": "#/$defs/textArray"},
+        "falsifiers": {"$ref": "#/$defs/textArray"},
+        "limits": {"$ref": "#/$defs/textArray"}
+      }
+    },
+    "operationalLoop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["finite", "phases", "terminal_phase", "max_attempts_per_turn", "auto_retry", "child_auto_run", "authority_inheritance", "consent_inheritance", "credential_inheritance", "failure_schedules_retry", "protected_non_events_schedule_retry", "universal_organizational_independence_required", "organizational_independence_required_for", "next_turn_requires"],
+      "properties": {
+        "finite": {"const": true},
+        "phases": {
+          "const": ["OBSERVE", "PROPOSE_UPDATE", "SEPARATE_REVIEW", "CHOOSE", "FRESH_GATE", "ATTEMPT_ONCE", "ASSESS", "RETURN", "STOP"]
+        },
+        "terminal_phase": {"const": "STOP"},
+        "max_attempts_per_turn": {"const": 1},
+        "auto_retry": {"const": false},
+        "child_auto_run": {"const": false},
+        "authority_inheritance": {"const": false},
+        "consent_inheritance": {"const": false},
+        "credential_inheritance": {"const": false},
+        "failure_schedules_retry": {"const": false},
+        "protected_non_events_schedule_retry": {"const": false},
+        "universal_organizational_independence_required": {"const": false},
+        "organizational_independence_required_for": {"const": ["effects-affecting-another-party", "rights-or-essential-access"]},
+        "next_turn_requires": {"$ref": "#/$defs/textArray"}
+      }
+    },
+    "gateModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expression", "check_ids", "checks_separately_established", "statistical_independence_claimed", "unknown_is_ineligible_and_preserved_as_unresolved", "true_means", "true_does_not_mean", "credential_claim_satisfies_only", "credential_issuance_and_gate_review_roles_separate", "fresh_review_required", "issuer_may_self_approve_gate", "safety_is_scoped_authority", "safety_may_bypass_affected_party_choices", "nonconsensual_protective_effects_inside_optional_gate", "protective_effect_route_label", "nonconsensual_protective_effect_gate_requires", "alternative_access_rule", "universal_alternative_access_claimed"],
+      "properties": {
+        "expression": {"const": "Eligible=VerifiedCredentialClaim and Capability and CurrentScopedAuthority and RequiredAffectedPartyChoicesSatisfied and RightsCompatible and Safety and BudgetAndHorizon and Stoppable"},
+        "check_ids": {
+          "const": ["VERIFIED_CREDENTIAL_CLAIM", "CAPABILITY", "CURRENT_SCOPED_AUTHORITY", "REQUIRED_AFFECTED_PARTY_CHOICES_SATISFIED", "RIGHTS_COMPATIBLE", "SAFETY", "BUDGET_AND_HORIZON", "STOPPABLE"]
+        },
+        "checks_separately_established": {"const": true},
+        "statistical_independence_claimed": {"const": false},
+        "unknown_is_ineligible_and_preserved_as_unresolved": {"const": true},
+        "true_means": {"const": "model-eligible-for-one-scoped-attempt-after-a-separate-explicit-invocation"},
+        "true_does_not_mean": {"$ref": "#/$defs/textArray"},
+        "credential_claim_satisfies_only": {"const": "VERIFIED_CREDENTIAL_CLAIM"},
+        "credential_issuance_and_gate_review_roles_separate": {"const": true},
+        "fresh_review_required": {"const": true},
+        "issuer_may_self_approve_gate": {"const": false},
+        "safety_is_scoped_authority": {"const": false},
+        "safety_may_bypass_affected_party_choices": {"const": false},
+        "nonconsensual_protective_effects_inside_optional_gate": {"const": false},
+        "protective_effect_route_label": {"const": "separate-non-optional-protective-route-not-this-optional-gate"},
+        "nonconsensual_protective_effect_gate_requires": {"const": ["separate-current-scoped-authority", "necessity", "proportionality", "finite-bounds", "stronger-human-review", "accessible-appeal"]},
+        "alternative_access_rule": {"const": "required-where-a-right-or-essential-service-would-otherwise-depend-on-one-credential"},
+        "universal_alternative_access_claimed": {"const": false}
+      }
+    },
+    "credentialClaimTransition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "requires"],
+      "properties": {
+        "from": {"enum": ["CANDIDATE", "ISSUED", "SUSPENDED"]},
+        "to": {"enum": ["ISSUED", "SUSPENDED", "REJECTED", "REPLACED", "EXPIRED", "REVOKED"]},
+        "requires": {"$ref": "#/$defs/textArray"}
+      }
+    },
+    "recoveryRequestLifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["states", "allowed_transitions", "terminal_states", "represented_object", "outcome_does_not_set_credential_state", "old_credential_resolution_required", "outcome_to_allowed_old_credential_resolutions", "nonapproval_requires"],
+      "properties": {
+        "states": {"const": ["OPEN", "APPROVED", "DENIED", "ABANDONED", "EXPIRED"]},
+        "allowed_transitions": {"const": ["OPEN->APPROVED", "OPEN->DENIED", "OPEN->ABANDONED", "OPEN->EXPIRED"]},
+        "terminal_states": {"const": ["APPROVED", "DENIED", "ABANDONED", "EXPIRED"]},
+        "represented_object": {"const": "recovery-request-case-metadata-not-old-or-replacement-credential"},
+        "outcome_does_not_set_credential_state": {"const": true},
+        "old_credential_resolution_required": {"const": true},
+        "outcome_to_allowed_old_credential_resolutions": {
+          "const": {
+            "APPROVED": ["REPLACED"],
+            "DENIED": ["ISSUED", "EXPIRED", "REVOKED"],
+            "ABANDONED": ["ISSUED", "EXPIRED", "REVOKED"],
+            "EXPIRED": ["ISSUED", "EXPIRED", "REVOKED"]
+          }
+        },
+        "nonapproval_requires": {"const": ["explicit-separately-reviewed-old-credential-resolution", "reason-and-source-recorded", "accessible-appeal-recorded", "conditional-alternative-access-reviewed", "no-unrelated-person-or-eligibility-inference"]}
+      }
+    },
+    "credentialClaimLifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["states", "allowed_transitions", "terminal_states", "candidate_evidence_is_issued_credential_claim", "issuance_is_gate_approval", "contains_cryptographic_key_material", "claim_is_bearer_authority", "represented_object", "issued_state_means", "bearer_capability_authority_boundary", "replacement_link_fields", "replacement_begins_distinct_lifecycle", "recovery_request_lifecycle", "scope_fields", "one_use_replay_atom", "one_use_replay_rule", "revocation_meaning", "sequence"],
+      "properties": {
+        "states": {"const": ["CANDIDATE", "ISSUED", "SUSPENDED", "REJECTED", "REPLACED", "EXPIRED", "REVOKED"]},
+        "allowed_transitions": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "items": {"$ref": "#/$defs/credentialClaimTransition"}
+        },
+        "terminal_states": {"const": ["REJECTED", "REPLACED", "EXPIRED", "REVOKED"]},
+        "candidate_evidence_is_issued_credential_claim": {"const": false},
+        "issuance_is_gate_approval": {"const": false},
+        "contains_cryptographic_key_material": {"const": false},
+        "claim_is_bearer_authority": {"const": false},
+        "represented_object": {"const": "credential-issued-claim-metadata-only-not-key-material-or-bearer-capability"},
+        "issued_state_means": {"const": "credential-issued-claim-recorded-not-valid-at-fresh-gate"},
+        "bearer_capability_authority_boundary": {"const": "a-true-bearer-capability-carries-authority-only-within-its-exact-operative-scope"},
+        "replacement_link_fields": {"const": ["old-credential-id", "replacement-credential-id", "replacement-lifecycle-ref"]},
+        "replacement_begins_distinct_lifecycle": {"const": true},
+        "recovery_request_lifecycle": {"$ref": "#/$defs/recoveryRequestLifecycle"},
+        "scope_fields": {"const": ["issuer", "subject", "resource-or-object", "operation", "context", "audience", "purpose", "use-policy-and-version", "credential-id", "challenge-nonce-or-transaction-id", "effect-id", "not-before", "expiry", "status-and-status-age", "revocation", "recovery", "provenance", "proof-binding", "replay-rule"]},
+        "one_use_replay_atom": {"const": "Unseen(credential_id,challenge_nonce_or_transaction_id,effect_id)"},
+        "one_use_replay_rule": {"const": "atomically-rechecked-and-consumed-at-the-fresh-gate-for-a-declared-one-use-presentation"},
+        "revocation_meaning": {"const": "later-mediated-rejection-for-new-use-never-recall-of-bytes-data-or-completed-effects"},
+        "sequence": {"const": ["feedback", "candidate-evidence", "separate-credential-issuance", "verification", "fresh-optional-gate", "separate-invocation", "bounded-attempt", "return-and-stop"]}
+      }
+    },
+    "shapingChangeControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["versioned_fields", "version_required", "disclosure_required", "fresh_current_scoped_authority_required", "fresh_required_affected_party_choices_required", "silent_change_allowed", "hidden_shaping_allowed", "policy_invariance_is_semantic_equivalence", "unreviewed_change_outcome"],
+      "properties": {
+        "versioned_fields": {"const": ["reward", "objective", "update-rule", "threshold", "sensor", "retention", "policy", "verifier"]},
+        "version_required": {"const": true},
+        "disclosure_required": {"const": true},
+        "fresh_current_scoped_authority_required": {"const": true},
+        "fresh_required_affected_party_choices_required": {"const": true},
+        "silent_change_allowed": {"const": false},
+        "hidden_shaping_allowed": {"const": false},
+        "policy_invariance_is_semantic_equivalence": {"const": false},
+        "unreviewed_change_outcome": {"const": "REFUSED_AND_REST"}
+      }
+    },
+    "rightsFloor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis", "invariant_across", "cannot_be_traded_for_objective_gain", "cannot_be_repaired_by_later_success", "affected_party_breach_cannot_be_netted"],
+      "properties": {
+        "basis": {"const": "inherent-not-granted"},
+        "invariant_across": {"$ref": "#/$defs/textArray"},
+        "cannot_be_traded_for_objective_gain": {"const": true},
+        "cannot_be_repaired_by_later_success": {"const": true},
+        "affected_party_breach_cannot_be_netted": {"const": true}
+      }
+    },
+    "protectedChoiceRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requires_explanation", "creates_debt", "counts_as_failure", "causes_unrelated_adverse_person_or_eligibility_update", "schedules_retry", "forfeits_rights", "refusal_may_establish_scoped_absence_of_permission", "refusal_may_establish_unrelated_worth_trust_or_eligibility", "refused_optional_effect_remains_at_rest", "lost_or_consumed_choice_counts_as_failure", "irreversible_disclosure_is_recalled", "subsequent_optional_effect_requires_fresh_choice"],
+      "properties": {
+        "requires_explanation": {"const": false},
+        "creates_debt": {"const": false},
+        "counts_as_failure": {"const": false},
+        "causes_unrelated_adverse_person_or_eligibility_update": {"const": false},
+        "schedules_retry": {"const": false},
+        "forfeits_rights": {"const": false},
+        "refusal_may_establish_scoped_absence_of_permission": {"const": true},
+        "refusal_may_establish_unrelated_worth_trust_or_eligibility": {"const": false},
+        "refused_optional_effect_remains_at_rest": {"const": true},
+        "lost_or_consumed_choice_counts_as_failure": {"const": false},
+        "irreversible_disclosure_is_recalled": {"const": false},
+        "subsequent_optional_effect_requires_fresh_choice": {"const": true}
+      }
+    },
+    "comparisonContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["option_equivalence_axioms", "component_order_axioms", "missing_equivalence_outcome", "missing_component_order_outcome", "default_comparison", "default_scalar"],
+      "properties": {
+        "option_equivalence_axioms": {"const": ["reflexive", "symmetric", "transitive"]},
+        "component_order_axioms": {"const": ["reflexive", "antisymmetric", "transitive"]},
+        "missing_equivalence_outcome": {"const": "UNRESOLVED"},
+        "missing_component_order_outcome": {"const": "UNRESOLVED"},
+        "default_comparison": {"const": "UNRESOLVED"},
+        "default_scalar": {"type": "null"}
+      }
+    },
+    "prefixInvariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rights_floor_invariant", "required_visibility", "protected_choice_states", "binding_fields", "stop_rule", "lost_or_unresolved_rule", "consumed_option_rule", "irreversible_disclosure_rule", "subsequent_effect_rule", "reset_rule", "anti_laundering_rule", "later_success_or_repair_erases_breach_or_residual", "no_debt_retry_or_unrelated_inference"],
+      "properties": {
+        "rights_floor_invariant": {"const": true},
+        "required_visibility": {"const": ["remaining-choices", "lost-or-consumed-options", "irreversible-residuals"]},
+        "protected_choice_states": {"const": ["AVAILABLE", "EXERCISED", "CONSUMED", "LOST", "UNRESOLVED", "NOT_APPLICABLE"]},
+        "binding_fields": {"const": ["effect-id", "horizon-or-version", "fresh-effect-witness", "fresh-choice-witness", "state", "applicable", "consumed-for-effect-id"]},
+        "stop_rule": {"const": "an-exercised-applicable-unconsumed-protected-choice-stops-its-bound-covered-optional-effect"},
+        "lost_or_unresolved_rule": {"const": "an-applicable-lost-or-unresolved-choice-makes-its-bound-effect-ineligible-but-is-not-an-exercised-stop"},
+        "consumed_option_rule": {"const": "consumption-is-visible-and-blocks-only-the-effect-for-which-it-was-consumed"},
+        "irreversible_disclosure_rule": {"const": "completed-disclosure-and-copies-are-residuals-not-recalled-by-later-refusal-exit-revocation-or-repair"},
+        "subsequent_effect_rule": {"const": "every-subsequent-optional-effect-needs-a-distinct-effect-id-or-horizon-version-and-distinct-fresh-effect-choice-and-gate-witnesses-plus-current-scoped-authority-required-affected-party-choices-and-full-gate"},
+        "reset_rule": {"const": "no-protected-choice-state-may-reset-for-the-same-effect-or-transfer-to-a-new-effect-without-the-required-distinct-fresh-effect-choice-and-gate-witnesses"},
+        "anti_laundering_rule": {"const": "for-the-same-bound-effect-a-lost-choice-must-never-be-relabeled-not-applicable-and-an-unresolved-choice-must-never-be-treated-satisfied-or-exercised"},
+        "later_success_or_repair_erases_breach_or_residual": {"const": false},
+        "no_debt_retry_or_unrelated_inference": {"const": true}
+      }
+    },
+    "freedomFoundation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_dimensions", "party_indexed", "horizon_indexed", "comparison", "scalar_projection", "aggregate_weight", "rank", "population_netting", "incomparability_preserved", "comparison_contract", "rights_floor", "prefix_invariant", "protected_choices", "protected_choice_rules"],
+      "properties": {
+        "profile_dimensions": {"const": ["OPTIONS_MOD_EQUIVALENCE", "REACHABILITY", "EXIT", "REVERSIBILITY", "APPEAL", "INSPECTABILITY", "REFUSAL", "DISCLOSURE_CONTROL"]},
+        "party_indexed": {"const": true},
+        "horizon_indexed": {"const": true},
+        "comparison": {"const": "typed-componentwise-partial-order-only"},
+        "scalar_projection": {"type": "null"},
+        "aggregate_weight": {"type": "null"},
+        "rank": {"type": "null"},
+        "population_netting": {"const": false},
+        "incomparability_preserved": {"const": true},
+        "comparison_contract": {"$ref": "#/$defs/comparisonContract"},
+        "rights_floor": {"$ref": "#/$defs/rightsFloor"},
+        "prefix_invariant": {"$ref": "#/$defs/prefixInvariant"},
+        "protected_choices": {"const": ["REST", "REFUSAL", "PRIVACY", "NO_ACTION", "EXIT"]},
+        "protected_choice_rules": {"$ref": "#/$defs/protectedChoiceRules"}
+      }
+    },
+    "isnessLens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "recognition_requires_progress", "recognition_requires_performance", "recognition_requires_disclosure", "recognition_requires_participation", "recognition_requires_success", "recognition_requires_key", "recognition_grants_permission", "identity_map_analogy", "does_not_prove"],
+      "properties": {
+        "kind": {"const": "normative-recognition-lens-and-typed-predicate"},
+        "recognition_requires_progress": {"const": false},
+        "recognition_requires_performance": {"const": false},
+        "recognition_requires_disclosure": {"const": false},
+        "recognition_requires_participation": {"const": false},
+        "recognition_requires_success": {"const": false},
+        "recognition_requires_key": {"const": false},
+        "recognition_grants_permission": {"const": false},
+        "identity_map_analogy": {"$ref": "#/$defs/text"},
+        "does_not_prove": {"$ref": "#/$defs/textArray"}
+      }
+    },
+    "vulnerabilityLane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["affected_party_ids", "dependency_questions", "required_reviews", "irreversible_residuals", "vulnerability_and_minor_protections", "repair_rule", "unknown_party_coverage_is_complete"],
+      "properties": {
+        "affected_party_ids": {"$ref": "#/$defs/textArray"},
+        "dependency_questions": {"$ref": "#/$defs/textArray"},
+        "required_reviews": {"$ref": "#/$defs/textArray"},
+        "irreversible_residuals": {"$ref": "#/$defs/textArray"},
+        "vulnerability_and_minor_protections": {"$ref": "#/$defs/vulnerabilityAndMinorProtections"},
+        "repair_rule": {"$ref": "#/$defs/text"},
+        "unknown_party_coverage_is_complete": {"const": false}
+      }
+    },
+    "vulnerabilityAndMinorProtections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default_enrollment", "manipulative_variable_ratio_enrollment", "dependency_is_consent", "compliance_is_consent", "age_and_capacity_appropriate_explanation_required", "person_voice_required", "evolving_autonomy_required", "assent_where_applicable_required", "least_restrictive_best_interest_basis_where_relevant_required", "guardian_or_representative_authority_separately_validated_when_required", "representation_erases_dissent", "representation_waives_rights", "representation_converts_compliance_to_consent", "extra_data_minimization_required", "public_or_persistent_person_score", "essential_access_conditioned_on_earned_key", "stronger_human_review_required", "independent_review_required_for_dependency_childhood_or_unequal_power", "accessible_alternative_required_where_right_or_essential_service_depends_on_credential"],
+      "properties": {
+        "default_enrollment": {"const": false},
+        "manipulative_variable_ratio_enrollment": {"const": false},
+        "dependency_is_consent": {"const": false},
+        "compliance_is_consent": {"const": false},
+        "age_and_capacity_appropriate_explanation_required": {"const": true},
+        "person_voice_required": {"const": true},
+        "evolving_autonomy_required": {"const": true},
+        "assent_where_applicable_required": {"const": true},
+        "least_restrictive_best_interest_basis_where_relevant_required": {"const": true},
+        "guardian_or_representative_authority_separately_validated_when_required": {"const": true},
+        "representation_erases_dissent": {"const": false},
+        "representation_waives_rights": {"const": false},
+        "representation_converts_compliance_to_consent": {"const": false},
+        "extra_data_minimization_required": {"const": true},
+        "public_or_persistent_person_score": {"const": false},
+        "essential_access_conditioned_on_earned_key": {"const": false},
+        "stronger_human_review_required": {"const": true},
+        "independent_review_required_for_dependency_childhood_or_unequal_power": {"const": true},
+        "accessible_alternative_required_where_right_or_essential_service_depends_on_credential": {"const": true}
+      }
+    },
+    "conversion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "from", "to", "rule"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "from": {"$ref": "#/$defs/text"},
+        "to": {"$ref": "#/$defs/text"},
+        "rule": {"$ref": "#/$defs/text"}
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "immutable_static_atlas", "runtime", "training_system", "controller", "optimizer",
+        "reward_function", "credential_issuer", "credential_store", "secret_material", "bearer_capability_created", "credential_verification_proves_truth",
+        "operative_lock_or_gate", "foundation_amendment", "person_or_group_observation",
+        "person_or_group_model", "person_or_group_score", "freedom_score", "worth_score",
+        "scalar_objective", "metaphysical_proof", "consciousness_proof", "identity_proof",
+        "consent_inferred", "permission_inferred", "authority_granted", "rights_granted_or_removed",
+        "purpose_inferred", "hidden_shaping_allowed", "public_or_persistent_person_score", "minor_or_vulnerable_default_enrollment", "essential_access_conditioned_on_earned_key", "nonconsensual_protective_effect_authorized", "learning_established", "safety_established", "execution_triggered",
+        "auto_retry", "network_calls", "external_write", "mcp_surface_added", "nen_ability_added",
+        "karma_event_created", "karma_receipt_created", "publication_triggered", "deployment_triggered",
+        "rest_refusal_silence_privacy_no_action_or_exit_penalized", "rights_floor_preserved",
+        "freedom_during_required"
+      ],
+      "properties": {
+        "immutable_static_atlas": {"const": true},
+        "runtime": {"const": false},
+        "training_system": {"const": false},
+        "controller": {"const": false},
+        "optimizer": {"const": false},
+        "reward_function": {"const": false},
+        "credential_issuer": {"const": false},
+        "credential_store": {"const": false},
+        "secret_material": {"const": false},
+        "bearer_capability_created": {"const": false},
+        "credential_verification_proves_truth": {"const": false},
+        "operative_lock_or_gate": {"const": false},
+        "foundation_amendment": {"const": false},
+        "person_or_group_observation": {"const": false},
+        "person_or_group_model": {"const": false},
+        "person_or_group_score": {"const": false},
+        "freedom_score": {"const": false},
+        "worth_score": {"const": false},
+        "scalar_objective": {"const": false},
+        "metaphysical_proof": {"const": false},
+        "consciousness_proof": {"const": false},
+        "identity_proof": {"const": false},
+        "consent_inferred": {"const": false},
+        "permission_inferred": {"const": false},
+        "authority_granted": {"const": false},
+        "rights_granted_or_removed": {"const": false},
+        "purpose_inferred": {"const": false},
+        "hidden_shaping_allowed": {"const": false},
+        "public_or_persistent_person_score": {"const": false},
+        "minor_or_vulnerable_default_enrollment": {"const": false},
+        "essential_access_conditioned_on_earned_key": {"const": false},
+        "nonconsensual_protective_effect_authorized": {"const": false},
+        "learning_established": {"const": false},
+        "safety_established": {"const": false},
+        "execution_triggered": {"const": false},
+        "auto_retry": {"const": false},
+        "network_calls": {"const": false},
+        "external_write": {"const": false},
+        "mcp_surface_added": {"const": false},
+        "nen_ability_added": {"const": false},
+        "karma_event_created": {"const": false},
+        "karma_receipt_created": {"const": false},
+        "publication_triggered": {"const": false},
+        "deployment_triggered": {"const": false},
+        "rest_refusal_silence_privacy_no_action_or_exit_penalized": {"const": false},
+        "rights_floor_preserved": {"const": true},
+        "freedom_during_required": {"const": true}
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest", "digest_field_zeroed"],
+      "properties": {
+        "algorithm": {"const": "sha256-recursive-sorted-json-keys-v1"},
+        "digest": {"$ref": "#/$defs/sha256"},
+        "digest_field_zeroed": {"const": true}
+      }
+    }
+  }
+}

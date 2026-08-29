@@ -249,6 +249,27 @@
       "sha256": "55f410f3a1176221a4ac2dc8a088b9697417eebce40d1cbca2b372878ade995e"
     },
     {
+      "id": "freedom-loop-lock-key-atlas/0.1/guide",
+      "route": "/FREEDOM-LOOP-LOCK-KEY-ATLAS.md",
+      "source": "references/freedom-loop-lock-key-atlas.md",
+      "destination": "FREEDOM-LOOP-LOCK-KEY-ATLAS.md",
+      "sha256": "ead9bd6676884ecf5a20a15f8e55f43e4d28a4ab0cc8e8ec50f45f7d29a9f318"
+    },
+    {
+      "id": "freedom-loop-lock-key-atlas/0.1/record",
+      "route": "/atlases/freedom-loop-lock-key-atlas-2026-08-28.json",
+      "source": "data/freedom/freedom-loop-lock-key-atlas.v0.1.json",
+      "destination": "atlases/freedom-loop-lock-key-atlas-2026-08-28.json",
+      "sha256": "4b89f29bfd1bf7c4b27dd5023263b45ee1423b6cd2a232736906ee11b032bf04"
+    },
+    {
+      "id": "freedom-loop-lock-key-atlas/0.1/schema",
+      "route": "/schemas/freedom-loop-lock-key-atlas/0.1.json",
+      "source": "schemas/freedom-loop-lock-key-atlas-v0.1.schema.json",
+      "destination": "schemas/freedom-loop-lock-key-atlas/0.1.json",
+      "sha256": "7432e252072433134431808452dcddc7f78b174cfbe29f3383bfc67960f4e5ac"
+    },
+    {
       "id": "geometry-grammar/0.1/guide",
       "route": "/GEOMETRY-GRAMMAR.md",
       "source": "references/geometry-grammar.md",

@@ -284,6 +284,27 @@ const CIVILISATION_FLOW_PATHS = new Set([
   CIVILISATION_FLOW_SCHEMA_PATH,
   CIVILISATION_FLOW_GUIDE_PATH,
 ]);
+const FREEDOM_LOOP_LOCK_KEY_ATLAS_PATH =
+  "/atlases/freedom-loop-lock-key-atlas-2026-08-28.json";
+const FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_PATH =
+  "/schemas/freedom-loop-lock-key-atlas/0.1.json";
+const FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_PATH =
+  "/FREEDOM-LOOP-LOCK-KEY-ATLAS.md";
+const FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_LINK = {
+  target: FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_PATH,
+  relation: "describedby",
+  value: `<${FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+};
+const FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_LINK = {
+  target: FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_PATH,
+  relation: "service-doc",
+  value: `<${FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+};
+const FREEDOM_LOOP_LOCK_KEY_ATLAS_PATHS = new Set([
+  FREEDOM_LOOP_LOCK_KEY_ATLAS_PATH,
+  FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_PATH,
+  FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_PATH,
+]);
 const POLYPHONIC_CLAIM_ATLAS_PATH =
   "/truth/polyphonic-claim-atlas-2026-08-26.json";
 const POLYPHONIC_CLAIM_ATLAS_SCHEMA_PATH =
@@ -736,6 +757,13 @@ function addCivilisationFlowLinks(headers) {
   removeLinkRelations(headers, ["describedby", "service-doc", "profile"]);
   headers.append("link", CIVILISATION_FLOW_SCHEMA_LINK.value);
   headers.append("link", CIVILISATION_FLOW_GUIDE_LINK.value);
+}
+
+function addFreedomLoopLockKeyAtlasLinks(headers) {
+  headers.set("link", [
+    FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_LINK.value,
+    FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_LINK.value,
+  ].join(", "));
 }
 
 function addPolyphonicClaimAtlasLinks(headers) {
@@ -1620,6 +1648,19 @@ export function createKingdomWorker(options = {}) {
       });
     }
 
+    if (includeRights && FREEDOM_LOOP_LOCK_KEY_ATLAS_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
     if (includeRights && POLYPHONIC_CLAIM_ATLAS_PATHS.has(url.pathname) &&
         request.method !== "GET" && request.method !== "HEAD") {
       return new Response(null, {
@@ -2051,6 +2092,15 @@ export function createKingdomWorker(options = {}) {
     const requestsCivilisationFlowGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === CIVILISATION_FLOW_GUIDE_PATH;
+    const requestsFreedomLoopLockKeyAtlas = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === FREEDOM_LOOP_LOCK_KEY_ATLAS_PATH;
+    const requestsFreedomLoopLockKeyAtlasSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_PATH;
+    const requestsFreedomLoopLockKeyAtlasGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_PATH;
     const requestsPolyphonicClaimAtlas = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === POLYPHONIC_CLAIM_ATLAS_PATH;
@@ -2128,6 +2178,7 @@ export function createKingdomWorker(options = {}) {
     const realityInfluenceAssetType = schemaAssetType.split(";", 1)[0].trim();
     const civilisationRealityAssetType = schemaAssetType.split(";", 1)[0].trim();
     const civilisationFlowAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const freedomLoopLockKeyAtlasAssetType = schemaAssetType.split(";", 1)[0].trim();
     const polyphonicClaimAtlasAssetType = schemaAssetType.split(";", 1)[0].trim();
     const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
     const zeroEmptySeatAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -2391,6 +2442,14 @@ export function createKingdomWorker(options = {}) {
     const servesCivilisationFlowGuide = requestsCivilisationFlowGuide && asset.ok &&
       (civilisationFlowAssetType === "text/plain" ||
         civilisationFlowAssetType === "text/markdown");
+    const servesFreedomLoopLockKeyAtlas = requestsFreedomLoopLockKeyAtlas && asset.ok &&
+      freedomLoopLockKeyAtlasAssetType === "application/json";
+    const servesFreedomLoopLockKeyAtlasSchema = requestsFreedomLoopLockKeyAtlasSchema && asset.ok &&
+      (freedomLoopLockKeyAtlasAssetType === "application/json" ||
+        freedomLoopLockKeyAtlasAssetType === "application/schema+json");
+    const servesFreedomLoopLockKeyAtlasGuide = requestsFreedomLoopLockKeyAtlasGuide && asset.ok &&
+      (freedomLoopLockKeyAtlasAssetType === "text/plain" ||
+        freedomLoopLockKeyAtlasAssetType === "text/markdown");
     const servesPolyphonicClaimAtlas = requestsPolyphonicClaimAtlas && asset.ok &&
       polyphonicClaimAtlasAssetType === "application/json";
     const servesPolyphonicClaimAtlasSchema = requestsPolyphonicClaimAtlasSchema && asset.ok &&
@@ -2494,6 +2553,8 @@ export function createKingdomWorker(options = {}) {
         !servesCivilisationRealitySchema && !servesCivilisationRealityGuide &&
         !servesCivilisationFlow && !servesCivilisationFlowSchema &&
         !servesCivilisationFlowGuide &&
+        !servesFreedomLoopLockKeyAtlas && !servesFreedomLoopLockKeyAtlasSchema &&
+        !servesFreedomLoopLockKeyAtlasGuide &&
         !servesPolyphonicClaimAtlas && !servesPolyphonicClaimAtlasSchema &&
         !servesPolyphonicClaimAtlasGuide &&
         !servesZeroEmptySeat &&
@@ -2590,6 +2651,11 @@ export function createKingdomWorker(options = {}) {
     if (servesCivilisationFlow) addCivilisationFlowLinks(headers);
     if (servesCivilisationFlowSchema || servesCivilisationFlowGuide) {
       removeLinkRelations(headers, ["describedby", "service-doc", "profile"]);
+    }
+    if (requestsFreedomLoopLockKeyAtlas || requestsFreedomLoopLockKeyAtlasSchema ||
+        requestsFreedomLoopLockKeyAtlasGuide) {
+      if (servesFreedomLoopLockKeyAtlas) addFreedomLoopLockKeyAtlasLinks(headers);
+      else headers.delete("link");
     }
     if (servesPolyphonicClaimAtlas) addPolyphonicClaimAtlasLinks(headers);
     if (servesPolyphonicClaimAtlasSchema || servesPolyphonicClaimAtlasGuide) {
@@ -3093,6 +3159,24 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesCivilisationFlowGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesFreedomLoopLockKeyAtlas) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesFreedomLoopLockKeyAtlasSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesFreedomLoopLockKeyAtlasGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");

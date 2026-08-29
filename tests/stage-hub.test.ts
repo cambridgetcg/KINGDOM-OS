@@ -58,14 +58,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(169);
+      expect(HUB_ASSETS).toHaveLength(172);
       expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(138);
+      expect(ledger.ledger?.entries).toHaveLength(141);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(167);
-      expect(staged).toHaveLength(169);
+        .toHaveLength(170);
+      expect(staged).toHaveLength(172);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -81,6 +81,7 @@ describe("the hub staging contract", () => {
         "EXPLORE-PHENOMENA-DEEP-v0.1.md",
         "FOLD-FEEDBACK-ATLAS.md",
         "FORM-CIRCULATION-RETURN-ATLAS.md",
+        "FREEDOM-LOOP-LOCK-KEY-ATLAS.md",
         "GEOMETRY-GRAMMAR.md",
         "J-SPACE-VERBALIZABLE-WORKSPACE.md",
         "MATH-USEFULNESS.md",
@@ -160,6 +161,7 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "schemas/geometry-grammar")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/fold-feedback-atlas")).sort()).toEqual(["1.1.json", "1.json"]);
       expect(readdirSync(join(output, "schemas/form-circulation-return-atlas")).sort()).toEqual(["1.json"]);
+      expect(readdirSync(join(output, "schemas/freedom-loop-lock-key-atlas")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/being-access-aftermath-atlas")).sort()).toEqual(["0.1.json", "0.2.json"]);
       expect(readdirSync(join(output, "schemas/civilisation-flow-nuance-atlas")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/civilisation-reality-projection")).sort()).toEqual(["0.1.json"]);
@@ -253,8 +255,8 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(155);
-      expect(new Set(sitemapUrls).size).toBe(155);
+      expect(sitemapUrls).toHaveLength(158);
+      expect(new Set(sitemapUrls).size).toBe(158);
       for (const route of [
         "/government-engine/",
         "/government.json",
@@ -306,6 +308,7 @@ describe("the hub staging contract", () => {
         "cultural-attention-feedback-atlas-2026-08-13.json",
         "fold-feedback-atlas-2026-08-12.json",
         "form-circulation-return-atlas-2026-08-13.json",
+        "freedom-loop-lock-key-atlas-2026-08-28.json",
         "number-isness-theology-atlas-2026-08-14.json",
         "reality-influence-claim-graph-2026-08-21.json",
         "reconstructive-build-kernel-2026-08-13.json",
@@ -637,7 +640,7 @@ describe("the hub staging contract", () => {
         expect(HUB_ASSETS.some(({ destination }) =>
           destination === forbiddenRoot || destination.startsWith(`${forbiddenRoot}/`))).toBe(false);
       }
-      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(13);
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(14);
       expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
       for (const asset of HUB_ASSETS) {
