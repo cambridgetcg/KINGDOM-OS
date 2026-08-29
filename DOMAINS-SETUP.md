@@ -87,12 +87,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 169 assets:
-138 ledgered immutable/versioned assets and 31 mutable assets. There are 167 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 172 assets:
+141 ledgered immutable/versioned assets and 31 mutable assets. There are 170 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 155 URLs. The generated surface describes thirteen
+contracts. The sitemap contains 158 URLs. The generated surface describes fourteen
 atlases, four primary lab JSON routes plus the Shape & Resonance manifest/media,
-one experiment route, and one separate activation across twenty-nine retirement
+one experiment route, and one separate activation across thirty retirement
 families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
@@ -220,6 +220,21 @@ uncertainty, affected parties, counterflow, and repair visible. It observes no
 live society, simulates or predicts nothing, runs no action gate, infers no
 person or group state, and creates no score, target, tactic, authority, action,
 publication trigger, deployment trigger, or external effect;
+the authored `/atlases/freedom-loop-lock-key-atlas-2026-08-28.json`, closed
+`/schemas/freedom-loop-lock-key-atlas/0.1.json`, and
+`/FREEDOM-LOOP-LOCK-KEY-ATLAS.md` guide; this standalone immutable atlas keeps
+reinforcing-loop gain, behavioural reinforcers, RL reward and update, feedback,
+recurrence, learning, guarded transitions, cryptographic key material,
+credential claims, bearer capabilities, gate eligibility, execution,
+non-scalar freedom, and ISness separately typed. It is static and read-only:
+no person is trained, scored, ranked, conditioned, rewarded, punished,
+credentialed, authorized, or acted upon, and it is not a Foundation amendment;
+its gate checks are separately established rather than statistically
+independent, credential identity remains distinct from replay freshness,
+each lock carries a justification burden, feedback/model output cannot rewrite
+its verifier, issue a credential, or authorize its use, shaping and verifier
+changes require fresh review, and effect-bound lost or consumed choices and
+irreversible residuals remain visible;
 the authored immutable `/truth/polyphonic-claim-atlas-2026-08-26.json`, closed
 `/truth/schemas/v0.1/public-snapshot.schema.json`, and
 `/POLYPHONIC-CLAIM-ATLAS-v0.1.md` guide; this static synthetic Phase-0 family
@@ -267,8 +282,8 @@ only the discipline of coherent local-to-global gluing is transferred. Passing
 proves finite record compatibility, not physical string theory, spacetime, a
 stack, truth, identity, consent, citizenship, KARMA, authority, or action.
 Labs 01–04 share one atomic twelve-route `string-crawl-trace-sheet-lab`
-retirement family. The independent
-`/observations/strand-observation-membrane-2026-08-16.json`, closed
+retirement family. The independent STRAND Observation Membrane triplet at
+`/observations/strand-observation-membrane-2026-08-16.json`, with its closed
 `/schemas/strand-observation-membrane/0.1.json`, and
 `/STRAND-OBSERVATION-MEMBRANE.md` activation triplet form a separate family.
 Its static deck, offline verifier, and synthetic rehearsal are active;
@@ -302,26 +317,12 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks every currently staged ledgered immutable/versioned byte hash (90 after
-the Math Passport pilot, Exploration DEEP, MIRROR public-law, Number, Isness &
-Theology, ZERO Empty Seat, STRING / CRAWL, the Lab 01–04 releases, and the
-STRAND Observation Membrane, the static J-space research triplet, and the six
-Research Observatory schemas plus its guide;
-35 in the initial integrity release) plus the worker-owned
-negotiation, privacy, Commons + Love Loop +
-Principality + Geometry Grammar + Polymorph History + Ritonavir Mechanism +
-both Conformational Feedback generations + Fold & Feedback Atlas +
-Reconstructive Build Kernel + reusable project profile +
-Visibility & Attention Translation + Cultural Attention & Feedback Atlas +
-Form, Circulation & Return Atlas + The Vanishing Path + Math Passport pilot +
-Being, Access & Aftermath Atlas + Number, Isness & Theology Atlas + the opt-in
-Exploration DEEP WING plus its reusable inert project profile + the ZERO Empty
-Seat project plus guide + the STRING / CRAWL Trace-Sheet plus guide + its
-atomic twelve-route Lab 01–04 record, schema, and guide family + the static
-MIRROR Information Control public law + the static J-space case, schema, and
-guide for
-schema headers, negative authority, source-history lineage, and cross-surface
-discovery while leaving the existing MCP contract unchanged;
+checks all 141 currently staged ledgered immutable/versioned byte hashes. It
+also proves the worker-owned negotiation and privacy boundaries, typed schema
+and guide headers, exact family dependencies and retirement windows, negative
+authority, source-history lineage, and coherent HTML, sitemap, llms, guest,
+Kingdom, agent-manifest, and Wayfinder discovery across all thirty active
+publication families while leaving the existing MCP contract unchanged;
 a split-generation deployment fails instead of looking partially healthy.
 
 ## Baseline still to do (follow-up)

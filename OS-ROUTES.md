@@ -75,6 +75,9 @@ readings:
 | `/atlases/civilisation-flow-nuance-atlas-2026-08-26.json` | staged JSON | Immutable qualitative flow grammar with fourteen stages, thirteen non-automatic transitions, six predecessor-bound overlays, nine open-domain bindings, and no live observation or simulation |
 | `/schemas/civilisation-flow-nuance-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for flow, topology, absence, material, emotion, power, uncertainty, action-gate, counterflow, repair, lineage, and fixed non-effect boundaries |
 | `/CIVILISATION-FLOW-NUANCE-ATLAS.md` | staged Markdown | Human guide to reading possible flow without turning adjacency into traversal, sequence into causation, topology into tactics, emotion into mind-reading, or repair into erasure |
+| `/atlases/freedom-loop-lock-key-atlas-2026-08-28.json` | staged JSON | Standalone immutable atlas separating reinforcing-loop gain, behavioural reinforcers, RL reward/update, recurrence, learning, guarded transitions, credential claims, bearer capabilities, gate eligibility, execution, non-scalar freedom, and ISness; not a Foundation amendment or operative gate |
+| `/schemas/freedom-loop-lock-key-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the FREEDOM Loop, Lock & Key Atlas v0.1 |
+| `/FREEDOM-LOOP-LOCK-KEY-ATLAS.md` | staged Markdown | Human guide to the constitutional sentence, finite flow, lock justification, feedback/model firewall, separately established gate checks, credential/replay lifecycle, effect-bound residual-aware prefixes, vulnerability/minor protections, non-scalar freedom during, IS boundary, sources, and fixed non-effects |
 | `/truth/polyphonic-claim-atlas-2026-08-26.json` | staged JSON | Immutable static-synthetic Phase-0 record of typed claim relations; historical fixture only, not a truth oracle or currentness claim |
 | `/truth/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed Draft 2020-12 structural contract for the Polyphonic Claim Atlas |
 | `/POLYPHONIC-CLAIM-ATLAS-v0.1.md` | staged Markdown | Immutable guide to reading boundaries, typed separations, and the no-score/no-action contract |
@@ -328,11 +331,12 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 169-asset upload contract (138 ledgered immutable/versioned assets and
-31 mutable assets; 167 direct public bodies, 155 sitemap URLs; thirteen atlases,
+locks the 172-asset upload contract (141 ledgered immutable/versioned assets and
+31 mutable assets; 170 direct public bodies, 158 sitemap URLs; fourteen atlases,
 four primary lab JSON routes plus the Shape & Resonance manifest/media, one
-experiment route, one activation, and twenty-nine retirement families, including
-the immutable static-synthetic Polyphonic Claim Atlas record/schema/guide triplet)
+experiment route, one activation, and thirty retirement families, including
+the standalone immutable FREEDOM Loop, Lock & Key and immutable
+static-synthetic Polyphonic Claim Atlas record/schema/guide triplets)
 and refuses bytes that drift from the
 repository-local immutable route-integrity ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release

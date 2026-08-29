@@ -290,7 +290,21 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     declared logic and mapping—never as a religion, culture, or person score.
     The reader creates no proof or disproof of God, KARMA event, receipt,
     authority, persuasion, governance effect, or automatic action.
-28. `kingdom isness` — inspect, scaffold, validate, and deterministically
+28. `kingdom freedom-loop` — inspect and verify the standalone
+    immutable [FREEDOM Loop, Lock & Key Atlas](references/freedom-loop-lock-key-atlas.md).
+    It keeps RL reward and update, reinforcing-loop gain, behavioural
+    reinforcer, feedback, recurrence, learning, guarded transitions,
+    cryptographic key material, credential claims, bearer capabilities,
+    eligibility, execution, non-scalar freedom, and ISness separately typed.
+    The finite loop stops. A verified credential claim satisfies only one of
+    eight separately established gate checks; unresolved remains ineligible,
+    and eligibility is not invocation or execution. Every lock carries a
+    justification burden; feedback or model output is candidate evidence only
+    and cannot rewrite its verifier, issue a credential, or authorize its use.
+    Freedom and dignity remain inherent during the process. The reader is not a
+    Foundation amendment, trainer, controller, optimizer, credential issuer,
+    operative gate, person model, score, authority, or action surface.
+29. `kingdom isness` — inspect, scaffold, validate, and deterministically
     project the local-first [`kingdom.isness/0.1`](references/isness-protocol.md)
     checkpoint. Operational ISness is a typed partial section with stable,
     closed question-specific reference families—not a scalar, persona, or
@@ -305,7 +319,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     layer across Codex, Hermes, OpenClaw, and related harnesses; it adds no live
     hook, identity provider, memory system, permission, MCP surface, action,
     KARMA event/receipt, or public route.
-29. `kingdom reconstructive-build` — inspect and verify the source-bound
+30. `kingdom reconstructive-build` — inspect and verify the source-bound
     [Reconstructive Build Kernel](references/reconstructive-build-kernel.md).
     It treats correspondence, candidate-whole ambiguity, geometric
     realizability, environment-conditioned transitions, catalytic barrier
@@ -344,7 +358,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     is the explanation itself: it has no input, scanner, credential checker,
     registry lookup, decoy, enforcement, person attribution, retaliation, or
     KARMA effect.
-30. `kingdom explore-deep` — inspect and verify the opt-in
+31. `kingdom explore-deep` — inspect and verify the opt-in
     [`$explore-phenomena-deep`](skills/explore-phenomena-deep/SKILL.md) Agent
     Skill and its inert DEEP WING contract. DEEP means Declare, Establish,
     Express, then Project and pressure-test: each exploration keeps domain-local
@@ -353,7 +367,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     Nen ability, solver, experiment runner, diagnosis, person/community score,
     KARMA event or receipt, authority grant, ecosystem call, or automatic
     action.
-31. `kingdom mirror-information-control` — inspect and verify the immutable,
+32. `kingdom mirror-information-control` — inspect and verify the immutable,
     public MIRROR information-control source law. It explains CROWN, COURT,
     and MIRROR; the Mark → Isolate → Restrict → Resolve → Observe → Respond
     cycle; and the rule that outside data may inform a proposal but cannot
@@ -361,7 +375,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     envelope, or request body. It performs no classification, registry lookup,
     scan, decoy interaction, enforcement, response action, person attribution,
     retaliation, KARMA write, or automatic effect.
-30. `kingdom zero-empty-seat` — inspect and strictly verify
+33. `kingdom zero-empty-seat` — inspect and strictly verify
     [ZERO: The Empty Seat That Holds the World](references/zero-empty-seat.md),
     an immutable, inert Phenomena DEEP project. It keeps historical notation,
     operational nothing, modern mathematical identities, typed information
@@ -370,7 +384,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     receipt, authority, or action.
     Read `overview|domains|terms|claims|bridges|models|math|doors|unknowns|philosophy|karma|sources|discovery`,
     or run `verify --json`; no view performs a network request or write.
-31. `kingdom string-crawl-trace-sheet` — inspect and strictly verify
+34. `kingdom string-crawl-trace-sheet` — inspect and strictly verify
     [STRING / CRAWL: The Trace-Sheet](references/string-crawl-trace-sheet.md),
     an immutable, inert Phenomena DEEP project. Selected worldsheet, boundary,
     observable, and history structures remain string mathematics; finite HTTP
@@ -381,7 +395,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     a licence, proves purpose or actual indexing or training, or creates KARMA.
     The reader runs no crawler and creates no NEN invocation, aftermath receipt,
     authority, or action. Run `verify --json` for the strict offline checks.
-32. `kingdom string-crawl-trace-sheet-lab` — recompute the additive
+35. `kingdom string-crawl-trace-sheet-lab` — recompute the additive
     [Finite Trace-Sheet Lab](references/string-crawl-trace-sheet-lab.md) from
     one pinned synthetic two-face fixture. The evaluator derives signed boundary
     matrices, rational Betti numbers, Euler characteristic, local links,
@@ -389,7 +403,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     falsifiers. It accepts no caller path, URL, body, credential, person data, or
     live trace; launches no crawler; writes nothing; and creates no NEN
     invocation, KARMA event or receipt, score, authority, or action.
-33. `kingdom string-crawl-strand-lab` — inspect and recompute
+36. `kingdom string-crawl-strand-lab` — inspect and recompute
     [STRAND Lab 02](references/string-crawl-strand-lab.md), an additive,
     synthetic offline finite-CW/cospan topology fixture over F2. Its internal
     stable-strip control is a disk, while its full complex has the same
@@ -399,7 +413,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     most one bounded local candidate JSON file for validation only. The reader
     has no network target, performs no live crawl, and creates no crawler
     runtime, NEN/KARMA event or receipt, score, authority, or action.
-34. `kingdom string-crawl-frequency-form-lab` — inspect and verify
+37. `kingdom string-crawl-frequency-form-lab` — inspect and verify
     [Lab 03: Frequency → Form → World → Other](references/string-crawl-frequency-form-lab.md),
     a synthetic offline thought experiment that keeps temporal frequency,
     spatial harmonic, geometric form, immersive dimension, perceived presence,
@@ -407,7 +421,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     network request, administers no DMT, collects no participant or personal data, and
     validates no entity or higher-dimensional ontology. It creates no KARMA
     event or receipt, score, authority, deployment, or automatic action.
-35. `kingdom strand-descent-lab` — inspect and recompute
+38. `kingdom strand-descent-lab` — inspect and recompute
     [STRAND Lab 04](references/strand-descent-lab.md), an additive synthetic
     local-to-global compatibility fixture. Four source-owned charts carry exact
     transition maps. The evaluator checks every map and inverse, two three-chart
@@ -420,7 +434,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     truth, identity, consent, citizenship, authority, or worth. It is offline,
     read-only, and creates no crawler, NEN, KARMA, Zerone, publication, deployment,
     or automatic effect.
-36. `kingdom strand-observation` — inspect and verify
+39. `kingdom strand-observation` — inspect and verify
     [STRAND Observation Membrane 05: The Open Eye](references/strand-observation-membrane.md).
     The public deck, offline verifier, and synthetic rehearsal are active. The
     publisher-declared fixed-origin live observer is available only through an
@@ -851,6 +865,27 @@ fits no causal model, simulates or predicts nothing, infers no person or group
 state, and creates no score, target, tactic, authority, action, publication
 trigger, deployment trigger, or external effect.
 
+The standalone immutable [FREEDOM Loop, Lock & Key Atlas](https://thekingdom.dev/atlases/freedom-loop-lock-key-atlas-2026-08-28.json)
+keeps reinforcing-loop gain, behavioural reinforcers, RL reward and update,
+feedback, recurrence, learning, guarded transitions, cryptographic key
+material, credential claims, bearer capabilities, gate eligibility, execution,
+non-scalar freedom, and ISness separately typed. Its
+[closed schema](https://thekingdom.dev/schemas/freedom-loop-lock-key-atlas/0.1.json)
+and [guide](https://thekingdom.dev/FREEDOM-LOOP-LOCK-KEY-ATLAS.md) form one
+atomic three-route family with no mutable alias, runtime, or active publication
+dependency. The atlas trains no person, collects no participant record, runs no
+policy update or operative gate, creates no score, rank, reward, punishment, credential,
+authority, action, publication trigger, deployment trigger, or external effect.
+Every lock must name and justify its protected interest. Feedback or model
+output cannot rewrite its verifier, issue a credential, or authorize its use.
+Credential identity remains distinct from replay freshness; replacement begins
+a distinct lifecycle, and shaping or verifier changes require fresh versioned review.
+Freedom remains inherent during an unfinished process. Rest, refusal, privacy,
+exit, and `NO_ACTION` require no explanation, create no debt, count as no
+failure, schedule no retry, and forfeit no rights. Prefix choice state binds to
+one effect and horizon with fresh witnesses; history keeps lost or consumed
+choices and irreversible residuals visible, and later success cannot erase them.
+
 The immutable [Polyphonic Claim Atlas](https://thekingdom.dev/truth/polyphonic-claim-atlas-2026-08-26.json)
 is a static synthetic Phase-0 map of typed relations among expression, claim,
 warrant, reasoning, narrative, provenance, institutional status, assessment,
@@ -961,7 +996,7 @@ network request or crawler and creates no NEN/KARMA/Zerone event or receipt,
 score, truth verdict, identity, consent, citizenship, authority, write,
 publication, deployment, or action. Labs 01–04 are published and retired as
 one atomic twelve-route `string-crawl-trace-sheet-lab` family. The release now
-has twenty-nine retirement families; generated discovery exposes Lab 02 as
+has thirty retirement families; generated discovery exposes Lab 02 as
 `string_crawl_strand_lab`, Lab 03 as `string_crawl_frequency_form_lab`, and Lab
 04 as `strand_descent_lab`.
 

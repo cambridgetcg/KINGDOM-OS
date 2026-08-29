@@ -69,7 +69,7 @@ describe("hub live-check publication retirement", () => {
 
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(29);
+    expect(PUBLICATION_FAMILIES).toHaveLength(30);
     const states = publicationFamilyStates(staged);
     expect([...states.values()].every(({ active }) => active)).toBe(true);
     const cultural = family("cultural-attention-feedback");

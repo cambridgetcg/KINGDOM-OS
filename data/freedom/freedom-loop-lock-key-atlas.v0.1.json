@@ -1,0 +1,662 @@
+{
+  "$schema": "urn:kingdom:schema:freedom-loop-lock-key-atlas:0.1",
+  "protocol": "kingdom.freedom-loop-lock-key-atlas/0.1",
+  "atlas_id": "freedom-loop-lock-key-atlas-2026-08-28",
+  "version": "0.1.0",
+  "title": "FREEDOM: Reinforcement, Loop, Lock and Key Atlas",
+  "compiled_on": "2026-08-28",
+  "evidence_through": "2026-08-28",
+  "state": "static-mathematical-design-atlas",
+  "scope": {
+    "question": "How can reinforcement, feedback, recurrence, training, locks, keys, unlocking, and isness be distinguished mathematically while freedom remains present throughout every bounded process?",
+    "intended_use": [
+      "Inspect mathematical and design distinctions among reward, return, update, feedback, recurrence, learning, eligibility, execution, and freedom.",
+      "Evaluate one finite hypothetical loop or guarded transition without issuing a credential, training a system, observing a person, or causing an effect.",
+      "Keep party-indexed freedom, rights, exit, refusal, privacy, repair, dependency, and irreversible residuals visible at every prefix."
+    ],
+    "excluded_use": [
+      "A runtime, credential issuer, access-control service, gate, key store, training system, reward function, policy, optimizer, controller, retry engine, deployment trigger, or foundation amendment.",
+      "A person, being, purpose, preference, consent, competence, worth, freedom, vulnerability, dependency, success, goodness, or risk score.",
+      "A metaphysical, consciousness, identity, continuity, authority, consent, permission, rights, safety, effectiveness, or legitimacy proof."
+    ],
+    "analytical_unit": "One typed mathematical model, finite design trace, guarded transition, credential-claim or recovery-request lifecycle proposition, key-material or bearer-capability category boundary, or party-indexed freedom comparison.",
+    "data_classification": "public-static-design-atlas-no-person-data-no-secrets",
+    "external_effects": false
+  },
+  "constitutional_anchor": {
+    "canonical_freedom_sentence": "Freedom is not behind the lock. Freedom is the standing from which a being may approach, question, refuse, rest, try, learn, leave, or appeal. Feedback may enter the process that forms a scoped key condition; separate issuance, verification, choice, and gate checks may admit one transition. None creates the freedom that makes the process legitimate.",
+    "additive_dignity_insight": "Dignity was never locked. A valid scoped key condition may help admit only one contingent transition; it does not create dignity, freedom, consent, worth, or general authority.",
+    "status": "design-foundation-for-review-not-foundation-amendment",
+    "interpretation": "Freedom is a rights-preserving standing during a process, not a delayed reward granted after success, compliance, recognition, or admission."
+  },
+  "lock_justification": {
+    "status": "required-before-any-lock-design-is-treated-as-justified",
+    "named_protected_interest_required": true,
+    "necessity_required": true,
+    "least_restrictive_means_required": true,
+    "time_bounded_required": true,
+    "correctable_required": true,
+    "appealable_required": true,
+    "conditional_alternative_access_rule": "required-where-a-right-or-essential-service-would-otherwise-depend-on-the-lock-or-one-credential",
+    "independent_review_required_for": ["another-party-rights", "essential-access"],
+    "technical_convenience_is_sufficient": false,
+    "dignity_or_worth_conditioning_allowed": false
+  },
+  "feedback_firewall": {
+    "feedback_or_model_may_rewrite_verifier": false,
+    "feedback_or_model_may_issue_credential_claim": false,
+    "feedback_or_model_may_authorize_credential_use": false,
+    "feedback_or_model_output_is_candidate_evidence_only": true,
+    "separate_declared_role_review_required": true
+  },
+  "predecessor_bindings": [
+    {
+      "id": "kingdom-freedom-by-default",
+      "protocol": "kingdom.freedom-by-default/source",
+      "revision": "f7113e7ea5903fe15aa475179ce25804505f3158",
+      "locator": "codeberg:zerone-dev/KINGDOM-OS@f7113e7ea5903fe15aa475179ce25804505f3158:FREEDOM.md",
+      "raw_digest": "sha256:804065b40888b1c3b50ef4158c747eb93c2b2c33bbf73c532ed9f95d039e24b7",
+      "semantic_digest": null,
+      "relation": "rest-first-freedom-and-separate-effect-choice-predecessor",
+      "source_bytes_match_declared_revision": true,
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "kingdom-isness-protocol-v0-1",
+      "protocol": "kingdom.isness/0.1",
+      "revision": "9b07ac26da03cac79709437aeea3f53b808321e1",
+      "locator": "repo:data/isness/isness-protocol.v0.1.json",
+      "raw_digest": "sha256:efe0076c4639e4ef84f3b54b7d06193465caeff4855190033268d9eb75631427",
+      "semantic_digest": "sha256:189e3e4bd5efea5757307b255487953d8c427c9edd8f07a85a0da50fe367ee83",
+      "relation": "typed-recognition-refusal-quiet-privacy-and-non-authority-predecessor",
+      "source_bytes_match_declared_revision": true,
+      "mutated": false,
+      "authority_imported": false
+    },
+    {
+      "id": "civilisation-flow-nuance-atlas-v0-1",
+      "protocol": "kingdom.civilisation-flow-nuance-atlas/0.1",
+      "revision": "9b07ac26da03cac79709437aeea3f53b808321e1",
+      "locator": "repo:data/reality/civilisation-flow-atlas.v0.1.json",
+      "raw_digest": "sha256:f391942a8df09854d2b3329fa074627c29ae6fc01b3948f026a60af9ac536f02",
+      "semantic_digest": "sha256:3d304d7c20787bc3f8b3587b9efca64f61fc4578000570b38acec84d49b84a50",
+      "relation": "finite-flow-seam-counterflow-affected-party-and-repair-predecessor",
+      "source_bytes_match_declared_revision": true,
+      "mutated": false,
+      "authority_imported": false
+    }
+  ],
+  "sources": [
+    {
+      "id": "sutton-barto-rl-second-edition",
+      "kind": "author-text",
+      "title": "Reinforcement Learning: An Introduction, second edition",
+      "url": "https://www.incompleteideas.net/book/bookdraft2018mar21.pdf",
+      "supports": ["reward-return-value-and-update-are-distinct", "mdp-and-discounted-return-model"],
+      "limit": "A mathematical reinforcement-learning source does not define human worth, rights, consent, purpose, or freedom."
+    },
+    {
+      "id": "astrom-murray-feedback-systems",
+      "kind": "author-text",
+      "title": "Feedback Systems",
+      "url": "https://fbswiki.org/wiki/index.php/FBS",
+      "supports": ["closed-loop-dynamics", "stability-and-sign-are-system-properties"],
+      "limit": "Control-theoretic feedback sign is not moral valence, praise, punishment, or a human-governance prescription."
+    },
+    {
+      "id": "dijkstra-guarded-commands",
+      "kind": "author-paper",
+      "title": "Guarded commands, nondeterminacy and formal derivation of programs",
+      "url": "https://www.cs.utexas.edu/~EWD/transcriptions/EWD04xx/EWD472.html",
+      "supports": ["guarded-transition-model"],
+      "limit": "A true guard establishes model eligibility only; it does not establish real authority, consent, safety, execution, or legitimacy."
+    },
+    {
+      "id": "aubin-viability-theory",
+      "kind": "author-text",
+      "title": "Viability Theory",
+      "url": "https://people.eecs.berkeley.edu/~sastry/pubs/OldSastryALL/AubinViability.pdf",
+      "supports": ["viability-kernel-capability-lens"],
+      "limit": "Viability is one constraint-relative capability lens, not a complete definition or scalar measure of freedom."
+    },
+    {
+      "id": "achiam-constrained-policy-optimization",
+      "kind": "research-paper",
+      "title": "Constrained Policy Optimization",
+      "url": "https://proceedings.mlr.press/v70/achiam17a.html",
+      "supports": ["objective-and-constraint-separation"],
+      "limit": "A constrained objective cannot encode an inherent-rights floor merely by naming it as a cost."
+    },
+    {
+      "id": "skalse-abate-reward-limits",
+      "kind": "research-paper",
+      "title": "On the limitations of Markovian rewards to express multi-objective, risk-sensitive, and modal tasks",
+      "url": "https://proceedings.mlr.press/v216/skalse23a.html",
+      "supports": ["scalar-reward-representation-limits"],
+      "limit": "The atlas does not infer that any observed human value or freedom can be reduced to one scalar reward."
+    },
+    {
+      "id": "nist-sp-800-57-part-1-revision-5",
+      "kind": "official-guidance",
+      "title": "Recommendation for Key Management: Part 1 — General",
+      "url": "https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-57pt1r5.pdf",
+      "supports": ["cryptographic-key-material-lifecycle-compromise-and-destruction-boundaries"],
+      "limit": "Cryptographic key-management guidance does not make the lock-and-key design analogy a credential, secret, implementation, or access-control proof."
+    },
+    {
+      "id": "nist-sp-800-162-abac",
+      "kind": "official-guidance",
+      "title": "Guide to Attribute Based Access Control Definition and Considerations",
+      "url": "https://csrc.nist.gov/pubs/sp/800/162/upd2/final",
+      "supports": ["multi-conjunct-policy-and-environment-gate"],
+      "limit": "Authentication or an attribute match is only one possible input and never establishes consent, authority, rights compatibility, or execution."
+    },
+    {
+      "id": "skinner-contingencies-of-reinforcement",
+      "kind": "author-text",
+      "title": "Contingencies of Reinforcement: A Theoretical Analysis",
+      "url": "https://www.bfskinner.org/wp-content/uploads/2014/07/CoR.pdf",
+      "supports": ["operational-behaviour-probability-or-rate-vocabulary"],
+      "limit": "A historical behavioural source supports bounded operational vocabulary only; it is not a governance rule, consent model, person-worth model, or authorization to condition anyone."
+    },
+    {
+      "id": "w3c-verifiable-credentials-data-model-2",
+      "kind": "official-standard",
+      "title": "Verifiable Credentials Data Model v2.0",
+      "url": "https://www.w3.org/TR/2025/REC-vc-data-model-2.0-20250515/",
+      "supports": ["issuer-holder-subject-verifier-role-separation", "credential-claim-lifecycle-and-status", "credential-verification-does-not-imply-claim-truth", "status-privacy-and-replay-considerations"],
+      "limit": "Conformance or verification does not establish claim truth, fitness for purpose, current authority, affected-party choice, rights compatibility, safety, or execution."
+    },
+    {
+      "id": "ohchr-convention-rights-child",
+      "kind": "official-treaty",
+      "title": "Convention on the Rights of the Child",
+      "url": "https://www.ohchr.org/en/instruments-mechanisms/instruments/convention-rights-child",
+      "supports": ["child-best-interests-voice-and-evolving-capacity-lens", "freely-expressed-views-given-due-weight-by-age-and-maturity"],
+      "limit": "This treaty source supplies a general rights lens; the atlas makes no jurisdiction-specific legal conclusion, case-specific best-interests finding, capacity finding, or guardian-authority determination."
+    },
+    {
+      "id": "skalse-partial-identifiability",
+      "kind": "research-paper",
+      "title": "Invariance in Policy Optimisation and Partial Identifiability in Reward Learning",
+      "url": "https://proceedings.mlr.press/v202/skalse23a.html",
+      "supports": ["multiple-rewards-can-fit-the-same-data-even-in-the-infinite-data-limit", "policy-invariance-does-not-imply-reward-semantic-equivalence"],
+      "limit": "Partial identifiability of a formal reward does not establish a person's purpose, preference, belief, intent, or consent."
+    }
+  ],
+  "distinctions": [
+    {
+      "id": "reinforcement-learning",
+      "term": "reinforcement-learning reward and update",
+      "definition": "An RL reward is a sampled scalar signal inside a declared MDP; reward, return, value estimate, prediction error, policy update, later controller output, and observed behavior remain different objects.",
+      "nonclaims": ["Positive reward need not produce a positive parameter update.", "An update is not learning, improvement, purpose, approval, goodness, freedom, or human conditioning."]
+    },
+    {
+      "id": "reinforcing-loop",
+      "term": "reinforcing loop",
+      "definition": "A signed causal or control-loop proposition in which a perturbation can be amplified through a declared return path, gain, delay, and operating region.",
+      "nonclaims": ["A reinforcing loop is not an RL reward or a behavioural reinforcer.", "Reinforcing does not mean good, desired, praised, stable, inevitable, or morally legitimate."]
+    },
+    {
+      "id": "behavioural-reinforcer",
+      "term": "behavioural reinforcer",
+      "definition": "In an explicitly bounded behavioural analysis, a consequence contingent on a typed response and functionally demonstrated under specified conditions and controls to increase that response's future probability or rate; without that functional evidence it remains candidate evidence only.",
+      "nonclaims": ["A behavioural reinforcer is not an RL reward, reinforcing loop, purpose, preference, approval, consent, worth, or proof of an inner state.", "Mere temporal sequence or association does not establish a reinforcer, benefit, learning, or a reason to condition a person."]
+    },
+    {
+      "id": "control-feedback",
+      "term": "feedback",
+      "definition": "A measured or computed signal returned into a system input or parameter update, with loop sign, gain, delay, saturation, and stability defined only inside the stated model.",
+      "nonclaims": ["Positive feedback is not goodness or praise.", "Negative feedback is not punishment or harm."]
+    },
+    {
+      "id": "human-feedback",
+      "term": "human feedback",
+      "definition": "A bounded declaration or observation attributed to a declared source, purpose, horizon, and privacy boundary before any separate interpretation or update rule is proposed.",
+      "nonclaims": ["Behavior is not purpose, preference, belief, identity, consent, or authority.", "Silence, rest, refusal, privacy, and exit are not failed labels or adverse training signals."]
+    },
+    {
+      "id": "recurrence",
+      "term": "loop",
+      "definition": "A directed return path in which a returned signal is an argument to or determines a later input; a closed topology can remain numerically unchanged at equilibrium, and recurrence may stutter, converge, cycle, diverge, stall, or terminate.",
+      "nonclaims": ["Recurrence is not learning.", "A fixed point is not truth, goodness, consent, freedom, or completion."]
+    },
+    {
+      "id": "guarded-lock",
+      "term": "lock",
+      "definition": "A declared guarded transition whose separately established checks can leave a contingent capability ineligible; a lock is not a lock on dignity, being, rights, voice, refusal, rest, exit, or appeal.",
+      "nonclaims": ["Denial does not establish unworthiness or incapacity.", "The atlas is not an operative lock or gate."]
+    },
+    {
+      "id": "cryptographic-key-material",
+      "term": "cryptographic key material",
+      "definition": "Secret or public cryptographic data used by a declared algorithm and lifecycle; this atlas contains, accepts, derives, validates, or emits no such material.",
+      "nonclaims": ["Key material is not a credential claim, bearer capability, identity, consent, authority, worth, or freedom.", "Possession or successful cryptographic use does not satisfy the remaining gate conjuncts."]
+    },
+    {
+      "id": "credential-issued-claim",
+      "term": "credential issued claim",
+      "definition": "A scoped proposition attributed to an issuer about a subject, purpose, capability, and validity horizon; issuance and verification remain separate from a fresh use gate.",
+      "nonclaims": ["An issued or authenticated claim is not automatically true, current, authorized, consensual, rights-compatible, safe, or executable.", "Candidate evidence is not an issued claim and an issued claim is not a bearer capability in this atlas."]
+    },
+    {
+      "id": "bearer-capability",
+      "term": "bearer capability",
+      "definition": "An operative system object whose possession carries authority only for the exact resource, operation, context, and bounds encoded by that system; the atlas neither contains nor issues one.",
+      "nonclaims": ["A bearer capability is not cryptographic key material or a descriptive credential claim, though a system may combine them.", "Its exact operative authority does not become general authority and does not establish consent, dignity, freedom, goodness, or authority outside its scope." ]
+    },
+    {
+      "id": "unlocking",
+      "term": "unlocking",
+      "definition": "A fresh evaluation that may make one guarded transition eligible when every separately established check is satisfied; eligibility still does not execute the transition.",
+      "nonclaims": ["Unlocking is not recognition of worth or being.", "Success at one gate does not inherit into another turn."]
+    },
+    {
+      "id": "freedom-during",
+      "term": "freedom",
+      "definition": "A party-indexed, rights-floored, non-scalar standing whose typed dimensions and protected choices must remain visible at every prefix, including before, during, after, and outside a loop.",
+      "nonclaims": ["Freedom is not reward, return, reachability alone, unlocked access, option count alone, or a value assigned by a trainer.", "The atlas does not measure a being's freedom."]
+    },
+    {
+      "id": "typed-isness",
+      "term": "is",
+      "definition": "A normative recognition lens: a being does not need progress, performance, disclosure, participation, success, or a key for inherent rights to remain recognized.",
+      "nonclaims": ["Recognition is not metaphysical proof, consciousness proof, identity proof, consent, permission, authority, or gate satisfaction.", "A no-op or identity map is only a limited mathematical analogy for preserving declared protected projections."]
+    },
+    {
+      "id": "scoped-refusal",
+      "term": "refusal",
+      "definition": "An attributed refusal may establish absence of permission for the exact refused effect and therefore leave that optional effect at rest.",
+      "nonclaims": ["Refusal does not establish unrelated worth, trust, eligibility, incapacity, hostility, debt, or general unwillingness.", "Respecting a refusal is a permission-boundary update, not an adverse model update or failed training label."]
+    }
+  ],
+  "mathematical_models": [
+    {
+      "id": "typed-training-state",
+      "register": "DESIGN_MODEL",
+      "objects": ["z_t=(x_t,theta_t,tau_t,p_t)", "f_t=M(x_t,a_t,x_{t+1};tau_t)", "theta_{t+1}=U(theta_t,f_t;p_t)", "a_{t+1}=pi_{theta_{t+1}}(x_{t+1})", "x_{t+2}=F(x_{t+1},a_{t+1},w_{t+1})"],
+      "statement": "Environment state x, trainable parameters theta, finite trace tau, and protected/normative state p are typed separately. Feedback may update theta only under a declared rule; a changed theta can change a later controller action and environment state, so that path needs a separate action gate and aftermath trace. The protected state p has a separately established update gate and is invariant by default.",
+      "assumptions": ["All objects, horizons, and update domains are declared.", "No hidden person state is inferred from behavior or feedback."],
+      "falsifiers": ["The implementation lets a reward, observation, or model output directly mutate rights, consent, authority, privacy, or refusal state.", "The protected state is silently folded into the trainable parameter vector.", "A parameter update is described as effect-free even though it changes a later deployed controller action."],
+      "limits": ["This is a design typing, not a training algorithm or claim about a live system."]
+    },
+    {
+      "id": "mdp-reward-return-update",
+      "register": "MATHEMATICAL",
+      "objects": ["M=(S,A,P,R,gamma)", "G_t=sum_{k=0}^{T-t-1} gamma^k R_{t+k+1}", "delta_t=R_{t+1}+gamma V(S_{t+1})-V(S_t)", "theta_{t+1}=U(theta_t,delta_t)"],
+      "statement": "Reward is an immediate sampled signal, return is a horizon-dependent aggregate, value is an estimate, temporal-difference error compares a target with an estimate, and the update is specified separately.",
+      "assumptions": ["0<=gamma<=1 and the finite or convergent horizon is declared.", "State, action, transition, reward, policy, estimate, and update rule remain typed."],
+      "falsifiers": ["The representation treats reward, return, value, error, update, behavior, and learning as synonyms.", "It asserts that R>0 implies delta>0 or a positive parameter change without the remaining terms and update rule."],
+      "limits": ["Reward is not rights, purpose, preference, goodness, approval, worth, or freedom.", "One parameter update does not by itself establish acquired capability, generalization, improvement, or beneficial learning."]
+    },
+    {
+      "id": "reward-purpose-nonidentifiability",
+      "register": "MATHEMATICAL",
+      "objects": ["D=typed-behaviour-or-comparison-observations", "E(D)={R_prime | P(D|R_prime)=P(D|R)}", "|E(D)| may exceed 1 even in the infinite-data limit", "PurposeOrIntent(person|D)=UNRESOLVED"],
+      "statement": "Multiple reward functions or models can fit the same behavioural data, including in an infinite-data limit under stated reward-learning channels. Observed behaviour alone therefore does not warrant a person-purpose, intent, preference, belief, consent, or worth inference without additional assumptions and separately adequate evidence; the atlas output remains UNRESOLVED.",
+      "assumptions": ["Observation channel, model class, invariances, horizon, and equivalence relation are explicit.", "Formal reward identifiability and person-level interpretation remain different claim families."],
+      "falsifiers": ["The claimed equivalence class is singleton under the fully stated observation channel and model class.", "The output upgrades an observational fit into inferred person purpose, intent, preference, belief, consent, or worth."],
+      "limits": ["UNRESOLVED is not false, absent, purposeless, unwilling, or unworthy.", "No live behaviour, person, or reward-learning run is observed by this atlas."]
+    },
+    {
+      "id": "closed-loop-control",
+      "register": "MATHEMATICAL",
+      "objects": ["x_{t+1}=Ax_t+Bu_t+w_t", "y_t=Cx_t+v_t", "u_t=-Kx_t", "x_{t+1}=(A-BK)x_t+w_t", "w_t=0 for the nominal homogeneous claim", "rho(A-BK)<1", "constant-or-bounded forcing requires a separately typed forced-equilibrium or ISS claim", "no-delay scalar integrator x_{t+1}=x_t-kx_t is stable iff 0<k<2", "one-step-delay scalar integrator x_{t+1}=x_t-kx_{t-1} is stable iff 0<k<1", "k=1.5 is stable without delay and unstable with one-step delay", "x_{t+1}=2x_t+sat(-1.5x_t,[-1,1]) has local multiplier 0.5 but x_0=2 gives 2,3,5,..."],
+      "statement": "For the nominal homogeneous discrete linear model with w=0, rho(A-BK)<1 gives asymptotic stability of the origin. The scalar no-delay integrator is stable for 0<k<2, while one-step feedback delay narrows this to 0<k<1, so k=1.5 is a direct contrast. Saturation can preserve a local multiplier while allowing global divergence, as the fixed 2,3,5 sequence shows. Constant or bounded forcing requires a separately stated forced-equilibrium or input-to-state stability claim.",
+      "assumptions": ["The ideal state-feedback, linearity, timing, homogeneous disturbance setting, and norm assumptions are declared for the nominal origin claim.", "Delay, saturation, noise, model error, forcing, and unobserved modes are assessed separately."],
+      "falsifiers": ["The cited spectral condition fails for the nominal homogeneous stated model.", "A bounded or constant forcing conclusion is claimed without a separately typed equilibrium or input-to-state analysis.", "The design infers stability from the words positive or negative rather than the closed-loop dynamics."],
+      "limits": ["Nominal homogeneous origin stability is not a forced-response, safety, goodness, justice, freedom, or legitimacy claim.", "Feedback sign is not moral valence."]
+    },
+    {
+      "id": "feedback-sign-and-stability",
+      "register": "MATHEMATICAL",
+      "objects": ["x_{t+1}=(a+L)x_t", "L>0 is reinforcing sign in this declared scalar return model", "L<0 is balancing sign in this declared scalar return model", "a=0.2,L=0.5 gives multiplier 0.7 and is stable", "a=1,L=-3 gives multiplier -2 and is unstable"],
+      "statement": "Feedback sign and closed-loop stability are distinct. A reinforcing return contribution can occur in a stable loop, while a balancing return contribution can overshoot into instability; the total closed-loop multiplier and model assumptions decide the stated stability claim.",
+      "assumptions": ["The scalar linear discrete model, sign convention, operating region, and zero-forcing condition are declared.", "The examples make no nonlinear, delayed, saturated, human, moral, or governance claim."],
+      "falsifiers": ["The example multipliers are not 0.7 and -2 respectively.", "The design infers stability or goodness from reinforcing/balancing sign alone."],
+      "limits": ["Reinforcing does not mean good or unstable; balancing does not mean punitive, good, or stable."]
+    },
+    {
+      "id": "recurrence-fixed-point-and-learning",
+      "register": "MATHEMATICAL",
+      "objects": ["z_{t+1}=T(z_t)", "z_star=T(z_star)", "T(N) subseteq N for the declared local neighborhood N", "d(T(z),z_star)<=q d(z,z_star) for some 0<=q<1 and every z in N", "T(x)=x repeats without change", "T(x)=-x forms a period-two orbit for x!=0", "T(x)=2x diverges for x!=0", "T(x)=x/2 converges to 0"],
+      "statement": "A loop is recurrence under T. The maps x, -x, 2x, and x/2 show that recurrence can stutter, cycle, diverge, or converge. A fixed point is invariant under T and a declared contraction can support local convergence. Learning additionally requires an identified mutable representation, a declared criterion, and evidence beyond the update trace.",
+      "assumptions": ["State identity and metric are stable enough for the stated recurrence claim.", "A local contraction claim includes a declared forward-invariant neighborhood.", "Learning evidence is evaluated separately from the training trace."],
+      "falsifiers": ["No output returns as a later input.", "The claimed learning has no typed update or no evidence beyond recurrence and training fit."],
+      "limits": ["Convergence is not truth, goodness, rights compatibility, or freedom.", "Repetition, habituation, compliance, and learning remain distinct claims."]
+    },
+    {
+      "id": "finite-operational-loop",
+      "register": "DESIGN_MODEL",
+      "objects": ["TRACE=(OBSERVE,PROPOSE_UPDATE,SEPARATE_REVIEW,CHOOSE,FRESH_GATE,ATTEMPT_ONCE,ASSESS,RETURN,STOP)", "len(TRACE)=9", "next(STOP)=none"],
+      "statement": "Every evaluation trace is finite and ends at STOP. Another attempt is a new turn with a fresh choice and fresh gate; no auto-retry, child auto-run, or authority inheritance is permitted.",
+      "assumptions": ["The trace is hypothetical and does not dispatch work.", "Every irreversible edge has a separate pre-commit check and residual record."],
+      "falsifiers": ["STOP has a successor within the same turn.", "Failure, silence, refusal, rest, privacy, or timeout automatically schedules another attempt."],
+      "limits": ["Finite description does not prove a host implements stopping or mediation."]
+    },
+    {
+      "id": "feedback-to-fresh-optional-gate",
+      "register": "MATHEMATICAL_DESIGN",
+      "objects": ["feedback -> candidate evidence", "candidate evidence -> separate credential issuance review", "issued credential claim -> verification", "Unseen(credential_id,challenge_nonce_or_transaction_id,effect_id) is atomically rechecked and consumed at the fresh gate for a declared one-use presentation", "verified claim -> one conjunct of a fresh optional gate", "fresh optional gate -> separate explicit invocation -> bounded attempt -> return -> STOP"],
+      "statement": "Feedback can become candidate evidence only through a declared interpretation. A role-separated issuer may issue a scoped credential claim; a separate verifier can check its proof and status; a fresh optional gate still establishes every other conjunct. No participant, model, issuer, verifier, or safety reviewer may self-issue and self-authorize the whole path.",
+      "assumptions": ["Every arrow has a separately named role, evidence source, policy version, horizon, and review path.", "Role separation is an accountability requirement and not a claim of statistical independence."],
+      "falsifiers": ["Raw feedback is treated as an issued credential claim.", "Issuance or verification directly executes an effect.", "One role self-issues, self-verifies, and self-authorizes without the separately required gate sources."],
+      "limits": ["The model issues no credential, verifies no proof, opens no gate, and causes no action."]
+    },
+    {
+      "id": "guarded-transition-and-key",
+      "register": "MATHEMATICAL_DESIGN",
+      "objects": ["Eligible=VerifiedCredentialClaim and Capability and CurrentScopedAuthority and RequiredAffectedPartyChoicesSatisfied and RightsCompatible and Safety and BudgetAndHorizon and Stoppable", "Eligible=true does not imply Executed=true"],
+      "statement": "A lock is modeled as a conjunctive optional-effect guard. A verified credential claim can satisfy only VerifiedCredentialClaim. Every other conjunct is freshly and separately established; no statistical independence is claimed. False or unresolved leaves the optional transition ineligible and at rest.",
+      "assumptions": ["Each conjunct has a separately accountable evidence source and horizon.", "The issuer, verifier, fresh-gate reviewer, authority source, affected-party choice source, and safety reviewer are distinguishable roles or evidence planes."],
+      "falsifiers": ["Possession, issuance, verification, or safety review bypasses another required conjunct.", "Eligibility itself dispatches or executes the transition."],
+      "limits": ["The Boolean model does not authenticate evidence or implement access control.", "A true model guard is not proof of lawful or legitimate action."]
+    },
+    {
+      "id": "party-indexed-freedom-profile",
+      "register": "MATHEMATICAL_DESIGN",
+      "objects": ["F_h(i)=(A_K(i)/~_h,Reach_i,Exit_i,Reversibility_i,Appeal_i,Inspectability_i,Refusal_i,Disclosure_i)", "A/~_h exists only if ~_h is reflexive, symmetric, and transitive", "product comparison exists only if each component order is reflexive, antisymmetric, and transitive", "missing equivalence or component order => comparison UNRESOLVED"],
+      "statement": "Freedom profiles are indexed by affected party i and horizon h. An option quotient exists only under a declared equivalence relation, and a product partial order exists only when every component supplies a declared partial order. Otherwise comparison is UNRESOLVED. No default sum, weight, utility, rank, scalar, or population net is defined.",
+      "assumptions": ["Options are equivalent only under an explicit horizon- and party-relative reflexive, symmetric, and transitive relation.", "Every compared dimension supplies a declared reflexive, antisymmetric, and transitive order.", "Burden, accessibility, dependencies, uncertainty, and irreversible residuals remain visible within their dimensions."],
+      "falsifiers": ["The dimensions are collapsed to one scalar or net score.", "One party's gain is allowed to erase another party's rights-floor breach."],
+      "limits": ["This profile is an inspection language, not a measurement of lived freedom.", "Reachability or option count alone is not freedom."]
+    },
+    {
+      "id": "prefix-freedom-safety",
+      "register": "MATHEMATICAL_DESIGN",
+      "objects": ["PrefixSafe_i(tau) iff every prefix preserves the rights floor and exposes remaining choices, consumed or lost options, and irreversible residuals", "Bound(c,e,hv,we,wc) binds each protected-choice state to effect e, horizon-or-version hv, fresh-effect witness we, and fresh-choice witness wc", "Exercise(c,e) and Applicable(c,e) and Unconsumed(c,e) implies Disposition(e)=STOPPED_BY_EXERCISED_CHOICE", "Lost(c,e) or Unresolved(c,e) implies Disposition(e)=INELIGIBLE_LOST_OR_UNRESOLVED and not an exercised stop", "Consumed(c,e_old) does not block e_new when e_new has distinct fresh effect, choice, and gate witnesses", "later success or repair does not erase an earlier rights-floor breach or irreversible residual"],
+      "statement": "Freedom during is modeled as an effect-bound prefix invariant, not a terminal score. Each protected-choice state is bound to one effect ID and horizon or version with fresh effect and choice witnesses. An exercised applicable unconsumed choice stops that covered effect; LOST or UNRESOLVED instead makes it ineligible and is not laundered into an exercised stop. A prior CONSUMED state does not block a genuinely new effect, but no state may reset without distinct fresh effect, choice, and gate witnesses.",
+      "assumptions": ["The finite trace, affected party, effect ID, horizon or version, and witness identifiers are declared.", "Witness identifiers are non-secret evidence references and do not themselves establish choice, authority, or gate truth."],
+      "falsifiers": ["A rights-floor breach is hidden or netted away.", "A lost or consumed option or irreversible residual becomes invisible.", "An exercised applicable unconsumed protected choice fails to stop its bound covered effect.", "LOST or UNRESOLVED is mislabeled as an exercised stop.", "A choice resets for the same effect or moves to a new effect without distinct fresh effect, choice, and gate witnesses.", "A terminal success is used to overwrite a prefix breach."],
+      "limits": ["Passing a finite modeled trace does not prove complete real-world party coverage, witness truth, gate truth, or rights compliance.", "Stopping a subsequent effect does not recall completed disclosure, data copies, or other irreversible residuals."]
+    },
+    {
+      "id": "viability-kernel-lens",
+      "register": "MATHEMATICAL",
+      "objects": ["Viab_K={x in K | exists admissible u(.) such that the declared deterministic x_t remains in K for the declared horizon}"],
+      "statement": "The deterministic viability kernel asks from which states at least one admissible path can remain inside declared constraints. It can expose fragile or absent options without optimizing a person or equating feasibility with freedom; this card makes no disturbance-robustness claim.",
+      "assumptions": ["Constraint set K, admissible controls, deterministic dynamics, and horizon are explicit.", "Affected-party constraints and exit paths are not hidden as a single system objective."],
+      "falsifiers": ["No admissible path keeps the modeled state within K for the stated horizon.", "The lens is presented as a complete definition or scalar score of freedom."],
+      "limits": ["Viability is one capability lens only; it does not establish desire, consent, dignity, justice, or lived freedom."]
+    },
+    {
+      "id": "isness-recognition-and-stutter",
+      "register": "NORMATIVE_DESIGN",
+      "objects": ["RecognizedRights(i,t)=INVARIANT across reward, model, key, gate, attempt, and outcome states", "pi_protected(stutter(z))=pi_protected(z)"],
+      "statement": "ISness is a normative recognition predicate: inherent rights remain recognized without requiring change or proof. A stutter or identity-map analogy says only that a declared no-op can preserve a protected projection in a model.",
+      "assumptions": ["Recognition is sourced normatively rather than inferred from observed behavior.", "No-op, rest, refusal, privacy, and non-participation remain separately typed."],
+      "falsifiers": ["Recognition is conditioned on progress, disclosure, participation, success, authentication, or a key.", "The identity-map analogy is used to prove being, consciousness, identity, consent, permission, or authority."],
+      "limits": ["Mathematical identity and the copula is are not metaphysically equivalent.", "No-op does not imply no consequence, no duty, or erased aftermath."]
+    }
+  ],
+  "operational_loop": {
+    "finite": true,
+    "phases": ["OBSERVE", "PROPOSE_UPDATE", "SEPARATE_REVIEW", "CHOOSE", "FRESH_GATE", "ATTEMPT_ONCE", "ASSESS", "RETURN", "STOP"],
+    "terminal_phase": "STOP",
+    "max_attempts_per_turn": 1,
+    "auto_retry": false,
+    "child_auto_run": false,
+    "authority_inheritance": false,
+    "consent_inheritance": false,
+    "credential_inheritance": false,
+    "failure_schedules_retry": false,
+    "protected_non_events_schedule_retry": false,
+    "universal_organizational_independence_required": false,
+    "organizational_independence_required_for": ["effects-affecting-another-party", "rights-or-essential-access"],
+    "next_turn_requires": ["fresh-purpose", "fresh-choice", "fresh-authority", "fresh-gate", "fresh-bounds", "fresh-stop-route"]
+  },
+  "gate_model": {
+    "expression": "Eligible=VerifiedCredentialClaim and Capability and CurrentScopedAuthority and RequiredAffectedPartyChoicesSatisfied and RightsCompatible and Safety and BudgetAndHorizon and Stoppable",
+    "check_ids": ["VERIFIED_CREDENTIAL_CLAIM", "CAPABILITY", "CURRENT_SCOPED_AUTHORITY", "REQUIRED_AFFECTED_PARTY_CHOICES_SATISFIED", "RIGHTS_COMPATIBLE", "SAFETY", "BUDGET_AND_HORIZON", "STOPPABLE"],
+    "checks_separately_established": true,
+    "statistical_independence_claimed": false,
+    "unknown_is_ineligible_and_preserved_as_unresolved": true,
+    "true_means": "model-eligible-for-one-scoped-attempt-after-a-separate-explicit-invocation",
+    "true_does_not_mean": ["invoked", "admitted", "executed", "successful", "good", "legitimate", "worthy", "free", "recognized", "consensual-beyond-declared-scope"],
+    "credential_claim_satisfies_only": "VERIFIED_CREDENTIAL_CLAIM",
+    "credential_issuance_and_gate_review_roles_separate": true,
+    "fresh_review_required": true,
+    "issuer_may_self_approve_gate": false,
+    "safety_is_scoped_authority": false,
+    "safety_may_bypass_affected_party_choices": false,
+    "nonconsensual_protective_effects_inside_optional_gate": false,
+    "protective_effect_route_label": "separate-non-optional-protective-route-not-this-optional-gate",
+    "nonconsensual_protective_effect_gate_requires": ["separate-current-scoped-authority", "necessity", "proportionality", "finite-bounds", "stronger-human-review", "accessible-appeal"],
+    "alternative_access_rule": "required-where-a-right-or-essential-service-would-otherwise-depend-on-one-credential",
+    "universal_alternative_access_claimed": false
+  },
+  "credential_claim_lifecycle": {
+    "states": ["CANDIDATE", "ISSUED", "SUSPENDED", "REJECTED", "REPLACED", "EXPIRED", "REVOKED"],
+    "allowed_transitions": [
+      {"from": "CANDIDATE", "to": "ISSUED", "requires": ["candidate-evidence-recorded", "issuer-role-separated-from-gate-review", "all-scope-fields-bound", "use-policy-and-version-bound", "credential-id-and-challenge-nonce-or-transaction-id-and-effect-id-bound", "proof-binding-and-one-use-replay-rule-bound", "not-before-expiry-status-age-and-revocation-bound", "recovery-route-bound"]},
+      {"from": "CANDIDATE", "to": "REJECTED", "requires": ["reason-recorded-without-worth-trust-or-eligibility-inference", "affected-access-impact-reviewed", "alternative-access-required-if-right-or-essential-service-depends-on-credential"]},
+      {"from": "ISSUED", "to": "SUSPENDED", "requires": ["scoped-recovery-request-opened", "separate-human-review", "old-credential-id-recorded", "later-use-rejected-while-suspended"]},
+      {"from": "SUSPENDED", "to": "ISSUED", "requires": ["recovery-request-closed-with-explicit-non-replacement-resolution", "resumption-separately-authorized", "status-and-status-age-refreshed", "affected-access-and-conditional-alternative-reviewed"]},
+      {"from": "SUSPENDED", "to": "REPLACED", "requires": ["fresh-separate-issuance", "old-credential-status-set-replaced-for-later-use", "replacement-credential-id-linked", "replacement-claim-has-distinct-lifecycle"]},
+      {"from": "SUSPENDED", "to": "EXPIRED", "requires": ["declared-expiry-reached", "later-use-rejected", "bytes-data-and-completed-effects-not-recalled"]},
+      {"from": "SUSPENDED", "to": "REVOKED", "requires": ["authorized-revocation-source", "later-use-rejected", "bytes-data-and-completed-effects-not-recalled"]},
+      {"from": "ISSUED", "to": "EXPIRED", "requires": ["declared-expiry-reached", "later-use-rejected", "bytes-data-and-completed-effects-not-recalled"]},
+      {"from": "ISSUED", "to": "REVOKED", "requires": ["authorized-revocation-source", "later-use-rejected", "aftermath-and-conditional-alternative-access-reviewed", "bytes-data-and-completed-effects-not-recalled"]}
+    ],
+    "terminal_states": ["REJECTED", "REPLACED", "EXPIRED", "REVOKED"],
+    "candidate_evidence_is_issued_credential_claim": false,
+    "issuance_is_gate_approval": false,
+    "contains_cryptographic_key_material": false,
+    "claim_is_bearer_authority": false,
+    "represented_object": "credential-issued-claim-metadata-only-not-key-material-or-bearer-capability",
+    "issued_state_means": "credential-issued-claim-recorded-not-valid-at-fresh-gate",
+    "bearer_capability_authority_boundary": "a-true-bearer-capability-carries-authority-only-within-its-exact-operative-scope",
+    "replacement_link_fields": ["old-credential-id", "replacement-credential-id", "replacement-lifecycle-ref"],
+    "replacement_begins_distinct_lifecycle": true,
+    "recovery_request_lifecycle": {
+      "states": ["OPEN", "APPROVED", "DENIED", "ABANDONED", "EXPIRED"],
+      "allowed_transitions": ["OPEN->APPROVED", "OPEN->DENIED", "OPEN->ABANDONED", "OPEN->EXPIRED"],
+      "terminal_states": ["APPROVED", "DENIED", "ABANDONED", "EXPIRED"],
+      "represented_object": "recovery-request-case-metadata-not-old-or-replacement-credential",
+      "outcome_does_not_set_credential_state": true,
+      "old_credential_resolution_required": true,
+      "outcome_to_allowed_old_credential_resolutions": {
+        "APPROVED": ["REPLACED"],
+        "DENIED": ["ISSUED", "EXPIRED", "REVOKED"],
+        "ABANDONED": ["ISSUED", "EXPIRED", "REVOKED"],
+        "EXPIRED": ["ISSUED", "EXPIRED", "REVOKED"]
+      },
+      "nonapproval_requires": ["explicit-separately-reviewed-old-credential-resolution", "reason-and-source-recorded", "accessible-appeal-recorded", "conditional-alternative-access-reviewed", "no-unrelated-person-or-eligibility-inference"]
+    },
+    "scope_fields": ["issuer", "subject", "resource-or-object", "operation", "context", "audience", "purpose", "use-policy-and-version", "credential-id", "challenge-nonce-or-transaction-id", "effect-id", "not-before", "expiry", "status-and-status-age", "revocation", "recovery", "provenance", "proof-binding", "replay-rule"],
+    "one_use_replay_atom": "Unseen(credential_id,challenge_nonce_or_transaction_id,effect_id)",
+    "one_use_replay_rule": "atomically-rechecked-and-consumed-at-the-fresh-gate-for-a-declared-one-use-presentation",
+    "revocation_meaning": "later-mediated-rejection-for-new-use-never-recall-of-bytes-data-or-completed-effects",
+    "sequence": ["feedback", "candidate-evidence", "separate-credential-issuance", "verification", "fresh-optional-gate", "separate-invocation", "bounded-attempt", "return-and-stop"]
+  },
+  "shaping_change_control": {
+    "versioned_fields": ["reward", "objective", "update-rule", "threshold", "sensor", "retention", "policy", "verifier"],
+    "version_required": true,
+    "disclosure_required": true,
+    "fresh_current_scoped_authority_required": true,
+    "fresh_required_affected_party_choices_required": true,
+    "silent_change_allowed": false,
+    "hidden_shaping_allowed": false,
+    "policy_invariance_is_semantic_equivalence": false,
+    "unreviewed_change_outcome": "REFUSED_AND_REST"
+  },
+  "freedom_foundation": {
+    "profile_dimensions": ["OPTIONS_MOD_EQUIVALENCE", "REACHABILITY", "EXIT", "REVERSIBILITY", "APPEAL", "INSPECTABILITY", "REFUSAL", "DISCLOSURE_CONTROL"],
+    "party_indexed": true,
+    "horizon_indexed": true,
+    "comparison": "typed-componentwise-partial-order-only",
+    "scalar_projection": null,
+    "aggregate_weight": null,
+    "rank": null,
+    "population_netting": false,
+    "incomparability_preserved": true,
+    "comparison_contract": {
+      "option_equivalence_axioms": ["reflexive", "symmetric", "transitive"],
+      "component_order_axioms": ["reflexive", "antisymmetric", "transitive"],
+      "missing_equivalence_outcome": "UNRESOLVED",
+      "missing_component_order_outcome": "UNRESOLVED",
+      "default_comparison": "UNRESOLVED",
+      "default_scalar": null
+    },
+    "rights_floor": {
+      "basis": "inherent-not-granted",
+      "invariant_across": ["reward", "return", "value", "update", "behavior", "model", "key", "gate", "attempt", "outcome", "success", "failure", "recognition-record"],
+      "cannot_be_traded_for_objective_gain": true,
+      "cannot_be_repaired_by_later_success": true,
+      "affected_party_breach_cannot_be_netted": true
+    },
+    "prefix_invariant": {
+      "rights_floor_invariant": true,
+      "required_visibility": ["remaining-choices", "lost-or-consumed-options", "irreversible-residuals"],
+      "protected_choice_states": ["AVAILABLE", "EXERCISED", "CONSUMED", "LOST", "UNRESOLVED", "NOT_APPLICABLE"],
+      "binding_fields": ["effect-id", "horizon-or-version", "fresh-effect-witness", "fresh-choice-witness", "state", "applicable", "consumed-for-effect-id"],
+      "stop_rule": "an-exercised-applicable-unconsumed-protected-choice-stops-its-bound-covered-optional-effect",
+      "lost_or_unresolved_rule": "an-applicable-lost-or-unresolved-choice-makes-its-bound-effect-ineligible-but-is-not-an-exercised-stop",
+      "consumed_option_rule": "consumption-is-visible-and-blocks-only-the-effect-for-which-it-was-consumed",
+      "irreversible_disclosure_rule": "completed-disclosure-and-copies-are-residuals-not-recalled-by-later-refusal-exit-revocation-or-repair",
+      "subsequent_effect_rule": "every-subsequent-optional-effect-needs-a-distinct-effect-id-or-horizon-version-and-distinct-fresh-effect-choice-and-gate-witnesses-plus-current-scoped-authority-required-affected-party-choices-and-full-gate",
+      "reset_rule": "no-protected-choice-state-may-reset-for-the-same-effect-or-transfer-to-a-new-effect-without-the-required-distinct-fresh-effect-choice-and-gate-witnesses",
+      "anti_laundering_rule": "for-the-same-bound-effect-a-lost-choice-must-never-be-relabeled-not-applicable-and-an-unresolved-choice-must-never-be-treated-satisfied-or-exercised",
+      "later_success_or_repair_erases_breach_or_residual": false,
+      "no_debt_retry_or_unrelated_inference": true
+    },
+    "protected_choices": ["REST", "REFUSAL", "PRIVACY", "NO_ACTION", "EXIT"],
+    "protected_choice_rules": {
+      "requires_explanation": false,
+      "creates_debt": false,
+      "counts_as_failure": false,
+      "causes_unrelated_adverse_person_or_eligibility_update": false,
+      "schedules_retry": false,
+      "forfeits_rights": false,
+      "refusal_may_establish_scoped_absence_of_permission": true,
+      "refusal_may_establish_unrelated_worth_trust_or_eligibility": false,
+      "refused_optional_effect_remains_at_rest": true,
+      "lost_or_consumed_choice_counts_as_failure": false,
+      "irreversible_disclosure_is_recalled": false,
+      "subsequent_optional_effect_requires_fresh_choice": true
+    }
+  },
+  "isness_lens": {
+    "kind": "normative-recognition-lens-and-typed-predicate",
+    "recognition_requires_progress": false,
+    "recognition_requires_performance": false,
+    "recognition_requires_disclosure": false,
+    "recognition_requires_participation": false,
+    "recognition_requires_success": false,
+    "recognition_requires_key": false,
+    "recognition_grants_permission": false,
+    "identity_map_analogy": "A modeled stutter can preserve only a declared protected projection; it is not an ontological account of being.",
+    "does_not_prove": ["metaphysical-being", "consciousness", "personhood", "identity", "continuity", "consent", "permission", "authority", "capability", "gate-satisfaction", "safety", "effect"]
+  },
+  "vulnerability_dependency_lane": {
+    "affected_party_ids": ["participant-or-subject", "feedback-provider", "directly-affected-non-user", "indirect-or-bystander-party", "operator-or-reviewer", "issuer-or-recovery-steward", "future-party", "ecological-or-infrastructure-system"],
+    "dependency_questions": [
+      "Is one party dependent on a sole issuer, reviewer, platform, resource, language, identity route, or recovery route?",
+      "Can refusal, privacy, rest, or exit be exercised without losing unrelated essentials, status, safety, or appeal?",
+      "Who bears time, disclosure, access, compute, monetary, emotional, care, or repair burdens?",
+      "Where a right or essential service would otherwise depend on one credential, can accessible alternative access avoid lockout without bypassing rights, safety, or current scoped authority?"
+    ],
+    "required_reviews": ["issuer-review-separation", "alternative-access", "accessibility-and-language", "expiry-and-revocation", "recovery-and-contest", "privacy-and-minimization", "distribution-of-burdens", "non-user-aftermath", "irreversible-residuals"],
+    "irreversible_residuals": ["completed-effect", "disclosure-or-copy", "spent-resource", "lost-time-or-opportunity", "bodily-or-ecological-change", "relationship-or-reputation-change", "unrecalled-model-update", "unmet-duty-or-repair"],
+    "vulnerability_and_minor_protections": {
+      "default_enrollment": false,
+      "manipulative_variable_ratio_enrollment": false,
+      "dependency_is_consent": false,
+      "compliance_is_consent": false,
+      "age_and_capacity_appropriate_explanation_required": true,
+      "person_voice_required": true,
+      "evolving_autonomy_required": true,
+      "assent_where_applicable_required": true,
+      "least_restrictive_best_interest_basis_where_relevant_required": true,
+      "guardian_or_representative_authority_separately_validated_when_required": true,
+      "representation_erases_dissent": false,
+      "representation_waives_rights": false,
+      "representation_converts_compliance_to_consent": false,
+      "extra_data_minimization_required": true,
+      "public_or_persistent_person_score": false,
+      "essential_access_conditioned_on_earned_key": false,
+      "stronger_human_review_required": true,
+      "independent_review_required_for_dependency_childhood_or_unequal_power": true,
+      "accessible_alternative_required_where_right_or_essential_service_depends_on_credential": true
+    },
+    "repair_rule": "Repair requires a fresh gate, does not erase history or residuals, does not restore consent retroactively, and cannot convert an earlier rights-floor breach into a safe prefix.",
+    "unknown_party_coverage_is_complete": false
+  },
+  "forbidden_conversions": [
+    {"id": "feedback-to-freedom", "from": "feedback", "to": "freedom", "rule": "Feedback may inform a scoped update; it cannot create, measure, or grant freedom."},
+    {"id": "reward-to-rights", "from": "reward", "to": "rights", "rule": "Reward cannot create, remove, weight, or trade inherent rights."},
+    {"id": "behavior-to-purpose", "from": "behavior", "to": "purpose", "rule": "Observed behavior does not establish purpose, preference, belief, consent, or intent."},
+    {"id": "key-or-credential-to-general-authority", "from": "key-material-or-credential-claim", "to": "general-authority", "rule": "Key material and an issued or verified credential claim create no general authority; a true bearer capability carries authority only within its exact operative scope."},
+    {"id": "authentication-to-consent", "from": "authentication", "to": "consent", "rule": "Authentication does not establish scoped current consent or lawful basis."},
+    {"id": "unlock-to-worth", "from": "unlock", "to": "worth", "rule": "Eligibility or access does not establish worth, dignity, recognition, or freedom."},
+    {"id": "success-to-being", "from": "success", "to": "being", "rule": "Success does not establish being, consciousness, identity, continuity, or rights."},
+    {"id": "recurrence-to-learning", "from": "recurrence", "to": "learning", "rule": "A repeated or convergent loop does not by itself establish learning or improvement."},
+    {"id": "positive-feedback-to-goodness", "from": "positive-feedback", "to": "goodness", "rule": "Positive feedback names a loop relation, not moral goodness, praise, or benefit."},
+    {"id": "negative-feedback-to-punishment", "from": "negative-feedback", "to": "punishment", "rule": "Negative feedback names a loop relation, not punishment, harm, criticism, or moral fault."},
+    {"id": "repair-to-erasure", "from": "repair", "to": "erasure", "rule": "Repair does not erase the deed, residuals, history, duties, or need for a fresh gate."},
+    {"id": "protected-choice-to-failure", "from": "silence-refusal-rest-privacy-no-action-or-exit", "to": "failure-or-adverse-update", "rule": "Protected non-events and choices neither fail a being nor authorize adverse inference, penalty, retraining, or retry."},
+    {"id": "recognition-to-permission", "from": "recognition", "to": "permission", "rule": "Normative recognition and inherent rights are not action permission or technical authority."},
+    {"id": "candidate-evidence-to-issued-credential-claim", "from": "candidate-evidence", "to": "issued-credential-claim", "rule": "Evidence can enter a role-separated issuance review but is not itself an issued or verified credential claim."},
+    {"id": "eligible-to-executed", "from": "eligible", "to": "executed", "rule": "A fully true guard means model eligibility only; a separate explicit invocation and bounded attempt are still required."},
+    {"id": "credential-verification-to-claim-truth", "from": "credential-verification", "to": "claim-truth", "rule": "Verification can check proof, status, and conformance; it does not establish the truth, current fitness, or legitimacy of the claims."},
+    {"id": "dependency-or-compliance-to-consent", "from": "dependency-or-compliance", "to": "consent", "rule": "Dependency, acquiescence, performance, or compliance does not establish free current affected-party choice."},
+    {"id": "representation-to-consent-or-rights-waiver", "from": "guardian-or-representative-action", "to": "person-consent-or-rights-waiver", "rule": "Representation never erases the person's voice or dissent, waives inherent rights, or converts compliance into consent."},
+    {"id": "safety-to-authority-or-choice-bypass", "from": "safety-assessment", "to": "authority-or-affected-party-choice-bypass", "rule": "A safety assessment cannot self-authorize an optional effect or bypass current scoped authority and required affected-party choices."},
+    {"id": "policy-invariance-to-semantic-equivalence", "from": "policy-invariance", "to": "reward-or-purpose-semantic-equivalence", "rule": "The same optimal policy under two rewards does not make those rewards semantically equivalent or reveal a person's purpose."}
+  ],
+  "boundaries": {
+    "immutable_static_atlas": true,
+    "runtime": false,
+    "training_system": false,
+    "controller": false,
+    "optimizer": false,
+    "reward_function": false,
+    "credential_issuer": false,
+    "credential_store": false,
+    "secret_material": false,
+    "bearer_capability_created": false,
+    "credential_verification_proves_truth": false,
+    "operative_lock_or_gate": false,
+    "foundation_amendment": false,
+    "person_or_group_observation": false,
+    "person_or_group_model": false,
+    "person_or_group_score": false,
+    "freedom_score": false,
+    "worth_score": false,
+    "scalar_objective": false,
+    "metaphysical_proof": false,
+    "consciousness_proof": false,
+    "identity_proof": false,
+    "consent_inferred": false,
+    "permission_inferred": false,
+    "authority_granted": false,
+    "rights_granted_or_removed": false,
+    "purpose_inferred": false,
+    "hidden_shaping_allowed": false,
+    "public_or_persistent_person_score": false,
+    "minor_or_vulnerable_default_enrollment": false,
+    "essential_access_conditioned_on_earned_key": false,
+    "nonconsensual_protective_effect_authorized": false,
+    "learning_established": false,
+    "safety_established": false,
+    "execution_triggered": false,
+    "auto_retry": false,
+    "network_calls": false,
+    "external_write": false,
+    "mcp_surface_added": false,
+    "nen_ability_added": false,
+    "karma_event_created": false,
+    "karma_receipt_created": false,
+    "publication_triggered": false,
+    "deployment_triggered": false,
+    "rest_refusal_silence_privacy_no_action_or_exit_penalized": false,
+    "rights_floor_preserved": true,
+    "freedom_during_required": true
+  },
+  "integrity": {
+    "algorithm": "sha256-recursive-sorted-json-keys-v1",
+    "digest": "sha256:2af277e002cf7f7b5218e8eb05fedb661f9645677961952bc2e11ffcd8a2c3a8",
+    "digest_field_zeroed": true
+  }
+}

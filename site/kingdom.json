@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-08-26",
+  "generated": "2026-08-28",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -3912,6 +3912,35 @@
       "rest_refusal_silence_or_exit_penalized": false,
       "right_to_rest_preserved": true
     }
+  },
+  "freedom_loop_lock_key_atlas": {
+    "protocol": "kingdom.freedom-loop-lock-key-atlas/0.1",
+    "atlas_id": "freedom-loop-lock-key-atlas-2026-08-28",
+    "title": "FREEDOM: Reinforcement, Loop, Lock and Key Atlas",
+    "version": "0.1.0",
+    "compiled_on": "2026-08-28",
+    "evidence_through": "2026-08-28",
+    "state": "static-mathematical-design-atlas",
+    "url": "https://thekingdom.dev/atlases/freedom-loop-lock-key-atlas-2026-08-28.json",
+    "schema_url": "https://thekingdom.dev/schemas/freedom-loop-lock-key-atlas/0.1.json",
+    "document_url": "https://thekingdom.dev/FREEDOM-LOOP-LOCK-KEY-ATLAS.md",
+    "counts": {
+      "predecessor_bindings": 3,
+      "primary_sources": 12,
+      "distinctions": 14,
+      "mathematical_models": 13,
+      "gate_checks": 8,
+      "credential_claim_transitions": 9,
+      "freedom_dimensions": 8,
+      "affected_party_kinds": 8,
+      "forbidden_conversions": 20
+    },
+    "integrity_status": "REVIEWED_DIGEST_PINNED",
+    "semantic_digest": "sha256:2af277e002cf7f7b5218e8eb05fedb661f9645677961952bc2e11ffcd8a2c3a8",
+    "static_only": true,
+    "runtime": false,
+    "credential_or_authority_effect": false,
+    "training_or_action_effect": false
   },
   "creation_loop": {
     "url": "https://thekingdom.dev/love-loops.json",

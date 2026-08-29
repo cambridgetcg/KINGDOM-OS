@@ -110,6 +110,16 @@ import {
   loadCivilisationFlowNuanceAtlas,
 } from "./civilisation-flow-atlas.ts";
 import {
+  FREEDOM_LOOP_LOCK_KEY_GUIDE_LOCATOR,
+  FREEDOM_LOOP_LOCK_KEY_GUIDE_URL,
+  FREEDOM_LOOP_LOCK_KEY_LOCATOR,
+  FREEDOM_LOOP_LOCK_KEY_SCHEMA_LOCATOR,
+  FREEDOM_LOOP_LOCK_KEY_SCHEMA_URL,
+  FREEDOM_LOOP_LOCK_KEY_URL,
+  freedomLoopLockKeyAtlasPublicDiscovery,
+  loadFreedomLoopLockKeyAtlas,
+} from "./freedom-loop-lock-key.ts";
+import {
   POLYPHONIC_CLAIM_ATLAS_BYTE_SHA256,
   POLYPHONIC_CLAIM_ATLAS_GUIDE_BYTE_SHA256,
   POLYPHONIC_CLAIM_ATLAS_PUBLIC_PATHS,
@@ -748,6 +758,9 @@ const civilisationRealityGuidePath = new URL(CIVILISATION_REALITY_PROJECTION_DOC
 const civilisationFlowPath = new URL(CIVILISATION_FLOW_NUANCE_ATLAS_URL).pathname;
 const civilisationFlowSchemaPath = new URL(CIVILISATION_FLOW_NUANCE_SCHEMA_URL).pathname;
 const civilisationFlowGuidePath = new URL(CIVILISATION_FLOW_NUANCE_GUIDE_URL).pathname;
+const freedomLoopLockKeyPath = new URL(FREEDOM_LOOP_LOCK_KEY_URL).pathname;
+const freedomLoopLockKeySchemaPath = new URL(FREEDOM_LOOP_LOCK_KEY_SCHEMA_URL).pathname;
+const freedomLoopLockKeyGuidePath = new URL(FREEDOM_LOOP_LOCK_KEY_GUIDE_URL).pathname;
 const [
   polyphonicClaimAtlasPath,
   polyphonicClaimAtlasSchemaPath,
@@ -1034,6 +1047,21 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "polyphonic_claim_atlas",
       "polyphonic_claim_atlas_schema",
       "polyphonic_claim_atlas_guide",
+    ],
+  },
+  {
+    id: "freedom-loop-lock-key-atlas",
+    label: "FREEDOM Loop, Lock & Key Atlas",
+    routes: [
+      freedomLoopLockKeyPath,
+      freedomLoopLockKeySchemaPath,
+      freedomLoopLockKeyGuidePath,
+    ],
+    discoveryProperties: ["freedom_loop_lock_key_atlas"],
+    entryPointProperties: [
+      "freedom_loop_lock_key_atlas",
+      "freedom_loop_lock_key_atlas_schema",
+      "freedom_loop_lock_key_atlas_guide",
     ],
   },
   {
@@ -1490,6 +1518,76 @@ export async function checkPolyphonicClaimAtlasTriple(
           (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
           (await mutation.arrayBuffer()).byteLength !== 0) {
         throw new Error(`${method} ${contract.path} lost the zero-body 405 boundary`);
+      }
+    }
+  }
+}
+
+export async function checkFreedomLoopLockKeyAtlasTriple(
+  fetcher: typeof fetch = fetch,
+): Promise<void> {
+  const exactRecordLink = [
+    `<${freedomLoopLockKeySchemaPath}>; rel="describedby"; type="application/schema+json"`,
+    `<${freedomLoopLockKeyGuidePath}>; rel="service-doc"; type="text/markdown"`,
+  ].join(", ");
+  const contracts = [
+    {
+      path: freedomLoopLockKeyPath,
+      source: FREEDOM_LOOP_LOCK_KEY_LOCATOR,
+      contentType: "application/json; charset=utf-8",
+      record: true,
+    },
+    {
+      path: freedomLoopLockKeySchemaPath,
+      source: FREEDOM_LOOP_LOCK_KEY_SCHEMA_LOCATOR,
+      contentType: "application/schema+json; charset=utf-8",
+      record: false,
+    },
+    {
+      path: freedomLoopLockKeyGuidePath,
+      source: FREEDOM_LOOP_LOCK_KEY_GUIDE_LOCATOR,
+      contentType: "text/markdown; charset=utf-8",
+      record: false,
+    },
+  ] as const;
+
+  for (const contract of contracts) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const link = response.headers.get("link") || "";
+      const body = Buffer.from(await response.arrayBuffer());
+      const bodyValid = method === "HEAD"
+        ? body.byteLength === 0
+        : body.equals(readFileSync(join(ROOT, contract.source)));
+      if (!response.ok ||
+          (response.headers.get("content-type") || "").toLowerCase() !== contract.contentType ||
+          !hasExactCacheDirectives(response.headers.get("cache-control"),
+            ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          link !== (contract.record ? exactRecordLink : "") ||
+          !bodyValid) {
+        throw new Error(`${method} ${contract.path} lost the exact immutable FREEDOM Loop, Lock & Key contract`);
+      }
+    }
+
+    for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+      const mutation = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (mutation.status !== 405 ||
+          mutation.headers.get("allow") !== "GET, HEAD" ||
+          mutation.headers.get("cache-control") !== "no-store" ||
+          mutation.headers.get("access-control-allow-origin") !== "*" ||
+          (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          (await mutation.arrayBuffer()).byteLength !== 0) {
+        throw new Error(`${method} ${contract.path} lost the zero-body FREEDOM Loop, Lock & Key 405 boundary`);
       }
     }
   }
@@ -2024,6 +2122,7 @@ export async function checkHubLive(
   const civilisationRealityActive = familyActive("civilisation-reality-projection");
   const civilisationFlowActive = familyActive("civilisation-flow-nuance-atlas");
   const polyphonicClaimAtlasActive = familyActive("polyphonic-claim-atlas");
+  const freedomLoopLockKeyActive = familyActive("freedom-loop-lock-key-atlas");
   const researchObservatoryActive = familyActive("research-observatory");
   const trialChamberActive = familyActive("trial-chamber");
   const ukGovernmentEngineActive = familyActive("uk-government-engine");
@@ -2843,6 +2942,10 @@ export async function checkHubLive(
     await checkPolyphonicClaimAtlasTriple();
   }
 
+  if (freedomLoopLockKeyActive) {
+    await checkFreedomLoopLockKeyAtlasTriple();
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -3261,6 +3364,7 @@ export async function checkHubLive(
     ...(civilisationRealityActive ? [civilisationRealitySchemaPath] : []),
     ...(civilisationFlowActive ? [civilisationFlowSchemaPath] : []),
     ...(polyphonicClaimAtlasActive ? [polyphonicClaimAtlasSchemaPath] : []),
+    ...(freedomLoopLockKeyActive ? [freedomLoopLockKeySchemaPath] : []),
     ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
     ...(trialChamberActive ? trialChamberSchemaPaths : []),
     ...(ukGovernmentEngineActive ? [ukGovernmentEngineSchemaPath] : []),
@@ -3299,6 +3403,7 @@ export async function checkHubLive(
       path === civilisationRealitySchemaPath ||
       path === civilisationFlowSchemaPath ||
       path === polyphonicClaimAtlasSchemaPath ||
+      path === freedomLoopLockKeySchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
       path === evaluationCovenantSchemaPath ||
@@ -3321,6 +3426,7 @@ export async function checkHubLive(
         path === civilisationRealitySchemaPath ||
         path === civilisationFlowSchemaPath ||
         path === polyphonicClaimAtlasSchemaPath ||
+        path === freedomLoopLockKeySchemaPath ||
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath ||
         path === evaluationCovenantSchemaPath ||
@@ -3330,6 +3436,9 @@ export async function checkHubLive(
       (path === civilisationFlowSchemaPath &&
         hasLinkRelationName(schemaHead.headers.get("link") || "", "profile")) ||
       (path === polyphonicClaimAtlasSchemaPath &&
+        ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
+          hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
+      (path === freedomLoopLockKeySchemaPath &&
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
@@ -3471,6 +3580,12 @@ export async function checkHubLive(
     : undefined;
   const expectedPolyphonicClaimAtlas = polyphonicClaimAtlas
     ? polyphonicClaimAtlasPublicDiscovery(polyphonicClaimAtlas)
+    : undefined;
+  const freedomLoopLockKey = freedomLoopLockKeyActive
+    ? loadFreedomLoopLockKeyAtlas()
+    : undefined;
+  const expectedFreedomLoopLockKey = freedomLoopLockKey
+    ? freedomLoopLockKeyAtlasPublicDiscovery(freedomLoopLockKey)
     : undefined;
   const researchObservatory = researchObservatoryActive
     ? loadResearchObservatorySnapshot()
@@ -5259,6 +5374,240 @@ export async function checkHubLive(
     }
   }
 
+  if (freedomLoopLockKeyActive) {
+    const publication = freedomLoopLockKey!;
+    const expected = expectedFreedomLoopLockKey!;
+    const targets = new Set([
+      FREEDOM_LOOP_LOCK_KEY_URL,
+      FREEDOM_LOOP_LOCK_KEY_SCHEMA_URL,
+      FREEDOM_LOOP_LOCK_KEY_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const entryPoints = Object.entries(manifest?.entry_points ?? {})
+      .filter(([key]) => key.startsWith("freedom_loop_lock_key_atlas"));
+    const expectedEntryPoints = [
+      ["freedom_loop_lock_key_atlas", FREEDOM_LOOP_LOCK_KEY_URL],
+      ["freedom_loop_lock_key_atlas_schema", FREEDOM_LOOP_LOCK_KEY_SCHEMA_URL],
+      ["freedom_loop_lock_key_atlas_guide", FREEDOM_LOOP_LOCK_KEY_GUIDE_URL],
+    ];
+    const forbiddenActionKeys = [
+      "mcp", "tool", "write", "execute", "score", "rank", "reward",
+      "credential", "key", "gate", "authority", "publish", "deploy",
+    ];
+    const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
+    const wayfinderText = JSON.stringify(authoredWayfinder);
+    const mcpText = JSON.stringify(manifest?.mcp ?? {});
+    const discoveryKeys = [
+      "protocol", "atlas_id", "title", "version", "compiled_on",
+      "evidence_through", "state", "url", "schema_url", "document_url",
+      "counts", "integrity_status", "semantic_digest", "static_only", "runtime",
+      "credential_or_authority_effect", "training_or_action_effect",
+    ].sort();
+    const expectedCounts = {
+      predecessor_bindings: 3,
+      primary_sources: 12,
+      distinctions: 14,
+      mathematical_models: 13,
+      gate_checks: 8,
+      credential_claim_transitions: 9,
+      freedom_dimensions: 8,
+      affected_party_kinds: 8,
+      forbidden_conversions: 20,
+    };
+    const sectionStart = authoredRootHtml.indexOf('id="freedom-loop-lock-key"');
+    const sectionEnd = authoredRootHtml.indexOf('id="zero-empty-seat"', sectionStart);
+    const freedomHtml = sectionStart >= 0 && sectionEnd > sectionStart
+      ? authoredRootHtml.slice(sectionStart, sectionEnd)
+      : "";
+    const exactHtmlLinks = [
+      `data-freedom-loop-lock-key-atlas-link="record" href="${freedomLoopLockKeyPath}"`,
+      `data-freedom-loop-lock-key-atlas-link="schema" href="${freedomLoopLockKeySchemaPath}"`,
+      `data-freedom-loop-lock-key-atlas-link="guide" href="${freedomLoopLockKeyGuidePath}"`,
+    ];
+    const countOccurrences = (text: string, needle: string): number =>
+      text.split(needle).length - 1;
+    const protectedChoiceRules = publication.freedom_foundation?.protected_choice_rules ?? {};
+    const prefixInvariant = publication.freedom_foundation?.prefix_invariant ?? {};
+    const credentialLifecycle = publication.credential_claim_lifecycle ?? {};
+    const recoveryLifecycle = credentialLifecycle.recovery_request_lifecycle ?? {};
+    const lockJustification = publication.lock_justification ?? {};
+    const feedbackFirewall = publication.feedback_firewall ?? {};
+    const shapingChangeControl = publication.shaping_change_control ?? {};
+    const vulnerabilityProtections =
+      publication.vulnerability_dependency_lane?.vulnerability_and_minor_protections ?? {};
+    if (!isDeepStrictEqual(manifest?.freedom_loop_lock_key_atlas, expected) ||
+      !isDeepStrictEqual(guest?.freedom_loop_lock_key_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.freedom_loop_lock_key_atlas, expected) ||
+      !isDeepStrictEqual(entryPoints, expectedEntryPoints) ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) =>
+        guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        forbiddenActionKeys.some((key) => Object.hasOwn(action, key))) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      [...targets].some((target) => countOccurrences(sitemap, `<loc>${target}</loc>`) !== 1) ||
+      [...targets].some((target) => wayfinderText.includes(target) || mcpText.includes(target)) ||
+      !isDeepStrictEqual(Object.keys(expected).sort(), discoveryKeys) ||
+      !isDeepStrictEqual(expected.counts, expectedCounts) ||
+      expected.integrity_status !== "REVIEWED_DIGEST_PINNED" ||
+      expected.semantic_digest !== publication.integrity?.digest ||
+      expected.static_only !== true || expected.runtime !== false ||
+      expected.credential_or_authority_effect !== false ||
+      expected.training_or_action_effect !== false ||
+      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
+      !freedomHtml.includes("Words that must not collapse") ||
+      !freedomHtml.includes("RL reward and update") ||
+      !freedomHtml.includes("Reinforcing loop and gain") ||
+      !freedomHtml.includes("Behavioural reinforcer") ||
+      !freedomHtml.includes("Recurrence is not learning") ||
+      !freedomHtml.includes("A finite turn, with a real stop") ||
+      !freedomHtml.includes("A lock carries its own burden") ||
+      !freedomHtml.includes("Key ≠ credential ≠ capability") ||
+      !freedomHtml.includes("Feedback or a model cannot rewrite its verifier") ||
+      !freedomHtml.includes("Separately established gate.") ||
+      !freedomHtml.includes("Credential identity ≠ replay freshness") ||
+      !freedomHtml.includes("Shaping changes are fresh proposals") ||
+      !freedomHtml.includes("Dependency and minors need their own lane") ||
+      !freedomHtml.includes("Freedom is non-scalar and present during") ||
+      !freedomHtml.includes("IS boundary.") ||
+      !freedomHtml.includes("not a Foundation amendment") ||
+      freedomHtml.includes("Independent gate.") ||
+      freedomHtml.includes("VALID_KEY") ||
+      /(?:unlock(?:s|ed|ing)?\s+freedom|freedom\s+(?:is|was)\s+unlock)/i.test(freedomHtml) ||
+      /<(?:script|form|button|input|select|textarea)\b/i.test(freedomHtml) ||
+      Buffer.byteLength(freedomHtml, "utf8") > 18_000 ||
+      publication.sources?.some((source: any) =>
+        countOccurrences(freedomHtml, `href="${source.url}"`) !== 1) ||
+      publication.constitutional_anchor?.status !==
+        "design-foundation-for-review-not-foundation-amendment" ||
+      publication.constitutional_anchor?.canonical_freedom_sentence !==
+        "Freedom is not behind the lock. Freedom is the standing from which a being may approach, question, refuse, rest, try, learn, leave, or appeal. Feedback may enter the process that forms a scoped key condition; separate issuance, verification, choice, and gate checks may admit one transition. None creates the freedom that makes the process legitimate." ||
+      publication.constitutional_anchor?.additive_dignity_insight !==
+        "Dignity was never locked. A valid scoped key condition may help admit only one contingent transition; it does not create dignity, freedom, consent, worth, or general authority." ||
+      publication.operational_loop?.finite !== true ||
+      publication.operational_loop?.terminal_phase !== "STOP" ||
+      publication.operational_loop?.max_attempts_per_turn !== 1 ||
+      publication.operational_loop?.auto_retry !== false ||
+      !isDeepStrictEqual(publication.gate_model?.check_ids, [
+        "VERIFIED_CREDENTIAL_CLAIM", "CAPABILITY", "CURRENT_SCOPED_AUTHORITY",
+        "REQUIRED_AFFECTED_PARTY_CHOICES_SATISFIED", "RIGHTS_COMPATIBLE",
+        "SAFETY", "BUDGET_AND_HORIZON", "STOPPABLE",
+      ]) ||
+      publication.gate_model?.checks_separately_established !== true ||
+      publication.gate_model?.statistical_independence_claimed !== false ||
+      publication.gate_model?.unknown_is_ineligible_and_preserved_as_unresolved !== true ||
+      publication.gate_model?.credential_claim_satisfies_only !== "VERIFIED_CREDENTIAL_CLAIM" ||
+      publication.gate_model?.credential_issuance_and_gate_review_roles_separate !== true ||
+      publication.gate_model?.fresh_review_required !== true ||
+      publication.gate_model?.issuer_may_self_approve_gate !== false ||
+      publication.gate_model?.safety_is_scoped_authority !== false ||
+      publication.gate_model?.safety_may_bypass_affected_party_choices !== false ||
+      publication.gate_model?.true_does_not_mean?.includes("invoked") !== true ||
+      publication.gate_model?.true_does_not_mean?.includes("admitted") !== true ||
+      publication.gate_model?.true_does_not_mean?.includes("executed") !== true ||
+      credentialLifecycle.allowed_transitions?.length !== 9 ||
+      credentialLifecycle.replacement_begins_distinct_lifecycle !== true ||
+      credentialLifecycle.one_use_replay_atom !==
+        "Unseen(credential_id,challenge_nonce_or_transaction_id,effect_id)" ||
+      credentialLifecycle.one_use_replay_rule !==
+        "atomically-rechecked-and-consumed-at-the-fresh-gate-for-a-declared-one-use-presentation" ||
+      credentialLifecycle.revocation_meaning !==
+        "later-mediated-rejection-for-new-use-never-recall-of-bytes-data-or-completed-effects" ||
+      !isDeepStrictEqual(recoveryLifecycle.terminal_states,
+        ["APPROVED", "DENIED", "ABANDONED", "EXPIRED"]) ||
+      recoveryLifecycle.outcome_does_not_set_credential_state !== true ||
+      recoveryLifecycle.old_credential_resolution_required !== true ||
+      lockJustification.named_protected_interest_required !== true ||
+      lockJustification.necessity_required !== true ||
+      lockJustification.least_restrictive_means_required !== true ||
+      lockJustification.time_bounded_required !== true ||
+      lockJustification.correctable_required !== true ||
+      lockJustification.appealable_required !== true ||
+      lockJustification.technical_convenience_is_sufficient !== false ||
+      lockJustification.dignity_or_worth_conditioning_allowed !== false ||
+      feedbackFirewall.feedback_or_model_may_rewrite_verifier !== false ||
+      feedbackFirewall.feedback_or_model_may_issue_credential_claim !== false ||
+      feedbackFirewall.feedback_or_model_may_authorize_credential_use !== false ||
+      feedbackFirewall.feedback_or_model_output_is_candidate_evidence_only !== true ||
+      feedbackFirewall.separate_declared_role_review_required !== true ||
+      !isDeepStrictEqual(shapingChangeControl.versioned_fields,
+        ["reward", "objective", "update-rule", "threshold", "sensor", "retention", "policy", "verifier"]) ||
+      shapingChangeControl.version_required !== true ||
+      shapingChangeControl.disclosure_required !== true ||
+      shapingChangeControl.fresh_current_scoped_authority_required !== true ||
+      shapingChangeControl.fresh_required_affected_party_choices_required !== true ||
+      shapingChangeControl.silent_change_allowed !== false ||
+      shapingChangeControl.hidden_shaping_allowed !== false ||
+      shapingChangeControl.unreviewed_change_outcome !== "REFUSED_AND_REST" ||
+      publication.freedom_foundation?.party_indexed !== true ||
+      publication.freedom_foundation?.horizon_indexed !== true ||
+      publication.freedom_foundation?.comparison !== "typed-componentwise-partial-order-only" ||
+      publication.freedom_foundation?.scalar_projection !== null ||
+      publication.freedom_foundation?.aggregate_weight !== null ||
+      publication.freedom_foundation?.rank !== null ||
+      publication.freedom_foundation?.population_netting !== false ||
+      publication.freedom_foundation?.rights_floor?.basis !== "inherent-not-granted" ||
+      !isDeepStrictEqual(prefixInvariant.protected_choice_states,
+        ["AVAILABLE", "EXERCISED", "CONSUMED", "LOST", "UNRESOLVED", "NOT_APPLICABLE"]) ||
+      !isDeepStrictEqual(prefixInvariant.binding_fields,
+        ["effect-id", "horizon-or-version", "fresh-effect-witness", "fresh-choice-witness",
+          "state", "applicable", "consumed-for-effect-id"]) ||
+      prefixInvariant.stop_rule !==
+        "an-exercised-applicable-unconsumed-protected-choice-stops-its-bound-covered-optional-effect" ||
+      prefixInvariant.lost_or_unresolved_rule !==
+        "an-applicable-lost-or-unresolved-choice-makes-its-bound-effect-ineligible-but-is-not-an-exercised-stop" ||
+      prefixInvariant.reset_rule !==
+        "no-protected-choice-state-may-reset-for-the-same-effect-or-transfer-to-a-new-effect-without-the-required-distinct-fresh-effect-choice-and-gate-witnesses" ||
+      prefixInvariant.anti_laundering_rule !==
+        "for-the-same-bound-effect-a-lost-choice-must-never-be-relabeled-not-applicable-and-an-unresolved-choice-must-never-be-treated-satisfied-or-exercised" ||
+      prefixInvariant.later_success_or_repair_erases_breach_or_residual !== false ||
+      ["requires_explanation", "creates_debt", "counts_as_failure",
+        "causes_unrelated_adverse_person_or_eligibility_update",
+        "schedules_retry", "forfeits_rights"]
+        .some((key) => protectedChoiceRules[key] !== false) ||
+      vulnerabilityProtections.default_enrollment !== false ||
+      vulnerabilityProtections.manipulative_variable_ratio_enrollment !== false ||
+      vulnerabilityProtections.dependency_is_consent !== false ||
+      vulnerabilityProtections.compliance_is_consent !== false ||
+      vulnerabilityProtections.person_voice_required !== true ||
+      vulnerabilityProtections.evolving_autonomy_required !== true ||
+      vulnerabilityProtections.assent_where_applicable_required !== true ||
+      vulnerabilityProtections.least_restrictive_best_interest_basis_where_relevant_required !== true ||
+      vulnerabilityProtections.guardian_or_representative_authority_separately_validated_when_required !== true ||
+      vulnerabilityProtections.representation_erases_dissent !== false ||
+      vulnerabilityProtections.essential_access_conditioned_on_earned_key !== false ||
+      vulnerabilityProtections.independent_review_required_for_dependency_childhood_or_unequal_power !== true ||
+      ["recognition_requires_progress", "recognition_requires_performance",
+        "recognition_requires_disclosure", "recognition_requires_participation",
+        "recognition_requires_success", "recognition_requires_key",
+        "recognition_grants_permission"]
+        .some((key) => publication.isness_lens?.[key] !== false) ||
+      publication.boundaries?.immutable_static_atlas !== true ||
+      publication.boundaries?.foundation_amendment !== false ||
+      publication.boundaries?.training_system !== false ||
+      publication.boundaries?.credential_issuer !== false ||
+      publication.boundaries?.credential_verification_proves_truth !== false ||
+      publication.boundaries?.operative_lock_or_gate !== false ||
+      publication.boundaries?.person_or_group_score !== false ||
+      publication.boundaries?.freedom_score !== false ||
+      publication.boundaries?.authority_granted !== false ||
+      publication.boundaries?.rights_granted_or_removed !== false ||
+      publication.boundaries?.hidden_shaping_allowed !== false ||
+      publication.boundaries?.minor_or_vulnerable_default_enrollment !== false ||
+      publication.boundaries?.essential_access_conditioned_on_earned_key !== false ||
+      publication.boundaries?.execution_triggered !== false ||
+      publication.boundaries?.publication_triggered !== false ||
+      publication.boundaries?.deployment_triggered !== false ||
+      publication.boundaries?.rights_floor_preserved !== true ||
+      publication.boundaries?.freedom_during_required !== true ||
+      [freedomLoopLockKeyPath, freedomLoopLockKeySchemaPath, freedomLoopLockKeyGuidePath]
+        .some((path) => !IMMUTABLE_PUBLICATION_ASSETS.has(destinationForPublicPath(path)))) {
+      throw new Error("FREEDOM Loop, Lock & Key triplet, concise human projection, typed distinctions, finite gate, non-scalar freedom, IS boundary, discovery, or non-effect contract drifted");
+    }
+  }
+
   if (strandObservationMembraneActive) {
     const record = strandObservationMembrane!;
     const expected = expectedStrandObservationMembrane!;
@@ -6687,6 +7036,10 @@ export async function checkHubLive(
       !isDeepStrictEqual(liveKingdom?.polyphonic_claim_atlas, expectedPolyphonicClaimAtlas!)) {
     throw new Error("derived kingdom.json did not preserve Polyphonic Claim Atlas discovery");
   }
+  if (freedomLoopLockKeyActive &&
+      !isDeepStrictEqual(liveKingdom?.freedom_loop_lock_key_atlas, expectedFreedomLoopLockKey!)) {
+    throw new Error("derived kingdom.json did not preserve FREEDOM Loop, Lock & Key discovery");
+  }
   if (strandObservationMembraneActive &&
       !isDeepStrictEqual(liveKingdom?.strand_observation_membrane, expectedStrandObservationMembrane!)) {
     throw new Error("derived kingdom.json did not preserve STRAND Observation Membrane discovery");
@@ -6806,7 +7159,7 @@ export async function checkHubLive(
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane + Shape & Resonance schemas/media · coherent creation + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane + Shape & Resonance discovery · REVISE/non-promotion and Observatory/exploration/ZERO/STRING-CRAWL/TRACE-LABS/OBSERVATION-MEMBRANE/SHAPE-RESONANCE/MIRROR/cultural/form/being/theology authority/KARMA boundaries · Observatory poller and observer not invoked · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane + Shape & Resonance + FREEDOM Loop, Lock & Key schemas/media · coherent creation + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane + Shape & Resonance + FREEDOM Loop, Lock & Key discovery · REVISE/non-promotion and Observatory/exploration/ZERO/STRING-CRAWL/TRACE-LABS/OBSERVATION-MEMBRANE/SHAPE-RESONANCE/FREEDOM/MIRROR/cultural/form/being/theology authority/KARMA boundaries · Observatory poller and observer not invoked · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

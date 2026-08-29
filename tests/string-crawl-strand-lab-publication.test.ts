@@ -48,11 +48,11 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
   test("stages one immutable Lab 02 triplet within the twelve-atlas shape", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(169);
+    expect(HUB_ASSETS).toHaveLength(172);
     expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(167);
-    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(13);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(170);
+    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(14);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("labs/"))).toContainEqual(PUBLIC_TRIPLET[0]);
     expect(PUBLIC_TRIPLET.some(({ destination }) =>
       MUTABLE_HUB_DESTINATIONS.includes(destination))).toBe(false);
@@ -62,7 +62,7 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
 
   test("pins the exact record, schema, and guide bytes in the append-only route ledger", () => {
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(138);
+    expect(ledger.entries).toHaveLength(141);
     const entries = ledger.entries.filter((entry: { source?: string }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === entry.source));
     expect(entries).toEqual([
@@ -92,7 +92,7 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
 
   test("retires byte-bound Labs 01–04 as one twelve-route family", () => {
     const family = PUBLICATION_FAMILIES.find(({ id }) => id === "string-crawl-trace-sheet-lab");
-    expect(PUBLICATION_FAMILIES).toHaveLength(29);
+    expect(PUBLICATION_FAMILIES).toHaveLength(30);
     expect(family).toEqual({
       id: "string-crawl-trace-sheet-lab",
       label: "STRING / CRAWL STRAND Labs 01–04",
@@ -136,8 +136,8 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
   test("advertises the three versioned routes exactly once and no mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(155);
-    expect(new Set(urls).size).toBe(155);
+    expect(urls).toHaveLength(158);
+    expect(new Set(urls).size).toBe(158);
     for (const { destination } of PUBLIC_TRIPLET) {
       expect(urls.filter((url) => url === `${ORIGIN}/${destination}`)).toHaveLength(1);
     }
