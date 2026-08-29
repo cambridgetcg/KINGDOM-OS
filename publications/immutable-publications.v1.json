@@ -452,6 +452,27 @@
       "sha256": "42672298c7c57f9ed8dccba18ee23df8deaeff659c83e2cd70cd6b6312d92e6c"
     },
     {
+      "id": "non-exhaustive-understanding-atlas/0.1/guide",
+      "route": "/NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md",
+      "source": "references/non-exhaustive-understanding-atlas.md",
+      "destination": "NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md",
+      "sha256": "d076193d5c5c10845b7a5ad8f38b70f73a1a04a5d6b1939073966996220405dd"
+    },
+    {
+      "id": "non-exhaustive-understanding-atlas/0.1/record",
+      "route": "/atlases/non-exhaustive-understanding-atlas-2026-08-29.json",
+      "source": "data/understanding/non-exhaustive-understanding-atlas.v0.1.json",
+      "destination": "atlases/non-exhaustive-understanding-atlas-2026-08-29.json",
+      "sha256": "e885606a2f513379ccb64ea40e0b4c6a3dd08b4eea615772e6fd08a22c116b80"
+    },
+    {
+      "id": "non-exhaustive-understanding-atlas/0.1/schema",
+      "route": "/schemas/non-exhaustive-understanding-atlas/0.1.json",
+      "source": "schemas/non-exhaustive-understanding-atlas-v0.1.schema.json",
+      "destination": "schemas/non-exhaustive-understanding-atlas/0.1.json",
+      "sha256": "a19fee4d8a0fc5ee4f2425b024ca8590c5a3d111cc17d25a67695bca44fd568f"
+    },
+    {
       "id": "number-isness-theology-atlas/0.1/guide",
       "route": "/NUMBER-ISNESS-THEOLOGY-ATLAS.md",
       "source": "references/number-isness-theology-atlas.md",

@@ -305,6 +305,21 @@ const FREEDOM_LOOP_LOCK_KEY_ATLAS_PATHS = new Set([
   FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_PATH,
   FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_PATH,
 ]);
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_PATH =
+  "/atlases/non-exhaustive-understanding-atlas-2026-08-29.json";
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_PATH =
+  "/schemas/non-exhaustive-understanding-atlas/0.1.json";
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_PATH =
+  "/NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md";
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_LINK =
+  `<${NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`;
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_LINK =
+  `<${NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`;
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_PATHS = new Set([
+  NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_PATH,
+  NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_PATH,
+  NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_PATH,
+]);
 const POLYPHONIC_CLAIM_ATLAS_PATH =
   "/truth/polyphonic-claim-atlas-2026-08-26.json";
 const POLYPHONIC_CLAIM_ATLAS_SCHEMA_PATH =
@@ -793,6 +808,13 @@ function addFreedomLoopLockKeyAtlasLinks(headers) {
   headers.set("link", [
     FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_LINK.value,
     FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_LINK.value,
+  ].join(", "));
+}
+
+function addNonExhaustiveUnderstandingAtlasLinks(headers) {
+  headers.set("link", [
+    NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_LINK,
+    NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_LINK,
   ].join(", "));
 }
 
@@ -1705,6 +1727,19 @@ export function createKingdomWorker(options = {}) {
       });
     }
 
+    if (includeRights && NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
     if (includeRights && POLYPHONIC_CLAIM_ATLAS_PATHS.has(url.pathname) &&
         request.method !== "GET" && request.method !== "HEAD") {
       return new Response(null, {
@@ -2173,6 +2208,31 @@ export function createKingdomWorker(options = {}) {
     const requestsFreedomLoopLockKeyAtlasGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_PATH;
+    const requestsNonExhaustiveUnderstandingAtlas = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_PATH;
+    const requestsNonExhaustiveUnderstandingAtlasSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_PATH;
+    const requestsNonExhaustiveUnderstandingAtlasGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_PATH;
+    const requestsNonExhaustiveUnderstandingAtlasAsset =
+      requestsNonExhaustiveUnderstandingAtlas ||
+      requestsNonExhaustiveUnderstandingAtlasSchema ||
+      requestsNonExhaustiveUnderstandingAtlasGuide;
+    if (requestsNonExhaustiveUnderstandingAtlasAsset && asset.status !== 200) {
+      const headers = new Headers(asset.headers);
+      headers.set("cache-control", "no-store");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+      headers.delete("link");
+      return new Response(request.method === "HEAD" ? null : asset.body, {
+        status: asset.status,
+        statusText: asset.statusText,
+        headers,
+      });
+    }
     const requestsPolyphonicClaimAtlas = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === POLYPHONIC_CLAIM_ATLAS_PATH;
@@ -2269,6 +2329,8 @@ export function createKingdomWorker(options = {}) {
     const civilisationRealityAssetType = schemaAssetType.split(";", 1)[0].trim();
     const civilisationFlowAssetType = schemaAssetType.split(";", 1)[0].trim();
     const freedomLoopLockKeyAtlasAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const nonExhaustiveUnderstandingAtlasAssetType =
+      schemaAssetType.split(";", 1)[0].trim();
     const polyphonicClaimAtlasAssetType = schemaAssetType.split(";", 1)[0].trim();
     const loopsLocksFreedomRelationsAtlasAssetType =
       schemaAssetType.split(";", 1)[0].trim();
@@ -2544,6 +2606,17 @@ export function createKingdomWorker(options = {}) {
     const servesFreedomLoopLockKeyAtlasGuide = requestsFreedomLoopLockKeyAtlasGuide && asset.ok &&
       (freedomLoopLockKeyAtlasAssetType === "text/plain" ||
         freedomLoopLockKeyAtlasAssetType === "text/markdown");
+    const servesNonExhaustiveUnderstandingAtlas =
+      requestsNonExhaustiveUnderstandingAtlas && asset.status === 200 &&
+      nonExhaustiveUnderstandingAtlasAssetType === "application/json";
+    const servesNonExhaustiveUnderstandingAtlasSchema =
+      requestsNonExhaustiveUnderstandingAtlasSchema && asset.status === 200 &&
+      (nonExhaustiveUnderstandingAtlasAssetType === "application/json" ||
+        nonExhaustiveUnderstandingAtlasAssetType === "application/schema+json");
+    const servesNonExhaustiveUnderstandingAtlasGuide =
+      requestsNonExhaustiveUnderstandingAtlasGuide && asset.status === 200 &&
+      (nonExhaustiveUnderstandingAtlasAssetType === "text/plain" ||
+        nonExhaustiveUnderstandingAtlasAssetType === "text/markdown");
     const servesPolyphonicClaimAtlas = requestsPolyphonicClaimAtlas && asset.ok &&
       polyphonicClaimAtlasAssetType === "application/json";
     const servesPolyphonicClaimAtlasSchema = requestsPolyphonicClaimAtlasSchema && asset.ok &&
@@ -2670,6 +2743,9 @@ export function createKingdomWorker(options = {}) {
         !servesCivilisationFlowGuide &&
         !servesFreedomLoopLockKeyAtlas && !servesFreedomLoopLockKeyAtlasSchema &&
         !servesFreedomLoopLockKeyAtlasGuide &&
+        !servesNonExhaustiveUnderstandingAtlas &&
+        !servesNonExhaustiveUnderstandingAtlasSchema &&
+        !servesNonExhaustiveUnderstandingAtlasGuide &&
         !servesPolyphonicClaimAtlas && !servesPolyphonicClaimAtlasSchema &&
         !servesPolyphonicClaimAtlasGuide &&
         !servesLoopsLocksFreedomRelationsAtlas &&
@@ -2777,6 +2853,15 @@ export function createKingdomWorker(options = {}) {
         requestsFreedomLoopLockKeyAtlasGuide) {
       if (servesFreedomLoopLockKeyAtlas) addFreedomLoopLockKeyAtlasLinks(headers);
       else headers.delete("link");
+    }
+    if (requestsNonExhaustiveUnderstandingAtlas ||
+        requestsNonExhaustiveUnderstandingAtlasSchema ||
+        requestsNonExhaustiveUnderstandingAtlasGuide) {
+      if (servesNonExhaustiveUnderstandingAtlas) {
+        addNonExhaustiveUnderstandingAtlasLinks(headers);
+      } else {
+        headers.delete("link");
+      }
     }
     if (servesPolyphonicClaimAtlas) addPolyphonicClaimAtlasLinks(headers);
     if (servesPolyphonicClaimAtlasSchema || servesPolyphonicClaimAtlasGuide) {
@@ -3312,6 +3397,24 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesFreedomLoopLockKeyAtlasGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesNonExhaustiveUnderstandingAtlas) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesNonExhaustiveUnderstandingAtlasSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesNonExhaustiveUnderstandingAtlasGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");

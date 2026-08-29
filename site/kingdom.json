@@ -4039,6 +4039,34 @@
     "credential_or_authority_effect": false,
     "training_or_action_effect": false
   },
+  "non_exhaustive_understanding_atlas": {
+    "protocol": "kingdom.non-exhaustive-understanding-atlas/0.1",
+    "atlas_id": "non-exhaustive-understanding-atlas-2026-08-29",
+    "title": "Non-Exhaustive Understanding Atlas",
+    "version": "0.1.0",
+    "compiled_on": "2026-08-29",
+    "evidence_through": "2026-08-29",
+    "state": "static-reviewed-epistemic-design-atlas",
+    "url": "https://thekingdom.dev/atlases/non-exhaustive-understanding-atlas-2026-08-29.json",
+    "schema_url": "https://thekingdom.dev/schemas/non-exhaustive-understanding-atlas/0.1.json",
+    "document_url": "https://thekingdom.dev/NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md",
+    "counts": {
+      "concepts": 66,
+      "claims": 19,
+      "evidence": 14,
+      "sources": 15,
+      "counterexamples": 2,
+      "remainders": 3,
+      "j_space_mechanisms": 3
+    },
+    "integrity_status": "REVIEWED",
+    "semantic_digest": "sha256:fa5bb5471f579a02c293c29470454110b3cd07e046443e1b2c502926b0f437d8",
+    "reviewed_digest": "sha256:fa5bb5471f579a02c293c29470454110b3cd07e046443e1b2c502926b0f437d8",
+    "static_only": true,
+    "runtime": false,
+    "person_data": false,
+    "action_or_authority_effect": false
+  },
   "creation_loop": {
     "url": "https://thekingdom.dev/love-loops.json",
     "source": "https://thekingdom.dev/love-loops.source.json",

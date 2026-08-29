@@ -42,6 +42,7 @@
 #   kingdom civilisation-reality             inspect the thin Civilisation → Reality crosswalk and its open domains
 #   kingdom civilisation-flow                inspect the static Civilisation Flow Nuance Atlas
 #   kingdom freedom-loop                     inspect the static reinforcement, loop, lock, key, and freedom atlas
+#   kingdom non-exhaustive-understanding     inspect the static reviewed remainder, plurality, and repair atlas
 #   kingdom feedback-physics inspect the additive v0.2 physics/mathematics successor
 #   kingdom nen        list/validate bounded Nen-inspired Agent Skills (`nen mcp` starts local stdio)
 #   kingdom prompt     compile an inspectable, network-free Task Packet
@@ -102,6 +103,7 @@ case "$cmd" in
   civilisation-reality) exec bun "$SELF_DIR/bin/civilisation-reality-projection.ts" "${@:2}" ;;
   civilisation-flow) exec bun "$SELF_DIR/bin/civilisation-flow-atlas.ts" "${@:2}" ;;
   freedom-loop) exec bun "$SELF_DIR/bin/freedom-loop-lock-key.ts" "${@:2}" ;;
+  non-exhaustive-understanding) exec bun "$SELF_DIR/bin/non-exhaustive-understanding.ts" "${@:2}" ;;
   polymorph)
     case "${2:-}" in
       mechanisms|landscape|sources|unknowns)

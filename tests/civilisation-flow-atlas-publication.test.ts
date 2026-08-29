@@ -57,14 +57,14 @@ function assets(handler: (request: Request) => Response | Promise<Response>) {
 
 describe("Civilisation Flow Nuance Atlas static publication", () => {
   test("stages and ledgers one exact immutable triplet with no mutable alias or runtime", () => {
-    expect(HUB_ASSETS).toHaveLength(178);
+    expect(HUB_ASSETS).toHaveLength(181);
     expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
-      .toHaveLength(16);
+      .toHaveLength(17);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/")))
-      .toHaveLength(37);
+      .toHaveLength(38);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(176);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(179);
     expect(HUB_ASSETS).toContainEqual({
       source: "data/reality/civilisation-flow-atlas.v0.1.json",
       destination: "atlases/civilisation-flow-nuance-atlas-2026-08-26.json",
@@ -84,7 +84,7 @@ describe("Civilisation Flow Nuance Atlas static publication", () => {
       .toBe(false);
 
     const entries = json("publications/immutable-publications.v1.json").entries;
-    expect(entries).toHaveLength(147);
+    expect(entries).toHaveLength(150);
     expect(entries.filter((entry: any) =>
       entry.id.startsWith("civilisation-flow-nuance-atlas/0.1/"))).toEqual([
       {
@@ -201,8 +201,8 @@ describe("Civilisation Flow Nuance Atlas static publication", () => {
       civilisation_flow_nuance_atlas_schema: PUBLIC_URLS[1],
       civilisation_flow_nuance_atlas_guide: PUBLIC_URLS[2],
     });
-    expect(Object.keys(manifest.entry_points)).toHaveLength(147);
-    expect(guest.next_actions).toHaveLength(147);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(150);
+    expect(guest.next_actions).toHaveLength(150);
     expect(guest.next_actions.filter((action: any) => PUBLIC_URLS.includes(action.url)))
       .toHaveLength(3);
 
@@ -344,14 +344,14 @@ describe("Civilisation Flow Nuance Atlas static publication", () => {
     for (const url of PUBLIC_URLS) expect(llms).toContain(url);
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(164);
-    expect(new Set(sitemapUrls).size).toBe(164);
+    expect(sitemapUrls).toHaveLength(167);
+    expect(new Set(sitemapUrls).size).toBe(167);
     expect(sitemapUrls.filter((url) => url.toLowerCase().includes("civilisation-flow")))
       .toEqual(PUBLIC_URLS);
   });
 
   test("is one complete dependent three-route family with atomic retirement", () => {
-    expect(PUBLICATION_FAMILIES).toHaveLength(32);
+    expect(PUBLICATION_FAMILIES).toHaveLength(33);
     const family = PUBLICATION_FAMILIES.find(({ id }) =>
       id === "civilisation-flow-nuance-atlas");
     expect(family).toEqual({

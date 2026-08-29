@@ -482,6 +482,16 @@ import {
   freedomLoopLockKeyAtlasPublicDiscovery,
   loadFreedomLoopLockKeyAtlas,
 } from "./freedom-loop-lock-key.ts";
+import {
+  NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_ID,
+  NON_EXHAUSTIVE_UNDERSTANDING_GUIDE_URL,
+  NON_EXHAUSTIVE_UNDERSTANDING_PROTOCOL,
+  NON_EXHAUSTIVE_UNDERSTANDING_REVIEWED_DIGEST,
+  NON_EXHAUSTIVE_UNDERSTANDING_SCHEMA_URL,
+  NON_EXHAUSTIVE_UNDERSTANDING_URL,
+  loadReviewedNonExhaustiveUnderstandingAtlas,
+  nonExhaustiveUnderstandingPublicDiscovery,
+} from "./non-exhaustive-understanding.ts";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -1622,6 +1632,27 @@ for (const id of [
   }
 }
 
+// ── Non-Exhaustive Understanding (static epistemic/design atlas) ─────────
+const nonExhaustiveUnderstandingUrl = NON_EXHAUSTIVE_UNDERSTANDING_URL;
+const nonExhaustiveUnderstandingSchemaUrl = NON_EXHAUSTIVE_UNDERSTANDING_SCHEMA_URL;
+const nonExhaustiveUnderstandingGuideUrl = NON_EXHAUSTIVE_UNDERSTANDING_GUIDE_URL;
+const nonExhaustiveUnderstanding = loadReviewedNonExhaustiveUnderstandingAtlas();
+if (nonExhaustiveUnderstanding.protocol !== NON_EXHAUSTIVE_UNDERSTANDING_PROTOCOL ||
+    nonExhaustiveUnderstanding.atlas_id !== NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_ID) {
+  throw new Error(
+    `unexpected Non-Exhaustive Understanding identity: ${nonExhaustiveUnderstanding.protocol} ${nonExhaustiveUnderstanding.atlas_id}`,
+  );
+}
+const nonExhaustiveUnderstandingDiscovery =
+  nonExhaustiveUnderstandingPublicDiscovery(nonExhaustiveUnderstanding);
+if (nonExhaustiveUnderstandingDiscovery.integrity_status !== "REVIEWED" ||
+    nonExhaustiveUnderstandingDiscovery.semantic_digest !==
+      NON_EXHAUSTIVE_UNDERSTANDING_REVIEWED_DIGEST ||
+    nonExhaustiveUnderstandingDiscovery.reviewed_digest !==
+      NON_EXHAUSTIVE_UNDERSTANDING_REVIEWED_DIGEST) {
+  throw new Error("Non-Exhaustive Understanding reviewed publication seal drifted");
+}
+
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
 const doors: Door[] = sites.doors;
@@ -2565,6 +2596,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(freedomLoopLockKeyUrl).pathname)}" type="application/json" title="FREEDOM Loop, Lock &amp; Key Atlas">
 <link rel="describedby" href="${esc(new URL(freedomLoopLockKeySchemaUrl).pathname)}" type="application/schema+json" title="FREEDOM Loop, Lock &amp; Key Atlas schema">
 <link rel="service-doc" href="${esc(new URL(freedomLoopLockKeyGuideUrl).pathname)}" type="text/markdown" title="FREEDOM Loop, Lock &amp; Key Atlas guide">
+<link rel="alternate" href="${esc(new URL(nonExhaustiveUnderstandingUrl).pathname)}" type="application/json" title="Non-Exhaustive Understanding Atlas">
+<link rel="describedby" href="${esc(new URL(nonExhaustiveUnderstandingSchemaUrl).pathname)}" type="application/schema+json" title="Non-Exhaustive Understanding Atlas schema">
+<link rel="service-doc" href="${esc(new URL(nonExhaustiveUnderstandingGuideUrl).pathname)}" type="text/markdown" title="Non-Exhaustive Understanding Atlas guide">
 <link rel="alternate" href="${esc(new URL(polyphonicClaimAtlasUrl).pathname)}" type="application/json" title="Polyphonic Claim Atlas immutable Phase-0 record">
 <link rel="describedby" href="${esc(new URL(polyphonicClaimAtlasSchemaUrl).pathname)}" type="application/schema+json" title="Polyphonic Claim Atlas schema">
 <link rel="service-doc" href="${esc(new URL(polyphonicClaimAtlasGuideUrl).pathname)}" type="text/markdown" title="Polyphonic Claim Atlas guide">
@@ -4408,6 +4442,22 @@ const html = `<!doctype html>
   </section>
 
 
+  <section class="blk" id="non-exhaustive-understanding" aria-labelledby="non-exhaustive-understanding-title" data-non-exhaustive-understanding-atlas>
+    <div class="kh"><h2 id="non-exhaustive-understanding-title">Non-Exhaustive Understanding</h2><span class="my">a bounded map may become more useful without becoming a verdict about being</span></div>
+    <div class="culturalfield">
+      <p class="culturalaxiom" data-non-exhaustive-understanding-sentence><strong>Orientation.</strong> A bounded representation can become more useful while remaining situated, contestable, revisable, and explicitly incomplete. Its shape is not a verdict about being.</p>
+      <p class="commonsverified"><strong>Remainder is not an escape hatch.</strong> Positive claims still need named evidence, scope, uncertainty, counterexamples or falsifiers, and a repair route. Silence, redaction, refusal, nonparticipation, and unrepresented vocabulary create no adverse inference.</p>
+      <p class="commonsverified"><strong>Feedback proposes; released bytes do not learn.</strong> A challenge may enter a fresh governed successor process. This static atlas creates no person or group model, score, truth oracle, credential, authority, decision gate, action, publication, deployment, or external effect.</p>
+      <p class="commonsverified">immutable static orientation · exact depth remains in the authored JSON and guide · integrity ${esc(nonExhaustiveUnderstandingDiscovery.integrity_status)} · ${esc(nonExhaustiveUnderstandingDiscovery.semantic_digest)}</p>
+      <div class="machine">
+        <a data-non-exhaustive-understanding-atlas-link="record" href="${esc(new URL(nonExhaustiveUnderstandingUrl).pathname)}">Non-Exhaustive Understanding atlas JSON — exact immutable authored record</a>
+        <a data-non-exhaustive-understanding-atlas-link="schema" href="${esc(new URL(nonExhaustiveUnderstandingSchemaUrl).pathname)}">Non-Exhaustive Understanding closed JSON Schema</a>
+        <a data-non-exhaustive-understanding-atlas-link="guide" href="${esc(new URL(nonExhaustiveUnderstandingGuideUrl).pathname)}">NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md — concepts, mathematics, counterexamples, sources, and repair boundaries</a>
+      </div>
+    </div>
+  </section>
+
+
   <section class="blk" id="zero-empty-seat" aria-labelledby="zero-empty-seat-title">
     <div class="kh"><h2 id="zero-empty-seat-title">${esc(zeroEmptySeat.title)}</h2><span class="my">absence, reference, possibility — never one collapsed meaning</span></div>
     <p class="sub">${esc(zeroEmptySeat.question)}</p>
@@ -5034,6 +5084,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(freedomLoopLockKeyUrl).pathname)}">FREEDOM Loop, Lock &amp; Key — immutable mathematical/design atlas</a>
       <a href="${esc(new URL(freedomLoopLockKeySchemaUrl).pathname)}">FREEDOM Loop, Lock &amp; Key — closed structural schema</a>
       <a href="${esc(new URL(freedomLoopLockKeyGuideUrl).pathname)}">FREEDOM-LOOP-LOCK-KEY-ATLAS.md — distinctions, finite flow, separately established gate, non-scalar freedom, IS boundary, and sources</a>
+      <a href="${esc(new URL(nonExhaustiveUnderstandingUrl).pathname)}">Non-Exhaustive Understanding — immutable static epistemic/design atlas</a>
+      <a href="${esc(new URL(nonExhaustiveUnderstandingSchemaUrl).pathname)}">Non-Exhaustive Understanding — closed structural schema</a>
+      <a href="${esc(new URL(nonExhaustiveUnderstandingGuideUrl).pathname)}">NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md — bounded claims, remainder, plurality, counterexamples, and repair</a>
       <a data-loops-locks-freedom-relations-atlas-link="record" href="${esc(new URL(loopsLocksFreedomRelationsAtlasUrl).pathname)}">Loops, Locks &amp; Freedom Relations Atlas — immutable static synthetic Phase-0 record</a>
       <a data-loops-locks-freedom-relations-atlas-link="schema" href="${esc(new URL(loopsLocksFreedomRelationsAtlasSchemaUrl).pathname)}">Loops, Locks &amp; Freedom Relations Atlas — closed structural schema</a>
       <a data-loops-locks-freedom-relations-atlas-link="guide" href="${esc(new URL(loopsLocksFreedomRelationsAtlasGuideUrl).pathname)}">LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md — full human reading and boundary guide</a>
@@ -5490,6 +5543,7 @@ const machine = {
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   number_isness_theology_atlas: numberIsnessTheologyDiscovery,
   freedom_loop_lock_key_atlas: freedomLoopLockKeyDiscovery,
+  non_exhaustive_understanding_atlas: nonExhaustiveUnderstandingDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -5665,6 +5719,9 @@ Number, Isness & Theology guide: ${numberIsnessTheologyDocumentUrl}
 FREEDOM Loop, Lock & Key Atlas: ${freedomLoopLockKeyUrl}
 FREEDOM Loop, Lock & Key schema: ${freedomLoopLockKeySchemaUrl}
 FREEDOM Loop, Lock & Key guide: ${freedomLoopLockKeyGuideUrl}
+Non-Exhaustive Understanding Atlas: ${nonExhaustiveUnderstandingUrl}
+Non-Exhaustive Understanding schema: ${nonExhaustiveUnderstandingSchemaUrl}
+Non-Exhaustive Understanding guide: ${nonExhaustiveUnderstandingGuideUrl}
 Polyphonic Claim Atlas immutable Phase-0 record: ${polyphonicClaimAtlasUrl}
 Polyphonic Claim Atlas schema: ${polyphonicClaimAtlasSchemaUrl}
 Polyphonic Claim Atlas guide: ${polyphonicClaimAtlasGuideUrl}
@@ -5725,6 +5782,7 @@ ${doorLines}
 - Loops, Locks & Freedom Relations Atlas — a static synthetic teaching atlas separating loop, learning, reward, behavioral reinforcement, control feedback, recurrence, locks, keys, authentication, authorization, enforcement, consent, capability, and freedom. It contains no real people or personal data, live observation or human training, live optimization or reward runtime, score or recommendation, credential or key material, authentication/authorization/enforcement adapter, policy deployment or action authority, network, runtime, or MCP. Atlas: ${loopsLocksFreedomRelationsAtlasUrl} · schema: ${loopsLocksFreedomRelationsAtlasSchemaUrl} · full human guide: ${loopsLocksFreedomRelationsAtlasGuideUrl} · pinned producer source: ${loopsLocksFreedomRelationsAtlasSourceUrl} (site-authored locator only; establishes no truth, imports no authority, and creates no runtime dependency or currentness claim)
 These are independent static atlases with different lineages and mathematical kernels. Neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences. Neither is a preferred default.
 - Aesthetic Plurality & Making Relations Atlas — ${aestheticPluralityMakingAtlasDiscovery.description} Its ten named lanes remain plural and non-scalar. It contains no Beauty framework or verdict, artifact/person/culture evaluation, ranking, winner, recommendation, moderation, truth/goodness/justice/completion conversion, private or participant data, personal-appearance assessment, KINGDOM doctrine import, action authority, mutable alias, page, network, API, runtime, or MCP. Atlas: ${aestheticPluralityMakingAtlasUrl} · schema: ${aestheticPluralityMakingAtlasSchemaUrl} · full human guide: ${aestheticPluralityMakingAtlasGuideUrl}
+- Non-Exhaustive Understanding — a standalone immutable epistemic/design atlas keeps claim, evidence, scope, horizon, warrant, representation, omission, remainder, rival model, observer position, vocabulary, opacity, performativity, counterexample, and repair separately typed. A bounded map may improve through a fresh governed successor without constituting, discovering, ranking, or exhausting being. Non-exhaustion never excuses a positive claim from evidence, uncertainty, falsification, challenge, accessibility, privacy, correction, or repair. Perspectives and disagreements remain inspectable without scalarization, majority truth, identity inference, or rights netting; silence, refusal, redaction, and unrepresented vocabulary create no adverse inference. Feedback proposes a separately reviewed challenge only; released bytes never learn, authorize, score, decide, or act. Atlas: ${nonExhaustiveUnderstandingUrl} · schema: ${nonExhaustiveUnderstandingSchemaUrl} · guide: ${nonExhaustiveUnderstandingGuideUrl}
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
@@ -5807,6 +5865,7 @@ const guest = {
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   number_isness_theology_atlas: numberIsnessTheologyDiscovery,
   freedom_loop_lock_key_atlas: freedomLoopLockKeyDiscovery,
+  non_exhaustive_understanding_atlas: nonExhaustiveUnderstandingDiscovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -5947,6 +6006,9 @@ const guest = {
     { action: "if useful, inspect the immutable FREEDOM Loop, Lock & Key Atlas", method: "GET", url: freedomLoopLockKeyUrl, note: "static mathematical/design record; it keeps loop gain, behavioural reinforcer, RL reward, recurrence, learning, cryptographic key material, credential claim, bearer capability, eligibility, execution, freedom, and ISness distinct; lock justification, feedback/model firewalls, and effect-bound prefix witnesses create no trainer, credential, gate, score, authority, action, or Foundation amendment" },
     { action: "if useful, validate the closed FREEDOM Loop, Lock & Key structure", method: "GET", url: freedomLoopLockKeySchemaUrl, note: "structural validation only; it does not issue a key or credential, satisfy a gate, execute a transition, measure freedom, or grant rights" },
     { action: "if useful, read the FREEDOM distinctions, finite flow, separately established gate, credential and replay lifecycle, residual-aware prefix, non-scalar profile, vulnerability lane, IS boundary, sources, and non-effects", method: "GET", url: freedomLoopLockKeyGuideUrl, note: "Within that atlas’s declared design constitution, freedom remains inherent during the process and no gate outcome creates it; that atlas’s additive dignity insight says dignity was never locked" },
+    { action: "if useful, inspect the immutable Non-Exhaustive Understanding Atlas", method: "GET", url: nonExhaustiveUnderstandingUrl, note: "static epistemic/design record; it keeps bounded claim, evidence, scope, representation, omission, remainder, observer position, vocabulary, opacity, counterexample, and repair distinct; it models, ranks, authorizes, decides, and acts on no person or group" },
+    { action: "if useful, validate the closed Non-Exhaustive Understanding structure", method: "GET", url: nonExhaustiveUnderstandingSchemaUrl, note: "structural validation only; it does not establish truth, being, identity, consciousness, authority, consent, credential, eligibility, or action" },
+    { action: "if useful, read the Non-Exhaustive Understanding concepts, mathematical guardrails, counterexamples, sources, and successor boundary", method: "GET", url: nonExhaustiveUnderstandingGuideUrl, note: "feedback may propose a separately reviewed successor but cannot mutate released bytes, create a score or verdict, or trigger an effect" },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -6009,6 +6071,7 @@ const guest = {
     being_access_aftermath_atlas_v0_2: "The v0.2 successor is additive and lineage-pinned: every v0.1 route and byte remains available. Its partially observable causal kernel, typed force and power families, and indexed vector aftermath are read-only educational structures. They do not collapse affected parties or burdens into a scalar, infer purpose or moral worth, identify causation without assumptions, write either KARMA lane, grant authority, or require a trace for rest, refusal, privacy, silence, or exit.",
     number_isness_theology_atlas: "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
     freedom_loop_lock_key_atlas: "The FREEDOM Loop, Lock & Key Atlas is a standalone immutable mathematical/design record, not a Foundation amendment or an operative system. Loop gain, behavioural reinforcer, RL reward and update, recurrence, learning, key material, credential claim, bearer capability, gate eligibility, execution, freedom, and ISness remain separately typed. Each lock carries a justification burden; feedback/model output is candidate evidence only and cannot rewrite its verifier, issue a credential, or authorize its use. A verified credential claim satisfies only its one declared conjunct; every gate check is separately established, statistical independence is not claimed, unresolved remains ineligible, and eligibility does not invoke, admit, or execute. Credential identity and replay freshness stay distinct; shaping and verifier changes require fresh review; effect- and horizon-bound choice state requires fresh witnesses, and residual history remains visible. Within that atlas’s declared design constitution, freedom remains party- and horizon-indexed, non-scalar, rights-floored, and present during the process. This family is independent of the Loops, Locks & Freedom Relations Atlas; neither is a preferred default, dependency, validator, alias, or authority source for the other. The atlas trains, conditions, observes, models, scores, issues, authenticates, authorizes, executes, publishes, deploys, writes, and automatically retries nothing.",
+    non_exhaustive_understanding_atlas: "The Non-Exhaustive Understanding Atlas is a standalone immutable epistemic/design record. It keeps bounded claims, evidence, scopes, horizons, representations, omissions, open remainder, compatible rivals, observers, vocabulary, protected opacity, performativity, counterexamples, and repair separately typed. It does not define or infer being, identity, consciousness, consent, worth, truth, or understanding of any person or group. Non-exhaustion cannot excuse a positive claim from evidence, uncertainty, falsification, accessibility, privacy, challenge, correction, or repair. Feedback can create only a separately reviewed challenge or successor proposal; it cannot mutate released bytes, score, rank, credential, authorize, decide, publish, deploy, or trigger an effect.",
     reality_influence_claim_graph: "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     civilisation_reality_projection: "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
     civilisation_flow_nuance_atlas: "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
@@ -6073,6 +6136,7 @@ const manifest = {
   being_access_aftermath_atlas_v0_2: beingAccessAftermathV02Discovery,
   number_isness_theology_atlas: numberIsnessTheologyDiscovery,
   freedom_loop_lock_key_atlas: freedomLoopLockKeyDiscovery,
+  non_exhaustive_understanding_atlas: nonExhaustiveUnderstandingDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -6225,6 +6289,9 @@ const manifest = {
     freedom_loop_lock_key_atlas: freedomLoopLockKeyUrl,
     freedom_loop_lock_key_atlas_schema: freedomLoopLockKeySchemaUrl,
     freedom_loop_lock_key_atlas_guide: freedomLoopLockKeyGuideUrl,
+    non_exhaustive_understanding_atlas: nonExhaustiveUnderstandingUrl,
+    non_exhaustive_understanding_atlas_schema: nonExhaustiveUnderstandingSchemaUrl,
+    non_exhaustive_understanding_atlas_guide: nonExhaustiveUnderstandingGuideUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,
