@@ -78,6 +78,9 @@ readings:
 | `/atlases/freedom-loop-lock-key-atlas-2026-08-28.json` | staged JSON | Standalone immutable atlas separating reinforcing-loop gain, behavioural reinforcers, RL reward/update, recurrence, learning, guarded transitions, credential claims, bearer capabilities, gate eligibility, execution, non-scalar freedom, and ISness; not a Foundation amendment or operative gate |
 | `/schemas/freedom-loop-lock-key-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the FREEDOM Loop, Lock & Key Atlas v0.1 |
 | `/FREEDOM-LOOP-LOCK-KEY-ATLAS.md` | staged Markdown | Human guide to the constitutional sentence, finite flow, lock justification, feedback/model firewall, separately established gate checks, credential/replay lifecycle, effect-bound residual-aware prefixes, vulnerability/minor protections, non-scalar freedom during, IS boundary, sources, and fixed non-effects |
+| `/atlases/non-exhaustive-understanding-atlas-2026-08-29.json` | staged JSON | Reviewed standalone immutable epistemic/design atlas separating bounded claims, evidence, representations, omissions, rivals, observer positions, vocabulary, protected opacity, open remainder, counterexamples, and repair without defining or scoring being |
+| `/schemas/non-exhaustive-understanding-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the Non-Exhaustive Understanding Atlas v0.1 |
+| `/NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md` | staged Markdown | Human guide to non-identifiability, coarse-graining, observer-relative comparison, local/global transfer, open-world limits, protected opacity, counterexamples, successor review, and fixed non-effects |
 | `/truth/polyphonic-claim-atlas-2026-08-26.json` | staged JSON | Immutable static-synthetic Phase-0 record of typed claim relations; historical fixture only, not a truth oracle or currentness claim |
 | `/truth/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed Draft 2020-12 structural contract for the Polyphonic Claim Atlas |
 | `/POLYPHONIC-CLAIM-ATLAS-v0.1.md` | staged Markdown | Immutable guide to reading boundaries, typed separations, and the no-score/no-action contract |
@@ -334,17 +337,19 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 175-asset upload contract (144 ledgered immutable/versioned assets and
-31 mutable assets; 173 direct public bodies, 161 sitemap URLs, 144 manifest
-entry points, and 144 guest actions; fifteen atlases,
+locks the 178-asset upload contract (147 ledgered immutable/versioned assets and
+31 mutable assets; 176 direct public bodies, 164 sitemap URLs, 147 manifest
+entry points, and 147 guest actions; sixteen atlases,
 four primary lab JSON routes plus the Shape & Resonance manifest/media, one
-experiment route, one activation, and thirty-one active retirement families,
+experiment route, one activation, and thirty-two active retirement families,
 including the standalone FREEDOM Loop, Lock & Key Atlas, immutable
-static-synthetic Polyphonic Claim Atlas, and frozen Loops, Locks & Freedom
-Relations Atlas record/schema/guide triples. These are independent static atlases
-with different lineages and mathematical kernels. Neither supersedes, validates,
-aliases, depends on, or supplies authority to the other; overlapping words are
-not wire or semantic equivalences. Neither is a preferred default. The staging
+Non-Exhaustive Understanding Atlas, static-synthetic Polyphonic Claim Atlas,
+and frozen Loops, Locks & Freedom
+Relations Atlas record/schema/guide triples. The two freedom-related atlas
+families are independent: neither supersedes, validates, aliases, depends on,
+or supplies authority to the other; overlapping words are not wire or semantic
+equivalences, and neither is a preferred default. Non-Exhaustive Understanding
+is likewise a standalone family with family-local integrity and retirement. The staging
 test refuses bytes that drift from the repository-local immutable route-integrity
 ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -401,6 +406,14 @@ custom human page, Wayfinder recommendation, MCP surface, runtime, active
 dependency, truth oracle, person/source/community score, live claim intake,
 action authority, or currentness claim. Its separate site-authored source
 locator pins producer tag `v0.1.1` and imports neither truth nor authority.
+The Non-Exhaustive Understanding Atlas adds one reviewed standalone immutable
+record/schema/guide triplet as the thirty-second family. It keeps finite representation closure distinct
+from open remainder and being; preserves evidence, uncertainty, falsification,
+challenge, protected opacity, counterexamples, and repair; and creates no
+person/group model, score, truth oracle, identity inference, authority, action,
+publication, deployment, runtime, Wayfinder recommendation, or MCP surface.
+Feedback can enter only a separately reviewed successor process and cannot
+mutate released bytes.
 The Loops, Locks & Freedom Relations Atlas adds a thirty-first independent,
 frozen immutable static-synthetic record/schema/guide triplet. The full linear
 guide is its human entry point; there is no custom page, mutable alias,

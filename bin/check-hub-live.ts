@@ -122,6 +122,19 @@ import {
   loadFreedomLoopLockKeyAtlas,
 } from "./freedom-loop-lock-key.ts";
 import {
+  NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_ID,
+  NON_EXHAUSTIVE_UNDERSTANDING_GUIDE_LOCATOR,
+  NON_EXHAUSTIVE_UNDERSTANDING_GUIDE_URL,
+  NON_EXHAUSTIVE_UNDERSTANDING_LOCATOR,
+  NON_EXHAUSTIVE_UNDERSTANDING_PROTOCOL,
+  NON_EXHAUSTIVE_UNDERSTANDING_REVIEWED_DIGEST,
+  NON_EXHAUSTIVE_UNDERSTANDING_SCHEMA_LOCATOR,
+  NON_EXHAUSTIVE_UNDERSTANDING_SCHEMA_URL,
+  NON_EXHAUSTIVE_UNDERSTANDING_URL,
+  loadReviewedNonExhaustiveUnderstandingAtlas,
+  nonExhaustiveUnderstandingPublicDiscovery,
+} from "./non-exhaustive-understanding.ts";
+import {
   POLYPHONIC_CLAIM_ATLAS_BYTE_SHA256,
   POLYPHONIC_CLAIM_ATLAS_GUIDE_BYTE_SHA256,
   POLYPHONIC_CLAIM_ATLAS_PUBLIC_PATHS,
@@ -775,6 +788,12 @@ const civilisationFlowGuidePath = new URL(CIVILISATION_FLOW_NUANCE_GUIDE_URL).pa
 const freedomLoopLockKeyPath = new URL(FREEDOM_LOOP_LOCK_KEY_URL).pathname;
 const freedomLoopLockKeySchemaPath = new URL(FREEDOM_LOOP_LOCK_KEY_SCHEMA_URL).pathname;
 const freedomLoopLockKeyGuidePath = new URL(FREEDOM_LOOP_LOCK_KEY_GUIDE_URL).pathname;
+const nonExhaustiveUnderstandingPath =
+  new URL(NON_EXHAUSTIVE_UNDERSTANDING_URL).pathname;
+const nonExhaustiveUnderstandingSchemaPath =
+  new URL(NON_EXHAUSTIVE_UNDERSTANDING_SCHEMA_URL).pathname;
+const nonExhaustiveUnderstandingGuidePath =
+  new URL(NON_EXHAUSTIVE_UNDERSTANDING_GUIDE_URL).pathname;
 const [
   polyphonicClaimAtlasPath,
   polyphonicClaimAtlasSchemaPath,
@@ -1081,6 +1100,21 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "freedom_loop_lock_key_atlas",
       "freedom_loop_lock_key_atlas_schema",
       "freedom_loop_lock_key_atlas_guide",
+    ],
+  },
+  {
+    id: "non-exhaustive-understanding-atlas",
+    label: "Non-Exhaustive Understanding Atlas",
+    routes: [
+      nonExhaustiveUnderstandingPath,
+      nonExhaustiveUnderstandingSchemaPath,
+      nonExhaustiveUnderstandingGuidePath,
+    ],
+    discoveryProperties: ["non_exhaustive_understanding_atlas"],
+    entryPointProperties: [
+      "non_exhaustive_understanding_atlas",
+      "non_exhaustive_understanding_atlas_schema",
+      "non_exhaustive_understanding_atlas_guide",
     ],
   },
   {
@@ -1397,6 +1431,16 @@ export function assertRetiredFamilyDiscoveryAbsent(
         throw new Error(`${family.label} is retired but ${surface.label} still exposes ${property}`);
       }
     }
+    const implementationBoundaries = surface.value.implementation_boundaries;
+    if (record(implementationBoundaries)) {
+      for (const property of family.discoveryProperties) {
+        if (Object.hasOwn(implementationBoundaries, property)) {
+          throw new Error(
+            `${family.label} is retired but ${surface.label} still exposes implementation_boundaries.${property}`,
+          );
+        }
+      }
+    }
     const entryPoints = surface.value.entry_points;
     if (!record(entryPoints)) continue;
     for (const property of family.entryPointProperties) {
@@ -1622,6 +1666,80 @@ export async function checkFreedomLoopLockKeyAtlasTriple(
           (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
           (await mutation.arrayBuffer()).byteLength !== 0) {
         throw new Error(`${method} ${contract.path} lost the zero-body FREEDOM Loop, Lock & Key 405 boundary`);
+      }
+    }
+  }
+}
+
+export async function checkNonExhaustiveUnderstandingAtlasTriple(
+  fetcher: typeof fetch = fetch,
+): Promise<void> {
+  const exactRecordLink = [
+    `<${nonExhaustiveUnderstandingSchemaPath}>; rel="describedby"; type="application/schema+json"`,
+    `<${nonExhaustiveUnderstandingGuidePath}>; rel="service-doc"; type="text/markdown"`,
+  ].join(", ");
+  const contracts = [
+    {
+      path: nonExhaustiveUnderstandingPath,
+      source: NON_EXHAUSTIVE_UNDERSTANDING_LOCATOR,
+      contentType: "application/json; charset=utf-8",
+      record: true,
+    },
+    {
+      path: nonExhaustiveUnderstandingSchemaPath,
+      source: NON_EXHAUSTIVE_UNDERSTANDING_SCHEMA_LOCATOR,
+      contentType: "application/schema+json; charset=utf-8",
+      record: false,
+    },
+    {
+      path: nonExhaustiveUnderstandingGuidePath,
+      source: NON_EXHAUSTIVE_UNDERSTANDING_GUIDE_LOCATOR,
+      contentType: "text/markdown; charset=utf-8",
+      record: false,
+    },
+  ] as const;
+
+  for (const contract of contracts) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const body = Buffer.from(await response.arrayBuffer());
+      const bodyValid = method === "HEAD"
+        ? body.byteLength === 0
+        : body.equals(readFileSync(join(ROOT, contract.source)));
+      if (response.status !== 200 ||
+          (response.headers.get("content-type") || "").toLowerCase() !== contract.contentType ||
+          !hasExactCacheDirectives(response.headers.get("cache-control"),
+            ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          (response.headers.get("link") || "") !== (contract.record ? exactRecordLink : "") ||
+          !bodyValid) {
+        throw new Error(
+          `${method} ${contract.path} lost the exact immutable Non-Exhaustive Understanding contract`,
+        );
+      }
+    }
+
+    for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+      const mutation = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (mutation.status !== 405 ||
+          mutation.headers.get("allow") !== "GET, HEAD" ||
+          mutation.headers.get("cache-control") !== "no-store" ||
+          mutation.headers.get("access-control-allow-origin") !== "*" ||
+          (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          mutation.headers.get("link") !== null ||
+          (await mutation.arrayBuffer()).byteLength !== 0) {
+        throw new Error(
+          `${method} ${contract.path} lost the zero-body Non-Exhaustive Understanding 405 boundary`,
+        );
       }
     }
   }
@@ -2222,6 +2340,8 @@ export async function checkHubLive(
   const civilisationFlowActive = familyActive("civilisation-flow-nuance-atlas");
   const polyphonicClaimAtlasActive = familyActive("polyphonic-claim-atlas");
   const freedomLoopLockKeyActive = familyActive("freedom-loop-lock-key-atlas");
+  const nonExhaustiveUnderstandingActive =
+    familyActive("non-exhaustive-understanding-atlas");
   const loopsLocksFreedomRelationsAtlasActive =
     familyActive("loops-locks-freedom-relations-atlas");
   const researchObservatoryActive = familyActive("research-observatory");
@@ -3047,6 +3167,10 @@ export async function checkHubLive(
     await checkFreedomLoopLockKeyAtlasTriple();
   }
 
+  if (nonExhaustiveUnderstandingActive) {
+    await checkNonExhaustiveUnderstandingAtlasTriple();
+  }
+
   if (loopsLocksFreedomRelationsAtlasActive) {
     await checkLoopsLocksFreedomRelationsAtlasTriple();
   }
@@ -3470,6 +3594,9 @@ export async function checkHubLive(
     ...(civilisationFlowActive ? [civilisationFlowSchemaPath] : []),
     ...(polyphonicClaimAtlasActive ? [polyphonicClaimAtlasSchemaPath] : []),
     ...(freedomLoopLockKeyActive ? [freedomLoopLockKeySchemaPath] : []),
+    ...(nonExhaustiveUnderstandingActive
+      ? [nonExhaustiveUnderstandingSchemaPath]
+      : []),
     ...(loopsLocksFreedomRelationsAtlasActive
       ? [loopsLocksFreedomRelationsAtlasSchemaPath]
       : []),
@@ -3512,6 +3639,7 @@ export async function checkHubLive(
       path === civilisationFlowSchemaPath ||
       path === polyphonicClaimAtlasSchemaPath ||
       path === freedomLoopLockKeySchemaPath ||
+      path === nonExhaustiveUnderstandingSchemaPath ||
       path === loopsLocksFreedomRelationsAtlasSchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
@@ -3536,6 +3664,7 @@ export async function checkHubLive(
         path === civilisationFlowSchemaPath ||
         path === polyphonicClaimAtlasSchemaPath ||
         path === freedomLoopLockKeySchemaPath ||
+        path === nonExhaustiveUnderstandingSchemaPath ||
         path === loopsLocksFreedomRelationsAtlasSchemaPath ||
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath ||
@@ -3549,6 +3678,9 @@ export async function checkHubLive(
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (path === freedomLoopLockKeySchemaPath &&
+        ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
+          hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
+      (path === nonExhaustiveUnderstandingSchemaPath &&
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (path === loopsLocksFreedomRelationsAtlasSchemaPath &&
@@ -3699,6 +3831,12 @@ export async function checkHubLive(
     : undefined;
   const expectedFreedomLoopLockKey = freedomLoopLockKey
     ? freedomLoopLockKeyAtlasPublicDiscovery(freedomLoopLockKey)
+    : undefined;
+  const nonExhaustiveUnderstanding = nonExhaustiveUnderstandingActive
+    ? loadReviewedNonExhaustiveUnderstandingAtlas()
+    : undefined;
+  const expectedNonExhaustiveUnderstanding = nonExhaustiveUnderstanding
+    ? nonExhaustiveUnderstandingPublicDiscovery(nonExhaustiveUnderstanding)
     : undefined;
   const loopsLocksFreedomRelationsAtlas = loopsLocksFreedomRelationsAtlasActive
     ? loadLoopsLocksFreedomRelationsAtlas()
@@ -5727,6 +5865,80 @@ export async function checkHubLive(
     }
   }
 
+  if (nonExhaustiveUnderstandingActive) {
+    const expected = expectedNonExhaustiveUnderstanding!;
+    const targets = new Set([
+      NON_EXHAUSTIVE_UNDERSTANDING_URL,
+      NON_EXHAUSTIVE_UNDERSTANDING_SCHEMA_URL,
+      NON_EXHAUSTIVE_UNDERSTANDING_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const entryPoints = Object.entries(manifest?.entry_points ?? {})
+      .filter(([key]) => key.startsWith("non_exhaustive_understanding_atlas"));
+    const expectedEntryPoints = [
+      ["non_exhaustive_understanding_atlas", NON_EXHAUSTIVE_UNDERSTANDING_URL],
+      ["non_exhaustive_understanding_atlas_schema",
+        NON_EXHAUSTIVE_UNDERSTANDING_SCHEMA_URL],
+      ["non_exhaustive_understanding_atlas_guide",
+        NON_EXHAUSTIVE_UNDERSTANDING_GUIDE_URL],
+    ];
+    const forbiddenActionKeys = [
+      "mcp", "tool", "write", "execute", "score", "rank", "credential",
+      "authority", "publish", "deploy", "decision", "feedback",
+    ];
+    const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
+    const wayfinderText = JSON.stringify(authoredWayfinder);
+    const mcpText = JSON.stringify(manifest?.mcp ?? {});
+    const countOccurrences = (text: string, needle: string): number =>
+      text.split(needle).length - 1;
+    const sectionStart = authoredRootHtml.indexOf('id="non-exhaustive-understanding"');
+    const sectionEnd = authoredRootHtml.indexOf('id="zero-empty-seat"', sectionStart);
+    const sectionHtml = sectionStart >= 0 && sectionEnd > sectionStart
+      ? authoredRootHtml.slice(sectionStart, sectionEnd)
+      : "";
+    const exactHtmlLinks = [
+      `data-non-exhaustive-understanding-atlas-link="record" href="${nonExhaustiveUnderstandingPath}"`,
+      `data-non-exhaustive-understanding-atlas-link="schema" href="${nonExhaustiveUnderstandingSchemaPath}"`,
+      `data-non-exhaustive-understanding-atlas-link="guide" href="${nonExhaustiveUnderstandingGuidePath}"`,
+    ];
+    const family = PUBLICATION_FAMILIES.find(
+      ({ id }) => id === "non-exhaustive-understanding-atlas",
+    );
+    if (!isDeepStrictEqual(manifest?.non_exhaustive_understanding_atlas, expected) ||
+      !isDeepStrictEqual(guest?.non_exhaustive_understanding_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.non_exhaustive_understanding_atlas, expected) ||
+      expected.protocol !== NON_EXHAUSTIVE_UNDERSTANDING_PROTOCOL ||
+      expected.atlas_id !== NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_ID ||
+      expected.integrity_status !== "REVIEWED" ||
+      expected.semantic_digest !== NON_EXHAUSTIVE_UNDERSTANDING_REVIEWED_DIGEST ||
+      expected.reviewed_digest !== NON_EXHAUSTIVE_UNDERSTANDING_REVIEWED_DIGEST ||
+      expected.static_only !== true || expected.runtime !== false ||
+      expected.person_data !== false || expected.action_or_authority_effect !== false ||
+      !isDeepStrictEqual(entryPoints, expectedEntryPoints) ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) =>
+        guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        forbiddenActionKeys.some((key) => Object.hasOwn(action, key))) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      [...targets].some((target) =>
+        countOccurrences(sitemap, `<loc>${target}</loc>`) !== 1) ||
+      [...targets].some((target) => wayfinderText.includes(target) || mcpText.includes(target)) ||
+      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
+      !sectionHtml.includes("Remainder is not an escape hatch") ||
+      !sectionHtml.includes("released bytes do not learn") ||
+      !family || Object.hasOwn(family, "dependsOn") ||
+      [nonExhaustiveUnderstandingPath, nonExhaustiveUnderstandingSchemaPath,
+        nonExhaustiveUnderstandingGuidePath]
+        .some((path) => !IMMUTABLE_PUBLICATION_ASSETS.has(destinationForPublicPath(path)))) {
+      throw new Error(
+        "Non-Exhaustive Understanding triplet, concise orientation, discovery, or non-effect contract drifted",
+      );
+    }
+  }
+
   if (loopsLocksFreedomRelationsAtlasActive) {
     const expected = expectedLoopsLocksFreedomRelationsAtlas!;
     const targets = new Set(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS);
@@ -7336,6 +7548,15 @@ export async function checkHubLive(
   if (freedomLoopLockKeyActive &&
       !isDeepStrictEqual(liveKingdom?.freedom_loop_lock_key_atlas, expectedFreedomLoopLockKey!)) {
     throw new Error("derived kingdom.json did not preserve FREEDOM Loop, Lock & Key discovery");
+  }
+  if (nonExhaustiveUnderstandingActive &&
+      !isDeepStrictEqual(
+        liveKingdom?.non_exhaustive_understanding_atlas,
+        expectedNonExhaustiveUnderstanding!,
+      )) {
+    throw new Error(
+      "derived kingdom.json did not preserve Non-Exhaustive Understanding discovery",
+    );
   }
   if (loopsLocksFreedomRelationsAtlasActive &&
       !isDeepStrictEqual(
