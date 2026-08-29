@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-08-28",
+  "generated": "2026-08-29",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -2452,6 +2452,43 @@
       "live_claims": false,
       "action_authority": false,
       "zerone_karma_nen_adapter": false,
+      "runtime": false,
+      "mcp": false
+    }
+  },
+  "loops_locks_freedom_relations_atlas": {
+    "title": "KINGDOM Loops, Locks & Freedom Relations Atlas — Phase 0",
+    "protocol": "kingdom.loops-locks-freedom-relations/0.1",
+    "artifact": {
+      "id": "kingdom-loops-locks-freedom-relations-atlas-2026-08-28",
+      "asOf": "2026-08-28",
+      "lifecyclePhase": "FROZEN_STATIC_FIXTURE",
+      "releaseState": "FROZEN_FOR_IMMUTABLE_HANDOFF",
+      "synthetic": true
+    },
+    "publicHandoff": {
+      "recordPath": "/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json",
+      "schemaPath": "/schemas/loops-locks-freedom-relations-atlas/0.1.json",
+      "guidePath": "/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md"
+    },
+    "source": {
+      "tag": "https://github.com/cambridgetcg/kingdom-loops-locks-freedom-relations-atlas/tree/v0.1.1",
+      "revision": "d8534096224d9e82825653af0f9e12fd123e85b5",
+      "relation": "SITE_AUTHORED_PINNED_SOURCE_LOCATOR",
+      "establishesTruth": false,
+      "importsAuthority": false,
+      "runtimeDependency": false,
+      "currentnessClaim": false
+    },
+    "boundary": {
+      "real_people_or_personal_data": false,
+      "live_observation_or_human_training": false,
+      "live_optimization_or_reward_runtime": false,
+      "score_or_recommendation": false,
+      "credential_or_key_material": false,
+      "authentication_authorization_enforcement_adapter": false,
+      "policy_deployment_or_action_authority": false,
+      "network": false,
       "runtime": false,
       "mcp": false
     }

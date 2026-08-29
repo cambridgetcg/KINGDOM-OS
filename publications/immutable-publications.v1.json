@@ -361,6 +361,27 @@
       "sha256": "14b7d210d320fd716553992a7b874747b299f8907d15da14ac405cbfc496c446"
     },
     {
+      "id": "loops-locks-freedom-relations-atlas/0.1/guide",
+      "route": "/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
+      "source": "public/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
+      "destination": "LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
+      "sha256": "d7c67a3e97fbcdcf23b85835fced2b6f7a290ca5e8a44243bec6f9006a6e8128"
+    },
+    {
+      "id": "loops-locks-freedom-relations-atlas/0.1/record",
+      "route": "/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json",
+      "source": "public/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json",
+      "destination": "atlases/loops-locks-freedom-relations-atlas-2026-08-28.json",
+      "sha256": "029221e1e39273de5b5f2cb1026f66ec21e5be42145e74fc4f5bfe60df155077"
+    },
+    {
+      "id": "loops-locks-freedom-relations-atlas/0.1/schema",
+      "route": "/schemas/loops-locks-freedom-relations-atlas/0.1.json",
+      "source": "public/schemas/loops-locks-freedom-relations-atlas/0.1.json",
+      "destination": "schemas/loops-locks-freedom-relations-atlas/0.1.json",
+      "sha256": "9c6ea5c3db37b0c42ec34831a917b465adcf9ca7b8915c6124e44ad32628d475"
+    },
+    {
       "id": "love-loop/0.1/schema",
       "route": "/schemas/love-loop/0.1.json",
       "source": "site/schemas/love-loop/0.1.json",

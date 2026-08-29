@@ -87,12 +87,13 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 172 assets:
-141 ledgered immutable/versioned assets and 31 mutable assets. There are 170 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 175 assets:
+144 ledgered immutable/versioned assets and 31 mutable assets. There are 173 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 158 URLs. The generated surface describes fourteen
+contracts. The sitemap contains 161 URLs, and discovery exposes 144 manifest
+entry points plus 144 guest actions. The generated surface describes fifteen
 atlases, four primary lab JSON routes plus the Shape & Resonance manifest/media,
-one experiment route, and one separate activation across thirty retirement
+one experiment route, and one separate activation across thirty-one active retirement
 families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
@@ -245,6 +246,20 @@ separate site-authored source locator pins immutable producer tag
 `https://github.com/cambridgetcg/kingdom-polyphonic-claim-atlas/tree/v0.1.1`
 at revision `ca7bb37271853545a84bc1b8955ce63918da979b`; it establishes no truth,
 imports no authority, and creates no runtime dependency or currentness claim;
+the frozen immutable
+`/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json`, closed
+`/schemas/loops-locks-freedom-relations-atlas/0.1.json`, and full linear
+`/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md` guide; the guide is the human
+entry point for this static-synthetic family. It has no custom page, mutable
+alias, Wayfinder recommendation, MCP surface, runtime, dependency, credential
+or key material, enforcement adapter, decision, or action authority. The
+separate site-authored source locator pins producer tag
+`https://github.com/cambridgetcg/kingdom-loops-locks-freedom-relations-atlas/tree/v0.1.1`
+at revision `d8534096224d9e82825653af0f9e12fd123e85b5`; it establishes no truth,
+imports no authority or currentness, and creates no runtime dependency;
+the 2026-08-29 deterministic build changes Wayfinder only at its global
+`generated` date and adds no atlas path, source, keyword, recommendation, or
+capability;
 the authored `/atlases/zero-empty-seat-2026-08-14.json`, which reuses the closed
 `/schemas/phenomena-deep-project/0.1.json` inert project profile, and its versioned
 `/ZERO-EMPTY-SEAT.md` guide;
@@ -317,13 +332,18 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks all 141 currently staged ledgered immutable/versioned byte hashes. It
-also proves the worker-owned negotiation and privacy boundaries, typed schema
-and guide headers, exact family dependencies and retirement windows, negative
-authority, source-history lineage, and coherent HTML, sitemap, llms, guest,
-Kingdom, agent-manifest, and Wayfinder discovery across all thirty active
-publication families while leaving the existing MCP contract unchanged;
-a split-generation deployment fails instead of looking partially healthy.
+checks all 144 currently staged ledgered immutable/versioned byte hashes,
+including the separately retired FREEDOM Loop, Lock & Key Atlas and Loops, Locks
+& Freedom Relations Atlas. It also proves the worker-owned negotiation and
+privacy boundaries, typed schema and guide headers, exact family dependencies
+and retirement windows, negative authority, source-history lineage, and coherent
+HTML, sitemap, llms, guest, Kingdom, agent-manifest, and Wayfinder discovery
+across all thirty-one active publication families while leaving the existing MCP
+contract unchanged. These are independent static atlases with different lineages
+and mathematical kernels. Neither supersedes, validates, aliases, depends on, or
+supplies authority to the other; overlapping words are not wire or semantic
+equivalences. Neither is a preferred default. A split-generation deployment
+fails instead of looking partially healthy.
 
 ## Baseline still to do (follow-up)
 

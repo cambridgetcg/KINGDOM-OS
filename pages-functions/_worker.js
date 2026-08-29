@@ -326,6 +326,21 @@ const POLYPHONIC_CLAIM_ATLAS_PATHS = new Set([
   POLYPHONIC_CLAIM_ATLAS_SCHEMA_PATH,
   POLYPHONIC_CLAIM_ATLAS_GUIDE_PATH,
 ]);
+const LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PATH =
+  "/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json";
+const LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_PATH =
+  "/schemas/loops-locks-freedom-relations-atlas/0.1.json";
+const LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_PATH =
+  "/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md";
+const LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_LINK =
+  `<${LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`;
+const LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_LINK =
+  `<${LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`;
+const LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PATHS = new Set([
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PATH,
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_PATH,
+  LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_PATH,
+]);
 const RESEARCH_OBSERVATORY_PATH = "/research.json";
 const RESEARCH_OBSERVATORY_PAGE_PATH = "/observatory/";
 const RESEARCH_OBSERVATORY_GUIDE_PATH = "/RESEARCH-OBSERVATORY-v0.1.md";
@@ -770,6 +785,13 @@ function addPolyphonicClaimAtlasLinks(headers) {
   headers.set("link", [
     POLYPHONIC_CLAIM_ATLAS_SCHEMA_LINK.value,
     POLYPHONIC_CLAIM_ATLAS_GUIDE_LINK.value,
+  ].join(", "));
+}
+
+function addLoopsLocksFreedomRelationsAtlasLinks(headers) {
+  headers.set("link", [
+    LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_LINK,
+    LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_LINK,
   ].join(", "));
 }
 
@@ -1674,6 +1696,20 @@ export function createKingdomWorker(options = {}) {
       });
     }
 
+    if (includeRights &&
+        LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
     if (includeRights && UK_GOVERNMENT_TRANSFORMATION_ENGINE_PATHS.has(url.pathname) &&
         UK_GOVERNMENT_TRANSFORMATION_ENGINE_MUTATING_METHODS.has(request.method)) {
       return new Response(null, {
@@ -2110,6 +2146,15 @@ export function createKingdomWorker(options = {}) {
     const requestsPolyphonicClaimAtlasGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === POLYPHONIC_CLAIM_ATLAS_GUIDE_PATH;
+    const requestsLoopsLocksFreedomRelationsAtlas = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PATH;
+    const requestsLoopsLocksFreedomRelationsAtlasSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_PATH;
+    const requestsLoopsLocksFreedomRelationsAtlasGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_PATH;
     const requestsZeroEmptySeat = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === ZERO_EMPTY_SEAT_PATH;
@@ -2180,6 +2225,8 @@ export function createKingdomWorker(options = {}) {
     const civilisationFlowAssetType = schemaAssetType.split(";", 1)[0].trim();
     const freedomLoopLockKeyAtlasAssetType = schemaAssetType.split(";", 1)[0].trim();
     const polyphonicClaimAtlasAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const loopsLocksFreedomRelationsAtlasAssetType =
+      schemaAssetType.split(";", 1)[0].trim();
     const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
     const zeroEmptySeatAssetType = schemaAssetType.split(";", 1)[0].trim();
     const stringCrawlTraceSheetAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -2458,6 +2505,17 @@ export function createKingdomWorker(options = {}) {
     const servesPolyphonicClaimAtlasGuide = requestsPolyphonicClaimAtlasGuide && asset.ok &&
       (polyphonicClaimAtlasAssetType === "text/plain" ||
         polyphonicClaimAtlasAssetType === "text/markdown");
+    const servesLoopsLocksFreedomRelationsAtlas =
+      requestsLoopsLocksFreedomRelationsAtlas && asset.ok &&
+      loopsLocksFreedomRelationsAtlasAssetType === "application/json";
+    const servesLoopsLocksFreedomRelationsAtlasSchema =
+      requestsLoopsLocksFreedomRelationsAtlasSchema && asset.ok &&
+      (loopsLocksFreedomRelationsAtlasAssetType === "application/json" ||
+        loopsLocksFreedomRelationsAtlasAssetType === "application/schema+json");
+    const servesLoopsLocksFreedomRelationsAtlasGuide =
+      requestsLoopsLocksFreedomRelationsAtlasGuide && asset.ok &&
+      (loopsLocksFreedomRelationsAtlasAssetType === "text/plain" ||
+        loopsLocksFreedomRelationsAtlasAssetType === "text/markdown");
     const servesZeroEmptySeat = requestsZeroEmptySeat && asset.ok &&
       (zeroEmptySeatAssetType === "application/json" || zeroEmptySeatAssetType === "application/schema+json");
     const servesZeroEmptySeatDocument = requestsZeroEmptySeatDocument && asset.ok &&
@@ -2557,6 +2615,9 @@ export function createKingdomWorker(options = {}) {
         !servesFreedomLoopLockKeyAtlasGuide &&
         !servesPolyphonicClaimAtlas && !servesPolyphonicClaimAtlasSchema &&
         !servesPolyphonicClaimAtlasGuide &&
+        !servesLoopsLocksFreedomRelationsAtlas &&
+        !servesLoopsLocksFreedomRelationsAtlasSchema &&
+        !servesLoopsLocksFreedomRelationsAtlasGuide &&
         !servesZeroEmptySeat &&
         !servesZeroEmptySeatDocument && !servesStringCrawlTraceSheet &&
         !servesStringCrawlTraceSheetDocument && !servesStringCrawlTraceSheetLab &&
@@ -2659,6 +2720,13 @@ export function createKingdomWorker(options = {}) {
     }
     if (servesPolyphonicClaimAtlas) addPolyphonicClaimAtlasLinks(headers);
     if (servesPolyphonicClaimAtlasSchema || servesPolyphonicClaimAtlasGuide) {
+      headers.delete("link");
+    }
+    if (servesLoopsLocksFreedomRelationsAtlas) {
+      addLoopsLocksFreedomRelationsAtlasLinks(headers);
+    }
+    if (servesLoopsLocksFreedomRelationsAtlasSchema ||
+        servesLoopsLocksFreedomRelationsAtlasGuide) {
       headers.delete("link");
     }
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
@@ -3195,6 +3263,24 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesPolyphonicClaimAtlasGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesLoopsLocksFreedomRelationsAtlas) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesLoopsLocksFreedomRelationsAtlasSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesLoopsLocksFreedomRelationsAtlasGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");

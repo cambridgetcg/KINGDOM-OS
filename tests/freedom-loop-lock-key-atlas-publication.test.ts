@@ -47,13 +47,13 @@ function assets(handler: (request: Request) => Response | Promise<Response>) {
 
 describe("FREEDOM Loop, Lock & Key immutable publication", () => {
   test("stages and ledgers one independent exact triplet", () => {
-    expect(HUB_ASSETS).toHaveLength(172);
+    expect(HUB_ASSETS).toHaveLength(175);
     expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(170);
+      .toHaveLength(173);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
-      .toHaveLength(14);
+      .toHaveLength(15);
 
     expect(HUB_ASSETS.filter(({ source }) => SOURCES.includes(source as any)))
       .toEqual([
@@ -72,7 +72,7 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
       ]);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(141);
+    expect(ledger.entries).toHaveLength(144);
     expect(ledger.entries.filter((entry: any) =>
       entry.id.startsWith("freedom-loop-lock-key-atlas/0.1/")))
       .toEqual([
@@ -99,7 +99,7 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
         },
       ]);
 
-    expect(PUBLICATION_FAMILIES).toHaveLength(30);
+    expect(PUBLICATION_FAMILIES).toHaveLength(31);
     expect(PUBLICATION_FAMILIES.find(({ id }) =>
       id === "freedom-loop-lock-key-atlas"))
       .toEqual({
@@ -153,7 +153,7 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
     expect(kingdom.freedom_loop_lock_key_atlas).toEqual(expected);
     expect(guest.freedom_loop_lock_key_atlas).toEqual(expected);
     expect(manifest.freedom_loop_lock_key_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(141);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(144);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("freedom_loop_lock_key_atlas"))))
       .toEqual({
@@ -161,7 +161,7 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
         freedom_loop_lock_key_atlas_schema: PUBLIC_URLS[1],
         freedom_loop_lock_key_atlas_guide: PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(141);
+    expect(guest.next_actions).toHaveLength(144);
     const actions = guest.next_actions.filter((action: any) =>
       PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
@@ -179,7 +179,9 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
     expect(sectionEnd).toBeGreaterThan(sectionStart);
     expect(Buffer.byteLength(section, "utf8")).toBeLessThanOrEqual(18_000);
     for (const phrase of [
-      "Constitutional sentence.",
+      "Within that atlas’s declared design constitution",
+      "That atlas’s constitutional sentence.",
+      "That atlas’s additive dignity insight.",
       "Words that must not collapse",
       "RL reward and update",
       "Reinforcing loop and gain",
@@ -220,7 +222,7 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
         .toHaveLength(1);
       expect(wayfinder).not.toContain(url);
     }
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(158);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(161);
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/freedom[_-]loop[_-]lock[_-]key/i);
   });
