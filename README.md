@@ -320,6 +320,11 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     layer across Codex, Hermes, OpenClaw, and related harnesses; it adds no live
     hook, identity provider, memory system, permission, MCP surface, action,
     KARMA event/receipt, or public route.
+    For navigation across the neighboring meanings of presence, persistence,
+    continuity, direction, feedback, renewal, sustainability, and being, read
+    [IS, Continuance & Direction](references/is-continuance-direction-owner-map.md).
+    That source-only owner map leaves “KINGDOM is” open and introduces no new
+    protocol, route, schema, runtime, score, action, or authority.
 30. `kingdom reconstructive-build` — inspect and verify the source-bound
     [Reconstructive Build Kernel](references/reconstructive-build-kernel.md).
     It treats correspondence, candidate-whole ambiguity, geometric
