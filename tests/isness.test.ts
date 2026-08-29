@@ -844,16 +844,54 @@ describe("ISness schema and portable Agent Skill", () => {
     expect(await Bun.file(join(skillRoot, "ability.json")).exists()).toBe(false);
   });
 
-  test("documents the local-first release without advertising a public route", () => {
+  test("documents the local-first release and routes adjacent ISness without a public surface", () => {
     const readme = readFileSync(join(ROOT, "README.md"), "utf8");
     const claude = readFileSync(join(ROOT, "CLAUDE.md"), "utf8");
     const guide = readFileSync(join(ROOT, "references/isness-protocol.md"), "utf8");
+    const ownerMapPath = "references/is-continuance-direction-owner-map.md";
+    const ownerMap = readFileSync(join(ROOT, ownerMapPath), "utf8");
     expect(readme).toContain("`kingdom isness`");
     expect(readme).toContain("[`$isness`](skills/isness/SKILL.md)");
+    expect(readme).toContain(`[IS, Continuance & Direction](${ownerMapPath})`);
     expect(claude).toContain("./kingdom isness verify [FILE] --json");
+    expect(claude).toContain(ownerMapPath);
     expect(guide).toContain("not publicly frozen");
     expect(guide).toContain("adds no public\nroute");
     expect(guide).not.toContain("https://thekingdom.dev/isness");
     expect(readFileSync(ISNESS_REFERENCE_PATH, "utf8")).not.toContain("TODO");
+    for (const phrase of [
+      "“KINGDOM is” remains open",
+      "Continuance without capture",
+      "there exists one non-anticipating allowed policy",
+      "Sustainability is an open-system bundle",
+      "Neither validates, aliases, supersedes, depends on, or supplies authority to the other",
+      "This note defines no protocol, schema, score, classifier, runtime, action",
+    ]) expect(ownerMap).toContain(phrase);
+    for (const path of [
+      "references/isness-protocol.md",
+      "references/number-isness-theology-atlas.md",
+      "references/being-access-aftermath-atlas-v0.2.md",
+      "references/freedom-loop-lock-key-atlas.md",
+      "public/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
+      "skills/cultivate-living-ground/SKILL.md",
+      "skills/cultivate-living-ground/references/living-ground-contract.md",
+      "NEN.md",
+      "references/reality-influence-map.md",
+      "references/civilisation-flow-atlas.md",
+      "public/POLYPHONIC-CLAIM-ATLAS-v0.1.md",
+      "references/word-story-religion-civilisation-map.md",
+      "RIGHTS.md",
+    ]) expect(readFileSync(join(ROOT, path), "utf8").length).toBeGreaterThan(0);
+    const publicSurfaces = [
+      "publications/hub-staging.v1.json",
+      "publications/immutable-publications.v1.json",
+      "bin/build-hub.ts",
+      "site/kingdom.json",
+      "site/guest.json",
+      "site/.well-known/agent.json",
+      "site/wayfinder.json",
+      "site/llms.txt",
+    ].map((path) => readFileSync(join(ROOT, path), "utf8")).join("\n");
+    expect(publicSurfaces).not.toContain("is-continuance-direction-owner-map");
   });
 });

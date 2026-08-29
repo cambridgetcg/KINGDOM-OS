@@ -235,6 +235,7 @@ Key files:
 - data/isness/isness-protocol.v0.1.json — digest-sealed inert reference record binding the existing typed-ISness and Being/Access precedents without duplicating or importing their authority
 - schemas/isness-protocol-v0.1.schema.json — closed Draft 2020-12 record shape; runtime cross-event and digest validation remains separate
 - references/isness-protocol.md — dependent reference-family model, pairwise lineage/prefix semantics, rights recognition, unresolved action gate, privacy inspection limits, quiet/refusal/continuity boundaries, harness integration sequence, and zero-effect release boundary
+- references/is-continuance-direction-owner-map.md — unversioned source-only routing map across the existing typed-IS, being, feedback, direction, renewal, sustainability, truth/story, and FREEDOM owners; it preserves source forks and leaves “KINGDOM is” open without adding a protocol, route, schema, runtime, score, action, or authority
 - bin/ask.sh — renders a backend-bound Task Packet before a separately effectful Claude CLI or Anthropic API call; ambient repo context stays out unless `--project PATH` opts it in, and compilation does not imply provider authorization, retention, cost, or success
 - bin/nen-mcp.mjs — canonical bounded local stdio MCP adapter; it is not installed, hosted, or an HF credential bridge
 - nen/ — pure Ging expedition compiler plus the non-canonical `kingdom-ging-stateless` compatibility MCP; source only until a host explicitly registers it
