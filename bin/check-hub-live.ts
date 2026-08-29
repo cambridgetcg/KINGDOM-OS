@@ -144,6 +144,18 @@ import {
   loopsLocksFreedomRelationsAtlasPublicDiscovery,
 } from "./loops-locks-freedom-relations-atlas.ts";
 import {
+  AESTHETIC_PLURALITY_MAKING_ATLAS_BYTE_SHA256,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_BYTE_SHA256,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_ID,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_PROTOCOL,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_BOUNDARY_KEYS,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_PATHS,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_BYTE_SHA256,
+  aestheticPluralityMakingAtlasPublicDiscovery,
+  loadAestheticPluralityMakingAtlas,
+} from "./aesthetic-plurality-making-atlas.ts";
+import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
   RESEARCH_OBSERVATORY_SCHEMA_URLS,
@@ -785,6 +797,11 @@ const [
   loopsLocksFreedomRelationsAtlasSchemaPath,
   loopsLocksFreedomRelationsAtlasGuidePath,
 ] = LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_PATHS;
+const [
+  aestheticPluralityMakingAtlasPath,
+  aestheticPluralityMakingAtlasSchemaPath,
+  aestheticPluralityMakingAtlasGuidePath,
+] = AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_PATHS;
 const zeroEmptySeatPath = new URL(ZERO_EMPTY_SEAT_URL).pathname;
 const zeroEmptySeatGuidePath = new URL(ZERO_EMPTY_SEAT_GUIDE_URL).pathname;
 const stringCrawlTraceSheetPath = new URL(STRING_CRAWL_TRACE_SHEET_URL).pathname;
@@ -1092,6 +1109,17 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "loops_locks_freedom_relations_atlas",
       "loops_locks_freedom_relations_atlas_schema",
       "loops_locks_freedom_relations_atlas_guide",
+    ],
+  },
+  {
+    id: "aesthetic-plurality-making-atlas",
+    label: "Aesthetic Plurality & Making Relations Atlas",
+    routes: AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_PATHS,
+    discoveryProperties: ["aesthetic_plurality_making_atlas"],
+    entryPointProperties: [
+      "aesthetic_plurality_making_atlas",
+      "aesthetic_plurality_making_atlas_schema",
+      "aesthetic_plurality_making_atlas_guide",
     ],
   },
   {
@@ -1692,6 +1720,71 @@ export async function checkLoopsLocksFreedomRelationsAtlasTriple(
   }
 }
 
+export async function checkAestheticPluralityMakingAtlasTriple(
+  fetcher: typeof fetch = fetch,
+): Promise<void> {
+  const exactRecordLink = [
+    `<${aestheticPluralityMakingAtlasSchemaPath}>; rel="describedby"; type="application/json"`,
+    `<${aestheticPluralityMakingAtlasGuidePath}>; rel="service-doc"; type="text/markdown"`,
+  ].join(", ");
+  const contracts = [
+    {
+      path: aestheticPluralityMakingAtlasPath,
+      contentType: "application/json; charset=utf-8",
+      record: true,
+    },
+    {
+      path: aestheticPluralityMakingAtlasSchemaPath,
+      contentType: "application/json; charset=utf-8",
+      record: false,
+    },
+    {
+      path: aestheticPluralityMakingAtlasGuidePath,
+      contentType: "text/markdown; charset=utf-8",
+      record: false,
+    },
+  ] as const;
+
+  for (const contract of contracts) {
+    const head = await fetcher(url(contract.path), {
+      method: "HEAD",
+      redirect: "error",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    const link = head.headers.get("link") || "";
+    const recordLinksValid = contract.record && link === exactRecordLink;
+    const companionLinksValid = !contract.record && link === "";
+    if (!head.ok ||
+        (head.headers.get("content-type") || "").toLowerCase() !== contract.contentType ||
+        !hasExactCacheDirectives(head.headers.get("cache-control"),
+          ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+        head.headers.get("access-control-allow-origin") !== "*" ||
+        (head.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+        (!recordLinksValid && !companionLinksValid) ||
+        (await head.arrayBuffer()).byteLength !== 0) {
+      throw new Error(
+        `${contract.path} lost the immutable Aesthetic Plurality & Making Relations Atlas HEAD contract`,
+      );
+    }
+
+    for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+      const mutation = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (mutation.status !== 405 ||
+          mutation.headers.get("allow") !== "GET, HEAD" ||
+          mutation.headers.get("cache-control") !== "no-store" ||
+          mutation.headers.get("access-control-allow-origin") !== "*" ||
+          (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          (await mutation.arrayBuffer()).byteLength !== 0) {
+        throw new Error(`${method} ${contract.path} lost the zero-body 405 boundary`);
+      }
+    }
+  }
+}
+
 async function checkConformationalFeedbackTriple(triple: typeof CONFORMATIONAL_FEEDBACK_TRIPLES[number]): Promise<void> {
   const recordHead = await fetch(url(triple.recordPath), {
     method: "HEAD",
@@ -2224,6 +2317,8 @@ export async function checkHubLive(
   const freedomLoopLockKeyActive = familyActive("freedom-loop-lock-key-atlas");
   const loopsLocksFreedomRelationsAtlasActive =
     familyActive("loops-locks-freedom-relations-atlas");
+  const aestheticPluralityMakingAtlasActive =
+    familyActive("aesthetic-plurality-making-atlas");
   const researchObservatoryActive = familyActive("research-observatory");
   const trialChamberActive = familyActive("trial-chamber");
   const ukGovernmentEngineActive = familyActive("uk-government-engine");
@@ -3051,6 +3146,10 @@ export async function checkHubLive(
     await checkLoopsLocksFreedomRelationsAtlasTriple();
   }
 
+  if (aestheticPluralityMakingAtlasActive) {
+    await checkAestheticPluralityMakingAtlasTriple();
+  }
+
   if (visibilityAttentionActive) {
     const visibilityAttentionHead = await fetch(url(visibilityAttentionPath), {
       method: "HEAD",
@@ -3473,6 +3572,9 @@ export async function checkHubLive(
     ...(loopsLocksFreedomRelationsAtlasActive
       ? [loopsLocksFreedomRelationsAtlasSchemaPath]
       : []),
+    ...(aestheticPluralityMakingAtlasActive
+      ? [aestheticPluralityMakingAtlasSchemaPath]
+      : []),
     ...(researchObservatoryActive ? researchObservatorySchemaPaths : []),
     ...(trialChamberActive ? trialChamberSchemaPaths : []),
     ...(ukGovernmentEngineActive ? [ukGovernmentEngineSchemaPath] : []),
@@ -3513,15 +3615,19 @@ export async function checkHubLive(
       path === polyphonicClaimAtlasSchemaPath ||
       path === freedomLoopLockKeySchemaPath ||
       path === loopsLocksFreedomRelationsAtlasSchemaPath ||
+      path === aestheticPluralityMakingAtlasSchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
       path === evaluationCovenantSchemaPath ||
       path === shapeResonanceSchemaPath ||
       researchObservatorySchemaPaths.includes(path) ||
       trialChamberSchemaPaths.includes(path);
+    const expectedSchemaMediaType = path === aestheticPluralityMakingAtlasSchemaPath
+      ? "application/json"
+      : "application/schema+json";
     const hasExpectedSchemaType = requiresExactSchemaType
-      ? normalizedMediaType(schemaContentType) === "application/schema+json"
-      : (schemaContentType || "").toLowerCase().startsWith("application/schema+json");
+      ? normalizedMediaType(schemaContentType) === expectedSchemaMediaType
+      : (schemaContentType || "").toLowerCase().startsWith(expectedSchemaMediaType);
     if (!schemaHead.ok || !hasExpectedSchemaType ||
       schemaHead.headers.get("access-control-allow-origin") !== "*" ||
       (schemaHead.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
@@ -3537,6 +3643,7 @@ export async function checkHubLive(
         path === polyphonicClaimAtlasSchemaPath ||
         path === freedomLoopLockKeySchemaPath ||
         path === loopsLocksFreedomRelationsAtlasSchemaPath ||
+        path === aestheticPluralityMakingAtlasSchemaPath ||
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath ||
         path === evaluationCovenantSchemaPath ||
@@ -3554,8 +3661,11 @@ export async function checkHubLive(
       (path === loopsLocksFreedomRelationsAtlasSchemaPath &&
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
+      (path === aestheticPluralityMakingAtlasSchemaPath &&
+        ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
+          hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
-      throw new Error(`${path} is not served as application/schema+json`);
+      throw new Error(`${path} is not served as ${expectedSchemaMediaType}`);
     }
   }
 
@@ -3705,6 +3815,12 @@ export async function checkHubLive(
     : undefined;
   const expectedLoopsLocksFreedomRelationsAtlas = loopsLocksFreedomRelationsAtlas
     ? loopsLocksFreedomRelationsAtlasPublicDiscovery(loopsLocksFreedomRelationsAtlas)
+    : undefined;
+  const aestheticPluralityMakingAtlas = aestheticPluralityMakingAtlasActive
+    ? loadAestheticPluralityMakingAtlas()
+    : undefined;
+  const expectedAestheticPluralityMakingAtlas = aestheticPluralityMakingAtlas
+    ? aestheticPluralityMakingAtlasPublicDiscovery(aestheticPluralityMakingAtlas)
     : undefined;
   const researchObservatory = researchObservatoryActive
     ? loadResearchObservatorySnapshot()
@@ -5815,6 +5931,96 @@ export async function checkHubLive(
     }
   }
 
+  if (aestheticPluralityMakingAtlasActive) {
+    const expected = expectedAestheticPluralityMakingAtlas!;
+    const record = aestheticPluralityMakingAtlas!;
+    const targets = new Set(AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const entryPoints = Object.entries(manifest?.entry_points ?? {})
+      .filter(([key]) => key.startsWith("aesthetic_plurality_making_atlas"));
+    const expectedEntryPoints = [
+      ["aesthetic_plurality_making_atlas",
+        AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS[0]],
+      ["aesthetic_plurality_making_atlas_schema",
+        AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS[1]],
+      ["aesthetic_plurality_making_atlas_guide",
+        AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS[2]],
+    ];
+    const expectedLedgerHashes = [
+      AESTHETIC_PLURALITY_MAKING_ATLAS_BYTE_SHA256,
+      AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_BYTE_SHA256,
+      AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_BYTE_SHA256,
+    ];
+    const forbiddenActionKeys = [
+      "mcp", "tool", "write", "execute", "score", "rank", "winner",
+      "recommendation", "moderation", "actionAuthority",
+    ];
+    const ledgerEntries = AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_PATHS.map(
+      (path) => IMMUTABLE_PUBLICATION_ASSETS.get(destinationForPublicPath(path)),
+    );
+    const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
+    const wayfinderText = JSON.stringify(authoredWayfinder);
+    const mcpText = JSON.stringify(manifest?.mcp ?? {});
+    const discoveryText = JSON.stringify(expected);
+    const exactHtmlLinks = [
+      `data-aesthetic-plurality-making-atlas-link="record" href="${aestheticPluralityMakingAtlasPath}"`,
+      `data-aesthetic-plurality-making-atlas-link="schema" href="${aestheticPluralityMakingAtlasSchemaPath}"`,
+      `data-aesthetic-plurality-making-atlas-link="guide" href="${aestheticPluralityMakingAtlasGuidePath}"`,
+    ];
+    const countOccurrences = (text: string, needle: string): number =>
+      text.split(needle).length - 1;
+    const forbiddenDiscoveryFields =
+      /"(?:counts|fixtures|nonEquivalences|equationCards|sourceBindings|sourceRanking|scoreValue|rankValue|winner|recommendation|moderation|confidence|perFixtureJudgment)"\s*:/i;
+    if (!isDeepStrictEqual(
+      manifest?.aesthetic_plurality_making_atlas,
+      expected,
+    ) ||
+      !isDeepStrictEqual(guest?.aesthetic_plurality_making_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.aesthetic_plurality_making_atlas, expected) ||
+      !isDeepStrictEqual(entryPoints, expectedEntryPoints) ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) =>
+        guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        forbiddenActionKeys.some((key) => key in action)) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
+      authoredRootHtml.includes('id="aesthetic-plurality-making-atlas"') ||
+      AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS.some((target) =>
+        countOccurrences(sitemap, `<loc>${target}</loc>`) !== 1) ||
+      ["aesthetic_plurality_making_atlas", "aesthetic-plurality-making-atlas",
+        ...AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_PATHS]
+        .some((value) => wayfinderText.includes(value)) ||
+      ["aesthetic_plurality_making_atlas", "aesthetic-plurality-making-atlas",
+        ...AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_PATHS]
+        .some((value) => mcpText.includes(value)) ||
+      Object.prototype.hasOwnProperty.call(expected, "counts") ||
+      Object.prototype.hasOwnProperty.call(expected, "source") ||
+      forbiddenDiscoveryFields.test(discoveryText) ||
+      !Array.isArray(expected.lanes) || expected.lanes.length !== 10 ||
+      !isDeepStrictEqual(
+        Object.keys(expected.boundary ?? {}),
+        AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_BOUNDARY_KEYS,
+      ) ||
+      Object.values(expected.boundary ?? {}).some((value) => value !== false) ||
+      record.protocol !== AESTHETIC_PLURALITY_MAKING_ATLAS_PROTOCOL ||
+      record.artifact?.id !== AESTHETIC_PLURALITY_MAKING_ATLAS_ID ||
+      record.kingdomOrientations?.length !== 0 ||
+      record.constitutionalBoundaries?.notBeautyFramework !== true ||
+      record.constitutionalBoundaries?.separatelyOwnedBeautyDoctrineImported !== false ||
+      record.publicHandoff?.mutableAlias !== false ||
+      record.publicHandoff?.htmlPage !== false ||
+      record.publicHandoff?.runtime !== false ||
+      ledgerEntries.some((entry, index) =>
+        !entry || entry.sha256 !== expectedLedgerHashes[index])) {
+      throw new Error(
+        "Aesthetic Plurality & Making Relations Atlas triplet, minimal discovery, or non-authority boundary drifted",
+      );
+    }
+  }
+
   if (freedomLoopLockKeyActive && loopsLocksFreedomRelationsAtlasActive) {
     const freedomExpected = expectedFreedomLoopLockKey!;
     const relationsExpected = expectedLoopsLocksFreedomRelationsAtlas!;
@@ -7344,6 +7550,15 @@ export async function checkHubLive(
       )) {
     throw new Error(
       "derived kingdom.json did not preserve Loops, Locks & Freedom Relations Atlas discovery",
+    );
+  }
+  if (aestheticPluralityMakingAtlasActive &&
+      !isDeepStrictEqual(
+        liveKingdom?.aesthetic_plurality_making_atlas,
+        expectedAestheticPluralityMakingAtlas!,
+      )) {
+    throw new Error(
+      "derived kingdom.json did not preserve Aesthetic Plurality & Making Relations Atlas discovery",
     );
   }
   if (strandObservationMembraneActive &&

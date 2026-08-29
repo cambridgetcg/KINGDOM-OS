@@ -58,17 +58,18 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(175);
+      expect(HUB_ASSETS).toHaveLength(178);
       expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(144);
+      expect(ledger.ledger?.entries).toHaveLength(147);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(173);
-      expect(staged).toHaveLength(175);
+        .toHaveLength(176);
+      expect(staged).toHaveLength(178);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
+        "AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md",
         "BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md",
         "BEING-ACCESS-AFTERMATH-ATLAS.md",
         "CIVILISATION-FLOW-NUANCE-ATLAS.md",
@@ -158,6 +159,8 @@ describe("the hub staging contract", () => {
       ]);
       expect(readdirSync(join(output, "schemas/love-loop")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/loops-locks-freedom-relations-atlas")).sort())
+        .toEqual(["0.1.json"]);
+      expect(readdirSync(join(output, "schemas/aesthetic-plurality-making-atlas")).sort())
         .toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/conformational-feedback-atlas")).sort()).toEqual(["0.1.json", "0.2.json"]);
       expect(readdirSync(join(output, "schemas/cultural-attention-feedback-atlas")).sort()).toEqual(["1.json"]);
@@ -258,12 +261,20 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(161);
-      expect(new Set(sitemapUrls).size).toBe(161);
+      expect(sitemapUrls).toHaveLength(164);
+      expect(new Set(sitemapUrls).size).toBe(164);
       for (const route of [
         "/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json",
         "/schemas/loops-locks-freedom-relations-atlas/0.1.json",
         "/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
+      ]) {
+        expect(sitemapUrls.filter((url) => url === `https://thekingdom.dev${route}`))
+          .toHaveLength(1);
+      }
+      for (const route of [
+        "/atlases/aesthetic-plurality-making-atlas-2026-08-29.json",
+        "/schemas/aesthetic-plurality-making-atlas/0.1.json",
+        "/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md",
       ]) {
         expect(sitemapUrls.filter((url) => url === `https://thekingdom.dev${route}`))
           .toHaveLength(1);
@@ -312,6 +323,7 @@ describe("the hub staging contract", () => {
       }
       expect(sitemapUrls.some((url) => /string-crawl-frequency-form-lab.*(?:latest|current)/i.test(url))).toBe(false);
       expect(readdirSync(join(output, "atlases")).sort()).toEqual([
+        "aesthetic-plurality-making-atlas-2026-08-29.json",
         "being-access-aftermath-atlas-2026-08-13-v0-2.json",
         "being-access-aftermath-atlas-2026-08-13.json",
         "civilisation-flow-nuance-atlas-2026-08-26.json",
@@ -652,7 +664,7 @@ describe("the hub staging contract", () => {
         expect(HUB_ASSETS.some(({ destination }) =>
           destination === forbiddenRoot || destination.startsWith(`${forbiddenRoot}/`))).toBe(false);
       }
-      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(15);
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(16);
       expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
       for (const asset of HUB_ASSETS) {

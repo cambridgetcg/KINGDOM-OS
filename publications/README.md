@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 144-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 147-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -93,6 +93,20 @@ authority, currentness, or a runtime dependency.
 These are independent static atlases with different lineages and mathematical kernels. Neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences.
 Neither is a preferred default; integrity, source, review, discovery, and
 retirement remain family-local.
+The Aesthetic Plurality & Making Relations Atlas adds the frozen immutable
+static-synthetic `/atlases/aesthetic-plurality-making-atlas-2026-08-29.json`,
+closed `/schemas/aesthetic-plurality-making-atlas/0.1.json`, and full linear
+`/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md` guide as the thirty-second family.
+The atomic triplet's count-light description names ten lanes: form, making
+event, maker statement, attributed response, aesthetic judgment, context and
+tradition, institutional selection, publication, adoption, and aftermath. It
+is not a Beauty framework and supplies no Beauty or completion verdict,
+artifact/person/culture evaluation, ranking, winner, recommendation,
+moderation decision, semantic or authority conversion, private or participant
+data, personal-appearance assessment, separately owned Beauty doctrine import,
+or action. It has no page, mutable alias, Wayfinder exposure, MCP surface,
+runtime, dependency, or producer repository/source-code locator; KINGDOM makes
+no Git-provenance claim for it.
 The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -256,12 +270,12 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 175-asset union classifies 144 destinations
-as ledgered immutable/versioned and 31 as mutable; 173 are direct public response
-bodies, the sitemap contains 161 URLs, and discovery exposes 144 manifest entry
-points plus 144 guest actions. Generated discovery describes fifteen atlases,
+consume those same bytes. The current 178-asset union classifies 147 destinations
+as ledgered immutable/versioned and 31 as mutable; 176 are direct public response
+bodies, the sitemap contains 164 URLs, and discovery exposes 147 manifest entry
+points plus 147 guest actions. Generated discovery describes sixteen atlases,
 four primary lab JSON routes plus Shape & Resonance manifest/media, one
-experiment route, one separate activation, and thirty-one active retirement
+experiment route, one separate activation, and thirty-two active retirement
 families. The two freedom-related atlases keep separate route triples, discovery
 keys, integrity/source/review claims, and retirement state; neither is preferred
 or removed with the other. Every destination is explicitly classified as mutable
@@ -270,7 +284,7 @@ committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the thirty-one linked authored publication
+The live release check retires the thirty-two linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

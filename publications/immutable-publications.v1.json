@@ -4,6 +4,27 @@
   "baseline_commit": "67fe98efc875a5ed13fb1c23d6e2aab5debe9ccb",
   "entries": [
     {
+      "id": "aesthetic-plurality-making-atlas/0.1/guide",
+      "route": "/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md",
+      "source": "public/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md",
+      "destination": "AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md",
+      "sha256": "8f09e20817432b4f3b3d5725fa069c9aa3a24e99b56e01dfead3a7397e48cf10"
+    },
+    {
+      "id": "aesthetic-plurality-making-atlas/0.1/record",
+      "route": "/atlases/aesthetic-plurality-making-atlas-2026-08-29.json",
+      "source": "public/atlases/aesthetic-plurality-making-atlas-2026-08-29.json",
+      "destination": "atlases/aesthetic-plurality-making-atlas-2026-08-29.json",
+      "sha256": "452880f1251fe1a7918b7c76578bbdc558f423b2f5c0bba038ad058566f4f558"
+    },
+    {
+      "id": "aesthetic-plurality-making-atlas/0.1/schema",
+      "route": "/schemas/aesthetic-plurality-making-atlas/0.1.json",
+      "source": "public/schemas/aesthetic-plurality-making-atlas/0.1.json",
+      "destination": "schemas/aesthetic-plurality-making-atlas/0.1.json",
+      "sha256": "565695c61526a0e9cb25f445aa447cf7f720bf41b5474e5c880975d97fe6477d"
+    },
+    {
       "id": "being-access-aftermath/0.1/guide",
       "route": "/BEING-ACCESS-AFTERMATH-ATLAS.md",
       "source": "references/being-access-aftermath-atlas.md",
