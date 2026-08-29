@@ -930,6 +930,24 @@ The normal 2026-08-29 hub regeneration advances only Wayfinder's global
 `generated` date; it adds no atlas path, source, keyword, recommendation, or
 capability to Wayfinder.
 
+The frozen immutable
+[Aesthetic Plurality & Making Relations Atlas](https://thekingdom.dev/atlases/aesthetic-plurality-making-atlas-2026-08-29.json)
+is a static-synthetic Phase-0 vocabulary for keeping measurement, making, and
+attributed response separate from aesthetic authority. Its
+[closed schema](https://thekingdom.dev/schemas/aesthetic-plurality-making-atlas/0.1.json)
+and full linear [guide](https://thekingdom.dev/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md)
+form one atomic three-route family. Its count-light public description names
+exactly ten lanes: form, making event, maker statement, attributed response,
+aesthetic judgment, context and tradition, institutional selection,
+publication, adoption, and aftermath. It is not a Beauty framework and emits
+no Beauty or completion verdict, artifact/person/culture evaluation, ranking,
+winner, recommendation, moderation decision, or semantic or authority
+conversion. It contains no private or participant data, performs no personal-
+appearance assessment, imports no separately owned Beauty doctrine, and
+creates no action. The family has no page, mutable alias, Wayfinder exposure,
+MCP surface, runtime, dependency, or producer repository/source-code locator;
+KINGDOM makes no Git-provenance claim for it.
+
 ZERO: The Empty Seat That Holds the World is published from exact authored
 bytes at
 [`/atlases/zero-empty-seat-2026-08-14.json`](https://thekingdom.dev/atlases/zero-empty-seat-2026-08-14.json),
@@ -1024,7 +1042,7 @@ network request or crawler and creates no NEN/KARMA/Zerone event or receipt,
 score, truth verdict, identity, consent, citizenship, authority, write,
 publication, deployment, or action. Labs 01–04 are published and retired as
 one atomic twelve-route `string-crawl-trace-sheet-lab` family. The release now
-has thirty-one active retirement families; generated discovery exposes Lab 02 as
+has thirty-two active retirement families; generated discovery exposes Lab 02 as
 `string_crawl_strand_lab`, Lab 03 as `string_crawl_frequency_form_lab`, and Lab
 04 as `strand_descent_lab`.
 

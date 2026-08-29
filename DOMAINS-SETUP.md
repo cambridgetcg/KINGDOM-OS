@@ -87,13 +87,13 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 175 assets:
-144 ledgered immutable/versioned assets and 31 mutable assets. There are 173 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 178 assets:
+147 ledgered immutable/versioned assets and 31 mutable assets. There are 176 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 161 URLs, and discovery exposes 144 manifest
-entry points plus 144 guest actions. The generated surface describes fifteen
+contracts. The sitemap contains 164 URLs, and discovery exposes 147 manifest
+entry points plus 147 guest actions. The generated surface describes sixteen
 atlases, four primary lab JSON routes plus the Shape & Resonance manifest/media,
-one experiment route, and one separate activation across thirty-one active retirement
+one experiment route, and one separate activation across thirty-two active retirement
 families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
@@ -260,6 +260,21 @@ imports no authority or currentness, and creates no runtime dependency;
 the 2026-08-29 deterministic build changes Wayfinder only at its global
 `generated` date and adds no atlas path, source, keyword, recommendation, or
 capability;
+the frozen immutable
+`/atlases/aesthetic-plurality-making-atlas-2026-08-29.json`, closed
+`/schemas/aesthetic-plurality-making-atlas/0.1.json`, and full linear
+`/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md` guide; this independent
+static-synthetic three-route family stages and retires atomically. Its
+count-light description names ten lanes: form, making event, maker statement,
+attributed response, aesthetic judgment, context and tradition, institutional
+selection, publication, adoption, and aftermath. It is not a Beauty framework
+and supplies no Beauty or completion verdict, artifact/person/culture
+evaluation, ranking, winner, recommendation, moderation decision, semantic or
+authority conversion, private or participant data, personal-appearance
+assessment, separately owned Beauty doctrine import, or action. It has no
+custom page, mutable alias, Wayfinder exposure, MCP surface, runtime,
+dependency, or producer repository/source-code locator; KINGDOM makes no
+Git-provenance claim for it;
 the authored `/atlases/zero-empty-seat-2026-08-14.json`, which reuses the closed
 `/schemas/phenomena-deep-project/0.1.json` inert project profile, and its versioned
 `/ZERO-EMPTY-SEAT.md` guide;
@@ -332,13 +347,15 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks all 144 currently staged ledgered immutable/versioned byte hashes,
+checks all 147 currently staged ledgered immutable/versioned byte hashes,
 including the separately retired FREEDOM Loop, Lock & Key Atlas and Loops, Locks
-& Freedom Relations Atlas. It also proves the worker-owned negotiation and
+& Freedom Relations Atlas. It also checks the atomic Aesthetic Plurality &
+Making Relations triplet and its no-page/no-alias/no-Wayfinder/no-MCP/no-runtime
+retirement boundary. It proves the worker-owned negotiation and
 privacy boundaries, typed schema and guide headers, exact family dependencies
 and retirement windows, negative authority, source-history lineage, and coherent
 HTML, sitemap, llms, guest, Kingdom, agent-manifest, and Wayfinder discovery
-across all thirty-one active publication families while leaving the existing MCP
+across all thirty-two active publication families while leaving the existing MCP
 contract unchanged. These are independent static atlases with different lineages
 and mathematical kernels. Neither supersedes, validates, aliases, depends on, or
 supplies authority to the other; overlapping words are not wire or semantic

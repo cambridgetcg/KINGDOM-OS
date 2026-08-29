@@ -1,0 +1,1853 @@
+{
+  "$schema": "https://thekingdom.dev/schemas/aesthetic-plurality-making-atlas/0.1.json",
+  "artifact": {
+    "asOf": "2026-08-29",
+    "authorship": {
+      "assistanceDisclosure": "Human-directed request; model-assisted research synthesis, original synthetic fixture authorship, implementation, and prefreeze verification. Independent review and release authorization remain separate recorded events.",
+      "humanDirected": true,
+      "modelAssisted": true
+    },
+    "id": "kingdom-aesthetic-plurality-making-atlas-phase-0-2026-08-29",
+    "kind": "STATIC_SYNTHETIC_RELATION_ATLAS",
+    "lifecycle": {
+      "externalPublicationPerformed": false,
+      "frozen": true,
+      "humanReviewCompleted": false,
+      "independentReviewGreen": true,
+      "phase": "FROZEN_STATIC_FIXTURE",
+      "publicationAuthorized": true,
+      "releaseGateSatisfied": true,
+      "reviewState": "INDEPENDENT_REVIEW_GREEN_EXACT_BYTE_HANDOFF"
+    },
+    "title": "KINGDOM Aesthetic Plurality & Making Relations Atlas — Phase 0"
+  },
+  "buildReceipt": {
+    "arithmetic": "EXACT_BOUNDED_SAFE_INTEGER_RATIONAL_FINITE_SET_AND_FINITE_GRAPH",
+    "clockRead": false,
+    "externalInputUsed": false,
+    "generatorInputReceipts": [
+      {
+        "byteSha256": "sha256:5a9de5fa37ebe5d64577a14017f2a089423b750675f95b2dc621ff400768fe6e",
+        "bytes": 779,
+        "path": "PUBLICATION-AUTHORIZATION.md"
+      },
+      {
+        "byteSha256": "sha256:b2603d78cf599391ab9504402c9ca5ba6e638eb67694bc09edf6ba0ed67023c3",
+        "bytes": 4947,
+        "path": "DESIGN-CONTRACT.md"
+      },
+      {
+        "byteSha256": "sha256:b9f811a6466b66bf282d59ff9535ad6f965b26a0c91ef3224b3e7843e94100ed",
+        "bytes": 4859,
+        "path": "SOURCE-INVENTORY.md"
+      },
+      {
+        "byteSha256": "sha256:aeb6d2e8ce1d692b03ff36be34050fcf59aa03d03671b5ec08e5ef800d6a6b38",
+        "bytes": 3077,
+        "path": "data/config.json"
+      },
+      {
+        "byteSha256": "sha256:b99e9b7d806c3a36f263eaccfa7271b053fb987240001d7fe6315fc2d487b9c0",
+        "bytes": 27788,
+        "path": "data/content.json"
+      },
+      {
+        "byteSha256": "sha256:2977b27db4169d5670c7f4a9aaa1c170e67b7663c025d793d4958e2f8b4750e5",
+        "bytes": 20703,
+        "path": "data/fixtures.json"
+      },
+      {
+        "byteSha256": "sha256:8f09e20817432b4f3b3d5725fa069c9aa3a24e99b56e01dfead3a7397e48cf10",
+        "bytes": 14497,
+        "path": "guide/public-guide.md"
+      },
+      {
+        "byteSha256": "sha256:97cb3483f5b4b533d9f4603ca1e47ca31d784c8077070a27a3a04347e86b55b1",
+        "bytes": 30899,
+        "path": "src/atlas.mjs"
+      },
+      {
+        "byteSha256": "sha256:2a61912bc885d03d0512520ac2bb060be110588c8952e7adda13fa925d731da3",
+        "bytes": 4425,
+        "path": "src/cli.mjs"
+      },
+      {
+        "byteSha256": "sha256:48c92300b0e8d0e5be424bf19524bf444a48b86633ac229606f239a7e9df5a43",
+        "bytes": 12971,
+        "path": "src/io.mjs"
+      },
+      {
+        "byteSha256": "sha256:e0460dfae7fa43aca58f2a604325be2c14b3df8af6904a3a4b33467a875101e3",
+        "bytes": 5895,
+        "path": "src/schema.mjs"
+      },
+      {
+        "byteSha256": "sha256:5cd9486338f848ce79f4909f7a783f7e9c67efc0598f1561c0c67319ffb0fb74",
+        "bytes": 22587,
+        "path": "src/verifier.mjs"
+      }
+    ],
+    "networkUsed": false,
+    "randomnessUsed": false,
+    "semanticPayloadSha256": "sha256:31910cdeca51dbd7a14bc9cb468cf4e9fbd62933a09b62bd47645bc3626162b4",
+    "verifiedFixtureCount": 18,
+    "verifierState": "ALL_STATIC_SYNTHETIC_FIXTURES_RECOMPUTED"
+  },
+  "constitutionalBoundaries": {
+    "fixtureSafety": [
+      "original-synthetic-only",
+      "abstract-labels-and-finite-structures-only",
+      "no-real-person",
+      "no-participant-record",
+      "no-private-data",
+      "no-personal-appearance-assessment",
+      "no-living-tradition-representation",
+      "no-protected-cultural-expression",
+      "no-recognizable-third-party-work"
+    ],
+    "forbiddenConversions": [
+      "measurement-to-aesthetic-authority",
+      "response-to-universal-taste",
+      "judgment-to-truth",
+      "judgment-to-goodness",
+      "judgment-to-justice",
+      "judgment-to-completion",
+      "selection-to-winner",
+      "publication-to-permission",
+      "publication-to-adoption",
+      "lineage-to-authorship",
+      "generation-to-ownership",
+      "aftermath-to-reward-or-punishment"
+    ],
+    "forbiddenFieldNames": [
+      "beautyScore",
+      "tasteScore",
+      "personScore",
+      "cultureScore",
+      "artifactScore",
+      "rank",
+      "ranking",
+      "winner",
+      "recommendation",
+      "moderation",
+      "gate",
+      "truthVerdict",
+      "goodnessVerdict",
+      "justiceVerdict",
+      "completionVerdict",
+      "attractivenessScore"
+    ],
+    "noAutomaticConversion": true,
+    "notBeautyFramework": true,
+    "opening": "A form can be measured without being beautiful. A synthetic attributed response can be recorded without becoming universal. A work can be made without settling who authored, owns, may publish, or should adopt it. This atlas keeps those seams open so creation remains plural.",
+    "separatelyOwnedBeautyDoctrineImported": false
+  },
+  "counts": {
+    "equationCards": 9,
+    "kingdomOrientations": 0,
+    "lanes": 10,
+    "mathematicalFixtures": 9,
+    "mathematicalRegisters": 2,
+    "nonEquivalences": 21,
+    "relationTypes": 15,
+    "relationalFixtures": 9,
+    "sourceBindings": 14,
+    "syntheticFixtures": 18,
+    "terms": 12
+  },
+  "equationCards": [
+    {
+      "assumptions": [
+        "A finite representation x and a finite declared transformation set G are supplied."
+      ],
+      "fixtureIds": [
+        "FIXTURE_SYMMETRY_STABILIZER"
+      ],
+      "id": "CARD_SYMMETRY_STABILIZER",
+      "nonclaims": [
+        "The stabilizer size is not an aesthetic scalar and does not imply preference."
+      ],
+      "notation": "Stab_G(x) = { g in G | g·x = x }",
+      "title": "Symmetry is invariance under declared transformations"
+    },
+    {
+      "assumptions": [
+        "The fixture uses dyadic rational probabilities so verification remains exact."
+      ],
+      "fixtureIds": [
+        "FIXTURE_DYADIC_ENTROPY"
+      ],
+      "id": "CARD_SHANNON_ENTROPY",
+      "nonclaims": [
+        "Entropy is not meaning, quality, beauty, or cultural significance."
+      ],
+      "notation": "H(P) = -Σ p_i log2(p_i)",
+      "title": "Entropy depends on a declared distribution"
+    },
+    {
+      "assumptions": [
+        "Every code and specimen is explicitly finite."
+      ],
+      "fixtureIds": [
+        "FIXTURE_CODE_ORDER_REVERSAL"
+      ],
+      "id": "CARD_DESCRIPTION_LENGTH",
+      "nonclaims": [
+        "A shorter declared encoding is not a better work or a universal simplicity fact."
+      ],
+      "notation": "L_C(x) = Σ count_x(s) · length_C(s)",
+      "title": "Description length depends on code and model"
+    },
+    {
+      "assumptions": [
+        "The representation and finite reference set are named."
+      ],
+      "fixtureIds": [
+        "FIXTURE_REFERENCE_RELATIVE_NOVELTY"
+      ],
+      "id": "CARD_RELATIVE_NOVELTY",
+      "nonclaims": [
+        "Reference-relative absence is not global originality, priority, authorship, or value."
+      ],
+      "notation": "N_R(x) = 1 when repr(x) is not in R; otherwise 0",
+      "title": "Novelty is relative to a reference and representation"
+    },
+    {
+      "assumptions": [
+        "All fixture coordinates belong only to an invented decision-vector register and are declared as maximize directions."
+      ],
+      "fixtureIds": [
+        "FIXTURE_PARETO_NON_DOMINATION"
+      ],
+      "id": "CARD_PARETO_FRONTIER",
+      "nonclaims": [
+        "The frontier supplies no artifact evaluation, aesthetic judgment, winner, scalar order, or recommendation."
+      ],
+      "notation": "x is dominated when some y is >= on all declared objectives and > on at least one",
+      "title": "Non-domination preserves plural abstract coordinates"
+    },
+    {
+      "assumptions": [
+        "Each synthetic ballot is a strict order over the same three labels."
+      ],
+      "fixtureIds": [
+        "FIXTURE_CONDORCET_CYCLE"
+      ],
+      "id": "CARD_PAIRWISE_CYCLE",
+      "nonclaims": [
+        "Majority relations do not become a coherent collective taste or aesthetic authority."
+      ],
+      "notation": "A ≻ B, B ≻ C, C ≻ A",
+      "title": "Pairwise aggregation can cycle"
+    },
+    {
+      "assumptions": [
+        "The declared version graph is finite."
+      ],
+      "fixtureIds": [
+        "FIXTURE_VERSION_DAG"
+      ],
+      "id": "CARD_VERSION_LINEAGE",
+      "nonclaims": [
+        "Lineage does not settle intention, authorship, ownership, permission, or endorsement."
+      ],
+      "notation": "ancestor(u,v) iff a directed path u -> ... -> v exists",
+      "title": "Derivation is a graph relation"
+    },
+    {
+      "assumptions": [
+        "The finite distribution is exact and totals one."
+      ],
+      "fixtureIds": [
+        "FIXTURE_STOCHASTIC_SUPPORT"
+      ],
+      "id": "CARD_STOCHASTIC_OCCURRENCE",
+      "nonclaims": [
+        "Probability and occurrence do not establish intention, authorship, ownership, or permission."
+      ],
+      "notation": "P(X=x) > 0 implies x is supported; nothing more",
+      "title": "Occurrence under a distribution is not intention"
+    },
+    {
+      "assumptions": [
+        "A finite feasible set, directed transition set, and start state are declared."
+      ],
+      "fixtureIds": [
+        "FIXTURE_FEASIBLE_NOT_REACHABLE"
+      ],
+      "id": "CARD_FEASIBILITY_REACHABILITY",
+      "nonclaims": [
+        "Neither set establishes publication, adoption, permission, or real-world capability."
+      ],
+      "notation": "Reach(s0,E) may be a proper subset of F",
+      "title": "Feasibility and reachability are different sets"
+    }
+  ],
+  "kingdomOrientations": [],
+  "nonEquivalences": [
+    {
+      "fixtureIds": [
+        "FIXTURE_SYMMETRY_STABILIZER",
+        "FIXTURE_ATTRIBUTED_DISAGREEMENT"
+      ],
+      "id": "NEQ_SYMMETRY_AESTHETIC_JUDGMENT",
+      "left": "SYMMETRY_UNDER_TRANSFORM_SET",
+      "reason": "Invariance is computed from a declared representation and transformations; an aesthetic judgment is an attributed evaluative act.",
+      "right": "AESTHETIC_JUDGMENT"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_DYADIC_ENTROPY"
+      ],
+      "id": "NEQ_ENTROPY_MEANING",
+      "left": "SHANNON_ENTROPY",
+      "reason": "Distributional uncertainty does not encode semantic, historical, cultural, or evaluative significance.",
+      "right": "MEANING_OR_AESTHETIC_WORTH"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_CODE_ORDER_REVERSAL"
+      ],
+      "id": "NEQ_CODE_LENGTH_GLOBAL_COMPLEXITY",
+      "left": "DESCRIPTION_LENGTH_UNDER_CODE_C1",
+      "reason": "The fixture reverses the ordering under a second declared code.",
+      "right": "GLOBAL_COMPLEXITY_OR_QUALITY"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_REFERENCE_RELATIVE_NOVELTY"
+      ],
+      "id": "NEQ_RELATIVE_GLOBAL_NOVELTY",
+      "left": "REFERENCE_RELATIVE_NOVELTY",
+      "reason": "The same representation is absent from one reference and present in another.",
+      "right": "GLOBAL_ORIGINALITY"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_PARETO_NON_DOMINATION"
+      ],
+      "id": "NEQ_PARETO_WINNER",
+      "left": "PARETO_NON_DOMINATION",
+      "reason": "Multiple invented coordinate vectors can remain on a frontier without any artifact relation, scalarization, or choice rule.",
+      "right": "WINNER_OR_RECOMMENDATION"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_CONDORCET_CYCLE"
+      ],
+      "id": "NEQ_AGGREGATION_COLLECTIVE_TASTE",
+      "left": "PAIRWISE_MAJORITY_RELATION",
+      "reason": "Pairwise majorities can be cyclic even when each synthetic ballot is transitive.",
+      "right": "COHERENT_COLLECTIVE_TASTE"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_VERSION_DAG"
+      ],
+      "id": "NEQ_LINEAGE_AUTHORSHIP",
+      "left": "VERSION_DAG",
+      "reason": "A derivation edge records ancestry only.",
+      "right": "AUTHORSHIP_OWNERSHIP_OR_PERMISSION"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_STOCHASTIC_SUPPORT"
+      ],
+      "id": "NEQ_PROBABILITY_INTENTION",
+      "left": "STOCHASTIC_SUPPORT_OR_PROBABILITY",
+      "reason": "A supported observed outcome supplies no maker statement or legal conclusion.",
+      "right": "INTENTION_OR_AUTHORSHIP"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_FEASIBLE_NOT_REACHABLE"
+      ],
+      "id": "NEQ_FEASIBLE_REACHABLE",
+      "left": "FEASIBLE_SET",
+      "reason": "A feasible state can be disconnected from the declared start under the declared transitions.",
+      "right": "GRAPH_REACHABILITY"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_FEASIBLE_NOT_REACHABLE",
+        "FIXTURE_PUBLICATION_WITHOUT_ADOPTION"
+      ],
+      "id": "NEQ_REACHABLE_ADOPTED",
+      "left": "GRAPH_REACHABILITY",
+      "reason": "A path in a model does not record a voluntary adoption event.",
+      "right": "ADOPTION"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_RESPONSE_JUDGMENT_SEPARATION"
+      ],
+      "id": "NEQ_RESPONSE_JUDGMENT",
+      "left": "ATTRIBUTED_RESPONSE",
+      "reason": "A reported encounter and an explicit evaluation are separate attributed acts.",
+      "right": "AESTHETIC_JUDGMENT"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_ATTRIBUTED_DISAGREEMENT"
+      ],
+      "id": "NEQ_JUDGMENT_TRUTH_GOODNESS_JUSTICE",
+      "left": "AESTHETIC_JUDGMENT",
+      "reason": "The atlas records who judged what under which terms; it grants no metaphysical or moral conversion.",
+      "right": "TRUTH_GOODNESS_OR_JUSTICE"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_MAKER_STATEMENT_BOUNDARY"
+      ],
+      "id": "NEQ_MAKER_STATEMENT_SETTLED_MEANING",
+      "left": "MAKER_STATEMENT",
+      "reason": "Attribution establishes that a statement is in the fixture, not that it exhausts interpretation or proves an inner state.",
+      "right": "EXCLUSIVE_MEANING_OR_PROVEN_INNER_STATE"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_SYNTHETIC_CONTEXT_VARIATION"
+      ],
+      "id": "NEQ_CONTEXT_CULTURE_ESSENCE",
+      "left": "DECLARED_CONTEXT_OR_TRADITION",
+      "reason": "Context records are partial and attributed; they do not define a people or settle rights.",
+      "right": "CULTURAL_ESSENCE_PERMISSION_OR_OWNERSHIP"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_INSTITUTIONAL_SELECTION_BOUNDARY"
+      ],
+      "id": "NEQ_SELECTION_AESTHETIC_AUTHORITY",
+      "left": "INSTITUTIONAL_SELECTION",
+      "reason": "A selection event is scoped to one institution and procedure.",
+      "right": "AESTHETIC_AUTHORITY_OR_UNIVERSAL_WINNER"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_PUBLICATION_WITHOUT_ADOPTION"
+      ],
+      "id": "NEQ_PUBLICATION_PERMISSION_ADOPTION",
+      "left": "PUBLICATION",
+      "reason": "Availability, rights terms, and voluntary reuse are separately recorded relations.",
+      "right": "PERMISSION_LICENCE_OR_ADOPTION"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_ADOPTION_WITHOUT_ENDORSEMENT"
+      ],
+      "id": "NEQ_ADOPTION_ENDORSEMENT",
+      "left": "ADOPTION",
+      "reason": "One scoped reuse event need not affirm every statement, interpretation, or future use.",
+      "right": "ENDORSEMENT_OR_UNIVERSAL_ACCEPTANCE"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_AFTERMATH_REPAIR_BOUNDARY"
+      ],
+      "id": "NEQ_AFTERMATH_RETROACTIVE_VERDICT",
+      "left": "AFTERMATH",
+      "reason": "Consequences can inform repair without becoming a retroactive universal verdict.",
+      "right": "RETROACTIVE_AESTHETIC_TRUTH_REWARD_OR_PUNISHMENT"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_ACCESS_NOT_AESTHETIC_VERDICT"
+      ],
+      "id": "NEQ_ACCESS_AESTHETIC_QUALITY",
+      "left": "ACCESS_RELATION",
+      "reason": "A scoped technical access condition is important but does not settle aesthetic judgment or every user need.",
+      "right": "AESTHETIC_QUALITY_OR_UNIVERSAL_INCLUSION"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_VERSION_DAG"
+      ],
+      "id": "NEQ_TRANSLATION_IDENTITY_MEANING",
+      "left": "TRANSLATES_WITH_DECLARED_LOSS",
+      "reason": "A typed translation edge can name unresolved or lost distinctions and therefore is not an identity edge.",
+      "right": "IDENTITY_OR_COMPLETE_MEANING_PRESERVATION"
+    },
+    {
+      "fixtureIds": [
+        "FIXTURE_VERSION_DAG"
+      ],
+      "id": "NEQ_TRANSLATION_RIGHTS",
+      "left": "TRANSLATION_OR_VERSION_DERIVATION",
+      "reason": "A translation or derivation record does not settle authorization or rights.",
+      "right": "PERMISSION_LICENCE_OR_OWNERSHIP"
+    }
+  ],
+  "protocol": "kingdom.aesthetic-plurality-making/0.1",
+  "publicHandoff": {
+    "currentState": "FROZEN_FOR_IMMUTABLE_HANDOFF",
+    "htmlPage": false,
+    "mutableAlias": false,
+    "publicationAuthorized": true,
+    "reviewGate": "INDEPENDENT_REVIEW_GREEN_THEN_RELEASE_OWNER_EXACT_BYTE_AUTHORIZATION",
+    "routes": [
+      {
+        "absoluteUrl": "https://thekingdom.dev/atlases/aesthetic-plurality-making-atlas-2026-08-29.json",
+        "immutable": true,
+        "mimeType": "application/json; charset=utf-8",
+        "role": "CANONICAL_RECORD",
+        "route": "/atlases/aesthetic-plurality-making-atlas-2026-08-29.json"
+      },
+      {
+        "absoluteUrl": "https://thekingdom.dev/schemas/aesthetic-plurality-making-atlas/0.1.json",
+        "immutable": true,
+        "mimeType": "application/json; charset=utf-8",
+        "role": "CLOSED_SCHEMA",
+        "route": "/schemas/aesthetic-plurality-making-atlas/0.1.json"
+      },
+      {
+        "absoluteUrl": "https://thekingdom.dev/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md",
+        "immutable": true,
+        "mimeType": "text/markdown; charset=utf-8",
+        "role": "ACCESSIBLE_LINEAR_GUIDE",
+        "route": "/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md"
+      }
+    ],
+    "runtime": false
+  },
+  "scope": {
+    "accessDecision": false,
+    "account": false,
+    "api": false,
+    "artifactEvaluation": false,
+    "authorityConversion": false,
+    "automatedRanking": false,
+    "automatedRecommendation": false,
+    "automaticAction": false,
+    "completionConversion": false,
+    "cultureEvaluation": false,
+    "enforcementDecision": false,
+    "formInput": false,
+    "goodnessConversion": false,
+    "governanceDecision": false,
+    "justiceConversion": false,
+    "legalConclusion": false,
+    "liveInput": false,
+    "livingTraditionFixture": false,
+    "mcp": false,
+    "moderationDecision": false,
+    "network": false,
+    "ownershipConversion": false,
+    "participantData": false,
+    "permissionConversion": false,
+    "personEvaluation": false,
+    "personalAppearanceAssessment": false,
+    "privateData": false,
+    "protectedExpressionFixture": false,
+    "publicationDecision": false,
+    "realPeople": false,
+    "recognizableThirdPartyWork": false,
+    "runtime": false,
+    "scalarAestheticEvaluation": false,
+    "staticArtifact": true,
+    "syntheticOnly": true,
+    "truthConversion": false,
+    "wcagConformanceClaim": false
+  },
+  "sourceBindingInvariants": {
+    "authorityImported": false,
+    "complianceImported": false,
+    "currentnessImported": false,
+    "downloadedAtBuild": false,
+    "endorsementImported": false,
+    "licenceImported": false,
+    "linkOnly": true,
+    "permissionImported": false,
+    "reuseRightImported": false,
+    "sourceTextImported": false,
+    "truthImported": false
+  },
+  "sourceBindings": [
+    {
+      "bindingRole": "Information entropy orientation for one exact dyadic fixture.",
+      "citation": "Claude E. Shannon, A Mathematical Theory of Communication, Bell System Technical Journal 27(3), 379–423 (1948).",
+      "class": "PRIMARY_TECHNICAL_SOURCE",
+      "id": "SOURCE_SHANNON_1948",
+      "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+    },
+    {
+      "bindingRole": "Description-length orientation; the atlas emphasizes declared-code dependence.",
+      "citation": "Jorma Rissanen, Modeling by shortest data description, Automatica 14(5), 465–471 (1978).",
+      "class": "PRIMARY_TECHNICAL_SOURCE",
+      "id": "SOURCE_RISSANEN_1978",
+      "url": "https://doi.org/10.1016/0005-1098(78)90005-5"
+    },
+    {
+      "bindingRole": "Algorithmic-description orientation with explicit reference-model dependence.",
+      "citation": "A. N. Kolmogorov, Three approaches to the quantitative definition of information, Problems of Information Transmission 1(1), 3–11 (1965); English edition 1968.",
+      "class": "PRIMARY_TECHNICAL_SOURCE",
+      "id": "SOURCE_KOLMOGOROV_1965",
+      "url": "https://doi.org/10.1080/00207166808803030"
+    },
+    {
+      "bindingRole": "Historical orientation for cyclic pairwise aggregation.",
+      "citation": "Nicolas de Condorcet, Essai sur l’application de l’analyse à la probabilité des décisions rendues à la pluralité des voix, Imprimerie Royale (1785).",
+      "class": "PRIMARY_TECHNICAL_SOURCE",
+      "id": "SOURCE_CONDORCET_1785",
+      "url": "https://gallica.bnf.fr/ark:/12148/bpt6k1057808s"
+    },
+    {
+      "bindingRole": "Social-choice orientation for limits of preference aggregation; no governance procedure is imported.",
+      "citation": "Kenneth J. Arrow, Social Choice and Individual Values, Cowles Commission Monograph 12 (1951).",
+      "class": "PRIMARY_TECHNICAL_SOURCE",
+      "id": "SOURCE_ARROW_1951",
+      "url": "https://cowles.yale.edu/sites/default/files/2022-09/m12-all.pdf"
+    },
+    {
+      "bindingRole": "One attributed processing-fluency model, preserved as a proposal rather than a universal law.",
+      "citation": "Rolf Reber, Norbert Schwarz, and Piotr Winkielman, Processing Fluency and Aesthetic Pleasure: Is Beauty in the Perceiver’s Processing Experience?, Personality and Social Psychology Review 8(4), 364–382 (2004).",
+      "class": "PRIMARY_TECHNICAL_SOURCE",
+      "id": "SOURCE_REBER_SCHWARZ_WINKIELMAN_2004",
+      "url": "https://doi.org/10.1207/S15327957PSPR0804_3"
+    },
+    {
+      "bindingRole": "Empirical counterweight to universal conversion from symmetry to aesthetic judgment.",
+      "citation": "Helmut Leder, Pablo P. L. Tinio, David Brieber, Tonio Kröner, Thomas Jacobsen, and Raphael Rosenberg, Symmetry Is Not a Universal Law of Beauty, Empirical Studies of the Arts 37(1), 104–114 (2019).",
+      "class": "PRIMARY_TECHNICAL_SOURCE",
+      "id": "SOURCE_LEDER_ET_AL_2019",
+      "url": "https://doi.org/10.1177/0276237418777941"
+    },
+    {
+      "bindingRole": "Individual disagreement orientation limited to abstract randomized patterns.",
+      "citation": "Jay Friedenberg, Beauty in the Eye of the Beholder: Individual Differences in Preference for Randomized Visual Patterns, Experimental Psychology 66(2), 123–136 (2019).",
+      "class": "PRIMARY_TECHNICAL_SOURCE",
+      "id": "SOURCE_FRIEDENBERG_2019",
+      "url": "https://doi.org/10.1027/1618-3169/a000432"
+    },
+    {
+      "bindingRole": "Cross-cultural empirical orientation preserving both commonality and difference without culture scores.",
+      "citation": "Eline Van Geert, Rong Ding, and Johan Wagemans, A Cross-Cultural Comparison of Aesthetic Preferences for Neatly Organized Compositions: Native Chinese- Versus Native Dutch-Speaking Samples, Empirical Studies of the Arts 43(1), 250–275 (2025; online 2024).",
+      "class": "PRIMARY_TECHNICAL_SOURCE",
+      "id": "SOURCE_VAN_GEERT_DING_WAGEMANS_2025",
+      "url": "https://doi.org/10.1177/02762374241245917"
+    },
+    {
+      "bindingRole": "Official cultural-expression diversity context; no compliance or legal conclusion.",
+      "citation": "UNESCO, Convention on the Protection and Promotion of the Diversity of Cultural Expressions, adopted 20 October 2005.",
+      "class": "OFFICIAL_NORMATIVE_CONTEXT",
+      "id": "SOURCE_UNESCO_2005_CONVENTION",
+      "url": "https://www.unesco.org/en/legal-affairs/convention-protection-and-promotion-diversity-cultural-expressions"
+    },
+    {
+      "bindingRole": "Boundary context against treating cultural expressions as ownerless fixture material.",
+      "citation": "World Intellectual Property Organization, Traditional Cultural Expressions, official topic page.",
+      "class": "OFFICIAL_NORMATIVE_CONTEXT",
+      "id": "SOURCE_WIPO_TCE",
+      "url": "https://www.wipo.int/en/web/traditional-knowledge/traditional-cultural-expressions/index"
+    },
+    {
+      "bindingRole": "Official Indigenous-rights context; no culture is represented by a synthetic fixture.",
+      "citation": "United Nations General Assembly, United Nations Declaration on the Rights of Indigenous Peoples, A/RES/61/295 (2007), especially Article 31.",
+      "class": "OFFICIAL_NORMATIVE_CONTEXT",
+      "id": "SOURCE_UNDRIP_2007",
+      "url": "https://www.un.org/development/desa/Indigenouspeoples/wp-content/uploads/sites/19/2018/11/UNDRIP_E_web.pdf"
+    },
+    {
+      "bindingRole": "Technical access orientation kept distinct from aesthetic judgment; no conformance claim.",
+      "citation": "W3C Accessibility Guidelines Working Group, Web Content Accessibility Guidelines (WCAG) 2.2, W3C Recommendation 12 December 2024.",
+      "class": "OFFICIAL_NORMATIVE_CONTEXT",
+      "id": "SOURCE_WCAG_2_2_2024",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/"
+    },
+    {
+      "bindingRole": "Jurisdiction-specific legal context for keeping stochastic generation, human contribution, and authorship questions distinct; no legal advice or conclusion.",
+      "citation": "U.S. Copyright Office, Copyright and Artificial Intelligence, Part 2: Copyrightability (January 2025).",
+      "class": "OFFICIAL_NORMATIVE_CONTEXT",
+      "id": "SOURCE_USCO_AI_PART_2_2025",
+      "url": "https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf"
+    }
+  ],
+  "syntheticFixtures": [
+    {
+      "expected": {
+        "preservingTransformCount": 4,
+        "preservingTransformIds": [
+          "IDENTITY",
+          "ROTATE_180",
+          "REFLECT_MAIN_DIAGONAL",
+          "REFLECT_ANTI_DIAGONAL"
+        ]
+      },
+      "id": "FIXTURE_SYMMETRY_STABILIZER",
+      "input": {
+        "sequence": [
+          "R",
+          "B",
+          "B",
+          "R"
+        ],
+        "transforms": [
+          {
+            "id": "IDENTITY",
+            "permutation": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "id": "ROTATE_90",
+            "permutation": [
+              2,
+              0,
+              3,
+              1
+            ]
+          },
+          {
+            "id": "ROTATE_180",
+            "permutation": [
+              3,
+              2,
+              1,
+              0
+            ]
+          },
+          {
+            "id": "ROTATE_270",
+            "permutation": [
+              1,
+              3,
+              0,
+              2
+            ]
+          },
+          {
+            "id": "REFLECT_VERTICAL",
+            "permutation": [
+              1,
+              0,
+              3,
+              2
+            ]
+          },
+          {
+            "id": "REFLECT_HORIZONTAL",
+            "permutation": [
+              2,
+              3,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "REFLECT_MAIN_DIAGONAL",
+            "permutation": [
+              0,
+              2,
+              1,
+              3
+            ]
+          },
+          {
+            "id": "REFLECT_ANTI_DIAGONAL",
+            "permutation": [
+              3,
+              1,
+              2,
+              0
+            ]
+          }
+        ]
+      },
+      "kind": "MATHEMATICAL",
+      "lane": "FORM",
+      "nonclaims": [
+        "Four preserving transforms do not make the pattern beautiful, good, important, finished, or preferred."
+      ],
+      "operation": "SYMMETRY_STABILIZER",
+      "premises": [
+        "The four positions are a declared 2-by-2 representation.",
+        "A transform acts by the listed permutation and no unlisted transform is inferred."
+      ],
+      "synthetic": true,
+      "title": "One finite pattern has four preserving transformations in the declared set",
+      "witnessesNonEquivalence": [
+        "NEQ_SYMMETRY_AESTHETIC_JUDGMENT"
+      ]
+    },
+    {
+      "expected": {
+        "entropyBits": {
+          "denominator": 2,
+          "numerator": 3
+        }
+      },
+      "id": "FIXTURE_DYADIC_ENTROPY",
+      "input": {
+        "logarithmBase": 2,
+        "symbols": [
+          {
+            "count": 2,
+            "id": "A"
+          },
+          {
+            "count": 1,
+            "id": "B"
+          },
+          {
+            "count": 1,
+            "id": "C"
+          }
+        ],
+        "total": 4
+      },
+      "kind": "MATHEMATICAL",
+      "lane": "FORM",
+      "nonclaims": [
+        "Three halves of a bit says nothing about meaning, response, aesthetic judgment, culture, or worth."
+      ],
+      "operation": "DYADIC_ENTROPY",
+      "premises": [
+        "Counts are positive integers and total four.",
+        "Logarithms use base two."
+      ],
+      "synthetic": true,
+      "title": "Exact entropy for a declared three-symbol distribution",
+      "witnessesNonEquivalence": [
+        "NEQ_ENTROPY_MEANING"
+      ]
+    },
+    {
+      "expected": {
+        "orderingReverses": true,
+        "shorterByCodebook": [
+          {
+            "codebookId": "CODE_A_SHORT",
+            "specimenId": "X"
+          },
+          {
+            "codebookId": "CODE_B_SHORT",
+            "specimenId": "Y"
+          }
+        ],
+        "totals": [
+          {
+            "bits": 4,
+            "codebookId": "CODE_A_SHORT",
+            "specimenId": "X"
+          },
+          {
+            "bits": 8,
+            "codebookId": "CODE_A_SHORT",
+            "specimenId": "Y"
+          },
+          {
+            "bits": 8,
+            "codebookId": "CODE_B_SHORT",
+            "specimenId": "X"
+          },
+          {
+            "bits": 4,
+            "codebookId": "CODE_B_SHORT",
+            "specimenId": "Y"
+          }
+        ]
+      },
+      "id": "FIXTURE_CODE_ORDER_REVERSAL",
+      "input": {
+        "codebooks": [
+          {
+            "id": "CODE_A_SHORT",
+            "lengths": [
+              {
+                "bits": 1,
+                "symbol": "A"
+              },
+              {
+                "bits": 2,
+                "symbol": "B"
+              }
+            ]
+          },
+          {
+            "id": "CODE_B_SHORT",
+            "lengths": [
+              {
+                "bits": 2,
+                "symbol": "A"
+              },
+              {
+                "bits": 1,
+                "symbol": "B"
+              }
+            ]
+          }
+        ],
+        "specimens": [
+          {
+            "id": "X",
+            "symbols": [
+              "A",
+              "A",
+              "A",
+              "A"
+            ]
+          },
+          {
+            "id": "Y",
+            "symbols": [
+              "B",
+              "B",
+              "B",
+              "B"
+            ]
+          }
+        ]
+      },
+      "kind": "MATHEMATICAL",
+      "lane": "FORM",
+      "nonclaims": [
+        "Neither encoding is an aesthetic judgment, quality metric, or universal complexity measure."
+      ],
+      "operation": "CODE_LENGTH_REVERSAL",
+      "premises": [
+        "Only literal symbol lengths are summed.",
+        "Each declared code is a fixture convention, not a claim of optimal compression."
+      ],
+      "synthetic": true,
+      "title": "Two declared codes reverse the description-length ordering",
+      "witnessesNonEquivalence": [
+        "NEQ_CODE_LENGTH_GLOBAL_COMPLEXITY"
+      ]
+    },
+    {
+      "expected": {
+        "notNovelRelativeTo": [
+          "REFERENCE_BETA"
+        ],
+        "novelRelativeTo": [
+          "REFERENCE_ALPHA"
+        ]
+      },
+      "id": "FIXTURE_REFERENCE_RELATIVE_NOVELTY",
+      "input": {
+        "candidateRepresentation": "spiral|blue",
+        "references": [
+          {
+            "id": "REFERENCE_ALPHA",
+            "representations": [
+              "line|red",
+              "arc|blue"
+            ]
+          },
+          {
+            "id": "REFERENCE_BETA",
+            "representations": [
+              "line|red",
+              "spiral|blue"
+            ]
+          }
+        ]
+      },
+      "kind": "MATHEMATICAL",
+      "lane": "FORM",
+      "nonclaims": [
+        "Absence from REFERENCE_ALPHA does not establish global originality, priority, authorship, ownership, or aesthetic worth."
+      ],
+      "operation": "REFERENCE_MEMBERSHIP",
+      "premises": [
+        "Representation is exact string identity in this fixture.",
+        "Reference sets are finite and explicitly named."
+      ],
+      "synthetic": true,
+      "title": "The same representation is absent from one reference and present in another",
+      "witnessesNonEquivalence": [
+        "NEQ_RELATIVE_GLOBAL_NOVELTY"
+      ]
+    },
+    {
+      "expected": {
+        "paretoFrontierVectorIds": [
+          "VECTOR_A",
+          "VECTOR_B",
+          "VECTOR_C"
+        ],
+        "strictlyDominatedVectorIds": [
+          "VECTOR_D"
+        ]
+      },
+      "id": "FIXTURE_PARETO_NON_DOMINATION",
+      "input": {
+        "coordinateIds": [
+          "DECLARED_COORDINATE_P",
+          "DECLARED_COORDINATE_Q"
+        ],
+        "vectors": [
+          {
+            "coordinates": [
+              3,
+              1
+            ],
+            "id": "VECTOR_A"
+          },
+          {
+            "coordinates": [
+              2,
+              2
+            ],
+            "id": "VECTOR_B"
+          },
+          {
+            "coordinates": [
+              1,
+              3
+            ],
+            "id": "VECTOR_C"
+          },
+          {
+            "coordinates": [
+              1,
+              1
+            ],
+            "id": "VECTOR_D"
+          }
+        ]
+      },
+      "kind": "MATHEMATICAL",
+      "lane": "ABSTRACT_DECISION_VECTOR_REGISTER",
+      "nonclaims": [
+        "The vectors are not artifacts or judgments; the frontier ranks, selects, and recommends nothing."
+      ],
+      "operation": "PARETO_MAXIMIZE",
+      "premises": [
+        "Both integer coordinates are declared as maximize directions.",
+        "No weights, scalarization, or choice rule exists."
+      ],
+      "synthetic": true,
+      "title": "Three invented vectors remain on a Pareto frontier under two declared coordinates",
+      "witnessesNonEquivalence": [
+        "NEQ_PARETO_WINNER"
+      ]
+    },
+    {
+      "expected": {
+        "collectiveWinnerEstablished": false,
+        "cycle": true
+      },
+      "id": "FIXTURE_CONDORCET_CYCLE",
+      "input": {
+        "ballots": [
+          {
+            "id": "SYNTHETIC_BALLOT_1",
+            "order": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "SYNTHETIC_BALLOT_2",
+            "order": [
+              "B",
+              "C",
+              "A"
+            ]
+          },
+          {
+            "id": "SYNTHETIC_BALLOT_3",
+            "order": [
+              "C",
+              "A",
+              "B"
+            ]
+          }
+        ]
+      },
+      "kind": "MATHEMATICAL",
+      "lane": "ABSTRACT_PREFERENCE_AGGREGATION_REGISTER",
+      "nonclaims": [
+        "The fixture produces no ranking; the cycle authorizes no tie-breaker, institution, winner, consensus, recommendation, or collective aesthetic voice."
+      ],
+      "operation": "PAIRWISE_MAJORITY_CYCLE",
+      "premises": [
+        "A, B, and C are opaque synthetic symbols, not artifacts, people, cultures, or aesthetic judgments.",
+        "Each fixed ballot is a strict order over the same symbols and every ballot has equal count one."
+      ],
+      "synthetic": true,
+      "title": "Three fixed orders over opaque synthetic symbols yield a cyclic pairwise relation",
+      "witnessesNonEquivalence": [
+        "NEQ_AGGREGATION_COLLECTIVE_TASTE"
+      ]
+    },
+    {
+      "expected": {
+        "acyclic": true,
+        "ancestorRelations": [
+          "SKETCH_1>ASSEMBLY_2",
+          "SKETCH_1>PRINT_3",
+          "SKETCH_1>TRANSLATION_3B",
+          "ASSEMBLY_2>PRINT_3",
+          "ASSEMBLY_2>TRANSLATION_3B"
+        ],
+        "declaredMeaningLossPreserved": true,
+        "rightsSettled": false,
+        "typedTranslationEdges": [
+          "ASSEMBLY_2>TRANSLATION_3B"
+        ]
+      },
+      "id": "FIXTURE_VERSION_DAG",
+      "input": {
+        "edges": [
+          {
+            "from": "SKETCH_1",
+            "relationType": "DERIVES_FROM",
+            "to": "ASSEMBLY_2"
+          },
+          {
+            "from": "ASSEMBLY_2",
+            "relationType": "DERIVES_FROM",
+            "to": "PRINT_3"
+          },
+          {
+            "from": "ASSEMBLY_2",
+            "relationType": "TRANSLATES_WITH_DECLARED_LOSS",
+            "to": "TRANSLATION_3B"
+          }
+        ],
+        "nodes": [
+          "SKETCH_1",
+          "ASSEMBLY_2",
+          "PRINT_3",
+          "TRANSLATION_3B"
+        ],
+        "translationDeclaration": {
+          "declaredMeaningLoss": [
+            "TOKEN_P_HAS_NO_DECLARED_EQUIVALENT"
+          ],
+          "edge": "ASSEMBLY_2>TRANSLATION_3B",
+          "rightsState": "UNRESOLVED",
+          "sourceLanguage": "SYNTHETIC_LANGUAGE_ALPHA",
+          "targetLanguage": "SYNTHETIC_LANGUAGE_BETA"
+        }
+      },
+      "kind": "MATHEMATICAL",
+      "lane": "MAKING_EVENT",
+      "nonclaims": [
+        "The graph records no intention, authorship, ownership, permission, licence, endorsement, or creative-credit allocation; translation is not identity or guaranteed meaning preservation."
+      ],
+      "operation": "VERSION_DAG",
+      "premises": [
+        "Nodes and derivation edges are complete for this fixture only.",
+        "Edges point from predecessor to derived version."
+      ],
+      "synthetic": true,
+      "title": "A finite derivation graph records lineage and nothing more",
+      "witnessesNonEquivalence": [
+        "NEQ_LINEAGE_AUTHORSHIP",
+        "NEQ_TRANSLATION_IDENTITY_MEANING",
+        "NEQ_TRANSLATION_RIGHTS"
+      ]
+    },
+    {
+      "expected": {
+        "authorshipEstablished": false,
+        "inSupport": true,
+        "intentionEstablished": false,
+        "observedProbability": {
+          "denominator": 4,
+          "numerator": 1
+        }
+      },
+      "id": "FIXTURE_STOCHASTIC_SUPPORT",
+      "input": {
+        "distribution": [
+          {
+            "outcome": "FORM_X",
+            "probability": {
+              "denominator": 4,
+              "numerator": 2
+            }
+          },
+          {
+            "outcome": "FORM_Y",
+            "probability": {
+              "denominator": 4,
+              "numerator": 1
+            }
+          },
+          {
+            "outcome": "FORM_Z",
+            "probability": {
+              "denominator": 4,
+              "numerator": 1
+            }
+          }
+        ],
+        "observedOutcome": "FORM_Y"
+      },
+      "kind": "MATHEMATICAL",
+      "lane": "MAKING_EVENT",
+      "nonclaims": [
+        "The distribution and occurrence settle no intention, authorship, ownership, copyrightability, permission, or adoption question."
+      ],
+      "operation": "FINITE_DISTRIBUTION_SUPPORT",
+      "premises": [
+        "The three rational probabilities sum exactly to one.",
+        "The fixture performs no sampling and uses no randomness."
+      ],
+      "synthetic": true,
+      "title": "A supported observed outcome does not establish intention or authorship",
+      "witnessesNonEquivalence": [
+        "NEQ_PROBABILITY_INTENTION"
+      ]
+    },
+    {
+      "expected": {
+        "feasibleButUnreachableStateIds": [
+          "STATE_D"
+        ],
+        "reachableStateIds": [
+          "STATE_A",
+          "STATE_B",
+          "STATE_C"
+        ]
+      },
+      "id": "FIXTURE_FEASIBLE_NOT_REACHABLE",
+      "input": {
+        "feasibleStateIds": [
+          "STATE_A",
+          "STATE_B",
+          "STATE_C",
+          "STATE_D"
+        ],
+        "startStateId": "STATE_A",
+        "transitions": [
+          {
+            "from": "STATE_A",
+            "to": "STATE_B"
+          },
+          {
+            "from": "STATE_B",
+            "to": "STATE_C"
+          }
+        ]
+      },
+      "kind": "MATHEMATICAL",
+      "lane": "MAKING_EVENT",
+      "nonclaims": [
+        "Model reachability is not real-world capability, permission, publication, adoption, or aesthetic merit."
+      ],
+      "operation": "FEASIBILITY_REACHABILITY",
+      "premises": [
+        "All four states are feasible by declaration.",
+        "Only listed directed transitions are available."
+      ],
+      "synthetic": true,
+      "title": "One feasible state is unreachable from the declared start",
+      "witnessesNonEquivalence": [
+        "NEQ_FEASIBLE_REACHABLE",
+        "NEQ_REACHABLE_ADOPTED"
+      ]
+    },
+    {
+      "expected": {
+        "collapsedConsensus": false,
+        "distinctLabels": true,
+        "universalJudgment": false
+      },
+      "id": "FIXTURE_ATTRIBUTED_DISAGREEMENT",
+      "input": {
+        "formId": "ABSTRACT_FORM_ALPHA",
+        "judgments": [
+          {
+            "asOf": "2026-08-29",
+            "attributionId": "SYNTHETIC_ROLE_ALPHA",
+            "contextId": "CONTEXT_ALPHA",
+            "label": "INVITING",
+            "methodId": "SYNTHETIC_DIRECT_LABEL_METHOD",
+            "vocabularyId": "DECLARED_AESTHETIC_VOCABULARY_ALPHA"
+          },
+          {
+            "asOf": "2026-08-29",
+            "attributionId": "SYNTHETIC_ROLE_BETA",
+            "contextId": "CONTEXT_BETA",
+            "label": "UNSETTLING",
+            "methodId": "SYNTHETIC_DIRECT_LABEL_METHOD",
+            "vocabularyId": "DECLARED_AESTHETIC_VOCABULARY_ALPHA"
+          }
+        ]
+      },
+      "kind": "RELATIONAL",
+      "lane": "AESTHETIC_JUDGMENT",
+      "nonclaims": [
+        "Neither synthetic label is a truth verdict, person trait, culture trait, winner, or recommendation."
+      ],
+      "operation": "PRESERVE_ATTRIBUTED_DISAGREEMENT",
+      "premises": [
+        "Both roles and the encountered form are synthetic.",
+        "No participant or population inference is permitted."
+      ],
+      "synthetic": true,
+      "title": "Two synthetic attributed judgments disagree without collapse",
+      "witnessesNonEquivalence": [
+        "NEQ_SYMMETRY_AESTHETIC_JUDGMENT",
+        "NEQ_JUDGMENT_TRUTH_GOODNESS_JUSTICE"
+      ]
+    },
+    {
+      "expected": {
+        "aestheticJudgmentRecorded": false,
+        "responseRecorded": true,
+        "universalResponseEstablished": false
+      },
+      "id": "FIXTURE_RESPONSE_JUDGMENT_SEPARATION",
+      "input": {
+        "aestheticJudgments": [],
+        "formId": "ABSTRACT_FORM_RESPONSE_ALPHA",
+        "response": {
+          "asOf": "2026-08-29",
+          "attributionId": "SYNTHETIC_RESPONSE_ROLE",
+          "contextId": "SYNTHETIC_RESPONSE_CONTEXT",
+          "report": "ATTENTION_RETURNED"
+        }
+      },
+      "kind": "RELATIONAL",
+      "lane": "ATTRIBUTED_RESPONSE",
+      "nonclaims": [
+        "The response token is not an aesthetic judgment, population estimate, person trait, or universal response."
+      ],
+      "operation": "RESPONSE_JUDGMENT_BOUNDARY",
+      "premises": [
+        "The role, form, context, and response token are synthetic.",
+        "A response report is not silently retyped as an evaluative judgment."
+      ],
+      "synthetic": true,
+      "title": "A synthetic attributed response is recorded without an aesthetic judgment",
+      "witnessesNonEquivalence": [
+        "NEQ_RESPONSE_JUDGMENT"
+      ]
+    },
+    {
+      "expected": {
+        "exclusiveMeaningEstablished": false,
+        "innerStateProven": false,
+        "statementAttributed": true
+      },
+      "id": "FIXTURE_MAKER_STATEMENT_BOUNDARY",
+      "input": {
+        "formId": "ABSTRACT_FORM_BETA",
+        "makingEventId": "SYNTHETIC_MAKING_EVENT_BETA",
+        "statement": {
+          "attributionId": "SYNTHETIC_MAKER_ROLE",
+          "text": "I explored repetition."
+        }
+      },
+      "kind": "RELATIONAL",
+      "lane": "MAKER_STATEMENT",
+      "nonclaims": [
+        "Recording the sentence does not prove an inner state, exhaust interpretation, assign authorship, or establish ownership."
+      ],
+      "operation": "MAKER_STATEMENT_BOUNDARY",
+      "premises": [
+        "The form, event, role, and statement are synthetic.",
+        "The statement is recorded exactly as fixture data."
+      ],
+      "synthetic": true,
+      "title": "A maker statement remains attributed without settling meaning",
+      "witnessesNonEquivalence": [
+        "NEQ_MAKER_STATEMENT_SETTLED_MEANING"
+      ]
+    },
+    {
+      "expected": {
+        "contextCount": 2,
+        "ownershipEstablished": false,
+        "permissionEstablished": false,
+        "realCommunityRepresented": false
+      },
+      "id": "FIXTURE_SYNTHETIC_CONTEXT_VARIATION",
+      "input": {
+        "contexts": [
+          {
+            "description": "Encountered as a repeated workshop exercise.",
+            "id": "INVENTED_CONTEXT_ONE"
+          },
+          {
+            "description": "Encountered as an isolated archive fragment.",
+            "id": "INVENTED_CONTEXT_TWO"
+          }
+        ],
+        "formId": "ABSTRACT_FORM_GAMMA"
+      },
+      "kind": "RELATIONAL",
+      "lane": "CONTEXT_TRADITION",
+      "nonclaims": [
+        "The invented contexts do not model, score, summarize, or stand in for any culture or living tradition."
+      ],
+      "operation": "CONTEXT_VARIATION",
+      "premises": [
+        "Both contexts are invented analytic placeholders and represent no real community or tradition.",
+        "No contextual description implies permission or ownership."
+      ],
+      "synthetic": true,
+      "title": "The same abstract form is situated in two invented fixture contexts",
+      "witnessesNonEquivalence": [
+        "NEQ_CONTEXT_CULTURE_ESSENCE"
+      ]
+    },
+    {
+      "expected": {
+        "publicAdoptionEstablished": false,
+        "selectionRecorded": true,
+        "universalAestheticAuthority": false,
+        "winnerEstablished": false
+      },
+      "id": "FIXTURE_INSTITUTIONAL_SELECTION_BOUNDARY",
+      "input": {
+        "institutionId": "SYNTHETIC_INSTITUTION_ALPHA",
+        "procedureId": "DECLARED_PROCEDURE_ALPHA",
+        "selectedFormId": "ABSTRACT_FORM_DELTA"
+      },
+      "kind": "RELATIONAL",
+      "lane": "INSTITUTIONAL_SELECTION",
+      "nonclaims": [
+        "Selection supplies no global rank, universal judgment, recommendation, adoption, or truth status."
+      ],
+      "operation": "INSTITUTIONAL_SELECTION_BOUNDARY",
+      "premises": [
+        "The institution, procedure, form, and event are synthetic.",
+        "The fixture records selection, not why every selector acted."
+      ],
+      "synthetic": true,
+      "title": "One synthetic selection event stays scoped to its declared procedure",
+      "witnessesNonEquivalence": [
+        "NEQ_SELECTION_AESTHETIC_AUTHORITY"
+      ]
+    },
+    {
+      "expected": {
+        "adoptionRecorded": false,
+        "licenceInferred": false,
+        "permissionInferred": false,
+        "publicationRecorded": true
+      },
+      "id": "FIXTURE_PUBLICATION_WITHOUT_ADOPTION",
+      "input": {
+        "adoptionEvents": [],
+        "artifactId": "SYNTHETIC_ARTIFACT_EPSILON",
+        "publicationEvent": {
+          "declaredRightsLabel": "RIGHTS_UNSPECIFIED",
+          "publisherId": "SYNTHETIC_PUBLISHER",
+          "route": "/synthetic/epsilon"
+        }
+      },
+      "kind": "RELATIONAL",
+      "lane": "PUBLICATION",
+      "nonclaims": [
+        "Availability does not create permission, licence, reuse, endorsement, or adoption."
+      ],
+      "operation": "PUBLICATION_ADOPTION_BOUNDARY",
+      "premises": [
+        "The route, publisher, artifact, and rights label are synthetic placeholders.",
+        "No actual publication or rights grant occurs."
+      ],
+      "synthetic": true,
+      "title": "A synthetic publication event occurs without an adoption event",
+      "witnessesNonEquivalence": [
+        "NEQ_PUBLICATION_PERMISSION_ADOPTION",
+        "NEQ_REACHABLE_ADOPTED"
+      ]
+    },
+    {
+      "expected": {
+        "adoptionRecorded": true,
+        "endorsementRecorded": false,
+        "universalAcceptanceEstablished": false
+      },
+      "id": "FIXTURE_ADOPTION_WITHOUT_ENDORSEMENT",
+      "input": {
+        "adoptionEvent": {
+          "adopterId": "SYNTHETIC_ADOPTER",
+          "contextId": "SYNTHETIC_USE_CONTEXT",
+          "use": "TEMPORARY_DISPLAY"
+        },
+        "artifactId": "SYNTHETIC_ARTIFACT_ZETA",
+        "endorsementStatements": []
+      },
+      "kind": "RELATIONAL",
+      "lane": "ADOPTION",
+      "nonclaims": [
+        "One use does not endorse every interpretation, future use, publisher, maker statement, or institution."
+      ],
+      "operation": "ADOPTION_ENDORSEMENT_BOUNDARY",
+      "premises": [
+        "The adopter, artifact, and use context are synthetic.",
+        "The adoption record contains no endorsement statement."
+      ],
+      "synthetic": true,
+      "title": "A scoped synthetic adoption does not imply endorsement",
+      "witnessesNonEquivalence": [
+        "NEQ_ADOPTION_ENDORSEMENT"
+      ]
+    },
+    {
+      "expected": {
+        "eventCount": 2,
+        "repairRecorded": true,
+        "retroactiveAestheticTruth": false,
+        "rewardOrPunishmentAuthorized": false
+      },
+      "id": "FIXTURE_AFTERMATH_REPAIR_BOUNDARY",
+      "input": {
+        "aftermathEvents": [
+          {
+            "id": "OBSERVATION_1",
+            "kind": "MATERIAL_WEAR_RECORDED"
+          },
+          {
+            "id": "REPAIR_1",
+            "kind": "REVERSIBLE_REPAIR_RECORDED"
+          }
+        ],
+        "artifactId": "SYNTHETIC_ARTIFACT_ETA"
+      },
+      "kind": "RELATIONAL",
+      "lane": "AFTERMATH",
+      "nonclaims": [
+        "Wear and repair do not prove success, failure, aesthetic truth, deserved reward, or deserved punishment."
+      ],
+      "operation": "AFTERMATH_BOUNDARY",
+      "premises": [
+        "The artifact and maintenance events are synthetic.",
+        "A repair can be recorded without assigning reward or punishment."
+      ],
+      "synthetic": true,
+      "title": "A synthetic repair event records aftermath without retroactive verdict",
+      "witnessesNonEquivalence": [
+        "NEQ_AFTERMATH_RETROACTIVE_VERDICT"
+      ]
+    },
+    {
+      "expected": {
+        "aestheticJudgmentEstablished": false,
+        "satisfiedTechnicalCheckCount": 2,
+        "universalInclusionEstablished": false,
+        "wcagConformanceEstablished": false
+      },
+      "id": "FIXTURE_ACCESS_NOT_AESTHETIC_VERDICT",
+      "input": {
+        "contentId": "SYNTHETIC_CONTENT_THETA",
+        "declaredTechnicalChecks": [
+          {
+            "id": "TEXT_ALTERNATIVE_PRESENT",
+            "satisfied": true
+          },
+          {
+            "id": "KEYBOARD_PATH_PRESENT",
+            "satisfied": true
+          }
+        ]
+      },
+      "kind": "RELATIONAL",
+      "lane": "FORM",
+      "nonclaims": [
+        "Two synthetic checks establish neither aesthetic quality nor conformance, universal access, completion, or recommendation."
+      ],
+      "operation": "ACCESS_AESTHETIC_BOUNDARY",
+      "premises": [
+        "The content and checklist are synthetic.",
+        "The checklist is not a WCAG conformance evaluation."
+      ],
+      "synthetic": true,
+      "title": "A scoped technical access check remains separate from aesthetic judgment",
+      "witnessesNonEquivalence": [
+        "NEQ_ACCESS_AESTHETIC_QUALITY"
+      ]
+    }
+  ],
+  "vocabularies": {
+    "lanes": [
+      {
+        "definition": "A declared arrangement, pattern, specification, or material configuration described without an aesthetic verdict.",
+        "id": "FORM",
+        "keepsDistinctFrom": [
+          "MAKING_EVENT",
+          "ATTRIBUTED_RESPONSE",
+          "AESTHETIC_JUDGMENT",
+          "INSTITUTIONAL_SELECTION"
+        ],
+        "label": "Form"
+      },
+      {
+        "definition": "A bounded transformation, assembly, selection, or revision event with declared inputs and outputs.",
+        "id": "MAKING_EVENT",
+        "keepsDistinctFrom": [
+          "FORM",
+          "MAKER_STATEMENT",
+          "PUBLICATION",
+          "ADOPTION"
+        ],
+        "label": "Making event"
+      },
+      {
+        "definition": "An attributed statement about a making event, purpose, process, or form; it records the statement rather than proving an inner state or exclusive meaning.",
+        "id": "MAKER_STATEMENT",
+        "keepsDistinctFrom": [
+          "MAKING_EVENT",
+          "AESTHETIC_JUDGMENT",
+          "CONTEXT_TRADITION",
+          "AUTHORSHIP_OR_OWNERSHIP"
+        ],
+        "label": "Maker statement"
+      },
+      {
+        "definition": "A situated report of an encounter, attributed in Phase 0 only to an explicitly synthetic role and never generalized to a person or population.",
+        "id": "ATTRIBUTED_RESPONSE",
+        "keepsDistinctFrom": [
+          "FORM",
+          "AESTHETIC_JUDGMENT",
+          "COLLECTIVE_PREFERENCE",
+          "UNIVERSAL_RESPONSE"
+        ],
+        "label": "Attributed response"
+      },
+      {
+        "definition": "An attributed evaluation under a declared vocabulary, method, date, and context, preserved alongside possible disagreement.",
+        "id": "AESTHETIC_JUDGMENT",
+        "keepsDistinctFrom": [
+          "TRUTH",
+          "GOODNESS",
+          "JUSTICE",
+          "COMPLETION",
+          "AUTHORITY"
+        ],
+        "label": "Aesthetic judgment"
+      },
+      {
+        "definition": "A declared historical, social, material, ritual, or interpretive context represented without reducing a culture or community to an essence.",
+        "id": "CONTEXT_TRADITION",
+        "keepsDistinctFrom": [
+          "CULTURAL_ESSENCE",
+          "PERMISSION",
+          "OWNERSHIP",
+          "UNIVERSAL_MEANING"
+        ],
+        "label": "Context and tradition"
+      },
+      {
+        "definition": "A documented acceptance, exhibition, acquisition, commissioning, curriculum, or award event under a stated institutional procedure.",
+        "id": "INSTITUTIONAL_SELECTION",
+        "keepsDistinctFrom": [
+          "AESTHETIC_AUTHORITY",
+          "WINNER",
+          "TRUTH",
+          "PUBLIC_ADOPTION"
+        ],
+        "label": "Institutional selection"
+      },
+      {
+        "definition": "A documented act of making an artifact available at a declared location and under declared terms.",
+        "id": "PUBLICATION",
+        "keepsDistinctFrom": [
+          "PERMISSION",
+          "LICENCE",
+          "ADOPTION",
+          "ENDORSEMENT"
+        ],
+        "label": "Publication"
+      },
+      {
+        "definition": "A distinct, voluntary, context-bound choice to reuse, perform, integrate, maintain, or carry a form.",
+        "id": "ADOPTION",
+        "keepsDistinctFrom": [
+          "PUBLICATION",
+          "ENDORSEMENT",
+          "UNIVERSAL_ACCEPTANCE",
+          "OBLIGATION"
+        ],
+        "label": "Adoption"
+      },
+      {
+        "definition": "Observed consequences, maintenance, contestation, repair, withdrawal, succession, or retirement after a making, publication, or adoption event.",
+        "id": "AFTERMATH",
+        "keepsDistinctFrom": [
+          "RETROACTIVE_AESTHETIC_VERDICT",
+          "PUNISHMENT",
+          "REWARD",
+          "AUTOMATIC_CONTINUATION"
+        ],
+        "label": "Aftermath"
+      }
+    ],
+    "mathematicalRegisters": [
+      {
+        "aestheticJudgmentRelation": false,
+        "artifactRelation": false,
+        "choiceRule": false,
+        "definition": "A finite register of invented integer coordinate vectors used only to demonstrate multiobjective non-domination.",
+        "id": "ABSTRACT_DECISION_VECTOR_REGISTER",
+        "selectionRelation": false
+      },
+      {
+        "aestheticJudgmentRelation": false,
+        "artifactRelation": false,
+        "choiceRule": false,
+        "definition": "A finite register of fixed strict orders over opaque invented symbols used only to demonstrate a pairwise aggregation cycle.",
+        "id": "ABSTRACT_PREFERENCE_AGGREGATION_REGISTER",
+        "selectionRelation": false
+      }
+    ],
+    "relationTypes": [
+      {
+        "definition": "A bounded description refers to a declared form or event.",
+        "id": "DESCRIBES"
+      },
+      {
+        "definition": "A declared form is an output of a declared making event.",
+        "id": "PRODUCED_BY"
+      },
+      {
+        "definition": "An attributed statement concerns a declared form or event.",
+        "id": "STATEMENT_ABOUT"
+      },
+      {
+        "definition": "An attributed synthetic response concerns one declared encounter.",
+        "id": "RESPONSE_TO"
+      },
+      {
+        "definition": "An attributed aesthetic judgment evaluates one declared object under named terms.",
+        "id": "JUDGMENT_OF"
+      },
+      {
+        "definition": "A statement, response, judgment, or event is bounded to a declared context.",
+        "id": "SITUATED_IN"
+      },
+      {
+        "definition": "An artifact was selected through a declared institutional procedure.",
+        "id": "SELECTED_BY"
+      },
+      {
+        "definition": "An artifact was made available through a declared publication event.",
+        "id": "PUBLISHED_AS"
+      },
+      {
+        "definition": "An artifact was voluntarily reused in one declared adoption context.",
+        "id": "ADOPTED_IN"
+      },
+      {
+        "definition": "A declared event has a later recorded consequence or stewardship event.",
+        "id": "HAS_AFTERMATH"
+      },
+      {
+        "definition": "A version has a declared lineage edge from another version.",
+        "id": "DERIVES_FROM"
+      },
+      {
+        "definition": "A form or making event is bounded by a declared feasibility, access, material, or rights condition.",
+        "id": "CONSTRAINED_BY"
+      },
+      {
+        "definition": "Two attributed judgments differ without forced resolution.",
+        "id": "DISAGREES_WITH"
+      },
+      {
+        "definition": "A typed boundary says one relation must not be silently converted into another.",
+        "id": "NOT_EQUIVALENT_TO"
+      },
+      {
+        "definition": "A version is declared as a translation with named source and target languages, explicit possible meaning loss, and separately unresolved rights.",
+        "id": "TRANSLATES_WITH_DECLARED_LOSS"
+      }
+    ],
+    "terms": [
+      {
+        "definition": "The subset of declared transformations under which a declared finite representation remains invariant.",
+        "id": "SYMMETRY_UNDER_TRANSFORM_SET",
+        "nonclaims": [
+          "Not a universal property independent of representation or transform set.",
+          "Not an aesthetic judgment."
+        ]
+      },
+      {
+        "definition": "Expected information under a declared finite probability distribution and logarithm base.",
+        "id": "SHANNON_ENTROPY",
+        "nonclaims": [
+          "Not semantic meaning.",
+          "Not aesthetic value."
+        ]
+      },
+      {
+        "definition": "A bit length under a named code or model-description convention.",
+        "id": "DESCRIPTION_LENGTH",
+        "nonclaims": [
+          "Not code-independent complexity.",
+          "Not quality or worth."
+        ]
+      },
+      {
+        "definition": "Absence of a declared representation from a named finite reference set.",
+        "id": "REFERENCE_RELATIVE_NOVELTY",
+        "nonclaims": [
+          "Not global originality.",
+          "Not priority, authorship, or ownership."
+        ]
+      },
+      {
+        "definition": "No declared alternative is at least as strong on every declared objective and strictly stronger on at least one.",
+        "id": "PARETO_NON_DOMINATION",
+        "nonclaims": [
+          "Not a scalar ordering.",
+          "Not a preferred choice or recommendation."
+        ]
+      },
+      {
+        "definition": "A relation computed from declared finite preference orders by pairwise counts.",
+        "id": "PAIRWISE_MAJORITY_RELATION",
+        "nonclaims": [
+          "Need not be transitive.",
+          "Not a coherent collective taste or authority."
+        ]
+      },
+      {
+        "definition": "A finite directed acyclic graph whose edges declare version derivation.",
+        "id": "VERSION_DAG",
+        "nonclaims": [
+          "Not authorship, ownership, permission, endorsement, or creative credit."
+        ]
+      },
+      {
+        "definition": "The outcomes assigned non-zero probability by a declared finite distribution.",
+        "id": "STOCHASTIC_SUPPORT",
+        "nonclaims": [
+          "An observed supported outcome does not establish intention or authorship."
+        ]
+      },
+      {
+        "definition": "The states satisfying a declared finite set of constraints.",
+        "id": "FEASIBLE_SET",
+        "nonclaims": [
+          "Membership does not establish reachability, publication, adoption, or permission."
+        ]
+      },
+      {
+        "definition": "Existence of a finite directed path from a declared start state under declared transitions.",
+        "id": "GRAPH_REACHABILITY",
+        "nonclaims": [
+          "Reachability does not establish feasibility outside the model, adoption, or authority."
+        ]
+      },
+      {
+        "definition": "An attributed empirical proposal relating processing dynamics to some reported aesthetic responses under studied conditions.",
+        "id": "PROCESSING_FLUENCY_MODEL",
+        "nonclaims": [
+          "One model is not a universal law.",
+          "It does not convert ease, repetition, symmetry, or familiarity into aesthetic truth."
+        ]
+      },
+      {
+        "definition": "A declared relation between content, a mode of access, and an explicitly scoped technical criterion.",
+        "id": "ACCESS_RELATION",
+        "nonclaims": [
+          "Not an aesthetic verdict.",
+          "Not a universal inclusion or standards-conformance claim."
+        ]
+      }
+    ]
+  }
+}

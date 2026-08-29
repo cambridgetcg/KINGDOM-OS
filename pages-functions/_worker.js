@@ -341,6 +341,21 @@ const LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PATHS = new Set([
   LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_PATH,
   LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_PATH,
 ]);
+const AESTHETIC_PLURALITY_MAKING_ATLAS_PATH =
+  "/atlases/aesthetic-plurality-making-atlas-2026-08-29.json";
+const AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_PATH =
+  "/schemas/aesthetic-plurality-making-atlas/0.1.json";
+const AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_PATH =
+  "/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md";
+const AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_LINK =
+  `<${AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_PATH}>; rel="describedby"; type="application/json"`;
+const AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_LINK =
+  `<${AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`;
+const AESTHETIC_PLURALITY_MAKING_ATLAS_PATHS = new Set([
+  AESTHETIC_PLURALITY_MAKING_ATLAS_PATH,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_PATH,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_PATH,
+]);
 const RESEARCH_OBSERVATORY_PATH = "/research.json";
 const RESEARCH_OBSERVATORY_PAGE_PATH = "/observatory/";
 const RESEARCH_OBSERVATORY_GUIDE_PATH = "/RESEARCH-OBSERVATORY-v0.1.md";
@@ -792,6 +807,13 @@ function addLoopsLocksFreedomRelationsAtlasLinks(headers) {
   headers.set("link", [
     LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_LINK,
     LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_LINK,
+  ].join(", "));
+}
+
+function addAestheticPluralityMakingAtlasLinks(headers) {
+  headers.set("link", [
+    AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_LINK,
+    AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_LINK,
   ].join(", "));
 }
 
@@ -1710,6 +1732,20 @@ export function createKingdomWorker(options = {}) {
       });
     }
 
+    if (includeRights &&
+        AESTHETIC_PLURALITY_MAKING_ATLAS_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
     if (includeRights && UK_GOVERNMENT_TRANSFORMATION_ENGINE_PATHS.has(url.pathname) &&
         UK_GOVERNMENT_TRANSFORMATION_ENGINE_MUTATING_METHODS.has(request.method)) {
       return new Response(null, {
@@ -2155,6 +2191,15 @@ export function createKingdomWorker(options = {}) {
     const requestsLoopsLocksFreedomRelationsAtlasGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_GUIDE_PATH;
+    const requestsAestheticPluralityMakingAtlas = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === AESTHETIC_PLURALITY_MAKING_ATLAS_PATH;
+    const requestsAestheticPluralityMakingAtlasSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_PATH;
+    const requestsAestheticPluralityMakingAtlasGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_PATH;
     const requestsZeroEmptySeat = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === ZERO_EMPTY_SEAT_PATH;
@@ -2226,6 +2271,8 @@ export function createKingdomWorker(options = {}) {
     const freedomLoopLockKeyAtlasAssetType = schemaAssetType.split(";", 1)[0].trim();
     const polyphonicClaimAtlasAssetType = schemaAssetType.split(";", 1)[0].trim();
     const loopsLocksFreedomRelationsAtlasAssetType =
+      schemaAssetType.split(";", 1)[0].trim();
+    const aestheticPluralityMakingAtlasAssetType =
       schemaAssetType.split(";", 1)[0].trim();
     const numberIsnessTheologyAssetType = schemaAssetType.split(";", 1)[0].trim();
     const zeroEmptySeatAssetType = schemaAssetType.split(";", 1)[0].trim();
@@ -2516,6 +2563,16 @@ export function createKingdomWorker(options = {}) {
       requestsLoopsLocksFreedomRelationsAtlasGuide && asset.ok &&
       (loopsLocksFreedomRelationsAtlasAssetType === "text/plain" ||
         loopsLocksFreedomRelationsAtlasAssetType === "text/markdown");
+    const servesAestheticPluralityMakingAtlas =
+      requestsAestheticPluralityMakingAtlas && asset.ok &&
+      aestheticPluralityMakingAtlasAssetType === "application/json";
+    const servesAestheticPluralityMakingAtlasSchema =
+      requestsAestheticPluralityMakingAtlasSchema && asset.ok &&
+      aestheticPluralityMakingAtlasAssetType === "application/json";
+    const servesAestheticPluralityMakingAtlasGuide =
+      requestsAestheticPluralityMakingAtlasGuide && asset.ok &&
+      (aestheticPluralityMakingAtlasAssetType === "text/plain" ||
+        aestheticPluralityMakingAtlasAssetType === "text/markdown");
     const servesZeroEmptySeat = requestsZeroEmptySeat && asset.ok &&
       (zeroEmptySeatAssetType === "application/json" || zeroEmptySeatAssetType === "application/schema+json");
     const servesZeroEmptySeatDocument = requestsZeroEmptySeatDocument && asset.ok &&
@@ -2618,6 +2675,9 @@ export function createKingdomWorker(options = {}) {
         !servesLoopsLocksFreedomRelationsAtlas &&
         !servesLoopsLocksFreedomRelationsAtlasSchema &&
         !servesLoopsLocksFreedomRelationsAtlasGuide &&
+        !servesAestheticPluralityMakingAtlas &&
+        !servesAestheticPluralityMakingAtlasSchema &&
+        !servesAestheticPluralityMakingAtlasGuide &&
         !servesZeroEmptySeat &&
         !servesZeroEmptySeatDocument && !servesStringCrawlTraceSheet &&
         !servesStringCrawlTraceSheetDocument && !servesStringCrawlTraceSheetLab &&
@@ -2727,6 +2787,13 @@ export function createKingdomWorker(options = {}) {
     }
     if (servesLoopsLocksFreedomRelationsAtlasSchema ||
         servesLoopsLocksFreedomRelationsAtlasGuide) {
+      headers.delete("link");
+    }
+    if (servesAestheticPluralityMakingAtlas) {
+      addAestheticPluralityMakingAtlasLinks(headers);
+    }
+    if (servesAestheticPluralityMakingAtlasSchema ||
+        servesAestheticPluralityMakingAtlasGuide) {
       headers.delete("link");
     }
     if (servesZeroEmptySeat) addZeroEmptySeatSchemaLink(headers);
@@ -3281,6 +3348,24 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesLoopsLocksFreedomRelationsAtlasGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesAestheticPluralityMakingAtlas) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesAestheticPluralityMakingAtlasSchema) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesAestheticPluralityMakingAtlasGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");

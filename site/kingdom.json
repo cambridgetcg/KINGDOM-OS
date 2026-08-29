@@ -2493,6 +2493,66 @@
       "mcp": false
     }
   },
+  "aesthetic_plurality_making_atlas": {
+    "title": "KINGDOM Aesthetic Plurality & Making Relations Atlas — Phase 0",
+    "description": "A frozen static synthetic relation atlas that keeps form, making, attributed response, aesthetic judgment, context and tradition, institutional selection, publication, adoption, and aftermath distinct without producing a Beauty verdict.",
+    "protocol": "kingdom.aesthetic-plurality-making/0.1",
+    "artifact": {
+      "id": "kingdom-aesthetic-plurality-making-atlas-phase-0-2026-08-29",
+      "asOf": "2026-08-29",
+      "kind": "STATIC_SYNTHETIC_RELATION_ATLAS",
+      "phase": "FROZEN_STATIC_FIXTURE",
+      "reviewState": "INDEPENDENT_REVIEW_GREEN_EXACT_BYTE_HANDOFF",
+      "staticArtifact": true,
+      "syntheticOnly": true,
+      "immutable": true
+    },
+    "lanes": [
+      "Form",
+      "Making event",
+      "Maker statement",
+      "Attributed response",
+      "Aesthetic judgment",
+      "Context and tradition",
+      "Institutional selection",
+      "Publication",
+      "Adoption",
+      "Aftermath"
+    ],
+    "publicHandoff": {
+      "recordPath": "/atlases/aesthetic-plurality-making-atlas-2026-08-29.json",
+      "schemaPath": "/schemas/aesthetic-plurality-making-atlas/0.1.json",
+      "guidePath": "/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md"
+    },
+    "boundary": {
+      "beauty_verdict": false,
+      "scalar_aesthetic_evaluation": false,
+      "artifact_evaluation": false,
+      "person_evaluation": false,
+      "culture_evaluation": false,
+      "automated_ranking": false,
+      "automated_recommendation": false,
+      "moderation_decision": false,
+      "action_authority": false,
+      "truth_conversion": false,
+      "goodness_conversion": false,
+      "justice_conversion": false,
+      "completion_conversion": false,
+      "private_data": false,
+      "participant_data": false,
+      "personal_appearance_assessment": false,
+      "kingdom_doctrine_import": false,
+      "source_truth_import": false,
+      "source_authority_import": false,
+      "source_currentness_import": false,
+      "mutable_alias": false,
+      "html_page": false,
+      "network": false,
+      "api": false,
+      "runtime": false,
+      "mcp": false
+    }
+  },
   "zero_empty_seat": {
     "protocol": "kingdom.explore-phenomena-deep-project/0.1",
     "project_id": "zero-empty-seat-2026-08-14",

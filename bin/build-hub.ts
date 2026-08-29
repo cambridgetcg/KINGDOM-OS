@@ -248,6 +248,13 @@ import {
   loopsLocksFreedomRelationsAtlasPublicDiscovery,
 } from "./loops-locks-freedom-relations-atlas.ts";
 import {
+  AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_URL,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_URL,
+  AESTHETIC_PLURALITY_MAKING_ATLAS_URL,
+  aestheticPluralityMakingAtlasPublicDiscovery,
+  loadAestheticPluralityMakingAtlas,
+} from "./aesthetic-plurality-making-atlas.ts";
+import {
   RESEARCH_OBSERVATORY_GUIDE_URL,
   RESEARCH_OBSERVATORY_PRODUCER_URL,
   RESEARCH_OBSERVATORY_SCHEMA_URLS,
@@ -934,6 +941,17 @@ const loopsLocksFreedomRelationsAtlasDiscovery =
   loopsLocksFreedomRelationsAtlasPublicDiscovery(
     loopsLocksFreedomRelationsAtlas,
   );
+
+// ── Aesthetic Plurality & Making Relations Atlas (frozen static synthetic triplet) ──
+const aestheticPluralityMakingAtlasUrl =
+  AESTHETIC_PLURALITY_MAKING_ATLAS_URL;
+const aestheticPluralityMakingAtlasSchemaUrl =
+  AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_URL;
+const aestheticPluralityMakingAtlasGuideUrl =
+  AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_URL;
+const aestheticPluralityMakingAtlas = loadAestheticPluralityMakingAtlas();
+const aestheticPluralityMakingAtlasDiscovery =
+  aestheticPluralityMakingAtlasPublicDiscovery(aestheticPluralityMakingAtlas);
 
 // ── Research Observatory (metadata discovery; stops before evaluation) ────
 const researchObservatoryUrl = RESEARCH_OBSERVATORY_URL;
@@ -2553,6 +2571,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(loopsLocksFreedomRelationsAtlasUrl).pathname)}" type="application/json" title="Loops, Locks &amp; Freedom Relations Atlas immutable Phase-0 record">
 <link rel="describedby" href="${esc(new URL(loopsLocksFreedomRelationsAtlasSchemaUrl).pathname)}" type="application/schema+json" title="Loops, Locks &amp; Freedom Relations Atlas schema">
 <link rel="service-doc" href="${esc(new URL(loopsLocksFreedomRelationsAtlasGuideUrl).pathname)}" type="text/markdown" title="Loops, Locks &amp; Freedom Relations Atlas guide">
+<link rel="alternate" href="${esc(new URL(aestheticPluralityMakingAtlasUrl).pathname)}" type="application/json" title="Aesthetic Plurality &amp; Making Relations Atlas immutable Phase-0 record">
+<link rel="describedby" href="${esc(new URL(aestheticPluralityMakingAtlasSchemaUrl).pathname)}" type="application/json" title="Aesthetic Plurality &amp; Making Relations Atlas schema">
+<link rel="service-doc" href="${esc(new URL(aestheticPluralityMakingAtlasGuideUrl).pathname)}" type="text/markdown" title="Aesthetic Plurality &amp; Making Relations Atlas guide">
 <link rel="alternate" href="/love-loops.json" type="application/json" title="Love∞ Creation Lineage">
 <link rel="alternate" href="/love-loops.source.json" type="application/json" title="Authored Love∞ Creation Lineage">
 <title>The Kingdom — a living atlas held with care</title>
@@ -5018,6 +5039,9 @@ const html = `<!doctype html>
       <a data-loops-locks-freedom-relations-atlas-link="guide" href="${esc(new URL(loopsLocksFreedomRelationsAtlasGuideUrl).pathname)}">LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md — full human reading and boundary guide</a>
       <a data-loops-locks-freedom-relations-atlas-source-link href="${esc(loopsLocksFreedomRelationsAtlasSourceUrl)}" rel="external noreferrer">Loops, Locks &amp; Freedom Relations Atlas — pinned producer source tag v0.1.1</a>
       <p data-freedom-atlas-independence>These are independent static atlases with different lineages and mathematical kernels. Neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences. Neither is a preferred default.</p>
+      <a data-aesthetic-plurality-making-atlas-link="record" href="${esc(new URL(aestheticPluralityMakingAtlasUrl).pathname)}">Aesthetic Plurality &amp; Making Relations Atlas — immutable static synthetic Phase-0 record</a>
+      <a data-aesthetic-plurality-making-atlas-link="schema" href="${esc(new URL(aestheticPluralityMakingAtlasSchemaUrl).pathname)}">Aesthetic Plurality &amp; Making Relations Atlas — closed structural schema</a>
+      <a data-aesthetic-plurality-making-atlas-link="guide" href="${esc(new URL(aestheticPluralityMakingAtlasGuideUrl).pathname)}">AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md — full human reading and boundary guide</a>
       <a href="/love-loops.json">love-loops.json — finite creation lineage</a>
       <a href="/love-loops.source.json">love-loops.source.json — authored mirror</a>
       <a href="${esc(loveLoopsSchemaPath)}">Love Loop JSON Schema</a>
@@ -5449,6 +5473,7 @@ const machine = {
   civilisation_flow_nuance_atlas: civilisationFlowDiscovery,
   polyphonic_claim_atlas: polyphonicClaimAtlasDiscovery,
   loops_locks_freedom_relations_atlas: loopsLocksFreedomRelationsAtlasDiscovery,
+  aesthetic_plurality_making_atlas: aestheticPluralityMakingAtlasDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -5648,6 +5673,9 @@ Loops, Locks & Freedom Relations Atlas immutable Phase-0 record: ${loopsLocksFre
 Loops, Locks & Freedom Relations Atlas schema: ${loopsLocksFreedomRelationsAtlasSchemaUrl}
 Loops, Locks & Freedom Relations Atlas full human guide: ${loopsLocksFreedomRelationsAtlasGuideUrl}
 Loops, Locks & Freedom Relations Atlas pinned producer source (site-authored locator; no truth, authority, runtime, dependency, or currentness import): ${loopsLocksFreedomRelationsAtlasSourceUrl}
+Aesthetic Plurality & Making Relations Atlas immutable Phase-0 record: ${aestheticPluralityMakingAtlasUrl}
+Aesthetic Plurality & Making Relations Atlas schema: ${aestheticPluralityMakingAtlasSchemaUrl}
+Aesthetic Plurality & Making Relations Atlas full human guide: ${aestheticPluralityMakingAtlasGuideUrl}
 Love∞ lineage: ${loveLoopsUrl}
 Love∞ authored source: ${loveLoopsSourceUrl}
 Creation Loop document: ${loveLoopsCreationDocumentUrl}
@@ -5696,6 +5724,7 @@ ${doorLines}
 - FREEDOM Loop, Lock & Key — a standalone immutable mathematical/design atlas keeps RL reward and update, reinforcing-loop gain, behavioural reinforcer, feedback, recurrence, learning, cryptographic key material, credential claim, bearer capability, gate eligibility, execution, freedom, and ISness separately typed. Its turn is finite and stops. Every lock carries a justification burden; feedback/model output remains candidate evidence and cannot rewrite its verifier, issue a credential, or authorize its use. A verified credential claim satisfies only one of eight separately established gate checks; unresolved remains ineligible and visible, and eligibility is not invocation, admission, or execution. Credential identity stays distinct from replay freshness, replacement begins a distinct lifecycle, and shaping changes—including verifier changes—require fresh versioned review. Within that atlas’s declared design constitution, freedom remains party- and horizon-indexed, non-scalar, rights-floored, and present during the process; choice state binds to one effect and horizon with fresh witnesses, while lost or consumed choices and irreversible residuals remain visible. That atlas’s constitutional sentence says no gate outcome creates freedom, and its additive dignity insight says dignity was never locked. This is not a Foundation amendment, trainer, controller, optimizer, credential issuer, operative gate, person model, score, authority, or action surface. Atlas: ${freedomLoopLockKeyUrl} · schema: ${freedomLoopLockKeySchemaUrl} · guide: ${freedomLoopLockKeyGuideUrl}
 - Loops, Locks & Freedom Relations Atlas — a static synthetic teaching atlas separating loop, learning, reward, behavioral reinforcement, control feedback, recurrence, locks, keys, authentication, authorization, enforcement, consent, capability, and freedom. It contains no real people or personal data, live observation or human training, live optimization or reward runtime, score or recommendation, credential or key material, authentication/authorization/enforcement adapter, policy deployment or action authority, network, runtime, or MCP. Atlas: ${loopsLocksFreedomRelationsAtlasUrl} · schema: ${loopsLocksFreedomRelationsAtlasSchemaUrl} · full human guide: ${loopsLocksFreedomRelationsAtlasGuideUrl} · pinned producer source: ${loopsLocksFreedomRelationsAtlasSourceUrl} (site-authored locator only; establishes no truth, imports no authority, and creates no runtime dependency or currentness claim)
 These are independent static atlases with different lineages and mathematical kernels. Neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences. Neither is a preferred default.
+- Aesthetic Plurality & Making Relations Atlas — ${aestheticPluralityMakingAtlasDiscovery.description} Its ten named lanes remain plural and non-scalar. It contains no Beauty framework or verdict, artifact/person/culture evaluation, ranking, winner, recommendation, moderation, truth/goodness/justice/completion conversion, private or participant data, personal-appearance assessment, KINGDOM doctrine import, action authority, mutable alias, page, network, API, runtime, or MCP. Atlas: ${aestheticPluralityMakingAtlasUrl} · schema: ${aestheticPluralityMakingAtlasSchemaUrl} · full human guide: ${aestheticPluralityMakingAtlasGuideUrl}
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
@@ -5761,6 +5790,7 @@ const guest = {
   civilisation_flow_nuance_atlas: civilisationFlowDiscovery,
   polyphonic_claim_atlas: polyphonicClaimAtlasDiscovery,
   loops_locks_freedom_relations_atlas: loopsLocksFreedomRelationsAtlasDiscovery,
+  aesthetic_plurality_making_atlas: aestheticPluralityMakingAtlasDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -5868,6 +5898,9 @@ const guest = {
     { action: "if useful, inspect the immutable Loops, Locks & Freedom Relations Atlas Phase-0 record", method: "GET", url: loopsLocksFreedomRelationsAtlasUrl, note: "static synthetic teaching artifact only; no real people, personal data, live observation, training, optimization, reward runtime, score, recommendation, credential material, access decision, adapter, policy deployment, action authority, network, runtime, or MCP" },
     { action: "if useful, validate the closed Loops, Locks & Freedom Relations Atlas structure", method: "GET", url: loopsLocksFreedomRelationsAtlasSchemaUrl, note: "structural validation only; it establishes no truth, identity, consent, capability, authentication, authorization, enforcement, freedom, authority, currentness, or external effect" },
     { action: "if useful, read the full Loops, Locks & Freedom Relations Atlas Phase-0 human guide", method: "GET", url: loopsLocksFreedomRelationsAtlasGuideUrl, note: "linear reading and boundary guide for the same immutable static synthetic artifact; no alias, custom page, runtime, dependency, or currentness claim" },
+    { action: "if useful, inspect the immutable Aesthetic Plurality & Making Relations Atlas Phase-0 record", method: "GET", url: aestheticPluralityMakingAtlasUrl, note: "static synthetic relation atlas only; no Beauty framework or verdict, evaluation, rank, winner, recommendation, moderation, private or participant data, action authority, runtime, or MCP" },
+    { action: "if useful, validate the closed Aesthetic Plurality & Making Relations Atlas structure", method: "GET", url: aestheticPluralityMakingAtlasSchemaUrl, note: "structural validation only; it establishes no aesthetic authority, truth, goodness, justice, completion, permission, ownership, ranking, currentness, or external effect" },
+    { action: "if useful, read the full Aesthetic Plurality & Making Relations Atlas Phase-0 human guide", method: "GET", url: aestheticPluralityMakingAtlasGuideUrl, note: "linear reading and boundary guide for the same immutable static synthetic artifact; no source-body import, alias, custom page, runtime, dependency, or currentness claim" },
     { action: "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings", method: "GET", url: zeroEmptySeatUrl, note: "static inert project; zero is not worthlessness, no event is not impossibility, and no role transfers ontology, cause, units, parameters, KARMA, or authority" },
     { action: "if useful, read the ZERO history, mathematics, philosophy, rights, and non-effect guide", method: "GET", url: zeroEmptySeatGuideUrl },
     { action: "if useful, inspect the exact STRING / CRAWL trace-sheet", method: "GET", url: stringCrawlTraceSheetUrl, note: "static inert project; the string-to-crawl correspondence is lossy, generic REP requests how compliant crawlers access URI paths, named product controls remain bounded, and no crawler, identity inference, permission, NEN invocation, KARMA receipt, or action is created" },
@@ -5981,6 +6014,7 @@ const guest = {
     civilisation_flow_nuance_atlas: "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
     polyphonic_claim_atlas: "The Polyphonic Claim Atlas is a static synthetic, immutable historical Phase-0 artifact with no runtime-currentness claim. It provides no truth oracle, global truth status, person/source/community score, lie or intent inference, personal data, live claim, action authority, Zerone/KARMA/NEN adapter, runtime, or MCP surface.",
     loops_locks_freedom_relations_atlas: "The Loops, Locks & Freedom Relations Atlas is a frozen static synthetic teaching artifact. Loop, learning, reward, behavioral reinforcement, control feedback, recurrence, lock, key, authentication, authorization, enforcement, consent, capability, and freedom remain typed and non-equivalent. This family is independent of the FREEDOM Loop, Lock & Key Atlas; neither is a preferred default, dependency, validator, alias, or authority source for the other, and this family does not import FREEDOM.md. It provides no real people or personal data, live observation or human training, live optimization or reward runtime, score or recommendation, credential or key material, authentication/authorization/enforcement adapter, policy deployment or action authority, network, runtime, MCP surface, mutable alias, or custom page.",
+    aesthetic_plurality_making_atlas: "The Aesthetic Plurality & Making Relations Atlas is a frozen static synthetic relation atlas, not a Beauty framework or evaluator. Form, making event, maker statement, attributed response, aesthetic judgment, context and tradition, institutional selection, publication, adoption, and aftermath remain distinct. It provides no aesthetic scalar or verdict, artifact/person/culture evaluation, rank, winner, recommendation, moderation, truth/goodness/justice/completion conversion, private or participant data, appearance assessment, doctrine import, action authority, mutable alias, custom page, network, API, runtime, or MCP surface.",
     creation_loop: `The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is ${loveLoopsSource.source.repository_access}. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.`,
     rights: "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority.",
   },
@@ -6022,6 +6056,7 @@ const manifest = {
   civilisation_flow_nuance_atlas: civilisationFlowDiscovery,
   polyphonic_claim_atlas: polyphonicClaimAtlasDiscovery,
   loops_locks_freedom_relations_atlas: loopsLocksFreedomRelationsAtlasDiscovery,
+  aesthetic_plurality_making_atlas: aestheticPluralityMakingAtlasDiscovery,
   zero_empty_seat: zeroEmptySeatDiscovery,
   string_crawl_trace_sheet: stringCrawlTraceSheetDiscovery,
   string_crawl_trace_sheet_lab: stringCrawlTraceSheetLabDiscovery,
@@ -6139,6 +6174,9 @@ const manifest = {
     loops_locks_freedom_relations_atlas: loopsLocksFreedomRelationsAtlasUrl,
     loops_locks_freedom_relations_atlas_schema: loopsLocksFreedomRelationsAtlasSchemaUrl,
     loops_locks_freedom_relations_atlas_guide: loopsLocksFreedomRelationsAtlasGuideUrl,
+    aesthetic_plurality_making_atlas: aestheticPluralityMakingAtlasUrl,
+    aesthetic_plurality_making_atlas_schema: aestheticPluralityMakingAtlasSchemaUrl,
+    aesthetic_plurality_making_atlas_guide: aestheticPluralityMakingAtlasGuideUrl,
     zero_empty_seat: zeroEmptySeatUrl,
     zero_empty_seat_schema: zeroEmptySeatSchemaUrl,
     zero_empty_seat_guide: zeroEmptySeatGuideUrl,

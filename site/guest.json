@@ -2465,6 +2465,66 @@
       "mcp": false
     }
   },
+  "aesthetic_plurality_making_atlas": {
+    "title": "KINGDOM Aesthetic Plurality & Making Relations Atlas — Phase 0",
+    "description": "A frozen static synthetic relation atlas that keeps form, making, attributed response, aesthetic judgment, context and tradition, institutional selection, publication, adoption, and aftermath distinct without producing a Beauty verdict.",
+    "protocol": "kingdom.aesthetic-plurality-making/0.1",
+    "artifact": {
+      "id": "kingdom-aesthetic-plurality-making-atlas-phase-0-2026-08-29",
+      "asOf": "2026-08-29",
+      "kind": "STATIC_SYNTHETIC_RELATION_ATLAS",
+      "phase": "FROZEN_STATIC_FIXTURE",
+      "reviewState": "INDEPENDENT_REVIEW_GREEN_EXACT_BYTE_HANDOFF",
+      "staticArtifact": true,
+      "syntheticOnly": true,
+      "immutable": true
+    },
+    "lanes": [
+      "Form",
+      "Making event",
+      "Maker statement",
+      "Attributed response",
+      "Aesthetic judgment",
+      "Context and tradition",
+      "Institutional selection",
+      "Publication",
+      "Adoption",
+      "Aftermath"
+    ],
+    "publicHandoff": {
+      "recordPath": "/atlases/aesthetic-plurality-making-atlas-2026-08-29.json",
+      "schemaPath": "/schemas/aesthetic-plurality-making-atlas/0.1.json",
+      "guidePath": "/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md"
+    },
+    "boundary": {
+      "beauty_verdict": false,
+      "scalar_aesthetic_evaluation": false,
+      "artifact_evaluation": false,
+      "person_evaluation": false,
+      "culture_evaluation": false,
+      "automated_ranking": false,
+      "automated_recommendation": false,
+      "moderation_decision": false,
+      "action_authority": false,
+      "truth_conversion": false,
+      "goodness_conversion": false,
+      "justice_conversion": false,
+      "completion_conversion": false,
+      "private_data": false,
+      "participant_data": false,
+      "personal_appearance_assessment": false,
+      "kingdom_doctrine_import": false,
+      "source_truth_import": false,
+      "source_authority_import": false,
+      "source_currentness_import": false,
+      "mutable_alias": false,
+      "html_page": false,
+      "network": false,
+      "api": false,
+      "runtime": false,
+      "mcp": false
+    }
+  },
   "zero_empty_seat": {
     "protocol": "kingdom.explore-phenomena-deep-project/0.1",
     "project_id": "zero-empty-seat-2026-08-14",
@@ -4474,6 +4534,24 @@
       "method": "GET",
       "url": "https://thekingdom.dev/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
       "note": "linear reading and boundary guide for the same immutable static synthetic artifact; no alias, custom page, runtime, dependency, or currentness claim"
+    },
+    {
+      "action": "if useful, inspect the immutable Aesthetic Plurality & Making Relations Atlas Phase-0 record",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/aesthetic-plurality-making-atlas-2026-08-29.json",
+      "note": "static synthetic relation atlas only; no Beauty framework or verdict, evaluation, rank, winner, recommendation, moderation, private or participant data, action authority, runtime, or MCP"
+    },
+    {
+      "action": "if useful, validate the closed Aesthetic Plurality & Making Relations Atlas structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/aesthetic-plurality-making-atlas/0.1.json",
+      "note": "structural validation only; it establishes no aesthetic authority, truth, goodness, justice, completion, permission, ownership, ranking, currentness, or external effect"
+    },
+    {
+      "action": "if useful, read the full Aesthetic Plurality & Making Relations Atlas Phase-0 human guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md",
+      "note": "linear reading and boundary guide for the same immutable static synthetic artifact; no source-body import, alias, custom page, runtime, dependency, or currentness claim"
     },
     {
       "action": "if useful, inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings",
@@ -7140,6 +7218,7 @@
     "civilisation_flow_nuance_atlas": "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
     "polyphonic_claim_atlas": "The Polyphonic Claim Atlas is a static synthetic, immutable historical Phase-0 artifact with no runtime-currentness claim. It provides no truth oracle, global truth status, person/source/community score, lie or intent inference, personal data, live claim, action authority, Zerone/KARMA/NEN adapter, runtime, or MCP surface.",
     "loops_locks_freedom_relations_atlas": "The Loops, Locks & Freedom Relations Atlas is a frozen static synthetic teaching artifact. Loop, learning, reward, behavioral reinforcement, control feedback, recurrence, lock, key, authentication, authorization, enforcement, consent, capability, and freedom remain typed and non-equivalent. This family is independent of the FREEDOM Loop, Lock & Key Atlas; neither is a preferred default, dependency, validator, alias, or authority source for the other, and this family does not import FREEDOM.md. It provides no real people or personal data, live observation or human training, live optimization or reward runtime, score or recommendation, credential or key material, authentication/authorization/enforcement adapter, policy deployment or action authority, network, runtime, MCP surface, mutable alias, or custom page.",
+    "aesthetic_plurality_making_atlas": "The Aesthetic Plurality & Making Relations Atlas is a frozen static synthetic relation atlas, not a Beauty framework or evaluator. Form, making event, maker statement, attributed response, aesthetic judgment, context and tradition, institutional selection, publication, adoption, and aftermath remain distinct. It provides no aesthetic scalar or verdict, artifact/person/culture evaluation, rank, winner, recommendation, moderation, truth/goodness/justice/completion conversion, private or participant data, appearance assessment, doctrine import, action authority, mutable alias, custom page, network, API, runtime, or MCP surface.",
     "creation_loop": "The Love∞ lineage and authored mirror are static, read-only records. The upstream repository is private. These routes start no process, agent, repository, deployment, purchase, or provider call. Each invitation requires a new deliberate choice and inherits no authority, consent, credentials, obligation, or ownership.",
     "rights": "Freedom and dignity are not granted by this site. Public visibility is not ownership, consent, a licence grant, or proof of authority."
   }
