@@ -84,6 +84,7 @@ describe("the hub staging contract", () => {
         "FORM-CIRCULATION-RETURN-ATLAS.md",
         "FREEDOM-LOOP-LOCK-KEY-ATLAS.md",
         "GEOMETRY-GRAMMAR.md",
+        "IS-SUSTAINABILITY-DIRECTION-ATLAS.md",
         "J-SPACE-VERBALIZABLE-WORKSPACE.md",
         "LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
         "MATH-USEFULNESS.md",
@@ -170,6 +171,8 @@ describe("the hub staging contract", () => {
       expect(readdirSync(join(output, "schemas/form-circulation-return-atlas")).sort()).toEqual(["1.json"]);
       expect(readdirSync(join(output, "schemas/freedom-loop-lock-key-atlas")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/non-exhaustive-understanding-atlas")).sort())
+        .toEqual(["0.1.json"]);
+      expect(readdirSync(join(output, "schemas/is-sustainability-direction-atlas")).sort())
         .toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/being-access-aftermath-atlas")).sort()).toEqual(["0.1.json", "0.2.json"]);
       expect(readdirSync(join(output, "schemas/civilisation-flow-nuance-atlas")).sort()).toEqual(["0.1.json"]);
@@ -343,6 +346,7 @@ describe("the hub staging contract", () => {
         "fold-feedback-atlas-2026-08-12.json",
         "form-circulation-return-atlas-2026-08-13.json",
         "freedom-loop-lock-key-atlas-2026-08-28.json",
+        "is-sustainability-direction-atlas-2026-08-29.json",
         "loops-locks-freedom-relations-atlas-2026-08-28.json",
         "non-exhaustive-understanding-atlas-2026-08-29.json",
         "number-isness-theology-atlas-2026-08-14.json",

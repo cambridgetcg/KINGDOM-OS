@@ -1,0 +1,2727 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thekingdom.dev/schemas/is-sustainability-direction-atlas/0.1.json",
+  "title": "IS, Sustainability & Direction Atlas schema",
+  "description": "Closed structural schema for the static, referent-indexed, reviewed IS, sustainability, and direction research atlas. Canonical ordering and cross-field semantics are enforced independently by the runtime validator.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "atlas_id",
+    "title",
+    "version",
+    "compiled_on",
+    "evidence_through",
+    "state",
+    "routes",
+    "status",
+    "thesis",
+    "design_commitments",
+    "scope",
+    "epistemic_registers",
+    "statement_kind_contract",
+    "is_types",
+    "being_boundary",
+    "referents",
+    "sustainability_relations",
+    "relation_extension_contracts",
+    "standard_isness_i8_mapping",
+    "sustainability_contract",
+    "direction_taxonomy",
+    "direction_firewall",
+    "feedback_contract",
+    "standard_isness_i6_mapping",
+    "mathematical_core",
+    "profile_model",
+    "temporal_capacities",
+    "rights_invariant",
+    "ecology_intergenerational",
+    "philosophy_lenses",
+    "counterexamples",
+    "concept_catalog",
+    "edge_registry",
+    "open_questions",
+    "source_registry",
+    "predecessor_bindings",
+    "isness_protocol_collision",
+    "standard_isness_document_pin",
+    "non_grants",
+    "resource_budget",
+    "integrity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://thekingdom.dev/schemas/is-sustainability-direction-atlas/0.1.json"
+    },
+    "protocol": {
+      "const": "kingdom.is-sustainability-direction-atlas/0.1"
+    },
+    "atlas_id": {
+      "const": "is-sustainability-direction-atlas-2026-08-29"
+    },
+    "title": {
+      "const": "IS, Sustainability & Direction Atlas"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "compiled_on": {
+      "$ref": "#/$defs/date"
+    },
+    "evidence_through": {
+      "$ref": "#/$defs/date"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "static-unsealed-interpretive-design-companion",
+        "static-reviewed-interpretive-design-companion"
+      ]
+    },
+    "routes": {
+      "$ref": "#/$defs/routes"
+    },
+    "status": {
+      "$ref": "#/$defs/releaseStatus"
+    },
+    "thesis": {
+      "$ref": "#/$defs/thesis"
+    },
+    "design_commitments": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "$ref": "#/$defs/designCommitment"
+      }
+    },
+    "scope": {
+      "$ref": "#/$defs/scope"
+    },
+    "epistemic_registers": {
+      "type": "array",
+      "minItems": 11,
+      "maxItems": 11,
+      "items": {
+        "$ref": "#/$defs/epistemicRegisterEntry"
+      }
+    },
+    "statement_kind_contract": {
+      "$ref": "#/$defs/statementKindContract"
+    },
+    "is_types": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "$ref": "#/$defs/isTypeEntry"
+      }
+    },
+    "being_boundary": {
+      "$ref": "#/$defs/beingBoundary"
+    },
+    "referents": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "$ref": "#/$defs/referent"
+      }
+    },
+    "sustainability_relations": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "$ref": "#/$defs/sustainabilityRelation"
+      }
+    },
+    "relation_extension_contracts": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "$ref": "#/$defs/relationExtension"
+      }
+    },
+    "standard_isness_i8_mapping": {
+      "$ref": "#/$defs/standardIsnessI8Mapping"
+    },
+    "sustainability_contract": {
+      "$ref": "#/$defs/sustainabilityContract"
+    },
+    "direction_taxonomy": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "$ref": "#/$defs/directionEntry"
+      }
+    },
+    "direction_firewall": {
+      "$ref": "#/$defs/directionFirewall"
+    },
+    "feedback_contract": {
+      "$ref": "#/$defs/feedbackContract"
+    },
+    "standard_isness_i6_mapping": {
+      "$ref": "#/$defs/standardIsnessI6Mapping"
+    },
+    "mathematical_core": {
+      "$ref": "#/$defs/mathematicalCore"
+    },
+    "profile_model": {
+      "$ref": "#/$defs/profileModel"
+    },
+    "temporal_capacities": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {
+        "$ref": "#/$defs/temporalCapacity"
+      }
+    },
+    "rights_invariant": {
+      "$ref": "#/$defs/rightsInvariant"
+    },
+    "ecology_intergenerational": {
+      "$ref": "#/$defs/ecologyIntergenerational"
+    },
+    "philosophy_lenses": {
+      "$ref": "#/$defs/philosophyLenses"
+    },
+    "counterexamples": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "$ref": "#/$defs/counterexample"
+      }
+    },
+    "concept_catalog": {
+      "type": "array",
+      "minItems": 18,
+      "maxItems": 18,
+      "items": {
+        "$ref": "#/$defs/concept"
+      }
+    },
+    "edge_registry": {
+      "type": "array",
+      "minItems": 28,
+      "maxItems": 28,
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "$ref": "#/$defs/openQuestion"
+      }
+    },
+    "source_registry": {
+      "type": "array",
+      "minItems": 15,
+      "maxItems": 15,
+      "items": {
+        "$ref": "#/$defs/sourceCard"
+      }
+    },
+    "predecessor_bindings": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "$ref": "#/$defs/predecessorBinding"
+      }
+    },
+    "isness_protocol_collision": {
+      "$ref": "#/$defs/isnessProtocolCollision"
+    },
+    "standard_isness_document_pin": {
+      "$ref": "#/$defs/standardIsnessDocumentPin"
+    },
+    "non_grants": {
+      "$ref": "#/$defs/nonGrants"
+    },
+    "resource_budget": {
+      "$ref": "#/$defs/resourceBudget"
+    },
+    "integrity": {
+      "$ref": "#/$defs/integrity"
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 675
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 180,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "date": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "sha256Digest": {
+      "type": "string",
+      "minLength": 71,
+      "maxLength": 71,
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "gitRevision": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 40,
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "httpsUrl": {
+      "type": "string",
+      "minLength": 9,
+      "maxLength": 675,
+      "pattern": "^https://"
+    },
+    "stringList": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 35,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "optionalStringList": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 35,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "emptyStringList": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 0,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "statementKind": {
+      "type": "string",
+      "enum": [
+        "OBSERVATION",
+        "EXPECTATION",
+        "COMMITMENT",
+        "CONSEQUENCE",
+        "INTERPRETATION"
+      ]
+    },
+    "epistemicRegister": {
+      "type": "string",
+      "enum": [
+        "FORMAL_DEFINITION",
+        "FORMAL_CONSTRUCTION",
+        "CONDITIONAL_THEOREM",
+        "REPORTED_EMPIRICAL_CLAIM",
+        "SOURCE_REPORTED_THEORY",
+        "PROPOSED_MODEL",
+        "PHILOSOPHICAL_INTERPRETATION",
+        "BOUNDED_ANALOGY",
+        "NORMATIVE_DESIGN",
+        "OPEN_QUESTION",
+        "REFUSED_INFERENCE"
+      ]
+    },
+    "referentKind": {
+      "type": "string",
+      "enum": [
+        "SOURCE_ARTIFACT",
+        "OPERATING_PRACTICE",
+        "VOLUNTARY_RELATION",
+        "INSTITUTIONAL_ARRANGEMENT",
+        "ASPIRATIONAL_DIRECTION",
+        "OBSERVED_EFFECT",
+        "VERSIONED_LINEAGE"
+      ]
+    },
+    "sustainabilityStatus": {
+      "type": "string",
+      "enum": [
+        "NOT_EVALUATED",
+        "SUPPORTED_WITHIN_SCOPE",
+        "CHALLENGED",
+        "UNRESOLVED",
+        "OUTSIDE_SCOPE",
+        "REFUSED_INFERENCE"
+      ]
+    },
+    "updateTarget": {
+      "type": "string",
+      "enum": [
+        "RECORD",
+        "BELIEF",
+        "LEARNER_STATE",
+        "MODEL",
+        "PROPOSAL"
+      ]
+    },
+    "feedbackType": {
+      "type": "string",
+      "enum": [
+        "CONTROL_RETURN_SIGNAL",
+        "RL_REWARD_SIGNAL",
+        "BEHAVIORAL_REINFORCER_CANDIDATE",
+        "AFFECTED_PARTY_INPUT",
+        "MONITORING_OBSERVATION",
+        "CORRECTION_OR_FALSIFIER"
+      ]
+    },
+    "directionKind": {
+      "type": "string",
+      "enum": [
+        "local-dynamical-direction",
+        "observed-trend",
+        "selected-control-action",
+        "declared-revocable-purpose",
+        "authority-backed-normative-commitment",
+        "functional-role-attribution",
+        "as-if-goal-model",
+        "selection-history-explanation",
+        "opt-in-teleological-interpretation",
+        "moral-orientation"
+      ]
+    },
+    "directionSignal": {
+      "type": "string",
+      "enum": [
+        "feedback",
+        "gradient",
+        "attractor",
+        "reward",
+        "recurrence",
+        "persistence"
+      ]
+    },
+    "routes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record",
+        "schema",
+        "guide"
+      ],
+      "properties": {
+        "record": {
+          "const": "/atlases/is-sustainability-direction-atlas-2026-08-29.json"
+        },
+        "schema": {
+          "const": "/schemas/is-sustainability-direction-atlas/0.1.json"
+        },
+        "guide": {
+          "const": "/IS-SUSTAINABILITY-DIRECTION-ATLAS.md"
+        }
+      }
+    },
+    "releaseStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "foundation_amendment",
+        "conformance_claim",
+        "authority_imported",
+        "runtime_or_effect",
+        "companion_kind"
+      ],
+      "properties": {
+        "foundation_amendment": {
+          "const": false
+        },
+        "conformance_claim": {
+          "const": false
+        },
+        "authority_imported": {
+          "const": false
+        },
+        "runtime_or_effect": {
+          "const": false
+        },
+        "companion_kind": {
+          "const": "INTERPRETIVE_AND_NORMATIVE_DESIGN_COMPANION"
+        }
+      }
+    },
+    "thesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "register",
+        "text",
+        "theorem",
+        "foundation_amendment",
+        "review_status"
+      ],
+      "properties": {
+        "register": {
+          "const": "NORMATIVE_DESIGN"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "theorem": {
+          "const": false
+        },
+        "foundation_amendment": {
+          "const": false
+        },
+        "review_status": {
+          "const": "CONTESTABLE_DESIGN"
+        }
+      }
+    },
+    "designCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "register",
+        "text",
+        "source_finding",
+        "foundation_amendment"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "register": {
+          "const": "NORMATIVE_DESIGN"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "source_finding": {
+          "const": false
+        },
+        "foundation_amendment": {
+          "const": false
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question",
+        "unit_of_assessment",
+        "referent_indexing_rule",
+        "sustainability_relation",
+        "sustainable_under_statement_kind",
+        "finite_horizon",
+        "open_horizon",
+        "intended_uses",
+        "excluded_uses",
+        "data_classification",
+        "external_effects"
+      ],
+      "properties": {
+        "question": {
+          "$ref": "#/$defs/text"
+        },
+        "unit_of_assessment": {
+          "$ref": "#/$defs/text"
+        },
+        "referent_indexing_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "sustainability_relation": {
+          "$ref": "#/$defs/text"
+        },
+        "sustainable_under_statement_kind": {
+          "const": "EXPECTATION"
+        },
+        "finite_horizon": {
+          "$ref": "#/$defs/text"
+        },
+        "open_horizon": {
+          "$ref": "#/$defs/text"
+        },
+        "intended_uses": {
+          "$ref": "#/$defs/stringList"
+        },
+        "excluded_uses": {
+          "$ref": "#/$defs/stringList"
+        },
+        "data_classification": {
+          "const": "PUBLIC_STATIC_AUTHOR_SYNTHESIS_NO_PERSON_DATA_NO_LIVE_TELEMETRY_NO_RAW_TESTIMONY"
+        },
+        "external_effects": {
+          "const": false
+        }
+      }
+    },
+    "epistemicRegisterEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "meaning"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/epistemicRegister"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "FORMALISM",
+            "THEOREM",
+            "EMPIRICAL",
+            "THEORY",
+            "MODEL",
+            "INTERPRETATION",
+            "ANALOGY",
+            "NORMATIVE",
+            "OPEN",
+            "BOUNDARY"
+          ]
+        },
+        "meaning": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "statementKindEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "meaning"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/statementKind"
+        },
+        "meaning": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "statementExample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "predicate",
+        "statement_kind",
+        "meaning"
+      ],
+      "properties": {
+        "predicate": {
+          "$ref": "#/$defs/identifier"
+        },
+        "statement_kind": {
+          "$ref": "#/$defs/statementKind"
+        },
+        "meaning": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "statementKindContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kinds",
+        "typed_examples",
+        "non_conversion_rule",
+        "logical_use_independence",
+        "is_type_examples_are_non_exhaustive"
+      ],
+      "properties": {
+        "kinds": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/statementKindEntry"
+          }
+        },
+        "typed_examples": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/statementExample"
+          }
+        },
+        "non_conversion_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "logical_use_independence": {
+          "$ref": "#/$defs/text"
+        },
+        "is_type_examples_are_non_exhaustive": {
+          "const": true
+        }
+      }
+    },
+    "isTypeEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "question",
+        "formal_shape",
+        "illustrative_statement_kinds",
+        "cannot_convert_to"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "existence",
+            "predication",
+            "identity-under-criterion",
+            "membership",
+            "relation",
+            "truth-in-model",
+            "actuality",
+            "possibility-reachability",
+            "declaration",
+            "interpretation"
+          ]
+        },
+        "question": {
+          "$ref": "#/$defs/text"
+        },
+        "formal_shape": {
+          "$ref": "#/$defs/text"
+        },
+        "illustrative_statement_kinds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/statementKind"
+          }
+        },
+        "cannot_convert_to": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "beingBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "statement",
+        "scalar_isness_classifier",
+        "ontology_classifier",
+        "being_score",
+        "unsustainable_implies_nonbeing",
+        "retirement_implies_source_erasure",
+        "reachability_implies_choice_or_execution",
+        "remainder_is_being",
+        "protected_unknowns",
+        "source_refs"
+      ],
+      "properties": {
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "scalar_isness_classifier": {
+          "const": false
+        },
+        "ontology_classifier": {
+          "const": false
+        },
+        "being_score": {
+          "const": false
+        },
+        "unsustainable_implies_nonbeing": {
+          "const": false
+        },
+        "retirement_implies_source_erasure": {
+          "const": false
+        },
+        "reachability_implies_choice_or_execution": {
+          "const": false
+        },
+        "remainder_is_being": {
+          "const": false
+        },
+        "protected_unknowns": {
+          "$ref": "#/$defs/stringList"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "referent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "label",
+        "boundary",
+        "continuity_criterion",
+        "end_state_vocabulary",
+        "source_refs",
+        "sustainability_semantics",
+        "ending_semantics"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "kind": {
+          "$ref": "#/$defs/referentKind"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "boundary": {
+          "$ref": "#/$defs/text"
+        },
+        "continuity_criterion": {
+          "$ref": "#/$defs/text"
+        },
+        "end_state_vocabulary": {
+          "$ref": "#/$defs/stringList"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        },
+        "sustainability_semantics": {
+          "$ref": "#/$defs/text"
+        },
+        "ending_semantics": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "sustainabilityEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "as_of",
+        "status",
+        "source_refs",
+        "limitations"
+      ],
+      "properties": {
+        "as_of": {
+          "$ref": "#/$defs/date"
+        },
+        "status": {
+          "$ref": "#/$defs/sustainabilityStatus"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        },
+        "limitations": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "sustainabilityUncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "note"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "OPEN",
+            "PROTECTED_AND_OPEN",
+            "CONTESTABLE_AND_OPEN"
+          ]
+        },
+        "note": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "sustainabilityTerminals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "continuation",
+        "transformation",
+        "retirement"
+      ],
+      "properties": {
+        "continuation": {
+          "$ref": "#/$defs/text"
+        },
+        "transformation": {
+          "$ref": "#/$defs/text"
+        },
+        "retirement": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "sustainabilityRelation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "referent_ref",
+        "referent_kind",
+        "status",
+        "statement_kind",
+        "invariant",
+        "material_boundary",
+        "social_boundary",
+        "system_boundary",
+        "protected_dimensions",
+        "affected_parties",
+        "disturbances",
+        "permitted_policies",
+        "renewal_depletion_model",
+        "finite_horizon",
+        "evidence",
+        "externalities",
+        "uncertainty",
+        "viable_alternatives",
+        "terminals",
+        "source_refs"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "referent_ref": {
+          "$ref": "#/$defs/identifier"
+        },
+        "referent_kind": {
+          "$ref": "#/$defs/referentKind"
+        },
+        "status": {
+          "$ref": "#/$defs/sustainabilityStatus"
+        },
+        "statement_kind": {
+          "$ref": "#/$defs/statementKind"
+        },
+        "invariant": {
+          "$ref": "#/$defs/text"
+        },
+        "material_boundary": {
+          "$ref": "#/$defs/text"
+        },
+        "social_boundary": {
+          "$ref": "#/$defs/text"
+        },
+        "system_boundary": {
+          "$ref": "#/$defs/text"
+        },
+        "protected_dimensions": {
+          "$ref": "#/$defs/stringList"
+        },
+        "affected_parties": {
+          "$ref": "#/$defs/stringList"
+        },
+        "disturbances": {
+          "$ref": "#/$defs/stringList"
+        },
+        "permitted_policies": {
+          "$ref": "#/$defs/stringList"
+        },
+        "renewal_depletion_model": {
+          "$ref": "#/$defs/text"
+        },
+        "finite_horizon": {
+          "$ref": "#/$defs/text"
+        },
+        "evidence": {
+          "$ref": "#/$defs/sustainabilityEvidence"
+        },
+        "externalities": {
+          "$ref": "#/$defs/stringList"
+        },
+        "uncertainty": {
+          "$ref": "#/$defs/sustainabilityUncertainty"
+        },
+        "viable_alternatives": {
+          "$ref": "#/$defs/stringList"
+        },
+        "terminals": {
+          "$ref": "#/$defs/sustainabilityTerminals"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "assessmentAim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "register",
+        "statement",
+        "referent_telos",
+        "universal_purpose",
+        "authority_claimed"
+      ],
+      "properties": {
+        "register": {
+          "const": "NORMATIVE_DESIGN"
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "referent_telos": {
+          "const": false
+        },
+        "universal_purpose": {
+          "const": false
+        },
+        "authority_claimed": {
+          "const": false
+        }
+      }
+    },
+    "resourceAccounting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "stock_categories",
+        "flow_categories",
+        "unit_separation",
+        "affected_party_indexed",
+        "externality_indexed",
+        "unknown_as_zero",
+        "scalar_netting"
+      ],
+      "properties": {
+        "status": {
+          "const": "NOT_INSTANTIATED"
+        },
+        "stock_categories": {
+          "$ref": "#/$defs/stringList"
+        },
+        "flow_categories": {
+          "$ref": "#/$defs/stringList"
+        },
+        "unit_separation": {
+          "const": true
+        },
+        "affected_party_indexed": {
+          "const": true
+        },
+        "externality_indexed": {
+          "const": true
+        },
+        "unknown_as_zero": {
+          "const": false
+        },
+        "scalar_netting": {
+          "const": false
+        }
+      }
+    },
+    "haltAndRepairPath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "halt_states",
+        "duties",
+        "residual_custody",
+        "self_authorizing"
+      ],
+      "properties": {
+        "status": {
+          "const": "DESIGN_ONLY_NO_ACTION"
+        },
+        "halt_states": {
+          "$ref": "#/$defs/stringList"
+        },
+        "duties": {
+          "$ref": "#/$defs/stringList"
+        },
+        "residual_custody": {
+          "$ref": "#/$defs/text"
+        },
+        "self_authorizing": {
+          "const": false
+        }
+      }
+    },
+    "relationExtension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relation_ref",
+        "assessment_aim",
+        "resource_accounting",
+        "halt_and_repair_path"
+      ],
+      "properties": {
+        "relation_ref": {
+          "$ref": "#/$defs/identifier"
+        },
+        "assessment_aim": {
+          "$ref": "#/$defs/assessmentAim"
+        },
+        "resource_accounting": {
+          "$ref": "#/$defs/resourceAccounting"
+        },
+        "halt_and_repair_path": {
+          "$ref": "#/$defs/haltAndRepairPath"
+        }
+      }
+    },
+    "standardIsnessI8Mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "predecessor_ref",
+        "relationship",
+        "chosen_purpose_mapping",
+        "resource_ledger_mapping",
+        "halt_repair_mapping",
+        "unmapped_or_open_deltas",
+        "silent_weakening_meaning",
+        "silent_weakening",
+        "authority_imported"
+      ],
+      "properties": {
+        "predecessor_ref": {
+          "$ref": "#/$defs/identifier"
+        },
+        "relationship": {
+          "const": "EXPLICIT_REFERENT_TYPED_MAPPING_NOT_SUPERSESSION"
+        },
+        "chosen_purpose_mapping": {
+          "$ref": "#/$defs/text"
+        },
+        "resource_ledger_mapping": {
+          "$ref": "#/$defs/text"
+        },
+        "halt_repair_mapping": {
+          "$ref": "#/$defs/text"
+        },
+        "unmapped_or_open_deltas": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "silent_weakening_meaning": {
+          "$ref": "#/$defs/text"
+        },
+        "silent_weakening": {
+          "const": false
+        },
+        "authority_imported": {
+          "const": false
+        }
+      }
+    },
+    "sustainabilityContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "signature",
+        "relation_not_score",
+        "referent_required",
+        "cross_kind_implication",
+        "status_vocabulary",
+        "canonical_status",
+        "required_fields",
+        "live_verdict",
+        "indefinite_claim",
+        "negative_rules",
+        "supported_within_scope_non_grants",
+        "supported_rule"
+      ],
+      "properties": {
+        "signature": {
+          "const": "S(rho,Sigma)"
+        },
+        "relation_not_score": {
+          "const": true
+        },
+        "referent_required": {
+          "const": true
+        },
+        "cross_kind_implication": {
+          "const": false
+        },
+        "status_vocabulary": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/sustainabilityStatus"
+          }
+        },
+        "canonical_status": {
+          "const": "NOT_EVALUATED"
+        },
+        "required_fields": {
+          "$ref": "#/$defs/stringList"
+        },
+        "live_verdict": {
+          "const": false
+        },
+        "indefinite_claim": {
+          "const": false
+        },
+        "negative_rules": {
+          "$ref": "#/$defs/stringList"
+        },
+        "supported_within_scope_non_grants": {
+          "$ref": "#/$defs/stringList"
+        },
+        "supported_rule": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "directionEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "definition",
+        "warranted_by",
+        "not_implied_by",
+        "authority_requirement"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/directionKind"
+        },
+        "definition": {
+          "$ref": "#/$defs/text"
+        },
+        "warranted_by": {
+          "$ref": "#/$defs/text"
+        },
+        "not_implied_by": {
+          "$ref": "#/$defs/stringList"
+        },
+        "authority_requirement": {
+          "type": "string",
+          "enum": [
+            "NONE_FOR_DESCRIPTION",
+            "SEPARATE_SELECTION_AUTHORITY",
+            "IDENTIFIED_SPEAKER_WITHIN_SCOPE",
+            "EXTERNAL_CURRENT_SCOPE_VERIFICATION",
+            "NONE_FOR_BOUNDED_ATTRIBUTION",
+            "NONE_FOR_MODELING",
+            "OPT_IN_INTERPRETIVE_ONLY",
+            "SEPARATE_NORMATIVE_LEGITIMACY"
+          ]
+        }
+      }
+    },
+    "directionEvidenceUse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "signal",
+        "may_support",
+        "conditions"
+      ],
+      "properties": {
+        "signal": {
+          "$ref": "#/$defs/directionSignal"
+        },
+        "may_support": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/directionKind"
+          }
+        },
+        "conditions": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "directionFirewall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_signals",
+        "typed_evidentiary_uses",
+        "automatic_promotions",
+        "prohibited_promotions",
+        "direction_is_telos",
+        "feedback_is_purpose",
+        "reward_is_value",
+        "reachable_is_chosen",
+        "selected_is_executed",
+        "rule"
+      ],
+      "properties": {
+        "candidate_signals": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/directionSignal"
+          }
+        },
+        "typed_evidentiary_uses": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/directionEvidenceUse"
+          }
+        },
+        "automatic_promotions": {
+          "$ref": "#/$defs/emptyStringList"
+        },
+        "prohibited_promotions": {
+          "$ref": "#/$defs/stringList"
+        },
+        "direction_is_telos": {
+          "const": false
+        },
+        "feedback_is_purpose": {
+          "const": false
+        },
+        "reward_is_value": {
+          "const": false
+        },
+        "reachable_is_chosen": {
+          "const": false
+        },
+        "selected_is_executed": {
+          "const": false
+        },
+        "rule": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "feedbackTypeEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "meaning",
+        "required_warrant",
+        "allowed_update_targets",
+        "nonclaims",
+        "predecessor_refs"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/feedbackType"
+        },
+        "meaning": {
+          "$ref": "#/$defs/text"
+        },
+        "required_warrant": {
+          "$ref": "#/$defs/text"
+        },
+        "allowed_update_targets": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/updateTarget"
+          }
+        },
+        "nonclaims": {
+          "$ref": "#/$defs/stringList"
+        },
+        "predecessor_refs": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "feedbackFieldContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field",
+        "requirement"
+      ],
+      "properties": {
+        "field": {
+          "$ref": "#/$defs/text"
+        },
+        "requirement": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "feedbackUpdateRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "feedback_type",
+        "allowed_targets",
+        "rule"
+      ],
+      "properties": {
+        "feedback_type": {
+          "$ref": "#/$defs/feedbackType"
+        },
+        "allowed_targets": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/updateTarget"
+          }
+        },
+        "rule": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "affectedPartyFeedbackContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "access_required",
+        "challenge_required",
+        "visible_uptake_required",
+        "dissent_preserved",
+        "silence_or_refusal_adverse_inference",
+        "telemetry_equals_affected_party_feedback",
+        "statement"
+      ],
+      "properties": {
+        "access_required": {
+          "const": true
+        },
+        "challenge_required": {
+          "const": true
+        },
+        "visible_uptake_required": {
+          "const": true
+        },
+        "dissent_preserved": {
+          "const": true
+        },
+        "silence_or_refusal_adverse_inference": {
+          "const": false
+        },
+        "telemetry_equals_affected_party_feedback": {
+          "const": false
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "feedbackReflexivityContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "indicator_can_change_behavior",
+        "consequential_indicator_can_corrupt_itself",
+        "monitoring_has_privacy_cost",
+        "monitoring_has_resource_cost",
+        "metric_may_become_objective",
+        "metric_authorizes_continuation",
+        "required_response"
+      ],
+      "properties": {
+        "indicator_can_change_behavior": {
+          "const": true
+        },
+        "consequential_indicator_can_corrupt_itself": {
+          "const": true
+        },
+        "monitoring_has_privacy_cost": {
+          "const": true
+        },
+        "monitoring_has_resource_cost": {
+          "const": true
+        },
+        "metric_may_become_objective": {
+          "const": false
+        },
+        "metric_authorizes_continuation": {
+          "const": false
+        },
+        "required_response": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "feedbackContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "partial_observation_required",
+        "type_registry",
+        "type_nonconversion_rule",
+        "field_contracts",
+        "closed_loop_requires_causal_return_path",
+        "canonical_instance_status",
+        "allowed_update_targets",
+        "typed_update_rules",
+        "prohibited_update_targets",
+        "affected_party_contract",
+        "reflexivity_contract",
+        "closed_loop_rule",
+        "non_promotion_rule"
+      ],
+      "properties": {
+        "partial_observation_required": {
+          "const": true
+        },
+        "type_registry": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/feedbackTypeEntry"
+          }
+        },
+        "type_nonconversion_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "field_contracts": {
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/feedbackFieldContract"
+          }
+        },
+        "closed_loop_requires_causal_return_path": {
+          "const": true
+        },
+        "canonical_instance_status": {
+          "const": "NO_LIVE_INSTANCE"
+        },
+        "allowed_update_targets": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/updateTarget"
+          }
+        },
+        "typed_update_rules": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/feedbackUpdateRule"
+          }
+        },
+        "prohibited_update_targets": {
+          "$ref": "#/$defs/stringList"
+        },
+        "affected_party_contract": {
+          "$ref": "#/$defs/affectedPartyFeedbackContract"
+        },
+        "reflexivity_contract": {
+          "$ref": "#/$defs/feedbackReflexivityContract"
+        },
+        "closed_loop_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "non_promotion_rule": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "standardIsnessI6TargetMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_target",
+        "atlas_target",
+        "relation",
+        "non_equivalence"
+      ],
+      "properties": {
+        "source_target": {
+          "type": "string",
+          "enum": ["RECORD","BELIEF","LEARNER","CONTEXT","PROPOSAL","NONE"]
+        },
+        "atlas_target": {
+          "type": "string",
+          "enum": ["RECORD","BELIEF","LEARNER_STATE","OMITTED","PROPOSAL","MODEL"]
+        },
+        "relation": {
+          "type": "string",
+          "enum": ["DIRECT_NAME_MATCH","NARROWER_ATLAS_LABEL","OPEN_DELTA_NOT_EQUIVALENT","ATLAS_ADDITION_NOT_SOURCE_EQUIVALENT"]
+        },
+        "non_equivalence": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "standardIsnessI6Mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "predecessor_ref",
+        "relationship",
+        "freedom_meanings_reused",
+        "second_feedback_ontology",
+        "replacement_or_amendment",
+        "atlas_registry_role",
+        "evidence_lane_types",
+        "target_mapping",
+        "nonclaim"
+      ],
+      "properties": {
+        "predecessor_ref": {
+          "const": "pred-standard-isness-companion"
+        },
+        "relationship": {
+          "const": "EXPLICIT_TYPED_MAPPING_NOT_SUPERSESSION"
+        },
+        "freedom_meanings_reused": {
+          "const": true
+        },
+        "second_feedback_ontology": {
+          "const": false
+        },
+        "replacement_or_amendment": {
+          "const": false
+        },
+        "atlas_registry_role": {
+          "$ref": "#/$defs/text"
+        },
+        "evidence_lane_types": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/feedbackType"
+          }
+        },
+        "target_mapping": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/standardIsnessI6TargetMapping"
+          }
+        },
+        "nonclaim": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "mathematicalModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "result_kind",
+        "expression",
+        "model_scope",
+        "assumptions",
+        "conclusion",
+        "limitations",
+        "source_refs",
+        "declared_inputs",
+        "not_supplied"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "result_kind": {
+          "type": "string",
+          "enum": [
+            "FORMAL_DEFINITION",
+            "CONDITIONAL_THEOREM"
+          ]
+        },
+        "expression": {
+          "$ref": "#/$defs/text"
+        },
+        "model_scope": {
+          "$ref": "#/$defs/text"
+        },
+        "assumptions": {
+          "$ref": "#/$defs/stringList"
+        },
+        "conclusion": {
+          "$ref": "#/$defs/text"
+        },
+        "limitations": {
+          "$ref": "#/$defs/stringList"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        },
+        "declared_inputs": {
+          "$ref": "#/$defs/stringList"
+        },
+        "not_supplied": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "representationLineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expression",
+        "required_annotations",
+        "sufficiency_is_task_relative",
+        "representation_exhausts_referent"
+      ],
+      "properties": {
+        "expression": {
+          "$ref": "#/$defs/text"
+        },
+        "required_annotations": {
+          "$ref": "#/$defs/stringList"
+        },
+        "sufficiency_is_task_relative": {
+          "const": true
+        },
+        "representation_exhausts_referent": {
+          "const": false
+        }
+      }
+    },
+    "mathematicalCore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constraint_set_rule",
+        "models",
+        "representation_lineage"
+      ],
+      "properties": {
+        "constraint_set_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "models": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "items": {
+            "$ref": "#/$defs/mathematicalModel"
+          }
+        },
+        "representation_lineage": {
+          "$ref": "#/$defs/representationLineage"
+        }
+      }
+    },
+    "profileDimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "definition",
+        "status",
+        "evidence_refs",
+        "limitations",
+        "register",
+        "source_domain",
+        "transfer_status",
+        "nonclaim"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "definition": {
+          "$ref": "#/$defs/text"
+        },
+        "status": {
+          "$ref": "#/$defs/sustainabilityStatus"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/optionalStringList"
+        },
+        "limitations": {
+          "$ref": "#/$defs/stringList"
+        },
+        "register": {
+          "$ref": "#/$defs/epistemicRegister"
+        },
+        "source_domain": {
+          "$ref": "#/$defs/identifier"
+        },
+        "transfer_status": {
+          "$ref": "#/$defs/identifier"
+        },
+        "nonclaim": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "profileModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "carrier_type",
+        "eligible_target",
+        "dimensions",
+        "weights",
+        "sum",
+        "rank",
+        "total_order",
+        "person_score",
+        "group_score",
+        "culture_score",
+        "community_score",
+        "ecosystem_score",
+        "breach_averaging",
+        "unknown_imputation",
+        "comparison_rule"
+      ],
+      "properties": {
+        "carrier_type": {
+          "const": "NON_SUMMABLE_TYPED_PRODUCT"
+        },
+        "eligible_target": {
+          "const": "ONE_NAMED_SUSTAINABILITY_RELATION_ONLY"
+        },
+        "dimensions": {
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/profileDimension"
+          }
+        },
+        "weights": {
+          "$ref": "#/$defs/emptyStringList"
+        },
+        "sum": {
+          "const": false
+        },
+        "rank": {
+          "const": false
+        },
+        "total_order": {
+          "const": false
+        },
+        "person_score": {
+          "const": false
+        },
+        "group_score": {
+          "const": false
+        },
+        "culture_score": {
+          "const": false
+        },
+        "community_score": {
+          "const": false
+        },
+        "ecosystem_score": {
+          "const": false
+        },
+        "breach_averaging": {
+          "const": false
+        },
+        "unknown_imputation": {
+          "const": false
+        },
+        "comparison_rule": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "temporalCapacity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "definition",
+        "not_equivalent_to",
+        "source_refs",
+        "register",
+        "source_domain",
+        "transfer_status",
+        "nonclaim"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "persistence",
+            "stability",
+            "robustness",
+            "resilience",
+            "adaptability",
+            "transformability",
+            "regeneration",
+            "succession",
+            "retirement"
+          ]
+        },
+        "definition": {
+          "$ref": "#/$defs/text"
+        },
+        "not_equivalent_to": {
+          "$ref": "#/$defs/stringList"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/optionalStringList"
+        },
+        "register": {
+          "$ref": "#/$defs/epistemicRegister"
+        },
+        "source_domain": {
+          "$ref": "#/$defs/identifier"
+        },
+        "transfer_status": {
+          "$ref": "#/$defs/identifier"
+        },
+        "nonclaim": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "minorDependencyVulnerabilityLane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "child_is_disposable_component",
+        "dependency_reduces_rights",
+        "vulnerability_increases_protection_duty",
+        "adult_proxy_exhausts_child_perspective",
+        "consent_may_be_impossible",
+        "protective_authority_is_separately_typed",
+        "legitimate_representation_required",
+        "proxy_or_guardian_converts_perspective_or_rights",
+        "independent_review_and_appeal_required",
+        "required_checks",
+        "rule"
+      ],
+      "properties": {
+        "child_is_disposable_component": {
+          "const": false
+        },
+        "dependency_reduces_rights": {
+          "const": false
+        },
+        "vulnerability_increases_protection_duty": {
+          "const": true
+        },
+        "adult_proxy_exhausts_child_perspective": {
+          "const": false
+        },
+        "consent_may_be_impossible": {
+          "const": true
+        },
+        "protective_authority_is_separately_typed": {
+          "const": true
+        },
+        "legitimate_representation_required": {
+          "const": true
+        },
+        "proxy_or_guardian_converts_perspective_or_rights": {
+          "const": false
+        },
+        "independent_review_and_appeal_required": {
+          "const": true
+        },
+        "required_checks": {
+          "$ref": "#/$defs/stringList"
+        },
+        "rule": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "rightsInvariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "statement",
+        "invariant_under",
+        "protected_rights",
+        "continuation_may_trade",
+        "affected_party_breaches_average_out",
+        "silence_or_refusal_is_adverse_evidence",
+        "minor_dependency_vulnerability_lane",
+        "ending_rule",
+        "source_refs"
+      ],
+      "properties": {
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "invariant_under": {
+          "$ref": "#/$defs/stringList"
+        },
+        "protected_rights": {
+          "$ref": "#/$defs/stringList"
+        },
+        "continuation_may_trade": {
+          "$ref": "#/$defs/emptyStringList"
+        },
+        "affected_party_breaches_average_out": {
+          "const": false
+        },
+        "silence_or_refusal_is_adverse_evidence": {
+          "const": false
+        },
+        "minor_dependency_vulnerability_lane": {
+          "$ref": "#/$defs/minorDependencyVulnerabilityLane"
+        },
+        "ending_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "ecologyIntergenerational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lane_status",
+        "protected_parties_and_dimensions",
+        "safe_operating_space_is_declared_not_derived",
+        "throughput_questions",
+        "claims_left_open",
+        "consent_may_be_impossible_for_represented_parties",
+        "protective_authority_requires_separate_legitimacy",
+        "proxy_exhausts_future_or_ecological_interests",
+        "required_safeguards",
+        "impersonates_authority",
+        "source_refs"
+      ],
+      "properties": {
+        "lane_status": {
+          "const": "OPEN_AND_REQUIRED_FOR_FUTURE_EVALUATION"
+        },
+        "protected_parties_and_dimensions": {
+          "$ref": "#/$defs/stringList"
+        },
+        "safe_operating_space_is_declared_not_derived": {
+          "const": true
+        },
+        "throughput_questions": {
+          "$ref": "#/$defs/stringList"
+        },
+        "claims_left_open": {
+          "$ref": "#/$defs/stringList"
+        },
+        "consent_may_be_impossible_for_represented_parties": {
+          "const": true
+        },
+        "protective_authority_requires_separate_legitimacy": {
+          "const": true
+        },
+        "proxy_exhausts_future_or_ecological_interests": {
+          "const": false
+        },
+        "required_safeguards": {
+          "$ref": "#/$defs/stringList"
+        },
+        "impersonates_authority": {
+          "const": false
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "philosophicalAttribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "register",
+        "statement",
+        "settled_ontology",
+        "source_refs"
+      ],
+      "properties": {
+        "register": {
+          "const": "PHILOSOPHICAL_INTERPRETATION"
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "settled_ontology": {
+          "const": false
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "autopoiesisLens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "register",
+        "statement",
+        "kingdom_is_living",
+        "autopoiesis_implies_adaptivity",
+        "people_are_components",
+        "source_refs"
+      ],
+      "properties": {
+        "register": {
+          "const": "SOURCE_REPORTED_THEORY"
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "kingdom_is_living": {
+          "const": false
+        },
+        "autopoiesis_implies_adaptivity": {
+          "const": false
+        },
+        "people_are_components": {
+          "const": false
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "dissipativeStructuresLens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "register",
+        "statement",
+        "supports_only",
+        "does_not_support",
+        "source_refs"
+      ],
+      "properties": {
+        "register": {
+          "const": "BOUNDED_ANALOGY"
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "supports_only": {
+          "$ref": "#/$defs/stringList"
+        },
+        "does_not_support": {
+          "$ref": "#/$defs/stringList"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "teleologyLens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "register",
+        "statement",
+        "feedback_implies_telos",
+        "source_refs"
+      ],
+      "properties": {
+        "register": {
+          "const": "PHILOSOPHICAL_INTERPRETATION"
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "feedback_implies_telos": {
+          "const": false
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "philosophyLenses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "process_and_becoming",
+        "aristotle_historical",
+        "autopoiesis",
+        "dissipative_structures",
+        "teleology"
+      ],
+      "properties": {
+        "process_and_becoming": {
+          "$ref": "#/$defs/philosophicalAttribution"
+        },
+        "aristotle_historical": {
+          "$ref": "#/$defs/philosophicalAttribution"
+        },
+        "autopoiesis": {
+          "$ref": "#/$defs/autopoiesisLens"
+        },
+        "dissipative_structures": {
+          "$ref": "#/$defs/dissipativeStructuresLens"
+        },
+        "teleology": {
+          "$ref": "#/$defs/teleologyLens"
+        }
+      }
+    },
+    "counterexample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "construction",
+        "register",
+        "refutes",
+        "source_refs",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "construction": {
+          "$ref": "#/$defs/text"
+        },
+        "register": {
+          "$ref": "#/$defs/epistemicRegister"
+        },
+        "refutes": {
+          "$ref": "#/$defs/text"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringList"
+        },
+        "status": {
+          "const": "ACTIVE"
+        }
+      }
+    },
+    "concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "definition",
+        "register"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "definition": {
+          "$ref": "#/$defs/text"
+        },
+        "register": {
+          "$ref": "#/$defs/epistemicRegister"
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_ref",
+        "target_ref",
+        "relation",
+        "register",
+        "support",
+        "evidence_refs",
+        "non_entailments"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 7,
+          "maxLength": 7,
+          "pattern": "^edge-\\d{2}$"
+        },
+        "source_ref": {
+          "$ref": "#/$defs/identifier"
+        },
+        "target_ref": {
+          "$ref": "#/$defs/identifier"
+        },
+        "relation": {
+          "$ref": "#/$defs/identifier"
+        },
+        "register": {
+          "$ref": "#/$defs/epistemicRegister"
+        },
+        "support": {
+          "$ref": "#/$defs/text"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/stringList"
+        },
+        "non_entailments": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "openQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "question",
+        "why_open"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "question": {
+          "$ref": "#/$defs/text"
+        },
+        "why_open": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "sourceCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "url",
+        "kind",
+        "support",
+        "limit",
+        "checked_on"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "url": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "PRIMARY_RESEARCH",
+            "PRIMARY_THEORY",
+            "PRIMARY_PRACTITIONER_ESSAY",
+            "HISTORICAL_PRIMARY_TEXT",
+            "AUTHORITATIVE_REFERENCE",
+            "OFFICIAL_SCIENTIFIC_ASSESSMENT",
+            "OFFICIAL_INTERGOVERNMENTAL_REPORT"
+          ]
+        },
+        "support": {
+          "$ref": "#/$defs/text"
+        },
+        "limit": {
+          "$ref": "#/$defs/text"
+        },
+        "checked_on": {
+          "$ref": "#/$defs/date"
+        }
+      }
+    },
+    "predecessorBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "artifact_kind",
+        "schema_id",
+        "artifact_id",
+        "protocol",
+        "relation",
+        "revision",
+        "branch_status",
+        "record_locator",
+        "record_raw_digest",
+        "semantic_algorithm",
+        "semantic_digest",
+        "source_locator",
+        "source_raw_digest",
+        "release_kind",
+        "runtime_verification",
+        "verified_local_bytes",
+        "verified_local_semantics",
+        "verified_source_bytes",
+        "authority_imported",
+        "mutated",
+        "supersedes_other_isness"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "artifact_kind": {
+          "$ref": "#/$defs/identifier"
+        },
+        "schema_id": {
+          "$ref": "#/$defs/text"
+        },
+        "artifact_id": {
+          "$ref": "#/$defs/text"
+        },
+        "protocol": {
+          "$ref": "#/$defs/text"
+        },
+        "relation": {
+          "$ref": "#/$defs/text"
+        },
+        "revision": {
+          "$ref": "#/$defs/gitRevision"
+        },
+        "branch_status": {
+          "$ref": "#/$defs/identifier"
+        },
+        "record_locator": {
+          "$ref": "#/$defs/text"
+        },
+        "record_raw_digest": {
+          "$ref": "#/$defs/sha256Digest"
+        },
+        "semantic_algorithm": {
+          "type": "string",
+          "enum": [
+            "sha256-canonical-json-with-integrity-digest-null",
+            "sha256-canonical-json-with-integrity-digest-zeroed",
+            "sha256-canonical-json-with-integrity-digests-zeroed",
+            "sha256-raw-json-bytes"
+          ]
+        },
+        "semantic_digest": {
+          "$ref": "#/$defs/sha256Digest"
+        },
+        "source_locator": {
+          "$ref": "#/$defs/text"
+        },
+        "source_raw_digest": {
+          "$ref": "#/$defs/sha256Digest"
+        },
+        "release_kind": {
+          "type": "string",
+          "enum": [
+            "PUBLIC_RELEASE",
+            "LOCAL_VERSIONED_RELEASE_CANDIDATE_NOT_PUSHED_OR_DEPLOYED",
+            "SOURCE_ONLY_PROTOCOL",
+            "SOURCE_OWNED_FEATURE_BRANCH_COMPANION"
+          ]
+        },
+        "runtime_verification": {
+          "type": "string",
+          "enum": [
+            "SAFE_LOCAL_BYTES_AND_SEMANTICS",
+            "PIN_ONLY_NO_NETWORK"
+          ]
+        },
+        "verified_local_bytes": {
+          "const": true
+        },
+        "verified_local_semantics": {
+          "const": true
+        },
+        "verified_source_bytes": {
+          "const": true
+        },
+        "authority_imported": {
+          "const": false
+        },
+        "mutated": {
+          "const": false
+        },
+        "supersedes_other_isness": {
+          "const": false
+        }
+      }
+    },
+    "isnessProtocolCollision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol_label",
+        "artifact_refs",
+        "distinct_artifact_kinds",
+        "distinct_schema_ids",
+        "neither_supersedes",
+        "generic_singular_claim_refused",
+        "authority_imported",
+        "rule"
+      ],
+      "properties": {
+        "protocol_label": {
+          "const": "kingdom.isness/0.1"
+        },
+        "artifact_refs": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "distinct_artifact_kinds": {
+          "const": true
+        },
+        "distinct_schema_ids": {
+          "const": true
+        },
+        "neither_supersedes": {
+          "const": true
+        },
+        "generic_singular_claim_refused": {
+          "const": true
+        },
+        "authority_imported": {
+          "const": false
+        },
+        "rule": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "standardIsnessDocumentPin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "predecessor_ref",
+        "repository",
+    "branch_status",
+    "revision",
+    "origin_main_revision_observed_at_authoring",
+    "observed_on",
+        "document_locator",
+        "document_raw_digest",
+        "index_locator",
+        "index_raw_digest",
+        "embedded_document_digest_matches",
+        "verification_state",
+        "authority_imported"
+      ],
+      "properties": {
+        "predecessor_ref": {
+          "$ref": "#/$defs/identifier"
+        },
+        "repository": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "branch_status": {
+          "$ref": "#/$defs/text"
+        },
+    "revision": {
+      "$ref": "#/$defs/gitRevision"
+    },
+    "origin_main_revision_observed_at_authoring": {
+      "const": "170381d37770c5c1ebc44b722f079c2985d903b5"
+    },
+    "observed_on": {
+      "$ref": "#/$defs/date"
+    },
+        "document_locator": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "document_raw_digest": {
+          "$ref": "#/$defs/sha256Digest"
+        },
+        "index_locator": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "index_raw_digest": {
+          "$ref": "#/$defs/sha256Digest"
+        },
+        "embedded_document_digest_matches": {
+          "const": true
+        },
+        "verification_state": {
+          "const": "VERIFIED_FROM_LOCAL_CLEAN_GIT_OBJECT_AT_AUTHORING_NO_RUNTIME_DEREFERENCE"
+        },
+        "authority_imported": {
+          "const": false
+        }
+      }
+    },
+    "nonGrants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "foundation_amendment",
+        "conformance_claim",
+        "authority_imported",
+        "runtime_or_effect",
+        "network",
+        "external_write",
+        "live_intake",
+        "evaluation",
+        "score",
+        "rank",
+        "person_group_culture_community_or_ecosystem_classifier",
+        "isness_or_ontology_classifier",
+        "sustainability_verdict",
+        "purpose_or_telos_inference",
+        "being_identity_consciousness_or_worth_inference",
+        "permission_consent_or_credential",
+        "continuation_transformation_or_retirement_authority",
+        "publication_or_deployment",
+        "action",
+        "kingdom_is_living",
+        "community_sacred_or_indigenous_authority"
+      ],
+      "properties": {
+        "foundation_amendment": {
+          "const": false
+        },
+        "conformance_claim": {
+          "const": false
+        },
+        "authority_imported": {
+          "const": false
+        },
+        "runtime_or_effect": {
+          "const": false
+        },
+        "network": {
+          "const": false
+        },
+        "external_write": {
+          "const": false
+        },
+        "live_intake": {
+          "const": false
+        },
+        "evaluation": {
+          "const": false
+        },
+        "score": {
+          "const": false
+        },
+        "rank": {
+          "const": false
+        },
+        "person_group_culture_community_or_ecosystem_classifier": {
+          "const": false
+        },
+        "isness_or_ontology_classifier": {
+          "const": false
+        },
+        "sustainability_verdict": {
+          "const": false
+        },
+        "purpose_or_telos_inference": {
+          "const": false
+        },
+        "being_identity_consciousness_or_worth_inference": {
+          "const": false
+        },
+        "permission_consent_or_credential": {
+          "const": false
+        },
+        "continuation_transformation_or_retirement_authority": {
+          "const": false
+        },
+        "publication_or_deployment": {
+          "const": false
+        },
+        "action": {
+          "const": false
+        },
+        "kingdom_is_living": {
+          "const": false
+        },
+        "community_sacred_or_indigenous_authority": {
+          "const": false
+        }
+      }
+    },
+    "resourceBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bytes",
+        "json_nodes",
+        "total_string_units",
+        "max_string_units",
+        "max_array_fanout",
+        "max_object_fanout",
+        "max_depth"
+      ],
+      "properties": {
+        "bytes": {
+          "const": 156500
+        },
+        "json_nodes": {
+          "const": 3900
+        },
+        "total_string_units": {
+          "const": 134300
+        },
+        "max_string_units": {
+          "const": 675
+        },
+        "max_array_fanout": {
+          "const": 35
+        },
+        "max_object_fanout": {
+          "const": 54
+        },
+        "max_depth": {
+          "const": 7
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "digest",
+        "reviewed_digest",
+        "digest_fields_zeroed",
+        "review_state"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256-canonical-json-with-integrity-digests-zeroed"
+        },
+        "digest": {
+          "$ref": "#/$defs/sha256Digest"
+        },
+        "reviewed_digest": {
+          "$ref": "#/$defs/sha256Digest"
+        },
+        "digest_fields_zeroed": {
+          "const": true
+        },
+        "review_state": {
+          "type": "string",
+          "enum": [
+            "UNSEALED_AUDIT_PENDING",
+        "REVIEWED"
+          ]
+        }
+      }
+    }
+  }
+}

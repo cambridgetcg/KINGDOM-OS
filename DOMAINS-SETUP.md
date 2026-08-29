@@ -87,14 +87,14 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 181 assets:
-150 ledgered immutable/versioned assets and 31 mutable assets. There are 179 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 184 assets:
+153 ledgered immutable/versioned assets and 31 mutable assets. There are 182 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 167 URLs, and discovery exposes 150 manifest
-entry points plus 150 guest actions. The generated surface describes seventeen
-atlases, 38 public schema routes, four primary lab JSON routes plus the Shape &
+contracts. The sitemap contains 170 URLs, and discovery exposes 153 manifest
+entry points plus 153 guest actions. The generated surface describes eighteen
+atlases, 39 public schema routes, four primary lab JSON routes plus the Shape &
 Resonance manifest/media, one experiment route, and one separate activation
-across thirty-three active retirement
+across thirty-four active retirement
 families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
@@ -248,6 +248,16 @@ challenge, accessibility, privacy, correction, or repair. Feedback can propose
 only a separately reviewed successor; released bytes never learn, and the
 family creates no person/group model, score, truth oracle, identity,
 consciousness, authority, action, publication, deployment, or external effect;
+the authored `/atlases/is-sustainability-direction-atlas-2026-08-29.json`,
+closed `/schemas/is-sustainability-direction-atlas/0.1.json`, and
+`/IS-SUSTAINABILITY-DIRECTION-ATLAS.md` guide; this reviewed standalone
+immutable interpretive/design atlas keeps seven referent kinds, typed IS,
+statement kinds, sustainability relations, direction kinds, feedback lanes,
+finite-horizon viability, rights, affected parties, uncertainty, endings, and
+remainder distinct. Direction is a bounded proposal rather than a command or
+identity verdict; feedback cannot create being, worth, consent, purpose,
+authority, permission, publication, deployment, or action, and the family has
+no mutable alias, active dependency, Wayfinder recommendation, or MCP surface;
 the authored immutable `/truth/polyphonic-claim-atlas-2026-08-26.json`, closed
 `/truth/schemas/v0.1/public-snapshot.schema.json`, and
 `/POLYPHONIC-CLAIM-ATLAS-v0.1.md` guide; this static synthetic Phase-0 family
@@ -359,21 +369,23 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks all 150 currently staged ledgered immutable/versioned byte hashes,
+checks all 153 currently staged ledgered immutable/versioned byte hashes,
 including the independently retireable FREEDOM Loop, Lock & Key Atlas,
-Non-Exhaustive Understanding Atlas, and Loops, Locks & Freedom Relations Atlas.
-It also checks the atomic Aesthetic Plurality & Making Relations triplet and its
+Non-Exhaustive Understanding Atlas, IS, Sustainability & Direction Atlas, and
+Loops, Locks & Freedom Relations Atlas. It also checks the atomic Aesthetic
+Plurality & Making Relations triplet and its
 no-page/no-alias/no-Wayfinder/no-MCP/no-runtime retirement boundary. It proves
 the worker-owned negotiation and
 privacy boundaries, typed schema and guide headers, exact family dependencies
 and retirement windows, negative authority, source-history lineage, and coherent
 HTML, sitemap, llms, guest, Kingdom, agent-manifest, and Wayfinder discovery
-across all thirty-three active publication families while leaving the existing MCP
+across all thirty-four active publication families while leaving the existing MCP
 contract unchanged. The two freedom-related atlas families are independent:
 neither supersedes, validates, aliases, depends on, or supplies authority to the
 other; overlapping words are not wire or semantic equivalences, and neither is
-a preferred default. Non-Exhaustive Understanding is likewise standalone, with
-family-local integrity and retirement. A split-generation deployment
+a preferred default. Non-Exhaustive Understanding and IS, Sustainability &
+Direction are likewise standalone, with family-local integrity and retirement.
+A split-generation deployment
 fails instead of looking partially healthy.
 
 ## Baseline still to do (follow-up)

@@ -71,7 +71,7 @@ describe("hub live-check publication retirement", () => {
 
   test("requires every active family to stage its complete route set", () => {
     const staged = stagedDestinations();
-    expect(PUBLICATION_FAMILIES).toHaveLength(32);
+    expect(PUBLICATION_FAMILIES).toHaveLength(33);
     const states = publicationFamilyStates(staged);
     expect([...states.values()].filter(({ active }) => active)).toHaveLength(32);
     expect([...states.values()].every(({ active }) => active)).toBe(true);

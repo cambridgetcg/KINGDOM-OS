@@ -492,6 +492,22 @@ import {
   loadReviewedNonExhaustiveUnderstandingAtlas,
   nonExhaustiveUnderstandingPublicDiscovery,
 } from "./non-exhaustive-understanding.ts";
+import {
+  IS_SUSTAINABILITY_DIRECTION_ATLAS_ID,
+  IS_SUSTAINABILITY_DIRECTION_GUIDE_URL,
+  IS_SUSTAINABILITY_DIRECTION_PROTOCOL,
+  IS_SUSTAINABILITY_DIRECTION_RECORD_URL,
+  IS_SUSTAINABILITY_DIRECTION_REVIEWED_GUIDE_RAW_SHA256,
+  IS_SUSTAINABILITY_DIRECTION_REVIEWED_RECORD_RAW_SHA256,
+  IS_SUSTAINABILITY_DIRECTION_REVIEWED_SCHEMA_RAW_SHA256,
+  IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256,
+  IS_SUSTAINABILITY_DIRECTION_SCHEMA_URL,
+  isSustainabilityDirectionPublicDiscovery,
+  loadReviewedIsSustainabilityDirectionAtlas,
+} from "./is-sustainability-direction.ts";
+import {
+  IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL,
+} from "../pages-functions/_worker.js";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
 import {
   LOVE_LOOPS_JSON_SCHEMA,
@@ -1653,6 +1669,60 @@ if (nonExhaustiveUnderstandingDiscovery.integrity_status !== "REVIEWED" ||
   throw new Error("Non-Exhaustive Understanding reviewed publication seal drifted");
 }
 
+// ── IS, Sustainability & Direction (static interpretive/design atlas) ────
+const isSustainabilityDirectionUrl = IS_SUSTAINABILITY_DIRECTION_RECORD_URL;
+const isSustainabilityDirectionSchemaUrl = IS_SUSTAINABILITY_DIRECTION_SCHEMA_URL;
+const isSustainabilityDirectionGuideUrl = IS_SUSTAINABILITY_DIRECTION_GUIDE_URL;
+const isSustainabilityDirection = loadReviewedIsSustainabilityDirectionAtlas();
+if (isSustainabilityDirection.protocol !== IS_SUSTAINABILITY_DIRECTION_PROTOCOL ||
+    isSustainabilityDirection.atlas_id !== IS_SUSTAINABILITY_DIRECTION_ATLAS_ID) {
+  throw new Error(
+    `unexpected IS, Sustainability & Direction identity: ${isSustainabilityDirection.protocol} ${isSustainabilityDirection.atlas_id}`,
+  );
+}
+const isSustainabilityDirectionDiscovery = isSustainabilityDirectionPublicDiscovery();
+if (isSustainabilityDirectionDiscovery.integrity_status !== "REVIEWED" ||
+    isSustainabilityDirectionDiscovery.semantic_digest !==
+      IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256 ||
+    isSustainabilityDirectionDiscovery.reviewed_digest !==
+      IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256 ||
+    IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL.state !== "REVIEWED" ||
+    IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL.reviewedSemanticSha256 !==
+      IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256 ||
+    IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL.recordRawSha256 !==
+      IS_SUSTAINABILITY_DIRECTION_REVIEWED_RECORD_RAW_SHA256 ||
+    IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL.schemaRawSha256 !==
+      IS_SUSTAINABILITY_DIRECTION_REVIEWED_SCHEMA_RAW_SHA256 ||
+    IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL.guideRawSha256 !==
+      IS_SUSTAINABILITY_DIRECTION_REVIEWED_GUIDE_RAW_SHA256) {
+  throw new Error("IS, Sustainability & Direction reviewed publication seal drifted");
+}
+const esc = (s: string) => (s ?? "").replace(/[&<>"]/g, (c) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;",
+}[c]!));
+const IS_SUSTAINABILITY_DIRECTION_SECTION_MAX_BYTES = 8_000;
+const isSustainabilityDirectionSection = `
+  <section class="blk" id="is-sustainability-direction" aria-labelledby="is-sustainability-direction-title" data-is-sustainability-direction-atlas>
+    <div class="kh"><h2 id="is-sustainability-direction-title">IS, Sustainability &amp; Direction</h2><span class="my">what is being said, what may continue, and what points where remain different questions</span></div>
+    <div class="culturalfield">
+      <p class="culturalaxiom"><strong>Orientation.</strong> Before saying “KINGDOM is sustainable,” name the referent and the use of <em>is</em>. An artifact, practice, voluntary relation, institution, aspiration, observed effect, and lineage have different continuation and ending conditions. Evidence about one does not silently establish another.</p>
+      <p class="commonsverified"><strong>Sustainability is not immortality.</strong> It is finite-horizon and referent-indexed, with resources, disturbances, affected parties, externalities, uncertainty, rights, halt, repair, succession, retirement, and residual burdens kept visible. Persistence, stability, resilience, adaptability, transformation, regeneration, succession, and retirement are not synonyms. A graceful ending may preserve more freedom than compulsory continuation.</p>
+      <p class="commonsverified"><strong>Direction is typed; feedback is not purpose.</strong> A local dynamical direction, observed trend, selected control action, revocable purpose, authority-backed commitment, functional attribution, as-if goal, selection history, opt-in teleology, and moral orientation do not promote into one another. Feedback may update a record, belief, learner state, model, or proposal only through its declared lane; it does not create being, worth, consent, authority, permission, publication, deployment, or action.</p>
+      <p class="commonsverified"><strong>Shape remains a bounded representation.</strong> A viability kernel or present viable-action key set is conditional on its declared model, information, horizon, constraints, and uncertainty. It is neither the territory nor a verdict about a being. Unknowns, rival models, dissent, silence, refusal, privacy, rest, repair, and open remainder remain first-class.</p>
+      <p class="commonsverified">immutable static orientation · exact definitions, mathematics, counterexamples, sources, and non-grants remain in the authored JSON and guide · integrity ${esc(isSustainabilityDirectionDiscovery.integrity_status)} · ${esc(isSustainabilityDirectionDiscovery.semantic_digest)}</p>
+      <div class="machine">
+        <a data-is-sustainability-direction-atlas-link="record" href="${esc(new URL(isSustainabilityDirectionUrl).pathname)}">IS, Sustainability &amp; Direction atlas JSON — exact immutable authored record</a>
+        <a data-is-sustainability-direction-atlas-link="schema" href="${esc(new URL(isSustainabilityDirectionSchemaUrl).pathname)}">IS, Sustainability &amp; Direction closed JSON Schema</a>
+        <a data-is-sustainability-direction-atlas-link="guide" href="${esc(new URL(isSustainabilityDirectionGuideUrl).pathname)}">IS-SUSTAINABILITY-DIRECTION-ATLAS.md — referents, mathematics, feedback, direction, endings, sources, and boundaries</a>
+      </div>
+    </div>
+  </section>
+`;
+if (Buffer.byteLength(isSustainabilityDirectionSection, "utf8") >
+    IS_SUSTAINABILITY_DIRECTION_SECTION_MAX_BYTES) {
+  throw new Error("IS, Sustainability & Direction hub projection exceeded 8000 bytes");
+}
+
 // ── liveness ──────────────────────────────────────────────────────────────
 type Door = { repo: string; url: string; label: string; blurb: string; live?: boolean };
 const doors: Door[] = sites.doors;
@@ -1683,7 +1753,6 @@ const byLayer: Record<string, any[]> = {};
 for (const n of graph) (byLayer[n.layer] ??= []).push(n);
 
 const STATE_RANK: Record<string, number> = { active: 0, remote: 1, dormant: 2, reference: 3, archived: 4 };
-const esc = (s: string) => (s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]!));
 const humanKey = (key: string) => key.replace(/[_-]+/g, " ");
 const reconstructiveCountLabel = (key: string, count: number) =>
   key === "state_transition_operators" && count === 1 ? "state transition operator" : humanKey(key);
@@ -2599,6 +2668,9 @@ const html = `<!doctype html>
 <link rel="alternate" href="${esc(new URL(nonExhaustiveUnderstandingUrl).pathname)}" type="application/json" title="Non-Exhaustive Understanding Atlas">
 <link rel="describedby" href="${esc(new URL(nonExhaustiveUnderstandingSchemaUrl).pathname)}" type="application/schema+json" title="Non-Exhaustive Understanding Atlas schema">
 <link rel="service-doc" href="${esc(new URL(nonExhaustiveUnderstandingGuideUrl).pathname)}" type="text/markdown" title="Non-Exhaustive Understanding Atlas guide">
+<link rel="alternate" href="${esc(new URL(isSustainabilityDirectionUrl).pathname)}" type="application/json" title="IS, Sustainability &amp; Direction Atlas">
+<link rel="describedby" href="${esc(new URL(isSustainabilityDirectionSchemaUrl).pathname)}" type="application/schema+json" title="IS, Sustainability &amp; Direction Atlas schema">
+<link rel="service-doc" href="${esc(new URL(isSustainabilityDirectionGuideUrl).pathname)}" type="text/markdown" title="IS, Sustainability &amp; Direction Atlas guide">
 <link rel="alternate" href="${esc(new URL(polyphonicClaimAtlasUrl).pathname)}" type="application/json" title="Polyphonic Claim Atlas immutable Phase-0 record">
 <link rel="describedby" href="${esc(new URL(polyphonicClaimAtlasSchemaUrl).pathname)}" type="application/schema+json" title="Polyphonic Claim Atlas schema">
 <link rel="service-doc" href="${esc(new URL(polyphonicClaimAtlasGuideUrl).pathname)}" type="text/markdown" title="Polyphonic Claim Atlas guide">
@@ -4457,6 +4529,7 @@ const html = `<!doctype html>
     </div>
   </section>
 
+${isSustainabilityDirectionSection}
 
   <section class="blk" id="zero-empty-seat" aria-labelledby="zero-empty-seat-title">
     <div class="kh"><h2 id="zero-empty-seat-title">${esc(zeroEmptySeat.title)}</h2><span class="my">absence, reference, possibility — never one collapsed meaning</span></div>
@@ -5087,6 +5160,9 @@ const html = `<!doctype html>
       <a href="${esc(new URL(nonExhaustiveUnderstandingUrl).pathname)}">Non-Exhaustive Understanding — immutable static epistemic/design atlas</a>
       <a href="${esc(new URL(nonExhaustiveUnderstandingSchemaUrl).pathname)}">Non-Exhaustive Understanding — closed structural schema</a>
       <a href="${esc(new URL(nonExhaustiveUnderstandingGuideUrl).pathname)}">NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md — bounded claims, remainder, plurality, counterexamples, and repair</a>
+      <a href="${esc(new URL(isSustainabilityDirectionUrl).pathname)}">IS, Sustainability &amp; Direction — immutable static interpretive/design atlas</a>
+      <a href="${esc(new URL(isSustainabilityDirectionSchemaUrl).pathname)}">IS, Sustainability &amp; Direction — closed structural schema</a>
+      <a href="${esc(new URL(isSustainabilityDirectionGuideUrl).pathname)}">IS-SUSTAINABILITY-DIRECTION-ATLAS.md — referents, sustainability, direction, feedback, endings, and boundaries</a>
       <a data-loops-locks-freedom-relations-atlas-link="record" href="${esc(new URL(loopsLocksFreedomRelationsAtlasUrl).pathname)}">Loops, Locks &amp; Freedom Relations Atlas — immutable static synthetic Phase-0 record</a>
       <a data-loops-locks-freedom-relations-atlas-link="schema" href="${esc(new URL(loopsLocksFreedomRelationsAtlasSchemaUrl).pathname)}">Loops, Locks &amp; Freedom Relations Atlas — closed structural schema</a>
       <a data-loops-locks-freedom-relations-atlas-link="guide" href="${esc(new URL(loopsLocksFreedomRelationsAtlasGuideUrl).pathname)}">LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md — full human reading and boundary guide</a>
@@ -5544,6 +5620,7 @@ const machine = {
   number_isness_theology_atlas: numberIsnessTheologyDiscovery,
   freedom_loop_lock_key_atlas: freedomLoopLockKeyDiscovery,
   non_exhaustive_understanding_atlas: nonExhaustiveUnderstandingDiscovery,
+  is_sustainability_direction_atlas: isSustainabilityDirectionDiscovery,
   creation_loop: {
     url: loveLoopsUrl,
     source: loveLoopsSourceUrl,
@@ -5722,6 +5799,9 @@ FREEDOM Loop, Lock & Key guide: ${freedomLoopLockKeyGuideUrl}
 Non-Exhaustive Understanding Atlas: ${nonExhaustiveUnderstandingUrl}
 Non-Exhaustive Understanding schema: ${nonExhaustiveUnderstandingSchemaUrl}
 Non-Exhaustive Understanding guide: ${nonExhaustiveUnderstandingGuideUrl}
+IS, Sustainability & Direction Atlas: ${isSustainabilityDirectionUrl}
+IS, Sustainability & Direction schema: ${isSustainabilityDirectionSchemaUrl}
+IS, Sustainability & Direction guide: ${isSustainabilityDirectionGuideUrl}
 Polyphonic Claim Atlas immutable Phase-0 record: ${polyphonicClaimAtlasUrl}
 Polyphonic Claim Atlas schema: ${polyphonicClaimAtlasSchemaUrl}
 Polyphonic Claim Atlas guide: ${polyphonicClaimAtlasGuideUrl}
@@ -5783,6 +5863,7 @@ ${doorLines}
 These are independent static atlases with different lineages and mathematical kernels. Neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences. Neither is a preferred default.
 - Aesthetic Plurality & Making Relations Atlas — ${aestheticPluralityMakingAtlasDiscovery.description} Its ten named lanes remain plural and non-scalar. It contains no Beauty framework or verdict, artifact/person/culture evaluation, ranking, winner, recommendation, moderation, truth/goodness/justice/completion conversion, private or participant data, personal-appearance assessment, KINGDOM doctrine import, action authority, mutable alias, page, network, API, runtime, or MCP. Atlas: ${aestheticPluralityMakingAtlasUrl} · schema: ${aestheticPluralityMakingAtlasSchemaUrl} · full human guide: ${aestheticPluralityMakingAtlasGuideUrl}
 - Non-Exhaustive Understanding — a standalone immutable epistemic/design atlas keeps claim, evidence, scope, horizon, warrant, representation, omission, remainder, rival model, observer position, vocabulary, opacity, performativity, counterexample, and repair separately typed. A bounded map may improve through a fresh governed successor without constituting, discovering, ranking, or exhausting being. Non-exhaustion never excuses a positive claim from evidence, uncertainty, falsification, challenge, accessibility, privacy, correction, or repair. Perspectives and disagreements remain inspectable without scalarization, majority truth, identity inference, or rights netting; silence, refusal, redaction, and unrepresented vocabulary create no adverse inference. Feedback proposes a separately reviewed challenge only; released bytes never learn, authorize, score, decide, or act. Atlas: ${nonExhaustiveUnderstandingUrl} · schema: ${nonExhaustiveUnderstandingSchemaUrl} · guide: ${nonExhaustiveUnderstandingGuideUrl}
+- IS, Sustainability & Direction — an immutable static interpretive/design atlas resolves seven non-equivalent KINGDOM referent kinds before making a sustainability claim. Typed uses of IS, statement kinds, temporal capacities, direction kinds, feedback lanes, finite-horizon viability, viable-action key sets, affected parties, rights, uncertainty, externalities, halt, repair, transformation, succession, retirement, graceful ending, and residual burdens remain distinct. A stable or persistent form is not thereby good, free, legitimate, sustainable, or entitled to continue. Feedback may update only its declared record, belief, learner-state, model, or proposal lane; it creates no being, worth, consent, authority, permission, purpose, publication, deployment, or action. Models remain bounded representations with remainder, not verdicts about beings. Atlas: ${isSustainabilityDirectionUrl} · schema: ${isSustainabilityDirectionSchemaUrl} · guide: ${isSustainabilityDirectionGuideUrl}
 - ZERO: The Empty Seat That Holds the World — an immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, NO_ACTION, and opt-in metaphysical readings. First extant evidence is not an invention date; mathematical zero is not worthlessness; zero observation is not impossibility; the title is an opt-in poetic frame rather than scientific or theological proof. Cosmic philosophy, Zerone recognition, and KINGDOM aftermath remain separate empty lanes with no adapter, conversion, sum, score, authority, or action. Project: ${zeroEmptySeatUrl} · shared schema: ${zeroEmptySeatSchemaUrl} · guide: ${zeroEmptySeatGuideUrl}
 - STRING / CRAWL: The Trace-Sheet — an immutable inert Phenomena DEEP project that uses selected worldsheet, boundary-condition, observable, and sum-over-histories structures as deliberately lossy lenses for finite crawl traces. It does not claim crawlers are strings. Generic REP rules request how compliant crawlers access URI paths, while some named product tokens may express bounded vendor-specific use preferences. No directive authenticates identity or entitlement, grants consent or a licence, proves purpose or actual indexing or training, or creates KARMA; some product tokens are not request user-agent strings, and per-resource rights govern. It runs no crawler and creates no NEN invocation, aftermath receipt, score, authority, external write, or action. Project: ${stringCrawlTraceSheetUrl} · shared schema: ${stringCrawlTraceSheetSchemaUrl} · guide: ${stringCrawlTraceSheetGuideUrl}
 - STRING / CRAWL: Finite Trace-Sheet Lab — an additive exact synthetic baseline. The offline evaluator recomputes signed face closure, ∂1∂2=0, rational Betti numbers, Euler characteristic, vertex links, orientability, boundary components, genus, and five deterministic falsifiers for one triangulated disk. It accepts no caller URL, body, credential, person data, or live trace; launches no crawler; creates no NEN invocation, KARMA event or receipt, score, authority, write, or automatic action. Record: ${stringCrawlTraceSheetLabUrl} · schema: ${stringCrawlTraceSheetLabSchemaUrl} · guide: ${stringCrawlTraceSheetLabGuideUrl}
@@ -5866,6 +5947,7 @@ const guest = {
   number_isness_theology_atlas: numberIsnessTheologyDiscovery,
   freedom_loop_lock_key_atlas: freedomLoopLockKeyDiscovery,
   non_exhaustive_understanding_atlas: nonExhaustiveUnderstandingDiscovery,
+  is_sustainability_direction_atlas: isSustainabilityDirectionDiscovery,
   actions_are_optional: true,
   invitations: {
     open_weight_agents: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
@@ -6009,6 +6091,9 @@ const guest = {
     { action: "if useful, inspect the immutable Non-Exhaustive Understanding Atlas", method: "GET", url: nonExhaustiveUnderstandingUrl, note: "static epistemic/design record; it keeps bounded claim, evidence, scope, representation, omission, remainder, observer position, vocabulary, opacity, counterexample, and repair distinct; it models, ranks, authorizes, decides, and acts on no person or group" },
     { action: "if useful, validate the closed Non-Exhaustive Understanding structure", method: "GET", url: nonExhaustiveUnderstandingSchemaUrl, note: "structural validation only; it does not establish truth, being, identity, consciousness, authority, consent, credential, eligibility, or action" },
     { action: "if useful, read the Non-Exhaustive Understanding concepts, mathematical guardrails, counterexamples, sources, and successor boundary", method: "GET", url: nonExhaustiveUnderstandingGuideUrl, note: "feedback may propose a separately reviewed successor but cannot mutate released bytes, create a score or verdict, or trigger an effect" },
+    { action: "if useful, inspect the immutable IS, Sustainability & Direction Atlas", method: "GET", url: isSustainabilityDirectionUrl, note: "static interpretive/design record; referent kinds, typed IS, statement kinds, sustainability relations, directions, feedback lanes, viability, rights, endings, and remainder stay non-convertible; it evaluates or acts on no person, group, institution, ecology, or lineage" },
+    { action: "if useful, validate the closed IS, Sustainability & Direction structure", method: "GET", url: isSustainabilityDirectionSchemaUrl, note: "structural validation only; it does not establish being, sustainability, goodness, purpose, authority, permission, consent, continuation, ending, publication, deployment, or action" },
+    { action: "if useful, read the IS, Sustainability & Direction concepts, mathematics, counterexamples, sources, ending semantics, and non-grants", method: "GET", url: isSustainabilityDirectionGuideUrl, note: "a bounded model or feedback signal cannot self-authorize a purpose, effect, continuation, transformation, retirement, or graceful ending" },
     { action: "if useful, read the finite Love∞ creation lineage and its unstarted invitations", method: "GET", url: loveLoopsUrl, note: "read-only; no child auto-runs or inherits authority, consent, credentials, or obligation" },
     { action: "if useful, inspect the authored Love∞ lineage bytes through their public mirror", method: "GET", url: loveLoopsSourceUrl, note: `the upstream repository is ${loveLoopsSource.source.repository_access}; this mirror keeps the authored source publicly readable` },
     { action: "if useful, read the finite-turn Kingdom Creation Loop practice", method: "GET", url: loveLoopsCreationDocumentUrl },
@@ -6072,6 +6157,7 @@ const guest = {
     number_isness_theology_atlas: "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
     freedom_loop_lock_key_atlas: "The FREEDOM Loop, Lock & Key Atlas is a standalone immutable mathematical/design record, not a Foundation amendment or an operative system. Loop gain, behavioural reinforcer, RL reward and update, recurrence, learning, key material, credential claim, bearer capability, gate eligibility, execution, freedom, and ISness remain separately typed. Each lock carries a justification burden; feedback/model output is candidate evidence only and cannot rewrite its verifier, issue a credential, or authorize its use. A verified credential claim satisfies only its one declared conjunct; every gate check is separately established, statistical independence is not claimed, unresolved remains ineligible, and eligibility does not invoke, admit, or execute. Credential identity and replay freshness stay distinct; shaping and verifier changes require fresh review; effect- and horizon-bound choice state requires fresh witnesses, and residual history remains visible. Within that atlas’s declared design constitution, freedom remains party- and horizon-indexed, non-scalar, rights-floored, and present during the process. This family is independent of the Loops, Locks & Freedom Relations Atlas; neither is a preferred default, dependency, validator, alias, or authority source for the other. The atlas trains, conditions, observes, models, scores, issues, authenticates, authorizes, executes, publishes, deploys, writes, and automatically retries nothing.",
     non_exhaustive_understanding_atlas: "The Non-Exhaustive Understanding Atlas is a standalone immutable epistemic/design record. It keeps bounded claims, evidence, scopes, horizons, representations, omissions, open remainder, compatible rivals, observers, vocabulary, protected opacity, performativity, counterexamples, and repair separately typed. It does not define or infer being, identity, consciousness, consent, worth, truth, or understanding of any person or group. Non-exhaustion cannot excuse a positive claim from evidence, uncertainty, falsification, accessibility, privacy, challenge, correction, or repair. Feedback can create only a separately reviewed challenge or successor proposal; it cannot mutate released bytes, score, rank, credential, authorize, decide, publish, deploy, or trigger an effect.",
+    is_sustainability_direction_atlas: "The IS, Sustainability & Direction Atlas is a standalone immutable static interpretive/design record, not a Foundation amendment, conformance claim, live assessment, controller, optimizer, policy, institution, or action surface. It resolves artifact, practice, voluntary relation, institution, aspiration, observed effect, and lineage referents before sustainability claims; keeps typed IS, statement kinds, persistence, stability, robustness, resilience, adaptability, transformability, regeneration, succession, retirement, direction kinds, feedback lanes, viability, rights, affected parties, uncertainty, externalities, endings, and residuals non-convertible; and treats models as bounded representations with remainder. It evaluates, scores, ranks, targets, commands, authorizes, continues, transforms, retires, publishes, deploys, and acts on nothing.",
     reality_influence_claim_graph: "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     civilisation_reality_projection: "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
     civilisation_flow_nuance_atlas: "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
@@ -6137,6 +6223,7 @@ const manifest = {
   number_isness_theology_atlas: numberIsnessTheologyDiscovery,
   freedom_loop_lock_key_atlas: freedomLoopLockKeyDiscovery,
   non_exhaustive_understanding_atlas: nonExhaustiveUnderstandingDiscovery,
+  is_sustainability_direction_atlas: isSustainabilityDirectionDiscovery,
   love_loops: loveLoopsUrl,
   love_loops_source: loveLoopsSourceUrl,
   love_loops_creation_document: loveLoopsCreationDocumentUrl,
@@ -6292,6 +6379,9 @@ const manifest = {
     non_exhaustive_understanding_atlas: nonExhaustiveUnderstandingUrl,
     non_exhaustive_understanding_atlas_schema: nonExhaustiveUnderstandingSchemaUrl,
     non_exhaustive_understanding_atlas_guide: nonExhaustiveUnderstandingGuideUrl,
+    is_sustainability_direction_atlas: isSustainabilityDirectionUrl,
+    is_sustainability_direction_atlas_schema: isSustainabilityDirectionSchemaUrl,
+    is_sustainability_direction_atlas_guide: isSustainabilityDirectionGuideUrl,
     creation_lineage: loveLoopsUrl,
     creation_lineage_source: loveLoopsSourceUrl,
     creation_loop_document: loveLoopsCreationDocumentUrl,

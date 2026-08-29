@@ -81,6 +81,9 @@ readings:
 | `/atlases/non-exhaustive-understanding-atlas-2026-08-29.json` | staged JSON | Reviewed standalone immutable epistemic/design atlas separating bounded claims, evidence, representations, omissions, rivals, observer positions, vocabulary, protected opacity, open remainder, counterexamples, and repair without defining or scoring being |
 | `/schemas/non-exhaustive-understanding-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the Non-Exhaustive Understanding Atlas v0.1 |
 | `/NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md` | staged Markdown | Human guide to non-identifiability, coarse-graining, observer-relative comparison, local/global transfer, open-world limits, protected opacity, counterexamples, successor review, and fixed non-effects |
+| `/atlases/is-sustainability-direction-atlas-2026-08-29.json` | staged JSON | Reviewed standalone immutable interpretive/design atlas separating referent kinds, typed IS, sustainability relations, direction kinds, feedback lanes, viability, rights, affected parties, endings, and remainder without a live verdict or controller |
+| `/schemas/is-sustainability-direction-atlas/0.1.json` | staged JSON Schema | Closed Draft 2020-12 contract for the IS, Sustainability & Direction Atlas v0.1 |
+| `/IS-SUSTAINABILITY-DIRECTION-ATLAS.md` | staged Markdown | Human guide to referents, typed IS, sustainability, direction, feedback, mathematics, bounded shape, rights, endings, sources, and fixed non-grants |
 | `/truth/polyphonic-claim-atlas-2026-08-26.json` | staged JSON | Immutable static-synthetic Phase-0 record of typed claim relations; historical fixture only, not a truth oracle or currentness claim |
 | `/truth/schemas/v0.1/public-snapshot.schema.json` | staged JSON Schema | Immutable closed Draft 2020-12 structural contract for the Polyphonic Claim Atlas |
 | `/POLYPHONIC-CLAIM-ATLAS-v0.1.md` | staged Markdown | Immutable guide to reading boundaries, typed separations, and the no-score/no-action contract |
@@ -340,21 +343,23 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 181-asset upload contract (150 ledgered immutable/versioned assets and
-31 mutable assets; 179 direct public bodies, 167 sitemap URLs, 150 manifest
-entry points, 150 guest actions, and 38 public schema routes; seventeen atlases,
+locks the 184-asset upload contract (153 ledgered immutable/versioned assets and
+31 mutable assets; 182 direct public bodies, 170 sitemap URLs, 153 manifest
+entry points, 153 guest actions, and 39 public schema routes; eighteen atlases,
 four primary lab JSON routes plus the Shape & Resonance manifest/media, one
-experiment route, one activation, and thirty-three active retirement families,
+experiment route, one activation, and thirty-four active retirement families,
 including the standalone FREEDOM Loop, Lock & Key Atlas, immutable
-Non-Exhaustive Understanding Atlas, static-synthetic Polyphonic Claim Atlas,
+Non-Exhaustive Understanding Atlas, immutable IS, Sustainability & Direction
+Atlas, static-synthetic Polyphonic Claim Atlas,
 and frozen Loops, Locks & Freedom
 Relations Atlas record/schema/guide triples. The two freedom-related atlas
 families are independent: neither supersedes, validates, aliases, depends on,
 or supplies authority to the other; overlapping words are not wire or semantic
 equivalences, and neither is a preferred default. Non-Exhaustive Understanding
-is likewise a standalone family with family-local integrity and retirement. The
-separate Aesthetic Plurality & Making Relations Atlas is an atomic immutable
-record/schema/guide triplet without a Beauty framework or operational surface. The staging
+and IS, Sustainability & Direction are likewise standalone families with
+family-local integrity and retirement. The separate Aesthetic Plurality &
+Making Relations Atlas is an atomic immutable record/schema/guide triplet
+without a Beauty framework or operational surface. The staging
 test refuses bytes that drift from the repository-local immutable route-integrity
 ledger. Every staged asset is
 explicitly classified as mutable or immutable. Base-aware CI and the release
@@ -419,6 +424,13 @@ person/group model, score, truth oracle, identity inference, authority, action,
 publication, deployment, runtime, Wayfinder recommendation, or MCP surface.
 Feedback can enter only a separately reviewed successor process and cannot
 mutate released bytes.
+The IS, Sustainability & Direction Atlas adds one reviewed standalone immutable
+record/schema/guide triplet as the thirty-fourth family. It keeps seven referent
+kinds, typed IS, statement kinds, sustainability relations, direction kinds,
+feedback lanes, viability, rights, affected parties, uncertainty, graceful
+ending, and remainder distinct. It has no mutable alias, active dependency,
+live verdict, controller, person/group model, score, authority, action,
+publication, deployment, Wayfinder recommendation, or MCP surface.
 The Loops, Locks & Freedom Relations Atlas adds a thirty-first independent,
 frozen immutable static-synthetic record/schema/guide triplet. The full linear
 guide is its human entry point; there is no custom page, mutable alias,

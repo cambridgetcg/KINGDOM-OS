@@ -276,7 +276,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_PATHS.map((path) =>
         `https://thekingdom.dev${path}`),
     );
-    expect(PUBLICATION_FAMILIES).toHaveLength(32);
+    expect(PUBLICATION_FAMILIES).toHaveLength(33);
     expect(PUBLICATION_FAMILIES.find(({ id }) =>
       id === "loops-locks-freedom-relations-atlas")).toEqual({
         id: "loops-locks-freedom-relations-atlas",
@@ -295,11 +295,11 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
   });
 
   test("binds exact staging, ledger, discovery, sitemap, and no-Wayfinder-coupling contracts", () => {
-    expect(HUB_ASSETS).toHaveLength(178);
+    expect(HUB_ASSETS).toHaveLength(181);
     expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(176);
+      .toHaveLength(179);
     expect(HUB_ASSETS.filter(({ source }) => [
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_LOCATOR,
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_LOCATOR,
@@ -314,7 +314,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     ]);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(147);
+    expect(ledger.entries).toHaveLength(150);
     expect(ledger.entries.filter((entry: any) =>
       entry.id.startsWith("loops-locks-freedom-relations-atlas/"))).toEqual([
         { id: "loops-locks-freedom-relations-atlas/0.1/guide",
@@ -341,7 +341,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     expect(kingdom.loops_locks_freedom_relations_atlas).toEqual(expected);
     expect(guest.loops_locks_freedom_relations_atlas).toEqual(expected);
     expect(manifest.loops_locks_freedom_relations_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(147);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(150);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("loops_locks_freedom_relations_atlas"))))
       .toEqual({
@@ -352,7 +352,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
         loops_locks_freedom_relations_atlas_guide:
           LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(147);
+    expect(guest.next_actions).toHaveLength(150);
     const actions = guest.next_actions.filter((action: any) =>
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
@@ -390,7 +390,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
       .toBe("aa525a09aaa21d1a2e8ececad329773f20ff004d32494988ec677cee914a16f8");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(164);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(167);
   });
 
   test("activates or retires all three routes atomically", () => {

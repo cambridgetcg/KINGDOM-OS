@@ -135,6 +135,27 @@ import {
   nonExhaustiveUnderstandingPublicDiscovery,
 } from "./non-exhaustive-understanding.ts";
 import {
+  IS_SUSTAINABILITY_DIRECTION_ATLAS_ID,
+  IS_SUSTAINABILITY_DIRECTION_GUIDE_LOCATOR,
+  IS_SUSTAINABILITY_DIRECTION_GUIDE_URL,
+  IS_SUSTAINABILITY_DIRECTION_PROTOCOL,
+  IS_SUSTAINABILITY_DIRECTION_RECORD_LOCATOR,
+  IS_SUSTAINABILITY_DIRECTION_RECORD_URL,
+  IS_SUSTAINABILITY_DIRECTION_REVIEWED_GUIDE_RAW_SHA256,
+  IS_SUSTAINABILITY_DIRECTION_REVIEWED_RECORD_RAW_SHA256,
+  IS_SUSTAINABILITY_DIRECTION_REVIEWED_SCHEMA_RAW_SHA256,
+  IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256,
+  IS_SUSTAINABILITY_DIRECTION_SCHEMA_LOCATOR,
+  IS_SUSTAINABILITY_DIRECTION_SCHEMA_URL,
+  IS_SUSTAINABILITY_DIRECTION_UNSEALED_SHA256,
+  isSustainabilityDirectionDigest,
+  isSustainabilityDirectionPublicDiscovery,
+  loadReviewedIsSustainabilityDirectionAtlas,
+} from "./is-sustainability-direction.ts";
+import {
+  IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL,
+} from "../pages-functions/_worker.js";
+import {
   POLYPHONIC_CLAIM_ATLAS_BYTE_SHA256,
   POLYPHONIC_CLAIM_ATLAS_GUIDE_BYTE_SHA256,
   POLYPHONIC_CLAIM_ATLAS_PUBLIC_PATHS,
@@ -806,6 +827,18 @@ const nonExhaustiveUnderstandingSchemaPath =
   new URL(NON_EXHAUSTIVE_UNDERSTANDING_SCHEMA_URL).pathname;
 const nonExhaustiveUnderstandingGuidePath =
   new URL(NON_EXHAUSTIVE_UNDERSTANDING_GUIDE_URL).pathname;
+const isSustainabilityDirectionAtlasPath =
+  new URL(IS_SUSTAINABILITY_DIRECTION_RECORD_URL).pathname;
+const isSustainabilityDirectionAtlasSchemaPath =
+  new URL(IS_SUSTAINABILITY_DIRECTION_SCHEMA_URL).pathname;
+const isSustainabilityDirectionAtlasGuidePath =
+  new URL(IS_SUSTAINABILITY_DIRECTION_GUIDE_URL).pathname;
+const isSustainabilityDirectionAtlasLocator =
+  IS_SUSTAINABILITY_DIRECTION_RECORD_LOCATOR;
+const isSustainabilityDirectionAtlasSchemaLocator =
+  IS_SUSTAINABILITY_DIRECTION_SCHEMA_LOCATOR;
+const isSustainabilityDirectionAtlasGuideLocator =
+  IS_SUSTAINABILITY_DIRECTION_GUIDE_LOCATOR;
 const [
   polyphonicClaimAtlasPath,
   polyphonicClaimAtlasSchemaPath,
@@ -1132,6 +1165,21 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "non_exhaustive_understanding_atlas",
       "non_exhaustive_understanding_atlas_schema",
       "non_exhaustive_understanding_atlas_guide",
+    ],
+  },
+  {
+    id: "is-sustainability-direction-atlas",
+    label: "IS, Sustainability & Direction Atlas",
+    routes: [
+      isSustainabilityDirectionAtlasPath,
+      isSustainabilityDirectionAtlasSchemaPath,
+      isSustainabilityDirectionAtlasGuidePath,
+    ],
+    discoveryProperties: ["is_sustainability_direction_atlas"],
+    entryPointProperties: [
+      "is_sustainability_direction_atlas",
+      "is_sustainability_direction_atlas_schema",
+      "is_sustainability_direction_atlas_guide",
     ],
   },
   {
@@ -1767,6 +1815,151 @@ export async function checkNonExhaustiveUnderstandingAtlasTriple(
           (await mutation.arrayBuffer()).byteLength !== 0) {
         throw new Error(
           `${method} ${contract.path} lost the zero-body Non-Exhaustive Understanding 405 boundary`,
+        );
+      }
+    }
+  }
+}
+
+function assertIsSustainabilityDirectionPublicationSeal(): void {
+  const seal = IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL;
+  const pins = [
+    seal?.reviewedSemanticSha256,
+    seal?.recordRawSha256,
+    seal?.schemaRawSha256,
+    seal?.guideRawSha256,
+  ];
+  const nonzeroSha256 = (value: unknown): value is string =>
+    typeof value === "string" && /^sha256:[a-f0-9]{64}$/u.test(value) &&
+    value !== IS_SUSTAINABILITY_DIRECTION_UNSEALED_SHA256;
+  if (seal?.state !== "REVIEWED" || !pins.every(nonzeroSha256)) {
+    throw new Error(
+      "IS, Sustainability & Direction publication remains UNSEALED; live certification refused",
+    );
+  }
+  if (IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256 ===
+        IS_SUSTAINABILITY_DIRECTION_UNSEALED_SHA256 ||
+      seal.reviewedSemanticSha256 !==
+        IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256 ||
+      seal.recordRawSha256 !==
+        IS_SUSTAINABILITY_DIRECTION_REVIEWED_RECORD_RAW_SHA256 ||
+      seal.schemaRawSha256 !==
+        IS_SUSTAINABILITY_DIRECTION_REVIEWED_SCHEMA_RAW_SHA256 ||
+      seal.guideRawSha256 !==
+        IS_SUSTAINABILITY_DIRECTION_REVIEWED_GUIDE_RAW_SHA256) {
+    throw new Error(
+      "IS, Sustainability & Direction reviewed semantic/raw pins disagree with the edge seal",
+    );
+  }
+
+  let atlas: Record<string, any>;
+  try {
+    atlas = loadReviewedIsSustainabilityDirectionAtlas();
+  } catch {
+    throw new Error(
+      "IS, Sustainability & Direction reviewed loader refused live certification",
+    );
+  }
+  if (atlas.protocol !== IS_SUSTAINABILITY_DIRECTION_PROTOCOL ||
+      atlas.atlas_id !== IS_SUSTAINABILITY_DIRECTION_ATLAS_ID ||
+      atlas.integrity?.review_state !== "REVIEWED" ||
+      atlas.integrity?.digest !== IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256 ||
+      atlas.integrity?.reviewed_digest !==
+        IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256 ||
+      isSustainabilityDirectionDigest(atlas) !==
+        IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256) {
+    throw new Error(
+      "IS, Sustainability & Direction reviewed identity or semantic digest drifted",
+    );
+  }
+
+  for (const [source, expected] of [
+    [isSustainabilityDirectionAtlasLocator, seal.recordRawSha256],
+    [isSustainabilityDirectionAtlasSchemaLocator, seal.schemaRawSha256],
+    [isSustainabilityDirectionAtlasGuideLocator, seal.guideRawSha256],
+  ] as const) {
+    const actual = `sha256:${sha256(readFileSync(join(ROOT, source)))}`;
+    if (actual !== expected) {
+      throw new Error(
+        `IS, Sustainability & Direction exact raw pin drifted for ${source}`,
+      );
+    }
+  }
+}
+
+export async function checkIsSustainabilityDirectionAtlasTriple(
+  fetcher: typeof fetch = fetch,
+): Promise<void> {
+  assertIsSustainabilityDirectionPublicationSeal();
+  const exactRecordLink = [
+    `<${isSustainabilityDirectionAtlasSchemaPath}>; rel="describedby"; type="application/schema+json"`,
+    `<${isSustainabilityDirectionAtlasGuidePath}>; rel="service-doc"; type="text/markdown"`,
+  ].join(", ");
+  const contracts = [
+    {
+      path: isSustainabilityDirectionAtlasPath,
+      source: isSustainabilityDirectionAtlasLocator,
+      contentType: "application/json; charset=utf-8",
+      record: true,
+    },
+    {
+      path: isSustainabilityDirectionAtlasSchemaPath,
+      source: isSustainabilityDirectionAtlasSchemaLocator,
+      contentType: "application/schema+json; charset=utf-8",
+      record: false,
+    },
+    {
+      path: isSustainabilityDirectionAtlasGuidePath,
+      source: isSustainabilityDirectionAtlasGuideLocator,
+      contentType: "text/markdown; charset=utf-8",
+      record: false,
+    },
+  ] as const;
+
+  for (const contract of contracts) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const body = Buffer.from(await response.arrayBuffer());
+      const bodyValid = method === "HEAD"
+        ? body.byteLength === 0
+        : body.equals(readFileSync(join(ROOT, contract.source)));
+      if (response.status !== 200 ||
+          (response.headers.get("content-type") || "").toLowerCase() !==
+            contract.contentType ||
+          !hasExactCacheDirectives(response.headers.get("cache-control"),
+            ["public", "max-age=31536000", "immutable", "no-transform"]) ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !==
+            "nosniff" ||
+          (response.headers.get("link") || "") !==
+            (contract.record ? exactRecordLink : "") ||
+          !bodyValid) {
+        throw new Error(
+          `${method} ${contract.path} lost the exact immutable IS, Sustainability & Direction contract`,
+        );
+      }
+    }
+
+    for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+      const mutation = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (mutation.status !== 405 ||
+          mutation.headers.get("allow") !== "GET, HEAD" ||
+          mutation.headers.get("cache-control") !== "no-store" ||
+          mutation.headers.get("access-control-allow-origin") !== "*" ||
+          (mutation.headers.get("x-content-type-options") || "").toLowerCase() !==
+            "nosniff" ||
+          mutation.headers.get("link") !== null ||
+          (await mutation.arrayBuffer()).byteLength !== 0) {
+        throw new Error(
+          `${method} ${contract.path} lost the zero-body IS, Sustainability & Direction 405 boundary`,
         );
       }
     }
@@ -2435,6 +2628,8 @@ export async function checkHubLive(
   const freedomLoopLockKeyActive = familyActive("freedom-loop-lock-key-atlas");
   const nonExhaustiveUnderstandingActive =
     familyActive("non-exhaustive-understanding-atlas");
+  const isSustainabilityDirectionAtlasActive =
+    familyActive("is-sustainability-direction-atlas");
   const loopsLocksFreedomRelationsAtlasActive =
     familyActive("loops-locks-freedom-relations-atlas");
   const aestheticPluralityMakingAtlasActive =
@@ -3266,6 +3461,10 @@ export async function checkHubLive(
     await checkNonExhaustiveUnderstandingAtlasTriple();
   }
 
+  if (isSustainabilityDirectionAtlasActive) {
+    await checkIsSustainabilityDirectionAtlasTriple();
+  }
+
   if (loopsLocksFreedomRelationsAtlasActive) {
     await checkLoopsLocksFreedomRelationsAtlasTriple();
   }
@@ -3696,6 +3895,9 @@ export async function checkHubLive(
     ...(nonExhaustiveUnderstandingActive
       ? [nonExhaustiveUnderstandingSchemaPath]
       : []),
+    ...(isSustainabilityDirectionAtlasActive
+      ? [isSustainabilityDirectionAtlasSchemaPath]
+      : []),
     ...(loopsLocksFreedomRelationsAtlasActive
       ? [loopsLocksFreedomRelationsAtlasSchemaPath]
       : []),
@@ -3742,6 +3944,7 @@ export async function checkHubLive(
       path === polyphonicClaimAtlasSchemaPath ||
       path === freedomLoopLockKeySchemaPath ||
       path === nonExhaustiveUnderstandingSchemaPath ||
+      path === isSustainabilityDirectionAtlasSchemaPath ||
       path === loopsLocksFreedomRelationsAtlasSchemaPath ||
       path === aestheticPluralityMakingAtlasSchemaPath ||
       path === ukGovernmentEngineSchemaPath ||
@@ -3771,6 +3974,7 @@ export async function checkHubLive(
         path === polyphonicClaimAtlasSchemaPath ||
         path === freedomLoopLockKeySchemaPath ||
         path === nonExhaustiveUnderstandingSchemaPath ||
+        path === isSustainabilityDirectionAtlasSchemaPath ||
         path === loopsLocksFreedomRelationsAtlasSchemaPath ||
         path === aestheticPluralityMakingAtlasSchemaPath ||
         path === ukGovernmentEngineSchemaPath ||
@@ -3788,6 +3992,9 @@ export async function checkHubLive(
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (path === nonExhaustiveUnderstandingSchemaPath &&
+        ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
+          hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
+      (path === isSustainabilityDirectionAtlasSchemaPath &&
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (path === loopsLocksFreedomRelationsAtlasSchemaPath &&
@@ -3947,6 +4154,12 @@ export async function checkHubLive(
     : undefined;
   const expectedNonExhaustiveUnderstanding = nonExhaustiveUnderstanding
     ? nonExhaustiveUnderstandingPublicDiscovery(nonExhaustiveUnderstanding)
+    : undefined;
+  const isSustainabilityDirection = isSustainabilityDirectionAtlasActive
+    ? loadReviewedIsSustainabilityDirectionAtlas()
+    : undefined;
+  const expectedIsSustainabilityDirection = isSustainabilityDirection
+    ? isSustainabilityDirectionPublicDiscovery()
     : undefined;
   const loopsLocksFreedomRelationsAtlas = loopsLocksFreedomRelationsAtlasActive
     ? loadLoopsLocksFreedomRelationsAtlas()
@@ -6010,7 +6223,7 @@ export async function checkHubLive(
     const countOccurrences = (text: string, needle: string): number =>
       text.split(needle).length - 1;
     const sectionStart = authoredRootHtml.indexOf('id="non-exhaustive-understanding"');
-    const sectionEnd = authoredRootHtml.indexOf('id="zero-empty-seat"', sectionStart);
+    const sectionEnd = authoredRootHtml.indexOf('id="is-sustainability-direction"', sectionStart);
     const sectionHtml = sectionStart >= 0 && sectionEnd > sectionStart
       ? authoredRootHtml.slice(sectionStart, sectionEnd)
       : "";
@@ -6051,6 +6264,81 @@ export async function checkHubLive(
         .some((path) => !IMMUTABLE_PUBLICATION_ASSETS.has(destinationForPublicPath(path)))) {
       throw new Error(
         "Non-Exhaustive Understanding triplet, concise orientation, discovery, or non-effect contract drifted",
+      );
+    }
+  }
+
+  if (isSustainabilityDirectionAtlasActive) {
+    const expected = expectedIsSustainabilityDirection!;
+    const targets = new Set([
+      IS_SUSTAINABILITY_DIRECTION_RECORD_URL,
+      IS_SUSTAINABILITY_DIRECTION_SCHEMA_URL,
+      IS_SUSTAINABILITY_DIRECTION_GUIDE_URL,
+    ]);
+    const guestActions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => targets.has(action?.url))
+      : [];
+    const entryPoints = Object.entries(manifest?.entry_points ?? {})
+      .filter(([key]) => key.startsWith("is_sustainability_direction_atlas"));
+    const expectedEntryPoints = [
+      ["is_sustainability_direction_atlas", IS_SUSTAINABILITY_DIRECTION_RECORD_URL],
+      ["is_sustainability_direction_atlas_schema", IS_SUSTAINABILITY_DIRECTION_SCHEMA_URL],
+      ["is_sustainability_direction_atlas_guide", IS_SUSTAINABILITY_DIRECTION_GUIDE_URL],
+    ];
+    const forbiddenActionKeys = [
+      "mcp", "tool", "write", "execute", "score", "rank", "credential",
+      "authority", "publish", "deploy", "decision", "feedback",
+    ];
+    const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
+    const wayfinderText = JSON.stringify(authoredWayfinder);
+    const mcpText = JSON.stringify(manifest?.mcp ?? {});
+    const countOccurrences = (text: string, needle: string): number =>
+      text.split(needle).length - 1;
+    const sectionStart = authoredRootHtml.indexOf('id="is-sustainability-direction"');
+    const sectionEnd = authoredRootHtml.indexOf('id="zero-empty-seat"', sectionStart);
+    const sectionHtml = sectionStart >= 0 && sectionEnd > sectionStart
+      ? authoredRootHtml.slice(sectionStart, sectionEnd)
+      : "";
+    const exactHtmlLinks = [
+      `data-is-sustainability-direction-atlas-link="record" href="${isSustainabilityDirectionAtlasPath}"`,
+      `data-is-sustainability-direction-atlas-link="schema" href="${isSustainabilityDirectionAtlasSchemaPath}"`,
+      `data-is-sustainability-direction-atlas-link="guide" href="${isSustainabilityDirectionAtlasGuidePath}"`,
+    ];
+    const family = PUBLICATION_FAMILIES.find(
+      ({ id }) => id === "is-sustainability-direction-atlas",
+    );
+    if (!isDeepStrictEqual(manifest?.is_sustainability_direction_atlas, expected) ||
+      !isDeepStrictEqual(guest?.is_sustainability_direction_atlas, expected) ||
+      !isDeepStrictEqual(authoredKingdom?.is_sustainability_direction_atlas, expected) ||
+      expected.protocol !== IS_SUSTAINABILITY_DIRECTION_PROTOCOL ||
+      expected.atlas_id !== IS_SUSTAINABILITY_DIRECTION_ATLAS_ID ||
+      expected.integrity_status !== "REVIEWED" ||
+      expected.semantic_digest !== IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256 ||
+      expected.reviewed_digest !== IS_SUSTAINABILITY_DIRECTION_REVIEWED_SEMANTIC_SHA256 ||
+      expected.static_only !== true || expected.runtime_or_effect !== false ||
+      expected.live_verdict !== false || expected.foundation_amendment !== false ||
+      expected.conformance_claim !== false || expected.authority_imported !== false ||
+      !isDeepStrictEqual(entryPoints, expectedEntryPoints) ||
+      guestActions.length !== targets.size ||
+      [...targets].some((target) =>
+        guestActions.filter((action: any) => action?.url === target).length !== 1) ||
+      guestActions.some((action: any) => action?.method !== "GET" ||
+        forbiddenActionKeys.some((key) => Object.hasOwn(action, key))) ||
+      [...targets].some((target) => !llms.includes(target)) ||
+      [...targets].some((target) =>
+        countOccurrences(sitemap, `<loc>${target}</loc>`) !== 1) ||
+      [...targets].some((target) => wayfinderText.includes(target) || mcpText.includes(target)) ||
+      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
+      Buffer.byteLength(sectionHtml, "utf8") > 8_000 ||
+      !sectionHtml.includes("Sustainability is not immortality") ||
+      !sectionHtml.includes("Direction is typed; feedback is not purpose") ||
+      !sectionHtml.includes("Shape remains a bounded representation") ||
+      !family || Object.hasOwn(family, "dependsOn") ||
+      [isSustainabilityDirectionAtlasPath, isSustainabilityDirectionAtlasSchemaPath,
+        isSustainabilityDirectionAtlasGuidePath]
+        .some((path) => !IMMUTABLE_PUBLICATION_ASSETS.has(destinationForPublicPath(path)))) {
+      throw new Error(
+        "IS, Sustainability & Direction triplet, concise orientation, discovery, or non-effect contract drifted",
       );
     }
   }
@@ -7762,6 +8050,15 @@ export async function checkHubLive(
       )) {
     throw new Error(
       "derived kingdom.json did not preserve Non-Exhaustive Understanding discovery",
+    );
+  }
+  if (isSustainabilityDirectionAtlasActive &&
+      !isDeepStrictEqual(
+        liveKingdom?.is_sustainability_direction_atlas,
+        expectedIsSustainabilityDirection!,
+      )) {
+    throw new Error(
+      "derived kingdom.json did not preserve IS, Sustainability & Direction discovery",
     );
   }
   if (loopsLocksFreedomRelationsAtlasActive &&

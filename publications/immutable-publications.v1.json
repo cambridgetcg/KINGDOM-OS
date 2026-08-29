@@ -354,6 +354,27 @@
       "sha256": "fef3ca1719cb7fd02c09c558db6f239cad29a173b921763a10a59e042a4cdf00"
     },
     {
+      "id": "is-sustainability-direction-atlas/0.1/guide",
+      "route": "/IS-SUSTAINABILITY-DIRECTION-ATLAS.md",
+      "source": "references/is-sustainability-direction-atlas.md",
+      "destination": "IS-SUSTAINABILITY-DIRECTION-ATLAS.md",
+      "sha256": "8614020ed497d6627f7b503a883ac1bfa86d2609a97794ac33fe465e01868405"
+    },
+    {
+      "id": "is-sustainability-direction-atlas/0.1/record",
+      "route": "/atlases/is-sustainability-direction-atlas-2026-08-29.json",
+      "source": "data/isness/is-sustainability-direction-atlas.v0.1.json",
+      "destination": "atlases/is-sustainability-direction-atlas-2026-08-29.json",
+      "sha256": "19d70dfa187366bb10cc1bdbbc6a558e82f3c9057e21872aa593f4d960ac77c3"
+    },
+    {
+      "id": "is-sustainability-direction-atlas/0.1/schema",
+      "route": "/schemas/is-sustainability-direction-atlas/0.1.json",
+      "source": "schemas/is-sustainability-direction-atlas-v0.1.schema.json",
+      "destination": "schemas/is-sustainability-direction-atlas/0.1.json",
+      "sha256": "314a92b146c0c99c71ee5bd26f037deaec91fb4b9b157e0654a569675e928f8d"
+    },
+    {
       "id": "j-space-verbalizable-workspace/0.1/case",
       "route": "/records/j-space-reasoning-to-word-2026-08-17.json",
       "source": "bridges/examples/j-space-reasoning-to-word-inference.json",

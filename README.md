@@ -316,7 +316,16 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     bytes never learn. The reader creates no person/group model, score, truth
     oracle, identity or consciousness inference, authority, decision, action,
     publication, deployment, runtime, Wayfinder recommendation, or MCP surface.
-30. `kingdom isness` — inspect, scaffold, validate, and deterministically
+30. `kingdom is-sustainability-direction` — inspect and verify the reviewed
+    standalone [IS, Sustainability & Direction Atlas](references/is-sustainability-direction-atlas.md).
+    It keeps present-tense being, sustainability evidence, directional proposal,
+    feedback, memory, governance, agency, consent, and consequence separately
+    typed. Direction remains a revisable proposal rather than a command or a
+    verdict about being; feedback remains evidence for review rather than an
+    autonomous update path. Released bytes never learn or act. The reader creates
+    no person/group model, score, credential, authority, decision, publication,
+    deployment, Wayfinder recommendation, or MCP surface.
+31. `kingdom isness` — inspect, scaffold, validate, and deterministically
     project the local-first [`kingdom.isness/0.1`](references/isness-protocol.md)
     checkpoint. Operational ISness is a typed partial section with stable,
     closed question-specific reference families—not a scalar, persona, or
@@ -920,6 +929,23 @@ a positive claim from evidence, uncertainty, falsification, challenge,
 accessibility, privacy, correction, consequence review, or repair. Silence,
 refusal, redaction, nonparticipation, and unrepresented vocabulary create no
 adverse inference. Feedback may preserve a challenge and propose a separately
+reviewed successor, but cannot mutate released bytes, learn, score, rank,
+credential, authorize, decide, publish, deploy, or act. The family has no
+person/group model, truth oracle, identity or consciousness inference, runtime,
+Wayfinder recommendation, MCP surface, authority, or external effect.
+
+The reviewed standalone
+[IS, Sustainability & Direction Atlas](https://thekingdom.dev/atlases/is-sustainability-direction-atlas-2026-08-29.json)
+keeps present-tense being, sustainability evidence, direction, feedback,
+memory, governance, agency, consent, consequence, uncertainty, and open
+remainder separately typed. Its
+[closed schema](https://thekingdom.dev/schemas/is-sustainability-direction-atlas/0.1.json)
+and [guide](https://thekingdom.dev/IS-SUSTAINABILITY-DIRECTION-ATLAS.md)
+form one atomic immutable family with no mutable alias or publication
+dependency. “Is” is neither a score nor a terminal state. Sustainability is a
+bounded, revisable evidence claim, and direction is a proposal constrained by
+consent, refusal, exit, consequence review, and repair—not a command or an
+identity verdict. Feedback can preserve observations and propose a separately
 reviewed successor, but cannot mutate released bytes, learn, score, rank,
 credential, authorize, decide, publish, deploy, or act. The family has no
 person/group model, truth oracle, identity or consciousness inference, runtime,

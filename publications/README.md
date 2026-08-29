@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 150-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 153-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -113,8 +113,16 @@ mutable alias, custom page, Wayfinder recommendation, MCP surface, runtime,
 active dependency, person/group model, score, truth oracle, identity inference,
 authority, decision, or action surface. Feedback can propose only a separately
 reviewed successor and never mutates released bytes.
-Non-Exhaustive Understanding is likewise standalone; integrity, source, review,
-discovery, and retirement remain family-local.
+The IS, Sustainability & Direction Atlas adds one reviewed standalone immutable
+record, one closed schema, and one guide as the thirty-fourth family. It has no
+mutable alias, custom page, Wayfinder recommendation, MCP surface, runtime,
+active dependency, live verdict, controller, person/group model, score,
+authority, decision, or action surface. Referent kinds, typed IS,
+sustainability relations, direction kinds, feedback lanes, rights, endings,
+and remainder remain non-convertible.
+Non-Exhaustive Understanding and IS, Sustainability & Direction are likewise
+standalone; integrity, source, review, discovery, and retirement remain
+family-local.
 The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -278,12 +286,12 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 181-asset union classifies 150 destinations
-as ledgered immutable/versioned and 31 as mutable; 179 are direct public response
-bodies, the sitemap contains 167 URLs, and discovery exposes 150 manifest entry
-points plus 150 guest actions. Generated discovery describes seventeen atlases,
-38 public schema routes, four primary lab JSON routes plus Shape & Resonance
-manifest/media, one experiment route, one separate activation, and thirty-three active retirement
+consume those same bytes. The current 184-asset union classifies 153 destinations
+as ledgered immutable/versioned and 31 as mutable; 182 are direct public response
+bodies, the sitemap contains 170 URLs, and discovery exposes 153 manifest entry
+points plus 153 guest actions. Generated discovery describes eighteen atlases,
+39 public schema routes, four primary lab JSON routes plus Shape & Resonance
+manifest/media, one experiment route, one separate activation, and thirty-four active retirement
 families. The two freedom-related atlases keep separate route triples, discovery
 keys, integrity/source/review claims, and retirement state; neither is preferred
 or removed with the other. Every destination is explicitly classified as mutable
@@ -292,7 +300,7 @@ committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the thirty-three linked authored publication
+The live release check retires the thirty-four linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

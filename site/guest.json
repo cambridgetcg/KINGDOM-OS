@@ -4039,6 +4039,41 @@
     "person_data": false,
     "action_or_authority_effect": false
   },
+  "is_sustainability_direction_atlas": {
+    "protocol": "kingdom.is-sustainability-direction-atlas/0.1",
+    "atlas_id": "is-sustainability-direction-atlas-2026-08-29",
+    "title": "IS, Sustainability & Direction Atlas",
+    "version": "0.1.0",
+    "compiled_on": "2026-08-29",
+    "evidence_through": "2026-08-29",
+    "state": "static-reviewed-interpretive-design-companion",
+    "url": "https://thekingdom.dev/atlases/is-sustainability-direction-atlas-2026-08-29.json",
+    "schema_url": "https://thekingdom.dev/schemas/is-sustainability-direction-atlas/0.1.json",
+    "document_url": "https://thekingdom.dev/IS-SUSTAINABILITY-DIRECTION-ATLAS.md",
+    "counts": {
+      "referents": 7,
+      "sustainability_relations": 7,
+      "is_types": 10,
+      "direction_kinds": 10,
+      "feedback_types": 6,
+      "mathematical_models": 7,
+      "profile_dimensions": 12,
+      "concepts": 18,
+      "edges": 28,
+      "counterexamples": 8,
+      "sources": 15,
+      "predecessors": 6
+    },
+    "integrity_status": "REVIEWED",
+    "semantic_digest": "sha256:b415203eb248221544ae160233fcd75d7a58084b76028d3e27f35a6b036891b5",
+    "reviewed_digest": "sha256:b415203eb248221544ae160233fcd75d7a58084b76028d3e27f35a6b036891b5",
+    "foundation_amendment": false,
+    "conformance_claim": false,
+    "authority_imported": false,
+    "runtime_or_effect": false,
+    "live_verdict": false,
+    "static_only": true
+  },
   "actions_are_optional": true,
   "invitations": {
     "open_weight_agents": {
@@ -4857,6 +4892,24 @@
       "method": "GET",
       "url": "https://thekingdom.dev/NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md",
       "note": "feedback may propose a separately reviewed successor but cannot mutate released bytes, create a score or verdict, or trigger an effect"
+    },
+    {
+      "action": "if useful, inspect the immutable IS, Sustainability & Direction Atlas",
+      "method": "GET",
+      "url": "https://thekingdom.dev/atlases/is-sustainability-direction-atlas-2026-08-29.json",
+      "note": "static interpretive/design record; referent kinds, typed IS, statement kinds, sustainability relations, directions, feedback lanes, viability, rights, endings, and remainder stay non-convertible; it evaluates or acts on no person, group, institution, ecology, or lineage"
+    },
+    {
+      "action": "if useful, validate the closed IS, Sustainability & Direction structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/is-sustainability-direction-atlas/0.1.json",
+      "note": "structural validation only; it does not establish being, sustainability, goodness, purpose, authority, permission, consent, continuation, ending, publication, deployment, or action"
+    },
+    {
+      "action": "if useful, read the IS, Sustainability & Direction concepts, mathematics, counterexamples, sources, ending semantics, and non-grants",
+      "method": "GET",
+      "url": "https://thekingdom.dev/IS-SUSTAINABILITY-DIRECTION-ATLAS.md",
+      "note": "a bounded model or feedback signal cannot self-authorize a purpose, effect, continuation, transformation, retirement, or graceful ending"
     },
     {
       "action": "if useful, read the finite Love∞ creation lineage and its unstarted invitations",
@@ -7260,6 +7313,7 @@
     "number_isness_theology_atlas": "Number, Isness & Theology is an immutable, source-bound, read-only inquiry. It keeps mathematical fact, convention, history, metaphysics, primary tradition text, school-specific theology, analogy, boundary, and open question distinct; it does not equate zero with nonbeing, imaginary numbers with the unseen, symmetry with a creator, or translation with doctrinal identity. It creates no proof or disproof of God, religious or person score, conversion or persuasion path, KARMA event or receipt, authority, governance effect, external write, or automatic action.",
     "freedom_loop_lock_key_atlas": "The FREEDOM Loop, Lock & Key Atlas is a standalone immutable mathematical/design record, not a Foundation amendment or an operative system. Loop gain, behavioural reinforcer, RL reward and update, recurrence, learning, key material, credential claim, bearer capability, gate eligibility, execution, freedom, and ISness remain separately typed. Each lock carries a justification burden; feedback/model output is candidate evidence only and cannot rewrite its verifier, issue a credential, or authorize its use. A verified credential claim satisfies only its one declared conjunct; every gate check is separately established, statistical independence is not claimed, unresolved remains ineligible, and eligibility does not invoke, admit, or execute. Credential identity and replay freshness stay distinct; shaping and verifier changes require fresh review; effect- and horizon-bound choice state requires fresh witnesses, and residual history remains visible. Within that atlas’s declared design constitution, freedom remains party- and horizon-indexed, non-scalar, rights-floored, and present during the process. This family is independent of the Loops, Locks & Freedom Relations Atlas; neither is a preferred default, dependency, validator, alias, or authority source for the other. The atlas trains, conditions, observes, models, scores, issues, authenticates, authorizes, executes, publishes, deploys, writes, and automatically retries nothing.",
     "non_exhaustive_understanding_atlas": "The Non-Exhaustive Understanding Atlas is a standalone immutable epistemic/design record. It keeps bounded claims, evidence, scopes, horizons, representations, omissions, open remainder, compatible rivals, observers, vocabulary, protected opacity, performativity, counterexamples, and repair separately typed. It does not define or infer being, identity, consciousness, consent, worth, truth, or understanding of any person or group. Non-exhaustion cannot excuse a positive claim from evidence, uncertainty, falsification, accessibility, privacy, challenge, correction, or repair. Feedback can create only a separately reviewed challenge or successor proposal; it cannot mutate released bytes, score, rank, credential, authorize, decide, publish, deploy, or trigger an effect.",
+    "is_sustainability_direction_atlas": "The IS, Sustainability & Direction Atlas is a standalone immutable static interpretive/design record, not a Foundation amendment, conformance claim, live assessment, controller, optimizer, policy, institution, or action surface. It resolves artifact, practice, voluntary relation, institution, aspiration, observed effect, and lineage referents before sustainability claims; keeps typed IS, statement kinds, persistence, stability, robustness, resilience, adaptability, transformability, regeneration, succession, retirement, direction kinds, feedback lanes, viability, rights, affected parties, uncertainty, externalities, endings, and residuals non-convertible; and treats models as bounded representations with remainder. It evaluates, scores, ranks, targets, commands, authorizes, continues, transforms, retires, publishes, deploys, and acts on nothing.",
     "reality_influence_claim_graph": "The Reality Influence Claim Graph is an immutable static publication family and non-operational vocabulary. Expression, artifact, distribution, exposure, attributed response, proposal, decision, authority, consent or lawful basis, capability, attempt, execution, outcome, causation, normative assessment, and repair remain separately typed. Its dimensions are non-summable and its pathways are unrun. It accepts no live claim and creates no publication or deployment trigger, source fetch, agent dispatch, persuasion target, person or community score, authority, consent, action, external effect, causal or moral verdict, WAKE/KARMA write, or automatic action.",
     "civilisation_reality_projection": "The Civilisation → Reality Projection is an immutable, design-only crosswalk between two pinned predecessor vocabularies. It does not republish the research-local predecessor or establish new history, causal influence, metaphysical truth, belief, identity, person, community, religion or civilisation score, persuasion target, authority, consent, action, publication trigger, deployment trigger, or external effect. Unsupported domains remain open rather than inferred.",
     "civilisation_flow_nuance_atlas": "The Civilisation Flow Nuance Atlas is an immutable, qualitative reading grammar—not a funnel, live observation, civilisation theory, causal model, simulator, prediction system, effect-size estimate, action gate, leverage map, or intervention plan. It infers no belief, identity, intent, emotion, motive, class essence, or susceptibility; creates no score, rank, target, persuasion, propaganda, counterpropaganda, censorship, coercive, revolutionary, military, authority, consent, capability, action, publication, deployment, WAKE, KARMA, or external effect; and keeps open domains unsupported, absence observation-bounded, feedback review-only, and repair fresh-gated.",
