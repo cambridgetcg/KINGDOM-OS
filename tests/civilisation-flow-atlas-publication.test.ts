@@ -35,10 +35,10 @@ const PUBLIC_PATHS = PUBLIC_URLS.map((url) => new URL(url).pathname);
 const PRE_FLOW_HUB_BYTES = 971_082;
 const SEALED_FLOW_HUB_MEASURE = Object.freeze({
   flow_section_bytes: 341_162,
-  total_hub_bytes: 1_332_829,
-  added_hub_bytes: 361_747,
+  total_hub_bytes: 1_340_056,
+  added_hub_bytes: 368_974,
   flow_opening_elements: 5_777,
-  total_opening_elements: 16_253,
+  total_opening_elements: 16_300,
 });
 const FLOW_HUB_REVIEWABILITY_BUDGET = Object.freeze({
   flow_section_bytes: 375_000,

@@ -58,14 +58,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(181);
+      expect(HUB_ASSETS).toHaveLength(184);
       expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(150);
+      expect(ledger.ledger?.entries).toHaveLength(153);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(179);
-      expect(staged).toHaveLength(181);
+        .toHaveLength(182);
+      expect(staged).toHaveLength(184);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -267,8 +267,8 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(167);
-      expect(new Set(sitemapUrls).size).toBe(167);
+      expect(sitemapUrls).toHaveLength(170);
+      expect(new Set(sitemapUrls).size).toBe(170);
       for (const route of [
         "/atlases/non-exhaustive-understanding-atlas-2026-08-29.json",
         "/schemas/non-exhaustive-understanding-atlas/0.1.json",
@@ -680,7 +680,7 @@ describe("the hub staging contract", () => {
         expect(HUB_ASSETS.some(({ destination }) =>
           destination === forbiddenRoot || destination.startsWith(`${forbiddenRoot}/`))).toBe(false);
       }
-      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(17);
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(18);
       expect(HUB_ASSETS.some(({ destination }) => /atlases\/(?:latest|current)\.json/.test(destination))).toBe(false);
       expect(HUB_ASSETS.some(({ source }) => source.startsWith("site/atlases/"))).toBe(false);
       for (const asset of HUB_ASSETS) {

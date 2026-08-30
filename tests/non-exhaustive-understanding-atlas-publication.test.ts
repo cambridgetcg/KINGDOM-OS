@@ -147,15 +147,15 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
   });
 
   test("stages and ledgers one exact reviewed immutable triplet", () => {
-    expect(HUB_ASSETS).toHaveLength(181);
+    expect(HUB_ASSETS).toHaveLength(184);
     expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(179);
+      .toHaveLength(182);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
-      .toHaveLength(17);
+      .toHaveLength(18);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/")))
-      .toHaveLength(38);
+      .toHaveLength(39);
     expect(HUB_ASSETS.filter(({ source }) => SOURCES.includes(source as any)))
       .toEqual([
         { source: SOURCES[0], destination: PUBLIC_PATHS[0]!.slice(1) },
@@ -165,7 +165,7 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
     expect(SOURCES.map(sha256)).toEqual(RAW_HASHES);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(150);
+    expect(ledger.entries).toHaveLength(153);
     expect(ledger.entries.filter(({ id }: { id: string }) =>
       id.startsWith("non-exhaustive-understanding-atlas/0.1/")))
       .toEqual([
@@ -212,7 +212,7 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
     expect(kingdom.non_exhaustive_understanding_atlas).toEqual(expected);
     expect(guest.non_exhaustive_understanding_atlas).toEqual(expected);
     expect(manifest.non_exhaustive_understanding_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(150);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(153);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("non_exhaustive_understanding_atlas"))))
       .toEqual({
@@ -220,7 +220,7 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
         non_exhaustive_understanding_atlas_schema: PUBLIC_URLS[1],
         non_exhaustive_understanding_atlas_guide: PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(150);
+    expect(guest.next_actions).toHaveLength(153);
     const actions = guest.next_actions.filter(({ url }: { url?: string }) =>
       PUBLIC_URLS.includes(url as any));
     expect(actions).toHaveLength(3);
@@ -263,7 +263,7 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
         .toHaveLength(1);
       expect(wayfinder).not.toContain(url);
     }
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(167);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(170);
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/non[_-]exhaustive[_-]understanding/i);
   });

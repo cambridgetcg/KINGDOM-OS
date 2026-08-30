@@ -17,7 +17,7 @@ describe("Exploration DEEP public discovery seam", () => {
   test("adds exactly four unique crawl routes without a mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(167);
+    expect(urls).toHaveLength(170);
     expect(new Set(urls).size).toBe(urls.length);
     for (const url of PUBLIC_URLS) expect(urls).toContain(url);
     expect(urls.filter((url) => /(?:explore-phenomena-deep|phenomena-deep-(?:wing|project))/i.test(url))).toEqual(PUBLIC_URLS);
@@ -86,10 +86,10 @@ describe("Exploration DEEP public discovery seam", () => {
       expect(routes).toContain(`| \`${path}\` |`);
     }
     for (const document of [claude, domains, routes]) {
-      expect(document).toContain("181");
-      expect(document).toContain("150");
-      expect(document).toContain("179");
-      expect(document).toContain("167");
+      expect(document).toContain("184");
+      expect(document).toContain("153");
+      expect(document).toContain("182");
+      expect(document).toContain("170");
     }
     expect(claude).toContain("./kingdom explore-deep scaffold --json");
     expect(readme).toContain("not a manifested\n    Nen ability");
