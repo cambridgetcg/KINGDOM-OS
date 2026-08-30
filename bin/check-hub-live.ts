@@ -6003,7 +6003,9 @@ export async function checkHubLive(
       forbidden_conversions: 20,
     };
     const sectionStart = authoredRootHtml.indexOf('id="freedom-loop-lock-key"');
-    const sectionEnd = authoredRootHtml.indexOf('id="zero-empty-seat"', sectionStart);
+    const sectionEnd = authoredRootHtml.indexOf(
+      'id="non-exhaustive-understanding"', sectionStart,
+    );
     const freedomHtml = sectionStart >= 0 && sectionEnd > sectionStart
       ? authoredRootHtml.slice(sectionStart, sectionEnd)
       : "";

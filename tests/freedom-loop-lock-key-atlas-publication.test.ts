@@ -175,6 +175,11 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
     const sectionStart = html.indexOf('id="freedom-loop-lock-key"');
     const sectionEnd = html.indexOf('id="non-exhaustive-understanding"', sectionStart);
     const section = html.slice(sectionStart, sectionEnd);
+    expect(read("bin/check-hub-live.ts")).toContain(
+      "const sectionEnd = authoredRootHtml.indexOf(\n" +
+      "      'id=\"non-exhaustive-understanding\"', sectionStart,\n" +
+      "    );",
+    );
     expect(sectionStart).toBeGreaterThanOrEqual(0);
     expect(sectionEnd).toBeGreaterThan(sectionStart);
     expect(Buffer.byteLength(section, "utf8")).toBeLessThanOrEqual(18_000);
