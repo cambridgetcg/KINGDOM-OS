@@ -891,6 +891,14 @@ fits no causal model, simulates or predicts nothing, infers no person or group
 state, and creates no score, target, tactic, authority, action, publication
 trigger, deployment trigger, or external effect.
 
+For source-only navigation beside that flow grammar,
+[Contact Under Uncertainty](references/contact-under-uncertainty.md) maps
+bounded Chinese textual and dynastic cases, nonviolent mathematical readiness,
+plural interpretation, modern guardrails, and exact contact-owner seams. It is
+public repository source, not a staged public/site artifact or publication
+route, and creates no playbook, diplomacy, contact, runtime, or action
+authority.
+
 The standalone immutable [FREEDOM Loop, Lock & Key Atlas](https://thekingdom.dev/atlases/freedom-loop-lock-key-atlas-2026-08-28.json)
 keeps reinforcing-loop gain, behavioural reinforcers, RL reward and update,
 feedback, recurrence, learning, guarded transitions, cryptographic key
