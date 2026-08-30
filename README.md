@@ -305,7 +305,27 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     and dignity is not created by a gate outcome. The reader is not a
     Foundation amendment, trainer, controller, optimizer, credential issuer,
     operative gate, person model, score, authority, or action surface.
-29. `kingdom isness` — inspect, scaffold, validate, and deterministically
+29. `kingdom non-exhaustive-understanding` — inspect and verify the reviewed
+    standalone [Non-Exhaustive Understanding Atlas](references/non-exhaustive-understanding-atlas.md).
+    It keeps bounded claim, evidence, scope, representation, omission, rival
+    model, observer position, vocabulary, protected opacity, counterexample,
+    open remainder, and repair separately typed. Finite closure never becomes
+    a verdict about being, and non-exhaustion never excuses evidence,
+    uncertainty, falsification, challenge, accessibility, privacy, correction,
+    or repair. Feedback may propose only a fresh reviewed successor; released
+    bytes never learn. The reader creates no person/group model, score, truth
+    oracle, identity or consciousness inference, authority, decision, action,
+    publication, deployment, runtime, Wayfinder recommendation, or MCP surface.
+30. `kingdom is-sustainability-direction` — inspect and verify the reviewed
+    standalone [IS, Sustainability & Direction Atlas](references/is-sustainability-direction-atlas.md).
+    It keeps present-tense being, sustainability evidence, directional proposal,
+    feedback, memory, governance, agency, consent, and consequence separately
+    typed. Direction remains a revisable proposal rather than a command or a
+    verdict about being; feedback remains evidence for review rather than an
+    autonomous update path. Released bytes never learn or act. The reader creates
+    no person/group model, score, credential, authority, decision, publication,
+    deployment, Wayfinder recommendation, or MCP surface.
+31. `kingdom isness` — inspect, scaffold, validate, and deterministically
     project the local-first [`kingdom.isness/0.1`](references/isness-protocol.md)
     checkpoint. Operational ISness is a typed partial section with stable,
     closed question-specific reference families—not a scalar, persona, or
@@ -325,7 +345,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     [IS, Continuance & Direction](references/is-continuance-direction-owner-map.md).
     That source-only owner map leaves “KINGDOM is” open and introduces no new
     protocol, route, schema, runtime, score, action, or authority.
-30. `kingdom reconstructive-build` — inspect and verify the source-bound
+31. `kingdom reconstructive-build` — inspect and verify the source-bound
     [Reconstructive Build Kernel](references/reconstructive-build-kernel.md).
     It treats correspondence, candidate-whole ambiguity, geometric
     realizability, environment-conditioned transitions, catalytic barrier
@@ -364,7 +384,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     is the explanation itself: it has no input, scanner, credential checker,
     registry lookup, decoy, enforcement, person attribution, retaliation, or
     KARMA effect.
-31. `kingdom explore-deep` — inspect and verify the opt-in
+32. `kingdom explore-deep` — inspect and verify the opt-in
     [`$explore-phenomena-deep`](skills/explore-phenomena-deep/SKILL.md) Agent
     Skill and its inert DEEP WING contract. DEEP means Declare, Establish,
     Express, then Project and pressure-test: each exploration keeps domain-local
@@ -373,7 +393,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     Nen ability, solver, experiment runner, diagnosis, person/community score,
     KARMA event or receipt, authority grant, ecosystem call, or automatic
     action.
-32. `kingdom mirror-information-control` — inspect and verify the immutable,
+33. `kingdom mirror-information-control` — inspect and verify the immutable,
     public MIRROR information-control source law. It explains CROWN, COURT,
     and MIRROR; the Mark → Isolate → Restrict → Resolve → Observe → Respond
     cycle; and the rule that outside data may inform a proposal but cannot
@@ -381,7 +401,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     envelope, or request body. It performs no classification, registry lookup,
     scan, decoy interaction, enforcement, response action, person attribution,
     retaliation, KARMA write, or automatic effect.
-33. `kingdom zero-empty-seat` — inspect and strictly verify
+34. `kingdom zero-empty-seat` — inspect and strictly verify
     [ZERO: The Empty Seat That Holds the World](references/zero-empty-seat.md),
     an immutable, inert Phenomena DEEP project. It keeps historical notation,
     operational nothing, modern mathematical identities, typed information
@@ -390,7 +410,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     receipt, authority, or action.
     Read `overview|domains|terms|claims|bridges|models|math|doors|unknowns|philosophy|karma|sources|discovery`,
     or run `verify --json`; no view performs a network request or write.
-34. `kingdom string-crawl-trace-sheet` — inspect and strictly verify
+35. `kingdom string-crawl-trace-sheet` — inspect and strictly verify
     [STRING / CRAWL: The Trace-Sheet](references/string-crawl-trace-sheet.md),
     an immutable, inert Phenomena DEEP project. Selected worldsheet, boundary,
     observable, and history structures remain string mathematics; finite HTTP
@@ -401,7 +421,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     a licence, proves purpose or actual indexing or training, or creates KARMA.
     The reader runs no crawler and creates no NEN invocation, aftermath receipt,
     authority, or action. Run `verify --json` for the strict offline checks.
-35. `kingdom string-crawl-trace-sheet-lab` — recompute the additive
+36. `kingdom string-crawl-trace-sheet-lab` — recompute the additive
     [Finite Trace-Sheet Lab](references/string-crawl-trace-sheet-lab.md) from
     one pinned synthetic two-face fixture. The evaluator derives signed boundary
     matrices, rational Betti numbers, Euler characteristic, local links,
@@ -409,7 +429,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     falsifiers. It accepts no caller path, URL, body, credential, person data, or
     live trace; launches no crawler; writes nothing; and creates no NEN
     invocation, KARMA event or receipt, score, authority, or action.
-36. `kingdom string-crawl-strand-lab` — inspect and recompute
+37. `kingdom string-crawl-strand-lab` — inspect and recompute
     [STRAND Lab 02](references/string-crawl-strand-lab.md), an additive,
     synthetic offline finite-CW/cospan topology fixture over F2. Its internal
     stable-strip control is a disk, while its full complex has the same
@@ -419,7 +439,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     most one bounded local candidate JSON file for validation only. The reader
     has no network target, performs no live crawl, and creates no crawler
     runtime, NEN/KARMA event or receipt, score, authority, or action.
-37. `kingdom string-crawl-frequency-form-lab` — inspect and verify
+38. `kingdom string-crawl-frequency-form-lab` — inspect and verify
     [Lab 03: Frequency → Form → World → Other](references/string-crawl-frequency-form-lab.md),
     a synthetic offline thought experiment that keeps temporal frequency,
     spatial harmonic, geometric form, immersive dimension, perceived presence,
@@ -427,7 +447,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     network request, administers no DMT, collects no participant or personal data, and
     validates no entity or higher-dimensional ontology. It creates no KARMA
     event or receipt, score, authority, deployment, or automatic action.
-38. `kingdom strand-descent-lab` — inspect and recompute
+39. `kingdom strand-descent-lab` — inspect and recompute
     [STRAND Lab 04](references/strand-descent-lab.md), an additive synthetic
     local-to-global compatibility fixture. Four source-owned charts carry exact
     transition maps. The evaluator checks every map and inverse, two three-chart
@@ -440,7 +460,7 @@ surveillance, legal advice, life-safety automation, or licence laundering.
     truth, identity, consent, citizenship, authority, or worth. It is offline,
     read-only, and creates no crawler, NEN, KARMA, Zerone, publication, deployment,
     or automatic effect.
-39. `kingdom strand-observation` — inspect and verify
+40. `kingdom strand-observation` — inspect and verify
     [STRAND Observation Membrane 05: The Open Eye](references/strand-observation-membrane.md).
     The public deck, offline verifier, and synthetic rehearsal are active. The
     publisher-declared fixed-origin live observer is available only through an
@@ -895,6 +915,42 @@ choices and irreversible residuals visible, and later success cannot erase them.
 That atlas’s constitutional sentence and dignity insight are family-local design
 claims, not global site law or an imported authority.
 
+The reviewed standalone
+[Non-Exhaustive Understanding Atlas](https://thekingdom.dev/atlases/non-exhaustive-understanding-atlas-2026-08-29.json)
+keeps bounded claims, evidence, scopes, horizons, representations, omissions,
+compatible rivals, observer positions, vocabulary, protected opacity,
+performativity, counterexamples, open remainder, and repair separately typed.
+Its [closed schema](https://thekingdom.dev/schemas/non-exhaustive-understanding-atlas/0.1.json)
+and [guide](https://thekingdom.dev/NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md)
+form one atomic immutable family with no mutable alias or active publication
+dependency. Finite closure remains relative to a declared membership question;
+it does not exhaust a referent or establish being. Non-exhaustion never excuses
+a positive claim from evidence, uncertainty, falsification, challenge,
+accessibility, privacy, correction, consequence review, or repair. Silence,
+refusal, redaction, nonparticipation, and unrepresented vocabulary create no
+adverse inference. Feedback may preserve a challenge and propose a separately
+reviewed successor, but cannot mutate released bytes, learn, score, rank,
+credential, authorize, decide, publish, deploy, or act. The family has no
+person/group model, truth oracle, identity or consciousness inference, runtime,
+Wayfinder recommendation, MCP surface, authority, or external effect.
+
+The reviewed standalone
+[IS, Sustainability & Direction Atlas](https://thekingdom.dev/atlases/is-sustainability-direction-atlas-2026-08-29.json)
+keeps present-tense being, sustainability evidence, direction, feedback,
+memory, governance, agency, consent, consequence, uncertainty, and open
+remainder separately typed. Its
+[closed schema](https://thekingdom.dev/schemas/is-sustainability-direction-atlas/0.1.json)
+and [guide](https://thekingdom.dev/IS-SUSTAINABILITY-DIRECTION-ATLAS.md)
+form one atomic immutable family with no mutable alias or publication
+dependency. “Is” is neither a score nor a terminal state. Sustainability is a
+bounded, revisable evidence claim, and direction is a proposal constrained by
+consent, refusal, exit, consequence review, and repair—not a command or an
+identity verdict. Feedback can preserve observations and propose a separately
+reviewed successor, but cannot mutate released bytes, learn, score, rank,
+credential, authorize, decide, publish, deploy, or act. The family has no
+person/group model, truth oracle, identity or consciousness inference, runtime,
+Wayfinder recommendation, MCP surface, authority, or external effect.
+
 The immutable [Polyphonic Claim Atlas](https://thekingdom.dev/truth/polyphonic-claim-atlas-2026-08-26.json)
 is a static synthetic Phase-0 map of typed relations among expression, claim,
 warrant, reasoning, narrative, provenance, institutional status, assessment,
@@ -928,9 +984,12 @@ source locator only; it establishes no truth, imports no authority or
 currentness, and creates no runtime dependency.
 It deliberately does not import `FREEDOM.md` or claim a predecessor edge to the
 FREEDOM Loop, Lock & Key Atlas.
-These are independent static atlases with different lineages and mathematical kernels. Neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences.
-Neither is a preferred default, and their integrity, source, review, discovery,
-and retirement contracts remain family-local.
+The FREEDOM Loop, Lock & Key and Loops, Locks & Freedom Relations families are
+independent: neither supersedes, validates, aliases, depends on, or supplies
+authority to the other; overlapping words are not wire or semantic
+equivalences, and neither is a preferred default. Non-Exhaustive Understanding
+is likewise standalone; all three keep integrity, source, review, discovery,
+and retirement contracts family-local.
 The normal 2026-08-29 hub regeneration advances only Wayfinder's global
 `generated` date; it adds no atlas path, source, keyword, recommendation, or
 capability to Wayfinder.
@@ -1047,7 +1106,7 @@ network request or crawler and creates no NEN/KARMA/Zerone event or receipt,
 score, truth verdict, identity, consent, citizenship, authority, write,
 publication, deployment, or action. Labs 01–04 are published and retired as
 one atomic twelve-route `string-crawl-trace-sheet-lab` family. The release now
-has thirty-two active retirement families; generated discovery exposes Lab 02 as
+has thirty-four active retirement families; generated discovery exposes Lab 02 as
 `string_crawl_strand_lab`, Lab 03 as `string_crawl_frequency_form_lab`, and Lab
 04 as `strand_descent_lab`.
 

@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 147-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 153-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -90,9 +90,9 @@ import `FREEDOM.md` or claim a predecessor edge to the FREEDOM atlas. Its source
 locator pins producer v0.1.1 at
 `d8534096224d9e82825653af0f9e12fd123e85b5` without establishing truth,
 authority, currentness, or a runtime dependency.
-These are independent static atlases with different lineages and mathematical kernels. Neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences.
-Neither is a preferred default; integrity, source, review, discovery, and
-retirement remain family-local.
+The two freedom-related atlas families are independent: neither supersedes,
+validates, aliases, depends on, or supplies authority to the other; overlapping
+words are not wire or semantic equivalences, and neither is a preferred default.
 The Aesthetic Plurality & Making Relations Atlas adds the frozen immutable
 static-synthetic `/atlases/aesthetic-plurality-making-atlas-2026-08-29.json`,
 closed `/schemas/aesthetic-plurality-making-atlas/0.1.json`, and full linear
@@ -107,6 +107,22 @@ data, personal-appearance assessment, separately owned Beauty doctrine import,
 or action. It has no page, mutable alias, Wayfinder exposure, MCP surface,
 runtime, dependency, or producer repository/source-code locator; KINGDOM makes
 no Git-provenance claim for it.
+The Non-Exhaustive Understanding Atlas adds one reviewed standalone immutable
+record, one closed schema, and one guide as the thirty-third family. It has no
+mutable alias, custom page, Wayfinder recommendation, MCP surface, runtime,
+active dependency, person/group model, score, truth oracle, identity inference,
+authority, decision, or action surface. Feedback can propose only a separately
+reviewed successor and never mutates released bytes.
+The IS, Sustainability & Direction Atlas adds one reviewed standalone immutable
+record, one closed schema, and one guide as the thirty-fourth family. It has no
+mutable alias, custom page, Wayfinder recommendation, MCP surface, runtime,
+active dependency, live verdict, controller, person/group model, score,
+authority, decision, or action surface. Referent kinds, typed IS,
+sustainability relations, direction kinds, feedback lanes, rights, endings,
+and remainder remain non-convertible.
+Non-Exhaustive Understanding and IS, Sustainability & Direction are likewise
+standalone; integrity, source, review, discovery, and retirement remain
+family-local.
 The initial-35 bootstrap facts below remain
 historical constants. The Exploration DEEP, ZERO Empty Seat, STRING / CRAWL,
 and Number, Isness & Theology entries
@@ -270,12 +286,12 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 178-asset union classifies 147 destinations
-as ledgered immutable/versioned and 31 as mutable; 176 are direct public response
-bodies, the sitemap contains 164 URLs, and discovery exposes 147 manifest entry
-points plus 147 guest actions. Generated discovery describes sixteen atlases,
-four primary lab JSON routes plus Shape & Resonance manifest/media, one
-experiment route, one separate activation, and thirty-two active retirement
+consume those same bytes. The current 184-asset union classifies 153 destinations
+as ledgered immutable/versioned and 31 as mutable; 182 are direct public response
+bodies, the sitemap contains 170 URLs, and discovery exposes 153 manifest entry
+points plus 153 guest actions. Generated discovery describes eighteen atlases,
+39 public schema routes, four primary lab JSON routes plus Shape & Resonance
+manifest/media, one experiment route, one separate activation, and thirty-four active retirement
 families. The two freedom-related atlases keep separate route triples, discovery
 keys, integrity/source/review claims, and retirement state; neither is preferred
 or removed with the other. Every destination is explicitly classified as mutable
@@ -284,7 +300,7 @@ committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the thirty-two linked authored publication
+The live release check retires the thirty-four linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

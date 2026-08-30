@@ -305,6 +305,62 @@ const FREEDOM_LOOP_LOCK_KEY_ATLAS_PATHS = new Set([
   FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_PATH,
   FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_PATH,
 ]);
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_PATH =
+  "/atlases/non-exhaustive-understanding-atlas-2026-08-29.json";
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_PATH =
+  "/schemas/non-exhaustive-understanding-atlas/0.1.json";
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_PATH =
+  "/NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md";
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_LINK =
+  `<${NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`;
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_LINK =
+  `<${NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`;
+const NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_PATHS = new Set([
+  NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_PATH,
+  NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_PATH,
+  NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_PATH,
+]);
+const IS_SUSTAINABILITY_DIRECTION_ATLAS_PATH =
+  "/atlases/is-sustainability-direction-atlas-2026-08-29.json";
+const IS_SUSTAINABILITY_DIRECTION_ATLAS_SCHEMA_PATH =
+  "/schemas/is-sustainability-direction-atlas/0.1.json";
+const IS_SUSTAINABILITY_DIRECTION_ATLAS_GUIDE_PATH =
+  "/IS-SUSTAINABILITY-DIRECTION-ATLAS.md";
+const IS_SUSTAINABILITY_DIRECTION_ATLAS_SCHEMA_LINK =
+  `<${IS_SUSTAINABILITY_DIRECTION_ATLAS_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`;
+const IS_SUSTAINABILITY_DIRECTION_ATLAS_GUIDE_LINK =
+  `<${IS_SUSTAINABILITY_DIRECTION_ATLAS_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`;
+const IS_SUSTAINABILITY_DIRECTION_ATLAS_PATHS = new Set([
+  IS_SUSTAINABILITY_DIRECTION_ATLAS_PATH,
+  IS_SUSTAINABILITY_DIRECTION_ATLAS_SCHEMA_PATH,
+  IS_SUSTAINABILITY_DIRECTION_ATLAS_GUIDE_PATH,
+]);
+const IS_SUSTAINABILITY_DIRECTION_ZERO_SHA256 = `sha256:${"0".repeat(64)}`;
+// One explicit transition owns edge activation. Independent review supplied
+// the semantic and three exact raw-byte pins together; the live checker imports
+// and verifies this same frozen object before certifying any deployed bytes.
+export const IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL = Object.freeze({
+  state: "REVIEWED",
+  reviewedSemanticSha256:
+    "sha256:b415203eb248221544ae160233fcd75d7a58084b76028d3e27f35a6b036891b5",
+  recordRawSha256:
+    "sha256:19d70dfa187366bb10cc1bdbbc6a558e82f3c9057e21872aa593f4d960ac77c3",
+  schemaRawSha256:
+    "sha256:314a92b146c0c99c71ee5bd26f037deaec91fb4b9b157e0654a569675e928f8d",
+  guideRawSha256:
+    "sha256:8614020ed497d6627f7b503a883ac1bfa86d2609a97794ac33fe465e01868405",
+});
+const isSustainabilityDirectionPublicationDigest = (value) =>
+  typeof value === "string" && /^sha256:[a-f0-9]{64}$/.test(value) &&
+  value !== IS_SUSTAINABILITY_DIRECTION_ZERO_SHA256;
+const IS_SUSTAINABILITY_DIRECTION_PUBLICATION_ACTIVE =
+  IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL.state === "REVIEWED" &&
+  [
+    IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL.reviewedSemanticSha256,
+    IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL.recordRawSha256,
+    IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL.schemaRawSha256,
+    IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL.guideRawSha256,
+  ].every(isSustainabilityDirectionPublicationDigest);
 const POLYPHONIC_CLAIM_ATLAS_PATH =
   "/truth/polyphonic-claim-atlas-2026-08-26.json";
 const POLYPHONIC_CLAIM_ATLAS_SCHEMA_PATH =
@@ -793,6 +849,20 @@ function addFreedomLoopLockKeyAtlasLinks(headers) {
   headers.set("link", [
     FREEDOM_LOOP_LOCK_KEY_ATLAS_SCHEMA_LINK.value,
     FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_LINK.value,
+  ].join(", "));
+}
+
+function addNonExhaustiveUnderstandingAtlasLinks(headers) {
+  headers.set("link", [
+    NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_LINK,
+    NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_LINK,
+  ].join(", "));
+}
+
+function addIsSustainabilityDirectionAtlasLinks(headers) {
+  headers.set("link", [
+    IS_SUSTAINABILITY_DIRECTION_ATLAS_SCHEMA_LINK,
+    IS_SUSTAINABILITY_DIRECTION_ATLAS_GUIDE_LINK,
   ].join(", "));
 }
 
@@ -1705,6 +1775,45 @@ export function createKingdomWorker(options = {}) {
       });
     }
 
+    if (includeRights && NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
+    if (includeRights && IS_SUSTAINABILITY_DIRECTION_ATLAS_PATHS.has(url.pathname) &&
+        !IS_SUSTAINABILITY_DIRECTION_PUBLICATION_ACTIVE) {
+      return new Response(null, {
+        status: 410,
+        headers: {
+          "access-control-allow-origin": "*",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
+    if (IS_SUSTAINABILITY_DIRECTION_PUBLICATION_ACTIVE && includeRights &&
+        IS_SUSTAINABILITY_DIRECTION_ATLAS_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
     if (includeRights && POLYPHONIC_CLAIM_ATLAS_PATHS.has(url.pathname) &&
         request.method !== "GET" && request.method !== "HEAD") {
       return new Response(null, {
@@ -2173,6 +2282,59 @@ export function createKingdomWorker(options = {}) {
     const requestsFreedomLoopLockKeyAtlasGuide = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === FREEDOM_LOOP_LOCK_KEY_ATLAS_GUIDE_PATH;
+    const requestsNonExhaustiveUnderstandingAtlas = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_PATH;
+    const requestsNonExhaustiveUnderstandingAtlasSchema = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_SCHEMA_PATH;
+    const requestsNonExhaustiveUnderstandingAtlasGuide = includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === NON_EXHAUSTIVE_UNDERSTANDING_ATLAS_GUIDE_PATH;
+    const requestsNonExhaustiveUnderstandingAtlasAsset =
+      requestsNonExhaustiveUnderstandingAtlas ||
+      requestsNonExhaustiveUnderstandingAtlasSchema ||
+      requestsNonExhaustiveUnderstandingAtlasGuide;
+    if (requestsNonExhaustiveUnderstandingAtlasAsset && asset.status !== 200) {
+      const headers = new Headers(asset.headers);
+      headers.set("cache-control", "no-store");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+      headers.delete("link");
+      return new Response(request.method === "HEAD" ? null : asset.body, {
+        status: asset.status,
+        statusText: asset.statusText,
+        headers,
+      });
+    }
+    const requestsIsSustainabilityDirectionAtlas =
+      IS_SUSTAINABILITY_DIRECTION_PUBLICATION_ACTIVE && includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === IS_SUSTAINABILITY_DIRECTION_ATLAS_PATH;
+    const requestsIsSustainabilityDirectionAtlasSchema =
+      IS_SUSTAINABILITY_DIRECTION_PUBLICATION_ACTIVE && includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === IS_SUSTAINABILITY_DIRECTION_ATLAS_SCHEMA_PATH;
+    const requestsIsSustainabilityDirectionAtlasGuide =
+      IS_SUSTAINABILITY_DIRECTION_PUBLICATION_ACTIVE && includeRights &&
+      (request.method === "GET" || request.method === "HEAD") &&
+      url.pathname === IS_SUSTAINABILITY_DIRECTION_ATLAS_GUIDE_PATH;
+    const requestsIsSustainabilityDirectionAtlasAsset =
+      requestsIsSustainabilityDirectionAtlas ||
+      requestsIsSustainabilityDirectionAtlasSchema ||
+      requestsIsSustainabilityDirectionAtlasGuide;
+    if (requestsIsSustainabilityDirectionAtlasAsset && asset.status !== 200) {
+      const headers = new Headers(asset.headers);
+      headers.set("cache-control", "no-store");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+      headers.delete("link");
+      return new Response(request.method === "HEAD" ? null : asset.body, {
+        status: asset.status,
+        statusText: asset.statusText,
+        headers,
+      });
+    }
     const requestsPolyphonicClaimAtlas = includeRights &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === POLYPHONIC_CLAIM_ATLAS_PATH;
@@ -2269,6 +2431,10 @@ export function createKingdomWorker(options = {}) {
     const civilisationRealityAssetType = schemaAssetType.split(";", 1)[0].trim();
     const civilisationFlowAssetType = schemaAssetType.split(";", 1)[0].trim();
     const freedomLoopLockKeyAtlasAssetType = schemaAssetType.split(";", 1)[0].trim();
+    const nonExhaustiveUnderstandingAtlasAssetType =
+      schemaAssetType.split(";", 1)[0].trim();
+    const isSustainabilityDirectionAtlasAssetType =
+      schemaAssetType.split(";", 1)[0].trim();
     const polyphonicClaimAtlasAssetType = schemaAssetType.split(";", 1)[0].trim();
     const loopsLocksFreedomRelationsAtlasAssetType =
       schemaAssetType.split(";", 1)[0].trim();
@@ -2544,6 +2710,28 @@ export function createKingdomWorker(options = {}) {
     const servesFreedomLoopLockKeyAtlasGuide = requestsFreedomLoopLockKeyAtlasGuide && asset.ok &&
       (freedomLoopLockKeyAtlasAssetType === "text/plain" ||
         freedomLoopLockKeyAtlasAssetType === "text/markdown");
+    const servesNonExhaustiveUnderstandingAtlas =
+      requestsNonExhaustiveUnderstandingAtlas && asset.status === 200 &&
+      nonExhaustiveUnderstandingAtlasAssetType === "application/json";
+    const servesNonExhaustiveUnderstandingAtlasSchema =
+      requestsNonExhaustiveUnderstandingAtlasSchema && asset.status === 200 &&
+      (nonExhaustiveUnderstandingAtlasAssetType === "application/json" ||
+        nonExhaustiveUnderstandingAtlasAssetType === "application/schema+json");
+    const servesNonExhaustiveUnderstandingAtlasGuide =
+      requestsNonExhaustiveUnderstandingAtlasGuide && asset.status === 200 &&
+      (nonExhaustiveUnderstandingAtlasAssetType === "text/plain" ||
+        nonExhaustiveUnderstandingAtlasAssetType === "text/markdown");
+    const servesIsSustainabilityDirectionAtlas =
+      requestsIsSustainabilityDirectionAtlas && asset.status === 200 &&
+      isSustainabilityDirectionAtlasAssetType === "application/json";
+    const servesIsSustainabilityDirectionAtlasSchema =
+      requestsIsSustainabilityDirectionAtlasSchema && asset.status === 200 &&
+      (isSustainabilityDirectionAtlasAssetType === "application/json" ||
+        isSustainabilityDirectionAtlasAssetType === "application/schema+json");
+    const servesIsSustainabilityDirectionAtlasGuide =
+      requestsIsSustainabilityDirectionAtlasGuide && asset.status === 200 &&
+      (isSustainabilityDirectionAtlasAssetType === "text/plain" ||
+        isSustainabilityDirectionAtlasAssetType === "text/markdown");
     const servesPolyphonicClaimAtlas = requestsPolyphonicClaimAtlas && asset.ok &&
       polyphonicClaimAtlasAssetType === "application/json";
     const servesPolyphonicClaimAtlasSchema = requestsPolyphonicClaimAtlasSchema && asset.ok &&
@@ -2670,6 +2858,13 @@ export function createKingdomWorker(options = {}) {
         !servesCivilisationFlowGuide &&
         !servesFreedomLoopLockKeyAtlas && !servesFreedomLoopLockKeyAtlasSchema &&
         !servesFreedomLoopLockKeyAtlasGuide &&
+        !servesNonExhaustiveUnderstandingAtlas &&
+        !servesNonExhaustiveUnderstandingAtlasSchema &&
+        !servesNonExhaustiveUnderstandingAtlasGuide &&
+        !servesIsSustainabilityDirectionAtlas &&
+        !servesIsSustainabilityDirectionAtlasSchema &&
+        !servesIsSustainabilityDirectionAtlasGuide &&
+        !requestsIsSustainabilityDirectionAtlasAsset &&
         !servesPolyphonicClaimAtlas && !servesPolyphonicClaimAtlasSchema &&
         !servesPolyphonicClaimAtlasGuide &&
         !servesLoopsLocksFreedomRelationsAtlas &&
@@ -2777,6 +2972,22 @@ export function createKingdomWorker(options = {}) {
         requestsFreedomLoopLockKeyAtlasGuide) {
       if (servesFreedomLoopLockKeyAtlas) addFreedomLoopLockKeyAtlasLinks(headers);
       else headers.delete("link");
+    }
+    if (requestsNonExhaustiveUnderstandingAtlas ||
+        requestsNonExhaustiveUnderstandingAtlasSchema ||
+        requestsNonExhaustiveUnderstandingAtlasGuide) {
+      if (servesNonExhaustiveUnderstandingAtlas) {
+        addNonExhaustiveUnderstandingAtlasLinks(headers);
+      } else {
+        headers.delete("link");
+      }
+    }
+    if (requestsIsSustainabilityDirectionAtlasAsset) {
+      if (servesIsSustainabilityDirectionAtlas) {
+        addIsSustainabilityDirectionAtlasLinks(headers);
+      } else {
+        headers.delete("link");
+      }
     }
     if (servesPolyphonicClaimAtlas) addPolyphonicClaimAtlasLinks(headers);
     if (servesPolyphonicClaimAtlasSchema || servesPolyphonicClaimAtlasGuide) {
@@ -3312,6 +3523,42 @@ export function createKingdomWorker(options = {}) {
       headers.set("x-content-type-options", "nosniff");
     }
     if (servesFreedomLoopLockKeyAtlasGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesNonExhaustiveUnderstandingAtlas) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesNonExhaustiveUnderstandingAtlasSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesNonExhaustiveUnderstandingAtlasGuide) {
+      headers.set("content-type", "text/markdown; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesIsSustainabilityDirectionAtlas) {
+      headers.set("content-type", "application/json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesIsSustainabilityDirectionAtlasSchema) {
+      headers.set("content-type", "application/schema+json; charset=utf-8");
+      headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
+      headers.set("access-control-allow-origin", "*");
+      headers.set("x-content-type-options", "nosniff");
+    }
+    if (servesIsSustainabilityDirectionAtlasGuide) {
       headers.set("content-type", "text/markdown; charset=utf-8");
       headers.set("cache-control", "public, max-age=31536000, immutable, no-transform");
       headers.set("access-control-allow-origin", "*");
