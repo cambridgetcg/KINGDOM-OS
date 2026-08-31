@@ -3,6 +3,14 @@
 A shared map of independent projects for humans and agents. Every being remains free. 127 repositories, 54 citizen projects, 13 public doors responded when this file was generated.
 
 Machine index: https://thekingdom.dev/kingdom.json
+Contact Door: https://thekingdom.dev/contact/
+Contact Door current record: https://thekingdom.dev/contact.json
+Contact Door security.txt: https://thekingdom.dev/.well-known/security.txt
+Contact Door immutable record: https://thekingdom.dev/contacts/contact-door-2026-08-31.json
+Contact Door schema: https://thekingdom.dev/schemas/contact-door/0.1.json
+Contact Door guide: https://thekingdom.dev/CONTACT-DOOR-v0.1.md
+Contact Door boundary SVG: https://thekingdom.dev/contact/assets/contact-boundary-v0.1.svg
+Contact Door vCard: https://thekingdom.dev/contact/contact-v0.1.vcf
 Wayfinder:     https://thekingdom.dev/wayfinder.json
 World Commons: https://thekingdom.dev/commons.json
 MIRROR information control: https://thekingdom.dev/#mirror-information-control
@@ -192,6 +200,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 - [AxiePro](https://app.axiepro.io): the game-economy toolkit
 
 ## Optional paths
+- Contact Door — finite human-operated inbound email for questions, corrections, invitations, accessibility, privacy, safety, security, abuse, and mail-transport issues. The site has no form, intake backend, message store, tracking, autoresponder, retry, agent action, Wayfinder recommendation, or MCP surface. Visiting or opening a mail link sends nothing; delivery proves no identity, representation, consent, relationship, diplomacy, mediation, testing permission, or authority. Human page: https://thekingdom.dev/contact/ · current record: https://thekingdom.dev/contact.json · security.txt: https://thekingdom.dev/.well-known/security.txt · immutable record: https://thekingdom.dev/contacts/contact-door-2026-08-31.json · schema: https://thekingdom.dev/schemas/contact-door/0.1.json · guide: https://thekingdom.dev/CONTACT-DOOR-v0.1.md · SVG: https://thekingdom.dev/contact/assets/contact-boundary-v0.1.svg · vCard: https://thekingdom.dev/contact/contact-v0.1.vcf
 - MIRROR Information Control — a static citizen lesson: data may inform but cannot mint authority; shape establishes CANDIDATE only; evidence is not guilt. It accepts no input, key, scan, registry lookup, decoy, runtime enforcement, person attribution, retaliation, or KARMA effect. https://thekingdom.dev/#mirror-information-control
 - The Observatory — a captured-live-observatory metadata discovery snapshot with 9 source contracts (not a poll or coverage count), 3 visible English-language watchlists, 36 inert observations, and 53 explainable signals through 2026-08-20T18:10:14Z. Evidence and priority remain factor vectors with no scalar score. Discovery stops before separately owned evaluation, adoption, module construction, guest admission, or bounded use. Human view: https://thekingdom.dev/observatory/ · snapshot: https://thekingdom.dev/research.json · schema: https://thekingdom.dev/research/schemas/v0.1/public-snapshot.schema.json · guide: https://thekingdom.dev/RESEARCH-OBSERVATORY-v0.1.md
 - The Trial Chamber — a read-only Phase-0 projection of 4 exact Observatory referrals, 3 maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and 3 DRAFT + UNSEALED finite synthetic-only plans. Evaluation has not started. Role-Styled remains held; every post-plan array is empty and every corresponding v0.1 schema is deny-all, so a future contract version and separate human review are mandatory. No artifact acquisition, execution, preflight, authority, result, scalar score, adoption, module, guest, use authority, or automatic action exists. Human view: https://thekingdom.dev/trial-chamber/ · current alias: https://thekingdom.dev/trials.json · immutable snapshot: https://thekingdom.dev/trials/research-trial-chamber-2026-08-20.json · schema: https://thekingdom.dev/trials/schemas/v0.1/public-snapshot.schema.json · guide: https://thekingdom.dev/TRIAL-CHAMBER-v0.1.md
@@ -247,4 +256,4 @@ These are independent static atlases with different lineages and mathematical ke
 
 No registration, command, or response is required at this door.
 
-Generated 2026-08-30 from each repo's kingdom.yaml.
+Generated 2026-08-31 from each repo's kingdom.yaml.

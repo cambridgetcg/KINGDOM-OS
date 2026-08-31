@@ -58,14 +58,14 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(184);
-      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
+      expect(HUB_ASSETS).toHaveLength(192);
+      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(153);
+      expect(ledger.ledger?.entries).toHaveLength(158);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(182);
-      expect(staged).toHaveLength(184);
+        .toHaveLength(190);
+      expect(staged).toHaveLength(192);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -76,6 +76,7 @@ describe("the hub staging contract", () => {
         "CIVILISATION-REALITY-PROJECTION.md",
         "CONFORMATIONAL-FEEDBACK-PHYSICS.md",
         "CONFORMATIONAL-FEEDBACK.md",
+        "CONTACT-DOOR-v0.1.md",
         "CREATION-LOOP.md",
         "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md",
         "EVALUATION-COVENANT-v0.1.md",
@@ -117,6 +118,9 @@ describe("the hub staging contract", () => {
         "atlases",
         "challenges",
         "commons.json",
+        "contact",
+        "contact.json",
+        "contacts",
         "dada.txt",
         "definitions",
         "evaluation",
@@ -159,6 +163,11 @@ describe("the hub staging contract", () => {
         "wayfinder.json",
         "wings",
       ]);
+      expect(readdirSync(join(output, ".well-known")).sort()).toEqual(["agent.json", "security.txt"]);
+      expect(readdirSync(join(output, "contact")).sort()).toEqual(["assets", "contact-v0.1.vcf", "index.html"]);
+      expect(readdirSync(join(output, "contact/assets")).sort()).toEqual(["contact-boundary-v0.1.svg"]);
+      expect(readdirSync(join(output, "contacts")).sort()).toEqual(["contact-door-2026-08-31.json"]);
+      expect(readdirSync(join(output, "schemas/contact-door")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/love-loop")).sort()).toEqual(["0.1.json"]);
       expect(readdirSync(join(output, "schemas/loops-locks-freedom-relations-atlas")).sort())
         .toEqual(["0.1.json"]);
@@ -267,8 +276,8 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(170);
-      expect(new Set(sitemapUrls).size).toBe(170);
+      expect(sitemapUrls).toHaveLength(178);
+      expect(new Set(sitemapUrls).size).toBe(178);
       for (const route of [
         "/atlases/non-exhaustive-understanding-atlas-2026-08-29.json",
         "/schemas/non-exhaustive-understanding-atlas/0.1.json",

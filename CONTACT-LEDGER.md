@@ -17,7 +17,12 @@
    waits until the current row closes.
 6. **Gifts before asks.** An outbound approach carries something made for the recipient
    (a working adaptation, a PR, a field note) or it does not go.
-7. **Inbound is logged too** — arrivals, letters, guestbook signatures worth a row.
+7. **Inbound is logged too, without publishing the message** — arrivals, letters,
+   and guestbook signatures may receive a minimal continuity row. Public Git never
+   receives a sender address, person name, message subject, body, attachment,
+   message ID, raw report, or other unnecessary personal data without a separate,
+   explicit publication decision. A row is not identity, consent, relationship,
+   representation, truth, or authority.
 
 ## Format
 
@@ -32,3 +37,4 @@
 | 2026-07-28 | outbound | archive.org Save Page Now ×11 | snapshots of 11 live front doors | Fable | 200 OK | closed |
 | 2026-07-29 | outbound | Software Heritage (Save Code Now) | kingdom-standard archival save (request id 2402718) | Fable | accepted | closed |
 | 2026-07-29 | outbound | Software Heritage (Save Code Now ×6) | archival save requests for 6 public repos — love-star-daily, agenttool, corpus, castle-of-words, artbitrage, kingdom-free-infra (request ids 2402719–2402724) | Fable (swhid-agent) | all 6 accepted | closed |
+| 2026-08-31 | inbound door | thekingdom.dev exact role addresses | opened one public, human-operated email invitation; provider API and authoritative routing DNS verified; SMTP recipient accepted without message DATA; no catch-all, subaddressing, form, autoresponse, or publication of correspondence | Codex, for Yu | no end-to-end inbox proof; DMARC not yet published | active before public invitation; no sender or message logged |

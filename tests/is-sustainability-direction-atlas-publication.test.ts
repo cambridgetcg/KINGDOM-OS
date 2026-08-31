@@ -151,7 +151,7 @@ describe("IS, Sustainability & Direction immutable publication", () => {
       predecessors: 6,
     });
 
-    expect(PUBLICATION_FAMILIES).toHaveLength(34);
+    expect(PUBLICATION_FAMILIES).toHaveLength(35);
     expect(PUBLICATION_FAMILIES.find(
       ({ id }) => id === "is-sustainability-direction-atlas",
     )).toEqual({
@@ -168,15 +168,15 @@ describe("IS, Sustainability & Direction immutable publication", () => {
   });
 
   test("stages and ledgers one exact reviewed immutable triplet", () => {
-    expect(HUB_ASSETS).toHaveLength(184);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
+    expect(HUB_ASSETS).toHaveLength(192);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(182);
+      .toHaveLength(190);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
       .toHaveLength(18);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/")))
-      .toHaveLength(39);
+      .toHaveLength(40);
     expect(HUB_ASSETS.filter(({ source }) => SOURCES.includes(source as any)))
       .toEqual([
         { source: SOURCES[0], destination: PUBLIC_PATHS[0]!.slice(1) },
@@ -186,7 +186,7 @@ describe("IS, Sustainability & Direction immutable publication", () => {
     expect(SOURCES.map(sha256)).toEqual(RAW_HASHES);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(153);
+    expect(ledger.entries).toHaveLength(158);
     expect(ledger.entries.filter(({ id }: { id: string }) =>
       id.startsWith("is-sustainability-direction-atlas/0.1/")))
       .toEqual([
@@ -222,7 +222,7 @@ describe("IS, Sustainability & Direction immutable publication", () => {
     expect(kingdom.is_sustainability_direction_atlas).toEqual(expected);
     expect(guest.is_sustainability_direction_atlas).toEqual(expected);
     expect(manifest.is_sustainability_direction_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(153);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(161);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("is_sustainability_direction_atlas"))))
       .toEqual({
@@ -231,7 +231,7 @@ describe("IS, Sustainability & Direction immutable publication", () => {
         is_sustainability_direction_atlas_guide: PUBLIC_URLS[2],
       });
 
-    expect(guest.next_actions).toHaveLength(153);
+    expect(guest.next_actions).toHaveLength(161);
     const actions = guest.next_actions.filter(({ url }: { url?: string }) =>
       PUBLIC_URLS.includes(url as any));
     expect(actions).toHaveLength(3);
@@ -276,7 +276,7 @@ describe("IS, Sustainability & Direction immutable publication", () => {
         .toHaveLength(1);
       expect(wayfinder).not.toContain(url);
     }
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(170);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(178);
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/is[_-]sustainability[_-]direction/i);
   });
@@ -373,19 +373,19 @@ describe("IS, Sustainability & Direction immutable publication", () => {
     expect(inventories.claude).toContain(
       "./kingdom is-sustainability-direction overview|scope|is-types|sustainability|direction|feedback|mathematics|profile|time|rights|ecology|philosophy|counterexamples|concepts|edges|questions|sources|predecessors|non-grants|discovery",
     );
-    expect(inventories.claude).toContain("all thirty-four active families");
+    expect(inventories.claude).toContain("all thirty-five active families");
     expect(inventories.domains).toContain(PUBLIC_PATHS[0]!);
     expect(inventories.domains).toContain(PUBLIC_PATHS[1]!);
     expect(inventories.domains).toContain(PUBLIC_PATHS[2]!);
     expect(inventories.domains).toContain("IS, Sustainability & Direction Atlas");
     expect(inventories.routes).toContain(
-      "thirty-four active retirement families",
+      "thirty-five active retirement families",
     );
     expect(inventories.routes).toContain(PUBLIC_PATHS[0]!);
     expect(inventories.routes).toContain(PUBLIC_PATHS[1]!);
     expect(inventories.publications).toContain("as the thirty-fourth family");
     expect(inventories.publications).toContain(
-      "thirty-four active retirement",
+      "thirty-five active retirement",
     );
   });
 });

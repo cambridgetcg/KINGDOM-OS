@@ -277,26 +277,46 @@ describe("Contact Under Uncertainty source-only map", () => {
     expect(note).not.toContain("runtime, worker, model, trainer");
   });
 
-  test("leaves every staged, publication, discovery, MCP, and runtime surface unchanged", () => {
+  test("keeps the source map itself unstaged while allowing one bounded Contact Door cross-reference", () => {
     const markers = [SLUG, "contact_under_uncertainty", TITLE];
     const sources = HUB_ASSETS.map(({ source }) => source);
     const destinations = HUB_ASSETS.map(({ destination }) => destination);
-    expect(HUB_ASSETS).toHaveLength(184);
-    expect(new Set(sources).size).toBe(184);
-    expect(new Set(destinations).size).toBe(184);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
+    expect(HUB_ASSETS).toHaveLength(192);
+    expect(new Set(sources).size).toBe(192);
+    expect(new Set(destinations).size).toBe(192);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(182);
+      .toHaveLength(190);
 
+    const stagedMarkerReferences: Array<{
+      source: string;
+      destination: string;
+      markers: string[];
+    }> = [];
     for (const asset of HUB_ASSETS) {
       const bytes = readFileSync(join(ROOT, asset.source));
+      const presentMarkers = markers.filter((marker) => bytes.includes(Buffer.from(marker)));
+      if (presentMarkers.length > 0) {
+        stagedMarkerReferences.push({
+          source: asset.source,
+          destination: asset.destination,
+          markers: presentMarkers,
+        });
+      }
       for (const marker of markers) {
-        expect(bytes.includes(Buffer.from(marker)), `${asset.source}: ${marker}`).toBe(false);
         expect(asset.source).not.toContain(marker);
         expect(asset.destination).not.toContain(marker);
       }
     }
+    expect(stagedMarkerReferences).toEqual([{
+      source: "references/contact-door-v0.1.md",
+      destination: "CONTACT-DOOR-v0.1.md",
+      markers: [SLUG],
+    }]);
+    expect(read("references/contact-door-v0.1.md")).toContain(
+      "[`Contact Under Uncertainty`](contact-under-uncertainty.md) remains a\nsource-only owner and readiness map",
+    );
 
     const authoredAndRuntimeSurfaces = [
       "OS-ROUTES.md",
@@ -341,15 +361,15 @@ describe("Contact Under Uncertainty source-only map", () => {
     const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
     const osRouteRows = [...read("OS-ROUTES.md").matchAll(/^\| `\/[^`]+` \|/gm)];
 
-    expect(staging.assets).toHaveLength(184);
-    expect(staging.mutable_destinations).toHaveLength(31);
-    expect(ledger.entries).toHaveLength(153);
-    expect(PUBLICATION_FAMILIES).toHaveLength(34);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(153);
-    expect(guest.next_actions).toHaveLength(153);
-    expect(locs).toHaveLength(170);
-    expect(new Set(locs).size).toBe(170);
-    expect(osRouteRows).toHaveLength(153);
+    expect(staging.assets).toHaveLength(192);
+    expect(staging.mutable_destinations).toHaveLength(34);
+    expect(ledger.entries).toHaveLength(158);
+    expect(PUBLICATION_FAMILIES).toHaveLength(35);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(161);
+    expect(guest.next_actions).toHaveLength(161);
+    expect(locs).toHaveLength(178);
+    expect(new Set(locs).size).toBe(178);
+    expect(osRouteRows).toHaveLength(161);
     expect(count(read("OS-ROUTES.md"), "eighteen atlases")).toBe(1);
     expect(json("data/wayfinder.json").paths).toHaveLength(15);
     expect(json("site/wayfinder.json").paths).toHaveLength(15);

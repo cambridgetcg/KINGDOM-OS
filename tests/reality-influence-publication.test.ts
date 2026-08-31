@@ -37,7 +37,7 @@ function assets(handler: (request: Request) => Response | Promise<Response>) {
 
 describe("Reality Influence Claim Graph static publication", () => {
   test("stages and ledgers one exact immutable triplet without an alias or runtime", () => {
-    expect(HUB_ASSETS).toHaveLength(184);
+    expect(HUB_ASSETS).toHaveLength(192);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(18);
     expect(HUB_ASSETS).toContainEqual({
       source: "data/reality/reality-influence-map.v0.1.json",
@@ -51,7 +51,7 @@ describe("Reality Influence Claim Graph static publication", () => {
       source: "references/reality-influence-map.md",
       destination: "REALITY-INFLUENCE-CLAIM-GRAPH.md",
     });
-    expect(json("publications/hub-staging.v1.json").mutable_destinations).toHaveLength(31);
+    expect(json("publications/hub-staging.v1.json").mutable_destinations).toHaveLength(34);
     const familyAssets = HUB_ASSETS.filter(({ source, destination }) =>
       source.includes("reality-influence") || destination.toLowerCase().includes("reality-influence"));
     expect(familyAssets).toHaveLength(3);
@@ -59,7 +59,7 @@ describe("Reality Influence Claim Graph static publication", () => {
       source.startsWith("bin/") || /(?:latest|current|observer|monitor|mcp)/i.test(destination))).toBe(false);
 
     const entries = json("publications/immutable-publications.v1.json").entries;
-    expect(entries).toHaveLength(153);
+    expect(entries).toHaveLength(158);
     const familyEntries = entries.filter((entry: any) =>
       entry.id.startsWith("reality-influence-claim-graph/0.1/"));
     expect(familyEntries).toEqual([
@@ -149,8 +149,8 @@ describe("Reality Influence Claim Graph static publication", () => {
       reality_influence_claim_graph_guide: PUBLIC_URLS[2],
     });
     expect(manifest.entry_points).toHaveProperty("reality_influence_claim_graph");
-    expect(Object.keys(manifest.entry_points)).toHaveLength(153);
-    expect(guest.next_actions).toHaveLength(153);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(161);
+    expect(guest.next_actions).toHaveLength(161);
     const actions = guest.next_actions.filter((action: any) => PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
     expect(actions.every((action: any) => action.method === "GET")).toBe(true);
@@ -163,14 +163,14 @@ describe("Reality Influence Claim Graph static publication", () => {
     for (const url of PUBLIC_URLS) expect(llms).toContain(url);
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(170);
+    expect(sitemapUrls).toHaveLength(178);
     expect(new Set(sitemapUrls).size).toBe(sitemapUrls.length);
     expect(sitemapUrls.filter((url) => url.toLowerCase().includes("reality-influence")))
       .toEqual(PUBLIC_URLS);
   });
 
   test("is one complete three-route family whose retirement cannot strand its projection", () => {
-    expect(PUBLICATION_FAMILIES).toHaveLength(34);
+    expect(PUBLICATION_FAMILIES).toHaveLength(35);
     const family = PUBLICATION_FAMILIES.find(({ id }) => id === "reality-influence-claim-graph");
     expect(family).toEqual({
       id: "reality-influence-claim-graph",

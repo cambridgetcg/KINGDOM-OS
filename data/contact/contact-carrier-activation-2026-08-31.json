@@ -1,0 +1,60 @@
+{
+  "protocol": "kingdom.contact-door-carrier-receipt/0.1",
+  "id": "cloudflare-carrier-activation-2026-08-31",
+  "recordId": "contact-door-2026-08-31",
+  "semanticCoreSha256": "sha256:e782575253b74b07412953b9127d88da0ca1679bfc04ca1b3a3a14149e10835b",
+  "observedAt": "2026-08-31T19:33:24Z",
+  "receiptKind": "PROVIDER_API_AND_DNS_READBACK",
+  "provider": "Cloudflare Email Routing",
+  "baseline": {
+    "routingEnabled": false,
+    "configurationStatus": "unconfigured",
+    "literalRuleCount": 0,
+    "catchAllEnabled": false,
+    "catchAllAction": "drop",
+    "subaddressingEnabled": false,
+    "emailWorkerActionCount": 0,
+    "routingDnsRecordCount": 0,
+    "dmarcRecordCount": 0
+  },
+  "readback": {
+    "routingEnabled": true,
+    "configurationStatus": "ready",
+    "verifiedDestinationMatchCount": 1,
+    "destinationAddressPublished": false,
+    "literalLocalParts": [
+      "contact",
+      "security",
+      "abuse",
+      "postmaster"
+    ],
+    "enabledLiteralRuleCount": 4,
+    "forwardActionCount": 4,
+    "catchAllEnabled": false,
+    "catchAllAction": "drop",
+    "subaddressingEnabled": false,
+    "emailWorkerActionCount": 0,
+    "routingMxRecordCount": 3,
+    "routingSpfRecordCount": 1,
+    "routingDkimRecordCount": 1,
+    "authoritativeNameserverCount": 2,
+    "authoritativeDnsAgreement": true,
+    "receiveOnlyDmarcPolicy": "NOT_YET_PUBLISHED"
+  },
+  "probe": {
+    "smtpEnvelopeOnlyPerformed": true,
+    "smtpRecipientAccepted": true,
+    "messageDataSent": false,
+    "distinctSenderInboxProbePerformed": false,
+    "observedInDestinationInbox": false,
+    "note": "The provider accepted an SMTP envelope for the general literal route and the session ended before DATA. This proves neither message forwarding nor inbox receipt."
+  },
+  "limits": {
+    "dmarcNotPublishedBecauseScopedCredentialLacksDnsEdit": true,
+    "nonDeliveryReportsMayBeSilent": true,
+    "privateDestinationPublished": false,
+    "providerObjectIdentifiersPublished": false,
+    "credentialMaterialPublished": false,
+    "endToEndDeliveryProved": false
+  }
+}

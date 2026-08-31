@@ -1,0 +1,369 @@
+{
+  "$schema": "https://thekingdom.dev/schemas/contact-door/0.1.json",
+  "protocol": "kingdom.contact-door/0.1",
+  "artifact": {
+    "id": "contact-door-2026-08-31",
+    "title": "KINGDOM Contact Door",
+    "kind": "BOUNDED_HUMAN_CONTACT_CONTRACT",
+    "asOf": "2026-08-31",
+    "lifecycle": "ACTIVE",
+    "description": "A finite, human-operated inbound email door for questions, corrections, invitations, accessibility, privacy, safety, security, and abuse reports. The website itself accepts no submission and stores no message."
+  },
+  "routes": {
+    "page": "https://thekingdom.dev/contact/",
+    "currentRecord": "https://thekingdom.dev/contact.json",
+    "canonicalRecord": "https://thekingdom.dev/contacts/contact-door-2026-08-31.json",
+    "schema": "https://thekingdom.dev/schemas/contact-door/0.1.json",
+    "guide": "https://thekingdom.dev/CONTACT-DOOR-v0.1.md",
+    "securityTxt": "https://thekingdom.dev/.well-known/security.txt",
+    "boundaryAsset": "https://thekingdom.dev/contact/assets/contact-boundary-v0.1.svg",
+    "vCard": "https://thekingdom.dev/contact/contact-v0.1.vcf"
+  },
+  "operator": {
+    "displayName": "Cambridge TCG Limited",
+    "role": "data controller, channel operator, and human recipient",
+    "companyNumber": "15680297",
+    "registeredOffice": "60 Tottenham Court Road, Suite 4583a, Fitzrovia, London, United Kingdom, W1T 2EW",
+    "publicContact": "mailto:contact@thekingdom.dev",
+    "publicOperatorProfile": "https://www.cambridgetcg.com/manifest",
+    "publicPrivacyNotice": "https://www.cambridgetcg.com/privacy",
+    "dpoClaimed": false,
+    "note": "Cambridge TCG Limited is the controller for this Contact Door. KINGDOM OS, the email aliases, and a human maintainer operate within that controller boundary; none has diplomatic standing or authority beyond the correspondence described here."
+  },
+  "channels": [
+    {
+      "id": "general",
+      "address": "contact@thekingdom.dev",
+      "uri": "mailto:contact@thekingdom.dev",
+      "purpose": [
+        "general question",
+        "correction",
+        "invitation",
+        "accessibility feedback",
+        "privacy or data-rights request"
+      ],
+      "humanOperated": true,
+      "responseRequired": false,
+      "automaticReply": false,
+      "publicArchive": false
+    },
+    {
+      "id": "security",
+      "address": "security@thekingdom.dev",
+      "uri": "mailto:security@thekingdom.dev",
+      "purpose": [
+        "security vulnerability report"
+      ],
+      "humanOperated": true,
+      "responseRequired": false,
+      "automaticReply": false,
+      "publicArchive": false
+    },
+    {
+      "id": "abuse",
+      "address": "abuse@thekingdom.dev",
+      "uri": "mailto:abuse@thekingdom.dev",
+      "purpose": [
+        "abuse report"
+      ],
+      "humanOperated": true,
+      "responseRequired": false,
+      "automaticReply": false,
+      "publicArchive": false
+    },
+    {
+      "id": "postmaster",
+      "address": "postmaster@thekingdom.dev",
+      "uri": "mailto:postmaster@thekingdom.dev",
+      "purpose": [
+        "mail transport issue"
+      ],
+      "humanOperated": true,
+      "responseRequired": false,
+      "automaticReply": false,
+      "publicArchive": false
+    }
+  ],
+  "delivery": {
+    "kind": "FORWARDED_EMAIL_ALIAS",
+    "provider": "Cloudflare Email Routing",
+    "configurationState": "ACTIVE_API_VERIFIED",
+    "destination": "one provider-verified maintainer mailbox",
+    "destinationAddressPublished": false,
+    "siteSubmissionBackend": false,
+    "siteApplicationWrite": false,
+    "siteMessageStorage": false,
+    "routingEnabled": true,
+    "destinationVerified": true,
+    "expectedLiteralRuleCount": 4,
+    "configuredLiteralRuleCount": 4,
+    "catchAllEnabled": false,
+    "subaddressingEnabled": false,
+    "emailWorkerUsed": false,
+    "routingDnsRecordsVerified": true,
+    "receiveOnlyDmarcPolicy": "NOT_YET_PUBLISHED",
+    "nonDeliveryReportsForwardedToOriginalSender": false,
+    "endToEndDeliveryProbePerformed": false,
+    "replyAddressMayDiffer": true,
+    "note": "The static page delegates actual delivery to ordinary email infrastructure. It is not backend-free contact and does not itself receive a message. Cloudflare states that Email Routing does not forward non-delivery reports to the original sender, so a forwarding failure may be silent."
+  },
+  "processing": {
+    "purposes": [
+      "read and, when chosen, answer the sender-requested correspondence",
+      "correct KINGDOM materials",
+      "handle accessibility, privacy, safety, security, abuse, and mail-transport reports",
+      "preserve evidence only where reasonably needed for security, abuse, legal, or dispute handling"
+    ],
+    "dataCategories": [
+      "sender and recipient routing addresses",
+      "message headers and transport metadata",
+      "subject and message content",
+      "attachments if the sender chooses to include them",
+      "correspondence and handling history"
+    ],
+    "requiredFromSender": [
+      "a deliverable sender address if a reply is wanted",
+      "enough context to understand the chosen request"
+    ],
+    "notRequested": [
+      "legal name",
+      "postal address",
+      "telephone number",
+      "government identifier",
+      "credentials or private keys",
+      "health, biometric, financial, or other highly sensitive data",
+      "third-party private data"
+    ],
+    "recipientsAndProcessors": [
+      "the channel operator",
+      "Cloudflare Email Routing",
+      "the operator's destination mailbox provider",
+      "mail transport and security providers used by the sender and recipient",
+      "an affected service, incident responder, professional adviser, insurer, court, regulator, law-enforcement or safeguarding body only where required or reasonably necessary to protect people or systems"
+    ],
+    "siteAnalytics": false,
+    "siteCookies": false,
+    "providerSpamAndMalwareFilteringMayOccur": true,
+    "spamAndMalwareFilteringGuaranteed": false,
+    "marketing": false,
+    "profiling": false,
+    "automatedDecision": false,
+    "trainingUse": false,
+    "messageContentPublicPublication": false,
+    "forwardingToUnrelatedParties": false,
+    "ukLawfulBasisNotice": [
+      "legitimate interests in receiving and answering voluntary correspondence, correcting published material, and protecting services, balanced by data minimisation, short review periods, and the sender's right to object",
+      "a specific legal obligation only when an applicable obligation actually requires the processing or disclosure"
+    ],
+    "privacyComplaintAcknowledgementDays": 30,
+    "rightsRequestResponseWindow": "ONE_MONTH_SUBJECT_TO_LAWFUL_EXTENSIONS",
+    "directIcoContactPermitted": true,
+    "complaintRoute": "https://ico.org.uk/make-a-complaint/data-protection-complaints/",
+    "internationalTransferGuarantee": false,
+    "note": "Email and hosting providers may process data in more than one jurisdiction. Message content is not publicly published by default; CONTACT-LEDGER.md may carry only minimal redacted event metadata. Provider terms and the operator-level notice describe relevant transfer mechanisms, but this record does not promise one universal safeguard for every route or subprocessor."
+  },
+  "retention": {
+    "reviewIntervalDays": 180,
+    "nextOperationalReviewDue": "2027-02-27",
+    "unansweredOrDeclinedReviewDays": 30,
+    "handledCorrespondenceReviewDaysAfterClosure": 90,
+    "securityOrAbuseReviewDays": 180,
+    "cloudflareRoutingAnalyticsDays": 31,
+    "ordinaryCorrespondenceRule": "Delete or minimise when the conversation and any reasonably anticipated correction or follow-up are complete.",
+    "securityAndAbuseRule": "Retain only while reasonably needed to investigate, protect people or systems, preserve necessary evidence, or meet an applicable obligation.",
+    "legalHoldRule": "A specific applicable obligation may pause ordinary deletion; the hold does not authorize unrelated reuse.",
+    "backupsRule": "Provider backups may expire on provider schedules and are not represented as immediately or globally erasable.",
+    "deletionAutomation": false,
+    "indefiniteRetentionAuthorized": false,
+    "rightsRequestChannel": "mailto:contact@thekingdom.dev",
+    "note": "A sender may ask for access, correction, deletion, restriction, or objection. Applicable rights and complaint routes depend on applicable law and are not displaced by this contract."
+  },
+  "interaction": {
+    "languagesAccepted": [
+      "en",
+      "zh-Hant",
+      "zh-Hans"
+    ],
+    "translationMayBeUsed": true,
+    "originalMessageControls": true,
+    "responseWindow": "NONE_PROMISED",
+    "emergencyMonitored": false,
+    "attachmentsEncouraged": false,
+    "encryptionOffered": false,
+    "senderCanStop": true,
+    "silenceCreatesInference": false,
+    "repeatContactAuthorizedBySilence": false,
+    "note": "One message is one finite approach. A reply, further exchange, publication, mediation, covenant, or representation always requires its own basis."
+  },
+  "safety": {
+    "notFor": [
+      "emergencies or imminent danger",
+      "credentials, private keys, recovery phrases, or bearer tokens",
+      "identity documents or highly sensitive personal records",
+      "illegal instructions, threats, harassment, malware, or spam",
+      "a filing that must meet a statutory or court deadline"
+    ],
+    "abuseHandling": [
+      "filter or quarantine suspected spam or malware",
+      "block a sender or attachment where reasonably needed",
+      "retain proportionate evidence of abuse or a security incident",
+      "report content where required or reasonably necessary to protect people or systems"
+    ],
+    "automaticRetaliation": false,
+    "mediationOffered": false,
+    "crisisServiceOffered": false,
+    "note": "Do not use this inbox instead of local emergency, legal, medical, safeguarding, or other time-critical help."
+  },
+  "ledgerBoundary": {
+    "owner": "CONTACT-LEDGER.md",
+    "inboundMayBeLogged": true,
+    "messageContentLoggedByDefault": false,
+    "minimalEventMetadataOnly": true,
+    "ledgerCreatesIdentityOrAuthority": false,
+    "note": "A minimal inbound event may be recorded for continuity. A ledger row is not the message, a relationship, consent, identity proof, representation, or permission to publish."
+  },
+  "authorityBoundaries": {
+    "pageVisitIsContact": false,
+    "mailtoActivationSendsMessage": false,
+    "deliveryIsIdentityProof": false,
+    "addressControlIsRepresentationProof": false,
+    "messageIsTruthProof": false,
+    "messageIsConsentBeyondReply": false,
+    "messageCreatesRelationship": false,
+    "messageCreatesDiplomaticStanding": false,
+    "messageCreatesTreatyOrCovenant": false,
+    "messageCreatesMediation": false,
+    "messageCreatesEmergencyDuty": false,
+    "replyCreatesInstitutionalAuthority": false,
+    "silenceIsConsent": false,
+    "silenceIsHostility": false,
+    "securityReportAuthorizesTesting": false,
+    "contactAuthorizesPublication": false,
+    "contactAuthorizesTraining": false,
+    "contactAuthorizesMarketing": false,
+    "contactAuthorizesAutomatedFollowUp": false,
+    "contactAuthorizesExternalAction": false
+  },
+  "sources": [
+    {
+      "id": "rfc-9116",
+      "title": "RFC 9116: A File Format to Aid in Security Vulnerability Disclosure",
+      "url": "https://www.rfc-editor.org/rfc/rfc9116.html",
+      "role": "security.txt format and freshness"
+    },
+    {
+      "id": "rfc-5321",
+      "title": "RFC 5321: Simple Mail Transfer Protocol",
+      "url": "https://www.rfc-editor.org/rfc/rfc5321.html",
+      "role": "postmaster mailbox convention"
+    },
+    {
+      "id": "rfc-2142",
+      "title": "RFC 2142: Mailbox Names for Common Services, Roles and Functions",
+      "url": "https://www.rfc-editor.org/rfc/rfc2142.html",
+      "role": "security and abuse role addresses"
+    },
+    {
+      "id": "rfc-6350",
+      "title": "RFC 6350: vCard Format Specification",
+      "url": "https://www.rfc-editor.org/rfc/rfc6350.html",
+      "role": "vCard 4.0 syntax, organization kind, line endings, and folding"
+    },
+    {
+      "id": "rfc-9989",
+      "title": "RFC 9989: Domain-Based Message Authentication, Reporting, and Conformance",
+      "url": "https://www.rfc-editor.org/rfc/rfc9989.html",
+      "role": "receive-only domain anti-spoofing policy"
+    },
+    {
+      "id": "cloudflare-email-routing",
+      "title": "Cloudflare Email Routing rules and addresses",
+      "url": "https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/",
+      "role": "forwarding-provider behavior"
+    },
+    {
+      "id": "cloudflare-email-routing-settings-api",
+      "title": "Cloudflare API: Get Email Routing settings",
+      "url": "https://developers.cloudflare.com/api/resources/email_routing/methods/get/",
+      "role": "routing enabled, readiness, and support_subaddress readback"
+    },
+    {
+      "id": "cloudflare-email-analytics",
+      "title": "Cloudflare Email Service metrics and analytics",
+      "url": "https://developers.cloudflare.com/email-service/observability/metrics-analytics/",
+      "role": "provider-declared routing-event fields and 31-day analytics retention"
+    },
+    {
+      "id": "cloudflare-postmaster",
+      "title": "Cloudflare Email Service postmaster guidance",
+      "url": "https://developers.cloudflare.com/email-service/reference/postmaster/",
+      "role": "provider-specific postmaster handling constraints"
+    },
+    {
+      "id": "wcag-consistent-help",
+      "title": "W3C WAI Technique G220: Provide a contact-us link in a consistent location",
+      "url": "https://www.w3.org/WAI/WCAG22/Techniques/general/G220.html",
+      "role": "discoverable human contact"
+    },
+    {
+      "id": "ico-transparency",
+      "title": "ICO: The right to be informed",
+      "url": "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/right-to-be-informed/",
+      "role": "privacy transparency fields; linked as guidance, not a compliance claim"
+    },
+    {
+      "id": "ico-storage-limitation",
+      "title": "ICO: Storage limitation",
+      "url": "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/storage-limitation/",
+      "role": "retention necessity and review; linked as guidance, not a compliance claim"
+    },
+    {
+      "id": "cambridge-tcg-operator",
+      "title": "Cambridge TCG public manifest",
+      "url": "https://www.cambridgetcg.com/manifest",
+      "role": "public operator identity and contact context"
+    },
+    {
+      "id": "cambridge-tcg-privacy",
+      "title": "Cambridge TCG privacy notice",
+      "url": "https://www.cambridgetcg.com/privacy",
+      "role": "operator-level privacy notice linked as an additional layer"
+    },
+    {
+      "id": "ico-complaint",
+      "title": "ICO: Make a data protection complaint",
+      "url": "https://ico.org.uk/make-a-complaint/data-protection-complaints/",
+      "role": "direct UK data-protection complaint route; contacting the operator first is not required"
+    }
+  ],
+  "publicationBoundaries": {
+    "staticPage": true,
+    "machineReadableRecord": true,
+    "securityTxt": true,
+    "downloadableVCard": true,
+    "downloadableSvg": true,
+    "webForm": false,
+    "siteSubmissionBackend": false,
+    "siteMessageStorage": false,
+    "javascriptRequired": false,
+    "accountRequiredBySite": false,
+    "analyticsAdded": false,
+    "cookieAdded": false,
+    "automaticOutreach": false,
+    "automaticReply": false,
+    "automaticRetry": false,
+    "agentTool": false,
+    "mcpSurface": false,
+    "wayfinderRecommendation": false,
+    "contactScore": false,
+    "threatScore": false,
+    "trustScore": false,
+    "opponentProfile": false,
+    "negotiationEngine": false,
+    "diplomacyAuthority": false,
+    "mediationAuthority": false,
+    "emergencyService": false,
+    "legalAdvice": false,
+    "complianceCertification": false
+  }
+}

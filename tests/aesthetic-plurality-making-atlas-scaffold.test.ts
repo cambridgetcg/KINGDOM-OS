@@ -307,7 +307,7 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
       AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_PATHS.map((path) =>
         `https://thekingdom.dev${path}`),
     );
-    expect(PUBLICATION_FAMILIES).toHaveLength(34);
+    expect(PUBLICATION_FAMILIES).toHaveLength(35);
     expect(PUBLICATION_FAMILIES.find(({ id }) =>
       id === "aesthetic-plurality-making-atlas")).toEqual({
         id: "aesthetic-plurality-making-atlas",
@@ -326,11 +326,11 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
   });
 
   test("binds exact staging, ledger, discovery, sitemap, and no-coupling contracts", () => {
-    expect(HUB_ASSETS).toHaveLength(184);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
+    expect(HUB_ASSETS).toHaveLength(192);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(182);
+      .toHaveLength(190);
     expect(HUB_ASSETS.filter(({ source }) => [
       AESTHETIC_PLURALITY_MAKING_ATLAS_LOCATOR,
       AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_LOCATOR,
@@ -345,7 +345,7 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
     ]);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(153);
+    expect(ledger.entries).toHaveLength(158);
     expect(ledger.entries.filter((entry: any) =>
       entry.id.startsWith("aesthetic-plurality-making-atlas/"))).toEqual([
         { id: "aesthetic-plurality-making-atlas/0.1/guide",
@@ -372,7 +372,7 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
     expect(kingdom.aesthetic_plurality_making_atlas).toEqual(expected);
     expect(guest.aesthetic_plurality_making_atlas).toEqual(expected);
     expect(manifest.aesthetic_plurality_making_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(153);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(161);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("aesthetic_plurality_making_atlas"))))
       .toEqual({
@@ -383,7 +383,7 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
         aesthetic_plurality_making_atlas_guide:
           AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(153);
+    expect(guest.next_actions).toHaveLength(161);
     const actions = guest.next_actions.filter((action: any) =>
       AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
@@ -413,10 +413,10 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
     expect(wayfinderBytes.toString("utf8"))
       .not.toMatch(/aesthetic[_-]plurality[_-]making[_-]atlas/i);
     expect(createHash("sha256").update(wayfinderBytes).digest("hex"))
-      .toBe("7c499916f2f90d84c32f3c9ba6c961a24a4f004bb536fcefcf74277d9b2440d9");
+      .toBe("865189fd624521861784b22d20b79ebc9c3ce2dc8edae4c9f6026f89a0bc260c");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/aesthetic[_-]plurality[_-]making[_-]atlas/i);
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(170);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(178);
     expect(read("publications/hub-staging.v1.json")).not.toMatch(
       /aesthetic-plurality-making-atlas-(?:latest|current)|aesthetic-plurality-making-atlas\/index/i,
     );

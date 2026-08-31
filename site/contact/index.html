@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="A finite human-operated inbound email door for KINGDOM OS.">
+  <meta name="robots" content="index, follow">
+  <title>KINGDOM Contact Door</title>
+  <link rel="canonical" href="https://thekingdom.dev/contact/">
+  <link rel="alternate" type="application/json" href="https://thekingdom.dev/contact.json" title="Current machine-readable contact record">
+  <link rel="alternate" type="text/vcard" href="https://thekingdom.dev/contact/contact-v0.1.vcf" title="KINGDOM OS contact vCard">
+  <style>
+    :root{color-scheme:light dark;--bg:#f4f7f2;--ink:#102019;--card:#fff;--muted:#50665d;--line:#9ab3a7;--accent:#075c47;--focus:#ff9f1c;--warn:#783f04}
+    @media(prefers-color-scheme:dark){:root{--bg:#07110d;--ink:#e9fff5;--card:#10231c;--muted:#b2cfc2;--line:#3c6253;--accent:#8ce7c4;--focus:#ffc66d;--warn:#ffd29b}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:var(--accent);text-underline-offset:.2em}a:focus-visible{outline:.22rem solid var(--focus);outline-offset:.22rem;border-radius:.15rem}.skip{position:absolute;left:.75rem;top:-8rem;background:var(--card);padding:.75rem;z-index:4}.skip:focus{top:.75rem}
+    .shell{width:min(72rem,100% - 2rem);margin:auto}.hero{padding:5rem 0 2.5rem}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:750;color:var(--muted)}h1{font-size:clamp(2.5rem,8vw,6.5rem);line-height:.93;margin:.2rem 0 1.25rem;max-width:10ch}h2{font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.1}h3{font-size:1.15rem;line-height:1.3}.lead{font-size:clamp(1.12rem,2.5vw,1.45rem);max-width:46rem}.state{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3rem .75rem;font-weight:700}
+    .primary{display:inline-block;background:var(--accent);color:var(--bg);font-weight:800;padding:.8rem 1rem;border-radius:.5rem;text-decoration:none;min-height:44px}.primary:hover{text-decoration:underline}.boundary{border-left:.4rem solid var(--focus);padding:1rem 1.25rem;background:var(--card);max-width:55rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem}.door,.panel{background:var(--card);border:1px solid var(--line);border-radius:.7rem;padding:1.2rem}.contact-link{display:inline-block;font-weight:800;min-height:44px;padding:.55rem .7rem;border:2px solid currentColor;border-radius:.4rem}.contact-link+ p{overflow-wrap:anywhere}.diagram{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:.7rem;background:#08120f}section{padding:2.3rem 0}ul{padding-left:1.25rem}.warning{color:var(--warn);font-weight:700}.downloads{display:flex;gap:.8rem;flex-wrap:wrap}.downloads a{min-height:44px;display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:.4rem;padding:.55rem .8rem}footer{border-top:1px solid var(--line);margin-top:3rem;padding:2rem 0 4rem;color:var(--muted)}code{overflow-wrap:anywhere}
+    @media(max-width:24rem){.shell{width:min(100% - 1rem,72rem)}.hero{padding-top:3.5rem}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    @media(forced-colors:active){.primary,.door,.panel,.boundary{border:2px solid CanvasText}.primary{color:LinkText;background:Canvas}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to contact</a>
+  <main class="shell" id="main" tabindex="-1">
+    <header class="hero">
+      <p class="eyebrow">one finite human door · as of 2026-08-31</p>
+      <h1>Contact without capture.</h1>
+      <p class="lead">A real inbound email lane for KINGDOM OS. The page has no form, script, account, tracking cookie, autoresponder, or message database.</p>
+      <p><span class="state">Door state: ACTIVE · ACTIVE_API_VERIFIED</span></p>
+      <p class="operational-status"><strong>Operational verification:</strong> routing API and routing DNS verified: yes. Receive-only DMARC: <code>NOT_YET_PUBLISHED</code>. End-to-end inbox delivery proven: no. The current check stopped after SMTP envelope acceptance; no message DATA was sent and no destination-inbox receipt was observed.</p>
+      <p><a class="primary" href="mailto:contact@thekingdom.dev">Email contact@thekingdom.dev</a></p>
+      <div class="boundary">
+        <strong>Visiting sends nothing.</strong> Opening a mail link still sends nothing until you choose to send in your own mail client. Delivery is not identity, representation, consent, truth, relationship, diplomacy, mediation, or authority.
+      </div>
+    </header>
+
+    <section aria-labelledby="doors-title">
+      <p class="eyebrow">choose one purpose</p>
+      <h2 id="doors-title">Exact role addresses</h2>
+      <div class="grid">
+      <article class="door" id="channel-general">
+        <p class="eyebrow">general</p>
+        <h3>general question · correction · invitation · accessibility feedback · privacy or data-rights request</h3>
+        <a class="contact-link" href="mailto:contact@thekingdom.dev">Email contact@thekingdom.dev</a>
+        <p><code>contact@thekingdom.dev</code></p>
+        <p>Human-operated. No automatic reply and no response promise.</p>
+      </article>
+      <article class="door" id="channel-security">
+        <p class="eyebrow">security</p>
+        <h3>security vulnerability report</h3>
+        <a class="contact-link" href="mailto:security@thekingdom.dev">Email security@thekingdom.dev</a>
+        <p><code>security@thekingdom.dev</code></p>
+        <p>Human-operated. No automatic reply and no response promise.</p>
+      </article>
+      <article class="door" id="channel-abuse">
+        <p class="eyebrow">abuse</p>
+        <h3>abuse report</h3>
+        <a class="contact-link" href="mailto:abuse@thekingdom.dev">Email abuse@thekingdom.dev</a>
+        <p><code>abuse@thekingdom.dev</code></p>
+        <p>Human-operated. No automatic reply and no response promise.</p>
+      </article>
+      <article class="door" id="channel-postmaster">
+        <p class="eyebrow">postmaster</p>
+        <h3>mail transport issue</h3>
+        <a class="contact-link" href="mailto:postmaster@thekingdom.dev">Email postmaster@thekingdom.dev</a>
+        <p><code>postmaster@thekingdom.dev</code></p>
+        <p>Human-operated. No automatic reply and no response promise.</p>
+      </article>
+      </div>
+      <p>Only these four named base addresses are routed. Catch-all delivery and <code>+tag</code> subaddressing are disabled; there is no Email Worker, form, autoresponder, or wildcard address. Cloudflare does not forward non-delivery reports to the original sender, so a forwarding failure can be silent. Use an independent confirmation path for consequential or time-sensitive matters.</p>
+    </section>
+
+    <section aria-labelledby="send-title">
+      <p class="eyebrow">minimum necessary</p>
+      <h2 id="send-title">What to send</h2>
+      <div class="grid">
+        <div class="panel"><h3>Useful</h3><ul><li>The exact route, file, statement, or accessibility barrier.</li><li>The kind of response you seek.</li><li>Your preferred language: English, Traditional Chinese, or Simplified Chinese.</li><li>A deliverable reply address only if you want a reply.</li></ul></div>
+        <div class="panel"><h3>Do not send</h3><ul><li>Credentials, keys, recovery phrases, or bearer tokens.</li><li>Identity documents or highly sensitive personal records.</li><li>Third-party private data, malware, threats, or illegal instructions.</li><li>Anything that must meet an emergency, statutory, or court deadline.</li></ul><p class="warning">No encryption route is offered in v0.1. Do not email secrets.</p></div>
+      </div>
+    </section>
+
+    <section id="privacy" aria-labelledby="privacy-title">
+      <p class="eyebrow">privacy and handling</p>
+      <h2 id="privacy-title">Email uses providers</h2>
+      <p>The site accepts no submission. If you email, the sender's provider, transit providers, Cloudflare Email Routing, the destination mailbox provider, and the operator may process addresses, headers, transport metadata, content, attachments, and correspondence history.</p>
+      <p>The data controller is <strong>Cambridge TCG Limited</strong>, company 15680297, registered at 60 Tottenham Court Road, Suite 4583a, Fitzrovia, London, United Kingdom, W1T 2EW. Read the <a href="https://www.cambridgetcg.com/manifest" rel="external noreferrer">public operator profile</a> and <a href="https://www.cambridgetcg.com/privacy" rel="external noreferrer">controller privacy notice</a>. Messages are used only to understand and, when chosen, answer the request; correct KINGDOM materials; handle accessibility, privacy, safety, security, abuse, and mail transport; or preserve proportionate necessary evidence.</p>
+      <p>No marketing, profiling, automated decision, public message archive, message-content publication, model training, or unrelated forwarding is added by this door. Minimal redacted event metadata may appear in <code>CONTACT-LEDGER.md</code>. Where required or reasonably necessary to protect people or systems, a bounded disclosure may be made only to an affected service, incident responder, professional adviser, insurer, court, regulator, law-enforcement or safeguarding body. Providers may filter spam or malware, but filtering is not guaranteed.</p>
+      <ul>
+        <li>Unanswered or declined ordinary inquiries: deletion review within 30 days.</li>
+        <li>Handled ordinary correspondence: deletion or minimisation review within 90 days after closure.</li>
+        <li>Security or abuse evidence: review within 180 days unless an active incident or specific obligation requires longer.</li>
+        <li>Cloudflare Email Routing analytics: provider-declared 31-day event retention.</li>
+        <li>Provider trash and backups follow provider schedules; immediate global erasure is not claimed.</li>
+      </ul>
+      <p>Ask through <a href="mailto:contact@thekingdom.dev">contact@thekingdom.dev</a> for access, correction, deletion, restriction, objection, or a data-protection complaint. The stated UK bases are legitimate interests in receiving voluntary correspondence, correcting published material, and protecting services—with minimisation, short reviews, and a right to object—or a specific legal obligation when one actually applies. Ordinary correspondence has no response promise; Cambridge TCG Limited acknowledges a data-protection complaint within 30 days and normally answers an applicable rights request within one month, subject to lawful extensions. You may use the <a href="https://ico.org.uk/make-a-complaint/data-protection-complaints/" rel="external noreferrer">ICO complaint route</a> without contacting Cambridge first. This page does not promise one universal transfer safeguard or compliance outside the stated controller scope.</p>
+    </section>
+
+    <section id="security" aria-labelledby="security-title">
+      <p class="eyebrow">vulnerability disclosure</p>
+      <h2 id="security-title">Report safely; testing is not authorized</h2>
+      <p>Email <a href="mailto:security@thekingdom.dev">security@thekingdom.dev</a> with the affected route, observed behavior, impact, and smallest safe reproduction. Minimise personal data. Do not access data that is not yours, degrade availability, persist access, exfiltrate content, or expand testing beyond what is necessary to describe the issue.</p>
+      <p>Publishing this address creates no safe harbor, testing permission, confidentiality promise, bounty, SLA, or remediation deadline. For machine discovery, read <a href="/.well-known/security.txt"><code>/.well-known/security.txt</code></a>.</p>
+    </section>
+
+    <section aria-labelledby="boundary-title">
+      <p class="eyebrow">four boundaries</p>
+      <h2 id="boundary-title">Choose → send → deliver → receive</h2>
+      <img class="diagram" src="/contact/assets/contact-boundary-v0.1.svg" alt="The visitor chooses, a local mail client sends, providers deliver, and one human inbox may receive. Delivery is not identity, representation, consent, or authority." width="1200" height="630">
+      <p>A reply is manual and not promised. Because the alias is receive-only, a reply may come from a different Cambridge TCG mailbox address. Verify any consequential claim independently. Silence is not consent, hostility, or permission to retry.</p>
+    </section>
+
+    <section aria-labelledby="assets-title">
+      <p class="eyebrow">inspect and download</p>
+      <h2 id="assets-title">Public contract and assets</h2>
+      <div class="downloads">
+        <a href="/contact.json">Current JSON</a>
+        <a href="/contacts/contact-door-2026-08-31.json">As-of record</a>
+        <a href="/schemas/contact-door/0.1.json">Closed schema</a>
+        <a href="/CONTACT-DOOR-v0.1.md">Full guide</a>
+        <a href="/contact/contact-v0.1.vcf" download>Organization vCard</a>
+        <a href="/contact/assets/contact-boundary-v0.1.svg">Boundary SVG</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="sources-title">
+      <p class="eyebrow">bounded source horizon</p>
+      <h2 id="sources-title">Standards and guidance</h2>
+      <p>Links are design inputs, not imported authority, applicability findings, currentness guarantees, or compliance certificates.</p>
+      <ul><li><a href="https://www.rfc-editor.org/rfc/rfc9116.html" rel="external noreferrer">RFC 9116: A File Format to Aid in Security Vulnerability Disclosure</a> — security.txt format and freshness</li><li><a href="https://www.rfc-editor.org/rfc/rfc5321.html" rel="external noreferrer">RFC 5321: Simple Mail Transfer Protocol</a> — postmaster mailbox convention</li><li><a href="https://www.rfc-editor.org/rfc/rfc2142.html" rel="external noreferrer">RFC 2142: Mailbox Names for Common Services, Roles and Functions</a> — security and abuse role addresses</li><li><a href="https://www.rfc-editor.org/rfc/rfc6350.html" rel="external noreferrer">RFC 6350: vCard Format Specification</a> — vCard 4.0 syntax, organization kind, line endings, and folding</li><li><a href="https://www.rfc-editor.org/rfc/rfc9989.html" rel="external noreferrer">RFC 9989: Domain-Based Message Authentication, Reporting, and Conformance</a> — receive-only domain anti-spoofing policy</li><li><a href="https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/" rel="external noreferrer">Cloudflare Email Routing rules and addresses</a> — forwarding-provider behavior</li><li><a href="https://developers.cloudflare.com/api/resources/email_routing/methods/get/" rel="external noreferrer">Cloudflare API: Get Email Routing settings</a> — routing enabled, readiness, and support_subaddress readback</li><li><a href="https://developers.cloudflare.com/email-service/observability/metrics-analytics/" rel="external noreferrer">Cloudflare Email Service metrics and analytics</a> — provider-declared routing-event fields and 31-day analytics retention</li><li><a href="https://developers.cloudflare.com/email-service/reference/postmaster/" rel="external noreferrer">Cloudflare Email Service postmaster guidance</a> — provider-specific postmaster handling constraints</li><li><a href="https://www.w3.org/WAI/WCAG22/Techniques/general/G220.html" rel="external noreferrer">W3C WAI Technique G220: Provide a contact-us link in a consistent location</a> — discoverable human contact</li><li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/right-to-be-informed/" rel="external noreferrer">ICO: The right to be informed</a> — privacy transparency fields; linked as guidance, not a compliance claim</li><li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/storage-limitation/" rel="external noreferrer">ICO: Storage limitation</a> — retention necessity and review; linked as guidance, not a compliance claim</li><li><a href="https://www.cambridgetcg.com/manifest" rel="external noreferrer">Cambridge TCG public manifest</a> — public operator identity and contact context</li><li><a href="https://www.cambridgetcg.com/privacy" rel="external noreferrer">Cambridge TCG privacy notice</a> — operator-level privacy notice linked as an additional layer</li><li><a href="https://ico.org.uk/make-a-complaint/data-protection-complaints/" rel="external noreferrer">ICO: Make a data protection complaint</a> — direct UK data-protection complaint route; contacting the operator first is not required</li></ul>
+    </section>
+  </main>
+  <footer><div class="shell">KINGDOM Contact Door kingdom.contact-door/0.1 · one message is one approach · stopping is complete.</div></footer>
+</body>
+</html>

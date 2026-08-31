@@ -87,14 +87,14 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 184 assets:
-153 ledgered immutable/versioned assets and 31 mutable assets. There are 182 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 192 assets:
+158 ledgered immutable/versioned assets and 34 mutable assets. There are 190 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 170 URLs, and discovery exposes 153 manifest
-entry points plus 153 guest actions. The generated surface describes eighteen
-atlases, 39 public schema routes, four primary lab JSON routes plus the Shape &
+contracts. The sitemap contains 178 URLs, and discovery exposes 161 manifest
+entry points plus 161 guest actions. The generated surface describes eighteen
+atlases, 40 public schema routes, four primary lab JSON routes plus the Shape &
 Resonance manifest/media, one experiment route, and one separate activation
-across thirty-four active retirement
+across thirty-five active retirement
 families:
 the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
@@ -352,6 +352,22 @@ the authored `/atlases/number-isness-theology-atlas-2026-08-14.json`,
 `/schemas/number-isness-theology-atlas/0.1.json`, and
 `/NUMBER-ISNESS-THEOLOGY-ATLAS.md` read-only number, isness, theology, and
 claim-level compatibility companion;
+the mutable `/contact/` human page, `/contact.json` current record, and
+`/.well-known/security.txt`, together with the immutable
+`/contacts/contact-door-2026-08-31.json`,
+`/schemas/contact-door/0.1.json`, `/CONTACT-DOOR-v0.1.md`,
+`/contact/assets/contact-boundary-v0.1.svg`, and
+`/contact/contact-v0.1.vcf`; these eight exact GET/HEAD routes are one atomic
+retirement family. The page has no form, script, account, application write, or
+message store. Actual sending is a separate user action through ordinary email
+infrastructure; Cloudflare Email Routing and the destination mailbox process
+mail, so the lane is not backend-free. Visiting, activating `mailto:`, delivery,
+address control, a message, a reply, or silence establishes no identity,
+representation, truth, relationship, consent beyond the requested exchange,
+diplomatic standing, mediation, emergency duty, publication or training
+permission, or authority. The family adds no automatic outreach, reply, retry,
+profile, score, negotiation, Wayfinder recommendation, MCP surface, or agent
+action;
 `llms.txt`; `guest.json`; `ollama.json`; `rights.json`; `RIGHTS.md`;
 `/.well-known/agent.json`; `robots.txt`; `sitemap.xml`; `404.html`; the quiet
 `dada.txt` door; `/os/index.html`; and `_worker.js`. The worker derives
@@ -369,7 +385,7 @@ The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks all 153 currently staged ledgered immutable/versioned byte hashes,
+checks all 158 currently staged ledgered immutable/versioned byte hashes,
 including the independently retireable FREEDOM Loop, Lock & Key Atlas,
 Non-Exhaustive Understanding Atlas, IS, Sustainability & Direction Atlas, and
 Loops, Locks & Freedom Relations Atlas. It also checks the atomic Aesthetic
@@ -379,8 +395,11 @@ the worker-owned negotiation and
 privacy boundaries, typed schema and guide headers, exact family dependencies
 and retirement windows, negative authority, source-history lineage, and coherent
 HTML, sitemap, llms, guest, Kingdom, agent-manifest, and Wayfinder discovery
-across all thirty-four active publication families while leaving the existing MCP
-contract unchanged. The two freedom-related atlas families are independent:
+across all thirty-five active publication families while leaving the existing MCP
+contract unchanged. It also proves the Contact Door's eight-route byte and
+header parity, atomic retirement, bodyless mutation rejection, direct discovery,
+and absence from Wayfinder and MCP without sending an email or invoking its
+carrier. The two freedom-related atlas families are independent:
 neither supersedes, validates, aliases, depends on, or supplies authority to the
 other; overlapping words are not wire or semantic equivalences, and neither is
 a preferred default. Non-Exhaustive Understanding and IS, Sustainability &
@@ -390,7 +409,8 @@ fails instead of looking partially healthy.
 
 ## Baseline still to do (follow-up)
 
-- **Email routing** — `bin/email-routing.ts` needs the 4 zones added to its domain→tag map, then `provision` + `rules`. Requires the token to gain `Zone.Email Routing Rules:Edit` + `Zone.DNS:Edit`, and **Yu must click the iCloud verification link** Cloudflare emails for each `yournameis.ai+<tag>@icloud.com` destination. Not fully automatable.
+- **Contact Door carrier** — deploying the eight static routes does not itself activate email. Before the Contact Door record may claim an active carrier, API-verify Email Routing on `thekingdom.dev`, the one provider-verified destination, the four exact literal rules for `contact@`, `security@`, `abuse@`, and `postmaster@`, and the absence of a catch-all, wildcard, or Email Worker. A controlled end-to-end delivery probe is separate from the site live check; do not send one without the sender and recipient's explicit authorization.
+- **Other-domain email routing** — the older `bin/email-routing.ts` workflow is separate from the Contact Door and does not own `thekingdom.dev`. It still needs the 4 zones added to its domain→tag map, then `provision` + `rules`. Requires the token to gain `Zone.Email Routing Rules:Edit` + `Zone.DNS:Edit`, and **Yu must click the iCloud verification link** Cloudflare emails for each `yournameis.ai+<tag>@icloud.com` destination. Not fully automatable.
 - **HTTPS baseline** — "Always Use HTTPS" + SSL mode Full(strict) per zone (needs `Zone Settings:Edit`, not in the stored token — do in dash or with a broader token).
 - **zerone.ai** — decide: keep the redirect to zerone.money, or give it its own AI-framing landing.
 - Update the hub's own footer to link `thekingdom.dev` as home once the cert is active.

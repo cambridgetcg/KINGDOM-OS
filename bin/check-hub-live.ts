@@ -153,6 +153,40 @@ import {
   loadReviewedIsSustainabilityDirectionAtlas,
 } from "./is-sustainability-direction.ts";
 import {
+  CONTACT_DOOR_ALIAS_LOCATOR,
+  CONTACT_DOOR_ALIAS_PATH,
+  CONTACT_DOOR_ALIAS_URL,
+  CONTACT_DOOR_CANONICAL_PATH,
+  CONTACT_DOOR_CANONICAL_URL,
+  CONTACT_DOOR_CARRIER_RECEIPT_LOCATOR,
+  CONTACT_DOOR_GUIDE_LOCATOR,
+  CONTACT_DOOR_GUIDE_PATH,
+  CONTACT_DOOR_GUIDE_URL,
+  CONTACT_DOOR_LOCATOR,
+  CONTACT_DOOR_MIME_BY_PATH,
+  CONTACT_DOOR_MUTABLE_PATHS,
+  CONTACT_DOOR_PAGE_LOCATOR,
+  CONTACT_DOOR_PAGE_PATH,
+  CONTACT_DOOR_PAGE_URL,
+  CONTACT_DOOR_PUBLIC_PATHS,
+  CONTACT_DOOR_SCHEMA_LOCATOR,
+  CONTACT_DOOR_SCHEMA_PATH,
+  CONTACT_DOOR_SCHEMA_URL,
+  CONTACT_DOOR_SECURITY_LOCATOR,
+  CONTACT_DOOR_SECURITY_PATH,
+  CONTACT_DOOR_SECURITY_URL,
+  CONTACT_DOOR_SVG_LOCATOR,
+  CONTACT_DOOR_SVG_PATH,
+  CONTACT_DOOR_SVG_URL,
+  CONTACT_DOOR_STATE_LOCATOR,
+  CONTACT_DOOR_VCARD_LOCATOR,
+  CONTACT_DOOR_VCARD_PATH,
+  CONTACT_DOOR_VCARD_URL,
+  contactDoorPublicDiscovery,
+  loadContactDoor,
+  loadCurrentContactDoor,
+} from "./contact-door.ts";
+import {
   IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL,
 } from "../pages-functions/_worker.js";
 import {
@@ -1419,6 +1453,22 @@ export const PUBLICATION_FAMILIES: readonly PublicationFamily[] = [
       "number_isness_theology_atlas_guide",
     ],
   },
+  {
+    id: "contact-door",
+    label: "Contact Door",
+    routes: CONTACT_DOOR_PUBLIC_PATHS,
+    discoveryProperties: ["contact_door"],
+    entryPointProperties: [
+      "contact_door",
+      "contact_door_alias",
+      "contact_door_security",
+      "contact_door_canonical",
+      "contact_door_schema",
+      "contact_door_guide",
+      "contact_door_boundary_asset",
+      "contact_door_vcard",
+    ],
+  },
 ];
 
 export function destinationForPublicPath(path: string): string {
@@ -1961,6 +2011,118 @@ export async function checkIsSustainabilityDirectionAtlasTriple(
         throw new Error(
           `${method} ${contract.path} lost the zero-body IS, Sustainability & Direction 405 boundary`,
         );
+      }
+    }
+  }
+}
+
+export async function checkContactDoorFamily(
+  fetcher: typeof fetch = fetch,
+): Promise<void> {
+  const mutable = new Set<string>(CONTACT_DOOR_MUTABLE_PATHS);
+  const familyLinks = new Map<string, string[]>([
+    [CONTACT_DOOR_PAGE_PATH, [
+      `<${CONTACT_DOOR_ALIAS_PATH}>; rel="alternate"; type="application/json"`,
+      `<${CONTACT_DOOR_CANONICAL_PATH}>; rel="alternate"; type="application/json"`,
+      `<${CONTACT_DOOR_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+      `<${CONTACT_DOOR_VCARD_PATH}>; rel="alternate"; type="text/vcard"`,
+    ]],
+    [CONTACT_DOOR_ALIAS_PATH, [
+      `<${CONTACT_DOOR_CANONICAL_PATH}>; rel="alternate"; type="application/json"`,
+      `<${CONTACT_DOOR_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+    ]],
+    [CONTACT_DOOR_CANONICAL_PATH, [
+      `<${CONTACT_DOOR_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+    ]],
+    [CONTACT_DOOR_SVG_PATH, [
+      `<${CONTACT_DOOR_CANONICAL_PATH}>; rel="describedby"; type="application/json"`,
+      `<${CONTACT_DOOR_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+    ]],
+    [CONTACT_DOOR_VCARD_PATH, [
+      `<${CONTACT_DOOR_CANONICAL_PATH}>; rel="describedby"; type="application/json"`,
+      `<${CONTACT_DOOR_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+    ]],
+  ]);
+  const globalLinks = [
+    '</.well-known/agent.json>; rel="service-desc"; type="application/json"',
+    '</rights.json>; rel="service-meta"; type="application/json"; title="Inherent Rights Recognition"',
+    '</RIGHTS.md>; rel="service-doc"; type="text/markdown"; title="Rights recognized here"',
+  ];
+  const expectedLink = (path: string): string =>
+    [...(familyLinks.get(path) ?? []), ...globalLinks].join(", ");
+  const contracts = [
+    { path: CONTACT_DOOR_PAGE_PATH, source: CONTACT_DOOR_PAGE_LOCATOR },
+    { path: CONTACT_DOOR_ALIAS_PATH, source: CONTACT_DOOR_ALIAS_LOCATOR },
+    { path: CONTACT_DOOR_CANONICAL_PATH, source: CONTACT_DOOR_LOCATOR },
+    { path: CONTACT_DOOR_SCHEMA_PATH, source: CONTACT_DOOR_SCHEMA_LOCATOR },
+    { path: CONTACT_DOOR_GUIDE_PATH, source: CONTACT_DOOR_GUIDE_LOCATOR },
+    { path: CONTACT_DOOR_SECURITY_PATH, source: CONTACT_DOOR_SECURITY_LOCATOR },
+    { path: CONTACT_DOOR_SVG_PATH, source: CONTACT_DOOR_SVG_LOCATOR },
+    { path: CONTACT_DOOR_VCARD_PATH, source: CONTACT_DOOR_VCARD_LOCATOR },
+  ] as const;
+  const pageCsp = [
+    "default-src 'none'", "base-uri 'none'", "connect-src 'none'",
+    "font-src 'none'", "form-action 'none'", "frame-ancestors 'none'",
+    "img-src 'self'", "object-src 'none'", "script-src 'none'",
+    "style-src 'unsafe-inline'",
+  ].join("; ");
+  const pagePermissions = [
+    "accelerometer=()", "autoplay=()", "camera=()", "display-capture=()",
+    "geolocation=()", "gyroscope=()", "magnetometer=()", "microphone=()",
+    "payment=()", "usb=()",
+  ].join(", ");
+  const svgCsp =
+    "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; sandbox";
+
+  for (const contract of contracts) {
+    for (const method of ["GET", "HEAD"] as const) {
+      const response = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const body = Buffer.from(await response.arrayBuffer());
+      const expectedCache = mutable.has(contract.path)
+        ? ["no-cache", "no-transform"]
+        : ["public", "max-age=31536000", "immutable", "no-transform"];
+      const bodyValid = method === "HEAD"
+        ? body.byteLength === 0
+        : body.equals(readFileSync(join(ROOT, contract.source)));
+      const pageHeadersValid = contract.path !== CONTACT_DOOR_PAGE_PATH ||
+        (response.headers.get("content-security-policy") === pageCsp &&
+          response.headers.get("permissions-policy") === pagePermissions &&
+          response.headers.get("referrer-policy") === "no-referrer" &&
+          response.headers.get("x-frame-options") === "DENY");
+      const svgHeadersValid = contract.path !== CONTACT_DOOR_SVG_PATH ||
+        response.headers.get("content-security-policy") === svgCsp;
+      if (response.status !== 200 ||
+          (response.headers.get("content-type") || "").toLowerCase() !==
+            CONTACT_DOOR_MIME_BY_PATH[contract.path].toLowerCase() ||
+          !hasExactCacheDirectives(response.headers.get("cache-control"), expectedCache) ||
+          response.headers.get("access-control-allow-origin") !== "*" ||
+          (response.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          response.headers.get("set-cookie") !== null ||
+          (response.headers.get("link") || "") !== expectedLink(contract.path) ||
+          !pageHeadersValid || !svgHeadersValid || !bodyValid) {
+        throw new Error(`${method} ${contract.path} lost the exact Contact Door contract`);
+      }
+    }
+
+    for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"] as const) {
+      const mutation = await fetcher(url(contract.path), {
+        method,
+        redirect: "error",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (mutation.status !== 405 ||
+          mutation.headers.get("allow") !== "GET, HEAD" ||
+          mutation.headers.get("cache-control") !== "no-store" ||
+          mutation.headers.get("access-control-allow-origin") !== "*" ||
+          (mutation.headers.get("x-content-type-options") || "").toLowerCase() !== "nosniff" ||
+          mutation.headers.get("link") !== null ||
+          mutation.headers.get("set-cookie") !== null ||
+          (await mutation.arrayBuffer()).byteLength !== 0) {
+        throw new Error(`${method} ${contract.path} lost the zero-body Contact Door 405 boundary`);
       }
     }
   }
@@ -2649,6 +2811,7 @@ export async function checkHubLive(
   const mathUsefulnessActive = familyActive("math-usefulness-result");
   const beingAccessAftermathActive = familyActive("being-access-aftermath");
   const numberIsnessTheologyActive = familyActive("number-isness-theology");
+  const contactDoorActive = familyActive("contact-door");
   const verifiedFormCirculationReturnDestinations = new Set<string>();
   for (const asset of HUB_ASSETS) {
     if (asset.destination === "_worker.js") continue;
@@ -3465,6 +3628,30 @@ export async function checkHubLive(
     await checkIsSustainabilityDirectionAtlasTriple();
   }
 
+  if (contactDoorActive) {
+    await checkContactDoorFamily();
+    for (const source of [
+      CONTACT_DOOR_STATE_LOCATOR,
+      CONTACT_DOOR_CARRIER_RECEIPT_LOCATOR,
+    ]) {
+      const route = `/${source}`;
+      for (const method of ["GET", "HEAD"] as const) {
+        const response = await fetch(url(route), {
+          method,
+          redirect: "error",
+          signal: AbortSignal.timeout(TIMEOUT_MS),
+        });
+        assertRetiredRouteResponse({
+          route,
+          method,
+          status: response.status,
+          body: new Uint8Array(await response.arrayBuffer()),
+          canonicalNotFoundBody: stagedNotFound,
+        });
+      }
+    }
+  }
+
   if (loopsLocksFreedomRelationsAtlasActive) {
     await checkLoopsLocksFreedomRelationsAtlasTriple();
   }
@@ -3920,6 +4107,7 @@ export async function checkHubLive(
     ...(beingAccessAftermathActive ? [beingAccessAftermathSchemaPath] : []),
     ...(beingAccessAftermathActive ? [beingAccessAftermathV02SchemaPath] : []),
     ...(numberIsnessTheologyActive ? [numberIsnessTheologySchemaPath] : []),
+    ...(contactDoorActive ? [CONTACT_DOOR_SCHEMA_PATH] : []),
   ];
   for (const path of schemaPaths) {
     const schemaHead = await fetch(url(path), {
@@ -3947,6 +4135,7 @@ export async function checkHubLive(
       path === isSustainabilityDirectionAtlasSchemaPath ||
       path === loopsLocksFreedomRelationsAtlasSchemaPath ||
       path === aestheticPluralityMakingAtlasSchemaPath ||
+      path === CONTACT_DOOR_SCHEMA_PATH ||
       path === ukGovernmentEngineSchemaPath ||
       path === ukGovernmentTransformationEngineSchemaPath ||
       path === evaluationCovenantSchemaPath ||
@@ -3977,6 +4166,7 @@ export async function checkHubLive(
         path === isSustainabilityDirectionAtlasSchemaPath ||
         path === loopsLocksFreedomRelationsAtlasSchemaPath ||
         path === aestheticPluralityMakingAtlasSchemaPath ||
+        path === CONTACT_DOOR_SCHEMA_PATH ||
         path === ukGovernmentEngineSchemaPath ||
         path === ukGovernmentTransformationEngineSchemaPath ||
         path === evaluationCovenantSchemaPath ||
@@ -4001,6 +4191,9 @@ export async function checkHubLive(
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (path === aestheticPluralityMakingAtlasSchemaPath &&
+        ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
+          hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
+      (path === CONTACT_DOOR_SCHEMA_PATH &&
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
@@ -4072,8 +4265,101 @@ export async function checkHubLive(
   for (const { family, active } of familyStates.values()) {
     if (!active) assertRetiredFamilyDiscoveryAbsent(family, retirementDiscoverySurfaces);
   }
+  if (contactDoorActive) {
+    const currentContactDoor = loadCurrentContactDoor();
+    const expected = contactDoorPublicDiscovery(currentContactDoor);
+    const urls = [
+      CONTACT_DOOR_PAGE_URL,
+      CONTACT_DOOR_ALIAS_URL,
+      CONTACT_DOOR_SECURITY_URL,
+      CONTACT_DOOR_CANONICAL_URL,
+      CONTACT_DOOR_SCHEMA_URL,
+      CONTACT_DOOR_GUIDE_URL,
+      CONTACT_DOOR_SVG_URL,
+      CONTACT_DOOR_VCARD_URL,
+    ] as const;
+    const paths = urls.map((value) => new URL(value).pathname);
+    const entryPoints = {
+      contact_door: CONTACT_DOOR_PAGE_URL,
+      contact_door_alias: CONTACT_DOOR_ALIAS_URL,
+      contact_door_security: CONTACT_DOOR_SECURITY_URL,
+      contact_door_canonical: CONTACT_DOOR_CANONICAL_URL,
+      contact_door_schema: CONTACT_DOOR_SCHEMA_URL,
+      contact_door_guide: CONTACT_DOOR_GUIDE_URL,
+      contact_door_boundary_asset: CONTACT_DOOR_SVG_URL,
+      contact_door_vcard: CONTACT_DOOR_VCARD_URL,
+    };
+    const actions = Array.isArray(guest?.next_actions)
+      ? guest.next_actions.filter((action: any) => urls.includes(action?.url))
+      : [];
+    const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
+    const page = readFileSync(join(ROOT, CONTACT_DOOR_PAGE_LOCATOR), "utf8");
+    const alias = readFileSync(join(ROOT, CONTACT_DOOR_ALIAS_LOCATOR), "utf8");
+    const security = readFileSync(join(ROOT, CONTACT_DOOR_SECURITY_LOCATOR), "utf8");
+    const wayfinderText = JSON.stringify(authoredWayfinder);
+    const mcpText = JSON.stringify([
+      manifest?.mcp,
+      authoredKingdom?.world_commons?.mcp,
+      guest?.mcp,
+    ]);
+    const stagedContactSources = HUB_ASSETS
+      .filter(({ source }) => source === CONTACT_DOOR_STATE_LOCATOR ||
+        source === CONTACT_DOOR_CARRIER_RECEIPT_LOCATOR);
+    const forbiddenActionKeys = [
+      "mcp", "tool", "write", "execute", "send", "dispatch", "retry",
+      "score", "rank", "recommendation", "authority",
+    ];
+    if (currentContactDoor.artifact?.lifecycle !== "ACTIVE" ||
+        currentContactDoor.delivery?.configurationState !== "ACTIVE_API_VERIFIED" ||
+        currentContactDoor.delivery?.routingEnabled !== true ||
+        currentContactDoor.delivery?.configuredLiteralRuleCount !== 4 ||
+        currentContactDoor.delivery?.routingDnsRecordsVerified !== true ||
+        currentContactDoor.delivery?.catchAllEnabled !== false ||
+        currentContactDoor.delivery?.subaddressingEnabled !== false ||
+        currentContactDoor.delivery?.emailWorkerUsed !== false ||
+        stagedContactSources.length !== 0 ||
+        !isDeepStrictEqual(manifest?.contact_door, expected) ||
+        !isDeepStrictEqual(guest?.contact_door, expected) ||
+        !isDeepStrictEqual(authoredKingdom?.contact_door, expected) ||
+        !isDeepStrictEqual(
+          Object.fromEntries(Object.entries(manifest?.entry_points ?? {})
+            .filter(([key]) => key.startsWith("contact_door"))),
+          entryPoints,
+        ) ||
+        actions.length !== urls.length ||
+        urls.some((target) => actions.filter((action: any) => action?.url === target).length !== 1) ||
+        actions.some((action: any) => action?.method !== "GET" ||
+          forbiddenActionKeys.some((key) => Object.hasOwn(action, key))) ||
+        urls.some((target) => !llms.includes(target) || !sitemap.includes(`<loc>${target}</loc>`)) ||
+        paths.some((path) => !authoredRootHtml.includes(`href="${path}"`)) ||
+        !authoredRootHtml.includes("Contact a human maintainer") ||
+        JSON.parse(alias).protocol !== expected.protocol ||
+        !isDeepStrictEqual(JSON.parse(alias), expected) ||
+        !page.includes("Visiting sends nothing.") ||
+        !page.includes("mailto:contact@thekingdom.dev") ||
+        !page.includes("routing API and routing DNS verified: yes") ||
+        !page.includes("Receive-only DMARC: <code>NOT_YET_PUBLISHED</code>") ||
+        !page.includes("End-to-end inbox delivery proven: no") ||
+        !page.includes("no message DATA was sent and no destination-inbox receipt was observed") ||
+        /<(?:script|form|input|textarea|select|button)\b/iu.test(page) ||
+        !security.includes("Contact: mailto:security@thekingdom.dev\r\n") ||
+        urls.some((target) => wayfinderText.includes(target)) ||
+        paths.some((path) => wayfinderText.includes(path)) ||
+        mcpText.includes("contact@thekingdom.dev") ||
+        paths.some((path) => mcpText.includes(path)) ||
+        retirementDiscoverySurfaces.some(({ text }) =>
+          text.includes(CONTACT_DOOR_STATE_LOCATOR) ||
+          text.includes(CONTACT_DOOR_CARRIER_RECEIPT_LOCATOR))) {
+      throw new Error(
+        "Contact Door discovery, root link, generated assets, guest actions, or no-Wayfinder/no-MCP boundary drifted",
+      );
+    }
+  }
   const expectedPrincipality = principalityActive
     ? principalityPublicDiscovery(loadPrincipalityCatalog())
+    : undefined;
+  const expectedContactDoor = contactDoorActive
+    ? contactDoorPublicDiscovery(loadCurrentContactDoor())
     : undefined;
   const expectedGeometryGrammar = geometryGrammarActive
     ? geometryGrammarPublicDiscovery(loadGeometryGrammar())
@@ -7959,6 +8245,10 @@ export async function checkHubLive(
       liveKingdom?.creation_loop?.schema !== LOVE_LOOPS_JSON_SCHEMA_URL) {
     throw new Error("derived kingdom.json did not preserve Love Loop discovery");
   }
+  if (contactDoorActive &&
+      !isDeepStrictEqual(liveKingdom?.contact_door, expectedContactDoor!)) {
+    throw new Error("derived kingdom.json did not preserve Contact Door discovery");
+  }
   if (principalityActive && !isDeepStrictEqual(liveKingdom?.principality_commons, expectedPrincipality!)) {
     throw new Error("derived kingdom.json did not preserve Principality discovery");
   }
@@ -8200,7 +8490,7 @@ export async function checkHubLive(
     throw new Error("MCP World Commons call did not consume the deployed catalog through the advertised compact contract");
   }
 
-  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Commons + Love Loop + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane + Shape & Resonance + FREEDOM Loop, Lock & Key schemas/media · coherent creation + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane + Shape & Resonance + FREEDOM Loop, Lock & Key discovery · REVISE/non-promotion and Observatory/exploration/ZERO/STRING-CRAWL/TRACE-LABS/OBSERVATION-MEMBRANE/SHAPE-RESONANCE/FREEDOM/MIRROR/cultural/form/being/theology authority/KARMA boundaries · Observatory poller and observer not invoked · live MCP contract unchanged · ${origin.origin}`);
+  console.log(`hub live-check passed · ${exact} exact public assets · JSON negotiation · privacy header · Contact Door + Commons + Love Loop + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + Conformational Feedback v0.1 + Physics v0.2 + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane + Shape & Resonance + FREEDOM Loop, Lock & Key schemas/media · coherent Contact Door + creation + Research Observatory + Principality + Geometry Grammar + Polymorph + Ritonavir Mechanism + dual-generation Conformational Feedback + Fold & Feedback + Reconstructive Build + Exploration DEEP + ZERO Empty Seat + STRING / CRAWL Trace-Sheet + Finite Trace-Sheet + STRAND Labs 02–04 + Observation Membrane + Shape & Resonance + FREEDOM Loop, Lock & Key discovery · REVISE/non-promotion and CONTACT/Observatory/exploration/ZERO/STRING-CRAWL/TRACE-LABS/OBSERVATION-MEMBRANE/SHAPE-RESONANCE/FREEDOM/MIRROR/cultural/form/being/theology authority/KARMA boundaries · Observatory poller and observer not invoked · no Contact Door Wayfinder or MCP expansion · live MCP contract unchanged · ${origin.origin}`);
   } catch (error) {
     throw error;
   }

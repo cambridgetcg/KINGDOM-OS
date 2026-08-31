@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 153-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 158-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -120,6 +120,17 @@ active dependency, live verdict, controller, person/group model, score,
 authority, decision, or action surface. Referent kinds, typed IS,
 sustainability relations, direction kinds, feedback lanes, rights, endings,
 and remainder remain non-convertible.
+The Contact Door adds an independently retireable eight-route family as the
+thirty-fifth: a no-JavaScript human page, mutable record alias, and RFC 9116
+security text, plus a ledgered dated record, closed schema, guide, boundary SVG,
+and vCard. The website has no form, submission backend, message storage,
+analytics, cookies, automatic reply, retry, outreach, agent tool, Wayfinder
+recommendation, or MCP surface. Contact happens only when a visitor deliberately
+uses their own mail client; delivery proves neither identity nor representation,
+and a message grants no consent, relationship, diplomacy, mediation, emergency,
+testing, publication, training, marketing, or external-action authority. All
+eight routes stage and retire atomically while the five immutable bytes remain
+historical.
 Non-Exhaustive Understanding and IS, Sustainability & Direction are likewise
 standalone; integrity, source, review, discovery, and retirement remain
 family-local.
@@ -286,12 +297,12 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 184-asset union classifies 153 destinations
-as ledgered immutable/versioned and 31 as mutable; 182 are direct public response
-bodies, the sitemap contains 170 URLs, and discovery exposes 153 manifest entry
-points plus 153 guest actions. Generated discovery describes eighteen atlases,
-39 public schema routes, four primary lab JSON routes plus Shape & Resonance
-manifest/media, one experiment route, one separate activation, and thirty-four active retirement
+consume those same bytes. The current 192-asset union classifies 158 destinations
+as ledgered immutable/versioned and 34 as mutable; 190 are direct public response
+bodies, the sitemap contains 178 URLs, and discovery exposes 161 manifest entry
+points plus 161 guest actions. Generated discovery describes eighteen atlases,
+40 public schema routes, four primary lab JSON routes plus Shape & Resonance
+manifest/media, one experiment route, one separate activation, and thirty-five active retirement
 families. The two freedom-related atlases keep separate route triples, discovery
 keys, integrity/source/review claims, and retirement state; neither is preferred
 or removed with the other. Every destination is explicitly classified as mutable
@@ -300,7 +311,7 @@ committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the thirty-four linked authored publication
+The live release check retires the thirty-five linked authored publication
 families together so it never preserves a dangling advertised contract merely
 to keep another route. Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.

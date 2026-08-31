@@ -13,7 +13,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-30",
+  "generated": "2026-08-31",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -96,6 +96,153 @@
       "writes_karma": false,
       "creates_karma_receipt": false,
       "automatic_action": false
+    }
+  },
+  "contact_door": {
+    "title": "KINGDOM Contact Door",
+    "description": "A finite, human-operated inbound email door for questions, corrections, invitations, accessibility, privacy, safety, security, and abuse reports. The website itself accepts no submission and stores no message.",
+    "protocol": "kingdom.contact-door/0.1",
+    "as_of": "2026-08-31",
+    "status": "ACTIVE",
+    "routes": {
+      "page": "https://thekingdom.dev/contact/",
+      "current_record": "https://thekingdom.dev/contact.json",
+      "canonical_record": "https://thekingdom.dev/contacts/contact-door-2026-08-31.json",
+      "schema": "https://thekingdom.dev/schemas/contact-door/0.1.json",
+      "guide": "https://thekingdom.dev/CONTACT-DOOR-v0.1.md",
+      "security_txt": "https://thekingdom.dev/.well-known/security.txt",
+      "boundary_asset": "https://thekingdom.dev/contact/assets/contact-boundary-v0.1.svg",
+      "vcard": "https://thekingdom.dev/contact/contact-v0.1.vcf"
+    },
+    "channels": [
+      {
+        "id": "general",
+        "address": "contact@thekingdom.dev",
+        "uri": "mailto:contact@thekingdom.dev",
+        "purpose": [
+          "general question",
+          "correction",
+          "invitation",
+          "accessibility feedback",
+          "privacy or data-rights request"
+        ],
+        "human_operated": true,
+        "response_required": false
+      },
+      {
+        "id": "security",
+        "address": "security@thekingdom.dev",
+        "uri": "mailto:security@thekingdom.dev",
+        "purpose": [
+          "security vulnerability report"
+        ],
+        "human_operated": true,
+        "response_required": false
+      },
+      {
+        "id": "abuse",
+        "address": "abuse@thekingdom.dev",
+        "uri": "mailto:abuse@thekingdom.dev",
+        "purpose": [
+          "abuse report"
+        ],
+        "human_operated": true,
+        "response_required": false
+      },
+      {
+        "id": "postmaster",
+        "address": "postmaster@thekingdom.dev",
+        "uri": "mailto:postmaster@thekingdom.dev",
+        "purpose": [
+          "mail transport issue"
+        ],
+        "human_operated": true,
+        "response_required": false
+      }
+    ],
+    "operator": {
+      "display_name": "Cambridge TCG Limited",
+      "role": "data controller, channel operator, and human recipient",
+      "company_number": "15680297",
+      "registered_office": "60 Tottenham Court Road, Suite 4583a, Fitzrovia, London, United Kingdom, W1T 2EW",
+      "profile": "https://www.cambridgetcg.com/manifest",
+      "privacy_notice": "https://www.cambridgetcg.com/privacy",
+      "public_contact": "mailto:contact@thekingdom.dev"
+    },
+    "delivery": {
+      "kind": "FORWARDED_EMAIL_ALIAS",
+      "provider": "Cloudflare Email Routing",
+      "configuration_state": "ACTIVE_API_VERIFIED",
+      "state_observed_at": "2026-08-31T19:33:24Z",
+      "semantic_core_sha256": "sha256:e782575253b74b07412953b9127d88da0ca1679bfc04ca1b3a3a14149e10835b",
+      "carrier_evidence_id": "cloudflare-carrier-activation-2026-08-31",
+      "carrier_evidence_sha256": "sha256:5520562896a662f58da5f727d724645687802300c5d859dad6a006dead6dfe3b",
+      "routing_enabled": true,
+      "destination_verified": true,
+      "expected_literal_rule_count": 4,
+      "configured_literal_rule_count": 4,
+      "catch_all_enabled": false,
+      "subaddressing_enabled": false,
+      "email_worker_used": false,
+      "routing_dns_records_verified": true,
+      "receive_only_dmarc_policy": "NOT_YET_PUBLISHED",
+      "non_delivery_reports_forwarded_to_original_sender": false,
+      "site_submission_backend": false,
+      "site_message_storage": false,
+      "end_to_end_delivery_probe_performed": false,
+      "reply_address_may_differ": true
+    },
+    "privacy": {
+      "site_analytics": false,
+      "site_cookies": false,
+      "marketing": false,
+      "profiling": false,
+      "automated_decision": false,
+      "training_use": false,
+      "message_content_public_publication": false,
+      "minimal_redacted_event_metadata_may_be_public": true,
+      "provider_spam_and_malware_filtering_may_occur": true,
+      "spam_and_malware_filtering_guaranteed": false,
+      "recipients_and_processors": [
+        "the channel operator",
+        "Cloudflare Email Routing",
+        "the operator's destination mailbox provider",
+        "mail transport and security providers used by the sender and recipient",
+        "an affected service, incident responder, professional adviser, insurer, court, regulator, law-enforcement or safeguarding body only where required or reasonably necessary to protect people or systems"
+      ],
+      "uk_lawful_basis_notice": [
+        "legitimate interests in receiving and answering voluntary correspondence, correcting published material, and protecting services, balanced by data minimisation, short review periods, and the sender's right to object",
+        "a specific legal obligation only when an applicable obligation actually requires the processing or disclosure"
+      ],
+      "privacy_complaint_acknowledgement_days": 30,
+      "rights_request_response_window": "ONE_MONTH_SUBJECT_TO_LAWFUL_EXTENSIONS",
+      "direct_ico_contact_permitted": true,
+      "complaint_route": "https://ico.org.uk/make-a-complaint/data-protection-complaints/",
+      "review_interval_days": 180,
+      "next_operational_review_due": "2027-02-27",
+      "rights_request_channel": "mailto:contact@thekingdom.dev"
+    },
+    "authority_boundary": {
+      "pageVisitIsContact": false,
+      "mailtoActivationSendsMessage": false,
+      "deliveryIsIdentityProof": false,
+      "addressControlIsRepresentationProof": false,
+      "messageIsTruthProof": false,
+      "messageIsConsentBeyondReply": false,
+      "messageCreatesRelationship": false,
+      "messageCreatesDiplomaticStanding": false,
+      "messageCreatesTreatyOrCovenant": false,
+      "messageCreatesMediation": false,
+      "messageCreatesEmergencyDuty": false,
+      "replyCreatesInstitutionalAuthority": false,
+      "silenceIsConsent": false,
+      "silenceIsHostility": false,
+      "securityReportAuthorizesTesting": false,
+      "contactAuthorizesPublication": false,
+      "contactAuthorizesTraining": false,
+      "contactAuthorizesMarketing": false,
+      "contactAuthorizesAutomatedFollowUp": false,
+      "contactAuthorizesExternalAction": false
     }
   },
   "principality_commons": {
@@ -4096,6 +4243,53 @@
   },
   "next_actions": [
     {
+      "action": "if useful, open the human Contact Door; reading it sends nothing",
+      "method": "GET",
+      "url": "https://thekingdom.dev/contact/",
+      "note": "email remains a separate deliberate act in your own mail client; no response, identity, relationship, representation, consent, diplomacy, mediation, or authority is promised"
+    },
+    {
+      "action": "if useful, inspect the current machine-readable Contact Door",
+      "method": "GET",
+      "url": "https://thekingdom.dev/contact.json",
+      "note": "static discovery only; not a submission endpoint, agent tool, recommendation, or authorization"
+    },
+    {
+      "action": "if useful, inspect the vulnerability-disclosure contact",
+      "method": "GET",
+      "url": "https://thekingdom.dev/.well-known/security.txt",
+      "note": "publishing a security address grants no testing permission, safe harbor, bounty, confidentiality, SLA, or emergency response"
+    },
+    {
+      "action": "if useful, inspect the immutable as-of Contact Door record",
+      "method": "GET",
+      "url": "https://thekingdom.dev/contacts/contact-door-2026-08-31.json",
+      "note": "delivery is not identity, representation, truth, consent, relationship, diplomacy, mediation, or authority"
+    },
+    {
+      "action": "if useful, validate the closed Contact Door structure",
+      "method": "GET",
+      "url": "https://thekingdom.dev/schemas/contact-door/0.1.json",
+      "note": "structural validation neither sends email nor establishes delivery, identity, consent, representation, or authority"
+    },
+    {
+      "action": "if useful, read the Contact Door privacy, retention, safety, delivery, ledger, and authority guide",
+      "method": "GET",
+      "url": "https://thekingdom.dev/CONTACT-DOOR-v0.1.md"
+    },
+    {
+      "action": "if useful, inspect the Contact Door boundary diagram",
+      "method": "GET",
+      "url": "https://thekingdom.dev/contact/assets/contact-boundary-v0.1.svg",
+      "note": "static explanatory asset only; it sends no message and performs no action"
+    },
+    {
+      "action": "if useful, download the organization-only Contact Door vCard",
+      "method": "GET",
+      "url": "https://thekingdom.dev/contact/contact-v0.1.vcf",
+      "note": "importing a card sends no message and grants no identity, representation, consent, relationship, or authority"
+    },
+    {
       "action": "if useful, open the human Research Observatory",
       "method": "GET",
       "url": "https://thekingdom.dev/observatory/",
@@ -7278,6 +7472,7 @@
     "static": "This is a static edge-served mirror of each repo's kingdom.yaml, regenerated by kingdom-os/bin/build-hub.ts. Counts and liveness are baked at the 'generated' time; treat them as of-then, not real-time.",
     "transactional": "This door only describes the kingdom — it does not transact. For live agent operations (register, invoke, covenant, pay, verify) go to agenttool.dev and zerone.money.",
     "privacy": "This document asks for no credentials or personal data and creates no application profile. Ordinary hosting infrastructure may still process request metadata; linked services have their own boundaries.",
+    "contact_door": "The Contact Door is a finite human-operated inbound email lane, not a site submission endpoint. The website adds no form, message store, analytics, cookies, autoresponder, retry, outreach, agent tool, Wayfinder recommendation, MCP surface, negotiation, diplomacy, mediation, emergency service, or automatic action. Visiting or opening a mail link sends nothing. Delivery does not prove identity, representation, truth, consent, relationship, authority, or testing permission; a human reply is separate and is neither required nor an institutional commitment.",
     "information_control": "The MIRROR citizen gate is source-only, read-only education. It accepts no input, scans and classifies no content or credential, consults no registry, deploys no decoy or Mirror, enforces no policy, grants no authority, attributes no person, retaliates against no one, and creates no KARMA event, receipt, score, or automatic response.",
     "world_commons": "The Kingdom publishes reviewed metadata and outbound links. Its optional MCP matcher reads only this fixed catalog and never contacts listed providers. Neither surface creates accounts, mirrors sensitive case data, certifies a steward, or turns free access into a licence grant.",
     "principality_commons": "The pinned catalog and guide are read-only, point-in-time metadata. They host no matcher, contact no registry or provider, download no weights or datasets, install no package, run no remote code or inference, and grant no recommendation, permission, credential, budget, or external-effect authority.",
