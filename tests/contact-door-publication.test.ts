@@ -41,6 +41,7 @@ import {
   loadCurrentContactDoor,
 } from "../bin/contact-door.ts";
 import {
+  CONTACT_DOOR_SCHEMA_FORBIDDEN_RELATIONS,
   PUBLICATION_FAMILIES,
   assertRetiredFamilyDiscoveryAbsent,
   checkContactDoorFamily,
@@ -118,6 +119,13 @@ function workerFetcher(): typeof fetch {
 }
 
 describe("Contact Door public integration", () => {
+  test("keeps the global Rights guide link compatible with strict schema relations", () => {
+    expect(CONTACT_DOOR_SCHEMA_FORBIDDEN_RELATIONS).toEqual([
+      "describedby", "profile", "canonical",
+    ]);
+    expect(CONTACT_DOOR_SCHEMA_FORBIDDEN_RELATIONS).not.toContain("service-doc");
+  });
+
   test("stages and ledgers one atomic 3-mutable + 5-immutable family", () => {
     const family = PUBLICATION_FAMILIES.find(({ id }) => id === "contact-door");
     expect(PUBLICATION_FAMILIES).toHaveLength(35);
