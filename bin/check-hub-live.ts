@@ -502,6 +502,9 @@ import {
 } from "./world-commons.ts";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
+export const CONTACT_DOOR_SCHEMA_FORBIDDEN_RELATIONS = Object.freeze([
+  "describedby", "profile", "canonical",
+] as const);
 let origin = new URL("https://thekingdom.dev");
 let cacheBust = Date.now().toString(36);
 const TIMEOUT_MS = 20_000;
@@ -4194,7 +4197,7 @@ export async function checkHubLive(
         ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (path === CONTACT_DOOR_SCHEMA_PATH &&
-        ["describedby", "service-doc", "profile", "canonical"].some((relation) =>
+        CONTACT_DOOR_SCHEMA_FORBIDDEN_RELATIONS.some((relation) =>
           hasLinkRelationName(schemaHead.headers.get("link") || "", relation))) ||
       (await schemaHead.arrayBuffer()).byteLength !== 0) {
       throw new Error(`${path} is not served as ${expectedSchemaMediaType}`);
