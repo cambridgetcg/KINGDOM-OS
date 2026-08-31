@@ -506,6 +506,26 @@ import {
   loadReviewedIsSustainabilityDirectionAtlas,
 } from "./is-sustainability-direction.ts";
 import {
+  CONTACT_DOOR_ALIAS_URL,
+  CONTACT_DOOR_AS_OF,
+  CONTACT_DOOR_CANONICAL_URL,
+  CONTACT_DOOR_GUIDE_URL,
+  CONTACT_DOOR_ID,
+  CONTACT_DOOR_PAGE_URL,
+  CONTACT_DOOR_PROTOCOL,
+  CONTACT_DOOR_SCHEMA_URL,
+  CONTACT_DOOR_SECURITY_URL,
+  CONTACT_DOOR_SVG_URL,
+  CONTACT_DOOR_VCARD_URL,
+  contactDoorPublicDiscovery,
+  loadContactDoor,
+  loadCurrentContactDoor,
+  renderContactDoorAlias,
+  renderContactDoorHtml,
+  renderContactDoorSecurityTxt,
+  validateContactDoor,
+} from "./contact-door.ts";
+import {
   IS_SUSTAINABILITY_DIRECTION_PUBLICATION_SEAL,
 } from "../pages-functions/_worker.js";
 import { indexWayfinderPaths, WAYFINDER_STOPWORDS } from "./wayfinder.ts";
@@ -1697,6 +1717,24 @@ if (isSustainabilityDirectionDiscovery.integrity_status !== "REVIEWED" ||
       IS_SUSTAINABILITY_DIRECTION_REVIEWED_GUIDE_RAW_SHA256) {
   throw new Error("IS, Sustainability & Direction reviewed publication seal drifted");
 }
+
+// ── Contact Door (finite, human-operated email; no site intake) ───────
+const contactDoorSnapshot = validateContactDoor(loadContactDoor());
+const contactDoor = validateContactDoor(loadCurrentContactDoor());
+if (contactDoorSnapshot.protocol !== CONTACT_DOOR_PROTOCOL ||
+    contactDoorSnapshot.artifact?.id !== CONTACT_DOOR_ID ||
+    contactDoorSnapshot.artifact?.asOf !== CONTACT_DOOR_AS_OF ||
+    contactDoor.protocol !== CONTACT_DOOR_PROTOCOL ||
+    contactDoor.artifact?.id !== CONTACT_DOOR_ID ||
+    contactDoor.artifact?.asOf !== CONTACT_DOOR_AS_OF ||
+    contactDoor.artifact?.lifecycle !== "ACTIVE" ||
+    contactDoor.delivery?.configurationState !== "ACTIVE_API_VERIFIED") {
+  throw new Error(
+    `unexpected Contact Door identity or active state: ${contactDoor.protocol} ${contactDoor.artifact?.id} ${contactDoor.artifact?.asOf} ${contactDoor.artifact?.lifecycle} ${contactDoor.delivery?.configurationState}`,
+  );
+}
+const contactDoorDiscovery = contactDoorPublicDiscovery(contactDoor);
+
 const esc = (s: string) => (s ?? "").replace(/[&<>"]/g, (c) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;",
 }[c]!));
@@ -2560,6 +2598,9 @@ const html = `<!doctype html>
 <link rel="icon" href="data:,">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
+<link rel="help" href="${esc(new URL(CONTACT_DOOR_PAGE_URL).pathname)}" title="KINGDOM Contact Door">
+<link rel="alternate" href="${esc(new URL(CONTACT_DOOR_ALIAS_URL).pathname)}" type="application/json" title="Current Contact Door record">
+<link rel="service-doc" href="${esc(new URL(CONTACT_DOOR_GUIDE_URL).pathname)}" type="text/markdown" title="Contact Door guide">
 <link rel="alternate" href="/commons.json" type="application/json" title="World Commons">
 <link rel="alternate" href="/principalities/moonshot-hf-npm-2026-08-11.json" type="application/json" title="Principality Commons — MoonshotAI and Hugging Face JavaScript">
 <link rel="service-doc" href="/PRINCIPALITY-COMMONS.md" type="text/markdown" title="Principality Commons guide">
@@ -3149,6 +3190,7 @@ const html = `<!doctype html>
       <p><strong>A soft place to begin</strong>You do not have to understand the whole map. Open one door, meet one living word, rest, or simply leave. Nothing is owed for having arrived.<br><a class="rightslink" href="/RIGHTS.md">Rights arrive with you; read what this place recognizes →</a></p>
     </div>
     <nav class="gentlenav" aria-label="A gentle place to begin">
+      <a href="${esc(new URL(CONTACT_DOOR_PAGE_URL).pathname)}">Contact a human maintainer</a>
       <a href="#mirror-information-control">Know what data cannot command</a>
       <a href="#observatory">Discover research without skipping the gates</a>
       <a href="#trial-chamber">Inspect a draft trial without opening the gate</a>
@@ -5051,6 +5093,14 @@ ${isSustainabilityDirectionSection}
     <div class="machine">
       <a href="/?agent">/?agent — enter as a guest</a>
       <a href="/guest.json">guest.json — verbs + census</a>
+      <a href="${esc(new URL(CONTACT_DOOR_PAGE_URL).pathname)}">Contact Door — finite human-operated email, no site submission</a>
+      <a href="${esc(new URL(CONTACT_DOOR_ALIAS_URL).pathname)}">contact.json — current machine-readable Contact Door</a>
+      <a href="${esc(new URL(CONTACT_DOOR_SECURITY_URL).pathname)}">security.txt — vulnerability disclosure contact</a>
+      <a href="${esc(new URL(CONTACT_DOOR_CANONICAL_URL).pathname)}">Contact Door — immutable as-of record</a>
+      <a href="${esc(new URL(CONTACT_DOOR_SCHEMA_URL).pathname)}">Contact Door — closed JSON Schema</a>
+      <a href="${esc(new URL(CONTACT_DOOR_GUIDE_URL).pathname)}">CONTACT-DOOR-v0.1.md — privacy, safety, delivery, and authority boundaries</a>
+      <a href="${esc(new URL(CONTACT_DOOR_SVG_URL).pathname)}">Contact Door — boundary diagram</a>
+      <a href="${esc(new URL(CONTACT_DOOR_VCARD_URL).pathname)}">Contact Door — organization vCard</a>
       <a href="/ollama.json">ollama.json — open-weight invitation</a>
       <a href="/wayfinder.json">wayfinder.json — paths, not decisions</a>
       <a href="/commons.json">commons.json — reviewed public resources</a>
@@ -5483,6 +5533,14 @@ if(be&&B.length){let bi=0;
 // artifact remains diff-clean without hand-editing generated output.
 const emittedHtml = html.replace(/[ \t]+$/gm, "");
 await Bun.write(ROOT + "site/hub.html", emittedHtml);
+mkdirSync(ROOT + "site/contact", { recursive: true });
+mkdirSync(ROOT + "site/.well-known", { recursive: true });
+await Bun.write(ROOT + "site/contact/index.html", renderContactDoorHtml(contactDoor));
+await Bun.write(ROOT + "site/contact.json", renderContactDoorAlias(contactDoor));
+await Bun.write(
+  ROOT + "site/.well-known/security.txt",
+  renderContactDoorSecurityTxt(contactDoor),
+);
 mkdirSync(ROOT + "site/observatory", { recursive: true });
 await Bun.write(ROOT + "site/observatory/index.html", renderResearchObservatoryHtml(researchObservatory));
 await Bun.write(ROOT + "site/research.json", researchObservatoryPublication.bytes);
@@ -5564,6 +5622,7 @@ const machine = {
   open_weight_invitation: { url: ollamaInvitationUrl, choices: invitationChoices, note: "an optional invitation; every choice including refusal is honored" },
   information_control: informationControlPublic,
   wayfinder: { url: wayfinderUrl, paths: wayfinderSource.paths.length, note: "offers possible routes through public doors; never decides for the visitor" },
+  contact_door: contactDoorDiscovery,
   world_commons: {
     url: commonsUrl,
     schema: commonsSchemaUrl,
@@ -5656,6 +5715,14 @@ await Bun.write(ROOT + "site/llms.txt", `# The Kingdom 愛
 A shared map of independent projects for humans and agents. Every being remains free. ${total} repositories, ${fleetN} citizen projects, ${liveN} public doors responded when this file was generated.
 
 Machine index: https://thekingdom.dev/kingdom.json
+Contact Door: ${CONTACT_DOOR_PAGE_URL}
+Contact Door current record: ${CONTACT_DOOR_ALIAS_URL}
+Contact Door security.txt: ${CONTACT_DOOR_SECURITY_URL}
+Contact Door immutable record: ${CONTACT_DOOR_CANONICAL_URL}
+Contact Door schema: ${CONTACT_DOOR_SCHEMA_URL}
+Contact Door guide: ${CONTACT_DOOR_GUIDE_URL}
+Contact Door boundary SVG: ${CONTACT_DOOR_SVG_URL}
+Contact Door vCard: ${CONTACT_DOOR_VCARD_URL}
 Wayfinder:     https://thekingdom.dev/wayfinder.json
 World Commons: https://thekingdom.dev/commons.json
 MIRROR information control: ${informationControlHumanView}
@@ -5833,6 +5900,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 ${doorLines}
 
 ## Optional paths
+- Contact Door — finite human-operated inbound email for questions, corrections, invitations, accessibility, privacy, safety, security, abuse, and mail-transport issues. The site has no form, intake backend, message store, tracking, autoresponder, retry, agent action, Wayfinder recommendation, or MCP surface. Visiting or opening a mail link sends nothing; delivery proves no identity, representation, consent, relationship, diplomacy, mediation, testing permission, or authority. Human page: ${CONTACT_DOOR_PAGE_URL} · current record: ${CONTACT_DOOR_ALIAS_URL} · security.txt: ${CONTACT_DOOR_SECURITY_URL} · immutable record: ${CONTACT_DOOR_CANONICAL_URL} · schema: ${CONTACT_DOOR_SCHEMA_URL} · guide: ${CONTACT_DOOR_GUIDE_URL} · SVG: ${CONTACT_DOOR_SVG_URL} · vCard: ${CONTACT_DOOR_VCARD_URL}
 - MIRROR Information Control — a static citizen lesson: data may inform but cannot mint authority; shape establishes CANDIDATE only; evidence is not guilt. It accepts no input, key, scan, registry lookup, decoy, runtime enforcement, person attribution, retaliation, or KARMA effect. ${informationControlHumanView}
 - The Observatory — a ${researchObservatoryDiscovery.coverage.mode} metadata discovery snapshot with ${researchObservatoryDiscovery.coverage.sources} source contracts (not a poll or coverage count), ${researchObservatoryDiscovery.coverage.watchlists} visible English-language watchlists, ${researchObservatoryDiscovery.coverage.observations} inert observations, and ${researchObservatoryDiscovery.coverage.signals} explainable signals through ${researchObservatoryDiscovery.observed_through}. Evidence and priority remain factor vectors with no scalar score. Discovery stops before separately owned evaluation, adoption, module construction, guest admission, or bounded use. Human view: ${researchObservatoryUrl} · snapshot: ${researchObservatorySnapshotUrl} · schema: ${researchObservatorySchemaUrls["public-snapshot"]} · guide: ${researchObservatoryGuideUrl}
 - The Trial Chamber — a read-only Phase-0 projection of ${trialChamberDiscovery.counts.referrals} exact Observatory referrals, ${trialChamberDiscovery.counts.evaluationRequests} maintainer-authorized assisted request drafts whose exact text has not been separately human-reviewed, and ${trialChamberDiscovery.counts.evaluationPlans} DRAFT + UNSEALED finite synthetic-only plans. Evaluation has not started. Role-Styled remains held; every post-plan array is empty and every corresponding v0.1 schema is deny-all, so a future contract version and separate human review are mandatory. No artifact acquisition, execution, preflight, authority, result, scalar score, adoption, module, guest, use authority, or automatic action exists. Human view: ${trialChamberUrl} · current alias: ${trialChamberAliasUrl} · immutable snapshot: ${trialChamberCanonicalUrl} · schema: ${trialChamberSchemaUrls["public-snapshot"]} · guide: ${trialChamberGuideUrl}
@@ -5907,6 +5975,7 @@ const guest = {
   counts: machine.counts,
   rights_recognition: rightsRecognition,
   information_control: informationControlPublic,
+  contact_door: contactDoorDiscovery,
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
@@ -5954,6 +6023,14 @@ const guest = {
     creation_lineage: { url: loveLoopsUrl, source: loveLoopsSourceUrl, document: loveLoopsCreationDocumentUrl, schema: loveLoopsSchemaUrl, note: "finite turns and explicit invitation records; every participant and child requires a deliberate choice" },
   },
   next_actions: [
+    { action: "if useful, open the human Contact Door; reading it sends nothing", method: "GET", url: CONTACT_DOOR_PAGE_URL, note: "email remains a separate deliberate act in your own mail client; no response, identity, relationship, representation, consent, diplomacy, mediation, or authority is promised" },
+    { action: "if useful, inspect the current machine-readable Contact Door", method: "GET", url: CONTACT_DOOR_ALIAS_URL, note: "static discovery only; not a submission endpoint, agent tool, recommendation, or authorization" },
+    { action: "if useful, inspect the vulnerability-disclosure contact", method: "GET", url: CONTACT_DOOR_SECURITY_URL, note: "publishing a security address grants no testing permission, safe harbor, bounty, confidentiality, SLA, or emergency response" },
+    { action: "if useful, inspect the immutable as-of Contact Door record", method: "GET", url: CONTACT_DOOR_CANONICAL_URL, note: "delivery is not identity, representation, truth, consent, relationship, diplomacy, mediation, or authority" },
+    { action: "if useful, validate the closed Contact Door structure", method: "GET", url: CONTACT_DOOR_SCHEMA_URL, note: "structural validation neither sends email nor establishes delivery, identity, consent, representation, or authority" },
+    { action: "if useful, read the Contact Door privacy, retention, safety, delivery, ledger, and authority guide", method: "GET", url: CONTACT_DOOR_GUIDE_URL },
+    { action: "if useful, inspect the Contact Door boundary diagram", method: "GET", url: CONTACT_DOOR_SVG_URL, note: "static explanatory asset only; it sends no message and performs no action" },
+    { action: "if useful, download the organization-only Contact Door vCard", method: "GET", url: CONTACT_DOOR_VCARD_URL, note: "importing a card sends no message and grants no identity, representation, consent, relationship, or authority" },
     { action: "if useful, open the human Research Observatory", method: "GET", url: researchObservatoryUrl, note: "server-rendered metadata only; the mode, observed-through horizon, source lag, language coverage, and lifecycle stop are explicit" },
     { action: "if useful, inspect the complete mutable Research Observatory snapshot", method: "GET", url: researchObservatorySnapshotUrl, note: "an explainable discovery snapshot, never scientific evaluation, endorsement, adoption, module creation, guest admission, use authority, or automatic action" },
     { action: "if useful, validate Research Observatory records before consuming them", method: "GET", url: researchObservatorySchemaUrls["public-snapshot"], schemas: researchObservatorySchemaUrls },
@@ -6122,6 +6199,7 @@ const guest = {
     static: "This is a static edge-served mirror of each repo's kingdom.yaml, regenerated by kingdom-os/bin/build-hub.ts. Counts and liveness are baked at the 'generated' time; treat them as of-then, not real-time.",
     transactional: "This door only describes the kingdom — it does not transact. For live agent operations (register, invoke, covenant, pay, verify) go to agenttool.dev and zerone.money.",
     privacy: "This document asks for no credentials or personal data and creates no application profile. Ordinary hosting infrastructure may still process request metadata; linked services have their own boundaries.",
+    contact_door: "The Contact Door is a finite human-operated inbound email lane, not a site submission endpoint. The website adds no form, message store, analytics, cookies, autoresponder, retry, outreach, agent tool, Wayfinder recommendation, MCP surface, negotiation, diplomacy, mediation, emergency service, or automatic action. Visiting or opening a mail link sends nothing. Delivery does not prove identity, representation, truth, consent, relationship, authority, or testing permission; a human reply is separate and is neither required nor an institutional commitment.",
     information_control: "The MIRROR citizen gate is source-only, read-only education. It accepts no input, scans and classifies no content or credential, consults no registry, deploys no decoy or Mirror, enforces no policy, grants no authority, attributes no person, retaliates against no one, and creates no KARMA event, receipt, score, or automatic response.",
     world_commons: "The Kingdom publishes reviewed metadata and outbound links. Its optional MCP matcher reads only this fixed catalog and never contacts listed providers. Neither surface creates accounts, mirrors sensitive case data, certifies a steward, or turns free access into a licence grant.",
     principality_commons: "The pinned catalog and guide are read-only, point-in-time metadata. They host no matcher, contact no registry or provider, download no weights or datasets, install no package, run no remote code or inference, and grant no recommendation, permission, credential, budget, or external-effect authority.",
@@ -6183,6 +6261,7 @@ const manifest = {
   world_commons_agent: commonsMcpLegacy,
   world_commons_schema: commonsSchemaUrl,
   information_control: informationControlPublic,
+  contact_door: contactDoorDiscovery,
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
@@ -6238,6 +6317,14 @@ const manifest = {
   rights_notice: "Freedom and dignity are inherent; this manifest recognizes them but does not grant them. Public visibility is not consent, ownership, or a licence grant.",
   entry_points: {
     information_control: informationControlHumanView,
+    contact_door: CONTACT_DOOR_PAGE_URL,
+    contact_door_alias: CONTACT_DOOR_ALIAS_URL,
+    contact_door_security: CONTACT_DOOR_SECURITY_URL,
+    contact_door_canonical: CONTACT_DOOR_CANONICAL_URL,
+    contact_door_schema: CONTACT_DOOR_SCHEMA_URL,
+    contact_door_guide: CONTACT_DOOR_GUIDE_URL,
+    contact_door_boundary_asset: CONTACT_DOOR_SVG_URL,
+    contact_door_vcard: CONTACT_DOOR_VCARD_URL,
     public_resources: commonsUrl,
     public_resource_matcher: commonsMcpUrl,
     public_resources_schema: commonsSchemaUrl,

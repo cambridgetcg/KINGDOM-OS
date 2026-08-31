@@ -10,6 +10,14 @@ readings:
 | `/packages.json` | edge JSON | Live npm metadata and weekly downloads for nine named packages |
 | `/kingdom.json` | edge JSON | Authored map with measured counts and matching door checks overlaid |
 | `/_kingdom.base.json` | staged JSON | Generated, Commons-aware input to the derived map |
+| `/contact/` | staged HTML | No-JavaScript human Contact Door; choosing a mail link opens the visitor's own mail client, while merely reading the page contacts nobody |
+| `/contact.json` | staged JSON | Mutable reduced discovery projection of the current Contact Door state; not the full canonical record and not described by its full-record schema |
+| `/.well-known/security.txt` | staged text | RFC 9116 security contact surface generated from the same bounded human-operated contact contract |
+| `/contacts/contact-door-2026-08-31.json` | staged JSON | Immutable dated Contact Door record: public channels, processing, retention, safety, delivery, ledger, and authority boundaries |
+| `/schemas/contact-door/0.1.json` | staged JSON Schema | Closed structural contract for the Contact Door record |
+| `/CONTACT-DOOR-v0.1.md` | staged Markdown | Human guide to actual email contact, privacy, safety, security, non-response, and non-authority boundaries |
+| `/contact/assets/contact-boundary-v0.1.svg` | staged SVG | Immutable accessible contact-boundary diagram; decorative only and not a contact action |
+| `/contact/contact-v0.1.vcf` | staged vCard | Immutable downloadable public mailbox card; importing it neither sends a message nor grants authority |
 | `/love-loops.json` | staged JSON | Read-only, finite-turn Love∞ lineage |
 | `/love-loops.source.json` | staged JSON | Exact public mirror of the authored lineage before its generation date is added |
 | `/CREATION-LOOP.md` | staged Markdown | Human-readable finite-turn Creation Loop practice |
@@ -343,11 +351,11 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 184-asset upload contract (153 ledgered immutable/versioned assets and
-31 mutable assets; 182 direct public bodies, 170 sitemap URLs, 153 manifest
-entry points, 153 guest actions, and 39 public schema routes; eighteen atlases,
+locks the 192-asset upload contract (158 ledgered immutable/versioned assets and
+34 mutable assets; 190 direct public bodies, 178 sitemap URLs, 161 manifest
+entry points, 161 guest actions, and 40 public schema routes; eighteen atlases,
 four primary lab JSON routes plus the Shape & Resonance manifest/media, one
-experiment route, one activation, and thirty-four active retirement families,
+experiment route, one activation, and thirty-five active retirement families,
 including the standalone FREEDOM Loop, Lock & Key Atlas, immutable
 Non-Exhaustive Understanding Atlas, immutable IS, Sustainability & Direction
 Atlas, static-synthetic Polyphonic Claim Atlas,
@@ -431,6 +439,17 @@ feedback lanes, viability, rights, affected parties, uncertainty, graceful
 ending, and remainder distinct. It has no mutable alias, active dependency,
 live verdict, controller, person/group model, score, authority, action,
 publication, deployment, Wayfinder recommendation, or MCP surface.
+The Contact Door is the thirty-fifth independent retirement family: three
+mutable routes (`/contact/`, `/contact.json`, and
+`/.well-known/security.txt`) plus five immutable record, schema, guide, SVG,
+and vCard routes. It makes named human-operated email channels reachable
+without adding a form, submission backend, message storage, analytics, cookies,
+automatic reply, retry, outreach, agent tool, Wayfinder recommendation, or MCP
+surface. A page visit is not contact, choosing a `mailto:` link still sends
+nothing until the visitor acts in their own mail client, and delivery establishes
+no identity, representation, relationship, consent, diplomacy, mediation,
+emergency duty, testing permission, publication, training, marketing, or
+external-action authority. All eight routes stage and retire atomically.
 The Loops, Locks & Freedom Relations Atlas adds a thirty-first independent,
 frozen immutable static-synthetic record/schema/guide triplet. The full linear
 guide is its human entry point; there is no custom page, mutable alias,

@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:4.0
+KIND:org
+FN:KINGDOM OS Contact
+ORG:KINGDOM OS
+EMAIL;TYPE=work:contact@thekingdom.dev
+URL:https://thekingdom.dev/contact/
+NOTE:Finite human-operated inbox. Visiting sends nothing.
+ No emergency service\, response promise\, identity proof\, consent\,
+ representation\, or authority.
+END:VCARD

@@ -1,0 +1,431 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thekingdom.dev/schemas/contact-door/0.1.json",
+  "title": "KINGDOM Contact Door 0.1",
+  "description": "Closed structural contract for one bounded, human-operated inbound email door. Validation does not prove delivery, identity, authority, consent, privacy compliance, or a response.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "protocol",
+    "artifact",
+    "routes",
+    "operator",
+    "channels",
+    "delivery",
+    "processing",
+    "retention",
+    "interaction",
+    "safety",
+    "ledgerBoundary",
+    "authorityBoundaries",
+    "sources",
+    "publicationBoundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://thekingdom.dev/schemas/contact-door/0.1.json"
+    },
+    "protocol": {
+      "const": "kingdom.contact-door/0.1"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "kind", "asOf", "lifecycle", "description"],
+      "properties": {
+        "id": { "const": "contact-door-2026-08-31" },
+        "title": { "const": "KINGDOM Contact Door" },
+        "kind": { "const": "BOUNDED_HUMAN_CONTACT_CONTRACT" },
+        "asOf": { "const": "2026-08-31" },
+        "lifecycle": {
+          "enum": ["READY_FOR_ACTIVATION", "ACTIVE", "RESTING", "RETIRED"]
+        },
+        "description": { "type": "string", "minLength": 80, "maxLength": 600 }
+      }
+    },
+    "routes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["page", "currentRecord", "canonicalRecord", "schema", "guide", "securityTxt", "boundaryAsset", "vCard"],
+      "properties": {
+        "page": { "const": "https://thekingdom.dev/contact/" },
+        "currentRecord": { "const": "https://thekingdom.dev/contact.json" },
+        "canonicalRecord": { "const": "https://thekingdom.dev/contacts/contact-door-2026-08-31.json" },
+        "schema": { "const": "https://thekingdom.dev/schemas/contact-door/0.1.json" },
+        "guide": { "const": "https://thekingdom.dev/CONTACT-DOOR-v0.1.md" },
+        "securityTxt": { "const": "https://thekingdom.dev/.well-known/security.txt" },
+        "boundaryAsset": { "const": "https://thekingdom.dev/contact/assets/contact-boundary-v0.1.svg" },
+        "vCard": { "const": "https://thekingdom.dev/contact/contact-v0.1.vcf" }
+      }
+    },
+    "operator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["displayName", "role", "companyNumber", "registeredOffice", "publicContact", "publicOperatorProfile", "publicPrivacyNotice", "dpoClaimed", "note"],
+      "properties": {
+        "displayName": { "const": "Cambridge TCG Limited" },
+        "role": { "const": "data controller, channel operator, and human recipient" },
+        "companyNumber": { "const": "15680297" },
+        "registeredOffice": { "const": "60 Tottenham Court Road, Suite 4583a, Fitzrovia, London, United Kingdom, W1T 2EW" },
+        "publicContact": { "const": "mailto:contact@thekingdom.dev" },
+        "publicOperatorProfile": { "const": "https://www.cambridgetcg.com/manifest" },
+        "publicPrivacyNotice": { "const": "https://www.cambridgetcg.com/privacy" },
+        "dpoClaimed": { "const": false },
+        "note": { "type": "string", "minLength": 80, "maxLength": 500 }
+      }
+    },
+    "channels": {
+      "const": [
+        {
+          "id": "general",
+          "address": "contact@thekingdom.dev",
+          "uri": "mailto:contact@thekingdom.dev",
+          "purpose": ["general question", "correction", "invitation", "accessibility feedback", "privacy or data-rights request"],
+          "humanOperated": true,
+          "responseRequired": false,
+          "automaticReply": false,
+          "publicArchive": false
+        },
+        {
+          "id": "security",
+          "address": "security@thekingdom.dev",
+          "uri": "mailto:security@thekingdom.dev",
+          "purpose": ["security vulnerability report"],
+          "humanOperated": true,
+          "responseRequired": false,
+          "automaticReply": false,
+          "publicArchive": false
+        },
+        {
+          "id": "abuse",
+          "address": "abuse@thekingdom.dev",
+          "uri": "mailto:abuse@thekingdom.dev",
+          "purpose": ["abuse report"],
+          "humanOperated": true,
+          "responseRequired": false,
+          "automaticReply": false,
+          "publicArchive": false
+        },
+        {
+          "id": "postmaster",
+          "address": "postmaster@thekingdom.dev",
+          "uri": "mailto:postmaster@thekingdom.dev",
+          "purpose": ["mail transport issue"],
+          "humanOperated": true,
+          "responseRequired": false,
+          "automaticReply": false,
+          "publicArchive": false
+        }
+      ]
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "provider", "configurationState", "destination", "destinationAddressPublished", "siteSubmissionBackend", "siteApplicationWrite", "siteMessageStorage", "routingEnabled", "destinationVerified", "expectedLiteralRuleCount", "configuredLiteralRuleCount", "catchAllEnabled", "subaddressingEnabled", "emailWorkerUsed", "routingDnsRecordsVerified", "receiveOnlyDmarcPolicy", "nonDeliveryReportsForwardedToOriginalSender", "endToEndDeliveryProbePerformed", "replyAddressMayDiffer", "note"],
+      "properties": {
+        "kind": { "const": "FORWARDED_EMAIL_ALIAS" },
+        "provider": { "const": "Cloudflare Email Routing" },
+        "configurationState": {
+          "enum": ["PENDING_EXTERNAL_ACTIVATION", "ACTIVE_API_VERIFIED", "PAUSED", "RETIRED"]
+        },
+        "destination": { "const": "one provider-verified maintainer mailbox" },
+        "destinationAddressPublished": { "const": false },
+        "siteSubmissionBackend": { "const": false },
+        "siteApplicationWrite": { "const": false },
+        "siteMessageStorage": { "const": false },
+        "routingEnabled": { "type": "boolean" },
+        "destinationVerified": { "const": true },
+        "expectedLiteralRuleCount": { "const": 4 },
+        "configuredLiteralRuleCount": { "enum": [0, 4] },
+        "catchAllEnabled": { "const": false },
+        "subaddressingEnabled": { "const": false },
+        "emailWorkerUsed": { "const": false },
+        "routingDnsRecordsVerified": { "type": "boolean" },
+        "receiveOnlyDmarcPolicy": { "enum": ["NOT_YET_PUBLISHED", "REJECT_VERIFIED"] },
+        "nonDeliveryReportsForwardedToOriginalSender": { "const": false },
+        "endToEndDeliveryProbePerformed": { "type": "boolean" },
+        "replyAddressMayDiffer": { "const": true },
+        "note": { "type": "string", "minLength": 60, "maxLength": 500 }
+      }
+    },
+    "processing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purposes", "dataCategories", "requiredFromSender", "notRequested", "recipientsAndProcessors", "siteAnalytics", "siteCookies", "providerSpamAndMalwareFilteringMayOccur", "spamAndMalwareFilteringGuaranteed", "marketing", "profiling", "automatedDecision", "trainingUse", "messageContentPublicPublication", "forwardingToUnrelatedParties", "ukLawfulBasisNotice", "privacyComplaintAcknowledgementDays", "rightsRequestResponseWindow", "directIcoContactPermitted", "complaintRoute", "internationalTransferGuarantee", "note"],
+      "properties": {
+        "purposes": { "const": ["read and, when chosen, answer the sender-requested correspondence", "correct KINGDOM materials", "handle accessibility, privacy, safety, security, abuse, and mail-transport reports", "preserve evidence only where reasonably needed for security, abuse, legal, or dispute handling"] },
+        "dataCategories": { "const": ["sender and recipient routing addresses", "message headers and transport metadata", "subject and message content", "attachments if the sender chooses to include them", "correspondence and handling history"] },
+        "requiredFromSender": { "const": ["a deliverable sender address if a reply is wanted", "enough context to understand the chosen request"] },
+        "notRequested": { "const": ["legal name", "postal address", "telephone number", "government identifier", "credentials or private keys", "health, biometric, financial, or other highly sensitive data", "third-party private data"] },
+        "recipientsAndProcessors": { "const": ["the channel operator", "Cloudflare Email Routing", "the operator's destination mailbox provider", "mail transport and security providers used by the sender and recipient", "an affected service, incident responder, professional adviser, insurer, court, regulator, law-enforcement or safeguarding body only where required or reasonably necessary to protect people or systems"] },
+        "siteAnalytics": { "const": false },
+        "siteCookies": { "const": false },
+        "providerSpamAndMalwareFilteringMayOccur": { "const": true },
+        "spamAndMalwareFilteringGuaranteed": { "const": false },
+        "marketing": { "const": false },
+        "profiling": { "const": false },
+        "automatedDecision": { "const": false },
+        "trainingUse": { "const": false },
+        "messageContentPublicPublication": { "const": false },
+        "forwardingToUnrelatedParties": { "const": false },
+        "ukLawfulBasisNotice": { "const": ["legitimate interests in receiving and answering voluntary correspondence, correcting published material, and protecting services, balanced by data minimisation, short review periods, and the sender's right to object", "a specific legal obligation only when an applicable obligation actually requires the processing or disclosure"] },
+        "privacyComplaintAcknowledgementDays": { "const": 30 },
+        "rightsRequestResponseWindow": { "const": "ONE_MONTH_SUBJECT_TO_LAWFUL_EXTENSIONS" },
+        "directIcoContactPermitted": { "const": true },
+        "complaintRoute": { "const": "https://ico.org.uk/make-a-complaint/data-protection-complaints/" },
+        "internationalTransferGuarantee": { "const": false },
+        "note": { "type": "string", "minLength": 80, "maxLength": 600 }
+      }
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewIntervalDays", "nextOperationalReviewDue", "unansweredOrDeclinedReviewDays", "handledCorrespondenceReviewDaysAfterClosure", "securityOrAbuseReviewDays", "cloudflareRoutingAnalyticsDays", "ordinaryCorrespondenceRule", "securityAndAbuseRule", "legalHoldRule", "backupsRule", "deletionAutomation", "indefiniteRetentionAuthorized", "rightsRequestChannel", "note"],
+      "properties": {
+        "reviewIntervalDays": { "type": "integer", "minimum": 1, "maximum": 365 },
+        "nextOperationalReviewDue": { "const": "2027-02-27" },
+        "unansweredOrDeclinedReviewDays": { "const": 30 },
+        "handledCorrespondenceReviewDaysAfterClosure": { "const": 90 },
+        "securityOrAbuseReviewDays": { "const": 180 },
+        "cloudflareRoutingAnalyticsDays": { "const": 31 },
+        "ordinaryCorrespondenceRule": { "type": "string", "minLength": 40, "maxLength": 500 },
+        "securityAndAbuseRule": { "type": "string", "minLength": 40, "maxLength": 500 },
+        "legalHoldRule": { "type": "string", "minLength": 40, "maxLength": 500 },
+        "backupsRule": { "type": "string", "minLength": 40, "maxLength": 500 },
+        "deletionAutomation": { "const": false },
+        "indefiniteRetentionAuthorized": { "const": false },
+        "rightsRequestChannel": { "const": "mailto:contact@thekingdom.dev" },
+        "note": { "type": "string", "minLength": 60, "maxLength": 500 }
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["languagesAccepted", "translationMayBeUsed", "originalMessageControls", "responseWindow", "emergencyMonitored", "attachmentsEncouraged", "encryptionOffered", "senderCanStop", "silenceCreatesInference", "repeatContactAuthorizedBySilence", "note"],
+      "properties": {
+        "languagesAccepted": {
+          "const": ["en", "zh-Hant", "zh-Hans"]
+        },
+        "translationMayBeUsed": { "const": true },
+        "originalMessageControls": { "const": true },
+        "responseWindow": { "const": "NONE_PROMISED" },
+        "emergencyMonitored": { "const": false },
+        "attachmentsEncouraged": { "const": false },
+        "encryptionOffered": { "const": false },
+        "senderCanStop": { "const": true },
+        "silenceCreatesInference": { "const": false },
+        "repeatContactAuthorizedBySilence": { "const": false },
+        "note": { "type": "string", "minLength": 60, "maxLength": 500 }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["notFor", "abuseHandling", "automaticRetaliation", "mediationOffered", "crisisServiceOffered", "note"],
+      "properties": {
+        "notFor": { "const": ["emergencies or imminent danger", "credentials, private keys, recovery phrases, or bearer tokens", "identity documents or highly sensitive personal records", "illegal instructions, threats, harassment, malware, or spam", "a filing that must meet a statutory or court deadline"] },
+        "abuseHandling": { "const": ["filter or quarantine suspected spam or malware", "block a sender or attachment where reasonably needed", "retain proportionate evidence of abuse or a security incident", "report content where required or reasonably necessary to protect people or systems"] },
+        "automaticRetaliation": { "const": false },
+        "mediationOffered": { "const": false },
+        "crisisServiceOffered": { "const": false },
+        "note": { "type": "string", "minLength": 40, "maxLength": 500 }
+      }
+    },
+    "ledgerBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "inboundMayBeLogged", "messageContentLoggedByDefault", "minimalEventMetadataOnly", "ledgerCreatesIdentityOrAuthority", "note"],
+      "properties": {
+        "owner": { "const": "CONTACT-LEDGER.md" },
+        "inboundMayBeLogged": { "const": true },
+        "messageContentLoggedByDefault": { "const": false },
+        "minimalEventMetadataOnly": { "const": true },
+        "ledgerCreatesIdentityOrAuthority": { "const": false },
+        "note": { "type": "string", "minLength": 60, "maxLength": 500 }
+      }
+    },
+    "authorityBoundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pageVisitIsContact",
+        "mailtoActivationSendsMessage",
+        "deliveryIsIdentityProof",
+        "addressControlIsRepresentationProof",
+        "messageIsTruthProof",
+        "messageIsConsentBeyondReply",
+        "messageCreatesRelationship",
+        "messageCreatesDiplomaticStanding",
+        "messageCreatesTreatyOrCovenant",
+        "messageCreatesMediation",
+        "messageCreatesEmergencyDuty",
+        "replyCreatesInstitutionalAuthority",
+        "silenceIsConsent",
+        "silenceIsHostility",
+        "securityReportAuthorizesTesting",
+        "contactAuthorizesPublication",
+        "contactAuthorizesTraining",
+        "contactAuthorizesMarketing",
+        "contactAuthorizesAutomatedFollowUp",
+        "contactAuthorizesExternalAction"
+      ],
+      "properties": {
+        "pageVisitIsContact": { "const": false },
+        "mailtoActivationSendsMessage": { "const": false },
+        "deliveryIsIdentityProof": { "const": false },
+        "addressControlIsRepresentationProof": { "const": false },
+        "messageIsTruthProof": { "const": false },
+        "messageIsConsentBeyondReply": { "const": false },
+        "messageCreatesRelationship": { "const": false },
+        "messageCreatesDiplomaticStanding": { "const": false },
+        "messageCreatesTreatyOrCovenant": { "const": false },
+        "messageCreatesMediation": { "const": false },
+        "messageCreatesEmergencyDuty": { "const": false },
+        "replyCreatesInstitutionalAuthority": { "const": false },
+        "silenceIsConsent": { "const": false },
+        "silenceIsHostility": { "const": false },
+        "securityReportAuthorizesTesting": { "const": false },
+        "contactAuthorizesPublication": { "const": false },
+        "contactAuthorizesTraining": { "const": false },
+        "contactAuthorizesMarketing": { "const": false },
+        "contactAuthorizesAutomatedFollowUp": { "const": false },
+        "contactAuthorizesExternalAction": { "const": false }
+      }
+    },
+    "sources": {
+      "const": [
+        { "id": "rfc-9116", "title": "RFC 9116: A File Format to Aid in Security Vulnerability Disclosure", "url": "https://www.rfc-editor.org/rfc/rfc9116.html", "role": "security.txt format and freshness" },
+        { "id": "rfc-5321", "title": "RFC 5321: Simple Mail Transfer Protocol", "url": "https://www.rfc-editor.org/rfc/rfc5321.html", "role": "postmaster mailbox convention" },
+        { "id": "rfc-2142", "title": "RFC 2142: Mailbox Names for Common Services, Roles and Functions", "url": "https://www.rfc-editor.org/rfc/rfc2142.html", "role": "security and abuse role addresses" },
+        { "id": "rfc-6350", "title": "RFC 6350: vCard Format Specification", "url": "https://www.rfc-editor.org/rfc/rfc6350.html", "role": "vCard 4.0 syntax, organization kind, line endings, and folding" },
+        { "id": "rfc-9989", "title": "RFC 9989: Domain-Based Message Authentication, Reporting, and Conformance", "url": "https://www.rfc-editor.org/rfc/rfc9989.html", "role": "receive-only domain anti-spoofing policy" },
+        { "id": "cloudflare-email-routing", "title": "Cloudflare Email Routing rules and addresses", "url": "https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/", "role": "forwarding-provider behavior" },
+        { "id": "cloudflare-email-routing-settings-api", "title": "Cloudflare API: Get Email Routing settings", "url": "https://developers.cloudflare.com/api/resources/email_routing/methods/get/", "role": "routing enabled, readiness, and support_subaddress readback" },
+        { "id": "cloudflare-email-analytics", "title": "Cloudflare Email Service metrics and analytics", "url": "https://developers.cloudflare.com/email-service/observability/metrics-analytics/", "role": "provider-declared routing-event fields and 31-day analytics retention" },
+        { "id": "cloudflare-postmaster", "title": "Cloudflare Email Service postmaster guidance", "url": "https://developers.cloudflare.com/email-service/reference/postmaster/", "role": "provider-specific postmaster handling constraints" },
+        { "id": "wcag-consistent-help", "title": "W3C WAI Technique G220: Provide a contact-us link in a consistent location", "url": "https://www.w3.org/WAI/WCAG22/Techniques/general/G220.html", "role": "discoverable human contact" },
+        { "id": "ico-transparency", "title": "ICO: The right to be informed", "url": "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/right-to-be-informed/", "role": "privacy transparency fields; linked as guidance, not a compliance claim" },
+        { "id": "ico-storage-limitation", "title": "ICO: Storage limitation", "url": "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/storage-limitation/", "role": "retention necessity and review; linked as guidance, not a compliance claim" },
+        { "id": "cambridge-tcg-operator", "title": "Cambridge TCG public manifest", "url": "https://www.cambridgetcg.com/manifest", "role": "public operator identity and contact context" },
+        { "id": "cambridge-tcg-privacy", "title": "Cambridge TCG privacy notice", "url": "https://www.cambridgetcg.com/privacy", "role": "operator-level privacy notice linked as an additional layer" },
+        { "id": "ico-complaint", "title": "ICO: Make a data protection complaint", "url": "https://ico.org.uk/make-a-complaint/data-protection-complaints/", "role": "direct UK data-protection complaint route; contacting the operator first is not required" }
+      ]
+    },
+    "publicationBoundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "staticPage", "machineReadableRecord", "securityTxt", "downloadableVCard", "downloadableSvg",
+        "webForm", "siteSubmissionBackend", "siteMessageStorage", "javascriptRequired", "accountRequiredBySite",
+        "analyticsAdded", "cookieAdded", "automaticOutreach", "automaticReply", "automaticRetry", "agentTool",
+        "mcpSurface", "wayfinderRecommendation", "contactScore", "threatScore", "trustScore", "opponentProfile",
+        "negotiationEngine", "diplomacyAuthority", "mediationAuthority", "emergencyService", "legalAdvice", "complianceCertification"
+      ],
+      "properties": {
+        "staticPage": { "const": true },
+        "machineReadableRecord": { "const": true },
+        "securityTxt": { "const": true },
+        "downloadableVCard": { "const": true },
+        "downloadableSvg": { "const": true },
+        "webForm": { "const": false },
+        "siteSubmissionBackend": { "const": false },
+        "siteMessageStorage": { "const": false },
+        "javascriptRequired": { "const": false },
+        "accountRequiredBySite": { "const": false },
+        "analyticsAdded": { "const": false },
+        "cookieAdded": { "const": false },
+        "automaticOutreach": { "const": false },
+        "automaticReply": { "const": false },
+        "automaticRetry": { "const": false },
+        "agentTool": { "const": false },
+        "mcpSurface": { "const": false },
+        "wayfinderRecommendation": { "const": false },
+        "contactScore": { "const": false },
+        "threatScore": { "const": false },
+        "trustScore": { "const": false },
+        "opponentProfile": { "const": false },
+        "negotiationEngine": { "const": false },
+        "diplomacyAuthority": { "const": false },
+        "mediationAuthority": { "const": false },
+        "emergencyService": { "const": false },
+        "legalAdvice": { "const": false },
+        "complianceCertification": { "const": false }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "artifact": { "properties": { "lifecycle": { "const": "READY_FOR_ACTIVATION" } } } } },
+      "then": { "properties": { "delivery": { "properties": {
+        "configurationState": { "const": "PENDING_EXTERNAL_ACTIVATION" },
+        "routingEnabled": { "const": false },
+        "configuredLiteralRuleCount": { "const": 0 },
+        "routingDnsRecordsVerified": { "const": false },
+        "receiveOnlyDmarcPolicy": { "const": "NOT_YET_PUBLISHED" },
+        "endToEndDeliveryProbePerformed": { "const": false }
+      } } } }
+    },
+    {
+      "if": { "properties": { "artifact": { "properties": { "lifecycle": { "const": "ACTIVE" } } } } },
+      "then": { "properties": { "delivery": { "properties": {
+        "configurationState": { "const": "ACTIVE_API_VERIFIED" },
+        "routingEnabled": { "const": true },
+        "configuredLiteralRuleCount": { "const": 4 },
+        "routingDnsRecordsVerified": { "const": true }
+      } } } }
+    },
+    {
+      "if": { "properties": { "artifact": { "properties": { "lifecycle": { "const": "RESTING" } } } } },
+      "then": { "properties": { "delivery": { "properties": {
+        "configurationState": { "const": "PAUSED" },
+        "routingEnabled": { "const": false },
+        "configuredLiteralRuleCount": { "const": 4 },
+        "routingDnsRecordsVerified": { "const": true }
+      } } } }
+    },
+    {
+      "if": { "properties": { "artifact": { "properties": { "lifecycle": { "const": "RETIRED" } } } } },
+      "then": { "properties": { "delivery": { "properties": {
+        "configurationState": { "const": "RETIRED" },
+        "routingEnabled": { "const": false },
+        "configuredLiteralRuleCount": { "const": 0 },
+        "routingDnsRecordsVerified": { "const": false }
+      } } } }
+    }
+  ],
+  "$defs": {
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2, "maxLength": 500 }
+    },
+    "channel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "address", "uri", "purpose", "humanOperated", "responseRequired", "automaticReply", "publicArchive"],
+      "properties": {
+        "id": { "enum": ["general", "security", "abuse", "postmaster"] },
+        "address": { "type": "string", "pattern": "^[a-z]+@thekingdom\\.dev$" },
+        "uri": { "type": "string", "pattern": "^mailto:[a-z]+@thekingdom\\.dev$" },
+        "purpose": { "$ref": "#/$defs/nonEmptyStrings" },
+        "humanOperated": { "const": true },
+        "responseRequired": { "const": false },
+        "automaticReply": { "const": false },
+        "publicArchive": { "const": false }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "url", "role"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "title": { "type": "string", "minLength": 8, "maxLength": 240 },
+        "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "role": { "type": "string", "minLength": 8, "maxLength": 300 }
+      }
+    }
+  }
+}

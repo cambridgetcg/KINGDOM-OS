@@ -116,10 +116,10 @@ describe("STRAND Lab 03 public integration", () => {
   test("stages and advertises one immutable triplet with exact ledger hashes and no aliases", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(184);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(31);
+    expect(HUB_ASSETS).toHaveLength(192);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
     expect(HUB_ASSETS.filter(({ destination: path }) =>
-      path !== "_worker.js" && path !== "404.html")).toHaveLength(182);
+      path !== "_worker.js" && path !== "404.html")).toHaveLength(190);
     for (const asset of PUBLIC_TRIPLET) {
       expect(MUTABLE_HUB_DESTINATIONS).not.toContain(asset.destination);
     }
@@ -129,7 +129,7 @@ describe("STRAND Lab 03 public integration", () => {
       /string-crawl-frequency-form-lab.*(?:latest|current)/i.test(path))).toBe(false);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(153);
+    expect(ledger.entries).toHaveLength(158);
     expect(ledger.entries.filter(({ id }: { id?: string }) =>
       id?.startsWith("string-crawl-frequency-form-lab/0.1/"))).toEqual([
       {
@@ -163,8 +163,8 @@ describe("STRAND Lab 03 public integration", () => {
 
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(170);
-    expect(new Set(urls).size).toBe(170);
+    expect(urls).toHaveLength(178);
+    expect(new Set(urls).size).toBe(178);
     for (const url of PUBLIC_URLS) expect(urls.filter((candidate) => candidate === url)).toHaveLength(1);
     expect(urls.some((url) =>
       /string-crawl-frequency-form-lab.*(?:latest|current)/i.test(url))).toBe(false);
@@ -342,7 +342,7 @@ describe("STRAND Lab 03 public integration", () => {
 
   test("retires byte-bound Labs 01–04 as one exact twelve-route family", () => {
     const family = PUBLICATION_FAMILIES.find(({ id }) => id === "string-crawl-trace-sheet-lab");
-    expect(PUBLICATION_FAMILIES).toHaveLength(34);
+    expect(PUBLICATION_FAMILIES).toHaveLength(35);
     expect(family).toEqual({
       id: "string-crawl-trace-sheet-lab",
       label: "STRING / CRAWL STRAND Labs 01–04",

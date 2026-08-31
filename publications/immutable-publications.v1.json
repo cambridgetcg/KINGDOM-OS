@@ -151,6 +151,41 @@
       "sha256": "e60c14cf8b6350cc805f59c91b89727ffbd5b41e7c5a192d9ee53c90ba9fbdbd"
     },
     {
+      "id": "contact-door/0.1/guide",
+      "route": "/CONTACT-DOOR-v0.1.md",
+      "source": "references/contact-door-v0.1.md",
+      "destination": "CONTACT-DOOR-v0.1.md",
+      "sha256": "7869027a316c63ccc27fc0babf57b3273c52d91a55b5bae341ee500ba0795a2c"
+    },
+    {
+      "id": "contact-door/0.1/record",
+      "route": "/contacts/contact-door-2026-08-31.json",
+      "source": "data/contact/contact-door.v0.1.json",
+      "destination": "contacts/contact-door-2026-08-31.json",
+      "sha256": "c20389cb1e29902765902289b67c21fae5a9383a3b25d06c31e754638efe6880"
+    },
+    {
+      "id": "contact-door/0.1/schema",
+      "route": "/schemas/contact-door/0.1.json",
+      "source": "schemas/contact-door-v0.1.schema.json",
+      "destination": "schemas/contact-door/0.1.json",
+      "sha256": "cdac1cf0f9f502764bb70ac860a3a2f4ab6ae5015d57da5afab3ca9f320d5024"
+    },
+    {
+      "id": "contact-door/0.1/svg",
+      "route": "/contact/assets/contact-boundary-v0.1.svg",
+      "source": "data/contact/assets/contact-boundary-v0.1.svg",
+      "destination": "contact/assets/contact-boundary-v0.1.svg",
+      "sha256": "4a4808a4f3f8bc80db7c5c55d7b5a8e3ec2049b6b404fdc0a3576954452eb052"
+    },
+    {
+      "id": "contact-door/0.1/vcard",
+      "route": "/contact/contact-v0.1.vcf",
+      "source": "data/contact/assets/contact-v0.1.vcf",
+      "destination": "contact/contact-v0.1.vcf",
+      "sha256": "4da0537f938dc745d07cbca304ed8c9f1eb2d311db3332df63d8a731314017a3"
+    },
+    {
       "id": "cultural-attention-feedback/1/guide",
       "route": "/CULTURAL-ATTENTION-FEEDBACK-ATLAS.md",
       "source": "references/cultural-attention-feedback-atlas.md",

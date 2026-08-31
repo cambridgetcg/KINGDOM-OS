@@ -899,6 +899,29 @@ public repository source, not a staged public/site artifact or publication
 route, and creates no playbook, diplomacy, contact, runtime, or action
 authority.
 
+The separate [KINGDOM Contact Door](https://thekingdom.dev/contact/) is a
+finite, human-operated inbound email lane. Its mutable page,
+[`/contact.json`](https://thekingdom.dev/contact.json), and
+[`/.well-known/security.txt`](https://thekingdom.dev/.well-known/security.txt)
+are published and retired atomically with the immutable
+[canonical record](https://thekingdom.dev/contacts/contact-door-2026-08-31.json),
+[closed schema](https://thekingdom.dev/schemas/contact-door/0.1.json),
+[guide](https://thekingdom.dev/CONTACT-DOOR-v0.1.md),
+[boundary SVG](https://thekingdom.dev/contact/assets/contact-boundary-v0.1.svg),
+and [organization vCard](https://thekingdom.dev/contact/contact-v0.1.vcf).
+The site has no form, upload, account, JavaScript submission path, application
+write, or message store. Once the separately verified carrier is active,
+delivery uses Cloudflare Email Routing and a provider-verified human mailbox,
+so it is not backend-free contact. Visiting
+the page sends nothing, activating `mailto:` does not itself send, and delivery
+proves neither identity nor representation. A message creates no consent beyond
+the requested exchange, relationship, diplomacy, mediation, emergency duty,
+publication or training permission, or authority. There is no automatic
+outreach, reply, retry, scoring, profiling, negotiation, Wayfinder
+recommendation, MCP surface, or agent action. The older Contact Under
+Uncertainty map remains source-only; neither artifact supersedes or validates
+the other.
+
 The standalone immutable [FREEDOM Loop, Lock & Key Atlas](https://thekingdom.dev/atlases/freedom-loop-lock-key-atlas-2026-08-28.json)
 keeps reinforcing-loop gain, behavioural reinforcers, RL reward and update,
 feedback, recurrence, learning, guarded transitions, cryptographic key
@@ -1114,7 +1137,7 @@ network request or crawler and creates no NEN/KARMA/Zerone event or receipt,
 score, truth verdict, identity, consent, citizenship, authority, write,
 publication, deployment, or action. Labs 01–04 are published and retired as
 one atomic twelve-route `string-crawl-trace-sheet-lab` family. The release now
-has thirty-four active retirement families; generated discovery exposes Lab 02 as
+has thirty-five active retirement families; generated discovery exposes Lab 02 as
 `string_crawl_strand_lab`, Lab 03 as `string_crawl_frequency_form_lab`, and Lab
 04 as `strand_descent_lab`.
 

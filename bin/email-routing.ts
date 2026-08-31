@@ -25,6 +25,13 @@
 // mindicraft.com (Outlook), sinovai.com (HostGator) — real mailboxes live
 // there; touching their MX would break them. Outbound sending is a later
 // chapter (provider TBD); DMARC records here assume no outbound.
+//
+// thekingdom.dev is also deliberately outside this generic shape. Its central
+// Contact Door uses only the exact contact@, security@, abuse@, and postmaster@
+// literal rules, forwards to one separately verified maintainer destination,
+// and keeps catch-all disabled. Do not add that zone to ZONES without first
+// changing this script's global hello/dev/ai + catch-all behavior. The Contact
+// Door is receive-only; any human reply is a separately governed outbound act.
 
 const ACCOUNT = "cf4198e651bf3009877d49f688c9d88e";
 const ICLOUD_USER = "yournameis.ai";

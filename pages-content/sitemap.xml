@@ -6,6 +6,14 @@
   <url><loc>https://thekingdom.dev/kingdom.json</loc></url>
   <url><loc>https://thekingdom.dev/wayfinder.json</loc></url>
   <url><loc>https://thekingdom.dev/commons.json</loc></url>
+  <url><loc>https://thekingdom.dev/contact/</loc></url>
+  <url><loc>https://thekingdom.dev/contact.json</loc></url>
+  <url><loc>https://thekingdom.dev/.well-known/security.txt</loc></url>
+  <url><loc>https://thekingdom.dev/contacts/contact-door-2026-08-31.json</loc></url>
+  <url><loc>https://thekingdom.dev/schemas/contact-door/0.1.json</loc></url>
+  <url><loc>https://thekingdom.dev/CONTACT-DOOR-v0.1.md</loc></url>
+  <url><loc>https://thekingdom.dev/contact/assets/contact-boundary-v0.1.svg</loc></url>
+  <url><loc>https://thekingdom.dev/contact/contact-v0.1.vcf</loc></url>
   <url><loc>https://thekingdom.dev/observatory/</loc></url>
   <url><loc>https://thekingdom.dev/research.json</loc></url>
   <url><loc>https://thekingdom.dev/research/schemas/v0.1/public-snapshot.schema.json</loc></url>

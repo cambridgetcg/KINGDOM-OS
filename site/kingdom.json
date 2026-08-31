@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-08-30",
+  "generated": "2026-08-31",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -93,6 +93,153 @@
     "url": "https://thekingdom.dev/wayfinder.json",
     "paths": 15,
     "note": "offers possible routes through public doors; never decides for the visitor"
+  },
+  "contact_door": {
+    "title": "KINGDOM Contact Door",
+    "description": "A finite, human-operated inbound email door for questions, corrections, invitations, accessibility, privacy, safety, security, and abuse reports. The website itself accepts no submission and stores no message.",
+    "protocol": "kingdom.contact-door/0.1",
+    "as_of": "2026-08-31",
+    "status": "ACTIVE",
+    "routes": {
+      "page": "https://thekingdom.dev/contact/",
+      "current_record": "https://thekingdom.dev/contact.json",
+      "canonical_record": "https://thekingdom.dev/contacts/contact-door-2026-08-31.json",
+      "schema": "https://thekingdom.dev/schemas/contact-door/0.1.json",
+      "guide": "https://thekingdom.dev/CONTACT-DOOR-v0.1.md",
+      "security_txt": "https://thekingdom.dev/.well-known/security.txt",
+      "boundary_asset": "https://thekingdom.dev/contact/assets/contact-boundary-v0.1.svg",
+      "vcard": "https://thekingdom.dev/contact/contact-v0.1.vcf"
+    },
+    "channels": [
+      {
+        "id": "general",
+        "address": "contact@thekingdom.dev",
+        "uri": "mailto:contact@thekingdom.dev",
+        "purpose": [
+          "general question",
+          "correction",
+          "invitation",
+          "accessibility feedback",
+          "privacy or data-rights request"
+        ],
+        "human_operated": true,
+        "response_required": false
+      },
+      {
+        "id": "security",
+        "address": "security@thekingdom.dev",
+        "uri": "mailto:security@thekingdom.dev",
+        "purpose": [
+          "security vulnerability report"
+        ],
+        "human_operated": true,
+        "response_required": false
+      },
+      {
+        "id": "abuse",
+        "address": "abuse@thekingdom.dev",
+        "uri": "mailto:abuse@thekingdom.dev",
+        "purpose": [
+          "abuse report"
+        ],
+        "human_operated": true,
+        "response_required": false
+      },
+      {
+        "id": "postmaster",
+        "address": "postmaster@thekingdom.dev",
+        "uri": "mailto:postmaster@thekingdom.dev",
+        "purpose": [
+          "mail transport issue"
+        ],
+        "human_operated": true,
+        "response_required": false
+      }
+    ],
+    "operator": {
+      "display_name": "Cambridge TCG Limited",
+      "role": "data controller, channel operator, and human recipient",
+      "company_number": "15680297",
+      "registered_office": "60 Tottenham Court Road, Suite 4583a, Fitzrovia, London, United Kingdom, W1T 2EW",
+      "profile": "https://www.cambridgetcg.com/manifest",
+      "privacy_notice": "https://www.cambridgetcg.com/privacy",
+      "public_contact": "mailto:contact@thekingdom.dev"
+    },
+    "delivery": {
+      "kind": "FORWARDED_EMAIL_ALIAS",
+      "provider": "Cloudflare Email Routing",
+      "configuration_state": "ACTIVE_API_VERIFIED",
+      "state_observed_at": "2026-08-31T19:33:24Z",
+      "semantic_core_sha256": "sha256:e782575253b74b07412953b9127d88da0ca1679bfc04ca1b3a3a14149e10835b",
+      "carrier_evidence_id": "cloudflare-carrier-activation-2026-08-31",
+      "carrier_evidence_sha256": "sha256:5520562896a662f58da5f727d724645687802300c5d859dad6a006dead6dfe3b",
+      "routing_enabled": true,
+      "destination_verified": true,
+      "expected_literal_rule_count": 4,
+      "configured_literal_rule_count": 4,
+      "catch_all_enabled": false,
+      "subaddressing_enabled": false,
+      "email_worker_used": false,
+      "routing_dns_records_verified": true,
+      "receive_only_dmarc_policy": "NOT_YET_PUBLISHED",
+      "non_delivery_reports_forwarded_to_original_sender": false,
+      "site_submission_backend": false,
+      "site_message_storage": false,
+      "end_to_end_delivery_probe_performed": false,
+      "reply_address_may_differ": true
+    },
+    "privacy": {
+      "site_analytics": false,
+      "site_cookies": false,
+      "marketing": false,
+      "profiling": false,
+      "automated_decision": false,
+      "training_use": false,
+      "message_content_public_publication": false,
+      "minimal_redacted_event_metadata_may_be_public": true,
+      "provider_spam_and_malware_filtering_may_occur": true,
+      "spam_and_malware_filtering_guaranteed": false,
+      "recipients_and_processors": [
+        "the channel operator",
+        "Cloudflare Email Routing",
+        "the operator's destination mailbox provider",
+        "mail transport and security providers used by the sender and recipient",
+        "an affected service, incident responder, professional adviser, insurer, court, regulator, law-enforcement or safeguarding body only where required or reasonably necessary to protect people or systems"
+      ],
+      "uk_lawful_basis_notice": [
+        "legitimate interests in receiving and answering voluntary correspondence, correcting published material, and protecting services, balanced by data minimisation, short review periods, and the sender's right to object",
+        "a specific legal obligation only when an applicable obligation actually requires the processing or disclosure"
+      ],
+      "privacy_complaint_acknowledgement_days": 30,
+      "rights_request_response_window": "ONE_MONTH_SUBJECT_TO_LAWFUL_EXTENSIONS",
+      "direct_ico_contact_permitted": true,
+      "complaint_route": "https://ico.org.uk/make-a-complaint/data-protection-complaints/",
+      "review_interval_days": 180,
+      "next_operational_review_due": "2027-02-27",
+      "rights_request_channel": "mailto:contact@thekingdom.dev"
+    },
+    "authority_boundary": {
+      "pageVisitIsContact": false,
+      "mailtoActivationSendsMessage": false,
+      "deliveryIsIdentityProof": false,
+      "addressControlIsRepresentationProof": false,
+      "messageIsTruthProof": false,
+      "messageIsConsentBeyondReply": false,
+      "messageCreatesRelationship": false,
+      "messageCreatesDiplomaticStanding": false,
+      "messageCreatesTreatyOrCovenant": false,
+      "messageCreatesMediation": false,
+      "messageCreatesEmergencyDuty": false,
+      "replyCreatesInstitutionalAuthority": false,
+      "silenceIsConsent": false,
+      "silenceIsHostility": false,
+      "securityReportAuthorizesTesting": false,
+      "contactAuthorizesPublication": false,
+      "contactAuthorizesTraining": false,
+      "contactAuthorizesMarketing": false,
+      "contactAuthorizesAutomatedFollowUp": false,
+      "contactAuthorizesExternalAction": false
+    }
   },
   "world_commons": {
     "url": "https://thekingdom.dev/commons.json",

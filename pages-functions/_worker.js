@@ -412,6 +412,43 @@ const AESTHETIC_PLURALITY_MAKING_ATLAS_PATHS = new Set([
   AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_PATH,
   AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_PATH,
 ]);
+const CONTACT_DOOR_PAGE_PATH = "/contact/";
+const CONTACT_DOOR_ALIAS_PATH = "/contact.json";
+const CONTACT_DOOR_SECURITY_PATH = "/.well-known/security.txt";
+const CONTACT_DOOR_CANONICAL_PATH =
+  "/contacts/contact-door-2026-08-31.json";
+const CONTACT_DOOR_SCHEMA_PATH = "/schemas/contact-door/0.1.json";
+const CONTACT_DOOR_GUIDE_PATH = "/CONTACT-DOOR-v0.1.md";
+const CONTACT_DOOR_SVG_PATH = "/contact/assets/contact-boundary-v0.1.svg";
+const CONTACT_DOOR_VCARD_PATH = "/contact/contact-v0.1.vcf";
+const CONTACT_DOOR_PATHS = new Set([
+  CONTACT_DOOR_PAGE_PATH,
+  CONTACT_DOOR_ALIAS_PATH,
+  CONTACT_DOOR_SECURITY_PATH,
+  CONTACT_DOOR_CANONICAL_PATH,
+  CONTACT_DOOR_SCHEMA_PATH,
+  CONTACT_DOOR_GUIDE_PATH,
+  CONTACT_DOOR_SVG_PATH,
+  CONTACT_DOOR_VCARD_PATH,
+]);
+const CONTACT_DOOR_MUTABLE_PATHS = new Set([
+  CONTACT_DOOR_PAGE_PATH,
+  CONTACT_DOOR_ALIAS_PATH,
+  CONTACT_DOOR_SECURITY_PATH,
+]);
+const CONTACT_DOOR_MEDIA_TYPES = new Map([
+  [CONTACT_DOOR_PAGE_PATH, "text/html; charset=utf-8"],
+  [CONTACT_DOOR_ALIAS_PATH, "application/json; charset=utf-8"],
+  [CONTACT_DOOR_SECURITY_PATH, "text/plain; charset=utf-8"],
+  [CONTACT_DOOR_CANONICAL_PATH, "application/json; charset=utf-8"],
+  [CONTACT_DOOR_SCHEMA_PATH, "application/schema+json; charset=utf-8"],
+  [CONTACT_DOOR_GUIDE_PATH, "text/markdown; charset=utf-8"],
+  [CONTACT_DOOR_SVG_PATH, "image/svg+xml"],
+  [CONTACT_DOOR_VCARD_PATH, "text/vcard; charset=utf-8"],
+]);
+const CONTACT_DOOR_IMMUTABLE_CACHE =
+  "public, max-age=31536000, immutable, no-transform";
+const CONTACT_DOOR_MUTABLE_CACHE = "no-cache, no-transform";
 const RESEARCH_OBSERVATORY_PATH = "/research.json";
 const RESEARCH_OBSERVATORY_PAGE_PATH = "/observatory/";
 const RESEARCH_OBSERVATORY_GUIDE_PATH = "/RESEARCH-OBSERVATORY-v0.1.md";
@@ -885,6 +922,105 @@ function addAestheticPluralityMakingAtlasLinks(headers) {
     AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_LINK,
     AESTHETIC_PLURALITY_MAKING_ATLAS_GUIDE_LINK,
   ].join(", "));
+}
+
+function contactDoorLinks(path) {
+  if (path === CONTACT_DOOR_PAGE_PATH) {
+    return [
+      `<${CONTACT_DOOR_ALIAS_PATH}>; rel="alternate"; type="application/json"`,
+      `<${CONTACT_DOOR_CANONICAL_PATH}>; rel="alternate"; type="application/json"`,
+      `<${CONTACT_DOOR_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+      `<${CONTACT_DOOR_VCARD_PATH}>; rel="alternate"; type="text/vcard"`,
+    ];
+  }
+  if (path === CONTACT_DOOR_ALIAS_PATH) {
+    return [
+      `<${CONTACT_DOOR_CANONICAL_PATH}>; rel="alternate"; type="application/json"`,
+      `<${CONTACT_DOOR_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+    ];
+  }
+  if (path === CONTACT_DOOR_CANONICAL_PATH) {
+    return [
+      `<${CONTACT_DOOR_SCHEMA_PATH}>; rel="describedby"; type="application/schema+json"`,
+    ];
+  }
+  if (path === CONTACT_DOOR_SVG_PATH || path === CONTACT_DOOR_VCARD_PATH) {
+    return [
+      `<${CONTACT_DOOR_CANONICAL_PATH}>; rel="describedby"; type="application/json"`,
+      `<${CONTACT_DOOR_GUIDE_PATH}>; rel="service-doc"; type="text/markdown"`,
+    ];
+  }
+  return [];
+}
+
+function contactDoorAcceptsAssetMedia(path, assetType) {
+  if (path === CONTACT_DOOR_PAGE_PATH) return assetType === "text/html";
+  if (path === CONTACT_DOOR_ALIAS_PATH || path === CONTACT_DOOR_CANONICAL_PATH) {
+    return assetType === "application/json";
+  }
+  if (path === CONTACT_DOOR_SCHEMA_PATH) {
+    return assetType === "application/json" || assetType === "application/schema+json";
+  }
+  if (path === CONTACT_DOOR_GUIDE_PATH || path === CONTACT_DOOR_SECURITY_PATH) {
+    return assetType === "text/plain" || assetType === "text/markdown";
+  }
+  if (path === CONTACT_DOOR_SVG_PATH) return assetType === "image/svg+xml";
+  if (path === CONTACT_DOOR_VCARD_PATH) {
+    return assetType === "text/vcard" || assetType === "text/x-vcard" ||
+      assetType === "text/plain";
+  }
+  return false;
+}
+
+function contactDoorAssetResponse(request, asset, path) {
+  const headers = new Headers(asset.headers);
+  const assetType = (asset.headers.get("content-type") || "")
+    .split(";", 1)[0].trim().toLowerCase();
+  const exact = asset.status === 200 && contactDoorAcceptsAssetMedia(path, assetType);
+  headers.set("access-control-allow-origin", "*");
+  headers.set("cache-control", exact
+    ? CONTACT_DOOR_MUTABLE_PATHS.has(path)
+      ? CONTACT_DOOR_MUTABLE_CACHE
+      : CONTACT_DOOR_IMMUTABLE_CACHE
+    : "no-store");
+  headers.set("x-content-type-options", "nosniff");
+  headers.delete("link");
+  headers.delete("set-cookie");
+  if (exact) {
+    headers.set("content-type", CONTACT_DOOR_MEDIA_TYPES.get(path));
+    for (const value of contactDoorLinks(path)) headers.append("link", value);
+  }
+  addDiscoveryLinks(headers, true);
+  if (exact && path === CONTACT_DOOR_PAGE_PATH) {
+    headers.set("content-security-policy", [
+      "default-src 'none'",
+      "base-uri 'none'",
+      "connect-src 'none'",
+      "font-src 'none'",
+      "form-action 'none'",
+      "frame-ancestors 'none'",
+      "img-src 'self'",
+      "object-src 'none'",
+      "script-src 'none'",
+      "style-src 'unsafe-inline'",
+    ].join("; "));
+    headers.set("permissions-policy", [
+      "accelerometer=()", "autoplay=()", "camera=()", "display-capture=()",
+      "geolocation=()", "gyroscope=()", "magnetometer=()", "microphone=()",
+      "payment=()", "usb=()",
+    ].join(", "));
+    headers.set("referrer-policy", "no-referrer");
+    headers.set("x-frame-options", "DENY");
+  }
+  if (exact && path === CONTACT_DOOR_SVG_PATH) {
+    headers.set("content-security-policy",
+      "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; sandbox");
+  }
+  return new Response(request.method === "HEAD" ? null : asset.body, {
+    status: asset.status,
+    statusText: asset.statusText,
+    headers,
+  });
 }
 
 function addResearchObservatoryLinks(headers) {
@@ -1723,6 +1859,19 @@ export function createKingdomWorker(options = {}) {
     const includeRights = hasKingdomRightsAssets(url);
     const accept = (request.headers.get("accept") || "").toLowerCase();
 
+    if (includeRights && CONTACT_DOOR_PATHS.has(url.pathname) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, {
+        status: 405,
+        headers: {
+          "access-control-allow-origin": "*",
+          "allow": "GET, HEAD",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
+
     if (includeRights && REALITY_INFLUENCE_PATHS.has(url.pathname) &&
         request.method !== "GET" && request.method !== "HEAD") {
       return new Response(null, {
@@ -1964,6 +2113,10 @@ export function createKingdomWorker(options = {}) {
       });
     }
     const asset = await env.ASSETS.fetch(request);
+    if (includeRights && CONTACT_DOOR_PATHS.has(url.pathname) &&
+        (request.method === "GET" || request.method === "HEAD")) {
+      return contactDoorAssetResponse(request, asset, url.pathname);
+    }
     const protectsKingdomHtml = includeRights &&
       (asset.headers.get("content-type") || "").toLowerCase().includes("text/html");
     const servesResearchObservatoryPage = protectsKingdomHtml &&

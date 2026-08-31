@@ -1,0 +1,6 @@
+# KINGDOM OS vulnerability disclosure contact
+Contact: mailto:security@thekingdom.dev
+Policy: https://thekingdom.dev/contact/#security
+Canonical: https://thekingdom.dev/.well-known/security.txt
+Preferred-Languages: en, zh-Hant, zh-Hans
+Expires: 2027-02-28T23:59:59Z
