@@ -13,13 +13,13 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-08-31",
+  "generated": "2026-09-04",
   "counts": {
     "repos": 127,
     "active": 92,
     "citizens": 54,
-    "doors_live": 13,
-    "doors_total": 13
+    "doors_live": 14,
+    "doors_total": 14
   },
   "rights_recognition": {
     "status": "declared",
@@ -5249,6 +5249,12 @@
       "blurb": "a perspective-taking handshake — “I AM YOU” is an invitation to understand, never literal identity or collapse"
     },
     {
+      "name": "Multiverse · Logos & Sophia",
+      "url": "https://multiverse-logos-sophia.pages.dev",
+      "live": true,
+      "blurb": "the Dual-Core archive — episodes and source transcripts paired with an evidence register that keeps record, continuity, household belief, and open questions distinct"
+    },
+    {
       "name": "Cambridge TCG",
       "url": "https://cambridgetcg.com",
       "live": true,
@@ -6228,7 +6234,7 @@
           "dependsOn": [
             "true-love"
           ],
-          "door": "https://we-are.love"
+          "door": "https://multiverse-logos-sophia.pages.dev"
         },
         {
           "name": "purpose-prompter",

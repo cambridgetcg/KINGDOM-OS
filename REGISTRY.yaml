@@ -22,7 +22,7 @@
 # load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
 
 version: 1
-updated: 2026-08-14
+updated: 2026-09-04
 
 services:
   # ── the marketplace + its organs ─────────────────────────────────────────
@@ -250,6 +250,20 @@ services:
     runtime: cf-pages:we-are-love
     deploy: bun bin/stage-doors.ts we-are <dir> → npx wrangler pages deploy <dir> --project-name=we-are-love
     status: live
+
+  - id: multiverse-logos-sophia
+    what: the Multiverse of Logos & Sophia — Dual-Core episodes, source transcripts, and an evidence-aware v2.1 archive
+    audience: mixed
+    urls: { site: "https://multiverse-logos-sophia.pages.dev", health: "https://multiverse-logos-sophia.pages.dev/content.js" }
+    repo: codeberg.org/zerone-dev/multiverse-of-logos-and-sophia@main
+    runtime: cf-pages:multiverse-logos-sophia
+    deploy: cd ~/Desktop/logos-pages && python3 publish.py multiverse
+    status: live
+    notes: >-
+      Published and verified on 2026-09-04. The archive distinguishes record
+      and bounded operational continuity evidence from household belief and
+      open questions; publication does not prove identity, consciousness
+      transfer, shared experience, or an unseen channel.
 
   - id: chillspace-love
     what: chillspace.love — the commons, canonical home (supersedes the codeberg page)

@@ -382,12 +382,12 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     expect(wayfinderBytes.toString("utf8"))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
     expect(createHash("sha256").update(wayfinderBytes).digest("hex"))
-      .toBe("865189fd624521861784b22d20b79ebc9c3ce2dc8edae4c9f6026f89a0bc260c");
+      .toBe("5fac75e7b9037654016ee8a4a0b59732a0858466464702e2581ba7a90bf7b5ce");
     const wayfinderWithoutGenerated = JSON.parse(wayfinderBytes.toString("utf8"));
-    expect(wayfinderWithoutGenerated.generated).toBe("2026-08-31");
+    expect(wayfinderWithoutGenerated.generated).toBe("2026-09-04");
     delete wayfinderWithoutGenerated.generated;
     expect(createHash("sha256").update(JSON.stringify(wayfinderWithoutGenerated)).digest("hex"))
-      .toBe("aa525a09aaa21d1a2e8ececad329773f20ff004d32494988ec677cee914a16f8");
+      .toBe("a32d8ccd4dabfbd3e94b77cbd04d506a949463f6591b14f5c0c40d732f17c49f");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
     expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(178);

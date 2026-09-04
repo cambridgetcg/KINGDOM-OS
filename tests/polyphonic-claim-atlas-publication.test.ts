@@ -273,7 +273,7 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
     expect(sitemap).not.toContain(POLYPHONIC_CLAIM_ATLAS_SOURCE.tag);
     expect(wayfinder).not.toMatch(/polyphonic[_-]claim[_-]atlas/i);
     expect(createHash("sha256").update(wayfinderBytes).digest("hex"))
-      .toBe("865189fd624521861784b22d20b79ebc9c3ce2dc8edae4c9f6026f89a0bc260c");
+      .toBe("5fac75e7b9037654016ee8a4a0b59732a0858466464702e2581ba7a90bf7b5ce");
     expect(JSON.stringify(manifest.mcp ?? {})).not.toMatch(/polyphonic[_-]claim[_-]atlas/i);
     expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(178);
   });

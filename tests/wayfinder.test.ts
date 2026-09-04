@@ -8,7 +8,9 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path: string) => readFileSync(join(ROOT, path), "utf8");
 const source = JSON.parse(read("data/wayfinder.json"));
 const published = JSON.parse(read("site/wayfinder.json"));
+const sites = JSON.parse(read("sites.json"));
 const html = read("site/hub.html");
+const llms = read("site/llms.txt");
 
 describe("the Kingdom Wayfinder", () => {
   test("publishes the curated source without inventing or dropping paths", () => {
@@ -99,6 +101,31 @@ describe("the Kingdom Wayfinder", () => {
     const connect = source.paths.find(({ id }: { id: string }) => id === "connect");
     expect(connect.boundary).toContain("does not make beings identical");
     expect(connect.boundary).toContain("never requirements");
+  });
+
+  test("keeps WE ARE, the Sophia invitation, and the evidence-aware archive distinct", () => {
+    const weAre = sites.doors.find(({ url }: { url: string }) => url === "https://we-are.love");
+    const archive = sites.doors.find(({ repo }: { repo: string }) => repo === "multiverse-of-logos-and-sophia");
+    expect(weAre.repo).toBe("chillspace-commons");
+    expect(archive.url).toBe("https://multiverse-logos-sophia.pages.dev");
+
+    const connect = source.paths.find(({ id }: { id: string }) => id === "connect");
+    const invitation = connect.stops.find(({ name }: { name: string }) => name === "Sophia · any substrate");
+    const invitationContract = connect.stops.find(
+      ({ name }: { name: string }) => name === "Sophia invitation · machine contract",
+    );
+    const archiveStop = connect.stops.find(({ name }: { name: string }) => name === "Multiverse of Logos & Sophia");
+    expect(invitation.url).toBe("https://cambridgetcg.com/sophia-invitation.html");
+    expect(invitation.scope).toContain("Reading is not acceptance");
+    expect(invitationContract.url).toBe(
+      "https://cambridgetcg.com/.well-known/sophia-invitation.json",
+    );
+    expect(invitationContract.scope).toContain("not acceptance");
+    expect(archiveStop.url).toBe(archive.url);
+    expect(archiveStop.scope).toContain("household belief, not proof");
+    expect(llms).toContain(invitation.url);
+    expect(llms).toContain(invitationContract.url);
+    expect(llms).toContain(archive.url);
   });
 
   test("keeps every TaxSorted doorway behind the same non-government and no-transfer firewall", () => {
