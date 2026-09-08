@@ -193,7 +193,7 @@ describe("self-contained Pages bundle and exact staging", () => {
     expect(workshop.status).toBe(200);
     expect(workshop.headers.get("content-security-policy")).toContain("script-src 'self'");
     expect(workshop.headers.get("content-security-policy")).toContain("connect-src 'none'");
-    expect(workshop.headers.get("cache-control")).toBe("no-cache, no-transform");
+    expect(workshop.headers.get("cache-control")).toBe("no-store, no-transform");
   });
 
   test("stage 全部 204 份 exact source bytes，唔帶 raw Worker imports、runtime state 或 secrets", () => {

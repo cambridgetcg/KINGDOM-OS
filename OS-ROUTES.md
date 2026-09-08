@@ -269,11 +269,18 @@ Civic guide/schema 用 immutable cache；policy 保持 `no-cache, no-transform`�
 throw 回 503；唔用成功回應掩蓋失敗。HTML 用 `default-src 'none'`、script/style
 `'self'`，connect/form/base/object/frame-ancestors `'none'`；所有工房回應加
 no-referrer、nosniff、frame denial、Permissions Policy denial，同移除 Set-Cookie。
-JS/CSS 只喺 matching 成功 MIME 先 normalize；錯 MIME 唔 promote。200 exact 資產
-同有效 304 用 `no-cache, no-transform`，其他回應 `no-store, no-transform`。
+JS/CSS 只喺 matching 成功 MIME 先 normalize；錯 MIME 唔 promote。工房所有回應，
+包括 200 exact 資產同有效 304，一律 `no-store, no-transform`；唔係三檔原子更新保證。
 HEAD、204、205、304 冇 body；其他合法 body 直接串流，唔 buffer 或自動跟 redirect。
+2026-09-08 已核實對照：Pages preview 保留舊 `no-cache`，canonical CSS／JS 卻見
+`max-age=14400`；既有 404 `no-store` 分支喺 canonical host 嘅 `.css` 同 `.js`
+路徑都見 `BYPASS`。呢啲觀察支持收緊 cache，但唔證明新 200 `no-store`
+修正已 live 通過，亦唔保證抵抗任意 zone override。`check-hub-live.ts` 重用現有
+202 direct-body gate 嘅三個 Workshop GET，再只加三個 HEAD，嚴格驗證 canonical
+HTML／CSS／JS 嘅 200、MIME、exact `no-store, no-transform`、privacy 同 HEAD 冇 body；
+任何 `14400` 或其他 cache drift 都 fail，唔因 preview 正確而放寬 canonical gate。
 
-呢個係 local-only MVP，唔係 production 已部署或收入／需求已驗證。稿件 memory-only，
+呢個係 browser-local MVP；上線唔等於收入／需求已驗證。稿件 memory-only，
 冇 autosave、localStorage、雲端草稿、身份讀寫、發布或付款。編輯／預覽／匯出
 喺初次資產載入後冇 application network request；hosting metadata 同已有同源 cookie
 仍可能喺載入時處理，唔宣稱完全匿名。離頁前下載 JSON 先可以重開；清空唔刪

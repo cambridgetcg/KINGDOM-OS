@@ -58,7 +58,7 @@ function expectPrivacy(response: Response) {
 }
 
 describe("Workshop 獨立 edge 邊界", () => {
-  test("三個精確資產 GET／HEAD 有正確 MIME、mutable cache 同私隱 headers", async () => {
+  test("三個精確資產 GET／HEAD 有正確 MIME、no-store 同私隱 headers", async () => {
     const fixture = fixtureWorker();
     for (const [path, media, output] of ASSETS) {
       for (const method of ["GET", "HEAD"]) {
@@ -66,7 +66,7 @@ describe("Workshop 獨立 edge 邊界", () => {
         const response = await fixture.worker.fetch(request(path, method), env);
         expect(response.status).toBe(200);
         expect(response.headers.get("content-type")).toBe(output);
-        expect(response.headers.get("cache-control")).toBe("no-cache, no-transform");
+        expect(response.headers.get("cache-control")).toBe("no-store, no-transform");
         expect(await response.text()).toBe(method === "HEAD" ? "" : BYTES);
         if (method === "HEAD") expect(response.body).toBeNull();
         expectPrivacy(response);
@@ -86,7 +86,7 @@ describe("Workshop 獨立 edge 邊界", () => {
     const { worker } = fixtureWorker();
     const script = await worker.fetch(request("/workshop/workshop.js"), assetEnv("Text/JavaScript; charset=UTF-8"));
     expect(script.headers.get("content-type")).toBe("text/javascript; charset=utf-8");
-    expect(script.headers.get("cache-control")).toBe("no-cache, no-transform");
+    expect(script.headers.get("cache-control")).toBe("no-store, no-transform");
     for (const [path, media] of [["/workshop/workshop.js", "text/html"], ["/workshop/workshop.css", "text/html"], ["/workshop/", "application/json"]]) {
       const response = await worker.fetch(request(path!), assetEnv(media!));
       expect(response.status).toBe(200);
@@ -206,7 +206,7 @@ describe("Workshop 獨立 edge 邊界", () => {
     expect(fixture.upstreamCalls).toBe(0);
   });
 
-  test("304 有／冇 MIME 都係合法 bodyless mutable revalidation，保留 ETag 同 HTML CSP", async () => {
+  test("304 有／冇 MIME 都保留合法 bodyless 回應、ETag 同 HTML CSP，收緊成 no-store", async () => {
     const { worker } = fixtureWorker();
     for (const [path, media] of ASSETS) {
       for (const inputMedia of [media, null]) {
@@ -216,7 +216,7 @@ describe("Workshop 獨立 edge 邊界", () => {
           expect(response.body).toBeNull();
           expect(await response.text()).toBe("");
           expect(response.headers.get("etag")).toBe('"synthetic-version"');
-          expect(response.headers.get("cache-control")).toBe("no-cache, no-transform");
+          expect(response.headers.get("cache-control")).toBe("no-store, no-transform");
           if (path === "/workshop/") expect(response.headers.get("content-security-policy")).toContain("script-src 'self'");
           expectPrivacy(response);
         }

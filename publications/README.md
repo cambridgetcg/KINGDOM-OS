@@ -347,7 +347,10 @@ publication family、ledger entry 或公開 draft schema route。現有 160 個 
 entries 同 source bytes 唔改。三個檔案一齊 stage／更新／retire；retire 時同時移除
 三個 staging entries、mutable 分類、Workshop Worker routing、Wayfinder 同 sitemap
 入口，再生 dashboard／hub／machine discovery；唔改其他 publication family。
-`no-cache, no-transform` 係 mutable cache 政策，唔係三檔原子版本保證。
+`no-store, no-transform` 係三檔嘅 mutable cache 政策，唔係原子版本保證；canonical
+GET／HEAD 必須 exact 符合，唔接受 `max-age=14400`。舊 preview／canonical 對照同
+404 `no-store`／`BYPASS` control 見 `OS-ROUTES.md` Workshop 段；200 `no-store` 必須
+喺每次部署後重新 live 驗證，唔聲稱可抵抗任意 zone override。
 
 工房係手動寫作、預覽同 HTML／Markdown／JSON 下載；只有 JSON 保證可重新編輯。
 稿件只喺當頁 memory，冇 localStorage、autosave、雲端草稿、身份讀寫、付款或發布。
