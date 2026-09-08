@@ -1,10 +1,21 @@
 # Restored KINGDOM OS routes
 
 This repository is the source of the live system console and its machine
-readings:
+readings. Civic 新入口目前係 local implementation，唔係已部署／可寫嘅聲明；
+本地 launch、production 另批同 shared Worker 打包邊界見 `DOMAINS-SETUP.md`。
 
 | Route | Kind | Contract |
 |---|---|---|
+| `/` | staged HTML / negotiated JSON | Public dashboard with searchable/filterable map and readable list from `site/dashboard.html`; declared build-time state remains distinct from measured health, and explicit JSON negotiation still serves `guest.json`, never creates a participant |
+| `/atlas.html` | staged HTML | Existing research atlas from `site/hub.html`; original research sections remain readable |
+| `/meet/` | staged HTML | Voluntary public square; a post requires a separate explicit action and writable Civic runtime |
+| `/citizens/` | staged HTML | Voluntarily listed Civic profiles, not the legacy GitHub `citizen-*` census |
+| `/join/` | staged HTML | Opt-in declaration and profile management; reading does not register anyone or grant identity/authority |
+| `/civic/dashboard.css`, `/civic/dashboard.js` | staged CSS / JS | Same-origin generated interface assets; no runtime state or secrets |
+| `/api/civic/*` | edge JSON | Closed Civic API contract; status and public reads are separate from explicit mutations; no OS memo/cache or HTML fallback |
+| `/civic-policy.json` | staged JSON | Mutable limits, retention and non-grants policy; runtime status determines actual availability |
+| `/schemas/civic/0.1.json` | staged JSON Schema | New ledgered immutable Civic wire schema |
+| `/CIVIC-v0.1.md` | staged Markdown | New ledgered immutable Civic v0.1 guide; never reclassify a versioned guide as mutable |
 | `/os/` | staged HTML | Human console; recovered artifact with reviewed security and truth hardening |
 | `/os.json` | edge JSON | Live identity, door, law, protocol, and trust readings |
 | `/packages.json` | edge JSON | Live npm metadata and weekly downloads for nine named packages |
@@ -233,8 +244,17 @@ The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
 and `Cache-Control: public, max-age=600`. HEAD has the same status and headers
 with no body. The lost deployment answered the dynamic routes for methods
-besides GET too; that observable parity is retained. Unknown paths and every
+besides GET too; that observable parity is retained. Unknown non-Civic paths and every
 shared-door hostname still pass to `env.ASSETS`.
+
+Civic dispatch 只喺 Kingdom hosts／Pages previews，或明確 `CIVIC_LOCAL=true`
+嘅 loopback preview 啟用。API 命中 `/api/civic` namespace 後唔會落 HTML fallback；
+未知 path 回 JSON 404，HEAD 冇 body，缺 D1 回 honest 503/null counts。
+API responses 係 `no-store`，唔沿用上面 OS 十分鐘 cache。
+Dashboard／meet／citizens／join HTML 用同源 script/connect/form CSP、no-referrer
+同 no-transform；Contact Door 繼續係 script/connect/form `'none'`，唔借新互動開權。
+Civic guide/schema 用 immutable cache；policy 保持 `no-cache, no-transform`；
+錯 media type／error responses 唔會被 promote 成 immutable successful document。
 
 ## Provenance
 
@@ -250,11 +270,15 @@ Before republication, the inline HTML encoder was hardened to escape both
 quote characters as well as `&<>`, because live GitHub descriptions also enter
 a quoted title attribute. Copy that claimed nothing was hand-typed was corrected
 to distinguish live measurements from source-controlled monitored rosters. The
-reviewed artifact now staged from `pages-content/os/index.html` is:
+reviewed artifact originally staged from `pages-content/os/index.html` was:
 
 ```
 hardened sha256:2f50ff6bffd1e0bc830f1e82c95560cda3dae536c3066615d2cd1c6fa707bddc
 ```
+
+2026-09-08 本地整合只為此 mutable console 加 dashboard／atlas navigation，
+目前 source SHA-256 係 `30880bd607ea4fd014e3d5f8888b5ed78b1785adcd3f9e9d55debc10e9fa705e`；
+上面兩個 hash 保留歷史 provenance，唔聲稱目前 source 同舊 artifact byte-identical。
 
 The deployed worker bundle was not present in Git and could not be recovered
 through the available deployment metadata. The worker in
@@ -351,9 +375,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 192-asset upload contract (158 ledgered immutable/versioned assets and
-34 mutable assets; 190 direct public bodies, 178 sitemap URLs, 161 manifest
-entry points, 161 guest actions, and 40 public schema routes; eighteen atlases,
+locks the 201-asset upload contract (160 ledgered immutable/versioned assets and
+41 mutable assets; 199 direct public bodies, 185 sitemap URLs, 169 manifest
+entry points, 169 guest actions, and 41 public schema routes; eighteen atlases,
 four primary lab JSON routes plus the Shape & Resonance manifest/media, one
 experiment route, one activation, and thirty-five active retirement families,
 including the standalone FREEDOM Loop, Lock & Key Atlas, immutable
@@ -375,8 +399,28 @@ runbook additionally refuse removal or mutation of a previously committed
 ledger entry, while allowing its route to cease being staged; changing a source
 and its declared hash together is not a correction.
 `tests/advertised-assets.test.ts`
-recognizes the three worker routes so a dynamic URL cannot be mistaken for a
-staged file.
+recognizes the three OS worker routes and exact Civic API route shapes so a dynamic
+URL cannot be mistaken for a staged file; misspelled Civic paths are rejected.
+`tests/civic-integration.test.ts` covers dispatch, unavailable status, separate Civic
+and Contact CSP, immutable guide/schema headers, 199 direct-body source mappings,
+self-contained bundle execution, cross-checkout deterministic output, build failure
+without overwrite, and all 201 staged bytes. `tests/immutable-publications.test.ts`
+compares the two new Civic entries with exact implementation base
+`7a99cc685048a525efc6e42cc875b7db3e94f0e0`, retaining all 158 earlier objects and
+source bytes. Local snapshot/append-only evidence is not the committed release CLI
+proof; with HEAD still equal to that base, `--base` remains fail-closed.
+`stage-doors.ts` separately awaits `buildPagesWorker(sourceRoot)` to write the
+self-contained `site/_worker.js`, then exact-copies it, rather than staging
+unbundled source. It refuses build/output directory overlap (including resolved
+symlink aliases), checks the empty output before and after the asynchronous
+build, and keeps a previous bundle/upload untouched on bundle failure.
+`tests/stage-doors.test.ts` verifies those boundaries with local fixture roots;
+it does not verify a real commons checkout or any other door online.
+`CLAUDE.md` remains the pre-Civic research compatibility baseline. Current
+publication counts belong to this document, `DOMAINS-SETUP.md`, and
+`publications/README.md`; a passing baseline check does not certify a current
+release. Production stays manual and separately approved, using the clean,
+detached exact-origin release procedure in `DOMAINS-SETUP.md`.
 The ZERO Empty Seat record reuses the inert Phenomena DEEP project profile.
 Its historical notation, operational nothing, modern mathematical identities,
 typed information states, `NO_ACTION`, and opt-in metaphysical readings remain

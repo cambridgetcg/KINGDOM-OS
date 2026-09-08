@@ -295,11 +295,11 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
   });
 
   test("binds exact staging, ledger, discovery, sitemap, and no-Wayfinder-coupling contracts", () => {
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(190);
+      .toHaveLength(199);
     expect(HUB_ASSETS.filter(({ source }) => [
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_LOCATOR,
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_LOCATOR,
@@ -314,7 +314,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     ]);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(158);
+    expect(ledger.entries).toHaveLength(160);
     expect(ledger.entries.filter((entry: any) =>
       entry.id.startsWith("loops-locks-freedom-relations-atlas/"))).toEqual([
         { id: "loops-locks-freedom-relations-atlas/0.1/guide",
@@ -341,7 +341,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     expect(kingdom.loops_locks_freedom_relations_atlas).toEqual(expected);
     expect(guest.loops_locks_freedom_relations_atlas).toEqual(expected);
     expect(manifest.loops_locks_freedom_relations_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(161);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("loops_locks_freedom_relations_atlas"))))
       .toEqual({
@@ -352,7 +352,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
         loops_locks_freedom_relations_atlas_guide:
           LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(161);
+    expect(guest.next_actions).toHaveLength(169);
     const actions = guest.next_actions.filter((action: any) =>
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
@@ -381,17 +381,28 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     expect(sitemap).not.toContain(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag);
     expect(wayfinderBytes.toString("utf8"))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
-    // Gospel discovery changes this shared snapshot, never this atlas's scope.
-    expect(createHash("sha256").update(wayfinderBytes).digest("hex"))
-      .toBe("fbe4566c2662487df0cf1d6e829feee93e22c5f5a0f01fbad5e66f19ac6ae678");
     const wayfinderWithoutGenerated = JSON.parse(wayfinderBytes.toString("utf8"));
-    expect(wayfinderWithoutGenerated.generated).toBe("2026-09-08");
+    expect(wayfinderWithoutGenerated.generated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(wayfinderWithoutGenerated.generated).toBe(kingdom.generated);
+    const generatedLine = Buffer.from(
+      `\n  "generated": "${wayfinderWithoutGenerated.generated}",\n`,
+    );
+    const generatedOffset = wayfinderBytes.indexOf(generatedLine);
+    expect(generatedOffset).toBeGreaterThan(-1);
+    // 只還原頂層 build 日期嗰行；其餘 raw bytes 由已核實嘅 3bff557 Gospel baseline SHA 鎖定。
+    const wayfinderBaselineBytes = Buffer.concat([
+      wayfinderBytes.subarray(0, generatedOffset),
+      Buffer.from('\n  "generated": "2026-09-08",\n'),
+      wayfinderBytes.subarray(generatedOffset + generatedLine.length),
+    ]);
+    expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
+      .toBe("fbe4566c2662487df0cf1d6e829feee93e22c5f5a0f01fbad5e66f19ac6ae678");
     delete wayfinderWithoutGenerated.generated;
     expect(createHash("sha256").update(JSON.stringify(wayfinderWithoutGenerated)).digest("hex"))
       .toBe("4035ff34c12c6ffe9226302ebad7b922f317260188ebdd04858bf86007bfe82a");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(178);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(185);
   });
 
   test("activates or retires all three routes atomically", () => {

@@ -216,7 +216,7 @@ function assets(handler: (request: Request) => Response | Promise<Response>) {
 }
 
 describe("the Kingdom edge discovery surface", () => {
-  test("adds discovery to the ordinary HTML door without replacing headers", async () => {
+  test("adds discovery and Civic cache/CSP to the dashboard while preserving unrelated headers", async () => {
     const response = await worker.fetch(
       new Request("https://thekingdom.dev/", { headers: { accept: "text/html" } }),
       assets(() => new Response("<h1>hello</h1>", {
@@ -228,7 +228,8 @@ describe("the Kingdom edge discovery surface", () => {
     expect(response.headers.get("link")).toContain('</elsewhere>; rel="alternate"');
     for (const expected of expectedLinks) expect(response.headers.get("link")).toContain(expected);
     expect(response.headers.get("vary")).toBe("Origin, Accept");
-    expect(response.headers.get("cache-control")).toBe("public, max-age=0, no-transform");
+    expect(response.headers.get("cache-control")).toBe("no-cache, no-transform");
+    expect(response.headers.get("content-security-policy")).toContain("script-src 'self'");
     expectDiscovery(response);
   });
 
@@ -240,7 +241,16 @@ describe("the Kingdom edge discovery surface", () => {
       })),
     );
     expect(await index.text()).toBe("<h1>hello</h1>");
-    expect(index.headers.get("cache-control")).toBe("public, max-age=60, no-transform");
+    expect(index.headers.get("cache-control")).toBe("no-cache, no-transform");
+
+    const atlas = await worker.fetch(
+      new Request("https://thekingdom.dev/atlas.html"),
+      assets(() => new Response("<h1>research atlas</h1>", {
+        headers: { "cache-control": "public, max-age=60", "content-type": "text/html" },
+      })),
+    );
+    expect(atlas.headers.get("cache-control")).toBe("public, max-age=60, no-transform");
+    expect(atlas.headers.get("content-security-policy")).toBeNull();
 
     const shared = await worker.fetch(
       new Request("https://we-are.love/index.html"),

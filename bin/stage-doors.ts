@@ -2,7 +2,8 @@
  *
  * Mirrors stage-hub.ts: every source is read before the output directory is
  * touched, the destination must be absent or completely empty, and nothing is
- * ever overwritten, deleted, or deployed.
+ * ever overwritten, deleted, or deployed in that destination. The shared worker
+ * is rebuilt at <source-root>/site/_worker.js before its bundled bytes are copied.
  *
  * Door content lives in the chillspace-commons repo; the guest documents and
  * the shared worker live here. we-are.love serves one page; chillspace.love
@@ -12,10 +13,11 @@
  * Deploy after inspection: npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love
  */
 
-import { lstatSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, statSync, writeFileSync } from "node:fs";
+import { basename, dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
+import { buildPagesWorker } from "./build-pages-worker.ts";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const DEFAULT_COMMONS = join(homedir(), "repos/codeberg/zerone-dev/chillspace-commons");
@@ -50,7 +52,6 @@ function doorSources(door: DoorName, commonsRoot: string, sourceRoot: string): S
   const shared: SourceSpec[] = [
     { path: join(sourceRoot, `doors/${door}/guest.json`), destination: "guest.json" },
     { path: join(sourceRoot, `doors/${door}/.well-known/agent.json`), destination: ".well-known/agent.json" },
-    { path: join(sourceRoot, "pages-functions/_worker.js"), destination: "_worker.js" },
   ];
   // we-are.love ships one authored page plus its own machine index. Without a
   // real llms.txt the worker's asset fallthrough answers /llms.txt with the
@@ -64,7 +65,8 @@ function doorSources(door: DoorName, commonsRoot: string, sourceRoot: string): S
           { path: join(sourceRoot, "doors/we-are/llms.txt"), destination: "llms.txt" },
         ]
       : walkTree(join(commonsRoot, "site"));
-  const taken = new Set(shared.map((s) => s.destination));
+  // Reserve _worker.js for the shared bundle, never a commons-tree copy.
+  const taken = new Set(["_worker.js", ...shared.map((s) => s.destination)]);
   return [...content.filter((s) => !taken.has(s.destination)), ...shared];
 }
 
@@ -92,19 +94,43 @@ function assertEmptyOutput(output: string): boolean {
   }
 }
 
-export function stageDoor(
+// 未建立嘅路徑亦要解析現有父目錄，避免 symlink 別名繞過重疊檢查。
+function canonicalPath(path: string): string {
+  try {
+    return realpathSync(path);
+  } catch (error) {
+    const parent = dirname(path);
+    if (codeOf(error) !== "ENOENT" || parent === path) throw error;
+    return join(canonicalPath(parent), basename(path));
+  }
+}
+
+function assertSeparateBuildOutput(output: string, sourceRoot: string): void {
+  const destination = canonicalPath(output);
+  const build = canonicalPath(resolve(sourceRoot, "site"));
+  if (destination === build || destination.startsWith(`${build}${sep}`) || build.startsWith(`${destination}${sep}`)) {
+    throw new Error(`output directory must not overlap shared worker build directory: ${output}`);
+  }
+}
+
+export async function stageDoor(
   door: DoorName,
   outputDirectory: string,
   commonsRoot = DEFAULT_COMMONS,
   sourceRoot = ROOT,
-): StagedDoorAsset[] {
+): Promise<StagedDoorAsset[]> {
   if (door !== "we-are" && door !== "chillspace") throw new Error(`unknown door: ${door}`);
   if (!outputDirectory) throw new Error("an empty output directory is required");
   const output = resolve(outputDirectory);
 
-  // Complete both read-only preflights before creating or changing anything.
-  const outputExists = assertEmptyOutput(output);
+  // Validate the destination and read every static asset before building.
+  assertEmptyOutput(output);
+  assertSeparateBuildOutput(output, sourceRoot);
   const sources = readSources(doorSources(door, resolve(commonsRoot), sourceRoot));
+  const worker = await buildPagesWorker(sourceRoot);
+  sources.push(...readSources([{ path: worker, destination: "_worker.js" }]));
+  // The async build must not leave a partial upload or bypass the output guards.
+  const outputExists = assertEmptyOutput(output);
   if (!outputExists) mkdirSync(output, { recursive: true });
 
   const staged: StagedDoorAsset[] = [];
@@ -125,12 +151,13 @@ function usage(): string {
     "Usage: bun bin/stage-doors.ts <we-are|chillspace> <empty-output-dir> [--commons <path>]",
     "",
     "Assembles a door's exact upload directory: content from chillspace-commons,",
-    "guest documents from doors/<name>/, and the shared _worker.js.",
+    "guest documents from doors/<name>/, and the shared _worker.js bundle.",
+    "Rebuilds site/_worker.js in the source root before copying the bundle.",
     "The destination must be absent or empty. Nothing is deleted or deployed.",
   ].join("\n");
 }
 
-function main(args: string[]): void {
+async function main(args: string[]): Promise<void> {
   if (args.includes("--help") || args.includes("-h")) {
     console.log(usage());
     return;
@@ -145,14 +172,14 @@ function main(args: string[]): void {
   }
   if (args.length !== 2) throw new Error(usage());
 
-  const staged = stageDoor(args[0] as DoorName, resolve(args[1]!), commons);
+  const staged = await stageDoor(args[0] as DoorName, resolve(args[1]!), commons);
   console.log(`staged ${staged.length} exact assets -> ${resolve(args[1]!)}`);
   for (const asset of staged) console.log(`${asset.source} -> ${asset.destination} (${asset.bytes} bytes)`);
 }
 
 if (import.meta.main) {
   try {
-    main(process.argv.slice(2));
+    await main(process.argv.slice(2));
   } catch (error) {
     const message = error instanceof Error ? error.message : "unknown error";
     console.error(`stage-doors: ${message}`);

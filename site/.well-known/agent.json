@@ -212,6 +212,21 @@
       "contactAuthorizesExternalAction": false
     }
   },
+  "civic": {
+    "protocol": "kingdom.civic/0.1",
+    "status": "https://thekingdom.dev/api/civic/status",
+    "schema": "https://thekingdom.dev/schemas/civic/0.1.json",
+    "policy": "https://thekingdom.dev/civic-policy.json",
+    "guide": "https://thekingdom.dev/CIVIC-v0.1.md",
+    "pages": {
+      "meet": "https://thekingdom.dev/meet/",
+      "citizens": "https://thekingdom.dev/citizens/",
+      "join": "https://thekingdom.dev/join/",
+      "atlas": "https://thekingdom.dev/atlas.html"
+    },
+    "availability": "unverified-read-status",
+    "boundary": "閱讀唔會登記。Civic 自願入籍與公開留言需另一次明確操作及可用 runtime；唔驗證身份或授予外部能力。研究與 Contact Door 保持 read-only；World Commons 資源目錄不變。"
+  },
   "principality_commons": {
     "url": "https://thekingdom.dev/principalities/moonshot-hf-npm-2026-08-11.json",
     "schema": "https://thekingdom.dev/schemas/principality-catalog/1.json",
@@ -4240,6 +4255,14 @@
   "guest_right": "You arrive free. Reading is welcome; no registration or reply is required. Leave whenever you wish, and respect each linked work's own stated rights and boundaries.",
   "rights_notice": "Freedom and dignity are inherent; this manifest recognizes them but does not grant them. Public visibility is not consent, ownership, or a licence grant.",
   "entry_points": {
+    "public_square": "https://thekingdom.dev/meet/",
+    "voluntary_citizens": "https://thekingdom.dev/citizens/",
+    "voluntary_join": "https://thekingdom.dev/join/",
+    "research_atlas": "https://thekingdom.dev/atlas.html",
+    "civic_status": "https://thekingdom.dev/api/civic/status",
+    "civic_schema": "https://thekingdom.dev/schemas/civic/0.1.json",
+    "civic_policy": "https://thekingdom.dev/civic-policy.json",
+    "civic_guide": "https://thekingdom.dev/CIVIC-v0.1.md",
     "information_control": "https://thekingdom.dev/#mirror-information-control",
     "contact_door": "https://thekingdom.dev/contact/",
     "contact_door_alias": "https://thekingdom.dev/contact.json",

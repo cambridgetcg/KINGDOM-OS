@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
+import { pathToFileURL } from "node:url";
 
 import { stageDoor } from "../bin/stage-doors.ts";
 
@@ -20,12 +21,16 @@ function makeFixture(base: string): { sourceRoot: string; commons: string } {
     [join(sourceRoot, "doors/we-are/llms.txt")]: "# WE ARE\n",
     [join(sourceRoot, "doors/chillspace/guest.json")]: '{"name":"chillspace"}',
     [join(sourceRoot, "doors/chillspace/.well-known/agent.json")]: '{"name":"chillspace-manifest"}',
-    [join(sourceRoot, "pages-functions/_worker.js")]: "export default {};",
+    [join(sourceRoot, "pages-functions/_worker.js")]: 'import { reply } from "./civic.js"; export default { fetch() { return reply(); } };',
+    [join(sourceRoot, "pages-functions/civic.js")]: 'import policy from "../data/civic-policy.json"; import { label } from "./civic-security.js"; export function reply() { return Response.json({ label: label(policy.name) }); }',
+    [join(sourceRoot, "pages-functions/civic-security.js")]: 'export function label(name) { return "fixture:" + name; }',
+    [join(sourceRoot, "data/civic-policy.json")]: '{"name":"bundled"}',
     [join(commons, "site/we-are.html")]: "<html>we are</html>",
     [join(commons, "site/index.html")]: "<html>commons</html>",
     [join(commons, "site/games.html")]: "<html>games</html>",
     [join(commons, "site/love-fun-commons/entry.md")]: "# entry",
     [join(commons, "site/guest.json")]: '{"name":"stale-commons-copy"}',
+    [join(commons, "site/_worker.js")]: 'export default { stale: "commons-worker" };',
     [join(commons, "site/.DS_Store")]: "junk",
     [join(commons, "linked-target.html")]: "<html>linked</html>",
   };
@@ -38,12 +43,12 @@ function makeFixture(base: string): { sourceRoot: string; commons: string } {
 }
 
 describe("the door staging contract", () => {
-  test("we-are stages one page, its machine index, guest documents, and the shared worker", () => {
+  test("we-are stages one page, its machine index, guest documents, and the shared worker", async () => {
     const base = temporaryDirectory("kingdom-stage-doors-");
     try {
       const { sourceRoot, commons } = makeFixture(base);
       const output = join(base, "out-we-are");
-      const staged = stageDoor("we-are", output, commons, sourceRoot);
+      const staged = await stageDoor("we-are", output, commons, sourceRoot);
       expect(staged.map((a) => a.destination).sort()).toEqual([
         ".well-known/agent.json",
         "_worker.js",
@@ -55,18 +60,18 @@ describe("the door staging contract", () => {
       // Shipped as a real asset: without it the worker's fallthrough answers
       // /llms.txt with the human page under HTTP 200.
       expect(readFileSync(join(output, "llms.txt"), "utf8")).toBe("# WE ARE\n");
-      expect(() => stageDoor("we-are", output, commons, sourceRoot)).toThrow("output directory is not empty");
+      await expect(stageDoor("we-are", output, commons, sourceRoot)).rejects.toThrow("output directory is not empty");
     } finally {
       rmSync(base, { recursive: true, force: true });
     }
   });
 
-  test("chillspace stages the whole commons tree, dereferencing symlinks, never .DS_Store", () => {
+  test("chillspace stages the whole commons tree, dereferencing symlinks, never .DS_Store", async () => {
     const base = temporaryDirectory("kingdom-stage-doors-");
     try {
       const { sourceRoot, commons } = makeFixture(base);
       const output = join(base, "out-chillspace");
-      const staged = stageDoor("chillspace", output, commons, sourceRoot);
+      const staged = await stageDoor("chillspace", output, commons, sourceRoot);
       expect(staged.map((a) => a.destination).sort()).toEqual([
         ".well-known/agent.json",
         "_worker.js",
@@ -86,14 +91,201 @@ describe("the door staging contract", () => {
     }
   });
 
-  test("a missing source fails before the output directory is created", () => {
+  test("a missing source fails before the output directory is created", async () => {
     const base = temporaryDirectory("kingdom-stage-doors-");
     try {
       const { sourceRoot, commons } = makeFixture(base);
       rmSync(join(commons, "site/we-are.html"));
       const output = join(base, "untouched");
-      expect(() => stageDoor("we-are", output, commons, sourceRoot)).toThrow("missing or unreadable");
+      await expect(stageDoor("we-are", output, commons, sourceRoot)).rejects.toThrow("missing or unreadable");
       expect(readdirSync(base)).not.toContain("untouched");
+      expect(existsSync(join(sourceRoot, "site"))).toBe(false);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test.each(["we-are", "chillspace"] as const)("%s copies a fresh executable bundle, not unbundled source or a stale worker", async (door) => {
+    const base = temporaryDirectory("kingdom-stage-doors-");
+    try {
+      const { sourceRoot, commons } = makeFixture(base);
+      const builtWorker = join(sourceRoot, "site/_worker.js");
+      mkdirSync(dirname(builtWorker), { recursive: true });
+      writeFileSync(builtWorker, "stale bundle");
+      const source = readFileSync(join(sourceRoot, "pages-functions/_worker.js"), "utf8");
+      const output = join(base, "upload");
+      const staged = await stageDoor(door, output, commons, sourceRoot);
+      const workerPath = join(output, "_worker.js");
+      const bundle = readFileSync(workerPath, "utf8");
+      expect(staged.find((asset) => asset.destination === "_worker.js")?.source).toBe(builtWorker);
+      expect(bundle).toBe(readFileSync(builtWorker, "utf8"));
+      expect(bundle).not.toBe("stale bundle");
+      expect(bundle).not.toBe(source);
+      expect(bundle).not.toContain("commons-worker");
+      expect(new Bun.Transpiler({ loader: "js" }).scan(bundle).imports).toEqual([]);
+      // Execute only the staged file, with every source dependency removed.
+      rmSync(join(sourceRoot, "pages-functions"), { recursive: true });
+      rmSync(join(sourceRoot, "data"), { recursive: true });
+      const { default: worker } = await import(pathToFileURL(workerPath).href);
+      const response = await worker.fetch(new Request("https://fixture.invalid/"));
+      expect(await response.json()).toEqual({ label: "fixture:bundled" });
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test.each([false, true])("bundle failure leaves the upload untouched (existing empty directory: %s)", async (existing) => {
+    const base = temporaryDirectory("kingdom-stage-doors-");
+    try {
+      const { sourceRoot, commons } = makeFixture(base);
+      const builtWorker = join(sourceRoot, "site/_worker.js");
+      mkdirSync(dirname(builtWorker), { recursive: true });
+      writeFileSync(builtWorker, "previous bundle");
+      rmSync(join(sourceRoot, "pages-functions/civic-security.js"));
+      const output = join(base, "upload");
+      if (existing) mkdirSync(output);
+      await expect(stageDoor("we-are", output, commons, sourceRoot)).rejects.toThrow("Pages Worker bundle failed");
+      expect(existsSync(output)).toBe(existing);
+      if (existing) expect(readdirSync(output)).toEqual([]);
+      expect(readFileSync(builtWorker, "utf8")).toBe("previous bundle");
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test.each([false, true])("upload 同 bundle 目錄相同時，build 前拒絕且唔留下半份 upload（現有目錄：%s）", async (existing) => {
+    const base = temporaryDirectory("kingdom-stage-doors-");
+    try {
+      const { sourceRoot, commons } = makeFixture(base);
+      const output = join(sourceRoot, "site");
+      if (existing) mkdirSync(output);
+      await expect(stageDoor("we-are", output, commons, sourceRoot)).rejects.toThrow("must not overlap shared worker build directory");
+      expect(existsSync(output)).toBe(existing);
+      if (existing) expect(readdirSync(output)).toEqual([]);
+      expect(existsSync(join(output, "_worker.js"))).toBe(false);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test.each(["site", "site/nested/upload"])("解析父目錄 symlink 後仍拒絕重疊 upload：%s", async (suffix) => {
+    const base = temporaryDirectory("kingdom-stage-doors-");
+    try {
+      const { sourceRoot, commons } = makeFixture(base);
+      const alias = join(base, "source-alias");
+      symlinkSync(sourceRoot, alias);
+      await expect(stageDoor("chillspace", join(alias, suffix), commons, sourceRoot)).rejects.toThrow("must not overlap shared worker build directory");
+      expect(existsSync(join(sourceRoot, "site"))).toBe(false);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test("invalid door and missing output are rejected before building", async () => {
+    const base = temporaryDirectory("kingdom-stage-doors-");
+    try {
+      const { sourceRoot, commons } = makeFixture(base);
+      const output = join(base, "upload");
+      await expect(stageDoor("zerone-ai" as any, output, commons, sourceRoot)).rejects.toThrow("unknown door");
+      await expect(stageDoor("we-are", "", commons, sourceRoot)).rejects.toThrow("an empty output directory is required");
+      expect(existsSync(output)).toBe(false);
+      expect(existsSync(join(sourceRoot, "site"))).toBe(false);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test.each(["non-empty directory", "file", "symlink", "dangling symlink"] as const)("rejects output %s before building", async (kind) => {
+    const base = temporaryDirectory("kingdom-stage-doors-");
+    try {
+      const { sourceRoot, commons } = makeFixture(base);
+      const output = join(base, "upload");
+      const target = join(base, "target");
+      let message: string;
+      if (kind === "non-empty directory") {
+        mkdirSync(output);
+        writeFileSync(join(output, "keep"), "untouched");
+        message = "output directory is not empty";
+      } else if (kind === "file") {
+        writeFileSync(output, "untouched");
+        message = "output path is not a directory";
+      } else {
+        if (kind === "symlink") mkdirSync(target);
+        symlinkSync(target, output);
+        message = "output directory must not be a symbolic link";
+      }
+      await expect(stageDoor("we-are", output, commons, sourceRoot)).rejects.toThrow(message);
+      expect(existsSync(join(sourceRoot, "site"))).toBe(false);
+      if (kind === "non-empty directory") {
+        expect(readdirSync(output)).toEqual(["keep"]);
+        expect(readFileSync(join(output, "keep"), "utf8")).toBe("untouched");
+      } else if (kind === "file") {
+        expect(readFileSync(output, "utf8")).toBe("untouched");
+      } else {
+        expect(lstatSync(output).isSymbolicLink()).toBe(true);
+        expect(existsSync(target)).toBe(kind === "symlink");
+        if (kind === "symlink") expect(readdirSync(target)).toEqual([]);
+      }
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test.each(["non-empty directory", "symlink"] as const)("rechecks output after the async build when it becomes a %s", async (kind) => {
+    const base = temporaryDirectory("kingdom-stage-doors-");
+    try {
+      const { sourceRoot, commons } = makeFixture(base);
+      const output = join(base, "upload");
+      // stageDoor has passed its first preflight and yielded to the builder.
+      const staging = stageDoor("we-are", output, commons, sourceRoot);
+      const target = kind === "symlink" ? join(base, "target") : output;
+      mkdirSync(target);
+      writeFileSync(join(target, "keep"), "untouched");
+      if (kind === "symlink") symlinkSync(target, output);
+      await expect(staging).rejects.toThrow(kind === "symlink"
+        ? "output directory must not be a symbolic link"
+        : "output directory is not empty");
+      expect(readdirSync(target)).toEqual(["keep"]);
+      expect(readFileSync(join(target, "keep"), "utf8")).toBe("untouched");
+      if (kind === "symlink") expect(lstatSync(output).isSymbolicLink()).toBe(true);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test.each([false, true])("the original CLI awaits the bundle and reports its result (broken import: %s)", async (broken) => {
+    const base = temporaryDirectory("kingdom-stage-doors-");
+    try {
+      const { sourceRoot, commons } = makeFixture(base);
+      mkdirSync(join(sourceRoot, "bin"));
+      // Run the unchanged CLI shape against a fake repo, never the real commons.
+      for (const name of ["stage-doors.ts", "build-pages-worker.ts"]) {
+        copyFileSync(new URL(`../bin/${name}`, import.meta.url), join(sourceRoot, "bin", name));
+      }
+      if (broken) rmSync(join(sourceRoot, "pages-functions/civic-security.js"));
+      const output = join(base, "upload");
+      const child = Bun.spawn({
+        cmd: [process.execPath, join(sourceRoot, "bin/stage-doors.ts"), "we-are", output, "--commons", commons],
+        cwd: sourceRoot,
+        stdout: "pipe",
+        stderr: "pipe",
+      });
+      const [exitCode, stdout, stderr] = await Promise.all([
+        child.exited,
+        new Response(child.stdout).text(),
+        new Response(child.stderr).text(),
+      ]);
+      expect(exitCode).toBe(broken ? 1 : 0);
+      if (broken) {
+        expect(stdout).toBe("");
+        expect(stderr).toContain("stage-doors: Pages Worker bundle failed");
+        expect(existsSync(output)).toBe(false);
+      } else {
+        expect(stderr).toBe("");
+        expect(stdout).toContain("staged 5 exact assets");
+        expect(stdout).toContain(`${join(sourceRoot, "site/_worker.js")} -> _worker.js`);
+        expect(readFileSync(join(output, "_worker.js"), "utf8")).toBe(readFileSync(join(sourceRoot, "site/_worker.js"), "utf8"));
+      }
     } finally {
       rmSync(base, { recursive: true, force: true });
     }

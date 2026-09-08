@@ -67,6 +67,20 @@
       "sha256": "1a9803fa473891388a0b1a0f5d0220a4cde6f5a73181d0c81a2b8f738c786950"
     },
     {
+      "id": "civic/0.1/guide",
+      "route": "/CIVIC-v0.1.md",
+      "source": "references/civic-v0.1.md",
+      "destination": "CIVIC-v0.1.md",
+      "sha256": "f68c2538b9f590daf83fff243dd3385bf70faf33b4e1ba9b9130767e8d7c5fd5"
+    },
+    {
+      "id": "civic/0.1/schema",
+      "route": "/schemas/civic/0.1.json",
+      "source": "schemas/civic-v0.1.schema.json",
+      "destination": "schemas/civic/0.1.json",
+      "sha256": "235ea366eb0fd06b3df811145f0e6046ad2cd66f2055720e7d4809fee4807798"
+    },
+    {
       "id": "civilisation-flow-nuance-atlas/0.1/guide",
       "route": "/CIVILISATION-FLOW-NUANCE-ATLAS.md",
       "source": "references/civilisation-flow-atlas.md",

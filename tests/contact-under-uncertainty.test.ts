@@ -281,13 +281,13 @@ describe("Contact Under Uncertainty source-only map", () => {
     const markers = [SLUG, "contact_under_uncertainty", TITLE];
     const sources = HUB_ASSETS.map(({ source }) => source);
     const destinations = HUB_ASSETS.map(({ destination }) => destination);
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(new Set(sources).size).toBe(192);
-    expect(new Set(destinations).size).toBe(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(new Set(sources).size).toBe(201);
+    expect(new Set(destinations).size).toBe(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(190);
+      .toHaveLength(199);
 
     const stagedMarkerReferences: Array<{
       source: string;
@@ -361,15 +361,15 @@ describe("Contact Under Uncertainty source-only map", () => {
     const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
     const osRouteRows = [...read("OS-ROUTES.md").matchAll(/^\| `\/[^`]+` \|/gm)];
 
-    expect(staging.assets).toHaveLength(192);
-    expect(staging.mutable_destinations).toHaveLength(34);
-    expect(ledger.entries).toHaveLength(158);
+    expect(staging.assets).toHaveLength(201);
+    expect(staging.mutable_destinations).toHaveLength(41);
+    expect(ledger.entries).toHaveLength(160);
     expect(PUBLICATION_FAMILIES).toHaveLength(35);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(161);
-    expect(guest.next_actions).toHaveLength(161);
-    expect(locs).toHaveLength(178);
-    expect(new Set(locs).size).toBe(178);
-    expect(osRouteRows).toHaveLength(161);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
+    expect(guest.next_actions).toHaveLength(169);
+    expect(locs).toHaveLength(185);
+    expect(new Set(locs).size).toBe(185);
+    expect(osRouteRows).toHaveLength(169);
     expect(count(read("OS-ROUTES.md"), "eighteen atlases")).toBe(1);
     expect(json("data/wayfinder.json").paths).toHaveLength(15);
     expect(json("site/wayfinder.json").paths).toHaveLength(15);

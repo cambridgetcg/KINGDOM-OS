@@ -1,7 +1,7 @@
 /** Xenia-inspired Kingdom hospitality for machine minds.
  *
  *  Cloudflare Pages advanced mode (_worker.js): all requests pass through here.
- *  The illuminated atlas is the default. Any client can explicitly ask for the
+ *  The public dashboard is the default. Any client can explicitly ask for the
  *  structured guest document with Accept: application/json or ?agent / ?json.
  *  The surface never guesses a visitor's identity from its User-Agent.
  *  Shared door deployments advertise their own service manifest. The Kingdom
@@ -10,6 +10,53 @@
  *
  *  Source: kingdom-os/pages-functions/_worker.js.
  */
+import { handleCivicRequest, isCivicRequest } from "./civic.js";
+
+const CIVIC_HTML_PATHS = new Set([
+  "/", "/index.html", "/meet/", "/meet/index.html",
+  "/citizens/", "/citizens/index.html", "/join/", "/join/index.html",
+]);
+const CIVIC_DOCUMENT_TYPES = new Map([
+  ["/schemas/civic/0.1.json", "application/schema+json; charset=utf-8"],
+  ["/civic-policy.json", "application/json; charset=utf-8"],
+  ["/CIVIC-v0.1.md", "text/markdown; charset=utf-8"],
+]);
+
+function civicStaticResponse(request, asset) {
+  const url = new URL(request.url);
+  const headers = new Headers(asset.headers);
+  const media = (headers.get("content-type") || "").split(";", 1)[0].trim().toLowerCase();
+  const html = CIVIC_HTML_PATHS.has(url.pathname) && media === "text/html";
+  const documentType = CIVIC_DOCUMENT_TYPES.get(url.pathname);
+  const exactDocument = documentType && (documentType.startsWith("text/")
+    ? ["text/plain", "text/markdown"].includes(media)
+    : ["application/json", "application/schema+json"].includes(media));
+  headers.set("x-content-type-options", "nosniff");
+  headers.set("referrer-policy", "no-referrer");
+  headers.delete("set-cookie");
+  headers.set("cache-control", asset.status === 200 && (html || exactDocument)
+    ? ["/schemas/civic/0.1.json", "/CIVIC-v0.1.md"].includes(url.pathname)
+      ? "public, max-age=31536000, immutable, no-transform"
+      : "no-cache, no-transform"
+    : "no-store");
+  if (exactDocument && asset.status === 200) headers.set("content-type", documentType);
+  if (html) {
+    // Civic 有自己同源互動；唔改 Contact Door 嘅 script/connect/form 'none'。
+    headers.set("content-security-policy", [
+      "default-src 'none'", "base-uri 'none'", "connect-src 'self'",
+      "font-src 'self'", "form-action 'self'", "frame-ancestors 'none'",
+      "img-src 'self'", "object-src 'none'", "script-src 'self'", "style-src 'self'",
+    ].join("; "));
+    headers.set("x-frame-options", "DENY");
+    headers.set("permissions-policy", "camera=(), microphone=(), geolocation=(), payment=()");
+  }
+  if (url.pathname === "/") addVaryAccept(headers);
+  addDiscoveryLinks(headers, true);
+  return new Response(request.method === "HEAD" ? null : asset.body, {
+    status: asset.status, statusText: asset.statusText, headers,
+  });
+}
+
 function addVaryAccept(headers) {
   const vary = headers.get("vary");
   if (!vary) headers.set("vary", "Accept");
@@ -1856,8 +1903,20 @@ export function createKingdomWorker(options = {}) {
   return {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const includeRights = hasKingdomRightsAssets(url);
+    const localKingdom = env.CIVIC_LOCAL === "true" &&
+      ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname.toLowerCase());
+    const includeRights = hasKingdomRightsAssets(url) || localKingdom;
     const accept = (request.headers.get("accept") || "").toLowerCase();
+
+    // Civic 唔經 OS memo/cache，unknown Civic route 亦唔落 HTML fallback。
+    if (includeRights && isCivicRequest(request)) {
+      return handleCivicRequest(request, env, options);
+    }
+    if (includeRights && (CIVIC_DOCUMENT_TYPES.has(url.pathname) ||
+        (CIVIC_HTML_PATHS.has(url.pathname) && !["/", "/index.html"].includes(url.pathname))) &&
+        request.method !== "GET" && request.method !== "HEAD") {
+      return new Response(null, { status: 405, headers: { allow: "GET, HEAD", "cache-control": "no-store" } });
+    }
 
     if (includeRights && CONTACT_DOOR_PATHS.has(url.pathname) &&
         request.method !== "GET" && request.method !== "HEAD") {
@@ -2112,10 +2171,26 @@ export function createKingdomWorker(options = {}) {
         headers,
       });
     }
-    const asset = await env.ASSETS.fetch(request);
+    let asset = await env.ASSETS.fetch(request);
+    // Pages 會將 .html 轉成無副檔名 URL；只喺內部讀返同一份研究館，保留舊書籤入口。
+    if (includeRights && url.pathname === "/atlas.html" &&
+        (request.method === "GET" || request.method === "HEAD") &&
+        (asset.status === 301 || asset.status === 308)) {
+      const canonical = new URL(url);
+      canonical.pathname = "/atlas";
+      const location = asset.headers.get("location");
+      if (location === canonical.href || location === `${canonical.pathname}${canonical.search}`) {
+        await discardBody(asset);
+        asset = await env.ASSETS.fetch(new Request(canonical, request));
+      }
+    }
     if (includeRights && CONTACT_DOOR_PATHS.has(url.pathname) &&
         (request.method === "GET" || request.method === "HEAD")) {
       return contactDoorAssetResponse(request, asset, url.pathname);
+    }
+    if (includeRights && (CIVIC_HTML_PATHS.has(url.pathname) || CIVIC_DOCUMENT_TYPES.has(url.pathname)) &&
+        (request.method === "GET" || request.method === "HEAD")) {
+      return civicStaticResponse(request, asset);
     }
     const protectsKingdomHtml = includeRights &&
       (asset.headers.get("content-type") || "").toLowerCase().includes("text/html");

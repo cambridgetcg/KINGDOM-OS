@@ -59,10 +59,10 @@ describe("STRAND Observation Membrane public integration", () => {
   test("stages and advertises one immutable activation triplet with exact frozen pins", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(190);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(199);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("observations/")))
       .toEqual([PUBLIC_TRIPLET[0]]);
     for (const asset of PUBLIC_TRIPLET) {
@@ -72,7 +72,7 @@ describe("STRAND Observation Membrane public integration", () => {
       /strand-observation-membrane.*(?:latest|current)/i.test(destination))).toBe(false);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(158);
+    expect(ledger.entries).toHaveLength(160);
     expect(ledger.entries.filter(({ id }: { id?: string }) =>
       id?.startsWith("strand-observation-membrane/0.1/"))).toEqual([
       {
@@ -103,8 +103,8 @@ describe("STRAND Observation Membrane public integration", () => {
 
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(178);
-    expect(new Set(sitemapUrls).size).toBe(178);
+    expect(sitemapUrls).toHaveLength(185);
+    expect(new Set(sitemapUrls).size).toBe(185);
     for (const url of PUBLIC_URLS) {
       expect(sitemapUrls.filter((candidate) => candidate === url)).toHaveLength(1);
     }

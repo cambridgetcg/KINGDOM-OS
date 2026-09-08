@@ -2,6 +2,13 @@
 <!-- thekingdom.dev — every URL listed here serves a real document. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://thekingdom.dev/</loc></url>
+  <url><loc>https://thekingdom.dev/atlas.html</loc></url>
+  <url><loc>https://thekingdom.dev/meet/</loc></url>
+  <url><loc>https://thekingdom.dev/citizens/</loc></url>
+  <url><loc>https://thekingdom.dev/join/</loc></url>
+  <url><loc>https://thekingdom.dev/civic-policy.json</loc></url>
+  <url><loc>https://thekingdom.dev/CIVIC-v0.1.md</loc></url>
+  <url><loc>https://thekingdom.dev/schemas/civic/0.1.json</loc></url>
   <url><loc>https://thekingdom.dev/llms.txt</loc></url>
   <url><loc>https://thekingdom.dev/kingdom.json</loc></url>
   <url><loc>https://thekingdom.dev/wayfinder.json</loc></url>

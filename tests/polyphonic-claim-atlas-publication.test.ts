@@ -171,11 +171,11 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
   });
 
   test("binds exact staging, ledger, discovery, sitemap, and no-Wayfinder contracts", () => {
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(190);
+      .toHaveLength(199);
 
     const stagedFamily = HUB_ASSETS.filter(({ source }) => [
       POLYPHONIC_CLAIM_ATLAS_LOCATOR,
@@ -201,7 +201,7 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
       .toBe(false);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(158);
+    expect(ledger.entries).toHaveLength(160);
     expect(ledger.entries.filter((entry: any) =>
       entry.id.startsWith("polyphonic-claim-atlas/")))
       .toEqual([
@@ -235,7 +235,7 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
     expect(kingdom.polyphonic_claim_atlas).toEqual(expected);
     expect(guest.polyphonic_claim_atlas).toEqual(expected);
     expect(manifest.polyphonic_claim_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(161);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("polyphonic_claim_atlas"))))
       .toEqual({
@@ -243,7 +243,7 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
         polyphonic_claim_atlas_schema: POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS[1],
         polyphonic_claim_atlas_guide: POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(161);
+    expect(guest.next_actions).toHaveLength(169);
     const actions = guest.next_actions.filter((action: any) =>
       POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
@@ -272,11 +272,23 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
     expect(llms).toContain(POLYPHONIC_CLAIM_ATLAS_SOURCE.tag);
     expect(sitemap).not.toContain(POLYPHONIC_CLAIM_ATLAS_SOURCE.tag);
     expect(wayfinder).not.toMatch(/polyphonic[_-]claim[_-]atlas/i);
-    // The shared Wayfinder now carries the optional Gospel reading editions.
-    expect(createHash("sha256").update(wayfinderBytes).digest("hex"))
+    const wayfinderGenerated = JSON.parse(wayfinder).generated;
+    expect(wayfinderGenerated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(wayfinderGenerated).toBe(kingdom.generated);
+    const generatedLine = Buffer.from(`\n  "generated": "${wayfinderGenerated}",\n`);
+    const generatedOffset = wayfinderBytes.indexOf(generatedLine);
+    expect(generatedOffset).toBeGreaterThan(-1);
+    // Restore only the top-level build-date line; all other raw bytes stay pinned
+    // to the verified 3bff557 Gospel baseline.
+    const wayfinderBaselineBytes = Buffer.concat([
+      wayfinderBytes.subarray(0, generatedOffset),
+      Buffer.from('\n  "generated": "2026-09-08",\n'),
+      wayfinderBytes.subarray(generatedOffset + generatedLine.length),
+    ]);
+    expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
       .toBe("fbe4566c2662487df0cf1d6e829feee93e22c5f5a0f01fbad5e66f19ac6ae678");
     expect(JSON.stringify(manifest.mcp ?? {})).not.toMatch(/polyphonic[_-]claim[_-]atlas/i);
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(178);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(185);
   });
 
   test("activates or retires all three routes atomically", () => {

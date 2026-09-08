@@ -19,7 +19,7 @@ describe("ZERO Empty Seat public experience", () => {
   test("adds exactly the immutable record and guide routes while reusing the shared schema", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-  expect(urls).toHaveLength(178);
+  expect(urls).toHaveLength(185);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain(ZERO_EMPTY_SEAT_URL);
     expect(urls).toContain(ZERO_EMPTY_SEAT_GUIDE_URL);
@@ -138,14 +138,23 @@ describe("ZERO Empty Seat public experience", () => {
     });
   });
 
-  test("documents the final 192/158/34/190/178 publication contract", () => {
-    const docs = ["CLAUDE.md", "DOMAINS-SETUP.md", "OS-ROUTES.md", "publications/README.md"].map(read);
-    for (const document of docs) {
-      expect(document).toContain("192");
-      expect(document).toContain("158");
-      expect(document).toContain("34");
-      expect(document).toContain("190");
-      expect(document).toContain("178");
+  test("preserves the research baseline and documents the additive Civic publication contract", () => {
+    // CLAUDE.md remains the pre-Civic research compatibility baseline, not the
+    // current release runbook. Keep its original count checks independently.
+    const baseline = read("CLAUDE.md");
+    for (const count of ["192", "158", "34", "190", "178"]) {
+      expect(baseline).toContain(count);
+    }
+    const docs = ["DOMAINS-SETUP.md", "OS-ROUTES.md", "publications/README.md"].map(read);
+    for (const document of docs.map((text) => text.replace(/\s+/g, " "))) {
+      expect(document).toMatch(/\b201(?:-asset| assets)\b/);
+      expect(document).toContain("160 ledgered immutable/versioned assets");
+      expect(document).toContain("41 mutable assets");
+      expect(document).toMatch(/199 direct public (?:response )?bodies/);
+      expect(document).toMatch(/(?:sitemap contains 185 URLs|185 sitemap URLs)/);
+      expect(document).toContain("169 manifest entry points");
+      expect(document).toContain("169 guest actions");
+      expect(document).toContain("41 public schema routes");
     }
     expect(read("README.md")).toContain("/atlases/zero-empty-seat-2026-08-14.json");
     expect(read("OS-ROUTES.md")).toContain("| `/ZERO-EMPTY-SEAT.md` |");
