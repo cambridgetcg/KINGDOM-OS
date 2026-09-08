@@ -15,10 +15,11 @@
 - All four: `*.pages.dev` live immediately (200); custom domains attached, status `initializing` → active once CF provisions cert + DNS (minutes).
 - **chillspace.love supersedes** the old codeberg-subpath home in `sites.json`; the codeberg copy still exists as a mirror.
 
-## Workshop 本地入口（2026-09-08；未部署）
+## Workshop 本機寫作入口（2026-09-08）
 
-`https://thekingdom.dev/workshop/` 係燈下作品工房 local-only MVP；本輪唔部署，
-唔啟動 cloud service，唔改 bindings、compatibility、permissions 或 credentials。
+`https://thekingdom.dev/workshop/` 係燈下作品工房 browser-local MVP；本地驗證唔會
+自行部署。正式 release 要獨立授權並行下面嘅 runbook，唔改 bindings、compatibility、
+permissions 或 credentials。
 作者手動寫稿、預覽同下載 HTML／Markdown／JSON；JSON 可重新編輯。初次載入
 後編輯、預覽、匯出冇 application network request，稿件只喺當頁 memory，
 冇 autosave、localStorage、雲端草稿、身份讀寫、付款或發布。初次載入仍有普通
@@ -31,7 +32,10 @@ hosting metadata，亦可能帶已有同源 cookie；唔聲稱完全匿名。離
 immutable family、ledger entry 或公開 draft schema route。三檔一齊 stage、更新同
 retire；retire 同時移除 staging/mutable 三個 entries、Workshop Worker routing、
 Wayfinder 同 sitemap 入口，再用既有 builders 再生 hub/dashboard/machine discovery。
-`no-cache, no-transform` 唔保證三檔原子更新。Worker helper 喺 ASSETS 前拒絕所有
+Workshop cache 收緊為 `no-store, no-transform`，唔保證三檔原子更新；三個 canonical
+GET／HEAD 必須通過 exact cache live gate，唔接受 `max-age=14400`。舊 preview／
+canonical 對照同 404 control 見 `OS-ROUTES.md` Workshop 段；200 `no-store` 必須
+喺每次部署後重新 live 驗證，唔聲稱可抵抗任意 zone override。Worker helper 喺 ASSETS 前拒絕所有
 known mutations（包括 OPTIONS），唔接觸稿件；unknown Workshop prefix 回 404。
 Advanced-mode Pages 嘅 `_headers` 唔會自動套用 Worker response，所以 CSP／MIME／
 privacy headers 由獨立 wrapper 負責；Civic 同 Contact Door 政策保持獨立。
@@ -42,7 +46,7 @@ privacy headers 由獨立 wrapper 負責；Civic 同 Contact Door 政策保持�
 ```sh
 bun bin/build-pages-worker.ts
 bun bin/build-hub.ts 2026-09-08
-bun test tests/workshop.test.ts tests/workshop-worker.test.ts tests/stage-hub.test.ts tests/advertised-assets.test.ts tests/civic-integration.test.ts tests/shape-resonance-publication.test.ts
+bun test tests/workshop.test.ts tests/workshop-worker.test.ts tests/workshop-live.test.ts tests/stage-hub.test.ts tests/advertised-assets.test.ts tests/civic-integration.test.ts tests/shape-resonance-publication.test.ts
 node dev/civic/test-workshop-browser.mjs
 ```
 

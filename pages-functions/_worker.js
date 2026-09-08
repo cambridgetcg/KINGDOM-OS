@@ -79,7 +79,8 @@ function workshopResponse(request, asset) {
   const representation = (asset.status === 200 && matches) ||
     (asset.status === 304 && expected && (!media || matches));
   const html = representation && path === "/workshop/";
-  headers.set("cache-control", representation ? "no-cache, no-transform" : "no-store, no-transform");
+  // 未版本化嘅工房資產唔儲存；正式域名曾將 CSS／JS 嘅 no-cache 改成四小時。
+  headers.set("cache-control", "no-store, no-transform");
   headers.set("referrer-policy", "no-referrer");
   headers.set("x-content-type-options", "nosniff");
   headers.set("x-frame-options", "DENY");

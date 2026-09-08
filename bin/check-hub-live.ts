@@ -512,6 +512,12 @@ export function mappedHubSource(destination: string): string {
   return asset.source;
 }
 
+const WORKSHOP_MEDIA_TYPES = new Map([
+  ["/workshop/", "text/html; charset=utf-8"],
+  ["/workshop/workshop.css", "text/css; charset=utf-8"],
+  ["/workshop/workshop.js", "text/javascript; charset=utf-8"],
+]);
+
 export const CONTACT_DOOR_SCHEMA_FORBIDDEN_RELATIONS = Object.freeze([
   "describedby", "profile", "canonical",
 ] as const);
@@ -2766,6 +2772,42 @@ export function assertRetiredRouteResponse(options: {
   }
 }
 
+// DIRECT_HUB_ASSETS 已驗 GET bytes；呢個 gate 唔再 fetch 或讀取 response。
+// 呼叫者傳入已讀取嘅 body，避免重複消耗串流。
+export function assertWorkshopResponse(options: {
+  path: string;
+  method: "GET" | "HEAD";
+  response: Response;
+  body: Uint8Array;
+}): void {
+  const { path, method, response, body } = options;
+  const contentType = WORKSHOP_MEDIA_TYPES.get(path);
+  const html = path === "/workshop/";
+  const csp = [
+    "default-src 'none'", "base-uri 'none'", "connect-src 'none'",
+    "form-action 'none'", "frame-ancestors 'none'", "object-src 'none'",
+    html ? "script-src 'self'" : "script-src 'none'",
+    html ? "style-src 'self'" : "style-src 'none'",
+  ].join("; ");
+  const permissions = [
+    "accelerometer=()", "autoplay=()", "camera=()", "display-capture=()",
+    "geolocation=()", "gyroscope=()", "magnetometer=()", "microphone=()",
+    "payment=()", "usb=()",
+  ].join(", ");
+  if (!contentType || response.status !== 200 ||
+      response.headers.get("content-type") !== contentType ||
+      response.headers.get("cache-control") !== "no-store, no-transform" ||
+      response.headers.get("content-security-policy") !== csp ||
+      response.headers.get("permissions-policy") !== permissions ||
+      response.headers.get("referrer-policy") !== "no-referrer" ||
+      response.headers.get("x-content-type-options") !== "nosniff" ||
+      response.headers.get("x-frame-options") !== "DENY" ||
+      response.headers.has("set-cookie") ||
+      (method === "HEAD" && body.byteLength !== 0)) {
+    throw new Error(`${method} ${path} lost the exact Workshop contract`);
+  }
+}
+
 export function assertCivicStatus(response: Response, value: any, policy: unknown): void {
   if (![200, 503].includes(response.status) ||
       normalizedMediaType(response.headers.get("content-type")) !== "application/json" ||
@@ -2850,6 +2892,14 @@ export async function checkHubLive(
     const local = readFileSync(join(ROOT, asset.source));
     if (!live.equals(local)) {
       throw new Error(`${path} does not match ${asset.source} (${live.byteLength} live bytes; ${local.byteLength} local bytes)`);
+    }
+    if (WORKSHOP_MEDIA_TYPES.has(path)) {
+      assertWorkshopResponse({ path, method: "GET", response, body: live });
+      const head = await get(path, { method: "HEAD" });
+      assertWorkshopResponse({
+        path, method: "HEAD", response: head,
+        body: new Uint8Array(await head.arrayBuffer()),
+      });
     }
     const immutablePublication = IMMUTABLE_PUBLICATION_ASSETS.get(asset.destination);
     if (immutablePublication) {
