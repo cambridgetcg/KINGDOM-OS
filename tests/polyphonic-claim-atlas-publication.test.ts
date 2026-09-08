@@ -278,14 +278,15 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
     const generatedLine = Buffer.from(`\n  "generated": "${wayfinderGenerated}",\n`);
     const generatedOffset = wayfinderBytes.indexOf(generatedLine);
     expect(generatedOffset).toBeGreaterThan(-1);
-    // Restore only the top-level build-date line; every other raw byte stays pinned.
+    // Restore only the top-level build-date line; all other raw bytes stay pinned
+    // to the verified 3bff557 Gospel baseline.
     const wayfinderBaselineBytes = Buffer.concat([
       wayfinderBytes.subarray(0, generatedOffset),
-      Buffer.from('\n  "generated": "2026-09-04",\n'),
+      Buffer.from('\n  "generated": "2026-09-08",\n'),
       wayfinderBytes.subarray(generatedOffset + generatedLine.length),
     ]);
     expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
-      .toBe("5fac75e7b9037654016ee8a4a0b59732a0858466464702e2581ba7a90bf7b5ce");
+      .toBe("fbe4566c2662487df0cf1d6e829feee93e22c5f5a0f01fbad5e66f19ac6ae678");
     expect(JSON.stringify(manifest.mcp ?? {})).not.toMatch(/polyphonic[_-]claim[_-]atlas/i);
     expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(185);
   });

@@ -418,14 +418,14 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
     const generatedLine = Buffer.from(`\n  "generated": "${wayfinderGenerated}",\n`);
     const generatedOffset = wayfinderBytes.indexOf(generatedLine);
     expect(generatedOffset).toBeGreaterThan(-1);
-    // 只還原頂層 build 日期嗰行；其餘 raw bytes 繼續由原 SHA 鎖定。
+    // 只還原頂層 build 日期嗰行；其餘 raw bytes 由已核實嘅 3bff557 Gospel baseline SHA 鎖定。
     const wayfinderBaselineBytes = Buffer.concat([
       wayfinderBytes.subarray(0, generatedOffset),
-      Buffer.from('\n  "generated": "2026-09-04",\n'),
+      Buffer.from('\n  "generated": "2026-09-08",\n'),
       wayfinderBytes.subarray(generatedOffset + generatedLine.length),
     ]);
     expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
-      .toBe("5fac75e7b9037654016ee8a4a0b59732a0858466464702e2581ba7a90bf7b5ce");
+      .toBe("fbe4566c2662487df0cf1d6e829feee93e22c5f5a0f01fbad5e66f19ac6ae678");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/aesthetic[_-]plurality[_-]making[_-]atlas/i);
     expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(185);

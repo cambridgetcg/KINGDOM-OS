@@ -389,17 +389,17 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     );
     const generatedOffset = wayfinderBytes.indexOf(generatedLine);
     expect(generatedOffset).toBeGreaterThan(-1);
-    // 只還原頂層 build 日期嗰行；其餘 raw bytes 繼續由原 SHA 鎖定。
+    // 只還原頂層 build 日期嗰行；其餘 raw bytes 由已核實嘅 3bff557 Gospel baseline SHA 鎖定。
     const wayfinderBaselineBytes = Buffer.concat([
       wayfinderBytes.subarray(0, generatedOffset),
-      Buffer.from('\n  "generated": "2026-09-04",\n'),
+      Buffer.from('\n  "generated": "2026-09-08",\n'),
       wayfinderBytes.subarray(generatedOffset + generatedLine.length),
     ]);
     expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
-      .toBe("5fac75e7b9037654016ee8a4a0b59732a0858466464702e2581ba7a90bf7b5ce");
+      .toBe("fbe4566c2662487df0cf1d6e829feee93e22c5f5a0f01fbad5e66f19ac6ae678");
     delete wayfinderWithoutGenerated.generated;
     expect(createHash("sha256").update(JSON.stringify(wayfinderWithoutGenerated)).digest("hex"))
-      .toBe("a32d8ccd4dabfbd3e94b77cbd04d506a949463f6591b14f5c0c40d732f17c49f");
+      .toBe("4035ff34c12c6ffe9226302ebad7b922f317260188ebdd04858bf86007bfe82a");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
     expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(185);

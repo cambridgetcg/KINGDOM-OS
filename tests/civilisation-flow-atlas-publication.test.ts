@@ -33,13 +33,14 @@ const PUBLIC_URLS = [
 ] as const;
 const PUBLIC_PATHS = PUBLIC_URLS.map((url) => new URL(url).pathname);
 const PRE_FLOW_HUB_BYTES = 971_082;
-// 7a99cc6 嘅研究館已係呢組整頁測量；Civic 保留原家族段落同以下 review ceilings。
+// 3bff557 新整頁 baseline 包含 Sophia 同 Gospel discovery links。
+// Civic 保留原 Flow 家族段落同以下 review ceilings。
 const RESEARCH_ATLAS_MEASURE = Object.freeze({
   flow_section_bytes: 341_162,
-  total_hub_bytes: 1_344_597,
-  added_hub_bytes: 373_515,
+  total_hub_bytes: 1_348_337,
+  added_hub_bytes: 377_255,
   flow_opening_elements: 5_777,
-  total_opening_elements: 16_341,
+  total_opening_elements: 16_377,
 });
 const FLOW_HUB_REVIEWABILITY_BUDGET = Object.freeze({
   flow_section_bytes: 375_000,

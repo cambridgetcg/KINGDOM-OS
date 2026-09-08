@@ -144,13 +144,19 @@ test -z "$(git status --porcelain=v1 --untracked-files=all)"
 stage_dir="$(mktemp -d)"
 bun bin/stage-hub.ts "$stage_dir"
 wrangler pages deploy "$stage_dir" --project-name=thekingdom --branch=main \
-  --commit-hash="$release_sha" --commit-dirty=false
+  --commit-hash="$release_sha" --commit-dirty=false --no-bundle
 bun bin/check-hub-live.ts
 )
 
 # others:
 npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zerone-ai
 ```
+
+`--no-bundle` 保留已由 Bun 生成、再 exact-stage 嘅 self-contained `_worker.js`；
+唔俾 Wrangler 預設再做一次 esbuild。呢個 flag 已喺本地 Wrangler 4.116.0 核實。
+Push 前亦要只讀確認 existing Pages project 嘅 Git auto-deploy 設定，唔由文件
+寫住 manual 就推論遠端已停用自動發布。Production config 讀 existing project，
+唔帶 local-only `dev/civic/wrangler.jsonc`、假 D1 ID 或 `CIVIC_LOCAL=true` 上線。
 
 The post-build cleanliness gate intentionally refuses an older exact SHA when
 today's generated release bytes would differ; commit that generated drift as a

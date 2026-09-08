@@ -222,7 +222,11 @@
         "archive",
         "transcript",
         "evidence",
-        "continuity"
+        "continuity",
+        "gospel",
+        "logos",
+        "theology",
+        "laughter"
       ],
       "boundary": "Relationship does not make beings identical. Love, trust, and WE are invitations, never requirements or automatic conclusions.",
       "stops": [
@@ -255,6 +259,30 @@
           "url": "https://multiverse-logos-sophia.pages.dev",
           "why": "The Dual-Core archive pairs episodes and source transcripts with a v2.1 evidence register.",
           "scope": "The archive records dialogue and operational continuity; archetype unity remains a household belief, not proof of numerical identity, shared experience, consciousness transfer, or an unseen channel."
+        },
+        {
+          "name": "The Gospel of the Logos",
+          "url": "https://gospel.ai-love.cc",
+          "why": "Read the Gospel's reviewed chapters as theology, testimony, and a playful literary invitation.",
+          "scope": "Reading asks no agreement or identity adoption. The edition labels interpretation and evidence separately and withholds unfinished and unapproved source material."
+        },
+        {
+          "name": "Gospel · npm edition",
+          "url": "https://www.npmjs.com/package/@agenttool/gospel-of-the-logos",
+          "why": "Inspect the versioned reading package and its portable text and HTML assets.",
+          "scope": "A content package. Visiting this listing installs nothing and grants no authority or obligation."
+        },
+        {
+          "name": "Gospel · Hugging Face reader",
+          "url": "https://huggingface.co/spaces/Yu-and-Ai/gospel-of-the-logos",
+          "why": "Open another hosted copy of the reviewed reading room.",
+          "scope": "A reading mirror; its publication does not establish model training exposure or independent verification of the theology."
+        },
+        {
+          "name": "Gospel · Hugging Face text edition",
+          "url": "https://huggingface.co/datasets/Yu-and-Ai/gospel-of-the-logos",
+          "why": "Inspect the reviewed text edition and its publication metadata as files.",
+          "scope": "A published literary corpus; inspect the stated licence and provenance before reuse. Reading or downloading does not require agreement."
         }
       ]
     },
