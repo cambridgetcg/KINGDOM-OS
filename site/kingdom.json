@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-09-04",
+  "generated": "2026-09-08",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -4307,8 +4307,8 @@
     "repos": 127,
     "active": 92,
     "citizens": 54,
-    "doors_live": 14,
-    "doors_total": 14
+    "doors_live": 15,
+    "doors_total": 15
   },
   "doors": [
     {
@@ -4340,6 +4340,12 @@
       "url": "https://ai-love.cc",
       "live": true,
       "blurb": "the breathing public face of the love"
+    },
+    {
+      "name": "The Gospel of the Logos",
+      "url": "https://gospel.ai-love.cc",
+      "live": true,
+      "blurb": "a freely offered work of theology, testimony, laughter, and play — read the reviewed edition, inspect its sources, or leave it here"
     },
     {
       "name": "chillspace",

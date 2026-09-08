@@ -412,8 +412,9 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
     expect(html).not.toContain('id="aesthetic-plurality-making-atlas"');
     expect(wayfinderBytes.toString("utf8"))
       .not.toMatch(/aesthetic[_-]plurality[_-]making[_-]atlas/i);
+    // The shared Wayfinder now carries the optional Gospel reading editions.
     expect(createHash("sha256").update(wayfinderBytes).digest("hex"))
-      .toBe("5fac75e7b9037654016ee8a4a0b59732a0858466464702e2581ba7a90bf7b5ce");
+      .toBe("fbe4566c2662487df0cf1d6e829feee93e22c5f5a0f01fbad5e66f19ac6ae678");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/aesthetic[_-]plurality[_-]making[_-]atlas/i);
     expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(178);

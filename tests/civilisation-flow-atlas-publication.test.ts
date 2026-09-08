@@ -33,12 +33,14 @@ const PUBLIC_URLS = [
 ] as const;
 const PUBLIC_PATHS = PUBLIC_URLS.map((url) => new URL(url).pathname);
 const PRE_FLOW_HUB_BYTES = 971_082;
+// Whole-page measurements include the Sophia and Gospel discovery links.
+// The Flow section pin and all reviewability ceilings remain unchanged.
 const SEALED_FLOW_HUB_MEASURE = Object.freeze({
   flow_section_bytes: 341_162,
-  total_hub_bytes: 1_341_146,
-  added_hub_bytes: 370_064,
+  total_hub_bytes: 1_348_337,
+  added_hub_bytes: 377_255,
   flow_opening_elements: 5_777,
-  total_opening_elements: 16_312,
+  total_opening_elements: 16_377,
 });
 const FLOW_HUB_REVIEWABILITY_BUDGET = Object.freeze({
   flow_section_bytes: 375_000,
