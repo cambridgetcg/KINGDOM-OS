@@ -19,7 +19,7 @@ describe("ZERO Empty Seat public experience", () => {
   test("adds exactly the immutable record and guide routes while reusing the shared schema", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-  expect(urls).toHaveLength(185);
+  expect(urls).toHaveLength(186);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain(ZERO_EMPTY_SEAT_URL);
     expect(urls).toContain(ZERO_EMPTY_SEAT_GUIDE_URL);
@@ -147,11 +147,11 @@ describe("ZERO Empty Seat public experience", () => {
     }
     const docs = ["DOMAINS-SETUP.md", "OS-ROUTES.md", "publications/README.md"].map(read);
     for (const document of docs.map((text) => text.replace(/\s+/g, " "))) {
-      expect(document).toMatch(/\b201(?:-asset| assets)\b/);
+      expect(document).toMatch(/\b204(?:-asset| (?:staged )?assets)\b/);
       expect(document).toContain("160 ledgered immutable/versioned assets");
-      expect(document).toContain("41 mutable assets");
-      expect(document).toMatch(/199 direct public (?:response )?bodies/);
-      expect(document).toMatch(/(?:sitemap contains 185 URLs|185 sitemap URLs)/);
+      expect(document).toContain("44 mutable assets");
+      expect(document).toMatch(/202 direct public (?:response )?bodies/);
+      expect(document).toMatch(/(?:[Ss]itemap (?:contains|有) 186 URLs|186 sitemap URLs)/);
       expect(document).toContain("169 manifest entry points");
       expect(document).toContain("169 guest actions");
       expect(document).toContain("41 public schema routes");

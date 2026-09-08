@@ -52,7 +52,7 @@ describe("Civilisation → Reality Projection static publication", () => {
   });
 
   test("stages and ledgers one exact immutable triplet without publishing its research predecessor", () => {
-    expect(HUB_ASSETS).toHaveLength(201);
+    expect(HUB_ASSETS).toHaveLength(204);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
       .toHaveLength(18);
     expect(HUB_ASSETS).toContainEqual({
@@ -232,8 +232,8 @@ describe("Civilisation → Reality Projection static publication", () => {
     for (const url of PUBLIC_URLS) expect(llms).toContain(url);
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(185);
-    expect(new Set(sitemapUrls).size).toBe(185);
+    expect(sitemapUrls).toHaveLength(186);
+    expect(new Set(sitemapUrls).size).toBe(186);
     expect(sitemapUrls.filter((url) => url.toLowerCase().includes("civilisation-reality")))
       .toEqual(PUBLIC_URLS);
   });

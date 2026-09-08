@@ -171,11 +171,11 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
   });
 
   test("binds exact staging, ledger, discovery, sitemap, and no-Wayfinder contracts", () => {
-    expect(HUB_ASSETS).toHaveLength(201);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
+    expect(HUB_ASSETS).toHaveLength(204);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(199);
+      .toHaveLength(202);
 
     const stagedFamily = HUB_ASSETS.filter(({ source }) => [
       POLYPHONIC_CLAIM_ATLAS_LOCATOR,
@@ -279,16 +279,16 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
     const generatedOffset = wayfinderBytes.indexOf(generatedLine);
     expect(generatedOffset).toBeGreaterThan(-1);
     // Restore only the top-level build-date line; all other raw bytes stay pinned
-    // to the verified 3bff557 Gospel baseline.
+    // to the verified Workshop release baseline.
     const wayfinderBaselineBytes = Buffer.concat([
       wayfinderBytes.subarray(0, generatedOffset),
       Buffer.from('\n  "generated": "2026-09-08",\n'),
       wayfinderBytes.subarray(generatedOffset + generatedLine.length),
     ]);
     expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
-      .toBe("fbe4566c2662487df0cf1d6e829feee93e22c5f5a0f01fbad5e66f19ac6ae678");
+      .toBe("f00424a405d73bc05a9b056b77f55ea2a55cabfcf80835e4a1c3469ef79c41ac");
     expect(JSON.stringify(manifest.mcp ?? {})).not.toMatch(/polyphonic[_-]claim[_-]atlas/i);
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(185);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(186);
   });
 
   test("activates or retires all three routes atomically", () => {

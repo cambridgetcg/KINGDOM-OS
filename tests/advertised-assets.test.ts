@@ -335,8 +335,10 @@ describe("advertised URLs stay deployable", () => {
     const paths = authored.paths.filter(({ id }: { id: string }) => id === "workshop");
     expect(paths).toHaveLength(1);
     expect(paths[0].stops.map(({ url }: { url: string }) => url)).toEqual([url]);
-    expect(paths[0].boundary).toContain("手動本機寫作工具");
+    expect(paths[0].boundary).toContain("手動本機工具");
+    expect(paths[0].boundary).toContain("作者聲明");
     expect(paths[0].boundary).toContain("未核實");
+    expect(paths[0].stops[0].scope).toContain("本頁 memory");
     const dashboard = read("site/dashboard.html");
     expect(dashboard).toContain(`href="${url}"`);
     const projection = JSON.parse(dashboard.match(/<script id="civic-data" type="application\/json">([\s\S]*?)<\/script>/)![1]!);

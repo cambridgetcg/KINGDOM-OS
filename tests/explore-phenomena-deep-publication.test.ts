@@ -17,7 +17,7 @@ describe("Exploration DEEP public discovery seam", () => {
   test("adds exactly four unique crawl routes without a mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(185);
+    expect(urls).toHaveLength(186);
     expect(new Set(urls).size).toBe(urls.length);
     for (const url of PUBLIC_URLS) expect(urls).toContain(url);
     expect(urls.filter((url) => /(?:explore-phenomena-deep|phenomena-deep-(?:wing|project))/i.test(url))).toEqual(PUBLIC_URLS);
@@ -89,11 +89,12 @@ describe("Exploration DEEP public discovery seam", () => {
     for (const count of ["192", "158", "190", "178"]) {
       expect(claude).toContain(count);
     }
-    for (const document of [domains, routes, read("publications/README.md")]) {
-      expect(document).toContain("201");
-      expect(document).toContain("160");
-      expect(document).toContain("199");
-      expect(document).toContain("185");
+    for (const document of [domains, routes, read("publications/README.md")].map((text) => text.replace(/\s+/g, " "))) {
+      expect(document).toMatch(/\b204(?:-asset| (?:staged )?assets)\b/);
+      expect(document).toContain("160 ledgered immutable/versioned assets");
+      expect(document).toContain("44 mutable assets");
+      expect(document).toMatch(/202 direct public (?:response )?bodies/);
+      expect(document).toMatch(/(?:[Ss]itemap (?:contains|有) 186 URLs|186 sitemap URLs)/);
     }
     expect(claude).toContain("./kingdom explore-deep scaffold --json");
     expect(readme).toContain("not a manifested\n    Nen ability");

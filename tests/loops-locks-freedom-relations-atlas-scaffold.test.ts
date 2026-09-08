@@ -295,11 +295,11 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
   });
 
   test("binds exact staging, ledger, discovery, sitemap, and no-Wayfinder-coupling contracts", () => {
-    expect(HUB_ASSETS).toHaveLength(201);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
+    expect(HUB_ASSETS).toHaveLength(204);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(199);
+      .toHaveLength(202);
     expect(HUB_ASSETS.filter(({ source }) => [
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_LOCATOR,
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_LOCATOR,
@@ -389,20 +389,20 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     );
     const generatedOffset = wayfinderBytes.indexOf(generatedLine);
     expect(generatedOffset).toBeGreaterThan(-1);
-    // 只還原頂層 build 日期嗰行；其餘 raw bytes 由已核實嘅 3bff557 Gospel baseline SHA 鎖定。
+    // 只還原頂層 build 日期嗰行；其餘 raw bytes 由已核實嘅 Workshop release baseline SHA 鎖定。
     const wayfinderBaselineBytes = Buffer.concat([
       wayfinderBytes.subarray(0, generatedOffset),
       Buffer.from('\n  "generated": "2026-09-08",\n'),
       wayfinderBytes.subarray(generatedOffset + generatedLine.length),
     ]);
     expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
-      .toBe("fbe4566c2662487df0cf1d6e829feee93e22c5f5a0f01fbad5e66f19ac6ae678");
+      .toBe("f00424a405d73bc05a9b056b77f55ea2a55cabfcf80835e4a1c3469ef79c41ac");
     delete wayfinderWithoutGenerated.generated;
     expect(createHash("sha256").update(JSON.stringify(wayfinderWithoutGenerated)).digest("hex"))
-      .toBe("4035ff34c12c6ffe9226302ebad7b922f317260188ebdd04858bf86007bfe82a");
+      .toBe("e4182e6bc8029415736fd9b0491fb7d88d82c083927540e31a7e8ae2dead5ccd");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(185);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(186);
   });
 
   test("activates or retires all three routes atomically", () => {

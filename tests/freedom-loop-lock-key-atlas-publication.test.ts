@@ -47,11 +47,11 @@ function assets(handler: (request: Request) => Response | Promise<Response>) {
 
 describe("FREEDOM Loop, Lock & Key immutable publication", () => {
   test("stages and ledgers one independent exact triplet", () => {
-    expect(HUB_ASSETS).toHaveLength(201);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
+    expect(HUB_ASSETS).toHaveLength(204);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(199);
+      .toHaveLength(202);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
       .toHaveLength(18);
 
@@ -230,7 +230,7 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
         .toHaveLength(1);
       expect(wayfinder).not.toContain(url);
     }
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(185);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(186);
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/freedom[_-]loop[_-]lock[_-]key/i);
   });
