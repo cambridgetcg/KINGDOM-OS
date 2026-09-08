@@ -115,11 +115,22 @@ function normalize(raw: string): string {
 
 const staged = new Set<string>(HUB_ASSETS.map((a) => a.destination));
 const dynamic = new Set<string>(KINGDOM_OS_ROUTES.map(normalize));
+// 精確列 contract 路由；唔接受任意 /api/civic/* 拼錯路徑。
+const civicDynamic = (path: string) =>
+  /^api\/civic\/(?:status|participants|me|me\/citizenship|citizens|messages|moderation)$/.test(path) ||
+  /^api\/civic\/(?:citizens|messages)\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(path);
 const resolves = (path: string) =>
   staged.has(path) || staged.has(`${path}.html`) ||
-  staged.has(`${path}/index.html`) || dynamic.has(path);
+  staged.has(`${path}/index.html`) || dynamic.has(path) || civicDynamic(path);
 
 const surfaces = [
+  "site/dashboard.html",
+  "site/meet/index.html",
+  "site/citizens/index.html",
+  "site/join/index.html",
+  "data/civic-policy.json",
+  "references/civic-v0.1.md",
+  "schemas/civic-v0.1.schema.json",
   "site/hub.html",
   "site/kingdom.json",
   "site/wayfinder.json",
@@ -257,7 +268,7 @@ function advertisedPaths(source: string, text: string): Map<string, string> {
     found.set(normalize(prosePath), `${source}: ${match[0]}`);
   }
   if (source.endsWith(".html")) {
-    for (const match of text.matchAll(/href="(\/[^"]*)"/g)) {
+    for (const match of text.matchAll(/(?:href|src)="(\/[^"\s]*)"/g)) {
       found.set(normalize(match[1]!), `${source}: href ${match[1]}`);
     }
   }
@@ -265,6 +276,15 @@ function advertisedPaths(source: string, text: string): Map<string, string> {
 }
 
 describe("advertised URLs stay deployable", () => {
+  test("Civic dynamic classification refuses typos and extra path segments", () => {
+    for (const path of ["api/civic/status", "api/civic/me/citizenship", "api/civic/messages/00000000-0000-4000-8000-000000000001"]) {
+      expect(resolves(path)).toBe(true);
+      expect(staged.has(path)).toBe(false);
+    }
+    for (const path of ["api/civic", "api/civic/broken", "api/civic/status/extra", "api/civics/status", "api/civic/messages/not-an-id"]) {
+      expect(resolves(path)).toBe(false);
+    }
+  });
   test("keeps literal route punctuation while trimming prose sentence punctuation", () => {
     expect(advertisedPaths("fixture.html", '<a href="/guide.">broken</a>').has("guide.")).toBe(true);
     expect(advertisedPaths("fixture.md", "Read https://thekingdom.dev/guide.").has("guide")).toBe(true);

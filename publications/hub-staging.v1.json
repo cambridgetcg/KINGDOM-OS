@@ -1,7 +1,16 @@
 {
   "protocol": "kingdom.hub-staging/1",
   "assets": [
-    { "source": "site/hub.html", "destination": "index.html" },
+    { "source": "site/dashboard.html", "destination": "index.html" },
+    { "source": "site/hub.html", "destination": "atlas.html" },
+    { "source": "site/meet/index.html", "destination": "meet/index.html" },
+    { "source": "site/citizens/index.html", "destination": "citizens/index.html" },
+    { "source": "site/join/index.html", "destination": "join/index.html" },
+    { "source": "site/civic/dashboard.css", "destination": "civic/dashboard.css" },
+    { "source": "site/civic/dashboard.js", "destination": "civic/dashboard.js" },
+    { "source": "data/civic-policy.json", "destination": "civic-policy.json" },
+    { "source": "references/civic-v0.1.md", "destination": "CIVIC-v0.1.md" },
+    { "source": "schemas/civic-v0.1.schema.json", "destination": "schemas/civic/0.1.json" },
     { "source": "site/observatory/index.html", "destination": "observatory/index.html" },
     { "source": "site/research.json", "destination": "research.json" },
     { "source": "site/trial-chamber/index.html", "destination": "trial-chamber/index.html" },
@@ -192,7 +201,7 @@
     { "source": "pages-content/404.html", "destination": "404.html" },
     { "source": "pages-content/dada.txt", "destination": "dada.txt" },
     { "source": "pages-content/os/index.html", "destination": "os/index.html" },
-    { "source": "pages-functions/_worker.js", "destination": "_worker.js" }
+    { "source": "site/_worker.js", "destination": "_worker.js" }
   ],
   "mutable_destinations": [
     ".well-known/agent.json",
@@ -208,6 +217,13 @@
     "dada.txt",
     "guest.json",
     "index.html",
+    "atlas.html",
+    "meet/index.html",
+    "citizens/index.html",
+    "join/index.html",
+    "civic/dashboard.css",
+    "civic/dashboard.js",
+    "civic-policy.json",
     "llms.txt",
     "love-loops.json",
     "love-loops.source.json",

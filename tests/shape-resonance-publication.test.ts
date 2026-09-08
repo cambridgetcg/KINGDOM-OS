@@ -86,8 +86,8 @@ describe("Shape & Resonance Lab 01 publication", () => {
   });
 
   test("stages and ledgers one atomic 17-route family with a two-route mutable split", () => {
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     const familyDestinations = SHAPE_RESONANCE_FAMILY_URLS.map((url) =>
       destinationForPublicPath(new URL(url).pathname));
     expect(HUB_ASSETS.filter(({ destination }) => familyDestinations.includes(destination)))
@@ -98,7 +98,7 @@ describe("Shape & Resonance Lab 01 publication", () => {
       "shape-resonance.json",
     ]);
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(158);
+    expect(ledger.entries).toHaveLength(160);
     expect(ledger.entries.filter(({ id }: { id: string }) =>
       id.startsWith("shape-resonance-lab/0.1/"))).toHaveLength(15);
     expect(PUBLICATION_FAMILIES).toHaveLength(35);
@@ -301,7 +301,7 @@ describe("Shape & Resonance Lab 01 publication", () => {
       expect((sitemap.match(new RegExp(url.replaceAll("/", "\\/"), "g")) ?? []))
         .toHaveLength(1);
     }
-    expect((sitemap.match(/<loc>/g) ?? [])).toHaveLength(178);
+    expect((sitemap.match(/<loc>/g) ?? [])).toHaveLength(185);
     for (const url of [...SHAPE_RESONANCE_SVG_URLS, ...SHAPE_RESONANCE_AUDIO_URLS]) {
       expect(sitemap).not.toContain(url);
     }

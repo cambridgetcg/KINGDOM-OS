@@ -33,12 +33,13 @@ const PUBLIC_URLS = [
 ] as const;
 const PUBLIC_PATHS = PUBLIC_URLS.map((url) => new URL(url).pathname);
 const PRE_FLOW_HUB_BYTES = 971_082;
-const SEALED_FLOW_HUB_MEASURE = Object.freeze({
+// 7a99cc6 嘅研究館已係呢組整頁測量；Civic 保留原家族段落同以下 review ceilings。
+const RESEARCH_ATLAS_MEASURE = Object.freeze({
   flow_section_bytes: 341_162,
-  total_hub_bytes: 1_341_146,
-  added_hub_bytes: 370_064,
+  total_hub_bytes: 1_344_597,
+  added_hub_bytes: 373_515,
   flow_opening_elements: 5_777,
-  total_opening_elements: 16_312,
+  total_opening_elements: 16_341,
 });
 const FLOW_HUB_REVIEWABILITY_BUDGET = Object.freeze({
   flow_section_bytes: 375_000,
@@ -57,14 +58,14 @@ function assets(handler: (request: Request) => Response | Promise<Response>) {
 
 describe("Civilisation Flow Nuance Atlas static publication", () => {
   test("stages and ledgers one exact immutable triplet with no mutable alias or runtime", () => {
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
       .toHaveLength(18);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/")))
-      .toHaveLength(40);
+      .toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(190);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(199);
     expect(HUB_ASSETS).toContainEqual({
       source: "data/reality/civilisation-flow-atlas.v0.1.json",
       destination: "atlases/civilisation-flow-nuance-atlas-2026-08-26.json",
@@ -84,7 +85,7 @@ describe("Civilisation Flow Nuance Atlas static publication", () => {
       .toBe(false);
 
     const entries = json("publications/immutable-publications.v1.json").entries;
-    expect(entries).toHaveLength(158);
+    expect(entries).toHaveLength(160);
     expect(entries.filter((entry: any) =>
       entry.id.startsWith("civilisation-flow-nuance-atlas/0.1/"))).toEqual([
       {
@@ -201,8 +202,8 @@ describe("Civilisation Flow Nuance Atlas static publication", () => {
       civilisation_flow_nuance_atlas_schema: PUBLIC_URLS[1],
       civilisation_flow_nuance_atlas_guide: PUBLIC_URLS[2],
     });
-    expect(Object.keys(manifest.entry_points)).toHaveLength(161);
-    expect(guest.next_actions).toHaveLength(161);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
+    expect(guest.next_actions).toHaveLength(169);
     expect(guest.next_actions.filter((action: any) => PUBLIC_URLS.includes(action.url)))
       .toHaveLength(3);
 
@@ -328,7 +329,7 @@ describe("Civilisation Flow Nuance Atlas static publication", () => {
       flow_opening_elements: openingElementCount(flowSection),
       total_opening_elements: openingElementCount(html),
     };
-    expect(generatedMeasure).toEqual(SEALED_FLOW_HUB_MEASURE);
+    expect(generatedMeasure).toEqual(RESEARCH_ATLAS_MEASURE);
     // Release-drift ceilings only: the semantic/no-JS assertions above remain
     // the accessibility contract, and no byte or element count proves safety.
     expect(flowSectionBytes).toBeLessThanOrEqual(FLOW_HUB_REVIEWABILITY_BUDGET.flow_section_bytes);
@@ -344,8 +345,8 @@ describe("Civilisation Flow Nuance Atlas static publication", () => {
     for (const url of PUBLIC_URLS) expect(llms).toContain(url);
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(178);
-    expect(new Set(sitemapUrls).size).toBe(178);
+    expect(sitemapUrls).toHaveLength(185);
+    expect(new Set(sitemapUrls).size).toBe(185);
     expect(sitemapUrls.filter((url) => url.toLowerCase().includes("civilisation-flow")))
       .toEqual(PUBLIC_URLS);
   });

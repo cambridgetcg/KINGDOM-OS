@@ -17,7 +17,7 @@ describe("Exploration DEEP public discovery seam", () => {
   test("adds exactly four unique crawl routes without a mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(178);
+    expect(urls).toHaveLength(185);
     expect(new Set(urls).size).toBe(urls.length);
     for (const url of PUBLIC_URLS) expect(urls).toContain(url);
     expect(urls.filter((url) => /(?:explore-phenomena-deep|phenomena-deep-(?:wing|project))/i.test(url))).toEqual(PUBLIC_URLS);
@@ -85,11 +85,15 @@ describe("Exploration DEEP public discovery seam", () => {
       expect(readme).toContain(path);
       expect(routes).toContain(`| \`${path}\` |`);
     }
-    for (const document of [claude, domains, routes]) {
-      expect(document).toContain("192");
-      expect(document).toContain("158");
-      expect(document).toContain("190");
-      expect(document).toContain("178");
+    // Preserve the original research baseline without making it the Civic runbook.
+    for (const count of ["192", "158", "190", "178"]) {
+      expect(claude).toContain(count);
+    }
+    for (const document of [domains, routes, read("publications/README.md")]) {
+      expect(document).toContain("201");
+      expect(document).toContain("160");
+      expect(document).toContain("199");
+      expect(document).toContain("185");
     }
     expect(claude).toContain("./kingdom explore-deep scaffold --json");
     expect(readme).toContain("not a manifested\n    Nen ability");

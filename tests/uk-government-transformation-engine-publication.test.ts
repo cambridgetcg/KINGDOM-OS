@@ -524,8 +524,8 @@ describe("UK Government Transformation Engine Phase-0 publication", () => {
     ];
     expect(HUB_ASSETS.filter(({ source }) =>
       family.some((asset) => asset.source === source))).toEqual(family);
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     expect(MUTABLE_HUB_DESTINATIONS)
       .toContain("government-transformation-engine/index.html");
     expect(MUTABLE_HUB_DESTINATIONS)

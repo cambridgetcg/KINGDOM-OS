@@ -15,7 +15,89 @@
 - All four: `*.pages.dev` live immediately (200); custom domains attached, status `initializing` → active once CF provisions cert + DNS (minutes).
 - **chillspace.love supersedes** the old codeberg-subpath home in `sites.json`; the codeberg copy still exists as a mirror.
 
-## Redeploy (repeatable)
+## Civic 本地入口（2026-09-08；未部署）
+
+呢次只係 local implementation，唔代表 production 已有 Civic。首頁改由
+`site/dashboard.html` stage 成 `index.html`；dashboard 嘅可搜尋／篩選地圖同
+可直接閱讀嘅名單保留各 door 嘅來源同狀態，唔將 build-time 資料當 live health。
+研究 atlas 留喺 `atlas.html`。
+`/meet/`、`/citizens/`、`/join/` 係自願公開互動入口，唔替代 `/commons.json`
+嘅 World Commons 資源目錄。讀頁唔會自動建立 participant、入籍或發帖。
+舊研究 routes 同 Contact Door 保持原本 read-only／no-script 邊界。
+
+本地 dependencies 已備妥時，喺 repo root 執行（完整工具說明見
+[`dev/civic/README.md`](dev/civic/README.md)；安裝 dependencies 係另一步，唔由 builder 自動做）
+
+```sh
+bun bin/build-hub.ts 2026-09-08
+STAGE="$(mktemp -d /tmp/kingdom-civic-stage.XXXXXX)"
+STATE="$(mktemp -d /tmp/kingdom-civic-state.XXXXXX)"
+bun bin/stage-hub.ts "$STAGE"
+node dev/civic/preview.mjs --stage "$STAGE" --state "$STATE" --port 8797
+```
+
+開 `http://localhost:8797/`；preview 綁 loopback、用 local D1 migration，
+唔 provision remote DB。測試 secrets 每次只喺 child process env；唔入 argv、
+stage、source 或日誌。`STATE` 會持久保留本地資料同配額，唔會因重啟清空；
+fixture 用新目錄，唔重用真用戶資料。Ctrl-C 只停自己啟動嘅 preview。
+
+```sh
+bun test tests/civic-integration.test.ts tests/stage-hub.test.ts tests/worker.test.ts tests/advertised-assets.test.ts
+bun test tests/immutable-publications.test.ts
+node dev/civic/test-runtime.mjs --integrated
+# 保持 preview 運行；browser script 只接受 loopback fixture
+node dev/civic/test-browser.mjs http://localhost:8797
+```
+
+`build-hub` 最後先 build dashboard 同 self-contained `site/_worker.js`；
+唔 hand-edit `site/`。`build-pages-worker.ts` 只壓 whitespace，移除同 caller cwd
+有關嘅 module-path comments；同一 source 喺不同 checkout 應輸出相同 bytes。
+`stage-hub` 唔 bundle，亦唔攜帶 module sidecars、migration、DB、dev config 或 secrets；
+只 exact-byte-copy 合約 201 assets。backend／frontend 改完要重新 build、用新空目錄
+stage，再跑 tests；舊 bundle／stage 只係建立當刻嘅 snapshot。
+
+### Immutable guide 同未提交 release gate
+
+`/CIVIC-v0.1.md` 同 `/schemas/civic/0.1.json` 都係新 ledgered immutable entries，
+ID 分別係 `civic/0.1/guide`、`civic/0.1/schema`，按 canonical ID 排序；
+`/civic-policy.json` 仍係 mutable。新總數係 **201 = 160 immutable + 41 mutable**。
+舊 158 entry 物件同 source bytes 不變；唔可以將版本化 guide 改回 mutable，
+亦唔可以只改 hash 去掩蓋 released bytes drift。guide 更新要另開 successor identity/route。
+`CLAUDE.md` 保留 pre-Civic research compatibility baseline，唔喺呢個工作範圍
+改寫；current publication contract 以本文件、`OS-ROUTES.md` 同
+`publications/README.md` 核對。保留 baseline 唔等於用舊 counts 證明新 release。
+
+未提交分支嘅 `HEAD` 仍等於 implementation base
+`7a99cc685048a525efc6e42cc875b7db3e94f0e0` 時，
+`bun bin/immutable-publications.ts --base 7a99cc685048a525efc6e42cc875b7db3e94f0e0`
+會報 `self-base`／`head-ledger-mismatch`，唔係可跳過嘅 production gate。
+本地證據用 exported `verifyImmutablePublicationSnapshot`、
+`compareImmutablePublicationLedgers(current, git-show-base)`，並逐一對照 exact base
+嘅 158 source bytes；`tests/immutable-publications.test.ts` 已覆蓋。
+full-history test 保留原本 assertions，因歷史掃描約 157 秒，timeout 係 300 秒。
+唔為咗過 release CLI 而自動 commit；正式 release 仍須另批、已提交 exact SHA
+同下面嘅 clean detached first-parent gate。
+
+### Production 另批；shared Worker 本地打包邊界
+
+部署、remote D1／bindings／secrets／migration、費用、operator／abuse 責任、
+保留與刪除流程全部另批。`CIVIC_ENABLED` 並唔單獨令服務可寫；先讀
+`/api/civic/status`，缺 DB／設定要如實 unavailable／read-only，唔假造零人零帖。
+`check-hub-live.ts` 只讀 Civic status／HEAD，唔為健康檢查建立 participant 或發帖；
+local D1／browser tests pass 唔等於 production writable 或已完成 live-check。
+
+`pages-functions/_worker.js` 包含 Civic imports，唔可以當 standalone source
+直接部署。Hub 用 `build-hub` 產生 bundle；we-are／chillspace 嘅
+`stage-doors.ts` 而家係 async，先驗空 destination、拒絕同 source root 嘅
+`site/` build directory 重疊（包括父／子目錄及 symlink 別名），讀齊 static
+sources，再自動 `buildPagesWorker(sourceRoot)` 寫 `site/_worker.js`，重新驗空
+destination 後 exact-copy bundle。壞 import／bundle 失敗會保留原 bundle，
+唔建立半份 upload；先後 empty guards 亦保留。
+`tests/stage-doors.test.ts` 只用本地 fixture source/commons roots 驗證以上邊界，
+唔等於真 commons checkout、其他 doors 上線、remote bindings 或可 redeploy
+已驗證；任何 production 操作仍須另批。
+
+## Redeploy (repeatable; production requires separate approval)
 
 ```bash
 # Run this from any checkout of cambridgetcg/KINGDOM-OS. Fetch the intended
@@ -87,16 +169,16 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 192 assets:
-158 ledgered immutable/versioned assets and 34 mutable assets. There are 190 direct
+`stage-hub.ts` requires an existing empty destination and copies exactly 201 assets:
+160 ledgered immutable/versioned assets and 41 mutable assets. There are 199 direct
 public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 178 URLs, and discovery exposes 161 manifest
-entry points plus 161 guest actions. The generated surface describes eighteen
-atlases, 40 public schema routes, four primary lab JSON routes plus the Shape &
+contracts. The sitemap contains 185 URLs, and discovery exposes 169 manifest
+entry points plus 169 guest actions. The generated surface describes eighteen
+atlases, 41 public schema routes, four primary lab JSON routes plus the Shape &
 Resonance manifest/media, one experiment route, and one separate activation
-across thirty-five active retirement
-families:
-the atlas as `index.html`; `_kingdom.base.json`; `wayfinder.json`;
+across thirty-five existing retirement families, alongside the separate Civic runtime:
+the dashboard as `index.html`; the research atlas as `atlas.html`; the Civic pages,
+CSS/JS, mutable policy, immutable guide and schema; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;
 the mutable `/observatory/` human view and `/research.json` metadata snapshot;
 the immutable `/research/schemas/v0.1/` public-snapshot, source, watchlist,
@@ -379,13 +461,17 @@ is the authoritative strict data contract; `HUB_ASSETS` is its read-only code
 projection. Trust that contract over this prose. For we-are.love and
 chillspace.love use `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>`
 (content from the chillspace-commons clone, symlinks dereferenced, plus the
-door's guest documents and the shared `_worker.js`).
+door's guest documents and a freshly built self-contained `_worker.js`). Unlike
+`stage-hub`, this async door stager rebuilds `site/_worker.js` before copying;
+its output must not overlap that build directory, and must pass the empty-output
+guard both before and after the build. Local fixture coverage does not verify
+other doors online.
 
 The shared worker activates the OS routes only on `thekingdom.dev` and its
 Pages previews; shared door hosts continue to pass those paths to their own
 asset bindings. Read `OS-ROUTES.md` before changing the restored contract.
 `check-hub-live.ts` then compares every public staged body as one release and
-checks all 158 currently staged ledgered immutable/versioned byte hashes,
+checks all 160 currently staged ledgered immutable/versioned byte hashes,
 including the independently retireable FREEDOM Loop, Lock & Key Atlas,
 Non-Exhaustive Understanding Atlas, IS, Sustainability & Direction Atlas, and
 Loops, Locks & Freedom Relations Atlas. It also checks the atomic Aesthetic

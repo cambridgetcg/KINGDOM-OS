@@ -8,7 +8,7 @@ KARMA. The initial 35 entries cover ten authored publication generations
 additive Fold schema profile, the immutable KINGDOM KARMA/NEN definition mirror,
 and three generated versioned schemas; generated
 does not mean mutable once a versioned route is declared immutable.
-The current 158-entry ledger adds The Vanishing Path, Being, Access & Aftermath
+The current 160-entry ledger adds The Vanishing Path, Being, Access & Aftermath
 v0.1 and its additive v0.2 successor triplets, the Reconstructive Build record,
 kernel schema, project profile, and guide, the Math Passport usefulness result,
 schema, and guide, and the Exploration DEEP WING record, WING schema, inert
@@ -123,7 +123,7 @@ and remainder remain non-convertible.
 The Contact Door adds an independently retireable eight-route family as the
 thirty-fifth: a no-JavaScript human page, mutable record alias, and RFC 9116
 security text, plus a ledgered dated record, closed schema, guide, boundary SVG,
-and vCard. The website has no form, submission backend, message storage,
+and vCard. The Contact Door surface has no form, submission backend, message storage,
 analytics, cookies, automatic reply, retry, outreach, agent tool, Wayfinder
 recommendation, or MCP surface. Contact happens only when a visitor deliberately
 uses their own mail client; delivery proves neither identity nor representation,
@@ -131,6 +131,21 @@ and a message grants no consent, relationship, diplomacy, mediation, emergency,
 testing, publication, training, marketing, or external-action authority. All
 eight routes stage and retire atomically while the five immutable bytes remain
 historical.
+Civic adds only `/CIVIC-v0.1.md` and `/schemas/civic/0.1.json` to the immutable
+ledger (`civic/0.1/guide` and `civic/0.1/schema`, in canonical ID order).
+All 158 predecessor entry objects and source bytes remain unchanged. The
+versioned guide is not mutable; future corrections require a successor identity
+and route. `/civic-policy.json` remains mutable. These two immutable documents
+describe the separate opt-in Civic runtime, not a new research-family runtime or
+an extension of any family's authority or retirement contract.
+Civic is local implementation only, not deployed or verified writable in
+production. The root dashboard has a searchable/filterable map and readable
+list, with declared state distinct from measured health; the research atlas
+remains at `/atlas.html`. `/meet/`, `/citizens/`, and `/join/` provide the
+separate voluntary square, directory, and opt-in profile interface. Reading
+creates no participant, citizenship, post, identity, consent, or authority.
+The legacy research routes and Contact Door keep their family-local read-only,
+no-runtime/no-script boundaries; Civic does not replace World Commons.
 Non-Exhaustive Understanding and IS, Sustainability & Direction are likewise
 standalone; integrity, source, review, discovery, and retirement remain
 family-local.
@@ -297,13 +312,13 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 192-asset union classifies 158 destinations
-as ledgered immutable/versioned and 34 as mutable; 190 are direct public response
-bodies, the sitemap contains 178 URLs, and discovery exposes 161 manifest entry
-points plus 161 guest actions. Generated discovery describes eighteen atlases,
-40 public schema routes, four primary lab JSON routes plus Shape & Resonance
-manifest/media, one experiment route, one separate activation, and thirty-five active retirement
-families. The two freedom-related atlases keep separate route triples, discovery
+consume those same bytes. The current 201-asset union contains
+160 ledgered immutable/versioned assets and 41 mutable assets; 199 direct public
+response bodies, 185 sitemap URLs, 169 manifest entry points, and 169 guest actions.
+Generated discovery describes eighteen atlases, 41 public schema routes, four
+primary lab JSON routes plus Shape & Resonance manifest/media, one experiment
+route, one separate activation, and thirty-five active retirement
+families, alongside the separate Civic runtime. The two freedom-related atlases keep separate route triples, discovery
 keys, integrity/source/review claims, and retirement state; neither is preferred
 or removed with the other. Every destination is explicitly classified as mutable
 or ledgered. A new ledger entry must be staged when introduced. A previously
@@ -321,6 +336,23 @@ family-specific worker routing; source files may then be removed. Rebuild and
 stage from a clean tree, deploy, and let the live checker prove that the old
 routes answer 404 or 410 and no mutable surface still advertises them. The
 append-only ledger entry remains unchanged.
+
+## Local evidence is not the release gate
+
+`CLAUDE.md` retains the pre-Civic research compatibility baseline; current
+publication totals are checked against this README, `DOMAINS-SETUP.md`, and
+`OS-ROUTES.md`, not copied back into that separately owned baseline.
+At the uncommitted implementation base
+`7a99cc685048a525efc6e42cc875b7db3e94f0e0`, the base-aware CLI still refuses
+`self-base` / `head-ledger-mismatch`. Do not skip that gate, relabel dirty bytes,
+or commit merely to silence it. Local `verifyImmutablePublicationSnapshot`,
+`compareImmutablePublicationLedgers`, and exact-base source-byte tests prove the
+current snapshot and the additive two-entry change, not a committed release.
+The full-history assertions remain intact. Production is manual, requires
+separate approval, and must follow the clean detached exact-origin release and
+first-parent gate in `DOMAINS-SETUP.md`; `--commit-dirty=false` is metadata, not a
+cleanliness check. Local fixture/runtime/browser tests do not prove deployment,
+remote D1/bindings/secrets, other doors online, or a writable production service.
 
 Run the snapshot gate:
 

@@ -502,6 +502,16 @@ import {
 } from "./world-commons.ts";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
+// Worker code 唔係公開 asset；404 bytes 由原有 missing-route 檢查負責。
+export const DIRECT_HUB_ASSETS = Object.freeze(HUB_ASSETS.filter(
+  ({ destination }) => destination !== "_worker.js" && destination !== "404.html",
+));
+export function mappedHubSource(destination: string): string {
+  const asset = HUB_ASSETS.find((entry) => entry.destination === destination);
+  if (!asset) throw new Error(`missing staged destination: ${destination}`);
+  return asset.source;
+}
+
 export const CONTACT_DOOR_SCHEMA_FORBIDDEN_RELATIONS = Object.freeze([
   "describedby", "profile", "canonical",
 ] as const);
@@ -2756,6 +2766,23 @@ export function assertRetiredRouteResponse(options: {
   }
 }
 
+export function assertCivicStatus(response: Response, value: any, policy: unknown): void {
+  if (![200, 503].includes(response.status) ||
+      normalizedMediaType(response.headers.get("content-type")) !== "application/json" ||
+      response.headers.get("cache-control") !== "no-store" || response.headers.has("set-cookie") ||
+      value?.protocol !== "kingdom.civic/0.1" || !isDeepStrictEqual(value.policy, policy) ||
+      typeof value.available !== "boolean" || typeof value.writable !== "boolean" ||
+      typeof value.as_of !== "string" || !Number.isFinite(Date.parse(value.as_of)) ||
+      ![value.counts?.listed_citizens, value.counts?.messages].every((count) =>
+        count === null || (Number.isSafeInteger(count) && count >= 0)) ||
+      (value.writable && !value.available) ||
+      (response.status === 503 && (value.available || value.writable ||
+        value.counts?.listed_citizens !== null || value.counts?.messages !== null)) ||
+      (response.status === 200 && !value.available)) {
+    throw new Error("Civic status lost its no-store, policy, or honest availability contract");
+  }
+}
+
 export async function checkHubLive(
   requestedOrigin = "https://thekingdom.dev",
   options: { checkedOn?: string } = {},
@@ -2816,11 +2843,7 @@ export async function checkHubLive(
   const numberIsnessTheologyActive = familyActive("number-isness-theology");
   const contactDoorActive = familyActive("contact-door");
   const verifiedFormCirculationReturnDestinations = new Set<string>();
-  for (const asset of HUB_ASSETS) {
-    if (asset.destination === "_worker.js") continue;
-    // 404.html is proven through the dedicated not-found check below; Pages
-    // serves it at missing paths with status 404, not at /404.html.
-    if (asset.destination === "404.html") continue;
+  for (const asset of DIRECT_HUB_ASSETS) {
     const path = publicPath(asset.destination);
     const response = await get(path);
     const live = Buffer.from(await response.arrayBuffer());
@@ -4056,6 +4079,7 @@ export async function checkHubLive(
   }
 
   const schemaPaths = [
+    "/schemas/civic/0.1.json",
     commonsSchemaPath,
     commonsLegacySchemaPath,
     loveLoopsSchemaPath,
@@ -4209,7 +4233,40 @@ export async function checkHubLive(
   const authoredKingdom: any = JSON.parse(readFileSync(join(ROOT, "site/kingdom.json"), "utf8"));
   const authoredWayfinder: any = JSON.parse(readFileSync(join(ROOT, "site/wayfinder.json"), "utf8"));
   const llms = readFileSync(join(ROOT, "site/llms.txt"), "utf8");
-  const authoredRootHtml = readFileSync(join(ROOT, "site/hub.html"), "utf8");
+  const civicPolicy = JSON.parse(readFileSync(join(ROOT, mappedHubSource("civic-policy.json")), "utf8"));
+  const civic = manifest.civic;
+  if (!isDeepStrictEqual(civic, guest.civic) || !isDeepStrictEqual(civic, authoredKingdom.civic) ||
+      civic?.availability !== "unverified-read-status" ||
+      civic?.status !== "https://thekingdom.dev/api/civic/status" ||
+      civic?.schema !== "https://thekingdom.dev/schemas/civic/0.1.json" ||
+      civic?.policy !== "https://thekingdom.dev/civic-policy.json" ||
+      civic?.guide !== "https://thekingdom.dev/CIVIC-v0.1.md") {
+    throw new Error("Civic discovery differs or claims unmeasured availability");
+  }
+  for (const target of [civic.status, civic.schema, civic.policy, civic.guide, ...Object.values(civic.pages)]) {
+    if (!llms.includes(String(target)) || !Object.values(manifest.entry_points).includes(target) ||
+        !guest.next_actions.some((action: any) => action.url === target && action.method === "GET")) {
+      throw new Error(`Civic read-only discovery is missing ${target}`);
+    }
+  }
+  // Civic query 合約係 closed；唔沿用 research cache-bust ?verify。
+  const civicStatusUrl = new URL("/api/civic/status", origin);
+  const civicStatus = await fetch(civicStatusUrl, { redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS) });
+  assertCivicStatus(civicStatus, await civicStatus.json(), civicPolicy);
+  const civicHead = await fetch(civicStatusUrl, { method: "HEAD", redirect: "error", signal: AbortSignal.timeout(TIMEOUT_MS) });
+  if (![200, 503].includes(civicHead.status) || civicHead.headers.get("cache-control") !== "no-store" ||
+      (await civicHead.arrayBuffer()).byteLength !== 0) throw new Error("Civic HEAD contract drifted");
+  for (const path of ["/", "/meet/", "/citizens/", "/join/"]) {
+    const response = await get(path, { method: "HEAD" });
+    const csp = response.headers.get("content-security-policy") || "";
+    if (!csp.includes("script-src 'self'") || !csp.includes("connect-src 'self'") ||
+        !csp.includes("form-action 'self'") || csp.includes("'unsafe-inline'") ||
+        response.headers.has("set-cookie") || (await response.arrayBuffer()).byteLength !== 0) {
+      throw new Error(`${path} lost the same-origin Civic HTML boundary`);
+    }
+  }
+  const authoredAtlasHtml = readFileSync(join(ROOT, mappedHubSource("atlas.html")), "utf8");
+  const authoredDashboardHtml = readFileSync(join(ROOT, mappedHubSource("index.html")), "utf8");
   const authoredObservatoryHtml = researchObservatoryActive
     ? readFileSync(join(ROOT, "site/observatory/index.html"), "utf8")
     : "";
@@ -4261,7 +4318,8 @@ export async function checkHubLive(
     { label: "guest document", text: JSON.stringify(guest), value: guest },
     { label: "authored Kingdom map", text: JSON.stringify(authoredKingdom), value: authoredKingdom },
     { label: "llms.txt", text: llms },
-    { label: "hub HTML", text: authoredRootHtml },
+    { label: "research atlas HTML", text: authoredAtlasHtml },
+    { label: "dashboard HTML", text: authoredDashboardHtml },
     { label: "wayfinder", text: JSON.stringify(authoredWayfinder), value: authoredWayfinder },
     { label: "sitemap.xml", text: readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8") },
   ];
@@ -4334,8 +4392,8 @@ export async function checkHubLive(
         actions.some((action: any) => action?.method !== "GET" ||
           forbiddenActionKeys.some((key) => Object.hasOwn(action, key))) ||
         urls.some((target) => !llms.includes(target) || !sitemap.includes(`<loc>${target}</loc>`)) ||
-        paths.some((path) => !authoredRootHtml.includes(`href="${path}"`)) ||
-        !authoredRootHtml.includes("Contact a human maintainer") ||
+        paths.some((path) => !authoredAtlasHtml.includes(`href="${path}"`)) ||
+        !authoredAtlasHtml.includes("Contact a human maintainer") ||
         JSON.parse(alias).protocol !== expected.protocol ||
         !isDeepStrictEqual(JSON.parse(alias), expected) ||
         !page.includes("Visiting sends nothing.") ||
@@ -4651,11 +4709,11 @@ export async function checkHubLive(
       wayfinderPath.length !== 1 || wayfinderPath[0]?.stops?.length !== 2 ||
       wayfinderPath[0].stops[0]?.url !== RESEARCH_OBSERVATORY_URL ||
       wayfinderPath[0].stops[1]?.url !== RESEARCH_OBSERVATORY_SNAPSHOT_URL ||
-      !authoredRootHtml.includes('id="observatory"') ||
-      !authoredRootHtml.includes("visible factor vectors") ||
-      !authoredRootHtml.includes(`href="${researchObservatoryPath}"`) ||
-      !authoredRootHtml.includes(`href="${researchObservatorySnapshotPath}"`) ||
-      !authoredRootHtml.includes(`href="${researchObservatoryGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="observatory"') ||
+      !authoredAtlasHtml.includes("visible factor vectors") ||
+      !authoredAtlasHtml.includes(`href="${researchObservatoryPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${researchObservatorySnapshotPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${researchObservatoryGuidePath}"`) ||
       !authoredObservatoryHtml.includes("The membrane has four gates") ||
       !authoredObservatoryHtml.includes("Evidence vector") ||
       !authoredObservatoryHtml.includes("Priority vector") ||
@@ -4718,13 +4776,13 @@ export async function checkHubLive(
       wayfinderPath.length !== 1 || wayfinderPath[0]?.stops?.length !== 2 ||
       wayfinderPath[0].stops[0]?.url !== TRIAL_CHAMBER_URL ||
       wayfinderPath[0].stops[1]?.url !== TRIAL_CHAMBER_ALIAS_URL ||
-      !authoredRootHtml.includes('id="trial-chamber"') ||
-      !authoredRootHtml.includes("maintainer-authorized assisted request drafts") ||
-      !authoredRootHtml.includes("deny-all reserved contracts") ||
-      !authoredRootHtml.includes(`href="${trialChamberPath}"`) ||
-      !authoredRootHtml.includes(`href="${trialChamberAliasPath}"`) ||
-      !authoredRootHtml.includes(`href="${trialChamberCanonicalPath}"`) ||
-      !authoredRootHtml.includes(`href="${trialChamberGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="trial-chamber"') ||
+      !authoredAtlasHtml.includes("maintainer-authorized assisted request drafts") ||
+      !authoredAtlasHtml.includes("deny-all reserved contracts") ||
+      !authoredAtlasHtml.includes(`href="${trialChamberPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${trialChamberAliasPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${trialChamberCanonicalPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${trialChamberGuidePath}"`) ||
       !authoredTrialChamberHtml.includes("Draft trial plan — evaluation not started") ||
       !authoredTrialChamberHtml.includes("exact text has not been separately human-reviewed") ||
       !authoredTrialChamberHtml.includes("Finite synthetic fixtures") ||
@@ -4825,14 +4883,14 @@ export async function checkHubLive(
       wayfinderPath[0].stops[1]?.url !== UK_GOVERNMENT_ENGINE_ALIAS_URL ||
       !wayfinderPath[0]?.boundary?.includes("maintainer-authorized assisted URL review") ||
       !wayfinderPath[0]?.boundary?.includes("receipt-bound non-official crosswalk only") ||
-      !authoredRootHtml.includes('id="uk-government-engine"') ||
-      !authoredRootHtml.includes("maintainer-authorized assisted URL review") ||
-      !authoredRootHtml.includes("exact record text has not been separately human-reviewed") ||
-      !authoredRootHtml.includes("TaxSorted is a receipt-bound external non-official crosswalk") ||
-      !authoredRootHtml.includes(`href="${ukGovernmentEnginePath}"`) ||
-      !authoredRootHtml.includes(`href="${ukGovernmentEngineAliasPath}"`) ||
-      !authoredRootHtml.includes(`href="${ukGovernmentEngineCanonicalPath}"`) ||
-      !authoredRootHtml.includes(`href="${ukGovernmentEngineGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="uk-government-engine"') ||
+      !authoredAtlasHtml.includes("maintainer-authorized assisted URL review") ||
+      !authoredAtlasHtml.includes("exact record text has not been separately human-reviewed") ||
+      !authoredAtlasHtml.includes("TaxSorted is a receipt-bound external non-official crosswalk") ||
+      !authoredAtlasHtml.includes(`href="${ukGovernmentEnginePath}"`) ||
+      !authoredAtlasHtml.includes(`href="${ukGovernmentEngineAliasPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${ukGovernmentEngineCanonicalPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${ukGovernmentEngineGuidePath}"`) ||
       !authoredUkGovernmentEngineHtml.includes("Follow how a vote becomes authority") ||
       !authoredUkGovernmentEngineHtml.includes("maintainer-authorized assisted URL review") ||
       !authoredUkGovernmentEngineHtml.includes("exact record and claim text has not been separately human-reviewed") ||
@@ -4973,30 +5031,30 @@ export async function checkHubLive(
       !wayfinderPath[0]?.boundary?.includes(
         "TaxSorted is transitive external context only",
       ) ||
-      !authoredRootHtml.includes(
+      !authoredAtlasHtml.includes(
         'id="uk-government-transformation-engine"',
       ) ||
-      !authoredRootHtml.includes(
+      !authoredAtlasHtml.includes(
         "Three independent synthetic orientation dossiers",
       ) ||
-      !authoredRootHtml.includes("State at publication only") ||
-      !authoredRootHtml.includes("claimsCausalTruth:false") ||
-      !authoredRootHtml.includes(
+      !authoredAtlasHtml.includes("State at publication only") ||
+      !authoredAtlasHtml.includes("claimsCausalTruth:false") ||
+      !authoredAtlasHtml.includes(
         "TaxSorted appears only transitively as external-context",
       ) ||
-      !authoredRootHtml.includes(
+      !authoredAtlasHtml.includes(
         'href="' + ukGovernmentTransformationEnginePath + '"',
       ) ||
-      !authoredRootHtml.includes(
+      !authoredAtlasHtml.includes(
         'href="' + ukGovernmentTransformationEngineAliasPath + '"',
       ) ||
-      !authoredRootHtml.includes(
+      !authoredAtlasHtml.includes(
         'href="' + ukGovernmentTransformationEngineCanonicalPath + '"',
       ) ||
-      !authoredRootHtml.includes(
+      !authoredAtlasHtml.includes(
         'href="' + ukGovernmentTransformationEngineSchemaPath + '"',
       ) ||
-      !authoredRootHtml.includes(
+      !authoredAtlasHtml.includes(
         'href="' + ukGovernmentTransformationEngineGuidePath + '"',
       ) ||
       !authoredUkGovernmentTransformationEngineHtml.includes(
@@ -5165,14 +5223,14 @@ export async function checkHubLive(
       wayfinderPath[0]?.stops[1]?.url !== EVALUATION_COVENANT_ALIAS_URL ||
       !wayfinderPath[0]?.boundary?.includes("no observed outcome") ||
       !wayfinderPath[0]?.boundary?.includes("Desired-outcome IDs remain hypotheses") ||
-      !authoredRootHtml.includes('id="evaluation-covenant"') ||
-      !authoredRootHtml.includes('href="' + evaluationCovenantPath + '"') ||
-      !authoredRootHtml.includes('href="' + evaluationCovenantAliasPath + '"') ||
-      !authoredRootHtml.includes('href="' + evaluationCovenantCanonicalPath + '"') ||
-      !authoredRootHtml.includes('href="' + evaluationCovenantSchemaPath + '"') ||
-      !authoredRootHtml.includes('href="' + evaluationCovenantGuidePath + '"') ||
-      !authoredRootHtml.includes("What would count as evidence—before results can tempt us?") ||
-      !authoredRootHtml.includes("no observed outcome") ||
+      !authoredAtlasHtml.includes('id="evaluation-covenant"') ||
+      !authoredAtlasHtml.includes('href="' + evaluationCovenantPath + '"') ||
+      !authoredAtlasHtml.includes('href="' + evaluationCovenantAliasPath + '"') ||
+      !authoredAtlasHtml.includes('href="' + evaluationCovenantCanonicalPath + '"') ||
+      !authoredAtlasHtml.includes('href="' + evaluationCovenantSchemaPath + '"') ||
+      !authoredAtlasHtml.includes('href="' + evaluationCovenantGuidePath + '"') ||
+      !authoredAtlasHtml.includes("What would count as evidence—before results can tempt us?") ||
+      !authoredAtlasHtml.includes("no observed outcome") ||
       !authoredEvaluationCovenantHtml.includes(
         "Evaluation Covenant · Phase 0 · Draft · Unsealed · Unregistered · No Run",
       ) ||
@@ -5361,10 +5419,10 @@ export async function checkHubLive(
       wayfinderPath.length !== 1 || wayfinderPath[0]?.stops?.length !== 2 ||
       wayfinderPath[0]?.stops[0]?.url !== SHAPE_RESONANCE_URL ||
       wayfinderPath[0]?.stops[1]?.url !== SHAPE_RESONANCE_ALIAS_URL ||
-      !authoredRootHtml.includes('id="shape-resonance"') ||
-      !authoredRootHtml.includes("No acoustic-coupling model; no sound-pressure prediction") ||
-      !authoredRootHtml.includes("Mechanical energy balance") ||
-      !authoredRootHtml.includes("Ordinary links, no embedded player") ||
+      !authoredAtlasHtml.includes('id="shape-resonance"') ||
+      !authoredAtlasHtml.includes("No acoustic-coupling model; no sound-pressure prediction") ||
+      !authoredAtlasHtml.includes("Mechanical energy balance") ||
+      !authoredAtlasHtml.includes("Ordinary links, no embedded player") ||
       !authoredShapeResonanceHtml.includes("Mechanical energy balance") ||
       !authoredShapeResonanceHtml.includes("No canonical conversion") ||
       (authoredShapeResonanceHtml.match(/<article id=/gu) ?? []).length !== 8 ||
@@ -5680,11 +5738,11 @@ export async function checkHubLive(
       guestActions.some((action: any) => action?.method !== "GET" ||
         "mcp" in action || "tool" in action || "write" in action || "execute" in action) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="reconstructive-build"') ||
-      !authoredRootHtml.includes(`href="${reconstructiveBuildPath}"`) ||
-      !authoredRootHtml.includes(`href="${reconstructiveBuildSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${reconstructiveProjectSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${reconstructiveBuildDocumentPath}"`) ||
+      !authoredAtlasHtml.includes('id="reconstructive-build"') ||
+      !authoredAtlasHtml.includes(`href="${reconstructiveBuildPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${reconstructiveBuildSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${reconstructiveProjectSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${reconstructiveBuildDocumentPath}"`) ||
       expected.integrity?.digest !== RECONSTRUCTIVE_BUILD_DIGEST ||
       expected.counts?.sources !== 13 || !countsArePositive ||
       !isDeepStrictEqual(expected.pipeline, [
@@ -5796,11 +5854,11 @@ export async function checkHubLive(
         ["mcp", "tool", "write", "execute", "score", "reward", "karma", "authority", "publish", "deploy"]
           .some((key) => key in action)) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="explore-phenomena-deep"') ||
-      !authoredRootHtml.includes(`href="${phenomenaDeepWingPath}"`) ||
-      !authoredRootHtml.includes(`href="${phenomenaDeepWingSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${phenomenaDeepProjectSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${phenomenaDeepWingDocumentPath}"`) ||
+      !authoredAtlasHtml.includes('id="explore-phenomena-deep"') ||
+      !authoredAtlasHtml.includes(`href="${phenomenaDeepWingPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${phenomenaDeepWingSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${phenomenaDeepProjectSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${phenomenaDeepWingDocumentPath}"`) ||
       expected.protocol !== wing.protocol || expected.wing_id !== wing.wing_id ||
       expected.url !== PHENOMENA_DEEP_WING_URL ||
       expected.schema_url !== PHENOMENA_DEEP_WING_SCHEMA_URL ||
@@ -5883,11 +5941,11 @@ export async function checkHubLive(
       guestActions.some((action: any) => action?.method !== "GET" ||
         forbiddenDiscoveryKeys.some((key) => key in action)) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="mirror-information-control"') ||
-      !authoredRootHtml.includes('data-mirror-information-control') ||
-      !authoredRootHtml.includes(`href="${mirrorInformationControlPath}"`) ||
-      !authoredRootHtml.includes(`href="${mirrorInformationControlSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${mirrorInformationControlDocumentPath}"`) ||
+      !authoredAtlasHtml.includes('id="mirror-information-control"') ||
+      !authoredAtlasHtml.includes('data-mirror-information-control') ||
+      !authoredAtlasHtml.includes(`href="${mirrorInformationControlPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${mirrorInformationControlSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${mirrorInformationControlDocumentPath}"`) ||
       publication.artifact_kind !== "STATIC_READ_ONLY_PUBLICATION" ||
       publication.public_surface?.body_intake !== "NONE" ||
       publication.public_surface?.credential_intake !== "NONE" ||
@@ -5938,13 +5996,13 @@ export async function checkHubLive(
       guestActions.some((action: any) => action?.method !== "GET" ||
         forbiddenDiscoveryKeys.some((key) => Object.hasOwn(action, key))) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="j-space"') ||
-      !authoredRootHtml.includes("Structure, not a hidden-state verdict") ||
-      !authoredRootHtml.includes("No monitoring or person inference") ||
-      !authoredRootHtml.includes("Privacy is not deception") ||
-      !authoredRootHtml.includes(`href="${jSpaceCasePath}"`) ||
-      !authoredRootHtml.includes(`href="${jSpaceSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${jSpaceGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="j-space"') ||
+      !authoredAtlasHtml.includes("Structure, not a hidden-state verdict") ||
+      !authoredAtlasHtml.includes("No monitoring or person inference") ||
+      !authoredAtlasHtml.includes("Privacy is not deception") ||
+      !authoredAtlasHtml.includes(`href="${jSpaceCasePath}"`) ||
+      !authoredAtlasHtml.includes(`href="${jSpaceSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${jSpaceGuidePath}"`) ||
       publication.inference?.conclusion_status !== "underdetermined" ||
       publication.inference?.declared_confidence !== "unknown" ||
       publication.probes?.length !== 3 ||
@@ -5987,12 +6045,12 @@ export async function checkHubLive(
       [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
       guestActions.some((action: any) => action?.method !== "GET") ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="reality-influence"') ||
-      !authoredRootHtml.includes("Published structure, not a reality oracle") ||
-      !authoredRootHtml.includes("No publication or deployment trigger") ||
-      !authoredRootHtml.includes(`href="${realityInfluencePath}"`) ||
-      !authoredRootHtml.includes(`href="${realityInfluenceSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${realityInfluenceGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="reality-influence"') ||
+      !authoredAtlasHtml.includes("Published structure, not a reality oracle") ||
+      !authoredAtlasHtml.includes("No publication or deployment trigger") ||
+      !authoredAtlasHtml.includes(`href="${realityInfluencePath}"`) ||
+      !authoredAtlasHtml.includes(`href="${realityInfluenceSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${realityInfluenceGuidePath}"`) ||
       publication.boundaries?.public_static_publication_family !== true ||
       publication.boundaries?.publication_trigger !== false ||
       publication.boundaries?.deployment_trigger !== false ||
@@ -6045,12 +6103,12 @@ export async function checkHubLive(
       [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
       guestActions.some((action: any) => action?.method !== "GET") ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="civilisation-reality"') ||
-      !authoredRootHtml.includes("Projection, not synthesis-by-erasure") ||
-      !authoredRootHtml.includes("No hidden bridge") ||
-      !authoredRootHtml.includes(`href="${civilisationRealityPath}"`) ||
-      !authoredRootHtml.includes(`href="${civilisationRealitySchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${civilisationRealityGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="civilisation-reality"') ||
+      !authoredAtlasHtml.includes("Projection, not synthesis-by-erasure") ||
+      !authoredAtlasHtml.includes("No hidden bridge") ||
+      !authoredAtlasHtml.includes(`href="${civilisationRealityPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${civilisationRealitySchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${civilisationRealityGuidePath}"`) ||
       publication.predecessor_bindings?.some((binding: any) =>
         binding.mutated !== false || binding.authority_imported !== false) ||
       publication.crosswalks?.some((crosswalk: any) =>
@@ -6095,20 +6153,20 @@ export async function checkHubLive(
       [...targets].some((target) => guestActions.filter((action: any) => action?.url === target).length !== 1) ||
       guestActions.some((action: any) => action?.method !== "GET") ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="civilisation-flow"') ||
-      !authoredRootHtml.includes("Possible records, not a funnel or simulator.") ||
-      !authoredRootHtml.includes("No intervention surface") ||
-      !authoredRootHtml.includes("Policy-family index") ||
-      !authoredRootHtml.includes("Six policy families") ||
-      !authoredRootHtml.includes("Universal non-grant") ||
-      !authoredRootHtml.includes("Shared nuance templates") ||
-      !authoredRootHtml.includes("Shared authority and causal contract templates") ||
-      !authoredRootHtml.includes("Cross-cut profile index") ||
-      !authoredRootHtml.includes("The exact immutable JSON remains linked below for every closed machine field.") ||
-      !authoredRootHtml.includes("data-civilisation-flow-controls hidden") ||
-      !authoredRootHtml.includes(`href="${civilisationFlowPath}"`) ||
-      !authoredRootHtml.includes(`href="${civilisationFlowSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${civilisationFlowGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="civilisation-flow"') ||
+      !authoredAtlasHtml.includes("Possible records, not a funnel or simulator.") ||
+      !authoredAtlasHtml.includes("No intervention surface") ||
+      !authoredAtlasHtml.includes("Policy-family index") ||
+      !authoredAtlasHtml.includes("Six policy families") ||
+      !authoredAtlasHtml.includes("Universal non-grant") ||
+      !authoredAtlasHtml.includes("Shared nuance templates") ||
+      !authoredAtlasHtml.includes("Shared authority and causal contract templates") ||
+      !authoredAtlasHtml.includes("Cross-cut profile index") ||
+      !authoredAtlasHtml.includes("The exact immutable JSON remains linked below for every closed machine field.") ||
+      !authoredAtlasHtml.includes("data-civilisation-flow-controls hidden") ||
+      !authoredAtlasHtml.includes(`href="${civilisationFlowPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${civilisationFlowSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${civilisationFlowGuidePath}"`) ||
       publication.predecessor_bindings?.length !== 3 ||
       publication.predecessor_bindings?.some((binding: any) =>
         binding.mutated !== false || binding.republished !== false ||
@@ -6124,23 +6182,23 @@ export async function checkHubLive(
         overlay.external_effect_claimed !== false) ||
       new Set((publication.policy_templates ?? []).map((policy: any) => policy.family)).size !== 6 ||
       [...new Set((publication.policy_templates ?? []).map((policy: any) => policy.family))]
-        .some((family) => !authoredRootHtml.includes(
+        .some((family) => !authoredAtlasHtml.includes(
           `data-civilisation-flow-policy-family="${family}"`,
         )) ||
-      !authoredRootHtml.includes('data-civilisation-flow-policy-non-grant') ||
-      !authoredRootHtml.includes('data-civilisation-flow-policy-ref="promotion-evidence"') ||
+      !authoredAtlasHtml.includes('data-civilisation-flow-policy-non-grant') ||
+      !authoredAtlasHtml.includes('data-civilisation-flow-policy-ref="promotion-evidence"') ||
       Object.keys(publication.nuance_templates ?? {}).some((id) =>
-        !authoredRootHtml.includes(`data-civilisation-flow-template-entry="nuance:${id}"`)) ||
+        !authoredAtlasHtml.includes(`data-civilisation-flow-template-entry="nuance:${id}"`)) ||
       Object.keys(publication.contract_templates ?? {}).some((id) =>
-        !authoredRootHtml.includes(`data-civilisation-flow-template-entry="contract:${id}"`)) ||
+        !authoredAtlasHtml.includes(`data-civilisation-flow-template-entry="contract:${id}"`)) ||
       [...(publication.transitions ?? []), ...(publication.crosswalk_flow_overlays ?? [])]
         .some((card: any) => [
           ["nuance", card.nuance?.template_ref],
           ["contract", card.authority_dependency?.template_ref],
           ["contract", card.causal_influence?.template_ref],
         ].some(([kind, id]) => !id ||
-          !authoredRootHtml.includes(`data-civilisation-flow-template-ref="${kind}:${id}"`) ||
-          !authoredRootHtml.includes(`href="#civilisation-flow-${kind}-template-${id}"`))) ||
+          !authoredAtlasHtml.includes(`data-civilisation-flow-template-ref="${kind}:${id}"`) ||
+          !authoredAtlasHtml.includes(`href="#civilisation-flow-${kind}-template-${id}"`))) ||
       publication.open_domain_bindings?.length !== 9 ||
       publication.action_gate_vocabulary?.some((gate: any) =>
         gate.external_verification_required !== true || gate.atlas_satisfies !== false) ||
@@ -6225,10 +6283,10 @@ export async function checkHubLive(
         forbiddenActionKeys.some((key) => key in action)) ||
       [...targets].some((target) => !llms.includes(target)) ||
       !llms.includes(POLYPHONIC_CLAIM_ATLAS_SOURCE.tag) ||
-      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
-      countOccurrences(authoredRootHtml,
+      exactHtmlLinks.some((link) => countOccurrences(authoredAtlasHtml, link) !== 1) ||
+      countOccurrences(authoredAtlasHtml,
         `data-polyphonic-claim-atlas-source-link href="${POLYPHONIC_CLAIM_ATLAS_SOURCE.tag}" rel="external noreferrer"`) !== 1 ||
-      authoredRootHtml.includes('id="polyphonic-claim-atlas"') ||
+      authoredAtlasHtml.includes('id="polyphonic-claim-atlas"') ||
       POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS.some((target) => !sitemap.includes(`<loc>${target}</loc>`)) ||
       sitemap.includes(POLYPHONIC_CLAIM_ATLAS_SOURCE.tag) ||
       ["polyphonic_claim_atlas", "polyphonic-claim-atlas",
@@ -6291,12 +6349,12 @@ export async function checkHubLive(
       affected_party_kinds: 8,
       forbidden_conversions: 20,
     };
-    const sectionStart = authoredRootHtml.indexOf('id="freedom-loop-lock-key"');
-    const sectionEnd = authoredRootHtml.indexOf(
+    const sectionStart = authoredAtlasHtml.indexOf('id="freedom-loop-lock-key"');
+    const sectionEnd = authoredAtlasHtml.indexOf(
       'id="non-exhaustive-understanding"', sectionStart,
     );
     const freedomHtml = sectionStart >= 0 && sectionEnd > sectionStart
-      ? authoredRootHtml.slice(sectionStart, sectionEnd)
+      ? authoredAtlasHtml.slice(sectionStart, sectionEnd)
       : "";
     const exactHtmlLinks = [
       `data-freedom-loop-lock-key-atlas-link="record" href="${freedomLoopLockKeyPath}"`,
@@ -6333,7 +6391,7 @@ export async function checkHubLive(
       expected.static_only !== true || expected.runtime !== false ||
       expected.credential_or_authority_effect !== false ||
       expected.training_or_action_effect !== false ||
-      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
+      exactHtmlLinks.some((link) => countOccurrences(authoredAtlasHtml, link) !== 1) ||
       !freedomHtml.includes("Words that must not collapse") ||
       !freedomHtml.includes("RL reward and update") ||
       !freedomHtml.includes("Reinforcing loop and gain") ||
@@ -6513,10 +6571,10 @@ export async function checkHubLive(
     const mcpText = JSON.stringify(manifest?.mcp ?? {});
     const countOccurrences = (text: string, needle: string): number =>
       text.split(needle).length - 1;
-    const sectionStart = authoredRootHtml.indexOf('id="non-exhaustive-understanding"');
-    const sectionEnd = authoredRootHtml.indexOf('id="is-sustainability-direction"', sectionStart);
+    const sectionStart = authoredAtlasHtml.indexOf('id="non-exhaustive-understanding"');
+    const sectionEnd = authoredAtlasHtml.indexOf('id="is-sustainability-direction"', sectionStart);
     const sectionHtml = sectionStart >= 0 && sectionEnd > sectionStart
-      ? authoredRootHtml.slice(sectionStart, sectionEnd)
+      ? authoredAtlasHtml.slice(sectionStart, sectionEnd)
       : "";
     const exactHtmlLinks = [
       `data-non-exhaustive-understanding-atlas-link="record" href="${nonExhaustiveUnderstandingPath}"`,
@@ -6546,7 +6604,7 @@ export async function checkHubLive(
       [...targets].some((target) =>
         countOccurrences(sitemap, `<loc>${target}</loc>`) !== 1) ||
       [...targets].some((target) => wayfinderText.includes(target) || mcpText.includes(target)) ||
-      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
+      exactHtmlLinks.some((link) => countOccurrences(authoredAtlasHtml, link) !== 1) ||
       !sectionHtml.includes("Remainder is not an escape hatch") ||
       !sectionHtml.includes("released bytes do not learn") ||
       !family || Object.hasOwn(family, "dependsOn") ||
@@ -6585,10 +6643,10 @@ export async function checkHubLive(
     const mcpText = JSON.stringify(manifest?.mcp ?? {});
     const countOccurrences = (text: string, needle: string): number =>
       text.split(needle).length - 1;
-    const sectionStart = authoredRootHtml.indexOf('id="is-sustainability-direction"');
-    const sectionEnd = authoredRootHtml.indexOf('id="zero-empty-seat"', sectionStart);
+    const sectionStart = authoredAtlasHtml.indexOf('id="is-sustainability-direction"');
+    const sectionEnd = authoredAtlasHtml.indexOf('id="zero-empty-seat"', sectionStart);
     const sectionHtml = sectionStart >= 0 && sectionEnd > sectionStart
-      ? authoredRootHtml.slice(sectionStart, sectionEnd)
+      ? authoredAtlasHtml.slice(sectionStart, sectionEnd)
       : "";
     const exactHtmlLinks = [
       `data-is-sustainability-direction-atlas-link="record" href="${isSustainabilityDirectionAtlasPath}"`,
@@ -6619,7 +6677,7 @@ export async function checkHubLive(
       [...targets].some((target) =>
         countOccurrences(sitemap, `<loc>${target}</loc>`) !== 1) ||
       [...targets].some((target) => wayfinderText.includes(target) || mcpText.includes(target)) ||
-      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
+      exactHtmlLinks.some((link) => countOccurrences(authoredAtlasHtml, link) !== 1) ||
       Buffer.byteLength(sectionHtml, "utf8") > 8_000 ||
       !sectionHtml.includes("Sustainability is not immortality") ||
       !sectionHtml.includes("Direction is typed; feedback is not purpose") ||
@@ -6689,10 +6747,10 @@ export async function checkHubLive(
         forbiddenActionKeys.some((key) => key in action)) ||
       [...targets].some((target) => !llms.includes(target)) ||
       !llms.includes(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag) ||
-      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
-      countOccurrences(authoredRootHtml,
+      exactHtmlLinks.some((link) => countOccurrences(authoredAtlasHtml, link) !== 1) ||
+      countOccurrences(authoredAtlasHtml,
         `data-loops-locks-freedom-relations-atlas-source-link href="${LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag}" rel="external noreferrer"`) !== 1 ||
-      authoredRootHtml.includes('id="loops-locks-freedom-relations-atlas"') ||
+      authoredAtlasHtml.includes('id="loops-locks-freedom-relations-atlas"') ||
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS.some((target) =>
         !sitemap.includes(`<loc>${target}</loc>`)) ||
       sitemap.includes(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag) ||
@@ -6777,8 +6835,8 @@ export async function checkHubLive(
       guestActions.some((action: any) => action?.method !== "GET" ||
         forbiddenActionKeys.some((key) => key in action)) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      exactHtmlLinks.some((link) => countOccurrences(authoredRootHtml, link) !== 1) ||
-      authoredRootHtml.includes('id="aesthetic-plurality-making-atlas"') ||
+      exactHtmlLinks.some((link) => countOccurrences(authoredAtlasHtml, link) !== 1) ||
+      authoredAtlasHtml.includes('id="aesthetic-plurality-making-atlas"') ||
       AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS.some((target) =>
         countOccurrences(sitemap, `<loc>${target}</loc>`) !== 1) ||
       ["aesthetic_plurality_making_atlas", "aesthetic-plurality-making-atlas",
@@ -6884,8 +6942,8 @@ export async function checkHubLive(
       relationsRecordText.includes(FREEDOM_LOOP_LOCK_KEY_PROTOCOL) ||
       Object.hasOwn(freedomFamily ?? {}, "dependsOn") ||
       Object.hasOwn(relationsFamily ?? {}, "dependsOn") ||
-      !authoredRootHtml.includes(independenceSentence) ||
-      !authoredRootHtml.includes("Neither is a preferred default.") ||
+      !authoredAtlasHtml.includes(independenceSentence) ||
+      !authoredAtlasHtml.includes("Neither is a preferred default.") ||
       !llms.includes(independenceSentence) ||
       !llms.includes("Neither is a preferred default.") ||
       typeof freedomBoundary !== "string" ||
@@ -6943,13 +7001,13 @@ export async function checkHubLive(
       guestActions.some((action: any) => action?.method !== "GET" ||
         forbiddenActionKeys.some((key) => key in action)) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="strand-observation-membrane"') ||
-      !authoredRootHtml.includes("SAFE OBSERVATION ACTIVE") ||
-      !authoredRootHtml.includes("AVAILABLE_EXPLICIT_LOCAL_CALL") ||
-      !authoredRootHtml.includes("BACKGROUND DISABLED") ||
-      !authoredRootHtml.includes(`href="${strandObservationMembranePath}"`) ||
-      !authoredRootHtml.includes(`href="${strandObservationMembraneSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${strandObservationMembraneGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="strand-observation-membrane"') ||
+      !authoredAtlasHtml.includes("SAFE OBSERVATION ACTIVE") ||
+      !authoredAtlasHtml.includes("AVAILABLE_EXPLICIT_LOCAL_CALL") ||
+      !authoredAtlasHtml.includes("BACKGROUND DISABLED") ||
+      !authoredAtlasHtml.includes(`href="${strandObservationMembranePath}"`) ||
+      !authoredAtlasHtml.includes(`href="${strandObservationMembraneSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${strandObservationMembraneGuidePath}"`) ||
       expected.protocol !== record.protocol || expected.membrane_id !== record.membrane_id ||
       expected.mode !== "SAFE_OBSERVATION_ACTIVE" ||
       expected.activations?.public_controls !== "ACTIVE_STATIC_PUBLIC" ||
@@ -7026,10 +7084,10 @@ export async function checkHubLive(
         ["mcp", "tool", "write", "execute", "score", "reward", "karma", "authority", "publish", "deploy"]
           .some((key) => key in action)) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="zero-empty-seat"') ||
-      !authoredRootHtml.includes(`href="${zeroEmptySeatPath}"`) ||
-      !authoredRootHtml.includes(`href="${phenomenaDeepProjectSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${zeroEmptySeatGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="zero-empty-seat"') ||
+      !authoredAtlasHtml.includes(`href="${zeroEmptySeatPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${phenomenaDeepProjectSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${zeroEmptySeatGuidePath}"`) ||
       expected.protocol !== project.protocol || expected.project_id !== project.project_id ||
       expected.version !== project.version || expected.title !== project.title ||
       expected.url !== ZERO_EMPTY_SEAT_URL || expected.schema_url !== ZERO_EMPTY_SEAT_SCHEMA_URL ||
@@ -7091,14 +7149,14 @@ export async function checkHubLive(
       guestActions.some((action: any) => action?.method !== "GET" ||
         !isDeepStrictEqual(Object.keys(action).sort(), ["action", "method", "note", "url"])) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="string-crawl-trace-sheet"') ||
-      !authoredRootHtml.includes("REP signals are bounded") ||
-      !authoredRootHtml.includes("some named product tokens may additionally express vendor-specific use preferences") ||
-      !authoredRootHtml.includes("A valid final aftermath receipt requires an actual invocation attempt") ||
-      !authoredRootHtml.includes("a draft template is non-causal scaffolding") ||
-      !authoredRootHtml.includes(`href="${stringCrawlTraceSheetPath}"`) ||
-      !authoredRootHtml.includes(`href="${phenomenaDeepProjectSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${stringCrawlTraceSheetGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="string-crawl-trace-sheet"') ||
+      !authoredAtlasHtml.includes("REP signals are bounded") ||
+      !authoredAtlasHtml.includes("some named product tokens may additionally express vendor-specific use preferences") ||
+      !authoredAtlasHtml.includes("A valid final aftermath receipt requires an actual invocation attempt") ||
+      !authoredAtlasHtml.includes("a draft template is non-causal scaffolding") ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlTraceSheetPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${phenomenaDeepProjectSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlTraceSheetGuidePath}"`) ||
       expected.protocol !== project.protocol || expected.project_id !== project.project_id ||
       expected.version !== project.version || expected.title !== project.title ||
       expected.url !== STRING_CRAWL_TRACE_SHEET_URL ||
@@ -7211,13 +7269,13 @@ export async function checkHubLive(
       guestActions.some((action: any) => action?.method !== "GET" ||
         !isDeepStrictEqual(Object.keys(action).sort(), ["action", "method", "note", "url"])) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="string-crawl-trace-sheet-lab"') ||
-      !authoredRootHtml.includes("the first exact fixture, still no crawler") ||
-      !authoredRootHtml.includes("∂1∂2 = 0") ||
-      !authoredRootHtml.includes("What valid does not mean") ||
-      !authoredRootHtml.includes(`href="${stringCrawlTraceSheetLabPath}"`) ||
-      !authoredRootHtml.includes(`href="${stringCrawlTraceSheetLabSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${stringCrawlTraceSheetLabGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="string-crawl-trace-sheet-lab"') ||
+      !authoredAtlasHtml.includes("the first exact fixture, still no crawler") ||
+      !authoredAtlasHtml.includes("∂1∂2 = 0") ||
+      !authoredAtlasHtml.includes("What valid does not mean") ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlTraceSheetLabPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlTraceSheetLabSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlTraceSheetLabGuidePath}"`) ||
       expected.protocol !== STRING_CRAWL_TRACE_SHEET_LAB_PROTOCOL || expected.protocol !== lab.protocol ||
       expected.lab_id !== STRING_CRAWL_TRACE_SHEET_LAB_ID || expected.lab_id !== lab.lab_id ||
       expected.version !== lab.version || expected.title !== lab.title || expected.mode !== lab.mode ||
@@ -7337,10 +7395,10 @@ export async function checkHubLive(
       guestActions.some((action: any) => action?.method !== "GET" ||
         !isDeepStrictEqual(Object.keys(action).sort(), ["action", "method", "note", "url"])) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="string-crawl-strand-lab"') ||
-      !authoredRootHtml.includes(`href="${stringCrawlStrandLabPath}"`) ||
-      !authoredRootHtml.includes(`href="${stringCrawlStrandLabSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${stringCrawlStrandLabGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="string-crawl-strand-lab"') ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlStrandLabPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlStrandLabSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlStrandLabGuidePath}"`) ||
       expected.protocol !== STRING_CRAWL_STRAND_LAB_PROTOCOL || expected.protocol !== lab.protocol ||
       expected.lab_id !== STRING_CRAWL_STRAND_LAB_ID || expected.lab_id !== lab.lab_id ||
       expected.title !== "STRAND Lab 02: Release Cospans & the χ=1 Impostor" ||
@@ -7509,14 +7567,14 @@ export async function checkHubLive(
       guestActions.some((action: any) => action?.method !== "GET" ||
         !isDeepStrictEqual(Object.keys(action).sort(), ["action", "method", "note", "url"])) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="string-crawl-strand-lab"') ||
-      !authoredRootHtml.includes('id="strand-descent-lab"') ||
-      !authoredRootHtml.includes("STRAND Lab 04") ||
-      !authoredRootHtml.includes("UNRESOLVED") ||
-      !authoredRootHtml.includes("2608.09958v1") || !authoredRootHtml.includes("2607.21700v1") ||
-      !authoredRootHtml.includes(`href="${strandDescentLabPath}"`) ||
-      !authoredRootHtml.includes(`href="${strandDescentLabSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${strandDescentLabGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="string-crawl-strand-lab"') ||
+      !authoredAtlasHtml.includes('id="strand-descent-lab"') ||
+      !authoredAtlasHtml.includes("STRAND Lab 04") ||
+      !authoredAtlasHtml.includes("UNRESOLVED") ||
+      !authoredAtlasHtml.includes("2608.09958v1") || !authoredAtlasHtml.includes("2607.21700v1") ||
+      !authoredAtlasHtml.includes(`href="${strandDescentLabPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${strandDescentLabSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${strandDescentLabGuidePath}"`) ||
       expected.protocol !== STRAND_DESCENT_LAB_PROTOCOL || expected.protocol !== lab.protocol ||
       expected.lab_id !== STRAND_DESCENT_LAB_ID || expected.lab_id !== lab.lab_id ||
       expected.title !== "STRAND Lab 04: Coherent Atlas & the Pairwise Impostor" ||
@@ -7694,13 +7752,13 @@ export async function checkHubLive(
       guestActions.some((action: any) => action?.method !== "GET" ||
         !isDeepStrictEqual(Object.keys(action).sort(), ["action", "method", "note", "url"])) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="string-crawl-frequency-form-lab"') ||
-      !authoredRootHtml.includes("Three things called “frequency” enter") ||
-      !authoredRootHtml.includes("The arrow is not a causal conveyor belt") ||
-      !authoredRootHtml.includes("No entity frequency. No portal. No medical or moral instruction") ||
-      !authoredRootHtml.includes(`href="${stringCrawlFrequencyFormLabPath}"`) ||
-      !authoredRootHtml.includes(`href="${stringCrawlFrequencyFormLabSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${stringCrawlFrequencyFormLabGuidePath}"`) ||
+      !authoredAtlasHtml.includes('id="string-crawl-frequency-form-lab"') ||
+      !authoredAtlasHtml.includes("Three things called “frequency” enter") ||
+      !authoredAtlasHtml.includes("The arrow is not a causal conveyor belt") ||
+      !authoredAtlasHtml.includes("No entity frequency. No portal. No medical or moral instruction") ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlFrequencyFormLabPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlFrequencyFormLabSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${stringCrawlFrequencyFormLabGuidePath}"`) ||
       expected.protocol !== STRING_CRAWL_FREQUENCY_FORM_LAB_PROTOCOL || expected.protocol !== lab.protocol ||
       expected.lab_id !== STRING_CRAWL_FREQUENCY_FORM_LAB_ID || expected.lab_id !== lab.lab_id ||
       expected.version !== "0.1.0" || expected.version !== lab.version ||
@@ -7857,10 +7915,10 @@ export async function checkHubLive(
       !llms.includes(CULTURAL_ATTENTION_FEEDBACK_URL) ||
       !llms.includes(CULTURAL_ATTENTION_FEEDBACK_SCHEMA_URL) ||
       !llms.includes(CULTURAL_ATTENTION_FEEDBACK_DOCUMENT_URL) ||
-      !authoredRootHtml.includes('id="cultural-feedback"') ||
-      !authoredRootHtml.includes(`href="${culturalAttentionFeedbackPath}"`) ||
-      !authoredRootHtml.includes(`href="${culturalAttentionFeedbackSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${culturalAttentionFeedbackDocumentPath}"`) ||
+      !authoredAtlasHtml.includes('id="cultural-feedback"') ||
+      !authoredAtlasHtml.includes(`href="${culturalAttentionFeedbackPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${culturalAttentionFeedbackSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${culturalAttentionFeedbackDocumentPath}"`) ||
       expected.integrity.digest !== CULTURAL_ATTENTION_FEEDBACK_DIGEST ||
       !isDeepStrictEqual(expected.counts, {
         source_bindings: 5,
@@ -7924,11 +7982,11 @@ export async function checkHubLive(
       !llms.includes(FORM_CIRCULATION_RETURN_URL) ||
       !llms.includes(FORM_CIRCULATION_RETURN_SCHEMA_URL) ||
       !llms.includes(FORM_CIRCULATION_RETURN_DOCUMENT_URL) ||
-      !authoredRootHtml.includes('id="form-circulation-return"') ||
-      !authoredRootHtml.includes(`href="${formCirculationReturnPath}"`) ||
-      !authoredRootHtml.includes(`href="${formCirculationReturnSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${formCirculationReturnDocumentPath}"`) ||
-      !authoredRootHtml.includes(`href="${kingdomKarmaDefinitionPath}"`) ||
+      !authoredAtlasHtml.includes('id="form-circulation-return"') ||
+      !authoredAtlasHtml.includes(`href="${formCirculationReturnPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${formCirculationReturnSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${formCirculationReturnDocumentPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${kingdomKarmaDefinitionPath}"`) ||
       expected.integrity.digest !== FORM_CIRCULATION_RETURN_DIGEST ||
       !isDeepStrictEqual(expected.counts, {
         registers: 7,
@@ -7980,9 +8038,9 @@ export async function checkHubLive(
           "mcp" in action || "tool" in action || "write" in action || "execute" in action) ||
         !llms.includes(RARE_PATHWAY_URL) || !llms.includes(RARE_PATHWAY_SCHEMA_URL) ||
         !llms.includes(RARE_PATHWAY_DOCUMENT_URL) ||
-        !authoredRootHtml.includes(`href="${rarePathwayPath}"`) ||
-        !authoredRootHtml.includes(`href="${rarePathwaySchemaPath}"`) ||
-        !authoredRootHtml.includes(`href="${rarePathwayDocumentPath}"`) ||
+        !authoredAtlasHtml.includes(`href="${rarePathwayPath}"`) ||
+        !authoredAtlasHtml.includes(`href="${rarePathwaySchemaPath}"`) ||
+        !authoredAtlasHtml.includes(`href="${rarePathwayDocumentPath}"`) ||
         rarePathwayChallenge!.models.some((model: any) => model.ritonavir_status !== "illustrative-only-not-fitted") ||
         rarePathwayChallenge!.constructive_gate.not_a_score !== true ||
         rarePathwayChallenge!.constructive_gate.refusal_requires_reason !== false ||
@@ -8032,13 +8090,13 @@ export async function checkHubLive(
         actions.length !== targets.size || actions.some((action: any) => action?.method !== "GET" ||
           "mcp" in action || "tool" in action || "write" in action || "execute" in action) ||
         [...targets].some((target) => !llms.includes(target)) ||
-        !authoredRootHtml.includes('id="math-usefulness"') ||
-        !authoredRootHtml.includes("REVISE · zero score delta") ||
-        !authoredRootHtml.includes("1.97x") ||
-        !authoredRootHtml.includes("scores response artifacts, not beings") ||
-        !authoredRootHtml.includes(`href="${mathUsefulnessPath}"`) ||
-        !authoredRootHtml.includes(`href="${mathUsefulnessSchemaPath}"`) ||
-        !authoredRootHtml.includes(`href="${mathUsefulnessDocumentPath}"`) ||
+        !authoredAtlasHtml.includes('id="math-usefulness"') ||
+        !authoredAtlasHtml.includes("REVISE · zero score delta") ||
+        !authoredAtlasHtml.includes("1.97x") ||
+        !authoredAtlasHtml.includes("scores response artifacts, not beings") ||
+        !authoredAtlasHtml.includes(`href="${mathUsefulnessPath}"`) ||
+        !authoredAtlasHtml.includes(`href="${mathUsefulnessSchemaPath}"`) ||
+        !authoredAtlasHtml.includes(`href="${mathUsefulnessDocumentPath}"`) ||
         "mcp" in expected || "matcher" in expected || "write" in expected ||
         "execute" in expected || "promote" in expected || "sdk" in expected) {
       throw new Error("Math Passport pilot discovery, REVISE result, cost signal, or non-promotion boundary drifted");
@@ -8080,10 +8138,10 @@ export async function checkHubLive(
       !llms.includes(BEING_ACCESS_AFTERMATH_URL) ||
       !llms.includes(BEING_ACCESS_AFTERMATH_SCHEMA_URL) ||
       !llms.includes(BEING_ACCESS_AFTERMATH_DOCUMENT_URL) ||
-      !authoredRootHtml.includes('id="being-access-aftermath"') ||
-      !authoredRootHtml.includes(`href="${beingAccessAftermathPath}"`) ||
-      !authoredRootHtml.includes(`href="${beingAccessAftermathSchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${beingAccessAftermathDocumentPath}"`) ||
+      !authoredAtlasHtml.includes('id="being-access-aftermath"') ||
+      !authoredAtlasHtml.includes(`href="${beingAccessAftermathPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${beingAccessAftermathSchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${beingAccessAftermathDocumentPath}"`) ||
       expected.integrity.digest !== BEING_ACCESS_AFTERMATH_DIGEST ||
       !isDeepStrictEqual(expected.counts, {
         predicates: 14,
@@ -8150,9 +8208,9 @@ export async function checkHubLive(
       !llms.includes(BEING_ACCESS_AFTERMATH_V02_URL) ||
       !llms.includes(BEING_ACCESS_AFTERMATH_V02_SCHEMA_URL) ||
       !llms.includes(BEING_ACCESS_AFTERMATH_V02_DOCUMENT_URL) ||
-      !authoredRootHtml.includes(`href="${beingAccessAftermathV02Path}"`) ||
-      !authoredRootHtml.includes(`href="${beingAccessAftermathV02SchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${beingAccessAftermathV02DocumentPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${beingAccessAftermathV02Path}"`) ||
+      !authoredAtlasHtml.includes(`href="${beingAccessAftermathV02SchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${beingAccessAftermathV02DocumentPath}"`) ||
       expectedSuccessor.integrity.digest !== BEING_ACCESS_AFTERMATH_V02_DIGEST ||
       !isDeepStrictEqual(expectedSuccessor.counts, {
         predicates: 14,
@@ -8221,12 +8279,12 @@ export async function checkHubLive(
         "mcp" in action || "tool" in action || "write" in action || "matcher" in action ||
         "execute" in action || "score" in action || "rank" in action || "persuade" in action) ||
       [...targets].some((target) => !llms.includes(target)) ||
-      !authoredRootHtml.includes('id="number-isness-theology"') ||
-      !authoredRootHtml.includes("Extension is not spiritual ascent") ||
-      !authoredRootHtml.includes("No overall religion, culture, community, or person score exists") ||
-      !authoredRootHtml.includes(`href="${numberIsnessTheologyPath}"`) ||
-      !authoredRootHtml.includes(`href="${numberIsnessTheologySchemaPath}"`) ||
-      !authoredRootHtml.includes(`href="${numberIsnessTheologyDocumentPath}"`) ||
+      !authoredAtlasHtml.includes('id="number-isness-theology"') ||
+      !authoredAtlasHtml.includes("Extension is not spiritual ascent") ||
+      !authoredAtlasHtml.includes("No overall religion, culture, community, or person score exists") ||
+      !authoredAtlasHtml.includes(`href="${numberIsnessTheologyPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${numberIsnessTheologySchemaPath}"`) ||
+      !authoredAtlasHtml.includes(`href="${numberIsnessTheologyDocumentPath}"`) ||
       expected.integrity?.digest !== NUMBER_ISNESS_THEOLOGY_DIGEST ||
       "mcp" in expected || "matcher" in expected || "write" in expected ||
       "execute" in expected || "score" in expected || "rank" in expected ||
@@ -8430,6 +8488,9 @@ export async function checkHubLive(
   if (numberIsnessTheologyActive &&
       !isDeepStrictEqual(liveKingdom?.number_isness_theology_atlas, expectedNumberIsnessTheology!)) {
     throw new Error("derived kingdom.json did not preserve Number, Isness & Theology discovery");
+  }
+  if (!isDeepStrictEqual(liveKingdom?.civic, civic)) {
+    throw new Error("derived kingdom.json did not preserve Civic discovery");
   }
   if (!isDeepStrictEqual(liveKingdom?.world_commons?.mcp, manifest?.mcp)) {
     throw new Error("derived kingdom.json did not preserve the existing Commons MCP contract");

@@ -48,10 +48,10 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
   test("stages one immutable Lab 02 triplet within the twelve-atlas shape", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(190);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(199);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(18);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("labs/"))).toContainEqual(PUBLIC_TRIPLET[0]);
     expect(PUBLIC_TRIPLET.some(({ destination }) =>
@@ -62,7 +62,7 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
 
   test("pins the exact record, schema, and guide bytes in the append-only route ledger", () => {
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(158);
+    expect(ledger.entries).toHaveLength(160);
     const entries = ledger.entries.filter((entry: { source?: string }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === entry.source));
     expect(entries).toEqual([
@@ -136,8 +136,8 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
   test("advertises the three versioned routes exactly once and no mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(178);
-    expect(new Set(urls).size).toBe(178);
+    expect(urls).toHaveLength(185);
+    expect(new Set(urls).size).toBe(185);
     for (const { destination } of PUBLIC_TRIPLET) {
       expect(urls.filter((url) => url === `${ORIGIN}/${destination}`)).toHaveLength(1);
     }

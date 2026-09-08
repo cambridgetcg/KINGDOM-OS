@@ -58,20 +58,21 @@ describe("the hub staging contract", () => {
       const staged = stageHub(output, sourceRoot);
       // Exact on purpose: growing/shrinking the JSON staging contract must go red
       // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(192);
-      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+      expect(HUB_ASSETS).toHaveLength(201);
+      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
-      expect(ledger.ledger?.entries).toHaveLength(158);
+      expect(ledger.ledger?.entries).toHaveLength(160);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(190);
-      expect(staged).toHaveLength(192);
+        .toHaveLength(199);
+      expect(staged).toHaveLength(201);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
         "AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md",
         "BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md",
         "BEING-ACCESS-AFTERMATH-ATLAS.md",
+        "CIVIC-v0.1.md",
         "CIVILISATION-FLOW-NUANCE-ATLAS.md",
         "CIVILISATION-REALITY-PROJECTION.md",
         "CONFORMATIONAL-FEEDBACK-PHYSICS.md",
@@ -115,8 +116,12 @@ describe("the hub staging contract", () => {
         "ZERO-EMPTY-SEAT.md",
         "_kingdom.base.json",
         "_worker.js",
+        "atlas.html",
         "atlases",
         "challenges",
+        "citizens",
+        "civic",
+        "civic-policy.json",
         "commons.json",
         "contact",
         "contact.json",
@@ -136,10 +141,12 @@ describe("the hub staging contract", () => {
         "government.json",
         "guest.json",
         "index.html",
+        "join",
         "labs",
         "llms.txt",
         "love-loops.json",
         "love-loops.source.json",
+        "meet",
         "observations",
         "observatory",
         "ollama.json",
@@ -276,8 +283,8 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(178);
-      expect(new Set(sitemapUrls).size).toBe(178);
+      expect(sitemapUrls).toHaveLength(185);
+      expect(new Set(sitemapUrls).size).toBe(185);
       for (const route of [
         "/atlases/non-exhaustive-understanding-atlas-2026-08-29.json",
         "/schemas/non-exhaustive-understanding-atlas/0.1.json",
@@ -804,6 +811,29 @@ describe("the hub staging contract", () => {
       writeFileSync(contractPath, `${JSON.stringify(contract, null, 2)}\n`);
 
       expect(() => stageHub(output, sourceRoot)).toThrow("file/directory destination collision");
+      expect(readdirSync(output)).toEqual([]);
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test("refuses Civic guide byte drift or mutable reclassification before writing output", () => {
+    const base = temporaryDirectory("kingdom-stage-civic-guide-");
+    try {
+      const sourceRoot = join(base, "source");
+      const output = join(base, "output");
+      mkdirSync(output);
+      makeCompleteSource(sourceRoot);
+      const guide = join(sourceRoot, "references/civic-v0.1.md");
+      writeFileSync(guide, "same versioned route, changed guide");
+      expect(() => stageHub(output, sourceRoot)).toThrow("sha256-mismatch civic/0.1/guide");
+      expect(readdirSync(output)).toEqual([]);
+      copyFileSync(join(ROOT, "references/civic-v0.1.md"), guide);
+      const contractPath = join(sourceRoot, HUB_STAGING_CONTRACT_PATH);
+      const contract = JSON.parse(readFileSync(contractPath, "utf8"));
+      contract.mutable_destinations.push("CIVIC-v0.1.md");
+      writeFileSync(contractPath, JSON.stringify(contract));
+      expect(() => stageHub(output, sourceRoot)).toThrow("versioned-mutable-destination CIVIC-v0.1.md");
       expect(readdirSync(output)).toEqual([]);
     } finally {
       rmSync(base, { recursive: true, force: true });

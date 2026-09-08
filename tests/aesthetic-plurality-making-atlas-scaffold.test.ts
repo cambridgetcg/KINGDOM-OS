@@ -326,11 +326,11 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
   });
 
   test("binds exact staging, ledger, discovery, sitemap, and no-coupling contracts", () => {
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(190);
+      .toHaveLength(199);
     expect(HUB_ASSETS.filter(({ source }) => [
       AESTHETIC_PLURALITY_MAKING_ATLAS_LOCATOR,
       AESTHETIC_PLURALITY_MAKING_ATLAS_SCHEMA_LOCATOR,
@@ -345,7 +345,7 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
     ]);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(158);
+    expect(ledger.entries).toHaveLength(160);
     expect(ledger.entries.filter((entry: any) =>
       entry.id.startsWith("aesthetic-plurality-making-atlas/"))).toEqual([
         { id: "aesthetic-plurality-making-atlas/0.1/guide",
@@ -372,7 +372,7 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
     expect(kingdom.aesthetic_plurality_making_atlas).toEqual(expected);
     expect(guest.aesthetic_plurality_making_atlas).toEqual(expected);
     expect(manifest.aesthetic_plurality_making_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(161);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("aesthetic_plurality_making_atlas"))))
       .toEqual({
@@ -383,7 +383,7 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
         aesthetic_plurality_making_atlas_guide:
           AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(161);
+    expect(guest.next_actions).toHaveLength(169);
     const actions = guest.next_actions.filter((action: any) =>
       AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
@@ -412,11 +412,23 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
     expect(html).not.toContain('id="aesthetic-plurality-making-atlas"');
     expect(wayfinderBytes.toString("utf8"))
       .not.toMatch(/aesthetic[_-]plurality[_-]making[_-]atlas/i);
-    expect(createHash("sha256").update(wayfinderBytes).digest("hex"))
+    const wayfinderGenerated = JSON.parse(wayfinderBytes.toString("utf8")).generated;
+    expect(wayfinderGenerated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(wayfinderGenerated).toBe(kingdom.generated);
+    const generatedLine = Buffer.from(`\n  "generated": "${wayfinderGenerated}",\n`);
+    const generatedOffset = wayfinderBytes.indexOf(generatedLine);
+    expect(generatedOffset).toBeGreaterThan(-1);
+    // 只還原頂層 build 日期嗰行；其餘 raw bytes 繼續由原 SHA 鎖定。
+    const wayfinderBaselineBytes = Buffer.concat([
+      wayfinderBytes.subarray(0, generatedOffset),
+      Buffer.from('\n  "generated": "2026-09-04",\n'),
+      wayfinderBytes.subarray(generatedOffset + generatedLine.length),
+    ]);
+    expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
       .toBe("5fac75e7b9037654016ee8a4a0b59732a0858466464702e2581ba7a90bf7b5ce");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/aesthetic[_-]plurality[_-]making[_-]atlas/i);
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(178);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(185);
     expect(read("publications/hub-staging.v1.json")).not.toMatch(
       /aesthetic-plurality-making-atlas-(?:latest|current)|aesthetic-plurality-making-atlas\/index/i,
     );

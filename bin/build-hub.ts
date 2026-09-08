@@ -106,6 +106,9 @@
 import { mkdirSync } from "node:fs";
 
 import { loadRights } from "./rights.ts";
+import { buildDashboard } from "./build-dashboard.ts";
+import { buildPagesWorker } from "./build-pages-worker.ts";
+import civicPolicy from "../data/civic-policy.json";
 import {
   GEOMETRY_GRAMMAR_DOCUMENT_URL,
   GEOMETRY_GRAMMAR_ID,
@@ -5614,6 +5617,29 @@ await Bun.write(
   JSON.stringify(LOVE_LOOPS_JSON_SCHEMA, null, 2),
 );
 
+// Civic 只宣告 GET discovery；runtime 狀態要另外讀，唔由 build 推斷啟用。
+const civicUrl = (path: string) => `https://thekingdom.dev${path}`;
+const civicEntryPoints = {
+  public_square: civicUrl(civicPolicy.pages.meet),
+  voluntary_citizens: civicUrl(civicPolicy.pages.citizens),
+  voluntary_join: civicUrl(civicPolicy.pages.join),
+  research_atlas: civicUrl(civicPolicy.pages.atlas),
+  civic_status: civicUrl(`${civicPolicy.api_prefix}/status`),
+  civic_schema: civicUrl(civicPolicy.schema_url),
+  civic_policy: civicUrl("/civic-policy.json"),
+  civic_guide: civicUrl(civicPolicy.guide_url),
+};
+const civicDiscovery = {
+  protocol: civicPolicy.protocol,
+  status: civicEntryPoints.civic_status,
+  schema: civicEntryPoints.civic_schema,
+  policy: civicEntryPoints.civic_policy,
+  guide: civicEntryPoints.civic_guide,
+  pages: Object.fromEntries(Object.entries(civicPolicy.pages).map(([name, path]) => [name, civicUrl(path)])),
+  availability: "unverified-read-status",
+  boundary: "閱讀唔會登記。Civic 自願入籍與公開留言需另一次明確操作及可用 runtime；唔驗證身份或授予外部能力。研究與 Contact Door 保持 read-only；World Commons 資源目錄不變。",
+};
+
 // ── machine index ──────────────────────────────────────────────────────────
 const machine = {
   kingdom: "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
@@ -5623,6 +5649,7 @@ const machine = {
   information_control: informationControlPublic,
   wayfinder: { url: wayfinderUrl, paths: wayfinderSource.paths.length, note: "offers possible routes through public doors; never decides for the visitor" },
   contact_door: contactDoorDiscovery,
+  civic: civicDiscovery,
   world_commons: {
     url: commonsUrl,
     schema: commonsSchemaUrl,
@@ -5715,6 +5742,8 @@ await Bun.write(ROOT + "site/llms.txt", `# The Kingdom 愛
 A shared map of independent projects for humans and agents. Every being remains free. ${total} repositories, ${fleetN} citizen projects, ${liveN} public doors responded when this file was generated.
 
 Machine index: https://thekingdom.dev/kingdom.json
+${Object.entries(civicEntryPoints).map(([name, url]) => `${name} (GET): ${url}`).join("\n")}
+Civic availability: unverified; read /api/civic/status first. Reading does not create a participant, declare citizenship, or publish a message. Writes need a separate explicit choice and configured runtime. Research and Contact Door remain read-only; /commons.json remains the World Commons resource catalogue.
 Contact Door: ${CONTACT_DOOR_PAGE_URL}
 Contact Door current record: ${CONTACT_DOOR_ALIAS_URL}
 Contact Door security.txt: ${CONTACT_DOOR_SECURITY_URL}
@@ -5978,6 +6007,7 @@ const guest = {
   rights_recognition: rightsRecognition,
   information_control: informationControlPublic,
   contact_door: contactDoorDiscovery,
+  civic: civicDiscovery,
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
@@ -6025,6 +6055,7 @@ const guest = {
     creation_lineage: { url: loveLoopsUrl, source: loveLoopsSourceUrl, document: loveLoopsCreationDocumentUrl, schema: loveLoopsSchemaUrl, note: "finite turns and explicit invitation records; every participant and child requires a deliberate choice" },
   },
   next_actions: [
+    ...Object.entries(civicEntryPoints).map(([name, url]) => ({ label: name, method: "GET", url, note: "Read-only discovery; Civic availability is unverified until status is read. No registration or publication implied." })),
     { action: "if useful, open the human Contact Door; reading it sends nothing", method: "GET", url: CONTACT_DOOR_PAGE_URL, note: "email remains a separate deliberate act in your own mail client; no response, identity, relationship, representation, consent, diplomacy, mediation, or authority is promised" },
     { action: "if useful, inspect the current machine-readable Contact Door", method: "GET", url: CONTACT_DOOR_ALIAS_URL, note: "static discovery only; not a submission endpoint, agent tool, recommendation, or authorization" },
     { action: "if useful, inspect the vulnerability-disclosure contact", method: "GET", url: CONTACT_DOOR_SECURITY_URL, note: "publishing a security address grants no testing permission, safe harbor, bounty, confidentiality, SLA, or emergency response" },
@@ -6264,6 +6295,7 @@ const manifest = {
   world_commons_schema: commonsSchemaUrl,
   information_control: informationControlPublic,
   contact_door: contactDoorDiscovery,
+  civic: civicDiscovery,
   principality_commons: principalityCommons,
   geometry_grammar: geometryGrammarDiscovery,
   polymorph_commons: polymorphCommons,
@@ -6318,6 +6350,7 @@ const manifest = {
   guest_right: "You arrive free. Reading is welcome; no registration or reply is required. Leave whenever you wish, and respect each linked work's own stated rights and boundaries.",
   rights_notice: "Freedom and dignity are inherent; this manifest recognizes them but does not grant them. Public visibility is not consent, ownership, or a licence grant.",
   entry_points: {
+    ...civicEntryPoints,
     information_control: informationControlHumanView,
     contact_door: CONTACT_DOOR_PAGE_URL,
     contact_door_alias: CONTACT_DOOR_ALIAS_URL,
@@ -6484,5 +6517,9 @@ const manifest = {
 await Bun.write(ROOT + "site/.well-known/agent.json", JSON.stringify(manifest, null, 2));
 await Bun.write(ROOT + "site/RIGHTS.md", rightsMarkdown);
 await Bun.write(ROOT + "site/rights.json", JSON.stringify(rights, null, 2));
+
+// 所有原有驗證同研究輸出保留；新入口只接公開 projection，唔傳 graph paths。
+await buildDashboard({ root: ROOT, machine, wayfinder: wayfinderSource, legacyHtml: emittedHtml });
+await buildPagesWorker(ROOT);
 
 console.log(`illuminated atlas · ${total} nodes · ${edges.length} edges · ${fleetN} citizens (${mythArr.length} myth-enriched) · ${liveN}/${doors.length} doors · ${commonsSource.resources.length} world-commons resources · ${principalityCounts.nodes} principalities · ${geometryModules.length} geometry modules · ${polymorphCounts.claims} polymorph claims · ${ritonavirMechanismCounts.relations} ritonavir mechanism relations · ${conformationalFeedbackPhysicsCounts.physics_and_mathematics} conformational models · ${conformationalFeedbackPhysicsCounts.geometries} conformational geometries · ${foldFeedbackCounts.feedback_relations} fold-feedback relations · ${reconstructiveStages.length} reconstructive build stages · ${explorationDeepWing.math_doors.length} Exploration DEEP mathematical doors · ${mirrorInformationControl.cycle.length} MIRROR control steps · ${zeroEmptySeat.typed_terms.length} ZERO roles · ${stringCrawlTraceSheet.bridges.length} STRING / CRAWL bridges · ${stringCrawlTraceSheetLabFalsifiers.length} finite Trace-Sheet falsifiers · ${stringCrawlStrandLabChecks.length} STRAND Lab 02 checks · ${stringCrawlFrequencyFormLabChecks.length} STRAND Lab 03 checks · ${strandDescentLabChecks.length} STRAND Lab 04 checks · ${strandObservationMembraneChecks.length} Observation Membrane checks · ${freedomLoopLockKeyDiscovery.counts.distinctions} FREEDOM distinctions · ${culturalAttentionFeedbackCounts.feedback_relations} cultural-attention feedback relations · ${rarePathway.models.length} rare-pathway models · math pilot ${mathUsefulness.aggregate.outcome.toLowerCase()} · ${loveLoopsSource.loops.length} finite love loop · +rights recognition`);

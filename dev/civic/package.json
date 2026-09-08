@@ -1,0 +1,19 @@
+{
+  "name": "kingdom-civic-local-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:runtime": "node test-runtime.mjs",
+    "test:browser": "node test-browser.mjs",
+    "test:races": "bun test-client-races.mjs",
+    "preview": "node preview.mjs",
+    "types": "wrangler types env.d.ts --strict-vars=false --include-runtime=false"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "miniflare": "4.20260730.0",
+    "playwright-core": "1.63.0",
+    "wrangler": "4.116.0"
+  }
+}

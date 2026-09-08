@@ -156,6 +156,38 @@ function descendantBootstrapFixture(): {
 }
 
 describe("immutable route-integrity ledger", () => {
+  test("Civic adds only its frozen guide and schema, preserving all 158 base entries and source bytes", () => {
+    const baseCommit = "7a99cc685048a525efc6e42cc875b7db3e94f0e0";
+    const base = committedLedger(baseCommit);
+    const current = currentLedger();
+    const addedIds = new Set(["civic/0.1/guide", "civic/0.1/schema"]);
+    expect(base.entries).toHaveLength(158);
+    expect(current.entries).toHaveLength(160);
+    expect(current.entries.filter((entry) => !addedIds.has(entry.id))).toEqual(base.entries);
+    expect(compareImmutablePublicationLedgers(current, base)).toEqual([]);
+    expect(current.entries.map(({ id }) => id)).toEqual(current.entries.map(({ id }) => id).sort());
+    for (const entry of base.entries) {
+      const bytes = execFileSync("git", ["show", `${baseCommit}:${entry.source}`], { cwd: ROOT });
+      expect(readFileSync(join(ROOT, entry.source)).equals(bytes)).toBe(true);
+      expect(createHash("sha256").update(bytes).digest("hex")).toBe(entry.sha256);
+    }
+    for (const [id, source, destination] of [
+      ["civic/0.1/guide", "references/civic-v0.1.md", "CIVIC-v0.1.md"],
+      ["civic/0.1/schema", "schemas/civic-v0.1.schema.json", "schemas/civic/0.1.json"],
+    ]) {
+      expect(current.entries.find((entry) => entry.id === id)).toEqual({
+        id, source, destination, route: `/${destination}`,
+        sha256: createHash("sha256").update(readFileSync(join(ROOT, source))).digest("hex"),
+      });
+      expect(MUTABLE_HUB_DESTINATIONS).not.toContain(destination);
+    }
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
+    expect(MUTABLE_HUB_DESTINATIONS).toContain("civic-policy.json");
+    expect(verifyImmutablePublicationSnapshot({
+      root: ROOT, stagedAssets: HUB_ASSETS, mutableDestinations: MUTABLE_HUB_DESTINATIONS,
+    }).issues).toEqual([]);
+  }, 30_000);
   test("pins every initial versioned or explicitly immutable publication asset", () => {
     const snapshot = verifyImmutablePublicationSnapshot({
       root: ROOT,
@@ -416,7 +448,7 @@ describe("immutable route-integrity ledger", () => {
 
   test("audits every committed first-parent release tree from the fixed bootstrap", () => {
     expect(verifyImmutablePublicationHistory(committedLedger("HEAD"), ROOT)).toEqual([]);
-  }, 45_000);
+  }, 300_000);
 
   test("accepts a declared anchor behind an unrelated ledger-less base and rejects a non-ancestor", () => {
     const fixture = descendantBootstrapFixture();

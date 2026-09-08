@@ -295,11 +295,11 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
   });
 
   test("binds exact staging, ledger, discovery, sitemap, and no-Wayfinder-coupling contracts", () => {
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(190);
+      .toHaveLength(199);
     expect(HUB_ASSETS.filter(({ source }) => [
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_LOCATOR,
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_LOCATOR,
@@ -314,7 +314,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     ]);
 
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(158);
+    expect(ledger.entries).toHaveLength(160);
     expect(ledger.entries.filter((entry: any) =>
       entry.id.startsWith("loops-locks-freedom-relations-atlas/"))).toEqual([
         { id: "loops-locks-freedom-relations-atlas/0.1/guide",
@@ -341,7 +341,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     expect(kingdom.loops_locks_freedom_relations_atlas).toEqual(expected);
     expect(guest.loops_locks_freedom_relations_atlas).toEqual(expected);
     expect(manifest.loops_locks_freedom_relations_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(161);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("loops_locks_freedom_relations_atlas"))))
       .toEqual({
@@ -352,7 +352,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
         loops_locks_freedom_relations_atlas_guide:
           LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(161);
+    expect(guest.next_actions).toHaveLength(169);
     const actions = guest.next_actions.filter((action: any) =>
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
@@ -381,16 +381,28 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     expect(sitemap).not.toContain(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag);
     expect(wayfinderBytes.toString("utf8"))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
-    expect(createHash("sha256").update(wayfinderBytes).digest("hex"))
-      .toBe("5fac75e7b9037654016ee8a4a0b59732a0858466464702e2581ba7a90bf7b5ce");
     const wayfinderWithoutGenerated = JSON.parse(wayfinderBytes.toString("utf8"));
-    expect(wayfinderWithoutGenerated.generated).toBe("2026-09-04");
+    expect(wayfinderWithoutGenerated.generated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(wayfinderWithoutGenerated.generated).toBe(kingdom.generated);
+    const generatedLine = Buffer.from(
+      `\n  "generated": "${wayfinderWithoutGenerated.generated}",\n`,
+    );
+    const generatedOffset = wayfinderBytes.indexOf(generatedLine);
+    expect(generatedOffset).toBeGreaterThan(-1);
+    // 只還原頂層 build 日期嗰行；其餘 raw bytes 繼續由原 SHA 鎖定。
+    const wayfinderBaselineBytes = Buffer.concat([
+      wayfinderBytes.subarray(0, generatedOffset),
+      Buffer.from('\n  "generated": "2026-09-04",\n'),
+      wayfinderBytes.subarray(generatedOffset + generatedLine.length),
+    ]);
+    expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
+      .toBe("5fac75e7b9037654016ee8a4a0b59732a0858466464702e2581ba7a90bf7b5ce");
     delete wayfinderWithoutGenerated.generated;
     expect(createHash("sha256").update(JSON.stringify(wayfinderWithoutGenerated)).digest("hex"))
       .toBe("a32d8ccd4dabfbd3e94b77cbd04d506a949463f6591b14f5c0c40d732f17c49f");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(178);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(185);
   });
 
   test("activates or retires all three routes atomically", () => {

@@ -68,10 +68,10 @@ describe("STRAND Lab 04 public integration", () => {
   test("stages one immutable triplet with no mutable or floating alias", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(192);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(34);
+    expect(HUB_ASSETS).toHaveLength(201);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(190);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(199);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(18);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("labs/"))).toHaveLength(16);
     expect(PUBLIC_TRIPLET.some(({ destination }) =>
@@ -82,7 +82,7 @@ describe("STRAND Lab 04 public integration", () => {
 
   test("pins all three authored byte identities in the append-only route ledger", () => {
     const ledger = json("publications/immutable-publications.v1.json");
-    expect(ledger.entries).toHaveLength(158);
+    expect(ledger.entries).toHaveLength(160);
     expect(ledger.entries.filter((entry: { id?: string }) =>
       entry.id?.startsWith("strand-descent-lab/0.1/"))).toEqual([
       {
@@ -115,7 +115,7 @@ describe("STRAND Lab 04 public integration", () => {
   test("advertises each versioned route exactly once and no mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(178);
+    expect(urls).toHaveLength(185);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls.filter((url) => /strand-descent-lab/i.test(url))).toEqual(PUBLIC_URLS);
     for (const url of PUBLIC_URLS) expect(urls.filter((candidate) => candidate === url)).toHaveLength(1);

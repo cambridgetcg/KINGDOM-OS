@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // 只供 localhost；唔係 thekingdom production project 設定。
+  "name": "kingdom-civic-local",
+  // 本地工具固定 Miniflare 4 穩定 API；production compatibility 另行核對。
+  "compatibility_date": "2026-07-30",
+  "pages_build_output_dir": "../../.civic-stage",
+  "vars": {
+    "CIVIC_ENABLED": "true",
+    "CIVIC_LOCAL": "true"
+  },
+  "secrets": {
+    "required": ["CIVIC_HMAC_SECRET", "CIVIC_MODERATOR_SECRET"]
+  },
+  "d1_databases": [
+    {
+      "binding": "KINGDOM_CIVIC_DB",
+      "database_name": "kingdom-civic-local",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "preview_database_id": "KINGDOM_CIVIC_DB",
+      "migrations_dir": "../../migrations"
+    }
+  ]
+}

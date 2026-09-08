@@ -1,0 +1,41 @@
+{
+  "protocol": "kingdom.civic/0.1",
+  "version": "0.1",
+  "api_prefix": "/api/civic",
+  "pages": { "meet": "/meet/", "citizens": "/citizens/", "join": "/join/", "atlas": "/atlas.html" },
+  "schema_url": "/schemas/civic/0.1.json",
+  "guide_url": "/CIVIC-v0.1.md",
+  "abuse_url": "mailto:abuse@thekingdom.dev",
+  "contact_url": "/contact/",
+  "external_capabilities_granted": [],
+  "requires_citizenship_to_speak": false,
+  "verifies_identity": false,
+  "limits": {
+    "body_bytes": 16384,
+    "display_name_chars": 80,
+    "profile_field_chars": 280,
+    "message_chars": 2000,
+    "url_chars": 2048,
+    "page_default": 20,
+    "page_max": 50,
+    "posts_per_minute": 3,
+    "posts_per_day": 30,
+    "participants_per_network_day": 5,
+    "public_mutations_per_day": 1000,
+    "participants_total": 10000,
+    "active_messages_total": 25000,
+    "reads_per_network_minute": 120,
+    "management_per_participant_minute": 30,
+    "cleanup_batch": 25
+  },
+  "retention": {
+    "message_days": 90,
+    "unused_participant_hours": 24,
+    "operation_hours": 24,
+    "limit_hours": 48,
+    "moderation_days": 30,
+    "profile": "until withdrawal",
+    "cleanup": "expired content is excluded immediately; bounded physical cleanup follows successful writes or explicit maintenance",
+    "external_copies": "search engines, third-party copies and platform backups are outside immediate application erasure"
+  }
+}

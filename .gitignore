@@ -9,3 +9,9 @@ __pycache__/
 # wrangler local cache — carries CF account identifiers, never track
 .wrangler/
 node_modules/
+
+# Civic 本地預覽／測試產物，唔係出版資料
+.civic-stage/
+.civic-test-artifacts/
+.dev.vars*
+.env*

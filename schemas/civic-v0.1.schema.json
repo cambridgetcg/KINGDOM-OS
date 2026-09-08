@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thekingdom.dev/schemas/civic/0.1.json",
+  "title": "KINGDOM Civic v0.1 closed JSON wire shapes",
+  "description": "公開及私有 API JSON shape。Headers、ownership、byte cap、URL 安全、quota、revision 同 atomicity 另由 runtime 驗證；唔係身份或外部能力證明。",
+  "anyOf": [
+    { "$ref": "#/$defs/request" },
+    { "$ref": "#/$defs/response" }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$" },
+    "timestamp": { "type": "string", "format": "date-time", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "profileText": { "type": "string", "maxLength": 280 },
+    "bodyText": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "contactURL": { "type": "string", "maxLength": 2048, "pattern": "^(?:$|[Hh][Tt][Tt][Pp][Ss]://[^\\s\\u0000-\\u001f\\u007f]+)$" },
+    "kind": { "enum": ["introduction", "offer", "seek"] },
+    "revision": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 },
+    "token": { "type": "string", "pattern": "^kc_[A-Za-z0-9_-]{43}$" },
+    "cursor": { "type": ["string", "null"], "maxLength": 1024, "pattern": "^[A-Za-z0-9_-]+$" },
+    "errorDetail": {
+      "type": "object", "additionalProperties": false, "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$", "maxLength": 80 },
+        "message": { "type": "string", "minLength": 1, "maxLength": 500 }
+      }
+    },
+    "errorResponse": {
+      "type": "object", "additionalProperties": false, "required": ["error"],
+      "properties": { "error": { "$ref": "#/$defs/errorDetail" } }
+    },
+    "participant": {
+      "type": "object", "additionalProperties": false, "required": ["id", "display_name", "created_at"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "display_name": { "$ref": "#/$defs/name" },
+        "created_at": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "managedParticipant": {
+      "type": "object", "additionalProperties": false, "required": ["id", "display_name", "created_at", "posting_blocked"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "display_name": { "$ref": "#/$defs/name" },
+        "created_at": { "$ref": "#/$defs/timestamp" },
+        "posting_blocked": { "type": "boolean" }
+      }
+    },
+    "citizenship": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "display_name", "becoming", "offer", "seek", "contact_url", "listed", "created_at", "updated_at", "revision"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "display_name": { "$ref": "#/$defs/name" },
+        "becoming": { "$ref": "#/$defs/profileText" }, "offer": { "$ref": "#/$defs/profileText" }, "seek": { "$ref": "#/$defs/profileText" },
+        "contact_url": { "$ref": "#/$defs/contactURL" }, "listed": { "type": "boolean" },
+        "created_at": { "$ref": "#/$defs/timestamp" }, "updated_at": { "$ref": "#/$defs/timestamp" },
+        "revision": { "$ref": "#/$defs/revision" }
+      }
+    },
+    "message": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "author_id", "author_name", "kind", "body", "parent_id", "created_at", "expires_at", "revision", "deleted", "reply_count"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "author_id": { "anyOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+        "author_name": { "anyOf": [{ "$ref": "#/$defs/name" }, { "type": "null" }] },
+        "kind": { "$ref": "#/$defs/kind" },
+        "body": { "anyOf": [{ "$ref": "#/$defs/bodyText" }, { "type": "null" }] },
+        "parent_id": { "anyOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+        "created_at": { "$ref": "#/$defs/timestamp" }, "expires_at": { "$ref": "#/$defs/timestamp" },
+        "revision": { "$ref": "#/$defs/revision" }, "deleted": { "type": "boolean" },
+        "reply_count": { "type": "integer", "minimum": 0, "maximum": 25000 }
+      },
+      "allOf": [{
+        "if": { "properties": { "deleted": { "const": true } } },
+        "then": { "properties": { "author_id": { "type": "null" }, "author_name": { "type": "null" }, "body": { "type": "null" } } },
+        "else": { "properties": { "author_id": { "$ref": "#/$defs/id" }, "author_name": { "$ref": "#/$defs/name" }, "body": { "$ref": "#/$defs/bodyText" } } }
+      }]
+    },
+    "policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["protocol", "version", "api_prefix", "pages", "schema_url", "guide_url", "abuse_url", "contact_url", "external_capabilities_granted", "requires_citizenship_to_speak", "verifies_identity", "limits", "retention"],
+      "properties": {
+        "protocol": { "const": "kingdom.civic/0.1" }, "version": { "const": "0.1" }, "api_prefix": { "const": "/api/civic" },
+        "pages": {
+          "type": "object", "additionalProperties": false, "required": ["meet", "citizens", "join", "atlas"],
+          "properties": { "meet": { "const": "/meet/" }, "citizens": { "const": "/citizens/" }, "join": { "const": "/join/" }, "atlas": { "const": "/atlas.html" } }
+        },
+        "schema_url": { "const": "/schemas/civic/0.1.json" }, "guide_url": { "const": "/CIVIC-v0.1.md" },
+        "abuse_url": { "type": "string", "pattern": "^mailto:", "maxLength": 2048 },
+        "contact_url": { "const": "/contact/" },
+        "external_capabilities_granted": { "type": "array", "maxItems": 0 },
+        "requires_citizenship_to_speak": { "const": false }, "verifies_identity": { "const": false },
+        "limits": {
+          "type": "object", "additionalProperties": false,
+          "required": ["body_bytes", "display_name_chars", "profile_field_chars", "message_chars", "url_chars", "page_default", "page_max", "posts_per_minute", "posts_per_day", "participants_per_network_day", "public_mutations_per_day", "participants_total", "active_messages_total", "reads_per_network_minute", "management_per_participant_minute", "cleanup_batch"],
+          "properties": {
+            "body_bytes": { "type": "integer", "minimum": 1 }, "display_name_chars": { "type": "integer", "minimum": 1 },
+            "profile_field_chars": { "type": "integer", "minimum": 1 }, "message_chars": { "type": "integer", "minimum": 1 },
+            "url_chars": { "type": "integer", "minimum": 1 }, "page_default": { "type": "integer", "minimum": 1 },
+            "page_max": { "type": "integer", "minimum": 1 }, "posts_per_minute": { "type": "integer", "minimum": 1 },
+            "posts_per_day": { "type": "integer", "minimum": 1 }, "participants_per_network_day": { "type": "integer", "minimum": 1 },
+            "public_mutations_per_day": { "type": "integer", "minimum": 1 }, "participants_total": { "type": "integer", "minimum": 1 },
+            "active_messages_total": { "type": "integer", "minimum": 1 }, "reads_per_network_minute": { "type": "integer", "minimum": 1 },
+            "management_per_participant_minute": { "type": "integer", "minimum": 1 }, "cleanup_batch": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "retention": {
+          "type": "object", "additionalProperties": false,
+          "required": ["message_days", "unused_participant_hours", "operation_hours", "limit_hours", "moderation_days", "profile", "cleanup", "external_copies"],
+          "properties": {
+            "message_days": { "type": "integer", "minimum": 1 }, "unused_participant_hours": { "type": "integer", "minimum": 1 },
+            "operation_hours": { "type": "integer", "minimum": 1 }, "limit_hours": { "type": "integer", "minimum": 1 },
+            "moderation_days": { "type": "integer", "minimum": 1 }, "profile": { "const": "until withdrawal" },
+            "cleanup": { "type": "string", "minLength": 1 }, "external_copies": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "statusResponse": {
+      "type": "object", "additionalProperties": false,
+      "required": ["protocol", "available", "writable", "policy", "counts", "as_of"],
+      "properties": {
+        "protocol": { "const": "kingdom.civic/0.1" }, "available": { "type": "boolean" }, "writable": { "type": "boolean" },
+        "policy": { "$ref": "#/$defs/policy" },
+        "counts": {
+          "type": "object", "additionalProperties": false, "required": ["listed_citizens", "messages"],
+          "properties": {
+            "listed_citizens": { "type": ["integer", "null"], "minimum": 0 },
+            "messages": { "type": ["integer", "null"], "minimum": 0 }
+          }
+        },
+        "as_of": { "$ref": "#/$defs/timestamp" }, "error": { "$ref": "#/$defs/errorDetail" }
+      },
+      "allOf": [{
+        "if": { "properties": { "available": { "const": false } } },
+        "then": { "properties": { "writable": { "const": false }, "counts": { "properties": { "listed_citizens": { "type": "null" }, "messages": { "type": "null" } } } } }
+      }]
+    },
+    "participantRequest": {
+      "type": "object", "additionalProperties": false, "required": ["mode", "display_name", "acknowledge_control"],
+      "properties": { "mode": { "enum": ["cookie", "bearer"] }, "display_name": { "$ref": "#/$defs/name" }, "acknowledge_control": { "const": true } }
+    },
+    "participantResponse": {
+      "type": "object", "additionalProperties": false, "required": ["participant"],
+      "properties": { "participant": { "$ref": "#/$defs/participant" }, "token": { "$ref": "#/$defs/token" } }
+    },
+    "meResponse": {
+      "type": "object", "additionalProperties": false, "required": ["participant", "citizenship", "citizenship_revision", "csrf"],
+      "properties": {
+        "participant": { "$ref": "#/$defs/managedParticipant" },
+        "citizenship": { "anyOf": [{ "$ref": "#/$defs/citizenship" }, { "type": "null" }] },
+        "citizenship_revision": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "csrf": { "type": ["string", "null"], "pattern": "^[A-Za-z0-9_-]{43}$" }
+      }
+    },
+    "citizenshipRequest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["display_name", "becoming", "offer", "seek", "contact_url", "listed", "declare", "consent_version"],
+      "properties": {
+        "display_name": { "$ref": "#/$defs/name" }, "becoming": { "$ref": "#/$defs/profileText" },
+        "offer": { "$ref": "#/$defs/profileText" }, "seek": { "$ref": "#/$defs/profileText" },
+        "contact_url": { "$ref": "#/$defs/contactURL" }, "listed": { "type": "boolean" },
+        "declare": { "const": true }, "consent_version": { "const": "0.1" }
+      }
+    },
+    "citizenshipResponse": {
+      "type": "object", "additionalProperties": false, "required": ["citizenship"],
+      "properties": { "citizenship": { "$ref": "#/$defs/citizenship" } }
+    },
+    "citizensResponse": {
+      "type": "object", "additionalProperties": false, "required": ["items", "next_cursor", "as_of"],
+      "properties": {
+        "items": { "type": "array", "maxItems": 50, "items": { "$ref": "#/$defs/citizenship" } },
+        "next_cursor": { "$ref": "#/$defs/cursor" }, "as_of": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "messageRequest": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "body", "parent_id", "publish", "consent_version"],
+      "properties": {
+        "kind": { "$ref": "#/$defs/kind" }, "body": { "$ref": "#/$defs/bodyText" },
+        "parent_id": { "anyOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+        "publish": { "const": true }, "consent_version": { "const": "0.1" }
+      }
+    },
+    "messagePatchRequest": {
+      "type": "object", "additionalProperties": false, "required": ["body", "publish", "consent_version"],
+      "properties": { "body": { "$ref": "#/$defs/bodyText" }, "publish": { "const": true }, "consent_version": { "const": "0.1" } }
+    },
+    "messageResponse": {
+      "type": "object", "additionalProperties": false, "required": ["message"],
+      "properties": { "message": { "$ref": "#/$defs/message" } }
+    },
+    "messagesResponse": {
+      "type": "object", "additionalProperties": false, "required": ["items", "next_cursor", "as_of"],
+      "properties": {
+        "items": { "type": "array", "maxItems": 50, "items": { "$ref": "#/$defs/message" } },
+        "next_cursor": { "$ref": "#/$defs/cursor" }, "as_of": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "deletedResponse": {
+      "type": "object", "additionalProperties": false, "required": ["deleted"], "properties": { "deleted": { "const": true } }
+    },
+    "withdrawnResponse": {
+      "type": "object", "additionalProperties": false, "required": ["withdrawn"], "properties": { "withdrawn": { "const": true } }
+    },
+    "moderationRequest": {
+      "type": "object", "additionalProperties": false, "required": ["target", "id", "action", "reason"],
+      "properties": {
+        "target": { "enum": ["participant", "message", "citizenship"] }, "id": { "$ref": "#/$defs/id" },
+        "action": { "enum": ["hide", "restore", "delete", "block", "unblock"] },
+        "reason": { "type": "string", "pattern": "^[a-z][a-z0-9_-]{0,79}$" }
+      },
+      "allOf": [{
+        "if": { "properties": { "target": { "const": "participant" } } },
+        "then": { "properties": { "action": { "enum": ["block", "unblock"] } } },
+        "else": { "properties": { "action": { "enum": ["hide", "restore", "delete"] } } }
+      }]
+    },
+    "moderationResponse": {
+      "type": "object", "additionalProperties": false, "required": ["moderated"], "properties": { "moderated": { "const": true } }
+    },
+    "request": {
+      "oneOf": [
+        { "$ref": "#/$defs/participantRequest" }, { "$ref": "#/$defs/citizenshipRequest" },
+        { "$ref": "#/$defs/messageRequest" }, { "$ref": "#/$defs/messagePatchRequest" }, { "$ref": "#/$defs/moderationRequest" }
+      ]
+    },
+    "response": {
+      "anyOf": [
+        { "$ref": "#/$defs/errorResponse" }, { "$ref": "#/$defs/statusResponse" }, { "$ref": "#/$defs/participantResponse" },
+        { "$ref": "#/$defs/meResponse" }, { "$ref": "#/$defs/citizenshipResponse" }, { "$ref": "#/$defs/citizensResponse" },
+        { "$ref": "#/$defs/messageResponse" }, { "$ref": "#/$defs/messagesResponse" }, { "$ref": "#/$defs/deletedResponse" },
+        { "$ref": "#/$defs/withdrawnResponse" }, { "$ref": "#/$defs/moderationResponse" }
+      ]
+    }
+  }
+}
