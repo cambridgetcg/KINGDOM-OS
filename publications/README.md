@@ -312,9 +312,10 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. The current 201-asset union contains
-160 ledgered immutable/versioned assets and 41 mutable assets; 199 direct public
-response bodies, 185 sitemap URLs, 169 manifest entry points, and 169 guest actions.
+consume those same bytes. 本輪 union 係 204 staged assets：
+160 ledgered immutable/versioned assets 同 44 mutable assets；202 direct public
+response bodies、186 sitemap URLs、16 Wayfinder paths、169 manifest entry points
+同 169 guest actions。
 Generated discovery describes eighteen atlases, 41 public schema routes, four
 primary lab JSON routes plus Shape & Resonance manifest/media, one experiment
 route, one separate activation, and thirty-five active retirement
@@ -336,6 +337,24 @@ family-specific worker routing; source files may then be removed. Rebuild and
 stage from a clean tree, deploy, and let the live checker prove that the old
 routes answer 404 or 410 and no mutable surface still advertises them. The
 append-only ledger entry remains unchanged.
+
+## Workshop 三個 mutable authored assets
+
+`https://thekingdom.dev/workshop/`「燈下作品工房」係 local-only MVP，唔係已部署
+或已公開發布嘅聲明。`pages-content/workshop/{index.html,workshop.css,workshop.js}`
+由 `hub-staging.v1.json` 直接 exact-copy 到 `workshop/`；冇新 builder、immutable
+publication family、ledger entry 或公開 draft schema route。現有 160 個 immutable
+entries 同 source bytes 唔改。三個檔案一齊 stage／更新／retire；retire 時同時移除
+三個 staging entries、mutable 分類、Workshop Worker routing、Wayfinder 同 sitemap
+入口，再生 dashboard／hub／machine discovery；唔改其他 publication family。
+`no-cache, no-transform` 係 mutable cache 政策，唔係三檔原子版本保證。
+
+工房係手動寫作、預覽同 HTML／Markdown／JSON 下載；只有 JSON 保證可重新編輯。
+稿件只喺當頁 memory，冇 localStorage、autosave、雲端草稿、身份讀寫、付款或發布。
+來源同權利係作者聲明，未核實；冇 license 預設、評分、自動 agency 或服務推薦。
+首次載入仍有 hosting metadata，亦可能帶已有同源 cookie；只承諾載入後編輯、
+預覽、匯出冇 application network request，唔宣稱完全匿名。離頁前要自行下載 JSON；
+下載位置可能由使用者自己同步，清空工房唔會刪已下載檔。
 
 ## Local evidence is not the release gate
 

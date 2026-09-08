@@ -56,16 +56,15 @@ describe("the hub staging contract", () => {
       makeCompleteSource(sourceRoot);
 
       const staged = stageHub(output, sourceRoot);
-      // Exact on purpose: growing/shrinking the JSON staging contract must go red
-      // here and force a conscious review, then a deliberate bump.
-      expect(HUB_ASSETS).toHaveLength(201);
-      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
+      // Exact count 刻意鎖住；staging 合約增減要逐項核對，唔接受任意數量。
+      expect(HUB_ASSETS).toHaveLength(204);
+      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
       expect(ledger.ledger?.entries).toHaveLength(160);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(199);
-      expect(staged).toHaveLength(201);
+        .toHaveLength(202);
+      expect(staged).toHaveLength(204);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -169,7 +168,17 @@ describe("the hub staging contract", () => {
         "truth",
         "wayfinder.json",
         "wings",
+        "workshop",
       ]);
+      expect(readdirSync(join(output, "workshop")).sort()).toEqual(["index.html", "workshop.css", "workshop.js"]);
+      const workshopAssets = ["index.html", "workshop.css", "workshop.js"].map((name) => ({
+        source: `pages-content/workshop/${name}`, destination: `workshop/${name}`,
+      }));
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("workshop/"))).toEqual(workshopAssets);
+      for (const { destination } of workshopAssets) {
+        expect(MUTABLE_HUB_DESTINATIONS).toContain(destination);
+      }
+      expect(ledger.ledger?.entries.some(({ source }) => source.startsWith("pages-content/workshop/"))).toBe(false);
       expect(readdirSync(join(output, ".well-known")).sort()).toEqual(["agent.json", "security.txt"]);
       expect(readdirSync(join(output, "contact")).sort()).toEqual(["assets", "contact-v0.1.vcf", "index.html"]);
       expect(readdirSync(join(output, "contact/assets")).sort()).toEqual(["contact-boundary-v0.1.svg"]);
@@ -283,8 +292,12 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(185);
-      expect(new Set(sitemapUrls).size).toBe(185);
+      expect(sitemapUrls).toHaveLength(186);
+      expect(new Set(sitemapUrls).size).toBe(186);
+      expect(sitemapUrls.filter((url) => url === "https://thekingdom.dev/workshop/")).toHaveLength(1);
+      for (const path of ["workshop", "workshop/index.html", "workshop/workshop.css", "workshop/workshop.js"]) {
+        expect(sitemapUrls).not.toContain(`https://thekingdom.dev/${path}`);
+      }
       for (const route of [
         "/atlases/non-exhaustive-understanding-atlas-2026-08-29.json",
         "/schemas/non-exhaustive-understanding-atlas/0.1.json",
@@ -705,6 +718,27 @@ describe("the hub staging contract", () => {
 
       expect(() => stageHub(output, sourceRoot)).toThrow("output directory is not empty");
       expect(readFileSync(join(output, "index.html"))).toEqual(Buffer.from([0, 0, 255, 10]));
+    } finally {
+      rmSync(base, { recursive: true, force: true });
+    }
+  });
+
+  test("Workshop 三個 authored mutable 檔案缺一，就喺 staging 寫入前停低", () => {
+    const base = temporaryDirectory("kingdom-stage-workshop-");
+    try {
+      const sourceRoot = join(base, "source");
+      const output = join(base, "output");
+      mkdirSync(output);
+      makeCompleteSource(sourceRoot);
+      for (const name of ["index.html", "workshop.css", "workshop.js"]) {
+        const source = `pages-content/workshop/${name}`;
+        const path = join(sourceRoot, source);
+        const bytes = readFileSync(path);
+        rmSync(path);
+        expect(() => stageHub(output, sourceRoot)).toThrow(`required hub asset is missing or unreadable: ${source}`);
+        expect(readdirSync(output)).toEqual([]);
+        writeFileSync(path, bytes);
+      }
     } finally {
       rmSync(base, { recursive: true, force: true });
     }

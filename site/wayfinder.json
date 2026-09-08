@@ -10,6 +10,36 @@
   "matching": "Deterministic keyword overlap only. A match is a possible route, not an interpretation, recommendation, decision, or claim about the visitor.",
   "paths": [
     {
+      "id": "workshop",
+      "label": "喺燈下寫作品，再帶走",
+      "glyph": "文",
+      "invitation": "自己寫主文、按需要補來源同附註，預覽紙頁，再下載 HTML、Markdown 或 JSON 草稿。",
+      "keywords": [
+        "workshop",
+        "write",
+        "writing",
+        "draft",
+        "export",
+        "html",
+        "markdown",
+        "作品",
+        "寫作",
+        "工房",
+        "草稿",
+        "匯出",
+        "來源"
+      ],
+      "boundary": "手動本機寫作工具，唔係自動 agency 或服務推薦。稿件只留喺當頁 memory，冇 autosave、身份讀寫、雲端草稿、發布或付款；來源同權利只係作者聲明，未核實。",
+      "stops": [
+        {
+          "name": "燈下作品工房",
+          "url": "https://thekingdom.dev/workshop/",
+          "why": "同一張枱寫稿、整理來源、睇預覽，將作品同可重開嘅 JSON 草稿帶走。",
+          "scope": "Local-only MVP；載入後編輯、預覽、匯出冇 application network request，但首次載入仍有 hosting metadata，亦可能帶已有同源 cookie。冇自動保存，離頁前請下載 JSON；下載位置可能由使用者自己同步。"
+        }
+      ]
+    },
+    {
       "id": "play",
       "label": "play and make a little world",
       "glyph": "✦",

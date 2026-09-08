@@ -15,6 +15,42 @@
 - All four: `*.pages.dev` live immediately (200); custom domains attached, status `initializing` → active once CF provisions cert + DNS (minutes).
 - **chillspace.love supersedes** the old codeberg-subpath home in `sites.json`; the codeberg copy still exists as a mirror.
 
+## Workshop 本地入口（2026-09-08；未部署）
+
+`https://thekingdom.dev/workshop/` 係燈下作品工房 local-only MVP；本輪唔部署，
+唔啟動 cloud service，唔改 bindings、compatibility、permissions 或 credentials。
+作者手動寫稿、預覽同下載 HTML／Markdown／JSON；JSON 可重新編輯。初次載入
+後編輯、預覽、匯出冇 application network request，稿件只喺當頁 memory，
+冇 autosave、localStorage、雲端草稿、身份讀寫、付款或發布。初次載入仍有普通
+hosting metadata，亦可能帶已有同源 cookie；唔聲稱完全匿名。離頁前請下載 JSON；
+下載位置可能由使用者自己同步，清空工房唔會刪已下載檔。來源同權利只係作者
+聲明，未核實；工具唔預設 license、唔評分，Wayfinder 入口唔係自動 agency 或服務推薦。
+
+三個 authored 檔案 `pages-content/workshop/{index.html,workshop.css,workshop.js}`
+由 staging JSON 合約直接 exact-copy 去 `workshop/`，全部 mutable；冇新 builder、
+immutable family、ledger entry 或公開 draft schema route。三檔一齊 stage、更新同
+retire；retire 同時移除 staging/mutable 三個 entries、Workshop Worker routing、
+Wayfinder 同 sitemap 入口，再用既有 builders 再生 hub/dashboard/machine discovery。
+`no-cache, no-transform` 唔保證三檔原子更新。Worker helper 喺 ASSETS 前拒絕所有
+known mutations（包括 OPTIONS），唔接觸稿件；unknown Workshop prefix 回 404。
+Advanced-mode Pages 嘅 `_headers` 唔會自動套用 Worker response，所以 CSP／MIME／
+privacy headers 由獨立 wrapper 負責；Civic 同 Contact Door 政策保持獨立。
+
+本地驗證只用已存在 dependencies 同隔離 fixtures；唔安裝任何套件。喺 repo root
+沿用現有 snapshot 日期（本輪 2026-09-08）跑以下命令，唔 hand-edit site。
+
+```sh
+bun bin/build-pages-worker.ts
+bun bin/build-hub.ts 2026-09-08
+bun test tests/workshop.test.ts tests/workshop-worker.test.ts tests/stage-hub.test.ts tests/advertised-assets.test.ts tests/civic-integration.test.ts tests/shape-resonance-publication.test.ts
+node dev/civic/test-workshop-browser.mjs
+```
+
+`tests/workshop-worker.test.ts` 同 source-only staging fixtures 可以唔 build 而獨立跑；
+discovery 合約測試同完整 browser harness 要用最新 authored assets 同 regenerated
+discovery。完整 upload 用 `stage-hub` 同新建
+空 temp directory 證明；唔 deploy。Browser tests 唔等於 production 已驗證。
+
 ## Civic 本地入口（2026-09-08；未部署）
 
 呢次只係 local implementation，唔代表 production 已有 Civic。首頁改由
@@ -53,14 +89,14 @@ node dev/civic/test-browser.mjs http://localhost:8797
 唔 hand-edit `site/`。`build-pages-worker.ts` 只壓 whitespace，移除同 caller cwd
 有關嘅 module-path comments；同一 source 喺不同 checkout 應輸出相同 bytes。
 `stage-hub` 唔 bundle，亦唔攜帶 module sidecars、migration、DB、dev config 或 secrets；
-只 exact-byte-copy 合約 201 assets。backend／frontend 改完要重新 build、用新空目錄
+只 exact-byte-copy 合約 204 assets。backend／frontend 改完要重新 build、用新空目錄
 stage，再跑 tests；舊 bundle／stage 只係建立當刻嘅 snapshot。
 
 ### Immutable guide 同未提交 release gate
 
 `/CIVIC-v0.1.md` 同 `/schemas/civic/0.1.json` 都係新 ledgered immutable entries，
 ID 分別係 `civic/0.1/guide`、`civic/0.1/schema`，按 canonical ID 排序；
-`/civic-policy.json` 仍係 mutable。新總數係 **201 = 160 immutable + 41 mutable**。
+`/civic-policy.json` 仍係 mutable。連同 Workshop 三檔，本輪總數係 **204 = 160 immutable + 44 mutable**。
 舊 158 entry 物件同 source bytes 不變；唔可以將版本化 guide 改回 mutable，
 亦唔可以只改 hash 去掩蓋 released bytes drift。guide 更新要另開 successor identity/route。
 `CLAUDE.md` 保留 pre-Civic research compatibility baseline，唔喺呢個工作範圍
@@ -175,12 +211,12 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` requires an existing empty destination and copies exactly 201 assets:
-160 ledgered immutable/versioned assets and 41 mutable assets. There are 199 direct
-public response bodies; `_worker.js` and `404.html` are checked by their dedicated
-contracts. The sitemap contains 185 URLs, and discovery exposes 169 manifest
-entry points plus 169 guest actions. The generated surface describes eighteen
-atlases, 41 public schema routes, four primary lab JSON routes plus the Shape &
+`stage-hub.ts` 要求既有空 destination，只複製合約指定 204 assets：
+160 ledgered immutable/versioned assets 同 44 mutable assets，共 202 direct public
+response bodies；`_worker.js` 同 `404.html` 由獨立合約核對。
+Sitemap 有 186 URLs，Wayfinder 有 16 paths；discovery 保持 169 manifest entry points
+同 169 guest actions。Generated surface 描述 eighteen
+atlases、41 public schema routes、four primary lab JSON routes 同 Shape &
 Resonance manifest/media, one experiment route, and one separate activation
 across thirty-five existing retirement families, alongside the separate Civic runtime:
 the dashboard as `index.html`; the research atlas as `atlas.html`; the Civic pages,

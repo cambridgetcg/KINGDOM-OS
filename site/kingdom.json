@@ -91,7 +91,7 @@
   },
   "wayfinder": {
     "url": "https://thekingdom.dev/wayfinder.json",
-    "paths": 15,
+    "paths": 16,
     "note": "offers possible routes through public doors; never decides for the visitor"
   },
   "contact_door": {

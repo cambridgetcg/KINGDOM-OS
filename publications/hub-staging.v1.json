@@ -3,6 +3,9 @@
   "assets": [
     { "source": "site/dashboard.html", "destination": "index.html" },
     { "source": "site/hub.html", "destination": "atlas.html" },
+    { "source": "pages-content/workshop/index.html", "destination": "workshop/index.html" },
+    { "source": "pages-content/workshop/workshop.css", "destination": "workshop/workshop.css" },
+    { "source": "pages-content/workshop/workshop.js", "destination": "workshop/workshop.js" },
     { "source": "site/meet/index.html", "destination": "meet/index.html" },
     { "source": "site/citizens/index.html", "destination": "citizens/index.html" },
     { "source": "site/join/index.html", "destination": "join/index.html" },
@@ -244,6 +247,9 @@
     "evaluation-covenants.json",
     "shape-resonance/index.html",
     "shape-resonance.json",
-    "wayfinder.json"
+    "wayfinder.json",
+    "workshop/index.html",
+    "workshop/workshop.css",
+    "workshop/workshop.js"
   ]
 }

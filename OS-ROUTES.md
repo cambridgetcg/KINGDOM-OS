@@ -16,6 +16,9 @@ readings. Civic 新入口目前係 local implementation，唔係已部署／可�
 | `/civic-policy.json` | staged JSON | Mutable limits, retention and non-grants policy; runtime status determines actual availability |
 | `/schemas/civic/0.1.json` | staged JSON Schema | New ledgered immutable Civic wire schema |
 | `/CIVIC-v0.1.md` | staged Markdown | New ledgered immutable Civic v0.1 guide; never reclassify a versioned guide as mutable |
+| `/workshop/` | staged HTML | 燈下作品工房 local-only MVP；手動寫稿、預覽、下載 HTML／Markdown／JSON，唔自動儲存或發布 |
+| `/workshop/workshop.css`, `/workshop/workshop.js` | staged CSS / JS | 直接 stage authored 同源資產；三檔都係 mutable，唔依賴 Civic bundle 或外部資產 |
+| `/workshop`, `/workshop/index.html` | edge redirect | 只對 GET／HEAD 308 到 `/workshop/`，唔帶 query 或稿件；所有其他 method 喺 ASSETS 前 bodyless 405 |
 | `/os/` | staged HTML | Human console; recovered artifact with reviewed security and truth hardening |
 | `/os.json` | edge JSON | Live identity, door, law, protocol, and trust readings |
 | `/packages.json` | edge JSON | Live npm metadata and weekly downloads for nine named packages |
@@ -244,8 +247,8 @@ The three edge JSON routes return
 `application/json; charset=utf-8`, permissive read-only CORS, discovery links,
 and `Cache-Control: public, max-age=600`. HEAD has the same status and headers
 with no body. The lost deployment answered the dynamic routes for methods
-besides GET too; that observable parity is retained. Unknown non-Civic paths and every
-shared-door hostname still pass to `env.ASSETS`.
+besides GET too; that observable parity is retained. Civic 同 Workshop namespace 以外
+嘅 unknown paths，以及所有 shared-door hostname，繼續交俾 `env.ASSETS`。
 
 Civic dispatch 只喺 Kingdom hosts／Pages previews，或明確 `CIVIC_LOCAL=true`
 嘅 loopback preview 啟用。API 命中 `/api/civic` namespace 後唔會落 HTML fallback；
@@ -255,6 +258,28 @@ Dashboard／meet／citizens／join HTML 用同源 script/connect/form CSP、no-r
 同 no-transform；Contact Door 繼續係 script/connect/form `'none'`，唔借新互動開權。
 Civic guide/schema 用 immutable cache；policy 保持 `no-cache, no-transform`；
 錯 media type／error responses 唔會被 promote 成 immutable successful document。
+
+## Workshop 本機寫作邊界
+
+工房用獨立 helper，唔擴 Civic route set，唔借 Civic 嘅 network controller。
+沿用既有 Kingdom hostname／Pages preview 邊界，同明示 `CIVIC_LOCAL=true`
+嘅 loopback 測試入口；其他 host 政策唔改。三個 known assets 只准 GET／HEAD，
+包括 OPTIONS 嘅其他 method 喺 ASSETS 前 bodyless 405；未知 `/workshop/` 子路徑
+404，唔落首頁、guest、Civic 或 OS count fallback。ASSETS 失敗保留原 status，
+throw 回 503；唔用成功回應掩蓋失敗。HTML 用 `default-src 'none'`、script/style
+`'self'`，connect/form/base/object/frame-ancestors `'none'`；所有工房回應加
+no-referrer、nosniff、frame denial、Permissions Policy denial，同移除 Set-Cookie。
+JS/CSS 只喺 matching 成功 MIME 先 normalize；錯 MIME 唔 promote。200 exact 資產
+同有效 304 用 `no-cache, no-transform`，其他回應 `no-store, no-transform`。
+HEAD、204、205、304 冇 body；其他合法 body 直接串流，唔 buffer 或自動跟 redirect。
+
+呢個係 local-only MVP，唔係 production 已部署或收入／需求已驗證。稿件 memory-only，
+冇 autosave、localStorage、雲端草稿、身份讀寫、發布或付款。編輯／預覽／匯出
+喺初次資產載入後冇 application network request；hosting metadata 同已有同源 cookie
+仍可能喺載入時處理，唔宣稱完全匿名。離頁前下載 JSON 先可以重開；清空唔刪
+已下載檔，下載位置亦可能由使用者自己同步。來源同權利只係作者聲明，未核實。
+三個 authored mutable 檔案要一齊 stage／更新／retire；retire 同步移除 Worker 路由、
+Wayfinder/sitemap 入口並再生 hub/dashboard，冇 ledger entry 要新增或改寫。
 
 ## Provenance
 
@@ -375,9 +400,9 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-locks the 201-asset upload contract (160 ledgered immutable/versioned assets and
-41 mutable assets; 199 direct public bodies, 185 sitemap URLs, 169 manifest
-entry points, 169 guest actions, and 41 public schema routes; eighteen atlases,
+鎖住 204-asset upload 合約（160 ledgered immutable/versioned assets 同
+44 mutable assets；202 direct public bodies、186 sitemap URLs、16 Wayfinder paths、169 manifest
+entry points、169 guest actions 同 41 public schema routes；eighteen atlases、
 four primary lab JSON routes plus the Shape & Resonance manifest/media, one
 experiment route, one activation, and thirty-five active retirement families,
 including the standalone FREEDOM Loop, Lock & Key Atlas, immutable
@@ -402,9 +427,12 @@ and its declared hash together is not a correction.
 recognizes the three OS worker routes and exact Civic API route shapes so a dynamic
 URL cannot be mistaken for a staged file; misspelled Civic paths are rejected.
 `tests/civic-integration.test.ts` covers dispatch, unavailable status, separate Civic
-and Contact CSP, immutable guide/schema headers, 199 direct-body source mappings,
-self-contained bundle execution, cross-checkout deterministic output, build failure
-without overwrite, and all 201 staged bytes. `tests/immutable-publications.test.ts`
+同 Contact CSP、immutable guide/schema headers、202 direct-body source mappings、
+self-contained bundle execution、cross-checkout deterministic output、build failure
+without overwrite，同全部 204 staged bytes。`tests/workshop-worker.test.ts` 獨立用假
+ASSETS 驗證工房 GET/HEAD、405/404、canonical query 丟棄、MIME、CSP、mutable cache、
+HTTP body validity、串流、無 upstream 同 hostname isolation；唔依賴 site regeneration。
+`tests/immutable-publications.test.ts`
 compares the two new Civic entries with exact implementation base
 `7a99cc685048a525efc6e42cc875b7db3e94f0e0`, retaining all 158 earlier objects and
 source bytes. Local snapshot/append-only evidence is not the committed release CLI

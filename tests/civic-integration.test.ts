@@ -138,11 +138,14 @@ describe("Civic Pages integration", () => {
   });
 
   test("live-checker derives every public byte source from the staging contract", () => {
-    expect(DIRECT_HUB_ASSETS).toHaveLength(199);
+    expect(DIRECT_HUB_ASSETS).toHaveLength(202);
     expect(DIRECT_HUB_ASSETS).toEqual(HUB_ASSETS.filter(({ destination }) => !["_worker.js", "404.html"].includes(destination)));
     expect(mappedHubSource("index.html")).toBe("site/dashboard.html");
     expect(mappedHubSource("atlas.html")).toBe("site/hub.html");
     expect(mappedHubSource("_worker.js")).toBe("site/_worker.js");
+    for (const name of ["index.html", "workshop.css", "workshop.js"]) {
+      expect(mappedHubSource(`workshop/${name}`)).toBe(`pages-content/workshop/${name}`);
+    }
     expect(() => mappedHubSource("api/civic/status")).toThrow("missing staged destination");
   });
 });
@@ -186,18 +189,23 @@ describe("self-contained Pages bundle and exact staging", () => {
     expect(env.calls).toBe(0);
     const guide = await generated.default.fetch(request("/CIVIC-v0.1.md"), assetEnv("text/plain"));
     expect(guide.headers.get("cache-control")).toBe(IMMUTABLE_CACHE);
+    const workshop = await generated.default.fetch(request("/workshop/"), assetEnv("text/html"));
+    expect(workshop.status).toBe(200);
+    expect(workshop.headers.get("content-security-policy")).toContain("script-src 'self'");
+    expect(workshop.headers.get("content-security-policy")).toContain("connect-src 'none'");
+    expect(workshop.headers.get("cache-control")).toBe("no-cache, no-transform");
   });
 
-  test("stages all 201 exact source bytes, not raw Worker imports, runtime state or secrets", () => {
+  test("stage 全部 204 份 exact source bytes，唔帶 raw Worker imports、runtime state 或 secrets", () => {
     const output = join(fixture, "output");
     mkdirSync(output);
     const staged = stageHub(output, sourceRoot);
-    expect(staged).toHaveLength(201);
+    expect(staged).toHaveLength(204);
     for (const { source, destination } of HUB_ASSETS) {
       expect(readFileSync(join(output, destination)).equals(readFileSync(join(sourceRoot, source)))).toBe(true);
     }
     const files = readdirSync(output, { recursive: true, withFileTypes: true }).filter((entry) => entry.isFile());
-    expect(files).toHaveLength(201);
+    expect(files).toHaveLength(204);
     expect(readdirSync(output)).not.toContain("pages-functions");
     expect(readdirSync(output)).not.toContain("dev");
     expect(readdirSync(output)).not.toContain("migrations");
