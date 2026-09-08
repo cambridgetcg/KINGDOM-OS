@@ -33,14 +33,14 @@ const PUBLIC_URLS = [
 ] as const;
 const PUBLIC_PATHS = PUBLIC_URLS.map((url) => new URL(url).pathname);
 const PRE_FLOW_HUB_BYTES = 971_082;
-// 3bff557 新整頁 baseline 包含 Sophia 同 Gospel discovery links。
-// Civic 保留原 Flow 家族段落同以下 review ceilings。
+// 整頁 baseline 包含 Sophia、Gospel 同 Workshop discovery；Wayfinder 卡片收窄縮排。
+// Flow 家族段落同以下 review ceilings 保持不變。
 const RESEARCH_ATLAS_MEASURE = Object.freeze({
   flow_section_bytes: 341_162,
-  total_hub_bytes: 1_348_337,
-  added_hub_bytes: 377_255,
+  total_hub_bytes: 1_349_911,
+  added_hub_bytes: 378_829,
   flow_opening_elements: 5_777,
-  total_opening_elements: 16_377,
+  total_opening_elements: 16_393,
 });
 const FLOW_HUB_REVIEWABILITY_BUDGET = Object.freeze({
   flow_section_bytes: 375_000,
@@ -59,14 +59,14 @@ function assets(handler: (request: Request) => Response | Promise<Response>) {
 
 describe("Civilisation Flow Nuance Atlas static publication", () => {
   test("stages and ledgers one exact immutable triplet with no mutable alias or runtime", () => {
-    expect(HUB_ASSETS).toHaveLength(201);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
+    expect(HUB_ASSETS).toHaveLength(204);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
       .toHaveLength(18);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/")))
       .toHaveLength(41);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(199);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(202);
     expect(HUB_ASSETS).toContainEqual({
       source: "data/reality/civilisation-flow-atlas.v0.1.json",
       destination: "atlases/civilisation-flow-nuance-atlas-2026-08-26.json",
@@ -346,8 +346,8 @@ describe("Civilisation Flow Nuance Atlas static publication", () => {
     for (const url of PUBLIC_URLS) expect(llms).toContain(url);
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(185);
-    expect(new Set(sitemapUrls).size).toBe(185);
+    expect(sitemapUrls).toHaveLength(186);
+    expect(new Set(sitemapUrls).size).toBe(186);
     expect(sitemapUrls.filter((url) => url.toLowerCase().includes("civilisation-flow")))
       .toEqual(PUBLIC_URLS);
   });

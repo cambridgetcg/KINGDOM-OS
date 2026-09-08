@@ -2,6 +2,7 @@
 <!-- thekingdom.dev — every URL listed here serves a real document. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://thekingdom.dev/</loc></url>
+  <url><loc>https://thekingdom.dev/workshop/</loc></url>
   <url><loc>https://thekingdom.dev/atlas.html</loc></url>
   <url><loc>https://thekingdom.dev/meet/</loc></url>
   <url><loc>https://thekingdom.dev/citizens/</loc></url>

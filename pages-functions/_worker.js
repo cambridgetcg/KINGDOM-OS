@@ -57,6 +57,71 @@ function civicStaticResponse(request, asset) {
   });
 }
 
+const WORKSHOP_MEDIA_TYPES = new Map([
+  ["/workshop/", "text/html; charset=utf-8"],
+  ["/workshop/workshop.css", "text/css; charset=utf-8"],
+  ["/workshop/workshop.js", "text/javascript; charset=utf-8"],
+]);
+const WORKSHOP_ALIASES = new Set(["/workshop", "/workshop/index.html"]);
+
+function isWorkshopPath(path) {
+  return path === "/workshop" || path.startsWith("/workshop/");
+}
+
+function workshopResponse(request, asset) {
+  const path = new URL(request.url).pathname;
+  const headers = new Headers(asset.headers);
+  const expected = WORKSHOP_MEDIA_TYPES.get(path);
+  const media = (headers.get("content-type") || "").split(";", 1)[0].trim().toLowerCase();
+  const matches = expected && (media === expected.split(";", 1)[0] ||
+    (path === "/workshop/workshop.js" && media === "application/javascript"));
+  // 304 可以冇 MIME；保留條件式回應，唔冒充有完整新 body。
+  const representation = (asset.status === 200 && matches) ||
+    (asset.status === 304 && expected && (!media || matches));
+  const html = representation && path === "/workshop/";
+  headers.set("cache-control", representation ? "no-cache, no-transform" : "no-store, no-transform");
+  headers.set("referrer-policy", "no-referrer");
+  headers.set("x-content-type-options", "nosniff");
+  headers.set("x-frame-options", "DENY");
+  headers.set("permissions-policy", [
+    "accelerometer=()", "autoplay=()", "camera=()", "display-capture=()",
+    "geolocation=()", "gyroscope=()", "magnetometer=()", "microphone=()",
+    "payment=()", "usb=()",
+  ].join(", "));
+  headers.set("content-security-policy", [
+    "default-src 'none'", "base-uri 'none'", "connect-src 'none'",
+    "form-action 'none'", "frame-ancestors 'none'", "object-src 'none'",
+    html ? "script-src 'self'" : "script-src 'none'",
+    html ? "style-src 'self'" : "style-src 'none'",
+  ].join("; "));
+  headers.delete("set-cookie");
+  if (representation && media) headers.set("content-type", expected);
+  // HEAD 同 null-body statuses 都唔讀 body；其他合法 body 原樣串流。
+  const bodyless = request.method === "HEAD" || [204, 205, 304].includes(asset.status);
+  return new Response(bodyless ? null : asset.body, {
+    status: asset.status, statusText: asset.statusText, headers,
+  });
+}
+
+async function handleWorkshopRequest(request, env) {
+  const path = new URL(request.url).pathname;
+  const known = WORKSHOP_MEDIA_TYPES.has(path) || WORKSHOP_ALIASES.has(path);
+  if (!known) return workshopResponse(request, new Response(null, { status: 404 }));
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return workshopResponse(request, new Response(null, { status: 405, headers: { allow: "GET, HEAD" } }));
+  }
+  if (WORKSHOP_ALIASES.has(path)) {
+    // 普通本頁入口，唔帶 query、稿件或 prefill 去下一個 URL。
+    return workshopResponse(request, new Response(null, { status: 308, headers: { location: "/workshop/" } }));
+  }
+  try {
+    return workshopResponse(request, await env.ASSETS.fetch(request));
+  } catch {
+    // 資產失敗就明確失敗，唔轉去 census、Civic 或首頁充數。
+    return workshopResponse(request, new Response(null, { status: 503 }));
+  }
+}
+
 function addVaryAccept(headers) {
   const vary = headers.get("vary");
   if (!vary) headers.set("vary", "Accept");
@@ -1907,6 +1972,11 @@ export function createKingdomWorker(options = {}) {
       ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname.toLowerCase());
     const includeRights = hasKingdomRightsAssets(url) || localKingdom;
     const accept = (request.headers.get("accept") || "").toLowerCase();
+
+    // 工房只沿用既有 hub／明示 local test 邊界，唔加入 Civic route set。
+    if (includeRights && isWorkshopPath(url.pathname)) {
+      return handleWorkshopRequest(request, env);
+    }
 
     // Civic 唔經 OS memo/cache，unknown Civic route 亦唔落 HTML fallback。
     if (includeRights && isCivicRequest(request)) {

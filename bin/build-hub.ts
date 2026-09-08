@@ -2034,7 +2034,7 @@ const wayfinderCards = wayfinderSource.paths.map((path) => `
       ${path.stops.map((stop) => `<li><a href="${esc(stop.url)}" target="_blank" rel="noopener"><strong>${esc(stop.name)}</strong><span>${esc(stop.why)}</span><small>${esc(stop.scope)}</small><i aria-hidden="true">↗</i><span class="sr-only">Opens in a new tab.</span></a></li>`).join("")}
     </ul>
     <p class="pathboundary"><span aria-hidden="true">◇</span> ${esc(path.boundary)}</p>
-  </article>`).join("");
+  </article>`).join("").replace(/>\n[ \t]+</g, "><").trim();
 
 const commonsCategoryById = new Map<string, WorldCommonsCategory>(
   commonsSource.categories.map((category) => [category.id, category]),

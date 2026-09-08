@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="燈下作品工房：一張只喺本頁記憶體運作嘅寫作枱。寫主文、按需要加附註同來源，帶走 HTML、Markdown 或 JSON 草稿。">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="dark light">
+  <title>燈下作品工房 — KINGDOM</title>
+  <link rel="canonical" href="https://thekingdom.dev/workshop/">
+  <link rel="stylesheet" href="/workshop/workshop.css">
+  <script type="module" src="/workshop/workshop.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#body">跳到主文</a>
+  <header class="masthead">
+    <a class="wordmark" href="/" aria-label="返回 KINGDOM 首頁"><span class="maker-mark" aria-hidden="true">K</span> KINGDOM <span class="back-note">返回首頁</span></a>
+    <nav aria-label="工房以外"><a href="/atlas.html#commons">Commons 資源目錄 <span aria-hidden="true">↗</span></a></nav>
+  </header>
+
+  <main id="workbench" data-workshop>
+    <section class="introduction" aria-labelledby="workshop-title">
+      <div class="intro-copy">
+        <p class="eyebrow">KINGDOM / WORKSHOP <span>一張枱，一份作品</span></p>
+        <h1 id="workshop-title">燈下<span>作品工房</span></h1>
+        <p class="invitation">唔使先有答案。<br>由一句開始，寫成你想帶走嘅一頁。</p>
+      </div>
+      <aside class="lamp-note" aria-label="工房約定">
+        <div class="desk-lamp" aria-hidden="true"><span class="lamp-shade"></span><span class="lamp-stem"></span><span class="lamp-base"></span></div>
+        <p>你寫。你決定。<br><em>作品留喺你手上。</em></p>
+        <span class="small-caps">只喺本頁記憶體運作</span>
+      </aside>
+    </section>
+
+    <div class="memory-note" id="memory-note">
+      <span class="note-mark" aria-hidden="true">＊</span>
+      <p><strong>未自動保存。</strong>離開、重新整理或關頁會失去草稿。想繼續寫，請先下載 JSON；離頁提醒只係輔助，唔保證每次出現。</p>
+      <a href="#take-away">帶走草稿 <span aria-hidden="true">↓</span></a>
+    </div>
+    <p id="status" class="feedback feedback-status" role="status" aria-live="polite">工房載入中；準備好先開始寫。</p>
+    <p id="error" class="feedback feedback-error" role="alert" hidden></p>
+    <noscript><p class="feedback feedback-error">工房需要 JavaScript 做本機編輯、預覽同下載；未啟用時，呢張枱唔會收取或保存內容。</p></noscript>
+
+    <fieldset id="workshop-controls" disabled>
+      <legend class="sr-only">作品編輯、重新開稿同下載</legend>
+    <div class="desk-grid">
+      <section class="editor" aria-labelledby="editor-heading">
+        <header class="section-heading">
+          <div><span class="section-number" aria-hidden="true">01</span><h2 id="editor-heading">寫低</h2></div>
+          <span id="draft-state" class="draft-state">空白稿 · 未自動保存</span>
+        </header>
+        <form id="draft-form" autocomplete="off" novalidate>
+          <fieldset class="manuscript-fields">
+            <legend class="sr-only">作品</legend>
+            <div class="field title-field">
+              <label for="title">標題 <span>可遲啲先諗 · 最多 160 字碼點</span></label>
+              <textarea id="title" name="title" rows="2" placeholder="呢一頁，叫咩名？" spellcheck="false" aria-describedby="text-limit-note"></textarea>
+            </div>
+            <div class="field">
+              <label for="byline">署名 <span>可留空 · 最多 120 字碼點</span></label>
+              <textarea id="byline" name="byline" rows="1" placeholder="你想用嘅名字" spellcheck="false"></textarea>
+            </div>
+            <div class="field body-field">
+              <div class="label-line"><label for="body">主文 <span>自由寫，唔使分類</span></label><span id="body-count" class="counter">0 / 24,000</span></div>
+              <textarea id="body" name="body" rows="14" placeholder="一段故事、一封信、一個仍未講完嘅念頭……" spellcheck="false" aria-describedby="body-count text-limit-note memory-note"></textarea>
+            </div>
+            <p class="field-note" id="text-limit-note">長度按 Unicode 字碼點計；組字可以繼續，超出上限唔會自動截短。</p>
+          </fieldset>
+
+          <details class="drawer" id="register-drawer">
+            <summary><span class="drawer-title">頁邊附註 <span class="optional">按需要</span></span><span class="drawer-hint">觀察 / 詮釋 / 未知</span></summary>
+            <div class="drawer-content">
+              <p class="field-note">可以分清見到嘅、理解嘅、未知道嘅。三格都可留空；分類由你決定，唔係工房判定。</p>
+              <div class="field"><label for="observation">觀察 <span>最多 6,000 字碼點</span></label><textarea id="observation" name="observation" rows="4" placeholder="你見到、聽到或記低咗啲咩？" spellcheck="false"></textarea></div>
+              <div class="field"><label for="interpretation">詮釋 <span>最多 6,000 字碼點</span></label><textarea id="interpretation" name="interpretation" rows="4" placeholder="你點理解？有冇另一種讀法？" spellcheck="false"></textarea></div>
+              <div class="field"><label for="unknown">未知 <span>最多 6,000 字碼點</span></label><textarea id="unknown" name="unknown" rows="4" placeholder="有啲地方，仲未知道都可以。" spellcheck="false"></textarea></div>
+            </div>
+          </details>
+
+          <section class="sources-section" aria-labelledby="sources-heading">
+            <div class="subsection-heading"><h3 id="sources-heading">來源 <span class="optional">按需要</span></h3><span id="source-count" class="counter">0 / 8</span></div>
+            <p class="field-note">原創可以零來源。網址只係你留低嘅指向，工房唔會開啟或核實。備註同權利聲明會隨作品匯出。</p>
+            <div id="sources"></div>
+            <button type="button" class="add-source" data-add-source><span aria-hidden="true">＋</span> 加一個來源</button>
+          </section>
+
+          <div class="field rights-field">
+            <label for="rights">作品權利聲明 <span>可留空 · 最多 500 字碼點</span></label>
+            <textarea id="rights" name="rights" rows="3" placeholder="如果知道，可以寫低作品嘅使用條件。" spellcheck="false" aria-describedby="rights-note"></textarea>
+            <p class="field-note" id="rights-note">留空會標「未知」，照樣可以寫同匯出。有填寫只會標「作者聲明，未核實」；唔會自動套用 license 或授予使用權。</p>
+          </div>
+        </form>
+
+        <section class="draft-tools" aria-labelledby="draft-tools-heading">
+          <h3 id="draft-tools-heading">再開一頁</h3>
+          <div class="import-field"><label for="import-draft">重新開啟 JSON 草稿 <span>最多 512 KiB</span></label><input type="file" id="import-draft" accept=".json,application/json" aria-describedby="import-note"></div>
+          <p id="import-note" class="field-note">只讀你揀嘅檔案；全部驗證成功、確認取代之後先換稿。HTML 同 Markdown 唔支援重新匯入。</p>
+          <div class="quiet-actions"><button type="button" data-example>試讀一份虛構示例</button><button type="button" class="clear-button" data-clear>清空呢張枱</button></div>
+          <p class="field-note">示例係為工房原創嘅虛構短文，唔係真實記錄。清空只影響呢頁，唔會刪除已下載檔案。</p>
+        </section>
+      </section>
+
+      <section class="reading-side" aria-labelledby="reading-heading">
+        <div class="reading-sticky">
+          <header class="section-heading"><div><span class="section-number" aria-hidden="true">02</span><h2 id="reading-heading">望一望紙頁</h2></div><span class="small-caps">本機即時預覽</span></header>
+          <div class="paper-stack"><article id="preview" class="paper" aria-label="作品紙頁預覽" tabindex="0"><p class="paper-kicker">作品 / 尚未落筆</p><h2 class="paper-title">未命名作品</h2><p class="empty-page">寫低第一句，<br>呢度就會變成你嘅紙頁。</p><p class="paper-meta">呢段係預覽提示，唔會匯出。</p></article></div>
+          <section id="take-away" class="take-away" aria-labelledby="take-away-heading">
+            <div class="take-away-heading"><span class="section-number" aria-hidden="true">03</span><h2 id="take-away-heading">帶走，慢慢寫</h2></div>
+            <p>每次按鈕各下載一份。唔上傳，唔代你發布。</p>
+            <div class="download-options">
+              <button type="button" data-download="html"><span class="format">HTML <span aria-hidden="true">↓</span></span><span class="format-note">完整紙頁 · 離線閱讀 / 列印</span></button>
+              <button type="button" data-download="markdown"><span class="format">Markdown <span aria-hidden="true">↓</span></span><span class="format-note">純文字內容 · 帶去其他工具</span></button>
+              <button type="button" data-download="json" class="save-draft"><span class="format">JSON 草稿 <span aria-hidden="true">↓</span></span><span class="format-note">保留全部欄位 · 下次繼續寫</span></button>
+            </div>
+            <p class="download-note">只有 JSON 保證可重新編輯。下載位置由瀏覽器決定，檔案可能進入你自己嘅同步資料夾。按下下載唔代表檔案已保存，請自行確認。</p>
+          </section>
+        </div>
+      </section>
+    </div>
+    </fieldset>
+
+    <footer class="workshop-footer">
+      <p class="footer-saying">唔必寫完，先值得留低。</p>
+      <div class="privacy-copy"><h2>呢張枱嘅界線</h2><p>冇登入、AI、自動保存、雲端草稿或發布功能。稿件只喺本頁記憶體；工房唔讀寫身份或 cookies，唔用瀏覽器 storage。</p><p>首次載入仍有普通 hosting metadata，亦可能帶已有同源 cookie；唔等於完全匿名。頁面資產載入後，編輯、預覽、匯入同匯出唔會發出 application network request。來源連結只會喺你自己按下時開啟。</p><p>已載入嘅頁面可以繼續離線寫，唔代表已安裝離線 app。合上之前，記得帶走 JSON。</p></div>
+      <p class="colophon">KINGDOM / 燈下作品工房 <span>由你落筆，由你帶走。</span></p>
+    </footer>
+  </main>
+</body>
+</html>

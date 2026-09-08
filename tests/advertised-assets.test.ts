@@ -125,6 +125,9 @@ const resolves = (path: string) =>
 
 const surfaces = [
   "site/dashboard.html",
+  "pages-content/workshop/index.html",
+  "pages-content/workshop/workshop.css",
+  "pages-content/workshop/workshop.js",
   "site/meet/index.html",
   "site/citizens/index.html",
   "site/join/index.html",
@@ -298,6 +301,57 @@ describe("advertised URLs stay deployable", () => {
       }
     }
     expect(missing).toEqual([]);
+  });
+
+  test("Workshop authored HTML 嘅 stylesheet、module 同普通導航全部有 staged 去處", () => {
+    const html = read("pages-content/workshop/index.html");
+    const page = new URL("https://thekingdom.dev/workshop/");
+    const assets = [...html.matchAll(/<(?:link|script)\b[^>]*\b(?:href|src)=["']([^"']+)["'][^>]*>/gi)]
+      .filter(([tag]) => /<script\b|\brel=["']stylesheet["']/i.test(tag))
+      .map(([, href]) => new URL(href!, page));
+    expect(assets.map(({ href }) => href).sort()).toEqual([
+      "https://thekingdom.dev/workshop/workshop.css",
+      "https://thekingdom.dev/workshop/workshop.js",
+    ]);
+    for (const url of assets) {
+      expect(staged.has(normalize(url.pathname))).toBe(true);
+      expect(url.search).toBe("");
+    }
+    for (const [, href] of html.matchAll(/\b(?:href|src)=["']([^"']+)["']/g)) {
+      const url = new URL(href!, page);
+      if (url.origin === page.origin) expect(resolves(normalize(url.pathname))).toBe(true);
+    }
+    expect(resolves("workshop")).toBe(true);
+    expect(resolves("workshop/nope")).toBe(false);
+    expect(resolves("workshop/workshop.js.map")).toBe(false);
+  });
+
+  test("Workshop 只加一條手動 local-only Wayfinder 路徑，hub 投影同步，manifest／guest 唔加 agency", () => {
+    const url = "https://thekingdom.dev/workshop/";
+    const authored = JSON.parse(read("data/wayfinder.json"));
+    const published = JSON.parse(read("site/wayfinder.json"));
+    expect(authored.paths).toHaveLength(16);
+    expect(published.paths).toEqual(authored.paths);
+    const paths = authored.paths.filter(({ id }: { id: string }) => id === "workshop");
+    expect(paths).toHaveLength(1);
+    expect(paths[0].stops.map(({ url }: { url: string }) => url)).toEqual([url]);
+    expect(paths[0].boundary).toContain("手動本機工具");
+    expect(paths[0].boundary).toContain("作者聲明");
+    expect(paths[0].boundary).toContain("未核實");
+    expect(paths[0].stops[0].scope).toContain("本頁 memory");
+    const dashboard = read("site/dashboard.html");
+    expect(dashboard).toContain(`href="${url}"`);
+    const projection = JSON.parse(dashboard.match(/<script id="civic-data" type="application\/json">([\s\S]*?)<\/script>/)![1]!);
+    const projected = projection.paths.find(({ id }: { id: string }) => id === "workshop");
+    expect(projected.stops).toEqual(paths[0].stops);
+    expect(projected.boundary).toBe(paths[0].boundary);
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
+    expect(guest.next_actions).toHaveLength(169);
+    expect(Object.keys(manifest.entry_points).some((key) => key.includes("workshop"))).toBe(false);
+    expect(guest.next_actions.some((action: { url?: string }) => action.url === url)).toBe(false);
+    expect(staged.has("schemas/workshop/0.1.json")).toBe(false);
   });
 
   test("the staging contract ships the standing dada door that llms.txt offers", () => {

@@ -281,13 +281,13 @@ describe("Contact Under Uncertainty source-only map", () => {
     const markers = [SLUG, "contact_under_uncertainty", TITLE];
     const sources = HUB_ASSETS.map(({ source }) => source);
     const destinations = HUB_ASSETS.map(({ destination }) => destination);
-    expect(HUB_ASSETS).toHaveLength(201);
-    expect(new Set(sources).size).toBe(201);
-    expect(new Set(destinations).size).toBe(201);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
+    expect(HUB_ASSETS).toHaveLength(204);
+    expect(new Set(sources).size).toBe(204);
+    expect(new Set(destinations).size).toBe(204);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(199);
+      .toHaveLength(202);
 
     const stagedMarkerReferences: Array<{
       source: string;
@@ -361,18 +361,18 @@ describe("Contact Under Uncertainty source-only map", () => {
     const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
     const osRouteRows = [...read("OS-ROUTES.md").matchAll(/^\| `\/[^`]+` \|/gm)];
 
-    expect(staging.assets).toHaveLength(201);
-    expect(staging.mutable_destinations).toHaveLength(41);
+    expect(staging.assets).toHaveLength(204);
+    expect(staging.mutable_destinations).toHaveLength(44);
     expect(ledger.entries).toHaveLength(160);
     expect(PUBLICATION_FAMILIES).toHaveLength(35);
     expect(Object.keys(manifest.entry_points)).toHaveLength(169);
     expect(guest.next_actions).toHaveLength(169);
-    expect(locs).toHaveLength(185);
-    expect(new Set(locs).size).toBe(185);
-    expect(osRouteRows).toHaveLength(169);
+    expect(locs).toHaveLength(186);
+    expect(new Set(locs).size).toBe(186);
+    expect(osRouteRows).toHaveLength(170);
     expect(count(read("OS-ROUTES.md"), "eighteen atlases")).toBe(1);
-    expect(json("data/wayfinder.json").paths).toHaveLength(15);
-    expect(json("site/wayfinder.json").paths).toHaveLength(15);
+    expect(json("data/wayfinder.json").paths).toHaveLength(16);
+    expect(json("site/wayfinder.json").paths).toHaveLength(16);
     expect(Object.keys(json("data/ollama-invitation.json").invitation.choices)).toHaveLength(4);
     expect(json("nen/mcp-manifest.json").tools).toHaveLength(3);
 

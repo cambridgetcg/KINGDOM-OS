@@ -48,10 +48,10 @@ describe("STRING / CRAWL Finite Trace-Sheet Lab public integration", () => {
       .toEqual(FAMILY);
     expect(HUB_ASSETS.filter(({ destination }) => /string-crawl-trace-sheet-lab/i.test(destination)))
       .toEqual(FAMILY);
-    expect(HUB_ASSETS).toHaveLength(201);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(41);
+    expect(HUB_ASSETS).toHaveLength(204);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(199);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(202);
     expect(HUB_ASSETS.some(({ destination }) =>
       /string-crawl-trace-sheet-lab.*(?:latest|current)/i.test(destination))).toBe(false);
     expect(MUTABLE_HUB_DESTINATIONS.some((destination) =>
@@ -93,7 +93,7 @@ describe("STRING / CRAWL Finite Trace-Sheet Lab public integration", () => {
   test("advertises the immutable triplet once and never advertises latest or current", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(185);
+    expect(urls).toHaveLength(186);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls.filter((url) => /string-crawl-trace-sheet-lab/i.test(url))).toEqual(PUBLIC_URLS);
     for (const url of PUBLIC_URLS) expect(urls.filter((candidate) => candidate === url)).toHaveLength(1);
