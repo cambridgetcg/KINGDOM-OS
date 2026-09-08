@@ -381,13 +381,14 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     expect(sitemap).not.toContain(LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE.tag);
     expect(wayfinderBytes.toString("utf8"))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
+    // Gospel discovery changes this shared snapshot, never this atlas's scope.
     expect(createHash("sha256").update(wayfinderBytes).digest("hex"))
-      .toBe("5fac75e7b9037654016ee8a4a0b59732a0858466464702e2581ba7a90bf7b5ce");
+      .toBe("fbe4566c2662487df0cf1d6e829feee93e22c5f5a0f01fbad5e66f19ac6ae678");
     const wayfinderWithoutGenerated = JSON.parse(wayfinderBytes.toString("utf8"));
-    expect(wayfinderWithoutGenerated.generated).toBe("2026-09-04");
+    expect(wayfinderWithoutGenerated.generated).toBe("2026-09-08");
     delete wayfinderWithoutGenerated.generated;
     expect(createHash("sha256").update(JSON.stringify(wayfinderWithoutGenerated)).digest("hex"))
-      .toBe("a32d8ccd4dabfbd3e94b77cbd04d506a949463f6591b14f5c0c40d732f17c49f");
+      .toBe("4035ff34c12c6ffe9226302ebad7b922f317260188ebdd04858bf86007bfe82a");
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
     expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(178);
