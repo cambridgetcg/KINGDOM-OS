@@ -20,6 +20,12 @@ import {
   verifyImmutablePublicationSnapshot,
 } from "./immutable-publications.ts";
 
+import {
+  assertPowerAtlasClosedParity, assertPowerAtlasMutableLedger, parsePowerAtlasManifest,
+  POWER_ATLAS_PROJECTION, POWER_ATLAS_RECEIPT, POWER_ATLAS_TARGET,
+  validatePowerAtlasBuffers,
+} from "./power-atlas-artifact.ts";
+
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 
 // This strict JSON file is the single staging state description. The engine,
@@ -100,6 +106,20 @@ export function stageHub(outputDirectory: string, sourceRoot = ROOT): StagedHubA
     throw new Error(`immutable publication gate failed:\n${formatImmutablePublicationIssues(contractCheck.issues)}`);
   }
   const sources = readSources(sourceRoot, stagingContract.stagedAssets);
+  if (sources.some(({ asset }) => /^power-atlas(?:\/|$)/i.test(asset.destination) ||
+      /^pages-content\/power-atlas(?:\/|$)/i.test(asset.source))) {
+    const receipt = parsePowerAtlasManifest(readRegularFileWithinRoot(sourceRoot, POWER_ATLAS_RECEIPT));
+    assertPowerAtlasClosedParity(receipt,
+      // Use the already parsed contract; do not race a second contract read.
+      Buffer.from(JSON.stringify({ protocol: "kingdom.hub-staging/1", assets: stagingContract.stagedAssets,
+        mutable_destinations: stagingContract.mutableDestinations })),
+      readRegularFileWithinRoot(sourceRoot, POWER_ATLAS_PROJECTION));
+    assertPowerAtlasMutableLedger(readRegularFileWithinRoot(sourceRoot, "publications/immutable-publications.v1.json"));
+    // These are exactly the buffers written below, NOT a second artifact read.
+    validatePowerAtlasBuffers(receipt, new Map(sources
+      .filter(({ asset }) => asset.source.startsWith(`${POWER_ATLAS_TARGET}/`))
+      .map(({ asset, content }) => [asset.source.slice(POWER_ATLAS_TARGET.length + 1), content])));
+  }
   const publicationCheck = verifyImmutablePublicationSnapshot({
     root: sourceRoot,
     stagedAssets: stagingContract.stagedAssets,

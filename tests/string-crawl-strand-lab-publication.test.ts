@@ -48,10 +48,10 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
   test("stages one immutable Lab 02 triplet within the twelve-atlas shape", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(204);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
+    expect(HUB_ASSETS).toHaveLength(256);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(202);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(254);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(18);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("labs/"))).toContainEqual(PUBLIC_TRIPLET[0]);
     expect(PUBLIC_TRIPLET.some(({ destination }) =>
@@ -136,8 +136,8 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
   test("advertises the three versioned routes exactly once and no mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(186);
-    expect(new Set(urls).size).toBe(186);
+    expect(urls).toHaveLength(187);
+    expect(new Set(urls).size).toBe(187);
     for (const { destination } of PUBLIC_TRIPLET) {
       expect(urls.filter((url) => url === `${ORIGIN}/${destination}`)).toHaveLength(1);
     }

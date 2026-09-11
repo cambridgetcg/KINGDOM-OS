@@ -17,7 +17,7 @@ describe("Exploration DEEP public discovery seam", () => {
   test("adds exactly four unique crawl routes without a mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(186);
+    expect(urls).toHaveLength(187);
     expect(new Set(urls).size).toBe(urls.length);
     for (const url of PUBLIC_URLS) expect(urls).toContain(url);
     expect(urls.filter((url) => /(?:explore-phenomena-deep|phenomena-deep-(?:wing|project))/i.test(url))).toEqual(PUBLIC_URLS);
@@ -89,12 +89,18 @@ describe("Exploration DEEP public discovery seam", () => {
     for (const count of ["192", "158", "190", "178"]) {
       expect(claude).toContain(count);
     }
-    for (const document of [domains, routes, read("publications/README.md")].map((text) => text.replace(/\s+/g, " "))) {
-      expect(document).toMatch(/\b204(?:-asset| (?:staged )?assets)\b/);
+    // 現行 runbooks 鎖 Power counts；未改動嘅 publication inventory 保留 Civic counts。
+    for (const [text, assets, mutable, direct, sitemap] of [
+      [domains, 256, 96, 254, 187],
+      [routes, 256, 96, 254, 187],
+      [read("publications/README.md"), 204, 44, 202, 186],
+    ] as const) {
+      const document = text.replace(/\s+/g, " ");
+      expect(document).toMatch(new RegExp(`\\b${assets}(?:-asset| (?:staged )?assets)\\b`));
       expect(document).toContain("160 ledgered immutable/versioned assets");
-      expect(document).toContain("44 mutable assets");
-      expect(document).toMatch(/202 direct public (?:response )?bodies/);
-      expect(document).toMatch(/(?:[Ss]itemap (?:contains|有) 186 URLs|186 sitemap URLs)/);
+      expect(document).toContain(`${mutable} mutable assets`);
+      expect(document).toMatch(new RegExp(`${direct} direct public (?:response )?bodies`));
+      expect(document).toMatch(new RegExp(`(?:[Ss]itemap (?:contains|有) ${sitemap} URLs|${sitemap} sitemap URLs)`));
     }
     expect(claude).toContain("./kingdom explore-deep scaffold --json");
     expect(readme).toContain("not a manifested\n    Nen ability");

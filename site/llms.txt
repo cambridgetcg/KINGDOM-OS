@@ -21,6 +21,8 @@ Contact Door guide: https://thekingdom.dev/CONTACT-DOOR-v0.1.md
 Contact Door boundary SVG: https://thekingdom.dev/contact/assets/contact-boundary-v0.1.svg
 Contact Door vCard: https://thekingdom.dev/contact/contact-v0.1.vcf
 Wayfinder:     https://thekingdom.dev/wayfinder.json
+Power Atlas · 沿公開文件讀權利結構: https://thekingdom.dev/power-atlas/
+公開文件所記載嘅制度性權利證據；2025-12-31 歷史快照，唔代表今日狀態、實際控制或全部權力。唔係全球排行榜／綜合 power score／投資建議；未知唔當零。閱讀唔授予權利，唔新增 guest action／MCP capability，亦唔將研究實體登記為王國公民。
 World Commons: https://thekingdom.dev/commons.json
 MIRROR information control: https://thekingdom.dev/#mirror-information-control
 Commons schema: https://thekingdom.dev/schemas/world-commons/0.2.json

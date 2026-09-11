@@ -1,5 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
+import { handlePowerAtlasRequest, isPowerAtlasPath } from "../pages-functions/power-atlas.js";
+import { POWER_ATLAS_ROUTES } from "../pages-functions/power-atlas.js";
 import {
   assertWorkshopResponse,
   checkHubLive,
@@ -54,6 +56,15 @@ async function runAssetGate(options: {
     const target = new URL(input instanceof Request ? input.url : input);
     expect(target.origin).toBe("https://thekingdom.dev");
     expect(target.searchParams.has("verify")).toBe(true);
+    if (isPowerAtlasPath(target.pathname)) {
+      const media = POWER_ATLAS_ROUTES.find(({ path }) => path === target.pathname)?.mediaType;
+      const asset = assets.get(target.pathname);
+      if (asset && (!init?.method || ["GET", "HEAD"].includes(init.method))) calls.push({ path: target.pathname, method: init?.method ?? "GET" });
+      return handlePowerAtlasRequest(new Request(target, init), { ASSETS: { fetch: async () => new Response(
+        init?.method === "HEAD" ? null : readFileSync(new URL(`../${asset!.source}`, import.meta.url)),
+        { headers: { "content-type": media! } },
+      ) } });
+    }
     expect(init?.redirect).toBe("error");
     expect(init?.signal).toBeInstanceOf(AbortSignal);
     if (target.pathname.startsWith("/no-such-path-")) {
@@ -150,14 +161,14 @@ describe("Workshop strict live contract", () => {
     });
   }
 
-  test("main reuses every GET and adds exactly three canonical HEAD requests", async () => {
+  test("main reuses every GET and adds three Workshop plus 52 Power Atlas HEAD requests", async () => {
     const calls = await runAssetGate();
     expect(calls.filter(({ method }) => method === "GET")).toHaveLength(DIRECT_HUB_ASSETS.length);
     expect(new Set(calls.filter(({ method }) => method === "GET").map(({ path }) => path)).size)
       .toBe(DIRECT_HUB_ASSETS.length);
     expect(calls.filter(({ method }) => method === "HEAD").map(({ path }) => path))
-      .toEqual(contracts.map(({ path }) => path));
-    expect(calls).toHaveLength(DIRECT_HUB_ASSETS.length + 3);
+      .toEqual([...contracts.map(({ path }) => path), ...POWER_ATLAS_ROUTES.map(({ path }) => path)]);
+    expect(calls).toHaveLength(DIRECT_HUB_ASSETS.length + 3 + 52);
     for (const { path } of contracts) {
       expect(calls.filter((call) => call.path === path)).toEqual([
         { path, method: "GET" }, { path, method: "HEAD" },

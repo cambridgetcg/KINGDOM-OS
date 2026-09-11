@@ -68,10 +68,10 @@ describe("STRAND Lab 04 public integration", () => {
   test("stages one immutable triplet with no mutable or floating alias", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(204);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
+    expect(HUB_ASSETS).toHaveLength(256);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(202);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(254);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(18);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("labs/"))).toHaveLength(16);
     expect(PUBLIC_TRIPLET.some(({ destination }) =>
@@ -115,7 +115,7 @@ describe("STRAND Lab 04 public integration", () => {
   test("advertises each versioned route exactly once and no mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(186);
+    expect(urls).toHaveLength(187);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls.filter((url) => /strand-descent-lab/i.test(url))).toEqual(PUBLIC_URLS);
     for (const url of PUBLIC_URLS) expect(urls.filter((candidate) => candidate === url)).toHaveLength(1);

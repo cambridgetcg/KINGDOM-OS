@@ -86,8 +86,8 @@ describe("Shape & Resonance Lab 01 publication", () => {
   });
 
   test("stages and ledgers one atomic 17-route family with a two-route mutable split", () => {
-    expect(HUB_ASSETS).toHaveLength(204);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
+    expect(HUB_ASSETS).toHaveLength(256);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
     const familyDestinations = SHAPE_RESONANCE_FAMILY_URLS.map((url) =>
       destinationForPublicPath(new URL(url).pathname));
     expect(HUB_ASSETS.filter(({ destination }) => familyDestinations.includes(destination)))
@@ -301,12 +301,12 @@ describe("Shape & Resonance Lab 01 publication", () => {
       expect((sitemap.match(new RegExp(url.replaceAll("/", "\\/"), "g")) ?? []))
         .toHaveLength(1);
     }
-    expect((sitemap.match(/<loc>/g) ?? [])).toHaveLength(186);
+    expect((sitemap.match(/<loc>/g) ?? [])).toHaveLength(187);
     for (const url of [...SHAPE_RESONANCE_SVG_URLS, ...SHAPE_RESONANCE_AUDIO_URLS]) {
       expect(sitemap).not.toContain(url);
     }
     const wayfinder = json("data/wayfinder.json");
-    expect(wayfinder.paths).toHaveLength(16);
+    expect(wayfinder.paths).toHaveLength(17);
     const path = wayfinder.paths.find(({ id }: { id: string }) => id === "shape-resonance");
     expect(path.stops.map(({ url }: { url: string }) => url))
       .toEqual([SHAPE_RESONANCE_URL, SHAPE_RESONANCE_ALIAS_URL]);

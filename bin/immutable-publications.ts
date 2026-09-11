@@ -219,6 +219,10 @@ function mutableAlias(value: string): boolean {
 
 function immutableLookingDestination(value: string): boolean {
   if (/^[1-5]\d{2}\.html$/i.test(value)) return false;
+  // Vite hash assets are a mutable app family; font weights (400/500/600)
+  // are not publication versions. Only this prefix and JS/CSS/WOFF MIME
+  // extensions qualify. stageHub separately proves receipt/hash/MIME closure.
+  if (/^power-atlas\/assets\/(?:[A-Za-z0-9_-]+\/)*[A-Za-z0-9_][A-Za-z0-9._-]*-[A-Za-z0-9_-]{8,64}\.(js|css|woff|woff2)$/.test(value)) return false;
   return /^(?:atlases|definitions|feedback|geometries|polymorphs|principalities|records|schemas)\//i.test(value) ||
     /(?:^|[._/-])v?\d+(?:\.\d+)*(?=\.[A-Za-z]+$|[._/-]|$)/i.test(value) ||
     /(?:^|[._/-])\d{4}-\d{2}-\d{2}(?:[._/-]|$)/.test(value);

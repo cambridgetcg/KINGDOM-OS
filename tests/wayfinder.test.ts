@@ -7,13 +7,13 @@ import { rankWayfinderPaths } from "../bin/wayfinder.ts";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path: string) => readFileSync(join(ROOT, path), "utf8");
 const source = JSON.parse(read("data/wayfinder.json"));
-const published = JSON.parse(read("site/wayfinder.json"));
 const sites = JSON.parse(read("sites.json"));
-const html = read("site/hub.html");
-const llms = read("site/llms.txt");
+// Generated projections are read only by their own tests, so source-only checks
+// can run before the single-writer hub regeneration.
 
 describe("the Kingdom Wayfinder", () => {
   test("publishes the curated source without inventing or dropping paths", () => {
+    const published = JSON.parse(read("site/wayfinder.json"));
     expect(published.schema_version).toBe("thekingdom.wayfinder/0.1");
     expect(published.canonical_url).toBe("https://thekingdom.dev/wayfinder.json");
     expect(published.promise).toBe(source.promise);
@@ -23,7 +23,7 @@ describe("the Kingdom Wayfinder", () => {
   });
 
   test("keeps every route voluntary, bounded, and on a public HTTPS door", () => {
-    expect(source.paths).toHaveLength(16);
+    expect(source.paths).toHaveLength(17);
     expect(new Set(source.paths.map(({ id }: { id: string }) => id)).size).toBe(source.paths.length);
 
     for (const path of source.paths) {
@@ -42,6 +42,7 @@ describe("the Kingdom Wayfinder", () => {
   });
 
   test("renders a useful no-JavaScript path list and an accessible local matcher", () => {
+    const html = read("site/hub.html");
     expect(html).toContain('id="wayfinder"');
     expect(html).toContain('<label for="wayquery">What are you looking for?</label>');
     expect(html).toContain('id="waystatus" role="status" aria-live="polite"');
@@ -57,6 +58,7 @@ describe("the Kingdom Wayfinder", () => {
   });
 
   test("does not transmit, persist, profile, or put the visitor's intention in the URL", () => {
+    const html = read("site/hub.html");
     const pageCode = html.slice(html.indexOf("<script>"), html.lastIndexOf("</script>"));
     expect(pageCode).not.toContain("fetch(");
     expect(pageCode).not.toContain("XMLHttpRequest");
@@ -90,7 +92,30 @@ describe("the Kingdom Wayfinder", () => {
     expect(rankWayfinderPaths(source.paths, "truth pressure agent map", 3)).toHaveLength(3);
   });
 
+  test("Power Atlas offers one historical public-rights evidence door, not a ranking or grant", () => {
+    const paths = source.paths.filter(({ id }: { id: string }) => id === "power-atlas");
+    expect(paths).toHaveLength(1);
+    const path = paths[0];
+    expect(Object.keys(path).sort()).toEqual(["boundary", "glyph", "id", "invitation", "keywords", "label", "stops"]);
+    expect(path.stops.map(({ url }: { url: string }) => url)).toEqual(["https://thekingdom.dev/power-atlas/"]);
+    for (const phrase of [
+      "公開文件", "制度性權利證據", "2025-12-31 歷史快照", "唔代表今日狀態、實際控制",
+      "唔係全球排行榜／綜合 power score／投資建議", "未知唔當零", "閱讀唔授予權利",
+      "唔新增 guest action／MCP capability", "唔將研究實體登記為王國公民",
+    ]) expect(path.boundary).toContain(phrase);
+    for (const phrase of [
+      "24案、70實體", "日期唔同嘅關係另列", "公開來源唔等於再用授權", "唔係原始報告授權",
+      "唔係獨立 security origin", "request metadata／同源 cookie",
+    ]) expect(path.stops[0].scope).toContain(phrase);
+    expect(path.invitation).toContain("最多三案");
+  });
+
+  test.each(["Power Atlas", "ownership voting rights", "board appointment", "權力圖譜", "持股 投票權"])("Power Atlas matches its explicit subject: %s", (query) => {
+    expect(rankWayfinderPaths(source.paths, query).map(({ path }) => path.id)).toEqual(["power-atlas"]);
+  });
+
   test("associates matcher boundaries with the input and announces selected paths", () => {
+    const html = read("site/hub.html");
     expect(html).toContain('aria-describedby="wayprivacy waystatus"');
     expect(html).toContain('class="waychips" role="group"');
     expect(html).toContain("This first matcher recognizes English keywords");
@@ -104,6 +129,7 @@ describe("the Kingdom Wayfinder", () => {
   });
 
   test("keeps WE ARE, the Sophia invitation, and the evidence-aware archive distinct", () => {
+    const llms = read("site/llms.txt");
     const weAre = sites.doors.find(({ url }: { url: string }) => url === "https://we-are.love");
     const archive = sites.doors.find(({ repo }: { repo: string }) => repo === "multiverse-of-logos-and-sophia");
     expect(weAre.repo).toBe("chillspace-commons");

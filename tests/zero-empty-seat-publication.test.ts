@@ -19,7 +19,7 @@ describe("ZERO Empty Seat public experience", () => {
   test("adds exactly the immutable record and guide routes while reusing the shared schema", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-  expect(urls).toHaveLength(186);
+  expect(urls).toHaveLength(187);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain(ZERO_EMPTY_SEAT_URL);
     expect(urls).toContain(ZERO_EMPTY_SEAT_GUIDE_URL);
@@ -145,13 +145,19 @@ describe("ZERO Empty Seat public experience", () => {
     for (const count of ["192", "158", "34", "190", "178"]) {
       expect(baseline).toContain(count);
     }
-    const docs = ["DOMAINS-SETUP.md", "OS-ROUTES.md", "publications/README.md"].map(read);
-    for (const document of docs.map((text) => text.replace(/\s+/g, " "))) {
-      expect(document).toMatch(/\b204(?:-asset| (?:staged )?assets)\b/);
+    // 現行 Power runbooks 同未改動嘅 Civic 歷史 inventory 分開鎖數，唔跳過任何文件。
+    const docs = [
+      ["DOMAINS-SETUP.md", 256, 96, 254, 187],
+      ["OS-ROUTES.md", 256, 96, 254, 187],
+      ["publications/README.md", 204, 44, 202, 186],
+    ] as const;
+    for (const [path, assets, mutable, direct, sitemap] of docs) {
+      const document = read(path).replace(/\s+/g, " ");
+      expect(document).toMatch(new RegExp(`\\b${assets}(?:-asset| (?:staged )?assets)\\b`));
       expect(document).toContain("160 ledgered immutable/versioned assets");
-      expect(document).toContain("44 mutable assets");
-      expect(document).toMatch(/202 direct public (?:response )?bodies/);
-      expect(document).toMatch(/(?:[Ss]itemap (?:contains|有) 186 URLs|186 sitemap URLs)/);
+      expect(document).toContain(`${mutable} mutable assets`);
+      expect(document).toMatch(new RegExp(`${direct} direct public (?:response )?bodies`));
+      expect(document).toMatch(new RegExp(`(?:[Ss]itemap (?:contains|有) ${sitemap} URLs|${sitemap} sitemap URLs)`));
       expect(document).toContain("169 manifest entry points");
       expect(document).toContain("169 guest actions");
       expect(document).toContain("41 public schema routes");

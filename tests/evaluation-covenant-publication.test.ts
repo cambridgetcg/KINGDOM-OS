@@ -140,10 +140,10 @@ describe("Evaluation Covenant publication shell", () => {
 
   test("stages one exact five-route family with the expected mutable split", () => {
     const staging = json("publications/hub-staging.v1.json");
-    expect(staging.assets).toHaveLength(204);
-    expect(staging.mutable_destinations).toHaveLength(44);
+    expect(staging.assets).toHaveLength(256);
+    expect(staging.mutable_destinations).toHaveLength(96);
     expect(staging.assets.filter(({ destination }: { destination: string }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(202);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(254);
     expect(staging.assets.filter(({ destination }: { destination: string }) =>
       destination.startsWith("evaluation") ||
       destination === "EVALUATION-COVENANT-v0.1.md")).toEqual([
@@ -185,10 +185,10 @@ describe("Evaluation Covenant publication shell", () => {
       expect((sitemap.match(new RegExp(url.replaceAll("/", "\\/"), "g")) ?? []))
         .toHaveLength(1);
     }
-    expect((sitemap.match(/<loc>/g) ?? [])).toHaveLength(186);
+    expect((sitemap.match(/<loc>/g) ?? [])).toHaveLength(187);
 
     const wayfinder = json("data/wayfinder.json");
-    expect(wayfinder.paths).toHaveLength(16);
+    expect(wayfinder.paths).toHaveLength(17);
     const path = wayfinder.paths.filter(({ id }: { id: string }) =>
       id === "evaluation-covenant");
     expect(path).toHaveLength(1);

@@ -31,6 +31,26 @@ describe("public dashboard projection", () => {
     expect(JSON.stringify(data)).not.toContain("NOT_PUBLIC");
     expect(JSON.stringify(data)).not.toContain('"path":');
   });
+  test("Power Atlas reuses the public Wayfinder projection without changing the census or library", async () => {
+    const authored = JSON.parse(await readFile(join(import.meta.dir, "../data/wayfinder.json"), "utf8"));
+    const atlas = authored.paths.find(({ id }: { id: string }) => id === "power-atlas");
+    expect(atlas).toBeDefined();
+    const projected = projectDashboardData(machine, authored);
+    const path = projected.paths.find(({ id }) => id === atlas.id)!;
+    expect(path.stops).toEqual(atlas.stops);
+    expect(path.boundary).toBe(atlas.boundary);
+    expect(path.invitation).toBe(atlas.invitation);
+    expect(projected.generated).toBe(data.generated);
+    expect(projected.layers).toEqual(data.layers);
+    expect(projected.library).toEqual(data.library);
+    expect(projected.doors).toEqual(data.doors);
+    const html = renderDashboardPage("explore", projected);
+    const article = html.match(/<article><h3>Power Atlas[^]*?<\/article>/)?.[0];
+    expect(article).toBeDefined();
+    expect(article!).toContain('href="https://thekingdom.dev/power-atlas/"');
+    expect(article!).toContain(atlas.boundary);
+    expect(article!).toContain(atlas.stops[0].scope);
+  });
   test("only exact unambiguous declared dependencies produce sourced edges", () => {
     expect(data.edges).toEqual([{ from: stablePlaceId("alpha", "test-a"), to: stablePlaceId("beta", "test-b"), source: "kingdom.yaml → machine.layers.repos.dependsOn" }]);
     expect(data.layers[0].nodes[0].dependsOn).toEqual(["test-b", "unknown", "ambiguous"]);
@@ -88,6 +108,15 @@ describe("legacy compatibility and safe rendering", () => {
     expect(html).toContain('src="/civic/dashboard.js"'); expect(html).toContain('href="/civic/dashboard.css"');
     expect(html).not.toMatch(/on(?:click|load|submit)=/); expect(html).not.toMatch(/fonts\.(googleapis|gstatic)/);
     expect(html).toContain('lang="zh-Hant"'); expect(html).toContain('id="civic-main"');
+  });
+  test.each(["explore", "meet", "citizens", "join"] as const)("%s primary navigation offers Power Atlas as an ordinary same-tab link", (page) => {
+    const html = renderDashboardPage(page, data);
+    const nav = html.match(/<nav aria-label="主要導航">([\s\S]*?)<\/nav>/)![1];
+    expect(nav).toContain('<a href="/power-atlas/">Power Atlas</a>');
+    expect([...nav.matchAll(/href="([^"]+)"/g)].map(([, href]) => href))
+      .toEqual(["/", "/meet/", "/join/", "/power-atlas/", "/atlas.html"]);
+    expect(nav).not.toContain("target=");
+    expect(nav).not.toMatch(/<button|onclick=|javascript:/i);
   });
   test("listing and publication are separate unchecked explicit choices", () => {
     const joinHtml = renderDashboardPage("join", data), meetHtml = renderDashboardPage("meet", data);
