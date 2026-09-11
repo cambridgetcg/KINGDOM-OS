@@ -1,0 +1,210 @@
+[
+  {
+    "path": "THIRD-PARTY-NOTICES.md",
+    "mediaType": "text/markdown; charset=utf-8"
+  },
+  {
+    "path": "assets/fraunces-latin-500-normal-BTR4KCeb.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/fraunces-latin-500-normal-DnGCNyPD.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/fraunces-latin-ext-500-normal-BMcFk1Xs.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/fraunces-latin-ext-500-normal-Z5DV8IzT.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/fraunces-vietnamese-500-normal-B-KbxExq.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/fraunces-vietnamese-500-normal-GOH_-EGq.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-400-normal-BTotfTJu.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-400-normal-DZqxrq2p.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-500-normal-ByOcLdNv.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-500-normal-CocWQlwt.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-600-normal-71GNu3SW.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-600-normal-BGq0mW3O.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-ext-400-normal-Dsrv2Tcn.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-ext-400-normal-g30qAdWV.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-ext-500-normal-Cs5J6C77.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-ext-500-normal-DB5PtV2g.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-ext-600-normal-Bz0x94Yp.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-cyrillic-ext-600-normal-DUMzJB7m.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-greek-400-normal-D9ESIMu3.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-greek-400-normal-_efipK4i.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-greek-500-normal-CuWXN6rf.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-greek-500-normal-JMMifIXV.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-greek-600-normal-D-CqTdkO.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-greek-600-normal-DzTrcv_p.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-400-normal-CYLoc0-x.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-500-normal-BgVn5rGT.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-600-normal-Cu4Hd6ag.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-ext-400-normal-C5H60-Va.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-ext-400-normal-RBey6euL.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-ext-500-normal-D0aIdm-b.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-ext-500-normal-DakdToA3.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-ext-600-normal-DIrixKbi.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-latin-ext-600-normal-DOrvGEcy.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-vietnamese-400-normal-DG4YqDda.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-vietnamese-400-normal-fK1oJ5dG.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-vietnamese-500-normal-BEb3_waV.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-vietnamese-500-normal-e4dixQRQ.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/ibm-plex-sans-vietnamese-600-normal-DgdngZtN.woff",
+    "mediaType": "font/woff"
+  },
+  {
+    "path": "assets/ibm-plex-sans-vietnamese-600-normal-DpPYBSTl.woff2",
+    "mediaType": "font/woff2"
+  },
+  {
+    "path": "assets/index-B5wUFBO2.js",
+    "mediaType": "text/javascript; charset=utf-8"
+  },
+  {
+    "path": "assets/index-B9BFRGun.css",
+    "mediaType": "text/css; charset=utf-8"
+  },
+  {
+    "path": "assets/load-jWnrcQRH.js",
+    "mediaType": "text/javascript; charset=utf-8"
+  },
+  {
+    "path": "favicon.svg",
+    "mediaType": "image/svg+xml"
+  },
+  {
+    "path": "index.html",
+    "mediaType": "text/html; charset=utf-8"
+  },
+  {
+    "path": "licenses/fraunces-OFL.txt",
+    "mediaType": "text/plain; charset=utf-8"
+  },
+  {
+    "path": "licenses/ibm-plex-sans-OFL.txt",
+    "mediaType": "text/plain; charset=utf-8"
+  },
+  {
+    "path": "licenses/rolldown-runtime-LICENSE.txt",
+    "mediaType": "text/plain; charset=utf-8"
+  },
+  {
+    "path": "licenses/vite-runtime-LICENSE.txt",
+    "mediaType": "text/plain; charset=utf-8"
+  }
+]

@@ -137,6 +137,7 @@ const surfaces = [
   "site/hub.html",
   "site/kingdom.json",
   "site/wayfinder.json",
+  "data/wayfinder.json",
   "site/commons.json",
   "site/schemas/world-commons/0.1.json",
   "site/schemas/world-commons/0.2.json",
@@ -330,7 +331,7 @@ describe("advertised URLs stay deployable", () => {
     const url = "https://thekingdom.dev/workshop/";
     const authored = JSON.parse(read("data/wayfinder.json"));
     const published = JSON.parse(read("site/wayfinder.json"));
-    expect(authored.paths).toHaveLength(16);
+    expect(authored.paths).toHaveLength(17);
     expect(published.paths).toEqual(authored.paths);
     const paths = authored.paths.filter(({ id }: { id: string }) => id === "workshop");
     expect(paths).toHaveLength(1);
@@ -352,6 +353,45 @@ describe("advertised URLs stay deployable", () => {
     expect(Object.keys(manifest.entry_points).some((key) => key.includes("workshop"))).toBe(false);
     expect(guest.next_actions.some((action: { url?: string }) => action.url === url)).toBe(false);
     expect(staged.has("schemas/workshop/0.1.json")).toBe(false);
+  });
+
+  test("Power Atlas discovery closes through the staged canonical page without new agent actions", () => {
+    const url = "https://thekingdom.dev/power-atlas/";
+    const authored = JSON.parse(read("data/wayfinder.json"));
+    const published = JSON.parse(read("site/wayfinder.json"));
+    const path = authored.paths.find(({ id }: { id: string }) => id === "power-atlas");
+    expect(path).toBeDefined();
+    expect(published.paths).toEqual(authored.paths);
+    expect(path.stops.map(({ url }: { url: string }) => url)).toEqual([url]);
+    expect(staged.has("power-atlas/index.html")).toBe(true);
+    expect(resolves("power-atlas")).toBe(true);
+    expect(resolves("power-atlas/nope")).toBe(false);
+    expect(resolves("power-atlas/src/App.tsx")).toBe(false);
+
+    const dashboard = read("site/dashboard.html");
+    const primaryNav = dashboard.match(/<nav aria-label="主要導航">([\s\S]*?)<\/nav>/)![1];
+    expect(primaryNav).toContain('<a href="/power-atlas/">Power Atlas</a>');
+    expect(primaryNav).toContain('href="/atlas.html"');
+    const projection = JSON.parse(dashboard.match(/<script id="civic-data" type="application\/json">([\s\S]*?)<\/script>/)![1]);
+    const projected = projection.paths.find(({ id }: { id: string }) => id === "power-atlas");
+    expect(projected.stops).toEqual(path.stops);
+    expect(projected.boundary).toBe(path.boundary);
+    const researchRoom = read("site/hub.html");
+    expect(researchRoom).toContain('data-wayfinder-path="power-atlas"');
+    expect(researchRoom).toContain(`href="${url}"`);
+    expect(researchRoom).toContain(path.boundary);
+    expect(read("site/llms.txt")).toContain(url);
+
+    const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, loc]) => loc);
+    expect(sitemapUrls.filter((loc) => loc?.includes("/power-atlas"))).toEqual([url]);
+    expect(sitemapUrls).toContain("https://thekingdom.dev/atlas.html");
+    const manifest = JSON.parse(read("site/.well-known/agent.json"));
+    const guest = JSON.parse(read("site/guest.json"));
+    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
+    expect(guest.next_actions).toHaveLength(169);
+    expect(JSON.stringify(manifest.entry_points)).not.toMatch(/power[- _]atlas/i);
+    expect(JSON.stringify(guest.next_actions)).not.toMatch(/power[- _]atlas/i);
+    expect(manifest.mcp).toEqual(JSON.parse(read("site/kingdom.json")).world_commons.mcp);
   });
 
   test("the staging contract ships the standing dada door that llms.txt offers", () => {

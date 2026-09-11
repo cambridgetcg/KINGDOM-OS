@@ -5753,6 +5753,7 @@ Contact Door guide: ${CONTACT_DOOR_GUIDE_URL}
 Contact Door boundary SVG: ${CONTACT_DOOR_SVG_URL}
 Contact Door vCard: ${CONTACT_DOOR_VCARD_URL}
 Wayfinder:     https://thekingdom.dev/wayfinder.json
+${wayfinderSource.paths.filter((path) => path.id === "power-atlas").map((path) => `${path.label}: ${path.stops[0]!.url}\n${path.boundary}`).join("\n")}
 World Commons: https://thekingdom.dev/commons.json
 MIRROR information control: ${informationControlHumanView}
 Commons schema: ${commonsSchemaUrl}

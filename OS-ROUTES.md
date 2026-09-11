@@ -248,7 +248,7 @@ The three edge JSON routes return
 and `Cache-Control: public, max-age=600`. HEAD has the same status and headers
 with no body. The lost deployment answered the dynamic routes for methods
 besides GET too; that observable parity is retained. Civic 同 Workshop namespace 以外
-嘅 unknown paths，以及所有 shared-door hostname，繼續交俾 `env.ASSETS`。
+嘅 unknown paths（Power Atlas namespace 亦有獨立404），以及所有 shared-door hostname，繼續交俾 `env.ASSETS`。
 
 Civic dispatch 只喺 Kingdom hosts／Pages previews，或明確 `CIVIC_LOCAL=true`
 嘅 loopback preview 啟用。API 命中 `/api/civic` namespace 後唔會落 HTML fallback；
@@ -258,6 +258,34 @@ Dashboard／meet／citizens／join HTML 用同源 script/connect/form CSP、no-r
 同 no-transform；Contact Door 繼續係 script/connect/form `'none'`，唔借新互動開權。
 Civic guide/schema 用 immutable cache；policy 保持 `no-cache, no-transform`；
 錯 media type／error responses 唔會被 promote 成 immutable successful document。
+
+## Power Atlas 路由（本地整合，未發布）
+
+`/power-atlas/` 係獨立歷史研究 app，唔取代 `/atlas.html`。只喺既有 Kingdom
+hosts／Pages previews／明示 local-test gate 分流，先於 guest／首頁 fallback；
+其他域名、Civic、Workshop、研究館同 OS 路由不變。
+`/power-atlas` 同 `/power-atlas/index.html` 對 GET／HEAD 回 308
+`Location: /power-atlas/`；唔帶 query，browser 保留原 fragment。
+精確52條 page／asset routes 只准 GET／HEAD，其餘 method bodyless 405
+`Allow: GET, HEAD`；未知子路徑 bodyless 404。ASSETS 404 保留404，server error／
+fetch throw 回503，錯 MIME、redirect 或非完整成功 response 回502；唔用首頁 HTML
+充數。HEAD／有效304冇 body；合法 GET bytes 原樣串流。
+
+Worker 只 bundle `power-atlas-assets.json` 嘅 path/MIME projection，唔帶 sourceDigest、
+private import receipt 或 producer snapshot。HTML／JS／CSS／SVG／WOFF(2)／notices
+用明確 MIME；全部回應 `no-store, no-transform`、nosniff、no-referrer、DENY、
+Permissions Policy。CSP default/base/object/form/frame-ancestors 禁止；script/style/
+font/img/connect 最多 self，冇 unsafe-inline／eval 或外站 allowlist。獨立 CSS 唔等於
+獨立 security origin；普通 hosting metadata／同源 cookie 仍可能存在。
+
+`check-hub-live.ts` 重用52個 GET byte checks，另加52個 HEAD、aliases／404／405
+exact headers/body checks。本輪用 fake fetch 同真正 loopback staged Worker；未查新 live
+Power routes。最新 manifest `af2e34926e4a367992536a17688f39de298f29c1c3db07683c3fca18780c7436`
+嘅 desktop／mobile Chrome 均通過導航、308 fragment、字型／chunks／favicon、
+零 CSP violation 同零外部 app requests；冇放寬 CSP。現行 upload256、direct254、
+sitemap187、Wayfinder17；舊204映射同 immutable ledger 保留。新舊收據、未發布
+jitless／notice 修訂、rollback、驗收 logs 同匯入／更新／移除方法見
+[Power Atlas integration](references/power-atlas-integration.md)，發布仍另批。
 
 ## Workshop 本機寫作邊界
 
@@ -407,8 +435,8 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-鎖住 204-asset upload 合約（160 ledgered immutable/versioned assets 同
-44 mutable assets；202 direct public bodies、186 sitemap URLs、16 Wayfinder paths、169 manifest
+鎖住 256-asset upload 合約（160 ledgered immutable/versioned assets 同
+96 mutable assets；254 direct public bodies、187 sitemap URLs、17 Wayfinder paths、169 manifest
 entry points、169 guest actions 同 41 public schema routes；eighteen atlases、
 four primary lab JSON routes plus the Shape & Resonance manifest/media, one
 experiment route, one activation, and thirty-five active retirement families,

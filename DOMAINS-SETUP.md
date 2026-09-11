@@ -15,6 +15,35 @@
 - All four: `*.pages.dev` live immediately (200); custom domains attached, status `initializing` → active once CF provisions cert + DNS (minutes).
 - **chillspace.love supersedes** the old codeberg-subpath home in `sites.json`; the codeberg copy still exists as a mirror.
 
+## Power Atlas 本地整合（未發布）
+
+新增 `/power-atlas/` 獨立 document；唔取代 `/atlas.html`，唔改其他域名、Civic、
+Workshop 或研究 publication families。宿主只 exact-copy 已驗 artifact，正常 build
+唔讀外部 Atlas source／snapshot、唔 install。現行合約係 **256 = 原204 + Power52**
+（160 immutable + 96 mutable），254 direct bodies、187 sitemap URLs、17 Wayfinder
+paths；169 manifest entry points／169 guest actions／immutable ledger 不變。
+原有 256-entry 上限冇放寬；以下 Civic／Workshop 204 數字保留歷史背景，唔作新收據。
+
+`bin/import-power-atlas.ts` 只准初次 absent/empty target 或完全同 bytes 嘅
+`unchanged`；一般更新仍拒絕。本次未發布 Zod jitless／完整 rolldown notice 修訂，
+manifest SHA-256 係 `af2e34926e4a367992536a17688f39de298f29c1c3db07683c3fca18780c7436`。
+新舊收據、逐 bytes 備份、whole-directory rename rollback、完整 closure、實際
+staged Worker Chrome logs／screenshots 同更新／移除方法見
+[Power Atlas integration](references/power-atlas-integration.md)；唔係一般 overwrite 權限。
+用戶其後已明示本次 push／deploy；實際外向操作由 parent 執行，仍須已提交
+exact-origin SHA、clean detached release worktree 及完整站點 upload；唔用子目錄
+deploy、唔把本地 Chrome 當 production parity。
+
+**UTC release 準備 · 2026-09-11（未發布新 bytes）**：保留本地 commit
+`cc902db58b5183d48a794cd865579f74c37b7caf` 作比較，真
+`bun --no-env-file bin/build-hub.ts "$(date -u +%F)"` 兩次都生成今日日期，完整輸出
+SHA-256 一致；冇 `FORCE_LIVE`、fake clock、reset drift 或放寬 cleanliness gate。
+12個 generated files 只有確切日期位置改動；兩次 build-time doors 都係15/15，
+唔代表之後仍健康。Power52、研究 immutable bytes、builder／Worker／資料／manifest
+冇改。舊 `2026-09-08` 命令同收據只係當時本地驗收歷史，**唔係 production 日期
+bypass**；任何新日期或真 live-door drift 都要停喺 post-build gate，另作 reviewed
+release。新全站 stage 同測試／browser 收據見 integration 文件嘅 UTC release 段。
+
 ## Workshop 本機寫作入口（2026-09-08）
 
 `https://thekingdom.dev/workshop/` 係燈下作品工房 browser-local MVP；本地驗證唔會
@@ -215,10 +244,10 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` 要求既有空 destination，只複製合約指定 204 assets：
-160 ledgered immutable/versioned assets 同 44 mutable assets，共 202 direct public
+`stage-hub.ts` 要求既有空 destination，只複製合約指定 256 assets：
+160 ledgered immutable/versioned assets 同 96 mutable assets，共 254 direct public
 response bodies；`_worker.js` 同 `404.html` 由獨立合約核對。
-Sitemap 有 186 URLs，Wayfinder 有 16 paths；discovery 保持 169 manifest entry points
+Sitemap 有 187 URLs，Wayfinder 有 17 paths；discovery 保持 169 manifest entry points
 同 169 guest actions。Generated surface 描述 eighteen
 atlases、41 public schema routes、four primary lab JSON routes 同 Shape &
 Resonance manifest/media, one experiment route, and one separate activation

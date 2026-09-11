@@ -1,6 +1,6 @@
 {
   "schema_version": "thekingdom.wayfinder/0.1",
-  "generated": "2026-09-08",
+  "generated": "2026-09-11",
   "canonical_url": "https://thekingdom.dev/wayfinder.json",
   "promise": "Tell the map what you are looking for. It may offer a path; it never decides for you.",
   "privacy": {
@@ -353,6 +353,33 @@
           "url": "https://thekingdom.dev/research.json",
           "why": "The complete metadata projection with provenance receipts and four separate lifecycle gates.",
           "scope": "Metadata only; no full text, artifact execution, evaluation, adoption, module, guest, bounded use, or automatic action."
+        }
+      ]
+    },
+    {
+      "id": "power-atlas",
+      "label": "Power Atlas · 沿公開文件讀權利結構",
+      "glyph": "權",
+      "invitation": "由原文證據探索持股、投票權、董事任命同其他制度性權利，並列比較最多三案。",
+      "keywords": [
+        "power atlas",
+        "ownership",
+        "voting rights",
+        "board appointment",
+        "institutional rights",
+        "權力圖譜",
+        "持股",
+        "投票權",
+        "董事任命",
+        "制度性權利"
+      ],
+      "boundary": "公開文件所記載嘅制度性權利證據；2025-12-31 歷史快照，唔代表今日狀態、實際控制或全部權力。唔係全球排行榜／綜合 power score／投資建議；未知唔當零。閱讀唔授予權利，唔新增 guest action／MCP capability，亦唔將研究實體登記為王國公民。",
+      "stops": [
+        {
+          "name": "Power Atlas · 權力圖譜",
+          "url": "https://thekingdom.dev/power-atlas/",
+          "why": "讀六維資料、原文來源、table 同最多三案比較；以 URL hash 分享目前視圖。",
+          "scope": "V1：24案、70實體；日期唔同嘅關係另列。公開來源唔等於再用授權；第三方程式／字型 notices 唔係原始報告授權。獨立頁面唔係獨立 security origin；hosting 仍可能處理 request metadata／同源 cookie。"
         }
       ]
     },

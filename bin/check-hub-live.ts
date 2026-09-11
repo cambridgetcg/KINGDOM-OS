@@ -17,6 +17,7 @@ import { isDeepStrictEqual } from "node:util";
 import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS, MUTABLE_HUB_DESTINATIONS } from "./stage-hub.ts";
+import { POWER_ATLAS_ROUTES, POWER_ATLAS_ALIASES, POWER_ATLAS_CSP, POWER_ATLAS_PERMISSIONS } from "../pages-functions/power-atlas.js";
 import {
   formatImmutablePublicationIssues,
   verifyImmutablePublicationSnapshot,
@@ -2808,6 +2809,50 @@ export function assertWorkshopResponse(options: {
   }
 }
 
+const POWER_ATLAS_MEDIA_TYPES = new Map(POWER_ATLAS_ROUTES.map(({ path, mediaType }) => [path, mediaType]));
+export const POWER_ATLAS_MISSING_PATHS = [
+  "/power-atlas/no-such-asset", "/power-atlas/manifest.json", "/power-atlas/src/App.tsx",
+  "/power-atlas/assets/main.js.map", "/power-atlas/.env",
+] as const;
+
+/** Inspect already-read bytes; GET byte parity stays in the shared asset loop. */
+export function assertPowerAtlasResponse(options: {
+  path: string; method: string; response: Response; body: Uint8Array;
+}): void {
+  const { path, method, response, body } = options;
+  const media = POWER_ATLAS_MEDIA_TYPES.get(path);
+  const alias = POWER_ATLAS_ALIASES.includes(path);
+  const readable = method === "GET" || method === "HEAD";
+  const status = !media && !alias ? 404 : !readable ? 405 : alias ? 308 : 200;
+  if (response.status !== status ||
+      response.headers.get("cache-control") !== "no-store, no-transform" ||
+      response.headers.get("content-security-policy") !== POWER_ATLAS_CSP ||
+      response.headers.get("permissions-policy") !== POWER_ATLAS_PERMISSIONS ||
+      response.headers.get("referrer-policy") !== "no-referrer" ||
+      response.headers.get("x-content-type-options") !== "nosniff" ||
+      response.headers.get("x-frame-options") !== "DENY" || response.headers.has("set-cookie") ||
+      (status === 200 && response.headers.get("content-type") !== media) ||
+      (status === 308 ? response.headers.get("location") !== "/power-atlas/" : response.headers.has("location")) ||
+      (status === 405 ? response.headers.get("allow") !== "GET, HEAD" : response.headers.has("allow")) ||
+      ((method === "HEAD" || status !== 200) && body.byteLength !== 0)) {
+    throw new Error(`${method} ${path} lost the exact Power Atlas contract`);
+  }
+}
+
+/** Explicit non-success probes use manual redirects and no request payload. */
+export async function checkPowerAtlasEdges(fetchImpl: typeof fetch = fetch): Promise<void> {
+  const probes = [
+    ...POWER_ATLAS_ALIASES.flatMap((path) => ["GET", "HEAD"].map((method) => ({ path, method }))),
+    ...POWER_ATLAS_MISSING_PATHS.flatMap((path) => ["GET", "HEAD"].map((method) => ({ path, method }))),
+    ...[...POWER_ATLAS_ROUTES.map(({ path }) => path), ...POWER_ATLAS_ALIASES]
+      .flatMap((path) => ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"].map((method) => ({ path, method }))),
+  ];
+  for (const { path, method } of probes) {
+    const response = await fetchImpl(url(path), { method, redirect: "manual", signal: AbortSignal.timeout(TIMEOUT_MS) });
+    assertPowerAtlasResponse({ path, method, response, body: new Uint8Array(await response.arrayBuffer()) });
+  }
+}
+
 export function assertCivicStatus(response: Response, value: any, policy: unknown): void {
   if (![200, 503].includes(response.status) ||
       normalizedMediaType(response.headers.get("content-type")) !== "application/json" ||
@@ -2901,6 +2946,12 @@ export async function checkHubLive(
         body: new Uint8Array(await head.arrayBuffer()),
       });
     }
+    if (POWER_ATLAS_MEDIA_TYPES.has(path)) {
+      assertPowerAtlasResponse({ path, method: "GET", response, body: live });
+      const head = await get(path, { method: "HEAD" });
+      assertPowerAtlasResponse({ path, method: "HEAD", response: head,
+        body: new Uint8Array(await head.arrayBuffer()) });
+    }
     const immutablePublication = IMMUTABLE_PUBLICATION_ASSETS.get(asset.destination);
     if (immutablePublication) {
       if (asset.source !== immutablePublication.source) {
@@ -2926,6 +2977,8 @@ export async function checkHubLive(
     exactPaths.add(path);
     exact += 1;
   }
+
+  if (POWER_ATLAS_ROUTES.some(({ path }) => exactPaths.has(path))) await checkPowerAtlasEdges();
 
   // The ledger is history, not continuing publication authority. Every
   // ledgered route that HUB_ASSETS currently serves was hash-checked above.

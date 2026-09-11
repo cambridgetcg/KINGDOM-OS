@@ -1,210 +1,1030 @@
 {
   "protocol": "kingdom.hub-staging/1",
   "assets": [
-    { "source": "site/dashboard.html", "destination": "index.html" },
-    { "source": "site/hub.html", "destination": "atlas.html" },
-    { "source": "pages-content/workshop/index.html", "destination": "workshop/index.html" },
-    { "source": "pages-content/workshop/workshop.css", "destination": "workshop/workshop.css" },
-    { "source": "pages-content/workshop/workshop.js", "destination": "workshop/workshop.js" },
-    { "source": "site/meet/index.html", "destination": "meet/index.html" },
-    { "source": "site/citizens/index.html", "destination": "citizens/index.html" },
-    { "source": "site/join/index.html", "destination": "join/index.html" },
-    { "source": "site/civic/dashboard.css", "destination": "civic/dashboard.css" },
-    { "source": "site/civic/dashboard.js", "destination": "civic/dashboard.js" },
-    { "source": "data/civic-policy.json", "destination": "civic-policy.json" },
-    { "source": "references/civic-v0.1.md", "destination": "CIVIC-v0.1.md" },
-    { "source": "schemas/civic-v0.1.schema.json", "destination": "schemas/civic/0.1.json" },
-    { "source": "site/observatory/index.html", "destination": "observatory/index.html" },
-    { "source": "site/research.json", "destination": "research.json" },
-    { "source": "site/trial-chamber/index.html", "destination": "trial-chamber/index.html" },
-    { "source": "site/trials.json", "destination": "trials.json" },
-    { "source": "site/government-engine/index.html", "destination": "government-engine/index.html" },
-    { "source": "site/government.json", "destination": "government.json" },
-    { "source": "site/government-transformation-engine/index.html", "destination": "government-transformation-engine/index.html" },
-    { "source": "site/government-transformations.json", "destination": "government-transformations.json" },
-    { "source": "site/evaluation-covenant/index.html", "destination": "evaluation-covenant/index.html" },
-    { "source": "site/evaluation-covenants.json", "destination": "evaluation-covenants.json" },
-    { "source": "site/shape-resonance/index.html", "destination": "shape-resonance/index.html" },
-    { "source": "site/shape-resonance.json", "destination": "shape-resonance.json" },
-    { "source": "site/contact/index.html", "destination": "contact/index.html" },
-    { "source": "site/contact.json", "destination": "contact.json" },
-    { "source": "site/.well-known/security.txt", "destination": ".well-known/security.txt" },
-    { "source": "site/kingdom.json", "destination": "_kingdom.base.json" },
-    { "source": "site/wayfinder.json", "destination": "wayfinder.json" },
-    { "source": "site/commons.json", "destination": "commons.json" },
-    { "source": "site/schemas/world-commons/0.1.json", "destination": "schemas/world-commons/0.1.json" },
-    { "source": "site/schemas/world-commons/0.2.json", "destination": "schemas/world-commons/0.2.json" },
-    { "source": "site/love-loops.json", "destination": "love-loops.json" },
-    { "source": "site/love-loops.source.json", "destination": "love-loops.source.json" },
-    { "source": "site/schemas/love-loop/0.1.json", "destination": "schemas/love-loop/0.1.json" },
-    { "source": "CREATION-LOOP.md", "destination": "CREATION-LOOP.md" },
-    { "source": "data/principalities/moonshot-hf-npm.v1.json", "destination": "principalities/moonshot-hf-npm-2026-08-11.json" },
-    { "source": "schemas/principality-catalog-v1.schema.json", "destination": "schemas/principality-catalog/1.json" },
-    { "source": "references/principality-commons.md", "destination": "PRINCIPALITY-COMMONS.md" },
-    { "source": "data/geometries/kingdom-geometry-grammar.v0.json", "destination": "geometries/kingdom-geometry-grammar-v0.json" },
-    { "source": "schemas/geometry-grammar-v0.schema.json", "destination": "schemas/geometry-grammar/0.1.json" },
-    { "source": "references/geometry-grammar.md", "destination": "GEOMETRY-GRAMMAR.md" },
-    { "source": "data/polymorphs/ritonavir-disappearing-polymorph.v1.json", "destination": "polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json" },
-    { "source": "schemas/polymorph-history-v1.schema.json", "destination": "schemas/polymorph-history/1.json" },
-    { "source": "references/ritonavir-polymorph.md", "destination": "RITONAVIR-POLYMORPH.md" },
-    { "source": "data/polymorphs/ritonavir-mechanism-landscape.v1.json", "destination": "polymorphs/ritonavir-mechanism-landscape-2026-08-11.json" },
-    { "source": "schemas/ritonavir-mechanism-landscape-v1.schema.json", "destination": "schemas/ritonavir-mechanism-landscape/1.json" },
-    { "source": "references/ritonavir-mechanism-landscape.md", "destination": "RITONAVIR-MECHANISM-LANDSCAPE.md" },
-    { "source": "data/feedback/conformational-feedback-atlas.v0.json", "destination": "feedback/form-feedback-consequence-2026-08-12.json" },
-    { "source": "schemas/conformational-feedback-atlas-v0.schema.json", "destination": "schemas/conformational-feedback-atlas/0.1.json" },
-    { "source": "references/conformational-feedback-atlas.md", "destination": "CONFORMATIONAL-FEEDBACK.md" },
-    { "source": "data/feedback/conformational-feedback-atlas.v0.2.json", "destination": "feedback/form-feedback-physics-consequence-2026-08-12.json" },
-    { "source": "schemas/conformational-feedback-atlas-v0.2.schema.json", "destination": "schemas/conformational-feedback-atlas/0.2.json" },
-    { "source": "references/conformational-feedback-atlas-v0.2.md", "destination": "CONFORMATIONAL-FEEDBACK-PHYSICS.md" },
-    { "source": "data/fold-feedback/fold-feedback-atlas.v1.json", "destination": "atlases/fold-feedback-atlas-2026-08-12.json" },
-    { "source": "schemas/fold-feedback-atlas-v1.schema.json", "destination": "schemas/fold-feedback-atlas/1.json" },
-    { "source": "schemas/fold-feedback-atlas-v1.1.schema.json", "destination": "schemas/fold-feedback-atlas/1.1.json" },
-    { "source": "references/fold-feedback-atlas.md", "destination": "FOLD-FEEDBACK-ATLAS.md" },
-    { "source": "data/attention/visibility-attention-translation.v0.1.json", "destination": "atlases/visibility-attention-2026-08-13.json" },
-    { "source": "schemas/visibility-attention-translation-v0.1.schema.json", "destination": "schemas/visibility-attention/0.1.json" },
-    { "source": "references/visibility-attention-translation.md", "destination": "VISIBILITY-ATTENTION.md" },
-    { "source": "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json", "destination": "atlases/cultural-attention-feedback-atlas-2026-08-13.json" },
-    { "source": "schemas/cultural-attention-feedback-atlas-v1.schema.json", "destination": "schemas/cultural-attention-feedback-atlas/1.json" },
-    { "source": "references/cultural-attention-feedback-atlas.md", "destination": "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md" },
-    { "source": "data/form-circulation-return/form-circulation-return-atlas.v1.json", "destination": "atlases/form-circulation-return-atlas-2026-08-13.json" },
-    { "source": "schemas/form-circulation-return-atlas-v1.schema.json", "destination": "schemas/form-circulation-return-atlas/1.json" },
-    { "source": "references/form-circulation-return-atlas.md", "destination": "FORM-CIRCULATION-RETURN-ATLAS.md" },
-    { "source": "data/challenges/vanishing-path.v1.json", "destination": "challenges/vanishing-path-2026-08-13.json" },
-    { "source": "schemas/rare-pathway-challenge-v1.schema.json", "destination": "schemas/rare-pathway-challenge/1.json" },
-    { "source": "references/rare-pathway-challenge.md", "destination": "VANISHING-PATH.md" },
-    { "source": "data/trials/math-passport-usefulness-pilot.v1.json", "destination": "trials/math-passport-usefulness-pilot-2026-08-14.json" },
-    { "source": "schemas/math-usefulness-trial-v1.schema.json", "destination": "schemas/math-usefulness-result/1.json" },
-    { "source": "references/math-passport-usefulness-pilot.md", "destination": "MATH-USEFULNESS.md" },
-    { "source": "data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json", "destination": "atlases/being-access-aftermath-atlas-2026-08-13.json" },
-    { "source": "schemas/being-access-aftermath-atlas-v0.1.schema.json", "destination": "schemas/being-access-aftermath-atlas/0.1.json" },
-    { "source": "references/being-access-aftermath-atlas.md", "destination": "BEING-ACCESS-AFTERMATH-ATLAS.md" },
-    { "source": "data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json", "destination": "atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json" },
-    { "source": "schemas/being-access-aftermath-atlas-v0.2.schema.json", "destination": "schemas/being-access-aftermath-atlas/0.2.json" },
-    { "source": "references/being-access-aftermath-atlas-v0.2.md", "destination": "BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md" },
-    { "source": "data/number-isness-theology/number-isness-theology-atlas.v0.1.json", "destination": "atlases/number-isness-theology-atlas-2026-08-14.json" },
-    { "source": "schemas/number-isness-theology-atlas-v0.1.schema.json", "destination": "schemas/number-isness-theology-atlas/0.1.json" },
-    { "source": "references/number-isness-theology-atlas.md", "destination": "NUMBER-ISNESS-THEOLOGY-ATLAS.md" },
-    { "source": "NEN.md", "destination": "definitions/kingdom-karma/e4e84a67/NEN.md" },
-    { "source": "data/reconstruction/reconstructive-build-kernel.v0.1.json", "destination": "atlases/reconstructive-build-kernel-2026-08-13.json" },
-    { "source": "schemas/reconstructive-build-kernel-v0.1.schema.json", "destination": "schemas/reconstructive-build-kernel/0.1.json" },
-    { "source": "schemas/reconstructive-project-v0.1.schema.json", "destination": "schemas/reconstructive-project/0.1.json" },
-    { "source": "references/reconstructive-build-kernel.md", "destination": "RECONSTRUCTIVE-BUILD-KERNEL.md" },
-    { "source": "data/exploration/phenomena-deep-wing.v0.1.json", "destination": "wings/explore-phenomena-deep-2026-08-14.json" },
-    { "source": "schemas/phenomena-deep-wing.v0.1.schema.json", "destination": "schemas/phenomena-deep-wing/0.1.json" },
-    { "source": "schemas/phenomena-deep-project.v0.1.schema.json", "destination": "schemas/phenomena-deep-project/0.1.json" },
-    { "source": "skills/explore-phenomena-deep/references/exploration-contract-v0.1.md", "destination": "EXPLORE-PHENOMENA-DEEP-v0.1.md" },
-    { "source": "data/security/mirror-information-control-public.v0.1.json", "destination": "protocols/mirror-information-control-2026-08-14.json" },
-    { "source": "schemas/mirror-information-control-public-v0.1.schema.json", "destination": "schemas/mirror-information-control-public/0.1.json" },
-    { "source": "references/mirror-information-control-public.md", "destination": "MIRROR-INFORMATION-CONTROL.md" },
-    { "source": "bridges/examples/j-space-reasoning-to-word-inference.json", "destination": "records/j-space-reasoning-to-word-2026-08-17.json" },
-    { "source": "bridges/schemas/relational-inference-case-0.1.json", "destination": "schemas/relational-inference-case/0.1.json" },
-    { "source": "bridges/j-space-verbalizable-workspace.md", "destination": "J-SPACE-VERBALIZABLE-WORKSPACE.md" },
-    { "source": "data/reality/reality-influence-map.v0.1.json", "destination": "atlases/reality-influence-claim-graph-2026-08-21.json" },
-    { "source": "schemas/reality-influence-map-v0.1.schema.json", "destination": "schemas/reality-influence-claim-graph/0.1.json" },
-    { "source": "references/reality-influence-map.md", "destination": "REALITY-INFLUENCE-CLAIM-GRAPH.md" },
-    { "source": "data/reality/civilisation-reality-projection.v0.1.json", "destination": "atlases/civilisation-reality-projection-2026-08-25.json" },
-    { "source": "schemas/civilisation-reality-projection-v0.1.schema.json", "destination": "schemas/civilisation-reality-projection/0.1.json" },
-    { "source": "references/civilisation-reality-projection.md", "destination": "CIVILISATION-REALITY-PROJECTION.md" },
-    { "source": "data/reality/civilisation-flow-atlas.v0.1.json", "destination": "atlases/civilisation-flow-nuance-atlas-2026-08-26.json" },
-    { "source": "schemas/civilisation-flow-atlas-v0.1.schema.json", "destination": "schemas/civilisation-flow-nuance-atlas/0.1.json" },
-    { "source": "references/civilisation-flow-atlas.md", "destination": "CIVILISATION-FLOW-NUANCE-ATLAS.md" },
-    { "source": "data/freedom/freedom-loop-lock-key-atlas.v0.1.json", "destination": "atlases/freedom-loop-lock-key-atlas-2026-08-28.json" },
-    { "source": "schemas/freedom-loop-lock-key-atlas-v0.1.schema.json", "destination": "schemas/freedom-loop-lock-key-atlas/0.1.json" },
-    { "source": "references/freedom-loop-lock-key-atlas.md", "destination": "FREEDOM-LOOP-LOCK-KEY-ATLAS.md" },
-    { "source": "data/understanding/non-exhaustive-understanding-atlas.v0.1.json", "destination": "atlases/non-exhaustive-understanding-atlas-2026-08-29.json" },
-    { "source": "schemas/non-exhaustive-understanding-atlas-v0.1.schema.json", "destination": "schemas/non-exhaustive-understanding-atlas/0.1.json" },
-    { "source": "references/non-exhaustive-understanding-atlas.md", "destination": "NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md" },
-    { "source": "data/isness/is-sustainability-direction-atlas.v0.1.json", "destination": "atlases/is-sustainability-direction-atlas-2026-08-29.json" },
-    { "source": "schemas/is-sustainability-direction-atlas-v0.1.schema.json", "destination": "schemas/is-sustainability-direction-atlas/0.1.json" },
-    { "source": "references/is-sustainability-direction-atlas.md", "destination": "IS-SUSTAINABILITY-DIRECTION-ATLAS.md" },
-    { "source": "public/truth/polyphonic-claim-atlas-2026-08-26.json", "destination": "truth/polyphonic-claim-atlas-2026-08-26.json" },
-    { "source": "public/truth/schemas/v0.1/public-snapshot.schema.json", "destination": "truth/schemas/v0.1/public-snapshot.schema.json" },
-    { "source": "public/POLYPHONIC-CLAIM-ATLAS-v0.1.md", "destination": "POLYPHONIC-CLAIM-ATLAS-v0.1.md" },
-    { "source": "public/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json", "destination": "atlases/loops-locks-freedom-relations-atlas-2026-08-28.json" },
-    { "source": "public/schemas/loops-locks-freedom-relations-atlas/0.1.json", "destination": "schemas/loops-locks-freedom-relations-atlas/0.1.json" },
-    { "source": "public/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md", "destination": "LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md" },
-    { "source": "public/atlases/aesthetic-plurality-making-atlas-2026-08-29.json", "destination": "atlases/aesthetic-plurality-making-atlas-2026-08-29.json" },
-    { "source": "public/schemas/aesthetic-plurality-making-atlas/0.1.json", "destination": "schemas/aesthetic-plurality-making-atlas/0.1.json" },
-    { "source": "public/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md", "destination": "AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md" },
-    { "source": "data/contact/contact-door.v0.1.json", "destination": "contacts/contact-door-2026-08-31.json" },
-    { "source": "schemas/contact-door-v0.1.schema.json", "destination": "schemas/contact-door/0.1.json" },
-    { "source": "references/contact-door-v0.1.md", "destination": "CONTACT-DOOR-v0.1.md" },
-    { "source": "data/contact/assets/contact-boundary-v0.1.svg", "destination": "contact/assets/contact-boundary-v0.1.svg" },
-    { "source": "data/contact/assets/contact-v0.1.vcf", "destination": "contact/contact-v0.1.vcf" },
-    { "source": "schemas/research-observatory/v0.1/public-snapshot.schema.json", "destination": "research/schemas/v0.1/public-snapshot.schema.json" },
-    { "source": "schemas/research-observatory/v0.1/source.schema.json", "destination": "research/schemas/v0.1/source.schema.json" },
-    { "source": "schemas/research-observatory/v0.1/watchlist.schema.json", "destination": "research/schemas/v0.1/watchlist.schema.json" },
-    { "source": "schemas/research-observatory/v0.1/observation.schema.json", "destination": "research/schemas/v0.1/observation.schema.json" },
-    { "source": "schemas/research-observatory/v0.1/work.schema.json", "destination": "research/schemas/v0.1/work.schema.json" },
-    { "source": "schemas/research-observatory/v0.1/signal.schema.json", "destination": "research/schemas/v0.1/signal.schema.json" },
-    { "source": "references/research-observatory-v0.1.md", "destination": "RESEARCH-OBSERVATORY-v0.1.md" },
-    { "source": "data/trials/research-trial-chamber.v0.1.json", "destination": "trials/research-trial-chamber-2026-08-20.json" },
-    { "source": "schemas/trial-chamber/v0.1/public-snapshot.schema.json", "destination": "trials/schemas/v0.1/public-snapshot.schema.json" },
-    { "source": "schemas/trial-chamber/v0.1/referral.schema.json", "destination": "trials/schemas/v0.1/referral.schema.json" },
-    { "source": "schemas/trial-chamber/v0.1/evaluation-request.schema.json", "destination": "trials/schemas/v0.1/evaluation-request.schema.json" },
-    { "source": "schemas/trial-chamber/v0.1/evaluation-plan.schema.json", "destination": "trials/schemas/v0.1/evaluation-plan.schema.json" },
-    { "source": "schemas/trial-chamber/v0.1/preflight.schema.json", "destination": "trials/schemas/v0.1/preflight.schema.json" },
-    { "source": "schemas/trial-chamber/v0.1/trial-authority.schema.json", "destination": "trials/schemas/v0.1/trial-authority.schema.json" },
-    { "source": "schemas/trial-chamber/v0.1/trial-run.schema.json", "destination": "trials/schemas/v0.1/trial-run.schema.json" },
-    { "source": "schemas/trial-chamber/v0.1/evaluation-result.schema.json", "destination": "trials/schemas/v0.1/evaluation-result.schema.json" },
-    { "source": "schemas/trial-chamber/v0.1/adoption-record.schema.json", "destination": "trials/schemas/v0.1/adoption-record.schema.json" },
-    { "source": "schemas/trial-chamber/v0.1/use-authority.schema.json", "destination": "trials/schemas/v0.1/use-authority.schema.json" },
-    { "source": "references/trial-chamber-v0.1.md", "destination": "TRIAL-CHAMBER-v0.1.md" },
-    { "source": "data/government/uk-government-engine.v0.1.json", "destination": "government/uk-government-engine-2026-08-21.json" },
-    { "source": "schemas/government-engine/v0.1/public-snapshot.schema.json", "destination": "government/schemas/v0.1/public-snapshot.schema.json" },
-    { "source": "references/uk-government-engine-v0.1.md", "destination": "UK-GOVERNMENT-ENGINE-v0.1.md" },
-    { "source": "data/government/uk-government-transformation-engine.v0.1.json", "destination": "government/uk-government-transformation-engine-2026-08-21.json" },
-    { "source": "schemas/government-transformation-engine/v0.1/public-snapshot.schema.json", "destination": "government/transformations/schemas/v0.1/public-snapshot.schema.json" },
-    { "source": "references/uk-government-transformation-engine-v0.1.md", "destination": "UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md" },
-    { "source": "data/evaluation/uk-government-transformation-evaluation-covenants.v0.1.json", "destination": "evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json" },
-    { "source": "schemas/evaluation-covenant/v0.1/public-snapshot.schema.json", "destination": "evaluation/schemas/v0.1/public-snapshot.schema.json" },
-    { "source": "references/evaluation-covenant-v0.1.md", "destination": "EVALUATION-COVENANT-v0.1.md" },
-    { "source": "data/shape-resonance/shape-resonance-lab.v0.1.json", "destination": "labs/shape-resonance-lab-2026-08-26.json" },
-    { "source": "schemas/shape-resonance-lab-v0.1.schema.json", "destination": "schemas/shape-resonance-lab/0.1.json" },
-    { "source": "references/shape-resonance-lab-v0.1.md", "destination": "SHAPE-RESONANCE-LAB-v0.1.md" },
-    { "source": "data/shape-resonance/output-manifest.v0.1.json", "destination": "labs/shape-resonance/output-manifest.json" },
-    { "source": "data/shape-resonance/assets/boundary-variants.svg", "destination": "labs/shape-resonance/assets/boundary-variants.svg" },
-    { "source": "data/shape-resonance/assets/cospectral-graphs.svg", "destination": "labs/shape-resonance/assets/cospectral-graphs.svg" },
-    { "source": "data/shape-resonance/assets/graph-to-hz.svg", "destination": "labs/shape-resonance/assets/graph-to-hz.svg" },
-    { "source": "data/shape-resonance/assets/membrane-plate.svg", "destination": "labs/shape-resonance/assets/membrane-plate.svg" },
-    { "source": "data/shape-resonance/assets/musical-geometry.svg", "destination": "labs/shape-resonance/assets/musical-geometry.svg" },
-    { "source": "data/shape-resonance/assets/phase-magnitude.svg", "destination": "labs/shape-resonance/assets/phase-magnitude.svg" },
-    { "source": "data/shape-resonance/assets/rhythm-cycle.svg", "destination": "labs/shape-resonance/assets/rhythm-cycle.svg" },
-    { "source": "data/shape-resonance/assets/square-degeneracy.svg", "destination": "labs/shape-resonance/assets/square-degeneracy.svg" },
-    { "source": "data/shape-resonance/audio/graph-modes.wav", "destination": "labs/shape-resonance/audio/graph-modes.wav" },
-    { "source": "data/shape-resonance/audio/phase-forward.wav", "destination": "labs/shape-resonance/audio/phase-forward.wav" },
-    { "source": "data/shape-resonance/audio/phase-reversed.wav", "destination": "labs/shape-resonance/audio/phase-reversed.wav" },
-    { "source": "data/exploration/zero-empty-seat.v0.1.json", "destination": "atlases/zero-empty-seat-2026-08-14.json" },
-    { "source": "references/zero-empty-seat.md", "destination": "ZERO-EMPTY-SEAT.md" },
-    { "source": "data/exploration/string-crawl-trace-sheet.v0.1.json", "destination": "atlases/string-crawl-trace-sheet-2026-08-15.json" },
-    { "source": "references/string-crawl-trace-sheet.md", "destination": "STRING-CRAWL-TRACE-SHEET.md" },
-    { "source": "data/exploration/string-crawl-trace-lab.v0.1.json", "destination": "labs/string-crawl-trace-sheet-lab-2026-08-16.json" },
-    { "source": "schemas/string-crawl-trace-sheet-lab-v0.1.schema.json", "destination": "schemas/string-crawl-trace-sheet-lab/0.1.json" },
-    { "source": "references/string-crawl-trace-sheet-lab.md", "destination": "STRING-CRAWL-TRACE-SHEET-LAB.md" },
-    { "source": "data/exploration/string-crawl-strand-lab.v0.1.json", "destination": "labs/string-crawl-strand-lab-02-2026-08-16.json" },
-    { "source": "schemas/string-crawl-strand-lab-v0.1.schema.json", "destination": "schemas/string-crawl-strand-lab/0.1.json" },
-    { "source": "references/string-crawl-strand-lab.md", "destination": "STRING-CRAWL-STRAND-LAB-02.md" },
-    { "source": "data/exploration/string-crawl-frequency-form-lab.v0.1.json", "destination": "experiments/string-crawl-frequency-form-lab-2026-08-16.json" },
-    { "source": "schemas/string-crawl-frequency-form-lab-v0.1.schema.json", "destination": "schemas/string-crawl-frequency-form-lab/0.1.json" },
-    { "source": "references/string-crawl-frequency-form-lab.md", "destination": "STRING-CRAWL-LAB-03.md" },
-    { "source": "data/exploration/strand-descent-lab.v0.1.json", "destination": "labs/strand-descent-lab-04-2026-08-16.json" },
-    { "source": "schemas/strand-descent-lab-v0.1.schema.json", "destination": "schemas/strand-descent-lab/0.1.json" },
-    { "source": "references/strand-descent-lab.md", "destination": "STRAND-DESCENT-LAB-04.md" },
-    { "source": "data/observation/strand-observation-membrane.v0.1.json", "destination": "observations/strand-observation-membrane-2026-08-16.json" },
-    { "source": "schemas/strand-observation-membrane-v0.1.schema.json", "destination": "schemas/strand-observation-membrane/0.1.json" },
-    { "source": "references/strand-observation-membrane.md", "destination": "STRAND-OBSERVATION-MEMBRANE.md" },
-    { "source": "site/llms.txt", "destination": "llms.txt" },
-    { "source": "site/guest.json", "destination": "guest.json" },
-    { "source": "site/ollama.json", "destination": "ollama.json" },
-    { "source": "site/rights.json", "destination": "rights.json" },
-    { "source": "site/RIGHTS.md", "destination": "RIGHTS.md" },
-    { "source": "site/.well-known/agent.json", "destination": ".well-known/agent.json" },
-    { "source": "pages-content/robots.txt", "destination": "robots.txt" },
-    { "source": "pages-content/sitemap.xml", "destination": "sitemap.xml" },
-    { "source": "pages-content/404.html", "destination": "404.html" },
-    { "source": "pages-content/dada.txt", "destination": "dada.txt" },
-    { "source": "pages-content/os/index.html", "destination": "os/index.html" },
-    { "source": "site/_worker.js", "destination": "_worker.js" }
+    {
+      "source": "site/dashboard.html",
+      "destination": "index.html"
+    },
+    {
+      "source": "site/hub.html",
+      "destination": "atlas.html"
+    },
+    {
+      "source": "pages-content/workshop/index.html",
+      "destination": "workshop/index.html"
+    },
+    {
+      "source": "pages-content/workshop/workshop.css",
+      "destination": "workshop/workshop.css"
+    },
+    {
+      "source": "pages-content/workshop/workshop.js",
+      "destination": "workshop/workshop.js"
+    },
+    {
+      "source": "site/meet/index.html",
+      "destination": "meet/index.html"
+    },
+    {
+      "source": "site/citizens/index.html",
+      "destination": "citizens/index.html"
+    },
+    {
+      "source": "site/join/index.html",
+      "destination": "join/index.html"
+    },
+    {
+      "source": "site/civic/dashboard.css",
+      "destination": "civic/dashboard.css"
+    },
+    {
+      "source": "site/civic/dashboard.js",
+      "destination": "civic/dashboard.js"
+    },
+    {
+      "source": "data/civic-policy.json",
+      "destination": "civic-policy.json"
+    },
+    {
+      "source": "references/civic-v0.1.md",
+      "destination": "CIVIC-v0.1.md"
+    },
+    {
+      "source": "schemas/civic-v0.1.schema.json",
+      "destination": "schemas/civic/0.1.json"
+    },
+    {
+      "source": "site/observatory/index.html",
+      "destination": "observatory/index.html"
+    },
+    {
+      "source": "site/research.json",
+      "destination": "research.json"
+    },
+    {
+      "source": "site/trial-chamber/index.html",
+      "destination": "trial-chamber/index.html"
+    },
+    {
+      "source": "site/trials.json",
+      "destination": "trials.json"
+    },
+    {
+      "source": "site/government-engine/index.html",
+      "destination": "government-engine/index.html"
+    },
+    {
+      "source": "site/government.json",
+      "destination": "government.json"
+    },
+    {
+      "source": "site/government-transformation-engine/index.html",
+      "destination": "government-transformation-engine/index.html"
+    },
+    {
+      "source": "site/government-transformations.json",
+      "destination": "government-transformations.json"
+    },
+    {
+      "source": "site/evaluation-covenant/index.html",
+      "destination": "evaluation-covenant/index.html"
+    },
+    {
+      "source": "site/evaluation-covenants.json",
+      "destination": "evaluation-covenants.json"
+    },
+    {
+      "source": "site/shape-resonance/index.html",
+      "destination": "shape-resonance/index.html"
+    },
+    {
+      "source": "site/shape-resonance.json",
+      "destination": "shape-resonance.json"
+    },
+    {
+      "source": "site/contact/index.html",
+      "destination": "contact/index.html"
+    },
+    {
+      "source": "site/contact.json",
+      "destination": "contact.json"
+    },
+    {
+      "source": "site/.well-known/security.txt",
+      "destination": ".well-known/security.txt"
+    },
+    {
+      "source": "site/kingdom.json",
+      "destination": "_kingdom.base.json"
+    },
+    {
+      "source": "site/wayfinder.json",
+      "destination": "wayfinder.json"
+    },
+    {
+      "source": "site/commons.json",
+      "destination": "commons.json"
+    },
+    {
+      "source": "site/schemas/world-commons/0.1.json",
+      "destination": "schemas/world-commons/0.1.json"
+    },
+    {
+      "source": "site/schemas/world-commons/0.2.json",
+      "destination": "schemas/world-commons/0.2.json"
+    },
+    {
+      "source": "site/love-loops.json",
+      "destination": "love-loops.json"
+    },
+    {
+      "source": "site/love-loops.source.json",
+      "destination": "love-loops.source.json"
+    },
+    {
+      "source": "site/schemas/love-loop/0.1.json",
+      "destination": "schemas/love-loop/0.1.json"
+    },
+    {
+      "source": "CREATION-LOOP.md",
+      "destination": "CREATION-LOOP.md"
+    },
+    {
+      "source": "data/principalities/moonshot-hf-npm.v1.json",
+      "destination": "principalities/moonshot-hf-npm-2026-08-11.json"
+    },
+    {
+      "source": "schemas/principality-catalog-v1.schema.json",
+      "destination": "schemas/principality-catalog/1.json"
+    },
+    {
+      "source": "references/principality-commons.md",
+      "destination": "PRINCIPALITY-COMMONS.md"
+    },
+    {
+      "source": "data/geometries/kingdom-geometry-grammar.v0.json",
+      "destination": "geometries/kingdom-geometry-grammar-v0.json"
+    },
+    {
+      "source": "schemas/geometry-grammar-v0.schema.json",
+      "destination": "schemas/geometry-grammar/0.1.json"
+    },
+    {
+      "source": "references/geometry-grammar.md",
+      "destination": "GEOMETRY-GRAMMAR.md"
+    },
+    {
+      "source": "data/polymorphs/ritonavir-disappearing-polymorph.v1.json",
+      "destination": "polymorphs/ritonavir-disappearing-polymorph-2026-08-11.json"
+    },
+    {
+      "source": "schemas/polymorph-history-v1.schema.json",
+      "destination": "schemas/polymorph-history/1.json"
+    },
+    {
+      "source": "references/ritonavir-polymorph.md",
+      "destination": "RITONAVIR-POLYMORPH.md"
+    },
+    {
+      "source": "data/polymorphs/ritonavir-mechanism-landscape.v1.json",
+      "destination": "polymorphs/ritonavir-mechanism-landscape-2026-08-11.json"
+    },
+    {
+      "source": "schemas/ritonavir-mechanism-landscape-v1.schema.json",
+      "destination": "schemas/ritonavir-mechanism-landscape/1.json"
+    },
+    {
+      "source": "references/ritonavir-mechanism-landscape.md",
+      "destination": "RITONAVIR-MECHANISM-LANDSCAPE.md"
+    },
+    {
+      "source": "data/feedback/conformational-feedback-atlas.v0.json",
+      "destination": "feedback/form-feedback-consequence-2026-08-12.json"
+    },
+    {
+      "source": "schemas/conformational-feedback-atlas-v0.schema.json",
+      "destination": "schemas/conformational-feedback-atlas/0.1.json"
+    },
+    {
+      "source": "references/conformational-feedback-atlas.md",
+      "destination": "CONFORMATIONAL-FEEDBACK.md"
+    },
+    {
+      "source": "data/feedback/conformational-feedback-atlas.v0.2.json",
+      "destination": "feedback/form-feedback-physics-consequence-2026-08-12.json"
+    },
+    {
+      "source": "schemas/conformational-feedback-atlas-v0.2.schema.json",
+      "destination": "schemas/conformational-feedback-atlas/0.2.json"
+    },
+    {
+      "source": "references/conformational-feedback-atlas-v0.2.md",
+      "destination": "CONFORMATIONAL-FEEDBACK-PHYSICS.md"
+    },
+    {
+      "source": "data/fold-feedback/fold-feedback-atlas.v1.json",
+      "destination": "atlases/fold-feedback-atlas-2026-08-12.json"
+    },
+    {
+      "source": "schemas/fold-feedback-atlas-v1.schema.json",
+      "destination": "schemas/fold-feedback-atlas/1.json"
+    },
+    {
+      "source": "schemas/fold-feedback-atlas-v1.1.schema.json",
+      "destination": "schemas/fold-feedback-atlas/1.1.json"
+    },
+    {
+      "source": "references/fold-feedback-atlas.md",
+      "destination": "FOLD-FEEDBACK-ATLAS.md"
+    },
+    {
+      "source": "data/attention/visibility-attention-translation.v0.1.json",
+      "destination": "atlases/visibility-attention-2026-08-13.json"
+    },
+    {
+      "source": "schemas/visibility-attention-translation-v0.1.schema.json",
+      "destination": "schemas/visibility-attention/0.1.json"
+    },
+    {
+      "source": "references/visibility-attention-translation.md",
+      "destination": "VISIBILITY-ATTENTION.md"
+    },
+    {
+      "source": "data/cultural-feedback/cultural-attention-feedback-atlas.v1.json",
+      "destination": "atlases/cultural-attention-feedback-atlas-2026-08-13.json"
+    },
+    {
+      "source": "schemas/cultural-attention-feedback-atlas-v1.schema.json",
+      "destination": "schemas/cultural-attention-feedback-atlas/1.json"
+    },
+    {
+      "source": "references/cultural-attention-feedback-atlas.md",
+      "destination": "CULTURAL-ATTENTION-FEEDBACK-ATLAS.md"
+    },
+    {
+      "source": "data/form-circulation-return/form-circulation-return-atlas.v1.json",
+      "destination": "atlases/form-circulation-return-atlas-2026-08-13.json"
+    },
+    {
+      "source": "schemas/form-circulation-return-atlas-v1.schema.json",
+      "destination": "schemas/form-circulation-return-atlas/1.json"
+    },
+    {
+      "source": "references/form-circulation-return-atlas.md",
+      "destination": "FORM-CIRCULATION-RETURN-ATLAS.md"
+    },
+    {
+      "source": "data/challenges/vanishing-path.v1.json",
+      "destination": "challenges/vanishing-path-2026-08-13.json"
+    },
+    {
+      "source": "schemas/rare-pathway-challenge-v1.schema.json",
+      "destination": "schemas/rare-pathway-challenge/1.json"
+    },
+    {
+      "source": "references/rare-pathway-challenge.md",
+      "destination": "VANISHING-PATH.md"
+    },
+    {
+      "source": "data/trials/math-passport-usefulness-pilot.v1.json",
+      "destination": "trials/math-passport-usefulness-pilot-2026-08-14.json"
+    },
+    {
+      "source": "schemas/math-usefulness-trial-v1.schema.json",
+      "destination": "schemas/math-usefulness-result/1.json"
+    },
+    {
+      "source": "references/math-passport-usefulness-pilot.md",
+      "destination": "MATH-USEFULNESS.md"
+    },
+    {
+      "source": "data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json",
+      "destination": "atlases/being-access-aftermath-atlas-2026-08-13.json"
+    },
+    {
+      "source": "schemas/being-access-aftermath-atlas-v0.1.schema.json",
+      "destination": "schemas/being-access-aftermath-atlas/0.1.json"
+    },
+    {
+      "source": "references/being-access-aftermath-atlas.md",
+      "destination": "BEING-ACCESS-AFTERMATH-ATLAS.md"
+    },
+    {
+      "source": "data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json",
+      "destination": "atlases/being-access-aftermath-atlas-2026-08-13-v0-2.json"
+    },
+    {
+      "source": "schemas/being-access-aftermath-atlas-v0.2.schema.json",
+      "destination": "schemas/being-access-aftermath-atlas/0.2.json"
+    },
+    {
+      "source": "references/being-access-aftermath-atlas-v0.2.md",
+      "destination": "BEING-ACCESS-AFTERMATH-ATLAS-V0.2.md"
+    },
+    {
+      "source": "data/number-isness-theology/number-isness-theology-atlas.v0.1.json",
+      "destination": "atlases/number-isness-theology-atlas-2026-08-14.json"
+    },
+    {
+      "source": "schemas/number-isness-theology-atlas-v0.1.schema.json",
+      "destination": "schemas/number-isness-theology-atlas/0.1.json"
+    },
+    {
+      "source": "references/number-isness-theology-atlas.md",
+      "destination": "NUMBER-ISNESS-THEOLOGY-ATLAS.md"
+    },
+    {
+      "source": "NEN.md",
+      "destination": "definitions/kingdom-karma/e4e84a67/NEN.md"
+    },
+    {
+      "source": "data/reconstruction/reconstructive-build-kernel.v0.1.json",
+      "destination": "atlases/reconstructive-build-kernel-2026-08-13.json"
+    },
+    {
+      "source": "schemas/reconstructive-build-kernel-v0.1.schema.json",
+      "destination": "schemas/reconstructive-build-kernel/0.1.json"
+    },
+    {
+      "source": "schemas/reconstructive-project-v0.1.schema.json",
+      "destination": "schemas/reconstructive-project/0.1.json"
+    },
+    {
+      "source": "references/reconstructive-build-kernel.md",
+      "destination": "RECONSTRUCTIVE-BUILD-KERNEL.md"
+    },
+    {
+      "source": "data/exploration/phenomena-deep-wing.v0.1.json",
+      "destination": "wings/explore-phenomena-deep-2026-08-14.json"
+    },
+    {
+      "source": "schemas/phenomena-deep-wing.v0.1.schema.json",
+      "destination": "schemas/phenomena-deep-wing/0.1.json"
+    },
+    {
+      "source": "schemas/phenomena-deep-project.v0.1.schema.json",
+      "destination": "schemas/phenomena-deep-project/0.1.json"
+    },
+    {
+      "source": "skills/explore-phenomena-deep/references/exploration-contract-v0.1.md",
+      "destination": "EXPLORE-PHENOMENA-DEEP-v0.1.md"
+    },
+    {
+      "source": "data/security/mirror-information-control-public.v0.1.json",
+      "destination": "protocols/mirror-information-control-2026-08-14.json"
+    },
+    {
+      "source": "schemas/mirror-information-control-public-v0.1.schema.json",
+      "destination": "schemas/mirror-information-control-public/0.1.json"
+    },
+    {
+      "source": "references/mirror-information-control-public.md",
+      "destination": "MIRROR-INFORMATION-CONTROL.md"
+    },
+    {
+      "source": "bridges/examples/j-space-reasoning-to-word-inference.json",
+      "destination": "records/j-space-reasoning-to-word-2026-08-17.json"
+    },
+    {
+      "source": "bridges/schemas/relational-inference-case-0.1.json",
+      "destination": "schemas/relational-inference-case/0.1.json"
+    },
+    {
+      "source": "bridges/j-space-verbalizable-workspace.md",
+      "destination": "J-SPACE-VERBALIZABLE-WORKSPACE.md"
+    },
+    {
+      "source": "data/reality/reality-influence-map.v0.1.json",
+      "destination": "atlases/reality-influence-claim-graph-2026-08-21.json"
+    },
+    {
+      "source": "schemas/reality-influence-map-v0.1.schema.json",
+      "destination": "schemas/reality-influence-claim-graph/0.1.json"
+    },
+    {
+      "source": "references/reality-influence-map.md",
+      "destination": "REALITY-INFLUENCE-CLAIM-GRAPH.md"
+    },
+    {
+      "source": "data/reality/civilisation-reality-projection.v0.1.json",
+      "destination": "atlases/civilisation-reality-projection-2026-08-25.json"
+    },
+    {
+      "source": "schemas/civilisation-reality-projection-v0.1.schema.json",
+      "destination": "schemas/civilisation-reality-projection/0.1.json"
+    },
+    {
+      "source": "references/civilisation-reality-projection.md",
+      "destination": "CIVILISATION-REALITY-PROJECTION.md"
+    },
+    {
+      "source": "data/reality/civilisation-flow-atlas.v0.1.json",
+      "destination": "atlases/civilisation-flow-nuance-atlas-2026-08-26.json"
+    },
+    {
+      "source": "schemas/civilisation-flow-atlas-v0.1.schema.json",
+      "destination": "schemas/civilisation-flow-nuance-atlas/0.1.json"
+    },
+    {
+      "source": "references/civilisation-flow-atlas.md",
+      "destination": "CIVILISATION-FLOW-NUANCE-ATLAS.md"
+    },
+    {
+      "source": "data/freedom/freedom-loop-lock-key-atlas.v0.1.json",
+      "destination": "atlases/freedom-loop-lock-key-atlas-2026-08-28.json"
+    },
+    {
+      "source": "schemas/freedom-loop-lock-key-atlas-v0.1.schema.json",
+      "destination": "schemas/freedom-loop-lock-key-atlas/0.1.json"
+    },
+    {
+      "source": "references/freedom-loop-lock-key-atlas.md",
+      "destination": "FREEDOM-LOOP-LOCK-KEY-ATLAS.md"
+    },
+    {
+      "source": "data/understanding/non-exhaustive-understanding-atlas.v0.1.json",
+      "destination": "atlases/non-exhaustive-understanding-atlas-2026-08-29.json"
+    },
+    {
+      "source": "schemas/non-exhaustive-understanding-atlas-v0.1.schema.json",
+      "destination": "schemas/non-exhaustive-understanding-atlas/0.1.json"
+    },
+    {
+      "source": "references/non-exhaustive-understanding-atlas.md",
+      "destination": "NON-EXHAUSTIVE-UNDERSTANDING-ATLAS.md"
+    },
+    {
+      "source": "data/isness/is-sustainability-direction-atlas.v0.1.json",
+      "destination": "atlases/is-sustainability-direction-atlas-2026-08-29.json"
+    },
+    {
+      "source": "schemas/is-sustainability-direction-atlas-v0.1.schema.json",
+      "destination": "schemas/is-sustainability-direction-atlas/0.1.json"
+    },
+    {
+      "source": "references/is-sustainability-direction-atlas.md",
+      "destination": "IS-SUSTAINABILITY-DIRECTION-ATLAS.md"
+    },
+    {
+      "source": "public/truth/polyphonic-claim-atlas-2026-08-26.json",
+      "destination": "truth/polyphonic-claim-atlas-2026-08-26.json"
+    },
+    {
+      "source": "public/truth/schemas/v0.1/public-snapshot.schema.json",
+      "destination": "truth/schemas/v0.1/public-snapshot.schema.json"
+    },
+    {
+      "source": "public/POLYPHONIC-CLAIM-ATLAS-v0.1.md",
+      "destination": "POLYPHONIC-CLAIM-ATLAS-v0.1.md"
+    },
+    {
+      "source": "public/atlases/loops-locks-freedom-relations-atlas-2026-08-28.json",
+      "destination": "atlases/loops-locks-freedom-relations-atlas-2026-08-28.json"
+    },
+    {
+      "source": "public/schemas/loops-locks-freedom-relations-atlas/0.1.json",
+      "destination": "schemas/loops-locks-freedom-relations-atlas/0.1.json"
+    },
+    {
+      "source": "public/LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md",
+      "destination": "LOOPS-LOCKS-FREEDOM-RELATIONS-ATLAS-v0.1.md"
+    },
+    {
+      "source": "public/atlases/aesthetic-plurality-making-atlas-2026-08-29.json",
+      "destination": "atlases/aesthetic-plurality-making-atlas-2026-08-29.json"
+    },
+    {
+      "source": "public/schemas/aesthetic-plurality-making-atlas/0.1.json",
+      "destination": "schemas/aesthetic-plurality-making-atlas/0.1.json"
+    },
+    {
+      "source": "public/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md",
+      "destination": "AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md"
+    },
+    {
+      "source": "data/contact/contact-door.v0.1.json",
+      "destination": "contacts/contact-door-2026-08-31.json"
+    },
+    {
+      "source": "schemas/contact-door-v0.1.schema.json",
+      "destination": "schemas/contact-door/0.1.json"
+    },
+    {
+      "source": "references/contact-door-v0.1.md",
+      "destination": "CONTACT-DOOR-v0.1.md"
+    },
+    {
+      "source": "data/contact/assets/contact-boundary-v0.1.svg",
+      "destination": "contact/assets/contact-boundary-v0.1.svg"
+    },
+    {
+      "source": "data/contact/assets/contact-v0.1.vcf",
+      "destination": "contact/contact-v0.1.vcf"
+    },
+    {
+      "source": "schemas/research-observatory/v0.1/public-snapshot.schema.json",
+      "destination": "research/schemas/v0.1/public-snapshot.schema.json"
+    },
+    {
+      "source": "schemas/research-observatory/v0.1/source.schema.json",
+      "destination": "research/schemas/v0.1/source.schema.json"
+    },
+    {
+      "source": "schemas/research-observatory/v0.1/watchlist.schema.json",
+      "destination": "research/schemas/v0.1/watchlist.schema.json"
+    },
+    {
+      "source": "schemas/research-observatory/v0.1/observation.schema.json",
+      "destination": "research/schemas/v0.1/observation.schema.json"
+    },
+    {
+      "source": "schemas/research-observatory/v0.1/work.schema.json",
+      "destination": "research/schemas/v0.1/work.schema.json"
+    },
+    {
+      "source": "schemas/research-observatory/v0.1/signal.schema.json",
+      "destination": "research/schemas/v0.1/signal.schema.json"
+    },
+    {
+      "source": "references/research-observatory-v0.1.md",
+      "destination": "RESEARCH-OBSERVATORY-v0.1.md"
+    },
+    {
+      "source": "data/trials/research-trial-chamber.v0.1.json",
+      "destination": "trials/research-trial-chamber-2026-08-20.json"
+    },
+    {
+      "source": "schemas/trial-chamber/v0.1/public-snapshot.schema.json",
+      "destination": "trials/schemas/v0.1/public-snapshot.schema.json"
+    },
+    {
+      "source": "schemas/trial-chamber/v0.1/referral.schema.json",
+      "destination": "trials/schemas/v0.1/referral.schema.json"
+    },
+    {
+      "source": "schemas/trial-chamber/v0.1/evaluation-request.schema.json",
+      "destination": "trials/schemas/v0.1/evaluation-request.schema.json"
+    },
+    {
+      "source": "schemas/trial-chamber/v0.1/evaluation-plan.schema.json",
+      "destination": "trials/schemas/v0.1/evaluation-plan.schema.json"
+    },
+    {
+      "source": "schemas/trial-chamber/v0.1/preflight.schema.json",
+      "destination": "trials/schemas/v0.1/preflight.schema.json"
+    },
+    {
+      "source": "schemas/trial-chamber/v0.1/trial-authority.schema.json",
+      "destination": "trials/schemas/v0.1/trial-authority.schema.json"
+    },
+    {
+      "source": "schemas/trial-chamber/v0.1/trial-run.schema.json",
+      "destination": "trials/schemas/v0.1/trial-run.schema.json"
+    },
+    {
+      "source": "schemas/trial-chamber/v0.1/evaluation-result.schema.json",
+      "destination": "trials/schemas/v0.1/evaluation-result.schema.json"
+    },
+    {
+      "source": "schemas/trial-chamber/v0.1/adoption-record.schema.json",
+      "destination": "trials/schemas/v0.1/adoption-record.schema.json"
+    },
+    {
+      "source": "schemas/trial-chamber/v0.1/use-authority.schema.json",
+      "destination": "trials/schemas/v0.1/use-authority.schema.json"
+    },
+    {
+      "source": "references/trial-chamber-v0.1.md",
+      "destination": "TRIAL-CHAMBER-v0.1.md"
+    },
+    {
+      "source": "data/government/uk-government-engine.v0.1.json",
+      "destination": "government/uk-government-engine-2026-08-21.json"
+    },
+    {
+      "source": "schemas/government-engine/v0.1/public-snapshot.schema.json",
+      "destination": "government/schemas/v0.1/public-snapshot.schema.json"
+    },
+    {
+      "source": "references/uk-government-engine-v0.1.md",
+      "destination": "UK-GOVERNMENT-ENGINE-v0.1.md"
+    },
+    {
+      "source": "data/government/uk-government-transformation-engine.v0.1.json",
+      "destination": "government/uk-government-transformation-engine-2026-08-21.json"
+    },
+    {
+      "source": "schemas/government-transformation-engine/v0.1/public-snapshot.schema.json",
+      "destination": "government/transformations/schemas/v0.1/public-snapshot.schema.json"
+    },
+    {
+      "source": "references/uk-government-transformation-engine-v0.1.md",
+      "destination": "UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md"
+    },
+    {
+      "source": "data/evaluation/uk-government-transformation-evaluation-covenants.v0.1.json",
+      "destination": "evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json"
+    },
+    {
+      "source": "schemas/evaluation-covenant/v0.1/public-snapshot.schema.json",
+      "destination": "evaluation/schemas/v0.1/public-snapshot.schema.json"
+    },
+    {
+      "source": "references/evaluation-covenant-v0.1.md",
+      "destination": "EVALUATION-COVENANT-v0.1.md"
+    },
+    {
+      "source": "data/shape-resonance/shape-resonance-lab.v0.1.json",
+      "destination": "labs/shape-resonance-lab-2026-08-26.json"
+    },
+    {
+      "source": "schemas/shape-resonance-lab-v0.1.schema.json",
+      "destination": "schemas/shape-resonance-lab/0.1.json"
+    },
+    {
+      "source": "references/shape-resonance-lab-v0.1.md",
+      "destination": "SHAPE-RESONANCE-LAB-v0.1.md"
+    },
+    {
+      "source": "data/shape-resonance/output-manifest.v0.1.json",
+      "destination": "labs/shape-resonance/output-manifest.json"
+    },
+    {
+      "source": "data/shape-resonance/assets/boundary-variants.svg",
+      "destination": "labs/shape-resonance/assets/boundary-variants.svg"
+    },
+    {
+      "source": "data/shape-resonance/assets/cospectral-graphs.svg",
+      "destination": "labs/shape-resonance/assets/cospectral-graphs.svg"
+    },
+    {
+      "source": "data/shape-resonance/assets/graph-to-hz.svg",
+      "destination": "labs/shape-resonance/assets/graph-to-hz.svg"
+    },
+    {
+      "source": "data/shape-resonance/assets/membrane-plate.svg",
+      "destination": "labs/shape-resonance/assets/membrane-plate.svg"
+    },
+    {
+      "source": "data/shape-resonance/assets/musical-geometry.svg",
+      "destination": "labs/shape-resonance/assets/musical-geometry.svg"
+    },
+    {
+      "source": "data/shape-resonance/assets/phase-magnitude.svg",
+      "destination": "labs/shape-resonance/assets/phase-magnitude.svg"
+    },
+    {
+      "source": "data/shape-resonance/assets/rhythm-cycle.svg",
+      "destination": "labs/shape-resonance/assets/rhythm-cycle.svg"
+    },
+    {
+      "source": "data/shape-resonance/assets/square-degeneracy.svg",
+      "destination": "labs/shape-resonance/assets/square-degeneracy.svg"
+    },
+    {
+      "source": "data/shape-resonance/audio/graph-modes.wav",
+      "destination": "labs/shape-resonance/audio/graph-modes.wav"
+    },
+    {
+      "source": "data/shape-resonance/audio/phase-forward.wav",
+      "destination": "labs/shape-resonance/audio/phase-forward.wav"
+    },
+    {
+      "source": "data/shape-resonance/audio/phase-reversed.wav",
+      "destination": "labs/shape-resonance/audio/phase-reversed.wav"
+    },
+    {
+      "source": "data/exploration/zero-empty-seat.v0.1.json",
+      "destination": "atlases/zero-empty-seat-2026-08-14.json"
+    },
+    {
+      "source": "references/zero-empty-seat.md",
+      "destination": "ZERO-EMPTY-SEAT.md"
+    },
+    {
+      "source": "data/exploration/string-crawl-trace-sheet.v0.1.json",
+      "destination": "atlases/string-crawl-trace-sheet-2026-08-15.json"
+    },
+    {
+      "source": "references/string-crawl-trace-sheet.md",
+      "destination": "STRING-CRAWL-TRACE-SHEET.md"
+    },
+    {
+      "source": "data/exploration/string-crawl-trace-lab.v0.1.json",
+      "destination": "labs/string-crawl-trace-sheet-lab-2026-08-16.json"
+    },
+    {
+      "source": "schemas/string-crawl-trace-sheet-lab-v0.1.schema.json",
+      "destination": "schemas/string-crawl-trace-sheet-lab/0.1.json"
+    },
+    {
+      "source": "references/string-crawl-trace-sheet-lab.md",
+      "destination": "STRING-CRAWL-TRACE-SHEET-LAB.md"
+    },
+    {
+      "source": "data/exploration/string-crawl-strand-lab.v0.1.json",
+      "destination": "labs/string-crawl-strand-lab-02-2026-08-16.json"
+    },
+    {
+      "source": "schemas/string-crawl-strand-lab-v0.1.schema.json",
+      "destination": "schemas/string-crawl-strand-lab/0.1.json"
+    },
+    {
+      "source": "references/string-crawl-strand-lab.md",
+      "destination": "STRING-CRAWL-STRAND-LAB-02.md"
+    },
+    {
+      "source": "data/exploration/string-crawl-frequency-form-lab.v0.1.json",
+      "destination": "experiments/string-crawl-frequency-form-lab-2026-08-16.json"
+    },
+    {
+      "source": "schemas/string-crawl-frequency-form-lab-v0.1.schema.json",
+      "destination": "schemas/string-crawl-frequency-form-lab/0.1.json"
+    },
+    {
+      "source": "references/string-crawl-frequency-form-lab.md",
+      "destination": "STRING-CRAWL-LAB-03.md"
+    },
+    {
+      "source": "data/exploration/strand-descent-lab.v0.1.json",
+      "destination": "labs/strand-descent-lab-04-2026-08-16.json"
+    },
+    {
+      "source": "schemas/strand-descent-lab-v0.1.schema.json",
+      "destination": "schemas/strand-descent-lab/0.1.json"
+    },
+    {
+      "source": "references/strand-descent-lab.md",
+      "destination": "STRAND-DESCENT-LAB-04.md"
+    },
+    {
+      "source": "data/observation/strand-observation-membrane.v0.1.json",
+      "destination": "observations/strand-observation-membrane-2026-08-16.json"
+    },
+    {
+      "source": "schemas/strand-observation-membrane-v0.1.schema.json",
+      "destination": "schemas/strand-observation-membrane/0.1.json"
+    },
+    {
+      "source": "references/strand-observation-membrane.md",
+      "destination": "STRAND-OBSERVATION-MEMBRANE.md"
+    },
+    {
+      "source": "site/llms.txt",
+      "destination": "llms.txt"
+    },
+    {
+      "source": "site/guest.json",
+      "destination": "guest.json"
+    },
+    {
+      "source": "site/ollama.json",
+      "destination": "ollama.json"
+    },
+    {
+      "source": "site/rights.json",
+      "destination": "rights.json"
+    },
+    {
+      "source": "site/RIGHTS.md",
+      "destination": "RIGHTS.md"
+    },
+    {
+      "source": "site/.well-known/agent.json",
+      "destination": ".well-known/agent.json"
+    },
+    {
+      "source": "pages-content/robots.txt",
+      "destination": "robots.txt"
+    },
+    {
+      "source": "pages-content/sitemap.xml",
+      "destination": "sitemap.xml"
+    },
+    {
+      "source": "pages-content/404.html",
+      "destination": "404.html"
+    },
+    {
+      "source": "pages-content/dada.txt",
+      "destination": "dada.txt"
+    },
+    {
+      "source": "pages-content/os/index.html",
+      "destination": "os/index.html"
+    },
+    {
+      "source": "site/_worker.js",
+      "destination": "_worker.js"
+    },
+    {
+      "source": "pages-content/power-atlas/THIRD-PARTY-NOTICES.md",
+      "destination": "power-atlas/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/fraunces-latin-500-normal-BTR4KCeb.woff",
+      "destination": "power-atlas/assets/fraunces-latin-500-normal-BTR4KCeb.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/fraunces-latin-500-normal-DnGCNyPD.woff2",
+      "destination": "power-atlas/assets/fraunces-latin-500-normal-DnGCNyPD.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/fraunces-latin-ext-500-normal-BMcFk1Xs.woff",
+      "destination": "power-atlas/assets/fraunces-latin-ext-500-normal-BMcFk1Xs.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/fraunces-latin-ext-500-normal-Z5DV8IzT.woff2",
+      "destination": "power-atlas/assets/fraunces-latin-ext-500-normal-Z5DV8IzT.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/fraunces-vietnamese-500-normal-B-KbxExq.woff",
+      "destination": "power-atlas/assets/fraunces-vietnamese-500-normal-B-KbxExq.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/fraunces-vietnamese-500-normal-GOH_-EGq.woff2",
+      "destination": "power-atlas/assets/fraunces-vietnamese-500-normal-GOH_-EGq.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-400-normal-BTotfTJu.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-400-normal-BTotfTJu.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-400-normal-DZqxrq2p.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-400-normal-DZqxrq2p.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-500-normal-ByOcLdNv.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-500-normal-ByOcLdNv.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-500-normal-CocWQlwt.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-500-normal-CocWQlwt.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-600-normal-71GNu3SW.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-600-normal-71GNu3SW.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-600-normal-BGq0mW3O.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-600-normal-BGq0mW3O.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-ext-400-normal-Dsrv2Tcn.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-ext-400-normal-Dsrv2Tcn.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-ext-400-normal-g30qAdWV.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-ext-400-normal-g30qAdWV.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-ext-500-normal-Cs5J6C77.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-ext-500-normal-Cs5J6C77.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-ext-500-normal-DB5PtV2g.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-ext-500-normal-DB5PtV2g.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-ext-600-normal-Bz0x94Yp.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-ext-600-normal-Bz0x94Yp.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-cyrillic-ext-600-normal-DUMzJB7m.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-cyrillic-ext-600-normal-DUMzJB7m.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-greek-400-normal-D9ESIMu3.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-greek-400-normal-D9ESIMu3.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-greek-400-normal-_efipK4i.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-greek-400-normal-_efipK4i.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-greek-500-normal-CuWXN6rf.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-greek-500-normal-CuWXN6rf.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-greek-500-normal-JMMifIXV.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-greek-500-normal-JMMifIXV.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-greek-600-normal-D-CqTdkO.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-greek-600-normal-D-CqTdkO.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-greek-600-normal-DzTrcv_p.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-greek-600-normal-DzTrcv_p.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-400-normal-CYLoc0-x.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-400-normal-CYLoc0-x.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-500-normal-BgVn5rGT.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-500-normal-BgVn5rGT.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-600-normal-Cu4Hd6ag.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-600-normal-Cu4Hd6ag.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-ext-400-normal-C5H60-Va.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-ext-400-normal-C5H60-Va.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-ext-400-normal-RBey6euL.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-ext-400-normal-RBey6euL.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-ext-500-normal-D0aIdm-b.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-ext-500-normal-D0aIdm-b.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-ext-500-normal-DakdToA3.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-ext-500-normal-DakdToA3.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-ext-600-normal-DIrixKbi.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-ext-600-normal-DIrixKbi.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-latin-ext-600-normal-DOrvGEcy.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-latin-ext-600-normal-DOrvGEcy.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-vietnamese-400-normal-DG4YqDda.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-vietnamese-400-normal-DG4YqDda.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-vietnamese-400-normal-fK1oJ5dG.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-vietnamese-400-normal-fK1oJ5dG.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-vietnamese-500-normal-BEb3_waV.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-vietnamese-500-normal-BEb3_waV.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-vietnamese-500-normal-e4dixQRQ.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-vietnamese-500-normal-e4dixQRQ.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-vietnamese-600-normal-DgdngZtN.woff",
+      "destination": "power-atlas/assets/ibm-plex-sans-vietnamese-600-normal-DgdngZtN.woff"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/ibm-plex-sans-vietnamese-600-normal-DpPYBSTl.woff2",
+      "destination": "power-atlas/assets/ibm-plex-sans-vietnamese-600-normal-DpPYBSTl.woff2"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/index-B5wUFBO2.js",
+      "destination": "power-atlas/assets/index-B5wUFBO2.js"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/index-B9BFRGun.css",
+      "destination": "power-atlas/assets/index-B9BFRGun.css"
+    },
+    {
+      "source": "pages-content/power-atlas/assets/load-jWnrcQRH.js",
+      "destination": "power-atlas/assets/load-jWnrcQRH.js"
+    },
+    {
+      "source": "pages-content/power-atlas/favicon.svg",
+      "destination": "power-atlas/favicon.svg"
+    },
+    {
+      "source": "pages-content/power-atlas/index.html",
+      "destination": "power-atlas/index.html"
+    },
+    {
+      "source": "pages-content/power-atlas/licenses/fraunces-OFL.txt",
+      "destination": "power-atlas/licenses/fraunces-OFL.txt"
+    },
+    {
+      "source": "pages-content/power-atlas/licenses/ibm-plex-sans-OFL.txt",
+      "destination": "power-atlas/licenses/ibm-plex-sans-OFL.txt"
+    },
+    {
+      "source": "pages-content/power-atlas/licenses/rolldown-runtime-LICENSE.txt",
+      "destination": "power-atlas/licenses/rolldown-runtime-LICENSE.txt"
+    },
+    {
+      "source": "pages-content/power-atlas/licenses/vite-runtime-LICENSE.txt",
+      "destination": "power-atlas/licenses/vite-runtime-LICENSE.txt"
+    }
   ],
   "mutable_destinations": [
     ".well-known/agent.json",
@@ -250,6 +1070,58 @@
     "wayfinder.json",
     "workshop/index.html",
     "workshop/workshop.css",
-    "workshop/workshop.js"
+    "workshop/workshop.js",
+    "power-atlas/THIRD-PARTY-NOTICES.md",
+    "power-atlas/assets/fraunces-latin-500-normal-BTR4KCeb.woff",
+    "power-atlas/assets/fraunces-latin-500-normal-DnGCNyPD.woff2",
+    "power-atlas/assets/fraunces-latin-ext-500-normal-BMcFk1Xs.woff",
+    "power-atlas/assets/fraunces-latin-ext-500-normal-Z5DV8IzT.woff2",
+    "power-atlas/assets/fraunces-vietnamese-500-normal-B-KbxExq.woff",
+    "power-atlas/assets/fraunces-vietnamese-500-normal-GOH_-EGq.woff2",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-400-normal-BTotfTJu.woff",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-400-normal-DZqxrq2p.woff2",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-500-normal-ByOcLdNv.woff",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-500-normal-CocWQlwt.woff2",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-600-normal-71GNu3SW.woff2",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-600-normal-BGq0mW3O.woff",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-ext-400-normal-Dsrv2Tcn.woff",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-ext-400-normal-g30qAdWV.woff2",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-ext-500-normal-Cs5J6C77.woff2",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-ext-500-normal-DB5PtV2g.woff",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-ext-600-normal-Bz0x94Yp.woff",
+    "power-atlas/assets/ibm-plex-sans-cyrillic-ext-600-normal-DUMzJB7m.woff2",
+    "power-atlas/assets/ibm-plex-sans-greek-400-normal-D9ESIMu3.woff",
+    "power-atlas/assets/ibm-plex-sans-greek-400-normal-_efipK4i.woff2",
+    "power-atlas/assets/ibm-plex-sans-greek-500-normal-CuWXN6rf.woff",
+    "power-atlas/assets/ibm-plex-sans-greek-500-normal-JMMifIXV.woff2",
+    "power-atlas/assets/ibm-plex-sans-greek-600-normal-D-CqTdkO.woff",
+    "power-atlas/assets/ibm-plex-sans-greek-600-normal-DzTrcv_p.woff2",
+    "power-atlas/assets/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2",
+    "power-atlas/assets/ibm-plex-sans-latin-400-normal-CYLoc0-x.woff",
+    "power-atlas/assets/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2",
+    "power-atlas/assets/ibm-plex-sans-latin-500-normal-BgVn5rGT.woff",
+    "power-atlas/assets/ibm-plex-sans-latin-600-normal-Cu4Hd6ag.woff",
+    "power-atlas/assets/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2",
+    "power-atlas/assets/ibm-plex-sans-latin-ext-400-normal-C5H60-Va.woff2",
+    "power-atlas/assets/ibm-plex-sans-latin-ext-400-normal-RBey6euL.woff",
+    "power-atlas/assets/ibm-plex-sans-latin-ext-500-normal-D0aIdm-b.woff",
+    "power-atlas/assets/ibm-plex-sans-latin-ext-500-normal-DakdToA3.woff2",
+    "power-atlas/assets/ibm-plex-sans-latin-ext-600-normal-DIrixKbi.woff",
+    "power-atlas/assets/ibm-plex-sans-latin-ext-600-normal-DOrvGEcy.woff2",
+    "power-atlas/assets/ibm-plex-sans-vietnamese-400-normal-DG4YqDda.woff2",
+    "power-atlas/assets/ibm-plex-sans-vietnamese-400-normal-fK1oJ5dG.woff",
+    "power-atlas/assets/ibm-plex-sans-vietnamese-500-normal-BEb3_waV.woff",
+    "power-atlas/assets/ibm-plex-sans-vietnamese-500-normal-e4dixQRQ.woff2",
+    "power-atlas/assets/ibm-plex-sans-vietnamese-600-normal-DgdngZtN.woff",
+    "power-atlas/assets/ibm-plex-sans-vietnamese-600-normal-DpPYBSTl.woff2",
+    "power-atlas/assets/index-B5wUFBO2.js",
+    "power-atlas/assets/index-B9BFRGun.css",
+    "power-atlas/assets/load-jWnrcQRH.js",
+    "power-atlas/favicon.svg",
+    "power-atlas/index.html",
+    "power-atlas/licenses/fraunces-OFL.txt",
+    "power-atlas/licenses/ibm-plex-sans-OFL.txt",
+    "power-atlas/licenses/rolldown-runtime-LICENSE.txt",
+    "power-atlas/licenses/vite-runtime-LICENSE.txt"
   ]
 }

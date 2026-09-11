@@ -38,10 +38,14 @@ function makeCompleteSource(root: string): void {
   const parsed = parseImmutablePublicationLedger(readFileSync(ledgerSource));
   if (!parsed.ledger) throw new Error("test fixture ledger is invalid");
   const immutableSources = new Set(parsed.ledger.entries.map((entry) => entry.source));
+  for (const path of ["data/power-atlas/artifact.v1.json", "pages-functions/power-atlas-assets.json"]) {
+    mkdirSync(dirname(join(root, path)), { recursive: true });
+    copyFileSync(join(ROOT, path), join(root, path));
+  }
   for (const [index, asset] of HUB_ASSETS.entries()) {
     const source = join(root, asset.source);
     mkdirSync(dirname(source), { recursive: true });
-    if (immutableSources.has(asset.source)) copyFileSync(join(ROOT, asset.source), source);
+    if (immutableSources.has(asset.source) || asset.source.startsWith("pages-content/power-atlas/")) copyFileSync(join(ROOT, asset.source), source);
     else writeFileSync(source, Buffer.from([index, 0, 255, 10]));
   }
 }
@@ -57,14 +61,14 @@ describe("the hub staging contract", () => {
 
       const staged = stageHub(output, sourceRoot);
       // Exact count 刻意鎖住；staging 合約增減要逐項核對，唔接受任意數量。
-      expect(HUB_ASSETS).toHaveLength(204);
-      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
+      expect(HUB_ASSETS).toHaveLength(256);
+      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
       expect(ledger.ledger?.entries).toHaveLength(160);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(202);
-      expect(staged).toHaveLength(204);
+        .toHaveLength(254);
+      expect(staged).toHaveLength(256);
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -151,6 +155,7 @@ describe("the hub staging contract", () => {
         "ollama.json",
         "os",
         "polymorphs",
+        "power-atlas",
         "principalities",
         "protocols",
         "records",
@@ -292,8 +297,8 @@ describe("the hub staging contract", () => {
       ]);
       const sitemap = readFileSync(join(ROOT, "pages-content/sitemap.xml"), "utf8");
       const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-      expect(sitemapUrls).toHaveLength(186);
-      expect(new Set(sitemapUrls).size).toBe(186);
+      expect(sitemapUrls).toHaveLength(187);
+      expect(new Set(sitemapUrls).size).toBe(187);
       expect(sitemapUrls.filter((url) => url === "https://thekingdom.dev/workshop/")).toHaveLength(1);
       for (const path of ["workshop", "workshop/index.html", "workshop/workshop.css", "workshop/workshop.js"]) {
         expect(sitemapUrls).not.toContain(`https://thekingdom.dev/${path}`);
@@ -744,6 +749,33 @@ describe("the hub staging contract", () => {
     }
   });
 
+  test("Power Atlas every declared buffer, receipt and public projection fail closed before output", () => {
+    const base = temporaryDirectory("kingdom-stage-power-");
+    try {
+      const sourceRoot = join(base, "source"), output = join(base, "output");
+      mkdirSync(output); makeCompleteSource(sourceRoot);
+      const assets = HUB_ASSETS.filter(({ destination }) => destination.startsWith("power-atlas/"));
+      expect(assets).toHaveLength(52);
+      for (const { source } of assets) {
+        const path = join(sourceRoot, source), bytes = readFileSync(path);
+        rmSync(path);
+        expect(() => stageHub(output, sourceRoot)).toThrow("required hub asset is missing or unreadable");
+        expect(readdirSync(output)).toEqual([]);
+        const changed = Buffer.from(bytes); changed[changed.length - 1] ^= 1;
+        writeFileSync(path, changed);
+        expect(() => stageHub(output, sourceRoot)).toThrow("SHA-256 mismatch");
+        expect(readdirSync(output)).toEqual([]);
+        writeFileSync(path, bytes);
+      }
+      const projection = join(sourceRoot, "pages-functions/power-atlas-assets.json");
+      const bytes = readFileSync(projection); writeFileSync(projection, "[]");
+      expect(() => stageHub(output, sourceRoot)).toThrow("projection/receipt closed parity mismatch");
+      expect(readdirSync(output)).toEqual([]); writeFileSync(projection, bytes);
+      const receipt = join(sourceRoot, "data/power-atlas/artifact.v1.json"); rmSync(receipt);
+      expect(() => stageHub(output, sourceRoot)).toThrow(); expect(readdirSync(output)).toEqual([]);
+    } finally { rmSync(base, { recursive: true, force: true }); }
+  }, 30000);
+
   test("preflight failures leave existing content and destinations untouched", () => {
     const base = temporaryDirectory("kingdom-stage-preflight-");
     try {
@@ -837,10 +869,14 @@ describe("the hub staging contract", () => {
       writeFileSync(join(sourceRoot, "collision-child.txt"), "child\n");
       const contractPath = join(sourceRoot, HUB_STAGING_CONTRACT_PATH);
       const contract = JSON.parse(readFileSync(contractPath, "utf8"));
-      contract.assets.push(
+      // Stay within the unchanged 256-entry cap so this fixture exercises the
+      // hierarchy gate, not merely the earlier capacity gate.
+      const replaced = contract.assets.slice(-2).map(({ destination }: { destination: string }) => destination);
+      contract.assets.splice(-2, 2,
         { source: "collision-parent.txt", destination: "collision" },
         { source: "collision-child.txt", destination: "collision/child.txt" },
       );
+      contract.mutable_destinations = contract.mutable_destinations.filter((path: string) => !replaced.includes(path));
       contract.mutable_destinations.push("collision", "collision/child.txt");
       writeFileSync(contractPath, `${JSON.stringify(contract, null, 2)}\n`);
 

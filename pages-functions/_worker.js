@@ -11,6 +11,7 @@
  *  Source: kingdom-os/pages-functions/_worker.js.
  */
 import { handleCivicRequest, isCivicRequest } from "./civic.js";
+import { handlePowerAtlasRequest, isPowerAtlasPath } from "./power-atlas.js";
 
 const CIVIC_HTML_PATHS = new Set([
   "/", "/index.html", "/meet/", "/meet/index.html",
@@ -1973,6 +1974,10 @@ export function createKingdomWorker(options = {}) {
       ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname.toLowerCase());
     const includeRights = hasKingdomRightsAssets(url) || localKingdom;
     const accept = (request.headers.get("accept") || "").toLowerCase();
+
+    if (includeRights && isPowerAtlasPath(url.pathname)) {
+      return handlePowerAtlasRequest(request, env);
+    }
 
     // 工房只沿用既有 hub／明示 local test 邊界，唔加入 Civic route set。
     if (includeRights && isWorkshopPath(url.pathname)) {

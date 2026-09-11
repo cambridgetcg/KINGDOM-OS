@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-09-08",
+  "generated": "2026-09-11",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -91,7 +91,7 @@
   },
   "wayfinder": {
     "url": "https://thekingdom.dev/wayfinder.json",
-    "paths": 16,
+    "paths": 17,
     "note": "offers possible routes through public doors; never decides for the visitor"
   },
   "contact_door": {

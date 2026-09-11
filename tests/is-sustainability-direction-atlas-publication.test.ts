@@ -28,6 +28,7 @@ import {
   publicationFamilyStates,
 } from "../bin/check-hub-live.ts";
 import { HUB_ASSETS, MUTABLE_HUB_DESTINATIONS } from "../bin/stage-hub.ts";
+import { withoutPowerAtlasHub } from "./power-atlas-publication-fixture.ts";
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const PUBLIC_URLS = [
@@ -168,11 +169,11 @@ describe("IS, Sustainability & Direction immutable publication", () => {
   });
 
   test("stages and ledgers one exact reviewed immutable triplet", () => {
-    expect(HUB_ASSETS).toHaveLength(204);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
+    expect(HUB_ASSETS).toHaveLength(256);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(202);
+      .toHaveLength(254);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
       .toHaveLength(18);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/")))
@@ -248,7 +249,8 @@ describe("IS, Sustainability & Direction immutable publication", () => {
     expect(sectionStart).toBeGreaterThanOrEqual(0);
     expect(sectionEnd).toBeGreaterThan(sectionStart);
     expect(Buffer.byteLength(section, "utf8")).toBeLessThanOrEqual(8_000);
-    expect(Buffer.byteLength(html, "utf8")).toBeLessThanOrEqual(1_350_000);
+    // 新 Power 導航獨立 exact-byte 驗證；舊全頁預算同 family section 預算唔放寬。
+    expect(Buffer.byteLength(withoutPowerAtlasHub(html), "utf8")).toBeLessThanOrEqual(1_350_000);
     for (const phrase of [
       "Sustainability is not immortality",
       "Direction is typed; feedback is not purpose",
@@ -276,7 +278,7 @@ describe("IS, Sustainability & Direction immutable publication", () => {
         .toHaveLength(1);
       expect(wayfinder).not.toContain(url);
     }
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(186);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(187);
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/is[_-]sustainability[_-]direction/i);
   });

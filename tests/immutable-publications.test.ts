@@ -181,8 +181,8 @@ describe("immutable route-integrity ledger", () => {
       });
       expect(MUTABLE_HUB_DESTINATIONS).not.toContain(destination);
     }
-    expect(HUB_ASSETS).toHaveLength(204);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
+    expect(HUB_ASSETS).toHaveLength(256);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
     expect(MUTABLE_HUB_DESTINATIONS).toContain("civic-policy.json");
     expect(verifyImmutablePublicationSnapshot({
       root: ROOT, stagedAssets: HUB_ASSETS, mutableDestinations: MUTABLE_HUB_DESTINATIONS,

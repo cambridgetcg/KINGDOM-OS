@@ -59,10 +59,10 @@ describe("STRAND Observation Membrane public integration", () => {
   test("stages and advertises one immutable activation triplet with exact frozen pins", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(204);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
+    expect(HUB_ASSETS).toHaveLength(256);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
     expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(202);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(254);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("observations/")))
       .toEqual([PUBLIC_TRIPLET[0]]);
     for (const asset of PUBLIC_TRIPLET) {
@@ -103,8 +103,8 @@ describe("STRAND Observation Membrane public integration", () => {
 
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(186);
-    expect(new Set(sitemapUrls).size).toBe(186);
+    expect(sitemapUrls).toHaveLength(187);
+    expect(new Set(sitemapUrls).size).toBe(187);
     for (const url of PUBLIC_URLS) {
       expect(sitemapUrls.filter((candidate) => candidate === url)).toHaveLength(1);
     }

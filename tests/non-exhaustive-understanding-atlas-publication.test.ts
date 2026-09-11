@@ -147,11 +147,11 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
   });
 
   test("stages and ledgers one exact reviewed immutable triplet", () => {
-    expect(HUB_ASSETS).toHaveLength(204);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(44);
+    expect(HUB_ASSETS).toHaveLength(256);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
     expect(HUB_ASSETS.filter(({ destination }) =>
       destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(202);
+      .toHaveLength(254);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
       .toHaveLength(18);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/")))
@@ -263,7 +263,7 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
         .toHaveLength(1);
       expect(wayfinder).not.toContain(url);
     }
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(186);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(187);
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/non[_-]exhaustive[_-]understanding/i);
   });
