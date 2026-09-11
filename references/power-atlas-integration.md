@@ -2,7 +2,9 @@
 
 ## 範圍與收據
 
-本地整合，**未 commit／push／deploy，唔係 production-ready 聲明**。
+原本地整合已成 commit `cc902db58b5183d48a794cd865579f74c37b7caf`，保留作
+可比較基線；以下 UTC release 日期修訂仍未提交／發布，唔係 production-ready 聲明。
+用戶已明示本次 push／deploy，外向操作交 parent；本 writer 冇執行。
 宿主係 `/Users/macair/Desktop/kingdom-os-power-atlas-20260910`（K），明示 Git base
 `2e36e93991330f6d91e0676c7d9337d1c9fbd45a`。Parent 喺 2026-09-10T22:12:02Z
 已唯讀核對當時 Production deployment metadata：`5245e5e9-8d4b-4e55-b88e-684a7583c1bb`
@@ -108,7 +110,9 @@ metadata hashes 同完整 artifact tree；唔相等就停。將新 whole Power t
 唔用 Vite fixture 冒充宿主；ASSETS 逐 bytes 對照完整 stage，Worker outbound 全部擋住。
 Civic 冇 D1／寫入 bindings，honest unavailable 唔係服務健康驗證。
 
-已核 Git base `site/kingdom.json.generated` 係 `2026-09-08`，builder 固定沿用，冇日期 drift。
+當時已核 Git base `site/kingdom.json.generated` 係 `2026-09-08`，本地驗收沿用。
+以下命令同收據保留歷史，唔係 production 日期 bypass；今日 release 要用真 UTC
+日期並通過 `DOMAINS-SETUP.md` 嘅 post-build cleanliness gate，見下方 UTC release 段。
 本輪驗收根目錄同上；舊 `/private/tmp/power-atlas-host-final-mwnq7K` 同
 `/private/tmp/power-atlas-host-final-v4khr2yd` 保留但唔當 latest。
 
@@ -188,9 +192,57 @@ manifest／release pins不變、immutable ledger等於base、原Cargo tracked di
 tracked／untracked列表留喺 `baseline-diff-final.json`。R嘅unit／build／雙target Chrome係
 parent已跑嘅獨立收據，logs `/private/tmp/power-atlas-jitless-Qptxc3`；本writer冇寫R或重做研究。
 
+## UTC release 準備 · 2026-09-11（未發布新 bytes）
+
+本輪喺 `2026-09-11T08:48:15Z` 核真 UTC 日期，保留 `cc902db58b5183d48a794cd865579f74c37b7caf`
+同先前122-path inventory，冇 amend／reset 舊收據。自有證據根目錄：
+`/private/tmp/power-atlas-utc-release-mvcgbqki`。以下全部只係本地 release 準備，
+未證明 exact-origin release worktree cleanliness、production upload 或新 live parity。
+
+兩次真正 `bun --no-env-file bin/build-hub.ts "$(date -u +%F)"` 都係 `2026-09-11`，
+exit0；`build-1.json`／`build-2.json` 保留完整 site hashes，`before.json` 保留舊
+site／input hashes，同目錄有三份 site snapshots。兩次 code／manifest／data／其他
+build inputs 不變，輸出完整一致，build-time doors 都15/15；冇用 `FORCE_LIVE`、
+fake clock、mock fetch 或 reset 掩蓋 drift。呢個有界重現結果唔保證未來網絡觀察穩定；
+下一次 build 有任何未知 drift 都要停止，唔放寬 production post-build gate。
+
+相對上述 commit，12個 generated files 只由 `2026-09-08` 轉 `2026-09-11`：
+`site/{hub.html,dashboard.html,kingdom.json,wayfinder.json,commons.json,love-loops.json,guest.json,ollama.json,llms.txt}`
+同 `site/{meet,citizens,join}/index.html`。冇新增／移除 door 或改導航內容；Power52個
+artifact、研究 immutable bytes、Worker、builders、manifest／資料及所有 counts 不變。
+`generated-html-diff.json` 列出 exact 日期位置；其餘逐檔差異同 SHA 見 `stage-audit.json`
+及 `final-inventory.json`，唔手改 site、研究資料、產物或授權。
+
+Fixture 先驗完整 hub raw SHA-256
+`a51c65601c7beb0bcfc518f0904c8ae0aee8fb0049a82db7f6611d8f46b21f24`，再分離既有
+三個 Power projections，同 door-status 說明／footer **兩條完整 exact lines** 嘅已review
+日期，最後仍必須等於原 base SHA `852c8395b7f441b96706762a714a26fc47eb3044f93a697b85b859d792abb321`。
+唔以 regex 洗任意日期、唔忽略全頁；完整1,352,885 bytes、Power2,974 bytes同原研究
+budget 保留。新增同長度未知文案、日期段文案、單一未review日期同舊日期回填 negative
+測試，全部拒絕。Generated Wayfinder 先鎖今日 raw SHA
+`aecee3035014da639e9969b6c6ac575d8d1d8ccc416e1955500c7411afa224cc`，只喺 test 內還原
+唯一 generated field；原16 paths 同 authored source 完整對照不變，其他 assertions 冇刪。
+
+| 本輪 gate | 結果 | 證據根目錄內路徑 |
+|---|---|---|
+| focused release／research boundaries | exit0，537 pass／0 fail，17 files | `focused.log`、`focused-command.json` |
+| full Bun | exit0，1779 pass／0 fail，133 files，51,435 assertions；冇 skip | `full-bun.log`、`full-command.json` |
+| 真 staged Worker Chrome | exit0，13項，desktop／mobile，254 direct bodies exact parity，零page error／CSP／external app request | `browser.log`、`browser/browser.json` |
+| 真 Worker viewport | exit0；已目視兩裝置首頁 header，同兩裝置研究館 Wayfinder | `viewport.json`、`browser/screenshots/*-kingdom-actual-viewport.png`、`*-research-room.png` |
+| 最後新空完整stage | exit0，256 files／13,193,449 bytes；160 immutable＋96 mutable；全數等於 K source 同 browser stage | `stage-final.log`、`stage-audit.json` |
+
+全Bun沿用已核 Python3.14.6／jsonschema4.26.0，只喺 child PATH 前置
+`/private/tmp/kingdom-civic-schema.juhyFZ/bin`、`PYTHONDONTWRITEBYTECODE=1`，TMPDIR
+用自有新目錄；冇 install。完整新stage係
+`/private/tmp/power-atlas-utc-release-mvcgbqki/stage-final`，inventory SHA-256
+`4b85aba733e56c8dff9248df6798a96325cb982c0c5ed30a8ca4b111d923a408`。
+Browser 用既有 local harness、新 loopback instance 同隔離 Chrome，冇讀登入／auth/settings，
+冇用或停原服務；完成後只 dispose 自有 preview／Chrome。Civic 無 D1／write bindings，
+頁面如實 unavailable；既有 census upstream 由 harness 擋住，唔當成 production health。
+
 ## 獨立反查與 parent 核對
 
-三份獨立反查 findings 均為空：Atlas jitless／授權／source-only replay；宿主 artifact／staging／未發布修訂；宿主路由／headers／browser 證據。兩位宿主 reviewer 另跑181及233個 focused tests，全部通過；冇以此替代完整 Bun 結果。
+原整合三份獨立反查 findings 均為空（先於本輪 UTC 日期修訂）：Atlas jitless／授權／source-only replay；宿主 artifact／staging／未發布修訂；宿主路由／headers／browser 證據。兩位宿主 reviewer 另跑181及233個 focused tests，全部通過；冇以此替代完整 Bun 結果。
 
 Parent 已目視 desktop Atlas、mobile ICBC card 同 mobile 王國首頁 viewport；新入口、返回連結同獨立淺紙版面保留。最後核對 R／K manifest 同為 `af2e349…`，release SHA 不變。原 Cargo checkout tracked diff SHA 仍係 `f7d42c84570cc1ab32c356c2dc2454c6650b6408f0b9594b345cf886984c950e`，HEAD `a78e9e1e59a1baaf65e3425bcdefdb269792814e`，與開工觀察一致；呢個係有界 tracked-byte 觀察，唔推斷其他 writer 身份。
 
@@ -208,7 +260,8 @@ receipt／projection、Power Worker dispatch／import、Wayfinder／首頁／llm
 由builders再生，驗原204 mappings／ledger／其他域名同功能。刪之前先驗owned閉包並保留收據；
 唔用recursive cleanup覆蓋unknown，唔改immutable ledger。公開後移除唔等於撤回第三方副本。
 
-發布另批：獨立review已完成，仍須重新核對實際production並列精確差異、核Git auto-deploy、提交review過嘅
+本次用戶已明示 push／deploy；原整合獨立review已完成，日期增量另交 parent 核對。
+仍須重新核對實際production並列精確差異、核Git auto-deploy、提交review過嘅
 exact-origin SHA，再用既有clean detached release流程做完整站點upload／live byte-header驗收。
-本次只有開工時上述有界production基線收據，冇發布新artifact或驗新live routes；唔只upload Power子目錄，唔撤回或夾帶
+本 writer 只引用上述有界production基線收據，冇發布新artifact或驗新live routes；唔只upload Power子目錄，唔撤回或夾帶
 原Cargo checkout嘅工作，亦唔以本地Chrome代production parity。

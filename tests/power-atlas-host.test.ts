@@ -39,11 +39,17 @@ describe("Power Atlas host baseline and private/public separation", () => {
     for (const name of ["vite-runtime-LICENSE.txt", "rolldown-runtime-LICENSE.txt"])
       expect(receipt.files.some(({ path }) => path === `licenses/${name}`)).toBe(true);
   });
-  test("only the approved Power navigation is additive; original research HTML and 16 paths survive", () => {
+  test("only approved Power navigation and UTC release dates differ; original research HTML and 16 paths survive", () => {
     const html = read("site/hub.html").toString();
     expect(withoutPowerAtlasHub(html)).toBe(before("site/hub.html").toString());
     for (const path of ["data/wayfinder.json", "site/wayfinder.json"]) {
       const current = JSON.parse(read(path).toString()), original = JSON.parse(before(path).toString());
+      if (path === "site/wayfinder.json") {
+        expect(powerAtlasSha256(read(path))).toBe("aecee3035014da639e9969b6c6ac575d8d1d8ccc416e1955500c7411afa224cc");
+        expect(current.generated).toBe("2026-09-11");
+        expect(original.generated).toBe("2026-09-08");
+        current.generated = original.generated;
+      }
       expect(current.paths).toHaveLength(17);
       expect(current.paths.filter(({ id }: { id: string }) => id === "power-atlas")).toHaveLength(1);
       current.paths = current.paths.filter(({ id }: { id: string }) => id !== "power-atlas");
@@ -53,6 +59,22 @@ describe("Power Atlas host baseline and private/public separation", () => {
     expect(() => withoutPowerAtlasHub(html.replace("Possible records, not a funnel or simulator.", "Unreviewed change"))).toThrow();
     expect(() => withoutPowerAtlasHub(html.replace('data-wayfinder-intent="power-atlas"', 'data-wayfinder-intent="missing"'))).toThrow();
     expect(() => withoutPowerAtlasHub(`${html}<button type="button" data-wayfinder-intent="power-atlas">duplicate</button>`)).toThrow();
+  });
+  test("release-date projection rejects same-size prose changes and every unreviewed date", () => {
+    const html = read("site/hub.html").toString();
+    for (const [from, to] of [
+      ["Possible records, not a funnel or simulator.", "Possible records, not a funnel or Simulator."],
+      ["These public places responded", "These public places Responded"],
+      ["this atlas mirrors metadata", "this atlas Mirrors metadata"],
+      ["atlas was made (2026-09-11)", "atlas was made (2026-09-12)"],
+      ["each project · 2026-09-11<br>", "each project · 2026-09-12<br>"],
+    ]) {
+      const candidate = html.replace(from, to);
+      expect(candidate).not.toBe(html);
+      expect(Buffer.byteLength(candidate)).toBe(Buffer.byteLength(html));
+      expect(() => withoutPowerAtlasHub(candidate)).toThrow("完整 HTML raw SHA");
+    }
+    expect(() => withoutPowerAtlasHub(html.replaceAll("2026-09-11", "2026-09-08"))).toThrow("完整 HTML raw SHA");
   });
   test("narrow Power hashed-asset exception never weakens other versioned mutable gates", () => {
     const classified = (destination: string) => verifyImmutablePublicationSnapshot({ root,

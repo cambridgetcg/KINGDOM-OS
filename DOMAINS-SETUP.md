@@ -30,8 +30,19 @@ manifest SHA-256 係 `af2e34926e4a367992536a17688f39de298f29c1c3db07683c3fca1878
 新舊收據、逐 bytes 備份、whole-directory rename rollback、完整 closure、實際
 staged Worker Chrome logs／screenshots 同更新／移除方法見
 [Power Atlas integration](references/power-atlas-integration.md)；唔係一般 overwrite 權限。
-發布仍須另外批准、已提交 exact-origin SHA、clean detached release worktree 及完整
-站點 upload；唔用子目錄 deploy、唔把本地 Chrome 當 production parity。
+用戶其後已明示本次 push／deploy；實際外向操作由 parent 執行，仍須已提交
+exact-origin SHA、clean detached release worktree 及完整站點 upload；唔用子目錄
+deploy、唔把本地 Chrome 當 production parity。
+
+**UTC release 準備 · 2026-09-11（未發布新 bytes）**：保留本地 commit
+`cc902db58b5183d48a794cd865579f74c37b7caf` 作比較，真
+`bun --no-env-file bin/build-hub.ts "$(date -u +%F)"` 兩次都生成今日日期，完整輸出
+SHA-256 一致；冇 `FORCE_LIVE`、fake clock、reset drift 或放寬 cleanliness gate。
+12個 generated files 只有確切日期位置改動；兩次 build-time doors 都係15/15，
+唔代表之後仍健康。Power52、研究 immutable bytes、builder／Worker／資料／manifest
+冇改。舊 `2026-09-08` 命令同收據只係當時本地驗收歷史，**唔係 production 日期
+bypass**；任何新日期或真 live-door drift 都要停喺 post-build gate，另作 reviewed
+release。新全站 stage 同測試／browser 收據見 integration 文件嘅 UTC release 段。
 
 ## Workshop 本機寫作入口（2026-09-08）
 

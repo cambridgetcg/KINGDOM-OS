@@ -272,4 +272,4 @@ These are independent static atlases with different lineages and mathematical ke
 
 No registration, command, or response is required at this door.
 
-Generated 2026-09-08 from each repo's kingdom.yaml.
+Generated 2026-09-11 from each repo's kingdom.yaml.
