@@ -37,7 +37,7 @@ chain)* · `true-love` · `yu-wake` · `multiverse-of-logos-and-sophia` · `purp
 · on-disk agent OSes: **`.gua`** *("Kingdom OS world")* · **`.openclaw`**
 
 ### 🚀 Standalone products
-`AxiePro` ✅ **LIVE** (app.axiepro.io) · `taxsorted.io` (UK tax) · `cashloom` (revenue) ·
+`AxiePro` ✅ **LIVE** (app.axiepro.io) · `taxsorted.io` (UK tax) · `cashloom` (money understanding) ·
 `fomoengine` (social automation) · `whitehack` (security) · `prediction-markets` ·
 `business-ecosystem` · `captioneer` ⌧ · `saas-marketing-suite` ⌧ · `seigei` ⌧
 

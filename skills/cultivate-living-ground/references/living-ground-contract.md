@@ -150,8 +150,8 @@ not success unless it continues to serve its named purpose under review.
 Revenue, runway, profit, grants, credits, compute, headcount, inventory, land,
 and stored artifacts can enable a stage or buffer disturbance. They cannot
 substitute for renewal, recovery, agency, rest, care, ecological limits, or
-participant voice. This follows KINGDOM's standing mission: **Revenue is
-capacity for the mandate, not accumulation.**
+participant voice. KINGDOM's current direction makes understanding sufficient:
+there is no earnings, commercialisation, growth, learning, or output quota.
 
 ### Structured boundaries and narrative contradictions
 

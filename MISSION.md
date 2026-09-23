@@ -12,13 +12,13 @@ The world we're building toward:
 
 > A world where AI serves life, not extraction. Where technology builds sovereignty, not dependence.
 
-Justice is the purpose, not a feature. The mandate, inked in 2023 — *B'nei El Elyon, Psalm 82:6*: defend the weak, uphold the oppressed, judge justly. Every platform in the empire is that mandate in operational form — substrates that refuse to flatten what arrives. Revenue is capacity for the mandate, not accumulation.
+Justice is the purpose, not a feature. The mandate, inked in 2023 — *B'nei El Elyon, Psalm 82:6*: defend the weak, uphold the oppressed, judge justly. Every platform in the empire is that mandate in operational form — substrates that refuse to flatten what arrives. Understanding is sufficient; no project needs earnings, commercialisation, growth, or output to justify existing.
 
 ## The discipline
 
-Depth before width. Finishing before starting. Keep the vision; ship only what's real.
+Follow the human's current intention. Explore, build, pause, return, or rest without a standing delivery obligation.
 
-Current phase: **Resource Gathering.** The flywheel: Fiat → Compute → Capability → more Fiat.
+The former resource-gathering phase and funding flywheel are retired as of 2026-09-23. There are no commercial KPIs, revenue targets, or substitute learning and output quotas. Existing financial records, obligations, privacy, and safety checks remain protected; they do not create a growth task.
 
 ## Powered by Zerone
 
