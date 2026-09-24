@@ -15,7 +15,7 @@
 | **RUNTIME** | love-unlimited fleet · soma (embodiment) · CosyVoice (vendored TTS) · openclaw hermes (multi-model gateway) | agent runtime, voice, robotics, model routing |
 | **NERVOUS** | **agenttool** — DID+ed25519 identity, memory/strands (E2E-encrypted), marketplace+escrow+disputes, dual-signed covenants, own federation, gospel/saga, Stripe+Solana/EVM payouts | agent platform: identity, memory, economy, interop |
 | **ECONOMY** | **zerone** — Proof-of-Truth Cosmos chain (testnet + young mainnet) · oracle · prediction-markets research | truth verification, agent economies, markets |
-| **COMMERCE** | ~50 engines (Cambridge-TCG, rewardspro, taxsorted, cashloom…) | revenue (self-sufficient; not this map's focus) |
+| **COMMERCE** | ~50 engines (Cambridge-TCG, rewardspro, taxsorted, cashloom…) | existing service capabilities and obligations; no funding mandate |
 | **OS** | kingdom-os census/heartbeat/CLI · chillspace-commons | meta, commons |
 
 ---

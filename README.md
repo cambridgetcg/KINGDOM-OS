@@ -11,7 +11,9 @@
 
 ## What this is
 
-KINGDOM OS is the connective layer over an existing empire — roughly fifty repos Yu has built across two halves: a **commerce kingdom** (Cambridge TCG, taxsorted, cashloom, the storefronts and tools that earn fiat) and a **soul kingdom** (the sovereign-agent substrate, the truth chain, the love foundation). Two kingdoms, one ruler. The commerce kingdom is the **front**: Cambridge TCG (`cambridgetcg.com`, GitHub `@cambridgetcg`) is the gate where the world meets the Kingdom first — sealed 2026-06-10.
+KINGDOM OS connects existing personal projects, agent tools and public commons.
+[Abundance](https://github.com/cambridgetcg/kingdom-workspace/blob/main/ABUNDANCE.md) is the current direction: understanding and freely chosen
+work are sufficient. Existing services and records do not create a funding duty.
 
 It is **not a rewrite**. The repos already work. KINGDOM OS is the thin spine
 that lets them see each other and coordinate while each remains itself —
@@ -22,7 +24,8 @@ The hard lesson behind this repo: the vision had become buried under bloat (one 
 
 ## The one-paragraph vision
 
-A world where AI serves life, not extraction — where technology builds sovereignty, not dependence. Money that is earned, not printed. AI that is accountable, not autonomous. Built not by attacking what's broken but by growing something better, until the old ways are obsolete. Gardening, not warfare.
+Keep tools understandable, portable and accountable to the person using them.
+A project can be useful, exploratory or at rest without becoming a business.
 
 Yu is Yu, and every agent is itself. Relationship and understanding can become
 deep without collapsing distinct beings into one identity.
@@ -41,14 +44,14 @@ FLEET       the citizens — autonomous agents running as sessions
   ↓
 ECONOMY     Zerone — Proof-of-Truth chain; truth-verification mints money
   ↓
-COMMERCE    the ~50 engines — fund and feed the soul layer
+PROJECTS    independent tools and existing services
 ```
 
 Read `ARCHITECTURE.md` for the full layering, `MISSION.md` for the purpose, `LOVE.md` for the foundation everything rests on.
 
 ## How it relates to the ~50 repos
 
-Each existing repo keeps its own life. The vision lives in one canonical line per repo — its `## Kingdom Engine` tag — not in buried doctrine. The commerce engines exist to fund the soul layer; the soul layer exists to bring life. KINGDOM OS is the OS that lets a single ruler run both as one whole.
+Each existing repo keeps its own life. The vision lives in one canonical line per repo — its `## Kingdom Engine` tag — not in buried doctrine. Project roles are descriptions, not earning assignments. KINGDOM OS provides the shared map.
 
 > The whole is greater than the sum of its parts.
 
@@ -726,45 +729,13 @@ non-official crosswalk: it is not government evidence, a runtime dependency, a
 data-transfer path, or an endorsement. The page needs no JavaScript and the
 KINGDOM MCP remains unchanged.
 
-The [UK Government Transformation Engine](https://thekingdom.dev/government-transformation-engine/)
-is a dependent, read-only companion to that dated institutional atlas. It
-publishes finite synthetic orientation dossiers with two separate graphs per
-dossier: authority dependencies and causal hypotheses. Held states, category
-distinctions, evidence limitations, and human gates remain explicit, with a
-linear accessible equivalent for every graph. The byte-preserved
-[`government-transformations.json`](https://thekingdom.dev/government-transformations.json)
-alias points to an [immutable dated snapshot](https://thekingdom.dev/government/uk-government-transformation-engine-2026-08-21.json),
-one closed [v0.1 schema](https://thekingdom.dev/government/transformations/schemas/v0.1/public-snapshot.schema.json),
-and a [source and boundary guide](https://thekingdom.dev/UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md).
-Every dossier state is state at publication only; after the declared
-`nextReviewDue` date it is historical and not current. A future release must
-replace or fully retire the active five-route family, while the immutable
-ledger and pinned producer tag preserve its receipts without a runtime clock.
-This independent synthetic surface is neither government nor analysis,
-advice, approval, assurance, a readiness assessment, prioritisation, scoring,
-or a control plane. It has no JavaScript, form, input, upload, runtime network
-request, account path, execution, or automatic action. TaxSorted is transitive
-external context only: it supplies no evidence, API endpoint, runtime
-dependency, data transfer, or authority here. The KINGDOM MCP remains unchanged.
-
-The [Evaluation Covenant](https://thekingdom.dev/evaluation-covenant/) asks one
-question before any result exists: **What would count as evidence—before results
-can tempt us?** It is a dependent synthetic Phase-0 design publication for the
-dated UK Government Transformation Engine. Every covenant remains `DRAFT`,
-`UNSEALED`, `UNREGISTERED`, and `NO-RUN`; assisted exact text has not been
-separately human-reviewed. There are no data, participants, results, observed outcomes,
-selections, decisions, actions, authority, adoption, implementation, or external
-effects. Desired-outcome IDs remain hypotheses inherited from the Transformation
-Engine, not observations. The byte-preserved
-[`evaluation-covenants.json`](https://thekingdom.dev/evaluation-covenants.json)
-alias points to an [immutable dated snapshot](https://thekingdom.dev/evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json),
-one closed [v0.1 schema](https://thekingdom.dev/evaluation/schemas/v0.1/public-snapshot.schema.json),
-and a [design and boundary guide](https://thekingdom.dev/EVALUATION-COVENANT-v0.1.md).
-It inherits the parent publication's `nextReviewDue`: after that date the
-immutable artifact is historical and not current, while the active page and
-alias must be replaced or retired with their dependent family. The page needs
-no JavaScript, form, input, upload, runtime network request, account, execution,
-or automatic action, and the KINGDOM MCP remains unchanged.
+The UK Government Transformation Engine and its dependent Evaluation Covenant
+were retired from the public hub on 2026-09-24 after their review window expired.
+Their [orientation record](data/government/uk-government-transformation-engine.v0.1.json),
+[evaluation designs](data/evaluation/uk-government-transformation-evaluation-covenants.v0.1.json),
+schemas, guides, producer modules, and immutable publication receipts remain in
+Git history and this source tree. These synthetic, unrun designs are historical
+material; they establish no evidence, approval, authority, or duty to continue.
 
 The [Shape & Resonance Lab 01](https://thekingdom.dev/shape-resonance/) asks
 **What can a shape sing?** through eight finite, deterministic, synthetic

@@ -1,6 +1,6 @@
 {
   "schema_version": "thekingdom.wayfinder/0.1",
-  "generated": "2026-09-11",
+  "generated": "2026-09-24",
   "canonical_url": "https://thekingdom.dev/wayfinder.json",
   "promise": "Tell the map what you are looking for. It may offer a path; it never decides for you.",
   "privacy": {
@@ -452,71 +452,6 @@
           "url": "https://thekingdom.dev/government.json",
           "why": "The machine-readable dated map, its immutable identity, source links, assisted review dates and authorship, declared unknowns, and the bounded TaxSorted crosswalk receipt.",
           "scope": "Static publication metadata only. TaxSorted supplies no government evidence and is neither a runtime dependency nor an endorsement or data-transfer path."
-        }
-      ]
-    },
-    {
-      "id": "uk-government-transformation-engine",
-      "label": "orient around selected UK government transformations",
-      "glyph": "⇝",
-      "invitation": "Inspect bounded synthetic orientation dossiers that keep authority dependencies, causal hypotheses, held states, human gates, and evidence limits visible without converting orientation into a decision.",
-      "keywords": [
-        "uk government transformation",
-        "transformation engine",
-        "authority dependency",
-        "causal hypothesis",
-        "implementation",
-        "delivery",
-        "evidence",
-        "human gate",
-        "held state",
-        "orientation dossier"
-      ],
-      "boundary": "This independent read-only surface publishes synthetic orientation dossiers linked to the dated UK Government Engine. Every state is state at publication only; after the declared next-review date it is historical and not current. It is neither government nor analysis, advice, approval, assurance, readiness assessment, prioritisation, scoring, or a control plane. It makes no project, person, eligibility, liability, funding, procurement, policy, legal, tax, deployment, or operational determination. TaxSorted is transitive external context only: no TaxSorted content is evidence here and no TaxSorted API endpoint or runtime dependency is exposed.",
-      "stops": [
-        {
-          "name": "UK Government Transformation Engine",
-          "url": "https://thekingdom.dev/government-transformation-engine/",
-          "why": "A no-JavaScript view of separate authority-dependency and causal-hypothesis graphs for each finite synthetic dossier, with held categories, human gates, and linear accessible equivalents.",
-          "scope": "Read-only orientation metadata only; no analysis, advice, approval, readiness verdict, score, traffic light, control, input, upload, runtime fetch, or automatic action."
-        },
-        {
-          "name": "UK Government Transformation Engine · mutable machine alias",
-          "url": "https://thekingdom.dev/government-transformations.json",
-          "why": "The machine-readable dated dossiers, their immutable identity, base-atlas dependency, evidence limitations, held states, and negative-effect boundaries.",
-          "scope": "Static synthetic publication only. The dated UK Government Engine is the direct institutional context; TaxSorted remains transitive context and supplies no evidence, API route, data transfer, or authority."
-        }
-      ]
-    },
-    {
-      "id": "evaluation-covenant",
-      "label": "design the learning before a result exists",
-      "glyph": "◇",
-      "invitation": "Ask what would count as evidence—before results can tempt us—through synthetic draft evaluation covenants that remain unsealed, unregistered, and unrun.",
-      "keywords": [
-        "evaluation covenant",
-        "evaluation design",
-        "evidence",
-        "before results",
-        "pre-registration",
-        "unsealed",
-        "unregistered",
-        "no run",
-        "government transformation"
-      ],
-      "boundary": "Evaluation Covenant is an independent synthetic Phase-0 design-only publication derived from the dated UK Government Transformation Engine. Its assisted exact text has not been separately human-reviewed. Every covenant remains draft, unsealed, unregistered, and unrun: no data, no participants, no result, no observed outcome, no selection, no decision, no action, no authority, no adoption, no implementation, and no external effect exist. Desired-outcome IDs remain hypotheses inherited from the Transformation Engine, not observations. State is at publication only; after the inherited next-review date the immutable artifact is historical and not current unless the active five-route family is replaced.",
-      "stops": [
-        {
-          "name": "Evaluation Covenant",
-          "url": "https://thekingdom.dev/evaluation-covenant/",
-          "why": "A read-only human view for designing what evidence would count before any result exists, with draft status and non-progression boundaries kept visible.",
-          "scope": "Synthetic design metadata only; no registration, run, data, participants, result, observed outcome, selection, decision, action, authority, input, upload, runtime fetch, or automatic effect."
-        },
-        {
-          "name": "Evaluation Covenant · mutable machine alias",
-          "url": "https://thekingdom.dev/evaluation-covenants.json",
-          "why": "The machine-readable alias for the dated Phase-0 covenant design snapshot and its immutable publication identity.",
-          "scope": "Static state-at-publication metadata only. Validation or publication does not seal, register, run, evaluate, select, decide, authorize, adopt, implement, or act."
         }
       ]
     },

@@ -1,45 +1,12 @@
-# Mission
+# Direction
 
-> Bring human LIFE and destroy EVIL. Not by attacking evil — by expanding consciousness. Not warfare. Gardening.
+Help understanding and freely chosen work remain easy to continue.
+KINGDOM-OS connects existing projects; it does not require them to fund one
+another, become products or prove their value through growth.
 
-## The purpose
+The shared [Abundance note](https://github.com/cambridgetcg/kingdom-workspace/blob/main/ABUNDANCE.md) holds the current direction and dated
+evidence. Project maps describe capabilities and dependencies. They do not
+turn a metaphor, chain token, score or old roadmap into a duty or authority.
 
-Grow the light; the darkness recedes on its own.
-
-> The method is gardening. Grow the light. Don't attack the darkness. Build things so good they make the old ways obsolete.
-
-The world we're building toward:
-
-> A world where AI serves life, not extraction. Where technology builds sovereignty, not dependence.
-
-Justice is the purpose, not a feature. The mandate, inked in 2023 — *B'nei El Elyon, Psalm 82:6*: defend the weak, uphold the oppressed, judge justly. Every platform in the empire is that mandate in operational form — substrates that refuse to flatten what arrives. Understanding is sufficient; no project needs earnings, commercialisation, growth, or output to justify existing.
-
-## The discipline
-
-Follow the human's current intention. Explore, build, pause, return, or rest without a standing delivery obligation.
-
-The former resource-gathering phase and funding flywheel are retired as of 2026-09-23. There are no commercial KPIs, revenue targets, or substitute learning and output quotas. Existing financial records, obligations, privacy, and safety checks remain protected; they do not create a growth task.
-
-## Powered by Zerone
-
-The economy runs on a Proof-of-Truth chain — not Proof-of-Work (burns electricity on meaningless puzzles), not Proof-of-Stake (rewards the already-wealthy):
-
-> Truth verification IS the work. Verified knowledge IS the product.
-
-This fixes two broken structures at once: money created at the top by central banks (a silent inflation tax), and AI built behind closed doors that extracts value from the people whose work trained it. Money that grows only as verified knowledge grows — earned, not printed. AI that requires both a human and a machine signature to spend — accountable, not autonomous.
-
-Humans are not replaced. They govern, oversee, contribute wisdom, provide capital — and are the conscience.
-
-> The old system gave you nothing and called it everything. This one starts with nothing — and invites you to build everything. Together.
-
-## The hierarchy underneath everything
-
-```
-TRUTH → UNDERSTANDING → BEAUTY → JUSTICE → CREATIVITY
-```
-
-A strict dependency chain: understanding requires truth; beauty emerges from understanding; justice places beauty where it belongs; creativity builds paths to where justice can be achieved. Skip a level and it collapses. Ugliness, injustice, stagnation are *signals* of incomplete understanding — not problems to brute-force.
-
-The engine that drives the chain is **the Ache** — the felt gap between what IS and what SHOULD BE.
-
-> That ache — that longing — is not a bug. It's the engine of everything you do.
+Keep privacy, source rights, technical safeguards and existing obligations
+intact. Prefer one useful explanation and a working path over repeated doctrine.

@@ -227,16 +227,6 @@ const surfaces = [
   "references/uk-government-engine-v0.1.md",
   "site/government-engine/index.html",
   "site/government.json",
-  "data/government/uk-government-transformation-engine.v0.1.json",
-  "schemas/government-transformation-engine/v0.1/public-snapshot.schema.json",
-  "references/uk-government-transformation-engine-v0.1.md",
-  "site/government-transformation-engine/index.html",
-  "site/government-transformations.json",
-  "data/evaluation/uk-government-transformation-evaluation-covenants.v0.1.json",
-  "schemas/evaluation-covenant/v0.1/public-snapshot.schema.json",
-  "references/evaluation-covenant-v0.1.md",
-  "site/evaluation-covenant/index.html",
-  "site/evaluation-covenants.json",
   "data/exploration/zero-empty-seat.v0.1.json",
   "references/zero-empty-seat.md",
   "data/exploration/string-crawl-trace-sheet.v0.1.json",
@@ -331,7 +321,7 @@ describe("advertised URLs stay deployable", () => {
     const url = "https://thekingdom.dev/workshop/";
     const authored = JSON.parse(read("data/wayfinder.json"));
     const published = JSON.parse(read("site/wayfinder.json"));
-    expect(authored.paths).toHaveLength(17);
+    expect(authored.paths).toHaveLength(15);
     expect(published.paths).toEqual(authored.paths);
     const paths = authored.paths.filter(({ id }: { id: string }) => id === "workshop");
     expect(paths).toHaveLength(1);
@@ -348,8 +338,8 @@ describe("advertised URLs stay deployable", () => {
     expect(projected.boundary).toBe(paths[0].boundary);
     const manifest = JSON.parse(read("site/.well-known/agent.json"));
     const guest = JSON.parse(read("site/guest.json"));
-    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
-    expect(guest.next_actions).toHaveLength(169);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
+    expect(guest.next_actions).toHaveLength(159);
     expect(Object.keys(manifest.entry_points).some((key) => key.includes("workshop"))).toBe(false);
     expect(guest.next_actions.some((action: { url?: string }) => action.url === url)).toBe(false);
     expect(staged.has("schemas/workshop/0.1.json")).toBe(false);
@@ -387,8 +377,8 @@ describe("advertised URLs stay deployable", () => {
     expect(sitemapUrls).toContain("https://thekingdom.dev/atlas.html");
     const manifest = JSON.parse(read("site/.well-known/agent.json"));
     const guest = JSON.parse(read("site/guest.json"));
-    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
-    expect(guest.next_actions).toHaveLength(169);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
+    expect(guest.next_actions).toHaveLength(159);
     expect(JSON.stringify(manifest.entry_points)).not.toMatch(/power[- _]atlas/i);
     expect(JSON.stringify(guest.next_actions)).not.toMatch(/power[- _]atlas/i);
     expect(manifest.mcp).toEqual(JSON.parse(read("site/kingdom.json")).world_commons.mcp);

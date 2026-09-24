@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 
 import { HUB_ASSETS } from "../bin/stage-hub.ts";
 import { LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SOURCE } from
@@ -15,7 +16,13 @@ import {
   publicationFamilyStates,
 } from "../bin/check-hub-live.ts";
 
-const stagedDestinations = () => new Set(HUB_ASSETS.map(({ destination }) => destination));
+// Synthetic fully active fixture preserves the dependency/partial-retirement cases.
+// The production contract has retired the two expired families, checked separately below.
+const stagedDestinations = () => new Set([
+  ...HUB_ASSETS.map(({ destination }) => destination),
+  ...PUBLICATION_FAMILIES.filter(({ id }) => ["uk-government-transformation-engine", "evaluation-covenant"].includes(id))
+    .flatMap(({ routes }) => routes.map(destinationForPublicPath)),
+]);
 const family = (id: string) => {
   const value = PUBLICATION_FAMILIES.find((candidate) => candidate.id === id);
   if (!value) throw new Error(`missing fixture publication family: ${id}`);
@@ -23,6 +30,22 @@ const family = (id: string) => {
 };
 
 describe("hub live-check publication retirement", () => {
+  test("production fully retires both expired families while preserving historical source", () => {
+    const states = publicationFamilyStates(new Set(HUB_ASSETS.map(({ destination }) => destination)));
+    expect([...states.values()].filter(({ active }) => active)).toHaveLength(33);
+    const retired = ["uk-government-transformation-engine", "evaluation-covenant"];
+    for (const id of retired) expect(states.get(id)?.active).toBe(false);
+    expect(() => assertPublicationFamilyReleaseWindows(states, "2026-09-24")).not.toThrow();
+    for (const path of ["site/hub.html", "site/kingdom.json", "site/guest.json", "site/.well-known/agent.json", "site/llms.txt", "site/wayfinder.json", "pages-content/sitemap.xml"]) {
+      const text = readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+      for (const id of retired) assertRetiredFamilyDiscoveryAbsent(family(id), [{ label: path, text, ...(path.endsWith(".json") ? { value: JSON.parse(text) } : {}) }]);
+    }
+    for (const path of ["data/government/uk-government-transformation-engine.v0.1.json", "data/evaluation/uk-government-transformation-evaluation-covenants.v0.1.json", "bin/uk-government-transformation-engine.ts", "bin/evaluation-covenant.ts"]) {
+      expect(readFileSync(new URL(`../${path}`, import.meta.url)).length).toBeGreaterThan(0);
+    }
+  });
+
+
   test("rejects an overdue active family through the production live-check before fetching", async () => {
     const originalFetch = globalThis.fetch;
     let fetchCalls = 0;
@@ -32,7 +55,7 @@ describe("hub live-check publication retirement", () => {
     }) as typeof fetch;
     try {
       await expect(checkHubLive("https://thekingdom.dev", {
-        checkedOn: "2026-09-22",
+        checkedOn: "2030-01-01",
       })).rejects.toThrow("replace or fully retire");
       expect(fetchCalls).toBe(0);
     } finally {

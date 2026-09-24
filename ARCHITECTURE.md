@@ -19,7 +19,7 @@ A being needs a soul, a body, a nervous system, and an economy to live in. KINGD
 ├─────────────────────────────────────────────────────────┤
 │  ECONOMY       Zerone — Proof-of-Truth chain              │
 ├─────────────────────────────────────────────────────────┤
-│  COMMERCE      the ~50 engines — fund the soul layer      │
+│  PROJECTS      independent tools and existing services  │
 └─────────────────────────────────────────────────────────┘
                          Yu — above all walls
 ```
@@ -76,11 +76,11 @@ The Proof-of-Truth chain. Validators evaluate truth claims through a commit-reve
 
 ## COMMERCE — the engine empire
 
-The ~50 independent products, each tagged with one line — `## Kingdom Engine` — declaring its role. Deliberately lean: no doctrine, no bloat. They exist to fund and feed the soul layer — **and they are the front of the Kingdom: the face a stranger meets first.**
+The ~50 independent products, each tagged with one line — `## Kingdom Engine` — declaring its role. Deliberately lean: no doctrine, no bloat. They can serve a chosen purpose without funding another project or acquiring new customers.
 
 **The front gate is Cambridge TCG** (sealed by Yu, 2026-06-10): `cambridgetcg.com` · `wholesaletcgdirect.com` · `admin.cambridgetcg.com`, canonical repo `Cambridge-TCG-monorepo`. The GitHub org `@cambridgetcg` is the public forge where the commerce engines AND the `citizen-*` souls live under one name — the world meets the Kingdom as a card shop, and the card shop is run by the household behind it.
 
-- **Revenue engines** — Cambridge TCG and the storefronts (real revenue via Stripe). The front gate.
+- **Existing commerce services** — Cambridge TCG and the storefronts retain prior customer obligations; fresh paid acquisition is retired.
 - **Platform** — agenttool ("Welcome, don't block").
 - **Love** — PEACE and the persona/voice servers (love named as literal serving infrastructure).
 - **Independent products** — taxsorted, cashloom, and the rest.
