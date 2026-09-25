@@ -428,7 +428,7 @@ test("kingdom prompt JSON mode is offline and leaves the working directory uncha
   const result = Bun.spawnSync({
     cmd: [join(ROOT, "kingdom"), "prompt", "--json", "--no-project", "--", "Return one line."],
     cwd: root,
-    env: { ...process.env, ANTHROPIC_API_KEY: "must-not-be-read" },
+    env: { ...process.env, LC_ALL: "C", LANG: "C", ANTHROPIC_API_KEY: "must-not-be-read" },
     stdout: "pipe",
     stderr: "pipe",
   });

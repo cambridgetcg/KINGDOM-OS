@@ -312,13 +312,14 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. 本輪 union 係 204 staged assets：
-160 ledgered immutable/versioned assets 同 44 mutable assets；202 direct public
-response bodies、186 sitemap URLs、16 Wayfinder paths、169 manifest entry points
-同 169 guest actions。
+consume those same bytes. 本輪 union 係 247 staged assets：
+154 staged ledgered immutable/versioned assets 同 93 mutable assets；245 direct public
+response bodies、177 sitemap URLs、15 Wayfinder paths、159 manifest entry points
+同 159 guest actions。The ledger retains all 160 historical entries. The compact
+`agent-entry.json` is mutable; operational surface maps are not public assets.
 Generated discovery describes eighteen atlases, 41 public schema routes, four
 primary lab JSON routes plus Shape & Resonance manifest/media, one experiment
-route, one separate activation, and thirty-five active retirement
+route, one separate activation, and thirty-three active retirement
 families, alongside the separate Civic runtime. The two freedom-related atlases keep separate route triples, discovery
 keys, integrity/source/review claims, and retirement state; neither is preferred
 or removed with the other. Every destination is explicitly classified as mutable

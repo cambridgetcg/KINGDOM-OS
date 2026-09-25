@@ -2,10 +2,12 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { handlePowerAtlasRequest, isPowerAtlasPath } from "../pages-functions/power-atlas.js";
 import { POWER_ATLAS_ROUTES } from "../pages-functions/power-atlas.js";
+import { HUB_ASSETS } from "../bin/stage-hub.ts";
 import {
   assertWorkshopResponse,
   checkHubLive,
   DIRECT_HUB_ASSETS,
+  publicationFamilyStates,
 } from "../bin/check-hub-live.ts";
 
 const contracts = [
@@ -15,6 +17,11 @@ const contracts = [
 ] as const;
 type Contract = typeof contracts[number];
 type Method = "GET" | "HEAD";
+const retiredPaths = new Set(
+  [...publicationFamilyStates(new Set(HUB_ASSETS.map(({ destination }) => destination))).values()]
+    .filter(({ active }) => !active)
+    .flatMap(({ family }) => family.routes),
+);
 
 function headersFor(contract: Contract): Headers {
   const html = contract.path === "/workshop/";
@@ -37,8 +44,8 @@ async function assertResponse(contract: Contract, method: Method, response: Resp
   });
 }
 
-// 喺既有 missing-route 接口停低：行真實 202-body loop 同全部 Workshop 接線，
-// 唔為無關 publication gates 虛構 mocks。
+// Stop at the existing missing-route boundary, after the real direct-asset loop,
+// Workshop headers, Power Atlas edges, and canonical retired-route responses.
 async function runAssetGate(options: {
   path?: string;
   method?: Method;
@@ -72,6 +79,12 @@ async function runAssetGate(options: {
     }
     const path = target.pathname;
     const method = init?.method ?? "GET";
+    if (retiredPaths.has(path)) {
+      expect(["GET", "HEAD"]).toContain(method);
+      calls.push({ path, method });
+      return new Response(method === "HEAD" ? null :
+        readFileSync(new URL("../pages-content/404.html", import.meta.url)), { status: 404 });
+    }
     const asset = assets.get(path);
     if (!asset) throw new Error(`unexpected fixture route ${path}`);
     const contract = contracts.find((candidate) => candidate.path === path);
@@ -85,7 +98,7 @@ async function runAssetGate(options: {
     return new Response(body, { headers });
   }) as typeof fetch;
   try {
-    await expect(checkHubLive("https://thekingdom.dev", { checkedOn: "2026-09-08" }))
+    await expect(checkHubLive("https://thekingdom.dev", { checkedOn: "2026-09-25" }))
       .rejects.toThrow(options.expectedError ?? "Workshop fixture stopped after asset gate");
   } finally {
     globalThis.fetch = originalFetch;
@@ -161,15 +174,18 @@ describe("Workshop strict live contract", () => {
     });
   }
 
-  test("main reuses every GET and adds three Workshop plus 52 Power Atlas HEAD requests", async () => {
+  test("main reuses every active GET and checks Workshop, Power Atlas, and retired route methods", async () => {
     const calls = await runAssetGate();
-    expect(calls.filter(({ method }) => method === "GET")).toHaveLength(DIRECT_HUB_ASSETS.length);
-    expect(new Set(calls.filter(({ method }) => method === "GET").map(({ path }) => path)).size)
+    const activeCalls = calls.filter(({ path }) => !retiredPaths.has(path));
+    expect(activeCalls.filter(({ method }) => method === "GET")).toHaveLength(DIRECT_HUB_ASSETS.length);
+    expect(new Set(activeCalls.filter(({ method }) => method === "GET").map(({ path }) => path)).size)
       .toBe(DIRECT_HUB_ASSETS.length);
-    expect(calls.filter(({ method }) => method === "HEAD").map(({ path }) => path))
+    expect(activeCalls.filter(({ method }) => method === "HEAD").map(({ path }) => path))
       .toEqual([...contracts.map(({ path }) => path), ...POWER_ATLAS_ROUTES.map(({ path }) => path)]);
-    expect(calls).toHaveLength(DIRECT_HUB_ASSETS.length + 3 + 52);
-    for (const { path } of contracts) {
+    expect(activeCalls).toHaveLength(DIRECT_HUB_ASSETS.length + 3 + 52);
+    expect(retiredPaths.size).toBe(10);
+    expect(calls).toHaveLength(activeCalls.length + 2 * retiredPaths.size);
+    for (const path of [...contracts.map(({ path }) => path), ...retiredPaths]) {
       expect(calls.filter((call) => call.path === path)).toEqual([
         { path, method: "GET" }, { path, method: "HEAD" },
       ]);

@@ -5,23 +5,36 @@ import { join } from "node:path";
 import { parseHubStagingContract, verifyImmutablePublicationSnapshot } from "../bin/immutable-publications.ts";
 import { assertPowerAtlasClosedParity, parsePowerAtlasManifest, powerAtlasSha256, validatePowerAtlasBuffers } from "../bin/power-atlas-artifact.ts";
 import { withoutPowerAtlasHub } from "./power-atlas-publication-fixture.ts";
+import { PUBLICATION_FAMILIES, destinationForPublicPath } from "../bin/check-hub-live.ts";
 const root = join(import.meta.dir, "..");
 const base = "2e36e93991330f6d91e0676c7d9337d1c9fbd45a";
 const read = (path: string) => readFileSync(join(root, path));
 const before = (path: string) => execFileSync("git", ["-C", root, "show", `${base}:${path}`], { maxBuffer: 8 * 1024 * 1024 });
+const powerRelease = "704899af49aa3351404bd6934b3b9f741cc2d3df";
+const released = (path: string) => execFileSync("git", ["-C", root, "show", `${powerRelease}:${path}`], { maxBuffer: 8 * 1024 * 1024 });
 
 describe("Power Atlas host baseline and private/public separation", () => {
-  test("all original 204 mappings and 44 mutable entries survive in order; ledger bytes remain exact", () => {
+  test("retained baseline mappings and Power assets survive declared retirement; ledger bytes remain exact", () => {
     const path = "publications/hub-staging.v1.json";
     const old = parseHubStagingContract(before(path)), current = parseHubStagingContract(read(path));
     expect(old.stagedAssets).toHaveLength(204); expect(old.mutableDestinations).toHaveLength(44);
-    expect(current.stagedAssets).toHaveLength(256); expect(current.mutableDestinations).toHaveLength(96);
-    expect(current.stagedAssets.slice(0, 204)).toEqual(old.stagedAssets);
-    expect(current.mutableDestinations.slice(0, 44)).toEqual(old.mutableDestinations);
-    expect(current.stagedAssets.slice(204).every(({ destination }) => destination.startsWith("power-atlas/"))).toBe(true);
+    const retired = new Set(PUBLICATION_FAMILIES.filter(({ id }) =>
+      ["uk-government-transformation-engine", "evaluation-covenant"].includes(id))
+      .flatMap(({ routes }) => routes.map(destinationForPublicPath)));
+    expect(retired.size).toBe(10);
+    const originalRetained = old.stagedAssets.filter(({ destination }) => !retired.has(destination));
+    expect(originalRetained).toHaveLength(194);
+    expect(current.stagedAssets.filter(({ destination }) =>
+      !destination.startsWith("power-atlas/") && destination !== "agent-entry.json")).toEqual(originalRetained);
+    expect(current.mutableDestinations.filter((destination) =>
+      !destination.startsWith("power-atlas/") && destination !== "agent-entry.json"))
+      .toEqual(old.mutableDestinations.filter((destination) => !retired.has(destination)));
+    const shipped = parseHubStagingContract(released(path));
+    expect(current.stagedAssets.filter(({ destination }) => destination.startsWith("power-atlas/")))
+      .toEqual(shipped.stagedAssets.filter(({ destination }) => destination.startsWith("power-atlas/")));
     expect(read("publications/immutable-publications.v1.json")).toEqual(before("publications/immutable-publications.v1.json"));
     const tooMany = JSON.parse(read(path).toString());
-    tooMany.assets.push({ source: "extra.txt", destination: "extra.txt" });
+    while (tooMany.assets.length <= 256) tooMany.assets.push({ source: "extra.txt", destination: "extra.txt" });
     expect(() => parseHubStagingContract(Buffer.from(JSON.stringify(tooMany)))).toThrow("closed");
   });
   test("final receipt hashes all 52 public files and the Worker bundles no producer metadata", () => {
@@ -39,13 +52,13 @@ describe("Power Atlas host baseline and private/public separation", () => {
     for (const name of ["vite-runtime-LICENSE.txt", "rolldown-runtime-LICENSE.txt"])
       expect(receipt.files.some(({ path }) => path === `licenses/${name}`)).toBe(true);
   });
-  test("only approved Power navigation and UTC release dates differ; original research HTML and 16 paths survive", () => {
-    const html = read("site/hub.html").toString();
+  test("historical Power release preserves its exact original research HTML and 16 paths", () => {
+    const html = released("site/hub.html").toString();
     expect(withoutPowerAtlasHub(html)).toBe(before("site/hub.html").toString());
     for (const path of ["data/wayfinder.json", "site/wayfinder.json"]) {
-      const current = JSON.parse(read(path).toString()), original = JSON.parse(before(path).toString());
+      const current = JSON.parse(released(path).toString()), original = JSON.parse(before(path).toString());
       if (path === "site/wayfinder.json") {
-        expect(powerAtlasSha256(read(path))).toBe("aecee3035014da639e9969b6c6ac575d8d1d8ccc416e1955500c7411afa224cc");
+        expect(powerAtlasSha256(released(path))).toBe("aecee3035014da639e9969b6c6ac575d8d1d8ccc416e1955500c7411afa224cc");
         expect(current.generated).toBe("2026-09-11");
         expect(original.generated).toBe("2026-09-08");
         current.generated = original.generated;
@@ -60,8 +73,8 @@ describe("Power Atlas host baseline and private/public separation", () => {
     expect(() => withoutPowerAtlasHub(html.replace('data-wayfinder-intent="power-atlas"', 'data-wayfinder-intent="missing"'))).toThrow();
     expect(() => withoutPowerAtlasHub(`${html}<button type="button" data-wayfinder-intent="power-atlas">duplicate</button>`)).toThrow();
   });
-  test("release-date projection rejects same-size prose changes and every unreviewed date", () => {
-    const html = read("site/hub.html").toString();
+  test("historical release-date projection rejects same-size prose changes and every unreviewed date", () => {
+    const html = released("site/hub.html").toString();
     for (const [from, to] of [
       ["Possible records, not a funnel or simulator.", "Possible records, not a funnel or Simulator."],
       ["These public places responded", "These public places Responded"],

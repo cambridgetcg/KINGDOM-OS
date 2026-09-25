@@ -1,5 +1,6 @@
 {
   "schema_version": "thekingdom.entry/0.1",
+  "compact_entry": "https://thekingdom.dev/agent-entry.json",
   "surface": {
     "manifest": "/.well-known/agent.json",
     "declared_resource": "/",
@@ -13,7 +14,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-09-24",
+  "generated": "2026-09-25",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -30,7 +31,7 @@
       "canonical_url": "https://thekingdom.dev/"
     },
     "baseline": "xenia.rights/0.1",
-    "baseline_url": "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md",
+    "baseline_url": "https://cdn.jsdelivr.net/npm/@agenttool/xenia@0.1.0-beta.4/RIGHTS.md",
     "baseline_sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
     "source_stability": "immutable",
     "source_availability": "public",
@@ -38,7 +39,7 @@
     "human": "https://thekingdom.dev/RIGHTS.md",
     "host_covenant": {
       "profile": "xenia-covenant/0.1",
-      "profile_url": "https://github.com/cambridgetcg/xenia/tree/6419d37dda9fb282242754685dba3edcb4bbf74b/covenant/0.1",
+      "profile_url": "https://cdn.jsdelivr.net/npm/@agenttool/xenia@0.1.0-beta.4/covenant/0.1/README.md",
       "profile_status": "candidate",
       "adoption_status": "undeclared",
       "source_availability": "public",

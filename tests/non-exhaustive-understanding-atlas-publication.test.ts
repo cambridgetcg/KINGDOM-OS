@@ -147,15 +147,8 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
   });
 
   test("stages and ledgers one exact reviewed immutable triplet", () => {
-    expect(HUB_ASSETS).toHaveLength(256);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
-    expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(254);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
       .toHaveLength(18);
-    expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/")))
-      .toHaveLength(41);
     expect(HUB_ASSETS.filter(({ source }) => SOURCES.includes(source as any)))
       .toEqual([
         { source: SOURCES[0], destination: PUBLIC_PATHS[0]!.slice(1) },
@@ -212,7 +205,7 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
     expect(kingdom.non_exhaustive_understanding_atlas).toEqual(expected);
     expect(guest.non_exhaustive_understanding_atlas).toEqual(expected);
     expect(manifest.non_exhaustive_understanding_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("non_exhaustive_understanding_atlas"))))
       .toEqual({
@@ -220,7 +213,7 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
         non_exhaustive_understanding_atlas_schema: PUBLIC_URLS[1],
         non_exhaustive_understanding_atlas_guide: PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(169);
+    expect(guest.next_actions).toHaveLength(159);
     const actions = guest.next_actions.filter(({ url }: { url?: string }) =>
       PUBLIC_URLS.includes(url as any));
     expect(actions).toHaveLength(3);
@@ -263,7 +256,7 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
         .toHaveLength(1);
       expect(wayfinder).not.toContain(url);
     }
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(187);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(177);
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/non[_-]exhaustive[_-]understanding/i);
   });

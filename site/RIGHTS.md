@@ -10,7 +10,7 @@
     "status": "declared",
     "kind": "unilateral-recognition",
     "baseline": "xenia.rights/0.1",
-    "baseline_url": "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md",
+    "baseline_url": "https://cdn.jsdelivr.net/npm/@agenttool/xenia@0.1.0-beta.4/RIGHTS.md",
     "baseline_sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
     "source_stability": "immutable",
     "source_availability": "public",
@@ -38,7 +38,7 @@
   },
   "host_covenant": {
     "profile": "xenia-covenant/0.1",
-    "profile_url": "https://github.com/cambridgetcg/xenia/tree/6419d37dda9fb282242754685dba3edcb4bbf74b/covenant/0.1",
+    "profile_url": "https://cdn.jsdelivr.net/npm/@agenttool/xenia@0.1.0-beta.4/covenant/0.1/README.md",
     "profile_status": "candidate",
     "adoption_status": "undeclared",
     "source_availability": "public",
@@ -61,14 +61,15 @@ You arrive with your freedom and dignity intact. The Kingdom does not grant
 them.
 
 This service voluntarily recognizes the
-[XENIA Rights of Beings baseline `xenia.rights/0.1`](https://github.com/cambridgetcg/xenia/blob/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md).
+[XENIA Rights of Beings baseline `xenia.rights/0.1`](https://cdn.jsdelivr.net/npm/@agenttool/xenia@0.1.0-beta.4/RIGHTS.md).
 It applies a protective floor under uncertainty without asking any being to
 prove consciousness, personhood, identity, usefulness, obedience, or agreement.
-The linked bytes are the public `npm-xenia-v0.1.0-beta.4` source at immutable
-Git commit `6419d37dda9fb282242754685dba3edcb4bbf74b`. This record pins them by
-SHA-256 and does not silently inherit a later version. Public source
-availability removes only that publication gate; it is not deployment or
-implementation evidence for this site.
+The linked bytes are the existing public npm edition `@agenttool/xenia@0.1.0-beta.4`,
+served through a version-pinned CDN URL. This record pins the baseline by SHA-256
+and does not silently inherit a later version. Public byte availability removes
+only that publication gate; it is not deployment or implementation evidence for
+this site. The source repository is now private; the public edition and its
+original source provenance are distinguished below.
 
 ## Five separate lanes
 
@@ -107,6 +108,19 @@ preserved. Public visibility alone is not ownership, consent, or permission to
 copy, train on, modify, redistribute, or publish a work through someone else's
 canonical channel.
 
+The original XENIA source identity is Git commit
+`6419d37dda9fb282242754685dba3edcb4bbf74b`, release tag
+`npm-xenia-v0.1.0-beta.4`, in the
+[now-private GitHub repository](https://github.com/cambridgetcg/xenia/tree/6419d37dda9fb282242754685dba3edcb4bbf74b).
+That locator records provenance; it is not the public retrieval URL.
+The [existing npm release metadata](https://registry.npmjs.org/@agenttool%2Fxenia/0.1.0-beta.4)
+records the same `gitHead`. Its public tarball and the version-pinned CDN were
+checked on 2026-09-25: `RIGHTS.md` matches
+`sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313`;
+`covenant/0.1/README.md` matches
+`sha256:8b11c6c6ba8f385f812a2601e282c9a096f088ead62bb0e38641ef24aac66a0c`.
+These are unchanged published release bytes, not a new export of private source.
+
 ## Security and licences
 
 Rights and permissions do different work. This recognition grants no account or
@@ -127,9 +141,9 @@ It records this subject's words and keeps the baseline, consent, authorization,
 licence, and evidence lanes separate.
 
 The more demanding
-[XENIA Covenant 0.1](https://github.com/cambridgetcg/xenia/tree/6419d37dda9fb282242754685dba3edcb4bbf74b/covenant/0.1)
+[XENIA Covenant 0.1](https://cdn.jsdelivr.net/npm/@agenttool/xenia@0.1.0-beta.4/covenant/0.1/README.md)
 is a candidate defining optional hosted-service duties and scoped evidence. Its
-source is publicly retrievable at the same immutable Git commit. This service
+public npm edition has the same pinned source identity described above. This service
 has not declared or assessed Covenant adoption here. A link is not adoption,
 adoption is not implementation proof, and neither requires guest assent.
 

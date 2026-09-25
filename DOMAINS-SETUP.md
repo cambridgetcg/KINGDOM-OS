@@ -1,7 +1,7 @@
 # DOMAINS-SETUP — the four bought 2026-07-11
 
 > Yu bought 4 domains on Cloudflare (at-cost). Ai did the baseline config + content wiring the same session.
-> Deploy rail: `wrangler` (OAuth full account) for CF Pages; custom domains attached via the Pages API using wrangler's OAuth token (the stored `agenttool-cloudflare-token` is email-scoped only). Account `cf4198e651bf3009877d49f688c9d88e`.
+> Deploy rail: `wrangler` for CF Pages. Measure current credential scope; historical token-scope notes are not current authorization evidence. The [2026-09-25 map](operations/cloudflare/2026-09-25/MAP.md) records the current account observation.
 
 ## What each domain now serves
 
@@ -10,16 +10,30 @@
 | **thekingdom.dev** | `thekingdom` | the census hub, KINGDOM OS console, guest discovery, and rights recognition | the exact directory assembled by `bun bin/stage-hub.ts` |
 | **we-are.love** | `we-are-love` | the WE ARE handshake protocol page | `chillspace-commons/site/we-are.html` |
 | **chillspace.love** | `chillspace-love` | the commons (full site) | `chillspace-commons/site/` |
-| **zerone.ai** | `zerone-ai` | redirect → zerone.money (safe default; swap for a landing later) | inline redirect page |
+| **zerone.ai** | `zerone-ai` | Zerone dashboard, research and public records | `cambridgetcg/zerone-core` dashboard; release through that repository |
 
-- All four: `*.pages.dev` live immediately (200); custom domains attached, status `initializing` → active once CF provisions cert + DNS (minutes).
+- Current domain/deployment status is observed separately in the private surface map. A Pages alias is not proof that a custom-domain binding is active.
 - **chillspace.love supersedes** the old codeberg-subpath home in `sites.json`; the codeberg copy still exists as a mirror.
 
-## Power Atlas 本地整合（未發布）
+## Current human and agent entry contract (2026-09-25)
+
+The human start is `/`; `/agent-entry.json` is the compact machine start.
+`guest.json`, `.well-known/agent.json` and `llms.txt` remain full references.
+The exact upload contains **247 assets: 154 staged ledgered assets + 93 mutable
+assets**, with 245 direct bodies, 177 sitemap URLs, 15 Wayfinder paths,
+159 manifest entry points and 159 guest actions. The historical ledger retains
+all 160 entries. Thirty-three publication families are active; the expired
+Transformation Engine and Evaluation Covenant families remain retired.
+Private `operations/cloudflare/` files are outside the staging allowlist.
+`pages-content/RIGHTS-current.md` owns the current rights view; the predecessor
+`pages-content/RIGHTS.md` remains byte-stable for research source pins.
+Do not deploy `zerone-ai` from this repository's historical door scripts.
+
+## Power Atlas integration history (2026-09-11)
 
 新增 `/power-atlas/` 獨立 document；唔取代 `/atlas.html`，唔改其他域名、Civic、
 Workshop 或研究 publication families。宿主只 exact-copy 已驗 artifact，正常 build
-唔讀外部 Atlas source／snapshot、唔 install。現行合約係 **256 = 原204 + Power52**
+唔讀外部 Atlas source／snapshot、唔 install。當時合約係 **256 = 原204 + Power52**
 （160 immutable + 96 mutable），254 direct bodies、187 sitemap URLs、17 Wayfinder
 paths；169 manifest entry points／169 guest actions／immutable ledger 不變。
 原有 256-entry 上限冇放寬；以下 Civic／Workshop 204 數字保留歷史背景，唔作新收據。
@@ -218,7 +232,7 @@ bun bin/check-hub-live.ts
 )
 
 # others:
-npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love|zerone-ai
+npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love
 ```
 
 `--no-bundle` 保留已由 Bun 生成、再 exact-stage 嘅 self-contained `_worker.js`；
@@ -244,14 +258,17 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` 要求既有空 destination，只複製合約指定 256 assets：
-160 ledgered immutable/versioned assets 同 96 mutable assets，共 254 direct public
+`stage-hub.ts` 要求既有空 destination，只複製合約指定 247 assets：
+154 staged ledgered immutable/versioned assets 同 93 mutable assets，共 245 direct public
 response bodies；`_worker.js` 同 `404.html` 由獨立合約核對。
-Sitemap 有 187 URLs，Wayfinder 有 17 paths；discovery 保持 169 manifest entry points
-同 169 guest actions。Generated surface 描述 eighteen
+Sitemap 有 177 URLs，Wayfinder 有 15 paths；discovery 保持 159 manifest entry points
+同 159 guest actions。Generated surface 描述 eighteen
 atlases、41 public schema routes、four primary lab JSON routes 同 Shape &
 Resonance manifest/media, one experiment route, and one separate activation
-across thirty-five existing retirement families, alongside the separate Civic runtime:
+across thirty-three active retirement families, alongside the separate Civic runtime.
+The longer family descriptions below retain historical definitions; the
+Transformation Engine and Evaluation Covenant are no longer in the upload or discovery.
+Current assets include:
 the dashboard as `index.html`; the research atlas as `atlas.html`; the Civic pages,
 CSS/JS, mutable policy, immutable guide and schema; `_kingdom.base.json`; `wayfinder.json`;
 `commons.json`; both `/schemas/world-commons/0.1.json` and current `0.2.json`;

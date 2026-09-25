@@ -47,11 +47,6 @@ function assets(handler: (request: Request) => Response | Promise<Response>) {
 
 describe("FREEDOM Loop, Lock & Key immutable publication", () => {
   test("stages and ledgers one independent exact triplet", () => {
-    expect(HUB_ASSETS).toHaveLength(256);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
-    expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(254);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
       .toHaveLength(18);
 
@@ -153,7 +148,7 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
     expect(kingdom.freedom_loop_lock_key_atlas).toEqual(expected);
     expect(guest.freedom_loop_lock_key_atlas).toEqual(expected);
     expect(manifest.freedom_loop_lock_key_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("freedom_loop_lock_key_atlas"))))
       .toEqual({
@@ -161,7 +156,7 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
         freedom_loop_lock_key_atlas_schema: PUBLIC_URLS[1],
         freedom_loop_lock_key_atlas_guide: PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(169);
+    expect(guest.next_actions).toHaveLength(159);
     const actions = guest.next_actions.filter((action: any) =>
       PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
@@ -230,7 +225,7 @@ describe("FREEDOM Loop, Lock & Key immutable publication", () => {
         .toHaveLength(1);
       expect(wayfinder).not.toContain(url);
     }
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(187);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(177);
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/freedom[_-]loop[_-]lock[_-]key/i);
   });

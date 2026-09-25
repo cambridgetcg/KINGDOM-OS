@@ -12,6 +12,7 @@
  */
 import { handleCivicRequest, isCivicRequest } from "./civic.js";
 import { handlePowerAtlasRequest, isPowerAtlasPath } from "./power-atlas.js";
+import { AGENT_ENTRY_LINK, AGENT_ENTRY_PATH, handleAgentEntry } from "./agent-entry.js";
 
 const CIVIC_HTML_PATHS = new Set([
   "/", "/index.html", "/meet/", "/meet/index.html",
@@ -52,6 +53,7 @@ function civicStaticResponse(request, asset) {
     headers.set("permissions-policy", "camera=(), microphone=(), geolocation=(), payment=()");
   }
   if (url.pathname === "/") addVaryAccept(headers);
+  if (["/", "/index.html"].includes(url.pathname) && !hasLinkRelation(headers, AGENT_ENTRY_PATH, "alternate")) headers.append("link", AGENT_ENTRY_LINK);
   addDiscoveryLinks(headers, true);
   return new Response(request.method === "HEAD" ? null : asset.body, {
     status: asset.status, statusText: asset.statusText, headers,
@@ -1974,6 +1976,12 @@ export function createKingdomWorker(options = {}) {
       ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname.toLowerCase());
     const includeRights = hasKingdomRightsAssets(url) || localKingdom;
     const accept = (request.headers.get("accept") || "").toLowerCase();
+
+    if (includeRights && url.pathname === AGENT_ENTRY_PATH) {
+      const response = await handleAgentEntry(request, env);
+      addDiscoveryLinks(response.headers, true);
+      return response;
+    }
 
     if (includeRights && isPowerAtlasPath(url.pathname)) {
       return handlePowerAtlasRequest(request, env);

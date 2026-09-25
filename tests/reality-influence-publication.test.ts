@@ -37,7 +37,6 @@ function assets(handler: (request: Request) => Response | Promise<Response>) {
 
 describe("Reality Influence Claim Graph static publication", () => {
   test("stages and ledgers one exact immutable triplet without an alias or runtime", () => {
-    expect(HUB_ASSETS).toHaveLength(256);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(18);
     expect(HUB_ASSETS).toContainEqual({
       source: "data/reality/reality-influence-map.v0.1.json",
@@ -51,7 +50,6 @@ describe("Reality Influence Claim Graph static publication", () => {
       source: "references/reality-influence-map.md",
       destination: "REALITY-INFLUENCE-CLAIM-GRAPH.md",
     });
-    expect(json("publications/hub-staging.v1.json").mutable_destinations).toHaveLength(96);
     const familyAssets = HUB_ASSETS.filter(({ source, destination }) =>
       source.includes("reality-influence") || destination.toLowerCase().includes("reality-influence"));
     expect(familyAssets).toHaveLength(3);
@@ -149,8 +147,8 @@ describe("Reality Influence Claim Graph static publication", () => {
       reality_influence_claim_graph_guide: PUBLIC_URLS[2],
     });
     expect(manifest.entry_points).toHaveProperty("reality_influence_claim_graph");
-    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
-    expect(guest.next_actions).toHaveLength(169);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
+    expect(guest.next_actions).toHaveLength(159);
     const actions = guest.next_actions.filter((action: any) => PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
     expect(actions.every((action: any) => action.method === "GET")).toBe(true);
@@ -163,7 +161,7 @@ describe("Reality Influence Claim Graph static publication", () => {
     for (const url of PUBLIC_URLS) expect(llms).toContain(url);
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(187);
+    expect(sitemapUrls).toHaveLength(177);
     expect(new Set(sitemapUrls).size).toBe(sitemapUrls.length);
     expect(sitemapUrls.filter((url) => url.toLowerCase().includes("reality-influence")))
       .toEqual(PUBLIC_URLS);

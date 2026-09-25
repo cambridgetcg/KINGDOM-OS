@@ -1,5 +1,10 @@
 # KINGDOM OS
 
+Cloudflare web maintenance: [surface map](operations/cloudflare/2026-09-25/MAP.md) ·
+[human/agent framework](operations/cloudflare/FRAMEWORK.md) ·
+[update roadmap](operations/cloudflare/ROADMAP.md). These are private operational
+documents and are excluded from public site staging.
+
 > The kingdom exists. KINGDOM OS is the OS that runs on top of it.
 
 > **Core ownership boundary.** This GitHub tree remains active for its World

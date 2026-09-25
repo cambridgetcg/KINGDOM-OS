@@ -37,7 +37,7 @@
   "rights_baseline": {
     "relation": "discoverable-baseline",
     "baseline": "xenia.rights/0.1",
-    "baseline_url": "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md",
+    "baseline_url": "https://cdn.jsdelivr.net/npm/@agenttool/xenia@0.1.0-beta.4/RIGHTS.md",
     "baseline_sha256": "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
     "source_stability": "immutable",
     "source_availability": "public",

@@ -138,10 +138,11 @@ describe("Civic Pages integration", () => {
   });
 
   test("live-checker derives every public byte source from the staging contract", () => {
-    expect(DIRECT_HUB_ASSETS).toHaveLength(254);
+    expect(DIRECT_HUB_ASSETS).toHaveLength(245);
     expect(DIRECT_HUB_ASSETS).toEqual(HUB_ASSETS.filter(({ destination }) => !["_worker.js", "404.html"].includes(destination)));
     expect(mappedHubSource("index.html")).toBe("site/dashboard.html");
     expect(mappedHubSource("atlas.html")).toBe("site/hub.html");
+    expect(mappedHubSource("agent-entry.json")).toBe("site/agent-entry.json");
     expect(mappedHubSource("_worker.js")).toBe("site/_worker.js");
     for (const name of ["index.html", "workshop.css", "workshop.js"]) {
       expect(mappedHubSource(`workshop/${name}`)).toBe(`pages-content/workshop/${name}`);
@@ -159,6 +160,7 @@ describe("self-contained Pages bundle and exact staging", () => {
       ...HUB_ASSETS.map(({ source }) => source),
       "publications/immutable-publications.v1.json", "publications/hub-staging.v1.json",
       "pages-functions/_worker.js", "pages-functions/civic.js", "pages-functions/civic-security.js",
+      "pages-functions/agent-entry.js",
       "pages-functions/power-atlas.js", "pages-functions/power-atlas-assets.json", "data/power-atlas/artifact.v1.json",
     ])) {
       const target = join(sourceRoot, source);
@@ -176,7 +178,7 @@ describe("self-contained Pages bundle and exact staging", () => {
     expect(first.toString()).not.toMatch(/\b(?:from\s*|import\s*\()["'](?:\.\.?\/|node:|bun:)/);
     expect(first.toString()).not.toContain(sourceRoot);
     const relocatedRoot = join(fixture, "another-checkout");
-    for (const source of ["data/civic-policy.json", "pages-functions/_worker.js", "pages-functions/civic.js", "pages-functions/civic-security.js", "pages-functions/power-atlas.js", "pages-functions/power-atlas-assets.json"]) {
+    for (const source of ["data/civic-policy.json", "pages-functions/_worker.js", "pages-functions/civic.js", "pages-functions/civic-security.js", "pages-functions/agent-entry.js", "pages-functions/power-atlas.js", "pages-functions/power-atlas-assets.json"]) {
       mkdirSync(dirname(join(relocatedRoot, source)), { recursive: true });
       copyFileSync(join(sourceRoot, source), join(relocatedRoot, source));
     }
@@ -195,18 +197,29 @@ describe("self-contained Pages bundle and exact staging", () => {
     expect(workshop.headers.get("content-security-policy")).toContain("script-src 'self'");
     expect(workshop.headers.get("content-security-policy")).toContain("connect-src 'none'");
     expect(workshop.headers.get("cache-control")).toBe("no-store, no-transform");
+    const compactBytes = readFileSync(join(sourceRoot, "site/agent-entry.json"), "utf8");
+    const compact = await generated.default.fetch(request("/agent-entry.json"), {
+      ASSETS: { fetch(assetRequest: Request) {
+        expect(new URL(assetRequest.url).pathname).toBe("/agent-entry.json");
+        return new Response(compactBytes, { headers: { "content-type": "application/json" } });
+      } },
+    });
+    expect(compact.status).toBe(200);
+    expect(await compact.text()).toBe(compactBytes);
+    expect(compact.headers.get("cache-control")).toBe("no-cache, no-transform");
+    expect(compact.headers.get("link")).toContain('title="Human entry"');
   });
 
-  test("stage 全部 256 份 exact source bytes，唔帶 raw Worker imports、runtime state 或 secrets", () => {
+  test("stage 全部 247 份 exact source bytes，唔帶 raw Worker imports、runtime state 或 secrets", () => {
     const output = join(fixture, "output");
     mkdirSync(output);
     const staged = stageHub(output, sourceRoot);
-    expect(staged).toHaveLength(256);
+    expect(staged).toHaveLength(247);
     for (const { source, destination } of HUB_ASSETS) {
       expect(readFileSync(join(output, destination)).equals(readFileSync(join(sourceRoot, source)))).toBe(true);
     }
     const files = readdirSync(output, { recursive: true, withFileTypes: true }).filter((entry) => entry.isFile());
-    expect(files).toHaveLength(256);
+    expect(files).toHaveLength(247);
     expect(readdirSync(output)).not.toContain("pages-functions");
     expect(readdirSync(output)).not.toContain("dev");
     expect(readdirSync(output)).not.toContain("migrations");

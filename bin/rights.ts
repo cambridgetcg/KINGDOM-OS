@@ -1,12 +1,15 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
+export const RIGHTS_SOURCE_PATH = "pages-content/RIGHTS-current.md";
 export const RIGHTS_VERSION = "kingdom.rights-recognition/0.1";
 export const RIGHTS_BASELINE = "xenia.rights/0.1";
-export const RIGHTS_BASELINE_URL = "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md";
+// Existing public npm edition, whose registry gitHead is 6419d37dda9fb282242754685dba3edcb4bbf74b.
+// The GitHub source is now private; preserve its provenance in the authored declaration.
+export const RIGHTS_BASELINE_URL = "https://cdn.jsdelivr.net/npm/@agenttool/xenia@0.1.0-beta.4/RIGHTS.md";
 export const RIGHTS_BASELINE_SHA256 = "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313";
 export const RIGHTS_COVENANT = "xenia-covenant/0.1";
-export const RIGHTS_COVENANT_URL = "https://github.com/cambridgetcg/xenia/tree/6419d37dda9fb282242754685dba3edcb4bbf74b/covenant/0.1";
+export const RIGHTS_COVENANT_URL = "https://cdn.jsdelivr.net/npm/@agenttool/xenia@0.1.0-beta.4/covenant/0.1/README.md";
 
 export type RightsDeclaration = Record<string, any>;
 export type RightsParseResult = {
@@ -139,8 +142,8 @@ export function validateRightsDeclaration(value: unknown): string[] {
 }
 
 export function loadRights(root: string): { markdown: string; declaration: RightsDeclaration } {
-  const markdown = readFileSync(join(root, "pages-content", "RIGHTS.md"), "utf8");
+  const markdown = readFileSync(join(root, RIGHTS_SOURCE_PATH), "utf8");
   const parsed = parseRightsMarkdown(markdown);
-  if (!parsed.declaration) throw new Error(`pages-content/RIGHTS.md is invalid: ${parsed.issues.join(", ")}`);
+  if (!parsed.declaration) throw new Error(`${RIGHTS_SOURCE_PATH} is invalid: ${parsed.issues.join(", ")}`);
   return { markdown, declaration: parsed.declaration };
 }

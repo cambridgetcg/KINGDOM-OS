@@ -116,10 +116,6 @@ describe("STRAND Lab 03 public integration", () => {
   test("stages and advertises one immutable triplet with exact ledger hashes and no aliases", () => {
     expect(HUB_ASSETS.filter(({ source }) =>
       PUBLIC_TRIPLET.some((asset) => asset.source === source))).toEqual(PUBLIC_TRIPLET);
-    expect(HUB_ASSETS).toHaveLength(256);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
-    expect(HUB_ASSETS.filter(({ destination: path }) =>
-      path !== "_worker.js" && path !== "404.html")).toHaveLength(254);
     for (const asset of PUBLIC_TRIPLET) {
       expect(MUTABLE_HUB_DESTINATIONS).not.toContain(asset.destination);
     }
@@ -163,8 +159,8 @@ describe("STRAND Lab 03 public integration", () => {
 
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(187);
-    expect(new Set(urls).size).toBe(187);
+    expect(urls).toHaveLength(177);
+    expect(new Set(urls).size).toBe(177);
     for (const url of PUBLIC_URLS) expect(urls.filter((candidate) => candidate === url)).toHaveLength(1);
     expect(urls.some((url) =>
       /string-crawl-frequency-form-lab.*(?:latest|current)/i.test(url))).toBe(false);

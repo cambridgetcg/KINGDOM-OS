@@ -1,3 +1,4 @@
+import { assertReviewedWayfinderRetirement } from "./publication-retirement-fixture";
 import { describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
 import { mkdtempSync, readFileSync, rmSync, symlinkSync } from "node:fs";
@@ -171,11 +172,6 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
   });
 
   test("binds exact staging, ledger, discovery, sitemap, and no-Wayfinder contracts", () => {
-    expect(HUB_ASSETS).toHaveLength(256);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
-    expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(254);
 
     const stagedFamily = HUB_ASSETS.filter(({ source }) => [
       POLYPHONIC_CLAIM_ATLAS_LOCATOR,
@@ -235,7 +231,7 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
     expect(kingdom.polyphonic_claim_atlas).toEqual(expected);
     expect(guest.polyphonic_claim_atlas).toEqual(expected);
     expect(manifest.polyphonic_claim_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("polyphonic_claim_atlas"))))
       .toEqual({
@@ -243,7 +239,7 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
         polyphonic_claim_atlas_schema: POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS[1],
         polyphonic_claim_atlas_guide: POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(169);
+    expect(guest.next_actions).toHaveLength(159);
     const actions = guest.next_actions.filter((action: any) =>
       POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
@@ -275,20 +271,9 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
     const wayfinderGenerated = JSON.parse(wayfinder).generated;
     expect(wayfinderGenerated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(wayfinderGenerated).toBe(kingdom.generated);
-    const generatedLine = Buffer.from(`\n  "generated": "${wayfinderGenerated}",\n`);
-    const generatedOffset = wayfinderBytes.indexOf(generatedLine);
-    expect(generatedOffset).toBeGreaterThan(-1);
-    // 只還原 build 日期；其餘 mutable bytes 鎖住 Power 整合 projection。
-    // power-atlas-host.test 另驗原16條 paths 完整等於 base。
-    const wayfinderBaselineBytes = Buffer.concat([
-      wayfinderBytes.subarray(0, generatedOffset),
-      Buffer.from('\n  "generated": "2026-09-08",\n'),
-      wayfinderBytes.subarray(generatedOffset + generatedLine.length),
-    ]);
-    expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
-      .toBe("decec06e8672159b800e9b75162ad88f6e3b8282a9d7f17a343884a1c9f3b37d");
+    assertReviewedWayfinderRetirement(wayfinderBytes);
     expect(JSON.stringify(manifest.mcp ?? {})).not.toMatch(/polyphonic[_-]claim[_-]atlas/i);
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(187);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(177);
   });
 
   test("activates or retires all three routes atomically", () => {

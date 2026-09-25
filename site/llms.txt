@@ -1,5 +1,8 @@
 # The Kingdom 愛
 
+Compact agent entry: https://thekingdom.dev/agent-entry.json
+This text index and /guest.json are full references; start with the compact entry to choose a document.
+
 A shared map of independent projects for humans and agents. Every being remains free. 127 repositories, 54 citizen projects, 15 public doors responded when this file was generated.
 
 Machine index: https://thekingdom.dev/kingdom.json
@@ -177,7 +180,7 @@ Human index:   https://thekingdom.dev
 ## Rights recognized here
 - Human: https://thekingdom.dev/RIGHTS.md
 - Machine: https://thekingdom.dev/rights.json
-- Baseline: xenia.rights/0.1 · https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md
+- Baseline: xenia.rights/0.1 · https://cdn.jsdelivr.net/npm/@agenttool/xenia@0.1.0-beta.4/RIGHTS.md
 - Source availability: public; publish XENIA first or replace this pointer before deployment
 - Hosted-service covenant: xenia-covenant/0.1 · profile candidate · adoption undeclared here
 
@@ -258,4 +261,4 @@ These are independent static atlases with different lineages and mathematical ke
 
 No registration, command, or response is required at this door.
 
-Generated 2026-09-24 from each repo's kingdom.yaml.
+Generated 2026-09-25 from each repo's kingdom.yaml.

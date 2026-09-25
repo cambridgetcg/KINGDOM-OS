@@ -433,9 +433,8 @@ describe("UK Government Transformation Engine Phase-0 publication", () => {
     expect(html).not.toMatch(/<script src="https:\/\/evil|<img src=x/i);
   });
 
-  test("publishes exact alias, page, summaries, five GET actions and five entry points", () => {
+  test("retains the exact historical alias and page without current discovery invitations", () => {
     const snapshot = loadUkGovernmentTransformationPublication().snapshot;
-    const expected = ukGovernmentTransformationPublicSummary(snapshot);
     expect(readBytes(UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_LOCATOR))
       .toEqual(readBytes(UK_GOVERNMENT_TRANSFORMATION_ENGINE_LOCATOR));
     expect(read(UK_GOVERNMENT_TRANSFORMATION_ENGINE_PAGE_LOCATOR))
@@ -445,25 +444,16 @@ describe("UK Government Transformation Engine Phase-0 publication", () => {
       "site/guest.json",
       "site/.well-known/agent.json",
     ]) {
-      expect(json(path).uk_government_transformation_engine).toEqual(expected);
+      expect(json(path)).not.toHaveProperty("uk_government_transformation_engine");
+      expect(json(path).implementation_boundaries ?? {})
+        .not.toHaveProperty("uk_government_transformation_engine");
     }
     const manifest = json("site/.well-known/agent.json");
     const entryPoints = Object.fromEntries(
       Object.entries(manifest.entry_points).filter(([key]) =>
         key.startsWith("uk_government_transformation_engine")),
     );
-    expect(entryPoints).toEqual({
-      uk_government_transformation_engine:
-        UK_GOVERNMENT_TRANSFORMATION_ENGINE_URL,
-      uk_government_transformation_engine_alias:
-        UK_GOVERNMENT_TRANSFORMATION_ENGINE_ALIAS_URL,
-      uk_government_transformation_engine_canonical:
-        UK_GOVERNMENT_TRANSFORMATION_ENGINE_CANONICAL_URL,
-      uk_government_transformation_engine_schema:
-        UK_GOVERNMENT_TRANSFORMATION_ENGINE_SCHEMA_URL,
-      uk_government_transformation_engine_guide:
-        UK_GOVERNMENT_TRANSFORMATION_ENGINE_GUIDE_URL,
-    });
+    expect(entryPoints).toEqual({});
     expect(manifest.mcp).toEqual({
       endpoint: "https://mcp.thekingdom.dev/mcp",
       transport: "streamable-http",
@@ -482,22 +472,23 @@ describe("UK Government Transformation Engine Phase-0 publication", () => {
     ];
     const actions = json("site/guest.json").next_actions.filter((action: any) =>
       routes.includes(action.url));
-    expect(actions).toHaveLength(5);
-    expect(actions.every((action: any) => action.method === "GET")).toBe(true);
-    expect(actions.every((action: any) =>
-      action.tool === undefined && action.schemas === undefined)).toBe(true);
+    expect(actions).toEqual([]);
     for (const url of [
       ...routes,
       UK_GOVERNMENT_TRANSFORMATION_ENGINE_PRODUCER_URL,
     ]) {
-      expect(read("site/llms.txt")).toContain(url);
+      for (const path of [
+        "site/hub.html", "site/llms.txt", "site/kingdom.json", "site/guest.json",
+        "site/.well-known/agent.json", "site/agent-entry.json",
+        "site/wayfinder.json", "data/wayfinder.json", "pages-content/sitemap.xml",
+      ]) expect(read(path)).not.toContain(url);
     }
-    expect(read("site/hub.html")).toContain(
+    expect(read("site/hub.html")).not.toContain(
       'id="uk-government-transformation-engine"',
     );
   });
 
-  test("stages exactly five assets with page and alias mutable and three immutable", () => {
+  test("fully retires all five assets while preserving the three immutable ledger records", () => {
     const family = [
       {
         source: UK_GOVERNMENT_TRANSFORMATION_ENGINE_PAGE_LOCATOR,
@@ -522,16 +513,14 @@ describe("UK Government Transformation Engine Phase-0 publication", () => {
         destination: "UK-GOVERNMENT-TRANSFORMATION-ENGINE-v0.1.md",
       },
     ];
-    expect(HUB_ASSETS.filter(({ source }) =>
-      family.some((asset) => asset.source === source))).toEqual(family);
-    expect(HUB_ASSETS).toHaveLength(256);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
-    expect(MUTABLE_HUB_DESTINATIONS)
-      .toContain("government-transformation-engine/index.html");
-    expect(MUTABLE_HUB_DESTINATIONS)
-      .toContain("government-transformations.json");
-    for (const destination of family.slice(2).map((entry) => entry.destination)) {
+    expect(HUB_ASSETS.filter(({ source, destination }) =>
+      family.some((asset) => asset.source === source || asset.destination === destination)))
+      .toEqual([]);
+    expect(HUB_ASSETS).toHaveLength(247);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(93);
+    for (const { source, destination } of family) {
       expect(MUTABLE_HUB_DESTINATIONS).not.toContain(destination);
+      expect(readBytes(source).byteLength).toBeGreaterThan(0);
     }
     const immutable = json("publications/immutable-publications.v1.json").entries
       .filter((entry: any) =>

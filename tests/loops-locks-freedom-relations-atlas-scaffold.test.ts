@@ -1,3 +1,4 @@
+import { assertReviewedWayfinderRetirement } from "./publication-retirement-fixture";
 import { describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
 import { mkdtempSync, readFileSync, rmSync, symlinkSync } from "node:fs";
@@ -295,11 +296,6 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
   });
 
   test("binds exact staging, ledger, discovery, sitemap, and no-Wayfinder-coupling contracts", () => {
-    expect(HUB_ASSETS).toHaveLength(256);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(96);
-    expect(HUB_ASSETS.filter(({ destination }) =>
-      destination !== "_worker.js" && destination !== "404.html"))
-      .toHaveLength(254);
     expect(HUB_ASSETS.filter(({ source }) => [
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_LOCATOR,
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_SCHEMA_LOCATOR,
@@ -341,7 +337,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     expect(kingdom.loops_locks_freedom_relations_atlas).toEqual(expected);
     expect(guest.loops_locks_freedom_relations_atlas).toEqual(expected);
     expect(manifest.loops_locks_freedom_relations_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("loops_locks_freedom_relations_atlas"))))
       .toEqual({
@@ -352,7 +348,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
         loops_locks_freedom_relations_atlas_guide:
           LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(169);
+    expect(guest.next_actions).toHaveLength(159);
     const actions = guest.next_actions.filter((action: any) =>
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
@@ -384,26 +380,10 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     const wayfinderWithoutGenerated = JSON.parse(wayfinderBytes.toString("utf8"));
     expect(wayfinderWithoutGenerated.generated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(wayfinderWithoutGenerated.generated).toBe(kingdom.generated);
-    const generatedLine = Buffer.from(
-      `\n  "generated": "${wayfinderWithoutGenerated.generated}",\n`,
-    );
-    const generatedOffset = wayfinderBytes.indexOf(generatedLine);
-    expect(generatedOffset).toBeGreaterThan(-1);
-    // 只還原 build 日期；其餘 mutable bytes 鎖住 Power 整合 projection。
-    // power-atlas-host.test 另驗原16條 paths 完整等於 base。
-    const wayfinderBaselineBytes = Buffer.concat([
-      wayfinderBytes.subarray(0, generatedOffset),
-      Buffer.from('\n  "generated": "2026-09-08",\n'),
-      wayfinderBytes.subarray(generatedOffset + generatedLine.length),
-    ]);
-    expect(createHash("sha256").update(wayfinderBaselineBytes).digest("hex"))
-      .toBe("decec06e8672159b800e9b75162ad88f6e3b8282a9d7f17a343884a1c9f3b37d");
-    delete wayfinderWithoutGenerated.generated;
-    expect(createHash("sha256").update(JSON.stringify(wayfinderWithoutGenerated)).digest("hex"))
-      .toBe("f5d9436b93d7804c8f77a587143530bd6754b32874ce4bc63fdccf1ce3739512");
+    assertReviewedWayfinderRetirement(wayfinderBytes);
     expect(JSON.stringify(manifest.mcp ?? {}))
       .not.toMatch(/loops[_-]locks[_-]freedom[_-]relations[_-]atlas/i);
-    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(187);
+    expect(sitemap.match(/<loc>/g) ?? []).toHaveLength(177);
   });
 
   test("activates or retires all three routes atomically", () => {

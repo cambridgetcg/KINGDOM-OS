@@ -6,6 +6,10 @@
       "destination": "index.html"
     },
     {
+      "source": "site/agent-entry.json",
+      "destination": "agent-entry.json"
+    },
+    {
       "source": "site/hub.html",
       "destination": "atlas.html"
     },
@@ -988,6 +992,7 @@
   ],
   "mutable_destinations": [
     ".well-known/agent.json",
+    "agent-entry.json",
     "404.html",
     "CREATION-LOOP.md",
     "RIGHTS.md",

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { loadRights } from "../bin/rights.ts";
+import { loadRights, RIGHTS_BASELINE_URL, RIGHTS_COVENANT_URL } from "../bin/rights.ts";
 import {
   RESEARCH_OBSERVATORY_PRODUCER_URL,
   loadResearchObservatoryPublication,
@@ -31,6 +31,9 @@ const doorJson = [
   "doors/we-are/.well-known/agent.json",
   "doors/chillspace/guest.json",
   "doors/chillspace/.well-known/agent.json",
+];
+// Historical snapshots only; the current Zerone deployment is owned by zerone-core.
+const legacyDoorJson = [
   "doors/zerone-ai/guest.json",
   "doors/zerone-ai/.well-known/agent.json",
 ];
@@ -49,24 +52,26 @@ describe("generated rights discovery", () => {
       expect(document.rights_recognition.subject).toEqual({ kind: "service", name: "the-kingdom", canonical_url: "https://thekingdom.dev/" });
       expect(document.rights_recognition.linked_subject_adoption).toBe("not-inferred");
       expect(document.rights_recognition.baseline).toBe("xenia.rights/0.1");
+      expect(document.rights_recognition.baseline_url).toBe(RIGHTS_BASELINE_URL);
       expect(document.rights_recognition.baseline_sha256).toBe("sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313");
       expect(document.rights_recognition.source_stability).toBe("immutable");
       expect(document.rights_recognition.source_availability).toBe("public");
       expect(document.rights_recognition.host_covenant.profile_status).toBe("candidate");
+      expect(document.rights_recognition.host_covenant.profile_url).toBe(RIGHTS_COVENANT_URL);
       expect(document.rights_recognition.host_covenant.adoption_status).toBe("undeclared");
       expect(document.rights_recognition.declaration).toBe("https://thekingdom.dev/rights.json");
       expect(document.rights_recognition.human).toBe("https://thekingdom.dev/RIGHTS.md");
     }
   });
 
-  test("linked doors discover the framework without inheriting adoption", () => {
+  test("maintained door discovery points to the public edition without inheriting adoption", () => {
     for (const path of doorJson) {
       const document = json(path);
       expect(document.rights_recognition).toBeUndefined();
       expect(document.rights_baseline).toEqual({
         relation: "discoverable-baseline",
         baseline: "xenia.rights/0.1",
-        baseline_url: "https://raw.githubusercontent.com/cambridgetcg/xenia/6419d37dda9fb282242754685dba3edcb4bbf74b/RIGHTS.md",
+        baseline_url: RIGHTS_BASELINE_URL,
         baseline_sha256: "sha256:b72a6da110c582e5683bf0fabde5017db93d2199398014c8421a82f5318da313",
         source_stability: "immutable",
         source_availability: "public",
@@ -76,7 +81,7 @@ describe("generated rights discovery", () => {
   });
 
   test("Kingdom guest documents make no invented profile claim", () => {
-    for (const path of ["site/guest.json", "site/.well-known/agent.json", ...doorJson]) {
+    for (const path of ["site/guest.json", "site/.well-known/agent.json", ...doorJson, ...legacyDoorJson]) {
       const source = read(path);
       expect(source).not.toContain("xenia-surface/0.1");
       expect(source).not.toContain("kingdom-guest/0.1");

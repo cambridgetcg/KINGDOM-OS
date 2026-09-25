@@ -58,17 +58,27 @@ describe("the hub staging contract", () => {
       const output = join(base, "output");
       mkdirSync(output);
       makeCompleteSource(sourceRoot);
+      // A private portfolio or stray site file is never inferred into the public upload.
+      mkdirSync(join(sourceRoot, "operations/cloudflare/private"), { recursive: true });
+      writeFileSync(join(sourceRoot, "operations/cloudflare/private/portfolio.json"), "PRIVATE_PORTFOLIO_CANARY");
+      writeFileSync(join(sourceRoot, "site/private-portfolio.json"), "PRIVATE_PORTFOLIO_CANARY");
 
       const staged = stageHub(output, sourceRoot);
       // Exact count 刻意鎖住；staging 合約增減要逐項核對，唔接受任意數量。
-      expect(HUB_ASSETS).toHaveLength(246);
-      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(92);
+      expect(HUB_ASSETS).toHaveLength(247);
+      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(93);
+      // Global counts live here; individual publication tests pin their own family.
+      expect(new Set(HUB_ASSETS.map(({ source }) => source)).size).toBe(247);
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(18);
+      expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/"))).toHaveLength(41);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
       expect(ledger.ledger?.entries).toHaveLength(160);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(244);
-      expect(staged).toHaveLength(246);
+        .toHaveLength(245);
+      expect(staged).toHaveLength(247);
+      expect(readdirSync(output, { recursive: true })).not.toContain("private-portfolio.json");
+      expect(readdirSync(output, { recursive: true })).not.toContain("operations");
       expect(readdirSync(output).sort()).toEqual([
         ".well-known",
         "404.html",
@@ -117,6 +127,7 @@ describe("the hub staging contract", () => {
         "ZERO-EMPTY-SEAT.md",
         "_kingdom.base.json",
         "_worker.js",
+        "agent-entry.json",
         "atlas.html",
         "atlases",
         "challenges",

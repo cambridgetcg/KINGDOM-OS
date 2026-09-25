@@ -17,7 +17,7 @@ describe("Exploration DEEP public discovery seam", () => {
   test("adds exactly four unique crawl routes without a mutable alias", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-    expect(urls).toHaveLength(187);
+    expect(urls).toHaveLength(177);
     expect(new Set(urls).size).toBe(urls.length);
     for (const url of PUBLIC_URLS) expect(urls).toContain(url);
     expect(urls.filter((url) => /(?:explore-phenomena-deep|phenomena-deep-(?:wing|project))/i.test(url))).toEqual(PUBLIC_URLS);
@@ -73,7 +73,7 @@ describe("Exploration DEEP public discovery seam", () => {
     expect(builder).not.toContain("exploration_deep_wing_mcp");
   });
 
-  test("dispatches the explicit opt-in command and documents final release counts", () => {
+  test("dispatches the explicit opt-in command and documents the exact family routes", () => {
     const kingdom = read("kingdom");
     const readme = read("README.md");
     const claude = read("CLAUDE.md");
@@ -83,25 +83,10 @@ describe("Exploration DEEP public discovery seam", () => {
     expect(kingdom).toContain('explore-deep) exec bun "$SELF_DIR/bin/explore-phenomena-deep.ts" "${@:2}" ;;');
     for (const path of PUBLIC_URLS.map((url) => new URL(url).pathname)) {
       expect(readme).toContain(path);
+      expect(domains).toContain(path);
       expect(routes).toContain(`| \`${path}\` |`);
     }
-    // Preserve the original research baseline without making it the Civic runbook.
-    for (const count of ["192", "158", "190", "178"]) {
-      expect(claude).toContain(count);
-    }
-    // 現行 runbooks 鎖 Power counts；未改動嘅 publication inventory 保留 Civic counts。
-    for (const [text, assets, mutable, direct, sitemap] of [
-      [domains, 256, 96, 254, 187],
-      [routes, 256, 96, 254, 187],
-      [read("publications/README.md"), 204, 44, 202, 186],
-    ] as const) {
-      const document = text.replace(/\s+/g, " ");
-      expect(document).toMatch(new RegExp(`\\b${assets}(?:-asset| (?:staged )?assets)\\b`));
-      expect(document).toContain("160 ledgered immutable/versioned assets");
-      expect(document).toContain(`${mutable} mutable assets`);
-      expect(document).toMatch(new RegExp(`${direct} direct public (?:response )?bodies`));
-      expect(document).toMatch(new RegExp(`(?:[Ss]itemap (?:contains|有) ${sitemap} URLs|${sitemap} sitemap URLs)`));
-    }
+    // Global upload cardinalities are owned by stage-hub.test.ts.
     expect(claude).toContain("./kingdom explore-deep scaffold --json");
     expect(readme).toContain("not a manifested\n    Nen ability");
     expect(readme).toContain("does not fetch, solve");

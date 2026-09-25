@@ -52,7 +52,6 @@ describe("Civilisation → Reality Projection static publication", () => {
   });
 
   test("stages and ledgers one exact immutable triplet without publishing its research predecessor", () => {
-    expect(HUB_ASSETS).toHaveLength(256);
     expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/")))
       .toHaveLength(18);
     expect(HUB_ASSETS).toContainEqual({
@@ -184,8 +183,8 @@ describe("Civilisation → Reality Projection static publication", () => {
       civilisation_reality_projection_schema: PUBLIC_URLS[1],
       civilisation_reality_projection_guide: PUBLIC_URLS[2],
     });
-    expect(Object.keys(manifest.entry_points)).toHaveLength(169);
-    expect(guest.next_actions).toHaveLength(169);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
+    expect(guest.next_actions).toHaveLength(159);
     expect(guest.next_actions.filter((action: any) => PUBLIC_URLS.includes(action.url)))
       .toHaveLength(3);
 
@@ -232,8 +231,8 @@ describe("Civilisation → Reality Projection static publication", () => {
     for (const url of PUBLIC_URLS) expect(llms).toContain(url);
     const sitemapUrls = [...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1]!);
-    expect(sitemapUrls).toHaveLength(187);
-    expect(new Set(sitemapUrls).size).toBe(187);
+    expect(sitemapUrls).toHaveLength(177);
+    expect(new Set(sitemapUrls).size).toBe(177);
     expect(sitemapUrls.filter((url) => url.toLowerCase().includes("civilisation-reality")))
       .toEqual(PUBLIC_URLS);
   });

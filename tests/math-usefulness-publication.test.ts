@@ -28,7 +28,6 @@ const PUBLIC_TRIPLET = [
 
 describe("Math Passport usefulness publication", () => {
   test("stages exactly one immutable triplet without a mutable alias", () => {
-    expect(HUB_ASSETS).toHaveLength(256);
     for (const asset of PUBLIC_TRIPLET) {
       expect(HUB_ASSETS.filter(({ destination }) => destination === asset.destination)).toEqual([asset]);
     }
@@ -92,7 +91,7 @@ describe("Math Passport usefulness publication", () => {
       expect(html).toContain(`href="${new URL(url).pathname}"`);
       expect(sitemap).toContain(`<loc>${url}</loc>`);
     }
-    expect(sitemap.match(/<loc>/g)).toHaveLength(187);
+    expect(sitemap.match(/<loc>/g)).toHaveLength(177);
     expect(manifest.mcp).toEqual(kingdom.world_commons.mcp);
   });
 

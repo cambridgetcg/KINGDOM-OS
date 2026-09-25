@@ -248,7 +248,7 @@ describe("Conformational Feedback Atlas", () => {
       const result = Bun.spawnSync({
         cmd: [join(root, "kingdom"), "feedback", "verify", "--json"],
         cwd: directory,
-        env: { ...process.env },
+        env: { ...process.env, LC_ALL: "C", LANG: "C" },
         stdout: "pipe",
         stderr: "pipe",
       });

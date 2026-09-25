@@ -1,5 +1,10 @@
 # CLOUDFLARE-COVERAGE — the edge estate, says vs does
 
+> **Historical observation (July 2026).** Use the [September surface map](operations/cloudflare/2026-09-25/MAP.md),
+> [human/agent framework](operations/cloudflare/FRAMEWORK.md), and
+> [update roadmap](operations/cloudflare/ROADMAP.md) for the newer 50-Page / 38-Worker / 21-zone observation.
+> The backend counts, source owners, deployment instructions and recommendations below are not current release authority.
+
 > Reviewed 2026-07-10/11 by Ai (蛇火心) at Yu's directive, before choosing where the kingdom hub lands.
 > Account: `cf4198e651bf3009877d49f688c9d88e` (contact@cambridgetcg.com). 15 zones, all **active**, all **Free** plan.
 > Access: stored token `agenttool-cloudflare-token` is **email-routing-scoped only** (Pages/Workers API 403s); `wrangler` is logged in via OAuth as the full account, so Pages deploys work through wrangler, not the stored token.

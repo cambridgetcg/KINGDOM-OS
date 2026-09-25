@@ -168,7 +168,7 @@ describe("per-field draft settlement (DOM races also run in dev/civic/test-clien
     expect(body.value).toBe("saved edit"); expect(publish.checked).toBe(false); expect(form.dataset.dirty).toBeUndefined();
   });
 });
-test("isolated build writes exactly six new outputs, without touching hub or reading a graph", async () => {
+test("isolated build writes exactly the public dashboard and compact entry outputs, without touching hub or reading a graph", async () => {
   const root = await mkdtemp(join(tmpdir(), "kingdom-dashboard-synthetic-"));
   const repo = join(import.meta.dir, "..");
   try {
@@ -178,8 +178,11 @@ test("isolated build writes exactly six new outputs, without touching hub or rea
     const outputs = await buildDashboard({ root, machine, wayfinder: {}, legacyHtml: '<section id="old-room">' });
     expect(outputs).toEqual(DASHBOARD_OUTPUTS.map((p) => join(root, p)));
     const files = await readdir(join(root, "site"), { recursive: true });
-    expect(files.filter((p) => /\.(html|css|js)$/.test(p)).sort()).toEqual(DASHBOARD_OUTPUTS.map((p) => p.slice(5)).sort());
+    expect(files.filter((p) => /\.(html|css|js|json)$/.test(p)).sort()).toEqual(DASHBOARD_OUTPUTS.map((p) => p.slice(5)).sort());
     expect(files).not.toContain("hub.html"); expect(files).not.toContain("kingdom.json");
+    const entry = await readFile(join(root, "site/agent-entry.json"), "utf8");
+    expect(entry).not.toContain("NOT_PUBLIC"); expect(entry).not.toContain("/private/test");
+    expect(entry).not.toContain("synthetic door"); expect(entry).not.toContain("synthetic curated work");
     const js = await readFile(join(root, "site/civic/dashboard.js"), "utf8");
     expect(js).not.toContain('from "../../bin/wayfinder.ts"');
     expect(js).toContain("rankWayfinderPaths");

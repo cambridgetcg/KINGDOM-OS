@@ -19,7 +19,7 @@ describe("ZERO Empty Seat public experience", () => {
   test("adds exactly the immutable record and guide routes while reusing the shared schema", () => {
     const sitemap = read("pages-content/sitemap.xml");
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]!);
-  expect(urls).toHaveLength(187);
+  expect(urls).toHaveLength(177);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain(ZERO_EMPTY_SEAT_URL);
     expect(urls).toContain(ZERO_EMPTY_SEAT_GUIDE_URL);
@@ -138,30 +138,10 @@ describe("ZERO Empty Seat public experience", () => {
     });
   });
 
-  test("preserves the research baseline and documents the additive Civic publication contract", () => {
-    // CLAUDE.md remains the pre-Civic research compatibility baseline, not the
-    // current release runbook. Keep its original count checks independently.
-    const baseline = read("CLAUDE.md");
-    for (const count of ["192", "158", "34", "190", "178"]) {
-      expect(baseline).toContain(count);
-    }
-    // 現行 Power runbooks 同未改動嘅 Civic 歷史 inventory 分開鎖數，唔跳過任何文件。
-    const docs = [
-      ["DOMAINS-SETUP.md", 256, 96, 254, 187],
-      ["OS-ROUTES.md", 256, 96, 254, 187],
-      ["publications/README.md", 204, 44, 202, 186],
-    ] as const;
-    for (const [path, assets, mutable, direct, sitemap] of docs) {
-      const document = read(path).replace(/\s+/g, " ");
-      expect(document).toMatch(new RegExp(`\\b${assets}(?:-asset| (?:staged )?assets)\\b`));
-      expect(document).toContain("160 ledgered immutable/versioned assets");
-      expect(document).toContain(`${mutable} mutable assets`);
-      expect(document).toMatch(new RegExp(`${direct} direct public (?:response )?bodies`));
-      expect(document).toMatch(new RegExp(`(?:[Ss]itemap (?:contains|有) ${sitemap} URLs|${sitemap} sitemap URLs)`));
-      expect(document).toContain("169 manifest entry points");
-      expect(document).toContain("169 guest actions");
-      expect(document).toContain("41 public schema routes");
-    }
+  test("documents the exact ZERO public routes and source-only command", () => {
+    // Global upload cardinalities are owned by stage-hub.test.ts.
+    expect(read("CLAUDE.md")).toContain("./kingdom zero-empty-seat verify --json");
+    expect(read("DOMAINS-SETUP.md")).toContain("/ZERO-EMPTY-SEAT.md");
     expect(read("README.md")).toContain("/atlases/zero-empty-seat-2026-08-14.json");
     expect(read("OS-ROUTES.md")).toContain("| `/ZERO-EMPTY-SEAT.md` |");
   });

@@ -282,7 +282,7 @@ font/img/connect 最多 self，冇 unsafe-inline／eval 或外站 allowlist。�
 exact headers/body checks。本輪用 fake fetch 同真正 loopback staged Worker；未查新 live
 Power routes。最新 manifest `af2e34926e4a367992536a17688f39de298f29c1c3db07683c3fca18780c7436`
 嘅 desktop／mobile Chrome 均通過導航、308 fragment、字型／chunks／favicon、
-零 CSP violation 同零外部 app requests；冇放寬 CSP。現行 upload256、direct254、
+零 CSP violation 同零外部 app requests；冇放寬 CSP。當時 upload256、direct254、
 sitemap187、Wayfinder17；舊204映射同 immutable ledger 保留。新舊收據、未發布
 jitless／notice 修訂、rollback、驗收 logs 同匯入／更新／移除方法見
 [Power Atlas integration](references/power-atlas-integration.md)，發布仍另批。
@@ -435,11 +435,11 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-鎖住 256-asset upload 合約（160 ledgered immutable/versioned assets 同
-96 mutable assets；254 direct public bodies、187 sitemap URLs、17 Wayfinder paths、169 manifest
-entry points、169 guest actions 同 41 public schema routes；eighteen atlases、
+鎖住 247-asset upload 合約（154 staged ledgered immutable/versioned assets 同
+93 mutable assets；245 direct public bodies、177 sitemap URLs、15 Wayfinder paths、159 manifest
+entry points、159 guest actions 同 41 public schema routes；eighteen atlases、
 four primary lab JSON routes plus the Shape & Resonance manifest/media, one
-experiment route, one activation, and thirty-five active retirement families,
+experiment route, one activation, and thirty-three active retirement families,
 including the standalone FREEDOM Loop, Lock & Key Atlas, immutable
 Non-Exhaustive Understanding Atlas, immutable IS, Sustainability & Direction
 Atlas, static-synthetic Polyphonic Claim Atlas,

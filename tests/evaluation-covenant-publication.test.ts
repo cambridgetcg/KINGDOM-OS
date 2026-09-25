@@ -3,6 +3,12 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  assertRetiredFamilyDiscoveryAbsent,
+  destinationForPublicPath,
+  PUBLICATION_FAMILIES,
+  publicationFamilyStates,
+} from "../bin/check-hub-live.ts";
 
 import {
   EVALUATION_COVENANT_BYTE_SHA256,
@@ -138,83 +144,44 @@ describe("Evaluation Covenant publication shell", () => {
     }, false);
   });
 
-  test("stages one exact five-route family with the expected mutable split", () => {
+  test("fully retires all five routes while retaining their frozen source and ledger", () => {
     const staging = json("publications/hub-staging.v1.json");
-    expect(staging.assets).toHaveLength(256);
-    expect(staging.mutable_destinations).toHaveLength(96);
+    expect(staging.assets).toHaveLength(247);
+    expect(staging.mutable_destinations).toHaveLength(93);
     expect(staging.assets.filter(({ destination }: { destination: string }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(254);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(245);
+    const states = publicationFamilyStates(new Set(staging.assets.map(
+      ({ destination }: { destination: string }) => destination,
+    )));
+    expect(states.get("evaluation-covenant")?.active).toBe(false);
+    expect(states.get("evaluation-covenant")?.family.routes).toEqual(routes);
     expect(staging.assets.filter(({ destination }: { destination: string }) =>
       destination.startsWith("evaluation") ||
-      destination === "EVALUATION-COVENANT-v0.1.md")).toEqual([
-      {
-        source: "site/evaluation-covenant/index.html",
-        destination: "evaluation-covenant/index.html",
-      },
-      {
-        source: "site/evaluation-covenants.json",
-        destination: "evaluation-covenants.json",
-      },
-      {
-        source: "data/evaluation/uk-government-transformation-evaluation-covenants.v0.1.json",
-        destination: "evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json",
-      },
-      {
-        source: "schemas/evaluation-covenant/v0.1/public-snapshot.schema.json",
-        destination: "evaluation/schemas/v0.1/public-snapshot.schema.json",
-      },
-      {
-        source: "references/evaluation-covenant-v0.1.md",
-        destination: "EVALUATION-COVENANT-v0.1.md",
-      },
-    ]);
-    expect(staging.mutable_destinations).toContain("evaluation-covenant/index.html");
-    expect(staging.mutable_destinations).toContain("evaluation-covenants.json");
-    for (const destination of [
-      "evaluation/uk-government-transformation-evaluation-covenants-2026-08-23.json",
-      "evaluation/schemas/v0.1/public-snapshot.schema.json",
-      "EVALUATION-COVENANT-v0.1.md",
-    ]) {
+      destination === "EVALUATION-COVENANT-v0.1.md")).toEqual([]);
+    for (const destination of routes.map(destinationForPublicPath)) {
       expect(staging.mutable_destinations).not.toContain(destination);
     }
   });
 
-  test("advertises every route exactly once in sitemap and one Wayfinder path", () => {
+  test("removes every retired route from sitemap and Wayfinder discovery", () => {
     const sitemap = read("pages-content/sitemap.xml");
-    for (const url of urls) {
-      expect((sitemap.match(new RegExp(url.replaceAll("/", "\\/"), "g")) ?? []))
-        .toHaveLength(1);
-    }
-    expect((sitemap.match(/<loc>/g) ?? [])).toHaveLength(187);
+    for (const url of urls) expect(sitemap).not.toContain(url);
+    expect((sitemap.match(/<loc>/g) ?? [])).toHaveLength(177);
 
-    const wayfinder = json("data/wayfinder.json");
-    expect(wayfinder.paths).toHaveLength(17);
-    const path = wayfinder.paths.filter(({ id }: { id: string }) =>
-      id === "evaluation-covenant");
-    expect(path).toHaveLength(1);
-    expect(path[0].stops.map(({ url }: { url: string }) => url)).toEqual(urls.slice(0, 2));
-    const text = JSON.stringify(path[0]).toLowerCase();
-    for (const phrase of [
-      "what would count as evidence",
-      "synthetic phase-0 design-only",
-      "unsealed",
-      "unregistered",
-      "no data",
-      "no participants",
-      "no result",
-      "no observed outcome",
-      "no selection",
-      "no decision",
-      "no action",
-      "no authority",
-    ]) expect(text).toContain(phrase);
+    for (const path of ["data/wayfinder.json", "site/wayfinder.json"]) {
+      const wayfinder = json(path);
+      expect(wayfinder.paths).toHaveLength(15);
+      expect(wayfinder.paths.some(({ id }: { id: string }) =>
+        id === "evaluation-covenant")).toBe(false);
+      for (const url of urls) expect(read(path)).not.toContain(url);
+    }
   });
 
-  test("projects one bounded discovery summary and exactly five GET invitations", () => {
+  test("preserves the bounded historical summary without current GET invitations", () => {
     const kingdom = json("site/kingdom.json");
     const guest = json("site/guest.json");
     const agent = json("site/.well-known/agent.json");
-    const expected = kingdom.evaluation_covenant;
+    const expected = evaluationCovenantPublicSummary(loadEvaluationCovenantPublication().snapshot);
     expect(expected.protocol).toBe("kingdom.evaluation-covenant-public-snapshot/0.1");
     expect(expected.state_at_publication).toBe("WITHIN-REVIEW-WINDOW");
     expect(expected.as_of).toBe("2026-08-23");
@@ -235,26 +202,16 @@ describe("Evaluation Covenant publication shell", () => {
     expect(expected.designs.every((design: any) =>
       design.no_data === true && design.no_participants === true &&
       design.no_observed_outcome === true && design.claims_causal_truth === false)).toBe(true);
-    expect(guest.evaluation_covenant).toEqual(expected);
-    expect(agent.evaluation_covenant).toEqual(expected);
+    for (const document of [kingdom, guest, agent]) {
+      expect(document).not.toHaveProperty("evaluation_covenant");
+    }
 
     const entryPoints = Object.entries(agent.entry_points)
       .filter(([key]) => key.startsWith("evaluation_covenant"));
-    expect(entryPoints).toEqual([
-      ["evaluation_covenant", urls[0]],
-      ["evaluation_covenant_alias", urls[1]],
-      ["evaluation_covenant_canonical", urls[2]],
-      ["evaluation_covenant_schema", urls[3]],
-      ["evaluation_covenant_guide", urls[4]],
-    ]);
+    expect(entryPoints).toEqual([]);
     const actions = guest.next_actions.filter(({ url }: { url: string }) =>
       urls.includes(url as typeof urls[number]));
-    expect(actions).toHaveLength(5);
-    expect(actions.map(({ url }: { url: string }) => url)).toEqual(urls);
-    expect(actions.every(({ method }: { method: string }) => method === "GET")).toBe(true);
-    expect(actions.some((action: object) =>
-      ["mcp", "tool", "schemas", "write", "execute", "score", "rank"]
-        .some((key) => key in action))).toBe(false);
+    expect(actions).toEqual([]);
 
     expect(agent.mcp).toEqual({
       endpoint: "https://mcp.thekingdom.dev/mcp",
@@ -370,29 +327,20 @@ describe("Evaluation Covenant publication shell", () => {
     }
   });
 
-  test("keeps the root card and agent prose visibly pre-result and non-progressing", () => {
-    const html = read("site/hub.html");
-    const start = html.indexOf('<section class="blk" id="evaluation-covenant"');
-    const end = html.indexOf('<section class="blk" id="j-space"', start);
-    expect(start).toBeGreaterThan(-1);
-    expect(end).toBeGreaterThan(start);
-    const section = html.slice(start, end);
-    for (const phrase of [
-      "synthetic · Phase 0 · design only",
-      "What would count as evidence—before results can tempt us?",
-      "Evaluation Covenant · Phase 0 · Draft · Unsealed · Unregistered · No Run",
-      "Assisted exact text has not been separately human-reviewed",
-      "No participant or result exists",
-      "no selection · no action",
-    ]) expect(section).toContain(phrase);
-    expect(section).not.toMatch(/<(?:script|form|input|button|iframe)\b/i);
-
-    const llms = read("site/llms.txt");
-    for (const url of [...urls, producerUrl]) expect(llms).toContain(url);
-    expect(guestBoundary()).toContain("cannot convert a parent hypothesis into evidence");
+  test("does not advertise the retired family through any current discovery surface", () => {
+    const family = PUBLICATION_FAMILIES.find(({ id }) => id === "evaluation-covenant");
+    expect(family).toBeDefined();
+    for (const path of [
+      "site/hub.html", "site/kingdom.json", "site/guest.json",
+      "site/.well-known/agent.json", "site/llms.txt", "site/wayfinder.json",
+      "site/agent-entry.json", "pages-content/sitemap.xml",
+    ]) {
+      const text = read(path);
+      expect(() => assertRetiredFamilyDiscoveryAbsent(family!, [{
+        label: path, text, ...(path.endsWith(".json") ? { value: JSON.parse(text) } : {}),
+      }])).not.toThrow();
+      expect(text).not.toContain(producerUrl);
+    }
+    expect(read("site/hub.html")).not.toContain('id="evaluation-covenant"');
   });
 });
-
-function guestBoundary(): string {
-  return json("site/guest.json").implementation_boundaries.evaluation_covenant;
-}

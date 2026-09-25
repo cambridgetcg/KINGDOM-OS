@@ -80,3 +80,6 @@ jobs:
 
       - name: Exercise immutable staging gate
         run: bun test tests/immutable-publications.test.ts tests/stage-hub.test.ts tests/check-hub-live-retirement.test.ts
+
+      - name: Verify private Cloudflare inventory and map contracts
+        run: python3 -m unittest discover -s tests -p 'test_cloudflare*.py'

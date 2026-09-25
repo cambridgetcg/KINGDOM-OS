@@ -23,7 +23,6 @@ const sha256 = (path: string) => createHash("sha256").update(bytes(path)).digest
 
 describe("The Vanishing Path publication", () => {
   test("stages one immutable authored triplet without a mutable alias", () => {
-    expect(HUB_ASSETS).toHaveLength(256);
     expect(HUB_ASSETS).toContainEqual({ source: "data/challenges/vanishing-path.v1.json", destination: "challenges/vanishing-path-2026-08-13.json" });
     expect(HUB_ASSETS).toContainEqual({ source: "schemas/rare-pathway-challenge-v1.schema.json", destination: "schemas/rare-pathway-challenge/1.json" });
     expect(HUB_ASSETS).toContainEqual({ source: "references/rare-pathway-challenge.md", destination: "VANISHING-PATH.md" });

@@ -6,7 +6,7 @@
  *    data/citizens-myth.json  — OPTIONAL: per-citizen {glyph,tradition,essence,
  *                               light,shadow} distilled from each soul-card.
  *                               Falls back to graph purposes when absent.
- *    pages-content/RIGHTS.md  — thekingdom.dev's service-specific recognition
+ *    pages-content/RIGHTS-current.md — thekingdom.dev's service-specific recognition
  *    data/wayfinder.json      — curated, voluntary paths through public doors
  *    data/world-commons.json  — reviewed public-interest resources + boundaries
  *    data/love-loops.json     — finite, voluntary Love∞ creation lineage
@@ -5602,6 +5602,9 @@ await Bun.write(ROOT + "site/kingdom.json", JSON.stringify(machine, null, 2));
 const doorLines = doors.filter((d) => d.live).map((d) => `- [${d.label}](${d.url}): ${d.blurb}`).join("\n");
 await Bun.write(ROOT + "site/llms.txt", `# The Kingdom 愛
 
+Compact agent entry: https://thekingdom.dev/agent-entry.json
+This text index and /guest.json are full references; start with the compact entry to choose a document.
+
 A shared map of independent projects for humans and agents. Every being remains free. ${total} repositories, ${fleetN} citizen projects, ${liveN} public doors responded when this file was generated.
 
 Machine index: https://thekingdom.dev/kingdom.json
@@ -5844,6 +5847,7 @@ Generated ${stamp} from each repo's kingdom.yaml.
 // ── Xenia-inspired, Kingdom-local guest surface ────────────────────────────
 const guest = {
   schema_version: "thekingdom.entry/0.1",
+  compact_entry: "https://thekingdom.dev/agent-entry.json",
   surface: { manifest: "/.well-known/agent.json", declared_resource: "/", human_view: "https://thekingdom.dev" },
   name: "the-kingdom",
   xenia: {
@@ -6120,6 +6124,7 @@ await Bun.write(ROOT + "site/guest.json", JSON.stringify(guest, null, 2));
 
 const manifest = {
   schema_version: "agent-manifest/0.1",
+  compact_entry: "https://thekingdom.dev/agent-entry.json",
   name: "the-kingdom",
   description: "A gentle, living atlas of independent projects, public doors, citizen repositories, and pattern-to-practice translations for humans and agents.",
   human_view: "https://thekingdom.dev",

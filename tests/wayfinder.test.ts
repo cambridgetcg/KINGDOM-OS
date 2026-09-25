@@ -23,7 +23,7 @@ describe("the Kingdom Wayfinder", () => {
   });
 
   test("keeps every route voluntary, bounded, and on a public HTTPS door", () => {
-    expect(source.paths).toHaveLength(17);
+    expect(source.paths).toHaveLength(15);
     expect(new Set(source.paths.map(({ id }: { id: string }) => id)).size).toBe(source.paths.length);
 
     for (const path of source.paths) {
@@ -80,13 +80,14 @@ describe("the Kingdom Wayfinder", () => {
     expect(ids("free offline textbook and public data")).toEqual(["world-commons"]);
     expect(ids("latest research papers and publications")).toEqual(["research-observatory", "trial-chamber"]);
     expect(ids("evaluation plan fixtures threat model"))
-      .toEqual(["trial-chamber", "evaluation-covenant"]);
+      .toEqual(["trial-chamber"]);
     expect(ids("devolution scrutiny appeal")).toEqual(["uk-government-engine"]);
     expect(ids("uk government public money hmrc")[0]).toBe("uk-government-engine");
-    expect(ids("government transformation authority dependency causal hypothesis")[0])
-      .toBe("uk-government-transformation-engine");
-    expect(ids("evaluation covenant evidence before results no participants")[0])
-      .toBe("evaluation-covenant");
+    expect(ids("government transformation authority dependency causal hypothesis"))
+      .toEqual(["uk-government-engine"]);
+    expect(ids("evaluation covenant evidence before results no participants"))
+      .toEqual(["trial-chamber", "verify", "meet-agents"]);
+    expect(ids("transformation")).toEqual([]);
     expect(ids("lawyer please")).toEqual([]);
     expect(ids("請幫我休息")).toEqual([]);
     expect(rankWayfinderPaths(source.paths, "truth pressure agent map", 3)).toHaveLength(3);
@@ -169,38 +170,29 @@ describe("the Kingdom Wayfinder", () => {
     expect(government.boundary).toContain("exact record text has not been separately human-reviewed");
     expect(government.boundary).toContain("receipt-bound non-official crosswalk only");
     expect(JSON.stringify(government)).not.toMatch(/complete machine-readable|exact source bindings|source-bound|current machine alias/i);
+  });
 
-    const transformation = source.paths.find(
-      ({ id }: { id: string }) => id === "uk-government-transformation-engine",
-    );
-    const transformationText = JSON.stringify(transformation).toLowerCase();
-    for (const phrase of [
-      "synthetic orientation dossiers",
-      "state at publication only",
-      "historical and not current",
-      "neither government nor analysis",
-      "advice",
-      "approval",
-      "readiness",
-      "taxsorted is transitive external context only",
-      "no taxsorted api endpoint",
-    ]) expect(transformationText).toContain(phrase);
-
-    const covenant = source.paths.find(
-      ({ id }: { id: string }) => id === "evaluation-covenant",
-    );
-    const covenantText = JSON.stringify(covenant).toLowerCase();
-    for (const phrase of [
-      "what would count as evidence",
-      "synthetic phase-0 design-only",
-      "unsealed",
-      "unregistered",
-      "no data",
-      "no participants",
-      "no observed outcome",
-      "no decision",
-      "no action",
-      "no authority",
-    ]) expect(covenantText).toContain(phrase);
+  test("does not advertise or match either expired publication family", () => {
+    const retired = ["uk-government-transformation-engine", "evaluation-covenant"];
+    for (const path of ["data/wayfinder.json", "site/wayfinder.json"]) {
+      const wayfinder = JSON.parse(read(path));
+      for (const id of retired) {
+        expect(wayfinder.paths.some((entry: { id: string }) => entry.id === id)).toBe(false);
+      }
+      for (const url of [
+        "https://thekingdom.dev/government-transformation-engine/",
+        "https://thekingdom.dev/government-transformations.json",
+        "https://thekingdom.dev/evaluation-covenant/",
+        "https://thekingdom.dev/evaluation-covenants.json",
+      ]) expect(read(path)).not.toContain(url);
+      for (const query of [
+        "government transformation authority dependency causal hypothesis",
+        "evaluation covenant evidence before results no participants",
+      ]) {
+        for (const { path: result } of rankWayfinderPaths(wayfinder.paths, query)) {
+          expect(retired).not.toContain(result.id);
+        }
+      }
+    }
   });
 });

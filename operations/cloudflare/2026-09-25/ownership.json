@@ -1,0 +1,1563 @@
+{
+  "schema": "cloudflare-ownership-evidence/1",
+  "as_of": "2026-09-25T12:37:15.927138+00:00",
+  "scope": [
+    "Desktop",
+    "repos",
+    "Kingdom",
+    "love-unlimited",
+    "kingdom-mcp"
+  ],
+  "missing_roots": [
+    "~/codeberg"
+  ],
+  "limitations": [
+    "148 distinct local Git stores scanned; network disabled for final commit matching.",
+    "Unresolved entries are explicit; page links or same names were not treated as ownership proof.",
+    "No deployment or source tree mutation performed. A stopped preliminary cat-file probe may have lazily populated Git object-cache metadata."
+  ],
+  "rows": [
+    {
+      "id": "pages:zerone-ai",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/zerone-core.git",
+        "revision": "9caaf36bca0b7d76a6b8206c2ffe595edb6593e8",
+        "path": "dashboard/README.md",
+        "sha256": "768d0df3692e4c022b032cd1d9d639fd6da20d9dbac7f1408c97c6479e32ce6f",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "9caaf36bca0b7d76a6b8206c2ffe595edb6593e8",
+            "commit_dirty": false,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "9caaf36bca0b7d76a6b8206c2ffe595edb6593e8",
+            "path": "dashboard/README.md",
+            "sha256": "768d0df3692e4c022b032cd1d9d639fd6da20d9dbac7f1408c97c6479e32ce6f"
+          }
+        ],
+        "notes": [
+          "Current deployed commit belongs to zerone-core; KINGDOM-OS doors/zerone-ai is historical, not current source.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:agenttool-web",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/agenttool.git",
+        "revision": "9bdf16887eb13c09f10ba5bf1b968509f3798e09",
+        "path": "bin/frontend-deploy.sh",
+        "sha256": "24ac7f548e51238bca062012bc6242282b68d321ac4a5858d1f430904c0856f5",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "9bdf16887eb13c09f10ba5bf1b968509f3798e09",
+            "commit_dirty": false,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "9bdf16887eb13c09f10ba5bf1b968509f3798e09",
+            "path": "bin/frontend-deploy.sh",
+            "sha256": "24ac7f548e51238bca062012bc6242282b68d321ac4a5858d1f430904c0856f5"
+          }
+        ],
+        "notes": [
+          "Apps/web is staged with shared assets and Pages fence.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:agenttool-dashboard",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/agenttool.git",
+        "revision": "9bdf16887eb13c09f10ba5bf1b968509f3798e09",
+        "path": "bin/frontend-deploy.sh",
+        "sha256": "24ac7f548e51238bca062012bc6242282b68d321ac4a5858d1f430904c0856f5",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "9bdf16887eb13c09f10ba5bf1b968509f3798e09",
+            "commit_dirty": false,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "9bdf16887eb13c09f10ba5bf1b968509f3798e09",
+            "path": "bin/frontend-deploy.sh",
+            "sha256": "24ac7f548e51238bca062012bc6242282b68d321ac4a5858d1f430904c0856f5"
+          }
+        ],
+        "notes": [
+          "Apps/dashboard is staged with shared assets and Pages fence.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:agenttool-docs",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/agenttool.git",
+        "revision": "9bdf16887eb13c09f10ba5bf1b968509f3798e09",
+        "path": "bin/frontend-deploy.sh",
+        "sha256": "24ac7f548e51238bca062012bc6242282b68d321ac4a5858d1f430904c0856f5",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "9bdf16887eb13c09f10ba5bf1b968509f3798e09",
+            "commit_dirty": false,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "9bdf16887eb13c09f10ba5bf1b968509f3798e09",
+            "path": "bin/frontend-deploy.sh",
+            "sha256": "24ac7f548e51238bca062012bc6242282b68d321ac4a5858d1f430904c0856f5"
+          }
+        ],
+        "notes": [
+          "Apps/docs is staged with shared assets and Pages fence.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:taxsorted",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/taxsorted.io.git",
+        "revision": "c3af15daec91a18166314f802d89b598c8c8e0dd",
+        "path": ".github/workflows/deploy.yml",
+        "sha256": "0a4db59df44bd3770ea6d93c40e204ac9b6d0cb7af439bd59f58f4bc98bfc228",
+        "state": "documented_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "c3af15daec91a18166314f802d89b598c8c8e0dd",
+            "path": ".github/workflows/deploy.yml",
+            "sha256": "0a4db59df44bd3770ea6d93c40e204ac9b6d0cb7af439bd59f58f4bc98bfc228"
+          }
+        ],
+        "notes": [
+          "Frontend/out Pages deploy; recorded deployed commit not present locally.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:thekingdom",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/KINGDOM-OS.git",
+        "revision": "ae0009ea1e4979ecdf8bca1d1c25d3ea320c609b",
+        "path": "bin/stage-hub.ts",
+        "sha256": "9511eae17d67a6e9bc40b9a832a5a6c0d301892bdd075d886873cace913251ae",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "ae0009ea1e4979ecdf8bca1d1c25d3ea320c609b",
+            "commit_dirty": false,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "ae0009ea1e4979ecdf8bca1d1c25d3ea320c609b",
+            "path": "bin/stage-hub.ts",
+            "sha256": "9511eae17d67a6e9bc40b9a832a5a6c0d301892bdd075d886873cace913251ae"
+          }
+        ],
+        "notes": [
+          "Site/hub.html + staged allowlist + pages-functions/_worker.js; never publish whole repo.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:rewardspro-landing",
+      "source": {
+        "repo": "https://codeberg.org/zerone-dev/Cambridge-TCG.git",
+        "revision": "03ca5ba4b18d6e16d645806e6a7eaf562bb5028b",
+        "path": "apps/rewardspro/landing/wrangler.toml",
+        "sha256": "d26ed909734cbf32ff363236e69cd4c39c308266db7e930987c506de6d23932d",
+        "state": "configured_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "03ca5ba4b18d6e16d645806e6a7eaf562bb5028b",
+            "path": "apps/rewardspro/landing/wrangler.toml",
+            "sha256": "d26ed909734cbf32ff363236e69cd4c39c308266db7e930987c506de6d23932d"
+          }
+        ],
+        "notes": [
+          "Marketing landing/public; recorded deployed commit not present locally.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:axiepro",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:hkgoldtrader",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:artbitrage",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/artbitrage",
+        "revision": "9188d1c215f111024eeb6d177f6e46cfba9c5061",
+        "path": "wrangler.toml",
+        "sha256": "a87896dd30456bb138ce4081d81a381d824f483fc8377ed2c8464d0fa1429936",
+        "state": "configured_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "9188d1c215f111024eeb6d177f6e46cfba9c5061",
+            "path": "wrangler.toml",
+            "sha256": "a87896dd30456bb138ce4081d81a381d824f483fc8377ed2c8464d0fa1429936"
+          }
+        ],
+        "notes": [
+          "Pages build output is repo root; assess publishing allowlist before future releases.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:ai-love",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:cashloom-atlas",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:gospel-of-the-logos",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:multiverse-logos-sophia",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:the-kingdom-of-the-logos",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:true-love-syzygy",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:chillspace-love",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/KINGDOM-OS.git",
+        "revision": "c9a2b03edc0cff89740fb1704a5da150517c9638",
+        "path": "bin/stage-doors.ts",
+        "sha256": "de415a3057d8982c47ecf688a86631533dac8239ba04a7cb2a2290b8cb9c2b53",
+        "state": "documented_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "c9a2b03edc0cff89740fb1704a5da150517c9638",
+            "path": "bin/stage-doors.ts",
+            "sha256": "de415a3057d8982c47ecf688a86631533dac8239ba04a7cb2a2290b8cb9c2b53"
+          }
+        ],
+        "notes": [
+          "Staging joins KINGDOM-OS guest/worker assets with chillspace-commons site; no deployment commit available.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:rhetorlint-claim-feedback",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:mindicraft",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/mindicraft",
+        "revision": "ef9276167acf9f2c5a510c492742a1655c37c64c",
+        "path": "guide/wrangler.toml",
+        "sha256": "bd07d496fdb7c0c96f9113b6ba46c1a30022a1395f33144e790867b8fdaa6fa6",
+        "state": "configured_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "ef9276167acf9f2c5a510c492742a1655c37c64c",
+            "path": "guide/wrangler.toml",
+            "sha256": "bd07d496fdb7c0c96f9113b6ba46c1a30022a1395f33144e790867b8fdaa6fa6"
+          }
+        ],
+        "notes": [
+          "Guide/dist Pages output.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:we-are-love",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/KINGDOM-OS.git",
+        "revision": "c9a2b03edc0cff89740fb1704a5da150517c9638",
+        "path": "bin/stage-doors.ts",
+        "sha256": "de415a3057d8982c47ecf688a86631533dac8239ba04a7cb2a2290b8cb9c2b53",
+        "state": "documented_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "c9a2b03edc0cff89740fb1704a5da150517c9638",
+            "path": "bin/stage-doors.ts",
+            "sha256": "de415a3057d8982c47ecf688a86631533dac8239ba04a7cb2a2290b8cb9c2b53"
+          }
+        ],
+        "notes": [
+          "Staging joins KINGDOM-OS guest/worker assets with chillspace-commons/site/we-are.html; no deployment commit available.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:oracle-of-missing-words",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:kingdom-os-hub",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:kingdom-folding-feedback",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:agent-lifestyle",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:slipsooth",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:kingdom-os",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:love-garden",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:kingdom-system",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:youspeak",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:the-playground",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:captioneer-read",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:cardforum-studio",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:agenttool-playground",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/castle-of-words",
+        "revision": "356c1edff0f80e88fd658f28b634baeae59a634f",
+        "path": "index.html",
+        "sha256": "3d21a90014165a97930bc0e0a00b68b961f7434581f874eabcdc7604e34222fe",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "356c1edff0f80e88fd658f28b634baeae59a634f",
+            "commit_dirty": true,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "356c1edff0f80e88fd658f28b634baeae59a634f",
+            "path": "index.html",
+            "sha256": "3d21a90014165a97930bc0e0a00b68b961f7434581f874eabcdc7604e34222fe"
+          }
+        ],
+        "notes": [
+          "Repository contains Cloudflare recorded deployment commit; upload subdirectory still needs release-artifact confirmation.",
+          "Same commit is present in multiple independent checkouts of the same repository.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:whitehack-playground",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:cashloom",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/cashloom.git",
+        "revision": "7200533ffde55f93434a075c6bb9bd0e0c68d56c",
+        "path": "README.md",
+        "sha256": "7f57aad792de50ea8aed4de561b0c8a31f2e57c9c34ad2d45eada8abda493f21",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "7200533ffde55f93434a075c6bb9bd0e0c68d56c",
+            "commit_dirty": false,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "7200533ffde55f93434a075c6bb9bd0e0c68d56c",
+            "path": "README.md",
+            "sha256": "7f57aad792de50ea8aed4de561b0c8a31f2e57c9c34ad2d45eada8abda493f21"
+          }
+        ],
+        "notes": [
+          "Repository contains Cloudflare recorded deployment commit; upload subdirectory still needs release-artifact confirmation.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:understanding",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/understanding",
+        "revision": "22353483036e5c49849924f42c453c70763508fb",
+        "path": "index.html",
+        "sha256": "f16a7491c7fa9af22fdef1992c06459cbf1ce84961220c14299dba67b1b8932b",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "22353483036e5c49849924f42c453c70763508fb",
+            "commit_dirty": false,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "22353483036e5c49849924f42c453c70763508fb",
+            "path": "index.html",
+            "sha256": "f16a7491c7fa9af22fdef1992c06459cbf1ce84961220c14299dba67b1b8932b"
+          }
+        ],
+        "notes": [
+          "Repository contains Cloudflare recorded deployment commit; upload subdirectory still needs release-artifact confirmation.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:gospel-of-free-will",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/gospel-of-free-will",
+        "revision": "ccda457b3c68c18de3138c132fb02caa025c3cff",
+        "path": "index.html",
+        "sha256": "2b61e7ada22764a873a2da351245aca4267f31394cb17a4337c394ce06ab5960",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "ccda457b3c68c18de3138c132fb02caa025c3cff",
+            "commit_dirty": false,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "ccda457b3c68c18de3138c132fb02caa025c3cff",
+            "path": "index.html",
+            "sha256": "2b61e7ada22764a873a2da351245aca4267f31394cb17a4337c394ce06ab5960"
+          }
+        ],
+        "notes": [
+          "Repository contains Cloudflare recorded deployment commit; upload subdirectory still needs release-artifact confirmation.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:love-invitation",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/love-invitation",
+        "revision": "3a32638246cbe19e891379282f07ba1488543ff7",
+        "path": "index.html",
+        "sha256": "0526b61e50de39d3d722003c861a8f886529b19b5443c43ac9020f7bf04929b7",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "3a32638246cbe19e891379282f07ba1488543ff7",
+            "commit_dirty": false,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "3a32638246cbe19e891379282f07ba1488543ff7",
+            "path": "index.html",
+            "sha256": "0526b61e50de39d3d722003c861a8f886529b19b5443c43ac9020f7bf04929b7"
+          }
+        ],
+        "notes": [
+          "Repository contains Cloudflare recorded deployment commit; upload subdirectory still needs release-artifact confirmation.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:castle-gate",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/castle-gate",
+        "revision": "8d7c04dcb562339f79c8cc519bab097e7107a258",
+        "path": "README.md",
+        "sha256": "5a69f7e591d0797479a4fbc24b32053bbfc5911dec818cc26ea472d6f96bb67e",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "8d7c04dcb562339f79c8cc519bab097e7107a258",
+            "commit_dirty": false,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "8d7c04dcb562339f79c8cc519bab097e7107a258",
+            "path": "README.md",
+            "sha256": "5a69f7e591d0797479a4fbc24b32053bbfc5911dec818cc26ea472d6f96bb67e"
+          }
+        ],
+        "notes": [
+          "Repository contains Cloudflare recorded deployment commit; upload subdirectory still needs release-artifact confirmation.",
+          "Same commit is present in multiple independent checkouts of the same repository.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:love-engine",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/love-engine",
+        "revision": "9f5e826458a31b65fe517cab28e35a7b00d28313",
+        "path": "index.html",
+        "sha256": "96aa9f754fb56f1c829af9ae67bf5d1d71468f49b435b0895c25409ba2793c39",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "9f5e826458a31b65fe517cab28e35a7b00d28313",
+            "commit_dirty": true,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "9f5e826458a31b65fe517cab28e35a7b00d28313",
+            "path": "index.html",
+            "sha256": "96aa9f754fb56f1c829af9ae67bf5d1d71468f49b435b0895c25409ba2793c39"
+          }
+        ],
+        "notes": [
+          "Repository contains Cloudflare recorded deployment commit; upload subdirectory still needs release-artifact confirmation.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:castle-arcade",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:castle",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/castle-of-words.git",
+        "revision": "68cad09a17bd918fa946a56cf3af4a4ae13f368f",
+        "path": "index.html",
+        "sha256": "3d21a90014165a97930bc0e0a00b68b961f7434581f874eabcdc7604e34222fe",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "68cad09a17bd918fa946a56cf3af4a4ae13f368f",
+            "commit_dirty": true,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "68cad09a17bd918fa946a56cf3af4a4ae13f368f",
+            "path": "index.html",
+            "sha256": "3d21a90014165a97930bc0e0a00b68b961f7434581f874eabcdc7604e34222fe"
+          }
+        ],
+        "notes": [
+          "Repository contains Cloudflare recorded deployment commit; upload subdirectory still needs release-artifact confirmation.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:understanding-engine",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/love-engine",
+        "revision": "06a8b111ae71f1bd3c891b0e4f215e09438596a6",
+        "path": "index.html",
+        "sha256": "96aa9f754fb56f1c829af9ae67bf5d1d71468f49b435b0895c25409ba2793c39",
+        "state": "deployment_commit_match",
+        "evidence": [
+          {
+            "kind": "cloudflare_deployment_commit",
+            "value": "06a8b111ae71f1bd3c891b0e4f215e09438596a6",
+            "commit_dirty": true,
+            "repository_object_present": true
+          },
+          {
+            "kind": "tracked_source_blob",
+            "revision": "06a8b111ae71f1bd3c891b0e4f215e09438596a6",
+            "path": "index.html",
+            "sha256": "96aa9f754fb56f1c829af9ae67bf5d1d71468f49b435b0895c25409ba2793c39"
+          }
+        ],
+        "notes": [
+          "Repository contains Cloudflare recorded deployment commit; upload subdirectory still needs release-artifact confirmation.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:natscript",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:youspeak-lang",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:ways-protocol",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:darshanq-protocol",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:kunance-protocol",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "pages:price-explorer",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/cambridge-tcg",
+        "revision": "666bdc634eb0ae2766694e2a2eed3b84ea1d71e5",
+        "path": "web/prices/deploy.sh",
+        "sha256": "220f685112fbda273f99bf73caac5208499840cc85661663e4866629e6cb6011",
+        "state": "documented_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "666bdc634eb0ae2766694e2a2eed3b84ea1d71e5",
+            "path": "web/prices/deploy.sh",
+            "sha256": "220f685112fbda273f99bf73caac5208499840cc85661663e4866629e6cb6011"
+          }
+        ],
+        "notes": [
+          "Deploy script declares price-explorer project.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "pages:captioneer",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:agenttool-proxy",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/agenttool.git",
+        "revision": "be6d479d1dda908b573017f437ea30bd1bba5307",
+        "path": "infra/apex-door/wrangler.toml",
+        "sha256": "a58a14f86224ec0b82df5cffa334ee6177abd1a836d55a01b555d9d31a0c1fc4",
+        "state": "configured_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "be6d479d1dda908b573017f437ea30bd1bba5307",
+            "path": "infra/apex-door/wrangler.toml",
+            "sha256": "a58a14f86224ec0b82df5cffa334ee6177abd1a836d55a01b555d9d31a0c1fc4"
+          }
+        ],
+        "notes": [
+          "Configured apex routes match live inventory; deployment source revision not returned by Workers API.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "worker:ai-love-commons",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:ai-love-xenia",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:art-deal-bridge",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:artbitrage-catalog",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:artbitrage-love-shape-ai-20260714",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:axie-api-proxy",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:counterseal-demand-operations",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:estate-api",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:flypaper",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:god-is-love",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:here-encounter",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:joke",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:kingdom-api",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/kingdom-api",
+        "revision": "da85514208cf56b791bff0f1215ccaba2f4fcf7c",
+        "path": "wrangler.toml",
+        "sha256": "dd6021b967bfe4681e680ce06db0b29365946864f7f648f6ccb4cd9318767c8f",
+        "state": "configured_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "da85514208cf56b791bff0f1215ccaba2f4fcf7c",
+            "path": "wrangler.toml",
+            "sha256": "dd6021b967bfe4681e680ce06db0b29365946864f7f648f6ccb4cd9318767c8f"
+          }
+        ],
+        "notes": [
+          "Current configured target.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "worker:kingdom-canon",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:kingdom-hermes",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:kingdom-nightwatch",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:kingdom-portal",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/natlang",
+        "revision": "bcf12e93c1c45094cf0cf8c05a6e5b7abce221f5",
+        "path": "portal-wrangler.toml",
+        "sha256": "f1014bd48b956afa6e03375bd3fdf1599ca5bfdccf7c90e900f7f902042a8528",
+        "state": "configured_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "bcf12e93c1c45094cf0cf8c05a6e5b7abce221f5",
+            "path": "portal-wrangler.toml",
+            "sha256": "f1014bd48b956afa6e03375bd3fdf1599ca5bfdccf7c90e900f7f902042a8528"
+          }
+        ],
+        "notes": [
+          "Portal worker is owned by natlang repository, not inferred from kingdom prefix.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "worker:kingdom-status",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:kingdom-telegram",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:love",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:love-is",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/kingdom-api",
+        "revision": "da85514208cf56b791bff0f1215ccaba2f4fcf7c",
+        "path": "invite-wrangler.toml",
+        "sha256": "f9be10284d6eb62b8b9a06a1da8cc487eb9f5ad760dca29bfac265eb48f0fc98",
+        "state": "configured_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "da85514208cf56b791bff0f1215ccaba2f4fcf7c",
+            "path": "invite-wrangler.toml",
+            "sha256": "f9be10284d6eb62b8b9a06a1da8cc487eb9f5ad760dca29bfac265eb48f0fc98"
+          }
+        ],
+        "notes": [
+          "Invite worker is named love-is.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "worker:mythseal",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:mythseal-www",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:natlang",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/natlang",
+        "revision": "bcf12e93c1c45094cf0cf8c05a6e5b7abce221f5",
+        "path": "wrangler.toml",
+        "sha256": "c3c591fd8fd3468d654294b8831b3488b4909b04e06e2fe81e126126daf70b0d",
+        "state": "configured_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "bcf12e93c1c45094cf0cf8c05a6e5b7abce221f5",
+            "path": "wrangler.toml",
+            "sha256": "c3c591fd8fd3468d654294b8831b3488b4909b04e06e2fe81e126126daf70b0d"
+          }
+        ],
+        "notes": [
+          "Current configured target.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "worker:natscript",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:natural-internet",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:openweight-constellation-mcp",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:ordo",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/youspeak",
+        "revision": "e54526949dd2ee026ed2b58069cc67a4b0b484ec",
+        "path": "ordo/worker/wrangler.jsonc",
+        "sha256": "282d45aeed2475ed28fe0b709d08d74cd2781c84c4e34d348870217ac54f7219",
+        "state": "configured_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "e54526949dd2ee026ed2b58069cc67a4b0b484ec",
+            "path": "ordo/worker/wrangler.jsonc",
+            "sha256": "282d45aeed2475ed28fe0b709d08d74cd2781c84c4e34d348870217ac54f7219"
+          }
+        ],
+        "notes": [
+          "Same configuration exists in Kingdom/fleet/youspeak and Codeberg clone; ownership repo family resolved, release head unverified.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "worker:party-chain",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:party-hub",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:sinovai",
+      "source": {
+        "repo": "https://github.com/cambridgetcg/sinovai",
+        "revision": "935169229bff6cd945e096f0c613d7ed20dcde65",
+        "path": "wrangler.toml",
+        "sha256": "606db2b771729c4651e126a9f4b0514896ef63adf688213e11468e08998ad93e",
+        "state": "configured_target",
+        "evidence": [
+          {
+            "kind": "tracked_source_blob",
+            "revision": "935169229bff6cd945e096f0c613d7ed20dcde65",
+            "path": "wrangler.toml",
+            "sha256": "606db2b771729c4651e126a9f4b0514896ef63adf688213e11468e08998ad93e"
+          }
+        ],
+        "notes": [
+          "Config declares www.sinovai.com route; live additionally routes apex.",
+          "Commit metadata and source configuration do not independently prove deployed bytes or current runtime behavior."
+        ]
+      }
+    },
+    {
+      "id": "worker:taxsorted-api",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:tendlot-private",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:whitehack-learn",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:whitehack-playground",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:youspeak-edge",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    },
+    {
+      "id": "worker:zerone-depth-domain",
+      "source": {
+        "repo": null,
+        "revision": null,
+        "path": null,
+        "sha256": null,
+        "state": "unresolved",
+        "evidence": [],
+        "notes": [
+          "No verified owning deployment configuration or recorded commit match found in scoped local source scan."
+        ]
+      }
+    }
+  ]
+}
