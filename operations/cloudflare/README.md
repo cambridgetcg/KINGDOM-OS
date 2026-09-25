@@ -4,6 +4,10 @@ Start with the [interactive map](2026-09-25/index.html),
 [machine observation](2026-09-25/surfaces.json),
 [framework](FRAMEWORK.md), or [roadmap](ROADMAP.md).
 
+For existing traffic, runtime and storage-operation telemetry, use the
+[private observation guide](OBSERVATION.md). Its daily local reports are
+separate from this dated deployment inventory and from public site content.
+
 The observation covers one authenticated account, 21 zones, 50 Pages projects,
 38 Workers, 39 custom Pages bindings, and 144 address/CNAME records across 135
 DNS hostnames. All 136 requested metadata sets completed. Of those custom
