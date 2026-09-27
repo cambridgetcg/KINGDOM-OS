@@ -44,7 +44,7 @@ describe("compact hub entry", () => {
       .toEqual([moduleLink]);
     expect(document.read.filter((entry: { url: string }) => entry.url !== moduleLink.url)).toEqual([
       { name: "World Commons catalog", url: "https://thekingdom.dev/commons.json" },
-      { name: "Public map and measured census", url: "https://thekingdom.dev/kingdom.json" },
+      { name: "Project registry and measurements", url: "https://thekingdom.dev/kingdom.json" },
       { name: "Wayfinder paths", url: "https://thekingdom.dev/wayfinder.json" },
       { name: "Current Civic availability", url: "https://thekingdom.dev/api/civic/status" },
       { name: "Civic interaction contract", url: "https://thekingdom.dev/CIVIC-v0.1.md" },
@@ -67,10 +67,11 @@ describe("compact hub entry", () => {
     const html = renderDashboardPage("explore", projectDashboardData({}));
     expect(html).toContain('<link rel="alternate" type="application/json" href="/agent-entry.json" title="Compact agent entry">');
     const doors = html.match(/<nav class="service-line" aria-label="Human and agent entries">([\s\S]*?)<\/nav>/)?.[1];
-    expect(doors).toContain("Human page");
-    expect(doors).toContain('href="/agent-entry.json"');
-    expect(doors).toContain('href="/guest.json"');
-    expect(doors).toContain("Full agent reference");
+    expect(doors).not.toMatch(/START HERE|Human page/);
+    expect(doors).toContain('<a href="#civic-modules">Modules</a>');
+    expect(doors).toContain('<a href="/agent-entry.json" type="application/json">Agent entry (JSON)</a>');
+    expect(doors).toContain('<a href="/guest.json" type="application/json">Full agent reference</a>');
+    expect([...doors!.matchAll(/<a\b/g)]).toHaveLength(3);
     expect(html.indexOf('aria-label="Human and agent entries"')).toBeLessThan(html.indexOf('class="hall-intro"'));
     expect(renderDashboardPage("meet", projectDashboardData({}))).not.toContain('title="Compact agent entry"');
   });

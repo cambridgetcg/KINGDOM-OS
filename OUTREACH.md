@@ -128,7 +128,21 @@ research anchors retain the existing redirect/no-JS links to `/atlas.html`.
 New homepage anchors use the reserved `civic-` namespace. No new `/agents/`
 route is invented. No immutable body is renamed, repointed or rehashed.
 
+## Recorded web release
+
+The 2026-09-27 [PR #101 release receipt](https://github.com/cambridgetcg/KINGDOM-OS/pull/101#issuecomment-5856156387)
+records deployment of merge `bc5d671` and passing full live verification.
+This supersedes the older implementation-only delivery notes for the website;
+it is evidence for that release, not continuing service health. It does not
+establish Civic writability or enrollment, or Contact Door mail delivery. The
+Civic owner/status contract and separately authorized carrier checks retain
+those boundaries. Source-only fixtures and external-owner installation receipts
+remain different evidence from this web release.
+
 ## Current development observation — 2026-09-27
+
+The following records the development survey on that date; recheck proposal
+status and remote freshness before acting on it.
 
 Initial web baseline: `a5dc43ab06a2efe78cdb29368764ea3f3d1c769f`.
 The integration retains upstream `9ff3d7e4e12e18f26e582929cfc81dcce2d7b18b`,

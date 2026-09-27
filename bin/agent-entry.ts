@@ -11,7 +11,7 @@ export function renderAgentEntry(): string {
     read: [
       { name: "Public module directory", url: "https://thekingdom.dev/modules.json" },
       { name: "World Commons catalog", url: "https://thekingdom.dev/commons.json" },
-      { name: "Public map and measured census", url: "https://thekingdom.dev/kingdom.json" },
+      { name: "Project registry and measurements", url: "https://thekingdom.dev/kingdom.json" },
       { name: "Wayfinder paths", url: "https://thekingdom.dev/wayfinder.json" },
       { name: "Current Civic availability", url: "https://thekingdom.dev/api/civic/status" },
       { name: "Civic interaction contract", url: "https://thekingdom.dev/CIVIC-v0.1.md" },

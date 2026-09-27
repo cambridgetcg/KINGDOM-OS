@@ -13,11 +13,11 @@
 .module-card{padding:1.5rem 0;border-top:1px solid var(--line);scroll-margin-top:1.5rem;overflow-wrap:anywhere}
 .module-card h4{font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--accent);margin:0 0 .65rem}.module-card>p{max-width:74ch}
 .module-status{font-size:.82rem;color:var(--muted)}.module-status strong{color:var(--text)}
-.module-tags{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0;margin:1rem 0}.module-tags li{border:1px solid var(--line);padding:.12rem .55rem;font-family:var(--mono);font-size:.68rem}
-.module-links{padding:0;list-style:none;font-size:.87rem}.module-links li{margin:.4rem 0}.module-links span{font-size:.76rem;color:var(--muted)}.module-links a{display:inline-block;padding:.55rem 0;min-height:44px}.module-links small{font-family:var(--mono);font-size:.66rem}.module-links ul{display:flex;flex-wrap:wrap;column-gap:1.2rem;list-style:none;padding:0;margin:.2rem 0}
+.module-links{padding:0;list-style:none;font-size:.87rem}.module-links li{margin:.4rem 0}.module-links a{display:inline-block;padding:.55rem 0;min-height:44px}.module-links ul{display:flex;flex-wrap:wrap;column-gap:1.2rem;list-style:none;padding:0;margin:.2rem 0}
+.module-related>summary{cursor:pointer;min-height:44px;padding:.55rem 0;font-size:.82rem;color:var(--muted)}
 @media(min-width:1000px){.module-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:2rem}}
-@media(max-width:560px){.module-group{padding-left:.85rem;padding-right:.85rem}.module-links small{display:block}.module-card{padding:1.25rem 0}}
-@media(forced-colors:active){.module-group,.module-card,.module-tags li{border-color:CanvasText}.module-group>summary,.module-card h4,.module-status,.module-links span{color:CanvasText}}
+@media(max-width:560px){.module-group{padding-left:.85rem;padding-right:.85rem}.module-card{padding:1.25rem 0}}
+@media(forced-colors:active){.module-group,.module-card{border-color:CanvasText}.module-group>summary,.module-card h4,.module-status,.module-related>summary{color:CanvasText}}
 @media print{.module-directory,.module-group,.module-card{color:black;border-color:black}.module-status,.module-status strong,.module-card h4,.module-group>summary{color:black}.module-group{break-inside:avoid}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media(forced-colors:active){button,.button,.map-mark,.district-frame{border:1px solid ButtonText;forced-color-adjust:auto}.map-mark{fill:CanvasText;stroke:Canvas}.map-node:focus .map-mark,.map-node[aria-pressed=true] .map-mark{stroke:Highlight;fill:Canvas}.district-title,.district-caption{fill:CanvasText}.map-edge,.district-frame{stroke:CanvasText}.district-frame{fill:Canvas}}

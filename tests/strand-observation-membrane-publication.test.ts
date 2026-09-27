@@ -361,7 +361,11 @@ describe("STRAND Observation Membrane public integration", () => {
     expect(liveChecker).toContain("checkStrandObservationMembraneTriple");
     expect(liveChecker).toContain('familyActive("strand-observation-membrane")');
     expect(liveChecker).not.toContain("observeStrandObservationMembraneLive");
-    for (const document of ["README.md", "CLAUDE.md", "DOMAINS-SETUP.md", "OS-ROUTES.md", "publications/README.md"]) {
+    for (const entrypoint of ["README.md", "CLAUDE.md"]) {
+      expect(read(entrypoint)).toContain("](references/kingdom-module-map.md)");
+    }
+    expect(read("references/kingdom-module-map.md")).toContain("](strand-observation-membrane.md)");
+    for (const document of ["references/strand-observation-membrane.md", "DOMAINS-SETUP.md", "OS-ROUTES.md", "publications/README.md"]) {
       expect(read(document)).toContain("STRAND Observation Membrane");
     }
   });

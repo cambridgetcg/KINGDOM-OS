@@ -19,6 +19,7 @@ const types = { ".html": "text/html", ".json": "application/json", ".css": "text
 const errors = [], external = [], checks = [];
 let mf, browser;
 try {
+  assert.deepEqual(catalogue, JSON.parse(await readFile(join(root, "data/public-modules.json"), "utf8")), "Rebuild site/modules.json before browser acceptance");
   await mkdir(stage);
   const staged = spawnSync("bun", ["--no-env-file", "bin/stage-hub.ts", stage], { cwd: root, encoding: "utf8" });
   assert.equal(staged.status, 0, staged.stderr);
@@ -59,17 +60,38 @@ try {
         return route.continue();
       });
       const page = await context.newPage();
+      const requests = [];
+      page.on("request", (request) => requests.push({ path: new URL(request.url()).pathname, method: request.method() }));
       page.on("pageerror", (error) => errors.push(error.message));
       page.on("console", (message) => { if (message.type() === "error" && /Content Security Policy|Refused to (?:load|execute|connect)/i.test(message.text())) errors.push(message.text()); });
       await page.goto(new URL("/#civic-modules", base).href, { waitUntil: "networkidle" });
       assert.equal(await page.locator(".module-card").count(), catalogue.modules.length);
       assert.equal(await page.locator(".module-group").count(), catalogue.groups.length);
+      assert.equal(await page.locator(".module-tags").count(), 0);
+      assert.equal(await page.locator("#civic-modules-title").textContent(), "Modules");
+      assert.deepEqual(await page.locator('nav[aria-label="Human and agent entries"] a').allTextContents(), ["Modules", "Agent entry (JSON)", "Full agent reference"]);
+      assert.equal(await page.locator("#civic-service-status").count(), 1);
+      assert.equal(await page.locator(".square-window #civic-service-status").count(), 1);
+      assert.equal(await page.locator(".square-window #civic-refresh-status").count(), 1);
+      assert.ok(await page.locator("#civic-modules").evaluate((directory) => Boolean(directory.compareDocumentPosition(document.getElementById("civic-service-status")) & Node.DOCUMENT_POSITION_FOLLOWING)));
       for (const module of catalogue.modules) {
         const card = page.locator(`#civic-module-${module.id}`);
         assert.equal(await card.isVisible(), true, `${width}/${javaScriptEnabled}: ${module.id}`);
         assert.ok((await card.textContent()).includes(module.purpose));
-        const urls = await card.locator(":scope > ul.module-links a").evaluateAll((links) => links.map((link) => link.href));
-        assert.deepEqual(urls, module.links.map((link) => link.url));
+        const links = card.locator(":scope > ul.module-links");
+        assert.equal(await links.evaluate((list) => list.previousElementSibling.textContent), module.purpose);
+        const entries = await links.locator("a").evaluateAll((anchors) => anchors.map((a) => ({ url: a.href, format: a.type })));
+        const uniqueLinks = module.links.filter((link, index, all) => all.findIndex((other) => other.url === link.url) === index);
+        assert.deepEqual(entries, uniqueLinks.map(({ url, format }) => ({ url, format })));
+        assert.doesNotMatch(await links.textContent(), /\b(?:Human|Agent)\b|text\/|application\//);
+        const related = card.locator(":scope > details.module-related");
+        assert.equal(await related.count(), module.related_ids.length ? 1 : 0);
+        if (module.related_ids.length) {
+          assert.equal(await related.getAttribute("open"), null);
+          assert.equal(await related.locator("summary").textContent(), "Related reading");
+          assert.deepEqual(await related.locator("a").evaluateAll((anchors) => anchors.map((a) => a.hash)), module.related_ids.map((id) => `#civic-module-${id}`));
+          assert.equal(await related.locator("a").first().isVisible(), false);
+        }
       }
       if (width >= 1000) {
         const first = await page.locator("#civic-module-wayfinder").boundingBox();
@@ -83,10 +105,35 @@ try {
       assert.equal(await page.locator(".module-group").first().getAttribute("open"), null);
       await page.keyboard.press("Enter");
       assert.notEqual(await page.locator(".module-group").first().getAttribute("open"), null);
+      const related = page.locator("#civic-module-wayfinder > .module-related");
+      await related.locator("summary").focus(); await page.keyboard.press("Enter");
+      assert.notEqual(await related.getAttribute("open"), null);
+      const target = page.locator("#civic-module-workshop");
+      const targetGroup = page.locator(".module-group").filter({ has: target });
+      await targetGroup.locator(":scope > summary").click();
+      assert.equal(await target.isVisible(), false);
+      await related.locator('a[href="#civic-module-workshop"]').click();
+      await target.waitFor({ state: "visible" });
+      assert.notEqual(await targetGroup.getAttribute("open"), null, "related anchors must reveal a closed destination group");
+      await related.locator("summary").focus(); await page.keyboard.press("Enter");
+      assert.equal(await related.getAttribute("open"), null);
+      if (javaScriptEnabled) {
+        const before = requests.filter(({ path }) => path === "/api/civic/status").length;
+        await Promise.all([
+          page.waitForResponse((response) => new URL(response.url()).pathname === "/api/civic/status"),
+          page.locator("#civic-refresh-status").click(),
+        ]);
+        await page.waitForFunction(() => !document.getElementById("civic-refresh-status").disabled);
+        assert.equal(requests.filter(({ path }) => path === "/api/civic/status").length, before + 1);
+      } else {
+        assert.equal(requests.filter(({ path }) => path === "/api/civic/status").length, 0);
+      }
+      assert.ok(requests.every(({ method }) => method === "GET"), "navigation and refresh must not submit writes");
+      await page.locator("#civic-modules-title").scrollIntoViewIfNeeded();
       if (process.env.OUTREACH_SCREENSHOTS) {
         await page.screenshot({ path: join(process.env.OUTREACH_SCREENSHOTS, `modules-${width}-${javaScriptEnabled ? "js" : "nojs"}.png`) });
       }
-      checks.push(`${width}px ${javaScriptEnabled ? "JS" : "no-JS"}: all cards/links, no overflow, keyboard disclosure`);
+      checks.push(`${width}px ${javaScriptEnabled ? "JS" : "no-JS"}: unique typed links, optional related reading, cross-group anchors, scoped Civic status, no overflow or writes`);
       await context.close();
     }
   }

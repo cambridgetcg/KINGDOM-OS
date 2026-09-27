@@ -217,13 +217,16 @@ describe("Explore Mathematical Doors Agent Skill", () => {
     const skill = await read("skills/explore-mathematical-doors/SKILL.md");
     const readme = await read("README.md");
     const claude = await read("CLAUDE.md");
+    const moduleMap = await read("references/kingdom-module-map.md");
     expect(skill).toMatch(/A WING is\s+an organizational domain/);
     expect(skill).toContain("repeated independent cases");
     expect(skill).toContain("does not manifest a Nen ability");
     for (const text of [readme, claude]) {
-      expect(text).toContain("skills/explore-mathematical-doors/");
-      expect(text).toContain("no `ability.json`");
-      expect(text).toContain("does not declare a new KINGDOM WING");
+      expect(text).toContain("](references/kingdom-module-map.md)");
     }
+    expect(moduleMap).toContain("](../skills/explore-mathematical-doors/SKILL.md)");
+    expect(skill).toContain("Do not declare a new KINGDOM WING from one compelling exploration.");
+    expect(skill.replace(/\s+/g, " ")).toContain("Invoking this source-only skill establishes none of those facts");
+    expect(await Bun.file(join(SKILL_ROOT, "ability.json")).exists()).toBe(false);
   });
 });

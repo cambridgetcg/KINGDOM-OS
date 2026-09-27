@@ -185,12 +185,16 @@ export function renderModuleCatalog(value: PublicModuleCatalog = PUBLIC_MODULE_C
 }
 
 const BEHAVIOR_LABELS: Record<PublicModuleBehavior, string> = {
-  "browser-local": "Browser-local",
-  "runtime-gated": "Runtime-gated",
+  "browser-local": "In your browser",
+  "runtime-gated": "Requires service",
   "static-reference": "Static reference",
   snapshot: "Snapshot",
   discovery: "Discovery",
   "external-service": "External service",
+};
+const LINK_FORMAT_LABELS: Record<PublicModuleLink["format"], string> = {
+  "text/html": "", "application/json": "JSON", "text/markdown": "Markdown",
+  "text/plain": "Text", "application/mcp": "MCP",
 };
 const escapeHtml = (value: string): string => value.replace(/[&<>"']/g,
   (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]!);
@@ -204,16 +208,19 @@ export function renderModuleDirectory(value: PublicModuleCatalog = PUBLIC_MODULE
   const card = (module: PublicModule): string => `<article id="civic-module-${esc(module.id)}" class="module-card" aria-labelledby="civic-module-label:${esc(module.id)}">
   <h4 id="civic-module-label:${esc(module.id)}">${esc(module.label)}</h4>
   <p>${esc(module.purpose)}</p>
+  <ul class="module-links" aria-label="Entry links">${module.links.filter((link, index, links) => links.findIndex((other) => other.url === link.url) === index).map((link) => {
+    const format = LINK_FORMAT_LABELS[link.format];
+    const label = link.label + (format && !link.label.endsWith(format) ? ` (${format})` : "");
+    return `<li><a href="${esc(link.url)}" type="${esc(link.format)}">${esc(label)}</a></li>`;
+  }).join("")}</ul>
   <p class="module-status"><strong>${esc(BEHAVIOR_LABELS[module.behavior])}</strong> · ${esc(module.status_note)}</p>
-  <ul class="module-tags" aria-label="Tags">${module.tags.map((tag) => `<li>${esc(tag)}</li>`).join("")}</ul>
-  <ul class="module-links" aria-label="Human and agent entry links">${module.links.map((link) => `<li><span>${link.audience === "human" ? "Human" : "Agent"}</span> · <a href="${esc(link.url)}" type="${esc(link.format)}">${esc(link.label)}</a> <small>${esc(link.format)}</small></li>`).join("")}</ul>
-  ${module.related_ids.length ? `<nav class="module-links" aria-label="Related entries"><span>Related reading</span><ul>${module.related_ids.map((id) => `<li><a href="#civic-module-${esc(id)}">${esc(byId.get(id)!.label)}</a></li>`).join("")}</ul></nav>` : ""}
+  ${module.related_ids.length ? `<details class="module-related"><summary>Related reading</summary><nav class="module-links" aria-label="Related entries"><ul>${module.related_ids.map((id) => `<li><a href="#civic-module-${esc(id)}">${esc(byId.get(id)!.label)}</a></li>`).join("")}</ul></nav></details>` : ""}
 </article>`;
   const html = `<section id="civic-modules" class="module-directory" aria-labelledby="civic-modules-title">
-  <h2 id="civic-modules-title">Public modules · 公共入口</h2>
+  <h2 id="civic-modules-title">Modules</h2>
   <p>${esc(value.purpose)}</p>
-  <p class="module-links"><a href="/modules.json" type="application/json">Agent · Module catalogue (JSON)</a></p>
-  <p class="module-status">Audience labels are presentation, not access control. Listing grants no action; links do not prove availability. Related links are navigation companions, not runtime integration, dependencies, equivalence, or authority.</p>
+  <p class="module-links"><a href="/modules.json" type="application/json">Module catalogue (JSON)</a></p>
+  <p class="module-status">Links do not grant permission or verify availability. Related reading does not imply integration.</p>
   ${value.groups.map((group) => `<details class="module-group" open>
     <summary><h3 id="civic-modules-group-${esc(group.id)}">${esc(group.label)}</h3></summary>
     <p>${esc(group.purpose)}</p>

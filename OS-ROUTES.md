@@ -435,16 +435,11 @@ content types, derived-field preservation, partial and total upstream failure,
 full-lifetime streaming timeouts, missing-base 503 behavior, HEAD, the observed
 method parity, static fallback, and shared-host isolation. The console test
 executes its real encoder against hostile attribute text. `tests/stage-hub.test.ts`
-鎖住 247-asset upload 合約（154 staged ledgered immutable/versioned assets 同
-93 mutable assets；245 direct public bodies、177 sitemap URLs、15 Wayfinder paths、159 manifest
-entry points、159 guest actions 同 41 public schema routes；eighteen atlases、
-four primary lab JSON routes plus the Shape & Resonance manifest/media, one
-experiment route, one activation, and thirty-three active retirement families,
-including the standalone FREEDOM Loop, Lock & Key Atlas, immutable
-Non-Exhaustive Understanding Atlas, immutable IS, Sustainability & Direction
-Atlas, static-synthetic Polyphonic Claim Atlas,
-and frozen Loops, Locks & Freedom
-Relations Atlas record/schema/guide triples. The two freedom-related atlas
+checks the exact [current staging contract](publications/hub-staging.v1.json)
+and its mutable/immutable classification. Counts are derived from that contract,
+not maintained as another inventory here. Family purposes and lifecycle belong
+to the [module map](references/kingdom-module-map.md) and
+[publication guide](publications/README.md). The two freedom-related atlas
 families are independent: neither supersedes, validates, aliases, depends on,
 or supplies authority to the other; overlapping words are not wire or semantic
 equivalences, and neither is a preferred default. Non-Exhaustive Understanding
@@ -462,16 +457,16 @@ and its declared hash together is not a correction.
 recognizes the three OS worker routes and exact Civic API route shapes so a dynamic
 URL cannot be mistaken for a staged file; misspelled Civic paths are rejected.
 `tests/civic-integration.test.ts` covers dispatch, unavailable status, separate Civic
-同 Contact CSP、immutable guide/schema headers、202 direct-body source mappings、
+同 Contact CSP、immutable guide/schema headers、direct-body source mappings、
 self-contained bundle execution、cross-checkout deterministic output、build failure
-without overwrite，同全部 204 staged bytes。`tests/workshop-worker.test.ts` 獨立用假
+without overwrite，同完整 staged bytes。`tests/workshop-worker.test.ts` 獨立用假
 ASSETS 驗證工房 GET/HEAD、405/404、canonical query 丟棄、MIME、CSP、mutable cache、
 HTTP body validity、串流、無 upstream 同 hostname isolation；唔依賴 site regeneration。
-`tests/immutable-publications.test.ts`
-compares the two new Civic entries with exact implementation base
-`7a99cc685048a525efc6e42cc875b7db3e94f0e0`, retaining all 158 earlier objects and
-source bytes. Local snapshot/append-only evidence is not the committed release CLI
-proof; with HEAD still equal to that base, `--base` remains fail-closed.
+`tests/immutable-publications.test.ts` retains a historical Civic fixture against
+implementation base `7a99cc685048a525efc6e42cc875b7db3e94f0e0`, including its
+158 earlier objects and source bytes. That fixture is not the current release
+comparison base: verify the exact release commit against its own first parent
+as required by the runbook.
 `stage-doors.ts` separately awaits `buildPagesWorker(sourceRoot)` to write the
 self-contained `site/_worker.js`, then exact-copies it, rather than staging
 unbundled source. It refuses build/output directory overlap (including resolved
@@ -479,11 +474,10 @@ symlink aliases), checks the empty output before and after the asynchronous
 build, and keeps a previous bundle/upload untouched on bundle failure.
 `tests/stage-doors.test.ts` verifies those boundaries with local fixture roots;
 it does not verify a real commons checkout or any other door online.
-`CLAUDE.md` remains the pre-Civic research compatibility baseline. Current
-publication counts belong to this document, `DOMAINS-SETUP.md`, and
-`publications/README.md`; a passing baseline check does not certify a current
-release. Production stays manual and separately approved, using the clean,
-detached exact-origin release procedure in `DOMAINS-SETUP.md`.
+`CLAUDE.md` is the current agent entrypoint, not a frozen pre-Civic baseline.
+A passing historical fixture does not certify a current release. Follow the
+clean, detached exact-origin release procedure in `DOMAINS-SETUP.md`, including
+required approval and a read of the existing Pages auto-deploy configuration.
 The ZERO Empty Seat record reuses the inert Phenomena DEEP project profile.
 Its historical notation, operational nothing, modern mathematical identities,
 typed information states, `NO_ACTION`, and opt-in metaphysical readings remain

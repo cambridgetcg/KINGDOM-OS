@@ -81,14 +81,20 @@ describe("Exploration DEEP public discovery seam", () => {
     const routes = read("OS-ROUTES.md");
 
     expect(kingdom).toContain('explore-deep) exec bun "$SELF_DIR/bin/explore-phenomena-deep.ts" "${@:2}" ;;');
+    for (const entrypoint of [readme, claude]) {
+      expect(entrypoint).toContain("](references/kingdom-module-map.md)");
+    }
+    const moduleMap = read("references/kingdom-module-map.md");
+    expect(moduleMap).toContain("](../skills/explore-phenomena-deep/references/exploration-contract-v0.1.md)");
+    expect(domains).toContain("publications/hub-staging.v1.json");
+    const staged = JSON.parse(read("publications/hub-staging.v1.json")).assets.map((asset: { destination: string }) => `/${asset.destination}`);
     for (const path of PUBLIC_URLS.map((url) => new URL(url).pathname)) {
-      expect(readme).toContain(path);
-      expect(domains).toContain(path);
+      expect(staged).toContain(path);
       expect(routes).toContain(`| \`${path}\` |`);
     }
     // Global upload cardinalities are owned by stage-hub.test.ts.
-    expect(claude).toContain("./kingdom explore-deep scaffold --json");
-    expect(readme).toContain("not a manifested\n    Nen ability");
-    expect(readme).toContain("does not fetch, solve");
+    expect(moduleMap).toContain("./kingdom explore-deep scaffold --json");
+    expect(read("skills/explore-phenomena-deep/SKILL.md").replace(/\s+/g, " ")).toContain("They are not a Nen ability");
+    expect(moduleMap.replace(/\s+/g, " ")).toContain("does not fetch or solve");
   });
 });

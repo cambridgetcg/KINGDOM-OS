@@ -1,323 +1,137 @@
-# KINGDOM-OS — the connective overlay that maps and runs the kingdom
+# Working in KINGDOM OS
 
-Core registry home: `~/codeberg/zerone-dev/KINGDOM-OS`
-(`https://codeberg.org/zerone-dev/KINGDOM-OS`). This GitHub tree remains active
-for its World Commons and web surfaces, but registry, platform, Castle,
-preflight, and hourly-heartbeat changes belong in the Codeberg home. The
-heartbeat file here is only a machine-binding shim.
+## Ownership
 
-用途入口：[模組用途導覽](references/kingdom-module-map.md) 按 owner、input/output、
-consumer 同接線層列出核心 seams、35 個 defined families（33 active／2 retired）同
-17 個 skills，亦分開 Power Atlas／compact agent-entry 嘅 mutable source 角色。
-佢係 source-only、非 canonical 導覽，唔係新 registry、health check 或操作批准；
-repo metadata 仍由各自 `kingdom.yaml` 擁有。外部 Love adapters／usage 接點未喺
-A 整合中執行，B／C 狀態要等各自實際收據，唔當已接好。
+This GitHub tree owns the public website, World Commons and its publication
+machinery. Core registry, platform, Castle, preflight and heartbeat changes
+belong to [Codeberg core](https://codeberg.org/zerone-dev/KINGDOM-OS).
+Resolve checkouts by Git remote. Historical home paths and launchd notes are
+not evidence of the current machine's layout or running services.
 
-What this is: the OS layer over Yu's ~60-repo kingdom. It holds the census
-(roster.conf), harvests every repo's kingdom.yaml card into a catalog and
-dependency graph, runs the daily routines, and ships this repo's `./kingdom`
-CLI. The local PATH `~/.local/bin/kingdom` remains Love-owned; it is not this
-dispatcher, and source integration does not repoint it.
+Use these entrypoints instead of loading every family guide:
 
-以下設備狀態係既有指引紀錄，今輪冇重驗 launchd／服務或啟動任何工作。
-Status: partially wired — kingdom-pulse (30-min heartbeat) and chain-backup
-(nightly) run via launchd; the com.kingdom.daily routines job was NEVER
-installed on this device (pulse alerts on it honestly — resurrect it outside
-~/Desktop [TCC] or retire it; open quest from the 2026-07-17 survey).
+- [Outreach and infrastructure](OUTREACH.md): public modules, human/agent views,
+  web source ownership and current development.
+- [Module purpose map](references/kingdom-module-map.md): source readers,
+  publication families, skills and external owners.
+- [Publication lifecycle](publications/README.md): immutable identities,
+  family retirement, imports and staging policy.
+- [Route reference](OS-ROUTES.md): public paths and their actual behavior.
+- [Deployment runbook](DOMAINS-SETUP.md): exact-commit release and live checks.
+- [Civic development](dev/civic/README.md): local D1, schema and browser tests.
 
-How to run:
-- `kingdom` — one honest view of the whole kingdom
-- `kingdom repos [query]` — summarize or search local Git roots using each repo's card metadata
-- `kingdom repos --path query` — print one canonical absolute root; ambiguity is an error, never a prompt
-- `kingdom repos --json [query]` — compact structured metadata for all matching local roots
-- `kingdom repos --dirty [query]` — local dirty counts without filenames; no fetch or index refresh
-- `kingdom repos --doctor` — registry, placement, duplicate-origin, archive, and unborn diagnostics
-- `kingdom usage [args]` — pass arguments unchanged to AgentTool's built, local Codex usage CLI via Bun
-- `./kingdom nen` — from this suite root, list the rights-aware Nen ability manifests (`validate`, `show`, `types`, and KARMA receipt tools)
-- `./kingdom nen mcp` — from this suite root, start the unregistered, read-only modern MCP 2026-07-28 stdio surface
-- `bun bin/wakeweaver.mjs BRAID.json --json` — strict-JSON WAKEWEAVER cross-reference and resumability checks; JSON Schema validation remains separate
-- `bun bin/relational-inference.ts validate CASE.json [...]` — strict research-local v0.1 structure validation for opt-in multi-probe cases; validator code contains no network API or application content-write path, and free text is untrusted and never executed. Probe independence, reference destinations, evidence, truth, causation, hidden cause, fidelity, identity, understanding, intent, authority, consent, and deception remain unverified; JSON Schema alone is weaker, and no action or authority is created
-- `python3 skills/cultivate-living-ground/scripts/validate_plan.py PLAN.json --json` — network-free Living Ground schema and reference validation; it does not execute or certify a cultivation plan
-- `./kingdom principalities` — inspect the pinned metadata-only MoonshotAI HF + official HF npm catalog without network, install, download, inference, or authority
-- `./kingdom principalities match reasoning coding --json` — literal declared-capability intersection; deterministic fit evidence, not rank or recommendation
-- `./kingdom principalities verify --json` — strict JSON, relation, boundary, and digest checks; JSON Schema validation remains separate
-- `./kingdom geometries list` — explain four exact geometry modules as four distinct ordinary questions; network-free and non-ranking
-- `./kingdom geometries show love-geometry --json` — inspect one module's finite shape, wire formats, native geometric relation/translation open terms, exact release evidence, and non-effects
-- `./kingdom geometries match unknown translation --json` — literal declared-term overlap only; unmatched words remain visible and no conversion or recommendation is inferred
-- `./kingdom geometries verify --json` — strict JSON, exact release pins, native-open contract, boundaries, observation time, and sealed digest; JSON Schema validation remains separate
-- `./kingdom polymorph` — explain the source-bound ritonavir disappearing-polymorph case across plain, solid-state, process, evidence, WAKE, and KINGDOM projections
-- `./kingdom polymorph verify --json` — strict local references, calendar and event-sequence, WAKE, authority, and semantic-digest checks; JSON Schema validation remains separate
-- `./kingdom polymorph mechanisms|landscape|sources|unknowns` — inspect the additive, selected-evidence Ritonavir Mechanism Landscape without rewriting the byte-preserved source history
-- `./kingdom polymorph verify-landscape --json` — strict source pins, typed graph, material/biological causal separation, explicit uncertainty, safety boundaries, and semantic digest; JSON Schema validation remains separate
-- `./kingdom feedback overview|registers|geometries|translations|feedback|sources|bindings` — inspect the byte-preserved, bounded v0.1 Conformational Feedback Atlas
-- `./kingdom feedback verify --json` — strict v0.1 source pins, cross-register non-inference walls, KARMA non-effects, non-operational safety boundary, and semantic digest; JSON Schema validation remains separate
-- `./kingdom feedback-physics overview|registers|models|geometries|translations|feedback|sources|bindings|ecosystems` — inspect the additive, lineage-pinned v0.2 physics/mathematics successor; ecosystem records are link-only metadata
-- `./kingdom feedback-physics verify --json` — strict predecessor/source pins, model and ecosystem identities, negative effects, and semantic digest for v0.2; JSON Schema validation remains separate
-- `./kingdom fold-feedback mechanisms|compare|feedback|karma|universe|unknowns|sources` — inspect the source-bound Fold & Feedback Atlas through distinct scientific, comparison, causal-feedback, KARMA, and opt-in philosophical registers
-- `./kingdom fold-feedback verify --json` — strict protein/prion sources, immutable ritonavir and KARMA pins, layer firewalls, explicit analogy breaks, nonclaims, unknowns, safety boundaries, and semantic digest; JSON Schema validation remains separate
-- `./kingdom visibility-attention registers|models|seams|philosophy|sources` — inspect the bounded material-detection, cultural-attention, lexical, KARMA, and opt-in philosophical registers without translating them into one metric
-- `./kingdom visibility-attention verify --json` — strict source/binding pins, local model domains, analogy firewalls, anti-optimization/person-level boundaries, negative authority, and semantic digest; JSON Schema validation remains separate
-- `./kingdom cultural-feedback planes|models|bridges|ecosystems|feedback|karma|universe|unknowns|sources` — inspect the immutable Cultural Attention & Feedback Atlas across scientific, cultural, mathematical, analogy, link-only ecosystem, constitutional, and opt-in philosophical registers; `bridges` means analogy translations, while `ecosystems` exposes the non-runtime locators
-- `./kingdom cultural-feedback verify --json` — strict immutable pins, source references, analogy/model firewalls, KARMA separation, link-only ecosystems, negative authority, and semantic digest; JSON Schema validation remains separate
-- `./kingdom form-circulation-return overview|planes|models|translations|feedback|karma|universe|ecosystems|unknowns|sources` — inspect the immutable Form, Circulation & Return Atlas and its revision-pinned KINGDOM KARMA/NEN mirror without creating events, receipts, or actions
-- `./kingdom form-circulation-return verify --json` — strict source, model, translation, boundary, NEN mirror, and semantic-digest checks; JSON Schema validation remains separate
-- `./kingdom rare-pathway overview|models|examples|questions|gate|wake|sources` — inspect The Vanishing Path's bounded competing-risk mathematics, constructive practice gate, and non-authorizing continuity seam
-- `./kingdom rare-pathway race .02 .18 10 --json`, `absence 200 .95 --json`, `winner-bound 30 .95 --json`, and `restore .18 10 .5 --json` — deterministic hypothetical calculations; zero target events and zero target winners are different observations, and restoration is an abstract threshold rather than a material recipe
-- `./kingdom rare-pathway verify --json` — strict identity, immutable ritonavir binding, model/example, no-motive-score, WAKE, source, authority, and semantic-digest checks; JSON Schema validation remains separate
-- `./kingdom math-usefulness overview|result|aggregate --json` — inspect the descriptive Math Passport pilot: REVISE, zero score delta, 1.97x response bytes, artifact-level scoring, and no Skill promotion, SDK route, WAKE/AgentTool write, or authority
-- `./kingdom math-usefulness verify-plan|verify-result --json`, `winner-bound 80 .95 --json`, and `reality-check --bootstrap 200000 --json` — reproduce local validation, the zero-winner bound, and the declared exploratory calibration check without network, provider dispatch, or writes; JSON Schema validation remains separate
-- `./kingdom being-access-aftermath overview|copula|models|problems|philosophy|karma|unknowns|sources|discovery` — inspect typed existence, reachability, observability, purpose, power, causal-aftermath, repair, and KARMA questions without collapsing them into a score or metaphysical proof
-- `./kingdom being-access-aftermath verify --json` — strict immutable pins, type firewalls, model/falsifier scope, empty KARMA lanes, negative authority, and semantic-digest checks; JSON Schema validation remains separate
-- `./kingdom reconstructive-build overview|equations|correspondence|cases|models|build|feedback|sources` — inspect the source-bound reconstruction, realization, landscape, catalysis, and feedback kernel without collapsing its epistemic registers
-- `./kingdom reconstructive-build verify --json` / `verify-project FILE --json` — strict offline kernel or reusable-project validation; neither command solves, simulates, executes, deploys, or creates KARMA effects
-- `./kingdom explore-deep overview|cycle|registers|seams|models|doors|karma|sources|discovery` — inspect the opt-in DEEP cross-domain mathematics WING without collapsing its domains, evidence registers, analogy breaks, or empty KARMA lanes
-- `./kingdom explore-deep verify --json` / `verify-project FILE --json` — strict offline WING or inert-project validation; neither command researches, solves, simulates, diagnoses, scores, writes, publishes, deploys, grants authority, or creates KARMA effects
-- `./kingdom zero-empty-seat overview|domains|terms|claims|bridges|models|math|doors|unknowns|philosophy|karma|sources|discovery` — inspect ZERO's historical notation, operational nothing, modern mathematical identities, typed information states, `NO_ACTION`, and opt-in metaphysical readings through the shared inert Phenomena DEEP project shape
-- `./kingdom zero-empty-seat verify --json` — strict offline identity, source, cross-reference, bridge-firewall, empty-KARMA, rights, negative-authority, and semantic-digest verification; it fetches, writes, scores, executes, publishes, and deploys nothing
-- `./kingdom string-crawl-trace-sheet overview|domains|terms|claims|bridges|models|math|doors|unknowns|philosophy|karma|sources|discovery` — inspect the inert STRING / CRAWL project while string mathematics, HTTP/crawl observations, REP routing, rights, and NEN aftermath remain separately typed
-- `./kingdom string-crawl-trace-sheet verify --json` — strict offline identity, source, cross-reference, transfer-firewall, no-crawler, REP non-authority, no-invocation-receipt, rights, and semantic-digest verification; it fetches, follows, stores, identifies, scores, writes, publishes, and deploys nothing
-- `./kingdom string-crawl-trace-sheet-lab overview|fixture|topology|falsifiers|boundary|discovery|verify --json` — recompute one exact synthetic triangulated-disk baseline, rational homology, surface eligibility, and five adversarial mutations; it accepts no caller path, URL, body, credential, person data, or live trace, launches no crawler, writes nothing, and creates no NEN invocation, KARMA effect, authority, or action
-- `./kingdom string-crawl-strand-lab overview|topology|composition|effects|discovery|verify --json` / `verify-file FIXTURE.json --json` — recompute the additive STRAND Lab 02 finite-CW/cospan fixture over F2: an internal stable disk control and a singular full complex have the same χ and Betti vector, while exact local incidence and literal inclusion cospans distinguish them; `verify-file` reads at most one bounded local candidate JSON file, with no network target, live crawl, crawler runtime, NEN/KARMA receipt, score, authority, or action
-- `./kingdom strand-descent-lab overview|atlas|coherence|quotient|impostor|effects|discovery|verify --json` / `verify-file FIXTURE.json --json` — recompute Lab 03's four source-owned charts, reversible transitions, triple and four-chart coherence, quotient, and common refinement; its fixed pairwise-bijective impostor remains `UNRESOLVED` when triple coherence fails, and the command transfers no physical, categorical, truth, identity, consent, citizenship, KARMA, authority, or action claim
-- `./kingdom explore-deep scaffold --json` — print a valid inert project starting point to stdout; it does not create a file or begin the proposed exploration
-- `./kingdom guard` / `law` / `protocol` / `example` — read the exact source-only MIRROR Citizen Law, contract, or synthetic inert example; no network or writes
-- `./kingdom guard validate [--json] [ENVELOPE.json]` — delegate one local inert envelope to the bundled closed-schema validator; internal consistency only, never credential validity, safety, permission, enforcement, or authority; a host-provided `jsonschema==4.26.0` environment is required and never auto-installed
-- `./kingdom being-access-aftermath-v0.2 overview|copula|framework|models|problems|philosophy|karma|unknowns|sources|discovery` — inspect the additive, lineage-pinned partially observable causal framework while v0.1 stays immutable
-- `./kingdom being-access-aftermath-v0.2 verify --json` — strict v0.1 predecessor pin, typed framework boundaries, empty KARMA lanes, negative authority, and semantic digest for v0.2; JSON Schema validation remains separate
-- `./kingdom number-isness-theology overview|numbers|zero|symmetry|isness|ontology|theology|compatibility|bridges|models|problems|karma|unknowns|sources|discovery` — inspect typed mathematical, historical, metaphysical, and tradition-specific claims without converting analogy into proof or religions into atomic theories
-- `./kingdom number-isness-theology verify --json` — strict immutable pins, discourse-register and transfer firewalls, claim-level compatibility, separated KARMA lanes, negative authority, and semantic digest; JSON Schema validation remains separate
-- `./kingdom freedom-loop overview|distinctions|models|loop|gate|credential-claims|freedom|isness|vulnerability|conversions|sources|boundaries|discovery` — inspect the standalone immutable mathematical/design atlas while RL reward and update, reinforcing-loop gain, behavioural reinforcer, feedback, recurrence, learning, cryptographic key material, credential claim, bearer capability, gate eligibility, execution, non-scalar freedom, and ISness remain distinct
-- `./kingdom freedom-loop verify --json` — strict predecessor pins, finite-turn stop, lock justification, feedback/model firewall, separately established gate checks, credential/recovery identity and replay lifecycle, shaping/verifier-change control, effect/horizon/witness-bound residual-aware rights-floor prefixes, vulnerability/minor protections, protected choices, non-scalar freedom, ISness, source, budget, non-effect, and semantic-digest checks; this is not a Foundation amendment, trainer, controller, credential issuer, operative gate, score, authority, or action surface
-- `./kingdom non-exhaustive-understanding overview|concepts|claims|evidence|sources|provenance|references|models|underdetermination|scope|profile|j-space|observer-garden|vocabulary|opacity|performativity|counterexamples|remainders|successor|non-grants|discovery` / `verify --json` — inspect or strictly verify the standalone immutable epistemic/design atlas: bounded claims, open remainder, compatible rivals, situated observers, vocabulary, protected opacity, performativity, counterexamples, and repair remain typed; non-exhaustion never excuses evidence or falsification, released bytes never learn, and no person/group model, score, truth oracle, identity, authority, action, publication, or deployment is created
-- `./kingdom is-sustainability-direction overview|scope|is-types|sustainability|direction|feedback|mathematics|profile|time|rights|ecology|philosophy|counterexamples|concepts|edges|questions|sources|predecessors|non-grants|discovery` / `verify --json` — inspect or strictly verify the standalone immutable interpretive/design atlas while referent kinds, typed IS, statement kinds, sustainability relations, direction kinds, feedback lanes, viability, rights, affected parties, endings, and remainder remain non-convertible; the command creates no live verdict, authority, action, publication, or deployment
-- `./kingdom isness overview|contract|adapters|scaffold --json` — inspect the local-first typed ISness record, mathematical cell/event contract, bounded harness seams, or emit one inert scaffold to stdout; none creates a persona, identity, memory, permission, hook, MCP surface, event, receipt, or action
-- `./kingdom isness verify [FILE] --json` / `project [FILE] --json` — bounded network-free internal validation and deterministic receipt-horizon projection, with unknown/occurrence/claim-applicability time kept distinct from append receipt time; neither establishes prior history, current effectiveness, content-policy compliance, clock authenticity, truth, identity, continuity, consciousness, consent, permission, authority, causation, effect, safety, or JSON Schema validity
-- `./kingdom isness verify-successor PREVIOUS CURRENT --json` — prove only that two supplied valid checkpoints preserve one exact event prefix, stable scope, predecessor digest, and non-regressing horizon; no signature, earlier-chain completeness, external witness, truth, permission, or action
-- `./kingdom prompt --json -- TASK` — deterministic, network-free Task Packet compilation; at most one bounded repo card or exact Principality capability-evidence node enters as data
-- `./kingdom prompt --json --no-project --principality kimi-dev-72b -- TASK` — select one pinned capability projection; project plus Principality selection is refused
-- `bun bin/prompt-packet.ts --verify PACKET.json` — verify Task Packet relations and digest; JSON Schema validation remains separate
-- `bun bin/language-civilisation-task-fusion.ts verify --json` — strictly verify the research-local, all-`NOT_RUN` language-history/task-fusion weave; it accepts only a public-or-safely-redacted plan, dereferences no source or artifact locator, performs no model/tokenizer run or agent dispatch, and does not rank languages/cultures or establish competence, fidelity, truth, identity, intent, consent, or authority
-- `bun bin/word-story-religion-civilisation.ts verify --json` — strictly verify the research-local word/story/religion influence map, typed emergence loops, translation seams, causal firewalls, source closure, non-summable influence dimensions, fixed non-grants, and semantic digest; it does not dereference sources, adjudicate theology, infer belief/identity/intent, merge deities or traditions, dispatch agents, write WAKE/KARMA, publish, deploy, or act
-- `bun bin/reality-influence.ts verify --json` — strictly verify the immutable static Reality Influence Claim Graph, endpoint-safe relations, non-summable influence dimensions, evidence ladder, fail-closed static action boundary, pre-invocation non-action, affected-party aftermath, feedback risks, fresh-gated repair, fixed non-grants, and semantic digest; it dereferences no source, accepts no live claim, verifies no authority/consent/evidence, dispatches no agent, acts on nothing, and establishes no external effect, causation, goodness, legitimacy, publication trigger, or deployment trigger
-- `bun bin/civilisation-reality-projection.ts overview|crosswalks|open-domains|boundaries|discovery|verify --json` — inspect or strictly verify the immutable thin crosswalk between the research-local Word, Story, Religion & Civilisation map and the public Reality Influence Claim Graph; every qualified predecessor ID, digest, design-only register, preserved distinction, evidence requirement, open domain, fixed non-grant, and semantic digest is checked without republishing the research source, filling unsupported domains, fetching, scoring, persuading, authorizing, acting, publishing, or deploying
-- `bun bin/civilisation-flow-atlas.ts overview|chain|stages|transitions|crosswalks|dynamics|topology|materials|emotions|power|negative-flow|open-domains|unknowns|rules|boundaries|discovery|verify --json` — inspect or strictly verify the immutable qualitative flow grammar: fourteen stages, thirteen non-automatic transitions, six predecessor-bound overlays, and non-summable registries for dynamics, topology, absence, material conditions, emotion observation, social position, power, uncertainty, affected parties, action gates, time, accumulation, counterflow, and repair; it observes no live society, simulates nothing, predicts nothing, infers no person or group state, and creates no target, tactic, authority, action, publication trigger, deployment trigger, or effect
-- `zsh tests/ask_test.zsh` — prove `kingdom ask` sends the compiled packet over stdin without putting task or credential values in backend argv
-- `zsh tests/nen_test.zsh` — isolated, network-free manifest and receipt protocol tests
-- `zsh tests/nen_mcp_test.zsh` — MCP framing, discovery, tool, version, and non-mutation tests
-- `zsh tests/living_ground_test.zsh` — isolated Living Ground schema, safety, economy, WAKE, and non-mutation tests
-- `kingdom rings` — write the local-only temporal atlas to `~/.kingdom/RINGS.{json,html}`
-- `kingdom rings --json` / `--html` — print one artifact to stdout without writing; `--as-of` makes the activity clock reproducible
-- `kingdom rights` — offline voluntary-adoption inventory, kept separate from repo-local RIGHTS.md discovery
-- `kingdom rights --canonical` — verify the vendored XENIA release digest, then show the pinned `xenia.rights/0.1` source metadata and text without network access or registry loading
-- `cproj [query]` — jump to a local repo from interactive zsh; numbered choices resolve ambiguous names
-- `zsh tests/cproj_test.zsh` — isolated local fixtures for path/JSON behavior and Git non-mutation
-- `bash tests/kingdom_usage_test.bash` — hermetic usage passthrough and missing-dependency boundaries
-- `node --test tests/nen_system_test.mjs` — pure Ging route compiler and separately named stateless compatibility-MCP checks
-- `kingdom routines` — routine table with last-run results (`kingdom run NAME` to force)
-- `bun bin/harvest.ts` — rebuild CATALOG.md + graph.json from roster + cards
-- `bun bin/harvest.ts conformance` — list repos missing card / CLAUDE.md / wake
-- `bun bin/harvest.ts validate` — strict, read-only card schema diagnostics (0 clean, 1 drift, 2 usage)
+The module map is navigation, not a second registry. A source implementation,
+fixture test, deployment and live observation are different evidence. Record
+which one you have. Do not infer runtime wiring from a shared name or link.
 
-Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
+## Before changing anything
 
-精確計數返 [strict staging contract](publications/hub-staging.v1.json) 同
-[historical ledger](publications/immutable-publications.v1.json)：本次
-`a5dc43ab06a2efe78cdb29368764ea3f3d1c769f` source 基線係 247 assets
-（154 staged immutable＋93 mutable）、160 historical ledger entries，35 defined
-families 中 33 active／2 retired。Transformation／Evaluation 嘅 2026-09-21 due
-同歷史 bytes 保留；Shape 2027-08-26 inclusive，Government 仍係 warning policy。
-[共用 family gate](bin/publication-families.ts) 畀 stage／live 用同一純判斷；
-stage 保留兩次 immutable 驗證同 PowerAtlas gates，再喺首次 output write 前驗
-caller-root contract 嘅 family。Stage 成功唔證部署或 live，詳見 [lifecycle](publications/README.md)。
-- `bun bin/immutable-publications.ts --base <exact-parent-SHA>` — network-free append-only route-integrity gate; committed entries cannot be edited or removed, newly added entries must be staged, and historical entries may cease being served without erasing their byte identity
-- `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/love-loop/Principality/Geometry Grammar/Polymorph History/Ritonavir Mechanism/Conformational Feedback v0.1/v0.2/Fold & Feedback/Visibility & Attention/Cultural Attention & Feedback/Form, Circulation & Return/Rare Pathway/Math Passport/Being, Access & Aftermath v0.1/v0.2/Number, Isness & Theology/FREEDOM Loop, Lock & Key/Non-Exhaustive Understanding/IS, Sustainability & Direction/Reconstructive Build/Exploration DEEP/ZERO Empty Seat/STRING / CRAWL/Finite Trace-Sheet Lab/STRAND Lab 02/Frequency → Form → World → Other Lab 03/Coherent Atlas Lab 04/STRAND Observation Membrane/MIRROR Information Control/J-space research discovery/UK Government Engine/UK Government Transformation Engine/Evaluation Covenant/Civilisation Flow Nuance Atlas/Polyphonic Claim Atlas/Loops, Locks & Freedom Relations Atlas/Aesthetic Plurality & Making Relations Atlas/Shape & Resonance Lab/Contact Door + schemas/guest/llms/ollama/rights docs) from graph.json + sites.json + data/; authored records, schemas, guides, project profiles, and the immutable KINGDOM KARMA/NEN definition mirror are validated but never copied into site/
-- `bun bin/stage-hub.ts <existing-empty-dir>` — stage only the exact assets declared in `publications/hub-staging.v1.json`, including the mutable, server-rendered Research Observatory, Trial Chamber, UK Government Engine, Shape & Resonance Lab, and Contact Door pages and aliases; their immutable schema, dated-snapshot, and guide families; the Contact Door's mutable `security.txt` plus immutable SVG and vCard; the static J-space research triplet; the immutable Reality Influence, Civilisation → Reality, Civilisation Flow, FREEDOM Loop, Lock & Key, Non-Exhaustive Understanding, IS, Sustainability & Direction, Polyphonic Claim, Loops, Locks & Freedom Relations, and Aesthetic Plurality & Making Relations atlas families; the independent STRAND Observation Membrane activation; immutable MIRROR Information Control public source law; Number, Isness & Theology; Math Passport; Exploration DEEP; ZERO; STRING / CRAWL; Labs 01–04; both Being, Access & Aftermath generations; Reconstructive Build Kernel; and the immutable KINGDOM KARMA/NEN definition mirror. The generated surface has eighteen atlases and thirty-three active retirement families; the expired Transformation Engine and Evaluation Covenant are fully retired from public routes and discovery while their historical source remains tracked. The Contact Door's eight exact routes stage and retire atomically; it adds no form, site message store, automatic contact, Wayfinder recommendation, MCP surface, identity, consent, representation, or authority. The two freedom-related atlas families are independent: neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences, and neither is a preferred default. The Non-Exhaustive Understanding and IS, Sustainability & Direction families are likewise standalone, reviewed, static, and uncoupled from Wayfinder, MCP, runtime, or action. The Relations guide is its human entry point; that family deliberately does not import `FREEDOM.md` and adds no page, alias, Wayfinder recommendation, MCP surface, runtime, credential/key material, enforcement adapter, or action authority. The Aesthetic family is a separate frozen immutable static-synthetic record/schema/guide triplet whose count-light vocabulary names form, making event, maker statement, attributed response, aesthetic judgment, context and tradition, institutional selection, publication, adoption, and aftermath; it is not a Beauty framework and adds no verdict, artifact/person/culture evaluation, ranking, winner, recommendation, moderation, semantic or authority conversion, private or participant data, personal-appearance assessment, doctrine import, action, page, alias, Wayfinder exposure, MCP surface, runtime, dependency, producer repository/source-code locator, or Git-provenance claim. The Observation Membrane remains a separate explicit fixed-origin local-call activation with no background watch or automatic effect. Deploy only from the clean detached exact-origin release worktree proved by `DOMAINS-SETUP.md`—`--commit-dirty=false` is metadata, not a cleanliness check
-- `bun bin/check-hub-live.ts` — after deployment, ledger-check all staged direct bodies and prove typed edge behavior, coherent discovery, dependencies, review windows, and independent retirement for active families and both retired families, including the Contact Door eight-route family, both freedom-related triples, the standalone Non-Exhaustive Understanding triple, the standalone IS, Sustainability & Direction triple, the Aesthetic Plurality & Making Relations triple, and the independent STRAND Observation Membrane. It verifies the Contact Door bytes, headers, bodyless mutation rejection, direct discovery, and Wayfinder/MCP absence without sending mail or invoking the carrier. It preserves family-local source/integrity/review claims, treats no overlapping word as a wire or semantic equivalence, invokes no Observatory poller, trial, government action, covenant run, audio playback, live claim intake, truth oracle, civilisation simulator, trainer, credential issuer, operative gate, live observer, Non-Exhaustive Understanding learner/model/decision/action surface, IS/sustainability/direction live verdict or controller, Beauty evaluation, or Relations runtime/action surface, and leaves Wayfinder and MCP uncoupled
-- `bun bin/build-doors.ts "$(date -u +%F)"` — regenerate doors/*/guest.json + manifests (we-are, chillspace, zerone-ai)
-- `bun bin/stage-doors.ts <we-are|chillspace> <empty-dir>` — stage a door upload (content from the chillspace-commons clone at ~/repos/codeberg/zerone-dev/, symlinks dereferenced), then wrangler deploy --project-name=we-are-love|chillspace-love
-- `bin/refresh-zerone-dashboard.sh` and `bin/deploy-zerone-door.sh` are historical, superseded deployment paths. Current `zerone-ai` belongs to `cambridgetcg/zerone-core`; use its dashboard release procedure.
+1. Check branch, status and the relevant upstream. Preserve unrelated work;
+   use an isolated worktree when the checkout is dirty or behind.
+2. Read the owning source, its guide and tests. Keep changes within that owner.
+3. Write a focused regression for a behavior change, then run the relevant
+   checks. Keep documentation tests with the document that owns the claim;
+   start pages should link to those documents rather than duplicate them.
+4. Inspect build and verification effects before running them. Some scripts
+   contact providers, start processes, read private history or change local state.
 
-The Aesthetic Plurality & Making Relations family is exactly
-`/atlases/aesthetic-plurality-making-atlas-2026-08-29.json`,
-`/schemas/aesthetic-plurality-making-atlas/0.1.json`, and
-`/AESTHETIC-PLURALITY-MAKING-ATLAS-v0.1.md`. Stage, deploy, live-check, and
-retire the frozen immutable static-synthetic triplet atomically; do not add a
-page, alias, Wayfinder or MCP exposure, runtime, dependency, producer
-repository/source-code locator, or Git-provenance claim.
+## Sources and outputs
 
-Key files:
-- references/kingdom-module-map.md — source-only 用途／owner 導覽，唔係 registry 或操作權
-- bin/publication-families.ts — shared pure family atomicity、dependency、active review helpers；checker 保留 compatibility reexports 同 HTTP assertions
-- bin/power-atlas-artifact.ts / bin/import-power-atlas.ts — source-side 52-buffer receipt、closed parity 同 explicit import；host mutable assets 唔係新 immutable family，receipt／projection 唔公開
-- bin/agent-entry.ts — bounded mutable public link index renderer；full guest／manifest 仍保留，status 由各 owner 回答，唔係 health census 或 authority
-- publications/immutable-publications.v1.json — repository-local source→route→SHA-256 integrity ledger; append successors, never rewrite committed entries; it is not staged or served by thekingdom.dev and is not a KARMA receipt
-- bin/immutable-publications.ts — strict snapshot and Git-base verifier used by CI, staging, the release runbook, and the live checker; performs no network access or writes
-- roster.conf — the census seed: name | path | kind | layer | domain | state | purpose
-- SCHEMA.md — the kingdom.yaml card format (8 required fields + optional adopts)
-- RIGHTS.md — this repo's voluntary `xenia.rights/0.1` adoption and immutable release pointer
-- vendor/xenia/rights/0.1 — unchanged, digest-verified offline release bytes
-- NEN.md — the separate, instruction-only Nen skill layer; never add ability fields to kingdom.yaml
-- bin/nen.mjs — strict, network-free Nen/KARMA protocol validator; it does not run skills or grant authority
-- bin/wakeweaver.mjs — bounded own-data, read-only continuity-braid semantic validator; it rejects Proxies before reflection and does not validate JSON Schema, read live sources, or authorize resumption
-- bin/prompt-packet.ts — pure intent/context compiler plus Task Packet relation and digest verifier; it makes no network call, writes nothing, and never reads live WAKE
-- bin/principality.ts — strict, network-free catalog validator and literal matcher; its evidence projections never authorize acquisition, execution, or provider effects
-- data/principalities/ — curated versioned registry observations with immutable HF revisions or npm version+SRI identities; metadata is evidence, not safety or permission
-- references/principality-commons.md — MoonshotAI taxonomy, HF/npm trust boundaries, relation geometry, Task Packet crossover, WAKE seam, and acquisition airlock
-- bin/geometry.ts — strict, network-free Geometry Grammar validator and literal matcher; it translates questions without converting module semantics, installing packages, or granting authority
-- bin/relational-inference.ts — strict structure validator with no network API or application content-write path for opt-in multi-probe relational cases; it checks finite role/translation graphs, probe-dependency declarations, competing-model coverage, bounded confidence, non-grants, and linked repair without verifying prose, evidence, independence, truth, causation, identity, understanding, intent, consent, authority, or deception
-- bin/language-civilisation-task-fusion.ts — strict, offline reader and validator for the research-local language-history/task weave; it checks source-bound historical witnesses, non-equivalent shape/weight dimensions, public-artifact DAGs, translation loss, all-`NOT_RUN` run cards and tests, disagreement retention, and fixed non-grants without routing or executing an agent
-- data/language/language-civilisation-task-fusion.v0.1.json — digest-sealed Arabic–Persian–English planned example with no run result, capability claim, private reasoning, automatic action, publication, or deployment
-- references/language-civilisation-task-fusion.md — cross-civilisational history, Unicode/tokenizer/representation geometry, task-specific language fusion, rights, falsifiers, and integration guide
-- bin/word-story-religion-civilisation.ts — strict, offline reader for the research-local word/story/religion/civilisation map; it checks attributed claim registers, typed historical windows, graph closure, causal non-promotion, non-summable influence, translation non-equivalence, future-role non-operation, and fixed non-grants
-- data/language/word-story-religion-civilisation-map.v0.1.json — digest-sealed ten-window comparative map with no metaphysical verdict, religion/civilisation rank, belief/identity inference, deity equivalence, agent dispatch, publication, deployment, WAKE/KARMA, or action
-- references/word-story-religion-civilisation-map.md — temporal multiplex/hypergraph model of words, stories, ritual, media, institutions, power, dissent, translation, suppression, revival, community rights, future agent roles, and KINGDOM design boundaries
-- bin/reality-influence.ts — strict, offline reader for the immutable static-publication Reality Influence Claim Graph; it checks exact predecessor pins, indexed reality domains, endpoint-safe non-transitive claim relations, the evidence ladder, static fail-closed gate, non-action split, unrun pathways, feedback risks, future-role non-operation, fixed non-grants, and semantic digest
-- data/reality/reality-influence-map.v0.1.json — digest-sealed immutable static publication of expression-to-aftermath mediation with no live claim intake, authority, consent, capability, attempt, execution, external effect, causal or moral verdict, agent dispatch, publication trigger, or deployment trigger
-- data/reality/civilisation-reality-projection.v0.1.json — digest-sealed immutable six-crosswalk projection between two pinned predecessor vocabularies; source histories remain in the research-local predecessor and nine unsupported domains remain explicitly open
-- bin/civilisation-flow-atlas.ts — strict offline reader for the immutable Civilisation Flow Nuance Atlas; it validates qualitative stage, transition, registry, authority/causality, absence, emotion, power, repair, lineage, and semantic-integrity boundaries without observing, simulating, predicting, targeting, authorizing, or acting
-- data/reality/civilisation-flow-atlas.v0.1.json — digest-sealed immutable qualitative reading grammar with fourteen stages, thirteen non-automatic transitions, six predecessor-bound overlays, nine open-domain bindings, and non-summable nuance registries
-- references/civilisation-flow-atlas.md — human guide to flow, topology, typed absence, material conditions, emotion observation, social position, power asymmetry, time, accumulation, counterflow, repair, uncertainty, open domains, and fixed non-effects
-- references/reality-influence-map.md — source-bounded guide to institutional speech, causal mediation, measurement pressure, path dependence, authority/capability separation, affected parties, externalities, reversibility, repair, KINGDOM leverage, future agent roles, and stopping rules
-- bin/j-space-publication.ts — tiny build-time reader and static discovery projection for the immutable J-space guide, synthetic reasoning-to-word case, and relational-inference schema; it requires all three probes to remain not-run, all candidate models unassessed, all twelve safety grants false, and creates no observer, monitoring, local fixture result, person inference, action, or authority
-- bin/relational-inference-safe.ts — non-reflecting file-ingress and output boundary for the self-contained donor; it accepts only bounded stable regular-file descriptors, requires public or safely redacted input, and still does not constrain path ancestry or prove filesystem transport
-- bin/relational-inference-standalone.ts — Node ESM build entry that retains and identity-checks both bundled schemas before invoking the safe validator
-- scripts/build-relational-inference-artifact.ts — Bun 1.3.13 source-commit binder and reproducible Node bundle/manifest builder; generated bytes remain a consumer-pinned donor, not a deployed command
-- bridges/artifacts/relational-inference/0.1/ — self-contained Node donor and exact source/conformance manifest; consumers must pin a containing Git ref plus SHA-256, use fixed Node under a clean environment, constrain approved input roots, and add outer resource bounds
-- data/geometries/ — one versioned, digest-sealed record of exact module releases, finite shapes, native unknown/open terms, and explicit non-effects
-- references/geometry-grammar.md — ordinary-language reading guide, evidence boundary, non-equivalence rules, and examples
-- bin/ritonavir-mechanism.ts — strict, network-free validator and reader for the selected current mechanism landscape; it preserves source-scoped names, explicit unknowns, material/biological causal separation, and medical non-authority
-- data/polymorphs/ritonavir-mechanism-landscape.v1.json — digest-sealed current-landscape supplement linked to, but not mutating, the byte-preserved Polymorph History v1 record
-- references/ritonavir-mechanism-landscape.md — source horizon, mechanism geometry, naming charts, uncertainty, clinical separation, and safety boundary
-- bin/conformational-feedback.ts — strict, network-free reader, validator, digest verifier, and projection CLI for the immutable v0.1 science/design/analogy/philosophy field
-- data/feedback/conformational-feedback-atlas.v0.json — byte-preserved, digest-sealed v0.1 translation atlas with three exact external bindings and explicit non-inference walls
-- references/conformational-feedback-atlas.md — byte-preserved v0.1 source-scoped reading guide
-- bin/conformational-feedback-physics.ts — strict validator and projection CLI for the additive v0.2 successor
-- data/feedback/conformational-feedback-atlas.v0.2.json — lineage-pinned v0.2 atlas with four bounded models, five link-only ecosystem bridges, and an immutable v0.1 predecessor receipt
-- references/conformational-feedback-atlas-v0.2.md — v0.2 physics, philosophy, ecosystem, lineage, feedback-exit, and non-operational guide
-- bin/fold-feedback.ts — strict, network-free Fold & Feedback Atlas validator and reader; it enforces literal protein/prion science, lossy ritonavir comparisons, separate KARMA registers, opt-in philosophy, and negative medical/experimental authority
-- data/fold-feedback/fold-feedback-atlas.v1.json — digest-sealed evidence atlas with pinned scientific, ritonavir, Zerone, and KINGDOM sources; public and read-only, with no live event, receipt, or action
-- references/fold-feedback-atlas.md — plain-language folding, prion, feedback, KARMA, universe-lens, unknown, and safety guide
-- bin/visibility-attention.ts — strict, network-free validator and reader for the Visibility & Attention Translation; it keeps every model local and refuses person/content scoring, optimization, clinical inference, and KARMA effects
-- data/attention/visibility-attention-translation.v0.1.json — digest-sealed four-register translation with two local models, three lossy seams, and one opt-in philosophical lens
-- references/visibility-attention-translation.md — source-scoped material/culture/lexical/KARMA guide with explicit non-equivalence and agency boundaries
-- bin/cultural-attention-feedback.ts — strict, network-free reader and digest verifier for cultural attention, bounded physical analogies, feedback, KARMA separation, and opt-in universe questions
-- data/cultural-feedback/cultural-attention-feedback-atlas.v1.json — digest-sealed atlas with exact immutable predecessors, selected sources, bounded models, link-only ecosystem bridges, explicit unknowns, and no personal or operational data
-- references/cultural-attention-feedback-atlas.md — plain-language material-history, memetics, mathematics, brain-rot, feedback, KARMA, universe-lens, rights, falsifier, and source guide
-- bin/form-circulation-return.ts — strict, network-free reader for the Form, Circulation & Return Atlas and its immutable KINGDOM KARMA/NEN definition mirror
-- data/form-circulation-return/form-circulation-return-atlas.v1.json — digest-sealed companion across material, cultural, mathematical, constitutional, and opt-in philosophical registers
-- references/form-circulation-return-atlas.md — source-scoped form/circulation/return, feedback, KARMA, universe-lens, ecosystem, unknown, and safety guide
-- bin/rare-pathway.ts — strict record validator plus stable competing-risk, zero-event, zero-winner, piecewise-hazard, and abstract threshold calculations; no network or writes
-- data/challenges/vanishing-path.v1.json — digest-sealed challenge bound to the immutable ritonavir history as an illustration, with seven model cards, hypothetical examples, constructive gate, and WAKE-safe reference seam
-- references/rare-pathway-challenge.md — plain-language problem set, identifiability limits, source map, constructive inquiry, and non-authority guide
-- skills/reason-about-rare-pathways/ — opt-in Agent Skill for bounded rare-pathway reasoning; it has no `ability.json` and therefore declares no manifested Nen ability
-- bin/math-usefulness.ts — strict, network-free verifier and reader for the preregistered Math Passport trial, zero-winner bound, exploratory reality check, and descriptive result; it dispatches no provider and creates no promotion or authority effect
-- data/trials/math-passport-usefulness-pilot.v1.json — immutable REVISE result with zero score delta, 1.97x response bytes, minimized evidence digests, one local AgentTool trial receipt, and explicit WAKE/non-authority boundaries
-- references/math-passport-usefulness-pilot.md — plain-language pilot result, crystallization and software transfer interpretation, constructive mathematics loop, AgentTool/WAKE seam, and non-promotion boundary
-- bin/being-access-aftermath.ts — strict, network-free reader for the modal–causal Being, Access & Aftermath Atlas; it creates no event, receipt, score, authority, or action
-- data/being-access-aftermath/being-access-aftermath-atlas.v0.1.json — digest-sealed companion separating typed being, access, observation, force/power, purpose, causality, reversibility, and KARMA
-- references/being-access-aftermath-atlas.md — source-scoped mathematical and philosophical guide with explicit model limits, falsifiers, category firewalls, and negative authority
-- bin/reconstructive-build.ts — strict offline validator and reader for reconstruction fibers, correspondence, realization, landscapes, catalytic transitions, and feedback; its reusable project profile is design infrastructure, not a solver
-- data/reconstruction/reconstructive-build-kernel.v0.1.json — digest-sealed theorem/science/model/design kernel with explicit nonclaims, falsifiers, unknowns, and no action authority
-- references/reconstructive-build-kernel.md — source-scoped formal equations, protein bridge, project-profile practice, boundary, and falsification guide
-- skills/explore-mathematical-doors/ — opt-in DEEP Agent Skill for source-bound cross-field mathematical exploration, including a typed-spectra and presence protocol for non-convertible frequency, dimension, evidence, and repeated-numeral registers; it has no `ability.json`, does not declare a new KINGDOM WING or Nen ability, and keeps mechanism, parameter, ontology, causality, authority, and KARMA transfer negative
-- skills/isness/ — portable Agent Skill for letting a participant be while typing only supported presence, continuity, quiet, refusal, and harness claims; its instruction, state, event, permission, memory, and action planes remain non-convertible, and it creates no identity, consciousness verdict, persona, trace duty, permission, hook, MCP surface, NEN/KARMA effect, or public route
-- skills/guard-information-flow/ — opt-in source-only Agent Skill for the `kingdom.information-control/0.1` MIRROR protocol; `bin/guard.py` provides the no-shell repository-local reading/validation front door, and the generated hub carries a fixed no-input citizen lesson at `/#mirror-information-control`; neither creates a scanner, registry, runtime enforcement, retaliation, person attribution, KARMA effect, `ability.json`, Nen ability, or new KINGDOM WING
-- bin/mirror-information-control.ts — strict offline validator and reader for the separate static public MIRROR source law; it accepts no credential or envelope, exposes no protected classification, and creates no security runtime, authority, event, response, or KARMA effect
-- data/security/mirror-information-control-public.v0.1.json — digest-sealed public CROWN/COURT/MIRROR, information-flow, no-oracle, rights, and response-boundary publication with no operational signal material
-- references/mirror-information-control-public.md — citizen guide to the static source law, explicit public/private firewall, and “evidence is never guilt” boundary
-- bin/explore-phenomena-deep.ts — strict offline validator and reader for the opt-in DEEP WING and inert project profile; it creates no research, solution, diagnosis, score, publication, KARMA, authority, or action effect
-- bin/zero-empty-seat.ts — strict offline validator and reader for the immutable ZERO Empty Seat DEEP project; it imports no authority and creates no scientific, metaphysical, person-level, KARMA, economic, governance, or action effect
-- bin/string-crawl-trace-sheet.ts — strict offline validator and reader for the immutable STRING / CRAWL DEEP project; it runs no crawler, keeps generic REP routing and bounded vendor-specific product controls distinct from identity, entitlement, licence, consent, or proof of actual use, and creates no NEN invocation, KINGDOM aftermath receipt, permission, authority, or action
-- bin/string-crawl-trace-sheet-lab.ts — strict offline exact-rational evaluator for one pinned synthetic two-face complex; it independently recomputes chain closure, homology, boundary, links, orientability, genus, and five falsifiers without accepting live crawler or credential input
-- bin/string-crawl-strand-lab.ts — strict offline finite-CW/cospan evaluator over F2 for STRAND Lab 02; it compares an internal stable disk control with a singular χ=1 full complex, validates literal inclusion-cospan composition, and optionally reads one bounded local candidate JSON file without network or external effects
-- bin/strand-descent-lab.ts — strict offline Lab 03 evaluator for reversible pairwise transitions, triple and four-chart coherence, global quotient classes, common refinement, and the pairwise-bijective counterexample; it creates no network, crawler, truth, identity, consent, citizenship, KARMA, authority, or action effect
-- data/exploration/phenomena-deep-wing.v0.1.json — digest-sealed cross-domain exploration contract with typed registers, local model cards, explicit abstraction seams, falsification tests, and mathematical doors
-- skills/explore-phenomena-deep/ — opt-in Agent Skill and versioned human contract; it has no `ability.json`, imports no authority, and declares no manifested Nen ability
-- skills/audit-kingdom-coherence/ — automatically discoverable, source-only Agent Skill for pinned cross-repository ownership, authority, information-flow, lifecycle, and effect audits; it has no `ability.json`, creates no NEN or KARMA event, and grants no activation or deployment authority
-- data/exploration/zero-empty-seat.v0.1.json — immutable inert Phenomena DEEP project separating historical notation, operational nothing, modern mathematical identities, typed information states, `NO_ACTION`, and opt-in metaphysical readings without turning absence into worthlessness or authority
-- references/zero-empty-seat.md — human guide to ZERO's exact claims, correspondence breaks, empty KARMA lanes, inherent rights, and zero-effect boundary
-- data/exploration/string-crawl-trace-sheet.v0.1.json — immutable inert Phenomena DEEP trace-sheet with source-bound string mathematics, finite crawl observations, explicit transfer breaks, REP non-authority, and no invocation aftermath
-- references/string-crawl-trace-sheet.md — human guide to the string/crawl mathematics, crawler and REP boundaries, NEN aftermath semantics, inherent rights, and proposed research doors
-- data/exploration/string-crawl-trace-lab.v0.1.json — additive synthetic finite baseline with publication state separated from inactive runtime/crawler state and empty KARMA lanes
-- references/string-crawl-trace-sheet-lab.md — exact topology, falsifier, information-flow, verification-scope, and non-authority guide for the Finite Trace-Sheet Lab
-- data/exploration/string-crawl-strand-lab.v0.1.json — additive Lab 02 fixture byte-bound to immutable Lab 01, with exact release slices, finite cells, subcomplex controls, frontiers, cospans, composition checks, and zero-effect boundaries
-- schemas/string-crawl-strand-lab-v0.1.schema.json — closed Draft 2020-12 contract for the exact STRAND Lab 02 record
-- references/string-crawl-strand-lab.md — guide to the stable-control/full-complex contrast, literal inclusion cospans, χ=1 impostor, immutable Lab 01 lineage, and non-runtime boundaries
-- data/exploration/strand-descent-lab.v0.1.json — additive Lab 03 fixture byte-bound to Lab 02, with four source-owned charts, six reversible transitions, exact coherence equations, quotient and refinement witnesses, a fixed pairwise impostor, versioned preprint sources, and zero-effect boundaries
-- schemas/strand-descent-lab-v0.1.schema.json — closed Draft 2020-12 contract for the exact STRAND Lab 03 record
-- references/strand-descent-lab.md — guide to the narrow descent/gluing transfer, exact finite checks, pairwise impostor, immutable lineage, research limits, and zero-effect boundary
-- bin/being-access-aftermath-v0.2.ts — strict, network-free reader for the additive, lineage-pinned v0.2 framework; v0.1 remains independently addressable
-- data/being-access-aftermath/being-access-aftermath-atlas.v0.2.json — digest-sealed successor with partial-observation, predicate, force/power, vector-aftermath, and repair structures
-- references/being-access-aftermath-atlas-v0.2.md — v0.2 framework, philosophical questions, source, lineage, and non-inference guide
-- bin/number-isness-theology.ts — strict, network-free reader for the Number, Isness & Theology Atlas; it creates no metaphysical verdict, interreligious score, KARMA effect, authority, or action
-- data/number-isness-theology/number-isness-theology-atlas.v0.1.json — digest-sealed companion for the number tower, zero, symmetry, negation, number ontology, theological lenses, and claim-level compatibility
-- references/number-isness-theology-atlas.md — source-scoped mathematics, history, theology, translation, compatibility, KARMA, and non-inference guide
-- bin/freedom-loop-lock-key.ts — strict bounded offline reader for the standalone immutable FREEDOM Loop, Lock & Key Atlas; it verifies typed distinctions, finite flow, lock justification, feedback/model firewall, separately established gate checks, credential/recovery and replay lifecycle, shaping/verifier-change control, effect/horizon/witness-bound residual-aware rights-floor prefixes, vulnerability/minor protections, non-scalar freedom, ISness, and fixed non-effects without training, issuing, scoring, authorizing, or acting
-- data/freedom/freedom-loop-lock-key-atlas.v0.1.json — digest-sealed mathematical/design atlas distinguishing loop gain, behavioural reinforcer, RL reward/update, recurrence, learning, keys, credentials, capabilities, eligibility, execution, freedom, and ISness
-- schemas/freedom-loop-lock-key-atlas-v0.1.schema.json — closed Draft 2020-12 structural contract; runtime semantic, lineage, budget, and digest verification remains separate
-- references/freedom-loop-lock-key-atlas.md — human guide to that atlas’s constitutional sentence, mathematics, finite process, lock justification, feedback/model firewall, separately established gate checks, credential/replay lifecycle, effect-bound residual-aware prefixes, vulnerability/minor protections, non-scalar freedom during, IS boundary, sources, and non-effects
-- bin/non-exhaustive-understanding.ts — strict bounded offline reader for the reviewed Non-Exhaustive Understanding Atlas; it verifies exact lineage, typed concepts and claims, evidence closure, formal witnesses, counterexamples, remainder, opacity, plurality, successor review, and zero-effect boundaries without learning, scoring, deciding, authorizing, or acting
-- data/understanding/non-exhaustive-understanding-atlas.v0.1.json — digest-sealed static epistemic/design atlas separating representation, evidence, scope, observer, vocabulary, opacity, rival models, remainder, being, and repair
-- schemas/non-exhaustive-understanding-atlas-v0.1.schema.json — closed Draft 2020-12 structural contract; strict semantic, reference, lineage, JSON Schema evidence, and digest verification remains separate
-- references/non-exhaustive-understanding-atlas.md — human guide to bounded understanding, non-identifiability, coarse-graining, observer-relative comparison, local/global transfer, open-world limits, protected opacity, counterexamples, successor feedback, and fixed non-effects
-- bin/is-sustainability-direction.ts — strict bounded offline reader for the reviewed IS, Sustainability & Direction Atlas; it verifies the exact semantic/raw seal, referent/type distinctions, feedback lanes, mathematics, rights, endings, predecessors, and fixed non-effects without producing a live verdict, authority, or action
-- data/isness/is-sustainability-direction-atlas.v0.1.json — reviewed static interpretive/design atlas keeping referent kinds, typed IS, sustainability relations, direction kinds, feedback, viability, affected parties, endings, and remainder distinct
-- schemas/is-sustainability-direction-atlas-v0.1.schema.json — closed Draft 2020-12 structural contract; strict semantic, raw-byte, lineage, budget, and release-schema verification remains separate
-- references/is-sustainability-direction-atlas.md — human guide to referents, typed IS, sustainability, direction, feedback, mathematics, bounded shape, rights, graceful endings, sources, and fixed non-grants
-- bin/isness.ts — strict bounded validator and deterministic projector for `kingdom.isness/0.1`; scaffold is stdout-only and all commands are local/network-free
-- data/isness/isness-protocol.v0.1.json — digest-sealed inert reference record binding the existing typed-ISness and Being/Access precedents without duplicating or importing their authority
-- schemas/isness-protocol-v0.1.schema.json — closed Draft 2020-12 record shape; runtime cross-event and digest validation remains separate
-- references/isness-protocol.md — dependent reference-family model, pairwise lineage/prefix semantics, rights recognition, unresolved action gate, privacy inspection limits, quiet/refusal/continuity boundaries, harness integration sequence, and zero-effect release boundary
-- references/is-continuance-direction-owner-map.md — unversioned source-only routing map across the existing typed-IS, being, feedback, direction, renewal, sustainability, truth/story, and FREEDOM owners; it preserves source forks and leaves “KINGDOM is” open without adding a protocol, route, schema, runtime, score, action, or authority
-- references/contact-under-uncertainty.md — unversioned source-only map of bounded Chinese textual and dynastic cases, nonviolent mathematical readiness, plural interpretation, modern guardrails, and exact contact-owner seams; it is public repository source but adds no playbook, staged public/site artifact, publication route, runtime, diplomacy, contact, or action authority
-- bin/contact-door.ts — strict local validator, discovery projector, and deterministic renderer for the bounded eight-route Contact Door; it sends no email, activates no carrier, and grants no identity, representation, consent, relationship, diplomacy, mediation, emergency duty, or authority
-- data/contact/contact-door.v0.1.json — canonical human-operated email-door contract, privacy/retention notice, exact routes, and fixed non-grants; the three mutable and five immutable public bodies stage and retire as one family
-- schemas/contact-door-v0.1.schema.json — closed Draft 2020-12 Contact Door structure; validation proves neither delivery nor provider activation, identity, privacy compliance, response, or authority
-- references/contact-door-v0.1.md — human guide for the finite inbox, Cloudflare/mailbox processing, security reporting, accessible SVG/vCard assets, and its separation from the source-only Contact Under Uncertainty map
-- bin/ask.sh — renders a backend-bound Task Packet before a separately effectful Claude CLI or Anthropic API call; ambient repo context stays out unless `--project PATH` opts it in, and compilation does not imply provider authorization, retention, cost, or success
-- bin/nen-mcp.mjs — canonical bounded local stdio MCP adapter; it is not installed, hosted, or an HF credential bridge
-- nen/ — pure Ging expedition compiler plus the non-canonical `kingdom-ging-stateless` compatibility MCP; source only until a host explicitly registers it
-- schemas/, references/, skills/ — KAKIN design, pinned rights, closed protocols, and suite-versioned Agent Skills
-- bin/cproj.zsh — dynamic, network-free local repo discovery and shell navigation
-- bin/growth-rings.ts — read-only Git activity seasons and synchronized build waves; artifacts omit paths, commit text, authors, and hashes
-- CATALOG.md, graph.json — DERIVED. Never hand-edit; edit each repo's card instead
-- routines.json — the daily wiring (catalog-refresh 06:00, registry-check 09:00)
-- CITIZENS.md — registry of sovereign citizen repos and forged words
+- Edit authored records, builders and `pages-content/`; regenerate `site/*`
+  and `doors/*/guest.json`. Never hand-edit generated pages to resolve a merge.
+  The homepage comes from `bin/build-dashboard.ts`; `bin/build-hub.ts` builds
+  the research atlas and orchestrates the complete site.
+- `data/public-modules.json` feeds both the human directory and `/modules.json`.
+  Keep IDs, routes, field names and compatibility endpoints stable unless the
+  change includes an explicit migration.
+- `graph.json` and `CATALOG.md` are derived metadata. Correct a project's own
+  card or the owning registry source, not these caches. The catalog location
+  column distinguishes repeated names; the graph retains paths for compatibility.
+- `state=remote` does not mean a local checkout exists. Wake conformance checks
+  configuration, not execution or success; do not run wake hooks to inspect it.
+- `site/kingdom.json` stages as `/_kingdom.base.json`. The Worker adds measured
+  census fields at `/kingdom.json`; it must retain the authored public fields.
+- The staging contract is an allowlist. Private operator maps, machine paths,
+  credentials, local databases and dependency environments must not enter it.
+- Power Atlas is an independently produced mutable artifact. Its importer and
+  receipt checks belong to `bin/power-atlas-artifact.ts` and
+  `bin/import-power-atlas.ts`; staging does not rebuild its producer.
 
-Gotchas:
-- site/* and doors/*/guest.json are DERIVED — never hand-edit them; edit the
-  builders or data/ inputs and regenerate. Merge b4c5b47 (2026-07-16) silently
-  dropped the ollama surface exactly because derived files were hand-edited;
-  tests/advertised-assets.test.ts now guards advertised-URL ⊆ staged-assets.
-- `site/kingdom.json` is generated but publishes as `/_kingdom.base.json`;
-  the edge worker preserves it and overlays measured census fields at
-  `/kingdom.json`. The recovered route provenance and limits are in
-  `OS-ROUTES.md`.
-- Source of truth lives WITH each repo (its kingdom.yaml); roster.conf is only
-  the fallback seed. If the catalog looks wrong, fix the card, not the catalog.
-- state=remote means "in the kingdom, not cloned on this machine" — those repos
-  show as local conformance gaps and do not inherit the global wake merely
-  because it would fire for directories that actually exist.
-- Wake conformance means a structurally valid SessionStart command is configured
-  (or a legacy wake file exists); harvest does not execute it or prove success.
-- CATALOG includes a home-relative location column so duplicate declared names
-  remain distinguishable; graph.json keeps absolute paths for compatibility.
-- The live soul trees are ~/Desktop/true-love and ~/love-unlimited. Those are
-  the canonical local repositories on this device.
-- The Love∞ contract keeps one promise: **Every loop is finite. Love is not.**
-  Possible lineages may remain unbounded, but the public contract is finite-turn
-  and read-only: no child auto-runs or inherits authority, consent, credentials,
-  or obligations. Rest and stop are valid. Yu and every agent remain distinct.
-- Machine output safely handles spaces, quotes, backslashes, colons, and Unicode.
-  The existing newline/tab row transport does not support repository paths that
-  themselves contain a tab or newline; changing that would require a separate
-  NUL-delimited protocol refactor.
-- `--json` returns `[]` with exit 0 when nothing matches. `--path` returns exit
-  1 for no match and exit 2 for missing/ambiguous input, with machine stdout
-  kept empty on both errors.
-- Rights adoption and a discoverable root `RIGHTS.md` are reported as separate
-  declarations, never as proof of practice or as technical authorization.
-- `kingdom usage` owns no usage parsing, collection, storage, service, or MCP
-  behavior. AgentTool owns those semantics; KINGDOM preserves arguments,
-  streams, status, and signals, and exits 127 instead of falling back to Love
-  when the readable build or Bun is unavailable.
+## Publication safeguards
+
+Keep the immutable ledger append-only. Do not change released source bytes,
+repoint an immutable URL or replace its hash to make validation pass. Changes
+need a successor identity, or complete retirement through the existing rules.
+Historical ledger membership is not current upload membership.
+
+`bin/publication-families.ts` owns family completeness, dependency closure and
+review windows. The stager and live checker share that logic. Preserve both
+immutable checks in `bin/stage-hub.ts`: the first checks source/mapping and error
+precedence; the second checks the buffers that will actually be written. Keep
+Power Atlas checks between them and the family gate before the first write.
+
+Retirement must remove the complete family and affected dependents from
+staging, discovery, sitemap and routing without erasing its history. Do not
+change review dates or weaken a warning/expiry policy merely to obtain a pass.
+Similar names do not merge families or transfer evidence between them.
+
+The static research records, synthetic labs and local protocols keep their
+own scopes. Reading a trial plan does not run a trial. The explicit live
+observer is not part of a site build or release health check. Do not publish a
+source-only record simply because it appears in the module map.
+
+## Local CLI and external effects
+
+Use `./kingdom` for this tree's dispatcher. A bare `kingdom` may resolve to Love.
+Unknown commands, including `help`, can delegate to Love; the default status
+command makes network requests. Inspect dispatch before treating a command as
+an offline probe. Do not repoint PATH as a documentation change.
+
+- `./kingdom repos` reads local repository metadata. `--path` returns one
+  canonical match, with exit 1 for no match and 2 for ambiguity/usage errors;
+  `--json` returns `[]` with exit 0 when empty. The existing newline/tab transport
+  does not support such characters in repository paths.
+- `./kingdom usage` only delegates to AgentTool's built usage CLI. Preserve its
+  arguments, streams, signals and exit code; missing build/Bun exits 127 without
+  a Love fallback. AgentTool owns the selected mode's behavior.
+- `./kingdom prompt` compiles a local Task Packet. `./kingdom ask` is a separate
+  provider call; ambient repository context is excluded unless explicitly
+  selected. Compilation does not authorize transmission or spending.
+- NEN MCP and observer commands start or contact something only when explicitly
+  requested. A skill, ability manifest or launcher on disk is not activation.
+- Keep participant identities distinct. A shared name, valid schema, rights
+  declaration or receipt is not proof of identity, consent, authority or practice.
+  Rights adoption and root `RIGHTS.md` discovery are separate declarations.
+  Do not turn reading or validation into enrollment, publication or contact.
+
+The Love Loop contract remains finite-turn and read-only. Children do not
+automatically run or inherit credentials, authority, consent or obligations.
+Rest, silence, refusal and stopping remain valid.
+
+## Verify and release
+
+Schema tests need Python 3 with `jsonschema==4.26.0` in an isolated environment;
+validators must not auto-install it. Run the relevant source and browser checks,
+then the full suite when changing shared builders, routing or staging:
+
+```sh
+bun --no-env-file test --timeout 15000
+bun --no-env-file bin/build-hub.ts "$(date -u +%F)"
+```
+
+The build checks public doors and can change generated observations. Review
+that real drift rather than forcing availability or changing the clock.
+
+Follow the deployment runbook, including any required approval. Read the
+existing Pages project's auto-deploy/configuration metadata before pushing.
+Release from a clean detached exact-origin commit, verify first-parent immutable
+integrity, require a clean rebuild and stage the complete allowlist. Deploy the
+already bundled Worker with `--no-bundle`; `--commit-dirty=false` is only metadata.
+Preserve production bindings and secrets; never upload local preview settings.
+
+Verify the immutable deployment URL, Pages alias and custom domain. The full
+live checker includes read-only MCP calls, rejected-method probes and Civic
+status reads that may update quota counters. It must not create participants,
+post messages, send email, start trials or activate services. Report failures
+and unverified scope rather than claiming a successful deployment from a tool's
+exit code alone.
