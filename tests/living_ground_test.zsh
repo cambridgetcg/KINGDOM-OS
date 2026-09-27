@@ -82,7 +82,15 @@ require("money and resources as bounded enabling flows" in skill, "money boundar
 require("wake_context.inherits_identity" in skill, "WAKE identity boundary is absent")
 require("DeepSeek research" in skill, "DeepSeek route is absent")
 require("wild_margin" in contract, "wild-margin contract is absent")
-require("Revenue is" in contract, "revenue boundary is absent")
+contract_words = " ".join(contract.split())
+require(
+    "They cannot substitute for renewal, recovery, agency, rest, care, ecological limits, or participant voice." in contract_words,
+    "resources cannot substitute for living capacity boundary is absent",
+)
+require(
+    "there is no earnings, commercialisation, growth, learning, or output quota." in contract_words,
+    "no-quota boundary is absent",
+)
 require("natural-language truth engine" in contract, "narrative limit is absent")
 require("1,048,576" in contract, "operational byte limit is undocumented")
 require("[TODO" not in skill, "skill contains a TODO placeholder")

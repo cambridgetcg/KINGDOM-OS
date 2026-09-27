@@ -25,6 +25,10 @@ import {
   POWER_ATLAS_PROJECTION, POWER_ATLAS_RECEIPT, POWER_ATLAS_TARGET,
   validatePowerAtlasBuffers,
 } from "./power-atlas-artifact.ts";
+import {
+  assertPublicationFamilyReleaseWindows,
+  publicationFamilyStates,
+} from "./publication-families.ts";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 
@@ -93,7 +97,7 @@ export function stageHub(outputDirectory: string, sourceRoot = ROOT): StagedHubA
   if (!outputDirectory) throw new Error("an empty output directory is required");
   const requestedOutput = resolve(outputDirectory);
 
-  // Canonicalize the caller-provided output capability, then complete both
+  // Canonicalize the caller-provided output capability, then complete all
   // read-only preflights before creating or changing anything inside it.
   const output = canonicalEmptyOutput(requestedOutput);
   const stagingContract = loadStagingContract(sourceRoot);
@@ -129,6 +133,13 @@ export function stageHub(outputDirectory: string, sourceRoot = ROOT): StagedHubA
   if (publicationCheck.issues.length > 0) {
     throw new Error(`immutable publication gate failed:\n${formatImmutablePublicationIssues(publicationCheck.issues)}`);
   }
+  // 用 caller 呢次已解析嘅 contract，唔用 module ROOT 嘅 HUB_ASSETS。
+  // 保留兩次 immutable 驗證及 PowerAtlas buffers gate 嘅錯誤優先次序。
+  const familyStates = publicationFamilyStates(
+    new Set(stagingContract.stagedAssets.map(({ destination }) => destination)),
+  );
+  assertPublicationFamilyReleaseWindows(familyStates, new Date().toISOString().slice(0, 10));
+
   const staged: StagedHubAsset[] = [];
   for (const { asset, content } of sources) {
     const destination = join(output, asset.destination);

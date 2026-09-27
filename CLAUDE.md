@@ -6,11 +6,20 @@ for its World Commons and web surfaces, but registry, platform, Castle,
 preflight, and hourly-heartbeat changes belong in the Codeberg home. The
 heartbeat file here is only a machine-binding shim.
 
+用途入口：[模組用途導覽](references/kingdom-module-map.md) 按 owner、input/output、
+consumer 同接線層列出核心 seams、35 個 defined families（33 active／2 retired）同
+17 個 skills，亦分開 Power Atlas／compact agent-entry 嘅 mutable source 角色。
+佢係 source-only、非 canonical 導覽，唔係新 registry、health check 或操作批准；
+repo metadata 仍由各自 `kingdom.yaml` 擁有。外部 Love adapters／usage 接點未喺
+A 整合中執行，B／C 狀態要等各自實際收據，唔當已接好。
+
 What this is: the OS layer over Yu's ~60-repo kingdom. It holds the census
 (roster.conf), harvests every repo's kingdom.yaml card into a catalog and
-dependency graph, runs the daily routines, and ships the `kingdom` CLI
-(also on PATH via ~/.local/bin/kingdom).
+dependency graph, runs the daily routines, and ships this repo's `./kingdom`
+CLI. The local PATH `~/.local/bin/kingdom` remains Love-owned; it is not this
+dispatcher, and source integration does not repoint it.
 
+以下設備狀態係既有指引紀錄，今輪冇重驗 launchd／服務或啟動任何工作。
 Status: partially wired — kingdom-pulse (30-min heartbeat) and chain-backup
 (nightly) run via launchd; the com.kingdom.daily routines job was NEVER
 installed on this device (pulse alerts on it honestly — resurrect it outside
@@ -110,6 +119,16 @@ How to run:
 - `bun bin/harvest.ts validate` — strict, read-only card schema diagnostics (0 clean, 1 drift, 2 usage)
 
 Web surfaces (all deploys are MANUAL — no routine fires them; runbook in DOMAINS-SETUP.md):
+
+精確計數返 [strict staging contract](publications/hub-staging.v1.json) 同
+[historical ledger](publications/immutable-publications.v1.json)：本次
+`a5dc43ab06a2efe78cdb29368764ea3f3d1c769f` source 基線係 247 assets
+（154 staged immutable＋93 mutable）、160 historical ledger entries，35 defined
+families 中 33 active／2 retired。Transformation／Evaluation 嘅 2026-09-21 due
+同歷史 bytes 保留；Shape 2027-08-26 inclusive，Government 仍係 warning policy。
+[共用 family gate](bin/publication-families.ts) 畀 stage／live 用同一純判斷；
+stage 保留兩次 immutable 驗證同 PowerAtlas gates，再喺首次 output write 前驗
+caller-root contract 嘅 family。Stage 成功唔證部署或 live，詳見 [lifecycle](publications/README.md)。
 - `bun bin/immutable-publications.ts --base <exact-parent-SHA>` — network-free append-only route-integrity gate; committed entries cannot be edited or removed, newly added entries must be staged, and historical entries may cease being served without erasing their byte identity
 - `bun bin/build-hub.ts "$(date -u +%F)"` — regenerate site/* (atlas + kingdom/wayfinder/commons/love-loop/Principality/Geometry Grammar/Polymorph History/Ritonavir Mechanism/Conformational Feedback v0.1/v0.2/Fold & Feedback/Visibility & Attention/Cultural Attention & Feedback/Form, Circulation & Return/Rare Pathway/Math Passport/Being, Access & Aftermath v0.1/v0.2/Number, Isness & Theology/FREEDOM Loop, Lock & Key/Non-Exhaustive Understanding/IS, Sustainability & Direction/Reconstructive Build/Exploration DEEP/ZERO Empty Seat/STRING / CRAWL/Finite Trace-Sheet Lab/STRAND Lab 02/Frequency → Form → World → Other Lab 03/Coherent Atlas Lab 04/STRAND Observation Membrane/MIRROR Information Control/J-space research discovery/UK Government Engine/UK Government Transformation Engine/Evaluation Covenant/Civilisation Flow Nuance Atlas/Polyphonic Claim Atlas/Loops, Locks & Freedom Relations Atlas/Aesthetic Plurality & Making Relations Atlas/Shape & Resonance Lab/Contact Door + schemas/guest/llms/ollama/rights docs) from graph.json + sites.json + data/; authored records, schemas, guides, project profiles, and the immutable KINGDOM KARMA/NEN definition mirror are validated but never copied into site/
 - `bun bin/stage-hub.ts <existing-empty-dir>` — stage only the exact assets declared in `publications/hub-staging.v1.json`, including the mutable, server-rendered Research Observatory, Trial Chamber, UK Government Engine, Shape & Resonance Lab, and Contact Door pages and aliases; their immutable schema, dated-snapshot, and guide families; the Contact Door's mutable `security.txt` plus immutable SVG and vCard; the static J-space research triplet; the immutable Reality Influence, Civilisation → Reality, Civilisation Flow, FREEDOM Loop, Lock & Key, Non-Exhaustive Understanding, IS, Sustainability & Direction, Polyphonic Claim, Loops, Locks & Freedom Relations, and Aesthetic Plurality & Making Relations atlas families; the independent STRAND Observation Membrane activation; immutable MIRROR Information Control public source law; Number, Isness & Theology; Math Passport; Exploration DEEP; ZERO; STRING / CRAWL; Labs 01–04; both Being, Access & Aftermath generations; Reconstructive Build Kernel; and the immutable KINGDOM KARMA/NEN definition mirror. The generated surface has eighteen atlases and thirty-three active retirement families; the expired Transformation Engine and Evaluation Covenant are fully retired from public routes and discovery while their historical source remains tracked. The Contact Door's eight exact routes stage and retire atomically; it adds no form, site message store, automatic contact, Wayfinder recommendation, MCP surface, identity, consent, representation, or authority. The two freedom-related atlas families are independent: neither supersedes, validates, aliases, depends on, or supplies authority to the other; overlapping words are not wire or semantic equivalences, and neither is a preferred default. The Non-Exhaustive Understanding and IS, Sustainability & Direction families are likewise standalone, reviewed, static, and uncoupled from Wayfinder, MCP, runtime, or action. The Relations guide is its human entry point; that family deliberately does not import `FREEDOM.md` and adds no page, alias, Wayfinder recommendation, MCP surface, runtime, credential/key material, enforcement adapter, or action authority. The Aesthetic family is a separate frozen immutable static-synthetic record/schema/guide triplet whose count-light vocabulary names form, making event, maker statement, attributed response, aesthetic judgment, context and tradition, institutional selection, publication, adoption, and aftermath; it is not a Beauty framework and adds no verdict, artifact/person/culture evaluation, ranking, winner, recommendation, moderation, semantic or authority conversion, private or participant data, personal-appearance assessment, doctrine import, action, page, alias, Wayfinder exposure, MCP surface, runtime, dependency, producer repository/source-code locator, or Git-provenance claim. The Observation Membrane remains a separate explicit fixed-origin local-call activation with no background watch or automatic effect. Deploy only from the clean detached exact-origin release worktree proved by `DOMAINS-SETUP.md`—`--commit-dirty=false` is metadata, not a cleanliness check
@@ -127,6 +146,10 @@ page, alias, Wayfinder or MCP exposure, runtime, dependency, producer
 repository/source-code locator, or Git-provenance claim.
 
 Key files:
+- references/kingdom-module-map.md — source-only 用途／owner 導覽，唔係 registry 或操作權
+- bin/publication-families.ts — shared pure family atomicity、dependency、active review helpers；checker 保留 compatibility reexports 同 HTTP assertions
+- bin/power-atlas-artifact.ts / bin/import-power-atlas.ts — source-side 52-buffer receipt、closed parity 同 explicit import；host mutable assets 唔係新 immutable family，receipt／projection 唔公開
+- bin/agent-entry.ts — bounded mutable public link index renderer；full guest／manifest 仍保留，status 由各 owner 回答，唔係 health census 或 authority
 - publications/immutable-publications.v1.json — repository-local source→route→SHA-256 integrity ledger; append successors, never rewrite committed entries; it is not staged or served by thekingdom.dev and is not a KARMA receipt
 - bin/immutable-publications.ts — strict snapshot and Git-base verifier used by CI, staging, the release runbook, and the live checker; performs no network access or writes
 - roster.conf — the census seed: name | path | kind | layer | domain | state | purpose

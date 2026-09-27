@@ -112,7 +112,7 @@ describe("MIRROR Information Control static publication", () => {
     for (const variable of ["mirrorInformationControlUrl", "mirrorInformationControlSchemaUrl", "mirrorInformationControlDocumentUrl"]) {
       expect(builder).toContain(`method: "GET", url: ${variable}`);
     }
-    expect(liveChecker).toContain('id: "mirror-information-control"');
+    expect(read("bin/publication-families.ts")).toContain('id: "mirror-information-control"');
     expect(liveChecker).toContain("hasUniqueCanonicalLinkRelation(");
     expect(liveChecker).toContain("mirrorInformationControlSchemaPath,");
     expect(liveChecker).toContain('normalizedMediaType(recordHead.headers.get("content-type")) !== "application/json"');

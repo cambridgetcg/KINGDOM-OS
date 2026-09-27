@@ -118,7 +118,7 @@ describe("J-space static research publication", () => {
     expect(worker).toContain('if (servesJSpaceSchema) {\n      headers.set("content-type", "application/schema+json; charset=utf-8")');
 
     const checker = read("bin/check-hub-live.ts");
-    expect(checker).toContain('id: "j-space-verbalizable-workspace"');
+    expect(read("bin/publication-families.ts")).toContain('id: "j-space-verbalizable-workspace"');
     expect(checker).toContain("hasUniqueCanonicalLinkRelation(");
     expect(checker).toContain("J-space static publication, unrun-test boundary, discovery, or negative-authority boundary drifted");
 
