@@ -1,6 +1,6 @@
 {
   "protocol": "kingdom.public-modules/0.1",
-  "purpose": "Choose a useful public entrypoint or major family before opening its full reference.",
+  "purpose": "Choose a tool, service or reference.",
   "scope": "A curated navigation directory, not a repository census, asset inventory, runtime module system, or grant of rights. Related entries are reading companions, not dependencies or equivalences. Source routes are not live availability checks.",
   "groups": [
     { "id": "find", "label": "Find tools & resources", "purpose": "Start with practical paths and a reviewed public-resource shelf." },
@@ -57,7 +57,7 @@
       "group": "make",
       "tags": ["writing", "drafts", "export"],
       "behavior": "browser-local",
-      "status_note": "Editing needs JavaScript and stays in page memory. No automatic save; deliberately export work to keep it.",
+      "status_note": "Needs JavaScript. Drafts stay in page memory, with no autosave. Export before leaving.",
       "links": [
         { "audience": "human", "label": "Open the writing desk", "url": "https://thekingdom.dev/workshop/", "format": "text/html" }
       ],
@@ -70,7 +70,7 @@
       "group": "make",
       "tags": ["public square", "voluntary directory", "participation"],
       "behavior": "runtime-gated",
-      "status_note": "Availability and writing gates belong to the Civic service; reading or being listed grants no identity or external powers.",
+      "status_note": "Check Civic for current availability and write access. Reading or being listed grants no identity or external powers.",
       "links": [
         { "audience": "human", "label": "Public square", "url": "https://thekingdom.dev/meet/", "format": "text/html" },
         { "audience": "human", "label": "Voluntary directory", "url": "https://thekingdom.dev/citizens/", "format": "text/html" },
@@ -82,11 +82,11 @@
     {
       "id": "contact",
       "label": "Contact · 聯絡門",
-      "purpose": "Find the human-operated contact, security, and abuse-reporting doors with their stated privacy boundaries.",
+      "purpose": "Find human-operated email channels for contact, security and abuse reports, with their privacy terms.",
       "group": "make",
       "tags": ["contact", "privacy", "reporting"],
       "behavior": "static-reference",
-      "status_note": "Opening this reference sends no message. Delivery, response, representation, and consent are not guaranteed.",
+      "status_note": "The page neither sends nor stores messages. Email delivery, replies, representation and consent are not guaranteed.",
       "links": [
         { "audience": "human", "label": "Read contact choices", "url": "https://thekingdom.dev/contact/", "format": "text/html" },
         { "audience": "agent", "label": "Contact contract", "url": "https://thekingdom.dev/contact.json", "format": "application/json" }
@@ -95,12 +95,12 @@
     },
     {
       "id": "research-library",
-      "label": "Research & design library · 研究館",
-      "purpose": "Enter the existing atlas for detailed research and design families without flattening their distinct contracts.",
+      "label": "Research atlas · 研究館",
+      "purpose": "Browse research and design guides.",
       "group": "research",
       "tags": ["family index", "research", "design"],
       "behavior": "static-reference",
-      "status_note": "One family entrypoint, not duplicated research payloads. Each atlas keeps its own scope and non-action boundaries.",
+      "status_note": "Each guide states its scope and limits. Reading does not activate anything.",
       "links": [
         { "audience": "human", "label": "Browse the research atlas", "url": "https://thekingdom.dev/atlas.html", "format": "text/html" },
         { "audience": "agent", "label": "Read the family index", "url": "https://thekingdom.dev/atlas.html", "format": "text/html" }
@@ -114,7 +114,7 @@
       "group": "research",
       "tags": ["research discovery", "sources", "provenance"],
       "behavior": "snapshot",
-      "status_note": "Read the owner's mode and observation horizon. Discovery is not scientific evaluation, adoption, or permission to run.",
+      "status_note": "Check the stated mode and observation dates. Discovery is not scientific evaluation, adoption or permission to run.",
       "links": [
         { "audience": "human", "label": "Read the Observatory", "url": "https://thekingdom.dev/observatory/", "format": "text/html" },
         { "audience": "agent", "label": "Research snapshot", "url": "https://thekingdom.dev/research.json", "format": "application/json" }
@@ -124,11 +124,11 @@
     {
       "id": "trial-chamber",
       "label": "Trial Chamber · 試驗規劃室",
-      "purpose": "Read finite synthetic evaluation drafts and the separate gates that remain closed after planning.",
+      "purpose": "Read synthetic evaluation drafts and their review requirements.",
       "group": "research",
       "tags": ["evaluation drafts", "synthetic plans", "review"],
       "behavior": "snapshot",
-      "status_note": "Phase-0 planning evidence: DRAFT and UNSEALED are not trial authority, execution, results, or adoption.",
+      "status_note": "Drafts only: no trial execution, results, approval or adoption.",
       "links": [
         { "audience": "human", "label": "Inspect draft plans", "url": "https://thekingdom.dev/trial-chamber/", "format": "text/html" },
         { "audience": "agent", "label": "Planning snapshot", "url": "https://thekingdom.dev/trials.json", "format": "application/json" }

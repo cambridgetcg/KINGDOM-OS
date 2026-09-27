@@ -132,7 +132,15 @@ describe("MIRROR Information Control static publication", () => {
     const kingdom = read("kingdom");
     const readme = read("README.md");
     expect(kingdom).toContain('mirror-information-control) exec bun "$SELF_DIR/bin/mirror-information-control.ts" "${@:2}" ;;');
-    expect(readme).toContain("kingdom mirror-information-control");
-    for (const url of PUBLIC_URLS) expect(readme).toContain(new URL(url).pathname);
+    expect(readme).toContain("](references/kingdom-module-map.md)");
+    const moduleMap = read("references/kingdom-module-map.md");
+    expect(moduleMap).toContain("](mirror-information-control-public.md)");
+    expect(moduleMap).toContain("./kingdom mirror-information-control");
+    const guide = read("references/mirror-information-control-public.md");
+    const staged = JSON.parse(read("publications/hub-staging.v1.json")).assets.map((asset: { destination: string }) => `/${asset.destination}`);
+    for (const url of PUBLIC_URLS) {
+      expect(guide).toContain(new URL(url).pathname);
+      expect(staged).toContain(new URL(url).pathname);
+    }
   });
 });

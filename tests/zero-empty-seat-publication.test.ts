@@ -140,9 +140,17 @@ describe("ZERO Empty Seat public experience", () => {
 
   test("documents the exact ZERO public routes and source-only command", () => {
     // Global upload cardinalities are owned by stage-hub.test.ts.
-    expect(read("CLAUDE.md")).toContain("./kingdom zero-empty-seat verify --json");
-    expect(read("DOMAINS-SETUP.md")).toContain("/ZERO-EMPTY-SEAT.md");
-    expect(read("README.md")).toContain("/atlases/zero-empty-seat-2026-08-14.json");
-    expect(read("OS-ROUTES.md")).toContain("| `/ZERO-EMPTY-SEAT.md` |");
+    for (const entrypoint of ["README.md", "CLAUDE.md"]) {
+      expect(read(entrypoint)).toContain("](references/kingdom-module-map.md)");
+    }
+    const moduleMap = read("references/kingdom-module-map.md");
+    expect(moduleMap).toContain("](zero-empty-seat.md)");
+    expect(moduleMap).toContain("./kingdom zero-empty-seat verify --json");
+    expect(read("DOMAINS-SETUP.md")).toContain("publications/hub-staging.v1.json");
+    const staged = JSON.parse(read("publications/hub-staging.v1.json")).assets.map((asset: { destination: string }) => `/${asset.destination}`);
+    for (const path of ["/ZERO-EMPTY-SEAT.md", "/atlases/zero-empty-seat-2026-08-14.json"]) {
+      expect(staged).toContain(path);
+      expect(read("OS-ROUTES.md")).toContain(`| \`${path}\` |`);
+    }
   });
 });

@@ -288,12 +288,22 @@ describe("STRING / CRAWL STRAND Lab 02 public integration", () => {
   test("documents the exact routes and exposes only the offline dispatcher", () => {
     const dispatcher = read("kingdom");
     expect(dispatcher).toContain('string-crawl-strand-lab) exec bun "$SELF_DIR/bin/string-crawl-strand-lab.ts"');
+    for (const entrypoint of ["README.md", "CLAUDE.md"]) {
+      expect(read(entrypoint)).toContain("](references/kingdom-module-map.md)");
+    }
+    expect(read("references/kingdom-module-map.md")).toContain("](string-crawl-strand-lab.md)");
+    expect(read("DOMAINS-SETUP.md")).toContain("publications/hub-staging.v1.json");
+    const staged = json("publications/hub-staging.v1.json").assets.map((asset: { destination: string }) => `/${asset.destination}`);
     for (const path of [`/${RECORD_DESTINATION}`, `/${SCHEMA_DESTINATION}`, `/${GUIDE_DESTINATION}`]) {
-      for (const document of ["README.md", "DOMAINS-SETUP.md", "OS-ROUTES.md"]) {
+      expect(staged).toContain(path);
+      for (const document of ["references/string-crawl-strand-lab.md", "OS-ROUTES.md"]) {
         expect(read(document)).toContain(path);
       }
     }
-    expect(read("README.md")).toContain("synthetic offline finite-CW/cospan topology fixture");
+    const guide = read("references/string-crawl-strand-lab.md");
+    expect(guide).toContain("A tiny synthetic topology lab for the KINGDOM. It is exact, offline");
+    expect(guide).toContain("The canonical artifact is a finite regular-CW fixture");
+    expect(guide).toContain("two inclusion cospans joined over their literal shared frontier");
     expect(read("OS-ROUTES.md")).toContain("no NEN/KARMA receipt");
   });
 });

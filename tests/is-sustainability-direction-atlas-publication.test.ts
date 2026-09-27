@@ -1,6 +1,7 @@
 import { readHistoricalPowerHub } from "./publication-retirement-fixture";
 import { describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
+import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -360,22 +361,37 @@ describe("IS, Sustainability & Direction immutable publication", () => {
     }])).not.toThrow();
   });
 
-  test("pins the thirty-fourth family in the human release inventories", () => {
-    const inventories = {
-      claude: read("CLAUDE.md"),
-      domains: read("DOMAINS-SETUP.md"),
-      routes: read("OS-ROUTES.md"),
-      publications: read("publications/README.md"),
-    };
-    expect(inventories.claude).toContain(
-      "./kingdom is-sustainability-direction overview|scope|is-types|sustainability|direction|feedback|mathematics|profile|time|rights|ecology|philosophy|counterexamples|concepts|edges|questions|sources|predecessors|non-grants|discovery",
-    );
-    expect(inventories.domains).toContain(PUBLIC_PATHS[0]!);
-    expect(inventories.domains).toContain(PUBLIC_PATHS[1]!);
-    expect(inventories.domains).toContain(PUBLIC_PATHS[2]!);
-    expect(inventories.domains).toContain("IS, Sustainability & Direction Atlas");
-    expect(inventories.routes).toContain(PUBLIC_PATHS[0]!);
-    expect(inventories.routes).toContain(PUBLIC_PATHS[1]!);
-    expect(inventories.publications).toContain("as the thirty-fourth family");
+  test("routes command and release documentation to their owning references", () => {
+    for (const entrypoint of ["README.md", "CLAUDE.md"]) {
+      expect(read(entrypoint)).toContain("](references/kingdom-module-map.md)");
+    }
+    const moduleMap = read("references/kingdom-module-map.md");
+    expect(moduleMap).toContain("](is-sustainability-direction-atlas.md)");
+    expect(moduleMap).toContain("IS, Sustainability & Direction Atlas");
+    // Unknown flags print the source-owned command inventory without loading a record.
+    const help = spawnSync("bun", ["--no-env-file", "bin/is-sustainability-direction.ts", "--help"], {
+      cwd: ROOT, encoding: "utf8", timeout: 10_000,
+    });
+    expect(help.status).toBe(2);
+    expect(help.stdout).toBe("");
+    const accepted = help.stderr.match(/\[([a-z|\-]+)\] \[--json\]/)?.[1]?.split("|");
+    expect(accepted).toBeDefined();
+    const inventory = moduleMap.match(/reader's accepted inventory[\s\S]*?\n\s+is ([\s\S]+?)\.\n/)?.[1];
+    expect(inventory).toBeDefined();
+    const documented = [...inventory!.matchAll(/`([^`]+)`/g)].map((match) => match[1]);
+    expect(documented).toEqual(accepted!);
+    for (const obsolete of ["scope", "is-types", "mathematics", "time", "rights", "concepts", "edges", "questions", "discovery"]) {
+      expect(documented).not.toContain(obsolete);
+    }
+    expect(moduleMap).toContain("**not accepted commands**");
+    expect(read("DOMAINS-SETUP.md")).toContain("publications/hub-staging.v1.json");
+    expect(read("publications/README.md")).toContain("hub-staging.v1.json");
+    const staged = json("publications/hub-staging.v1.json").assets.map((asset: { destination: string }) => `/${asset.destination}`);
+    for (const path of PUBLIC_PATHS) {
+      expect(staged).toContain(path);
+      expect(read("OS-ROUTES.md")).toContain(path);
+    }
+    // The exact family membership, routes and bytes are checked above;
+    // a historical release ordinal is not a second current manifest.
   });
 });

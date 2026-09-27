@@ -199,6 +199,115 @@ test("JSON rendering validates before emitting deterministic bytes within the ag
 });
 
 const escapeText = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+const cardHtml = (html: string, id: string): string => html.match(new RegExp(`<article id="civic-module-${id}"[^>]*>([\\s\\S]*?)</article>`))![1];
+
+test("human cards show each exact destination once without merging distinct fragments or JSON audiences", () => {
+  const value = copy();
+  const research = value.modules.find((module) => module.id === "research-library")!;
+  research.links.push({ audience: "human", label: "Rights overview", url: "https://thekingdom.dev/atlas.html#rights", format: "text/html" });
+  const before = renderModuleCatalog(value);
+  const card = cardHtml(modules.renderModuleDirectory(value), "research-library");
+  expect([...card.matchAll(/href="https:\/\/thekingdom.dev\/atlas.html"/g)]).toHaveLength(1);
+  expect(card).toContain('href="https://thekingdom.dev/atlas.html#rights" type="text/html"');
+  expect(card).toContain(research.links[0].label);
+  expect(card).not.toContain(research.links[1].label);
+  expect(JSON.parse(before).modules.find((module: modules.PublicModule) => module.id === "research-library").links)
+    .toEqual(research.links);
+  expect(research.links.slice(0, 2).map((link) => link.audience)).toEqual(["human", "agent"]);
+  expect(renderModuleCatalog(value)).toBe(before);
+});
+
+test("card entry links follow their purpose with compact formats instead of audience or MIME clutter", () => {
+  const html = modules.renderModuleDirectory();
+  for (const module of PUBLIC_MODULE_CATALOG.modules) {
+    const card = cardHtml(html, module.id);
+    expect(card).toContain(`<p>${escapeText(module.purpose)}</p>\n  <ul class="module-links"`);
+    const entryLinks = card.match(/<ul class="module-links"[^>]*>([\s\S]*?)<\/ul>/)![1];
+    const text = entryLinks.replace(/<[^>]*>/g, "");
+    expect(text).not.toMatch(/\b(?:Human|Agent)\b|text\/|application\//);
+    for (const link of module.links) expect(entryLinks).toContain(`href="${escapeText(link.url)}" type="${link.format}"`);
+  }
+  expect(cardHtml(html, "wayfinder")).toContain('type="application/json">Path catalogue (JSON)</a>');
+  expect(cardHtml(html, "civic")).toContain('type="text/markdown">Civic interaction contract (Markdown)</a>');
+  expect(cardHtml(html, "full-references")).toContain('type="text/plain">Text reference index (Text)</a>');
+  expect(cardHtml(html, "commons-mcp")).toContain('type="application/mcp">Hosted read-only MCP</a>');
+});
+
+test("tags stay in the JSON catalogue rather than decorative card chips", () => {
+  const before = renderModuleCatalog();
+  const html = modules.renderModuleDirectory();
+  expect(html).not.toContain('class="module-tags"');
+  expect(html).not.toContain('aria-label="Tags"');
+  expect(JSON.parse(before).modules.map((module: modules.PublicModule) => module.tags))
+    .toEqual(PUBLIC_MODULE_CATALOG.modules.map((module) => module.tags));
+  expect(renderModuleCatalog()).toBe(before);
+});
+
+test("related reading is an optional disclosure with unchanged module anchors", () => {
+  const html = modules.renderModuleDirectory();
+  for (const module of PUBLIC_MODULE_CATALOG.modules) {
+    const card = cardHtml(html, module.id);
+    const related = card.match(/<details class="module-related"><summary>Related reading<\/summary>([\s\S]*?)<\/details>/)?.[1];
+    expect(related, module.id).toBeDefined();
+    expect([...related!.matchAll(/href="#civic-module-([^"]+)"/g)].map((match) => match[1])).toEqual(module.related_ids);
+  }
+  expect([...html.matchAll(/<details class="module-group" open>/g)]).toHaveLength(PUBLIC_MODULE_CATALOG.groups.length);
+  const value = copy();
+  value.modules[0].related_ids = [];
+  expect(cardHtml(modules.renderModuleDirectory(value), value.modules[0].id)).not.toContain('class="module-related"');
+});
+
+test("workshop describes its scope plainly without implying extra capabilities", () => {
+  const module = PUBLIC_MODULE_CATALOG.modules.find((module) => module.id === "workshop")!;
+  expect(module.status_note).toBe("Needs JavaScript. Drafts stay in page memory, with no autosave. Export before leaving.");
+  expect(module.behavior).toBe("browser-local");
+  const card = cardHtml(modules.renderModuleDirectory(), module.id);
+  for (const text of [module.label, module.purpose, module.status_note]) expect(card).toContain(escapeText(text));
+});
+
+test("research-library describes its scope plainly without implying extra capabilities", () => {
+  const module = PUBLIC_MODULE_CATALOG.modules.find((module) => module.id === "research-library")!;
+  expect(module.label).toBe("Research atlas · 研究館");
+  expect(module.purpose).toBe("Browse research and design guides.");
+  expect(module.status_note).toBe("Each guide states its scope and limits. Reading does not activate anything.");
+  expect(module.behavior).toBe("static-reference");
+  const card = cardHtml(modules.renderModuleDirectory(), module.id);
+  for (const text of [module.label, module.purpose, module.status_note]) expect(card).toContain(escapeText(text));
+});
+
+test("trial-chamber describes its scope plainly without implying extra capabilities", () => {
+  const module = PUBLIC_MODULE_CATALOG.modules.find((module) => module.id === "trial-chamber")!;
+  expect(module.purpose).toBe("Read synthetic evaluation drafts and their review requirements.");
+  expect(module.status_note).toBe("Drafts only: no trial execution, results, approval or adoption.");
+  expect(module.behavior).toBe("snapshot");
+  const card = cardHtml(modules.renderModuleDirectory(), module.id);
+  for (const text of [module.label, module.purpose, module.status_note]) expect(card).toContain(escapeText(text));
+});
+
+test("civic describes its scope plainly without implying extra capabilities", () => {
+  const module = PUBLIC_MODULE_CATALOG.modules.find((module) => module.id === "civic")!;
+  expect(module.status_note).toBe("Check Civic for current availability and write access. Reading or being listed grants no identity or external powers.");
+  expect(module.behavior).toBe("runtime-gated");
+  const card = cardHtml(modules.renderModuleDirectory(), module.id);
+  for (const text of [module.label, module.purpose, module.status_note]) expect(card).toContain(escapeText(text));
+});
+
+test("contact describes its scope plainly without implying extra capabilities", () => {
+  const module = PUBLIC_MODULE_CATALOG.modules.find((module) => module.id === "contact")!;
+  expect(module.purpose).toBe("Find human-operated email channels for contact, security and abuse reports, with their privacy terms.");
+  expect(module.status_note).toBe("The page neither sends nor stores messages. Email delivery, replies, representation and consent are not guaranteed.");
+  expect(module.behavior).toBe("static-reference");
+  const card = cardHtml(modules.renderModuleDirectory(), module.id);
+  for (const text of [module.label, module.purpose, module.status_note]) expect(card).toContain(escapeText(text));
+});
+
+test("observatory describes its scope plainly without implying extra capabilities", () => {
+  const module = PUBLIC_MODULE_CATALOG.modules.find((module) => module.id === "observatory")!;
+  expect(module.status_note).toBe("Check the stated mode and observation dates. Discovery is not scientific evaluation, adoption or permission to run.");
+  expect(module.behavior).toBe("snapshot");
+  const card = cardHtml(modules.renderModuleDirectory(), module.id);
+  for (const text of [module.label, module.purpose, module.status_note]) expect(card).toContain(escapeText(text));
+});
 
 test("server-renders every grouped entry as readable, escaped navigation without active content", () => {
   expect(modules.renderModuleDirectory).toBeFunction();
@@ -206,7 +315,7 @@ test("server-renders every grouped entry as readable, escaped navigation without
   const html = render();
   expect(html).toContain('<section id="civic-modules" class="module-directory" aria-labelledby="civic-modules-title">');
   expect(html).toContain('<h2 id="civic-modules-title">');
-  expect([...html.matchAll(/<details\b/g)]).toHaveLength(PUBLIC_MODULE_CATALOG.groups.length);
+  expect([...html.matchAll(/<details\b[^>]*class="module-group"/g)]).toHaveLength(PUBLIC_MODULE_CATALOG.groups.length);
   expect([...html.matchAll(/<article\b/g)]).toHaveLength(PUBLIC_MODULE_CATALOG.modules.length);
   for (const group of PUBLIC_MODULE_CATALOG.groups) {
     expect(html).toContain('<details class="module-group" open>');
@@ -214,28 +323,26 @@ test("server-renders every grouped entry as readable, escaped navigation without
     expect(html).toContain(escapeText(group.purpose));
   }
   const behaviorLabels = {
-    "browser-local": "Browser-local", "runtime-gated": "Runtime-gated", "static-reference": "Static reference",
+    "browser-local": "In your browser", "runtime-gated": "Requires service", "static-reference": "Static reference",
     snapshot: "Snapshot", discovery: "Discovery", "external-service": "External service",
   };
   for (const module of PUBLIC_MODULE_CATALOG.modules) {
     const card = html.match(new RegExp(`<article id="civic-module-${module.id}"[^>]*>([\\s\\S]*?)</article>`))?.[1];
     expect(card).toBeDefined();
-    for (const text of [module.label, module.purpose, module.status_note, ...module.tags]) expect(card).toContain(escapeText(text));
+    for (const text of [module.label, module.purpose, module.status_note]) expect(card).toContain(escapeText(text));
     expect(card).toContain(behaviorLabels[module.behavior]);
-    expect(card).toContain('class="module-tags"');
+    expect(card).not.toContain('class="module-tags"');
     expect(card).toContain('class="module-links"');
     expect(card).toContain('class="module-status"');
-    for (const link of module.links) {
+    for (const link of module.links.filter((link, index, links) => links.findIndex((other) => other.url === link.url) === index)) {
       expect(card).toContain(`href="${escapeText(link.url)}"`);
       expect(card).toContain(escapeText(link.label));
-      expect(card).toContain(link.audience === "human" ? "Human" : "Agent");
-      expect(card).toContain(link.format);
+      expect(card).toContain(`type="${link.format}"`);
     }
     for (const id of module.related_ids) expect(card).toContain(`href="#civic-module-${id}"`);
   }
-  expect(html).toContain("Audience labels are presentation, not access control.");
-  expect(html).toContain("Listing grants no action; links do not prove availability.");
-  expect(html).toContain("not runtime integration");
+  expect(html).toContain("Links do not grant permission or verify availability.");
+  expect(html).toContain("Related reading does not imply integration.");
   expect(html).not.toMatch(/<(?:script|style|iframe|img|audio|video|link|form|input)\b|\s(?:on\w+|src|srcdoc|hidden)=|fetch\(|autoplay|preload|prefetch/i);
   expect(render()).toBe(html);
   expect(Buffer.byteLength(html, "utf8")).toBeLessThan(100_000);
@@ -287,15 +394,24 @@ test("directory rendering enforces a byte budget after HTML escaping expands tex
     module.label = "&".repeat(120);
     module.purpose = "&".repeat(320);
     module.status_note = "&".repeat(320);
-    module.tags = module.tags.map((_, i) => String(i) + "&".repeat(47));
+    // Expand visible link labels; tags are deliberately absent from the HTML.
+    for (const link of module.links) link.label = "&".repeat(120);
   }
   expect(modules.validateModuleCatalog(expanded)).toEqual([]);
   expect(Buffer.byteLength(renderModuleCatalog(expanded), "utf8")).toBeLessThan(30_000);
   expect(() => modules.renderModuleDirectory(expanded)).toThrow(/HTML byte budget/);
 });
 
-test("the readable directory exposes its machine-readable catalogue as a deliberate link", () => {
-  expect(modules.renderModuleDirectory()).toContain('<a href="/modules.json" type="application/json">Agent · Module catalogue (JSON)</a>');
+test("the directory introduces its choices with one warning and a typed catalogue link", () => {
+  const html = modules.renderModuleDirectory();
+  expect(html.match(/<h2 id="civic-modules-title">(.*?)<\/h2>/)?.[1]).toBe("Modules");
+  expect(PUBLIC_MODULE_CATALOG.purpose).toBe("Choose a tool, service or reference.");
+  const intro = html.slice(0, html.indexOf('<details class="module-group"'));
+  expect(intro).toContain('<a href="/modules.json" type="application/json">Module catalogue (JSON)</a>');
+  expect(intro.match(/<p class="module-status">(.*?)<\/p>/g)).toEqual([
+    '<p class="module-status">Links do not grant permission or verify availability. Related reading does not imply integration.</p>',
+  ]);
+  expect(PUBLIC_MODULE_CATALOG.scope).toBe("A curated navigation directory, not a repository census, asset inventory, runtime module system, or grant of rights. Related entries are reading companions, not dependencies or equivalences. Source routes are not live availability checks.");
 });
 
 test("valid module identifiers cannot collide with directory heading identifiers", () => {

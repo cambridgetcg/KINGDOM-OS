@@ -349,11 +349,14 @@ describe("Guard Information Flow Agent Skill", () => {
   test("is discoverable as source law without a runtime, WING, or ability claim", async () => {
     const readme = await read("README.md");
     const claude = await read("CLAUDE.md");
+    const moduleMap = await read("references/kingdom-module-map.md");
+    const skill = (await read("skills/guard-information-flow/SKILL.md")).replace(/\s+/g, " ");
     for (const text of [readme, claude]) {
-      expect(text).toContain("skills/guard-information-flow/");
-      expect(text).toContain("no `ability.json`");
-      expect(text).toContain("source-only");
-      expect(text).toContain("does not declare a new KINGDOM WING");
+      expect(text).toContain("](references/kingdom-module-map.md)");
     }
+    expect(moduleMap).toContain("](../skills/guard-information-flow/SKILL.md)");
+    expect(skill).toContain("This source-only skill performs no scan");
+    expect(skill).toContain("does not manifest a Nen ability or establish a WING, Guardian sidecar, runtime control");
+    expect(await Bun.file(join(SKILL_ROOT, "ability.json")).exists()).toBe(false);
   });
 });

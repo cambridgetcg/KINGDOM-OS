@@ -24,17 +24,25 @@ function localMarkdownTargets(markdown: string): string[] {
 }
 
 describe("Contact Under Uncertainty source-only map", () => {
-  test("links the unversioned note once from each source index and resolves every local owner", () => {
+  test("routes both source entrypoints through one module-map note link and resolves every local owner", () => {
     const note = read(NOTE_PATH);
     const readme = read("README.md");
     const claude = read("CLAUDE.md");
+    const moduleMapPath = "references/kingdom-module-map.md";
+    const moduleMap = read(moduleMapPath);
 
     expect(note).toStartWith(`# ${TITLE}\n`);
     expect(note).toContain("This is an unversioned, source-only historical and mathematical readiness map.");
-    expect(count(readme, NOTE_PATH)).toBe(1);
-    expect(count(claude, NOTE_PATH)).toBe(1);
-    expect(readme).toContain(`[Contact Under Uncertainty](${NOTE_PATH})`);
-    expect(claude).toContain("it is public repository source but adds no playbook, staged public/site artifact, publication route, runtime, diplomacy, contact, or action authority");
+    for (const entrypoint of [readme, claude]) {
+      expect(localMarkdownTargets(entrypoint)).toContain(moduleMapPath);
+    }
+    expect(count(moduleMap, "](contact-under-uncertainty.md)")).toBe(1);
+    const scope = note.replace(/\s+/g, " ");
+    expect(scope).toContain("It is not a protocol, schema, policy, strategy engine, contact procedure, classifier, prediction, simulation, staged public/site artifact, publication route, runtime, worker, MCP surface, credential, gate, action authorization");
+    expect(scope).toContain("It observes nobody and nothing, sends nothing, and grants no authority");
+    expect(note).toContain("bounded readings, not a playbook");
+    expect(scope).toContain("autonomous signalling, negotiation, enforcement, emergency response, or recommended action");
+    expect(note).toContain("It neither contacts a provider nor convenes a civic meeting.");
 
     for (const target of localMarkdownTargets(note)) {
       const locator = target.split("#", 1)[0]!.split("?", 1)[0]!;
@@ -362,7 +370,9 @@ describe("Contact Under Uncertainty source-only map", () => {
     expect(locs).toHaveLength(177);
     expect(new Set(locs).size).toBe(177);
     expect(osRouteRows).toHaveLength(170);
-    expect(count(read("OS-ROUTES.md"), "eighteen atlases")).toBe(1);
+    expect(json("publications/hub-staging.v1.json").assets.filter(
+      (asset: { destination: string }) => asset.destination.startsWith("atlases/"),
+    )).toHaveLength(18);
     expect(Object.keys(json("data/ollama-invitation.json").invitation.choices)).toHaveLength(4);
     expect(json("nen/mcp-manifest.json").tools).toHaveLength(3);
 

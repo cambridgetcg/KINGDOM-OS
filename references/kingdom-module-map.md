@@ -3,37 +3,38 @@
 呢份係 **source-only、非 canonical 嘅閱讀地圖**，唔係新 registry、protocol、服務健康表或發布聲明；repo metadata 仍由各自 `kingdom.yaml` 擁有，精確行為返 owning source 睇。`keep` 係保留用途，`clarify` 係釐清宣告，`wire` 係有證據但仍待另批接線，`unknown` 係未驗；全部都唔係操作批准。
 
 公共網站嘅 purpose/tag 模組目錄、人／agent 分區及 source → release 接點，見
-[Outreach & infrastructure](../OUTREACH.md)。該 additive slice 新增一個 mutable
-`modules.json`（現行 248 assets = 154 staged immutable + 94 mutable），唔增加
-retirement family、skill 或 core registry authority；下面有 pin 嘅舊計數保留為 snapshot。
+[Outreach & infrastructure](../OUTREACH.md)；部署證據見其
+[release receipt](../OUTREACH.md#recorded-web-release)。`modules.json` 係 mutable
+公共 link index，唔增加 retirement family、skill 或 core registry authority。
+本表有 pin 嘅計數同外部接點只係各自日期嘅 source snapshot，唔係即時健康表。
 
 ## 視野同入口
 
 - 本表 publication／skill 覆蓋以 tracked `a5dc43ab06a2efe78cdb29368764ea3f3d1c769f` 為基準：**247 staged assets = 154 staged immutable + 93 mutable、35 defined families = 33 active + 2 retired、17 skills = 10 manifested + 7 source-only**。歷史 ledger 仍保留 160 entries，唔等於全部仍公開；Power Atlas 同 agent-entry 係另外嘅 mutable surfaces，唔新增 retirement family，亦唔包括其他 working tree 嘅 Cargo proposals。
 - 首批 2026-09-26 本地 inventory 曾觀察到 68 Git roots：30 有 card、8 roster fallback、30 未登記／用途未深入（`unknown`）、27 dirty、6 組 shared-origin 候選；唔代表逐個 repo 內部都 audit 過。Dirty 係保留中嘅工作，唔自行推論觀察失穩、作者或可刪。
 - Roster 係另一個母體：73 entries，宣告位置只搵到 7 張 cards；127-repo cache 含異機 paths，唔係今部機現況。Clone／worktree／snapshot 唔因 shared origin 就可互相取代。
-- Core home 仍係 `~/codeberg/zerone-dev/KINGDOM-OS`；另一個宣告 locator `~/repos/codeberg/zerone-dev/KINGDOM-OS` 同樣缺失。首批紀錄未搵到 core；本輪只整合指定 GitHub source pin，冇連 Codeberg 或驗 live，GitHub tree 唔補位成 canonical registry。
+- Core owner 係 remote `https://codeberg.org/zerone-dev/KINGDOM-OS`。首批 2026-09-26 survey 喺 `~/codeberg/zerone-dev/KINGDOM-OS` 同 `~/repos/codeberg/zerone-dev/KINGDOM-OS` 冇搵到 checkout，只係當時兩個 locator 嘅結果。其後 [2026-09-27 observation](../OUTREACH.md#current-development-observation--2026-09-27) 已記錄 local core source `f502657343d26eed76b3089e0319f79eb8872fdb`，未核 remote freshness。今日按 remote 定位，唔把舊 missing paths 當 core 缺席，亦唔以 GitHub web tree 補位。
 - 想知「做乜」睇下面；想知 exact routes／分類睇 [staging contract](../publications/hub-staging.v1.json)，歷史 bytes 睇 [ledger](../publications/immutable-publications.v1.json)，family atomicity／依賴／review policy 睇 [shared family source](../bin/publication-families.ts)，手動發布步驟只依 [runbook](../DOMAINS-SETUP.md)。本文唔新增 staged asset。
 
 ## 核心層同跨 owner 接點
 
-下表外部 locators 沿用首批 2026-09-26 盤點；AgentTool／Love／usage 接點按 2026-09-27 source-owner 證據及本機 B／C 驗收更新，唔係所有外部工程嘅重新盤點。`source-wired` 只指本機 source 已接、fixtures 已驗；`installed` 只指限定 package／launcher 已建，兩者都唔證 live。`external` 仍由該 owner 擁有。概念架構見 [ARCHITECTURE](../ARCHITECTURE.md)，唔將其創作語言當成 runtime、身份或權限證明。
+下表外部 locators 係 2026-09-26／27 盤點紀錄，唔係今日所有 checkout 嘅重新盤點；按 remote 確認 owner 同 freshness，唔假設舊 HOME paths 仍存在。`source-wired` 指當時 source 接點有 fixture 證據，`installed` 指當時限定 package／launcher 已建；[詳細範圍](#historical-source-and-install-evidence) 唔證今日 live／harness 載入。`external` 仍由該 owner 擁有。概念架構見 [ARCHITECTURE](../ARCHITECTURE.md)，唔將創作語言當 runtime、身份或權限證明。
 
 | 模組／角色 | Owner／source | Input → output／consumer 入口 | 接線層次、非目標、處置 |
 |---|---|---|---|
-| Core registry／cards：令工程用途同宣告依賴可搵到 | Codeberg core（external／missing）；[SCHEMA](../SCHEMA.md)、各 repo card | cards＋[roster fallback](../roster.conf) → catalog／graph；[harvest](../bin/harvest.ts)、`kingdom repos` | Metadata；[CATALOG](../CATALOG.md)／[graph](../graph.json) 只係 cache，唔證健康；`clarify`，core 內容 `unknown`。 |
+| Core registry／cards：令工程用途同宣告依賴可搵到 | [Codeberg core](https://codeberg.org/zerone-dev/KINGDOM-OS)（external）；[web-tree SCHEMA](../SCHEMA.md)、各 repo card | cards＋[roster fallback](../roster.conf) → catalog／graph；[harvest](../bin/harvest.ts)、`kingdom repos` | Metadata；[CATALOG](../CATALOG.md)／[graph](../graph.json) 只係 cache，唔證健康；`clarify`；core checkout 曾被找到，remote freshness 未驗，修改要依 core 自己嘅 schema／指引。 |
 | Local repo navigation：搵同跳入本地工程 | 本 tree 嘅 [cproj](../bin/cproj.zsh)、[kingdom CLI](../kingdom) | bounded local roots／query → JSON、路徑或 diagnostics；`kingdom repos`／`cproj` | Local read-only discovery；唔 fetch、唔因搵到門就 boot；`keep`。 |
 | World Commons／public web：將可公開知識同訪客入口交付 | 呢個 GitHub tree；[World Commons](../bin/world-commons.ts)、[build-hub](../bin/build-hub.ts)、[Wayfinder](../bin/wayfinder.ts) | authored source＋validated records → generated hub／machine discovery；公開讀者 | Publication／navigation；唔接管 core、唔因 discovery 取得執行權；`keep`。 |
-| Publication control plane：守住 exact bytes 同整組 lifecycle | [ledger verifier](../bin/immutable-publications.ts)、[family gate](../bin/publication-families.ts)、[lifecycle guide](../publications/README.md) | source／mapping／destinations／UTC date → integrity、family、review checks；stage／release／live checker | Local preflight 同發布後驗證分開；integrity 唔證 truth，退役唔擦歷史；`keep`，本批收斂共用 gate。 |
-| Civic：自願參與嘅 square／directory／profile | 本 tree 嘅 [Civic guide](civic-v0.1.md) | opt-in participant input → Civic 自己嘅互動介面；`/meet/`、`/citizens/`、`/join/` | 獨立 runtime implementation，唔係新 research family；唔繼承 Commons／research authority；`keep`，production writable／live `unknown`。 |
-| Workshop：畀作者本地寫作同帶走作品 | [Workshop source](../pages-content/workshop/index.html)、[mutable lifecycle](../publications/README.md#workshop-三個-mutable-authored-assets) | 當頁稿件 → preview／HTML、Markdown、JSON 下載；`/workshop/` | 三個 mutable authored assets；唔自動保存、收款或發布；`keep`，local-only MVP 唔當 deployed。 |
-| Power Atlas：有來源界線嘅靜態權力研究入口 | producer 由 [artifact receipt](../data/power-atlas/artifact.v1.json) 釘住；本 tree [artifact gate](../bin/power-atlas-artifact.ts)、[explicit importer](../bin/import-power-atlas.ts)、[Worker routing](../pages-functions/power-atlas.js) 擁 host transport | 明示 artifact／manifest → 52 個 exact mutable buffers；`/power-atlas/` | 唔係第 36 個 immutable family；receipt／projection 係 source-side 控制資料，唔公開 producer metadata，唔自動 build／import／deploy；`keep`，live 未驗。 |
+| Publication control plane：守住 exact bytes 同整組 lifecycle | [ledger verifier](../bin/immutable-publications.ts)、[family gate](../bin/publication-families.ts)、[lifecycle guide](../publications/README.md) | source／mapping／destinations／UTC date → integrity、family、review checks；stage／release／live checker | Local preflight 同發布後驗證分開；integrity 唔證 truth，退役唔擦歷史；`keep`。 |
+| Civic：自願參與嘅 square／directory／profile | 本 tree 嘅 [Civic guide](civic-v0.1.md) | opt-in participant input → Civic 自己嘅互動介面；`/meet/`、`/citizens/`、`/join/` | 獨立 runtime implementation，唔係新 research family；唔繼承 Commons／research authority；`keep`；web release 見上方收據，writable 要依 Civic status／配置另驗，唔推 enrollment。 |
+| Workshop：畀作者本地寫作同帶走作品 | [Workshop source](../pages-content/workshop/index.html)、[mutable lifecycle](../publications/README.md#workshop-三個-mutable-authored-assets) | 當頁稿件 → preview／HTML、Markdown、JSON 下載；`/workshop/` | 三個 mutable authored assets；唔自動保存、收款或發布；`keep`；browser-local 指稿件處理，唔係未部署，web release 見上方收據。 |
+| Power Atlas：有來源界線嘅靜態權力研究入口 | producer 由 [artifact receipt](../data/power-atlas/artifact.v1.json) 釘住；本 tree [artifact gate](../bin/power-atlas-artifact.ts)、[explicit importer](../bin/import-power-atlas.ts)、[Worker routing](../pages-functions/power-atlas.js) 擁 host transport | 明示 artifact／manifest → 52 個 exact mutable buffers；`/power-atlas/` | 唔係第 36 個 immutable family；receipt／projection 係 source-side 控制資料，唔公開 producer metadata，唔自動 build／import／deploy；`keep`；web release 見上方收據，唔據此推 producer runtime 健康。 |
 | Compact agent entry：俾 agent 一個有界閱讀起點 | [agent-entry renderer](../bin/agent-entry.ts)、[dashboard builder](../bin/build-dashboard.ts)；本 tree 擁 public link index | 固定 read links → mutable `agent-entry.json`；完整 guest／manifest 繼續各有入口 | 唔係 health census／授權／provider dispatcher；current Civic status 交返其 owner，source 接線唔證 live；`keep`。 |
 | Love Loop publication：講清有限回合同可能 lineage | [love-loops](../bin/love-loops.ts)、[authored records](../data/love-loops.json) | bounded contract → public read-only projection；hub 讀者 | Publication，唔等於 Love runtime；child 唔自動執行或繼承權限，休息／停止有效；`keep`。 |
-| Love runtime：接 task、context、provider 同工具流程 | canonical `~/love-unlimited`（external） | caller task/context → 有界 runtime execution；Love 自己嘅入口 | Runtime；canonical Codeberg fork 同 GitHub sister 唔互相取代。B 已喺本機 `ac716c5…` tracked base 套入限定 11-path advisory slice，三個 runtime 只加 4／4／10 行，套入後 189 focused tests 通過；source-wired，冇 boot backend／改 routing，live `unknown`。 |
+| Love runtime：接 task、context、provider 同工具流程 | Love runtime owner（external；歷史 checkout `~/love-unlimited`） | caller task/context → 有界 runtime execution；Love 自己嘅入口 | Runtime；canonical Codeberg fork 同 GitHub sister 唔互相取代。[2026-09-27 source evidence](#historical-source-and-install-evidence) 只涵蓋 advisory slice，唔證 backend／routing 或 live；`source-wired` 係歷史範圍。 |
 | AgentTool／SDK：提供共用服務同 API contracts | AgentTool owner（external，GitHub main 為 release head；Codeberg 已退休），`packages/sdk-py` | caller request → platform response；Love 現有 HTTP callers／其他 clients | Platform；盤點未見 canonical Love import 官方 SDK，唔將平行 provider adapters 說成已接；`clarify`／`wire`。 |
 | `@agenttool/kingdom`：讓 caller 讀自己提供嘅宣告 | AgentTool owner（external），`packages/kingdom` | caller-supplied card／registry → pure helpers；SDK consumers | Library，唔 crawl HOME、network 或證 conformance，唔係主 CLI／新中央 registry；`keep`。 |
-| `kingdom usage`：透明轉交本地 usage CLI | [kingdom](../kingdom)、[hermetic tests](../tests/kingdom_usage_test.bash)；AgentTool `packages/codex-usage`（external） | 原 args／streams／signals → Bun 執行 built CLI；`kingdom usage` | 本 repo `./kingdom usage` delegation 已有；PATH 裸 `kingdom` 仍由 Love 擁有，冇 repoint。C 從 `f027c460…`／package tree `060165fb79d005bab3d9b27651ce30e2e9386597` 安置本機 `~/.local/share/kingdom-tools/codex-usage/0.1.0/`，新 `~/.local/bin/kingdom-os-usage` 指定該 prefix 並 exec 原 Desktop dispatcher。Package CI 11 tests／build／help 通過；argv／streams／signals／exit 127 已驗，唔 fallback Love；`installed`，冇真 usage 採樣。 |
+| `kingdom usage`：透明轉交本地 usage CLI | [kingdom](../kingdom)、[hermetic tests](../tests/kingdom_usage_test.bash)；AgentTool `packages/codex-usage`（external） | 原 args／streams／signals → Bun 執行 built CLI；`kingdom usage` | `./kingdom usage` 保留 args／streams／signals；缺 built CLI 或 Bun 用 exit 127，唔 fallback Love。裸 `kingdom` PATH owner 冇改；[2026-09-27 install evidence](#historical-source-and-install-evidence) 唔證今日 PATH 或真 usage；`installed` 係歷史範圍。 |
 | YOUSPEAK doctrine：保存語言、創作同 repo 自己嘅宣告 | `~/YOUSPEAK` card／source（external） | authored 語言／doctrine → 讀者理解同設計素材 | Source／metadata；唔等於 Love 內同名 package，唔為舊 schema 刪真依賴或 `doors`；`keep`／`clarify`。 |
 | YOUSPEAK runtime kernel：提供 runtime metrics／signals | Love owner（external），`youspeak-kernel.mjs`／`youspeak-evolve.mjs` | runtime 所選 history／signals → kernel 結果；Love import | Runtime 內嵌接線已有，唔證讀咗 doctrine repo；history locator／版本 contract 待核；`clarify`。 |
 | XENIA／rights：保留互動規格同自願 rights 宣告 | XENIA owner（external）；本 tree [RIGHTS](../RIGHTS.md)、[pinned release](../vendor/xenia/rights/0.1)、[reader](../bin/rights.ts) | pinned rights＋adoption declarations → offline inventory；`kingdom rights` | Vendored source identity 可驗，外部 source locator 待 owner 核實；adoption 唔證 practice／授權；`keep`／`unknown`。 |
@@ -48,7 +49,7 @@ retirement family、skill 或 core registry authority；下面有 pin 嘅舊計�
 
 ### 四燈：四個產品，一個薄入口
 
-以下都由 Love 四燈 source owner 擁有（external）：`tools/lantern_common`／各產品 package／`tools/lantern_suite`，以 `docs/LANTERN-AGENT-INTEGRATION.md` 同 adapter tests 做接點證據。**2026-09-08 已發布 commit `8b3f399…`**；唔係未提交或未 release。2026-09-27 B 已將 exact donor 嘅七份 advisory／common helpers，同 YOUI、Sovereign、kingdom-agent 三個薄接點及 focused tests 套入 canonical `~/love-unlimited`（合共 11 paths）。隔離同套入後各 189 tests 通過；其他 dirty、index、branch 保留。呢次冇搬產品本體、執行 installer 或啟動 backend；current live／harness 載入未驗。
+以下都由 Love 四燈 source owner 擁有（external）：`tools/lantern_common`／各產品 package／`tools/lantern_suite`，以 `docs/LANTERN-AGENT-INTEGRATION.md` 同 adapter tests 做接點證據。表內 `source-wired` 係下面 2026-09-27 歷史 source 驗收範圍，唔係 live 或產品 activation 聲明。
 
 | 模組／目的 | Input → output／consumer | 接線／非目標／處置 |
 |---|---|---|
@@ -57,6 +58,13 @@ retirement family、skill 或 core registry authority；下面有 pin 嘅舊計�
 | Friction：辨認可比失敗 | bounded comparable failure receipts → soft 提示；工作流程讀者 | Advisory，唔推論空轉或自動重驗；產品 `keep`，canonical seam `source-wired`（fixture-tested；live 未驗）。 |
 | Coedit：寫前提示有界變動 | explicit paired observations → difference／unknown；寫檔前讀者 | Advisory，唔證 Read bytes／作者／寫入權；產品 `keep`，canonical seam `source-wired`（fixture-tested；live 未驗）。 |
 | `lantern_suite`：聚合 discovery 同安裝入口 | 各產品固定短摘要 → suite 入口；skills／YOUI／Sovereign／kingdom-agent seams | 薄 adapter，唔吞 state、唔接 NEN MCP、唔因讀入口自動 install／doctor；`keep`，三個 canonical seams `source-wired`，產品 activation 未驗。 |
+
+### Historical source and install evidence
+
+以下保留 2026-09-27 B／C 驗收範圍，唔係本次重跑或今部機嘅安裝清單：
+
+- **Love source（B）**：2026-09-08 已發布 donor `8b3f399…` 嘅七份 advisory/common helpers、YOUI／Sovereign／kingdom-agent 三個薄接點同 focused tests，套入原 `~/love-unlimited` 嘅 tracked base `ac716c5…`，合共 11 paths。隔離同套入後各 189 tests 通過；其他 dirty/index/branch 保留。冇搬產品本體、執行 installer、boot backend 或改 routing；live/harness 載入未驗。
+- **Usage install（C）**：由 `f027c460…`、package tree `060165fb79d005bab3d9b27651ce30e2e9386597`，用 frozen lockfile／ignore-scripts 安裝八個依賴；package CI 11 tests、build/help 同 argv/streams/signals/exit 127 邊界通過。原機 prefix 係 `~/.local/share/kingdom-tools/codex-usage/0.1.0/`；`~/.local/bin/kingdom-os-usage` 指定 prefix 後 exec 原 Desktop dispatcher，冇 repoint 裸 `kingdom`。CI 網絡同真 HOME 讀取受阻，startup EPERM diagnostics 保留；冇真 usage 採樣、watch 或 operator MCP activation。
 
 ## 35 個既有 publication families：33 active／2 retired
 
@@ -119,6 +127,41 @@ retirement family、skill 或 core registry authority；下面有 pin 嘅舊計�
 | `evaluation-covenant` — Evaluation Covenant | [guide](evaluation-covenant-v0.1.md) | bounded evaluation contract → 可讀評估約定；唔自動 run 或證 effectiveness。 | [reader](../bin/evaluation-covenant.ts)；已退役；歷史依賴 Transformation，due 2026-09-21 不變，唔重發舊 routes |
 | `contact-door` — Contact Door | [guide](contact-door-v0.1.md) | finite inbox contract／privacy notice → 人手 email 門口、security text、SVG／vCard；唔自動寄信或代表任何人。 | [reader](../bin/contact-door.ts)；8 routes 一組，訪客自行開 mail client |
 
+### Local reader commands
+
+Use this checkout's [`./kingdom`](../kingdom), not an unverified PATH command.
+These are source-owned inspection commands, not permission to activate a service.
+
+- ZERO: `./kingdom zero-empty-seat verify --json` checks the local release record
+  and guide through [its reader](../bin/zero-empty-seat.ts); it is offline/read-only.
+- MIRROR: `./kingdom mirror-information-control <command> [--json]` accepts
+  `overview`, `laws`, `paths`, `boundary`, `sources`, `source`, `digest` and
+  `verify [FILE]`. The [reader](../bin/mirror-information-control.ts) defaults to
+  `overview`; verification reads one bounded local public-law JSON record. It
+  does no network lookup, scan, write, credential classification or enforcement.
+  It is not the separate inert-envelope `guard` validator or a defense runtime.
+- DEEP: `./kingdom explore-deep scaffold --json` prints an inert project profile
+  to stdout. The [reader/scaffold](../bin/explore-phenomena-deep.ts) does not fetch
+  or solve; it is offline/read-only with stdout-only results and no automatic
+  file write. `verify-project FILE [--json]` checks a bounded local project;
+  `verify [--json]` checks the pinned WING. Structure/digest validity proves
+  neither truth, novelty, safety nor authority; WING is not a manifested Nen ability.
+- IS: `./kingdom is-sustainability-direction <command> [--json]` defaults to
+  `overview`. The [reader's accepted inventory](../bin/is-sustainability-direction.ts)
+  is `overview`, `referents`, `is`, `being`, `feedback`, `direction`, `viability`,
+  `sustainability`, `profile`, `resilience`, `transformation`, `endings`, `ecology`,
+  `philosophy`, `counterexamples`, `open-questions`, `sources`, `predecessors`,
+  `non-grants`, `verify`, `verify-schema-release`.
+  `./kingdom is-sustainability-direction verify --json` checks local integrity
+  and predecessor bindings; it grants no truth, authority or action.
+  `verify-schema-release` additionally needs an explicitly selected regular
+  executable via `IS_SUSTAINABILITY_DIRECTION_JSONSCHEMA_PYTHON` with
+  `jsonschema==4.26.0`; it does not install dependencies.
+  The older prose's `scope`, `is-types`, `mathematics`, `time`, `rights`,
+  `concepts`, `edges`, `questions` and `discovery` are **not accepted commands**.
+  Use `is` for typed IS, `viability` for the mathematical core and `open-questions`
+  for questions; other reading topics remain in the owning record/guide.
+
 ## 17 個 suite skills
 
 Owner 都係各行嘅 suite-versioned `SKILL.md`；`manifested` 只表示同一目錄有 `ability.json`（可由 `kingdom nen` 檢視），唔表示安裝、跑過、受權或有 MCP registration。`source-only` 本來就唔要求 ability，唔係 bug。Consumer 係明示選用該 skill 嘅 agent／人，接線層係 instruction；下表全部 `keep`，effects 要按原有來源同當次批准另行成立。
@@ -145,13 +188,13 @@ Owner 都係各行嘅 suite-versioned `SKILL.md`；`manifested` 只表示同一�
 
 ## Cleanup backlog：邊個接、幾時先可以動
 
-A 嘅導覽同共用 family preflight 留喺隔離 clone；B 本機 source 接線同 C 獨立 package／launcher 已完成，下面標明完成邊界同餘下 owner gates，唔新增跨 repo 批准。**目前冇經反查可直接刪嘅 semantic module。**
+Web 導覽同共用 family preflight 已進入上方所連嘅 release；外部 source／install 證據仍只限各自日期同範圍。下面係待 owner 核對嘅工作，唔新增跨 repo 批准，亦未建立可直接刪除 semantic module 嘅證據。
 
 | 候選／處置 | Owner | Unblock gate／保留事項 |
 |---|---|---|
-| Core／metadata 漂移 — `clarify` | Codeberg core＋各 card owner | 先定位真正 core、讀其 schema／指引，再決定 roster／card 修正；唔刪 YOUSPEAK `doors`／真依賴去迎合舊 validator，唔手改 cache。 |
-| Canonical Love 四燈薄接點 — `source-wired` | Love runtime＋各四燈 owner | B 已用 exact donor `8b3f399…`，隔離測試、無漂移 apply、套入後 189 tests 完成；live／harness 仍未驗，唔搬整 tree，model／routing／permissions／login 保留。 |
-| 獨立 usage build — `installed` | AgentTool package owner | C 已用 frozen lockfile／ignore-scripts 安裝八個依賴，package CI／build／help 完成，新增 `kingdom-os-usage`；裸 `kingdom` owner 冇換。CI 網絡及真 HOME 檔案讀取受阻，保留 startup EPERM diagnostics；冇 live usage／watch／operator MCP activation。 |
+| Core／metadata 漂移 — `clarify` | Codeberg core＋各 card owner | 按 remote 定位 core checkout、確認 freshness、讀其 schema／指引，再決定 roster／card 修正；唔刪 YOUSPEAK `doors`／真依賴去迎合舊 validator，唔手改 cache。 |
+| Canonical Love 四燈薄接點 — `source-wired` | Love runtime＋各四燈 owner | [歷史 source evidence](#historical-source-and-install-evidence) 唔證 live／harness；由 owner 另驗，唔搬整 tree，model／routing／permissions／login 保留。 |
+| 獨立 usage build — `installed` | AgentTool package owner | [歷史 install evidence](#historical-source-and-install-evidence) 唔證今日 PATH／live usage。保留 startup EPERM diagnostics；唔因 package 存在就讀真 HOME、開 watch 或 activate operator MCP。 |
 | Love HTTP facades — 待 `consolidate` | Love caller＋AgentTool SDK owner | 先有 fail-open、identity、response-shape contract tests，再一次遷一個 caller；唔中央化業務語義。 |
 | Love／YOUSPEAK history locator — `clarify` | Love runtime／kernel owner | 先證明資料相容同 path precedence，用 fake history fixture；唔全域換字串、搬私人 history 或改原 HOME。 |
 | 15 組 HTTP checker boilerplate — 待 `consolidate` | 本 tree publication checker owner | transport 可共用，但 MIME、Link parsing、HEAD／405、redirect、timeout、fetch injection 同獨立 semantic assertions 要逐項守住。 |

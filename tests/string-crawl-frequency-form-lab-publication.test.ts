@@ -383,19 +383,31 @@ describe("STRAND Lab 03 public integration", () => {
     expect(read("kingdom")).toContain(
       'string-crawl-frequency-form-lab) exec bun "$SELF_DIR/bin/string-crawl-frequency-form-lab.ts"',
     );
+    for (const entrypoint of ["README.md", "CLAUDE.md"]) {
+      expect(read(entrypoint)).toContain("](references/kingdom-module-map.md)");
+    }
+    expect(read("references/kingdom-module-map.md")).toContain("](string-crawl-frequency-form-lab.md)");
+    expect(read("DOMAINS-SETUP.md")).toContain("publications/hub-staging.v1.json");
+    const staged = JSON.parse(read("publications/hub-staging.v1.json")).assets.map((asset: { destination: string }) => `/${asset.destination}`);
     for (const url of PUBLIC_URLS) {
       const path = new URL(url).pathname;
-      for (const document of ["README.md", "DOMAINS-SETUP.md", "OS-ROUTES.md"]) {
+      expect(staged).toContain(path);
+      for (const document of ["references/string-crawl-frequency-form-lab.md", "OS-ROUTES.md"]) {
         expect(read(document)).toContain(path);
       }
     }
+    const guide = read("references/string-crawl-frequency-form-lab.md").replace(/\s+/g, " ");
+    expect(guide).toContain("Lab 03 is an exact synthetic thought experiment");
+    expect(guide).toContain("contains no DMT administration, participant observation, crawler trace, entity measurement");
+    expect(guide).toContain("emits only to stdout, and performs zero network requests, writes, or subprocess launches");
+    expect(guide).toContain("command, KARMA result, authority, or automatic action here");
+    expect(guide).toContain("No event is observed or created here");
+    expect(guide).toContain("No action or invocation occurs, so no receipt exists");
+    expect(read("publications/README.md")).toContain("kingdom-module-map.md");
     for (const document of [
-      "README.md",
       "REGISTRY.md",
       "REGISTRY.yaml",
       "OS-ROUTES.md",
-      "DOMAINS-SETUP.md",
-      "publications/README.md",
     ]) {
       const publication = read(document).toLowerCase().replace(/\s+/g, " ");
       expect(publication).toContain("synthetic offline thought experiment");

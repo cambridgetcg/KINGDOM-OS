@@ -850,11 +850,17 @@ describe("ISness schema and portable Agent Skill", () => {
     const guide = readFileSync(join(ROOT, "references/isness-protocol.md"), "utf8");
     const ownerMapPath = "references/is-continuance-direction-owner-map.md";
     const ownerMap = readFileSync(join(ROOT, ownerMapPath), "utf8");
-    expect(readme).toContain("`kingdom isness`");
-    expect(readme).toContain("[`$isness`](skills/isness/SKILL.md)");
-    expect(readme).toContain(`[IS, Continuance & Direction](${ownerMapPath})`);
-    expect(claude).toContain("./kingdom isness verify [FILE] --json");
-    expect(claude).toContain(ownerMapPath);
+    const moduleMap = readFileSync(join(ROOT, "references/kingdom-module-map.md"), "utf8");
+    for (const entrypoint of [readme, claude]) {
+      expect(entrypoint).toContain("](references/kingdom-module-map.md)");
+    }
+    expect(moduleMap).toContain("`kingdom isness`");
+    expect(moduleMap).toContain("](isness-protocol.md)");
+    expect(moduleMap).toContain("](../skills/isness/SKILL.md)");
+    expect(moduleMap).toContain("](is-continuance-direction-owner-map.md)");
+    expect(readFileSync(join(ROOT, "skills/isness/agents/openai.yaml"), "utf8")).toContain("$isness");
+    expect(guide).toContain("./kingdom isness verify /tmp/isness-record.json --json");
+    expect(guide).toContain("`verify` reads at most one bounded regular non-symlink JSON file with no network");
     expect(guide).toContain("not publicly frozen");
     expect(guide).toContain("adds no public\nroute");
     expect(guide).not.toContain("https://thekingdom.dev/isness");
