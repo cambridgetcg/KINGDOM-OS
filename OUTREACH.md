@@ -4,6 +4,11 @@ Maintainer start page. This file is repository documentation, not part of the
 public upload. It organizes the existing web surface; it is not a replacement
 for the core registry or an authorization to operate another service.
 
+For the broader source-only inventory of core seams, publication families and
+suite skills, use the [module purpose map](references/kingdom-module-map.md).
+This guide owns visitor discovery and its web/infrastructure handoffs, not a
+second inventory of those source-level modules.
+
 ## Choose a lane
 
 | Lane | Start | Purpose |
@@ -89,7 +94,7 @@ rendering and regression tests do not need provider requests.
 | Homepage hierarchy and build outputs | `bin/build-dashboard.ts`, `pages-content/civic/dashboard.css` | `tests/dashboard.test.ts`, integration test, responsive/no-JS browser check |
 | Compact entrance | `bin/agent-entry.ts` | `tests/agent-entry.test.ts` |
 | Typed catalogue delivery | `pages-functions/agent-entry.js`, dispatch in `pages-functions/_worker.js` | `tests/public-modules-worker.test.ts`, `tests/agent-entry.test.ts` |
-| Exact upload membership | `publications/hub-staging.v1.json` | `tests/stage-hub.test.ts`, immutable gate |
+| Exact upload membership and family lifecycle | `publications/hub-staging.v1.json`, `bin/publication-families.ts` | `tests/stage-hub.test.ts`, `tests/publication-families.test.ts`, immutable gate |
 | Visitor routes | `data/wayfinder.json`, `bin/wayfinder.ts` | `tests/wayfinder.test.ts` |
 | Reviewed external resources | `data/world-commons.json`, `bin/world-commons.ts` | Commons tests; hosted matcher has a separate owner |
 | Research publications and lifecycle | `data/`, `references/`, `schemas/`, immutable ledger | Family validators, retirement tests, `bin/check-hub-live.ts` |
@@ -125,7 +130,9 @@ route is invented. No immutable body is renamed, repointed or rehashed.
 
 ## Current development observation — 2026-09-27
 
-Baseline web source: `a5dc43ab06a2efe78cdb29368764ea3f3d1c769f`.
+Initial web baseline: `a5dc43ab06a2efe78cdb29368764ea3f3d1c769f`.
+The integration retains upstream `9ff3d7e4e12e18f26e582929cfc81dcce2d7b18b`,
+including the shared publication-family preflight and source-only module map.
 A separate clean worktree was used; the older dirty/diverged Desktop checkout
 was not reset, moved or deployed. Baseline Bun suite: 1,802 tests passed.
 

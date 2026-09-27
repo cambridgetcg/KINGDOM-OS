@@ -1,6 +1,6 @@
 # KINGDOM OS
 
-Start with [Outreach & infrastructure](OUTREACH.md) for module purposes, the human/agent split, source ownership and current development.
+Start with [Outreach & infrastructure](OUTREACH.md) for public module purposes, the human/agent split, source ownership and current development. The [source module map](references/kingdom-module-map.md) covers core seams, publication families and suite skills.
 
 Cloudflare web maintenance: [surface map](operations/cloudflare/2026-09-25/MAP.md) ·
 [human/agent framework](operations/cloudflare/FRAMEWORK.md) ·

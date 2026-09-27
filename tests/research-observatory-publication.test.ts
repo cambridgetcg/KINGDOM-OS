@@ -306,7 +306,7 @@ describe("Research Observatory publication boundary", () => {
     expect(worker).toContain('headers.set("content-type", "application/schema+json; charset=utf-8")');
 
     const checker = read("bin/check-hub-live.ts");
-    expect(checker).toContain('id: "research-observatory"');
+    expect(read("bin/publication-families.ts")).toContain('id: "research-observatory"');
     expect(checker).toContain("Research Observatory page, snapshot, schema links, guide, or HEAD boundary drifted");
     expect(checker).toContain("Research Observatory mode, provenance, factor vectors, lifecycle gates, discovery, or negative-effect boundary drifted");
     expect(checker).toContain("Observatory poller and observer not invoked");

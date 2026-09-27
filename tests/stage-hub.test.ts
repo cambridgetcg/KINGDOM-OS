@@ -1,4 +1,5 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, setSystemTime, spyOn, test } from "bun:test";
+import * as immutablePublications from "../bin/immutable-publications.ts";
 import {
   copyFileSync,
   existsSync,
@@ -15,6 +16,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { HUB_ASSETS, MUTABLE_HUB_DESTINATIONS, stageHub } from "../bin/stage-hub.ts";
+import { PUBLICATION_FAMILIES, destinationForPublicPath, publicationFamilyStates } from "../bin/publication-families.ts";
 import {
   HUB_STAGING_CONTRACT_PATH,
   IMMUTABLE_PUBLICATIONS_LEDGER_PATH,
@@ -49,6 +51,199 @@ function makeCompleteSource(root: string): void {
     else writeFileSync(source, Buffer.from([index, 0, 255, 10]));
   }
 }
+
+function withSourceFixture(run: (sourceRoot: string, output: string) => void): void {
+  const base = temporaryDirectory("kingdom-stage-family-");
+  try {
+    const sourceRoot = join(base, "source");
+    const output = join(base, "output");
+    mkdirSync(output);
+    makeCompleteSource(sourceRoot);
+    run(sourceRoot, output);
+  } finally {
+    setSystemTime();
+    rmSync(base, { recursive: true, force: true });
+  }
+}
+
+function removeDestinations(sourceRoot: string, destinations: ReadonlySet<string>): void {
+  const path = join(sourceRoot, HUB_STAGING_CONTRACT_PATH);
+  const contract = JSON.parse(readFileSync(path, "utf8"));
+  contract.assets = contract.assets.filter((asset: { destination: string }) => !destinations.has(asset.destination));
+  contract.mutable_destinations = contract.mutable_destinations.filter((destination: string) => !destinations.has(destination));
+  writeFileSync(path, JSON.stringify(contract));
+}
+
+function familyDestinations(ids: readonly string[]): Set<string> {
+  return new Set(PUBLICATION_FAMILIES.filter(({ id }) => ids.includes(id))
+    .flatMap(({ routes }) => routes.map(destinationForPublicPath)));
+}
+
+describe("stage 嘅 family preflight", () => {
+  test("caller sourceRoot 入面每個 partial family 都喺第一個 output write 前拒絕", () => {
+    withSourceFixture((sourceRoot, output) => {
+      const contractPath = join(sourceRoot, HUB_STAGING_CONTRACT_PATH);
+      const original = readFileSync(contractPath);
+      for (const { family, active } of publicationFamilyStates(new Set(HUB_ASSETS.map(({ destination }) => destination))).values()) {
+        if (!active) continue;
+        writeFileSync(contractPath, original);
+        removeDestinations(sourceRoot, new Set([destinationForPublicPath(family.routes[0]!)]));
+        expect(() => stageHub(output, sourceRoot)).toThrow(`${family.label} is partially staged`);
+        expect(readdirSync(output)).toEqual([]);
+      }
+    });
+  });
+
+  test("caller sourceRoot 缺每條 active dependency 都拒絕而 output 留空", () => {
+    withSourceFixture((sourceRoot, output) => {
+      const contractPath = join(sourceRoot, HUB_STAGING_CONTRACT_PATH);
+      const original = readFileSync(contractPath);
+      for (const { family, active } of publicationFamilyStates(new Set(HUB_ASSETS.map(({ destination }) => destination))).values()) {
+        if (!active) continue;
+        for (const dependencyId of family.dependsOn ?? []) {
+          writeFileSync(contractPath, original);
+          removeDestinations(sourceRoot, familyDestinations([dependencyId]));
+          expect(() => stageHub(output, sourceRoot)).toThrow(`${family.label} requires active`);
+          expect(readdirSync(output)).toEqual([]);
+        }
+      }
+    });
+  });
+
+  test("custom sourceRoot 全部 family 退役仍可 stage 剩餘 assets，唔錯用 module default", () => {
+    withSourceFixture((sourceRoot, output) => {
+      const removed = familyDestinations(PUBLICATION_FAMILIES.map(({ id }) => id));
+      removeDestinations(sourceRoot, removed);
+      const expected = HUB_ASSETS.filter(({ destination }) => !removed.has(destination));
+      expect(expected.length).toBeGreaterThan(0);
+      const staged = stageHub(output, sourceRoot);
+      expect(staged.map(({ source, destination }) => ({ source, destination }))).toEqual(expected);
+      for (const { source, destination } of expected) {
+        expect(readFileSync(join(output, destination))).toEqual(readFileSync(join(sourceRoot, source)));
+      }
+      for (const destination of removed) expect(existsSync(join(output, destination))).toBe(false);
+    });
+  });
+
+  test("production 真 UTC 今日 stage 全部 248 assets，逐一比對 actual source bytes", () => {
+    withSourceFixture((_sourceRoot, output) => {
+      setSystemTime();
+      const staged = stageHub(output, ROOT);
+      expect(staged).toHaveLength(248);
+      for (const { source, destination } of staged) {
+        expect(readFileSync(join(output, destination))).toEqual(readFileSync(join(ROOT, source)));
+      }
+    });
+  });
+
+  test("active Shape 截止日 inclusive，翌日拒絕；時計喺 finally 還原", () => {
+    withSourceFixture((sourceRoot, output) => {
+      setSystemTime(new Date("2027-08-27T00:00:00Z"));
+      expect(() => stageHub(output, sourceRoot)).toThrow(
+        "Shape & Resonance Lab 01 active publication passed nextReviewDue 2027-08-26",
+      );
+      expect(readdirSync(output)).toEqual([]);
+      setSystemTime(new Date("2027-08-26T23:59:59.999Z"));
+      expect(stageHub(output, sourceRoot)).toHaveLength(248);
+    });
+  });
+
+  test("production 判斷採 UTC 日期而唔係本地 offset 嘅日子", () => {
+    withSourceFixture((sourceRoot, output) => {
+      setSystemTime(new Date("2027-08-26T23:30:00-01:00"));
+      expect(() => stageHub(output, sourceRoot)).toThrow("passed nextReviewDue 2027-08-26");
+      expect(readdirSync(output)).toEqual([]);
+      setSystemTime(new Date("2027-08-27T00:30:00+01:00"));
+      expect(stageHub(output, sourceRoot)).toHaveLength(248);
+    });
+  });
+
+  test("Government warning 冇新增 hard due；dependent retirement 閉包可用", () => {
+    withSourceFixture((sourceRoot, output) => {
+      const retiredIds = ["uk-government-transformation-engine", "evaluation-covenant", "shape-resonance-lab"];
+      const removed = familyDestinations(retiredIds);
+      removeDestinations(sourceRoot, removed);
+      setSystemTime(new Date("2030-01-01T00:00:00Z"));
+      const staged = stageHub(output, sourceRoot);
+      expect(staged).toHaveLength(HUB_ASSETS.filter(({ destination }) => !removed.has(destination)).length);
+      for (const destination of familyDestinations(["uk-government-engine"])) {
+        expect(staged.some((asset) => asset.destination === destination)).toBe(true);
+      }
+    });
+  });
+
+  test("source-unreadable 同 mutable source errors 仍先於 partial／review errors", () => {
+    withSourceFixture((sourceRoot, output) => {
+      removeDestinations(sourceRoot, new Set(["PRINCIPALITY-COMMONS.md"]));
+      const path = join(sourceRoot, "references/geometry-grammar.md");
+      const bytes = readFileSync(path);
+      rmSync(path);
+      expect(() => stageHub(output, sourceRoot)).toThrow("source-unreadable geometry-grammar/0.1/guide");
+      expect(readdirSync(output)).toEqual([]);
+      writeFileSync(path, bytes);
+      rmSync(join(sourceRoot, "site/rights.json"));
+      expect(() => stageHub(output, sourceRoot)).toThrow("required hub asset is missing or unreadable: site/rights.json");
+      expect(readdirSync(output)).toEqual([]);
+    });
+  });
+
+  test("PowerAtlas parity 同 52-buffer gate 仍先於 family partial／expiry", () => {
+    withSourceFixture((sourceRoot, output) => {
+      removeDestinations(sourceRoot, new Set(["PRINCIPALITY-COMMONS.md"]));
+      setSystemTime(new Date("2027-08-27T00:00:00Z"));
+      const projection = join(sourceRoot, "pages-functions/power-atlas-assets.json");
+      const original = readFileSync(projection);
+      writeFileSync(projection, "[]");
+      expect(() => stageHub(output, sourceRoot)).toThrow("projection/receipt closed parity mismatch");
+      expect(readdirSync(output)).toEqual([]);
+      writeFileSync(projection, original);
+      const asset = HUB_ASSETS.find(({ source }) => source.startsWith("pages-content/power-atlas/"))!;
+      const path = join(sourceRoot, asset.source), bytes = readFileSync(path);
+      const changed = Buffer.from(bytes); changed[changed.length - 1] ^= 1;
+      writeFileSync(path, changed);
+      expect(() => stageHub(output, sourceRoot)).toThrow("SHA-256 mismatch");
+      expect(readdirSync(output)).toEqual([]);
+      writeFileSync(path, bytes);
+      expect(() => stageHub(output, sourceRoot)).toThrow("Principality Commons is partially staged");
+      expect(readdirSync(output)).toEqual([]);
+    });
+  });
+
+  test("第一關之後 source 改變，第二關仍綁住真 buffers，唔畀還原磁碟 bytes 蒙混", () => {
+    withSourceFixture((sourceRoot, output) => {
+      removeDestinations(sourceRoot, new Set(["PRINCIPALITY-COMMONS.md"]));
+      const path = join(sourceRoot, "references/geometry-grammar.md");
+      const bytes = readFileSync(path);
+      const changed = Buffer.from("fixture：第一關之後變咗嘅 bytes");
+      const verify = immutablePublications.verifyImmutablePublicationSnapshot;
+      let calls = 0;
+      const verifier = spyOn(immutablePublications, "verifyImmutablePublicationSnapshot")
+        .mockImplementation((options) => {
+          calls++;
+          if (calls === 2) {
+            expect(options.sourceBytes?.get("references/geometry-grammar.md")).toEqual(changed);
+            // 磁碟先還原，真 verifier 仍要拒絕已讀入嘅 changed buffer。
+            writeFileSync(path, bytes);
+          }
+          const result = verify(options);
+          if (calls === 1) {
+            expect(options.sourceBytes).toBeUndefined();
+            expect(result.issues).toEqual([]);
+            writeFileSync(path, changed);
+          }
+          return result;
+        });
+      try {
+        expect(() => stageHub(output, sourceRoot)).toThrow("sha256-mismatch geometry-grammar/0.1/guide");
+        expect(calls).toBe(2);
+        expect(readdirSync(output)).toEqual([]);
+      } finally {
+        verifier.mockRestore();
+      }
+      expect(readFileSync(path)).toEqual(bytes);
+    });
+  });
+});
 
 describe("the hub staging contract", () => {
   test("copies exactly the declared assets into an empty directory and never overwrites", () => {

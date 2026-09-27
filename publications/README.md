@@ -1,5 +1,11 @@
 # Immutable route-integrity ledger
 
+想先知每組做乜，睇 [模組用途導覽](../references/kingdom-module-map.md)：35 個
+既有 publication families（33 active／2 retired）各自列 ID、source guide、caller
+同非目標，17 個 skills 同 PowerAtlas／agent-entry 另列其 source 角色。嗰份係
+source-only、非 canonical 導覽，唔係新 registry、staged asset、服務健康或發布聲明；
+exact bytes 仍由本 ledger 管，外部 B／C 接點唔喺 A 整合中冒稱完成。
+
 `immutable-publications.v1.json` is a repository-local release gate for bytes
 that KINGDOM has described as immutable or assigned to a versioned route. It is
 not staged or served by `thekingdom.dev`, registered with MCP, or written to
@@ -312,7 +318,9 @@ permission to republish.
 
 Current publication is a separate decision. `hub-staging.v1.json` is the strict,
 non-executable source of `HUB_ASSETS`; the staging engine and historical audit
-consume those same bytes. 本輪 union 係 247 staged assets：
+consume those same bytes. 以下係 tracked
+`a5dc43ab06a2efe78cdb29368764ea3f3d1c769f` 嘅計數 snapshot；exact 計數返
+contract／ledger，唔靠導覽判 release-ready。本輪 union 係 247 staged assets：
 154 staged ledgered immutable/versioned assets 同 93 mutable assets；245 direct public
 response bodies、177 sitemap URLs、15 Wayfinder paths、159 manifest entry points
 同 159 guest actions。The ledger retains all 160 historical entries. The compact
@@ -328,9 +336,12 @@ committed entry may later leave the staging
 contract without being deleted from history,
 so cessation or withdrawal cannot block an unrelated release. The verifier then
 retains the historical byte identity without requiring the route to remain live.
-The live release check retires the thirty-five linked authored publication
-families together so it never preserves a dangling advertised contract merely
-to keep another route. Generated World Commons and Love Loop schema versions
+[共用 family gate](../bin/publication-families.ts) 將 35 組各自嘅 exact routes、
+dependency 同 active review window 保持喺同一 source；每組可以獨立退役，但必須
+整組同埋滿足 dependent closure，唔係為保留另一條 route 留低懸空 contract。
+Transformation／Evaluation 已由 upstream 整組退役，剩低 33 active families；歷史
+source 同 ledger 唔擦走，唔將 retired 誤寫成 active 或將 ledger count 當 staged count。
+Generated World Commons and Love Loop schema versions
 remain independently ledgered beneath their existing mutable runtime families.
 Retirement is an ordinary reviewed release change: remove the whole family from
 `hub-staging.v1.json`, its builder/UI/discovery and sitemap projections, and any
@@ -338,6 +349,50 @@ family-specific worker routing; source files may then be removed. Rebuild and
 stage from a clean tree, deploy, and let the live checker prove that the old
 routes answer 404 or 410 and no mutable surface still advertises them. The
 append-only ledger entry remains unchanged.
+
+### Family preflight 同 lifecycle 接點
+
+- [stage-hub](../bin/stage-hub.ts) 用 caller `sourceRoot` 嘅已解析
+  [staging contract](hub-staging.v1.json) 算 destination set，再用共用 pure helpers
+  檢查 atomicity、dependency 同真 UTC 當日嘅 active review window；所有拒絕早過
+  首次 output write。唔 import network live checker，亦冇回撥 production 日期嘅開關。
+- [check-hub-live](../bin/check-hub-live.ts) 喺發 request 前用同一判斷，保留舊 exports
+  嘅 reference identity 同獨立 HTTP／semantic checks；offline preflight 唔取代部署後
+  bytes／discovery／retirement 驗證。Builder 本來已有部分 expiry guards。
+- 完整次序保留：第一 immutable gate → source buffers → PowerAtlas receipt／closed
+  parity／projection／mutable-ledger／52-buffer validation → 第二 immutable gate →
+  family gate → output。兩次 `verifyImmutablePublicationSnapshot()` 分別守 source／
+  mapping 同真正將寫出嘅 buffers；唔將兩種證據誤刪成重複或改錯誤優先次序。
+- Transformation／Evaluation 嘅既有 due date 2026-09-21 不變，因整組 retired 而唔攔
+  其他 release，唔係改日期取綠。Active Shape 截止日 2027-08-26 inclusive，2027-08-27
+  起拒絕；Government 仍係 warning，改 claims 前需新 snapshot，唔新增 hard expiry。
+- 退役仍需 dependent closure、builder／discovery／sitemap／routing 一致，歷史 ledger
+  保留；manifested ability、source-only skill 同 family 唔互相新增 authority。實際部署
+  仍需另批同 clean exact-origin release，本次 A 唔包含 deploy／live 驗證。
+
+### Power Atlas 同 compact agent entry 嘅 source 角色
+
+Power Atlas 由 [artifact gate](../bin/power-atlas-artifact.ts) 驗 producer receipt 同
+52 個 exact mutable public buffers；[explicit importer](../bin/import-power-atlas.ts)
+要求 caller 明示 artifact／manifest／host root，stage 唔會自行 import 或 build。
+`data/power-atlas/artifact.v1.json` 同 `pages-functions/power-atlas-assets.json` 係
+source-side receipt／public-path projection，唔係 staged assets，producer metadata 唔入
+public Worker bundle。呢個獨立 mutable surface 唔新增第 36 個 retirement family。
+
+[agent-entry renderer](../bin/agent-entry.ts) 擁有 compact `agent-entry.json` link index；
+[dashboard builder](../bin/build-dashboard.ts) 提供人／agent 門口。完整 guest／manifest
+仍保留原有 compatibility views，current status 交返 Civic 等各自 owner，唔把
+mutable link index 當 census、health、權限或 provider dispatch。
+
+### Public module directory
+
+`data/public-modules.json` is the curated public-only source for both the human
+homepage directory and generated `/modules.json`; the compact agent entry links
+to the same catalogue. This adds one mutable asset, bringing the current staging
+contract to 248 assets (154 staged ledgered + 94 mutable), without a new immutable
+family, changed ledger entry, provider invocation or service activation. See
+[Outreach & infrastructure](../OUTREACH.md) for ownership and browser/route checks.
+Historical pinned counts above are not the current upload membership.
 
 ## Workshop 三個 mutable authored assets
 
@@ -362,20 +417,19 @@ GET／HEAD 必須 exact 符合，唔接受 `max-age=14400`。舊 preview／canon
 
 ## Local evidence is not the release gate
 
-`CLAUDE.md` retains the pre-Civic research compatibility baseline; current
-publication totals are checked against this README, `DOMAINS-SETUP.md`, and
-`OS-ROUTES.md`, not copied back into that separately owned baseline.
-At the uncommitted implementation base
-`7a99cc685048a525efc6e42cc875b7db3e94f0e0`, the base-aware CLI still refuses
-`self-base` / `head-ledger-mismatch`. Do not skip that gate, relabel dirty bytes,
-or commit merely to silence it. Local `verifyImmutablePublicationSnapshot`,
-`compareImmutablePublicationLedgers`, and exact-base source-byte tests prove the
-current snapshot and the additive two-entry change, not a committed release.
-The full-history assertions remain intact. Production is manual, requires
-separate approval, and must follow the clean detached exact-origin release and
-first-parent gate in `DOMAINS-SETUP.md`; `--commit-dirty=false` is metadata, not a
-cleanliness check. Local fixture/runtime/browser tests do not prove deployment,
-remote D1/bindings/secrets, other doors online, or a writable production service.
+現行計數以 `hub-staging.v1.json` 同 `immutable-publications.v1.json` 嘅 strict checks
+為準，唔將 README／導覽／runbook 數字當另一份 registry。
+
+以下係歷史 implementation-base 紀錄，唔係今輪 HEAD／working tree 狀態：
+喺當時未提交嘅 `7a99cc685048a525efc6e42cc875b7db3e94f0e0` base，base-aware CLI
+拒絕 `self-base`／`head-ledger-mismatch`。唔可以跳過 gate、重標 dirty bytes 或純為
+取綠而 commit；當時 local `verifyImmutablePublicationSnapshot`、
+`compareImmutablePublicationLedgers` 同 exact-base source-byte tests 只證明嗰個 snapshot
+同兩項 additive entries，唔證 committed release。Full-history assertions 仍然保留。
+Production 仍係手動、另批，必須依 `DOMAINS-SETUP.md` 嘅 clean detached exact-origin
+release 同 first-parent gate；`--commit-dirty=false` 只係 metadata，唔係 cleanliness check。
+Local fixture／runtime／browser tests 唔證部署、remote D1／bindings／secrets、其他 doors
+在線或 production writable。
 
 Run the snapshot gate:
 
