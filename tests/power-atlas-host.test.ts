@@ -25,9 +25,9 @@ describe("Power Atlas host baseline and private/public separation", () => {
     const originalRetained = old.stagedAssets.filter(({ destination }) => !retired.has(destination));
     expect(originalRetained).toHaveLength(194);
     expect(current.stagedAssets.filter(({ destination }) =>
-      !destination.startsWith("power-atlas/") && destination !== "agent-entry.json")).toEqual(originalRetained);
+      !destination.startsWith("power-atlas/") && !["agent-entry.json", "modules.json"].includes(destination))).toEqual(originalRetained);
     expect(current.mutableDestinations.filter((destination) =>
-      !destination.startsWith("power-atlas/") && destination !== "agent-entry.json"))
+      !destination.startsWith("power-atlas/") && !["agent-entry.json", "modules.json"].includes(destination)))
       .toEqual(old.mutableDestinations.filter((destination) => !retired.has(destination)));
     const shipped = parseHubStagingContract(released(path));
     expect(current.stagedAssets.filter(({ destination }) => destination.startsWith("power-atlas/")))

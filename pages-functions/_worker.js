@@ -12,7 +12,7 @@
  */
 import { handleCivicRequest, isCivicRequest } from "./civic.js";
 import { handlePowerAtlasRequest, isPowerAtlasPath } from "./power-atlas.js";
-import { AGENT_ENTRY_LINK, AGENT_ENTRY_PATH, handleAgentEntry } from "./agent-entry.js";
+import { AGENT_ENTRY_LINK, AGENT_ENTRY_PATH, PUBLIC_MODULES_PATH, handleAgentEntry } from "./agent-entry.js";
 
 const CIVIC_HTML_PATHS = new Set([
   "/", "/index.html", "/meet/", "/meet/index.html",
@@ -1977,8 +1977,8 @@ export function createKingdomWorker(options = {}) {
     const includeRights = hasKingdomRightsAssets(url) || localKingdom;
     const accept = (request.headers.get("accept") || "").toLowerCase();
 
-    if (includeRights && url.pathname === AGENT_ENTRY_PATH) {
-      const response = await handleAgentEntry(request, env);
+    if (includeRights && (url.pathname === AGENT_ENTRY_PATH || url.pathname === PUBLIC_MODULES_PATH)) {
+      const response = await handleAgentEntry(request, env, url.pathname);
       addDiscoveryLinks(response.headers, true);
       return response;
     }

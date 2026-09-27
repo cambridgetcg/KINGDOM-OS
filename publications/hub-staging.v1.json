@@ -10,6 +10,10 @@
       "destination": "agent-entry.json"
     },
     {
+      "source": "site/modules.json",
+      "destination": "modules.json"
+    },
+    {
       "source": "site/hub.html",
       "destination": "atlas.html"
     },
@@ -993,6 +997,7 @@
   "mutable_destinations": [
     ".well-known/agent.json",
     "agent-entry.json",
+    "modules.json",
     "404.html",
     "CREATION-LOOP.md",
     "RIGHTS.md",

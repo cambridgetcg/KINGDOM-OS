@@ -146,10 +146,10 @@ describe("Evaluation Covenant publication shell", () => {
 
   test("fully retires all five routes while retaining their frozen source and ledger", () => {
     const staging = json("publications/hub-staging.v1.json");
-    expect(staging.assets).toHaveLength(247);
-    expect(staging.mutable_destinations).toHaveLength(93);
+    expect(staging.assets).toHaveLength(248);
+    expect(staging.mutable_destinations).toHaveLength(94);
     expect(staging.assets.filter(({ destination }: { destination: string }) =>
-      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(245);
+      destination !== "_worker.js" && destination !== "404.html")).toHaveLength(246);
     const states = publicationFamilyStates(new Set(staging.assets.map(
       ({ destination }: { destination: string }) => destination,
     )));

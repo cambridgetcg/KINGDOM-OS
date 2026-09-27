@@ -2,6 +2,11 @@
 
 呢份係 **source-only、非 canonical 嘅閱讀地圖**，唔係新 registry、protocol、服務健康表或發布聲明；repo metadata 仍由各自 `kingdom.yaml` 擁有，精確行為返 owning source 睇。`keep` 係保留用途，`clarify` 係釐清宣告，`wire` 係有證據但仍待另批接線，`unknown` 係未驗；全部都唔係操作批准。
 
+公共網站嘅 purpose/tag 模組目錄、人／agent 分區及 source → release 接點，見
+[Outreach & infrastructure](../OUTREACH.md)。該 additive slice 新增一個 mutable
+`modules.json`（現行 248 assets = 154 staged immutable + 94 mutable），唔增加
+retirement family、skill 或 core registry authority；下面有 pin 嘅舊計數保留為 snapshot。
+
 ## 視野同入口
 
 - 本表 publication／skill 覆蓋以 tracked `a5dc43ab06a2efe78cdb29368764ea3f3d1c769f` 為基準：**247 staged assets = 154 staged immutable + 93 mutable、35 defined families = 33 active + 2 retired、17 skills = 10 manifested + 7 source-only**。歷史 ledger 仍保留 160 entries，唔等於全部仍公開；Power Atlas 同 agent-entry 係另外嘅 mutable surfaces，唔新增 retirement family，亦唔包括其他 working tree 嘅 Cargo proposals。

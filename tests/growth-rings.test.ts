@@ -106,6 +106,9 @@ function row(name: string, path: string, layer: string, state = "active", kind =
 
 beforeAll(() => {
   fixtureRoot = mkdtempSync(join(tmpdir(), "growth-rings-test-"));
+  // Keep the not-git fixture outside any ancestor repository even when TMPDIR
+  // lives beneath a tracked home. Real child repos have their own .git roots.
+  writeFileSync(join(fixtureRoot, ".git"), "gitdir: deliberately-missing-fixture-boundary\n");
   fixtureHome = join(fixtureRoot, "PRIVATE_HOME_SENTINEL");
   mkdirSync(join(fixtureHome, "repos"), { recursive: true });
   repos = [];

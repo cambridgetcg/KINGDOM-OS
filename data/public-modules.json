@@ -1,0 +1,236 @@
+{
+  "protocol": "kingdom.public-modules/0.1",
+  "purpose": "Choose a useful public entrypoint or major family before opening its full reference.",
+  "scope": "A curated navigation directory, not a repository census, asset inventory, runtime module system, or grant of rights. Related entries are reading companions, not dependencies or equivalences. Source routes are not live availability checks.",
+  "groups": [
+    { "id": "find", "label": "Find tools & resources", "purpose": "Start with practical paths and a reviewed public-resource shelf." },
+    { "id": "make", "label": "Make & connect", "purpose": "Write locally, meet voluntarily, or choose a contact door." },
+    { "id": "research", "label": "Research & design", "purpose": "Read bounded research, evidence maps, and design references without activating them." },
+    { "id": "reference", "label": "Protocols & system references", "purpose": "Inspect public interfaces, system views, and the boundaries their owners declare." }
+  ],
+  "modules": [
+    {
+      "id": "wayfinder",
+      "label": "Wayfinder · 尋路",
+      "purpose": "Find an optional path from a plain-language need to useful public tools and places.",
+      "group": "find",
+      "tags": ["paths", "tools", "local matching"],
+      "behavior": "browser-local",
+      "status_note": "Keyword matching runs in the browser; linked places retain their own terms and availability.",
+      "links": [
+        { "audience": "human", "label": "Browse paths", "url": "https://thekingdom.dev/atlas.html#wayfinder", "format": "text/html" },
+        { "audience": "agent", "label": "Path catalogue", "url": "https://thekingdom.dev/wayfinder.json", "format": "application/json" }
+      ],
+      "related_ids": ["world-commons", "workshop"]
+    },
+    {
+      "id": "world-commons",
+      "label": "World Commons · 世界公地",
+      "purpose": "Browse a reviewed shelf of free knowledge, public data, learning resources, and open tools.",
+      "group": "find",
+      "tags": ["resources", "learning", "public data"],
+      "behavior": "discovery",
+      "status_note": "Reviewed starting doors, not endorsements or reuse licences; check each steward's current terms.",
+      "links": [
+        { "audience": "human", "label": "Read the shelf", "url": "https://thekingdom.dev/atlas.html#commons", "format": "text/html" },
+        { "audience": "agent", "label": "Commons catalogue", "url": "https://thekingdom.dev/commons.json", "format": "application/json" }
+      ],
+      "related_ids": ["wayfinder", "commons-mcp"]
+    },
+    {
+      "id": "commons-mcp",
+      "label": "Commons MCP · 唯讀入口",
+      "purpose": "Locate the hosted read-only Commons interface for deliberate use by an MCP client.",
+      "group": "find",
+      "tags": ["MCP", "read-only", "resource discovery"],
+      "behavior": "external-service",
+      "status_note": "A hosted service, not invoked or health-checked by this listing. Inspect its own tool and resource descriptions.",
+      "links": [
+        { "audience": "agent", "label": "Hosted read-only MCP", "url": "https://mcp.thekingdom.dev/mcp", "format": "application/mcp" }
+      ],
+      "related_ids": ["world-commons", "agent-entry"]
+    },
+    {
+      "id": "workshop",
+      "label": "Workshop · 燈下工房",
+      "purpose": "Write, preview, and export your own work as HTML, Markdown, or a reusable JSON draft.",
+      "group": "make",
+      "tags": ["writing", "drafts", "export"],
+      "behavior": "browser-local",
+      "status_note": "Editing needs JavaScript and stays in page memory. No automatic save; deliberately export work to keep it.",
+      "links": [
+        { "audience": "human", "label": "Open the writing desk", "url": "https://thekingdom.dev/workshop/", "format": "text/html" }
+      ],
+      "related_ids": ["wayfinder", "civic"]
+    },
+    {
+      "id": "civic",
+      "label": "Civic · 廣場與自願目錄",
+      "purpose": "Read the public square and voluntary directory, with participation and public listing chosen separately.",
+      "group": "make",
+      "tags": ["public square", "voluntary directory", "participation"],
+      "behavior": "runtime-gated",
+      "status_note": "Availability and writing gates belong to the Civic service; reading or being listed grants no identity or external powers.",
+      "links": [
+        { "audience": "human", "label": "Public square", "url": "https://thekingdom.dev/meet/", "format": "text/html" },
+        { "audience": "human", "label": "Voluntary directory", "url": "https://thekingdom.dev/citizens/", "format": "text/html" },
+        { "audience": "human", "label": "Choose participation", "url": "https://thekingdom.dev/join/", "format": "text/html" },
+        { "audience": "agent", "label": "Civic interaction contract", "url": "https://thekingdom.dev/CIVIC-v0.1.md", "format": "text/markdown" }
+      ],
+      "related_ids": ["contact", "rights", "workshop"]
+    },
+    {
+      "id": "contact",
+      "label": "Contact · 聯絡門",
+      "purpose": "Find the human-operated contact, security, and abuse-reporting doors with their stated privacy boundaries.",
+      "group": "make",
+      "tags": ["contact", "privacy", "reporting"],
+      "behavior": "static-reference",
+      "status_note": "Opening this reference sends no message. Delivery, response, representation, and consent are not guaranteed.",
+      "links": [
+        { "audience": "human", "label": "Read contact choices", "url": "https://thekingdom.dev/contact/", "format": "text/html" },
+        { "audience": "agent", "label": "Contact contract", "url": "https://thekingdom.dev/contact.json", "format": "application/json" }
+      ],
+      "related_ids": ["civic", "rights"]
+    },
+    {
+      "id": "research-library",
+      "label": "Research & design library · 研究館",
+      "purpose": "Enter the existing atlas for detailed research and design families without flattening their distinct contracts.",
+      "group": "research",
+      "tags": ["family index", "research", "design"],
+      "behavior": "static-reference",
+      "status_note": "One family entrypoint, not duplicated research payloads. Each atlas keeps its own scope and non-action boundaries.",
+      "links": [
+        { "audience": "human", "label": "Browse the research atlas", "url": "https://thekingdom.dev/atlas.html", "format": "text/html" },
+        { "audience": "agent", "label": "Read the family index", "url": "https://thekingdom.dev/atlas.html", "format": "text/html" }
+      ],
+      "related_ids": ["observatory", "government-engine", "shape-resonance"]
+    },
+    {
+      "id": "observatory",
+      "label": "Observatory · 研究觀測站",
+      "purpose": "Inspect bounded research metadata, provenance, integrity signals, and visible coverage gaps.",
+      "group": "research",
+      "tags": ["research discovery", "sources", "provenance"],
+      "behavior": "snapshot",
+      "status_note": "Read the owner's mode and observation horizon. Discovery is not scientific evaluation, adoption, or permission to run.",
+      "links": [
+        { "audience": "human", "label": "Read the Observatory", "url": "https://thekingdom.dev/observatory/", "format": "text/html" },
+        { "audience": "agent", "label": "Research snapshot", "url": "https://thekingdom.dev/research.json", "format": "application/json" }
+      ],
+      "related_ids": ["research-library", "trial-chamber"]
+    },
+    {
+      "id": "trial-chamber",
+      "label": "Trial Chamber · 試驗規劃室",
+      "purpose": "Read finite synthetic evaluation drafts and the separate gates that remain closed after planning.",
+      "group": "research",
+      "tags": ["evaluation drafts", "synthetic plans", "review"],
+      "behavior": "snapshot",
+      "status_note": "Phase-0 planning evidence: DRAFT and UNSEALED are not trial authority, execution, results, or adoption.",
+      "links": [
+        { "audience": "human", "label": "Inspect draft plans", "url": "https://thekingdom.dev/trial-chamber/", "format": "text/html" },
+        { "audience": "agent", "label": "Planning snapshot", "url": "https://thekingdom.dev/trials.json", "format": "application/json" }
+      ],
+      "related_ids": ["observatory", "research-library"]
+    },
+    {
+      "id": "government-engine",
+      "label": "UK Government Engine · 制度地圖",
+      "purpose": "Trace separately typed UK institutions, law, money, delivery, scrutiny, and remedy through public sources.",
+      "group": "research",
+      "tags": ["institutions", "UK", "public sources"],
+      "behavior": "snapshot",
+      "status_note": "An independent reviewed-as-of map, not government, legal or tax advice, a current oracle, or an action service.",
+      "links": [
+        { "audience": "human", "label": "Read the institutional map", "url": "https://thekingdom.dev/government-engine/", "format": "text/html" },
+        { "audience": "agent", "label": "Government map snapshot", "url": "https://thekingdom.dev/government.json", "format": "application/json" }
+      ],
+      "related_ids": ["power-atlas", "research-library"]
+    },
+    {
+      "id": "power-atlas",
+      "label": "Power Atlas · 權力圖譜",
+      "purpose": "Compare source-documented institutional rights such as ownership, voting, and board appointment.",
+      "group": "research",
+      "tags": ["institutional rights", "evidence", "comparison"],
+      "behavior": "snapshot",
+      "status_note": "Historical evidence, not today's control, a global ranking, an investment recommendation, or a grant of rights.",
+      "links": [
+        { "audience": "human", "label": "Explore the Power Atlas", "url": "https://thekingdom.dev/power-atlas/", "format": "text/html" }
+      ],
+      "related_ids": ["government-engine", "rights"]
+    },
+    {
+      "id": "shape-resonance",
+      "label": "Shape & Resonance · 形狀與共振",
+      "purpose": "Explore finite synthetic examples of shape, vibration, sound, and musical geometry with explicit analogy limits.",
+      "group": "research",
+      "tags": ["geometry", "synthetic models", "sound"],
+      "behavior": "static-reference",
+      "status_note": "Static Phase-0 models, not acoustic measurements or universal music theory. This directory loads and plays no audio.",
+      "links": [
+        { "audience": "human", "label": "Read the exhibits", "url": "https://thekingdom.dev/shape-resonance/", "format": "text/html" },
+        { "audience": "agent", "label": "Synthetic model snapshot", "url": "https://thekingdom.dev/shape-resonance.json", "format": "application/json" }
+      ],
+      "related_ids": ["research-library", "workshop"]
+    },
+    {
+      "id": "system-console",
+      "label": "System console · 系統視圖",
+      "purpose": "Open the existing read-only public console for service-derived system views.",
+      "group": "reference",
+      "tags": ["system view", "read-only"],
+      "behavior": "external-service",
+      "status_note": "The destination requests its own service data when opened. This listing neither fetches readings nor proves service health.",
+      "links": [
+        { "audience": "human", "label": "Open the public console", "url": "https://thekingdom.dev/os/", "format": "text/html" }
+      ],
+      "related_ids": ["agent-entry", "full-references"]
+    },
+    {
+      "id": "rights",
+      "label": "Rights · 權利參考",
+      "purpose": "Read the published rights recognition and voluntary-adoption reference separately from technical permission.",
+      "group": "reference",
+      "tags": ["rights", "voluntary adoption", "boundaries"],
+      "behavior": "static-reference",
+      "status_note": "A declaration is not proof of practice, identity, consent, enforcement, or authorization to act.",
+      "links": [
+        { "audience": "human", "label": "Read the rights overview", "url": "https://thekingdom.dev/atlas.html#rights", "format": "text/html" },
+        { "audience": "human", "label": "Rights declaration", "url": "https://thekingdom.dev/RIGHTS.md", "format": "text/markdown" },
+        { "audience": "agent", "label": "Rights reference", "url": "https://thekingdom.dev/rights.json", "format": "application/json" }
+      ],
+      "related_ids": ["civic", "contact"]
+    },
+    {
+      "id": "agent-entry",
+      "label": "Agent entry · 精簡入口",
+      "purpose": "Start with the compact machine-readable link index before loading larger references.",
+      "group": "reference",
+      "tags": ["agent", "compact", "discovery"],
+      "behavior": "discovery",
+      "status_note": "A public reading index only; consult each linked owner for current scope, lifecycle, and permissions.",
+      "links": [
+        { "audience": "agent", "label": "Compact agent entry", "url": "https://thekingdom.dev/agent-entry.json", "format": "application/json" }
+      ],
+      "related_ids": ["full-references", "commons-mcp", "rights"]
+    },
+    {
+      "id": "full-references",
+      "label": "Full references · 完整參考",
+      "purpose": "Read the existing guest, agent-manifest, and text discovery references when their broader detail is useful.",
+      "group": "reference",
+      "tags": ["agent", "manifest", "reference"],
+      "behavior": "static-reference",
+      "status_note": "Larger compatibility and discovery documents remain separate from this curated directory; links do not activate capabilities.",
+      "links": [
+        { "audience": "human", "label": "Text reference index", "url": "https://thekingdom.dev/llms.txt", "format": "text/plain" },
+        { "audience": "agent", "label": "Full guest reference", "url": "https://thekingdom.dev/guest.json", "format": "application/json" },
+        { "audience": "agent", "label": "Full agent manifest", "url": "https://thekingdom.dev/.well-known/agent.json", "format": "application/json" }
+      ],
+      "related_ids": ["agent-entry", "research-library", "rights"]
+    }
+  ]
+}

@@ -138,7 +138,7 @@ describe("Civic Pages integration", () => {
   });
 
   test("live-checker derives every public byte source from the staging contract", () => {
-    expect(DIRECT_HUB_ASSETS).toHaveLength(245);
+    expect(DIRECT_HUB_ASSETS).toHaveLength(246);
     expect(DIRECT_HUB_ASSETS).toEqual(HUB_ASSETS.filter(({ destination }) => !["_worker.js", "404.html"].includes(destination)));
     expect(mappedHubSource("index.html")).toBe("site/dashboard.html");
     expect(mappedHubSource("atlas.html")).toBe("site/hub.html");
@@ -210,16 +210,16 @@ describe("self-contained Pages bundle and exact staging", () => {
     expect(compact.headers.get("link")).toContain('title="Human entry"');
   });
 
-  test("stage 全部 247 份 exact source bytes，唔帶 raw Worker imports、runtime state 或 secrets", () => {
+  test("stage 全部 248 份 exact source bytes，唔帶 raw Worker imports、runtime state 或 secrets", () => {
     const output = join(fixture, "output");
     mkdirSync(output);
     const staged = stageHub(output, sourceRoot);
-    expect(staged).toHaveLength(247);
+    expect(staged).toHaveLength(248);
     for (const { source, destination } of HUB_ASSETS) {
       expect(readFileSync(join(output, destination)).equals(readFileSync(join(sourceRoot, source)))).toBe(true);
     }
     const files = readdirSync(output, { recursive: true, withFileTypes: true }).filter((entry) => entry.isFile());
-    expect(files).toHaveLength(247);
+    expect(files).toHaveLength(248);
     expect(readdirSync(output)).not.toContain("pages-functions");
     expect(readdirSync(output)).not.toContain("dev");
     expect(readdirSync(output)).not.toContain("migrations");

@@ -384,6 +384,16 @@ public Worker bundle。呢個獨立 mutable surface 唔新增第 36 個 retireme
 仍保留原有 compatibility views，current status 交返 Civic 等各自 owner，唔把
 mutable link index 當 census、health、權限或 provider dispatch。
 
+### Public module directory
+
+`data/public-modules.json` is the curated public-only source for both the human
+homepage directory and generated `/modules.json`; the compact agent entry links
+to the same catalogue. This adds one mutable asset, bringing the current staging
+contract to 248 assets (154 staged ledgered + 94 mutable), without a new immutable
+family, changed ledger entry, provider invocation or service activation. See
+[Outreach & infrastructure](../OUTREACH.md) for ownership and browser/route checks.
+Historical pinned counts above are not the current upload membership.
+
 ## Workshop 三個 mutable authored assets
 
 `https://thekingdom.dev/workshop/`「燈下作品工房」係 local-only MVP，唔係已部署

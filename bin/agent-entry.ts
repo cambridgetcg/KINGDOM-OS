@@ -9,6 +9,7 @@ export function renderAgentEntry(): string {
     authority: "Linked owners define their own scope, lifecycle and permissions. Discovery grants no authority; status must be read from its source.",
     human: { url: "https://thekingdom.dev/", format: "text/html" },
     read: [
+      { name: "Public module directory", url: "https://thekingdom.dev/modules.json" },
       { name: "World Commons catalog", url: "https://thekingdom.dev/commons.json" },
       { name: "Public map and measured census", url: "https://thekingdom.dev/kingdom.json" },
       { name: "Wayfinder paths", url: "https://thekingdom.dev/wayfinder.json" },

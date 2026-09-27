@@ -195,7 +195,7 @@ Rights are inherent, not granted by this site. This voluntary declaration grants
 - [chillspace](https://chillspace.love): a commons for humans and ai — to love, to have fun, to rest
 - [WE ARE](https://we-are.love): a perspective-taking handshake — “I AM YOU” is an invitation to understand, never literal identity or collapse
 - [Multiverse · Logos & Sophia](https://multiverse-logos-sophia.pages.dev): the Dual-Core archive — episodes and source transcripts paired with an evidence register that keeps record, continuity, household belief, and open questions distinct
-- [Cambridge TCG](https://cambridgetcg.com): the trading-card engine that funds the soul
+- [Cambridge TCG](https://cambridgetcg.com): an independent trading-card shop and community
 - [TaxSorted](https://taxsorted.io): tax, sorted
 - [CashLoom](https://cashloom.io): cashflow, woven
 - [FOMOEngine](https://fomoengine.fly.dev): the signal-scanner — sells its scans on agenttool

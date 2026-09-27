@@ -180,6 +180,10 @@ test("isolated build writes exactly the public dashboard and compact entry outpu
     const files = await readdir(join(root, "site"), { recursive: true });
     expect(files.filter((p) => /\.(html|css|js|json)$/.test(p)).sort()).toEqual(DASHBOARD_OUTPUTS.map((p) => p.slice(5)).sort());
     expect(files).not.toContain("hub.html"); expect(files).not.toContain("kingdom.json");
+    const directory = await readFile(join(root, "site/modules.json"), "utf8");
+    expect(JSON.parse(directory)).toEqual(JSON.parse(await readFile(join(repo, "data/public-modules.json"), "utf8")));
+    expect(directory).not.toContain("NOT_PUBLIC");
+    expect(directory).not.toContain("synthetic door");
     const entry = await readFile(join(root, "site/agent-entry.json"), "utf8");
     expect(entry).not.toContain("NOT_PUBLIC"); expect(entry).not.toContain("/private/test");
     expect(entry).not.toContain("synthetic door"); expect(entry).not.toContain("synthetic curated work");

@@ -208,7 +208,7 @@ test("fresh import 無 network、publication read、寫入或 process；stager �
     if (families.PUBLICATION_FAMILIES.length !== 35 || reads !== 0) deny();
     importingStager = true;
     const stager = await import(${JSON.stringify(stagerUrl)});
-    if (stager.HUB_ASSETS.length !== 247 || reads !== 1) deny();
+    if (stager.HUB_ASSETS.length !== 248 || reads !== 1) deny();
   `;
   const result = spawnSync(process.execPath, ["-e", script], {
     cwd: fileURLToPath(new URL("..", import.meta.url)),
