@@ -15,12 +15,14 @@
 - Current domain/deployment status is observed separately in the private surface map. A Pages alias is not proof that a custom-domain binding is active.
 - **chillspace.love supersedes** the old codeberg-subpath home in `sites.json`; the codeberg copy still exists as a mirror.
 
-## Current human and agent entry contract (2026-09-25)
+## Current human and agent entry contract (2026-09-27)
 
 The human start is `/`; `/agent-entry.json` is the compact machine start.
+The shared purpose/tag directory is `/#civic-modules` for people and
+`/modules.json` for machine readers; it is generated from one public-only source.
 `guest.json`, `.well-known/agent.json` and `llms.txt` remain full references.
-The exact upload contains **247 assets: 154 staged ledgered assets + 93 mutable
-assets**, with 245 direct bodies, 177 sitemap URLs, 15 Wayfinder paths,
+The exact upload contains **248 assets: 154 staged ledgered assets + 94 mutable
+assets**, with 246 direct bodies, 177 sitemap URLs, 15 Wayfinder paths,
 159 manifest entry points and 159 guest actions. The historical ledger retains
 all 160 entries. Thirty-three publication families are active; the expired
 Transformation Engine and Evaluation Covenant families remain retired.
@@ -258,8 +260,8 @@ preserves its byte identity without granting continuing authority to republish.
 ledgered bytes it is about to copy. The ledger is not itself staged or served by
 `thekingdom.dev`.
 
-`stage-hub.ts` 要求既有空 destination，只複製合約指定 247 assets：
-154 staged ledgered immutable/versioned assets 同 93 mutable assets，共 245 direct public
+`stage-hub.ts` 要求既有空 destination，只複製合約指定 248 assets：
+154 staged ledgered immutable/versioned assets 同 94 mutable assets，共 246 direct public
 response bodies；`_worker.js` 同 `404.html` 由獨立合約核對。
 Sitemap 有 177 URLs，Wayfinder 有 15 paths；discovery 保持 159 manifest entry points
 同 159 guest actions。Generated surface 描述 eighteen

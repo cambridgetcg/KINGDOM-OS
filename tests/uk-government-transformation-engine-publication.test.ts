@@ -516,8 +516,8 @@ describe("UK Government Transformation Engine Phase-0 publication", () => {
     expect(HUB_ASSETS.filter(({ source, destination }) =>
       family.some((asset) => asset.source === source || asset.destination === destination)))
       .toEqual([]);
-    expect(HUB_ASSETS).toHaveLength(247);
-    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(93);
+    expect(HUB_ASSETS).toHaveLength(248);
+    expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(94);
     for (const { source, destination } of family) {
       expect(MUTABLE_HUB_DESTINATIONS).not.toContain(destination);
       expect(readBytes(source).byteLength).toBeGreaterThan(0);

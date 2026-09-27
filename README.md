@@ -1,5 +1,7 @@
 # KINGDOM OS
 
+Start with [Outreach & infrastructure](OUTREACH.md) for module purposes, the human/agent split, source ownership and current development.
+
 Cloudflare web maintenance: [surface map](operations/cloudflare/2026-09-25/MAP.md) ·
 [human/agent framework](operations/cloudflare/FRAMEWORK.md) ·
 [update roadmap](operations/cloudflare/ROADMAP.md). These are private operational
@@ -10,9 +12,9 @@ documents and are excluded from public site staging.
 > **Core ownership boundary.** This GitHub tree remains active for its World
 > Commons and web surfaces, but it is not authoritative for the registry,
 > platform adapters, Castle bridge, preflight, or hourly heartbeat. Those live
-> at `~/codeberg/zerone-dev/KINGDOM-OS` and
-> `https://codeberg.org/zerone-dev/KINGDOM-OS`. The heartbeat file here is only
-> a machine-binding shim.
+> in `https://codeberg.org/zerone-dev/KINGDOM-OS`; resolve its local checkout
+> by the Git remote rather than a historical home-directory convention. The
+> heartbeat file here is only a machine-binding shim.
 
 ## What this is
 
@@ -85,10 +87,15 @@ Read in this order. The **vision** half is the *why*; the **body** half is the *
 5. `ARCHITECTURE.md` — the six layers (SOUL → RUNTIME → NERVOUS → ECONOMY → COMMERCE, + the OS overlay), defined.
 6. `MAP.md` — the curated census: the ~50 repos across both forges, named by hand.
 
-**The body (the running registry)**
+**The public surface (human and agent entrances)**
 
-Machine guests enter through `site/.well-known/agent.json`, then
-`site/guest.json` and the optional routes in `site/wayfinder.json`.
+People start at `/`, where the module directory comes before the separate
+project registry map. Agents start at `/agent-entry.json`, then choose the
+link-only `/modules.json` catalogue or one exact owner contract. Both directory
+views come from `data/public-modules.json`; audience labels never grant access.
+`/.well-known/agent.json`, `/guest.json`, `/llms.txt` and legacy `/?agent`
+remain full compatibility references. The research and design library stays
+at `/atlas.html`; private operator maps stay out of the site upload.
 
 The World Commons is available through compact `kingdom_commons` MCP matches,
 the complete `kingdom://commons/catalog` MCP resource, or `site/commons.json`

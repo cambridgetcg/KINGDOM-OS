@@ -2,7 +2,6 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { AGENT_ENTRY_MAX_BYTES, renderAgentEntry } from "../bin/agent-entry";
-import { projectDashboardData, renderDashboardPage } from "../bin/build-dashboard";
 import { HUB_ASSETS, MUTABLE_HUB_DESTINATIONS } from "../bin/stage-hub";
 import worker from "../pages-functions/_worker.js";
 
@@ -32,11 +31,39 @@ describe("compact hub entry", () => {
       else expect(url.href).toBe("https://mcp.thekingdom.dev/mcp");
     }
     expect(MUTABLE_HUB_DESTINATIONS).toContain("agent-entry.json");
+  });
+
+  test("generated compact entry matches its builder", () => {
     const published = readFileSync(join(import.meta.dir, "../site/agent-entry.json"), "utf8");
     expect(published).toBe(body);
   });
 
-  test("human root has a prominent agent door and a separately labelled full reference", () => {
+  test("adds one public module directory link without replacing existing discovery", () => {
+    const moduleLink = { name: "Public module directory", url: "https://thekingdom.dev/modules.json" };
+    expect(document.read.filter((entry: { name: string; url: string }) => entry.name === moduleLink.name || entry.url === moduleLink.url))
+      .toEqual([moduleLink]);
+    expect(document.read.filter((entry: { url: string }) => entry.url !== moduleLink.url)).toEqual([
+      { name: "World Commons catalog", url: "https://thekingdom.dev/commons.json" },
+      { name: "Public map and measured census", url: "https://thekingdom.dev/kingdom.json" },
+      { name: "Wayfinder paths", url: "https://thekingdom.dev/wayfinder.json" },
+      { name: "Current Civic availability", url: "https://thekingdom.dev/api/civic/status" },
+      { name: "Civic interaction contract", url: "https://thekingdom.dev/CIVIC-v0.1.md" },
+      { name: "Rights recognition", url: "https://thekingdom.dev/rights.json" },
+    ]);
+    expect(document.full_reference).toEqual({
+      guest: "https://thekingdom.dev/guest.json",
+      manifest: "https://thekingdom.dev/.well-known/agent.json",
+      text_index: "https://thekingdom.dev/llms.txt",
+      research_atlas: "https://thekingdom.dev/atlas.html",
+    });
+    expect(document.mcp).toEqual({
+      url: "https://mcp.thekingdom.dev/mcp",
+      scope: "Read-only public Kingdom resources; consult the server's tool and resource descriptions.",
+    });
+  });
+
+  test("human root has a prominent agent door and a separately labelled full reference", async () => {
+    const { projectDashboardData, renderDashboardPage } = await import("../bin/build-dashboard");
     const html = renderDashboardPage("explore", projectDashboardData({}));
     expect(html).toContain('<link rel="alternate" type="application/json" href="/agent-entry.json" title="Compact agent entry">');
     const doors = html.match(/<nav class="service-line" aria-label="Human and agent entries">([\s\S]*?)<\/nav>/)?.[1];

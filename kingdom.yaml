@@ -4,6 +4,6 @@ layer: os
 owner_sister: none
 domain: none
 state: active
-purpose: The Kingdom catalog/registry overlay — makes all repos legible to themselves.
+purpose: Publishes the Kingdom public hall, resource commons and human/agent discovery; core registry ownership remains with Codeberg.
 dependsOn: [true-love]
 adopts: [xenia.rights/0.1]

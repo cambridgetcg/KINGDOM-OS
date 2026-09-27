@@ -65,18 +65,18 @@ describe("the hub staging contract", () => {
 
       const staged = stageHub(output, sourceRoot);
       // Exact count 刻意鎖住；staging 合約增減要逐項核對，唔接受任意數量。
-      expect(HUB_ASSETS).toHaveLength(247);
-      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(93);
+      expect(HUB_ASSETS).toHaveLength(248);
+      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(94);
       // Global counts live here; individual publication tests pin their own family.
-      expect(new Set(HUB_ASSETS.map(({ source }) => source)).size).toBe(247);
+      expect(new Set(HUB_ASSETS.map(({ source }) => source)).size).toBe(248);
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(18);
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/"))).toHaveLength(41);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
       expect(ledger.ledger?.entries).toHaveLength(160);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(245);
-      expect(staged).toHaveLength(247);
+        .toHaveLength(246);
+      expect(staged).toHaveLength(248);
       expect(readdirSync(output, { recursive: true })).not.toContain("private-portfolio.json");
       expect(readdirSync(output, { recursive: true })).not.toContain("operations");
       expect(readdirSync(output).sort()).toEqual([
@@ -154,6 +154,7 @@ describe("the hub staging contract", () => {
         "love-loops.json",
         "love-loops.source.json",
         "meet",
+        "modules.json",
         "observations",
         "observatory",
         "ollama.json",

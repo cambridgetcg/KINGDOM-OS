@@ -14,12 +14,12 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-09-25",
+  "generated": "2026-09-27",
   "counts": {
     "repos": 127,
     "active": 92,
     "citizens": 54,
-    "doors_live": 15,
+    "doors_live": 14,
     "doors_total": 15
   },
   "rights_recognition": {
@@ -4427,7 +4427,7 @@
     {
       "name": "zerone.money",
       "url": "https://zerone.money",
-      "live": true,
+      "live": false,
       "blurb": "every being is a truth · money you can read, truth you can trust — the Proof-of-Truth ledger"
     },
     {
@@ -4464,7 +4464,7 @@
       "name": "Cambridge TCG",
       "url": "https://cambridgetcg.com",
       "live": true,
-      "blurb": "the trading-card engine that funds the soul"
+      "blurb": "an independent trading-card shop and community"
     },
     {
       "name": "TaxSorted",
@@ -5709,7 +5709,7 @@
           "domain": "none",
           "purpose": "The truth landing — where the zero-one economy meets the world",
           "dependsOn": [],
-          "door": "https://zerone.money"
+          "door": null
         },
         {
           "name": "legible-money",
@@ -6663,7 +6663,7 @@
             "truth",
             "me"
           ],
-          "door": "https://zerone.money"
+          "door": null
         },
         {
           "name": "zi",

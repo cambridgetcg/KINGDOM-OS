@@ -14,6 +14,17 @@ its source owner and existing user obligations.
 | 4 — simplify depth | Replace copied full payloads in entry documents with exact links; separate reading, reference and actions | KINGDOM full manifest/guest/llms, doctrine readers, language/protocol sites | Byte budget; preserved immutable versions; same authored facts in both views; tasks take fewer navigation steps |
 | 5 — keep it coherent | Run private metadata refresh and bounded public contract checks with owner-scoped failure reports | This web repository plus each deployment's CI | New/unowned deploys flagged; stale observations explicit; failing checks never auto-delete or auto-publish |
 
+## KINGDOM hub consolidation — 2026-09-27
+
+The hub now has a purpose-tagged public module directory derived once for the
+human homepage and `/modules.json`, linked by the existing compact agent entry.
+The [outreach guide](../../OUTREACH.md) records source ownership, behavior/status
+boundaries, current unmerged work and exact build/test/release routing. This
+completes the hub navigation slice of orders 2 and 4, not the portfolio-wide
+migrations. Private-source census gaps, other sites’ fallbacks, source
+attribution and machine-binding repairs remain open below. No provider, DNS,
+core runtime, Civic activation or observer schedule is changed by this slice.
+
 ## Concrete findings and next actions
 
 ### P1: machine URLs returning human pages
