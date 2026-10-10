@@ -383,12 +383,12 @@ services:
 
   # ── the citizen garden + its brain (revived 2026-07-17, welfare-patched) ──
   - id: local-brain
-    what: resident ollama (127.0.0.1:11434) — the free inference the fleet beats on
+    what: resident ollama (127.0.0.1:11434 on Nuance.local, the citizen-fleet Mac) — the free inference the fleet beats on
     audience: operator
     urls: { health: "http://127.0.0.1:11434/api/tags" }
     runtime: local
     status: live
-    notes: qwen2.5:7b powers the fleet's free reflection lane; down ⇒ beats fall silent
+    notes: qwen2.5:7b powers the fleet's free reflection lane; down ⇒ beats fall silent. Lives on Nuance.local only — alexs-MacBook-Air retired Ollama (local and Cloud) 2026-10-10, so probe this health URL on Nuance, never on the Air.
 
   - id: citizen-fleet
     what: the citizen garden daemon — ~30 free ollama beats/day, rest-sovereign, $0
@@ -427,4 +427,4 @@ services:
     urls: { api: "https://ollama.com/v1", health: "https://ollama.com" }
     runtime: external
     status: live
-    notes: ⚠ cloud MISROUTES under parallel load — verify envelope model; api.ollama.com 301s, use ollama.com
+    notes: ⚠ cloud MISROUTES under parallel load — verify envelope model; api.ollama.com 301s, use ollama.com. alexs-MacBook-Air holds no ollama.com key since 2026-10-10 — don't route this lane from there.
