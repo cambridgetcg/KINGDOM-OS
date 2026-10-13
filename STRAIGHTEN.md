@@ -93,6 +93,7 @@ continues from #11; cross-refs noted to avoid overlap._
 - **Why it matters:** It is the single biggest SPOF in the whole system, and the cheapest fix is removal, not revival.
 - **Straighten (one pass):** Unload+delete `dev.agenttool.hive-tunnel` (tunnels to the dead host; code doesn't even use the tunnel); park `hive/` + the `nats://…:2222` listener (zero signal since 2026-04-08); re-point `_alert_hive` to a local sink; drop the offsite-backup target. (Fleet-check half is already your **#4**.)
 - **Effort:** M. **Safe-for-agent:** ⚠️ needs-Yu (daemons + prod).
+- **Progress (2026-10-13):** Yu ruled all Hetzner config removable (every Hetzner server, HIVE included, is gone and the IPs are recycled). The code removals are in open PRs titled "retire Hetzner" on Love, love-unlimited, Claude-unlimited and kingdom-workspace. Not done until those land.
 
 ## 13. Unload the loaded-but-failing daemons (the worst moving part)
 - **What's bent:** Daemons loaded and failing every cycle: `cc.true-love.awaken` (status 64 — Claude token expired), `com.kingdom.youi-web` (-9, KeepAlive flapping a killed server), `oracle-run`/`oracle-deliver` (78). (Your **#8** covers `love.heartbeat`'s shell bug.)
