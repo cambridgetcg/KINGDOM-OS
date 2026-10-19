@@ -29,7 +29,7 @@
 
 1. ✅ **Snapshot retention raised** — zerone-1 (mainnet) 5→**60d**, testnet 5→**14d**. Bulk-recovery window widened at snapshot-storage cost only (first 10GB free; mainnet vol ~4GB used).
 2. ✅ **Tigris bucket `kingdom-vault` created** — S3 read/write/delete verified end-to-end. Creds in macOS keychain (`agenttool-tigris-access-key` / `-secret-key`). ⚠️ creds transited this session's transcript — rotate via Tigris dashboard if paranoid.
-3. **Historical online captures, not verified recovery backups.** The nightly `com.kingdom.chain-backup` job uses an installed copy of [`bin/chain-backup-remote.ts`](bin/chain-backup-remote.ts), not the alternative in-node [`bin/chain-backup-to-tigris.sh`](bin/chain-backup-to-tigris.sh). The recorded 2026-07-17 object sizes (mainnet 1105MB, testnet 1525MB) attest only to uploaded bytes, not database coherence or recoverability. Log: `~/.kingdom/logs/chain-backup.log`. The source-only safety revision below has **not** replaced the installed job.
+3. **Historical online captures, not verified recovery backups.** The nightly `com.kingdom.chain-backup` job uses an installed copy of [`bin/chain-backup-remote.ts`](bin/chain-backup-remote.ts), not the alternative in-node [`bin/chain-backup-to-tigris.sh`](bin/chain-backup-to-tigris.sh). The recorded 2026-07-17 object sizes (mainnet 1105MB, testnet 1525MB) attest only to uploaded bytes, not database coherence or recoverability. Log: `~/.kingdom/logs/chain-backup.log`. The safety revision below replaced the installed job on 2026-09-08 at 12:43 BST through `replace-runner` (receipt in `~/.kingdom/bin/.chain-backup-rollback-aa3e2674…/`); it went uncommitted until 2026-10-19, when the 12-hour upload URL and `upload_http` were added and installed the same way.
 
 ## needs-Yu / next integrate (touch live infra — staged, not auto-run)
 
@@ -43,11 +43,13 @@ Ranked by (durability or $ saved) ÷ risk:
 6. **Deploy hygiene** — tokens already sane (longest expiry 2033, not the 20yr default; `FOR-FABLE` etc.). Optional: blue-green strategy on the 3-machine API; Grafana alert rules on machine restarts (there's a live deploy-source-drift question in INFRA-MAP — alerts would surface it).
 7. **Observability** — free managed Prometheus + Grafana at fly-metrics.net already available; wire alert rules (Fly has no native paging).
 
-## Online salvage contract (source revision 2026-09-08; not activated)
+## Online salvage contract (revision 2026-09-08, installed that day; amended 2026-10-19)
 
 - Both runners archive the running node's `data` and `config`. **Tar exit 0 and 1 are `RAW_UNVERIFIED`**, including when the object has positive size. A live LevelDB copy can be inconsistent even when tar reports no changes; “resync the tail” is not a recovery guarantee. These archives are not a complete coherent validator home.
 - Tar exit >1 is `FAILED`, and upload is `NOT_ATTEMPTED`. Tar/curl/SSH results and the independent object-presence check are retained separately; neither a successful SSH command nor stored bytes erase a failed capture or upload. The remote runner requires exactly one bounded protocol record; missing, oversized or malformed output fails closed. Fly stdout banners also fail closed rather than being silently ignored.
 - Per-chain JSON reports `capture_status` (`RAW_UNVERIFIED`/`FAILED`), `upload_status` (`PRESENT`/`FAILED`/`NOT_ATTEMPTED`), numeric exit codes where known, and independent `object_status`. A failed object check means unknown presence, not proven absence. Transport/protocol failure may leave an object in storage; it is not cleaned up or promoted. `recovery_status` is always `NOT_ASSESSED`; `retention_status` is always `DISABLED`.
+- The remote runner also reports `upload_http`: curl's `%{http_code}` for the PUT, `0` when no HTTP response arrived, and `null` when no upload was attempted or curl wrote anything but three digits. It sits beside `upload_exit` and never replaces it. Before 2026-10-19 curl's output went to `/dev/null`, so a `curl 22` (for example mainnet on 2026-10-12) cannot be told apart after the fact.
+- The PUT URL is presigned for **12 hours**, before the remote tar starts. At 2 hours it expired before curl began on CPU-credit-throttled nights: once a Fly shared-CPU machine has used its burst credit (about 1.5 days after a restart), testnet's tar alone took 2h05–2h19, and 25 of 40 testnet nights from 2026-09-09 failed, 21 of them with `curl 22`. The longer URL stays visible in local and remote process arguments for the length of the run, and a replay within those hours could overwrite only that night's object key.
 - Exit **3** means all requested salvage captures landed but remain unverified; **1** means an operational failure; **2** means invalid usage/configuration, rejected before effects. There is **no exit-0 verified-success path**, no verified receipt, and no advancement of verified-backup freshness. Logs omit raw subprocess output, presigned URLs, credentials and archive contents.
 - **No remote listing or deletion in either implementation.** Every existing generation, including legacy and known-good objects, is preserved. Unique capture suffixes avoid routine same-second overwrites. Only newly created private temporary files are cleaned up. Storage will grow without bound until a separately reviewed retention policy exists; upload success must never trigger pruning.
 - The in-node alternative requires tar/zstd, AWS CLI and explicitly provisioned credentials; its default home is `/data/.zeroned`. It performs no snapshot/export fallback. Genesis export/import is diagnostic-only, not validator recovery.
@@ -64,13 +66,13 @@ These are **observations, not a cross-host lock, service fence, or proof of orph
 
 Run from a trusted PATH/interpreter environment (Python 3 standard library plus Darwin `libSystem` copyfile/ACL/xattr APIs; no package installation). `--home` is mandatory and explicit: inherited `HOME` never chooses the write target. Use the absolute, non-symlink script path. Check parents/source/destination are regular owner-controlled paths; unsafe links, multiple hardlinks, group/world write permissions, foreign ownership, unsupported parent allow-ACLs or unpreservable metadata cause refusal. ACL refusal uses native Darwin entry tags and permission masks, not display-text matching: every parent allow entry is unsupported (even read-only or inherit-only), and file allow entries may grant only read, execute, read-attributes, read-extended-attributes, read-security or synchronize. Mutation/unknown grants and ACL inspection failures defer; deny entries cannot hide a later allow grant. Harmless file read ACLs remain preserved. Root-owned sticky ancestor directories are permitted, but the actual home/source/destination directories must be owner-controlled and non-shared. The existing plist must still bind the expected wrapper with **RunAtLoad=false** and **03:33**; wrapper/plist bytes and identities are checked again and never written in this action.
 
-After source review, the parent can perform the selected replacement with this exact invocation (not a test or a capture command):
+After source review, the parent can perform the selected replacement with this exact invocation (not a test or a capture command). The digests pin the 2026-10-19 replacement (2026-09-08 runner → 12-hour URL runner); for any later one, recompute both with `shasum -a 256` over the source and `~/.kingdom/bin/chain-backup-remote.ts`:
 
 ```sh
 PATH=/usr/bin:/bin:/usr/sbin:/sbin /bin/bash /Users/yournameisai/Desktop/kingdom-os/bin/chain-backup-install.sh replace-runner \
   --home /Users/yournameisai \
-  --expected-source 826123f748ab0386be34db00e9455d17ff1565204b4580e880ba69a5b246b139 \
-  --expected-installed 5293395880fb27e4307bb75783c5f6d885c2c1ab04500cf3537025347b51d565 \
+  --expected-source 41996699510e03235071246958110a9a4bf611e9c24727d3dad217db9a7a847c \
+  --expected-installed 826123f748ab0386be34db00e9455d17ff1565204b4580e880ba69a5b246b139 \
   --quiet-window-confirmed
 ```
 

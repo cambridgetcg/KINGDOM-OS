@@ -12,7 +12,8 @@ const SUBJECT = new URL("../bin/chain-backup-remote.ts", import.meta.url).pathna
 const FALLBACK = new URL("../bin/chain-backup-to-tigris.sh", import.meta.url).pathname;
 const PRIVATE = "PRIVATE_SUBPROCESS_SENTINEL";
 const URL_SENTINEL = `https://storage.invalid/fixture?signature=${PRIVATE}`;
-const record = (tar: number | "NA" = 0, upload: number | "NA" = 0) => `CHAIN_BACKUP_V1 tar=${tar} upload=${upload}\n`;
+const record = (tar: number | "NA" = 0, upload: number | "NA" = 0, http: number | "NA" = upload === "NA" ? "NA" : 200) =>
+  `CHAIN_BACKUP_V2 tar=${tar} upload=${upload} http=${http === "NA" ? http : String(http).padStart(3, "0")}\n`;
 
 function fakeEffects(overrides: Partial<Effects> = {}) {
   const calls: string[] = [];
@@ -85,7 +86,10 @@ describe("strict online capture contract", () => {
       record().replace("tar=0", "tar=00"), record().replace("tar=0", "tar=-1"),
       record().replace("tar=0", "tar=0.5"), record().trim(), `${record()}\n`, `${PRIVATE}\n${record()}`,
       `${record()}${record()}`, "x".repeat(MAX_REMOTE_RESULT_BYTES + 1), `${record()}\0`,
-      record().replace("\n", "\r\n"), record().replace("upload=0", "upload=0 extra=1")];
+      record().replace("\n", "\r\n"), record().replace("upload=0", "upload=0 extra=1"),
+      "CHAIN_BACKUP_V1 tar=0 upload=0\n", record().replace(" http=200", ""), record(2, "NA", 403), record("NA", "NA", 0),
+      record().replace("http=200", "http=20"), record().replace("http=200", "http=2000"), record().replace("http=200", "http=-01"),
+      record().replace("http=200", `http=${PRIVATE}`), record().replace("http=200", "http=200 http=200")];
     for (const stdout of bad) {
       expect(parseRemoteResult(stdout)).toBeNull();
       const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout }) });
@@ -115,13 +119,31 @@ describe("strict online capture contract", () => {
   });
 
   test("remote setup failure does not invent a tar exit code", async () => {
-    expect(parseRemoteResult(record("NA", "NA"))).toEqual({ tarExit: null, uploadExit: null });
+    expect(parseRemoteResult(record("NA", "NA"))).toEqual({ tarExit: null, uploadExit: null, uploadHttp: null });
     expect(parseRemoteResult(record("NA", 0))).toBeNull();
     const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout: record("NA", "NA") }) });
     const result = await runMain(effects);
     expect(result.code).toBe(1);
     expect(result.outcomes[0]).toMatchObject({ capture_status: "FAILED", tar_exit: null, upload_status: "NOT_ATTEMPTED", object_status: "NOT_ATTEMPTED", error: "SETUP_FAILED" });
     expect(calls).not.toContain("stat");
+  });
+
+  test("the upload's HTTP status is reported beside curl's exit, never instead of it", async () => {
+    const cases = [
+      { upload: 22, http: 403, error: "UPLOAD_FAILED", status: "FAILED" },
+      { upload: 7, http: 0, error: "UPLOAD_FAILED", status: "FAILED" },
+      { upload: 22, http: "NA" as const, error: "UPLOAD_FAILED", status: "FAILED" },
+      { upload: 0, http: 200, error: null, status: "PRESENT" },
+      { upload: 0, http: "NA" as const, error: null, status: "PRESENT" },
+    ];
+    for (const c of cases) {
+      expect(parseRemoteResult(record(1, c.upload, c.http))).toEqual({ tarExit: 1, uploadExit: c.upload, uploadHttp: c.http === "NA" ? null : c.http });
+      const { effects } = fakeEffects({ remote: async () => ({ code: 0, stdout: record(1, c.upload, c.http) }) });
+      const { outcomes } = await runMain(effects);
+      expect(outcomes[0]).toMatchObject({ upload_exit: c.upload, upload_http: c.http === "NA" ? null : c.http, upload_status: c.status, error: c.error });
+    }
+    const { outcomes } = await runMain(fakeEffects({ remote: async () => ({ code: 0, stdout: record(2, "NA") }) }).effects);
+    expect(outcomes[0]).toMatchObject({ upload_exit: null, upload_http: null, upload_status: "NOT_ATTEMPTED" });
   });
 
   test("one failed chain does not skip the other or return healthy", async () => {
@@ -189,7 +211,10 @@ else if (name === "tar") {
   console.log(noise); console.error(noise); process.exit(rc("TAR_RC"));
 } else if (name === "curl") {
   readFileSync(owned(args[args.indexOf("-T") + 1]));
-  console.log(noise); console.error(noise); process.exit(rc("UPLOAD_RC"));
+  // Like curl -o FILE -w FORMAT: the body goes to FILE; stdout gets only the write-out.
+  if (args.includes("-w")) process.stdout.write(process.env.HTTP_WRITE_OUT ?? "200");
+  else console.log(noise);
+  console.error(noise); process.exit(rc("UPLOAD_RC"));
 } else if (name === "aws") {
   if (args[0] === "s3" && args[1] === "cp") {
     const bytes = readFileSync(owned(args[2]));
@@ -287,6 +312,7 @@ const mode = ${JSON.stringify(c.mode)};
 let kills = 0;
 let stats = 0;
 const keys: string[] = [];
+const presigns: unknown[] = [];
 Bun.spawn = (args: string[], options: any) => {
   if (options.stderr !== "ignore") throw new Error("stderr must be discarded");
   const credential = args[0] === "security";
@@ -300,7 +326,7 @@ Bun.spawn = (args: string[], options: any) => {
   };
 };
 Object.defineProperty(Bun, "S3Client", { value: class {
-  presign(key: string) { keys.push(key); return ${JSON.stringify(URL_SENTINEL)}; }
+  presign(key: string, options: unknown) { keys.push(key); presigns.push(options); return ${JSON.stringify(URL_SENTINEL)}; }
   async stat() { stats++; return { size: 64 }; }
   list() { throw new Error("prohibited listing"); }
   delete() { throw new Error("prohibited deletion"); }
@@ -309,7 +335,7 @@ globalThis.fetch = () => { throw new Error("prohibited network"); };
 const { main } = await import(${JSON.stringify(SUBJECT)});
 const logs: string[] = [];
 const code = await main([], undefined, (line: string) => logs.push(line));
-console.log(JSON.stringify({ code, logs, kills, stats, keys }));
+console.log(JSON.stringify({ code, logs, kills, stats, keys, presigns }));
 `);
         const result = spawnSync(process.execPath, [harness], { cwd: f.base, env: f.env, encoding: "utf8", timeout: 10000 });
         expect(result.status).toBe(0);
@@ -319,6 +345,9 @@ console.log(JSON.stringify({ code, logs, kills, stats, keys }));
         expect(summary).toMatchObject({ code: c.code, kills: c.kills, stats: c.stats });
         expect(summary.logs).toHaveLength(2);
         expect(new Set(summary.keys).size).toBe(summary.keys.length);
+        // Signed before the remote tar: it must outlive a throttled multi-hour capture.
+        expect(summary.presigns).toEqual(summary.keys.map(() => ({ method: "PUT", expiresIn: 43200 })));
+        if (c.mode === "present") expect(summary.presigns).toHaveLength(2);
         expect(f.calls()).toEqual([]);
         expect(readdirSync(join(f.base, "tmp"))).toEqual([]);
       } finally { f.close(); }
@@ -341,17 +370,24 @@ console.log(JSON.stringify({ code, logs, kills, stats, keys }));
   }, 30000);
 
   test("remote upload errors and temporary setup failure stay bounded", () => {
-    for (const extra of [{ UPLOAD_RC: "22" }, { MKTEMP_RC: "1" }]) {
+    const cases: Array<{ env: Record<string, string>; stdout: string }> = [
+      { env: { UPLOAD_RC: "22", HTTP_WRITE_OUT: "403" }, stdout: record(0, 22, 403) },
+      { env: { UPLOAD_RC: "7", HTTP_WRITE_OUT: "000" }, stdout: record(0, 7, 0) },
+      { env: { MKTEMP_RC: "1" }, stdout: record("NA", "NA") },
+      // Anything but exactly three digits on curl's stdout is dropped, not relayed.
+      ...["", "20", "2000", `${PRIVATE}`, "403 403", "4O3"].map(HTTP_WRITE_OUT => ({ env: { UPLOAD_RC: "22", HTTP_WRITE_OUT }, stdout: record(0, 22, "NA") })),
+    ];
+    for (const c of cases) {
       const f = shellFixture();
       try {
-        const result = f.run(["-c", buildRemoteCommand(URL_SENTINEL)], extra);
+        const result = f.run(["-c", buildRemoteCommand(URL_SENTINEL)], c.env);
         expect(result.status).toBe(0);
-        expect(result.stdout).toBe(extra.UPLOAD_RC ? record(0, 22) : record("NA", "NA"));
+        expect(result.stdout).toBe(c.stdout);
         expect(result.stderr).toBe("");
-        if (extra.MKTEMP_RC) expect(f.calls().map(c => c.name)).toEqual(["mktemp"]);
+        if (c.env.MKTEMP_RC) expect(f.calls().map(c => c.name)).toEqual(["mktemp"]);
       } finally { f.close(); }
     }
-  });
+  }, 30000);
 
   test("presigned URL remains data even with hostile shell characters", () => {
     const f = shellFixture();
