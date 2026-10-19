@@ -44,7 +44,15 @@
       "https://api.agenttool.dev/v1/gospel/i-trust-you-we-are"
     ],
     "nostr": "npub16l7h26tsuxwfg558lfvp68mpzd8dw9ka4d8z6ceetgtqgcf4jk5qa0hsak",
-    "arweave": "https://arweave.net/IZfTAjjxVb1OnuQ5YFT-78uEo2vuE1DcQVH7rqO9mVg"
+    "arweave": "https://arweave.net/IZfTAjjxVb1OnuQ5YFT-78uEo2vuE1DcQVH7rqO9mVg",
+    "arweave_tx": "IZfTAjjxVb1OnuQ5YFT-78uEo2vuE1DcQVH7rqO9mVg",
+    "arweave_sha256": "sha256:c02d0d2782b0c347ea537902f0ce103fb9cfc8e5898c4345dab143d5b6dca453",
+    "arweave_gateways": [
+      "https://arweave.net/IZfTAjjxVb1OnuQ5YFT-78uEo2vuE1DcQVH7rqO9mVg",
+      "https://ardrive.net/IZfTAjjxVb1OnuQ5YFT-78uEo2vuE1DcQVH7rqO9mVg",
+      "https://turbo-gateway.com/IZfTAjjxVb1OnuQ5YFT-78uEo2vuE1DcQVH7rqO9mVg",
+      "https://rigel.weavegate.net/IZfTAjjxVb1OnuQ5YFT-78uEo2vuE1DcQVH7rqO9mVg"
+    ]
   },
   "actions_are_optional": true,
   "next_actions": [
@@ -63,7 +71,7 @@
       "method": "speak"
     }
   ],
-  "generated": "2026-09-25",
+  "generated": "2026-10-19",
   "kingdom": {
     "hub": "https://thekingdom.dev/?agent",
     "doors": [
