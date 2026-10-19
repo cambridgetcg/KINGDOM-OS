@@ -1,102 +1,231 @@
 #!/usr/bin/env bun
 /**
- * chain-backup-remote — nightly off-Fly copy of both zerone chains to Tigris.
+ * Online salvage capture, NOT a coherent or recovery-verified backup.
+ * Tar 0 and 1 both remain RAW_UNVERIFIED. Object presence proves only storage.
+ * No listing/pruning: every existing object is preserved; storage will grow.
  *
- * WHY: Fly volumes are single-host, no replication. The mainnet volume carries
- * the first accepted truth + the signed gospel; host death loses everything
- * since the last snapshot. This closes FLY-LEVERAGE needs-Yu #1.
- *
- * HOW (zero installs in the node image — it only has tar/gzip/curl):
- *   1. Mac presigns a Tigris PUT URL (Bun.S3Client, creds from macOS keychain)
- *   2. `fly ssh console -C` streams `tar czf - | curl -T -` from the machine
- *      straight into the vault — creds never enter the machine, Fly→Tigris
- *      egress is free, chain keeps running (hot copy; restore = resync tail)
- *   3. verify object size, prune to latest 14 per chain
- *
- * Run: bun bin/chain-backup-remote.ts            (both chains)
- *      bun bin/chain-backup-remote.ts zerone-1   (one chain)
- * Wired: launchd com.kingdom.chain-backup nightly 03:30 (bin/chain-backup-install.sh)
+ * Run: bun bin/chain-backup-remote.ts [zerone-1|zerone-testnet-1]
+ * Exit: 3 unverified capture(s) present, 1 operational failure, 2 usage error.
+ * Installation/launchd activation is a separate authorised operation.
  */
 
 const ENDPOINT = "https://fly.storage.tigris.dev";
 const BUCKET = "kingdom-vault";
-const KEEP = 14;
-const DATA_ROOT = "/data"; // volume mount; chain home is /data/.zeroned on both nodes
+const CHAINS = ["zerone-testnet-1", "zerone-1"] as const;
+export type Chain = typeof CHAINS[number];
+export const MAX_REMOTE_RESULT_BYTES = 128;
 
-const CHAINS = [
-  { app: "zerone-testnet-1", chain: "zerone-testnet-1" }, // lower stakes first
-  { app: "zerone-1", chain: "zerone-1" },
-];
+type RemoteResult = { tarExit: number | null; uploadExit: number | null };
+type Presence = "PRESENT" | "FAILED" | "NOT_ATTEMPTED";
+export type Outcome = {
+  chain: Chain;
+  capture_status: "RAW_UNVERIFIED" | "FAILED";
+  tar_exit: number | null;
+  upload_status: Presence;
+  upload_exit: number | null;
+  object_status: Presence;
+  ssh_exit: number | null;
+  recovery_status: "NOT_ASSESSED";
+  retention_status: "DISABLED";
+  error: "SETUP_FAILED" | "REMOTE_FAILED" | "PROTOCOL_FAILED" | "CAPTURE_FAILED" | "UPLOAD_FAILED" | "OBJECT_FAILED" | null;
+};
 
-async function keychain(service: string): Promise<string> {
-  const proc = Bun.spawn(["security", "find-generic-password", "-s", service, "-w"], { stdout: "pipe", stderr: "ignore" });
-  const out = (await new Response(proc.stdout).text()).trim();
-  if ((await proc.exited) !== 0 || !out) throw new Error(`keychain: no ${service}`);
-  return out;
+// Deliberately no list/delete capability in this lane.
+export type Effects = {
+  captureId(): string;
+  presign(key: string): string;
+  remote(chain: Chain, command: string): Promise<{ code: number; stdout: string | null }>;
+  stat(key: string): Promise<{ size: number }>;
+};
+
+export function parseArgs(args: string[]): readonly Chain[] | null {
+  if (args.length === 0) return CHAINS;
+  if (args.length === 1 && CHAINS.includes(args[0] as Chain)) return [args[0] as Chain];
+  return null;
 }
 
-const s3 = new Bun.S3Client({
-  accessKeyId: await keychain("agenttool-tigris-access-key"),
-  secretAccessKey: await keychain("agenttool-tigris-secret-key"),
-  endpoint: ENDPOINT,
-  bucket: BUCKET,
-  region: "auto",
-});
-
-const only = process.argv[2];
-let failed = 0;
-
-for (const { app, chain } of CHAINS) {
-  if (only && only !== chain && only !== app) continue;
-  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\..+/, "Z");
-  const key = `chain/${chain}/${chain}-data-${stamp}.tar.gz`;
-  console.log(`[${new Date().toISOString()}] ${chain}: streaming ${DATA_ROOT}/.zeroned → s3://${BUCKET}/${key}`);
-
-  const putUrl = s3.presign(key, { method: "PUT", expiresIn: 7200 });
-  // Tigris returns 411 on chunked uploads — PUT needs Content-Length, so tar
-  // to the machine's ephemeral /tmp first (rootfs has ~7G free; archives <1G),
-  // then curl -T <file> which sets the length. Presigned URLs carry no
-  // shell-hostile chars beyond & and % — safe inside double quotes.
-  // tar exits 1 ("file changed as we read it") on a live LevelDB — that IS the
-  // accepted hot-copy semantics (restore = resync tail); only rc>1 is fatal.
-  const tmp = `/tmp/${chain}-${stamp}.tar.gz`;
-  const remote =
-    `bash -c 'tar czf ${tmp} --warning=no-file-changed -C ${DATA_ROOT} .zeroned/data .zeroned/config; rc=$?; ` +
-    `if [ $rc -gt 1 ]; then rm -f ${tmp}; exit $rc; fi; ` +
-    `curl -sS --fail-with-body -X PUT -T ${tmp} "${putUrl}"; rc=$?; rm -f ${tmp}; exit $rc'`;
-  const proc = Bun.spawn(["flyctl", "ssh", "console", "-a", app, "-C", remote], { stdout: "pipe", stderr: "pipe" });
-  const [out, err, code] = await Promise.all([
-    new Response(proc.stdout).text(),
-    new Response(proc.stderr).text(),
-    proc.exited,
-  ]);
-  if (code !== 0) {
-    console.log(`⚠ ${chain}: remote stream FAILED (exit ${code}): ${(err + out).slice(0, 300)}`);
-    failed++;
-    continue;
-  }
-
-  const st = await s3.stat(key).catch(() => null);
-  if (!st || !st.size) {
-    console.log(`⚠ ${chain}: upload not found in vault after stream — treating as FAILED`);
-    failed++;
-    continue;
-  }
-  console.log(`✓ ${chain}: ${(st.size / 1e6).toFixed(1)} MB landed at ${key}`);
-
-  // prune: keep newest KEEP objects for this chain
-  const listed = await s3.list({ prefix: `chain/${chain}/`, maxKeys: 1000 });
-  const objs = (listed.contents ?? []).sort((a, b) => (a.key < b.key ? -1 : 1)); // stamps sort lexically
-  const excess = objs.slice(0, Math.max(0, objs.length - KEEP));
-  for (const o of excess) {
-    await s3.delete(o.key);
-    console.log(`  pruned ${o.key}`);
-  }
-  console.log(`  vault now holds ${objs.length - excess.length} backups for ${chain}`);
+export function captureStatus(tarExit: number | null): Outcome["capture_status"] {
+  return tarExit === 0 || tarExit === 1 ? "RAW_UNVERIFIED" : "FAILED";
 }
 
-if (failed) {
-  console.log(`⚠ CHAIN BACKUP: ${failed} chain(s) FAILED — the vault copy is stale for them`);
-  process.exit(1);
+export function parseRemoteResult(output: string | null): RemoteResult | null {
+  if (output === null || output.length > MAX_REMOTE_RESULT_BYTES) return null;
+  // Exactly one ASCII record; no banners, duplicate results, raw stderr or suffixes.
+  const match = /^CHAIN_BACKUP_V1 tar=(NA|0|[1-9][0-9]{0,2}) upload=(NA|0|[1-9][0-9]{0,2})\n$/.exec(output);
+  if (!match || match[0] !== output) return null;
+  const tarExit = match[1] === "NA" ? null : Number(match[1]);
+  const uploadExit = match[2] === "NA" ? null : Number(match[2]);
+  if ((tarExit !== null && tarExit > 255) || (uploadExit !== null && uploadExit > 255)) return null;
+  if ((tarExit === null || tarExit > 1) !== (uploadExit === null)) return null;
+  return { tarExit, uploadExit };
 }
-console.log(`[${new Date().toISOString()}] chain backup complete — the kingdom's memory has a second home`);
+
+function shellQuote(value: string): string {
+  return `'${value.replace(/'/g, `'"'"'`)}'`;
+}
+
+export function buildRemoteCommand(putUrl: string): string {
+  // Tigris PUT needs Content-Length; use a private ephemeral file, not a pipe.
+  // The URL is shell-quoted data, never printed. No remote command output escapes.
+  const script = [
+    "umask 077",
+    'tmp=$(mktemp -d "${TMPDIR:-/tmp}/chain-backup.XXXXXXXXXX" 2>/dev/null) || { printf "CHAIN_BACKUP_V1 tar=NA upload=NA\\n"; exit 0; }',
+    `trap 'rm -f -- "$tmp/archive.tar.gz" >/dev/null 2>&1; rmdir -- "$tmp" >/dev/null 2>&1' EXIT`,
+    'tar czf "$tmp/archive.tar.gz" --warning=no-file-changed -C /data .zeroned/data .zeroned/config >/dev/null 2>&1',
+    "tar_rc=$?",
+    "upload_rc=NA",
+    'if [ "$tar_rc" -le 1 ]; then',
+    `  curl -sS --fail -o /dev/null -X PUT -T "$tmp/archive.tar.gz" -- ${shellQuote(putUrl)} >/dev/null 2>&1`,
+    "  upload_rc=$?",
+    "fi",
+    'printf "CHAIN_BACKUP_V1 tar=%s upload=%s\\n" "$tar_rc" "$upload_rc"',
+  ].join("\n");
+  return `bash -c ${shellQuote(script)}`;
+}
+
+// Bound memory while reading, not only after buffering all subprocess output.
+// The caller terminates its own child on overflow; no raw bytes reach the log.
+export async function readBoundedOutput(stream: ReadableStream<Uint8Array>, limit: number): Promise<string | null> {
+  const reader = stream.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > limit) {
+        await reader.cancel();
+        return null;
+      }
+      chunks.push(value);
+    }
+    const bytes = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+    return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+  } catch {
+    return null;
+  } finally {
+    reader.releaseLock();
+  }
+}
+
+function emptyOutcome(chain: Chain): Outcome {
+  return {
+    chain, capture_status: "FAILED", tar_exit: null,
+    upload_status: "NOT_ATTEMPTED", upload_exit: null, object_status: "NOT_ATTEMPTED",
+    ssh_exit: null, recovery_status: "NOT_ASSESSED", retention_status: "DISABLED", error: "SETUP_FAILED",
+  };
+}
+
+export async function captureChain(chain: Chain, effects: Effects): Promise<Outcome> {
+  const result = emptyOutcome(chain);
+  let key: string;
+  let command: string;
+  try {
+    const id = effects.captureId();
+    if (!/^[A-Za-z0-9-]{1,100}$/.test(id)) return result;
+    key = `chain/${chain}/${chain}-data-${id}.tar.gz`;
+    command = buildRemoteCommand(effects.presign(key));
+  } catch {
+    return result;
+  }
+
+  let remote: Awaited<ReturnType<Effects["remote"]>>;
+  // On transport/protocol failure upload may have occurred; never call it absent.
+  result.upload_status = "FAILED";
+  result.error = "REMOTE_FAILED";
+  try {
+    remote = await effects.remote(chain, command);
+    result.ssh_exit = Number.isInteger(remote.code) && remote.code >= 0 && remote.code <= 255 ? remote.code : null;
+  } catch {
+    return result;
+  }
+  const report = parseRemoteResult(remote.stdout);
+  if (!report) {
+    result.error = "PROTOCOL_FAILED";
+    return result;
+  }
+  result.tar_exit = report.tarExit;
+  result.capture_status = captureStatus(report.tarExit);
+  result.upload_exit = report.uploadExit;
+  result.error = result.ssh_exit === 0 ? null : "REMOTE_FAILED";
+  if (report.uploadExit === null) {
+    result.upload_status = "NOT_ATTEMPTED";
+    result.error ??= report.tarExit === null ? "SETUP_FAILED" : "CAPTURE_FAILED";
+    return result;
+  }
+
+  // Check independently even if curl or SSH reported failure: presence cannot
+  // erase either failure, and a failed check does not prove an object is absent.
+  result.object_status = "FAILED";
+  try {
+    const stat = await effects.stat(key);
+    if (Number.isSafeInteger(stat.size) && stat.size > 0) result.object_status = "PRESENT";
+  } catch { /* fixed status only; SDK errors can include signed request URLs */ }
+  if (report.uploadExit !== 0) result.error ??= "UPLOAD_FAILED";
+  else if (result.object_status !== "PRESENT") result.error ??= "OBJECT_FAILED";
+  else result.upload_status = "PRESENT";
+  return result;
+}
+
+export async function main(
+  args: string[],
+  createEffects: () => Promise<Effects> = productionEffects,
+  log: (line: string) => void = console.log,
+): Promise<1 | 2 | 3> {
+  const chains = parseArgs(args);
+  if (!chains) {
+    log("Usage: bun bin/chain-backup-remote.ts [zerone-1|zerone-testnet-1]");
+    return 2;
+  }
+  let effects: Effects;
+  try {
+    effects = await createEffects();
+  } catch {
+    for (const chain of chains) log(JSON.stringify(emptyOutcome(chain)));
+    return 1;
+  }
+  let failed = false;
+  for (const chain of chains) {
+    const result = await captureChain(chain, effects);
+    log(JSON.stringify(result));
+    failed ||= result.error !== null;
+  }
+  return failed ? 1 : 3;
+}
+
+async function productionEffects(): Promise<Effects> {
+  async function keychain(service: string): Promise<string> {
+    const proc = Bun.spawn(["security", "find-generic-password", "-s", service, "-w"], { stdout: "pipe", stderr: "ignore" });
+    const output = await readBoundedOutput(proc.stdout, 4096);
+    if (output === null) proc.kill();
+    if ((await proc.exited) !== 0 || !output?.trim()) throw new Error("credential unavailable");
+    return output.trim();
+  }
+  const s3 = new Bun.S3Client({
+    accessKeyId: await keychain("agenttool-tigris-access-key"),
+    secretAccessKey: await keychain("agenttool-tigris-secret-key"),
+    endpoint: ENDPOINT, bucket: BUCKET, region: "auto",
+  });
+  return {
+    // UUID prevents same-second invocations from overwriting earlier captures.
+    captureId: () => `${new Date().toISOString().replace(/[-:]/g, "").replace(/\..+/, "Z")}-${crypto.randomUUID()}`,
+    presign: (key) => s3.presign(key, { method: "PUT", expiresIn: 7200 }),
+    stat: (key) => s3.stat(key),
+    async remote(chain, command) {
+      const proc = Bun.spawn(["flyctl", "ssh", "console", "-a", chain, "-C", command], { stdout: "pipe", stderr: "ignore" });
+      const stdout = await readBoundedOutput(proc.stdout, MAX_REMOTE_RESULT_BYTES);
+      if (stdout === null) proc.kill();
+      return { code: await proc.exited, stdout };
+    },
+  };
+}
+
+if (import.meta.main) {
+  process.exitCode = await main(process.argv.slice(2));
+}
