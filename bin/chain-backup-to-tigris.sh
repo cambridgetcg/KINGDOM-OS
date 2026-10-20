@@ -44,8 +44,11 @@ STAMP="$(date -u +%Y%m%dT%H%M%SZ 2>/dev/null)" || fail_setup
 KEY="chain/${CHAIN}/${CHAIN}-data-${STAMP}-${TMP##*.}.tar.zst"
 
 # Suppress subprocess bodies: they may contain keys, URLs or archive filenames.
+# Validator identity keys stay out of new archives (data/priv_validator_state.json
+# stays in); older archives and the volume still hold them. Ledger zc-chain-backup-runner.
 tar_rc=0
 tar --use-compress-program="zstd -3 -T0" -cf "$TMP/archive.tar.zst" \
+  --exclude=priv_validator_key.json --exclude=node_key.json \
   -C "$PARENT" "${DATA_DIR##*/}/data" "${DATA_DIR##*/}/config" >/dev/null 2>&1 || tar_rc=$?
 if [ "$tar_rc" -gt 1 ]; then
   error='"CAPTURE_FAILED"'; report; exit 1

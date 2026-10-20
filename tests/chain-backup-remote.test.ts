@@ -1,11 +1,12 @@
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
-  buildRemoteCommand, captureChain, captureStatus, main, MAX_REMOTE_RESULT_BYTES,
-  parseArgs, parseRemoteResult, readBoundedOutput, type Effects,
+  buildRemoteCommand, captureChain, captureStatus, EXCLUDED_KEY_FILES, LOW_DISK_MARGIN_BYTES, main, MAX_REMOTE_RESULT_BYTES,
+  needKib, parseArgs, parseRemoteResult, readBoundedOutput, ROLLOUT_CHAINS, type Effects,
 } from "../bin/chain-backup-remote.ts";
 
 const SUBJECT = new URL("../bin/chain-backup-remote.ts", import.meta.url).pathname;
@@ -23,6 +24,8 @@ function fakeEffects(overrides: Partial<Effects> = {}) {
     presign: (key) => { calls.push(`presign:${key}`); return URL_SENTINEL; },
     remote: async () => { calls.push("remote"); return { code: 0, stdout: record() }; },
     stat: async () => { calls.push("stat"); return { size: 64 }; },
+    lastLandedBytes: async () => null,
+    markLanded: async (chain, bytes, keyFiles) => { calls.push(`mark:${chain}:${bytes}:${keyFiles}`); },
     ...overrides,
   };
   return { effects, calls };
@@ -119,7 +122,7 @@ describe("strict online capture contract", () => {
   });
 
   test("remote setup failure does not invent a tar exit code", async () => {
-    expect(parseRemoteResult(record("NA", "NA"))).toEqual({ tarExit: null, uploadExit: null, uploadHttp: null });
+    expect(parseRemoteResult(record("NA", "NA"))).toEqual({ kind: "capture", tarExit: null, uploadExit: null, uploadHttp: null });
     expect(parseRemoteResult(record("NA", 0))).toBeNull();
     const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout: record("NA", "NA") }) });
     const result = await runMain(effects);
@@ -137,7 +140,7 @@ describe("strict online capture contract", () => {
       { upload: 0, http: "NA" as const, error: null, status: "PRESENT" },
     ];
     for (const c of cases) {
-      expect(parseRemoteResult(record(1, c.upload, c.http))).toEqual({ tarExit: 1, uploadExit: c.upload, uploadHttp: c.http === "NA" ? null : c.http });
+      expect(parseRemoteResult(record(1, c.upload, c.http))).toEqual({ kind: "capture", tarExit: 1, uploadExit: c.upload, uploadHttp: c.http === "NA" ? null : c.http });
       const { effects } = fakeEffects({ remote: async () => ({ code: 0, stdout: record(1, c.upload, c.http) }) });
       const { outcomes } = await runMain(effects);
       expect(outcomes[0]).toMatchObject({ upload_exit: c.upload, upload_http: c.http === "NA" ? null : c.http, upload_status: c.status, error: c.error });
@@ -205,6 +208,11 @@ if (name === "mktemp") {
   if (rc("MKTEMP_RC")) process.exit(rc("MKTEMP_RC"));
   console.log(mkdtempSync(owned(args[1].replace(/X+$/, ""))));
 } else if (name === "date") console.log("20260908T000000Z");
+else if (name === "df") {
+  owned(args[args.length - 1] + "/");
+  process.stdout.write(process.env.DF_OUTPUT ?? "Filesystem 1024-blocks Used Available Capacity Mounted on\\noverlay 8000000 1000000 7000000 13% /\\n");
+  console.error(noise); process.exit(rc("DF_RC"));
+}
 else if (name === "tar") {
   const index = args[0] === "czf" ? 1 : args.indexOf("-cf") + 1;
   writeFileSync(owned(args[index]), "synthetic archive, no real node bytes");
@@ -250,7 +258,7 @@ else if (name === "tar") {
 } else { console.error(noise); process.exit(99); }
 `);
   chmodSync(mock, 0o700);
-  for (const name of ["tar", "curl", "aws", "mktemp", "date", "rm", "rmdir", "security", "flyctl", "ssh", "zeroned", "zstd"]) {
+  for (const name of ["tar", "curl", "aws", "mktemp", "date", "df", "rm", "rmdir", "security", "flyctl", "ssh", "zeroned", "zstd"]) {
     // Bun canonicalizes symlink argv[1]; keep each fake command's name explicit.
     const path = join(base, "bin", name);
     writeFileSync(path, readFileSync(mock, "utf8").replace("const name = basename(process.argv[1]);", `const name = ${JSON.stringify(name)};`));
@@ -493,4 +501,188 @@ console.log(JSON.stringify({ code, logs, kills, stats, keys, presigns }));
       expect(readdirSync(join(f.base, "tmp"))).toEqual([]);
     } finally { f.close(); }
   }, 60000);
+});
+
+// Ledger zc-chain-backup-runner: key-free archives, a low-disk pre-flight skip
+// and a per-chain landed marker, rolled out to testnet before mainnet.
+const skipRecord = (free: number | "NA", need: number) => `CHAIN_BACKUP_V2 skip=LOW_DISK free_kib=${free} need_kib=${need}\n`;
+const GIB = 1024 ** 3;
+
+describe("testnet-first rollout contract", () => {
+  test("only testnet is in the rollout; mainnet's remote command is byte-identical to 2026-10-19", () => {
+    expect(ROLLOUT_CHAINS).toEqual(["zerone-testnet-1"]);
+    // sha256 of the 8079e93 (#105) builder's output for URL_SENTINEL.
+    const pinned = "1bf1b28d0e2300e27511c1d5bd3e5d87ebed6512e41656782cdbf1a11d23be39";
+    expect(createHash("sha256").update(buildRemoteCommand(URL_SENTINEL)).digest("hex")).toBe(pinned);
+    expect(buildRemoteCommand(URL_SENTINEL, { excludeKeys: false, needKib: null })).toBe(buildRemoteCommand(URL_SENTINEL));
+  });
+
+  test("each chain is asked for the capture its rollout state allows", async () => {
+    const commands = new Map<string, string>();
+    const { effects } = fakeEffects({ remote: async (chain, command) => { commands.set(chain, command); return { code: 0, stdout: record(1) }; } });
+    const { code, outcomes } = await runMain(effects, []);
+    expect(code).toBe(3);
+    expect(commands.get("zerone-1")).toBe(buildRemoteCommand(URL_SENTINEL));
+    expect(commands.get("zerone-testnet-1")).toBe(buildRemoteCommand(URL_SENTINEL, { excludeKeys: true, needKib: needKib(null) }));
+    expect(outcomes.map((o) => [o.chain, o.key_files, o.disk_need_kib])).toEqual([
+      ["zerone-testnet-1", "EXCLUDED", needKib(null)], ["zerone-1", "INCLUDED", null],
+    ]);
+  });
+
+  test("the pre-flight bound is the last landed archive plus 1 GiB, in KiB", async () => {
+    expect(LOW_DISK_MARGIN_BYTES).toBe(GIB);
+    expect(needKib(null)).toBe(1048576);
+    expect(needKib(5 * GIB)).toBe(6 * 1048576);
+    expect(needKib(5 * GIB + 1)).toBe(6 * 1048576 + 1);
+    for (const bad of [0, -1, NaN, 0.5, Infinity]) expect(needKib(bad)).toBe(1048576);
+    for (const [last, need] of [[async () => 3 * GIB, 4 * 1048576], [async () => { throw new Error(PRIVATE); }, 1048576]] as const) {
+      const { outcomes, logs } = await runMain(fakeEffects({ lastLandedBytes: last }).effects, ["zerone-testnet-1"]);
+      expect(outcomes[0].disk_need_kib).toBe(need);
+      expect(logs.join("\n")).not.toContain(PRIVATE);
+    }
+    expect(() => buildRemoteCommand(URL_SENTINEL, { excludeKeys: true, needKib: 0 })).toThrow();
+    expect(() => buildRemoteCommand(URL_SENTINEL, { excludeKeys: true, needKib: 1.5 })).toThrow();
+  });
+
+  test("a low-disk skip is parsed strictly and only from a chain that asked for it", async () => {
+    expect(parseRemoteResult(skipRecord(500, 1048576))).toEqual({ kind: "skip", freeKib: 500, needKib: 1048576 });
+    expect(parseRemoteResult(skipRecord("NA", 1048576))).toEqual({ kind: "skip", freeKib: null, needKib: 1048576 });
+    for (const bad of [skipRecord(1048576, 1048576), skipRecord(2000000, 1048576), skipRecord(500, 1048576).trim(),
+      skipRecord(500, 1048576).replace("free_kib=500", "free_kib=0500"), skipRecord(500, 1048576).replace("need_kib=1048576", "need_kib=0"),
+      skipRecord(500, 1048576).replace("LOW_DISK", "OTHER"), skipRecord(500, 1048576) + record(),
+      `CHAIN_BACKUP_V2 skip=LOW_DISK free_kib=1 need_kib=${"9".repeat(17)}\n`]) {
+      expect(parseRemoteResult(bad)).toBeNull();
+    }
+    // Mainnet never asked for a pre-flight; a mismatched bound is not believed either.
+    for (const [chain, stdout] of [["zerone-1", skipRecord(500, 1048576)], ["zerone-testnet-1", skipRecord(500, 2097152)]] as const) {
+      const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout }) });
+      const { code, outcomes } = await runMain(effects, [chain]);
+      expect(code).toBe(1);
+      expect(outcomes[0]).toMatchObject({ error: "PROTOCOL_FAILED", landed_marker: "NOT_WRITTEN" });
+      expect(calls.filter((c) => c === "stat" || c.startsWith("mark:"))).toEqual([]);
+    }
+  });
+
+  test("a low-disk skip is red, uploads nothing and writes no marker", async () => {
+    const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout: skipRecord(700000, 1048576) }) });
+    const { code, outcomes } = await runMain(effects, ["zerone-testnet-1"]);
+    expect(code).toBe(1);
+    expect(outcomes[0]).toMatchObject({
+      capture_status: "SKIPPED", tar_exit: null, upload_status: "NOT_ATTEMPTED", object_status: "NOT_ATTEMPTED",
+      disk_free_kib: 700000, disk_need_kib: 1048576, landed_marker: "NOT_WRITTEN", error: "SKIPPED_LOW_DISK",
+    });
+    expect(calls.filter((c) => c === "stat" || c.startsWith("mark:"))).toEqual([]);
+  });
+
+  test("the landed marker is written only after a clean landing, with the object's size", async () => {
+    const landed = fakeEffects({ stat: async () => ({ size: 4096 }) });
+    expect((await runMain(landed.effects, [])).outcomes.map((o) => o.landed_marker)).toEqual(["WRITTEN", "WRITTEN"]);
+    expect(landed.calls.filter((c) => c.startsWith("mark:"))).toEqual(["mark:zerone-testnet-1:4096:EXCLUDED", "mark:zerone-1:4096:INCLUDED"]);
+    for (const [tar, upload, ssh, size] of [[2, "NA", 0, 64], [1, 22, 0, 64], [0, 0, 0, 0], [0, 0, 255, 64]] as const) {
+      const { effects, calls } = fakeEffects({ remote: async () => ({ code: ssh, stdout: record(tar, upload) }), stat: async () => ({ size }) });
+      const { outcomes } = await runMain(effects);
+      expect(outcomes[0].landed_marker).toBe("NOT_WRITTEN");
+      expect(calls.some((c) => c.startsWith("mark:"))).toBe(false);
+    }
+    // A marker that cannot be written is reported; the landed upload stays landed.
+    const broken = await runMain(fakeEffects({ markLanded: async () => { throw new Error(PRIVATE); } }).effects);
+    expect(broken.code).toBe(3);
+    expect(broken.outcomes[0]).toMatchObject({ upload_status: "PRESENT", error: null, landed_marker: "FAILED" });
+    expect(broken.logs.join("\n")).not.toContain(PRIVATE);
+  });
+
+  test("remote shell: the rollout capture drops both key files and keeps the members", () => {
+    expect(EXCLUDED_KEY_FILES).toEqual(["priv_validator_key.json", "node_key.json"]);
+    const f = shellFixture();
+    try {
+      const result = f.run(["-c", buildRemoteCommand(URL_SENTINEL, { excludeKeys: true, needKib: 1048576 })]);
+      expect(result.status).toBe(0);
+      expect(result.stdout).toBe(record());
+      expect(result.stderr).toBe("");
+      const args = f.calls().find((c) => c.name === "tar")!.args;
+      expect(args.filter((a) => a.startsWith("--exclude="))).toEqual(["--exclude=priv_validator_key.json", "--exclude=node_key.json"]);
+      expect(args.join(" ")).not.toContain("priv_validator_state");
+      expect(args.slice(args.indexOf("-C"))).toEqual(["-C", "/data", ".zeroned/data", ".zeroned/config"]);
+      expect(f.calls().map((c) => c.name)).toEqual(["mktemp", "df", "tar", "curl", "rm", "rmdir"]);
+      expect(readdirSync(join(f.base, "tmp"))).toEqual([]);
+    } finally { f.close(); }
+  });
+
+  test("remote shell: too little or unknown free space skips before tar and cleans up", () => {
+    const header = "Filesystem 1024-blocks Used Available Capacity Mounted on\n";
+    const cases: Array<{ env: Record<string, string>; stdout: string }> = [
+      { env: { DF_OUTPUT: `${header}overlay 8000000 7300000 700000 92% /\n` }, stdout: skipRecord(700000, 1048576) },
+      { env: { DF_OUTPUT: `${header}overlay 8000000 6951424 1048575 87% /\n` }, stdout: skipRecord(1048575, 1048576) },
+      { env: { DF_OUTPUT: "" }, stdout: skipRecord("NA", 1048576) },
+      { env: { DF_OUTPUT: header }, stdout: skipRecord("NA", 1048576) },
+      { env: { DF_OUTPUT: `${header}overlay 8000000 1 ${PRIVATE} 1% /\n` }, stdout: skipRecord("NA", 1048576) },
+      { env: { DF_RC: "1", DF_OUTPUT: "" }, stdout: skipRecord("NA", 1048576) },
+    ];
+    for (const c of cases) {
+      const f = shellFixture();
+      try {
+        const result = f.run(["-c", buildRemoteCommand(URL_SENTINEL, { excludeKeys: true, needKib: 1048576 })], c.env);
+        expect(result.status).toBe(0);
+        expect(result.stdout).toBe(c.stdout);
+        expect(result.stderr).toBe("");
+        expect(f.calls().map((call) => call.name)).toEqual(["mktemp", "df", "rm", "rmdir"]);
+        expect(readdirSync(join(f.base, "tmp"))).toEqual([]);
+      } finally { f.close(); }
+    }
+    const f = shellFixture();
+    try {
+      const exact = f.run(["-c", buildRemoteCommand(URL_SENTINEL, { excludeKeys: true, needKib: 1048576 })],
+        { DF_OUTPUT: `${header}overlay 8000000 6951424 1048576 87% /\n` });
+      expect(exact.stdout).toBe(record());
+    } finally { f.close(); }
+  }, 30000);
+
+  test("fallback in-node script also leaves both key files out", () => {
+    const f = shellFixture();
+    try {
+      const result = f.run([FALLBACK]);
+      expect(result.status).toBe(3);
+      const args = f.calls().find((c) => c.name === "tar")!.args;
+      expect(args.filter((a) => a.startsWith("--exclude="))).toEqual(["--exclude=priv_validator_key.json", "--exclude=node_key.json"]);
+    } finally { f.close(); }
+  });
+
+  test("production markers live under HOME, are atomic and feed the next pre-flight", () => {
+    const f = shellFixture();
+    try {
+      const harness = join(f.base, "marker.ts");
+      writeFileSync(harness, `
+const commands: string[] = [];
+Bun.spawn = (args: string[]) => {
+  const credential = args[0] === "security";
+  if (!credential) commands.push(args[args.length - 1]);
+  const text = credential ? "fixture-credential" : ${JSON.stringify(record(1))};
+  return { stdout: new ReadableStream({ start(c) { c.enqueue(new TextEncoder().encode(text)); c.close(); } }), exited: Promise.resolve(0), kill() {} };
+};
+Object.defineProperty(Bun, "S3Client", { value: class {
+  presign() { return ${JSON.stringify(URL_SENTINEL)}; }
+  async stat() { return { size: ${3 * GIB} }; }
+} });
+globalThis.fetch = () => { throw new Error("prohibited network"); };
+const { main, buildRemoteCommand } = await import(${JSON.stringify(SUBJECT)});
+const first = await main(["zerone-testnet-1"], undefined, () => {});
+const second = await main(["zerone-testnet-1"], undefined, () => {});
+console.log(JSON.stringify({ first, second, commands, expected: [
+  buildRemoteCommand(${JSON.stringify(URL_SENTINEL)}, { excludeKeys: true, needKib: 1048576 }),
+  buildRemoteCommand(${JSON.stringify(URL_SENTINEL)}, { excludeKeys: true, needKib: 4 * 1048576 }),
+] }));
+`);
+      const result = spawnSync(process.execPath, [harness], { cwd: f.base, env: f.env, encoding: "utf8", timeout: 10000 });
+      expect(result.stderr).toBe("");
+      const summary = JSON.parse(result.stdout);
+      expect([summary.first, summary.second]).toEqual([3, 3]);
+      expect(summary.commands).toEqual(summary.expected);
+      const dir = join(f.base, "home", ".kingdom", "state", "chain-backup");
+      expect(readdirSync(dir)).toEqual(["zerone-testnet-1.landed"]);
+      expect(JSON.parse(readFileSync(join(dir, "zerone-testnet-1.landed"), "utf8"))).toMatchObject({
+        protocol: "kingdom.chain-backup.landed/1", chain: "zerone-testnet-1", bytes: 3 * GIB,
+        capture_status: "RAW_UNVERIFIED", key_files: "EXCLUDED",
+      });
+    } finally { f.close(); }
+  }, 15000);
 });
