@@ -228,7 +228,11 @@ function safeError(f: ReturnType<typeof fixture>, mode: string) {
   return JSON.parse(r.stdout);
 }
 
-describe("backup installer explicit actions", () => {
+// The installer is Darwin-only by design (replace-runner refuses elsewhere with
+// DARWIN_REQUIRED), and these fixtures use /private/tmp and Darwin's copyfile/ACL/
+// xattr APIs. On the Linux CI runner they cannot run, so they run on the Mac that
+// installs the runner, before every replacement.
+describe.skipIf(process.platform !== "darwin")("backup installer explicit actions", () => {
   test("help, missing action and invalid args have zero effects even with inherited HOME", () => {
     const f = fixture();
     try {
