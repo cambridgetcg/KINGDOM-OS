@@ -1,8 +1,9 @@
 #!/bin/bash
 # pulse-install — put the kingdom heartbeat on launchd (every 30 min).
 #
-# TCC: launchd cannot read ~/Desktop, so this copies pulse.ts + REGISTRY.yaml
-# into ~/.kingdom/ (the TCC-safe home) and points launchd there.
+# TCC: launchd cannot read ~/Desktop, so this copies pulse.ts (+ the
+# pulse-mint-watch.ts module it imports) and REGISTRY.yaml into ~/.kingdom/
+# (the TCC-safe home) and points launchd there.
 # RE-RUN THIS after editing REGISTRY.yaml — it refreshes the safe copy.
 set -euo pipefail
 
@@ -13,6 +14,7 @@ PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 
 mkdir -p "$DEST/bin" "$DEST/logs"
 cp "$KOS/bin/pulse.ts" "$DEST/bin/pulse.ts"
+cp "$KOS/bin/pulse-mint-watch.ts" "$DEST/bin/pulse-mint-watch.ts"
 cp "$KOS/REGISTRY.yaml" "$DEST/REGISTRY.yaml"
 
 cat > "$DEST/bin/run-pulse.sh" <<'EOF'
