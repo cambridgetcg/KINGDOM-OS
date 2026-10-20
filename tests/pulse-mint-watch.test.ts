@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -130,6 +130,19 @@ describe("pulse mint watch", () => {
     expect(after.state.backoff_until).toBeUndefined();
   });
 
+  test("a re-dated baseline starts a fresh watch instead of keeping old claims", async () => {
+    const red = await runMintWatch(WATCH, {}, { fetch: fakeChain({ height: 120, claims: 1, claimHeight: 111 }).fetcher, now: NOW });
+    expect(red.observed).toBe("down");
+    const rebased = { ...WATCH, baseline_height: 150 };
+    const chain = fakeChain({ height: 160 });
+    const fresh = await runMintWatch(rebased, red.state, { fetch: chain.fetcher, now: NOW });
+    expect(fresh.observed).toBe("up");
+    expect(fresh.state.claims_seen).toBe(0);
+    expect(fresh.state.first_claim_height).toBeUndefined();
+    expect(fresh.state.baseline_id).toBe("1000@150");
+    expect(decodeURIComponent(chain.seen[2]!.url)).toContain("tx.height>150 AND tx.height<=160");
+  });
+
   test("backoff doubles per failure and is capped at eight hours", () => {
     expect(backoffMs(1)).toBe(30 * 60_000);
     expect(backoffMs(2)).toBe(60 * 60_000);
@@ -156,6 +169,43 @@ describe("pulse mint watch", () => {
     expect(await loadWatchState(path)).toEqual({});
     await saveWatchState(path, { a: { last_height: 7, claims_seen: 0 } });
     expect(await loadWatchState(path)).toEqual({ a: { last_height: 7, claims_seen: 0 } });
+  });
+});
+
+describe("pulse alerts on an unread watch", () => {
+  test("STATUS never says all quiet while a live watch is unknown", () => {
+    const home = mkdtempSync(join(tmpdir(), "pulse-unread-"));
+    const registry = join(home, "REGISTRY.yaml");
+    writeFileSync(
+      registry,
+      [
+        "version: 1",
+        "services:",
+        "  - id: chain-supply-watch",
+        "    what: test watch",
+        "    status: live",
+        "    mint_watch:",
+        '      rpc: "http://127.0.0.1:9"',
+        '      rest: "http://127.0.0.1:9"',
+        "      denom: uzrn",
+        '      baseline: "1000"',
+        "      baseline_height: 100",
+        "      claim_msg: /zerone.knowledge.v1.MsgClaimTrainingFundDisbursement",
+        "",
+      ].join("\n"),
+    );
+    // flyctl stays off PATH, so no account is read; bun is invoked by its own path
+    const r = Bun.spawnSync([process.execPath, "--no-env-file", join(ROOT, "bin/pulse.ts"), "--quiet"], {
+      env: { ...process.env, HOME: home, KINGDOM_REGISTRY: registry, PATH: "/usr/bin:/bin" },
+    });
+    expect(r.exitCode).toBe(0);
+    const status = readFileSync(join(home, ".kingdom/STATUS.md"), "utf8");
+    expect(status).toContain("## ⚠ Alerts (1)");
+    expect(status).toContain("**chain-supply-watch** live but UNREAD");
+    expect(status).not.toContain("All quiet");
+    const state = JSON.parse(readFileSync(join(home, ".kingdom/state/mint-watch.json"), "utf8"));
+    expect(state["chain-supply-watch"].failures).toBe(1);
+    expect(state["chain-supply-watch"].baseline_id).toBe("1000@100");
   });
 });
 

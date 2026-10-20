@@ -11,8 +11,9 @@
  * Red (down) when the supply is above the dated baseline, or when any such
  * transaction has been seen since the baseline height. Both stay red until a
  * person explains them and re-dates the baseline in the registry; advancing
- * the scan cursor never clears a seen transaction. A failed read is `unknown`,
- * never green, and backs off: the next attempt waits 30 min × 2^(failures−1),
+ * the scan cursor never clears a seen transaction, and a re-dated baseline
+ * starts a fresh watch. A failed read is `unknown` — never green, and pulse
+ * alerts on it — and backs off: the next attempt waits 30 min × 2^(failures−1),
  * capped at 8 h, so a struggling single validator is not hammered.
  */
 
@@ -28,6 +29,7 @@ export interface MintWatch {
 }
 
 export interface WatchState {
+  baseline_id?: string; // "<baseline>@<baseline_height>" the counts below belong to
   last_height?: number; // tx_search has covered (baseline_height, last_height]
   claims_seen?: number;
   first_claim_height?: number;
@@ -78,6 +80,10 @@ export function txSearchUrl(w: MintWatch, from: number, to: number): string {
   return `${trimSlash(w.rpc)}/tx_search?query=${encodeURIComponent(query)}&per_page=1&page=1&order_by=${encodeURIComponent('"asc"')}`;
 }
 
+export function baselineId(w: MintWatch): string {
+  return `${w.baseline}@${w.baseline_height}`;
+}
+
 export function backoffMs(failures: number): number {
   return Math.min(BACKOFF_BASE_MS * 2 ** Math.max(0, failures - 1), BACKOFF_CAP_MS);
 }
@@ -87,6 +93,9 @@ export async function runMintWatch(w: MintWatch, prior: WatchState = {}, opts: W
   const now = opts.now ?? new Date();
   const timeoutMs = opts.timeoutMs ?? 12_000;
   const url = trimSlash(w.rpc);
+  // A re-dated baseline starts a new watch: counts and cursor from the old one
+  // must not carry over (a claim before the new baseline is not "since" it).
+  if (prior.baseline_id !== undefined && prior.baseline_id !== baselineId(w)) prior = {};
 
   if (prior.backoff_until && now.getTime() < Date.parse(prior.backoff_until)) {
     return {
@@ -127,6 +136,7 @@ export async function runMintWatch(w: MintWatch, prior: WatchState = {}, opts: W
     }
 
     const state: WatchState = {
+      baseline_id: baselineId(w),
       last_height: Math.max(to, from),
       claims_seen: (prior.claims_seen ?? 0) + found,
       first_claim_height: firstHeight,
@@ -153,7 +163,7 @@ export async function runMintWatch(w: MintWatch, prior: WatchState = {}, opts: W
       observed: "unknown",
       url,
       note: `read failed (${String((error as Error).message ?? error).slice(0, 80)}); next try after ${backoff_until}`,
-      state: { ...prior, failures, backoff_until },
+      state: { ...prior, baseline_id: baselineId(w), failures, backoff_until },
     };
   }
 }

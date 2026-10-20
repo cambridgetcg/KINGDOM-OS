@@ -236,6 +236,9 @@ for (const s of services) {
   const p = byId.get(s.id);
   if (s.status === "live" && p && p.observed === "down")
     alerts.push(`**${s.id}** expected live, observed DOWN (${p.code ?? p.note}) — ${p.url ?? s.runtime ?? ""}`);
+  // unknown = a live watch that could not be read this round: never "all quiet"
+  if (s.status === "live" && p && p.observed === "unknown")
+    alerts.push(`**${s.id}** live but UNREAD — ${p.note ?? "no reading"}`);
   if (s.status === "live" && p && p.observed === "auth-walled")
     alerts.push(`**${s.id}** live but auth-walled (${p.code}) at ${p.url} — expected? add \`expect: [${p.code}]\``);
   const flyApp = s.runtime?.startsWith("fly:") ? s.runtime.slice(4) : null;
