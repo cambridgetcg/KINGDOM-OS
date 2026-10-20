@@ -21,6 +21,10 @@
 # thekingdom.dev keeps its exact-commit runbook in DOMAINS-SETUP.md, and
 # zerone.ai releases from cambridgetcg/zerone-core.
 #
+# Publish exactly what a dry run staged: a dry run ends by printing the same
+# command with every *_REF pinned to the SHA it fetched. A *_REF may be a branch
+# name or a full 40-hex commit SHA, never an abbreviation.
+#
 # Upstreams (override for a deliberate rollback or a test):
 #   KOS_URL/KOS_REF          https://github.com/cambridgetcg/KINGDOM-OS.git main
 #   COMMONS_URL/COMMONS_REF  https://github.com/mynameisyou-cmyk/chillspace-commons.git master
@@ -58,10 +62,13 @@ fi
 # fetch <name> <url> <ref> → prints the directory holding `git archive` of the
 # freshly fetched ref; logs the exact SHA on stderr.
 fetch() {
-  local name="$1" url="$2" ref="$3" git_dir="$WORK/$1.git" tree="$WORK/$1"
+  local name="$1" url="$2" ref="$3" git_dir="$WORK/$1.git" tree="$WORK/$1" src
+  # a full SHA is fetched as itself (an exact pin); anything else is a branch
+  if [[ "$ref" =~ ^[0-9a-f]{40}$ ]]; then src="$ref"; else src="refs/heads/$ref"; fi
   git init -q --bare "$git_dir"
-  git -C "$git_dir" fetch -q --depth 1 "$url" "refs/heads/$ref" || { echo "fetch failed: $url $ref" >&2; exit 1; }
+  git -C "$git_dir" fetch -q --depth 1 "$url" "$src" || { echo "fetch failed: $url $ref" >&2; exit 1; }
   local sha; sha="$(git -C "$git_dir" rev-parse FETCH_HEAD)"
+  if [ "$src" = "$ref" ] && [ "$sha" != "$ref" ]; then echo "fetched $sha, not the pinned $ref" >&2; exit 1; fi
   mkdir -p "$tree"
   git -C "$git_dir" archive "$sha" | tar -x -C "$tree"
   printf '%s\n' "$sha" > "$tree.sha"
@@ -108,4 +115,11 @@ case "$TARGET" in
     [ "$DRY" = 1 ] || echo "  note: npm run deploy uploads a version; promoting it to traffic follows sinovai's own runbook"
     ;;
 esac
+if [ "$DRY" = 1 ]; then
+  pins=""
+  for pair in "KOS_REF:kingdom-os" "COMMONS_REF:chillspace-commons" "MCP_REF:kingdom-mcp" "SINOVAI_REF:sinovai"; do
+    [ -f "$WORK/${pair#*:}.sha" ] && pins="$pins${pair%%:*}=$(cat "$WORK/${pair#*:}.sha") "
+  done
+  echo "to publish exactly these trees: ${pins}bash bin/deploy.sh $TARGET"
+fi
 echo "done: $TARGET"

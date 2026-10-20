@@ -75,6 +75,9 @@ beforeAll(() => {
     ].join("\n"),
   });
   mcpSha = git(mcp, "rev-parse", "HEAD");
+  // GitHub serves reachable SHAs to fetch; a local fixture has to be told to
+  git(mcp, "config", "uploadpack.allowAnySHA1InWant", "true");
+  git(join(base, "kos"), "config", "uploadpack.allowAnySHA1InWant", "true");
   // uncommitted work in the upstream's own working tree must never ship
   writeFileSync(join(mcp, "src/uncommitted.ts"), "export const dirty = true;\n");
 });
@@ -117,6 +120,34 @@ describe("bin/deploy.sh", () => {
     expect(cwd!.endsWith("/kingdom-mcp")).toBe(true);
     expect(existsSync(cwd!)).toBe(false); // the temporary work tree is removed after a real run
     expect(r.out).toContain('contains "ok":true');
+  });
+
+  test("a dry run prints pins, and a pinned run ships those bytes after upstream moves", () => {
+    const dry = run(["kingdom-mcp", "--dry-run"]);
+    const line = dry.out.split("\n").find((l) => l.startsWith("to publish exactly these trees: "))!;
+    expect(line).toContain(`MCP_REF=${mcpSha}`);
+    const pins = Object.fromEntries(
+      [...line.matchAll(/([A-Z_]+_REF)=([0-9a-f]{40})/g)].map((m) => [m[1]!, m[2]!]),
+    ) as Record<string, string>;
+    expect(Object.keys(pins).sort()).toEqual(["KOS_REF", "MCP_REF"]);
+
+    const mcp = join(base, "mcp");
+    writeFileSync(join(mcp, "src/server.ts"), "export const moved = true;\n");
+    git(mcp, "commit", "-q", "-am", "upstream moved after the dry run");
+    expect(git(mcp, "rev-parse", "HEAD")).not.toBe(mcpSha);
+
+    rmSync(flyLog, { force: true });
+    const pinned = run(["kingdom-mcp", "--dry-run"], pins);
+    expect(pinned.code).toBe(0);
+    expect(pinned.out).toContain(`@ ${mcpSha}`);
+    const work = pinned.out.match(/staged trees stay in (\S+)/)![1]!;
+    expect(readFileSync(join(work, "kingdom-mcp/src/server.ts"), "utf8")).toBe("export {};\n");
+  });
+
+  test("an abbreviated SHA is not taken as a pin", () => {
+    const r = run(["kingdom-mcp", "--dry-run"], { MCP_REF: mcpSha.slice(0, 12) });
+    expect(r.code).not.toBe(0);
+    expect(r.out).toContain("fetch failed");
   });
 
   test("a missing upstream branch fails before anything is staged", () => {
