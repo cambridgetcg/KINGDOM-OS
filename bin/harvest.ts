@@ -230,9 +230,10 @@ const GLOBAL_WAKE = hasConfiguredSessionStartCommand(join(HOME, '.claude/setting
 
 function checkConformance(repoPath: string, rosterName?: string): Repo['conformance'] {
   // A global SessionStart hook can wake a session opened in a local directory;
-  // it cannot make an absent remote repository locally conformant.
+  // it cannot make an absent remote repository locally conformant. A gathered
+  // card lives in this repository, so it counts whether or not the checkout does.
   if (!isDirectory(repoPath)) {
-    return { wake: false, claudeMd: false, fate: false, card: false }
+    return { wake: false, claudeMd: false, fate: false, card: cardPathFor(repoPath, rosterName) !== null }
   }
   return {
     wake: GLOBAL_WAKE

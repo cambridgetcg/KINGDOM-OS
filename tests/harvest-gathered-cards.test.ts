@@ -39,6 +39,7 @@ beforeAll(() => {
       "gathered      | ~/repos/gathered      | service | commerce | commerce | active | seed purpose gathered",
       "bare          | ~/repos/bare          | service | commerce | commerce | active | seed purpose bare",
       "unlisted-only | ~/repos/unlisted-only | service | commerce | commerce | active | seed purpose unlisted",
+      "absent        | ~/repos/absent        | service | commerce | commerce | remote | seed purpose absent",
       "",
     ].join("\n"),
   );
@@ -47,6 +48,8 @@ beforeAll(() => {
   writeFileSync(join(kos, "cards/own.yaml"), card("own", "gathered copy that must lose", "dormant"));
   writeFileSync(join(kos, "cards/gathered.yaml"), card("gathered", "from the gathered card", "dormant"));
   writeFileSync(join(kos, "cards/unlisted/unlisted-only.yaml"), card("unlisted-only", "never read"));
+  // no checkout at ~/repos/absent: the gathered card must still count and be validated
+  writeFileSync(join(kos, "cards/absent.yaml"), card("absent", "gathered for an absent checkout", "remote"));
 });
 
 afterAll(() => {
@@ -68,12 +71,16 @@ describe("harvest reads gathered cards", () => {
     expect(byName.bare.conformance.card).toBe(false);
     expect(byName["unlisted-only"].purpose).toBe("seed purpose unlisted");
     expect(byName["unlisted-only"].conformance.card).toBe(false);
+    expect(byName.absent.purpose).toBe("gathered for an absent checkout");
+    expect(byName.absent.conformance.card).toBe(true);
+    expect(byName.absent.hasCard).toBe(true);
+    expect(byName.absent.conformance.claudeMd).toBe(false);
   });
 
   test("validate checks the gathered card and reports clean cards as clean", () => {
     const r = harvest("validate");
     expect(r.code).toBe(0);
-    expect(r.out).toContain("Card schema: 2 checked · 0 invalid · 0 issues");
+    expect(r.out).toContain("Card schema: 3 checked · 0 invalid · 0 issues");
   });
 
   test("a gathered card with drift is reported against its gathered path", () => {
