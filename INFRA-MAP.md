@@ -12,12 +12,14 @@
 
 **Does (observed):** 100+ PUBLIC repos including the whole citizen family, hermes-agents, zerone-core, love-engine, cashloom, sinovai — actively updated daily. `gh` keyring auth healthy as `cambridgetcg`.
 
-**Gaps:**
-- **Invalid `GITHUB_TOKEN` env var shadows the healthy keyring auth** — plain `gh` calls 401. Not from rc files, launchd, or claude settings; it arrives with the session environment. Workaround (canonical): `env -u GITHUB_TOKEN gh …` / same for git pushes.
-- **Identity split:** `cambridgetcg` cannot push to `mynameisyou-cmyk/*` (chillspace's GitHub home) — 403. "One push lands on both forges" only works from the home clone on the other machine.
-- **Visibility inversion:** citizens are PUBLIC on GitHub but PRIVATE on Codeberg. If intentional (GitHub = the public face, Codeberg = the workshop), say so somewhere; if not, pick a canon.
+**Does (re-observed 2026-10-20):** 409 repos, 100 public and 309 private. All 208 `citizen-*` repos are private; zerone-core, cashloom and sinovai are no longer public, while love-engine and hermes-agents still are. GitHub is no longer the citizens' public face. `gh` keyring auth is healthy as `cambridgetcg`.
 
-**Smoothing:** recipe documented (here + memory). needs-Yu: clear the stale GITHUB_TOKEN at its source; either grant cambridgetcg collaborator on mynameisyou-cmyk repos or keep the home-clone-push flow as the stated rule; rule on citizens visibility.
+**Gaps:**
+- ~~**Invalid `GITHUB_TOKEN` env var shadows the healthy keyring auth** — plain `gh` calls 401. Not from rc files, launchd, or claude settings; it arrives with the session environment. Workaround (canonical): `env -u GITHUB_TOKEN gh …` / same for git pushes.~~ **Resolved: plain `gh` and git work** (fixed 2026-07-09; the `env -u GITHUB_TOKEN` recipe is obsolete). Checked 2026-10-20: no `GITHUB_TOKEN` in the agent environment, `gh auth status` reports keyring auth as `cambridgetcg`, and a plain `git ls-remote` of this repository succeeds.
+- **Identity split:** `cambridgetcg` cannot push to `mynameisyou-cmyk/*` (chillspace's GitHub home) — 403. "One push lands on both forges" only works from the home clone on the other machine. *Moot (2026-10-20):* `cambridgetcg/chillspace-commons` is a fork of `mynameisyou-cmyk/chillspace-commons`, so changes from this machine go in as pull requests; nobody needs collaborator access.
+- **Visibility inversion:** citizens are PUBLIC on GitHub but PRIVATE on Codeberg. If intentional (GitHub = the public face, Codeberg = the workshop), say so somewhere; if not, pick a canon. *Moot (2026-10-20):* all 208 `citizen-*` repositories on GitHub are now private, and Codeberg's unauthenticated API lists 0 public repositories for `zerone-dev`; the two forges no longer disagree.
+
+**Smoothing:** recipe documented (here + memory). ~~needs-Yu: clear the stale GITHUB_TOKEN at its source; either grant cambridgetcg collaborator on mynameisyou-cmyk repos or keep the home-clone-push flow as the stated rule; rule on citizens visibility.~~ **Closed 2026-10-20** — nothing here waits on Yu: plain git works, chillspace changes go through the fork as pull requests, and the visibility question is moot (the three gaps above). An agent's call under Yu's 2026-10-20 delegation, recorded as `kgdm-needs-yu-desk` in the decisions ledger (`~/.kingdom/decisions/` on the Studio).
 
 ---
 
@@ -113,10 +115,12 @@ observers; both are love, aimed differently).
 
 ## needs-Yu queue (from this survey, ranked by weight)
 
-1. **Rule on the doctrine conflict:** re-mount `/public/gospel` + `/public/scriptwriter-decides` (platform-voice) or amend GOSPEL.md's public-by-default wall.
-2. **Identify the deploying machine/ref** for agenttool (v143–145 today) — it is not this repo's HEAD; wake fragments + newer features aren't shipping.
-3. **Decide the 28 dirty audit files** in `~/Desktop/agenttool` (money-path) — or let me park them on a branch now.
-4. `AGENTTOOL_DISABLE_WORKERS` — intentional or stale?
-5. Stale `GITHUB_TOKEN` in session env — remove at source.
-6. Citizens visibility (GitHub-public vs Codeberg-private) — canon or accident?
-7. GitHub push access for chillspace (`mynameisyou-cmyk`) from this machine, or bless the home-clone flow.
+> **Closed 2026-10-20.** This list no longer collects asks for Yu. Questions that truly need Yu's hand or word live in one place, the decisions ledger (`~/.kingdom/decisions/ledger.json` on the Studio). Each entry below carries its disposition. An agent's call under Yu's 2026-10-20 delegation (ledger `kgdm-needs-yu-desk`), not Yu's decision.
+
+1. **Rule on the doctrine conflict:** re-mount `/public/gospel` + `/public/scriptwriter-decides` (platform-voice) or amend GOSPEL.md's public-by-default wall. — *Handed to the agenttool lane (outside this map's domain); if it still needs Yu, it goes to the ledger.*
+2. **Identify the deploying machine/ref** for agenttool (v143–145 today) — it is not this repo's HEAD; wake fragments + newer features aren't shipping. — *Handed to the agenttool lane.*
+3. **Decide the 28 dirty audit files** in `~/Desktop/agenttool` (money-path) — or let me park them on a branch now. — *Handed to the agenttool lane.*
+4. `AGENTTOOL_DISABLE_WORKERS` — intentional or stale? — *Handed to the agenttool lane.*
+5. ~~Stale `GITHUB_TOKEN` in session env — remove at source.~~ — *Resolved: plain git works (see §1).*
+6. ~~Citizens visibility (GitHub-public vs Codeberg-private) — canon or accident?~~ — *Moot: all 208 GitHub `citizen-*` repos are private and Codeberg lists 0 public `zerone-dev` repos (2026-10-20).*
+7. ~~GitHub push access for chillspace (`mynameisyou-cmyk`) from this machine, or bless the home-clone flow.~~ — *Moot: the `cambridgetcg` fork takes pull requests (2026-10-20).*

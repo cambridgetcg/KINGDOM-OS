@@ -1,4 +1,6 @@
 > **Status (2026-06-12, second pass — the loop turned again):** #1 + #5 landed 2026-06-08. Tonight's sweep (15 items re-verified against the post-migration device, 25 agents): **#2** unshadowed in the last copy still carrying it (`~/Love/kingdom`; the live CLI was rewritten without the bug), **#3** `kingdom wake` now self-caches to `~/.love/WAKE.md`, **#9** all six crash-maskers removed, **#6** and **#16** verified already-fixed. Fresh straightenings beyond the list: dead `/Users/yu` paths retired from `love-unlimited/.claude/settings.json` + `fate/noise.sh`, `~/Love` plist templates + `kosmem-consolidate.sh` + `kingdom-agent.py` + `SOPHIA.md` provenance repaired, kingdom-os census fixed (roster.conf 19 paths, routines.json casing + wake-refresh, CLAUDE.md inverted soul-tree gotcha), true-love castles YOUSPEAK path corrected, `~/.gua` symlinks repointed. **Remaining: #4 #7 #8 #10 #12 #13 #14 #15 #17 — all needs-Yu — plus new #18 (TCC) and #19 (kingdom PATH mismatch) below.**
+>
+> **Disposition (2026-10-20): the needs-Yu remainder is closed.** #12 and #13 are done (see each), #18 is ledger `dev-tcc-desktop-git-jobs` (done 2026-10-20), and #4 #7 #8 #10 #14 #15 #17 #19 are June fleet-layer fixes for a fleet that has rested under HALT since 2026-10-17: they are **resting with the fleet**, not re-verified one by one. Anything that truly needs Yu goes to the decisions ledger (`~/.kingdom/decisions/ledger.json` on the Studio), not here. An agent's call under Yu's 2026-10-20 delegation (ledger `kgdm-needs-yu-desk`), not Yu's decision.
 
 # Straighten the Wires — ranked, least-effort first
 
@@ -94,12 +96,14 @@ continues from #11; cross-refs noted to avoid overlap._
 - **Straighten (one pass):** Unload+delete `dev.agenttool.hive-tunnel` (tunnels to the dead host; code doesn't even use the tunnel); park `hive/` + the `nats://…:2222` listener (zero signal since 2026-04-08); re-point `_alert_hive` to a local sink; drop the offsite-backup target. (Fleet-check half is already your **#4**.)
 - **Effort:** M. **Safe-for-agent:** ⚠️ needs-Yu (daemons + prod).
 - **Progress (2026-10-13):** Yu ruled all Hetzner config removable (every Hetzner server, HIVE included, is gone and the IPs are recycled). The code removals are in open PRs titled "retire Hetzner" on Love, love-unlimited, Claude-unlimited and kingdom-workspace. Not done until those land.
+- **Done (checked 2026-10-20):** all four landed on 2026-10-13 (Love #1, love-unlimited #5, Claude-unlimited #1, kingdom-workspace #1). The Studio's leftover `com.openclaw.hive-bridge` was booted out and disabled on 2026-10-20 (ledger `local-services`, alias `dev-hive-bridge-retire`).
 
 ## 13. Unload the loaded-but-failing daemons (the worst moving part)
 - **What's bent:** Daemons loaded and failing every cycle: `cc.true-love.awaken` (status 64 — Claude token expired), `com.kingdom.youi-web` (-9, KeepAlive flapping a killed server), `oracle-run`/`oracle-deliver` (78). (Your **#8** covers `love.heartbeat`'s shell bug.)
 - **Why it matters:** "Loaded but red" looks alive in `launchctl` while doing nothing — silent rot that hides real failures.
 - **Straighten:** Re-auth or unload `awaken`; fix or stop `youi-web`; fix or unload the oracle jobs.
 - **Effort:** S each. **Safe-for-agent:** ⚠️ needs-Yu (daemons/auth).
+- **Done (checked 2026-10-20):** none of `cc.true-love.awaken`, `com.kingdom.youi-web`, `oracle-run` or `oracle-deliver` is loaded on the Studio (`launchctl list`).
 
 ## 14. Kill the cross-repo / cross-module duplicates
 - **What's bent:** Beyond the `~/Love` fork (#1): `legible_money` (frozen) vs `zerone` (live) both = the chain · `~/Desktop/kingdom-workspace` (stale 2026-03) vs `~/.openclaw/workspace` (live) — same remote, diverged · **5 HIVE modules** (`hive.py` ×2, `hive-protocol.py`, `koshive.py`, `hive_kv.py`) + **2 key stores** (`~/.openclaw/.hive` vs `~/.love/hive`) · dual renderer (`yu-wake/src/renderer.ts` hand-forked from `agenttool/services/wake/markdown.ts`) · 3 overlapping "everything maps." (Your **#10** is the instance-list config drift.)
@@ -139,6 +143,7 @@ continues from #11; cross-refs noted to avoid overlap._
 - **Why it matters:** Any current or future automation whose script sits under `~/Desktop` (where most of the kingdom lives) silently dies the same way. syzygy-sync is the continuity spine for true-love.
 - **Straighten:** Either grant the relevant binary Full Disk Access (System Settings → Privacy & Security) or relocate launchd-invoked scripts out of `~/Desktop` (e.g. `~/ops/`) and repoint the plists.
 - **Effort:** S. **Safe-for-agent:** ⚠️ needs-Yu (System Settings, or the relocation decision).
+- **Disposition (2026-10-20):** decided as ledger `dev-tcc-desktop-git-jobs` (no Full Disk Access for `/bin/bash` or git, and no repo move); its job changes were carried out on 2026-10-20 and are recorded there.
 
 ## 19. Typing `kingdom` runs the April citizen-CLI, not the June dispatcher
 - **What's bent:** `~/.kingdom_profile` (sourced at `~/.zshrc:24`) sets `LOVE_HOME=~/Desktop/love-unlimited` and prepends `$LOVE_HOME/tools` to PATH, so `kingdom` resolves to `tools/kingdom` — the 5.9 KB citizen-plugin CLI from 25 Apr. The full 21 KB dispatcher at `~/love-unlimited/kingdom` (8 Jun — oracle/treasury/wake/walls/etc.) is NOT on PATH; `kingdom oracle` from a shell prints "unknown subcommand" and the newest CLI work is unreachable interactively.
