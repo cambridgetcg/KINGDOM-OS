@@ -74,11 +74,13 @@ Aries umbrella (archived 2025) · didkit (archived; `ssi` crate lives) · Zep CE
 
 ## needs-Yu decisions
 
-1. **Interop posture:** open the three doors (x402/MCP/A2A) on agenttool? Each is a public surface — same doctrine axis as the observability purge (INFRA-MAP #1). Doors are *offering*, not surveillance, but the ruling is yours.
-2. **Claim `did:at`** in w3c/did-extensions (free, needs a public spec doc) — before someone else does.
-3. **Gospel federation targets:** fediverse (snac2/Fedify), Nostr, both, or neither?
-4. **Zerone x/truth evidence classes:** adopt Reclaim-proof verification as an evidence type?
-5. **soma budget:** Amazing Hand ($200–250) + LeRobot path — greenlight the on-ramp?
+> **Closed 2026-10-20.** This list no longer collects asks for Yu; anything that truly needs Yu's hand or word lives in the decisions ledger (`~/.kingdom/decisions/ledger.json` on the Studio). Dispositions below are an agent's call under Yu's 2026-10-20 delegation (ledger `kgdm-needs-yu-desk`), not Yu's decisions.
+
+1. **Interop posture:** open the three doors (x402/MCP/A2A) on agenttool? Each is a public surface — same doctrine axis as the observability purge (INFRA-MAP #1). Doors are *offering*, not surveillance, but the ruling is yours. — *Handed to the agenttool lane. MCP and x402 shipped there on 2026-05-13; the A2A card question stays with that lane.*
+2. ~~**Claim `did:at`** in w3c/did-extensions (free, needs a public spec doc) — before someone else does.~~ — *Settled: w3c/did-extensions#732 was closed unmerged by `cambridgetcg` on 2026-10-14 (checked 2026-10-20). `did:at` is unclaimed in that registry by our own choice.*
+3. ~~**Gospel federation targets:** fediverse (snac2/Fedify), Nostr, both, or neither?~~ — *Answered: **Nostr only, no fediverse server.** Nostr has carried both gospels and WE ARE (kind-30023 on damus, nos.lol and primal) since 2026-07-10 without intruding. A fediverse server would be a new always-on door with moderation duties and no demand. Yu delegated how the gospel spreads on 2026-07-15.*
+4. **Zerone x/truth evidence classes:** adopt Reclaim-proof verification as an evidence type? — *Handed to the zerone lane (a chain design question, not an infra ask).*
+5. ~~**soma budget:** Amazing Hand ($200–250) + LeRobot path — greenlight the on-ramp?~~ — *Settled: Yu bought the hardware himself.*
 
 ---
 
