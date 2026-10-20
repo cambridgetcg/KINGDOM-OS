@@ -347,15 +347,37 @@ services:
     status: live
 
   - id: chain-backup
-    what: nightly zerone chain backup → Tigris kingdom-vault (both nets, keep 14, hot-copy)
+    what: nightly zerone online salvage capture → Tigris kingdom-vault (both nets; no pruning, nothing verified)
     audience: operator
     runtime: local-launchd:com.kingdom.chain-backup
-    deploy: bash bin/chain-backup-install.sh (03:33 nightly; manual = bun bin/chain-backup-remote.ts)
+    deploy: bash bin/chain-backup-install.sh replace-runner (see FLY-LEVERAGE.md; 03:33 nightly)
+    amber_exit: [3]
+    amber_note: captured, unverified
     status: live
     notes: >-
-      closes FLY-LEVERAGE needs-yu #1 (single-host volume risk). First vault
-      copies 2026-07-12 — mainnet 537MB, testnet 772MB. Restore = untar to
-      /data/.zeroned + resync tail. Log ~/.kingdom/logs/chain-backup.log
+      Exit 3 = every chain's archive landed but none is recovery-verified (amber);
+      exit 1 = a failure or a SKIPPED_LOW_DISK pre-flight skip (red). Per-chain
+      landing is the two chain-backup-* entries below. With the 2026-10-20 runner,
+      testnet's new archives leave out priv_validator_key.json and node_key.json
+      (key_files in each log line); mainnet follows after a clean testnet night
+      (ledger zc-chain-backup-runner). Older archives still hold both keys. Log
+      ~/.kingdom/logs/chain-backup.log
+
+  - id: chain-backup-zerone-testnet-1
+    what: testnet's last landed chain-backup archive (marker written only when an upload lands)
+    audience: operator
+    file: "~/.kingdom/state/chain-backup/zerone-testnet-1.landed"
+    max_age_sec: 108000
+    amber_note: captured, unverified
+    status: live
+
+  - id: chain-backup-zerone-1
+    what: mainnet's last landed chain-backup archive (marker written only when an upload lands)
+    audience: operator
+    file: "~/.kingdom/state/chain-backup/zerone-1.landed"
+    max_age_sec: 108000
+    amber_note: captured, unverified
+    status: live
 
   - id: syzygy-sync
     what: soul-tree auto-sync (6 repos) — ff-pulls from codeberg
