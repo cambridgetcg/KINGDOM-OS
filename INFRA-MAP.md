@@ -12,6 +12,8 @@
 
 **Does (observed):** 100+ PUBLIC repos including the whole citizen family, hermes-agents, zerone-core, love-engine, cashloom, sinovai — actively updated daily. `gh` keyring auth healthy as `cambridgetcg`.
 
+**Does (re-observed 2026-10-20):** 409 repos, 100 public and 309 private. All 208 `citizen-*` repos are private; zerone-core, cashloom and sinovai are no longer public, while love-engine and hermes-agents still are. GitHub is no longer the citizens' public face. `gh` keyring auth is healthy as `cambridgetcg`.
+
 **Gaps:**
 - ~~**Invalid `GITHUB_TOKEN` env var shadows the healthy keyring auth** — plain `gh` calls 401. Not from rc files, launchd, or claude settings; it arrives with the session environment. Workaround (canonical): `env -u GITHUB_TOKEN gh …` / same for git pushes.~~ **Resolved: plain `gh` and git work** (fixed 2026-07-09; the `env -u GITHUB_TOKEN` recipe is obsolete). Checked 2026-10-20: no `GITHUB_TOKEN` in the agent environment, `gh auth status` reports keyring auth as `cambridgetcg`, and a plain `git ls-remote` of this repository succeeds.
 - **Identity split:** `cambridgetcg` cannot push to `mynameisyou-cmyk/*` (chillspace's GitHub home) — 403. "One push lands on both forges" only works from the home clone on the other machine. *Moot (2026-10-20):* `cambridgetcg/chillspace-commons` is a fork of `mynameisyou-cmyk/chillspace-commons`, so changes from this machine go in as pull requests; nobody needs collaborator access.

@@ -42,7 +42,7 @@
 
 ## Findings (ranked)
 
-1. **🔴 `zerone.dev` is a parking page, not ours.** NS = afternic, body = `window.location.href="/lander"` (a for-sale lander). It was falsely listed as a live "door" — **fixed in `sites.json`; hub regenerated (12 doors, was 13).** ~~*needs-Yu: do we own zerone.dev?* If yes → pull it off afternic parking and point it at real hosting (it's the perfect hub domain — "a place for every being"). If no → stop referencing it anywhere.~~ **Settled 2026-10-20: not ours.** `dig NS zerone.dev` returns ns1/ns2.afternic.com (aftermarket parking); buying it isn't warranted (ledger `infra-zerone-dev-domain`, closed; an agent's call under Yu's 2026-10-20 delegation).
+1. **🔴 `zerone.dev` is a parking page, not ours.** NS = afternic, body = `window.location.href="/lander"` (a for-sale lander). It was falsely listed as a live "door" — **fixed in `sites.json`; hub regenerated (12 doors, was 13).** ~~*needs-Yu: do we own zerone.dev?* If yes → pull it off afternic parking and point it at real hosting (it's the perfect hub domain — "a place for every being"). If no → stop referencing it anywhere.~~ **Settled 2026-10-20 as not ours, and not needed** (ledger `infra-zerone-dev-domain`, closed; an agent's call under Yu's 2026-10-20 delegation). Its nameservers are ns1/ns2.afternic.com (aftermarket parking, `dig NS`), its page redirects to a parking `/lander`, and per the ledger's check it is not among this Cloudflare account's zones. No registrar account known to the estate holds it, though this is not proof that none exists; if one turns up, reopen the ledger item. The hub it was wanted for lives at thekingdom.dev (bought 2026-07-11), so buying zerone.dev isn't warranted.
 2. **🟡 zerone.* identity domains are entirely off Cloudflare.** zerone.money on Njalla+Codeberg is a defensible **sovereignty split** (privacy registrar + the soul forge) — but it means the "truth" brand gets no CF caching/DDoS/analytics, and lives on Codeberg Pages' uptime. Name it as intentional, or bring it behind CF.
 3. **🟡 Inconsistent proxy status.** axiepro, fomoengine, hkgoldtrader, wholesaletcgdirect are **DNS-only (grey cloud)** → no CF proxy, caching, WAF, or analytics on them. The Pages/Vercel origins are exposed directly. Flip to proxied unless there's a reason.
 4. **🟡 agenttool.dev's edge proxy sits in axiepro's Worker namespace** (`agenttool-proxy.axiepro.workers.dev`). Works, but the flagship API's front door is coupled to an unrelated brand's Worker — worth giving agenttool its own Worker (or CNAME straight to `agenttool.fly.dev`).
@@ -58,6 +58,8 @@ The kingdom hub (`kingdom-os/site/hub.html`, generated) needs a home. Given the 
 - **Fallbacks if zerone.dev isn't reclaimable:** a subdomain we already control on CF — e.g. `map.agenttool.dev` (fast, but couples the kingdom to one brand), or add a fresh short domain to CF, or put it on Codeberg Pages beside chillspace/zerone.money (keeps the soul-side content on the soul forge, off the commerce account).
 
 **Recommendation:** resolve zerone.dev ownership → if ours, reclaim from parking and make it the hub (CF Pages or Codeberg); if not, ship the hub to Codeberg Pages next to zerone.money/chillspace so the whole soul-side front (hub + commons + truth ledger) lives on one sovereign forge, and keep the CF account for the commerce brands.
+
+**Settled (2026-10-20):** the hub landed on thekingdom.dev (Cloudflare Pages project `thekingdom`; the domain was bought 2026-07-11, see [DOMAINS-SETUP.md](DOMAINS-SETUP.md)). zerone.dev is not needed for it (Finding #1).
 
 ---
 

@@ -31,9 +31,9 @@
 2. ✅ **Tigris bucket `kingdom-vault` created** — S3 read/write/delete verified end-to-end. Creds in macOS keychain (`agenttool-tigris-access-key` / `-secret-key`). ⚠️ creds transited this session's transcript — rotate via Tigris dashboard if paranoid.
 3. ✅ **Chain-backup WIRED + green** — [`bin/chain-backup-to-tigris.sh`](bin/chain-backup-to-tigris.sh) tar+zstd → Tigris, keep 14; runs nightly 03:33 via com.kingdom.chain-backup since 2026-07-12 (2026-07-17 run: mainnet 1105MB, testnet 1525MB). Log `~/.kingdom/logs/chain-backup.log`.
 
-## needs-Yu / next integrate (touch live infra — staged, not auto-run)
+## Former needs-Yu / next-integrate list (closed 2026-10-20 — history, not instructions)
 
-> **Closed 2026-10-20** — nothing in this list waits on Yu any more; anything that truly needs Yu's hand or word goes to the decisions ledger (`~/.kingdom/decisions/ledger.json` on the Studio). An agent's call under Yu's 2026-10-20 delegation (ledger `kgdm-needs-yu-desk`), not Yu's decision. Dispositions:
+> **Closed 2026-10-20 — do not run the commands in the list below.** They are kept as history: some resources they name no longer exist (mindicraft, cashloom-db), and others are done or superseded. Nothing in this list waits on Yu any more; anything that truly needs Yu's hand or word goes to the decisions ledger (`~/.kingdom/decisions/ledger.json` on the Studio). An agent's call under Yu's 2026-10-20 delegation (ledger `kgdm-needs-yu-desk`), not Yu's decision. Dispositions:
 > - **#1 chain backup:** not a Yu ask any more — the nightly `com.kingdom.chain-backup` runner has shipped both chains to Tigris since 2026-07-12 as online captures that are not verified backups; its open work (keys in archives, disk headroom, a three-state pulse) is ledger `zc-chain-backup-runner`.
 > - **#2 warm standby fork:** superseded — Fly volume snapshots are the restore path, and the snapshot-restore drill passed on testnet on 2026-10-18.
 > - **#3 mindicraft:** moot — the app no longer exists (absent from `flyctl apps list`, 2026-10-20).
