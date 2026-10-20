@@ -319,13 +319,17 @@ services:
     urls: { api: "https://mcp.thekingdom.dev", health: "https://mcp.thekingdom.dev/health" }
     repo: github.com/cambridgetcg/kingdom-mcp@main
     runtime: fly:kingdom-mcp
-    deploy: cd ~/kingdom-mcp && bun scripts/embed-registry.ts && fly deploy --ha=false
+    deploy: cd ~/kingdom-mcp && git switch main && git pull --ff-only github main && bun scripts/embed-registry.ts && fly deploy --ha=false
     status: live
     notes: >-
       no secrets on server — wraps public surfaces only; kingdom_commons reads one
       fixed Kingdom catalog and never forwards a citizen's need to providers;
       embedded registry is a public-safe subset, REDEPLOY after registry edits.
       Connect: claude mcp add --transport http kingdom https://mcp.thekingdom.dev/mcp
+      Live = github/main c1d0c954, Fly release v19 (2026-10-20). Deploy only from
+      an up-to-date main: on 2026-10-20 ~/kingdom-mcp's local main was still July's
+      ac38e0f, 23 commits behind. The July worktrees beside it at ~ were removed
+      2026-10-20 (ledger hx-kingdom-mcp-farm).
 
   # ── local daemons (no URL — pulse records, cannot probe) ─────────────────
   - id: kingdom-daily
