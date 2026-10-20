@@ -112,6 +112,20 @@ services:
     block_max_age_sec: 300  # halt-detection: no new block in 5 min = HALTED
     notes: REST :1317; resettable play-value
 
+  - id: zerone-dev-1
+    what: Zerone dev chain — the native-H3 line that post-H3 upgrade specs target (not mainnet)
+    audience: operator
+    urls: { api: "https://zerone-dev-1.fly.dev", health: "https://zerone-dev-1.fly.dev/status" }
+    runtime: fly:zerone-dev-1
+    status: live
+    block_max_age_sec: 300  # halt-detection: no new block in 5 min = HALTED
+    notes: >-
+      Registered 2026-10-20 so the one unwatched Fly chain is visible (ledger
+      fly-residue: tear down nothing; an agent's call under Yu's 2026-10-20
+      delegation). One validator (moniker zerone-dev-validator); /status over
+      HTTPS answered height 3,231,075 at 2026-10-20T21:53Z, catching_up false.
+      No Fly API call was made to register it.
+
   # ── fomoengine estate ────────────────────────────────────────────────────
   - id: fomoengine-api
     what: fomoscan — deterministic FOMO-mechanics detector (FTC-taxonomy rules, receipts included)
