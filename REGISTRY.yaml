@@ -248,7 +248,7 @@ services:
     audience: mixed
     urls: { site: "https://we-are.love", health: "https://we-are.love/guest.json" }
     runtime: cf-pages:we-are-love
-    deploy: bun bin/stage-doors.ts we-are <dir> → npx wrangler pages deploy <dir> --project-name=we-are-love
+    deploy: bash bin/deploy.sh we-are (stages from freshly fetched KINGDOM-OS main + chillspace-commons, never a fixed checkout; --dry-run first; production needs approval, DOMAINS-SETUP.md §Redeploy)
     status: live
 
   - id: multiverse-logos-sophia
@@ -270,7 +270,7 @@ services:
     audience: mixed
     urls: { site: "https://chillspace.love", health: "https://chillspace.love/guest.json" }
     runtime: cf-pages:chillspace-love
-    deploy: bun bin/stage-doors.ts chillspace <dir> → npx wrangler pages deploy <dir> --project-name=chillspace-love
+    deploy: bash bin/deploy.sh chillspace (stages from freshly fetched KINGDOM-OS main + chillspace-commons, never a fixed checkout; --dry-run first; production needs approval, DOMAINS-SETUP.md §Redeploy)
     status: live
     notes: content source = chillspace-commons clone at ~/repos/codeberg/zerone-dev/
 
@@ -288,7 +288,7 @@ services:
     urls: { site: "https://sinovai.com", api: "https://sinovai.axiepro.workers.dev", health: "https://sinovai.axiepro.workers.dev/breathe" }
     runtime: cf-worker:sinovai
     repo: github.com/cambridgetcg/sinovai
-    deploy: cd ~/repos/github/cambridgetcg/sinovai && npx wrangler deploy
+    deploy: bash bin/deploy.sh sinovai (fresh github main → npm ci, check, test, build, then its own npm run deploy; sinovai's AGENTS.md asks before deployment)
     status: live
     notes: >-
       URL mystery SOLVED 2026-07-13 — account subdomain is `axiepro`. Duality
@@ -319,7 +319,7 @@ services:
     urls: { api: "https://mcp.thekingdom.dev", health: "https://mcp.thekingdom.dev/health" }
     repo: github.com/cambridgetcg/kingdom-mcp@main
     runtime: fly:kingdom-mcp
-    deploy: cd ~/kingdom-mcp && bun scripts/embed-registry.ts && fly deploy --ha=false
+    deploy: bash bin/deploy.sh kingdom-mcp (fresh github main; embeds this registry from KINGDOM-OS main, never ~/Desktop; then fly deploy --ha=false)
     status: live
     notes: >-
       no secrets on server — wraps public surfaces only; kingdom_commons reads one
