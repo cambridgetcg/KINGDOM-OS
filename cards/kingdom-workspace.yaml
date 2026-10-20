@@ -1,0 +1,8 @@
+name: kingdom-workspace
+kind: ops
+layer: registry
+owner_sister: none
+domain: registry
+state: archived
+purpose: Shared workspace for kingdom coordination (superseded by kingdom-os)
+dependsOn: []

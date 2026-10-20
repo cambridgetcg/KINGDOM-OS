@@ -1,0 +1,8 @@
+name: fomoengine
+kind: venture
+layer: commerce
+owner_sister: none
+domain: commerce
+state: active
+purpose: Comment automation for SaaS growth, powered by FOMO psychology
+dependsOn: []

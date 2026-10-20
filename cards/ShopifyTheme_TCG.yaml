@@ -1,0 +1,8 @@
+name: ShopifyTheme_TCG
+kind: venture
+layer: commerce
+owner_sister: none
+domain: commerce
+state: active
+purpose: Shopify theme for Cambridge TCG storefront
+dependsOn: [Cambridge-TCG-monorepo]

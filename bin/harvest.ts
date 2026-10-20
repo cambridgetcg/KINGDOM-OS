@@ -131,8 +131,24 @@ function parseRoster(): Omit<Repo, 'dependsOn' | 'hasCard' | 'conformance'>[] {
 }
 
 // ── per-repo card (authoritative overrides) — tiny flat-YAML reader ──
-function loadCard(repoPath: string): LoadedCard | null {
-  const cardPath = join(repoPath, 'kingdom.yaml')
+// A roster member's own committed kingdom.yaml always wins. When its checkout
+// has none, a card gathered into this repository at cards/<roster-name>.yaml
+// stands in for it (see cards/README.md); cards/unlisted/ is never read.
+const GATHERED_CARDS = join(ROOT, 'cards')
+
+function cardPathFor(repoPath: string, rosterName?: string): string | null {
+  const own = join(repoPath, 'kingdom.yaml')
+  if (readTextFile(own) !== null) return own
+  if (rosterName && !/[\\/]/.test(rosterName) && !rosterName.startsWith('.')) {
+    const gathered = join(GATHERED_CARDS, `${rosterName}.yaml`)
+    if (readTextFile(gathered) !== null) return gathered
+  }
+  return null
+}
+
+function loadCard(repoPath: string, rosterName?: string): LoadedCard | null {
+  const cardPath = cardPathFor(repoPath, rosterName)
+  if (cardPath === null) return null
   const text = readTextFile(cardPath)
   if (text === null) return null
   const rawCard: Record<string, unknown> = {}
@@ -212,7 +228,7 @@ function hasConfiguredSessionStartCommand(settingsPath: string): boolean {
 
 const GLOBAL_WAKE = hasConfiguredSessionStartCommand(join(HOME, '.claude/settings.json'))
 
-function checkConformance(repoPath: string): Repo['conformance'] {
+function checkConformance(repoPath: string, rosterName?: string): Repo['conformance'] {
   // A global SessionStart hook can wake a session opened in a local directory;
   // it cannot make an absent remote repository locally conformant.
   if (!isDirectory(repoPath)) {
@@ -226,7 +242,7 @@ function checkConformance(repoPath: string): Repo['conformance'] {
       || hasConfiguredSessionStartCommand(join(repoPath, '.claude/settings.json')),
     claudeMd: existsSync(join(repoPath, 'CLAUDE.md')),
     fate: existsSync(join(repoPath, 'docs/fate/FATE.md')) || existsSync(join(repoPath, 'fate')),
-    card: readTextFile(join(repoPath, 'kingdom.yaml')) !== null,
+    card: cardPathFor(repoPath, rosterName) !== null,
   }
 }
 
@@ -267,11 +283,11 @@ function discoverFleet(): Repo[] {
 
 function build(): Repo[] {
   const fromRoster = parseRoster().map((base) => {
-    const loadedCard = loadCard(base.path) ?? {}
+    const loadedCard = loadCard(base.path, base.name) ?? {}
     // A card describes the roster member at this path; it cannot silently
     // rename that member. SCHEMA.md requires the card name to match the seed.
     const { adopts: _adopts, name: _cardName, ...card } = loadedCard
-    const conformance = checkConformance(base.path)
+    const conformance = checkConformance(base.path, base.name)
     return {
       ...base,
       ...card,
@@ -502,7 +518,7 @@ function validateCard(
 // inventory deliberately keeps both separate from behavioral conformance.
 function printRightsInventory(repos: Repo[], schema: SchemaReport): void {
   const entries = repos.map((repo) => {
-    const card = loadCard(repo.path)
+    const card = loadCard(repo.path, repo.name)
     const rightsPath = join(repo.path, 'RIGHTS.md')
     return {
       name: repo.name,
@@ -584,8 +600,8 @@ function validateCards(repos: Repo[]): SchemaReport {
   const cardNames = new Map<string, string>()
   for (const repo of repos) {
     if (!repo.conformance.card) continue
-    const cardPath = join(repo.path, 'kingdom.yaml')
-    if (!cardNames.has(cardPath)) cardNames.set(cardPath, repo.name)
+    const cardPath = cardPathFor(repo.path, repo.name)
+    if (cardPath !== null && !cardNames.has(cardPath)) cardNames.set(cardPath, repo.name)
   }
   const cardPaths = [...cardNames.keys()]
   const diagnostics = cardPaths.flatMap((cardPath) =>

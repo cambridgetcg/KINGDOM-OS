@@ -1,0 +1,8 @@
+name: rewardspro-docs
+kind: infra
+layer: commerce
+owner_sister: none
+domain: commerce
+state: active
+purpose: Documentation for RewardsPro
+dependsOn: [rewardspro]

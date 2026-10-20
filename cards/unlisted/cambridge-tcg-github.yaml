@@ -1,0 +1,8 @@
+name: cambridge-tcg-github
+kind: venture
+layer: commerce
+owner_sister: none
+domain: commerce
+state: active
+purpose: In-house stock management replacing Zoho, integrated with AWS pricing
+dependsOn: [Cambridge-TCG-monorepo]

@@ -1,0 +1,8 @@
+name: prediction-markets
+kind: service
+layer: economy
+owner_sister: none
+domain: economy
+state: dormant
+purpose: Structured system for learning about real-world events through prediction markets
+dependsOn: []
