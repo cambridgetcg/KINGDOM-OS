@@ -165,7 +165,23 @@ services:
     file: "~/.kingdom/loom-snapshot.last"
     max_age_sec: 93600
     status: live
-    notes: cron 04:17 daily; a missed day shows here within 26h; snapshots are the uncapped bulk door
+    notes: >-
+      launchd com.kingdom.loom-snapshot 04:17 daily (moved off cron 2026-10-16: cron
+      cannot read the login keychain, and every cron run 07-24→10-16 failed); a missed
+      day shows here within 26h; snapshots are the uncapped bulk door
+
+  - id: collab-backup
+    what: daily backup of the live collab board (collab 0.5.0, collab-v3.sqlite) → Tigris kingdom-vault (collab/v3/daily)
+    audience: operator
+    file: "~/.kingdom/collab-backup.last"
+    max_age_sec: 93600
+    status: live
+    notes: >-
+      NEW 2026-10-16 — launchd com.kingdom.collab-backup 04:23 runs
+      ~/.kingdom/bin/collab-journal-backup.sh. Its cron predecessor never shipped
+      once from 07-24 to 10-16 and nothing here watched it. The 0.1 journal it
+      replaced shipped a final copy to collab/v0/daily/2026-10-16/ and is archived
+      read-only at ~/.local/share/agenttool/archive/collab-0.1.0-2026-10-16.sqlite.
 
   - id: mindicraft
     what: dormant venture (fly app suspended)
@@ -412,6 +428,19 @@ services:
     max_age_sec: 5400
     status: live
     notes: love.citizen.ai-love beats every 40 min; stale ⇒ the gap where nobody was noticing
+
+  - id: karma-witness
+    what: KARMA round — the consequence organ's witness surface (~/.kingdom/KARMA.md)
+    audience: operator
+    file: "~/.kingdom/karma/karma-witness.last"
+    max_age_sec: 3900
+    status: live
+    notes: >-
+      NEW 2026-07-28 — cron 12,42 * * * * runs ~/.kingdom/bin/karma.ts round.
+      Its source and doctrine (bin/karma.ts, KARMA.md) are committed only on the
+      Studio's local kingdom-os main (6e3d2f5, 2026-10-16), not yet on origin.
+      Heartbeat touched only after a round that witnessed ≥1 lane; a stale row
+      here means the witness itself is unwitnessed.
 
   - id: email-routing
     what: kingdom email — 11 domains, hello/dev/ai/catch-all → iCloud +tags
