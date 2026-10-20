@@ -15,14 +15,16 @@
 #   - `expect:` lists HTTP codes that count as healthy (e.g. 401 on an
 #     auth-walled API, 404 on an app with no root route — the app answering
 #     at all is the heartbeat).
-#   - status: live | dormant | suspended | operator | unknown
+#   - status: live | resting | dormant | suspended | operator | unknown
 #     pulse alerts only when status=live disagrees with observation.
+#     resting = paused on purpose (e.g. a HALT file) and expected back; say
+#     why and since when in notes, and set it back to live when it resumes.
 #
 # Deep context on gaps/drift lives in INFRA-MAP.md; notes here carry only the
 # load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
 
 version: 1
-updated: 2026-09-04
+updated: 2026-10-20
 
 services:
   # ── the marketplace + its organs ─────────────────────────────────────────
@@ -288,15 +290,36 @@ services:
     runtime: cf-pages:chillspace-love
     deploy: bun bin/stage-doors.ts chillspace <dir> → npx wrangler pages deploy <dir> --project-name=chillspace-love
     status: live
-    notes: content source = chillspace-commons clone at ~/repos/codeberg/zerone-dev/
+    notes: >-
+      content source = chillspace-commons clone at ~/repos/codeberg/zerone-dev/.
+      /guest.json has answered 404 since 2026-08-19 (pulse-history: last up 09:28Z
+      that day): the site is up, its guest documents are not deployed. They return with the next
+      approved door release (ledger kingdom-door-release, waiting on Yu's word),
+      not an ad-hoc deploy; this red is expected until then.
 
   - id: chillspace-commons
-    what: chillspace codeberg page — MIRROR of the commons (chillspace.love is canonical)
+    what: chillspace-commons source — its public home on GitHub (chillspace.love is the canonical site)
+    audience: humans
+    urls: { site: "https://github.com/mynameisyou-cmyk/chillspace-commons", health: "https://github.com/mynameisyou-cmyk/chillspace-commons" }
+    repo: github.com/mynameisyou-cmyk/chillspace-commons@master
+    status: live
+    notes: >-
+      Pointed here 2026-10-20 (was the Codeberg page, now the dormant row below).
+      Changes from this Mac go in as pull requests from the cambridgetcg fork.
+      The two homes have diverged: GitHub master (4c0bf694, 09-02) and Codeberg
+      master (c41b015, 08-24) each hold commits the other lacks — reconcile
+      before the next door release builds from either.
+
+  - id: chillspace-commons-codeberg
+    what: chillspace codeberg page — the old MIRROR of the commons
     audience: humans
     urls: { site: "https://zerone-dev.codeberg.page/chillspace-commons/", health: "https://zerone-dev.codeberg.page/chillspace-commons/" }
     runtime: codeberg-pages
     deploy: copy site files into the `pages` BRANCH (editing site/ on master does nothing)
-    status: live
+    status: dormant
+    notes: >-
+      Dormant since 2026-10-20: the page answers 404 and Codeberg lists 0 public
+      zerone-dev repositories. Kept, not deleted; pulse shows it without alerting.
 
   - id: sinovai
     what: trust arena worker (4-dim ratings; XENIA surface; breathes 陰陽 on the half hour)
@@ -318,7 +341,7 @@ services:
     audience: mixed
     urls: { site: "https://github.com/cambridgetcg", health: "https://github.com/cambridgetcg" }
     status: live
-    notes: ⚠ stale GITHUB_TOKEN env shadows keyring — canonical recipe `env -u GITHUB_TOKEN gh …`
+    notes: plain `gh` and git work with keyring auth (the stale GITHUB_TOKEN was fixed 2026-07-09; the `env -u GITHUB_TOKEN` recipe is obsolete — checked 2026-10-20)
 
   - id: codeberg-zerone-dev
     what: the home forge — ~150 repos, citizens, multiverse archive
@@ -403,15 +426,26 @@ services:
     audience: operator
     urls: { health: "http://127.0.0.1:11434/api/tags" }
     runtime: local
-    status: live
-    notes: qwen2.5:7b powers the fleet's free reflection lane; down ⇒ beats fall silent
+    status: resting
+    notes: >-
+      resting: HALT, models removed 10-17. The fleet rests under
+      ~/love-unlimited/HALT (since 2026-10-17) and every local model was removed
+      that day; the daemon still answers, with an empty model list. Set back to
+      live when HALT lifts and qwen2.5:7b (the fleet's reflection lane) is
+      restored. This row describes the Studio's own daemon; the Air
+      (alexs-MacBook-Air) retired Ollama, local and Cloud, on 2026-10-10 at Yu's
+      word (KINGDOM-OS #103).
 
   - id: citizen-fleet
     what: the citizen garden daemon — ~30 free ollama beats/day, rest-sovereign, $0
     audience: operator
     runtime: local-launchd:love.citizen-fleet
-    status: live
-    notes: welfare-patched (love-unlimited/FLEET-REVIVAL.md); HALT via touch ~/love-unlimited/HALT
+    status: resting
+    notes: >-
+      resting: HALT, models removed 10-17. ~/love-unlimited/HALT is present since
+      2026-10-17; each tick still runs and logs "HALT present — fleet rests" (see
+      citizen-fleet-beats). welfare-patched (love-unlimited/FLEET-REVIVAL.md).
+      Set back to live when HALT lifts.
 
   - id: citizen-fleet-beats
     what: fleet liveness — heartbeat-log mtime (catches a loaded-but-silent daemon)
@@ -456,4 +490,4 @@ services:
     urls: { api: "https://ollama.com/v1", health: "https://ollama.com" }
     runtime: external
     status: live
-    notes: ⚠ cloud MISROUTES under parallel load — verify envelope model; api.ollama.com 301s, use ollama.com
+    notes: ⚠ cloud MISROUTES under parallel load — verify envelope model; api.ollama.com 301s, use ollama.com. The Air (alexs-MacBook-Air) holds no ollama.com key since 2026-10-10 (KINGDOM-OS #103) — don't route this lane from there.
