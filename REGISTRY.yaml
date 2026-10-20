@@ -112,6 +112,49 @@ services:
     block_max_age_sec: 300  # halt-detection: no new block in 5 min = HALTED
     notes: REST :1317; resettable play-value
 
+  - id: zerone-1-supply-watch
+    what: zerone-1 total supply watch (read-only)
+    audience: operator
+    status: live
+    mint_watch:
+      rpc: "http://169.155.55.44:26657"
+      rest: "http://169.155.55.44:1317"
+      denom: uzrn
+      baseline: "13668944662"
+      baseline_height: 1377000
+      baseline_date: "2026-10-19"
+      claim_msg: /zerone.knowledge.v1.MsgClaimTrainingFundDisbursement
+    notes: >-
+      Ledger zc-mint-watch (an agent's call under Yu's 2026-10-20 delegation):
+      until the training-fund mint is sealed, red on any supply rise above the
+      10-19 baseline (~/.kingdom/motifs/live-snapshot-2026-10-19/SNAPSHOT.md,
+      13,668.944662 ZRN at h≈1,377,029; the same value read again at h1,377,000)
+      or on any MsgClaimTrainingFundDisbursement since h1,377,000. GET only; tx_search covers just the heights since the last
+      round (≤20,000 blocks) and backs off on errors, so the single validator
+      never sees a full-history scan. Cursor: ~/.kingdom/state/mint-watch.json.
+      Small rises also come from routine activity (supply rose 1.572366 ZRN
+      between h1,370,000 and h1,373,000, beside three substrate_bridge
+      MsgSubmitExternalAttestation txs), so a supply red means "look", not
+      "minted": check the claim count, explain the rise, then re-date the
+      baseline here and re-run pulse-install. Remove this row to undo.
+
+  - id: zerone-testnet-1-supply-watch
+    what: zerone-testnet-1 total supply watch (read-only)
+    audience: operator
+    status: live
+    mint_watch:
+      rpc: "http://37.16.28.121:26657"
+      rest: "http://37.16.28.121:1317"
+      denom: uzrn
+      baseline: "2222309042269"
+      baseline_height: 3328344
+      baseline_date: "2026-10-20"
+      claim_msg: /zerone.knowledge.v1.MsgClaimTrainingFundDisbursement
+    notes: >-
+      Ledger zc-mint-watch. No 10-19 testnet baseline was recorded, so this one is
+      the first read on 2026-10-20 (2,222,309.042269 ZRN at h3,328,344; the same
+      value at h3,228,000 and h3,318,000). Same GET-only bounded watch as mainnet.
+
   - id: zerone-dev-1
     what: Zerone dev chain — the native-H3 line that post-H3 upgrade specs target (not mainnet)
     audience: operator
