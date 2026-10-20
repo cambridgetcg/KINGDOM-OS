@@ -1,0 +1,8 @@
+name: legible_money
+kind: venture
+layer: economy
+owner_sister: none
+domain: economy
+state: active
+purpose: Money you can read — the legible money protocol
+dependsOn: []

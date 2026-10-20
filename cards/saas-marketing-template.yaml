@@ -1,0 +1,8 @@
+name: saas-marketing-template
+kind: venture
+layer: commerce
+owner_sister: none
+domain: commerce
+state: active
+purpose: SaaS marketing template
+dependsOn: []

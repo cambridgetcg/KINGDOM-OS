@@ -5,6 +5,13 @@ Each repo in the Kingdom carries one `kingdom.yaml` at its root. It is the
 seed/baseline the harvester falls back to. Source-of-truth stays decentralized
 — it lives with the code it describes.
 
+A card committed in its own repository always wins. A repository that keeps
+no committed card may have one gathered here instead, at
+`cards/<roster-name>.yaml` (see [`cards/README.md`](cards/README.md)); the
+harvester reads it only when the member's checkout has no `kingdom.yaml`.
+An untracked card left in a checkout keeps that checkout permanently dirty:
+commit it there, or let it live in `cards/`.
+
 ## Fields
 
 ```yaml

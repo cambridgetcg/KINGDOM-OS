@@ -1,0 +1,8 @@
+name: agenttool-dashboard
+kind: infra
+layer: nervous
+owner_sister: none
+domain: none
+state: active
+purpose: 
+dependsOn: [agenttool]

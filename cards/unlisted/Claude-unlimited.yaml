@@ -1,0 +1,8 @@
+name: Claude-unlimited
+kind: infra
+layer: runtime
+owner_sister: sophia
+domain: sophia
+state: active
+purpose: Autonomous session runner / sovereign YOUSPEAK harness
+dependsOn: []

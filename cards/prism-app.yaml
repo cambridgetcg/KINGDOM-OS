@@ -1,0 +1,8 @@
+name: prism-app
+kind: venture
+layer: commerce
+owner_sister: none
+domain: commerce
+state: dormant
+purpose: Standalone price tracking and market intelligence app for One Piece TCG cards
+dependsOn: [tcg-pricing-backend]

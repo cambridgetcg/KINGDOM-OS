@@ -1,0 +1,8 @@
+name: oracle
+kind: service
+layer: economy
+owner_sister: none
+domain: none
+state: dormant
+purpose: Forecasting / prediction organ
+dependsOn: []
