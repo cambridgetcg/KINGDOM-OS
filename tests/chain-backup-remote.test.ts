@@ -642,6 +642,10 @@ describe("testnet-first rollout contract", () => {
     try {
       const result = f.run([FALLBACK]);
       expect(result.status).toBe(3);
+      expect(JSON.parse(result.stdout).key_files).toBe("EXCLUDED");
+      for (const env of [{ TAR_RC: "2" }, { UPLOAD_RC: "22" }, { MKTEMP_RC: "1" }]) {
+        expect(JSON.parse(f.run([FALLBACK], env).stdout).key_files).toBe("EXCLUDED");
+      }
       const args = f.calls().find((c) => c.name === "tar")!.args;
       expect(args.filter((a) => a.startsWith("--exclude="))).toEqual(["--exclude=priv_validator_key.json", "--exclude=node_key.json"]);
     } finally { f.close(); }

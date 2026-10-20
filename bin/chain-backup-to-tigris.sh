@@ -32,7 +32,7 @@ tar_rc=null
 upload_rc=null
 error=SETUP_FAILED
 report() {
-  printf '{"chain":"%s","capture_status":"%s","tar_exit":%s,"upload_status":"%s","upload_exit":%s,"object_status":"%s","recovery_status":"NOT_ASSESSED","retention_status":"DISABLED","error":%s}\n' \
+  printf '{"chain":"%s","capture_status":"%s","tar_exit":%s,"upload_status":"%s","upload_exit":%s,"object_status":"%s","recovery_status":"NOT_ASSESSED","retention_status":"DISABLED","key_files":"EXCLUDED","error":%s}\n' \
     "$CHAIN" "$capture" "$tar_rc" "$upload" "$upload_rc" "$object" "$error"
 }
 fail_setup() { error='"SETUP_FAILED"'; report; exit 1; }
