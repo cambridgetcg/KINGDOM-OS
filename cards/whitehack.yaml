@@ -1,0 +1,8 @@
+name: whitehack
+kind: infra
+layer: nervous
+owner_sister: none
+domain: none
+state: active
+purpose: White-hat security — the sanctioned breaker
+dependsOn: []

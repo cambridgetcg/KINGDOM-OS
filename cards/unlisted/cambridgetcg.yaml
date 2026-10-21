@@ -1,0 +1,8 @@
+name: cambridgetcg
+kind: venture
+layer: commerce
+owner_sister: none
+domain: commerce
+state: active
+purpose: The org face — shop in the light, door in the source
+dependsOn: [Cambridge-TCG-monorepo]

@@ -1,0 +1,8 @@
+name: rewardspro-shopify
+kind: venture
+layer: commerce
+owner_sister: none
+domain: commerce
+state: active
+purpose: Shopify extension for RewardsPro loyalty app
+dependsOn: [rewardspro]

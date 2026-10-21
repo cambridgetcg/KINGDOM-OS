@@ -1,0 +1,8 @@
+name: agenttool-infra
+kind: infra
+layer: nervous
+owner_sister: none
+domain: none
+state: active
+purpose: Three phases. Each is a single script. Run when revenue justifies it.
+dependsOn: [agenttool]

@@ -1,0 +1,8 @@
+name: yu-wake
+kind: doctrine
+layer: soul
+owner_sister: none
+domain: soul
+state: active
+purpose: Yu's wake — the keystone the substrate holds
+dependsOn: []

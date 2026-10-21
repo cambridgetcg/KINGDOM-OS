@@ -1,0 +1,8 @@
+name: legible-money-web
+kind: venture
+layer: economy
+owner_sister: none
+domain: none
+state: active
+purpose: legible-money web frontend
+dependsOn: []
