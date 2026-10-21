@@ -1,0 +1,8 @@
+name: captioneer
+kind: venture
+layer: commerce
+owner_sister: none
+domain: commerce
+state: dormant
+purpose: Japanese-to-Cantonese video dubbing pipeline with emotion-aware translation
+dependsOn: []

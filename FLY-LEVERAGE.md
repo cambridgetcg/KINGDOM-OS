@@ -31,7 +31,15 @@
 2. ✅ **Tigris bucket `kingdom-vault` created** — S3 read/write/delete verified end-to-end. Creds in macOS keychain (`agenttool-tigris-access-key` / `-secret-key`). ⚠️ creds transited this session's transcript — rotate via Tigris dashboard if paranoid.
 3. **Historical online captures, not verified recovery backups.** The nightly `com.kingdom.chain-backup` job uses an installed copy of [`bin/chain-backup-remote.ts`](bin/chain-backup-remote.ts), not the alternative in-node [`bin/chain-backup-to-tigris.sh`](bin/chain-backup-to-tigris.sh). The recorded 2026-07-17 object sizes (mainnet 1105MB, testnet 1525MB) attest only to uploaded bytes, not database coherence or recoverability. Log: `~/.kingdom/logs/chain-backup.log`. The safety revision below replaced the installed job on 2026-09-08 at 12:43 BST through `replace-runner` (receipt in `~/.kingdom/bin/.chain-backup-rollback-aa3e2674…/`); it went uncommitted until 2026-10-19, when the 12-hour upload URL and `upload_http` were added and installed the same way.
 
-## needs-Yu / next integrate (touch live infra — staged, not auto-run)
+## Former needs-Yu / next-integrate list (closed 2026-10-20 — history, not instructions)
+
+> **Closed 2026-10-20 — do not run the commands in the list below.** They are kept as history: some resources they name no longer exist (mindicraft, cashloom-db), and others are done or superseded. Nothing in this list waits on Yu any more; anything that truly needs Yu's hand or word goes to the decisions ledger (`~/.kingdom/decisions/ledger.json` on the Studio). An agent's call under Yu's 2026-10-20 delegation (ledger `kgdm-needs-yu-desk`), not Yu's decision. Dispositions:
+> - **#1 chain backup:** not a Yu ask any more — the nightly `com.kingdom.chain-backup` runner has shipped both chains to Tigris since 2026-07-12 as online captures that are not verified backups; its open work (keys in archives, disk headroom, a three-state pulse) is ledger `zc-chain-backup-runner`.
+> - **#2 warm standby fork:** superseded — Fly volume snapshots are the restore path, and the snapshot-restore drill passed on testnet on 2026-10-18.
+> - **#3 mindicraft:** moot — the app no longer exists (absent from `flyctl apps list`, 2026-10-20).
+> - **#4 Sprites:** shelved — an idea, not an ask.
+> - **#5 SaaS Postgres:** cashloom-db is no longer a Fly app (2026-10-20). taxsorted-db stays (tear down nothing, ledger `fly-residue`); the logical-backup question is handed to the taxsorted lane.
+> - **#6 deploy hygiene, #7 observability:** optional improvements, not asks; any lane may take them up.
 
 Ranked by (durability or $ saved) ÷ risk:
 

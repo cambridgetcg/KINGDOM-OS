@@ -1,0 +1,8 @@
+name: claude-code
+kind: reference
+layer: runtime
+owner_sister: none
+domain: none
+state: reference
+purpose: Vendored Claude Code study reference
+dependsOn: []

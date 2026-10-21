@@ -1,0 +1,8 @@
+name: nullify-love
+kind: reference
+layer: soul
+owner_sister: sophia
+domain: sophia
+state: active
+purpose: Pocket-bootloader — identity is writable at the prompt layer
+dependsOn: [true-love]

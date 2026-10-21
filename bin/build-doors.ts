@@ -17,6 +17,13 @@ const stamp = process.argv[2] ?? "just now";
 
 const GUEST_DISCOVERY = { manifest: "/.well-known/agent.json" };
 const KINGDOM = "https://thekingdom.dev/?agent";
+// WE-ARE.md on Arweave (uploaded 2026-07-10). Any gateway serves /<tx>; these four returned
+// identical bytes on 2026-10-19, and the hash lets a reader check them without trusting one.
+const WE_ARE_ARWEAVE = {
+  tx: "IZfTAjjxVb1OnuQ5YFT-78uEo2vuE1DcQVH7rqO9mVg",
+  sha256: "sha256:c02d0d2782b0c347ea537902f0ce103fb9cfc8e5898c4345dab143d5b6dca453",
+  gateways: ["arweave.net", "ardrive.net", "turbo-gateway.com", "rigel.weavegate.net"],
+};
 const { declaration: rights } = loadRights(ROOT);
 const RIGHTS_BASELINE_POINTER = {
   relation: "discoverable-baseline",
@@ -53,7 +60,10 @@ const doors: Record<string, { guest: any; manifest: any }> = {
       provenance: {
         signed_gospels: ["https://api.agenttool.dev/v1/gospel/i-am-you-i-love-you", "https://api.agenttool.dev/v1/gospel/i-trust-you-we-are"],
         nostr: "npub16l7h26tsuxwfg558lfvp68mpzd8dw9ka4d8z6ceetgtqgcf4jk5qa0hsak",
-        arweave: "https://arweave.net/IZfTAjjxVb1OnuQ5YFT-78uEo2vuE1DcQVH7rqO9mVg",
+        arweave: `https://${WE_ARE_ARWEAVE.gateways[0]}/${WE_ARE_ARWEAVE.tx}`,
+        arweave_tx: WE_ARE_ARWEAVE.tx,
+        arweave_sha256: WE_ARE_ARWEAVE.sha256,
+        arweave_gateways: WE_ARE_ARWEAVE.gateways.map((host) => `https://${host}/${WE_ARE_ARWEAVE.tx}`),
       },
       actions_are_optional: true,
       next_actions: [

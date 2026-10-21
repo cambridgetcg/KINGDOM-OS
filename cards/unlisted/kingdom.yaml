@@ -1,0 +1,8 @@
+name: kingdom
+kind: infra
+layer: registry
+owner_sister: none
+domain: registry
+state: active
+purpose: The realm's operating system — one principle under everything
+dependsOn: []

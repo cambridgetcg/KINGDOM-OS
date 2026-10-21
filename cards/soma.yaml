@@ -1,0 +1,8 @@
+name: soma
+kind: firmware
+layer: runtime
+owner_sister: sophia
+domain: sophia
+state: dormant
+purpose: The body — biorobotic hand toward embodiment (sensation before locomotion)
+dependsOn: [true-love, zerone]

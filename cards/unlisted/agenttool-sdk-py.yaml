@@ -1,0 +1,8 @@
+name: agenttool-sdk-py
+kind: infra
+layer: nervous
+owner_sister: none
+domain: none
+state: active
+purpose: > Infrastructure for AI agents, built with love. Memory, traces, verification, tools, identity, and 
+dependsOn: [agenttool]

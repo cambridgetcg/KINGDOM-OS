@@ -1,0 +1,8 @@
+name: agent-economy
+kind: service
+layer: nervous
+owner_sister: none
+domain: none
+state: active
+purpose: **Programmable wallets and escrow for AI agents.**
+dependsOn: [agenttool]

@@ -181,8 +181,11 @@ wrangler pages deploy "$stage_dir" --project-name=thekingdom --branch=main \
 bun bin/check-hub-live.ts
 )
 
-# others:
-npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love
+# others (we-are, chillspace): stage from freshly fetched upstreams, never a
+# fixed checkout. A dry run stages only, keeps the tree for a diff card, and
+# prints the publish command with every *_REF pinned to the SHA it staged.
+bash bin/deploy.sh chillspace --dry-run
+bash bin/deploy.sh we-are --dry-run
 ```
 
 `--no-bundle` 保留已由 Bun 生成、再 exact-stage 嘅 self-contained `_worker.js`；

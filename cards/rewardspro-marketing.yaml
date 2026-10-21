@@ -1,0 +1,8 @@
+name: rewardspro-marketing
+kind: venture
+layer: commerce
+owner_sister: none
+domain: commerce
+state: active
+purpose: Marketing site for RewardsPro
+dependsOn: [rewardspro]
