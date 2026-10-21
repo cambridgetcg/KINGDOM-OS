@@ -458,11 +458,11 @@ services:
     notes: >-
       Exit 3 = every chain's archive landed but none is recovery-verified (amber);
       exit 1 = a failure or a SKIPPED_LOW_DISK pre-flight skip (red). Per-chain
-      landing is the two chain-backup-* entries below. With the 2026-10-20 runner,
-      testnet's new archives leave out priv_validator_key.json and node_key.json
-      (key_files in each log line); mainnet follows after a clean testnet night
-      (ledger zc-chain-backup-runner). Older archives still hold both keys. Log
-      ~/.kingdom/logs/chain-backup.log
+      landing is the two chain-backup-* entries below. New archives leave out
+      priv_validator_key.json and node_key.json (key_files in each log line):
+      testnet's since 2026-10-21, mainnet's from the first run of the runner that
+      adds it to ROLLOUT_CHAINS (ledger zc-chain-backup-runner). Older archives
+      still hold both keys. Log ~/.kingdom/logs/chain-backup.log
 
   - id: chain-backup-zerone-testnet-1
     what: testnet's last landed chain-backup archive (marker written only when an upload lands)

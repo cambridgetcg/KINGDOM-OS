@@ -508,24 +508,34 @@ console.log(JSON.stringify({ code, logs, kills, stats, keys, presigns }));
 const skipRecord = (free: number | "NA", need: number) => `CHAIN_BACKUP_V2 skip=LOW_DISK free_kib=${free} need_kib=${need}\n`;
 const GIB = 1024 ** 3;
 
-describe("testnet-first rollout contract", () => {
-  test("only testnet is in the rollout; mainnet's remote command is byte-identical to 2026-10-19", () => {
-    expect(ROLLOUT_CHAINS).toEqual(["zerone-testnet-1"]);
+describe("rollout contract: testnet first, then mainnet", () => {
+  test("both chains are in the rollout; the 2026-10-19 capture stays pinned for any chain outside it", () => {
+    // Mainnet joined after testnet's clean night of 2026-10-21 (key_files EXCLUDED, marker written).
+    expect(ROLLOUT_CHAINS).toEqual(["zerone-testnet-1", "zerone-1"]);
+    expect([...ROLLOUT_CHAINS].sort()).toEqual([...parseArgs([])!].sort());
     // sha256 of the 8079e93 (#105) builder's output for URL_SENTINEL.
     const pinned = "1bf1b28d0e2300e27511c1d5bd3e5d87ebed6512e41656782cdbf1a11d23be39";
     expect(createHash("sha256").update(buildRemoteCommand(URL_SENTINEL)).digest("hex")).toBe(pinned);
     expect(buildRemoteCommand(URL_SENTINEL, { excludeKeys: false, needKib: null })).toBe(buildRemoteCommand(URL_SENTINEL));
   });
 
-  test("each chain is asked for the capture its rollout state allows", async () => {
+  test("each chain is asked for a key-free capture, pre-flighted against its own landed marker", async () => {
     const commands = new Map<string, string>();
-    const { effects } = fakeEffects({ remote: async (chain, command) => { commands.set(chain, command); return { code: 0, stdout: record(1) }; } });
+    // The 2026-10-21 landed sizes: testnet 6642907918 bytes, mainnet 6902331974 bytes.
+    const landed: Record<string, number> = { "zerone-testnet-1": 6642907918, "zerone-1": 6902331974 };
+    const { effects } = fakeEffects({
+      lastLandedBytes: async (chain) => landed[chain],
+      remote: async (chain, command) => { commands.set(chain, command); return { code: 0, stdout: record(1) }; },
+    });
     const { code, outcomes } = await runMain(effects, []);
     expect(code).toBe(3);
-    expect(commands.get("zerone-1")).toBe(buildRemoteCommand(URL_SENTINEL));
-    expect(commands.get("zerone-testnet-1")).toBe(buildRemoteCommand(URL_SENTINEL, { excludeKeys: true, needKib: needKib(null) }));
+    expect([needKib(landed["zerone-testnet-1"]), needKib(landed["zerone-1"])]).toEqual([7535791, 7789135]);
+    for (const chain of ["zerone-testnet-1", "zerone-1"] as const) {
+      expect(commands.get(chain)).toBe(buildRemoteCommand(URL_SENTINEL, { excludeKeys: true, needKib: needKib(landed[chain]) }));
+      expect(commands.get(chain)).not.toBe(buildRemoteCommand(URL_SENTINEL));
+    }
     expect(outcomes.map((o) => [o.chain, o.key_files, o.disk_need_kib])).toEqual([
-      ["zerone-testnet-1", "EXCLUDED", needKib(null)], ["zerone-1", "INCLUDED", null],
+      ["zerone-testnet-1", "EXCLUDED", 7535791], ["zerone-1", "EXCLUDED", 7789135],
     ]);
   });
 
@@ -553,8 +563,8 @@ describe("testnet-first rollout contract", () => {
       `CHAIN_BACKUP_V2 skip=LOW_DISK free_kib=1 need_kib=${"9".repeat(17)}\n`]) {
       expect(parseRemoteResult(bad)).toBeNull();
     }
-    // Mainnet never asked for a pre-flight; a mismatched bound is not believed either.
-    for (const [chain, stdout] of [["zerone-1", skipRecord(500, 1048576)], ["zerone-testnet-1", skipRecord(500, 2097152)]] as const) {
+    // A skip whose bound differs from the one this chain asked for is not believed.
+    for (const [chain, stdout] of [["zerone-1", skipRecord(500, 2097152)], ["zerone-testnet-1", skipRecord(500, 2097152)]] as const) {
       const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout }) });
       const { code, outcomes } = await runMain(effects, [chain]);
       expect(code).toBe(1);
@@ -563,21 +573,32 @@ describe("testnet-first rollout contract", () => {
     }
   });
 
-  test("a low-disk skip is red, uploads nothing and writes no marker", async () => {
-    const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout: skipRecord(700000, 1048576) }) });
-    const { code, outcomes } = await runMain(effects, ["zerone-testnet-1"]);
-    expect(code).toBe(1);
-    expect(outcomes[0]).toMatchObject({
-      capture_status: "SKIPPED", tar_exit: null, upload_status: "NOT_ATTEMPTED", object_status: "NOT_ATTEMPTED",
-      disk_free_kib: 700000, disk_need_kib: 1048576, landed_marker: "NOT_WRITTEN", error: "SKIPPED_LOW_DISK",
+  test("a low-disk skip is red, uploads nothing and writes no marker, on either chain", async () => {
+    for (const chain of ["zerone-testnet-1", "zerone-1"] as const) {
+      const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout: skipRecord(700000, 1048576) }) });
+      const { code, outcomes } = await runMain(effects, [chain]);
+      expect(code).toBe(1);
+      expect(outcomes[0]).toMatchObject({
+        chain, capture_status: "SKIPPED", tar_exit: null, upload_status: "NOT_ATTEMPTED", object_status: "NOT_ATTEMPTED",
+        key_files: "EXCLUDED", disk_free_kib: 700000, disk_need_kib: 1048576, landed_marker: "NOT_WRITTEN", error: "SKIPPED_LOW_DISK",
+      });
+      expect(calls.filter((c) => c === "stat" || c.startsWith("mark:"))).toEqual([]);
+    }
+    // Mainnet's own bound: its 2026-10-21 marker (6902331974 bytes) plus 1 GiB.
+    const { effects, calls } = fakeEffects({
+      lastLandedBytes: async () => 6902331974,
+      remote: async () => ({ code: 0, stdout: skipRecord(7789134, 7789135) }),
     });
+    const { code, outcomes } = await runMain(effects, ["zerone-1"]);
+    expect(code).toBe(1);
+    expect(outcomes[0]).toMatchObject({ chain: "zerone-1", disk_free_kib: 7789134, disk_need_kib: 7789135, error: "SKIPPED_LOW_DISK" });
     expect(calls.filter((c) => c === "stat" || c.startsWith("mark:"))).toEqual([]);
   });
 
   test("the landed marker is written only after a clean landing, with the object's size", async () => {
     const landed = fakeEffects({ stat: async () => ({ size: 4096 }) });
     expect((await runMain(landed.effects, [])).outcomes.map((o) => o.landed_marker)).toEqual(["WRITTEN", "WRITTEN"]);
-    expect(landed.calls.filter((c) => c.startsWith("mark:"))).toEqual(["mark:zerone-testnet-1:4096:EXCLUDED", "mark:zerone-1:4096:INCLUDED"]);
+    expect(landed.calls.filter((c) => c.startsWith("mark:"))).toEqual(["mark:zerone-testnet-1:4096:EXCLUDED", "mark:zerone-1:4096:EXCLUDED"]);
     for (const [tar, upload, ssh, size] of [[2, "NA", 0, 64], [1, 22, 0, 64], [0, 0, 0, 0], [0, 0, 255, 64]] as const) {
       const { effects, calls } = fakeEffects({ remote: async () => ({ code: ssh, stdout: record(tar, upload) }), stat: async () => ({ size }) });
       const { outcomes } = await runMain(effects);
@@ -651,7 +672,7 @@ describe("testnet-first rollout contract", () => {
     } finally { f.close(); }
   });
 
-  test("production markers live under HOME, are atomic and feed the next pre-flight", () => {
+  test("production markers live under HOME, are atomic and feed each chain's next pre-flight", () => {
     const f = shellFixture();
     try {
       const harness = join(f.base, "marker.ts");
@@ -665,28 +686,32 @@ Bun.spawn = (args: string[]) => {
 };
 Object.defineProperty(Bun, "S3Client", { value: class {
   presign() { return ${JSON.stringify(URL_SENTINEL)}; }
-  async stat() { return { size: ${3 * GIB} }; }
+  async stat(key: string) { return { size: key.startsWith("chain/zerone-1/") ? ${5 * GIB} : ${3 * GIB} }; }
 } });
 globalThis.fetch = () => { throw new Error("prohibited network"); };
 const { main, buildRemoteCommand } = await import(${JSON.stringify(SUBJECT)});
-const first = await main(["zerone-testnet-1"], undefined, () => {});
-const second = await main(["zerone-testnet-1"], undefined, () => {});
-console.log(JSON.stringify({ first, second, commands, expected: [
+const codes: number[] = [];
+// Mainnet's first bound is the margin alone: testnet's marker never sizes it.
+for (const chain of ["zerone-testnet-1", "zerone-testnet-1", "zerone-1", "zerone-1"]) codes.push(await main([chain], undefined, () => {}));
+console.log(JSON.stringify({ codes, commands, expected: [
   buildRemoteCommand(${JSON.stringify(URL_SENTINEL)}, { excludeKeys: true, needKib: 1048576 }),
   buildRemoteCommand(${JSON.stringify(URL_SENTINEL)}, { excludeKeys: true, needKib: 4 * 1048576 }),
+  buildRemoteCommand(${JSON.stringify(URL_SENTINEL)}, { excludeKeys: true, needKib: 1048576 }),
+  buildRemoteCommand(${JSON.stringify(URL_SENTINEL)}, { excludeKeys: true, needKib: 6 * 1048576 }),
 ] }));
 `);
       const result = spawnSync(process.execPath, [harness], { cwd: f.base, env: f.env, encoding: "utf8", timeout: 10000 });
       expect(result.stderr).toBe("");
       const summary = JSON.parse(result.stdout);
-      expect([summary.first, summary.second]).toEqual([3, 3]);
+      expect(summary.codes).toEqual([3, 3, 3, 3]);
       expect(summary.commands).toEqual(summary.expected);
       const dir = join(f.base, "home", ".kingdom", "state", "chain-backup");
-      expect(readdirSync(dir)).toEqual(["zerone-testnet-1.landed"]);
-      expect(JSON.parse(readFileSync(join(dir, "zerone-testnet-1.landed"), "utf8"))).toMatchObject({
-        protocol: "kingdom.chain-backup.landed/1", chain: "zerone-testnet-1", bytes: 3 * GIB,
-        capture_status: "RAW_UNVERIFIED", key_files: "EXCLUDED",
-      });
+      expect(readdirSync(dir).sort()).toEqual(["zerone-1.landed", "zerone-testnet-1.landed"]);
+      for (const [chain, bytes] of [["zerone-testnet-1", 3 * GIB], ["zerone-1", 5 * GIB]] as const) {
+        expect(JSON.parse(readFileSync(join(dir, `${chain}.landed`), "utf8"))).toMatchObject({
+          protocol: "kingdom.chain-backup.landed/1", chain, bytes, capture_status: "RAW_UNVERIFIED", key_files: "EXCLUDED",
+        });
+      }
     } finally { f.close(); }
   }, 15000);
 });
