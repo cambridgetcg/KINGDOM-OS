@@ -87,7 +87,7 @@ REASONS = frozenset({
     "transport_error", "response_too_large", "invalid_json", "invalid_response",
     "graphql_error", "api_failure", "request_budget_exhausted", "dataset_disabled",
     "settings_unavailable", "required_fields_unavailable", "window_exceeds_max_duration",
-    "window_outside_retention", "security_events_not_collected",
+    "window_outside_retention",
 })
 
 
@@ -641,17 +641,18 @@ def collect(client, account_id, *, now=None, window_end=None):
         out = [collect_view(client, "zone", zone["id"], zone["name"], view, HTTP_DATASET,
                             settings.get(HTTP_DATASET), history if view == "timeline" else window, now)
                for view in VIEWS]
-        security = observation("zone", zone["name"], "security_events", FIREWALL_DATASET, window, 300)
+        # Firewall events are never queried, so they are a limitation, not an
+        # observation: a placeholder that can never be "ok" made every run
+        # incomplete. The "security" view above carries edge security actions,
+        # and a failed settings read already shows as an error on those views.
         setting = settings.get(FIREWALL_DATASET)
-        security["reason"] = "dataset_disabled" if isinstance(setting, dict) and setting.get("enabled") is False else "security_events_not_collected" if isinstance(setting, dict) and setting.get("enabled") is True else "settings_unavailable"
-        if isinstance(setting, dict) and setting.get("_read_error") in REASONS:
-            security.update(state="error", reason=setting["_read_error"])
-        out.append(security)
-        return out
+        return out, isinstance(setting, dict) and setting.get("enabled") is True
 
+    firewall_enabled = False
     with ThreadPoolExecutor(max_workers=3) as pool:
-        for zone_observations in pool.map(zone_views, zones):
+        for zone_observations, enabled in pool.map(zone_views, zones):
             observations.extend(zone_observations)
+            firewall_enabled = firewall_enabled or enabled
     counts = {state: sum(item["state"] == state for item in observations) for state in ("ok", "unavailable", "error")}
     limitations = [
         "credential_visible_account_scope_only", "adaptive_estimates_not_unique_people",
@@ -663,7 +664,10 @@ def collect(client, account_id, *, now=None, window_end=None):
         "account_runtime_timeline_not_collected", "runtime_cpu_units_not_assumed",
         "application_reads_may_write_quota_or_housekeeping_state",
         "storage_writes_do_not_alone_establish_business_actions_or_request_causality",
+        "security_events_not_collected",
     ]
+    if firewall_enabled:
+        limitations.append("security_events_dataset_enabled_but_not_collected")
     limitations.extend(metadata_gaps)
     if any(item["truncated"] for item in observations):
         limitations.append("group_limit_reached_population_may_be_incomplete")

@@ -227,7 +227,7 @@ class CollectionTests(unittest.TestCase):
         for forbidden in ("clientRequestPath", "clientIP", "userAgent\"", "deployment_configs", '"raw_log"'):
             self.assertNotIn(forbidden, encoded)
         self.assertEqual(snapshot["scope"]["zones_expected"], 4)
-        self.assertEqual(snapshot["coverage"], {"complete": False, "observations": 44, "ok": 40, "unavailable": 4, "errors": 0})
+        self.assertEqual(snapshot["coverage"], {"complete": True, "observations": 40, "ok": 40, "unavailable": 0, "errors": 0})
         self.assertLessEqual(client.maximum_live, 3)
         self.assertGreaterEqual(client.maximum_live, 2)
         queries = [call[0] for call in client.calls if isinstance(call[0], str) and call[0].startswith("query")]
@@ -235,6 +235,24 @@ class CollectionTests(unittest.TestCase):
         self.assertFalse(any(re.search(r"\b(clientIP|userAgent|clientRequestQuery|clientRequestReferer)\b", query) for query in queries))
         data_queries = [query for query in queries if "TrafficData" in query and "zones(filter:" in query]
         self.assertEqual(sum('requestSource: "eyeball"' not in query for query in data_queries), 4)
+
+    def test_never_collected_firewall_dataset_is_a_limitation_not_a_coverage_gap(self):
+        # Regression: one "security_events" placeholder per zone was always
+        # unavailable (dataset_disabled or not collected), so no run could ever
+        # be complete. The plan's setting now gates a limitation instead.
+        client = FixtureClient(2)
+        snapshot = traffic.collect(client, ACCOUNT, now=NOW)
+        self.assertFalse(any(item["view"] == "security_events" for item in snapshot["observations"]))
+        self.assertTrue(snapshot["coverage"]["complete"])
+        self.assertIn("security_events_not_collected", snapshot["limitations"])
+        self.assertNotIn("security_events_dataset_enabled_but_not_collected", snapshot["limitations"])
+        client = FixtureClient(2)
+        client.settings["zone"][traffic.FIREWALL_DATASET] = setting(["count"])
+        snapshot = traffic.collect(client, ACCOUNT, now=NOW)
+        self.assertTrue(snapshot["coverage"]["complete"])
+        self.assertIn("security_events_dataset_enabled_but_not_collected", snapshot["limitations"])
+        queries = [call[0] for call in client.calls if isinstance(call[0], str) and call[0].startswith("query")]
+        self.assertFalse(any("firewallEventsAdaptiveGroups(" in query for query in queries))
 
     def test_exact_metadata_join_keeps_storage_effects_separate_from_requests(self):
         snapshot = traffic.collect(FixtureClient(), ACCOUNT, now=NOW)
@@ -283,7 +301,7 @@ class CollectionTests(unittest.TestCase):
         client = FixtureClient()
         client.graphql = lambda query, variables: {"ok": False, "code": "transport_error"}
         snapshot = traffic.collect(client, ACCOUNT, now=NOW)
-        self.assertEqual(snapshot["coverage"], {"complete": False, "observations": 14, "ok": 0, "unavailable": 0, "errors": 14})
+        self.assertEqual(snapshot["coverage"], {"complete": False, "observations": 13, "ok": 0, "unavailable": 0, "errors": 13})
         self.assertTrue(all(item["reason"] == "transport_error" for item in snapshot["observations"]))
 
     def test_valid_empty_success_differs_from_failure_and_errors_are_constant(self):
@@ -441,7 +459,9 @@ class PrivateOutputTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory) / "snapshot.json"
             output = io.StringIO()
-            with mock.patch.object(traffic, "credential", return_value="fixture-token"), mock.patch.object(traffic, "Client", return_value=FixtureClient()), contextlib.redirect_stdout(output):
+            client = FixtureClient()
+            client.fail_view = "clientCountryName"  # one failed view makes the snapshot partial
+            with mock.patch.object(traffic, "credential", return_value="fixture-token"), mock.patch.object(traffic, "Client", return_value=client), contextlib.redirect_stdout(output):
                 code = traffic.main(["--account-id", ACCOUNT, "--output", str(target)])
             self.assertEqual(code, 0)
             summary = json.loads(output.getvalue())
