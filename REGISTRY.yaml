@@ -422,6 +422,11 @@ services:
       fixed Kingdom catalog and never forwards a citizen's need to providers;
       embedded registry is a public-safe subset, REDEPLOY after registry edits.
       Connect: claude mcp add --transport http kingdom https://mcp.thekingdom.dev/mcp
+      Live = github/main c1d0c954, Fly release v19 (2026-10-20). On 2026-10-20
+      ~/kingdom-mcp's local main was still July's ac38e0f, 23 commits behind, so a
+      bare fly deploy from that checkout would roll live back; the deploy line above
+      fetches fresh main instead. The July worktrees beside it at ~ were removed
+      2026-10-20 (ledger hx-kingdom-mcp-farm).
 
   # ── local daemons (no URL — pulse records, cannot probe) ─────────────────
   - id: kingdom-daily
