@@ -34,6 +34,11 @@ classification is evidence, not a verdict.
 - Separate Workers and Pages Functions execution summaries.
 - Explicit unavailable, failed, sampled and truncated observations. An absent
   dataset is unknown, never zero activity.
+- Firewall security events (`firewallEventsAdaptiveGroups`) are not collected.
+  This is a standing limitation, not an unavailable observation, so it cannot
+  keep every run incomplete. The edge `security` view carries security actions
+  and sources. A separate limitation notes when a zone's plan enables the
+  dataset.
 - A private Markdown report, a self-contained filterable HTML view, a minimized
   JSON snapshot and a machine-readable run record.
 
