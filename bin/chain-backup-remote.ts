@@ -29,9 +29,10 @@ export const EXCLUDED_KEY_FILES = ["priv_validator_key.json", "node_key.json"] a
 // space is below the last landed archive plus this margin.
 export const LOW_DISK_MARGIN_BYTES = 1024 ** 3;
 // The capture changes above (key exclusion, low-disk pre-flight) apply only to
-// these chains: testnet first, and mainnet after a clean testnet night
-// (ledger zc-chain-backup-runner). Other chains run the 2026-10-19 capture unchanged.
-export const ROLLOUT_CHAINS: readonly Chain[] = ["zerone-testnet-1"];
+// these chains. Testnet went first; mainnet joined after testnet's clean night of
+// 2026-10-21 (ledger zc-chain-backup-runner). A chain outside this list would run
+// the 2026-10-19 capture unchanged.
+export const ROLLOUT_CHAINS: readonly Chain[] = ["zerone-testnet-1", "zerone-1"];
 
 type RemoteResult =
   | { kind: "capture"; tarExit: number | null; uploadExit: number | null; uploadHttp: number | null }
