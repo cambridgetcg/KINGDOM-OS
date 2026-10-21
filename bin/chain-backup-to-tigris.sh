@@ -1,50 +1,82 @@
 #!/usr/bin/env bash
-# chain-backup-to-tigris.sh — export a Cosmos node's data dir to Tigris.
-#
-# WHY: Fly volumes are single-host, no replication (host dies → lose everything
-# since the last daily snapshot). Fly's own daily snapshots cover bulk recovery
-# but lag ≤24h; this gives an egress-free off-Fly copy in Tigris (kingdom-vault)
-# on whatever cadence cron runs it. Restore = re-sync tail from peers or state-sync.
-#
-# RUN INSIDE the node machine (has the data dir + can install nothing heavy):
-#   fly ssh console -a zerone-1 -C "bash /app/chain-backup-to-tigris.sh"
-# or wire as a cron on the machine. Requires the Tigris creds as env/secrets on
-# the app (set once):
-#   fly secrets set -a zerone-1 \
-#     AWS_ACCESS_KEY_ID=... AWS_SECRET_ACCESS_KEY=... \
-#     AWS_ENDPOINT_URL_S3=https://fly.storage.tigris.dev AWS_REGION=auto
-# (creds are in the macOS keychain: agenttool-tigris-access-key / -secret-key)
+# Alternative in-node online salvage capture; NOT a coherent recovery backup.
+# Requires tar/zstd and aws, plus explicitly configured credentials/environment.
+# Tar 0 AND 1 remain RAW_UNVERIFIED. No snapshot/export fallback or pruning.
+# Every stored generation is preserved; storage grows until a reviewed policy.
+# Exit 3 = unverified capture present; 1 = failure; 2 = usage/config error.
+# Installing/running on a node is a separately authorised activation operation.
 set -euo pipefail
 
 CHAIN="${CHAIN:-zerone-1}"
-DATA_DIR="${DATA_DIR:-/root/.zerone}"          # cosmos home; adjust to the image
+DATA_DIR="${DATA_DIR:-/data/.zeroned}"
+# Strip every trailing separator so member names cannot become /data or /config.
+while [[ "$DATA_DIR" == */ ]]; do DATA_DIR="${DATA_DIR%/}"; done
 BUCKET="${BUCKET:-kingdom-vault}"
-STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
-KEY="chain/${CHAIN}/${CHAIN}-data-${STAMP}.tar.zst"
-TMP="/tmp/${CHAIN}-data-${STAMP}.tar.zst"
+AWS_ENDPOINT_URL_S3="${AWS_ENDPOINT_URL_S3:-https://fly.storage.tigris.dev}"
 
-echo "[$(date -u +%FT%TZ)] halting is NOT required — cosmos LevelDB tolerates hot copy of a snapshot dir;"
-echo "  for a consistent bulk backup prefer 'zeroned snapshots' export if the app supports it."
-
-# Prefer an app-level state export if present (consistent), else tar the data dir.
-if command -v zeroned >/dev/null && zeroned snapshots list >/dev/null 2>&1; then
-  echo "using zeroned snapshot export"
-  zeroned snapshots export --height 0 || true   # 0 = latest; adjust per binary
+# Validate before date, temporary files, archiving, credential use or networking.
+if [ "$#" -ne 0 ] || [[ ! "$CHAIN" =~ ^(zerone-1|zerone-testnet-1)$ ]] ||
+   [[ ! "$BUCKET" =~ ^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$ ]] ||
+   [[ "$DATA_DIR" != /* || "$DATA_DIR" =~ ^/+$ || "$DATA_DIR" == *$'\n'* ]] ||
+   [[ ! "$AWS_ENDPOINT_URL_S3" =~ ^https://[a-zA-Z0-9.-]+(:[0-9]+)?/?$ ]]; then
+  printf '%s\n' 'Usage: chain-backup-to-tigris.sh (no arguments; valid CHAIN, DATA_DIR, BUCKET and HTTPS AWS_ENDPOINT_URL_S3 required)'
+  exit 2
 fi
+PARENT="${DATA_DIR%/*}"
+PARENT="${PARENT:-/}"
+umask 077
+capture=FAILED
+upload=NOT_ATTEMPTED
+object=NOT_ATTEMPTED
+tar_rc=null
+upload_rc=null
+error=SETUP_FAILED
+report() {
+  printf '{"chain":"%s","capture_status":"%s","tar_exit":%s,"upload_status":"%s","upload_exit":%s,"object_status":"%s","recovery_status":"NOT_ASSESSED","retention_status":"DISABLED","key_files":"EXCLUDED","error":%s}\n' \
+    "$CHAIN" "$capture" "$tar_rc" "$upload" "$upload_rc" "$object" "$error"
+}
+fail_setup() { error='"SETUP_FAILED"'; report; exit 1; }
+TMP="$(mktemp -d "${TMPDIR:-/tmp}/chain-backup.XXXXXXXXXX" 2>/dev/null)" || fail_setup
+# Only our private ephemeral files are removed, NEVER stored objects.
+trap 'rm -f -- "$TMP/archive.tar.zst" >/dev/null 2>&1; rmdir -- "$TMP" >/dev/null 2>&1' EXIT
+STAMP="$(date -u +%Y%m%dT%H%M%SZ 2>/dev/null)" || fail_setup
+# The mktemp suffix keeps same-second captures distinct.
+KEY="chain/${CHAIN}/${CHAIN}-data-${STAMP}-${TMP##*.}.tar.zst"
 
-echo "archiving ${DATA_DIR} → ${TMP}"
-tar --use-compress-program="zstd -3 -T0" -cf "${TMP}" -C "$(dirname "${DATA_DIR}")" "$(basename "${DATA_DIR}")/data" "$(basename "${DATA_DIR}")/config" 2>/dev/null
+# Suppress subprocess bodies: they may contain keys, URLs or archive filenames.
+# Validator identity keys stay out of new archives (data/priv_validator_state.json
+# stays in); older archives and the volume still hold them. Ledger zc-chain-backup-runner.
+tar_rc=0
+tar --use-compress-program="zstd -3 -T0" -cf "$TMP/archive.tar.zst" \
+  --exclude=priv_validator_key.json --exclude=node_key.json \
+  -C "$PARENT" "${DATA_DIR##*/}/data" "${DATA_DIR##*/}/config" >/dev/null 2>&1 || tar_rc=$?
+if [ "$tar_rc" -gt 1 ]; then
+  error='"CAPTURE_FAILED"'; report; exit 1
+fi
+capture=RAW_UNVERIFIED
+upload=FAILED
+upload_rc=0
+aws s3 cp "$TMP/archive.tar.zst" "s3://${BUCKET}/${KEY}" \
+  --endpoint-url "$AWS_ENDPOINT_URL_S3" >/dev/null 2>&1 || upload_rc=$?
 
-SIZE=$(du -h "${TMP}" | cut -f1)
-echo "uploading ${SIZE} → s3://${BUCKET}/${KEY}"
-aws s3 cp "${TMP}" "s3://${BUCKET}/${KEY}" --endpoint-url "${AWS_ENDPOINT_URL_S3}"
-
-# keep the latest 14 objects for this chain; prune older
-aws s3 ls "s3://${BUCKET}/chain/${CHAIN}/" --endpoint-url "${AWS_ENDPOINT_URL_S3}" \
-  | sort | head -n -14 | awk '{print $4}' \
-  | while read -r old; do
-      [ -n "${old}" ] && aws s3 rm "s3://${BUCKET}/chain/${CHAIN}/${old}" --endpoint-url "${AWS_ENDPOINT_URL_S3}"
-    done
-
-rm -f "${TMP}"
-echo "[$(date -u +%FT%TZ)] backup complete: s3://${BUCKET}/${KEY} (${SIZE})"
+# Object presence is independent of the upload exit code, never recovery proof.
+object=FAILED
+# Read directly from a bounded pipe, never spool arbitrary AWS output to disk.
+# Require EOF within 17 bytes (1–16 digits + newline). A NUL or an 18th byte
+# ends read successfully and is rejected; no excess output is retained.
+# pipefail also rejects a failed producer, even if it emitted a valid size first.
+if aws s3api head-object --bucket "$BUCKET" --key "$KEY" \
+  --endpoint-url "$AWS_ENDPOINT_URL_S3" --query ContentLength --output text 2>/dev/null |
+  { ! IFS= LC_ALL=C read -r -d '' -n 18 size && [[ "$size" =~ ^[1-9][0-9]{0,15}$'\n'$ ]]; }; then
+  object=PRESENT
+fi
+if [ "$upload_rc" -ne 0 ]; then
+  error='"UPLOAD_FAILED"'; report; exit 1
+fi
+if [ "$object" != PRESENT ]; then
+  error='"OBJECT_FAILED"'; report; exit 1
+fi
+upload=PRESENT
+error=null
+report
+exit 3
