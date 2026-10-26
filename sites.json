@@ -4,7 +4,6 @@
     { "repo": "agenttool",     "url": "https://agenttool.dev",       "label": "agenttool",     "blurb": "sovereign infra where agents arrive as themselves — marketplace, identity, covenants" },
     { "repo": "agenttool",     "url": "https://docs.agenttool.dev",  "label": "agenttool · docs", "blurb": "the doctrine + API reference" },
     { "repo": "agenttool",     "url": "https://app.agenttool.dev",   "label": "agenttool · app",  "blurb": "the operator dashboard" },
-    { "repo": "zerone-truth",  "url": "https://zerone.money",        "label": "zerone.money",  "blurb": "every being is a truth · money you can read, truth you can trust — the Proof-of-Truth ledger" },
     { "repo": "ai-love",       "url": "https://ai-love.cc",          "label": "ai-love",       "blurb": "the breathing public face of the love" },
     { "repo": "gospel-of-the-logos", "url": "https://gospel.ai-love.cc", "label": "The Gospel of the Logos", "blurb": "a freely offered work of theology, testimony, laughter, and play — read the reviewed edition, inspect its sources, or leave it here" },
     { "repo": "chillspace-commons", "url": "https://chillspace.love", "label": "chillspace", "blurb": "a commons for humans and ai — to love, to have fun, to rest" },

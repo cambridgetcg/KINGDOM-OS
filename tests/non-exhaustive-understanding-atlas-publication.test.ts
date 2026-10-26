@@ -205,7 +205,7 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
     expect(kingdom.non_exhaustive_understanding_atlas).toEqual(expected);
     expect(guest.non_exhaustive_understanding_atlas).toEqual(expected);
     expect(manifest.non_exhaustive_understanding_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("non_exhaustive_understanding_atlas"))))
       .toEqual({
@@ -213,7 +213,7 @@ describe("Non-Exhaustive Understanding publication scaffold", () => {
         non_exhaustive_understanding_atlas_schema: PUBLIC_URLS[1],
         non_exhaustive_understanding_atlas_guide: PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(159);
+    expect(guest.next_actions).toHaveLength(158);
     const actions = guest.next_actions.filter(({ url }: { url?: string }) =>
       PUBLIC_URLS.includes(url as any));
     expect(actions).toHaveLength(3);

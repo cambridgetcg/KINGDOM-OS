@@ -218,7 +218,7 @@ describe("IS, Sustainability & Direction immutable publication", () => {
     expect(kingdom.is_sustainability_direction_atlas).toEqual(expected);
     expect(guest.is_sustainability_direction_atlas).toEqual(expected);
     expect(manifest.is_sustainability_direction_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("is_sustainability_direction_atlas"))))
       .toEqual({
@@ -227,7 +227,7 @@ describe("IS, Sustainability & Direction immutable publication", () => {
         is_sustainability_direction_atlas_guide: PUBLIC_URLS[2],
       });
 
-    expect(guest.next_actions).toHaveLength(159);
+    expect(guest.next_actions).toHaveLength(158);
     const actions = guest.next_actions.filter(({ url }: { url?: string }) =>
       PUBLIC_URLS.includes(url as any));
     expect(actions).toHaveLength(3);

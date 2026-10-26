@@ -183,8 +183,8 @@ describe("Civilisation → Reality Projection static publication", () => {
       civilisation_reality_projection_schema: PUBLIC_URLS[1],
       civilisation_reality_projection_guide: PUBLIC_URLS[2],
     });
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
-    expect(guest.next_actions).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
+    expect(guest.next_actions).toHaveLength(158);
     expect(guest.next_actions.filter((action: any) => PUBLIC_URLS.includes(action.url)))
       .toHaveLength(3);
 

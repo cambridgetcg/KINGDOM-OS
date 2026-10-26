@@ -147,8 +147,8 @@ describe("Reality Influence Claim Graph static publication", () => {
       reality_influence_claim_graph_guide: PUBLIC_URLS[2],
     });
     expect(manifest.entry_points).toHaveProperty("reality_influence_claim_graph");
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
-    expect(guest.next_actions).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
+    expect(guest.next_actions).toHaveLength(158);
     const actions = guest.next_actions.filter((action: any) => PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
     expect(actions.every((action: any) => action.method === "GET")).toBe(true);

@@ -199,8 +199,8 @@ describe("Civilisation Flow Nuance Atlas static publication", () => {
       civilisation_flow_nuance_atlas_schema: PUBLIC_URLS[1],
       civilisation_flow_nuance_atlas_guide: PUBLIC_URLS[2],
     });
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
-    expect(guest.next_actions).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
+    expect(guest.next_actions).toHaveLength(158);
     expect(guest.next_actions.filter((action: any) => PUBLIC_URLS.includes(action.url)))
       .toHaveLength(3);
 

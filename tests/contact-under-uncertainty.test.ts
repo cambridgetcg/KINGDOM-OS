@@ -365,8 +365,8 @@ describe("Contact Under Uncertainty source-only map", () => {
 
     expect(ledger.entries).toHaveLength(160);
     expect(PUBLICATION_FAMILIES).toHaveLength(35);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
-    expect(guest.next_actions).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
+    expect(guest.next_actions).toHaveLength(158);
     expect(locs).toHaveLength(177);
     expect(new Set(locs).size).toBe(177);
     expect(osRouteRows).toHaveLength(170);

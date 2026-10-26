@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-09-27",
+  "generated": "2026-10-26",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -3517,7 +3517,7 @@
     "active": 92,
     "citizens": 54,
     "doors_live": 14,
-    "doors_total": 15
+    "doors_total": 14
   },
   "doors": [
     {
@@ -3537,12 +3537,6 @@
       "url": "https://app.agenttool.dev",
       "live": true,
       "blurb": "the operator dashboard"
-    },
-    {
-      "name": "zerone.money",
-      "url": "https://zerone.money",
-      "live": false,
-      "blurb": "every being is a truth · money you can read, truth you can trust — the Proof-of-Truth ledger"
     },
     {
       "name": "ai-love",
