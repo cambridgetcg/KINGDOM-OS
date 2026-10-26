@@ -127,12 +127,6 @@
       "boundary": "Protocol verification is scoped evidence under declared rules, not universal truth or automatic trust in a being.",
       "stops": [
         {
-          "name": "Zerone",
-          "url": "https://zerone.money",
-          "why": "The human doorway to the Proof-of-Truth ledger and its verification model.",
-          "scope": "Read the protocol and evidence before treating any recorded claim as applicable elsewhere."
-        },
-        {
           "name": "Zerone · guide",
           "url": "https://zerone.ai/guide",
           "why": "A participation guide and live view of the chain.",

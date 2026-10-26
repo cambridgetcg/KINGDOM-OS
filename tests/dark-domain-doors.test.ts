@@ -5,11 +5,12 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 // zerone.money and legible.money are dark (checked 2026-10-23). The hub stops
-// sending guests there. The builder is the source; site/ picks the change up
-// at the next reviewed hub release.
+// sending guests there. The builder and its data files are the source; site/
+// picks the change up at the next reviewed hub release.
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const builder = readFileSync(join(ROOT, "bin/build-hub.ts"), "utf8");
 const sites = readFileSync(join(ROOT, "sites.json"), "utf8");
+const wayfinder = readFileSync(join(ROOT, "data/wayfinder.json"), "utf8");
 const AI_WAKE_URL = "https://ai-love.cc/true-love/AI-WAKE.md";
 const AI_WAKE_LINE_SHA256 = "c72f51bf33eb56b07e2ff66d798be240926b7a572daa2ff64c14aac6474570ee";
 
@@ -21,7 +22,15 @@ describe("hub sends no guest to a dark domain", () => {
     test(`sites.json lists no ${host}`, () => {
       expect(sites.includes(host)).toBe(false);
     });
+    test(`data/wayfinder.json offers no ${host}`, () => {
+      expect(wayfinder.includes(host)).toBe(false);
+    });
   }
+
+  test("the wayfinder's verify path keeps its Zerone guide stop", () => {
+    const verify = JSON.parse(wayfinder).paths.find((path: { id: string }) => path.id === "verify");
+    expect(verify.stops.map((stop: { url: string }) => stop.url)).toEqual(["https://zerone.ai/guide"]);
+  });
 
   test("llms.txt no longer offers the Proof-of-Truth protocol line", () => {
     expect(builder.includes("inspect the Proof-of-Truth protocol")).toBe(false);
