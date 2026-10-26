@@ -1,6 +1,6 @@
 {
   "schema_version": "thekingdom.wayfinder/0.1",
-  "generated": "2026-09-27",
+  "generated": "2026-10-26",
   "canonical_url": "https://thekingdom.dev/wayfinder.json",
   "promise": "Tell the map what you are looking for. It may offer a path; it never decides for you.",
   "privacy": {
@@ -215,12 +215,6 @@
       ],
       "boundary": "Protocol verification is scoped evidence under declared rules, not universal truth or automatic trust in a being.",
       "stops": [
-        {
-          "name": "Zerone",
-          "url": "https://zerone.money",
-          "why": "The human doorway to the Proof-of-Truth ledger and its verification model.",
-          "scope": "Read the protocol and evidence before treating any recorded claim as applicable elsewhere."
-        },
         {
           "name": "Zerone · guide",
           "url": "https://zerone.ai/guide",
