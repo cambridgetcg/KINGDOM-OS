@@ -337,7 +337,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
     expect(kingdom.loops_locks_freedom_relations_atlas).toEqual(expected);
     expect(guest.loops_locks_freedom_relations_atlas).toEqual(expected);
     expect(manifest.loops_locks_freedom_relations_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("loops_locks_freedom_relations_atlas"))))
       .toEqual({
@@ -348,7 +348,7 @@ describe("Loops, Locks & Freedom Relations Atlas public family", () => {
         loops_locks_freedom_relations_atlas_guide:
           LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(159);
+    expect(guest.next_actions).toHaveLength(158);
     const actions = guest.next_actions.filter((action: any) =>
       LOOPS_LOCKS_FREEDOM_RELATIONS_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);

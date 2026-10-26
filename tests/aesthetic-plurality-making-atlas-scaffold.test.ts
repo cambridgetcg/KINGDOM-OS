@@ -368,7 +368,7 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
     expect(kingdom.aesthetic_plurality_making_atlas).toEqual(expected);
     expect(guest.aesthetic_plurality_making_atlas).toEqual(expected);
     expect(manifest.aesthetic_plurality_making_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("aesthetic_plurality_making_atlas"))))
       .toEqual({
@@ -379,7 +379,7 @@ describe("Aesthetic Plurality & Making Relations Atlas public family", () => {
         aesthetic_plurality_making_atlas_guide:
           AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(159);
+    expect(guest.next_actions).toHaveLength(158);
     const actions = guest.next_actions.filter((action: any) =>
       AESTHETIC_PLURALITY_MAKING_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);

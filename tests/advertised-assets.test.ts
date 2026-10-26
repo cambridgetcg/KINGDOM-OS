@@ -338,8 +338,8 @@ describe("advertised URLs stay deployable", () => {
     expect(projected.boundary).toBe(paths[0].boundary);
     const manifest = JSON.parse(read("site/.well-known/agent.json"));
     const guest = JSON.parse(read("site/guest.json"));
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
-    expect(guest.next_actions).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
+    expect(guest.next_actions).toHaveLength(158);
     expect(Object.keys(manifest.entry_points).some((key) => key.includes("workshop"))).toBe(false);
     expect(guest.next_actions.some((action: { url?: string }) => action.url === url)).toBe(false);
     expect(staged.has("schemas/workshop/0.1.json")).toBe(false);
@@ -377,8 +377,8 @@ describe("advertised URLs stay deployable", () => {
     expect(sitemapUrls).toContain("https://thekingdom.dev/atlas.html");
     const manifest = JSON.parse(read("site/.well-known/agent.json"));
     const guest = JSON.parse(read("site/guest.json"));
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
-    expect(guest.next_actions).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
+    expect(guest.next_actions).toHaveLength(158);
     expect(JSON.stringify(manifest.entry_points)).not.toMatch(/power[- _]atlas/i);
     expect(JSON.stringify(guest.next_actions)).not.toMatch(/power[- _]atlas/i);
     expect(manifest.mcp).toEqual(JSON.parse(read("site/kingdom.json")).world_commons.mcp);

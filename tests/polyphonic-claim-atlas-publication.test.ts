@@ -231,7 +231,7 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
     expect(kingdom.polyphonic_claim_atlas).toEqual(expected);
     expect(guest.polyphonic_claim_atlas).toEqual(expected);
     expect(manifest.polyphonic_claim_atlas).toEqual(expected);
-    expect(Object.keys(manifest.entry_points)).toHaveLength(159);
+    expect(Object.keys(manifest.entry_points)).toHaveLength(158);
     expect(Object.fromEntries(Object.entries(manifest.entry_points)
       .filter(([key]) => key.startsWith("polyphonic_claim_atlas"))))
       .toEqual({
@@ -239,7 +239,7 @@ describe("Polyphonic Claim Atlas public-family scaffold", () => {
         polyphonic_claim_atlas_schema: POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS[1],
         polyphonic_claim_atlas_guide: POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS[2],
       });
-    expect(guest.next_actions).toHaveLength(159);
+    expect(guest.next_actions).toHaveLength(158);
     const actions = guest.next_actions.filter((action: any) =>
       POLYPHONIC_CLAIM_ATLAS_PUBLIC_URLS.includes(action.url));
     expect(actions).toHaveLength(3);
