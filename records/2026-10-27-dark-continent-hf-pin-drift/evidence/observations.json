@@ -1,0 +1,1988 @@
+{
+  "record": "dark-continent-hf-pin-drift",
+  "observed_on": "2026-10-27",
+  "schema": "none; derived evidence for the KARMA receipt in this directory",
+  "method": {
+    "endpoints": [
+      "GET https://huggingface.co/api/{models|datasets|spaces}/<owner/name>?expand=…",
+      "GET https://huggingface.co/api/{models|datasets|spaces}/<owner/name>/revision/<pin>?expand=… (only where head differed from the pin)"
+    ],
+    "expand_fields": {
+      "model_and_dataset": [
+        "sha",
+        "lastModified",
+        "private",
+        "gated",
+        "disabled",
+        "cardData",
+        "tags"
+      ],
+      "space": [
+        "sha",
+        "lastModified",
+        "private",
+        "disabled",
+        "cardData",
+        "tags"
+      ]
+    },
+    "client": "curl, anonymous, User-Agent 'Mozilla/5.0', no token, cookie, netrc or curl config; no redirect following; no retry",
+    "license_rule": "assertion = cardData.license when present, else the first license:* tag, else not_declared",
+    "visibility_rule": "private or disabled -> unavailable; gated false -> public; gated auto/manual -> gated; spaces: gated not requested",
+    "verdict_precedence": "gone > unknown > gating-changed > license-changed > moved > unchanged; the comparison fields keep each dimension separate",
+    "requests": 35,
+    "request_log": "evidence/requests.jsonl"
+  },
+  "local_sources": [
+    {
+      "source": "cambridgetcg/KINGDOM-OS",
+      "revision": "b719f2546c8765238a8f0ca0cfee9884669864c0",
+      "path": "skills/navigate-dark-continent/references/hf-boundaries.md",
+      "bytes": 11260,
+      "sha256": "sha256:9af2593e8f06d6075d352736b1b240a1fee3856622bdf0bdb04728a1ad9bc757",
+      "license": "none declared (no repository license file at this revision)"
+    },
+    {
+      "source": "cambridgetcg/agenttool",
+      "revision": "8947c8fdf17c60590ad4d983f6a464cd0de28983",
+      "path": "packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl",
+      "bytes": 48811,
+      "sha256": "sha256:49d29d78d5d7a31686e373d06487cdfb7eed6727289581e45c1cb4b0e2d2252f",
+      "license": "Apache-2.0 (package license; dataset card license: apache-2.0)",
+      "git_blob": "b0357d47177d9d44c1834d3d760278f9699a97e6",
+      "same_blob_at_training_atlas_pin_3841a5fc": true
+    },
+    {
+      "source": "cambridgetcg/agenttool",
+      "revision": "8947c8fdf17c60590ad4d983f6a464cd0de28983",
+      "path": "packages/dark-continent-karma/hf/space/source-manifest.json",
+      "bytes": 1138,
+      "sha256": "sha256:cdd879791468c819a900198d9f13c56b69cafbf5a09c4326af21810b08d231f2",
+      "license": "Apache-2.0 (package license)",
+      "git_blob": "5ed723077d69dba614827e4fc762ee8142c42502"
+    },
+    {
+      "source": "cambridgetcg/agenttool",
+      "revision": "8947c8fdf17c60590ad4d983f6a464cd0de28983",
+      "path": "packages/dark-continent-karma/hf/dataset/README.md",
+      "bytes": 5856,
+      "sha256": "sha256:1751beef0e10cdede196bc8d6f76a8086aa357be236a5fa4d90b8390db6fa6e1",
+      "license": "Apache-2.0 (package license; card front matter license: apache-2.0)",
+      "git_blob": "dc6daa00476a4a80f8271212510a2667dacd6c34"
+    },
+    {
+      "source": "cambridgetcg/hf-kingdom-lab",
+      "revision": "d8e48068bd9af7689f3fea6cbb8d05d4e10e312a",
+      "path": "committed tree (git ls-tree -r listing digested; git grep over every path)",
+      "bytes": 5956,
+      "sha256": "sha256:ed78616fcfa3ed3a3e3ff39083b1a20245e250b2e1f82bbf1740a7a6bd5f1456",
+      "license": "Apache-2.0 (repository LICENSE); only searched, nothing reused",
+      "finding": "no match for handshake; no match for dark continent, kingdom.karma or nen-hf-evidence-ref"
+    }
+  ],
+  "counts": {
+    "unchanged": 33,
+    "license-changed": 1
+  },
+  "resources": [
+    {
+      "kind": "model",
+      "id": "mlx-community/gpt-oss-20b-MXFP4-Q8",
+      "pin": {
+        "revision": "773a7da77e569019bb0fd17a554b263738d669a3",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Existing local evaluator)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "apache-2.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 1,
+          "http_status": 200,
+          "sha": "773a7da77e569019bb0fd17a554b263738d669a3",
+          "lastModified": "2026-03-19T10:30:16.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 1,
+          "lastModified": "2026-03-19T10:30:16.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "model",
+      "id": "mlx-community/Qwen3-30B-A3B-Instruct-2507-4bit",
+      "pin": {
+        "revision": "e9675aa3ca5f900ccef55267914466d55ab325fa",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Multilingual critic candidate)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "apache-2.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 2,
+          "http_status": 200,
+          "sha": "e9675aa3ca5f900ccef55267914466d55ab325fa",
+          "lastModified": "2025-08-06T13:40:37.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 2,
+          "lastModified": "2025-08-06T13:40:37.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "model",
+      "id": "Xenova/all-MiniLM-L6-v2",
+      "pin": {
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Current semantic lane)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": null,
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 3,
+          "http_status": 200,
+          "sha": "751bff37182d3f1213fa05d7196b954e230abad9",
+          "lastModified": "2025-07-22T16:42:24.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 3,
+          "lastModified": "2025-07-22T16:42:24.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": "no_baseline",
+        "license_at_pin_matches_baseline": null
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "model",
+      "id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "pin": {
+        "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Chinese semantic candidate)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": null,
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 4,
+          "http_status": 200,
+          "sha": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+          "lastModified": "2026-01-28T10:02:26.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 4,
+          "lastModified": "2026-01-28T10:02:26.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": "no_baseline",
+        "license_at_pin_matches_baseline": null
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "model",
+      "id": "alvanlii/whisper-small-cantonese",
+      "pin": {
+        "revision": "b03a4e5d482f06858ce10ebbabebabec9f447a0d",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Cantonese voice candidate)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "apache-2.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 5,
+          "http_status": 200,
+          "sha": "b03a4e5d482f06858ce10ebbabebabec9f447a0d",
+          "lastModified": "2025-11-20T04:10:40.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 5,
+          "lastModified": "2025-11-20T04:10:40.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "leeduckgo/cantonese-life-scenarios-corpus",
+      "pin": {
+        "revision": "e9bfb8f07250faab06a6ad8ed46f9b02567f886c",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Cantonese life-scenario fixture candidate)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "cc-by-4.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 6,
+          "http_status": 200,
+          "sha": "e9bfb8f07250faab06a6ad8ed46f9b02567f886c",
+          "lastModified": "2026-07-11T05:39:58.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 6,
+          "lastModified": "2026-07-11T05:39:58.000Z",
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "gorilla-llm/Berkeley-Function-Calling-Leaderboard",
+      "pin": {
+        "revision": "61fc0608cfd831fcfbbaa676ebdfef0ed963eeda",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Tool-choice evaluation)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "apache-2.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 7,
+          "http_status": 200,
+          "sha": "61fc0608cfd831fcfbbaa676ebdfef0ed963eeda",
+          "lastModified": "2026-04-29T00:03:02.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 7,
+          "lastModified": "2026-04-29T00:03:02.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "AI-Secure/DTap-Bench-Agent-Trajectories",
+      "pin": {
+        "revision": "836caf2fdd78b888ddd14fb62dc038e932e17898",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Adversarial trajectories)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": null,
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 8,
+          "http_status": 200,
+          "sha": "836caf2fdd78b888ddd14fb62dc038e932e17898",
+          "lastModified": "2026-07-01T04:46:10.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 8,
+          "lastModified": "2026-07-01T04:46:10.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": "no_baseline",
+        "license_at_pin_matches_baseline": null
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "mcphunt-benchmark/mcphunt-agent-traces",
+      "pin": {
+        "revision": "062bb343fe890ae3018222c7ebe44dbd49ea76d0",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Cross-server data-propagation traces)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "cc-by-4.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 9,
+          "http_status": 200,
+          "sha": "062bb343fe890ae3018222c7ebe44dbd49ea76d0",
+          "lastModified": "2026-07-30T16:43:55.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 9,
+          "lastModified": "2026-07-30T16:43:55.000Z",
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "MCPShield/mcp-security-scan-2026",
+      "pin": {
+        "revision": "69f4f624cef494841d8855efdcf9131473d63bd0",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: MCP risk signal)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "cc-by-4.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 10,
+          "http_status": 200,
+          "sha": "69f4f624cef494841d8855efdcf9131473d63bd0",
+          "lastModified": "2026-04-11T03:06:58.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 10,
+          "lastModified": "2026-04-11T03:06:58.000Z",
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "mcp-research-alliance/mcp-ecosystem-sample",
+      "pin": {
+        "revision": "bd9274ec0a3ba990d701f856942f12099ef37f61",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Emerging MCP ecosystem sample)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "other",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 11,
+          "http_status": 200,
+          "sha": "862c164e2fc336b654368ce147812cab7efa1d6f",
+          "lastModified": "2026-08-03T16:20:23.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "pinned-revision response",
+          "request": 35,
+          "lastModified": "2026-07-31T04:16:10.000Z",
+          "license": {
+            "card": "other",
+            "tags": [
+              "other"
+            ],
+            "assertion": "other"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": false,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": false,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "license-changed"
+    },
+    {
+      "kind": "model",
+      "id": "Tongyi-MAI/Z-Image-Turbo",
+      "pin": {
+        "revision": "f332072aa78be7aecdf3ee76d5c247082da564a6",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Worldbuilding image model)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "apache-2.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 12,
+          "http_status": 200,
+          "sha": "f332072aa78be7aecdf3ee76d5c247082da564a6",
+          "lastModified": "2026-01-30T16:58:07.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 12,
+          "lastModified": "2026-01-30T16:58:07.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "space",
+      "id": "mcp-tools/Z-Image-Turbo",
+      "pin": {
+        "revision": "523314ae75f69a4df28f6322d6b4560188502911",
+        "where": "KINGDOM-OS b719f254 skills/navigate-dark-continent/references/hf-boundaries.md (Reviewed public resources: Optional remote image tool)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": null,
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "table heading 'Reviewed public resources'; no per-row gating stated"
+      },
+      "observed": {
+        "current": {
+          "request": 13,
+          "http_status": 200,
+          "sha": "523314ae75f69a4df28f6322d6b4560188502911",
+          "lastModified": "2026-05-22T17:49:35.000Z",
+          "private": false,
+          "gated": "not_requested",
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 13,
+          "lastModified": "2026-05-22T17:49:35.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": "no_baseline",
+        "license_at_pin_matches_baseline": null
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "allenai/Dolci-RL-Zero-IF-7B",
+      "pin": {
+        "revision": "c96e4e424c0a5d416f725c488ec7c61b7f758d85",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 1)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "odc-by",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 14,
+          "http_status": 200,
+          "sha": "c96e4e424c0a5d416f725c488ec7c61b7f758d85",
+          "lastModified": "2026-01-05T16:24:09.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 14,
+          "lastModified": "2026-01-05T16:24:09.000Z",
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "allenai/DataDecide-eval-results",
+      "pin": {
+        "revision": "9919b5a0e61e57a85021263918fa82d6ceaee038",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 2)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "odc-by",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 15,
+          "http_status": 200,
+          "sha": "9919b5a0e61e57a85021263918fa82d6ceaee038",
+          "lastModified": "2025-04-16T20:20:58.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 15,
+          "lastModified": "2025-04-16T20:20:58.000Z",
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "allenai/signal-and-noise",
+      "pin": {
+        "revision": "e8a9789c036cd22131bc2fa2b6cec998f8fe89ec",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 3)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "apache-2.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 16,
+          "http_status": 200,
+          "sha": "e8a9789c036cd22131bc2fa2b6cec998f8fe89ec",
+          "lastModified": "2025-08-19T16:04:50.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 16,
+          "lastModified": "2025-08-19T16:04:50.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "allenai/DataDecide-data-recipes",
+      "pin": {
+        "revision": "3baf34baf5b636f0943401b5c6a2ccb7e5cf3bb9",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 4)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "odc-by",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 17,
+          "http_status": 200,
+          "sha": "3baf34baf5b636f0943401b5c6a2ccb7e5cf3bb9",
+          "lastModified": "2025-05-06T00:24:55.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 17,
+          "lastModified": "2025-05-06T00:24:55.000Z",
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "locuslab/TOFU",
+      "pin": {
+        "revision": "324592d84ae4f482ac7249b9285c2ecdb53e3a68",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 5)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "mit",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 18,
+          "http_status": 200,
+          "sha": "324592d84ae4f482ac7249b9285c2ecdb53e3a68",
+          "lastModified": "2025-03-27T22:38:57.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "mit",
+            "tags": [
+              "mit"
+            ],
+            "assertion": "mit"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 18,
+          "lastModified": "2025-03-27T22:38:57.000Z",
+          "license": {
+            "card": "mit",
+            "tags": [
+              "mit"
+            ],
+            "assertion": "mit"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "allenai/dolma3_dolmino_mix-100B-1125",
+      "pin": {
+        "revision": "f23aa129fda8335ba9760057bcc1f0c02f3d068b",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 6)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "odc-by",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 19,
+          "http_status": 200,
+          "sha": "f23aa129fda8335ba9760057bcc1f0c02f3d068b",
+          "lastModified": "2026-02-23T19:03:37.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 19,
+          "lastModified": "2026-02-23T19:03:37.000Z",
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "allenai/dolma3_longmino_mix-100B-1125",
+      "pin": {
+        "revision": "28fea4330d8f8e27221010d42c4bc53ba9ec3236",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 7)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "odc-by",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 20,
+          "http_status": 200,
+          "sha": "28fea4330d8f8e27221010d42c4bc53ba9ec3236",
+          "lastModified": "2026-02-24T02:07:54.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 20,
+          "lastModified": "2026-02-24T02:07:54.000Z",
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "Salesforce/xlam-function-calling-60k",
+      "pin": {
+        "revision": "26d14ebfe18b1f7b524bd39b404b50af5dc97866",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 8)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "cc-by-4.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "gated",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 21,
+          "http_status": 200,
+          "sha": "26d14ebfe18b1f7b524bd39b404b50af5dc97866",
+          "lastModified": "2025-01-24T19:25:58.000Z",
+          "private": false,
+          "gated": "auto",
+          "disabled": false,
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          },
+          "card_extra_gated_fields": 3
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 21,
+          "lastModified": "2025-01-24T19:25:58.000Z",
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "gated",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "HuggingFaceFW/fineweb-edu-score-2",
+      "pin": {
+        "revision": "74a19fcb9c3b0aadb0e000d16838be8c52054ae6",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 9)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "odc-by",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 22,
+          "http_status": 200,
+          "sha": "74a19fcb9c3b0aadb0e000d16838be8c52054ae6",
+          "lastModified": "2025-07-11T20:16:52.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 22,
+          "lastModified": "2025-07-11T20:16:52.000Z",
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "HuggingFaceTB/cosmopedia-100k",
+      "pin": {
+        "revision": "8fdb6dada238c1d46dd8cf61da2fb4f9c36f654d",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 10)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "apache-2.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 23,
+          "http_status": 200,
+          "sha": "8fdb6dada238c1d46dd8cf61da2fb4f9c36f654d",
+          "lastModified": "2024-02-19T23:41:30.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 23,
+          "lastModified": "2024-02-19T23:41:30.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "nvidia/HelpSteer2",
+      "pin": {
+        "revision": "990b2711a36180dd19d9c94b8627844866f8982a",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 11)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "cc-by-4.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 24,
+          "http_status": 200,
+          "sha": "990b2711a36180dd19d9c94b8627844866f8982a",
+          "lastModified": "2024-12-18T21:06:57.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 24,
+          "lastModified": "2024-12-18T21:06:57.000Z",
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "allenai/wildguardmix",
+      "pin": {
+        "revision": "d29c47f41c8b51348b5c8e8c81c039b3132b66d1",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 12)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "odc-by",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "gated",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 25,
+          "http_status": 200,
+          "sha": "d29c47f41c8b51348b5c8e8c81c039b3132b66d1",
+          "lastModified": "2024-06-29T06:29:47.000Z",
+          "private": false,
+          "gated": "auto",
+          "disabled": false,
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          },
+          "card_extra_gated_fields": 2
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 25,
+          "lastModified": "2024-06-29T06:29:47.000Z",
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "gated",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "EleutherAI/pile-deduped-pythia-preshuffled",
+      "pin": {
+        "revision": "4647773ea142ab1ff5694602fa104bbf49088408",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 13)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "not_declared",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 26,
+          "http_status": 200,
+          "sha": "4647773ea142ab1ff5694602fa104bbf49088408",
+          "lastModified": "2023-10-31T13:16:14.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": null,
+            "tags": [],
+            "assertion": "not_declared"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 26,
+          "lastModified": "2023-10-31T13:16:14.000Z",
+          "license": {
+            "card": null,
+            "tags": [],
+            "assertion": "not_declared"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "pietrolesci/pythia-deduped-memorisation-profiles",
+      "pin": {
+        "revision": "e342bbd99583e5683dc4f64e06b49f4d2a2c0a9e",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 14)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "not_declared",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 27,
+          "http_status": 200,
+          "sha": "e342bbd99583e5683dc4f64e06b49f4d2a2c0a9e",
+          "lastModified": "2025-04-09T19:28:30.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": null,
+            "tags": [],
+            "assertion": "not_declared"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 27,
+          "lastModified": "2025-04-09T19:28:30.000Z",
+          "license": {
+            "card": null,
+            "tags": [],
+            "assertion": "not_declared"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "pretraining-playground/pythia-training-metrics",
+      "pin": {
+        "revision": "8c25e3d115cfbe19a05798b11cdd7103e019a7e1",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 15)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "apache-2.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 28,
+          "http_status": 200,
+          "sha": "8c25e3d115cfbe19a05798b11cdd7103e019a7e1",
+          "lastModified": "2025-12-22T11:06:15.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 28,
+          "lastModified": "2025-12-22T11:06:15.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "allenai/reward-bench-2",
+      "pin": {
+        "revision": "7ff08853b0d5686e79b13fda8677024f566a104a",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 16)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "odc-by",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 29,
+          "http_status": 200,
+          "sha": "7ff08853b0d5686e79b13fda8677024f566a104a",
+          "lastModified": "2025-06-04T08:53:38.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 29,
+          "lastModified": "2025-06-04T08:53:38.000Z",
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "qizhou/UniEdit",
+      "pin": {
+        "revision": "8b69deb0327a0efd8a7e7b11b80a527dc33f0d42",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 17)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "mit",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 30,
+          "http_status": 200,
+          "sha": "8b69deb0327a0efd8a7e7b11b80a527dc33f0d42",
+          "lastModified": "2025-11-20T11:28:20.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "mit",
+            "tags": [
+              "mit"
+            ],
+            "assertion": "mit"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 30,
+          "lastModified": "2025-11-20T11:28:20.000Z",
+          "license": {
+            "card": "mit",
+            "tags": [
+              "mit"
+            ],
+            "assertion": "mit"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "nvidia/OpenMathReasoning",
+      "pin": {
+        "revision": "d3d08664755704f422af97d43a7ff0ded4bd95df",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 18)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "cc-by-4.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 31,
+          "http_status": 200,
+          "sha": "d3d08664755704f422af97d43a7ff0ded4bd95df",
+          "lastModified": "2025-05-27T18:43:44.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 31,
+          "lastModified": "2025-05-27T18:43:44.000Z",
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "nvidia/HelpSteer3",
+      "pin": {
+        "revision": "f6d145777bcbde96137596340fab89793acd1031",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 19)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "cc-by-4.0",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 32,
+          "http_status": 200,
+          "sha": "f6d145777bcbde96137596340fab89793acd1031",
+          "lastModified": "2025-11-16T07:18:00.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 32,
+          "lastModified": "2025-11-16T07:18:00.000Z",
+          "license": {
+            "card": "cc-by-4.0",
+            "tags": [
+              "cc-by-4.0"
+            ],
+            "assertion": "cc-by-4.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "allenai/tmax-sft",
+      "pin": {
+        "revision": "9d6ab7471ffa2884b2ef0cd2b7e5e22a027ff1b4",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl (rank 20)"
+      },
+      "baseline": {
+        "observed_on": "2026-07-31",
+        "license": "odc-by",
+        "license_basis": "the pinning source's own license field or boundary text",
+        "visibility": "public",
+        "visibility_basis": "atlas subject.visibility"
+      },
+      "observed": {
+        "current": {
+          "request": 33,
+          "http_status": 200,
+          "sha": "9d6ab7471ffa2884b2ef0cd2b7e5e22a027ff1b4",
+          "lastModified": "2026-06-23T03:28:45.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 33,
+          "lastModified": "2026-06-23T03:28:45.000Z",
+          "license": {
+            "card": "odc-by",
+            "tags": [
+              "odc-by"
+            ],
+            "assertion": "odc-by"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    },
+    {
+      "kind": "dataset",
+      "id": "Yu-and-Ai/kingdom-dark-continent-karma",
+      "pin": {
+        "revision": "4ea106235b6d7dd53122b3025163a1bb32b02f97",
+        "where": "agenttool 8947c8fd packages/dark-continent-karma/hf/space/source-manifest.json (dataset_revision, pinned_to_initial_dataset_publish)"
+      },
+      "baseline": {
+        "observed_on": null,
+        "license": "apache-2.0",
+        "license_basis": "agenttool 8947c8fd packages/dark-continent-karma/hf/dataset/README.md front matter (source card, not a Hub observation)",
+        "visibility": "public",
+        "visibility_basis": "Space README links it as a public dataset; no dated gating observation"
+      },
+      "observed": {
+        "current": {
+          "request": 34,
+          "http_status": 200,
+          "sha": "4ea106235b6d7dd53122b3025163a1bb32b02f97",
+          "lastModified": "2026-08-01T07:16:55.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          },
+          "card_extra_gated_fields": 0
+        },
+        "pinned_revision": {
+          "resolves": true,
+          "basis": "the current-info response reports this revision as head",
+          "request": 34,
+          "lastModified": "2026-08-01T07:16:55.000Z",
+          "license": {
+            "card": "apache-2.0",
+            "tags": [
+              "apache-2.0"
+            ],
+            "assertion": "apache-2.0"
+          }
+        }
+      },
+      "comparison": {
+        "head_equals_pin": true,
+        "pinned_revision_resolves": true,
+        "visibility_now": "public",
+        "visibility_matches_baseline": true,
+        "license_now_matches_baseline": true,
+        "license_at_pin_matches_baseline": true
+      },
+      "verdict": "unchanged"
+    }
+  ],
+  "inference": [
+    "Thirty-three of the thirty-four pinned resources are, as of this observation, still public at their pinned revision, which is also their head, with the license and visibility recorded on 2026-07-31 (or by the pinning source).",
+    "mcp-research-alliance/mcp-ecosystem-sample is the only drift: its pinned revision still resolves with the 'other' license that the 07-31 row recorded, while a later head now asserts cc-by-4.0. The hf-boundaries row is accurate about the pin and stale about the head. A card-level license change is a publisher assertion; it does not by itself clear the license, provenance, field-privacy or update-policy review that row requires.",
+    "Four hf-boundaries rows recorded no license on 07-31 (Xenova/all-MiniLM-L6-v2, sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2, AI-Secure/DTap-Bench-Agent-Trajectories, mcp-tools/Z-Image-Turbo). Their current assertions are recorded here for the first time; there is nothing to compare them with.",
+    "Every unchanged resource reports a lastModified at or before 2026-07-30, consistent with no commit since the 07-31 review. Repository settings such as gating can change without a commit; this is a single snapshot, not continuous monitoring.",
+    "The Yu-and-Ai/kingdom-dark-continent-karma dataset head equals the revision the Space source manifest pins (4ea10623…). The byte identity of its treasure index with AgentTool main rests on the same-day audit, not on this expedition, which downloaded no file."
+  ]
+}
