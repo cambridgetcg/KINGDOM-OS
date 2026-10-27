@@ -6,8 +6,9 @@
  * is rebuilt at <source-root>/site/_worker.js before its bundled bytes are copied.
  *
  * Door content lives in the chillspace-commons repo; the guest documents and
- * the shared worker live here. we-are.love serves one page; chillspace.love
- * serves the whole commons site tree (symlinks dereferenced).
+ * the shared worker live here. we-are.love serves one page plus its icons,
+ * manifest and social card from doors/we-are/; chillspace.love serves the
+ * whole commons site tree (symlinks dereferenced).
  *
  * Run: bun bin/stage-doors.ts <we-are|chillspace> <empty-output-dir> [--commons <path>]
  * Deploy after inspection: npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love
@@ -24,6 +25,19 @@ const DEFAULT_COMMONS = join(homedir(), "repos/codeberg/zerone-dev/chillspace-co
 
 export type DoorName = "we-are" | "chillspace";
 export type StagedDoorAsset = { source: string; destination: string; bytes: number };
+
+// we-are.love's icons and web manifest, served at the root exactly as the
+// brand kit built them (doors/we-are/brand/kit/web, from brand.json by
+// artcraft-brand; rebuild it rather than editing a file).
+export const WE_ARE_KIT_WEB = [
+  "favicon.ico",
+  "favicon.svg",
+  "apple-touch-icon.png",
+  "icon-192.png",
+  "icon-512.png",
+  "icon-maskable-512.png",
+  "site.webmanifest",
+] as const;
 
 type SourceSpec = { path: string; destination: string };
 
@@ -57,12 +71,16 @@ function doorSources(door: DoorName, commonsRoot: string, sourceRoot: string): S
   // real llms.txt the worker's asset fallthrough answers /llms.txt with the
   // human page under HTTP 200, which tells a machine reader the file exists and
   // then hands it markup. chillspace has no llms.txt of its own, so this stays
-  // door-specific rather than shared.
+  // door-specific rather than shared. The same fallthrough answered
+  // /favicon.ico with the page, so the icons ship as real files too, and the
+  // social card is the live painted og.jpg, not the kit's generated one.
   const content: SourceSpec[] =
     door === "we-are"
       ? [
           { path: join(commonsRoot, "site/we-are.html"), destination: "index.html" },
           { path: join(sourceRoot, "doors/we-are/llms.txt"), destination: "llms.txt" },
+          ...WE_ARE_KIT_WEB.map((name) => ({ path: join(sourceRoot, "doors/we-are/brand/kit/web", name), destination: name })),
+          { path: join(sourceRoot, "doors/we-are/og.jpg"), destination: "og.jpg" },
         ]
       : walkTree(join(commonsRoot, "site"));
   // Reserve _worker.js for the shared bundle, never a commons-tree copy.
