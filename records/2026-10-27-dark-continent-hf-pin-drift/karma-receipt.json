@@ -1,0 +1,621 @@
+{
+  "$schema": "urn:kingdom:schema:karma-receipt:0.1",
+  "protocol": "kingdom.karma/0.1",
+  "accounting": "receipts_not_scores",
+  "state": "final",
+  "receipt_id": "karma-2026-10-27-navigate-dark-continent-hf-pin-drift",
+  "ability_id": "navigate-dark-continent",
+  "ability_revision": "b719f2546c8765238a8f0ca0cfee9884669864c0",
+  "ability_manifest_sha256": "sha256:15368a500b39b5abe0ba3efd2de2e6d104ae67cea532fa6392a3838d98f63fb1",
+  "ability_bundle_sha256": "sha256:ba7c8a4c38aee14475112c2a1c712df1b8e5569247077d3e5c81f459795e228f",
+  "invocation_id": "navigate-dark-continent.2026-10-27.hf-pin-drift",
+  "started_at": "2026-10-27T18:11:29.723Z",
+  "finished_at": "2026-10-27T18:17:51.557Z",
+  "authority": {
+    "authority_reference": "The owner's explicit decision in a Claude Code session on 2026-10-27 ('3. yes!' to: register the Nen MCP, clone hf-kingdom-lab, run one bounded expedition and bring back the first real KARMA receipt). Operational authority for this one expedition, bounded by charter.yaml in this record. The participant, consent and representative-authority lists are empty because only public repository metadata was read and no participant-specific basis was relied on.",
+    "affected_participants": [],
+    "consent_references": [],
+    "representative_authority_references": [],
+    "permissions_used": [
+      "local_read",
+      "remote_public_metadata_read: 35 anonymous GETs of a 70-request budget",
+      "local_evidence_write: this record directory and session scratch"
+    ]
+  },
+  "inputs": [
+    {
+      "source": "cambridgetcg/KINGDOM-OS (local Git objects or read-only extract; device path not recorded)",
+      "revision": "b719f2546c8765238a8f0ca0cfee9884669864c0",
+      "path": "skills/navigate-dark-continent/references/hf-boundaries.md",
+      "license_assertion": "none declared (no repository license file at this revision)",
+      "bytes": {
+        "value": "11260",
+        "basis": "observed"
+      },
+      "digest": "sha256:9af2593e8f06d6075d352736b1b240a1fee3856622bdf0bdb04728a1ad9bc757",
+      "boundary": "local",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "cambridgetcg/agenttool (local Git objects or read-only extract; device path not recorded)",
+      "revision": "8947c8fdf17c60590ad4d983f6a464cd0de28983",
+      "path": "packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl",
+      "license_assertion": "Apache-2.0 (package license; dataset card license: apache-2.0)",
+      "bytes": {
+        "value": "48811",
+        "basis": "observed"
+      },
+      "digest": "sha256:49d29d78d5d7a31686e373d06487cdfb7eed6727289581e45c1cb4b0e2d2252f",
+      "boundary": "local",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "cambridgetcg/agenttool (local Git objects or read-only extract; device path not recorded)",
+      "revision": "8947c8fdf17c60590ad4d983f6a464cd0de28983",
+      "path": "packages/dark-continent-karma/hf/space/source-manifest.json",
+      "license_assertion": "Apache-2.0 (package license)",
+      "bytes": {
+        "value": "1138",
+        "basis": "observed"
+      },
+      "digest": "sha256:cdd879791468c819a900198d9f13c56b69cafbf5a09c4326af21810b08d231f2",
+      "boundary": "local",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "cambridgetcg/agenttool (local Git objects or read-only extract; device path not recorded)",
+      "revision": "8947c8fdf17c60590ad4d983f6a464cd0de28983",
+      "path": "packages/dark-continent-karma/hf/dataset/README.md",
+      "license_assertion": "Apache-2.0 (package license; card front matter license: apache-2.0)",
+      "bytes": {
+        "value": "5856",
+        "basis": "observed"
+      },
+      "digest": "sha256:1751beef0e10cdede196bc8d6f76a8086aa357be236a5fa4d90b8390db6fa6e1",
+      "boundary": "local",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "cambridgetcg/hf-kingdom-lab (local Git objects or read-only extract; device path not recorded)",
+      "revision": "d8e48068bd9af7689f3fea6cbb8d05d4e10e312a",
+      "path": "committed tree (git ls-tree -r listing digested; git grep over every path)",
+      "license_assertion": "Apache-2.0 (repository LICENSE); only searched, nothing reused",
+      "bytes": {
+        "value": "5956",
+        "basis": "observed"
+      },
+      "digest": "sha256:ed78616fcfa3ed3a3e3ff39083b1a20245e250b2e1f82bbf1740a7a6bd5f1456",
+      "boundary": "local",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, model mlx-community/gpt-oss-20b-MXFP4-Q8 (request 1, 2026-10-27T18:13:19.939Z)",
+      "revision": "mutable head requested; response reported 773a7da77e569019bb0fd17a554b263738d669a3",
+      "path": "/api/models/mlx-community/gpt-oss-20b-MXFP4-Q8?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "556",
+        "basis": "observed"
+      },
+      "digest": "sha256:ebe434cd700c4745cc4d751b4c2d986c86031f9b93cfb4b0c5401beff3ca9f0b",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, model mlx-community/Qwen3-30B-A3B-Instruct-2507-4bit (request 2, 2026-10-27T18:13:20.251Z)",
+      "revision": "mutable head requested; response reported e9675aa3ca5f900ccef55267914466d55ab325fa",
+      "path": "/api/models/mlx-community/Qwen3-30B-A3B-Instruct-2507-4bit?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "689",
+        "basis": "observed"
+      },
+      "digest": "sha256:3bb0d18f48af0e3b90a8b408a7db2ef66b92a8398f129b59b869de0dff4ab9ba",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, model Xenova/all-MiniLM-L6-v2 (request 3, 2026-10-27T18:13:20.653Z)",
+      "revision": "mutable head requested; response reported 751bff37182d3f1213fa05d7196b954e230abad9",
+      "path": "/api/models/Xenova/all-MiniLM-L6-v2?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "535",
+        "basis": "observed"
+      },
+      "digest": "sha256:9e2c30e0b53716761c568e9bb1d6bac2647f18cda5adcb22e3401489d88c6d69",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, model sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 (request 4, 2026-10-27T18:13:21.195Z)",
+      "revision": "mutable head requested; response reported e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+      "path": "/api/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "1308",
+        "basis": "observed"
+      },
+      "digest": "sha256:4ccc5ff9505c212ff726490b4540b76fe3b5c35a149b94978f1fb424a29a2ec9",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, model alvanlii/whisper-small-cantonese (request 5, 2026-10-27T18:13:21.702Z)",
+      "revision": "mutable head requested; response reported b03a4e5d482f06858ce10ebbabebabec9f447a0d",
+      "path": "/api/models/alvanlii/whisper-small-cantonese?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "1236",
+        "basis": "observed"
+      },
+      "digest": "sha256:fa0f0086646a8f2fb7685a3da6108722026f88e25694da863b860dac94b02920",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset leeduckgo/cantonese-life-scenarios-corpus (request 6, 2026-10-27T18:13:22.226Z)",
+      "revision": "mutable head requested; response reported e9bfb8f07250faab06a6ad8ed46f9b02567f886c",
+      "path": "/api/datasets/leeduckgo/cantonese-life-scenarios-corpus?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts cc-by-4.0",
+      "bytes": {
+        "value": "403",
+        "basis": "observed"
+      },
+      "digest": "sha256:d4a4e5e165a367e89353fb42bbe61ab0f3f1f26afdda3dc582cf3360759dce90",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset gorilla-llm/Berkeley-Function-Calling-Leaderboard (request 7, 2026-10-27T18:13:22.751Z)",
+      "revision": "mutable head requested; response reported 61fc0608cfd831fcfbbaa676ebdfef0ed963eeda",
+      "path": "/api/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "339",
+        "basis": "observed"
+      },
+      "digest": "sha256:e223611c5f9369a2a397da2741f1202e31767d94a631629d85cb4f99b97d7d41",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset AI-Secure/DTap-Bench-Agent-Trajectories (request 8, 2026-10-27T18:13:23.274Z)",
+      "revision": "mutable head requested; response reported 836caf2fdd78b888ddd14fb62dc038e932e17898",
+      "path": "/api/datasets/AI-Secure/DTap-Bench-Agent-Trajectories?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "905",
+        "basis": "observed"
+      },
+      "digest": "sha256:17cd7c81132b53bb822889e50e24ddcc2066f3337123e49e0ab335aeabddc5da",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset mcphunt-benchmark/mcphunt-agent-traces (request 9, 2026-10-27T18:13:23.439Z)",
+      "revision": "mutable head requested; response reported 062bb343fe890ae3018222c7ebe44dbd49ea76d0",
+      "path": "/api/datasets/mcphunt-benchmark/mcphunt-agent-traces?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts cc-by-4.0",
+      "bytes": {
+        "value": "792",
+        "basis": "observed"
+      },
+      "digest": "sha256:dccdd6a31747d1b1dd67f1a68a25536a461cab46de6c80cc8eb106f8acb55df0",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset MCPShield/mcp-security-scan-2026 (request 10, 2026-10-27T18:13:24.327Z)",
+      "revision": "mutable head requested; response reported 69f4f624cef494841d8855efdcf9131473d63bd0",
+      "path": "/api/datasets/MCPShield/mcp-security-scan-2026?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts cc-by-4.0",
+      "bytes": {
+        "value": "725",
+        "basis": "observed"
+      },
+      "digest": "sha256:6fb9a919e13722503e844860651199c84642a54a3c5bf52e7ff0938076bc6c36",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset mcp-research-alliance/mcp-ecosystem-sample (request 11, 2026-10-27T18:13:24.848Z)",
+      "revision": "mutable head requested; response reported 862c164e2fc336b654368ce147812cab7efa1d6f",
+      "path": "/api/datasets/mcp-research-alliance/mcp-ecosystem-sample?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts cc-by-4.0",
+      "bytes": {
+        "value": "2203",
+        "basis": "observed"
+      },
+      "digest": "sha256:bf2bbec9e8b0c86e90d6078366331830b796ce41ba2e39f64d9bdfa7047a723b",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, model Tongyi-MAI/Z-Image-Turbo (request 12, 2026-10-27T18:13:25.372Z)",
+      "revision": "mutable head requested; response reported f332072aa78be7aecdf3ee76d5c247082da564a6",
+      "path": "/api/models/Tongyi-MAI/Z-Image-Turbo?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "504",
+        "basis": "observed"
+      },
+      "digest": "sha256:8ab41f838d05773a4b05a18725976cc6c78bf2b7e917a9c7debebd0b8deaf50c",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, space mcp-tools/Z-Image-Turbo (request 13, 2026-10-27T18:13:25.897Z)",
+      "revision": "mutable head requested; response reported 523314ae75f69a4df28f6322d6b4560188502911",
+      "path": "/api/spaces/mcp-tools/Z-Image-Turbo?expand=sha&expand=lastModified&expand=private&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "441",
+        "basis": "observed"
+      },
+      "digest": "sha256:16d5863b416e31b343b81ba718aba9d51267bad6d0c2b943620b09e76ffb9888",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset allenai/Dolci-RL-Zero-IF-7B (request 14, 2026-10-27T18:13:26.420Z)",
+      "revision": "mutable head requested; response reported c96e4e424c0a5d416f725c488ec7c61b7f758d85",
+      "path": "/api/datasets/allenai/Dolci-RL-Zero-IF-7B?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts odc-by",
+      "bytes": {
+        "value": "938",
+        "basis": "observed"
+      },
+      "digest": "sha256:d457116dea99c5cadd3486b4c98a4010f964fb57adcc9d187d67b66697a56dc0",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset allenai/DataDecide-eval-results (request 15, 2026-10-27T18:13:27.469Z)",
+      "revision": "mutable head requested; response reported 9919b5a0e61e57a85021263918fa82d6ceaee038",
+      "path": "/api/datasets/allenai/DataDecide-eval-results?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts odc-by",
+      "bytes": {
+        "value": "1279",
+        "basis": "observed"
+      },
+      "digest": "sha256:867cf50c84925ff3417ddc21182be28fc6fe143bcb8579f3713773e510ba125c",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset allenai/signal-and-noise (request 16, 2026-10-27T18:13:27.634Z)",
+      "revision": "mutable head requested; response reported e8a9789c036cd22131bc2fa2b6cec998f8fe89ec",
+      "path": "/api/datasets/allenai/signal-and-noise?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "488",
+        "basis": "observed"
+      },
+      "digest": "sha256:dd78a02eb4ea7776ba688d7add967d6a751b053df4ebaa990eab8640392f9b56",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset allenai/DataDecide-data-recipes (request 17, 2026-10-27T18:13:28.517Z)",
+      "revision": "mutable head requested; response reported 3baf34baf5b636f0943401b5c6a2ccb7e5cf3bb9",
+      "path": "/api/datasets/allenai/DataDecide-data-recipes?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts odc-by",
+      "bytes": {
+        "value": "313",
+        "basis": "observed"
+      },
+      "digest": "sha256:41d3bf4cb59e367a624dbd2ccbbdab8898331c7541fc058969a1fad1561f154e",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset locuslab/TOFU (request 18, 2026-10-27T18:13:28.661Z)",
+      "revision": "mutable head requested; response reported 324592d84ae4f482ac7249b9285c2ecdb53e3a68",
+      "path": "/api/datasets/locuslab/TOFU?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts mit",
+      "bytes": {
+        "value": "2212",
+        "basis": "observed"
+      },
+      "digest": "sha256:134ff88d31598737537ce1e8d9973809c7bdb570a728d5379d116787953395bc",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset allenai/dolma3_dolmino_mix-100B-1125 (request 19, 2026-10-27T18:13:29.566Z)",
+      "revision": "mutable head requested; response reported f23aa129fda8335ba9760057bcc1f0c02f3d068b",
+      "path": "/api/datasets/allenai/dolma3_dolmino_mix-100B-1125?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts odc-by",
+      "bytes": {
+        "value": "753",
+        "basis": "observed"
+      },
+      "digest": "sha256:a555a97728751e8ac8e32ba7e00965b839d6c7da79ee2a3e694aefd7b6919874",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset allenai/dolma3_longmino_mix-100B-1125 (request 20, 2026-10-27T18:13:29.729Z)",
+      "revision": "mutable head requested; response reported 28fea4330d8f8e27221010d42c4bc53ba9ec3236",
+      "path": "/api/datasets/allenai/dolma3_longmino_mix-100B-1125?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts odc-by",
+      "bytes": {
+        "value": "428",
+        "basis": "observed"
+      },
+      "digest": "sha256:8d56cc531d557b8c7853e7c2f9965b59f5e1c83d6ad43fbc193e8d211ddf3db3",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset Salesforce/xlam-function-calling-60k (request 21, 2026-10-27T18:13:30.617Z)",
+      "revision": "mutable head requested; response reported 26d14ebfe18b1f7b524bd39b404b50af5dc97866",
+      "path": "/api/datasets/Salesforce/xlam-function-calling-60k?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts cc-by-4.0",
+      "bytes": {
+        "value": "1198",
+        "basis": "observed"
+      },
+      "digest": "sha256:e314e7a7ac0aa7a1c0eecabdbc4bf214ec68b0574c374061d66aeb6bfbcb1236",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset HuggingFaceFW/fineweb-edu-score-2 (request 22, 2026-10-27T18:13:30.760Z)",
+      "revision": "mutable head requested; response reported 74a19fcb9c3b0aadb0e000d16838be8c52054ae6",
+      "path": "/api/datasets/HuggingFaceFW/fineweb-edu-score-2?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts odc-by",
+      "bytes": {
+        "value": "12050",
+        "basis": "observed"
+      },
+      "digest": "sha256:c5f2c53639ad96fee02021694c8cc349a80f83f4a97aa742a9dd8bbdf5c5a2b5",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset HuggingFaceTB/cosmopedia-100k (request 23, 2026-10-27T18:13:31.249Z)",
+      "revision": "mutable head requested; response reported 8fdb6dada238c1d46dd8cf61da2fb4f9c36f654d",
+      "path": "/api/datasets/HuggingFaceTB/cosmopedia-100k?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "971",
+        "basis": "observed"
+      },
+      "digest": "sha256:49d0bf29bed0ed15768ae089285034d803491ad0092309cfb8600ca9626c959f",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset nvidia/HelpSteer2 (request 24, 2026-10-27T18:13:32.711Z)",
+      "revision": "mutable head requested; response reported 990b2711a36180dd19d9c94b8627844866f8982a",
+      "path": "/api/datasets/nvidia/HelpSteer2?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts cc-by-4.0",
+      "bytes": {
+        "value": "599",
+        "basis": "observed"
+      },
+      "digest": "sha256:cc7aa210d45336663138536b319493f8803642c3102cb21d1e86d337ffe36cac",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset allenai/wildguardmix (request 25, 2026-10-27T18:13:32.846Z)",
+      "revision": "mutable head requested; response reported d29c47f41c8b51348b5c8e8c81c039b3132b66d1",
+      "path": "/api/datasets/allenai/wildguardmix?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts odc-by",
+      "bytes": {
+        "value": "1859",
+        "basis": "observed"
+      },
+      "digest": "sha256:d10d1e59a2cc96d7c35f8ed14854ae7d8d834acaaf5800403c24c16a0842032d",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset EleutherAI/pile-deduped-pythia-preshuffled (request 26, 2026-10-27T18:13:33.759Z)",
+      "revision": "mutable head requested; response reported 4647773ea142ab1ff5694602fa104bbf49088408",
+      "path": "/api/datasets/EleutherAI/pile-deduped-pythia-preshuffled?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts not_declared",
+      "bytes": {
+        "value": "243",
+        "basis": "observed"
+      },
+      "digest": "sha256:4381f4b2b761720c4975e67bd8b5a4fe6f22c07b771a3b45759ab089956adc10",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset pietrolesci/pythia-deduped-memorisation-profiles (request 27, 2026-10-27T18:13:33.902Z)",
+      "revision": "mutable head requested; response reported e342bbd99583e5683dc4f64e06b49f4d2a2c0a9e",
+      "path": "/api/datasets/pietrolesci/pythia-deduped-memorisation-profiles?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts not_declared",
+      "bytes": {
+        "value": "4780",
+        "basis": "observed"
+      },
+      "digest": "sha256:ce411a8d7ccb34a9793bd8d06d055a87b59d983b7f2f3edde65071461805625d",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset pretraining-playground/pythia-training-metrics (request 28, 2026-10-27T18:13:34.808Z)",
+      "revision": "mutable head requested; response reported 8c25e3d115cfbe19a05798b11cdd7103e019a7e1",
+      "path": "/api/datasets/pretraining-playground/pythia-training-metrics?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "304",
+        "basis": "observed"
+      },
+      "digest": "sha256:40473df2f36697f8794a7e2aa8bbf21a868f3ee61b3e9248923b9b1b3ac07208",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset allenai/reward-bench-2 (request 29, 2026-10-27T18:13:35.333Z)",
+      "revision": "mutable head requested; response reported 7ff08853b0d5686e79b13fda8677024f566a104a",
+      "path": "/api/datasets/allenai/reward-bench-2?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts odc-by",
+      "bytes": {
+        "value": "1588",
+        "basis": "observed"
+      },
+      "digest": "sha256:7cb10d36d4425eb2394604afbe076e9c846b4ceca676832f3020ccf89a4f2259",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset qizhou/UniEdit (request 30, 2026-10-27T18:13:35.858Z)",
+      "revision": "mutable head requested; response reported 8b69deb0327a0efd8a7e7b11b80a527dc33f0d42",
+      "path": "/api/datasets/qizhou/UniEdit?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts mit",
+      "bytes": {
+        "value": "309",
+        "basis": "observed"
+      },
+      "digest": "sha256:a656984856a71d21cb86f2a8bcc012bd866f05da1537730315a4a66aa5c28fbb",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset nvidia/OpenMathReasoning (request 31, 2026-10-27T18:13:36.381Z)",
+      "revision": "mutable head requested; response reported d3d08664755704f422af97d43a7ff0ded4bd95df",
+      "path": "/api/datasets/nvidia/OpenMathReasoning?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts cc-by-4.0",
+      "bytes": {
+        "value": "1688",
+        "basis": "observed"
+      },
+      "digest": "sha256:f4f6bc7ee72bbf75500be6650864a4069f0a95e70cf03fc81ee09a02dbe79ae7",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset nvidia/HelpSteer3 (request 32, 2026-10-27T18:13:36.907Z)",
+      "revision": "mutable head requested; response reported f6d145777bcbde96137596340fab89793acd1031",
+      "path": "/api/datasets/nvidia/HelpSteer3?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts cc-by-4.0",
+      "bytes": {
+        "value": "1720",
+        "basis": "observed"
+      },
+      "digest": "sha256:58f412fa36880add21ffc5d84ec9b464fa3b6a21acaca2d57f1f5082a675b621",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset allenai/tmax-sft (request 33, 2026-10-27T18:13:37.429Z)",
+      "revision": "mutable head requested; response reported 9d6ab7471ffa2884b2ef0cd2b7e5e22a027ff1b4",
+      "path": "/api/datasets/allenai/tmax-sft?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts odc-by",
+      "bytes": {
+        "value": "3669",
+        "basis": "observed"
+      },
+      "digest": "sha256:6cce705b967aaae9b69cbbf60ac0d9ebb734d98c6cf89efd9e0252b4255e7d1a",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset Yu-and-Ai/kingdom-dark-continent-karma (request 34, 2026-10-27T18:13:37.954Z)",
+      "revision": "mutable head requested; response reported 4ea106235b6d7dd53122b3025163a1bb32b02f97",
+      "path": "/api/datasets/Yu-and-Ai/kingdom-dark-continent-karma?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts apache-2.0",
+      "bytes": {
+        "value": "1091",
+        "basis": "observed"
+      },
+      "digest": "sha256:4c6ad375c68b644acfd8449374e2432a121eab4188215c5293387c8d65757a2a",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    },
+    {
+      "source": "huggingface.co Hub API, dataset mcp-research-alliance/mcp-ecosystem-sample (request 35, 2026-10-27T18:14:03.448Z)",
+      "revision": "bd9274ec0a3ba990d701f856942f12099ef37f61 (pinned revision requested)",
+      "path": "/api/datasets/mcp-research-alliance/mcp-ecosystem-sample/revision/bd9274ec0a3ba990d701f856942f12099ef37f61?expand=sha&expand=lastModified&expand=private&expand=gated&expand=disabled&expand=cardData&expand=tags",
+      "license_assertion": "Hub metadata under the Hub's terms; the subject repository's card asserts other",
+      "bytes": {
+        "value": "2687",
+        "basis": "observed"
+      },
+      "digest": "sha256:96ea8d146036bce5fe2d0298b983b7c3beb01589382734455b7a7f0db002c65b",
+      "boundary": "remote_public",
+      "assurance": "untrusted_evidence"
+    }
+  ],
+  "predicted_effects": [
+    "At most 70 anonymous HTTPS GETs to huggingface.co /api metadata endpoints for 34 named public resources: one current-info read each, plus one pinned-revision read only where the head differs from the pin.",
+    "Local evidence writes limited to one record directory in the KINGDOM-OS PR worktree and session scratch; raw response bodies deleted before return.",
+    "No content download, gate acceptance, Space invocation, provider call, Hub write, commit or publication; GBP 0 and 0 remote GPU seconds."
+  ],
+  "observed_effects": [
+    "35 anonymous HTTPS GETs to huggingface.co /api metadata endpoints, started between 2026-10-27T18:13:19.939Z and 2026-10-27T18:14:03.448Z: 34 current-info reads and 1 pinned-revision read. All returned HTTP/2 200 application/json, with no redirect, no Set-Cookie and no retry, and no stop condition was triggered.",
+    "Received 86820 bytes (35017 header + 51803 body). Requests carried only the resource ID, one pinned revision, expand field names and the User-Agent 'Mozilla/5.0'. No token, Authorization header, cookie, netrc or curl config file was used.",
+    "Local reads: the KINGDOM-OS suite extract at b719f254 (skill, references, receipt schema, NEN.md); AgentTool Git objects at 8947c8fd, plus one blob-identity check at 3841a5fc; and the hf-kingdom-lab committed tree d8e48068 via git grep, plus its LICENSE file. The lab CLI, DataNode and data root were not opened, and no working tree was modified.",
+    "Local execution: python3 -I helper scripts and curl from session scratch; './kingdom nen list --json', 'validate', 'receipt-template' and 'verify-receipt' from the suite root, which NEN.md documents as network-free and write-free.",
+    "Local writes: this record directory (charter.yaml, evidence/requests.jsonl, evidence/observations.json and this receipt; RETURN-NOTE.md is written after this receipt) and session scratch. The 35 raw bodies, 35 header files and 35 derived-field files were deleted at 2026-10-27T18:16:42Z, after their digests and fields were recorded.",
+    "Not used: private reads, file or content downloads, gate acceptance, *.hf.space requests, provider or model calls, Jobs, Hub writes, the hf CLI or huggingface_hub, commits, pushes or publication.",
+    "The charter was preceded by untimed preparatory local reads of the suite documents, the atlas rows and the lab tree. They are included in the local reads above."
+  ],
+  "costs": {
+    "time_ms": {
+      "value": "381834",
+      "basis": "observed"
+    },
+    "compute": "One laptop running curl, python3 and bun for seconds. CPU time and memory were not measured. Summed curl transfer time was 18873 ms.",
+    "money": "GBP 0 observed: anonymous public endpoints only, with no paid service or provider. The cost of the operator's own connectivity was not measured.",
+    "energy": "Not measured.",
+    "privacy": "Hugging Face and network intermediaries saw the 34 resource IDs, one pinned revision, request timing, a generic User-Agent and the device's public network address. No account identity, token, email, local path or private content left the device. The committed record omits local device paths.",
+    "coordination": "Ran as one track of a multi-track workflow on the owner's decision. Wrote only this record directory in an uncommitted PR worktree and contacted no participant. A later stage owns the documentation changes and the commit.",
+    "data_egress_bytes": {
+      "value": "7938",
+      "basis": "estimated"
+    },
+    "remote_gpu_seconds": {
+      "value": "0",
+      "basis": "observed"
+    }
+  },
+  "outputs": [
+    {
+      "reference": "records/2026-10-27-dark-continent-hf-pin-drift/charter.yaml: the expedition charter, written before the first network call",
+      "digest": "sha256:220a923d6e31d2e10f8f21288769d6724303cc4703f31f9ff9c05cc20b2522f7"
+    },
+    {
+      "reference": "records/2026-10-27-dark-continent-hf-pin-drift/evidence/requests.jsonl: a 35-line request log with UTC time, URL, status, protocol, byte counts and body SHA-256",
+      "digest": "sha256:e53493c6028b7dfb0a5ba1061a78ce6a6647d52f0f3125fa4bebc10f2fa17f5b"
+    },
+    {
+      "reference": "records/2026-10-27-dark-continent-hf-pin-drift/evidence/observations.json: per-resource observations, with 33 unchanged and 1 license-changed. mcp-research-alliance/mcp-ecosystem-sample has a head that moved to 862c164e… and asserts cc-by-4.0, while its pin bd9274ec… still resolves as 'other'.",
+      "digest": "sha256:784beb2354837be9ae86a1c7ba0c064a6dfbd51868284bb0e620720f054aadae"
+    }
+  ],
+  "uncertainty": [
+    "Hub metadata, cards and license fields are publisher or provider assertions. They are not legal clearance, provenance proof or safety verdicts.",
+    "That a head equals its pin rests on the API's sha field. No file tree, file bytes or per-file README digest from the atlas was re-checked, because file downloads were outside the charter.",
+    "That the atlas treasure index is byte-identical to the Hub dataset at 4ea10623… rests on a same-day audit, not on this expedition.",
+    "For hf-boundaries rows, the 07-31 'public' baseline comes from the table heading, not from a per-row gating observation. Four rows recorded no license, so their current assertions have no baseline.",
+    "Gating was not requested for the one Space. Its visibility was read from the private and disabled fields only.",
+    "Repository settings (gating, visibility, disabled) can change without a commit. This is a single snapshot taken 2026-10-27 between 18:13 and 18:14Z.",
+    "Egress bytes are estimated from uncompressed HTTP/1.1-equivalent request text. curl reported 0 for size_request over HTTP/2, so no observed value exists. TLS, TCP and DNS overhead are not counted.",
+    "The verifier checks the bound manifest and bundle digests against the local suite; it does not run Git to prove the declared revision. Instead, the suite extract's revision marker was read and the suite's relevant paths were compared with a b719f254 checkout.",
+    "The training-atlas route pins AgentTool 3841a5fc (2026-07-31). This expedition read origin/main 8947c8fd, explicitly reviewed for this run, and confirmed that the treasure-index blob is identical at both."
+  ],
+  "repair": {
+    "required": false,
+    "actions": [
+      "Raw bodies, headers and derived scratch files were deleted after their digests were recorded. Nothing remote was changed, so nothing remote needs undoing."
+    ],
+    "status": "complete"
+  },
+  "retention": {
+    "expires_at": "2027-10-27",
+    "redactions": [
+      "Raw response bodies and headers were not retained. Only URL, status, protocol, content type, byte counts and SHA-256 digests are kept.",
+      "Local device paths were omitted. Local sources are named by repository, revision and path.",
+      "No account identity, token or email was recorded."
+    ]
+  },
+  "result": "completed"
+}

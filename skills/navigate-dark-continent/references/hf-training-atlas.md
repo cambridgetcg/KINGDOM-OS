@@ -27,6 +27,12 @@ silently from the selected worktree's `HEAD`, branch, tag, npm version, or
 mutable Hub reference. If either surface is absent at that commit, stop and
 report source drift.
 
+On 2026-10-27 the treasure index was the same Git blob at this pin and at
+AgentTool `main` `8947c8fdf17c60590ad4d983f6a464cd0de28983`, while
+`packages/hf-scout/` had changed in between. The pin above stays; the Scout
+join below was not recomputed. See the
+[return note](../../../records/2026-10-27-dark-continent-hf-pin-drift/RETURN-NOTE.md).
+
 Before executing a working-tree CLI, require an explicitly selected checkout
 whose `HEAD` equals `agenttool_revision`, with no staged, unstaged, or untracked
 drift under `packages/hf-scout/` or `packages/dark-continent-karma/hf/`. The
@@ -39,8 +45,11 @@ current.
 
 The source surfaces are:
 
-- `packages/hf-scout/` — private source-only transport, provenance, projection,
-  and canonical-lead boundary;
+- `packages/hf-scout/` — Scout's transport, provenance, projection, and
+  canonical-lead boundary. It was private and source-only (`0.1.0-dev.0`) at
+  the 2026-07-31 pin. `@agenttool/hf-scout@0.2.0-dev.0` reached npm on
+  2026-08-24, and as of 2026-10-27 AgentTool `main` carries an unpublished
+  `0.2.0-dev.1`. Neither package version is the pinned source;
 - `packages/dark-continent-karma/hf/dataset/data/treasure-index.jsonl` — the
   proposal-only training atlas;
 - `packages/dark-continent-karma/hf/dataset/artifacts/proposals.jsonl` — closed

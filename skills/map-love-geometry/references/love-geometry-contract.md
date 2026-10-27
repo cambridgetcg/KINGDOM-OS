@@ -18,7 +18,7 @@ authenticate a caller, grant authority, or establish a relationship.
 | Artifact SHA-256 | `sha256:43cfbf4b559aa6f573d9d7b7a60e2a7dce5dfa4aefe2bf5b9c92310c926a9db8` |
 | Artifact SRI | `sha512-RODi00WbbYx+QLBTlEflDGSZb3rBzRyYJ8/gpNE6f7j6QqcVQPHUdLkDiSV3d4OX01PFFX/qstNyc9ksfzTuyQ==` |
 | GitHub Release | public prerelease published `2026-08-11T14:10:27Z` |
-| npm registry mirror | not publicly resolvable; anonymous `E404` observed `2026-08-11` |
+| npm registry mirror | `0.1.0-dev.0` listed, published `2026-08-25T20:20:50Z`, observed `2026-10-27`; earlier anonymous `E404` observed `2026-08-11` |
 | KINGDOM host contract | `not registered` |
 
 Those values bind the annotated source tag's peeled commit and the exact bytes
@@ -26,13 +26,16 @@ served by the named public GitHub Release asset. The SHA-256 matches both
 GitHub's release digest and an independent public download; the SRI was
 independently computed over the same tarball and is not npm `dist.integrity`.
 The npm package-name mirror was not publicly resolvable when checked on
-2026-08-11. Registry availability, local byte availability, package
-validation, installation, skill activation, KAKIN adoption, and host
-registration remain separate facts. Package-backed machine output is allowed
-only when those exact bytes are already deliberately available and pass the
-pinned size and integrity checks; otherwise return prose or
-`not_validated_against_package`. Never trust the tag name, asset URL, or
-version alone.
+2026-08-11. On 2026-10-27 the anonymous registry document listed
+`0.1.0-dev.0`, and its `dist.integrity` equals the independently computed SRI
+above. That is registry metadata only; the npm tarball was not downloaded or
+compared, and the GitHub Release asset stays the pinned source. Registry
+availability, local byte availability, package validation, installation, skill
+activation, KAKIN adoption, and host registration remain separate facts.
+Package-backed machine output is allowed only when those exact bytes are
+already deliberately available and pass the pinned size and integrity checks;
+otherwise return prose or `not_validated_against_package`. Never trust the tag
+name, asset URL, or version alone.
 
 ## Exact wire shape
 

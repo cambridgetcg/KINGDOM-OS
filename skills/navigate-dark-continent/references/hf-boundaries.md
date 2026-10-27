@@ -21,26 +21,35 @@ Resolve the optional project dynamically:
 ./kingdom repos --path hf-kingdom-lab
 ```
 
-`hf-kingdom-lab` owns HF observations, AgentTool content-addressed artifacts,
-semantic vectors, XP, reward tickets, and provider-effect receipts. Do not
-hard-code its device path, copy `.hf-kingdom-data`, read its SQLite directly,
-or import unstable `src/*` internals.
+`hf-kingdom-lab` is the public `cambridgetcg/hf-kingdom-lab` repository,
+released as `@agenttool/hf-kingdom-lab@0.1.0` on 2026-08-01. It owns HF
+observations, AgentTool content-addressed artifacts, semantic vectors, and its
+own local run receipts. At commit `d8e48068` (checked 2026-10-27) it has no XP,
+reward tickets, or reward vouchers, and nothing in it reads or writes
+`kingdom.karma` or `nen-hf-evidence-ref`. Do not hard-code its device path,
+copy `.hf-kingdom-data`, read its SQLite directly, or import unstable `src/*`
+internals.
 
-The current CLI seams are experimental and fail-closed:
+The CLI seams this route may use are experimental and fail-closed:
 
-- `ingest`: only explicitly named public model, dataset, or Space IDs from an
-  ability allowlist; performs remote reads and local evidence writes.
+- `ingest`: one public model, dataset, or Space ID per call; performs remote
+  reads and local evidence writes. The lab checks only the ID's syntax, so the
+  charter must name every ID it may ingest.
 - `query`: local AgentTool full-text search, limit at most 50.
 - `semantic-query`: current local English lane, limit at most 20.
-- `reward preview/claim`: creates a local prompt voucher only; it never invokes
-  a provider.
+- `doctor`: prints the DataNode manifest after opening the node.
+
+The lab's other commands, including `embedding-prepare`, which downloads a
+fixed 23.7 MB revision, are outside this route.
 
 Opening its DataNode may initialize collections or repair full-text indexes, so
-even a query is not guaranteed byte-for-byte read-only. Keep the dependency
-optional until the lab exposes a versioned JSON capability handshake.
+even a query or `doctor` is not guaranteed byte-for-byte read-only. Keep the
+dependency optional until the lab exposes a versioned JSON capability
+handshake; it had none at `d8e48068`.
 
 Portable skill manifests may name public IDs and pinned revisions. Store local
-record IDs only in runtime receipts, using a reference such as:
+record IDs only in runtime receipts, using a KINGDOM-side reference such as the
+following. The caller composes it; the lab does not emit it.
 
 ```json
 {
@@ -68,9 +77,22 @@ record IDs only in runtime receipts, using a reference such as:
 | Adversarial trajectories | [`AI-Secure/DTap-Bench-Agent-Trajectories`](https://huggingface.co/datasets/AI-Secure/DTap-Bench-Agent-Trajectories/tree/836caf2fdd78b888ddd14fb62dc038e932e17898) `836caf2fdd78b888ddd14fb62dc038e932e17898` | Metadata census only; quarantine `setup.sh`, `judge.py`, prompts, and MCP bindings in any future content test |
 | Cross-server data-propagation traces | [`mcphunt-benchmark/mcphunt-agent-traces`](https://huggingface.co/datasets/mcphunt-benchmark/mcphunt-agent-traces/tree/062bb343fe890ae3018222c7ebe44dbd49ea76d0) `062bb343fe890ae3018222c7ebe44dbd49ea76d0` | CC-BY-4.0 assertion; useful for offline leakage/canary analysis, but quarantine prompts, traces, judge evidence, and any executable bindings; never replay tools |
 | MCP risk signal | [`MCPShield/mcp-security-scan-2026`](https://huggingface.co/datasets/MCPShield/mcp-security-scan-2026/tree/69f4f624cef494841d8855efdcf9131473d63bd0) `69f4f624cef494841d8855efdcf9131473d63bd0` | CC-BY-4.0 assertion; aggregate labels are investigation signals, not vulnerability truth |
-| Emerging MCP ecosystem sample | [`mcp-research-alliance/mcp-ecosystem-sample`](https://huggingface.co/datasets/mcp-research-alliance/mcp-ecosystem-sample/tree/bd9274ec0a3ba990d701f856942f12099ef37f61) `bd9274ec0a3ba990d701f856942f12099ef37f61` | Same-day metadata scout; publisher labels the license `other`; do not admit content until exact license, collection provenance, field privacy, and update policy are reviewed |
+| Emerging MCP ecosystem sample | [`mcp-research-alliance/mcp-ecosystem-sample`](https://huggingface.co/datasets/mcp-research-alliance/mcp-ecosystem-sample/tree/bd9274ec0a3ba990d701f856942f12099ef37f61) `bd9274ec0a3ba990d701f856942f12099ef37f61` | Same-day metadata scout; publisher labels the license `other` at this revision; do not admit content until exact license, collection provenance, field privacy, and update policy are reviewed |
 | Worldbuilding image model | [`Tongyi-MAI/Z-Image-Turbo`](https://huggingface.co/Tongyi-MAI/Z-Image-Turbo/tree/f332072aa78be7aecdf3ee76d5c247082da564a6) `f332072aa78be7aecdf3ee76d5c247082da564a6` | Apache-2.0 assertion; model license does not settle output ownership, safety, or non-infringement |
 | Optional remote image tool | [`mcp-tools/Z-Image-Turbo`](https://huggingface.co/spaces/mcp-tools/Z-Image-Turbo/tree/523314ae75f69a4df28f6322d6b4560188502911) `523314ae75f69a4df28f6322d6b4560188502911` | Community Space; manual, one-shot, separately authorized only |
+
+On 2026-10-27 a bounded public-metadata expedition re-read every pin above; see
+its [return note](../../../records/2026-10-27-dark-continent-hf-pin-drift/RETURN-NOTE.md).
+Twelve rows still report their pinned revision as head and are public and not
+disabled, and every license recorded here still matches at its pinned
+revision. The MCP ecosystem
+sample's head moved to `862c164e2fc336b654368ce147812cab7efa1d6f`
+(2026-08-03), and its card now asserts `cc-by-4.0`. Its pinned revision still
+resolves and still says `other`. A new publisher label does not complete the
+review that row requires, so the pin stays. Four rows recorded no license here:
+the two MiniLM embedding models, DTap, and the Z-Image-Turbo Space card. All
+four now assert `apache-2.0`. The table remains the reviewed allowlist until a
+row is re-reviewed and re-pinned.
 
 No model or dataset defines Nen, KARMA, rights, or KAKIN governance. Models may
 propose or critique; checked-in design and accountable collaborators decide.
