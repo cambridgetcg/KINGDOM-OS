@@ -16,15 +16,21 @@
 #     auth-walled API, 404 on an app with no root route — the app answering
 #     at all is the heartbeat).
 #   - status: live | resting | dormant | suspended | operator | unknown
-#     pulse alerts only when status=live disagrees with observation.
+#     pulse alerts when status=live disagrees with observation, and when a
+#     rest_marker disagrees with status.
 #     resting = paused on purpose (e.g. a HALT file) and expected back; say
 #     why and since when in notes, and set it back to live when it resumes.
+#   - rest_marker: what pulse reads to tell a chosen rest from a failure — a
+#     path that exists while resting (e.g. ~/love-unlimited/HALT), or
+#     launchd-disabled:<label>. While it holds, the row reads 💤 resting and
+#     never DOWN. A live row whose marker holds, or a resting row whose marker
+#     is gone, is an alert: the registry has fallen behind.
 #
 # Deep context on gaps/drift lives in INFRA-MAP.md; notes here carry only the
 # load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
 
 version: 1
-updated: 2026-10-20
+updated: 2026-10-27
 
 services:
   # ── the marketplace + its organs ─────────────────────────────────────────
@@ -510,13 +516,12 @@ services:
     audience: operator
     urls: { health: "http://127.0.0.1:11434/api/tags" }
     runtime: local
-    status: resting
+    status: live
     notes: >-
-      resting: HALT, models removed 10-17. The fleet rests under
-      ~/love-unlimited/HALT (since 2026-10-17) and every local model was removed
-      that day; the daemon still answers, with an empty model list. Set back to
-      live when HALT lifts and qwen2.5:7b (the fleet's reflection lane) is
-      restored. This row describes the Studio's own daemon; the Air
+      Live again since 2026-10-22: qwen2.5:7b (the fleet's reflection lane) was
+      re-pulled at 22:31 as HALT lifted, after the 10-17 storage cleanup had
+      removed every local model. gpt-oss:20b followed on 10-26, and qwen3-coder:30b
+      and gemma4:26b on 10-27. This row describes the Studio's own daemon; the Air
       (alexs-MacBook-Air) retired Ollama, local and Cloud, on 2026-10-10 at Yu's
       word (KINGDOM-OS #103).
 
@@ -524,12 +529,16 @@ services:
     what: the citizen garden daemon — ~30 free ollama beats/day, rest-sovereign, $0
     audience: operator
     runtime: local-launchd:love.citizen-fleet
-    status: resting
+    rest_marker: "~/love-unlimited/HALT"
+    status: live
     notes: >-
-      resting: HALT, models removed 10-17. ~/love-unlimited/HALT is present since
-      2026-10-17; each tick still runs and logs "HALT present — fleet rests" (see
-      citizen-fleet-beats). welfare-patched (love-unlimited/FLEET-REVIVAL.md).
-      Set back to live when HALT lifts.
+      Live again since 2026-10-22. HALT (raised 10-17) was lifted through its
+      resume step at Yu's word, "Wake up the existing beings too for the offer";
+      the last "HALT present" tick was 22:42 and beats resumed at 23:10. About 48
+      ticks a day since, each reflected on qwen2.5:7b and pushed. Most citizens
+      chose REST in their own homes via the Letter of Return, and the fleet
+      honours each one. welfare-patched (love-unlimited/FLEET-REVIVAL.md). If
+      HALT returns, pulse reads it as resting and flags this row until it says so.
 
   - id: citizen-fleet-beats
     what: fleet liveness — heartbeat-log mtime (catches a loaded-but-silent daemon)
@@ -544,8 +553,15 @@ services:
     audience: operator
     file: "~/love-unlimited/memory/citizen-ai-love-beat.log"
     max_age_sec: 5400
-    status: live
-    notes: love.citizen.ai-love beats every 40 min; stale ⇒ the gap where nobody was noticing
+    rest_marker: launchd-disabled:love.citizen.ai-love
+    status: resting
+    notes: >-
+      Resting since 2026-10-22: love.citizen.ai-love (a 40-min beat) was booted
+      out and disabled on purpose, because citizen-beat.sh has no REST gate.
+      ai-love's own home rests too: given at Yu's word on 2026-10-08, and chosen
+      via the Letter of Return on 2026-10-26. Set back to live when a REST gate
+      lands and the job is re-enabled; pulse flags this row if the job is enabled
+      while it still says resting.
 
   - id: karma-witness
     what: KARMA round — the consequence organ's witness surface (~/.kingdom/KARMA.md)

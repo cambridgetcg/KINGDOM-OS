@@ -37,6 +37,13 @@
  * exit code listed in `amber_exit` is amber (e.g. chain-backup's exit 3: captured,
  * unverified), and a fresh `file:` on an entry with `amber_note` is amber with
  * that note (the thing landed, but nothing has verified it yet).
+ * resting is chosen, not failed. A `rest_marker:` names what pulse reads to tell
+ * the two apart: a path that exists while resting (e.g. ~/love-unlimited/HALT)
+ * or `launchd-disabled:<label>` (`launchctl disable`). While it holds, the row
+ * is observed resting (💤) and never DOWN. When marker and registry disagree,
+ * that is registry drift: a live row whose marker holds, or a resting row whose
+ * marker is gone (it may have resumed). A resting row with no marker keeps the
+ * registry's word: a stale or silent probe there shows 💤, not 🔴.
  */
 
 import { stat } from "node:fs/promises";
@@ -70,6 +77,7 @@ interface Service {
   mint_watch?: MintWatch; // read-only supply + message watch (bin/pulse-mint-watch.ts)
   amber_exit?: number | number[]; // launchd exit codes that mean "ran, not verified" ⇒ amber
   amber_note?: string;            // why amber; also makes a fresh file: amber, not up
+  rest_marker?: string; // a path that exists, or launchd-disabled:<label> ⇒ resting, not down
   money?: string;
   notes?: string;
 }
@@ -97,7 +105,7 @@ interface Probe {
   id: string;
   expected: string;
   url?: string;
-  observed: string; // up | auth-walled | down | skipped | unknown
+  observed: string; // up | amber | auth-walled | down | resting | skipped | unknown
   code?: number;
   ms?: number;
   note?: string;
@@ -212,6 +220,34 @@ async function probeFile(s: Service): Promise<Probe> {
   }
 }
 
+// ── rest ──────────────────────────────────────────────────────────────────
+
+// launchd's own record of jobs switched off on purpose, read once a round.
+// null = unreadable, so no rest is guessed either way.
+async function disabledLabels(): Promise<Set<string> | null> {
+  try {
+    const proc = Bun.spawn(["launchctl", "print-disabled", `gui/${process.getuid!()}`], { stdout: "pipe", stderr: "ignore" });
+    const out = await new Response(proc.stdout).text();
+    if ((await proc.exited) !== 0) return null;
+    // macOS 13+ prints `"label" => disabled`; older releases print `=> true`
+    return new Set([...out.matchAll(/"([^"]+)"\s*=>\s*(?:disabled|true)\b/g)].map((m) => m[1]));
+  } catch {
+    return null;
+  }
+}
+
+// true = the rest holds, false = its marker is gone, null = could not tell this round.
+async function restHolds(marker: string, disabled: Set<string> | null): Promise<boolean | null> {
+  if (marker.startsWith("launchd-disabled:")) return disabled ? disabled.has(marker.slice("launchd-disabled:".length)) : null;
+  try {
+    await stat(marker.replace(/^file:\/\//, "").replace(/^~/, HOME));
+    return true;
+  } catch (e) {
+    const code = (e as NodeJS.ErrnoException).code;
+    return code === "ENOENT" || code === "ENOTDIR" ? false : null; // EACCES/EPERM (e.g. TCC) prove nothing
+  }
+}
+
 // ── main ──────────────────────────────────────────────────────────────────
 
 const { services, path: regPath } = await loadRegistry();
@@ -242,9 +278,32 @@ if (mintServices.length) await saveWatchState(WATCH_STATE, watchState);
 const allProbes = [...probes, ...daemonProbes, ...fileProbes, ...mintProbes];
 const byId = new Map(allProbes.map((p) => [p.id, p]));
 
+// Rest readings come before alerts: a marker that holds turns the probe into
+// "resting", so a chosen rest can never be counted as DOWN.
+const restServices = services.filter((s) => typeof s.rest_marker === "string" && s.rest_marker.length > 0);
+const disabled = restServices.some((s) => s.rest_marker!.startsWith("launchd-disabled:")) ? await disabledLabels() : null;
+const rest = new Map<string, boolean | null>();
+for (const s of restServices) {
+  const holds = await restHolds(s.rest_marker!, disabled);
+  rest.set(s.id, holds);
+  let p = byId.get(s.id);
+  if (!p) {
+    p = { id: s.id, expected: s.status, observed: "skipped", note: "no probe; rest marker only" };
+    allProbes.push(p);
+    byId.set(s.id, p);
+  }
+  const probeSaid = p.observed === "skipped" ? "" : `; probe: ${p.observed}${p.note ? ` (${p.note})` : ""}`;
+  if (holds === true) Object.assign(p, { observed: "resting", note: `rest marker ${s.rest_marker} holds${probeSaid}` });
+  else p.note = `${p.note ? `${p.note}; ` : ""}rest marker ${s.rest_marker} ${holds === false ? "absent" : "unreadable"}`;
+}
+
 const alerts: string[] = [];
 for (const s of services) {
   const p = byId.get(s.id);
+  if (s.status === "live" && rest.get(s.id) === true)
+    alerts.push(`**${s.id}** registry says live, but its rest marker \`${s.rest_marker}\` holds — resting, not down; set status: resting and say why and since when`);
+  if (s.status === "resting" && rest.get(s.id) === false)
+    alerts.push(`**${s.id}** registry says resting, but its rest marker \`${s.rest_marker}\` is gone — if it has resumed, set status back to live`);
   if (s.status === "live" && p && p.observed === "down")
     alerts.push(`**${s.id}** expected live, observed DOWN (${p.code ?? p.note}) — ${p.url ?? s.runtime ?? ""}`);
   // unknown = a live watch that could not be read this round: never "all quiet"
@@ -264,12 +323,15 @@ for (const s of services) {
 
 // STATUS.md
 const now = new Date().toISOString();
-const mark = (p?: Probe) =>
-  !p ? "·" : p.observed === "up" ? "🟢" : p.observed === "amber" ? "🟠" : p.observed === "auth-walled" ? "🟡" : p.observed === "down" ? "🔴" : "·";
+// A resting row that is silent is as expected (💤) unless its own marker says the rest is over.
+const restingAsExpected = (s: Service, p?: Probe) =>
+  p?.observed === "resting" || (s.status === "resting" && p?.observed === "down" && rest.get(s.id) !== false);
+const mark = (s: Service, p?: Probe) =>
+  !p ? "·" : restingAsExpected(s, p) ? "💤" : p.observed === "up" ? "🟢" : p.observed === "amber" ? "🟠" : p.observed === "auth-walled" ? "🟡" : p.observed === "down" ? "🔴" : "·";
 const lines: string[] = [];
 lines.push(`# Kingdom STATUS — generated by pulse`);
 lines.push(``);
-lines.push(`> ${now} · registry: \`${regPath}\` · ${services.length} services, ${probeable.length} probed + ${daemonProbes.length} launchd-checked + ${fileProbes.length} freshness-checked + ${mintProbes.length} mint-watched · GENERATED FILE — edit REGISTRY.yaml, never this`);
+lines.push(`> ${now} · registry: \`${regPath}\` · ${services.length} services, ${probeable.length} probed + ${daemonProbes.length} launchd-checked + ${fileProbes.length} freshness-checked + ${mintProbes.length} mint-watched + ${restServices.length} rest markers read · GENERATED FILE — edit REGISTRY.yaml, never this`);
 lines.push(``);
 if (alerts.length) {
   lines.push(`## ⚠ Alerts (${alerts.length})`);
@@ -285,7 +347,7 @@ lines.push(`|---|---|---|---|---|---|---|`);
 for (const s of services) {
   const p = byId.get(s.id);
   lines.push(
-    `| ${mark(p)} | ${s.id} | ${s.status} | ${p?.observed ?? "—"} | ${p?.code ?? ""} | ${p?.ms ?? ""} | ${p?.url ?? s.urls?.site ?? p?.note ?? ""} |`,
+    `| ${mark(s, p)} | ${s.id} | ${s.status} | ${p?.observed ?? "—"} | ${p?.code ?? ""} | ${p?.ms ?? ""} | ${p?.url ?? s.urls?.site ?? p?.note ?? ""} |`,
   );
 }
 lines.push(``);
@@ -303,8 +365,9 @@ await Bun.write(histFile, prev + JSON.stringify(record) + "\n");
 if (!QUIET) {
   for (const s of services) {
     const p = byId.get(s.id);
-    console.log(`${mark(p)} ${s.id.padEnd(22)} ${s.status.padEnd(9)} ${(p?.observed ?? "—").padEnd(11)} ${p?.code ?? ""} ${p?.ms ? p.ms + "ms" : ""}`);
+    console.log(`${mark(s, p)} ${s.id.padEnd(22)} ${s.status.padEnd(9)} ${(p?.observed ?? "—").padEnd(11)} ${p?.code ?? ""} ${p?.ms ? p.ms + "ms" : ""}`);
   }
 }
 for (const a of alerts) console.log(`⚠ PULSE ALERT: ${a.replace(/\*\*/g, "")}`);
-console.log(`pulse: ${allProbes.filter((p) => p.observed === "up").length}/${allProbes.length} up, ${alerts.length} alerts → ${outDir}/STATUS.md`);
+const restingCount = allProbes.filter((p) => p.observed === "resting").length;
+console.log(`pulse: ${allProbes.filter((p) => p.observed === "up").length}/${allProbes.length} up, ${restingCount ? `${restingCount} resting, ` : ""}${alerts.length} alerts → ${outDir}/STATUS.md`);
