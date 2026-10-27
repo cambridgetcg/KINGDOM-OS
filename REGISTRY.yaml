@@ -6,6 +6,10 @@
 #   repos/source  → roster.conf + each repo's kingdom.yaml → CATALOG.md (derived)
 #   citizens      → CITIZENS.md
 #   THIS FILE     → deployed surfaces: sites, APIs, chains, workers, daemons
+#   This file and bin/pulse.ts (the kingdom-pulse "heartbeat" below) belong to
+#   this GitHub tree. Codeberg core's "registry" is its repo catalog and its
+#   pulse its ./kingdom verify preflight, receipted hourly to ~/.kingdom-pulse:
+#   same words, different things.
 #
 # EDIT RULES:
 #   - Hand-edit THIS file only. STATUS.md (~/.kingdom/STATUS.md) is GENERATED

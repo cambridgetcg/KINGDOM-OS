@@ -3,8 +3,25 @@
 ## Ownership
 
 This GitHub tree owns the public website, World Commons and its publication
-machinery. Core registry, platform, Castle, preflight and heartbeat changes
-belong to [Codeberg core](https://codeberg.org/zerone-dev/KINGDOM-OS).
+machinery, and the deployed-surfaces registry with its pulse: `REGISTRY.yaml`
+and the 30-minute `bin/pulse.ts`, installed under `~/.kingdom` by
+`bin/pulse-install.sh`. [Codeberg core](https://codeberg.org/zerone-dev/KINGDOM-OS)
+owns its platform adapters, Castle, preflight and hourly heartbeat receipt
+(`~/.kingdom-pulse`); `scripts/kingdom-heartbeat.sh` here is only that
+heartbeat's machine-binding shim. The words cross: core's "registry" is its
+repo catalog and its "pulse" its `./kingdom verify` preflight and that receipt,
+while files here call `bin/pulse.ts` the heartbeat and often say "registry" for
+the repo catalog. Name the file you mean.
+
+Both trees carry a repo catalog (roster, cards, harvest). They share history
+only up to 3683573 (2026-06-11); core's own commits begin 2026-07-23. Core's own
+docs, all from 2026-09-03 or earlier, call core's catalog canonical. Owner decisions D1 and
+D4 of 2026-10-17 (business-ecosystem `estate/curated/decisions.toml`,
+dec-2026-10-17-2 and -5: an orchestrator's settled reading of Yu's answers; the
+verbatim words are kept privately) make this tree's GitHub main the taxonomy
+authority and this repository, with its roster and harvest, the connective map
+of KINGDOM OS. The Codeberg fork is a member and not authoritative for taxonomy.
+
 Resolve checkouts by Git remote. Historical home paths and launchd notes are
 not evidence of the current machine's layout or running services.
 
@@ -45,7 +62,7 @@ which one you have. Do not infer runtime wiring from a shared name or link.
   Keep IDs, routes, field names and compatibility endpoints stable unless the
   change includes an explicit migration.
 - `graph.json` and `CATALOG.md` are derived metadata. Correct a project's own
-  card or the owning registry source, not these caches. The catalog location
+  card or the roster (`roster.conf`, `cards/`), not these caches. The catalog location
   column distinguishes repeated names; the graph retains paths for compatibility.
 - `state=remote` does not mean a local checkout exists. Wake conformance checks
   configuration, not execution or success; do not run wake hooks to inspect it.
