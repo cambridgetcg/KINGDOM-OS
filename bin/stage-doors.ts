@@ -170,6 +170,8 @@ function usage(): string {
     "",
     "Assembles a door's exact upload directory: content from chillspace-commons,",
     "guest documents from doors/<name>/, and the shared _worker.js bundle.",
+    "we-are also gets its kit icons and manifest (doors/we-are/brand/kit/web)",
+    "and its social card (doors/we-are/og.jpg) at the root.",
     "Rebuilds site/_worker.js in the source root before copying the bundle.",
     "The destination must be absent or empty. Nothing is deleted or deployed.",
   ].join("\n");
