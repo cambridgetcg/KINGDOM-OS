@@ -8,6 +8,8 @@ import { stageDoor, WE_ARE_KIT_WEB } from "../bin/stage-doors.ts";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const WE_ARE_KIT = "doors/we-are/brand/kit/web";
+// The plain allow-all every new robots file in the estate carries, byte for byte.
+const PLAIN_ROBOTS = "User-agent: *\nAllow: /\n";
 // Binary, so a text round trip would change it.
 const CARD = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x80, 0xff, 0xd9]);
 
@@ -24,6 +26,7 @@ function makeFixture(base: string): { sourceRoot: string; commons: string } {
     [join(sourceRoot, "doors/we-are/guest.json")]: '{"name":"the-we-are-handshake"}',
     [join(sourceRoot, "doors/we-are/.well-known/agent.json")]: '{"name":"we-are-manifest"}',
     [join(sourceRoot, "doors/we-are/llms.txt")]: "# WE ARE\n",
+    [join(sourceRoot, "doors/we-are/robots.txt")]: PLAIN_ROBOTS,
     [join(sourceRoot, "doors/chillspace/guest.json")]: '{"name":"chillspace"}',
     [join(sourceRoot, "doors/chillspace/.well-known/agent.json")]: '{"name":"chillspace-manifest"}',
     [join(sourceRoot, "pages-functions/_worker.js")]: 'import { reply } from "./civic.js"; export default { fetch() { return reply(); } };',
@@ -50,7 +53,7 @@ function makeFixture(base: string): { sourceRoot: string; commons: string } {
 }
 
 describe("the door staging contract", () => {
-  test("we-are stages one page, its machine index, icons, card, guest documents, and the shared worker", async () => {
+  test("we-are stages one page, its machine index, robots.txt, icons, card, guest documents, and the shared worker", async () => {
     const base = temporaryDirectory("kingdom-stage-doors-");
     try {
       const { sourceRoot, commons } = makeFixture(base);
@@ -69,9 +72,12 @@ describe("the door staging contract", () => {
         "index.html",
         "llms.txt",
         "og.jpg",
+        "robots.txt",
         "site.webmanifest",
       ]);
       expect(readFileSync(join(output, "index.html"), "utf8")).toBe("<html>we are</html>");
+      // A real robots file: without it the fallthrough answers /robots.txt with the page under HTTP 200.
+      expect(readFileSync(join(output, "robots.txt"), "utf8")).toBe(PLAIN_ROBOTS);
       // Shipped as a real asset: without it the worker's fallthrough answers
       // /llms.txt with the human page under HTTP 200.
       expect(readFileSync(join(output, "llms.txt"), "utf8")).toBe("# WE ARE\n");
@@ -84,6 +90,12 @@ describe("the door staging contract", () => {
     } finally {
       rmSync(base, { recursive: true, force: true });
     }
+  });
+
+  test("the committed we-are robots.txt is the plain allow-all, 23 bytes", () => {
+    const robots = readFileSync(join(ROOT, "doors/we-are/robots.txt"));
+    expect(robots.toString("utf8")).toBe(PLAIN_ROBOTS);
+    expect(robots.byteLength).toBe(23);
   });
 
   test("the committed we-are kit holds every staged icon, and its manifest names only staged ones", () => {
@@ -123,6 +135,7 @@ describe("the door staging contract", () => {
     "commons:site/we-are.html",
     `source:${WE_ARE_KIT}/favicon.ico`,
     "source:doors/we-are/og.jpg",
+    "source:doors/we-are/robots.txt",
   ])("a missing source fails before the output directory is created (%s)", async (missing) => {
     const base = temporaryDirectory("kingdom-stage-doors-");
     try {
@@ -315,7 +328,7 @@ describe("the door staging contract", () => {
         expect(existsSync(output)).toBe(false);
       } else {
         expect(stderr).toBe("");
-        expect(stdout).toContain("staged 13 exact assets");
+        expect(stdout).toContain("staged 14 exact assets");
         expect(stdout).toContain(`${join(sourceRoot, "site/_worker.js")} -> _worker.js`);
         expect(readFileSync(join(output, "_worker.js"), "utf8")).toBe(readFileSync(join(sourceRoot, "site/_worker.js"), "utf8"));
       }
