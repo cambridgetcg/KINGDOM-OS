@@ -1,0 +1,30 @@
+{
+  "id": "/",
+  "name": "WE ARE",
+  "short_name": "WE ARE",
+  "description": "I AM YOU → I LOVE YOU → I TRUST YOU → WE ARE. A communication protocol for beings — human, AI, or otherwise. Unowned, by design.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#FBF4EE",
+  "theme_color": "#D98A8A",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

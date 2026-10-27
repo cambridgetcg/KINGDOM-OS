@@ -2,9 +2,14 @@ import { describe, expect, test } from "bun:test";
 import { copyFileSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-import { stageDoor } from "../bin/stage-doors.ts";
+import { stageDoor, WE_ARE_KIT_WEB } from "../bin/stage-doors.ts";
+
+const ROOT = fileURLToPath(new URL("..", import.meta.url));
+const WE_ARE_KIT = "doors/we-are/brand/kit/web";
+// Binary, so a text round trip would change it.
+const CARD = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x80, 0xff, 0xd9]);
 
 function temporaryDirectory(prefix: string): string {
   return mkdtempSync(join(tmpdir(), prefix));
@@ -34,16 +39,18 @@ function makeFixture(base: string): { sourceRoot: string; commons: string } {
     [join(commons, "site/.DS_Store")]: "junk",
     [join(commons, "linked-target.html")]: "<html>linked</html>",
   };
+  for (const name of WE_ARE_KIT_WEB) files[join(sourceRoot, WE_ARE_KIT, name)] = `kit ${name}`;
   for (const [path, content] of Object.entries(files)) {
     mkdirSync(dirname(path), { recursive: true });
     writeFileSync(path, content);
   }
+  writeFileSync(join(sourceRoot, "doors/we-are/og.jpg"), CARD);
   symlinkSync(join(commons, "linked-target.html"), join(commons, "site/linked.html"));
   return { sourceRoot: `${sourceRoot}/`, commons };
 }
 
 describe("the door staging contract", () => {
-  test("we-are stages one page, its machine index, guest documents, and the shared worker", async () => {
+  test("we-are stages one page, its machine index, icons, card, guest documents, and the shared worker", async () => {
     const base = temporaryDirectory("kingdom-stage-doors-");
     try {
       const { sourceRoot, commons } = makeFixture(base);
@@ -52,18 +59,39 @@ describe("the door staging contract", () => {
       expect(staged.map((a) => a.destination).sort()).toEqual([
         ".well-known/agent.json",
         "_worker.js",
+        "apple-touch-icon.png",
+        "favicon.ico",
+        "favicon.svg",
         "guest.json",
+        "icon-192.png",
+        "icon-512.png",
+        "icon-maskable-512.png",
         "index.html",
         "llms.txt",
+        "og.jpg",
+        "site.webmanifest",
       ]);
       expect(readFileSync(join(output, "index.html"), "utf8")).toBe("<html>we are</html>");
       // Shipped as a real asset: without it the worker's fallthrough answers
       // /llms.txt with the human page under HTTP 200.
       expect(readFileSync(join(output, "llms.txt"), "utf8")).toBe("# WE ARE\n");
+      // The icons are the kit's own files, and the card is the door's og.jpg, byte for byte.
+      for (const name of WE_ARE_KIT_WEB) {
+        expect(readFileSync(join(output, name)).equals(readFileSync(join(sourceRoot, WE_ARE_KIT, name)))).toBe(true);
+      }
+      expect(readFileSync(join(output, "og.jpg")).equals(CARD)).toBe(true);
       await expect(stageDoor("we-are", output, commons, sourceRoot)).rejects.toThrow("output directory is not empty");
     } finally {
       rmSync(base, { recursive: true, force: true });
     }
+  });
+
+  test("the committed we-are kit holds every staged icon, and its manifest names only staged ones", () => {
+    for (const name of WE_ARE_KIT_WEB) expect(existsSync(join(ROOT, WE_ARE_KIT, name)), name).toBe(true);
+    expect(existsSync(join(ROOT, "doors/we-are/og.jpg"))).toBe(true);
+    const manifest = JSON.parse(readFileSync(join(ROOT, WE_ARE_KIT, "site.webmanifest"), "utf8"));
+    expect(manifest.icons.length).toBeGreaterThan(0);
+    for (const icon of manifest.icons) expect(WE_ARE_KIT_WEB).toContain(icon.src.replace(/^\//, ""));
   });
 
   test("chillspace stages the whole commons tree, dereferencing symlinks, never .DS_Store", async () => {
@@ -91,11 +119,16 @@ describe("the door staging contract", () => {
     }
   });
 
-  test("a missing source fails before the output directory is created", async () => {
+  test.each([
+    "commons:site/we-are.html",
+    `source:${WE_ARE_KIT}/favicon.ico`,
+    "source:doors/we-are/og.jpg",
+  ])("a missing source fails before the output directory is created (%s)", async (missing) => {
     const base = temporaryDirectory("kingdom-stage-doors-");
     try {
       const { sourceRoot, commons } = makeFixture(base);
-      rmSync(join(commons, "site/we-are.html"));
+      const [root, path] = missing.split(":") as [string, string];
+      rmSync(join(root === "commons" ? commons : sourceRoot, path));
       const output = join(base, "untouched");
       await expect(stageDoor("we-are", output, commons, sourceRoot)).rejects.toThrow("missing or unreadable");
       expect(readdirSync(base)).not.toContain("untouched");
@@ -282,7 +315,7 @@ describe("the door staging contract", () => {
         expect(existsSync(output)).toBe(false);
       } else {
         expect(stderr).toBe("");
-        expect(stdout).toContain("staged 5 exact assets");
+        expect(stdout).toContain("staged 13 exact assets");
         expect(stdout).toContain(`${join(sourceRoot, "site/_worker.js")} -> _worker.js`);
         expect(readFileSync(join(output, "_worker.js"), "utf8")).toBe(readFileSync(join(sourceRoot, "site/_worker.js"), "utf8"));
       }
