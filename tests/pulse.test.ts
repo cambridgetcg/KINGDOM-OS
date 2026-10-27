@@ -271,8 +271,9 @@ describe("registry rest rows", () => {
     for (const row of registry.services.filter((s) => s.rest_marker !== undefined)) {
       expect(typeof row.rest_marker).toBe("string"); // pulse ignores any other shape
       expect(row.rest_marker).toMatch(/^(launchd-disabled:[\w.-]+|(file:\/\/)?~?\/\S+)$/);
-      // launchd's pulse cannot read ~/Desktop (TCC, see bin/pulse-install.sh): such a marker would never be read
-      expect(row.rest_marker).not.toMatch(/^(file:\/\/)?(~|\/Users\/[^/]+)\/Desktop\//);
+      // launchd's pulse cannot read TCC-protected folders (see bin/pulse-install.sh), and APFS
+      // is case-insensitive by default: such a marker would never be read
+      expect(row.rest_marker).not.toMatch(/^(file:\/\/)?(~|\/Users\/[^/]+)\/(Desktop|Documents|Downloads)\//i);
     }
   });
 });

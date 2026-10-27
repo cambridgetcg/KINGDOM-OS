@@ -25,8 +25,10 @@
 #     launchd-disabled:<label>. While it holds, the row reads 💤 resting and
 #     never DOWN. A live row whose marker holds, or a resting row whose marker
 #     is gone, is an alert: the registry has fallen behind. Use a path launchd
-#     can read: never under ~/Desktop (the TCC wall, see bin/pulse-install.sh).
-#     An unreadable marker guesses nothing and shows · with the reason.
+#     can read: never under ~/Desktop, ~/Documents or ~/Downloads (the TCC
+#     wall, see bin/pulse-install.sh). An unreadable marker guesses nothing:
+#     the probe stands, a silent resting row shows · (unknown), and the STATUS
+#     cell says why.
 #     (kingdom-mcp's public kingdom_status has its own rest_file and does not
 #     read this field; the embed drops it.)
 #

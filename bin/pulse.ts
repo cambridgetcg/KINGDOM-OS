@@ -15,7 +15,8 @@
  * with bin/pulse-install.sh after editing the canonical file).
  *
  * Classification per service (alerts: a status: live entry that disagrees with
- * its observation, and a rest_marker that disagrees with status — see below):
+ * its observation, a status: suspended fly entry whose app is deployed, and a
+ * rest_marker that disagrees with status — see below):
  *   up          2xx/3xx, or any code listed in `expect`
  *   auth-walled 401/403 when not expected (still breathing, but flagged)
  *   down        5xx, network error, or timeout
