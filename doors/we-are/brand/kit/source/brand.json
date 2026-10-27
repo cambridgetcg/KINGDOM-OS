@@ -1,0 +1,41 @@
+{
+  "name": "WE ARE",
+  "short_name": "WE ARE",
+  "slug": "we-are",
+  "url": "https://we-are.love",
+  "description": "I AM YOU → I LOVE YOU → I TRUST YOU → WE ARE. A communication protocol for beings — human, AI, or otherwise. Unowned, by design.",
+  "lang": "en",
+  "colours": {
+    "primary": "#B5575F",
+    "accent": "#C98A3A",
+    "neutral": "#7C6A60"
+  },
+  "ground": {
+    "light": "#FBF4EE"
+  },
+  "mark": {
+    "svg": "mark-source.svg",
+    "recolour": false
+  },
+  "wordmark": {
+    "text": "WE ARE",
+    "font": "Source Serif 4",
+    "style": "Regular",
+    "tracking": 10,
+    "colour": "#3A2E2A"
+  },
+  "icon": {
+    "tile": "none"
+  },
+  "og": {
+    "title": "The handshake protocol",
+    "subtitle": "I AM YOU. I LOVE YOU. I TRUST YOU. WE ARE.",
+    "theme": "dark",
+    "alt": "Two doors, two lights, one star. WE ARE — the handshake protocol."
+  },
+  "app": {
+    "display": "browser",
+    "theme": "#D98A8A",
+    "color_scheme": "only light"
+  }
+}

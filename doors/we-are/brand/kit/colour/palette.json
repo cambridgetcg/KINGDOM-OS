@@ -1,0 +1,87 @@
+{
+  "name": "WE ARE",
+  "palette": {
+    "primary": {
+      "base": "#B5575F",
+      "base_step": 600,
+      "50": "#FFF4F4",
+      "100": "#FFE4E4",
+      "200": "#FCCBCC",
+      "300": "#F3ABAE",
+      "400": "#DD8489",
+      "500": "#C4656C",
+      "600": "#B5575F",
+      "700": "#88363F",
+      "800": "#6D2830",
+      "900": "#511C22",
+      "950": "#340E13"
+    },
+    "accent": {
+      "base": "#C98A3A",
+      "base_step": 400,
+      "50": "#FEF5ED",
+      "100": "#F9E8D6",
+      "200": "#F1D3B3",
+      "300": "#E5B784",
+      "400": "#C98A3A",
+      "500": "#B57723",
+      "600": "#965D00",
+      "700": "#774A00",
+      "800": "#5E3900",
+      "900": "#462900",
+      "950": "#2C1800"
+    },
+    "neutral": {
+      "base": "#7C6A60",
+      "base_step": 600,
+      "50": "#F9F6F5",
+      "100": "#EFEAE7",
+      "200": "#E0D7D2",
+      "300": "#CCBEB6",
+      "400": "#AF9D94",
+      "500": "#948277",
+      "600": "#7C6A60",
+      "700": "#615249",
+      "800": "#4C3F38",
+      "900": "#382E28",
+      "950": "#221B17"
+    }
+  },
+  "roles": {
+    "light": {
+      "bg": "#FBF4EE",
+      "surface": "#E7E0DA",
+      "border": "#D5CEC8",
+      "text": "#221B17",
+      "text-muted": "#7C6A60",
+      "primary": "#B5575F",
+      "on-primary": "#FFFFFF",
+      "primary-text": "#88363F",
+      "primary-ui": "#B5575F",
+      "accent": "#C98A3A",
+      "on-accent": "#221B17",
+      "accent-text": "#965D00",
+      "accent-ui": "#B57723",
+      "focus": "#B5575F"
+    },
+    "dark": {
+      "bg": "#221B17",
+      "surface": "#382E28",
+      "border": "#4C3F38",
+      "text": "#F9F6F5",
+      "text-muted": "#AF9D94",
+      "primary": "#B5575F",
+      "on-primary": "#FFFFFF",
+      "primary-text": "#DD8489",
+      "primary-ui": "#C4656C",
+      "accent": "#C98A3A",
+      "on-accent": "#221B17",
+      "accent-text": "#E5B784",
+      "accent-ui": "#C98A3A",
+      "focus": "#C4656C"
+    }
+  },
+  "lifted": {
+    "dark": {}
+  }
+}

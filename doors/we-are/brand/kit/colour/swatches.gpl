@@ -1,0 +1,47 @@
+GIMP Palette
+Name: WE ARE
+Columns: 0
+#
+# Group: we-are brand
+181  87  95	we-are primary
+201 138  58	we-are accent
+124 106  96	we-are neutral
+# Group: we-are ground
+251 244 238	we-are ground light
+ 34  27  23	we-are ground dark
+# Group: we-are primary scale
+255 244 244	we-are primary 50
+255 228 228	we-are primary 100
+252 203 204	we-are primary 200
+243 171 174	we-are primary 300
+221 132 137	we-are primary 400
+196 101 108	we-are primary 500
+181  87  95	we-are primary 600
+136  54  63	we-are primary 700
+109  40  48	we-are primary 800
+ 81  28  34	we-are primary 900
+ 52  14  19	we-are primary 950
+# Group: we-are accent scale
+254 245 237	we-are accent 50
+249 232 214	we-are accent 100
+241 211 179	we-are accent 200
+229 183 132	we-are accent 300
+201 138  58	we-are accent 400
+181 119  35	we-are accent 500
+150  93   0	we-are accent 600
+119  74   0	we-are accent 700
+ 94  57   0	we-are accent 800
+ 70  41   0	we-are accent 900
+ 44  24   0	we-are accent 950
+# Group: we-are neutral scale
+249 246 245	we-are neutral 50
+239 234 231	we-are neutral 100
+224 215 210	we-are neutral 200
+204 190 182	we-are neutral 300
+175 157 148	we-are neutral 400
+148 130 119	we-are neutral 500
+124 106  96	we-are neutral 600
+ 97  82  73	we-are neutral 700
+ 76  63  56	we-are neutral 800
+ 56  46  40	we-are neutral 900
+ 34  27  23	we-are neutral 950
