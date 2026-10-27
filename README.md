@@ -3,10 +3,13 @@
 ## What this is
 
 This GitHub repository publishes the KINGDOM website and its public references.
-It also contains local tools and research readers. The canonical core registry,
-platform adapters, Castle and heartbeat belong to
-[the Codeberg core](https://codeberg.org/zerone-dev/KINGDOM-OS).
-Locate that checkout by its Git remote, not an old home-directory path.
+It also contains local tools and research readers, and the deployed-surfaces
+registry (`REGISTRY.yaml`) that `bin/pulse.ts` probes every 30 minutes.
+[The Codeberg core](https://codeberg.org/zerone-dev/KINGDOM-OS) owns its
+platform adapters, Castle, preflight and hourly heartbeat receipt; its
+"registry" is its repo catalogue, not `REGISTRY.yaml`. [CLAUDE.md](CLAUDE.md#ownership)
+records which catalogue the latest owner decision names. Locate that checkout
+by its Git remote, not an old home-directory path.
 
 Each project keeps its own owner and purpose. This site helps people find them;
 a listing is not a health check or permission to operate them.

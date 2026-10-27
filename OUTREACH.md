@@ -2,7 +2,8 @@
 
 Maintainer start page. This file is repository documentation, not part of the
 public upload. It organizes the existing web surface; it is not a replacement
-for the core registry or an authorization to operate another service.
+for `REGISTRY.yaml`, either tree's repo catalogue, or an authorization to
+operate another service.
 
 For the broader source-only inventory of core seams, publication families and
 suite skills, use the [module purpose map](references/kingdom-module-map.md).
@@ -103,7 +104,8 @@ rendering and regression tests do not need provider requests.
 | Contact contract | `data/contact/contact-door.v0.1.json`, `bin/contact-door.ts` | Contact family tests; no email is sent by validation |
 | Human-readable system references | `pages-content/os/index.html`, `OS-ROUTES.md` | OS/Worker tests; measurement scope remains explicit |
 | Web infrastructure | `operations/cloudflare/`, `DOMAINS-SETUP.md` | Private inventory/observer tests and exact release checks |
-| Canonical registry, platform, Castle, preflight and hourly pulse | `https://codeberg.org/zerone-dev/KINGDOM-OS` | Core's own instructions, cards and tests—not this web catalogue |
+| Deployed-surfaces registry and its 30-minute pulse | `REGISTRY.yaml`, `bin/pulse.ts`, `bin/pulse-install.sh` | `tests/pulse.test.ts`, `tests/pulse-mint-watch.test.ts`; the installer copies the working tree into `~/.kingdom`, so run it only from clean main |
+| Core platform adapters, Castle, preflight and the hourly heartbeat receipt (`~/.kingdom-pulse`; `scripts/kingdom-heartbeat.sh` here is its machine-binding shim) | `https://codeberg.org/zerone-dev/KINGDOM-OS` | Core's own instructions, cards and tests—not this web catalogue. Core's "registry" is its repo catalogue; `CLAUDE.md` records which catalogue the latest owner decision names |
 | Zerone website/chain | `cambridgetcg/zerone-core` | Its own dashboard/chain release procedures |
 
 This table covers the consolidation seams, not a whole-repository file census.
@@ -119,7 +121,7 @@ presentation labels instead of moving runtime files:
 - Homepage module directory: **Modules / 模組入口**.
 - Existing repository census: **Project registry map / 工程目錄**.
 - `/atlas.html`: **Research & design library**; distinct from `/power-atlas/`.
-- `/os/`: **System status & references**, not the canonical core registry.
+- `/os/`: **System status & references**, not `REGISTRY.yaml` or a repo catalogue.
 - Curated citizen works and voluntary Civic profiles remain different lists.
 
 `guest.json`, `.well-known/agent.json`, `llms.txt`, `/?agent`, `/?json` and
