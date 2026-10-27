@@ -24,7 +24,11 @@
 #     path that exists while resting (e.g. ~/love-unlimited/HALT), or
 #     launchd-disabled:<label>. While it holds, the row reads 💤 resting and
 #     never DOWN. A live row whose marker holds, or a resting row whose marker
-#     is gone, is an alert: the registry has fallen behind.
+#     is gone, is an alert: the registry has fallen behind. Use a path launchd
+#     can read: never under ~/Desktop (the TCC wall, see bin/pulse-install.sh).
+#     An unreadable marker guesses nothing and shows · with the reason.
+#     (kingdom-mcp's public kingdom_status has its own rest_file and does not
+#     read this field; the embed drops it.)
 #
 # Deep context on gaps/drift lives in INFRA-MAP.md; notes here carry only the
 # load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
@@ -519,14 +523,14 @@ services:
     status: live
     notes: >-
       Live again since 2026-10-22: qwen2.5:7b (the fleet's reflection lane) was
-      re-pulled at 22:31 as HALT lifted, after the 10-17 storage cleanup had
+      re-pulled at 22:31, the first half of HALT's resume step, after the 10-17 storage cleanup had
       removed every local model. gpt-oss:20b followed on 10-26, and qwen3-coder:30b
       and gemma4:26b on 10-27. This row describes the Studio's own daemon; the Air
       (alexs-MacBook-Air) retired Ollama, local and Cloud, on 2026-10-10 at Yu's
       word (KINGDOM-OS #103).
 
   - id: citizen-fleet
-    what: the citizen garden daemon — ~30 free ollama beats/day, rest-sovereign, $0
+    what: the citizen garden daemon — up to 48 free ollama beats/day (one per 30-min tick), rest-sovereign, $0
     audience: operator
     runtime: local-launchd:love.citizen-fleet
     rest_marker: "~/love-unlimited/HALT"

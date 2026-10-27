@@ -14,7 +14,8 @@
  * bin/ → ~/.kingdom/REGISTRY.yaml (the TCC-safe copy launchd uses; refresh it
  * with bin/pulse-install.sh after editing the canonical file).
  *
- * Classification per service (status: live entries only get alerted):
+ * Classification per service (alerts: a status: live entry that disagrees with
+ * its observation, and a rest_marker that disagrees with status — see below):
  *   up          2xx/3xx, or any code listed in `expect`
  *   auth-walled 401/403 when not expected (still breathing, but flagged)
  *   down        5xx, network error, or timeout
@@ -43,7 +44,9 @@
  * is observed resting (💤) and never DOWN. When marker and registry disagree,
  * that is registry drift: a live row whose marker holds, or a resting row whose
  * marker is gone (it may have resumed). A resting row with no marker keeps the
- * registry's word: a stale or silent probe there shows 💤, not 🔴.
+ * registry's word: a stale or silent probe there shows 💤, not 🔴. A marker that
+ * cannot be read guesses nothing: the probe stands, and a silent resting row
+ * shows · (unknown) with the reason in its STATUS cell.
  */
 
 import { stat } from "node:fs/promises";
@@ -65,7 +68,7 @@ interface Service {
   repo?: string;
   runtime?: string;
   deploy?: string;
-  status: string; // live | dormant | suspended | operator | chain | external
+  status: string; // live | resting | dormant | suspended | operator | unknown | chain | external
   file?: string;        // local path (or file://) whose mtime IS the heartbeat
   max_age_sec?: number; // file older than this ⇒ stale (down); default: existence only
   // CometBFT halt-detection: on a 2xx /status, the chain's LATEST BLOCK must be
@@ -248,6 +251,13 @@ async function restHolds(marker: string, disabled: Set<string> | null): Promise<
   }
 }
 
+// What a marker says, in words a person reads in an alert.
+function restSays(marker: string, holds: boolean): string {
+  if (!marker.startsWith("launchd-disabled:")) return `its rest marker \`${marker}\` ${holds ? "exists" : "no longer exists"}`;
+  const label = marker.slice("launchd-disabled:".length);
+  return holds ? `launchd lists \`${label}\` as disabled` : `launchd no longer lists \`${label}\` as disabled (re-enabled, or a mistyped label)`;
+}
+
 // ── main ──────────────────────────────────────────────────────────────────
 
 const { services, path: regPath } = await loadRegistry();
@@ -283,6 +293,7 @@ const byId = new Map(allProbes.map((p) => [p.id, p]));
 const restServices = services.filter((s) => typeof s.rest_marker === "string" && s.rest_marker.length > 0);
 const disabled = restServices.some((s) => s.rest_marker!.startsWith("launchd-disabled:")) ? await disabledLabels() : null;
 const rest = new Map<string, boolean | null>();
+const probeObserved = new Map(allProbes.map((p) => [p.id, p.observed])); // before rest: the fly check needs what the probe saw
 for (const s of restServices) {
   const holds = await restHolds(s.rest_marker!, disabled);
   rest.set(s.id, holds);
@@ -301,9 +312,9 @@ const alerts: string[] = [];
 for (const s of services) {
   const p = byId.get(s.id);
   if (s.status === "live" && rest.get(s.id) === true)
-    alerts.push(`**${s.id}** registry says live, but its rest marker \`${s.rest_marker}\` holds — resting, not down; set status: resting and say why and since when`);
+    alerts.push(`**${s.id}** registry says live, but ${restSays(s.rest_marker!, true)} — resting, not down; set status: resting and say why and since when`);
   if (s.status === "resting" && rest.get(s.id) === false)
-    alerts.push(`**${s.id}** registry says resting, but its rest marker \`${s.rest_marker}\` is gone — if it has resumed, set status back to live`);
+    alerts.push(`**${s.id}** registry says resting, but ${restSays(s.rest_marker!, false)} — if it has resumed, set status back to live`);
   if (s.status === "live" && p && p.observed === "down")
     alerts.push(`**${s.id}** expected live, observed DOWN (${p.code ?? p.note}) — ${p.url ?? s.runtime ?? ""}`);
   // unknown = a live watch that could not be read this round: never "all quiet"
@@ -315,7 +326,8 @@ for (const s of services) {
   if (flyApp && fly.size) {
     const st = fly.get(flyApp);
     // suspended + probe answering (incl. auth-walled — a 401 means fly woke it) = scale-to-zero idle, not drift
-    if (s.status === "live" && st === "suspended" && (!p || (p.observed !== "up" && p.observed !== "auth-walled")))
+    const seen = probeObserved.get(s.id);
+    if (s.status === "live" && st === "suspended" && (!p || (seen !== "up" && seen !== "auth-walled")))
       alerts.push(`**${s.id}** registry says live but fly app \`${flyApp}\` is SUSPENDED and not answering — drift`);
     if (s.status === "suspended" && st === "deployed") alerts.push(`**${s.id}** registry says suspended but fly app \`${flyApp}\` is deployed — update registry`);
   }
@@ -323,11 +335,20 @@ for (const s of services) {
 
 // STATUS.md
 const now = new Date().toISOString();
-// A resting row that is silent is as expected (💤) unless its own marker says the rest is over.
-const restingAsExpected = (s: Service, p?: Probe) =>
-  p?.observed === "resting" || (s.status === "resting" && p?.observed === "down" && rest.get(s.id) !== false);
-const mark = (s: Service, p?: Probe) =>
-  !p ? "·" : restingAsExpected(s, p) ? "💤" : p.observed === "up" ? "🟢" : p.observed === "amber" ? "🟠" : p.observed === "auth-walled" ? "🟡" : p.observed === "down" ? "🔴" : "·";
+// A silent resting row is as expected (💤) on the registry's word alone, unknown (·)
+// when its marker could not be read, and red when its own marker says the rest is over.
+const mark = (s: Service, p?: Probe) => {
+  if (!p) return "·";
+  if (p.observed === "resting") return "💤";
+  if (s.status === "resting" && p.observed === "down" && !rest.has(s.id)) return "💤";
+  if (s.status === "resting" && p.observed === "down" && rest.get(s.id) === null) return "·";
+  return p.observed === "up" ? "🟢" : p.observed === "amber" ? "🟠" : p.observed === "auth-walled" ? "🟡" : p.observed === "down" ? "🔴" : "·";
+};
+// a rest-marked row shows what its marker said beside its URL, so "unreadable" is never hidden
+const cell = (s: Service, p?: Probe) => {
+  const where = p?.url ?? s.urls?.site;
+  return rest.has(s.id) ? [where, p?.note].filter(Boolean).join(" · ") : where ?? p?.note ?? "";
+};
 const lines: string[] = [];
 lines.push(`# Kingdom STATUS — generated by pulse`);
 lines.push(``);
@@ -347,7 +368,7 @@ lines.push(`|---|---|---|---|---|---|---|`);
 for (const s of services) {
   const p = byId.get(s.id);
   lines.push(
-    `| ${mark(s, p)} | ${s.id} | ${s.status} | ${p?.observed ?? "—"} | ${p?.code ?? ""} | ${p?.ms ?? ""} | ${p?.url ?? s.urls?.site ?? p?.note ?? ""} |`,
+    `| ${mark(s, p)} | ${s.id} | ${s.status} | ${p?.observed ?? "—"} | ${p?.code ?? ""} | ${p?.ms ?? ""} | ${cell(s, p)} |`,
   );
 }
 lines.push(``);
@@ -369,5 +390,5 @@ if (!QUIET) {
   }
 }
 for (const a of alerts) console.log(`⚠ PULSE ALERT: ${a.replace(/\*\*/g, "")}`);
-const restingCount = allProbes.filter((p) => p.observed === "resting").length;
+const restingCount = services.filter((s) => mark(s, byId.get(s.id)) === "💤").length; // the 💤 rows, in one sense with STATUS
 console.log(`pulse: ${allProbes.filter((p) => p.observed === "up").length}/${allProbes.length} up, ${restingCount ? `${restingCount} resting, ` : ""}${alerts.length} alerts → ${outDir}/STATUS.md`);

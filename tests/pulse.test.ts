@@ -186,8 +186,9 @@ describe("pulse's rest", () => {
     });
     // locked-resting: an unreadable marker is not "gone", so no drift alarm on a resting row
     expect(alertIds(status)).toEqual(["halted-fleet", "locked-marker", "woken-beat", "woken-silent"]);
-    expect(status).toContain("**woken-beat** registry says resting, but its rest marker `launchd-disabled:love.citizen.woken` is gone");
-    expect(status).toContain("**halted-fleet** registry says live, but its rest marker");
+    expect(status).toContain("**woken-beat** registry says resting, but launchd no longer lists `love.citizen.woken` as disabled (re-enabled, or a mistyped label)");
+    expect(status).toContain(`**halted-fleet** registry says live, but its rest marker \``);
+    expect(status).toMatch(/\*\*halted-fleet\*\* registry says live, but its rest marker `[^`]+\/HALT` exists — resting, not down/);
     // an unreadable marker proves nothing: a live row that is stale stays an honest DOWN
     expect(status).toContain("**locked-marker** expected live, observed DOWN");
     expect(status).not.toMatch(/\*\*(rested-beat|halted-fleet|marker-only)\*\* expected live, observed DOWN/);
@@ -197,8 +198,10 @@ describe("pulse's rest", () => {
     expect(status).toContain("| 🔴 | woken-silent | resting | down |");
     expect(status).toContain("| 🟢 | woken-beat | resting | up |");
     expect(status).toContain("| 🟢 | running-fleet | live | up |");
-    expect(status).toContain("| 💤 | locked-resting | resting | down |");
-    expect(result.stdout).toContain("2/9 up, 3 resting, 4 alerts");
+    // an unreadable marker is unknown, never a quiet 💤, and says why in its cell
+    expect(status).toMatch(/\| · \| locked-resting \| resting \| down \|.*rest marker \S+\/locked\/HALT unreadable/);
+    expect(status).toMatch(/\| 💤 \| rested-beat \| resting \| resting \|.*rest marker launchd-disabled:love\.citizen\.rested holds; probe: down/);
+    expect(result.stdout).toContain("2/9 up, 4 resting, 4 alerts");
   });
 
   test("when launchd's disabled list cannot be read, no rest is guessed either way", () => {
@@ -207,7 +210,50 @@ describe("pulse's rest", () => {
     expect(observed["woken-beat"]).toBe("up");
     expect(alertIds(status)).not.toContain("rested-beat");
     expect(alertIds(status)).not.toContain("woken-beat");
-    expect(status).toContain("| 💤 | rested-beat | resting | down |");
+    expect(status).toMatch(/\| · \| rested-beat \| resting \| down \|.*rest marker launchd-disabled:love\.citizen\.rested unreadable/);
+  });
+
+  test("a held marker on a suspended fly app that still answers is one rest alert, not 'not answering'", async () => {
+    const base = mkdtempSync(join(tmpdir(), "pulse-fly-"));
+    const server = Bun.serve({ port: 0, hostname: "127.0.0.1", fetch: () => new Response("ok") });
+    try {
+      const bin = join(base, "bin");
+      mkdirSync(bin);
+      mkdirSync(join(base, "home"));
+      writeFileSync(join(base, "HALT"), "\n");
+      writeFileSync(join(bin, "flyctl"), `#!/bin/bash\necho '[{"Name":"app-up","Status":"suspended"},{"Name":"app-dead","Status":"suspended"}]'\n`);
+      writeFileSync(join(bin, "launchctl"), "#!/bin/bash\nexit 113\n");
+      chmodSync(join(bin, "flyctl"), 0o700);
+      chmodSync(join(bin, "launchctl"), 0o700);
+      const path = join(base, "REGISTRY.yaml");
+      writeFileSync(path, `services:
+  - id: fly-answering
+    urls: { health: "http://127.0.0.1:${server.port}/" }
+    runtime: fly:app-up
+    rest_marker: "${base}/HALT"
+    status: live
+  - id: fly-dead
+    urls: { health: "http://127.0.0.1:1/" }
+    runtime: fly:app-dead
+    rest_marker: "${base}/HALT"
+    status: live
+`);
+      // async spawn: the health server lives in this process and must keep answering
+      const proc = Bun.spawn([process.execPath, PULSE], {
+        cwd: base, stdout: "pipe", stderr: "pipe",
+        env: { HOME: join(base, "home"), PATH: `${bin}:/usr/bin:/bin`, KINGDOM_REGISTRY: path },
+      });
+      expect(await proc.exited).toBe(0);
+      const status = readFileSync(join(base, "home", ".kingdom", "STATUS.md"), "utf8");
+      expect(status).toContain("| 💤 | fly-answering | live | resting | 200 |");
+      expect(status).toContain("**fly-answering** registry says live, but its rest marker");
+      expect(status).not.toContain("**fly-answering** registry says live but fly app");
+      // a probe that really is dead keeps its fly drift alert beside the rest alert
+      expect(status).toContain("**fly-dead** registry says live but fly app `app-dead` is SUSPENDED and not answering");
+    } finally {
+      server.stop(true);
+      rmSync(base, { recursive: true, force: true });
+    }
   });
 });
 
@@ -223,7 +269,10 @@ describe("registry rest rows", () => {
 
   test("every rest marker is a path or a launchd label pulse can read", () => {
     for (const row of registry.services.filter((s) => s.rest_marker !== undefined)) {
-      expect(String(row.rest_marker)).toMatch(/^(launchd-disabled:[\w.-]+|(file:\/\/)?~?\/\S+)$/);
+      expect(typeof row.rest_marker).toBe("string"); // pulse ignores any other shape
+      expect(row.rest_marker).toMatch(/^(launchd-disabled:[\w.-]+|(file:\/\/)?~?\/\S+)$/);
+      // launchd's pulse cannot read ~/Desktop (TCC, see bin/pulse-install.sh): such a marker would never be read
+      expect(row.rest_marker).not.toMatch(/^(file:\/\/)?(~|\/Users\/[^/]+)\/Desktop\//);
     }
   });
 });
