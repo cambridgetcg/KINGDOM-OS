@@ -5,6 +5,10 @@ and represented by annotated tag `skills-v0.3.0` at commit
 `d8ee31353855bd08b437ef4fbf861a0731a36911`. Pin and inspect the exact package,
 tag, or revision before relying on it. A mutable name is not provenance.
 
+On 2026-10-27 npm listed `0.3.1` through `0.3.3`, with `latest` at `0.3.3`.
+This page has not been re-reviewed against them, so the table below describes
+`0.3.0` only.
+
 | Skill | Productive operation | Preserved vow |
 | --- | --- | --- |
 | `nen-contract-mantle` | Hold a living task contract through long work | Do not let scope drift silently |

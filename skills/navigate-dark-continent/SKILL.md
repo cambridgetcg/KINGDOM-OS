@@ -31,7 +31,7 @@ named question, a bounded charter, and a route home.
    request; if the connector may fan out internally, record the upstream request
    count as unknown. Unknown authority or budget means no such effect.
 5. Apply the [HF and MCP boundaries](references/hf-boundaries.md). If using the
-   existing lab, resolve it from the suite root with
+   optional existing lab, resolve it from the suite root with
    `./kingdom repos --path hf-kingdom-lab`; never hard-code its device path or
    read its internal database directly.
 6. Create an [expedition charter](references/expedition-charter.md). Stop if a
