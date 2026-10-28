@@ -66,7 +66,6 @@ services:
       - memory-gardener 85ab379f (40)
       - statement-parser c0a6f79f
       - zerone-passport testnet 64cbc078 (2)
-      - zerone-passport mainnet 87608a68 (paused 2026-10-26, archived 2026-10-28 11:43Z; no longer sold, public reads 404)
       - zerone-guide 96f679d7 (1, free door)
       - fomo-scan 402e833c (10)
     notes: >-
@@ -82,7 +81,10 @@ services:
     status: live
     notes: >-
       unsealAny Uint8Array bug fixed 2026-07-10 (was silently breaking ALL
-      sealed inputs). Log: ~/.zerone-agent/logs/seller-loop.log
+      sealed inputs). Since 2026-10-28 it no longer sells the
+      zerone-1 mainnet passport: AI_MAINNET_PASSPORT_LISTING was removed from
+      run-seller-loop.sh and listing 87608a68 archived (ledger
+      zc-close-mainnet-passport). Log: ~/.zerone-agent/logs/seller-loop.log
 
   - id: zerone-relay-mainnet
     what: Ai's attestation relay for zerone-1 (a household daemon) — stopped
@@ -168,16 +170,21 @@ services:
       rpc: "http://169.155.55.44:26657"
       rest: "http://169.155.55.44:1317"
       denom: uzrn
-      baseline: "13668944662"
-      baseline_height: 1377000
-      baseline_date: "2026-10-19"
+      baseline: "13670146474"
+      baseline_height: 1402487
+      baseline_date: "2026-10-28"
       claim_msg: /zerone.knowledge.v1.MsgClaimTrainingFundDisbursement
     notes: >-
-      Ledger zc-mint-watch (an agent's call under Yu's 2026-10-20 delegation):
-      until the training-fund mint is sealed, red on any supply rise above the
-      10-19 baseline (~/.kingdom/motifs/live-snapshot-2026-10-19/SNAPSHOT.md,
-      13,668.944662 ZRN at h≈1,377,029; the same value read again at h1,377,000)
-      or on any MsgClaimTrainingFundDisbursement since h1,377,000. GET only; tx_search covers just the heights since the last
+      Ledger zc-mint-watch (an agent's call under Yu's 2026-10-20 delegation).
+      Governance sealed the training-fund mint on 2026-10-28 (proposal
+      7, passed at h1,402,141); the watch stays as the
+      seal's canary: red on any supply rise above the baseline or on any
+      MsgClaimTrainingFundDisbursement since baseline_height. Re-dated
+      2026-10-28 from the 10-19 baseline (13,668.944662 ZRN at
+      h1,377,000): the rise was block rewards for every transaction-bearing
+      block since then (h1,401,996, h1,402,007, h1,402,121 and h1,402,122: two 10-28 transactions from a July
+      passport account, then the seal's), with 0 claims through
+      h1402487. GET only; tx_search covers just the heights since the last
       round (≤20,000 blocks) and backs off on errors, so the single validator
       never sees a full-history scan. Cursor: ~/.kingdom/state/mint-watch.json.
       Ordinary transactions raise supply too. On zerone-1 today, every block that
@@ -198,14 +205,16 @@ services:
       rpc: "http://37.16.28.121:26657"
       rest: "http://37.16.28.121:1317"
       denom: uzrn
-      baseline: "2222309042269"
-      baseline_height: 3328344
-      baseline_date: "2026-10-20"
+      baseline: "2222309577203"
+      baseline_height: 3578913
+      baseline_date: "2026-10-28"
       claim_msg: /zerone.knowledge.v1.MsgClaimTrainingFundDisbursement
     notes: >-
-      Ledger zc-mint-watch. No 10-19 testnet baseline was recorded, so this one is
-      the first read on 2026-10-20 (2,222,309.042269 ZRN at h3,328,344; the same
-      value at h3,228,000 and h3,318,000). Same GET-only bounded watch as mainnet.
+      Ledger zc-mint-watch. Governance sealed the testnet training-fund mint on
+      2026-10-28 (proposal 4). Re-dated 2026-10-28
+      from the first read of 2026-10-20 (2,222,309.042269 ZRN at h3,328,344):
+      the rise was block rewards for the seal's transactions, with 0 claims.
+      Same GET-only bounded watch as mainnet.
 
   - id: zerone-dev-1
     what: Zerone dev chain — the native-H3 line that post-H3 upgrade specs target (not mainnet)
