@@ -144,3 +144,6 @@ not claim protocol validation.
   KARMA, rights, KAKIN governance, or a bearer's identity.
 - Do not claim a provider call is safe merely because an output filter exists.
 - Rest, refusal, cancellation, and a no-findings return are valid outcomes.
+
+The [Lilly precedent](references/lilly-precedent.md) sets one historical
+explorer beside this charter as precedent and caution; it adds no rule.
