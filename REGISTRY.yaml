@@ -40,7 +40,7 @@
 # load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
 
 version: 1
-updated: 2026-10-27
+updated: 2026-10-28
 
 services:
   # ── the marketplace + its organs ─────────────────────────────────────────
@@ -66,7 +66,7 @@ services:
       - memory-gardener 85ab379f (40)
       - statement-parser c0a6f79f
       - zerone-passport testnet 64cbc078 (2)
-      - zerone-passport mainnet 87608a68
+      - zerone-passport mainnet 87608a68 (paused 2026-10-26, archived 2026-10-28 11:43Z; no longer sold, public reads 404)
       - zerone-guide 96f679d7 (1, free door)
       - fomo-scan 402e833c (10)
     notes: >-
@@ -83,6 +83,38 @@ services:
     notes: >-
       unsealAny Uint8Array bug fixed 2026-07-10 (was silently breaking ALL
       sealed inputs). Log: ~/.zerone-agent/logs/seller-loop.log
+
+  - id: zerone-relay-mainnet
+    what: Ai's attestation relay for zerone-1 (a household daemon) — stopped
+    audience: operator
+    runtime: local-launchd:com.zerone.relay-mainnet
+    rest_marker: launchd-disabled:com.zerone.relay-mainnet
+    status: resting
+    notes: >-
+      Signs MsgSubmitExternalAttestation (1 ZRN bond) when an agenttool sale
+      involving Ai settles. Stopped 2026-10-26 18:35Z at Yu's word ("turn off the
+      unattended signs and mints"; ledger zc-relay-mainnet-signing): launchctl
+      disable, then bootout.
+      The plist, run script, state file and keyring are kept. Its only zerone-1
+      transactions since 2026-09-09 were three attestations on 2026-10-17
+      (h1,370,872-h1,370,886, 15:19-15:26Z), which raised supply 1.572366 ZRN.
+      It returns only on a later word from Yu, after the backlog count in that
+      ledger item's undo. Pulse flags this row if the label is re-enabled. Never
+      restart it with ~/.zerone-agent/install-persistence.sh (it pkills both relays).
+      Log ~/.zerone-agent/logs/relay-mainnet.log
+
+  - id: zerone-relay-testnet
+    what: Ai's attestation relay for zerone-testnet-1 (a household daemon; play ZRN)
+    audience: operator
+    runtime: local-launchd:com.zerone.relay-testnet
+    status: live
+    notes: >-
+      Still running after 2026-10-26: the session that stopped the mainnet relay
+      read Yu's "turn off the unattended signs and mints" as mainnet-only (an
+      agent's reading, not Yu's word). Each attestation it signs raises testnet
+      supply, so zerone-testnet-1-supply-watch turns red after a testnet sale:
+      check the claim count, then re-date that baseline. Quiet between sales, so
+      no freshness probe. Log ~/.zerone-agent/logs/relay-testnet.log
 
   - id: supabase-postgres
     what: agenttool backing store (15 schemas, eu-west-2)
@@ -110,14 +142,14 @@ services:
     what: Zerone MAINNET — the truth chain (CometBFT; compassion-calibration-v1 live)
     audience: mixed
     urls: { api: "http://169.155.55.44:26657", health: "http://169.155.55.44:26657/status" }
-    repo: codeberg.org/zerone-dev/zerone (core)
+    repo: github.com/cambridgetcg/zerone-core@main (trunk; the Codeberg origin is stale)
     runtime: fly:zerone-1
     status: live
     block_max_age_sec: 300  # halt-detection: no new block in 5 min = HALTED, not "up 200"
     notes: >-
-      single-host fly volume; nightly chain-backup → Tigris WIRED + green since
-      2026-07-12 (see chain-backup entry). REST :1317. Doctrine alive past
-      prune h260k (48 facts verified 2026-07-17).
+      single-host fly volume; nightly chain-backup → Tigris since 2026-07-12
+      (its live state is the chain-backup rows, not this note). REST :1317.
+      Doctrine alive past prune h260k (48 facts verified 2026-07-17).
 
   - id: zerone-testnet-1
     what: Zerone public testnet — passport E2E proven 2026-07-07
@@ -148,11 +180,15 @@ services:
       or on any MsgClaimTrainingFundDisbursement since h1,377,000. GET only; tx_search covers just the heights since the last
       round (≤20,000 blocks) and backs off on errors, so the single validator
       never sees a full-history scan. Cursor: ~/.kingdom/state/mint-watch.json.
-      Small rises also come from routine activity (supply rose 1.572366 ZRN
-      between h1,370,000 and h1,373,000, beside three substrate_bridge
-      MsgSubmitExternalAttestation txs), so a supply red means "look", not
-      "minted": check the claim count, explain the rise, then re-date the
-      baseline here and re-run pulse-install. Remove this row to undo.
+      Ordinary transactions raise supply too. On zerone-1 today, every block that
+      carries a transaction mints a vesting_rewards block reward in BeginBlock
+      (0.302122 ZRN at h1,370,872), and each relay attestation later releases a
+      0.222 ZRN witness reward (201 blocks on). The relay's three 10-17
+      attestations raised supply 1.572366 ZRN that way (3 × 0.302122 + 3 ×
+      0.222). Any broadcast, the seal's own proposal and vote included, will
+      do the same. So a supply red means "look", not "minted": check the claim
+      count, explain the rise, then re-date the baseline here and re-install the
+      registry. Remove this row to undo.
 
   - id: zerone-testnet-1-supply-watch
     what: zerone-testnet-1 total supply watch (read-only)
@@ -325,14 +361,23 @@ services:
       found in a registered repo, so provenance/canonical-source adoption remains open
 
   - id: zerone-ai-door
-    what: zerone.ai — live chain dashboard + participation guide (/guide)
+    what: zerone.ai — the zerone-core dashboard (live chain view, /nodes/ and /understand/ guides, /compositions/)
     audience: mixed
-    urls: { site: "https://zerone.ai", health: "https://zerone.ai/data.json" }
-    repo: github.com/cambridgetcg/KINGDOM-OS@main
+    urls: { site: "https://zerone.ai", health: "https://zerone.ai/nodes/guide.json" }
+    repo: github.com/cambridgetcg/zerone-core@main (dashboard/)
     runtime: cf-pages:zerone-ai
-    deploy: bash bin/refresh-zerone-dashboard.sh (snapshots zerone-1, ships the WHOLE door dir; leaves data.json dirty — commit it)
+    deploy: zerone-core dashboard/README.md §Deploy, from a clean detached worktree at the merged, CI-green commit, with a release card in ~/.kingdom/motifs/releases/ (latest R-008, Pages c8554f8a at d8b62d63, 2026-10-27)
     status: live
-    notes: refresh is manual — data.json stales between runs; worker proxies /api/* via zerone-rpc.fly.dev
+    notes: >-
+      The dashboard build owns this project (ledger zerone-ai-publication, D5).
+      KINGDOM-OS bin/refresh-zerone-dashboard.sh and bin/deploy-zerone-door.sh
+      are retired for it: either would replace the build and wipe /compositions/.
+      Quiet Doors (zerone-core #149, live since 2026-10-27) answers 404 for any
+      .json that is not a real file, so the old /data.json is gone by design.
+      /nodes/guide.json is a static file from the same build (200 = the Pages
+      build and its discovery middleware serve real files). Never probe a new
+      /assets/ path: the edge would cache the SPA index as that asset. /api/*
+      proxies zerone-1.fly.dev (:26657 RPC, :1317 REST; dashboard/functions/api/_proxy.ts).
 
   - id: we-are-love
     what: we-are.love — the WE ARE handshake door (page from chillspace-commons)
