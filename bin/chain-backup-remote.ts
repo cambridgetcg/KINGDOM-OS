@@ -52,10 +52,15 @@ const MAX_S3_RESPONSE_BYTES = 256 * 1024;
 const S3_TIMEOUT_MS = 120_000;
 
 type StreamUpload = number | "OVER" | "STAGE" | null;
+// Why a streamed capture was refused before anything ran: head is not GNU
+// coreutils (BSD/macOS head -c over-reads a pipe and drops the excess), or the
+// remote cannot count the tar stream's bytes independently of head.
+type StreamRefusal = "HEAD_NOT_GNU" | "NO_BYTE_COUNT";
 type RemoteResult =
   | { kind: "capture"; tarExit: number | null; uploadExit: number | null; uploadHttp: number | null }
   | { kind: "skip"; freeKib: number | null; needKib: number }
-  | { kind: "stream"; tarExit: number | null; parts: number; upload: StreamUpload; uploadHttp: number | null };
+  | { kind: "refuse"; reason: StreamRefusal }
+  | { kind: "stream"; tarExit: number | null; parts: number; bytes: number | null; upload: StreamUpload; uploadHttp: number | null };
 type Presence = "PRESENT" | "FAILED" | "NOT_ATTEMPTED";
 export type Outcome = {
   chain: Chain;
@@ -74,10 +79,14 @@ export type Outcome = {
   landed_marker: "WRITTEN" | "FAILED" | "NOT_WRITTEN";
   capture_mode: "STAGED" | "STREAMED_MULTIPART";
   parts: number | null; // streamed: parts the remote reports uploaded
-  // OPEN: created and never completed (a skip or a torn stream); UNKNOWN: the
-  // complete call failed, so whether the object exists is for stat to say.
+  // Streamed: the tar stream's bytes as counted on the remote by tee | wc -c,
+  // independently of head. null: not counted (staged, refused, torn, unreadable).
+  stream_bytes: number | null;
+  // OPEN: created and never completed (a skip, a refusal or a torn stream);
+  // UNKNOWN: the complete call failed, so whether the object exists is for stat to say.
   multipart_status: "NOT_STARTED" | "OPEN" | "COMPLETED" | "UNKNOWN";
-  error: "SETUP_FAILED" | "REMOTE_FAILED" | "PROTOCOL_FAILED" | "CAPTURE_FAILED" | "UPLOAD_FAILED" | "MULTIPART_FAILED" | "OBJECT_FAILED" | "SKIPPED_LOW_DISK" | null;
+  error: "SETUP_FAILED" | "REMOTE_FAILED" | "PROTOCOL_FAILED" | "CAPTURE_FAILED" | "UPLOAD_FAILED" | "MULTIPART_FAILED"
+    | "STREAM_MISMATCH" | "OBJECT_FAILED" | "SKIPPED_LOW_DISK" | `REFUSED_${StreamRefusal}` | null;
 };
 
 export type UploadedPart = { partNumber: number; etag: string; size: number };
@@ -137,22 +146,26 @@ export function parseRemoteResult(output: string | null): RemoteResult | null {
     if (freeKib !== null && freeKib >= needKib) return null;
     return { kind: "skip", freeKib, needKib };
   }
-  const stream = /^CHAIN_BACKUP_V3 tar=(NA|0|[1-9][0-9]{0,2}) parts=(0|[1-9][0-9]{0,4}) upload=(NA|OVER|STAGE|0|[1-9][0-9]{0,2}) http=(NA|[0-9]{3})\n$/.exec(output);
+  const refuse = /^CHAIN_BACKUP_V3 refuse=(HEAD_NOT_GNU|NO_BYTE_COUNT)\n$/.exec(output);
+  if (refuse && refuse[0] === output) return { kind: "refuse", reason: refuse[1] as StreamRefusal };
+  const stream = /^CHAIN_BACKUP_V3 tar=(NA|0|[1-9][0-9]{0,2}) parts=(0|[1-9][0-9]{0,4}) bytes=(NA|0|[1-9][0-9]{0,15}) upload=(NA|OVER|STAGE|0|[1-9][0-9]{0,2}) http=(NA|[0-9]{3})\n$/.exec(output);
   if (stream && stream[0] === output) {
     const tarExit = stream[1] === "NA" ? null : Number(stream[1]);
     const parts = Number(stream[2]);
-    const upload: StreamUpload = stream[3] === "NA" ? null : stream[3] === "OVER" || stream[3] === "STAGE" ? stream[3] : Number(stream[3]);
-    const uploadHttp = stream[4] === "NA" ? null : Number(stream[4]);
+    const bytes = stream[3] === "NA" ? null : Number(stream[3]);
+    const upload: StreamUpload = stream[4] === "NA" ? null : stream[4] === "OVER" || stream[4] === "STAGE" ? stream[4] : Number(stream[4]);
+    const uploadHttp = stream[5] === "NA" ? null : Number(stream[5]);
     if ((tarExit !== null && tarExit > 255) || (typeof upload === "number" && upload > 255)) return null;
+    if (bytes !== null && !Number.isSafeInteger(bytes)) return null;
     // Setup failure: nothing ran, so nothing can be reported beside it.
-    if (tarExit === null && (parts !== 0 || upload !== null || uploadHttp !== null)) return null;
+    if (tarExit === null && (parts !== 0 || bytes !== null || upload !== null || uploadHttp !== null)) return null;
     // No part attempted: no count and no status.
     if (upload === null && (parts !== 0 || uploadHttp !== null)) return null;
     // A clean finish needs at least one landed part; OVER only follows a full set.
     if ((upload === 0 || upload === "OVER") && parts === 0) return null;
     // A status belongs to an attempt: the failing one, or the last landed part.
     if (uploadHttp !== null && typeof upload !== "number" && parts === 0) return null;
-    return { kind: "stream", tarExit, parts, upload, uploadHttp };
+    return { kind: "stream", tarExit, parts, bytes, upload, uploadHttp };
   }
   const match = /^CHAIN_BACKUP_V2 tar=(NA|0|[1-9][0-9]{0,2}) upload=(NA|0|[1-9][0-9]{0,2}) http=(NA|[0-9]{3})\n$/.exec(output);
   if (!match || match[0] !== output) return null;
@@ -217,10 +230,18 @@ export function buildRemoteCommand(
 }
 
 export function buildStreamedRemoteCommand(partUrls: readonly string[], options: StreamOptions): string {
-  // tar's stdout is the archive; it never reaches SSH. head -c (GNU) reads
-  // exactly one part from the pipe into the private directory, curl -T sends it
-  // with a Content-Length, and the part is overwritten by the next one. Only the
-  // one fixed-format record leaves the machine, as in the staged capture.
+  // tar's stdout is the archive; it never reaches SSH. head -c reads one part
+  // from the pipe into the private directory, curl -T sends it with a
+  // Content-Length, and the part is overwritten by the next one. Only the one
+  // fixed-format record leaves the machine, as in the staged capture.
+  //
+  // Cutting parts is only sound if head reads exactly N bytes and no more. GNU
+  // head does; BSD/macOS head reads a whole stdio buffer and drops the excess,
+  // and the parts still look whole. So the capture is refused unless head is GNU
+  // coreutils, and tee also hands every byte of the stream to wc -c, a count
+  // independent of head that the Mac must find equal to the parts' sum and the
+  // object's size before it writes a landed marker. The counter's own plumbing
+  // (tee writing /dev/fd/3 into wc) is proven on five bytes before tar starts.
   const need = options.needKib;
   const part = options.partBytes ?? PART_BYTES;
   if (!Number.isSafeInteger(need) || need <= 0) throw new Error("invalid pre-flight bound");
@@ -229,14 +250,19 @@ export function buildStreamedRemoteCommand(partUrls: readonly string[], options:
   if (partUrls.length < 1 || partUrls.length > 10000) throw new Error("invalid part count");
   const script = [
     "umask 077",
-    'tmp=$(mktemp -d "${TMPDIR:-/tmp}/chain-backup.XXXXXXXXXX" 2>/dev/null) || { printf "CHAIN_BACKUP_V3 tar=NA parts=0 upload=NA http=NA\\n"; exit 0; }',
-    `trap 'rm -f -- "$tmp/part" >/dev/null 2>&1; rmdir -- "$tmp" >/dev/null 2>&1' EXIT`,
+    // Before anything is created: GNU head, and a working independent byte counter.
+    'case "$(head --version 2>/dev/null </dev/null)" in ("head (GNU coreutils) "*) ;; (*) printf "CHAIN_BACKUP_V3 refuse=HEAD_NOT_GNU\\n"; exit 0 ;; esac',
+    "probe=$({ printf 12345 | tee /dev/fd/3 >/dev/null 2>&1; } 3>&1 | wc -c 2>/dev/null)",
+    '[ "$probe" -eq 5 ] 2>/dev/null || { printf "CHAIN_BACKUP_V3 refuse=NO_BYTE_COUNT\\n"; exit 0; }',
+    'tmp=$(mktemp -d "${TMPDIR:-/tmp}/chain-backup.XXXXXXXXXX" 2>/dev/null) || { printf "CHAIN_BACKUP_V3 tar=NA parts=0 bytes=NA upload=NA http=NA\\n"; exit 0; }',
+    `trap 'rm -f -- "$tmp/part" "$tmp/count" >/dev/null 2>&1; rmdir -- "$tmp" >/dev/null 2>&1' EXIT`,
     ...preflightLines(need),
     `u=(${partUrls.map(shellQuote).join(" ")})`,
-    // The loop's counters and then tar's status (PIPESTATUS[0]) come back as one
-    // captured line. An early break closes the pipe under tar, so a torn stream
-    // reports tar > 1.
-    `r=$(tar czf - --warning=no-file-changed${excludeFlags(options.excludeKeys)} -C /data .zeroned/data .zeroned/config 2>/dev/null | {`,
+    // The loop's counters, then tar's and tee's statuses (PIPESTATUS), come back
+    // as one line on fd 4. An early break closes the pipe under tee and tar, so
+    // a torn stream reports tar > 1. tee's second copy goes to fd 3, the pipe
+    // into wc -c; nothing else writes there, and bash waits for wc.
+    `r=$( { { tar czf - --warning=no-file-changed${excludeFlags(options.excludeKeys)} -C /data .zeroned/data .zeroned/config 2>/dev/null | tee /dev/fd/3 2>/dev/null | {`,
     "  parts=0 upload=NA http=NA",
     "  while :; do",
     `    head -c ${part} > "$tmp/part" 2>/dev/null || { upload=STAGE; break; }`,
@@ -250,10 +276,13 @@ export function buildStreamedRemoteCommand(partUrls: readonly string[], options:
     "    parts=$((parts + 1))",
     "  done",
     '  printf "%s %s %s" "$parts" "$upload" "$http"',
-    '}; printf " %s" "${PIPESTATUS[0]}")',
-    "set -f; set -- $r; parts=$1 upload=$2 http=$3 tar_rc=$4",
-    'rm -f -- "$tmp/part" >/dev/null 2>&1',
-    'printf "CHAIN_BACKUP_V3 tar=%s parts=%s upload=%s http=%s\\n" "${tar_rc:-NA}" "${parts:-0}" "${upload:-NA}" "${http:-NA}"',
+    '} >&4; printf " %s %s" "${PIPESTATUS[0]}" "${PIPESTATUS[1]}" >&4; } 3>&1 | wc -c > "$tmp/count" 2>/dev/null; } 4>&1)',
+    "set -f; set -- $r; parts=$1 upload=$2 http=$3 tar_rc=$4 tee_rc=$5",
+    // The count is believed only from a tee that copied the whole stream (exit 0)
+    // and a plain decimal from wc; anything else is NA, which the Mac refuses.
+    'bytes=NA; if [ "$tee_rc" = 0 ] && read -r n < "$tmp/count"; then case "$n" in ""|*[!0-9]*|0?*) ;; *) bytes=$n ;; esac; fi 2>/dev/null',
+    'rm -f -- "$tmp/part" "$tmp/count" >/dev/null 2>&1',
+    'printf "CHAIN_BACKUP_V3 tar=%s parts=%s bytes=%s upload=%s http=%s\\n" "${tar_rc:-NA}" "${parts:-0}" "$bytes" "${upload:-NA}" "${http:-NA}"',
   ].join("\n");
   const command = `bash -c ${shellQuote(script)}`;
   if (command.length > MAX_REMOTE_COMMAND_BYTES) throw new Error("remote command too long");
@@ -299,7 +328,7 @@ function emptyOutcome(chain: Chain): Outcome {
     key_files: ROLLOUT_CHAINS.includes(chain) ? "EXCLUDED" : "INCLUDED",
     disk_free_kib: null, disk_need_kib: null, landed_marker: "NOT_WRITTEN",
     capture_mode: ROLLOUT_CHAINS.includes(chain) && STREAM_CHAINS.includes(chain) ? "STREAMED_MULTIPART" : "STAGED",
-    parts: null, multipart_status: "NOT_STARTED", error: "SETUP_FAILED",
+    parts: null, stream_bytes: null, multipart_status: "NOT_STARTED", error: "SETUP_FAILED",
   };
 }
 
@@ -363,17 +392,19 @@ export async function captureChain(chain: Chain, effects: Effects): Promise<Outc
   // and a capture record only in the protocol this chain was sent.
   if (!report || (report.kind === "skip" && report.needKib !== result.disk_need_kib) ||
       (report.kind === "stream" && (!streamed || report.parts > partLimit || (report.upload === "OVER" && report.parts !== partLimit))) ||
-      (report.kind === "capture" && streamed)) {
+      (report.kind === "refuse" && !streamed) || (report.kind === "capture" && streamed)) {
     result.error = "PROTOCOL_FAILED";
     return result;
   }
-  if (report.kind === "skip") {
+  if (report.kind === "skip" || report.kind === "refuse") {
     // Nothing was archived or uploaded; the rootfs was left alone. A streamed
     // chain's upload stays OPEN with no parts.
     result.capture_status = "SKIPPED";
     result.upload_status = "NOT_ATTEMPTED";
-    result.disk_free_kib = report.freeKib;
-    result.error = "SKIPPED_LOW_DISK";
+    if (report.kind === "skip") {
+      result.disk_free_kib = report.freeKib;
+      result.error = "SKIPPED_LOW_DISK";
+    } else result.error = `REFUSED_${report.reason}`;
     return result;
   }
   if (report.kind === "stream") return finishStream(chain, result, report, key, uploadId, effects);
@@ -424,6 +455,7 @@ async function finishStream(
   result.upload_exit = typeof report.upload === "number" ? report.upload : null;
   result.upload_http = report.uploadHttp;
   result.parts = report.parts;
+  result.stream_bytes = report.bytes;
   result.error = result.ssh_exit === 0 ? null : "REMOTE_FAILED";
   if (report.upload === null) {
     result.upload_status = "NOT_ATTEMPTED";
@@ -445,6 +477,13 @@ async function finishStream(
     return result;
   }
   const expected = listed.reduce((total, part) => total + part.size, 0);
+  // Whole-looking parts are not enough: a head that over-reads drops bytes
+  // between parts and every part still looks full. The remote's own count of
+  // the tar stream must equal the parts' sum, or the upload is never completed.
+  if (report.bytes === null || report.bytes !== expected) {
+    result.error ??= "STREAM_MISMATCH";
+    return result;
+  }
   try {
     await effects.multipart.complete(key, uploadId, listed);
     result.multipart_status = "COMPLETED";

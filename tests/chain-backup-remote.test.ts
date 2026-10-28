@@ -18,8 +18,12 @@ const URL_SENTINEL = `https://storage.invalid/fixture?signature=${PRIVATE}`;
 const record = (tar: number | "NA" = 0, upload: number | "NA" = 0, http: number | "NA" = upload === "NA" ? "NA" : 200) =>
   `CHAIN_BACKUP_V2 tar=${tar} upload=${upload} http=${http === "NA" ? http : String(http).padStart(3, "0")}\n`;
 type StreamUploadField = number | "NA" | "OVER" | "STAGE";
-const streamRecord = (tar: number | "NA" = 1, parts = 1, upload: StreamUploadField = 0, http: number | "NA" = upload === "NA" ? "NA" : 200) =>
-  `CHAIN_BACKUP_V3 tar=${tar} parts=${parts} upload=${upload} http=${http === "NA" ? http : String(http).padStart(3, "0")}\n`;
+// bytes: the remote's own count of the tar stream. The default matches onePart()
+// (one 64-byte part) for a one-part stream, and is NA otherwise.
+const streamRecord = (tar: number | "NA" = 1, parts = 1, upload: StreamUploadField = 0, http: number | "NA" = upload === "NA" ? "NA" : 200,
+  bytes: number | "NA" = parts === 1 && tar !== "NA" ? 64 : "NA") =>
+  `CHAIN_BACKUP_V3 tar=${tar} parts=${parts} bytes=${bytes} upload=${upload} http=${http === "NA" ? http : String(http).padStart(3, "0")}\n`;
+const refuseRecord = (reason: "HEAD_NOT_GNU" | "NO_BYTE_COUNT") => `CHAIN_BACKUP_V3 refuse=${reason}\n`;
 // Each chain answers in the protocol it was sent: the streamed capture's record is V3.
 const answer = (command: string) => (command.includes("CHAIN_BACKUP_V3") ? streamRecord() : record());
 const UPLOAD_ID = "fixture-upload-id";
@@ -210,7 +214,7 @@ function shellFixture() {
   for (const dir of ["bin", "tmp", "home", "objects"]) mkdirSync(join(base, dir));
   const mock = join(base, "mock.ts");
   writeFileSync(mock, `#!${process.execPath}
-import { appendFileSync, writeFileSync, readFileSync, mkdtempSync, rmSync, rmdirSync, fstatSync, statSync, readdirSync, writeSync, readSync } from "node:fs";
+import { appendFileSync, writeFileSync, readFileSync, mkdtempSync, rmSync, rmdirSync, fstatSync, statSync, readdirSync, writeSync, readSync, openSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 const name = basename(process.argv[1]);
 const args = process.argv.slice(2);
@@ -219,6 +223,8 @@ appendFileSync(join(root, "calls"), JSON.stringify({ name, args }) + "\\n");
 function owned(path: string) { if (!path.startsWith(root + "/tmp/")) throw new Error("outside owned fixture"); return path; }
 const noise = ${JSON.stringify(PRIVATE)};
 const rc = (key: string) => Number(process.env[key] || 0);
+// This invocation's ordinal among calls of that command, itself included.
+const nth = (command: string) => readFileSync(join(root, "calls"), "utf8").trim().split("\\n").filter((line) => JSON.parse(line).name === command).length;
 if (name === "mktemp") {
   if (rc("MKTEMP_RC")) process.exit(rc("MKTEMP_RC"));
   console.log(mkdtempSync(owned(args[1].replace(/X+$/, ""))));
@@ -243,9 +249,14 @@ else if (name === "tar") {
   writeFileSync(owned(args[index]), "synthetic archive, no real node bytes");
   console.log(noise); console.error(noise); process.exit(rc("TAR_RC"));
 } else if (name === "head") {
+  if (args[0] === "--version") {
+    // GNU's first line by default; HEAD_VERSION/HEAD_VERSION_RC impersonate other heads.
+    process.stdout.write(process.env.HEAD_VERSION ?? "head (GNU coreutils) 9.1\\nCopyright (C) 2022 Free Software Foundation, Inc.\\n");
+    console.error(noise); process.exit(rc("HEAD_VERSION_RC"));
+  }
   // GNU head -c N: reads exactly N bytes (no more) from the shared pipe.
   if (!fstatSync(1).isFile()) process.exit(98);
-  const heads = readFileSync(join(root, "calls"), "utf8").trim().split("\\n").filter((line) => JSON.parse(line).name === "head").length;
+  const heads = readFileSync(join(root, "calls"), "utf8").trim().split("\\n").filter((line) => JSON.parse(line).name === "head" && JSON.parse(line).args[0] === "-c").length;
   if (rc("HEAD_FAIL_AT") && heads === rc("HEAD_FAIL_AT")) { console.error(noise); process.exit(1); }
   let left = Number(args[args.indexOf("-c") + 1]);
   const buffer = Buffer.alloc(4096);
@@ -255,6 +266,39 @@ else if (name === "tar") {
     writeSync(1, buffer, 0, got);
     left -= got;
   }
+  // A lossy head (like BSD/macOS head's stdio buffer): after a full part it has
+  // already read HEAD_DROP more bytes from the pipe, and drops them.
+  let drop = left === 0 ? rc("HEAD_DROP") : 0;
+  while (drop > 0) {
+    const got = readSync(0, buffer, 0, Math.min(buffer.length, drop), null);
+    if (got === 0) break;
+    drop -= got;
+  }
+} else if (name === "tee") {
+  // tee FILE: every byte read goes to stdout and to FILE (only /dev/fd/3 here).
+  // TEE_OPEN_FAIL=N: the Nth tee cannot open FILE; like GNU tee it still copies stdout, then exits 1.
+  if (args.length !== 1 || args[0] !== "/dev/fd/3") process.exit(99);
+  let copy: number;
+  try { copy = openSync(rc("TEE_OPEN_FAIL") && nth("tee") === rc("TEE_OPEN_FAIL") ? "/nonexistent/fd/3" : args[0], "w"); }
+  catch { console.error(noise); copy = -1; }
+  const buffer = Buffer.alloc(4096);
+  const all = (fd: number, length: number) => { let at = 0; while (at < length) at += writeSync(fd, buffer, at, length - at); };
+  try {
+    while (true) {
+      const got = readSync(0, buffer, 0, buffer.length, null);
+      if (got === 0) break;
+      all(1, got);
+      if (copy >= 0) all(copy, got);
+    }
+  } catch (error) { if (error.code !== "EPIPE") throw error; process.exit(141); }
+  process.exit(copy < 0 ? 1 : rc("TEE_RC"));
+} else if (name === "wc") {
+  // GNU wc -c on stdin: the count alone. WC_OUTPUT replaces the WC_OUTPUT_AT-th call's, for a broken counter.
+  if (args.join(" ") !== "-c") process.exit(99);
+  let total = 0;
+  const buffer = Buffer.alloc(65536);
+  while (true) { const got = readSync(0, buffer, 0, buffer.length, null); if (got === 0) break; total += got; }
+  process.stdout.write(process.env.WC_OUTPUT !== undefined && nth("wc") === rc("WC_OUTPUT_AT") ? process.env.WC_OUTPUT : total + "\\n");
 } else if (name === "curl") {
   const file = owned(args[args.indexOf("-T") + 1]);
   const bytes = readFileSync(file);
@@ -302,7 +346,7 @@ else if (name === "tar") {
 } else { console.error(noise); process.exit(99); }
 `);
   chmodSync(mock, 0o700);
-  for (const name of ["tar", "curl", "aws", "mktemp", "date", "df", "rm", "rmdir", "head", "security", "flyctl", "ssh", "zeroned", "zstd"]) {
+  for (const name of ["tar", "curl", "aws", "mktemp", "date", "df", "rm", "rmdir", "head", "tee", "wc", "security", "flyctl", "ssh", "zeroned", "zstd"]) {
     // Bun canonicalizes symlink argv[1]; keep each fake command's name explicit.
     const path = join(base, "bin", name);
     writeFileSync(path, readFileSync(mock, "utf8").replace("const name = basename(process.argv[1]);", `const name = ${JSON.stringify(name)};`));
@@ -672,7 +716,11 @@ describe("rollout contract: testnet first, then mainnet", () => {
   });
 
   test("the landed marker is written only after a clean landing, with the object's size", async () => {
-    const landed = fakeEffects({ stat: async () => ({ size: 4096 }) });
+    // The streamed chain's record counts the same 4096 bytes its one part holds.
+    const landed = fakeEffects({
+      stat: async () => ({ size: 4096 }),
+      remote: async (_chain, command) => ({ code: 0, stdout: command.includes("CHAIN_BACKUP_V3") ? streamRecord(1, 1, 0, 200, 4096) : record() }),
+    });
     landed.effects.multipart.listParts = async () => onePart(4096);
     expect((await runMain(landed.effects, [])).outcomes.map((o) => o.landed_marker)).toEqual(["WRITTEN", "WRITTEN"]);
     expect(landed.calls.filter((c) => c.startsWith("mark:"))).toEqual(["mark:zerone-testnet-1:4096:EXCLUDED", "mark:zerone-1:4096:EXCLUDED"]);
@@ -823,7 +871,7 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
   test("a whole stream is created, listed, completed, sized and marked", async () => {
     const commands: string[] = [];
     const { effects, calls } = fakeEffects({
-      remote: async (_chain, command) => { calls.push("remote"); commands.push(command); return { code: 0, stdout: streamRecord(1, 27) }; },
+      remote: async (_chain, command) => { calls.push("remote"); commands.push(command); return { code: 0, stdout: streamRecord(1, 27, 0, 200, 26 * PART_BYTES + 5) }; },
       stat: async () => { calls.push("stat"); return { size: 26 * PART_BYTES + 5 }; },
     });
     effects.multipart.listParts = async () => { calls.push("list-parts"); return fullParts(27, 5); };
@@ -831,7 +879,7 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
     expect(code).toBe(3);
     expect(outcomes[0]).toMatchObject({
       chain: "zerone-testnet-1", capture_mode: "STREAMED_MULTIPART", capture_status: "RAW_UNVERIFIED", tar_exit: 1,
-      parts: 27, upload_status: "PRESENT", upload_exit: 0, upload_http: 200, object_status: "PRESENT",
+      parts: 27, stream_bytes: 26 * PART_BYTES + 5, upload_status: "PRESENT", upload_exit: 0, upload_http: 200, object_status: "PRESENT",
       multipart_status: "COMPLETED", key_files: "EXCLUDED", disk_need_kib: STREAM_NEED, landed_marker: "WRITTEN", error: null,
     });
     const key = "chain/zerone-testnet-1/zerone-testnet-1-data-fixture-0.tar.gz";
@@ -876,7 +924,7 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
     expect(partsAreWhole(fullParts(3, PART_BYTES), 3)).toBe(true);
     for (const listed of listings) {
       expect(partsAreWhole(listed, 3)).toBe(false);
-      const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout: streamRecord(1, 3) }) });
+      const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout: streamRecord(1, 3, 0, 200, 2 * PART_BYTES + 5) }) });
       effects.multipart.listParts = async () => listed;
       const { code, outcomes } = await runMain(effects, ["zerone-testnet-1"]);
       expect(code).toBe(1);
@@ -916,7 +964,7 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
   test("records cross no protocols, and multipart setup failures never reach the remote", async () => {
     for (const [chain, stdout] of [
       ["zerone-testnet-1", record(1)], ["zerone-1", streamRecord(1)], ["zerone-testnet-1", streamRecord(1, MAX_PARTS + 1)],
-      ["zerone-testnet-1", streamRecord(141, 3, "OVER")],
+      ["zerone-testnet-1", streamRecord(141, 3, "OVER")], ["zerone-1", refuseRecord("HEAD_NOT_GNU")], ["zerone-1", refuseRecord("NO_BYTE_COUNT")],
     ] as const) {
       const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout }) });
       const { outcomes } = await runMain(effects, [chain]);
@@ -951,15 +999,26 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
   });
 
   test("V3 records are parsed strictly", () => {
-    expect(parseRemoteResult(streamRecord(1, 27))).toEqual({ kind: "stream", tarExit: 1, parts: 27, upload: 0, uploadHttp: 200 });
-    expect(parseRemoteResult(streamRecord(141, 2, "STAGE", 200))).toEqual({ kind: "stream", tarExit: 141, parts: 2, upload: "STAGE", uploadHttp: 200 });
-    expect(parseRemoteResult(streamRecord("NA", 0, "NA"))).toEqual({ kind: "stream", tarExit: null, parts: 0, upload: null, uploadHttp: null });
+    expect(parseRemoteResult(streamRecord(1, 27, 0, 200, 26 * PART_BYTES + 5))).toEqual({ kind: "stream", tarExit: 1, parts: 27, bytes: 26 * PART_BYTES + 5, upload: 0, uploadHttp: 200 });
+    expect(parseRemoteResult(streamRecord(1, 27))).toEqual({ kind: "stream", tarExit: 1, parts: 27, bytes: null, upload: 0, uploadHttp: 200 });
+    expect(parseRemoteResult(streamRecord(141, 2, "STAGE", 200))).toEqual({ kind: "stream", tarExit: 141, parts: 2, bytes: null, upload: "STAGE", uploadHttp: 200 });
+    expect(parseRemoteResult(streamRecord(2, 0, "NA", "NA", 0))).toEqual({ kind: "stream", tarExit: 2, parts: 0, bytes: 0, upload: null, uploadHttp: null });
+    expect(parseRemoteResult(streamRecord("NA", 0, "NA"))).toEqual({ kind: "stream", tarExit: null, parts: 0, bytes: null, upload: null, uploadHttp: null });
+    expect(parseRemoteResult(refuseRecord("HEAD_NOT_GNU"))).toEqual({ kind: "refuse", reason: "HEAD_NOT_GNU" });
+    expect(parseRemoteResult(refuseRecord("NO_BYTE_COUNT"))).toEqual({ kind: "refuse", reason: "NO_BYTE_COUNT" });
     for (const bad of [
       streamRecord(1, 0, 0), streamRecord(1, 0, "OVER"), streamRecord("NA", 1, "NA"), streamRecord("NA", 0, 0), streamRecord(1, 2, "NA"),
       streamRecord(1, 0, "NA", 200), streamRecord(1, 0, "STAGE", 200), streamRecord(256, 1), streamRecord(1, 1, 256),
       streamRecord(1).replace("parts=1", "parts=01"), streamRecord(1).replace("parts=1", "parts=123456"), streamRecord(1).trim(),
       streamRecord(1) + streamRecord(1), streamRecord(1).replace("upload=0", "upload=ABORT"), `${PRIVATE}\n${streamRecord(1)}`,
       streamRecord(1).replace("CHAIN_BACKUP_V3 ", "CHAIN_BACKUP_V3  "),
+      // The independent byte count: a plain decimal or NA, never beside a setup failure.
+      streamRecord(1).replace(" bytes=64", ""), streamRecord(1).replace("bytes=64", "bytes=064"), streamRecord(1).replace("bytes=64", "bytes=-64"),
+      streamRecord(1).replace("bytes=64", "bytes= 64"), streamRecord(1).replace("bytes=64", `bytes=${"9".repeat(16)}`),
+      streamRecord(1).replace("bytes=64", `bytes=${"1".repeat(17)}`), streamRecord("NA", 0, "NA", "NA", 0),
+      streamRecord(1).replace("parts=1 bytes=64", "bytes=64 parts=1"),
+      refuseRecord("HEAD_NOT_GNU").trim(), refuseRecord("HEAD_NOT_GNU") + refuseRecord("HEAD_NOT_GNU"), "CHAIN_BACKUP_V3 refuse=OTHER\n",
+      "CHAIN_BACKUP_V3 refuse=\n", `CHAIN_BACKUP_V3 refuse=${PRIVATE}\n`, "CHAIN_BACKUP_V2 refuse=HEAD_NOT_GNU\n",
     ]) expect(parseRemoteResult(bad)).toBeNull();
   });
 
@@ -974,7 +1033,8 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
         const result = f.run(["-c", buildStreamedRemoteCommand(urls, { excludeKeys: true, needKib: 1048576, partBytes: 16 })], { TAR_STREAM_BYTES: String(c.bytes), TAR_RC: "1" });
         expect(result.status).toBe(0);
         expect(result.stderr).toBe("");
-        expect(result.stdout).toBe(streamRecord(1, c.parts.length));
+        // The record carries the stream's own byte count, here equal to the parts' sum.
+        expect(result.stdout).toBe(streamRecord(1, c.parts.length, 0, 200, c.bytes));
         const intake = readFileSync(join(f.base, "upload-intake"), "utf8").trim().split("\n").map((line) => JSON.parse(line));
         expect(intake.map((u) => u.size)).toEqual(c.parts);
         // Peak staging is the part being uploaded, never the archive.
@@ -985,7 +1045,14 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
         expect(tar.filter((a) => a.startsWith("--exclude="))).toEqual(["--exclude=priv_validator_key.json", "--exclude=node_key.json"]);
         expect(tar.slice(tar.indexOf("-C"))).toEqual(["-C", "/data", ".zeroned/data", ".zeroned/config"]);
         // rm twice: the part is removed before the record prints, then the EXIT trap runs.
-        expect(f.calls().map((call) => call.name).filter((n) => n !== "head" && n !== "curl")).toEqual(["mktemp", "df", "tar", "rm", "rm", "rmdir"]);
+        const calls = f.calls();
+        expect(calls.map((call) => call.name).filter((n) => !["head", "curl", "tee", "wc"].includes(n))).toEqual(["mktemp", "df", "tar", "rm", "rm", "rmdir"]);
+        // Before anything is created: head's version, then the counter's five-byte probe.
+        expect(calls[0]).toEqual({ name: "head", args: ["--version"] });
+        expect(calls.slice(1, 3).map((call) => call.name).sort()).toEqual(["tee", "wc"]);
+        expect(calls[3].name).toBe("mktemp");
+        expect(calls.filter((call) => call.name === "tee").map((call) => call.args)).toEqual([["/dev/fd/3"], ["/dev/fd/3"]]);
+        expect(calls.filter((call) => call.name === "wc").map((call) => call.args)).toEqual([["-c"], ["-c"]]);
         expect(readdirSync(join(f.base, "tmp"))).toEqual([]);
       } finally { f.close(); }
     }
@@ -993,10 +1060,10 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
 
   test("remote shell: a failed part, an unstageable part or too many parts stop the stream", () => {
     const cases: Array<{ env: Record<string, string>; urls: number; stdout: RegExp; uploads: number }> = [
-      { env: { TAR_STREAM_BYTES: "200000", UPLOAD_FAIL_AT: "2", UPLOAD_RC: "22", HTTP_WRITE_OUT: "403" }, urls: 64, stdout: /^CHAIN_BACKUP_V3 tar=(141|[2-9]|[1-9][0-9]{1,2}) parts=1 upload=22 http=403\n$/, uploads: 2 },
-      { env: { TAR_STREAM_BYTES: "200000", HEAD_FAIL_AT: "3" }, urls: 64, stdout: /^CHAIN_BACKUP_V3 tar=(141|[2-9]|[1-9][0-9]{1,2}) parts=2 upload=STAGE http=200\n$/, uploads: 2 },
-      { env: { TAR_STREAM_BYTES: "200000" }, urls: 3, stdout: /^CHAIN_BACKUP_V3 tar=(141|[2-9]|[1-9][0-9]{1,2}) parts=3 upload=OVER http=200\n$/, uploads: 3 },
-      { env: { MKTEMP_RC: "1" }, urls: 3, stdout: /^CHAIN_BACKUP_V3 tar=NA parts=0 upload=NA http=NA\n$/, uploads: 0 },
+      { env: { TAR_STREAM_BYTES: "200000", UPLOAD_FAIL_AT: "2", UPLOAD_RC: "22", HTTP_WRITE_OUT: "403" }, urls: 64, stdout: /^CHAIN_BACKUP_V3 tar=(141|[2-9]|[1-9][0-9]{1,2}) parts=1 bytes=(NA|[1-9][0-9]*) upload=22 http=403\n$/, uploads: 2 },
+      { env: { TAR_STREAM_BYTES: "200000", HEAD_FAIL_AT: "3" }, urls: 64, stdout: /^CHAIN_BACKUP_V3 tar=(141|[2-9]|[1-9][0-9]{1,2}) parts=2 bytes=(NA|[1-9][0-9]*) upload=STAGE http=200\n$/, uploads: 2 },
+      { env: { TAR_STREAM_BYTES: "200000" }, urls: 3, stdout: /^CHAIN_BACKUP_V3 tar=(141|[2-9]|[1-9][0-9]{1,2}) parts=3 bytes=(NA|[1-9][0-9]*) upload=OVER http=200\n$/, uploads: 3 },
+      { env: { MKTEMP_RC: "1" }, urls: 3, stdout: /^CHAIN_BACKUP_V3 tar=NA parts=0 bytes=NA upload=NA http=NA\n$/, uploads: 0 },
     ];
     for (const c of cases) {
       const f = shellFixture();
@@ -1019,7 +1086,7 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
       try {
         const result = f.run(["-c", buildStreamedRemoteCommand(partUrls(), { excludeKeys: true, needKib: STREAM_NEED })], { DF_OUTPUT: df });
         expect(result.stdout).toBe(`CHAIN_BACKUP_V2 skip=LOW_DISK free_kib=${free} need_kib=${STREAM_NEED}\n`);
-        expect(f.calls().map((call) => call.name)).toEqual(["mktemp", "df", "rm", "rmdir"]);
+        expect(f.calls().map((call) => call.name).filter((n) => n !== "tee" && n !== "wc")).toEqual(["head", "mktemp", "df", "rm", "rmdir"]);
       } finally { f.close(); }
     }
     // The 2026-10-28 rootfs: 7688964 KiB free on testnet, well above one part plus the margin.
@@ -1027,7 +1094,7 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
     try {
       const result = f.run(["-c", buildStreamedRemoteCommand(partUrls(), { excludeKeys: true, needKib: STREAM_NEED, partBytes: 16 })],
         { DF_OUTPUT: `${header}overlay 8000000 311036 7688964 4% /\n` });
-      expect(result.stdout).toBe(streamRecord(0, 3));
+      expect(result.stdout).toBe(streamRecord(0, 3, 0, 200, 40));
     } finally { f.close(); }
     expect(() => buildStreamedRemoteCommand([], { excludeKeys: true, needKib: STREAM_NEED })).toThrow();
     expect(() => buildStreamedRemoteCommand(partUrls(), { excludeKeys: true, needKib: 0 })).toThrow();
@@ -1039,10 +1106,167 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
     try {
       const hostile = `${URL_SENTINEL}&quote='\"; zeroned snapshots export; $(zeroned); \`zeroned\``;
       const result = f.run(["-c", buildStreamedRemoteCommand([hostile], { excludeKeys: true, needKib: 1048576, partBytes: 64 })]);
-      expect(result.stdout).toBe(streamRecord(0, 1));
+      expect(result.stdout).toBe(streamRecord(0, 1, 0, 200, 40));
       expect(f.calls().find((call) => call.name === "curl")?.args.at(-1)).toBe(hostile);
       expect(f.calls().some((call) => call.name === "zeroned")).toBe(false);
     } finally { f.close(); }
+  });
+});
+
+// Review of #124: the cut into parts trusts head -c to read exactly one part from
+// the pipe. BSD/macOS head reads a whole stdio buffer and drops the excess, yet
+// every part still looks whole (full, full, short last, then empty), so ListParts,
+// Complete and stat would all pass. Two fail-closed answers: GNU head or no
+// capture, and a byte count of the tar stream taken independently of head.
+describe("streamed capture integrity: GNU head and an independent byte count", () => {
+  const listingOf = (sizes: number[]): UploadedPart[] => sizes.map((size, i) => ({ partNumber: i + 1, etag: `"e${i + 1}"`, size }));
+  const intakeOf = (base: string): Array<{ size: number }> => existsSync(join(base, "upload-intake"))
+    ? readFileSync(join(base, "upload-intake"), "utf8").trim().split("\n").map((line) => JSON.parse(line)) : [];
+
+  test("remote shell: a head that is not GNU coreutils is refused before anything is created", () => {
+    const heads: Array<Record<string, string>> = [
+      { HEAD_VERSION: "", HEAD_VERSION_RC: "1" }, // BSD/macOS: "illegal option -- -" on stderr
+      { HEAD_VERSION: "", HEAD_VERSION_RC: "0" },
+      { HEAD_VERSION: "BusyBox v1.36.1 (2023-11-07) multi-call binary.\n", HEAD_VERSION_RC: "1" },
+      { HEAD_VERSION: "head (uutils coreutils) 0.0.27\n" },
+      { HEAD_VERSION: "head 1.0, compatible with head (GNU coreutils) 9.1\n" },
+      { HEAD_VERSION: "xhead (GNU coreutils) 9.1\n" },
+      { HEAD_VERSION: "head (GNU coreutils)\n" },
+      { HEAD_VERSION: `${PRIVATE}\n` },
+    ];
+    for (const env of heads) {
+      const f = shellFixture();
+      try {
+        const result = f.run(["-c", buildStreamedRemoteCommand(partUrls(4), { excludeKeys: true, needKib: 1048576, partBytes: 16 })], env);
+        expect(result.status).toBe(0);
+        expect(result.stderr).toBe("");
+        expect(result.stdout).toBe(refuseRecord("HEAD_NOT_GNU"));
+        // Nothing but the version question: no tmp, no df, no tar, no part, no upload.
+        expect(f.calls()).toEqual([{ name: "head", args: ["--version"] }]);
+        expect(intakeOf(f.base)).toEqual([]);
+        expect(readdirSync(join(f.base, "tmp"))).toEqual([]);
+      } finally { f.close(); }
+    }
+  }, 30000);
+
+  test("remote shell: without a working byte counter the capture is refused before anything is created", () => {
+    const counters: Array<Record<string, string>> = [
+      { TEE_OPEN_FAIL: "1" }, // tee cannot open /dev/fd/3 (no /dev/fd on the machine)
+      { WC_OUTPUT: "", WC_OUTPUT_AT: "1" },
+      { WC_OUTPUT: "6\n", WC_OUTPUT_AT: "1" },
+      { WC_OUTPUT: "5x\n", WC_OUTPUT_AT: "1" },
+      { WC_OUTPUT: `${PRIVATE}\n`, WC_OUTPUT_AT: "1" },
+    ];
+    for (const env of counters) {
+      const f = shellFixture();
+      try {
+        const result = f.run(["-c", buildStreamedRemoteCommand(partUrls(4), { excludeKeys: true, needKib: 1048576, partBytes: 16 })], env);
+        expect(result.status).toBe(0);
+        expect(result.stderr).toBe("");
+        expect(result.stdout).toBe(refuseRecord("NO_BYTE_COUNT"));
+        expect(f.calls().map((call) => call.name).sort()).toEqual(["head", "tee", "wc"]);
+        expect(intakeOf(f.base)).toEqual([]);
+        expect(readdirSync(join(f.base, "tmp"))).toEqual([]);
+      } finally { f.close(); }
+    }
+  }, 30000);
+
+  test("remote shell: a lossy head's parts look whole, but the stream's own count exposes the loss", () => {
+    // HEAD_DROP: after each full part this head has already taken 8 more bytes from the pipe.
+    const cases = [
+      { bytes: 100, sizes: [16, 16, 16, 16, 4] }, // full, full, ..., short last, then empty
+      { bytes: 40, sizes: [16, 16] }, // full, full, then empty
+    ];
+    for (const c of cases) {
+      const f = shellFixture();
+      try {
+        const result = f.run(["-c", buildStreamedRemoteCommand(partUrls(), { excludeKeys: true, needKib: 1048576, partBytes: 16 })],
+          { TAR_STREAM_BYTES: String(c.bytes), TAR_RC: "0", HEAD_DROP: "8" });
+        expect(result.status).toBe(0);
+        expect(result.stderr).toBe("");
+        // By the loop's account this is a clean stream, and the uploaded parts pass every structural check...
+        expect(result.stdout).toBe(streamRecord(0, c.sizes.length, 0, 200, c.bytes));
+        const sizes = intakeOf(f.base).map((u) => u.size);
+        expect(sizes).toEqual(c.sizes);
+        expect(partsAreWhole(listingOf(sizes), sizes.length, 16)).toBe(true);
+        // ...but the count taken beside head is the whole tar stream, not the parts' sum.
+        const report = parseRemoteResult(result.stdout);
+        expect(report).toMatchObject({ kind: "stream", tarExit: 0, upload: 0, bytes: c.bytes });
+        expect(sizes.reduce((a, b) => a + b, 0)).toBeLessThan(c.bytes);
+        expect(readdirSync(join(f.base, "tmp"))).toEqual([]);
+      } finally { f.close(); }
+    }
+  }, 30000);
+
+  test("remote shell: a count that cannot be trusted is reported NA, never guessed", () => {
+    const cases: Array<{ env: Record<string, string>; bytes: number | "NA" }> = [
+      { env: { TEE_OPEN_FAIL: "2" }, bytes: "NA" }, // the stream's tee cannot open fd 3 (exit 1)
+      { env: { TEE_RC: "1" }, bytes: "NA" }, // tee itself reports failure
+      { env: { WC_OUTPUT: "", WC_OUTPUT_AT: "2" }, bytes: "NA" },
+      { env: { WC_OUTPUT: "forty\n", WC_OUTPUT_AT: "2" }, bytes: "NA" },
+      { env: { WC_OUTPUT: "0040\n", WC_OUTPUT_AT: "2" }, bytes: "NA" },
+      { env: { WC_OUTPUT: "40 -\n", WC_OUTPUT_AT: "2" }, bytes: "NA" },
+      { env: { WC_OUTPUT: `${"9".repeat(17)}\n`, WC_OUTPUT_AT: "2" }, bytes: "NA" },
+      { env: { WC_OUTPUT: "     40\n", WC_OUTPUT_AT: "2" }, bytes: 40 }, // BSD wc pads; the number is the number
+    ];
+    for (const c of cases) {
+      const f = shellFixture();
+      try {
+        const result = f.run(["-c", buildStreamedRemoteCommand(partUrls(4), { excludeKeys: true, needKib: 1048576, partBytes: 16 })], c.env);
+        expect(result.status).toBe(0);
+        expect(result.stderr).toBe("");
+        if (c.env.WC_OUTPUT?.startsWith("9")) {
+          // Seventeen digits is no record at all: the Mac refuses it as a protocol failure.
+          expect(result.stdout).toBe(`CHAIN_BACKUP_V3 tar=0 parts=3 bytes=${"9".repeat(17)} upload=0 http=200\n`);
+          expect(parseRemoteResult(result.stdout)).toBeNull();
+        } else expect(result.stdout).toBe(streamRecord(0, 3, 0, 200, c.bytes));
+        expect(result.stdout).not.toContain(PRIVATE);
+        expect(readdirSync(join(f.base, "tmp"))).toEqual([]);
+      } finally { f.close(); }
+    }
+  }, 30000);
+
+  test("the Mac completes nothing unless the stream's count equals the parts' sum", async () => {
+    const sum = 2 * PART_BYTES + 5;
+    // NA, off by one either way, a lossy head's shape (8 bytes lost after each full part), zero.
+    for (const bytes of ["NA", sum + 1, sum - 1, sum + 2 * 8, 0] as const) {
+      const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout: streamRecord(0, 3, 0, 200, bytes) }), stat: async () => { calls.push("stat"); return { size: sum }; } });
+      effects.multipart.listParts = async () => { calls.push("list-parts"); return fullParts(3, 5); };
+      const { code, outcomes } = await runMain(effects, ["zerone-testnet-1"]);
+      expect(code).toBe(1);
+      expect(outcomes[0]).toMatchObject({
+        capture_status: "RAW_UNVERIFIED", parts: 3, stream_bytes: bytes === "NA" ? null : bytes, upload_status: "FAILED",
+        object_status: "NOT_ATTEMPTED", multipart_status: "OPEN", landed_marker: "NOT_WRITTEN", error: "STREAM_MISMATCH",
+      });
+      // Listed, and then left OPEN: never completed, stat-ed or marked.
+      expect(calls.filter((c) => c === "list-parts" || c.startsWith("complete") || c === "stat" || c.startsWith("mark:"))).toEqual(["list-parts"]);
+    }
+    // Equal: completed, sized and marked with the one number all three agree on.
+    const { effects, calls } = fakeEffects({ remote: async () => ({ code: 0, stdout: streamRecord(0, 3, 0, 200, sum) }), stat: async () => { calls.push("stat"); return { size: sum }; } });
+    effects.multipart.listParts = async () => { calls.push("list-parts"); return fullParts(3, 5); };
+    const landed = await runMain(effects, ["zerone-testnet-1"]);
+    expect(landed.code).toBe(3);
+    expect(landed.outcomes[0]).toMatchObject({ stream_bytes: sum, multipart_status: "COMPLETED", object_status: "PRESENT", landed_marker: "WRITTEN", error: null });
+    expect(calls.filter((c) => c === "list-parts" || c.startsWith("complete") || c === "stat" || c.startsWith("mark:")))
+      .toEqual(["list-parts", "complete:3", "stat", `mark:zerone-testnet-1:${sum}:EXCLUDED`]);
+    // The staged chain never counts a stream.
+    expect((await runMain(fakeEffects().effects, ["zerone-1"])).outcomes[0].stream_bytes).toBeNull();
+  });
+
+  test("a refused stream is a red skip: nothing listed, completed, stat-ed or marked, the upload left OPEN", async () => {
+    for (const reason of ["HEAD_NOT_GNU", "NO_BYTE_COUNT"] as const) {
+      for (const ssh of [0, 1]) {
+        const { effects, calls } = fakeEffects({ remote: async () => { calls.push("remote"); return { code: ssh, stdout: refuseRecord(reason) }; } });
+        const { code, outcomes } = await runMain(effects, ["zerone-testnet-1"]);
+        expect(code).toBe(1);
+        expect(outcomes[0]).toMatchObject({
+          chain: "zerone-testnet-1", capture_mode: "STREAMED_MULTIPART", capture_status: "SKIPPED", tar_exit: null, ssh_exit: ssh,
+          upload_status: "NOT_ATTEMPTED", object_status: "NOT_ATTEMPTED", parts: null, stream_bytes: null,
+          multipart_status: "OPEN", landed_marker: "NOT_WRITTEN", error: `REFUSED_${reason}`,
+        });
+        expect(calls.filter((c) => c === "list-parts" || c.startsWith("complete") || c === "stat" || c.startsWith("mark:"))).toEqual([]);
+      }
+    }
   });
 });
 
