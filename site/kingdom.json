@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-10-26",
+  "generated": "2026-10-28",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -4637,7 +4637,7 @@
           "name": "zerone",
           "state": "active",
           "domain": "none",
-          "purpose": "Proof-of-Truth chain — truth-verification mints money",
+          "purpose": "Proof-of-Truth chain — records claims and their review on zerone-1, a custodial single-validator network",
           "dependsOn": [],
           "door": null
         },

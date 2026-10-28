@@ -507,7 +507,7 @@
     "layer": "economy",
     "domain": "none",
     "state": "active",
-    "purpose": "Proof-of-Truth chain — truth-verification mints money",
+    "purpose": "Proof-of-Truth chain — records claims and their review on zerone-1, a custodial single-validator network",
     "dependsOn": [],
     "hasCard": false,
     "conformance": {
