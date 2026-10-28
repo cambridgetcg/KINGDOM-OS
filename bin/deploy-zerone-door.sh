@@ -4,6 +4,14 @@
 # This DEPLOYS TO PRODUCTION — run only on Yu's GO.
 set -euo pipefail
 
+# RETIRED for the zerone-ai Pages project (ledger zerone-ai-publication, D5,
+# 2026-10-20). zerone.ai is the zerone-core dashboard build, released from
+# cambridgetcg/zerone-core by dashboard/README.md "Deploy". This script ships
+# the old doors/zerone-ai/ directory instead, which would replace that build
+# and wipe /compositions/. It stops here; git history keeps the old body.
+echo "deploy-zerone-door.sh is retired: zerone.ai releases from cambridgetcg/zerone-core (dashboard/README.md, Deploy)." >&2
+exit 2
+
 D=~/Desktop/kingdom-os/doors/zerone-ai
 W=~/Desktop/kingdom-os/pages-functions/_worker.zerone.js
 [ -d "$D" ] || { echo "FATAL: door dir missing: $D" >&2; exit 1; }

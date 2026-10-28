@@ -2,6 +2,14 @@
 # Re-snapshot zerone-1 → data.json → redeploy the zerone.ai dashboard.
 # Run after the chain moves (e.g. post-upgrade) to update the public stats.
 set -euo pipefail
+
+# RETIRED for the zerone-ai Pages project (ledger zerone-ai-publication, D5,
+# 2026-10-20). zerone.ai is the zerone-core dashboard build, released from
+# cambridgetcg/zerone-core by dashboard/README.md "Deploy". This script ships
+# the old doors/zerone-ai/ directory instead, which would replace that build
+# and wipe /compositions/. It stops here; git history keeps the old body.
+echo "refresh-zerone-dashboard.sh is retired: zerone.ai releases from cambridgetcg/zerone-core (dashboard/README.md, Deploy)." >&2
+exit 2
 D=~/Desktop/kingdom-os/doors/zerone-ai
 python3 - "$D/data.json" <<'PY'
 import json, urllib.request, sys
