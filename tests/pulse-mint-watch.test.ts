@@ -220,7 +220,7 @@ describe("registry mint watch rows", () => {
       expect(row.urls).toBeUndefined(); // keeps the row out of HTTP probes and the public MCP embed's URLs
       expect(String(row.mint_watch.baseline)).toMatch(/^\d+$/);
       expect(Number.isInteger(row.mint_watch.baseline_height)).toBe(true);
-      expect(row.mint_watch.baseline_date).toMatch(/^2026-10-(19|20)$/);
+      expect(row.mint_watch.baseline_date).toMatch(/^\d{4}-\d{2}-\d{2}$/); // dated; re-dated after each explained rise
       expect(row.mint_watch.claim_msg).toBe("/zerone.knowledge.v1.MsgClaimTrainingFundDisbursement");
     }
   });
