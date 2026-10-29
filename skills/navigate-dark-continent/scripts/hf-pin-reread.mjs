@@ -13,14 +13,20 @@
 // whether the lease would let a run start. A run reads only what the lease
 // names, writes only into the outbox it names, and never retries. Nothing here
 // commits, pushes, re-pins or publishes: those steps leave the game and wait
-// for Yu's own yes (references/reality-crossing.md, which also says why Ging's
+// for the owner's own yes.
+//
+// A lease authorizes one run into one new outbox. Its authority_reference
+// quotes the owner approving the charter this run serves; a session never
+// writes that authority for itself. Yu's 2026-10-29 answer approved building
+// this lamp, not running it: no run starts until he approves a new charter
+// (references/reality-crossing.md, which also says why Ging's
 // compileExpedition is not used here).
 //
 // Zero dependencies: Node built-ins and the runtime's fetch.
 
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { appendFileSync, existsSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { appendFileSync, existsSync, lstatSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { basename, dirname, isAbsolute, join, normalize, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -32,6 +38,7 @@ import {
   compareSincePrevious,
   countBy,
   deriveFields,
+  pinnedStateOf,
   resourceKey,
   rings,
   stateOf,
@@ -68,6 +75,8 @@ const REPO_ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,95}\/[A-Za-z0-9][A-Za-z0-9._-]{0,9
 const SHA40 = /^[0-9a-f]{40}$/;
 const DIGEST = /^sha256:[0-9a-f]{64}$/;
 const TIMESTAMP = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?Z$/;
+const DATE = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+const VISIBILITIES = ["public", "gated"];
 const SECRET_ENV = /^(?:HF_|HUGGING)|TOKEN|SECRET|PASSW|CREDENTIAL|COOKIE|AUTH|API_?KEY/i;
 export const OUTBOX_FILES = Object.freeze([
   "lease.json",
@@ -129,14 +138,32 @@ function suitePath(value, field) {
   return value;
 }
 
+// The previous record is named by digest as well as path, so the lease the
+// owner approves fixes the comparison point; a newer local commit cannot
+// stand in for it.
 function previousRef(value, field) {
-  closed(value, field, ["path"], ["sha256"]);
-  const ref = { path: suitePath(value.path, `${field}.path`) };
-  if (Object.hasOwn(value, "sha256")) {
-    if (typeof value.sha256 !== "string" || !DIGEST.test(value.sha256)) fail(`${field}.sha256`, "invalid-digest");
-    ref.sha256 = value.sha256;
+  closed(value, field, ["path", "sha256"]);
+  if (typeof value.sha256 !== "string" || !DIGEST.test(value.sha256)) fail(`${field}.sha256`, "invalid-digest");
+  return { path: suitePath(value.path, `${field}.path`), sha256: value.sha256 };
+}
+
+// A re-pinned resource has no previous row at its new pin, so the lease may
+// carry the license and visibility the boundary table reviewed at re-pin.
+function leaseBaseline(value, field) {
+  closed(value, field, ["license", "visibility", "observed_on", "basis"]);
+  if (!VISIBILITIES.includes(value.visibility)) fail(`${field}.visibility`, "unsupported");
+  if (typeof value.observed_on !== "string" || !DATE.test(value.observed_on)
+    || !Number.isFinite(Date.parse(`${value.observed_on}T00:00:00Z`))) {
+    fail(`${field}.observed_on`, "invalid-date");
   }
-  return ref;
+  const basis = text(value.basis, `${field}.basis`, 300);
+  return {
+    observed_on: value.observed_on,
+    license: text(value.license, `${field}.license`, 100),
+    license_basis: `the lease: ${basis}`,
+    visibility: value.visibility,
+    visibility_basis: `the lease: ${basis}`,
+  };
 }
 
 export function parseLease(value) {
@@ -160,7 +187,7 @@ export function parseLease(value) {
   const seen = new Set();
   const resources = scope.resources.map((item, index) => {
     const field = `scope.resources[${index}]`;
-    closed(item, field, ["kind", "id", "pinned"], ["where"]);
+    closed(item, field, ["kind", "id", "pinned"], ["where", "baseline"]);
     if (!Object.hasOwn(KIND_SEGMENT, item.kind)) fail(`${field}.kind`, "unsupported");
     if (typeof item.id !== "string" || !REPO_ID.test(item.id)) fail(`${field}.id`, "invalid-repo-id");
     if (typeof item.pinned !== "string" || !SHA40.test(item.pinned)) fail(`${field}.pinned`, "invalid-revision");
@@ -169,6 +196,7 @@ export function parseLease(value) {
     seen.add(key);
     const resource = { kind: item.kind, id: item.id, pinned: item.pinned };
     if (Object.hasOwn(item, "where")) resource.where = text(item.where, `${field}.where`, 300);
+    if (Object.hasOwn(item, "baseline")) resource.baseline = leaseBaseline(item.baseline, `${field}.baseline`);
     return resource;
   });
   const previous = closed(scope.previous, "scope.previous", ["observations", "receipt"]);
@@ -221,6 +249,13 @@ function sha256(bytes) {
 
 function iso(ms) {
   return new Date(ms).toISOString();
+}
+
+// The same calendar day a year on; 29 February rolls to 1 March.
+export function oneYearAfter(ms) {
+  const date = new Date(ms);
+  date.setUTCFullYear(date.getUTCFullYear() + 1);
+  return date.toISOString().slice(0, 10);
 }
 
 export function scrubEnvironment(env) {
@@ -293,6 +328,14 @@ function lstatOrNull(path) {
   }
 }
 
+function realpathOrNull(path) {
+  try {
+    return realpathSync(path);
+  } catch {
+    return null;
+  }
+}
+
 function inside(child, parent) {
   const rel = resolve(child);
   const root = resolve(parent);
@@ -318,13 +361,13 @@ function readPrevious(ref, label, deps, refusals) {
     refusals.push(`previous-missing: ${label} is not a readable regular file`);
     return null;
   }
-  if (deps.git(root, ["ls-files", "--error-unmatch", "--", ref.path]).status !== 0) {
+  if (deps.git(root, ["ls-files", "--error-unmatch", "--", `:(literal)${ref.path}`]).status !== 0) {
     refusals.push(`previous-untracked: ${label} is not committed in this suite`);
     return null;
   }
   const bytes = readFileSync(absolute);
   const digest = sha256(bytes);
-  if (ref.sha256 && ref.sha256 !== digest) {
+  if (ref.sha256 !== digest) {
     refusals.push(`previous-digest-mismatch: ${label} does not match the digest the lease names`);
     return null;
   }
@@ -340,9 +383,13 @@ export function preflight(lease, deps) {
   }
   if (now >= Date.parse(lease.lease_expires_at)) refusals.push("lease-expired");
   if (lstatOrNull(lease.stop_file)) refusals.push("stop-file-present");
+  // The parent may be reached through a symlink (macOS /tmp is one), so it is
+  // resolved before both checks; the outbox itself must not exist at all.
+  const parent = realpathOrNull(dirname(lease.outbox));
   if (lstatOrNull(lease.outbox)) refusals.push("outbox-exists: every run needs a new outbox");
-  else if (!lstatOrNull(dirname(lease.outbox))?.isDirectory()) refusals.push("outbox-parent-missing");
-  if (inside(lease.outbox, join(root, "skills"))) {
+  else if (!parent || !lstatOrNull(parent)?.isDirectory()) refusals.push("outbox-parent-missing");
+  const skills = join(realpathOrNull(root) ?? root, "skills");
+  if (inside(lease.outbox, join(root, "skills")) || (parent && inside(join(parent, basename(lease.outbox)), skills))) {
     refusals.push("outbox-inside-skills: writing there would change the bundle the receipt binds");
   }
   if (lease.scope.resources.length > lease.budget.requests) {
@@ -640,14 +687,14 @@ function buildRow(resource, previousRow, current, pinned) {
         ?? (samePin && typeof previousRow.pin.where === "string" ? previousRow.pin.where : null)
         ?? "named in the lease (no previous row for this pin)",
     },
-    baseline: samePin && isRecord(previousRow.baseline)
-      ? previousRow.baseline
-      : {
+    baseline: resource.baseline
+      ?? (samePin && isRecord(previousRow.baseline) ? previousRow.baseline : null)
+      ?? {
         observed_on: null,
         license: null,
-        license_basis: "no previous row for this pin",
+        license_basis: "no previous row for this pin, and the lease names no baseline",
         visibility: null,
-        visibility_basis: "no previous row for this pin",
+        visibility_basis: "no previous row for this pin, and the lease names no baseline",
       },
     observed: { current, pinned_revision: pinned },
   };
@@ -665,15 +712,20 @@ function short(sha) {
   return typeof sha === "string" ? `${sha.slice(0, 8)}…` : "—";
 }
 
-function describe(summary) {
-  if (!summary) return "not read";
-  if (summary.state === "present") return `head \`${short(summary.sha)}\`, ${summary.visibility}, \`${summary.license}\``;
-  return summary.http_status === null ? "not read" : `HTTP ${summary.http_status}`;
+function describe(summary, pinState, pinRevision, unreadPin = "; pin not read") {
+  let head = "not read";
+  if (summary?.state === "present") head = `head \`${short(summary.sha)}\`, ${summary.visibility}, \`${summary.license}\``;
+  else if (summary && summary.http_status !== null) head = `HTTP ${summary.http_status}`;
+  if (summary?.state === "present" && summary.sha === pinRevision) return head;
+  if (!pinState) return summary?.state === "present" ? `${head}${unreadPin}` : head;
+  return `${head}; pin \`${short(pinRevision)}\` ${pinState.resolves ? `\`${pinState.license}\`` : "does not resolve"}`;
 }
 
 function returnNote(context, rows, receiptDigest) {
   const { lease, used, result, stop, pre, startedMs, finishedMs } = context;
   const changed = rows.filter(rings);
+  const was = (row) => describe(row.since_previous.previous, row.since_previous.previous_pinned, row.pin.revision, "");
+  const now = (row) => describe(summarizeObservation(row.observed.current), pinnedStateOf(row), row.pin.revision);
   const proposals = rows.filter((row) => row.verdict !== "unchanged" || rings(row));
   const name = (row) => `${row.kind} \`${row.id}\``;
   const lines = [
@@ -682,7 +734,7 @@ function returnNote(context, rows, receiptDigest) {
     `Draft, generated by \`hf-pin-reread.mjs\` under verdict method \`${VERDICT_METHOD}\`.`,
     "The generated sections hold observations only. Before this outbox becomes a",
     "record, a person reads it, writes the inference, finalizes the receipt and",
-    "asks Yu whether to merge it. Until then, deleting the outbox retracts the run.",
+    "asks the owner whether to merge it. Until then, deleting the outbox retracts the run.",
     "",
     `**Question.** Are the ${rows.length} public Hugging Face resources named in the lease`,
     "still present and public at their pinned revisions, with the license and",
@@ -701,7 +753,7 @@ function returnNote(context, rows, receiptDigest) {
   else {
     lines.push("| Resource | Since previous | Was | Now |", "| --- | --- | --- | --- |");
     for (const row of changed) {
-      lines.push(`| ${name(row)} | ${row.since_previous.verdict} | ${describe(row.since_previous.previous)} | ${describe(summarizeObservation(row.observed.current))} |`);
+      lines.push(`| ${name(row)} | ${row.since_previous.verdict} | ${was(row)} | ${now(row)} |`);
     }
   }
   lines.push(
@@ -709,8 +761,8 @@ function returnNote(context, rows, receiptDigest) {
     "## Proposal (not a decision)",
     "",
     "Every row starts at hold, and holding changes nothing. Re-pinning, admitting",
-    "content or retiring a row carries something out of the game: that is Yu's",
-    "decision, bound to the final receipt's digest and written as its own record.",
+    "content or retiring a row carries something out of the game: that is the",
+    "owner's decision, bound to the final receipt's digest and written as its own record.",
     "",
   );
   if (proposals.length === 0) lines.push("No row differs from its pin or from the previous run.");
@@ -763,6 +815,7 @@ function buildReceipt(context, rows, logs, outputs, finishedMs) {
   const statuses = countBy(logs.filter((log) => log.http_status !== null), (log) => log.http_status);
   const statusText = Object.entries(statuses).map(([code, count]) => `${count} × HTTP ${code}`).join(", ") || "no response";
   const bodyBytes = logs.reduce((sum, log) => sum + (log.body_bytes ?? 0), 0);
+  const idsSent = new Set(logs.map((log) => log.resource_index)).size;
   const window = logs.length ? `between ${logs[0].utc_started} and ${logs.at(-1).utc_started}` : "none was started";
   const licenseStatement = licenseFileStatement(resolve(context.deps.suiteRoot));
   const local = (item, description) => ({
@@ -852,8 +905,8 @@ function buildReceipt(context, rows, logs, outputs, finishedMs) {
       compute: "One local process for the run's duration; CPU time and memory were not measured.",
       money: "GBP 0 observed: anonymous public endpoints only, with no paid service or provider. The operator's connectivity cost was not measured.",
       energy: "Not measured.",
-      privacy: `Hugging Face and network intermediaries saw ${rows.length} resource IDs, the pinned revisions read in pass 2, request timing, a generic User-Agent and the device's public network address. No account identity, token, local path or private content left the device.`,
-      coordination: "Started under the lease in lease.json; contacted no participant and wrote only the outbox. Committing this record is a separate step that waits for Yu.",
+      privacy: `Hugging Face and network intermediaries saw ${idsSent} of the lease's ${rows.length} resource IDs, the pinned revisions read in pass 2, request timing, a generic User-Agent and the device's public network address. No account identity, token, local path or private content left the device.`,
+      coordination: "Started under the lease in lease.json; contacted no participant and wrote only the outbox. Committing this record is a separate step that waits for the owner.",
       data_egress_bytes: { value: String(used.egress), basis: "estimated" },
       remote_gpu_seconds: { value: "0", basis: "observed" },
     },
@@ -877,7 +930,7 @@ function buildReceipt(context, rows, logs, outputs, finishedMs) {
       status: "not_needed",
     },
     retention: {
-      expires_at: `${Number(iso(startedMs).slice(0, 4)) + 1}${iso(startedMs).slice(4, 10)}`,
+      expires_at: oneYearAfter(startedMs),
       redactions: [
         "Raw response bodies and headers were not retained. Only URL, status, content type, byte counts and SHA-256 digests are kept.",
         "Local device paths were omitted. The lease copy keeps only the final names of its outbox and stop-file paths.",

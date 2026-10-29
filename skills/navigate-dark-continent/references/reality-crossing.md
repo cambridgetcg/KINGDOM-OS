@@ -1,10 +1,20 @@
 # Reality crossing
 
-On 2026-10-29 Yu answered five questions about how the Dark Continent reaches
-現實層, the reality layer, through algorithm, script, automation and KARMA. His
-reply was "1. go for b. 2. 用 digest 連住 3. defer 4. yes please 5. yes". This
-note keeps what those answers mean for this skill, as principles with their
-reasons. It adds no gate beyond the charter and boundaries already here.
+On 2026-10-29 Yu answered five questions from a research report on how the
+Dark Continent reaches 現實層, the reality layer, through algorithm, script,
+automation and KARMA. His reply was
+"1. go for b. 2. 用 digest 連住 3. defer 4. yes please 5. yes".
+He chose reading (b) of 現實層; KARMA as two protocols
+linked by digest; to defer the `mcp-ecosystem-sample` re-pin, which is the
+[first decision record](../../../records/2026-10-29-mcp-ecosystem-sample-defer/README.md);
+to build this lamp as a pull request; and to keep the artbitrage heartbeat off.
+
+Question 4 carried its own condition: no Hugging Face request until Yu
+approves a new charter. His yes approved building the lamp, not running it.
+
+The two principles and the automation-last order below come from the report,
+not from his answers. He approved building the lamp on them without adopting
+them as standing policy, so they guide this skill until he says otherwise.
 
 ## Reading 現實層 through the chain
 
@@ -16,7 +26,7 @@ automatic."
 
 | Expedition artifact | Step on the chain |
 | --- | --- |
-| A lease or charter | authority + consent or other lawful basis + capability, for the run alone |
+| The charter Yu approves, and the lease that binds one run to it | authority + consent or other lawful basis + capability, for that run alone |
 | The run's GETs | attempt / execution |
 | `observations.json`, `requests.jsonl` | outcome of the run, kept as artifacts in a local outbox |
 | The `kingdom.karma/0.1` receipt | the record of that attempt and its outcome |
@@ -41,12 +51,14 @@ answer to Gain at all. The only route from the game to the real world is the
 three cards a player chooses for the clear-prize case after clearing it
 (ch. 184–185). What crosses is few, chosen, and comes last.
 
-Two principles follow.
+The report drew two principles from it.
 
-**Work that stays in the binder may run on its own.** Measuring, hashing,
-writing a receipt into a local outbox and re-verifying are reversible and
-self-contained. Deleting the outbox retracts them, and they spend nobody's
-attention or money. A script may do them under a written lease. A remote
+**Work that stays in the binder may run on its own, inside a lease.**
+Measuring, hashing, writing a receipt into a local outbox and re-verifying are
+reversible and self-contained. Deleting the outbox retracts them, and they
+spend nobody's attention or money. The [ability](../ability.json) still asks
+for fresh scoped authority before local evidence writes, and a lease is that
+authority for one run; inside it the script needs no further yes. A remote
 metadata read still touches someone else's server, which is why the lease
 names it, budgets it and can stop it.
 
@@ -56,10 +68,14 @@ to a person: none of these can be cleanly taken back, and each spends someone's
 attention or trust. A yes bound to a digest names exactly the evidence it
 approved, so it cannot drift onto a later run that says something else.
 
-The baseline moves only when Yu merges. A lease names the previous record,
-and the lamp reads it only from a clean, committed tree; naming the latest
-record Yu merged means automation never moves its own reference point, and a
-drift Yu has held does not ring again until it changes. Not merging is a
+The baseline moves only when Yu merges. A lease names the previous record by
+path and digest, and the lamp reads it only where it is committed in a clean
+tree. Because the lease Yu approves fixes that digest, a newer local commit
+cannot stand in for the record he merged, and automation never moves its own
+reference point. After a re-pin, the lease carries the license and visibility
+the boundary table reviewed for the new pin. A drift already in the previous
+record does not ring again until something about it changes, its pinned
+revision included; it stays in the proposal table at hold. Not merging is a
 complete outcome, and so is hold.
 
 The calamities ask the same patience. Ch. 341 names five (Brion, Ai, Hellbell,
@@ -92,17 +108,28 @@ and a metadata-only proposal would close them.
 
 ## Automation comes last
 
-A person starts the first two runs of the
-[lookback lamp](../scripts/hf-pin-reread.mjs) in a clean worktree, with
-`--plan` first. After those, Yu chooses whether runs stay manual or move to a
-dispatch-only workflow.
+No run starts until Yu approves a new charter. After that, a person starts
+the first two runs of the [lookback lamp](../scripts/hf-pin-reread.mjs) in a
+clean worktree, with `--plan` first. Then Yu chooses whether runs stay manual
+or move to a dispatch-only workflow.
 
-A written, expiring series lease is legitimate authority. The charter accepts
-"The exact request, policy, or scoped authorization"
-([expedition-charter.md](expedition-charter.md), line 7). A lease quotes Yu's
-words and names its resources, previous record, budget, expiry, stop file and
-outbox, and it allows no retry. The [example lease](hf-pin-lease.example.json)
-is refused by design.
+The charter template accepts "The exact request, policy, or scoped
+authorization" ([expedition-charter.md](expedition-charter.md), line 7), so a
+written, expiring lease is a legitimate form for that authority when the words
+it quotes are Yu's approval of the charter it serves. The charter holds the
+question, the operations, the data boundary and the return contract. The
+script fixes the rest for every run: anonymous metadata GETs to
+`huggingface.co`, no affected participants or consent references, only resource
+IDs and revisions leaving the device, and writes into one new outbox. The lease
+binds one run to that charter with its resources, previous record, budget,
+expiry, stop file and outbox, and it allows no retry.
+
+A lease authorizes one run into one new outbox; that is what keeps the
+authority fresh and scoped. A series is a sequence of leases, each with its own
+digest and each quoting what Yu approved for that series, over a lifetime he
+chose. A session never writes that authority for itself, and his 2026-10-29
+reply cannot be quoted as one, because it approved building the lamp. The
+[example lease](hf-pin-lease.example.json) is refused by design.
 
 A scheduled run in this public repository is not a local run. Public Actions
 logs and artifacts are visible to any signed-in GitHub account, by default for

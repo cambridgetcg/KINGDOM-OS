@@ -2,11 +2,13 @@ import { beforeAll, describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
 import {
   existsSync,
+  mkdirSync,
   mkdtempSync,
   readFileSync,
   readdirSync,
   rmSync,
   statSync,
+  symlinkSync,
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
@@ -18,6 +20,7 @@ import {
   comparePin,
   compareSincePrevious,
   countBy,
+  pinnedStateOf,
   rings,
 } from "../skills/navigate-dark-continent/scripts/hf-pin-verdict.mjs";
 import {
@@ -25,7 +28,9 @@ import {
   OUTBOX_FILES,
   defaultDeps,
   main,
+  oneYearAfter,
   parseLease,
+  planLookback,
   runLookback,
 } from "../skills/navigate-dark-continent/scripts/hf-pin-reread.mjs";
 
@@ -232,6 +237,31 @@ describe("hf-pin-drift/1 verdicts", () => {
     expect(compareSincePrevious(gone, rowById(MCP)).verdict).toBe("returned");
     expect(compareSincePrevious(undefined, rowById(MCP)).verdict).toBe("no_previous");
   });
+
+  test("since_previous watches the pinned revision as well as the head", () => {
+    const held = rowById(MCP);
+    expect(pinnedStateOf(held)).toEqual({ resolves: true, license: "other" });
+    const after = (change: (row: Row) => void, before: Row = held) => {
+      const row = clone(before);
+      change(row);
+      return compareSincePrevious(before, row);
+    };
+    // The head stays put while the pin stops resolving: the held drift lost its pin.
+    const lost = after((row) => { row.observed.pinned_revision = { resolves: false, http_status: 404 }; });
+    expect(lost).toMatchObject({ verdict: "gone", dimensions: ["gone"], previous_pinned: { resolves: true, license: "other" } });
+    expect(after((row) => { row.observed.pinned_revision.license.assertion = "mit"; }).verdict).toBe("license-changed");
+    expect(after((row) => { row.observed.pinned_revision = { resolves: null }; }).verdict).toBe("unknown");
+    const lostBefore = clone(held);
+    lostBefore.observed.pinned_revision = { resolves: false };
+    expect(compareSincePrevious(lostBefore, held).verdict).toBe("returned");
+    expect(after(() => {}, lostBefore).verdict).toBe("unchanged");
+    // A new pin has nothing of its own to compare with, so it rings once.
+    expect(after((row) => { row.pin.revision = row.observed.current.sha; }).verdict).toBe("no_previous");
+    // Unreadable last time, readable now: no usable previous, not "unknown".
+    const unreadable = clone(held);
+    unreadable.observed = { current: { request: 3, http_status: 429 }, pinned_revision: { resolves: null } };
+    expect(compareSincePrevious(unreadable, held)).toMatchObject({ verdict: "no_previous", dimensions: ["no_previous"] });
+  });
 });
 
 describe("hf-pin-reread lease", () => {
@@ -326,6 +356,79 @@ describe("hf-pin-reread lease", () => {
     expect(invalid((lease) => { lease.token = "x"; })).toBe("lease unknown-field");
     expect(invalid((lease) => { lease.outbox = "relative/outbox"; })).toBe("outbox not-a-normal-absolute-path");
     expect(invalid((lease) => { lease.budget.requests = 65; })).toBe("budget.requests out-of-range");
+    expect(invalid((lease) => { delete lease.scope.previous.receipt.sha256; }))
+      .toBe("scope.previous.receipt.sha256 missing-field");
+    expect(invalid((lease) => { lease.scope.resources[0].baseline = { license: "mit", visibility: "open", observed_on: "2026-10-29", basis: "x" }; }))
+      .toBe("scope.resources[0].baseline.visibility unsupported");
+  });
+
+  test("refusals before any request: example authority, untracked or unbound baseline, misplaced outbox, no template", async () => {
+    const cases: [string, (run: ReturnType<typeof setup>) => [string, Record<string, unknown>?]][] = [
+      ["lease-example", (run) => [leaseFor(run.dir, (lease) => {
+        lease.example = false;
+        lease.authority_reference = "EXAMPLE authority written by a test";
+      })]],
+      ["previous-untracked", (run) => [leaseFor(run.dir), {
+        git: (root: string, args: string[]) => (args[0] === "ls-files" ? { status: 1, stdout: "" } : cleanGit()(root, args)),
+      }]],
+      ["suite-not-a-git-tree", (run) => [leaseFor(run.dir), {
+        git: (root: string, args: string[]) => (args[0] === "rev-parse" ? { status: 128, stdout: "" } : cleanGit()(root, args)),
+      }]],
+      ["outbox-inside-skills", (run) => [leaseFor(run.dir, (lease) => { lease.outbox = join(SKILL, "lookback-test-outbox"); })]],
+      ["outbox-inside-skills", (run) => {
+        symlinkSync(SKILL, join(run.dir, "skill-link"));
+        return [leaseFor(run.dir, (lease) => { lease.outbox = join(run.dir, "skill-link", "outbox"); })];
+      }],
+      ["receipt-template-unavailable", (run) => [leaseFor(run.dir), {
+        receiptTemplate: () => { throw new Error("unavailable"); },
+      }]],
+    ];
+    for (const [code, prepare] of cases) {
+      const run = setup();
+      try {
+        const [lease, extra = {}] = prepare(run);
+        const before = snapshot([SKILL]);
+        const result = await runLookback(lease, { ...run.deps, ...extra });
+        expect(result.result).toBe("refused");
+        expect(result.refusals.some((reason: string) => reason.startsWith(code))).toBe(true);
+        expect(run.calls).toHaveLength(0);
+        expect(snapshot([SKILL])).toBe(before);
+      } finally {
+        run.cleanup();
+      }
+    }
+  });
+
+  test("the previous record is checked as a literal path, never a glob", () => {
+    const run = setup();
+    try {
+      const seen: string[][] = [];
+      const git = (root: string, args: string[]) => {
+        seen.push(args);
+        return cleanGit()(root, args);
+      };
+      planLookback(leaseFor(run.dir), { ...run.deps, git });
+      expect(seen.filter((args) => args[0] === "ls-files").map((args) => args.at(-1))).toEqual([
+        `:(literal)${RECORD}/evidence/observations.json`,
+        `:(literal)${RECORD}/karma-receipt.json`,
+      ]);
+    } finally {
+      run.cleanup();
+    }
+  });
+
+  test("an outbox whose parent is reached through a symlink may start", () => {
+    const run = setup();
+    try {
+      mkdirSync(join(run.dir, "real"));
+      symlinkSync(join(run.dir, "real"), join(run.dir, "link"));
+      const plan = planLookback(leaseFor(run.dir, (lease) => { lease.outbox = join(run.dir, "link", "outbox"); }), run.deps);
+      expect(plan.refusals).toEqual([]);
+      expect(plan.would_start).toBe(true);
+      expect(run.calls).toHaveLength(0);
+    } finally {
+      run.cleanup();
+    }
   });
 });
 
@@ -509,6 +612,101 @@ describe("hf-pin-reread run", () => {
     } finally {
       run.cleanup();
     }
+  });
+
+  test("a pinned revision that stops resolving rings, though the head has not moved", async () => {
+    const run = setup((_url, row, pinned) => (row.id === MCP && pinned ? json({ error: "Revision not found" }, 404) : null));
+    try {
+      const summary = await runLookback(leaseFor(run.dir), run.deps);
+      expect(summary).toMatchObject({ result: "completed", requests: 35, rang: [`dataset ${MCP}: gone`] });
+      const result = outbox(run.dir);
+      const row = result.observations.resources.find((item: Row) => item.id === MCP);
+      expect(row.observed.pinned_revision).toMatchObject({ resolves: false, http_status: 404 });
+      expect(row.verdict).toBe("gone");
+      expect(row.since_previous.verdict).toBe("gone");
+      expect(result.note).not.toContain("Nothing changed since the previous run.");
+      expect(result.note).toContain(
+        `| dataset \`${MCP}\` | gone | head \`862c164e…\`, public, \`cc-by-4.0\`; pin \`bd9274ec…\` \`other\` | head \`862c164e…\`, public, \`cc-by-4.0\`; pin \`bd9274ec…\` does not resolve |`,
+      );
+    } finally {
+      run.cleanup();
+    }
+  });
+
+  test("a redirect is recorded, not followed, and the run goes on", async () => {
+    const location = "https://huggingface.co/api/datasets/locuslab/TOFU-moved";
+    const run = setup((_url, row) => (row.id === "locuslab/TOFU"
+      ? new Response(null, { status: 307, headers: { location } })
+      : null));
+    try {
+      const summary = await runLookback(leaseFor(run.dir), run.deps);
+      expect(summary).toMatchObject({ result: "completed", requests: 35, rang: ["dataset locuslab/TOFU: unknown"] });
+      expect(run.calls.some(({ url }) => url.includes("TOFU-moved"))).toBe(false);
+      const result = outbox(run.dir);
+      const log = result.requests.find((item: any) => item.id === "locuslab/TOFU");
+      expect(log).toMatchObject({ http_status: 307, location, stop: null });
+      expect(result.observations.resources.find((item: Row) => item.id === "locuslab/TOFU").verdict).toBe("unknown");
+    } finally {
+      run.cleanup();
+    }
+  });
+
+  test("cancelling through the signal stops before the next request", async () => {
+    const controller = new AbortController();
+    const run = setup((_url, _row, _pinned, call) => {
+      if (call === 2) controller.abort();
+      return null;
+    }, { signal: controller.signal });
+    try {
+      const summary = await runLookback(leaseFor(run.dir), run.deps);
+      expect(summary).toMatchObject({ result: "cancelled", stop: "cancelled", requests: 2 });
+      expect(run.calls).toHaveLength(2);
+    } finally {
+      run.cleanup();
+    }
+  });
+
+  test("after a re-pin, the lease's reviewed baseline decides gating and license", async () => {
+    const head = rowById(MCP).observed.current.sha;
+    const gated = (_url: URL, row: Row, pinned: boolean) =>
+      (row.id === MCP && !pinned ? json({ ...metadataFor(row, false), gated: "manual" }) : null);
+    const repin = (baseline: boolean) => (lease: any) => {
+      const resource = lease.scope.resources.find((item: any) => item.id === MCP);
+      resource.pinned = head;
+      if (baseline) {
+        resource.baseline = { license: "cc-by-4.0", visibility: "public", observed_on: "2026-10-29", basis: "fixture review at re-pin" };
+      }
+    };
+    for (const [baseline, verdict] of [[true, "gating-changed"], [false, "unchanged"]] as const) {
+      const run = setup(gated);
+      try {
+        const summary = await runLookback(leaseFor(run.dir, repin(baseline)), run.deps);
+        expect(summary).toMatchObject({ result: "completed", requests: 34 });
+        const row = outbox(run.dir).observations.resources.find((item: Row) => item.id === MCP);
+        expect(row.verdict).toBe(verdict);
+        expect(row.since_previous.dimensions).toEqual(["gating-changed", "no_previous"]);
+        expect(row.baseline.license).toBe(baseline ? "cc-by-4.0" : null);
+      } finally {
+        run.cleanup();
+      }
+    }
+  });
+});
+
+describe("hf-pin-reread receipt details", () => {
+  test("a stopped run counts only the resource IDs it actually sent", async () => {
+    const run = setup((_url, _row, _pinned, call) => (call === 3 ? json({ error: "rate limited" }, 429) : null));
+    try {
+      await runLookback(leaseFor(run.dir), run.deps);
+      expect(outbox(run.dir).receipt.costs.privacy).toContain("saw 3 of the lease's 34 resource IDs");
+    } finally {
+      run.cleanup();
+    }
+  });
+
+  test("retention runs a calendar year, and 29 February rolls to 1 March", () => {
+    expect(oneYearAfter(Date.parse("2026-11-02T10:00:00Z"))).toBe("2027-11-02");
+    expect(oneYearAfter(Date.parse("2028-02-29T12:00:00Z"))).toBe("2029-03-01");
   });
 });
 

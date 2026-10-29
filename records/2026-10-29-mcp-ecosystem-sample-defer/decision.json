@@ -46,7 +46,7 @@
   "effect": "Nothing changes. The pin stays at bd9274ec, the head 862c164e and its cc-by-4.0 card are not admitted, and no content is read.",
   "reversible": true,
   "revisit_when": [
-    "the next lookback run's since_previous for this row is anything other than unchanged",
+    "the next lookback run's since_previous for this row is anything other than unchanged, for its head or its pinned revision",
     "Yu asks"
   ],
   "chain": {
@@ -61,5 +61,5 @@
     "kg_proposal": null,
     "kg_proposal_basis": "AgentTool main 784e2e13 publishes 18 kingdom.kg-proposal/0.1 proposals in packages/dark-continent-karma/hf/dataset/artifacts/proposals.jsonl, all for KARMA atlas treasure rows. None names this resource."
   },
-  "identity": "Commits in this repository land under the shared cambridgetcg GitHub account whoever makes them. Nothing here shows that a second person reviewed or approved this record, and it does not claim a two-person rule."
+  "identity": "A commit's author name is unauthenticated local Git configuration; the commit carrying this record names this machine's default. Pushes and merges go through the shared cambridgetcg GitHub account. Neither shows who acted, or that a second person reviewed or approved this record, and it does not claim a two-person rule."
 }

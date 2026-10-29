@@ -130,12 +130,13 @@ leaves the revision visibly marked for replacement and keeps `state` set to
 `draft`. The verifier rejects that scaffolding until all invocation facts are
 replaced and the receipt is explicitly finalized.
 
-To re-read the pinned HF resources as a series, run the
-[lookback lamp](scripts/hf-pin-reread.mjs) under a written lease, `--plan`
-first; it leaves observations, a draft receipt and a return note in a new
-local outbox. [Reality crossing](references/reality-crossing.md) records Yu's
-2026-10-29 decisions: what may run on its own, and what waits for his fresh
-yes bound to a receipt digest.
+The [lookback lamp](scripts/hf-pin-reread.mjs) re-reads the pinned HF
+resources once per lease, `--plan` first, and leaves observations, a draft
+receipt and a return note in a new local outbox. No run starts until Yu
+approves a new charter; his 2026-10-29 yes approved building it.
+[Reality crossing](references/reality-crossing.md) records his 2026-10-29
+answers and the principles the lamp is built on, which came from the research
+report he answered.
 
 This skill folder is one part of the KAKIN suite. Copying it alone does not
 carry the root receipt schema, ability manifest, or source-local

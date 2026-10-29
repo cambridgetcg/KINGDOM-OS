@@ -2,8 +2,12 @@
 //
 // Version 0 is the method the 2026-10-27 record wrote as prose inside its
 // observations.json, which declared `schema: none`. Version 1 keeps those
-// rules unchanged and adds a second comparison, since_previous, so that a
-// drift someone has already seen and held does not ring again next run.
+// rules and adds two things. One license rule covers a pin with no recorded
+// baseline: when the head has moved and its license differs from the license
+// at the pin, the verdict is license-changed, where v0 had no baseline to
+// compare and would have said moved. And a second comparison, since_previous,
+// sets this run beside the previous record, so that a drift already in that
+// record does not ring again until something about it changes.
 //
 // Every function here is pure: no file, clock, network or environment access.
 // They compare derived fields only. A raw body hash changes whenever a card
@@ -27,6 +31,7 @@ export const SINCE_PREVIOUS_PRECEDENCE = Object.freeze([
   "gating-changed",
   "license-changed",
   "moved",
+  "no_previous",
   "unchanged",
 ]);
 
@@ -37,8 +42,8 @@ export const NOT_FOUND_STATUSES = Object.freeze([401, 404, 410]);
 export const RULES = Object.freeze({
   license: "assertion = cardData.license when present, else the first license:* tag, else not_declared",
   visibility: "private or disabled -> unavailable; gated false -> public; gated auto/manual -> gated; spaces: gated not requested, so private and disabled decide",
-  pin: "pin against current: gone > unknown > gating-changed > license-changed > moved > unchanged; comparison keeps each dimension separate",
-  since_previous: "the previous run's observed current against this run's: gone > unknown > returned > gating-changed > license-changed > moved > unchanged; no_previous when the previous run has no observation for the resource",
+  pin: "pin against current: gone > unknown > gating-changed > license-changed > moved > unchanged; comparison keeps each dimension separate; with no baseline license, a moved head whose license differs from the license at the pin is license-changed",
+  since_previous: "the previous run's observations against this run's, for the current head and, when both runs read the same pin, for the pinned revision (resolves, license): gone > unknown > returned > gating-changed > license-changed > moved > no_previous > unchanged; no_previous when the previous run has no usable observation to compare (none, unreadable then, or a different pin)",
   fields: "derived fields only (HTTP status, sha, private, gated, disabled, license assertion); body hashes are never compared",
 });
 
@@ -188,6 +193,23 @@ export function comparePin(row) {
   };
 }
 
+// What a run knew about its pinned revision: whether it resolves and, if it
+// does, the license it asserts. Null when the run could not tell.
+export function pinnedStateOf(row) {
+  const pinRevision = row?.pin?.revision ?? null;
+  const current = row?.observed?.current ?? null;
+  if (stateOf(current) === "present" && current.sha === pinRevision) {
+    return { resolves: true, license: current.license.assertion };
+  }
+  const pinned = row?.observed?.pinned_revision;
+  if (!isRecord(pinned)) return null;
+  if (pinned.resolves === false) return { resolves: false, license: null };
+  if (pinned.resolves === true && typeof pinned.license?.assertion === "string") {
+    return { resolves: true, license: pinned.license.assertion };
+  }
+  return null;
+}
+
 export function summarizeObservation(observation) {
   const state = stateOf(observation);
   if (state === "unobserved") return null;
@@ -207,7 +229,9 @@ export function compareSincePrevious(previousRow, row) {
   const after = row?.observed?.current ?? null;
   const beforeState = stateOf(before);
   const afterState = stateOf(after);
-  if (beforeState === "unobserved") return { verdict: "no_previous", dimensions: [], previous: null };
+  if (beforeState === "unobserved") {
+    return { verdict: "no_previous", dimensions: [], previous: null, previous_pinned: null };
+  }
 
   const flags = new Set();
   if (afterState === "unobserved") {
@@ -232,14 +256,40 @@ export function compareSincePrevious(previousRow, row) {
     flags.add("gone");
   } else if (beforeState === "gone" && afterState === "present") {
     flags.add("returned");
+  } else if (beforeState === "unknown" && afterState === "present") {
+    // Unreadable then, readable now: there is nothing usable to compare with.
+    flags.add("no_previous");
   } else {
     flags.add("unknown");
+  }
+
+  // The pinned revision is a dimension of its own. A pin that stops resolving
+  // while the head stays put must ring, or a held drift would hide its loss.
+  // A new pin has no earlier observation of its own to compare with.
+  const pinRevision = row?.pin?.revision ?? null;
+  const samePin = typeof pinRevision === "string" && previousRow?.pin?.revision === pinRevision;
+  const pinBefore = samePin ? pinnedStateOf(previousRow) : null;
+  if (typeof pinRevision === "string" && !samePin) {
+    flags.add("no_previous");
+  } else if (samePin) {
+    const pinAfter = pinnedStateOf(row);
+    if (pinAfter?.resolves === false) {
+      if (pinBefore?.resolves !== false) flags.add("gone");
+    } else if (pinAfter?.resolves === true) {
+      if (pinBefore === null) flags.add("no_previous");
+      else if (pinBefore.resolves === false) flags.add("returned");
+      else if (pinBefore.license !== pinAfter.license) flags.add("license-changed");
+    } else if (pinBefore !== null && afterState === "present") {
+      // The head was read but the pin was not, so it may have changed.
+      flags.add("unknown");
+    }
   }
 
   return {
     verdict: firstOf(SINCE_PREVIOUS_PRECEDENCE, flags),
     dimensions: SINCE_PREVIOUS_PRECEDENCE.filter((verdict) => flags.has(verdict)),
     previous: summarizeObservation(before),
+    previous_pinned: pinBefore,
   };
 }
 
@@ -253,8 +303,9 @@ export function countBy(rows, pick) {
 }
 
 // A row rings when it changed since the previous run, or when there was no
-// previous observation to compare with. A drift that is merely still there
-// stays in the proposal table at hold, without ringing.
+// usable previous observation to compare with. A drift that is merely still
+// there, already in the previous record, stays in the proposal table at hold
+// without ringing.
 export function rings(row) {
   return row?.since_previous?.verdict !== "unchanged";
 }

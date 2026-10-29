@@ -2,7 +2,7 @@
 
 The first decision record for a Dark Continent expedition. It is prose plus a
 small [decision.json](decision.json)
-(`sha256:93c26da66eca6d32004e094820772748a837b8359c54e7318c6604e2c058a4ea`),
+(`sha256:f76f738ad035542a882eaf453b343b2f7b3718517a44aca8b432d5d5afbbd88f`),
 which holds the same facts as data. It introduces no schema.
 
 **Decision.** Defer. Yu decided on 2026-10-29, in his words: "3. defer". A
@@ -49,9 +49,10 @@ and a later decision can still re-pin or retire the row after the review it
 asks for.
 
 **When to revisit.** When the next lookback run's `since_previous` for this
-row is anything other than `unchanged`, or when Yu asks. A run that finds the
-same head and card does not ring, because this decision already covers what it
-would report.
+row is anything other than `unchanged`, for its head or for its pinned
+revision, or when Yu asks. A run that finds the same head, card and pin does
+not ring, because the drift is already in the record it compares with; the row
+stays in that run's proposal table at hold, and this decision covers it.
 
 ## On the reality-influence chain
 
@@ -74,8 +75,9 @@ normative assessment or repair to record.
 
 ## Identity
 
-Commits in this repository land under the shared `cambridgetcg` GitHub
-account, whoever makes them. Nothing in this record shows that a second person
-reviewed it, and it does not claim a two-person rule. Yu's own words above are
-the authority; merging this record into main is itself a step that waits for
-him.
+A commit's author name is unauthenticated local Git configuration; the commit
+carrying this record names this machine's default. Pushes and merges go through
+the shared `cambridgetcg` GitHub account. Neither shows who acted, or that a
+second person reviewed this record, and it does not claim a two-person rule.
+Yu's own words above are the authority; merging this record into main is itself
+a step that waits for him.
