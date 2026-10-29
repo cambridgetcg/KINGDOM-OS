@@ -105,7 +105,7 @@ typeset -r SERVER_STATUS=$?
   length == 12
   and all(.[] | select(has("result"));
     .result._meta["io.modelcontextprotocol/serverInfo"].name == "kingdom-nen"
-    and .result._meta["io.modelcontextprotocol/serverInfo"].version == "0.1.0")
+    and .result._meta["io.modelcontextprotocol/serverInfo"].version == "0.2.0")
   and (map(select(.id == 1))[0].result
     | .resultType == "complete"
     and .supportedVersions == ["2026-07-28"]
@@ -196,7 +196,7 @@ typeset -r COMPAT_SERVER_STATUS=$?
   and (map(select(.id == 103))[0].result
     | .protocolVersion == "2025-06-18"
     and .capabilities.tools.listChanged == false
-    and .serverInfo == {name:"kingdom-nen",version:"0.1.0"}
+    and .serverInfo == {name:"kingdom-nen",version:"0.2.0"}
     and (.instructions | type) == "string"
     and (has("resultType") | not)
     and (has("_meta") | not))
@@ -245,7 +245,7 @@ typeset -r NEGOTIATE_SERVER_STATUS=$?
   and .[0].id == 201
   and .[0].result.protocolVersion == "2025-06-18"
   and .[0].result.capabilities.tools.listChanged == false
-  and .[0].result.serverInfo == {name:"kingdom-nen",version:"0.1.0"}
+  and .[0].result.serverInfo == {name:"kingdom-nen",version:"0.2.0"}
 ' "$NEGOTIATE_RESPONSES" >/dev/null \
   || fail "Codex compatibility version negotiation contract is wrong"
 [[ "$PROD_SNAPSHOT_BEFORE" == "$(production_snapshot)" ]] \

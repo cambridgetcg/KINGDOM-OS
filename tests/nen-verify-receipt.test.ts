@@ -623,8 +623,12 @@ describe("kingdom_karma_receipt_verify over MCP", () => {
       { jsonrpc: "2.0", id: 1, method: "server/discover", params: { _meta: MODERN_META } },
       { jsonrpc: "2.0", id: 2, method: "tools/list", params: { _meta: MODERN_META } },
     ]);
-    expect(responses.get(1).result.instructions).toContain("KARMA receipt verification");
-    expect(responses.get(1).result.instructions).toContain("not that a finding is true or that anything is permitted");
+    const instructions = responses.get(1).result.instructions;
+    expect(instructions).toContain("KARMA receipt verification");
+    expect(instructions).toContain("one caller-named receipt under records/, reached without symlinks");
+    expect(instructions).toContain("runs the git found on the server's PATH, read-only and with fetching disabled");
+    expect(instructions).toContain("not that a finding is true or that anything is permitted");
+    expect(responses.get(1).result._meta["io.modelcontextprotocol/serverInfo"].version).toBe("0.2.0");
     const tools = responses.get(2).result.tools;
     expect(tools.map((tool: any) => tool.name)).toEqual([
       "kingdom_nen_list",
@@ -686,6 +690,26 @@ describe("kingdom_karma_receipt_verify over MCP", () => {
     for (const id of [2, 3]) {
       expect(responses.get(id).result.isError).toBe(true);
       expect(responses.get(id).result.structuredContent.code).toBe("receipt-path-unavailable");
+    }
+  });
+
+  test("fails closed on a receipt that is not a JSON object", () => {
+    const directory = join(fixture.root, "records", "not-an-object-over-mcp");
+    mkdirSync(directory, { recursive: true });
+    const receiptPath = "records/not-an-object-over-mcp/karma-receipt.json";
+    for (const value of ["[]", "null"]) {
+      writeFileSync(join(fixture.root, receiptPath), `${value}\n`);
+      const responses = mcp(fixture.server, [
+        verifyCall(1, { receipt_path: receiptPath, at_revision: true }),
+        verifyCall(2, { receipt_path: receiptPath }),
+      ]);
+      for (const id of [1, 2]) {
+        expect(responses.get(id).result.isError).toBe(true);
+        expect(responses.get(id).result.structuredContent.result).toMatchObject({
+          valid: false,
+          issues: [{ file: "karma-receipt.json", field: "$", code: "invalid-type" }],
+        });
+      }
     }
   });
 });

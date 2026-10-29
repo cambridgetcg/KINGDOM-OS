@@ -62,8 +62,18 @@ The canonical KINGDOM Nen server is:
 ```
 
 It lists and validates local KAKIN manifests, returns their bundle digests and
-affinities, and creates in-memory draft KARMA receipt scaffolding through the
-strict `bin/nen.mjs` boundary.
+affinities, creates in-memory draft KARMA receipt scaffolding, and verifies one
+KARMA receipt, all through the strict `bin/nen.mjs` boundary: six read-only
+tools. The verify tool, `kingdom_karma_receipt_verify`, is the only one that
+takes a path from the caller, a plain `records/…/*.json` path refused if any
+step is a symlink. It reads that receipt and the files its paths name inside
+the receipt's own record directory, and with `at_revision` it runs the `git`
+on the server's `PATH`, read-only and with fetching disabled, against this
+repository's local objects. It checks exactly what
+[verifying a KARMA receipt](#what-verifying-a-karma-receipt-shows) checks.
+[`NEN.md`](../NEN.md) predates this tool; where it says five calls, no
+caller-selected path or no external tool execution, this paragraph is the
+current account.
 
 For a restricted host that needs only pure computation over caller-supplied
 Ging expedition objects, run the compatibility port:

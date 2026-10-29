@@ -8,7 +8,7 @@ import { strictJson } from "./nen.mjs";
 
 const PROTOCOL_VERSION = "2026-07-28";
 const CODEX_COMPAT_PROTOCOL_VERSION = "2025-06-18";
-const SERVER_VERSION = "0.1.0";
+const SERVER_VERSION = "0.2.0";
 const MAX_LINE_BYTES = 256 * 1024;
 const MAX_CHILD_OUTPUT_BYTES = 1024 * 1024;
 const MAX_REQUESTS = 256;
@@ -25,7 +25,7 @@ const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const RECEIPT_PATH_SOURCE = "^records/(?:[A-Za-z0-9][A-Za-z0-9._-]{0,127}/){1,4}[A-Za-z0-9][A-Za-z0-9._-]{0,122}\\.json$";
 const RECEIPT_PATH = new RegExp(RECEIPT_PATH_SOURCE);
 const MAX_RECEIPT_PATH_LENGTH = 512;
-const SERVER_INSTRUCTIONS = "Read-only local KAKIN Nen inspection, draft KARMA scaffolding, and KARMA receipt verification. Tools perform no network call, fetch, write, inference, installation, skill execution, or authority grant; receipt verification reads one receipt under records/, its record directory, and, when asked, this repository's local Git objects. A draft receipt is not final evidence. A valid receipt is unsigned: it shows structure and matching local digests, not that a finding is true or that anything is permitted.";
+const SERVER_INSTRUCTIONS = "Read-only local KAKIN Nen inspection, draft KARMA scaffolding, and KARMA receipt verification. Tools perform no network call, fetch, write, inference, installation, skill execution, or authority grant. Receipt verification reads one caller-named receipt under records/, reached without symlinks, and files its paths name in that receipt's own record directory; with at_revision it also runs the git found on the server's PATH, read-only and with fetching disabled, against this repository's local objects. A draft receipt is not final evidence. A valid receipt is unsigned: it shows structure and matching local digests, not that a finding is true or that anything is permitted.";
 const SERVER_RESULT_META = {
   "io.modelcontextprotocol/serverInfo": {
     name: "kingdom-nen",
@@ -123,7 +123,7 @@ const TOOLS = [
   {
     name: "kingdom_karma_receipt_verify",
     title: "Verify one KARMA receipt",
-    description: "Verify one KARMA receipt stored under this repository's records/ directory. It checks the closed schema, time order, template placeholders, and the bound ability's manifest and bundle digests: against the working tree by default, or with at_revision against the suite at the receipt's own ability_revision, read from local Git objects and never fetched. It recomputes SHA-256 for outputs and inputs found in the receipt's record directory and, with at_revision, for inputs at exact revisions already present locally; remote and unreachable entries are listed as not recomputed. Receipts are unsigned: a valid result proves no finding true and authorizes nothing. An invalid receipt returns isError with the validation payload as result.",
+    description: "Verify one KARMA receipt stored under this repository's records/ directory, reached without symlinks. The receipt is checked against this checkout's closed receipt schema, time order and template placeholders, and its ability's manifest and bundle digests are compared: against the working tree by default, or with at_revision against the ability as committed at the receipt's own ability_revision. That revision is read from this repository's local Git objects by the git on the server's PATH, read-only and never fetched, and only when HEAD or a local branch, tag or remote-tracking ref reaches it. SHA-256 is recomputed for outputs and inputs whose paths name the receipt's record directory (records/<record>/...) and, with at_revision, for inputs at exact commits already in local objects; everything else, including remote inputs and bare relative paths, is listed as not recomputed with a reason. Receipts are unsigned: a valid result proves no finding true and authorizes nothing. An invalid receipt returns isError with the validation payload as result.",
     inputSchema: RECEIPT_VERIFY_INPUT,
     annotations: READ_ONLY_ANNOTATIONS,
   },
