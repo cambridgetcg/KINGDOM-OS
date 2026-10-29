@@ -1,0 +1,65 @@
+{
+  "record": "mcp-ecosystem-sample-defer",
+  "schema": "none; a small decision record, read with README.md in this directory",
+  "decided_on": "2026-10-29",
+  "decision": "defer",
+  "decided_by": "Yu (宇恆), the owner",
+  "words": "3. defer",
+  "words_context": "Yu's answer to question 3 of a 2026-10-29 research report on how the Dark Continent reaches 現實層 (keep, re-pin after review, or defer). The whole reply was \"1. go for b. 2. 用 digest 連住 3. defer 4. yes please 5. yes\". The report itself is kept outside this repository.",
+  "recorded_by": "a Claude Code session working for Yu; no DID or AgentTool identity is claimed",
+  "target": {
+    "file": "skills/navigate-dark-continent/references/hf-boundaries.md",
+    "row": "Emerging MCP ecosystem sample",
+    "resource": {
+      "kind": "dataset",
+      "id": "mcp-research-alliance/mcp-ecosystem-sample"
+    },
+    "pinned_revision": "bd9274ec0a3ba990d701f856942f12099ef37f61",
+    "pinned_license": "other",
+    "observed_head": "862c164e2fc336b654368ce147812cab7efa1d6f",
+    "observed_head_license": "cc-by-4.0",
+    "observed_on": "2026-10-27"
+  },
+  "subject": [
+    {
+      "path": "records/2026-10-27-dark-continent-hf-pin-drift/karma-receipt.json",
+      "sha256": "sha256:e72139bd882f1dca33aa8ede651ba4fd54d5b5c2c90a820c68617746c3f7e157"
+    },
+    {
+      "path": "records/2026-10-27-dark-continent-hf-pin-drift/evidence/observations.json",
+      "sha256": "sha256:784beb2354837be9ae86a1c7ba0c064a6dfbd51868284bb0e620720f054aadae",
+      "row_verdict": "license-changed",
+      "verdict_method": "the record's prose method (schema: none), which hf-pin-drift/1 reproduces"
+    }
+  ],
+  "policy": {
+    "path": "skills/navigate-dark-continent/references/hf-boundaries.md",
+    "revision": "9c51c0f31548751483945213129322b24aa8aaf8",
+    "sha256": "sha256:9460e993b430b57b3936bc1e4b89eed190b339b33aa8af3f5cf70244daaf4248",
+    "lines": "80, 94-95",
+    "text": [
+      "do not admit content until exact license, collection provenance, field privacy, and update policy are reviewed",
+      "The table remains the reviewed allowlist until a row is re-reviewed and re-pinned."
+    ]
+  },
+  "effect_class": "none",
+  "effect": "Nothing changes. The pin stays at bd9274ec, the head 862c164e and its cc-by-4.0 card are not admitted, and no content is read.",
+  "reversible": true,
+  "revisit_when": [
+    "the next lookback run's since_previous for this row is anything other than unchanged, for its head or its pinned revision",
+    "Yu asks"
+  ],
+  "chain": {
+    "map": "references/reality-influence-map.md, lines 40-56",
+    "covers": ["proposal", "decision"],
+    "no_attempt": "A defer authorizes nothing and changes nothing, so no attempt, outcome, causal or normative assessment, or repair follows from it."
+  },
+  "karma": {
+    "kingdom_karma_receipts": [
+      "sha256:e72139bd882f1dca33aa8ede651ba4fd54d5b5c2c90a820c68617746c3f7e157"
+    ],
+    "kg_proposal": null,
+    "kg_proposal_basis": "AgentTool main 784e2e13 publishes 18 kingdom.kg-proposal/0.1 proposals in packages/dark-continent-karma/hf/dataset/artifacts/proposals.jsonl, all for KARMA atlas treasure rows. None names this resource."
+  },
+  "identity": "A commit's author name is unauthenticated local Git configuration; the commit carrying this record names this machine's default. Pushes and merges go through the shared cambridgetcg GitHub account. Neither shows who acted, or that a second person reviewed or approved this record, and it does not claim a two-person rule."
+}
