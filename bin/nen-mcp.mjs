@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 import { spawn } from "node:child_process";
+import { lstatSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { strictJson } from "./nen.mjs";
 
 const PROTOCOL_VERSION = "2026-07-28";
 const CODEX_COMPAT_PROTOCOL_VERSION = "2025-06-18";
-const SERVER_VERSION = "0.1.0";
+const SERVER_VERSION = "0.2.0";
 const MAX_LINE_BYTES = 256 * 1024;
 const MAX_CHILD_OUTPUT_BYTES = 1024 * 1024;
 const MAX_REQUESTS = 256;
@@ -18,6 +19,13 @@ const SCRIPT_PATH = fileURLToPath(import.meta.url);
 const OS_ROOT = dirname(dirname(SCRIPT_PATH));
 const NEN_CLI = join(OS_ROOT, "bin", "nen.mjs");
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+// A receipt the verify tool may read: a plain path under this repository's
+// records/ directory, one to four directories deep, ending in .json. Every
+// segment starts with a letter or digit, so "." and ".." cannot appear.
+const RECEIPT_PATH_SOURCE = "^records/(?:[A-Za-z0-9][A-Za-z0-9._-]{0,127}/){1,4}[A-Za-z0-9][A-Za-z0-9._-]{0,122}\\.json$";
+const RECEIPT_PATH = new RegExp(RECEIPT_PATH_SOURCE);
+const MAX_RECEIPT_PATH_LENGTH = 512;
+const SERVER_INSTRUCTIONS = "Read-only local KAKIN Nen inspection, draft KARMA scaffolding, and KARMA receipt verification. Tools perform no network call, fetch, write, inference, installation, skill execution, or authority grant. Receipt verification reads one caller-named receipt under records/, reached without symlinks, and files its paths name in that receipt's own record directory; with at_revision it also runs the git found on the server's PATH, read-only and with fetching disabled, against this repository's local objects. A draft receipt is not final evidence. A valid receipt is unsigned: it shows structure and matching local digests, not that a finding is true or that anything is permitted.";
 const SERVER_RESULT_META = {
   "io.modelcontextprotocol/serverInfo": {
     name: "kingdom-nen",
@@ -50,6 +58,23 @@ const OPTIONAL_ABILITY_INPUT = {
 const REQUIRED_ABILITY_INPUT = {
   ...OPTIONAL_ABILITY_INPUT,
   required: ["ability_id"],
+};
+
+const RECEIPT_VERIFY_INPUT = {
+  type: "object",
+  additionalProperties: false,
+  required: ["receipt_path"],
+  properties: {
+    receipt_path: {
+      type: "string",
+      pattern: RECEIPT_PATH_SOURCE,
+      minLength: 1,
+      maxLength: MAX_RECEIPT_PATH_LENGTH,
+    },
+    at_revision: {
+      type: "boolean",
+    },
+  },
 };
 
 const READ_ONLY_ANNOTATIONS = {
@@ -95,6 +120,13 @@ const TOOLS = [
     inputSchema: REQUIRED_ABILITY_INPUT,
     annotations: READ_ONLY_ANNOTATIONS,
   },
+  {
+    name: "kingdom_karma_receipt_verify",
+    title: "Verify one KARMA receipt",
+    description: "Verify one KARMA receipt stored under this repository's records/ directory, reached without symlinks. The receipt is checked against this checkout's closed receipt schema, time order and template placeholders, and its ability's manifest and bundle digests are compared: against the working tree by default, or with at_revision against the ability as committed at the receipt's own ability_revision. That revision is read from this repository's local Git objects by the git on the server's PATH, read-only and never fetched, and only when HEAD or a local branch, tag or remote-tracking ref reaches it. SHA-256 is recomputed for outputs and inputs whose paths name the receipt's record directory (records/<record>/...) and, with at_revision, for inputs at exact commits already in local objects; everything else, including remote inputs and bare relative paths, is listed as not recomputed with a reason. Receipts are unsigned: a valid result proves no finding true and authorizes nothing. An invalid receipt returns isError with the validation payload as result.",
+    inputSchema: RECEIPT_VERIFY_INPUT,
+    annotations: READ_ONLY_ANNOTATIONS,
+  },
 ];
 
 const TOOL_COMMANDS = new Map([
@@ -107,7 +139,40 @@ const TOOL_COMMANDS = new Map([
   ["kingdom_nen_show", (argumentsValue) => ["show", argumentsValue.ability_id]],
   ["kingdom_nen_types", () => ["types", "--json"]],
   ["kingdom_karma_receipt_template", (argumentsValue) => ["receipt-template", argumentsValue.ability_id]],
+  ["kingdom_karma_receipt_verify", (argumentsValue) => {
+    const receipt = containedReceiptPath(argumentsValue.receipt_path);
+    if (receipt === null) return null;
+    return [
+      "verify-receipt",
+      receipt,
+      ...(argumentsValue.at_revision === true ? ["--at-revision"] : []),
+      "--json",
+    ];
+  }],
 ]);
+
+// Resolve a validated receipt path inside this repository without following a
+// symlink at any step. Beyond the suite the other tools already read, the
+// verifier then reads only that receipt, its own record directory and, with
+// at_revision, this repository's local Git objects.
+function containedReceiptPath(relative) {
+  const parts = relative.split("/");
+  let current = OS_ROOT;
+  for (const [index, part] of parts.entries()) {
+    current = join(current, part);
+    let stat;
+    try {
+      stat = lstatSync(current);
+    } catch {
+      return null;
+    }
+    if (stat.isSymbolicLink()) return null;
+    const leaf = index === parts.length - 1;
+    if (!leaf && !stat.isDirectory()) return null;
+    if (leaf && !stat.isFile()) return null;
+  }
+  return current;
+}
 
 function isObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -170,6 +235,20 @@ function modernMetadataError(params, id) {
 
 function validateToolArguments(name, value) {
   if (!isObject(value)) return "arguments must be an object";
+  if (name === "kingdom_karma_receipt_verify") {
+    if (!hasExactKeys(value, ["receipt_path", "at_revision"], ["receipt_path"])) {
+      return "receipt_path is required and at_revision is the only other argument";
+    }
+    if (
+      typeof value.receipt_path !== "string"
+      || value.receipt_path.length > MAX_RECEIPT_PATH_LENGTH
+      || !RECEIPT_PATH.test(value.receipt_path)
+    ) return "receipt_path must be a plain relative path to a .json file under records/";
+    if (Object.hasOwn(value, "at_revision") && typeof value.at_revision !== "boolean") {
+      return "at_revision must be a boolean";
+    }
+    return null;
+  }
   const abilityTool = name === "kingdom_nen_validate"
     || name === "kingdom_nen_show"
     || name === "kingdom_karma_receipt_template";
@@ -343,7 +422,17 @@ async function callTool(name, argumentsValue, signal, modern) {
   if (!acquired) return null;
   try {
     if (signal.aborted) return null;
-    const execution = await runNenCli(command(argumentsValue), signal);
+    const args = command(argumentsValue);
+    if (args === null) {
+      return toolResult({
+        protocol: "kingdom.nen-mcp-error/0.1",
+        code: "receipt-path-unavailable",
+        exit_code: null,
+        diagnostics: [],
+        result: null,
+      }, true, modern);
+    }
+    const execution = await runNenCli(args, signal);
     if (execution.cancelled) return null;
     if (execution.ok) return toolResult(execution.payload, false, modern);
     return toolResult({
@@ -402,7 +491,7 @@ async function handleCompatRequest(message, params, signal) {
         protocolVersion: CODEX_COMPAT_PROTOCOL_VERSION,
         capabilities: { tools: { listChanged: false } },
         serverInfo: { name: "kingdom-nen", version: SERVER_VERSION },
-        instructions: "Read-only local KAKIN Nen inspection and draft KARMA scaffolding. Tools perform no network call, write, inference, installation, skill execution, or authority grant. A draft receipt is not final evidence.",
+        instructions: SERVER_INSTRUCTIONS,
       },
     };
   }
@@ -472,7 +561,7 @@ async function handleModernRequest(message, params, signal) {
         supportedVersions: [PROTOCOL_VERSION],
         capabilities: { tools: { listChanged: false } },
         _meta: SERVER_RESULT_META,
-        instructions: "Read-only local KAKIN Nen inspection and draft KARMA scaffolding. Tools perform no network call, write, inference, installation, skill execution, or authority grant. A draft receipt is not final evidence.",
+        instructions: SERVER_INSTRUCTIONS,
         ttlMs: 300_000,
         cacheScope: "public",
       },
