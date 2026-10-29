@@ -538,3 +538,33 @@ describe("reality crossing", () => {
     }
   });
 });
+
+describe("the first decision record", () => {
+  const DECISION = join(ROOT, "records", "2026-10-29-mcp-ecosystem-sample-defer");
+
+  test("binds the real digests of the evidence the defer rests on", () => {
+    const decision = JSON.parse(readFileSync(join(DECISION, "decision.json"), "utf8"));
+    expect(decision).toMatchObject({
+      decision: "defer",
+      decided_on: "2026-10-29",
+      words: "3. defer",
+      effect_class: "none",
+      reversible: true,
+      chain: { covers: ["proposal", "decision"] },
+      karma: { kg_proposal: null },
+      target: { resource: { kind: "dataset", id: MCP }, pinned_revision: "bd9274ec0a3ba990d701f856942f12099ef37f61" },
+    });
+    for (const subject of decision.subject) expect(fileDigest(join(ROOT, subject.path))).toBe(subject.sha256);
+    expect(decision.karma.kingdom_karma_receipts).toEqual([fileDigest(join(ROOT, RECORD, "karma-receipt.json"))]);
+    expect(decision.recorded_by).toContain("no DID");
+    expect(decision.identity).toContain("does not claim a two-person rule");
+
+    const readme = readFileSync(join(DECISION, "README.md"), "utf8");
+    expect(readme).toContain(fileDigest(join(DECISION, "decision.json")));
+    expect(readme).toContain("\"3. defer\"");
+    for (const subject of decision.subject) expect(readme).toContain(subject.sha256);
+    expect(linesOf(join(ROOT, RECORD, "RETURN-NOTE.md"), 52, 56))
+      .toContain("Whether to\n  re-pin is a documentation decision and was not made here.");
+    for (const target of relativeLinks(join(DECISION, "README.md"))) expect(existsSync(join(DECISION, target))).toBe(true);
+  });
+});
