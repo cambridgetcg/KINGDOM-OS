@@ -125,6 +125,50 @@ Run its tests with:
 node --test tests/nen_system_test.mjs
 ```
 
+## What verifying a KARMA receipt shows
+
+```bash
+./kingdom nen verify-receipt records/<record>/karma-receipt.json
+./kingdom nen verify-receipt records/<record>/karma-receipt.json --at-revision
+```
+
+KARMA receipts are unsigned by design, so verification shows only what this
+checkout can recompute:
+
+- The receipt against this checkout's closed `kingdom.karma/0.1` schema, in
+  both modes. A revision never supplies the receipt schema: the protocol is
+  fixed, and a receipt that could pick its schema could pick its own judge.
+- Time order, the absence of template placeholders, and the named ability's
+  manifest and bundle digests. By default these are compared with the working
+  tree, which runs no Git, so a receipt fails with `ability-digest-mismatch`
+  once its skill has changed; the 2026-10-27 Dark Continent receipt now does.
+  `--at-revision` compares them with the ability as committed at the receipt's
+  own `ability_revision`, read into memory from local Git objects by the `git`
+  on `PATH`, read-only and with fetching disabled. The revision must already
+  be present and reachable from `HEAD` or a local branch, tag or
+  remote-tracking ref, because a commit no ref holds is not part of any line
+  this repository keeps. An absent or unreachable revision, or a lookup that
+  did not finish, is reported as exactly that.
+- The SHA-256 of outputs and inputs whose paths name the receipt's record
+  directory from the repository root (`records/<record>/…`) and, with
+  `--at-revision`, of inputs at exact commits already in this repository's
+  objects. Mismatches are `output-digest-mismatch`, `input-digest-mismatch`
+  and `input-bytes-mismatch`. Remote inputs, descriptions, other
+  repositories' commits and bare relative paths are listed as not recomputed,
+  each with a reason. A bare path such as `evidence/observations.json` is not
+  guessed into the record directory, because a predecessor's file of the same
+  name would make a correct receipt look tampered.
+
+A pass does not show that a finding is true, that the declared revision is the
+one that actually ran, that the authority, consent or other basis it cites was
+real or sufficient, or that any later action is permitted. Verification runs
+no skill and grants nothing.
+
+[`NEN.md`](../NEN.md) is the immutable definition `kingdom-karma/e4e84a67` and
+predates `--at-revision`. Its sentence that the verifier "records but does not
+run Git" and its command list describe the default mode only; this section is
+the current account.
+
 ## Rights and authority
 
 The standing floor is `xenia.rights/0.1`. A King is a distinct collaborator or

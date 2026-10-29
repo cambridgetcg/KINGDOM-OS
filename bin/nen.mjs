@@ -8,7 +8,7 @@ import {
   realpathSync,
 } from "node:fs";
 import { createHash } from "node:crypto";
-import { basename, dirname, isAbsolute, join, parse, resolve, sep } from "node:path";
+import { basename, dirname, isAbsolute, join, parse, relative as relativePath, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const MAX_FILE_BYTES = 64 * 1024;
@@ -1750,7 +1750,8 @@ function verifyManifestationReceipt(path, json, skillsRoot) {
 // extracted tree. The environment is built from nothing so an inherited
 // GIT_DIR, replace ref, promisor remote or global config cannot redirect what
 // is read; lazy fetching and every transport protocol are switched off, so a
-// missing object stays missing.
+// missing object stays missing. Only PATH is inherited, to find `git` itself:
+// whoever launches the verifier already chooses which programs it runs.
 
 function gitEnvironment() {
   return {
@@ -1768,6 +1769,9 @@ function gitEnvironment() {
   };
 }
 
+// A Git call reports how it ended, not only its output. A lookup that timed
+// out, was killed, could not start or overflowed its buffer has failed; it has
+// not shown that an object is absent, and is never reported as if it had.
 function runGit(args, input = "") {
   const result = spawnSync("git", ["-c", "protocol.allow=never", "-C", OS_ROOT, ...args], {
     cwd: OS_ROOT,
@@ -1778,42 +1782,81 @@ function runGit(args, input = "") {
     killSignal: "SIGKILL",
     windowsHide: true,
   });
-  if (result.error || result.status !== 0 || !Buffer.isBuffer(result.stdout)) return null;
-  return result.stdout;
+  const exited = !result.error && result.signal === null ? result.status : null;
+  return {
+    ok: exited === 0 && Buffer.isBuffer(result.stdout),
+    exited,
+    stdout: Buffer.isBuffer(result.stdout) ? result.stdout : Buffer.alloc(0),
+  };
 }
 
 let suiteRepositoryAnswer = null;
 
 // The suite root must itself be a repository's top level. A copied suite
 // inside some unrelated checkout must not borrow that checkout's history.
-function suiteRepositoryAvailable() {
+// rev-parse exits 128 outside any repository; any other failure is a lookup
+// that did not finish.
+function suiteRepository() {
   if (suiteRepositoryAnswer !== null) return suiteRepositoryAnswer;
-  const output = runGit(["rev-parse", "--show-toplevel"]);
-  let available = false;
-  if (output !== null) {
+  const result = runGit(["rev-parse", "--show-toplevel"]);
+  let answer = "lookup-failed";
+  if (result.ok) {
     try {
-      available = realpathSync(output.toString("utf8").replace(/\n$/, "")) === realpathSync(OS_ROOT);
+      answer = realpathSync(result.stdout.toString("utf8").replace(/\n$/, "")) === realpathSync(OS_ROOT)
+        ? "available"
+        : "unavailable";
     } catch {
-      available = false;
+      answer = "unavailable";
     }
+  } else if (result.exited === 128) {
+    answer = "unavailable";
   }
-  suiteRepositoryAnswer = available;
-  return available;
+  suiteRepositoryAnswer = answer;
+  return answer;
 }
 
+// `cat-file -e` exits 1, silently, for a well-formed ID that is not in local
+// objects. That exit, and only that exit, means missing.
 function localCommit(revision) {
-  const output = runGit(["cat-file", "-t", revision]);
-  if (output === null) return "missing";
-  return output.toString("utf8").trim() === "commit" ? "present" : "not-commit";
+  const exists = runGit(["cat-file", "-e", revision]);
+  if (exists.exited === 1) return "missing";
+  if (!exists.ok) return "lookup-failed";
+  const type = runGit(["cat-file", "-t", revision]);
+  if (!type.ok) return "lookup-failed";
+  return type.stdout.toString("utf8").trim() === "commit" ? "present" : "not-commit";
+}
+
+// A suite revision must be held by a line someone keeps: an ancestor of HEAD,
+// or of a local branch, tag or remote-tracking ref. A commit object no ref
+// reaches leaves no trace in any branch listing, so a receipt bound to one
+// would be judged by an ability nobody adopted. The ref that holds it is
+// reported so a reader can judge that line for themselves.
+function revisionReachability(revision) {
+  const head = runGit(["merge-base", "--is-ancestor", revision, "HEAD"]);
+  if (head.ok) return { status: "reachable", from: "HEAD" };
+  if (head.exited !== 1) return { status: "lookup-failed", from: null };
+  const refs = runGit([
+    "for-each-ref",
+    "--count=1",
+    "--contains",
+    revision,
+    "--format=%(refname)",
+    "refs/heads",
+    "refs/tags",
+    "refs/remotes",
+  ]);
+  if (!refs.ok) return { status: "lookup-failed", from: null };
+  const name = refs.stdout.toString("utf8").trim();
+  return name === "" ? { status: "not-reachable", from: null } : { status: "reachable", from: name };
 }
 
 function revisionEntries(revision, paths, recursive) {
   const args = ["ls-tree", "-z", "-l", "--full-tree"];
   if (recursive) args.push("-r", "-t");
-  const output = runGit([...args, revision, "--", ...paths]);
-  if (output === null) return null;
+  const result = runGit([...args, revision, "--", ...paths]);
+  if (!result.ok) return null;
   const entries = [];
-  for (const line of output.toString("utf8").split("\0")) {
+  for (const line of result.stdout.toString("utf8").split("\0")) {
     if (line === "") continue;
     const match = line.match(/^([0-7]{6}) (blob|tree|commit) ([0-9a-f]{40,64}) +(-|[0-9]+)\t([\s\S]+)$/);
     if (!match) return null;
@@ -1832,8 +1875,9 @@ function readGitBlobs(oids) {
   const unique = [...new Set(oids)];
   const blobs = new Map();
   if (unique.length === 0) return blobs;
-  const output = runGit(["cat-file", "--batch"], `${unique.join("\n")}\n`);
-  if (output === null) return null;
+  const result = runGit(["cat-file", "--batch"], `${unique.join("\n")}\n`);
+  if (!result.ok) return null;
+  const output = result.stdout;
   let offset = 0;
   for (const oid of unique) {
     const newline = output.indexOf(0x0a, offset);
@@ -1903,32 +1947,45 @@ function revisionFiles(root, entries, blobs) {
   });
 }
 
-// Load the suite a receipt names: the three schemas, the rights baseline and
-// the one ability folder, exactly as committed at that revision.
+// Load the ability a receipt names, as committed at that revision: its folder,
+// the ability and manifestation-receipt schemas it was validated against, and
+// the rights baseline. The receipt schema is not taken from the revision.
+// kingdom.karma/0.1 is a fixed protocol, and a revision that could supply its
+// own receipt schema could loosen a nested rule (inputs[].assurance, say) and
+// so choose its own judge.
 function loadRevisionSuite(revision, abilityId, label, issues) {
-  if (!suiteRepositoryAvailable()) {
-    issues.push(issue(label, "$.ability_revision", "suite-repository-unavailable"));
-    return { status: "repository_unavailable", files: null };
+  const repository = suiteRepository();
+  if (repository !== "available") {
+    const failed = repository === "lookup-failed";
+    issues.push(issue(label, "$.ability_revision", failed ? "revision-lookup-failed" : "suite-repository-unavailable"));
+    return { status: failed ? "lookup_failed" : "repository_unavailable", files: null, reachableFrom: null };
   }
   const presence = localCommit(revision);
-  if (presence === "missing") {
-    issues.push(issue(label, "$.ability_revision", "revision-not-present-locally"));
-    return { status: "revision_not_present_locally", files: null };
+  if (presence !== "present") {
+    const [code, status] = {
+      missing: ["revision-not-present-locally", "revision_not_present_locally"],
+      "not-commit": ["revision-not-a-commit", "revision_not_a_commit"],
+      "lookup-failed": ["revision-lookup-failed", "lookup_failed"],
+    }[presence];
+    issues.push(issue(label, "$.ability_revision", code));
+    return { status, files: null, reachableFrom: null };
   }
-  if (presence === "not-commit") {
-    issues.push(issue(label, "$.ability_revision", "revision-not-a-commit"));
-    return { status: "revision_not_a_commit", files: null };
+  const reachability = revisionReachability(revision);
+  if (reachability.status !== "reachable") {
+    const failed = reachability.status === "lookup-failed";
+    issues.push(issue(label, "$.ability_revision", failed ? "revision-lookup-failed" : "revision-not-reachable"));
+    return { status: failed ? "lookup_failed" : "revision_not_reachable", files: null, reachableFrom: null };
   }
+  const reachableFrom = reachability.from;
   const entries = revisionEntries(revision, [
     ABILITY_SCHEMA_REL,
     MANIFESTATION_RECEIPT_SCHEMA_REL,
-    RECEIPT_SCHEMA_REL,
     RIGHTS_BASELINE_REL,
     `skills/${abilityId}`,
   ], true);
   if (entries === null) {
     issues.push(issue(label, "$.ability_revision", "revision-suite-unreadable"));
-    return { status: "unreadable", files: null };
+    return { status: "unreadable", files: null, reachableFrom };
   }
   // Blobs the validator would reject as oversized are never read.
   const wanted = entries.filter((entry) =>
@@ -1939,27 +1996,47 @@ function loadRevisionSuite(revision, abilityId, label, issues) {
     || wanted.reduce((total, entry) => total + entry.size, 0) > MAX_REVISION_SUITE_BYTES
   ) {
     issues.push(issue(label, "$.ability_revision", "revision-suite-too-large"));
-    return { status: "too_large", files: null };
+    return { status: "too_large", files: null, reachableFrom };
   }
   const blobs = readGitBlobs(wanted.map((entry) => entry.oid));
   if (blobs === null) {
     issues.push(issue(label, "$.ability_revision", "revision-suite-unreadable"));
-    return { status: "unreadable", files: null };
+    return { status: "unreadable", files: null, reachableFrom };
   }
-  return { status: "read", files: revisionFiles(OS_ROOT, entries, blobs) };
+  return { status: "read", files: revisionFiles(OS_ROOT, entries, blobs), reachableFrom };
 }
 
 // Digest recomputation.
 //
-// Outputs and inputs are recomputed only where their bytes are reachable on
-// this machine without a request: a file in the receipt's own record
-// directory, or (with --at-revision) a path at an exact revision already in
-// local Git objects. Everything else is listed as not recomputed with a reason,
+// Outputs and inputs are recomputed only where the receipt itself says where
+// their bytes are and those bytes are on this machine without a request:
+//
+// - A path that names the receipt's own record directory from the repository
+//   root, as in "records/<record>/evidence/x.json", is read from that
+//   directory, never through a symlink.
+// - With --at-revision, an input bound to an exact commit ID is read from that
+//   commit's root tree, as Git's own <commit>:<path> reads it, when the commit
+//   is already in this repository's local objects. Only this repository's
+//   objects are consulted and `source` is not interpreted, so an input from
+//   another repository comes back as not present here. A commit ID names one
+//   tree, so the bytes are the same whether or not a ref reaches the commit.
+//
+// A bare relative path ("evidence/x.json") could be relative to a predecessor
+// record, another repository or anything else. It is not guessed at, because
+// hashing whichever file happens to share its name would report a correct
+// receipt as tampered. Everything not recomputed is listed with a reason and is
 // never counted as a pass.
 
 function plainPathParts(value) {
   if (typeof value !== "string" || value.length === 0 || value.length > 1000) return null;
-  if (value.startsWith("/") || value.includes("\\") || value.includes(":") || /[\u0000-\u001f\u007f]/u.test(value)) {
+  // Whitespace marks a description rather than a path, as it does in an output
+  // reference.
+  if (
+    value.startsWith("/")
+    || value.includes("\\")
+    || value.includes(":")
+    || /[\s\u0000-\u001f\u007f]/u.test(value)
+  ) {
     return null;
   }
   const parts = value.split("/");
@@ -1973,20 +2050,26 @@ function outputReferenceParts(reference) {
   return match ? plainPathParts(match[1]) : null;
 }
 
-// A path may be written relative to the record directory ("evidence/x.json")
-// or from a root whose trailing components are the record directory itself
-// ("records/<record>/evidence/x.json"). Either way it must land inside it.
-function recordRelativeParts(recordDirectory, parts) {
-  const directoryParts = recordDirectory.split(sep).filter(Boolean);
-  for (let shared = Math.min(parts.length - 1, directoryParts.length); shared >= 1; shared -= 1) {
-    const tail = directoryParts.slice(-shared);
-    if (parts.slice(0, shared).every((part, index) => part === tail[index])) return parts.slice(shared);
+// The record directory as path components from the repository root, or null
+// when the receipt does not live inside this repository, in which case no path
+// can name it.
+function recordAnchor(recordDirectory) {
+  let fromRoot;
+  try {
+    fromRoot = relativePath(realpathSync(OS_ROOT), recordDirectory);
+  } catch {
+    return null;
   }
-  return parts;
+  if (fromRoot === "" || isAbsolute(fromRoot) || fromRoot === ".." || fromRoot.startsWith(`..${sep}`)) return null;
+  return fromRoot.split(sep);
 }
 
-function readRecordFile(recordDirectory, parts, budget) {
-  const relative = recordRelativeParts(recordDirectory, parts);
+function recordRelativeParts(anchor, parts) {
+  if (anchor === null || parts.length <= anchor.length) return null;
+  return anchor.every((part, index) => parts[index] === part) ? parts.slice(anchor.length) : null;
+}
+
+function readRecordFile(recordDirectory, relative, budget) {
   let current = recordDirectory;
   for (const [index, part] of relative.entries()) {
     current = join(current, part);
@@ -1994,11 +2077,11 @@ function readRecordFile(recordDirectory, parts, budget) {
     try {
       stat = lstatSync(current);
     } catch {
-      return { reason: "not_in_record_directory" };
+      return { reason: "missing_file" };
     }
     if (stat.isSymbolicLink()) return { reason: "not_a_regular_file" };
     const leaf = index === relative.length - 1;
-    if (!leaf && !stat.isDirectory()) return { reason: "not_in_record_directory" };
+    if (!leaf && !stat.isDirectory()) return { reason: "missing_file" };
     if (leaf && !stat.isFile()) return { reason: "not_a_regular_file" };
     if (leaf && (stat.size > MAX_DIGEST_FILE_BYTES || stat.size > budget.remaining)) return { reason: "too_large" };
   }
@@ -2012,6 +2095,12 @@ function readRecordFile(recordDirectory, parts, budget) {
   }
 }
 
+const PRESENCE_REASONS = Object.freeze({
+  missing: "revision_not_present_locally",
+  "not-commit": "revision_not_a_commit",
+  "lookup-failed": "revision_lookup_failed",
+});
+
 function readRevisionFiles(requests, budget) {
   // requests: [{ revision, path, settle(result) }]
   const byRevision = new Map();
@@ -2020,14 +2109,15 @@ function readRevisionFiles(requests, budget) {
     byRevision.get(request.revision).push(request);
   }
   for (const [revision, group] of [...byRevision.entries()].sort(([left], [right]) => binaryCompare(left, right))) {
-    if (!suiteRepositoryAvailable()) {
-      for (const request of group) request.settle({ reason: "repository_unavailable" });
+    const repository = suiteRepository();
+    if (repository !== "available") {
+      const reason = repository === "lookup-failed" ? "revision_lookup_failed" : "repository_unavailable";
+      for (const request of group) request.settle({ reason });
       continue;
     }
     const presence = localCommit(revision);
     if (presence !== "present") {
-      const reason = presence === "missing" ? "revision_not_in_local_objects" : "revision_not_a_commit";
-      for (const request of group) request.settle({ reason });
+      for (const request of group) request.settle({ reason: PRESENCE_REASONS[presence] });
       continue;
     }
     const entries = revisionEntries(revision, [...new Set(group.map((request) => request.path))], false);
@@ -2058,26 +2148,44 @@ function readRevisionFiles(requests, budget) {
 }
 
 function recomputeReceiptDigests(receipt, receiptPath, atRevision, label, issues) {
-  const recordDirectory = dirname(resolve(receiptPath));
+  let recordDirectory = null;
+  try {
+    recordDirectory = realpathSync(dirname(resolve(receiptPath)));
+  } catch {
+    recordDirectory = null;
+  }
+  const anchor = recordDirectory === null ? null : recordAnchor(recordDirectory);
   const budget = { remaining: MAX_DIGEST_TOTAL_BYTES };
   const entries = [];
   const revisionRequests = [];
 
-  function settle(entry, expected, result, onMismatch, onBytes = null) {
-    entry.basis = result.basis ?? entry.basis;
+  function fromRecord(parts) {
+    const inside = recordRelativeParts(anchor, parts);
+    if (inside === null) return { reason: "location_ambiguous" };
+    return { basis: "record_directory", ...readRecordFile(recordDirectory, inside, budget) };
+  }
+
+  // A recomputed entry is a mismatch when its digest differs, and a
+  // bytes_mismatch when its digest matches but the observed byte count it
+  // declares does not. Both count as mismatched, so the summary line always
+  // agrees with the issues.
+  function settle(entry, expected, result, onMismatch, declaredBytes = null) {
     if (!result.bytes) {
       entry.status = "not_recomputed";
       entry.basis = null;
       entry.reason = result.reason;
       return;
     }
-    if (sha256(result.bytes) === expected) {
-      entry.status = "match";
-    } else {
+    entry.basis = result.basis;
+    entry.status = "match";
+    if (sha256(result.bytes) !== expected) {
       entry.status = "mismatch";
-      onMismatch();
+      onMismatch("digest");
     }
-    if (onBytes) onBytes(result.bytes.byteLength);
+    if (declaredBytes !== null && declaredBytes !== BigInt(result.bytes.byteLength)) {
+      if (entry.status === "match") entry.status = "bytes_mismatch";
+      onMismatch("bytes");
+    }
   }
 
   receipt.outputs.forEach((output, index) => {
@@ -2091,7 +2199,7 @@ function recomputeReceiptDigests(receipt, receiptPath, atRevision, label, issues
     settle(
       entry,
       output.digest,
-      { basis: "record_directory", ...readRecordFile(recordDirectory, parts, budget) },
+      fromRecord(parts),
       () => issues.push(issue(label, `${entry.field}.digest`, "output-digest-mismatch")),
     );
   });
@@ -2099,12 +2207,14 @@ function recomputeReceiptDigests(receipt, receiptPath, atRevision, label, issues
   receipt.inputs.forEach((input, index) => {
     const entry = { field: `$.inputs[${index}]`, status: "not_recomputed", basis: null, reason: null };
     entries.push(entry);
-    const onMismatch = () => issues.push(issue(label, `${entry.field}.digest`, "input-digest-mismatch"));
-    const onBytes = (actual) => {
-      if (input.bytes?.basis === "observed" && /^[0-9]+$/.test(input.bytes.value) && BigInt(input.bytes.value) !== BigInt(actual)) {
-        issues.push(issue(label, `${entry.field}.bytes`, "input-bytes-mismatch"));
-      }
-    };
+    const declaredBytes = input.bytes?.basis === "observed" && /^[0-9]+$/.test(input.bytes.value)
+      ? BigInt(input.bytes.value)
+      : null;
+    const onMismatch = (kind) => issues.push(issue(
+      label,
+      `${entry.field}.${kind}`,
+      kind === "bytes" ? "input-bytes-mismatch" : "input-digest-mismatch",
+    ));
     if (input.boundary === "remote_public" || input.boundary === "remote_private") {
       entry.reason = "remote_boundary";
       return;
@@ -2122,40 +2232,46 @@ function recomputeReceiptDigests(receipt, receiptPath, atRevision, label, issues
       revisionRequests.push({
         revision: input.revision,
         path: parts.join("/"),
-        settle: (result) => settle(entry, input.digest, { basis: "git_revision", ...result }, onMismatch, onBytes),
+        settle: (result) => settle(entry, input.digest, { basis: "git_revision", ...result }, onMismatch, declaredBytes),
       });
       return;
     }
-    settle(
-      entry,
-      input.digest,
-      { basis: "record_directory", ...readRecordFile(recordDirectory, parts, budget) },
-      onMismatch,
-      onBytes,
-    );
+    settle(entry, input.digest, fromRecord(parts), onMismatch, declaredBytes);
   });
 
   readRevisionFiles(revisionRequests, budget);
   const recomputed = entries.filter((entry) => entry.status !== "not_recomputed").length;
   return {
     recomputed,
-    mismatched: entries.filter((entry) => entry.status === "mismatch").length,
+    mismatched: entries.filter((entry) => entry.status === "mismatch" || entry.status === "bytes_mismatch").length,
     not_recomputed: entries.length - recomputed,
     entries,
   };
 }
 
-// verify-receipt checks one kingdom.karma/0.1 receipt. It is unsigned by
-// design, so a pass establishes only what can be recomputed here: the closed
-// schema, time order, absence of template placeholders, the bound ability's
-// manifest and bundle digests (working tree by default; with --at-revision,
-// the suite as committed at the receipt's own ability_revision), and the
-// SHA-256 of every output or input whose bytes are reachable locally. It does
-// not show that a finding is true, that the authority cited was real or
-// sufficient, or that any later action is permitted.
+// verify-receipt checks one kingdom.karma/0.1 receipt. Receipts are unsigned
+// by design, so a pass establishes only what can be recomputed here:
+//
+// - the receipt against this checkout's closed receipt schema, in both modes;
+// - time order, absence of template placeholders, and the bound ability's
+//   manifest and bundle digests, against the working tree by default or, with
+//   --at-revision, against the ability as committed at the receipt's own
+//   ability_revision, which must be in local objects and reachable from HEAD
+//   or a local branch, tag or remote-tracking ref;
+// - the SHA-256 of outputs and inputs whose paths name the receipt's record
+//   directory and, with --at-revision, of inputs at exact commits already in
+//   this repository's local objects. Everything else is listed as not
+//   recomputed, with a reason.
+//
+// It does not show that a finding is true, that the authority cited was real
+// or sufficient, that the revision was the one actually run, or that any later
+// action is permitted.
 function verifyReceipt(path, json, skillsRoot, atRevision = false) {
   const issues = [];
   const label = basename(path) || "receipt.json";
+  // Whether the file parsed is tracked apart from its value: null, false, 0
+  // and "" are JSON values too, and each must reach the schema.
+  let loaded = false;
   let receipt = null;
   try {
     const stat = lstatSync(path);
@@ -2165,6 +2281,7 @@ function verifyReceipt(path, json, skillsRoot, atRevision = false) {
     else {
       try {
         receipt = strictJson(decodeUtf8(readFileSync(path)));
+        loaded = true;
       } catch (error) {
         const code = error instanceof JsonProblem ? error.code : error instanceof TypeError ? "invalid-utf8" : "invalid-json";
         issues.push(issue(label, "$", code));
@@ -2174,11 +2291,20 @@ function verifyReceipt(path, json, skillsRoot, atRevision = false) {
     issues.push(issue(label, "$", "missing-file"));
   }
 
-  // The suite the receipt is checked against. By default it is the working
-  // tree. --at-revision reads the receipt's own ability_revision from local Git
-  // objects and never falls back to the working tree when that fails.
+  // The receipt schema always comes from this checkout (see loadRevisionSuite).
+  // The ability it names is checked against the working tree by default.
+  // --at-revision reads that ability from the receipt's own ability_revision in
+  // local Git objects and never falls back to the working tree when that fails.
+  const receiptSchema = loadReceiptSchema();
   const suite = atRevision
-    ? { source: "git_revision", revision: null, status: "not_read", files: null, skillsRoot: DEFAULT_SKILLS_ROOT }
+    ? {
+      source: "git_revision",
+      revision: null,
+      status: "not_read",
+      reachableFrom: null,
+      files: null,
+      skillsRoot: DEFAULT_SKILLS_ROOT,
+    }
     : { source: "working_tree", files: LOCAL_FILES, skillsRoot };
   if (atRevision && record(receipt)) {
     if (typeof receipt.ability_revision !== "string" || !EXACT_REVISION.test(receipt.ability_revision)) {
@@ -2189,13 +2315,13 @@ function verifyReceipt(path, json, skillsRoot, atRevision = false) {
       issues.push(issue(label, "$.ability_id", "ability-not-valid"));
     } else {
       suite.revision = receipt.ability_revision;
-      const loaded = loadRevisionSuite(suite.revision, receipt.ability_id, label, issues);
-      suite.status = loaded.status;
-      suite.files = loaded.files;
+      const revisionSuite = loadRevisionSuite(suite.revision, receipt.ability_id, label, issues);
+      suite.status = revisionSuite.status;
+      suite.reachableFrom = revisionSuite.reachableFrom;
+      suite.files = revisionSuite.files;
     }
   }
   const unavailable = { schema: null, sha256: null, issues: [] };
-  const receiptSchema = suite.files ? loadReceiptSchema(suite.files) : unavailable;
   const abilitySchema = suite.files ? loadAbilitySchema(suite.files) : unavailable;
   const manifestationReceiptSchema = suite.files ? loadManifestationReceiptSchema(suite.files) : unavailable;
   const rightsInfo = suite.files ? loadRightsBaseline(suite.files) : unavailable;
@@ -2206,105 +2332,119 @@ function verifyReceipt(path, json, skillsRoot, atRevision = false) {
     ...rightsInfo.issues,
   );
   let digests = null;
+  let checked = false;
 
-  if (receipt && receiptSchema.schema && receiptSchema.issues.length === 0) {
+  if (loaded && receiptSchema.schema && receiptSchema.issues.length === 0) {
     const issuesBeforeSchema = issues.length;
     validateWithSchema(receipt, receiptSchema.schema, receiptSchema.schema, label, "$", issues);
+    checked = true;
     const schemaValid = issues.length === issuesBeforeSchema;
-    if (receipt.state === "draft") {
-      issues.push(issue(label, "$.state", "draft-receipt"));
-    }
-    if (receipt.state === "final") {
-      const hasTemplatePlaceholder = receipt.receipt_id === "draft-replace-me"
-        || receipt.invocation_id === "draft-replace-me"
-        || (
-          typeof receipt.ability_revision === "string"
-          && receipt.ability_revision.startsWith("template:")
-        )
-        || (
-          typeof receipt.authority?.authority_reference === "string"
-          && receipt.authority.authority_reference.startsWith("Replace with")
-        )
-        || (
-          Array.isArray(receipt.predicted_effects)
-          && receipt.predicted_effects.includes("Replace with the predicted bounded effect.")
-        )
-        || (
-          Array.isArray(receipt.observed_effects)
-          && receipt.observed_effects.includes("No action recorded; this is a draft template.")
-        )
-        || (
-          Array.isArray(receipt.uncertainty)
-          && receipt.uncertainty.includes("Replace draft fields after a real invocation or refusal.")
-        )
-        || (
-          receipt.started_at === "1970-01-01T00:00:00.000Z"
-          && receipt.finished_at === "1970-01-01T00:00:00.000Z"
+    // The rest reads fields, so it needs an object; the schema has already
+    // reported anything else.
+    if (record(receipt)) {
+      if (receipt.state === "draft") {
+        issues.push(issue(label, "$.state", "draft-receipt"));
+      }
+      if (receipt.state === "final") {
+        const hasTemplatePlaceholder = receipt.receipt_id === "draft-replace-me"
+          || receipt.invocation_id === "draft-replace-me"
+          || (
+            typeof receipt.ability_revision === "string"
+            && receipt.ability_revision.startsWith("template:")
+          )
+          || (
+            typeof receipt.authority?.authority_reference === "string"
+            && receipt.authority.authority_reference.startsWith("Replace with")
+          )
+          || (
+            Array.isArray(receipt.predicted_effects)
+            && receipt.predicted_effects.includes("Replace with the predicted bounded effect.")
+          )
+          || (
+            Array.isArray(receipt.observed_effects)
+            && receipt.observed_effects.includes("No action recorded; this is a draft template.")
+          )
+          || (
+            Array.isArray(receipt.uncertainty)
+            && receipt.uncertainty.includes("Replace draft fields after a real invocation or refusal.")
+          )
+          || (
+            receipt.started_at === "1970-01-01T00:00:00.000Z"
+            && receipt.finished_at === "1970-01-01T00:00:00.000Z"
+          );
+        if (hasTemplatePlaceholder) issues.push(issue(label, "$", "receipt-placeholder"));
+      }
+      if (typeof receipt.started_at === "string" && typeof receipt.finished_at === "string") {
+        const start = normalizeTimestamp(receipt.started_at);
+        const finish = normalizeTimestamp(receipt.finished_at);
+        if (start === null) issues.push(issue(label, "$.started_at", "invalid-timestamp"));
+        if (finish === null) issues.push(issue(label, "$.finished_at", "invalid-timestamp"));
+        if (start !== null && finish !== null && finish < start) {
+          issues.push(issue(label, "$.finished_at", "invalid-time-order"));
+        }
+      }
+      if (receipt.repair && receipt.repair.required === false && !["not_needed", "complete"].includes(receipt.repair.status)) {
+        issues.push(issue(label, "$.repair.status", "invalid-repair-status"));
+      }
+      if (receipt.repair && receipt.repair.required === true && receipt.repair.status === "not_needed") {
+        issues.push(issue(label, "$.repair.status", "invalid-repair-status"));
+      }
+      for (const field of ["time_ms", "data_egress_bytes", "remote_gpu_seconds"]) {
+        const measurement = receipt.costs?.[field];
+        if (measurement && typeof measurement === "object") {
+          const unknown = measurement.value === "unknown";
+          if ((unknown && measurement.basis !== "not_measured") || (!unknown && measurement.basis === "not_measured")) {
+            issues.push(issue(label, `$.costs.${field}`, "invalid-measurement-basis"));
+          }
+        }
+      }
+      if (
+        typeof receipt.ability_id === "string"
+        && ID_PATTERN.test(receipt.ability_id)
+        && abilitySchema.schema
+        && abilitySchema.issues.length === 0
+        && rightsInfo.issues.length === 0
+      ) {
+        const ability = validateAbility(
+          suite.skillsRoot,
+          receipt.ability_id,
+          abilitySchema.schema,
+          manifestationReceiptSchema.schema,
+          suite.files,
         );
-      if (hasTemplatePlaceholder) issues.push(issue(label, "$", "receipt-placeholder"));
-    }
-    if (typeof receipt.started_at === "string" && typeof receipt.finished_at === "string") {
-      const start = normalizeTimestamp(receipt.started_at);
-      const finish = normalizeTimestamp(receipt.finished_at);
-      if (start === null) issues.push(issue(label, "$.started_at", "invalid-timestamp"));
-      if (finish === null) issues.push(issue(label, "$.finished_at", "invalid-timestamp"));
-      if (start !== null && finish !== null && finish < start) {
-        issues.push(issue(label, "$.finished_at", "invalid-time-order"));
-      }
-    }
-    if (receipt.repair && receipt.repair.required === false && !["not_needed", "complete"].includes(receipt.repair.status)) {
-      issues.push(issue(label, "$.repair.status", "invalid-repair-status"));
-    }
-    if (receipt.repair && receipt.repair.required === true && receipt.repair.status === "not_needed") {
-      issues.push(issue(label, "$.repair.status", "invalid-repair-status"));
-    }
-    for (const field of ["time_ms", "data_egress_bytes", "remote_gpu_seconds"]) {
-      const measurement = receipt.costs?.[field];
-      if (measurement && typeof measurement === "object") {
-        const unknown = measurement.value === "unknown";
-        if ((unknown && measurement.basis !== "not_measured") || (!unknown && measurement.basis === "not_measured")) {
-          issues.push(issue(label, `$.costs.${field}`, "invalid-measurement-basis"));
+        if (ability.issues.length > 0 || !ability.manifestSha256 || !ability.bundleSha256) {
+          issues.push(issue(label, "$.ability_id", "ability-not-valid"));
+        } else {
+          if (receipt.ability_manifest_sha256 !== ability.manifestSha256) {
+            issues.push(issue(label, "$.ability_manifest_sha256", "ability-digest-mismatch"));
+          }
+          if (receipt.ability_bundle_sha256 !== ability.bundleSha256) {
+            issues.push(issue(label, "$.ability_bundle_sha256", "ability-digest-mismatch"));
+          }
         }
       }
+      // Paths in a receipt that failed its schema are not followed.
+      if (schemaValid) digests = recomputeReceiptDigests(receipt, path, atRevision, label, issues);
     }
-    if (
-      typeof receipt.ability_id === "string"
-      && ID_PATTERN.test(receipt.ability_id)
-      && abilitySchema.schema
-      && abilitySchema.issues.length === 0
-      && rightsInfo.issues.length === 0
-    ) {
-      const ability = validateAbility(
-        suite.skillsRoot,
-        receipt.ability_id,
-        abilitySchema.schema,
-        manifestationReceiptSchema.schema,
-        suite.files,
-      );
-      if (ability.issues.length > 0 || !ability.manifestSha256 || !ability.bundleSha256) {
-        issues.push(issue(label, "$.ability_id", "ability-not-valid"));
-      } else {
-        if (receipt.ability_manifest_sha256 !== ability.manifestSha256) {
-          issues.push(issue(label, "$.ability_manifest_sha256", "ability-digest-mismatch"));
-        }
-        if (receipt.ability_bundle_sha256 !== ability.bundleSha256) {
-          issues.push(issue(label, "$.ability_bundle_sha256", "ability-digest-mismatch"));
-        }
-      }
-    }
-    // Paths in a receipt that failed its schema are not followed.
-    if (schemaValid) digests = recomputeReceiptDigests(receipt, path, atRevision, label, issues);
   }
+  // A pass needs a receipt that was actually checked. Every path that skips
+  // the schema reports why, so this is only a floor under later edits.
+  if (!checked && issues.length === 0) issues.push(issue(label, "$", "receipt-not-checked"));
   sortIssues(issues);
   const payload = {
     protocol: "kingdom.karma-validation/0.1",
-    valid: issues.length === 0,
+    valid: checked && issues.length === 0,
     receipt_schema_sha256: receiptSchema.sha256,
     ability_schema_sha256: abilitySchema.sha256,
     manifestation_receipt_schema_sha256: manifestationReceiptSchema.sha256,
     rights_sha256: rightsInfo.sha256,
     suite: atRevision
-      ? { source: "git_revision", revision: suite.revision, status: suite.status }
+      ? {
+        source: "git_revision",
+        revision: suite.revision,
+        status: suite.status,
+        reachable_from: suite.reachableFrom,
+      }
       : { source: "working_tree" },
     digests,
     issues,
@@ -2316,18 +2456,22 @@ function verifyReceipt(path, json, skillsRoot, atRevision = false) {
     if (digests) process.stdout.write(`${digestSummary(digests)}\n`);
     printIssues(issues);
   }
-  return issues.length === 0 ? 0 : 1;
+  return payload.valid ? 0 : 1;
 }
 
 function suiteSummary(suite) {
   const revision = suite.revision ?? "unknown";
   switch (suite.status) {
     case "read":
-      return `Suite: Git revision ${revision}, read from local objects`;
+      return `Suite: ability at Git revision ${revision}, reachable from ${safeTerminal(suite.reachableFrom)}, read from local objects; receipt schema from this checkout`;
     case "revision_not_present_locally":
       return `Suite: Git revision ${revision} is not in this repository's local objects; nothing was fetched`;
     case "revision_not_a_commit":
       return `Suite: Git object ${revision} is not a commit`;
+    case "revision_not_reachable":
+      return `Suite: Git revision ${revision} is in local objects but no local branch, tag, remote-tracking ref or HEAD reaches it; it was not read`;
+    case "lookup_failed":
+      return `Suite: a Git lookup for revision ${revision} did not finish (timeout, signal or Git error), so it was not read; this says nothing about whether it is present, and nothing was fetched`;
     case "revision_not_exact":
       return "Suite: ability_revision is not an exact commit ID; no revision was read";
     case "repository_unavailable":
@@ -2356,7 +2500,7 @@ function usage() {
   process.stderr.write(
     "usage: kingdom nen [list [--json] | validate [ID] [--json] | show ID [--json] | digest ID | types [--json] | receipt-template ID | verify-receipt FILE [--at-revision] [--json] | verify-manifestation-receipt FILE [--json]]\n"
     + "       bun bin/nen.mjs --skills-root /absolute/path <command>\n"
-    + "       --at-revision reads the suite at the receipt's ability_revision from local Git objects; it never fetches and does not combine with --skills-root\n",
+    + "       --at-revision reads the named ability at the receipt's ability_revision, which a local ref must reach, from local Git objects; it never fetches and does not combine with --skills-root\n",
   );
   return 2;
 }

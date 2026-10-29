@@ -56,8 +56,12 @@ function sha256(bytes: Buffer | string): string {
   return `sha256:${createHash("sha256").update(bytes).digest("hex")}`;
 }
 
-function git(root: string, args: string[]): string {
-  const result = spawnSync("git", ["-C", root, ...args], { encoding: "utf8", env: GIT_ENV });
+function git(root: string, args: string[], options: { env?: Record<string, string>; input?: string } = {}): string {
+  const result = spawnSync("git", ["-C", root, ...args], {
+    encoding: "utf8",
+    env: { ...GIT_ENV, ...options.env },
+    input: options.input,
+  });
   if (result.status !== 0) throw new Error(`git ${args[0]} failed: ${result.stderr}`);
   return result.stdout.trim();
 }
@@ -79,14 +83,28 @@ function tempRoot(prefix: string): string {
   return root;
 }
 
-function run(cli: string, args: string[]) {
-  const result = spawnSync(process.execPath, [cli, ...args], { encoding: "utf8", env: CHILD_ENV });
+function run(cli: string, args: string[], env: Record<string, string> = CHILD_ENV) {
+  const result = spawnSync(process.execPath, [cli, ...args], { encoding: "utf8", env });
   return { status: result.status, stdout: result.stdout, stderr: result.stderr };
 }
 
 function verify(cli: string, receipt: string, ...flags: string[]) {
   const result = run(cli, ["verify-receipt", receipt, ...flags, "--json"]);
   return { status: result.status, payload: JSON.parse(result.stdout) };
+}
+
+// A commit made from the first fixture commit's tree with some files
+// replaced, and no ref pointing at it until the caller adds one.
+function commitBesideFirst(message: string, replace: Record<string, string> = {}): string {
+  const index = join(tempRoot("nen-verify-index."), "index");
+  const env = { GIT_INDEX_FILE: index };
+  git(fixture.root, ["read-tree", fixture.first], { env });
+  for (const [path, content] of Object.entries(replace)) {
+    const blob = git(fixture.root, ["hash-object", "-w", "--stdin"], { input: content });
+    git(fixture.root, ["update-index", "--add", "--cacheinfo", `100644,${blob},${path}`], { env });
+  }
+  const tree = git(fixture.root, ["write-tree"], { env });
+  return git(fixture.root, ["commit-tree", tree, "-p", fixture.first, "-m", message]);
 }
 
 // A small suite repository: two commits of one skill, so a receipt bound to
@@ -159,6 +177,8 @@ function finalReceipt(revision: string): any {
 
 // One record directory per test: an output in evidence/, an input bound to the
 // first fixture commit, a remote input, and an input kept beside the receipt.
+// Paths in the record name it from the repository root, which is the only form
+// the verifier resolves into a record directory.
 function writeRecord(name: string, change: (receipt: any, directory: string) => void = () => {}): string {
   const directory = join(fixture.root, "records", name);
   mkdirSync(join(directory, "evidence"), { recursive: true });
@@ -194,7 +214,7 @@ function writeRecord(name: string, change: (receipt: any, directory: string) => 
     {
       source: "this record directory",
       revision: "working copy",
-      path: "notes.txt",
+      path: `records/${name}/notes.txt`,
       license_assertion: "not-applicable: local fixture",
       bytes: { value: String(notes.byteLength), basis: "observed" },
       digest: sha256(notes),
@@ -244,7 +264,11 @@ describe("verify-receipt at the receipt's own revision", () => {
     expect(own.status).toBe(0);
     expect(own.payload.valid).toBe(true);
     expect(own.payload.issues).toEqual([]);
-    expect(own.payload.suite).toEqual({ source: "git_revision", revision: fixture.first, status: "read" });
+    expect(own.payload.suite).toEqual({
+      source: "git_revision", revision: fixture.first, status: "read", reachable_from: "HEAD",
+    });
+    // The receipt is judged by this checkout's receipt schema in both modes.
+    expect(own.payload.receipt_schema_sha256).toBe(current.payload.receipt_schema_sha256);
     expect(own.payload.digests).toEqual({
       recomputed: 3,
       mismatched: 0,
@@ -280,8 +304,13 @@ describe("verify-receipt at the receipt's own revision", () => {
       { file: "karma-receipt.json", field: "$.inputs[2].bytes", code: "input-bytes-mismatch" },
       { file: "karma-receipt.json", field: "$.outputs[0].digest", code: "output-digest-mismatch" },
     ]);
-    expect(result.payload.digests.mismatched).toBe(2);
-    expect(entry(result.payload, "$.inputs[2]").status).toBe("match");
+    // A matching digest with a wrong byte count is still a mismatch, so the
+    // summary agrees with the issues.
+    expect(entry(result.payload, "$.inputs[2]").status).toBe("bytes_mismatch");
+    expect(result.payload.digests.mismatched).toBe(3);
+    expect(run(fixture.cli, ["verify-receipt", receipt, "--at-revision"]).stdout).toContain(
+      "Digests: 3 recomputed · 3 mismatched · 1 not recomputed (1 remote_boundary)",
+    );
   });
 
   test("entries that cannot be read here are listed with a reason, never counted as passing", () => {
@@ -292,29 +321,81 @@ describe("verify-receipt at the receipt's own revision", () => {
       value.outputs.push(
         { reference: "a description with no leading path", digest: `sha256:${"b".repeat(64)}` },
         { reference: `skills/${FIXTURE_SKILL}/SKILL.md: outside this record`, digest: `sha256:${"c".repeat(64)}` },
-        { reference: "linked.json: a symlink beside the receipt", digest: sha256("{}\n") },
+        { reference: "records/unreachable/linked.json: a symlink beside the receipt", digest: sha256("{}\n") },
+        { reference: "records/unreachable/evidence/cleaned-up.json: removed after the run", digest: `sha256:${"d".repeat(64)}` },
       );
-      value.inputs.push({
-        ...value.inputs[0],
-        revision: fixture.remoteOnly,
-        path: "elsewhere.txt",
-      });
+      value.inputs.push(
+        { ...value.inputs[0], revision: fixture.remoteOnly, path: "elsewhere.txt" },
+        { ...value.inputs[0], path: "committed tree (git ls-tree -r listing digested)" },
+      );
     });
 
     const result = verify(fixture.cli, receipt, "--at-revision");
     expect(result.status).toBe(0);
     expect(result.payload.digests.recomputed).toBe(3);
-    expect(result.payload.digests.not_recomputed).toBe(5);
+    expect(result.payload.digests.not_recomputed).toBe(7);
     expect(entry(result.payload, "$.outputs[1]").reason).toBe("not_a_path");
-    expect(entry(result.payload, "$.outputs[2]").reason).toBe("not_in_record_directory");
+    expect(entry(result.payload, "$.outputs[2]").reason).toBe("location_ambiguous");
     expect(entry(result.payload, "$.outputs[3]").reason).toBe("not_a_regular_file");
+    expect(entry(result.payload, "$.outputs[4]").reason).toBe("missing_file");
     expect(entry(result.payload, "$.inputs[1]").reason).toBe("remote_boundary");
-    expect(entry(result.payload, "$.inputs[3]").reason).toBe("revision_not_in_local_objects");
+    expect(entry(result.payload, "$.inputs[3]").reason).toBe("revision_not_present_locally");
+    // A description with spaces is not a file name, even at an exact revision.
+    expect(entry(result.payload, "$.inputs[4]").reason).toBe("not_a_path");
 
     const text = run(fixture.cli, ["verify-receipt", receipt, "--at-revision"]);
     expect(text.stdout).toContain(
-      "Digests: 3 recomputed · 0 mismatched · 5 not recomputed (1 not_a_path, 1 not_a_regular_file, 1 not_in_record_directory, 1 remote_boundary, 1 revision_not_in_local_objects)",
+      "Digests: 3 recomputed · 0 mismatched · 7 not recomputed (1 location_ambiguous, 1 missing_file, 2 not_a_path, 1 not_a_regular_file, 1 remote_boundary, 1 revision_not_present_locally)",
     );
+  });
+
+  test("a bare relative path is never guessed into the record directory", () => {
+    // A lookback-lamp style receipt cites a predecessor's evidence file by the
+    // same relative path as its own, with the predecessor's digest. Hashing
+    // the new record's file would call a correct receipt tampered.
+    const predecessor = Buffer.from('{"observed":"the predecessor"}\n');
+    const receipt = writeRecord("lookback", (value) => {
+      value.inputs.push(
+        {
+          ...value.inputs[2],
+          source: "predecessor record records/bound-to-first (working copy)",
+          path: "evidence/observations.json",
+          bytes: { value: String(predecessor.byteLength), basis: "observed" },
+          digest: sha256(predecessor),
+        },
+        {
+          ...value.inputs[2],
+          source: "another repository (working copy, uncommitted)",
+          path: "notes.txt",
+          digest: sha256("another repository's notes\n"),
+        },
+      );
+    });
+
+    for (const flags of [[], ["--at-revision"]]) {
+      const result = verify(fixture.cli, receipt, ...flags);
+      expect(result.payload.issues.filter((item: any) => item.field.startsWith("$.inputs"))).toEqual([]);
+      expect(entry(result.payload, "$.inputs[3]")).toEqual({
+        field: "$.inputs[3]", status: "not_recomputed", basis: null, reason: "location_ambiguous",
+      });
+      expect(entry(result.payload, "$.inputs[4]").reason).toBe("location_ambiguous");
+      expect(result.payload.digests.mismatched).toBe(0);
+    }
+  });
+
+  test("a receipt that is not a JSON object fails in both modes", () => {
+    const directory = join(fixture.root, "records", "not-an-object");
+    mkdirSync(directory, { recursive: true });
+    for (const value of ["[]", '"x"', "1", "null", "false"]) {
+      const receipt = join(directory, "karma-receipt.json");
+      writeFileSync(receipt, `${value}\n`);
+      for (const flags of [[], ["--at-revision"]]) {
+        const result = verify(fixture.cli, receipt, ...flags);
+        expect(result.status).toBe(1);
+        expect(result.payload.valid).toBe(false);
+        expect(result.payload.issues).toEqual([{ file: "karma-receipt.json", field: "$", code: "invalid-type" }]);
+      }
+    }
   });
 
   test("a revision missing from local objects fails and is not fetched, even from a promisor remote", () => {
@@ -332,11 +413,90 @@ describe("verify-receipt at the receipt's own revision", () => {
     const result = verify(fixture.cli, receipt, "--at-revision");
     expect(result.payload).toMatchObject({
       valid: false,
-      suite: { source: "git_revision", revision: fixture.remoteOnly, status: "revision_not_present_locally" },
-      digests: null,
+      suite: {
+        source: "git_revision",
+        revision: fixture.remoteOnly,
+        status: "revision_not_present_locally",
+        reachable_from: null,
+      },
       issues: [{ file: "karma-receipt.json", field: "$.ability_revision", code: "revision-not-present-locally" }],
     });
+    // The receipt schema does not depend on the revision, so the receipt and
+    // its record are still checked; only the ability comparison is skipped.
+    expect(result.payload.digests.mismatched).toBe(0);
     expect(hasLocalCommit(fixture.root, fixture.remoteOnly)).toBe(false);
+  });
+
+  test("a lookup that fails is reported as failed, never as an absent revision", () => {
+    // A git that fails `cat-file -e` with an exit other than 1 stands in for a
+    // timeout, a signal or a broken repository.
+    const shim = tempRoot("nen-verify-git-shim.");
+    const realGit = spawnSync("sh", ["-c", "command -v git"], { encoding: "utf8", env: CHILD_ENV }).stdout.trim();
+    writeFileSync(
+      join(shim, "git"),
+      `#!/bin/sh\nfor argument in "$@"; do [ "$argument" = "-e" ] && exit 3; done\nexec "${realGit}" "$@"\n`,
+      { mode: 0o755 },
+    );
+    const receipt = writeRecord("lookup-failed");
+    const env = { ...CHILD_ENV, PATH: `${shim}:${CHILD_ENV.PATH}` };
+
+    const result = run(fixture.cli, ["verify-receipt", receipt, "--at-revision", "--json"], env);
+    expect(result.status).toBe(1);
+    const payload = JSON.parse(result.stdout);
+    expect(payload.suite).toMatchObject({ revision: fixture.first, status: "lookup_failed" });
+    expect(payload.issues).toEqual([
+      { file: "karma-receipt.json", field: "$.ability_revision", code: "revision-lookup-failed" },
+    ]);
+    expect(entry(payload, "$.inputs[0]").reason).toBe("revision_lookup_failed");
+
+    const text = run(fixture.cli, ["verify-receipt", receipt, "--at-revision"], env);
+    expect(text.stdout).toContain("this says nothing about whether it is present, and nothing was fetched");
+    expect(text.stdout).not.toContain("is not in this repository's local objects");
+  });
+
+  test("a revision no ref reaches is not read until a ref holds it", () => {
+    const dangling = commitBesideFirst("dangling suite");
+    const receipt = writeRecord("dangling", (value) => {
+      value.ability_revision = dangling;
+    });
+
+    const unheld = verify(fixture.cli, receipt, "--at-revision");
+    expect(unheld.status).toBe(1);
+    expect(unheld.payload.suite).toEqual({
+      source: "git_revision", revision: dangling, status: "revision_not_reachable", reachable_from: null,
+    });
+    expect(unheld.payload.issues).toEqual([
+      { file: "karma-receipt.json", field: "$.ability_revision", code: "revision-not-reachable" },
+    ]);
+
+    git(fixture.root, ["update-ref", "refs/heads/held", dangling]);
+    const held = verify(fixture.cli, receipt, "--at-revision");
+    expect(held.status).toBe(0);
+    expect(held.payload.suite).toEqual({
+      source: "git_revision", revision: dangling, status: "read", reachable_from: "refs/heads/held",
+    });
+  });
+
+  test("a revision cannot loosen the receipt schema it is judged by", () => {
+    const schemaPath = "schemas/karma-receipt-v0.1.schema.json";
+    const schema = JSON.parse(readFileSync(join(fixture.root, schemaPath), "utf8"));
+    expect(schema.properties.inputs.items.properties.assurance).toEqual({ const: "untrusted_evidence" });
+    schema.properties.inputs.items.properties.assurance = { enum: ["untrusted_evidence", "trusted"] };
+    const loosened = commitBesideFirst("loosened receipt schema", {
+      [schemaPath]: `${JSON.stringify(schema, null, 2)}\n`,
+    });
+    git(fixture.root, ["update-ref", "refs/heads/loosened", loosened]);
+    const receipt = writeRecord("loosened", (value) => {
+      value.ability_revision = loosened;
+      value.inputs[0].assurance = "trusted";
+    });
+
+    const result = verify(fixture.cli, receipt, "--at-revision");
+    expect(result.status).toBe(1);
+    expect(result.payload.suite.status).toBe("read");
+    expect(result.payload.issues).toEqual([
+      { file: "karma-receipt.json", field: "$.inputs[0].assurance", code: "invalid-const" },
+    ]);
   });
 
   test("only an exact commit ID is resolved, and only in the suite's own repository", () => {
@@ -408,7 +568,10 @@ describe("the 2026-10-27 Dark Continent receipt", () => {
     const result = verify(join(REPO_ROOT, "bin", "nen.mjs"), RECEIPT_1027, "--at-revision");
     expect(result.status).toBe(0);
     expect(result.payload.valid).toBe(true);
-    expect(result.payload.suite).toEqual({ source: "git_revision", revision: REVISION_1027, status: "read" });
+    // b719f254 is an ancestor of main, so HEAD or a remote-tracking ref holds
+    // it in any full-history checkout; which one depends on the checkout.
+    expect(result.payload.suite).toMatchObject({ source: "git_revision", revision: REVISION_1027, status: "read" });
+    expect(typeof result.payload.suite.reachable_from).toBe("string");
     expect(result.payload.digests.recomputed).toBe(4);
     expect(result.payload.digests.mismatched).toBe(0);
     expect(entry(result.payload, "$.inputs[0]")).toEqual({
@@ -418,6 +581,9 @@ describe("the 2026-10-27 Dark Continent receipt", () => {
       .filter((candidate: any) => candidate.status === "not_recomputed")
       .map((candidate: any) => candidate.reason);
     expect(reasons.filter((reason: string) => reason === "remote_boundary")).toHaveLength(35);
-    expect(reasons.filter((reason: string) => reason === "revision_not_in_local_objects")).toHaveLength(4);
+    // Three inputs are agenttool commits, which this repository never holds;
+    // the fourth is a description of a listing, not a path.
+    expect(reasons.filter((reason: string) => reason === "revision_not_present_locally")).toHaveLength(3);
+    expect(reasons.filter((reason: string) => reason === "not_a_path")).toHaveLength(1);
   });
 });
