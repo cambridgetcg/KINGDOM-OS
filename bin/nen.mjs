@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
+import { spawnSync } from "node:child_process";
 import {
   lstatSync,
   readFileSync,
   readdirSync,
+  realpathSync,
 } from "node:fs";
 import { createHash } from "node:crypto";
 import { basename, dirname, isAbsolute, join, parse, resolve, sep } from "node:path";
@@ -14,7 +16,14 @@ const MAX_BUNDLE_FILES = 256;
 const MAX_BUNDLE_BYTES = 4 * 1024 * 1024;
 const MAX_BUNDLE_NODES = 512;
 const MAX_BUNDLE_DEPTH = 16;
+const MAX_REVISION_SUITE_ENTRIES = MAX_BUNDLE_NODES + 16;
+const MAX_REVISION_SUITE_BYTES = MAX_BUNDLE_BYTES + 1024 * 1024;
+const MAX_DIGEST_FILE_BYTES = 16 * 1024 * 1024;
+const MAX_DIGEST_TOTAL_BYTES = 64 * 1024 * 1024;
+const GIT_TIMEOUT_MS = 4_000;
+const GIT_OUTPUT_LIMIT = MAX_DIGEST_TOTAL_BYTES + 1024 * 1024;
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const EXACT_REVISION = /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/;
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
 const OS_ROOT = dirname(dirname(SCRIPT_PATH));
 const DEFAULT_SKILLS_ROOT = join(OS_ROOT, "skills");
@@ -108,6 +117,16 @@ class JsonProblem extends Error {
     this.code = code;
   }
 }
+
+// Every suite read goes through one of two file views. LOCAL_FILES is the
+// working tree. A revision view (revisionFiles) answers the same three calls
+// from blobs already read into memory, so verifying at a revision writes
+// nothing and never extracts a tree.
+const LOCAL_FILES = Object.freeze({
+  lstat: (path) => lstatSync(path),
+  read: (path) => readFileSync(path),
+  list: (path) => readdirSync(path, { withFileTypes: true }),
+});
 
 function binaryCompare(a, b) {
   return a < b ? -1 : a > b ? 1 : 0;
@@ -304,11 +323,11 @@ function strictJson(text) {
   return parsed;
 }
 
-function safeRead(root, relative, label, issues, expected = "file", raw = false) {
+function safeRead(root, relative, label, issues, expected = "file", raw = false, files = LOCAL_FILES) {
   const parts = relative.split("/").filter(Boolean);
   let current = root;
   try {
-    const rootStat = lstatSync(root);
+    const rootStat = files.lstat(root);
     if (rootStat.isSymbolicLink()) {
       issues.push(issue(label, "$", "symlink"));
       return null;
@@ -326,7 +345,7 @@ function safeRead(root, relative, label, issues, expected = "file", raw = false)
     current = join(current, parts[offset]);
     let stat;
     try {
-      stat = lstatSync(current);
+      stat = files.lstat(current);
     } catch {
       issues.push(issue(label, "$", "missing-file"));
       return null;
@@ -356,7 +375,7 @@ function safeRead(root, relative, label, issues, expected = "file", raw = false)
 
   if (expected === "directory") return current;
   try {
-    const bytes = readFileSync(current);
+    const bytes = files.read(current);
     if (raw) return bytes;
     try {
       return decodeUtf8(bytes);
@@ -370,8 +389,8 @@ function safeRead(root, relative, label, issues, expected = "file", raw = false)
   }
 }
 
-function parseJsonFile(root, relative, label, issues) {
-  const text = safeRead(root, relative, label, issues);
+function parseJsonFile(root, relative, label, issues, files = LOCAL_FILES) {
+  const text = safeRead(root, relative, label, issues, "file", false, files);
   if (text === null) return null;
   try {
     return strictJson(text);
@@ -381,8 +400,8 @@ function parseJsonFile(root, relative, label, issues) {
   }
 }
 
-function parseJsonValueFile(root, relative, label, issues) {
-  const text = safeRead(root, relative, label, issues);
+function parseJsonValueFile(root, relative, label, issues, files = LOCAL_FILES) {
+  const text = safeRead(root, relative, label, issues, "file", false, files);
   if (text === null) return { loaded: false, value: null };
   try {
     return { loaded: true, value: strictJson(text) };
@@ -758,9 +777,9 @@ function validateSchemaContract(schema, expectedId, expectedFields, label, issue
   validateSchemaReferenceGraph(schema, label, issues);
 }
 
-function loadSchema(relative, expectedId, expectedFields) {
+function loadSchema(relative, expectedId, expectedFields, files = LOCAL_FILES) {
   const issues = [];
-  const schema = parseJsonFile(OS_ROOT, relative, relative, issues);
+  const schema = parseJsonFile(OS_ROOT, relative, relative, issues, files);
   if (schema) validateSchemaContract(schema, expectedId, expectedFields, relative, issues);
   return {
     schema,
@@ -769,25 +788,26 @@ function loadSchema(relative, expectedId, expectedFields) {
   };
 }
 
-function loadAbilitySchema() {
-  return loadSchema(ABILITY_SCHEMA_REL, "urn:kingdom:schema:nen-ability:0.1", ABILITY_FIELDS);
+function loadAbilitySchema(files = LOCAL_FILES) {
+  return loadSchema(ABILITY_SCHEMA_REL, "urn:kingdom:schema:nen-ability:0.1", ABILITY_FIELDS, files);
 }
 
-function loadReceiptSchema() {
-  return loadSchema(RECEIPT_SCHEMA_REL, "urn:kingdom:schema:karma-receipt:0.1", RECEIPT_FIELDS);
+function loadReceiptSchema(files = LOCAL_FILES) {
+  return loadSchema(RECEIPT_SCHEMA_REL, "urn:kingdom:schema:karma-receipt:0.1", RECEIPT_FIELDS, files);
 }
 
-function loadManifestationReceiptSchema() {
+function loadManifestationReceiptSchema(files = LOCAL_FILES) {
   return loadSchema(
     MANIFESTATION_RECEIPT_SCHEMA_REL,
     "urn:kingdom:schema:nen-manifestation-receipt:0.1",
     MANIFESTATION_RECEIPT_FIELDS,
+    files,
   );
 }
 
-function loadRightsBaseline() {
+function loadRightsBaseline(files = LOCAL_FILES) {
   const issues = [];
-  const bytes = safeRead(OS_ROOT, RIGHTS_BASELINE_REL, RIGHTS_BASELINE_REL, issues, "file", true);
+  const bytes = safeRead(OS_ROOT, RIGHTS_BASELINE_REL, RIGHTS_BASELINE_REL, issues, "file", true, files);
   const digest = bytes === null ? null : sha256(bytes);
   if (digest !== null && digest !== RIGHTS_BASELINE_SHA256) {
     issues.push(issue(RIGHTS_BASELINE_REL, "$", "rights-baseline-digest-mismatch"));
@@ -904,11 +924,11 @@ function validateOpenAiYaml(text, id, label, issues) {
   }
 }
 
-function optionalDirectorySymlink(skillsRoot, id, name, issues) {
+function optionalDirectorySymlink(skillsRoot, id, name, issues, files = LOCAL_FILES) {
   const relative = `${id}/${name}`;
   const label = `skills/${relative}`;
   try {
-    const stat = lstatSync(join(skillsRoot, relative));
+    const stat = files.lstat(join(skillsRoot, relative));
     if (stat.isSymbolicLink()) issues.push(issue(label, "$", "symlink"));
     else if (!stat.isDirectory()) issues.push(issue(label, "$", "invalid-directory"));
   } catch {
@@ -981,10 +1001,10 @@ function semanticAbility(manifest, id, label, issues) {
   }
 }
 
-function inventorySkillBundle(skillsRoot, id, issues) {
+function inventorySkillBundle(skillsRoot, id, issues, files = LOCAL_FILES) {
   const base = join(skillsRoot, id);
   const inventory = [];
-  let files = 0;
+  let fileCount = 0;
   let bytes = 0;
   let nodes = 0;
   let stopped = false;
@@ -998,7 +1018,7 @@ function inventorySkillBundle(skillsRoot, id, issues) {
     }
     let entries;
     try {
-      entries = readdirSync(directory, { withFileTypes: true });
+      entries = files.list(directory);
     } catch {
       issues.push(issue(`skills/${id}`, "$", "unreadable-directory"));
       return;
@@ -1016,7 +1036,7 @@ function inventorySkillBundle(skillsRoot, id, issues) {
       const label = `skills/${id}/${relative}`;
       let stat;
       try {
-        stat = lstatSync(absolute);
+        stat = files.lstat(absolute);
       } catch {
         issues.push(issue(label, "$", "unreadable-file"));
         continue;
@@ -1033,9 +1053,9 @@ function inventorySkillBundle(skillsRoot, id, issues) {
         issues.push(issue(label, "$", "invalid-file"));
         continue;
       }
-      files += 1;
+      fileCount += 1;
       bytes += stat.size;
-      if (files > MAX_BUNDLE_FILES) {
+      if (fileCount > MAX_BUNDLE_FILES) {
         issues.push(issue(`skills/${id}`, "$", "too-many-files"));
         stopped = true;
         return;
@@ -1050,7 +1070,7 @@ function inventorySkillBundle(skillsRoot, id, issues) {
         return;
       }
       try {
-        const content = readFileSync(absolute);
+        const content = files.read(absolute);
         inventory.push({
           path: relative,
           mode: (stat.mode & 0o111) === 0 ? "100644" : "100755",
@@ -1064,7 +1084,7 @@ function inventorySkillBundle(skillsRoot, id, issues) {
   }
 
   try {
-    const stat = lstatSync(base);
+    const stat = files.lstat(base);
     if (stat.isSymbolicLink()) issues.push(issue(`skills/${id}`, "$", "symlink"));
     else if (!stat.isDirectory()) issues.push(issue(`skills/${id}`, "$", "invalid-directory"));
     else walk(base, "", 0);
@@ -1220,10 +1240,10 @@ function validateManifestationReceiptRecord(receipt, receiptLabel, schema, issue
   }
 }
 
-function validateManifestationReceipt(skillsRoot, id, filename, schema, issues) {
+function validateManifestationReceipt(skillsRoot, id, filename, schema, issues, files = LOCAL_FILES) {
   const receiptRelative = `${id}/assets/${filename}`;
   const receiptLabel = `skills/${receiptRelative}`;
-  const loadedReceipt = parseJsonValueFile(skillsRoot, receiptRelative, receiptLabel, issues);
+  const loadedReceipt = parseJsonValueFile(skillsRoot, receiptRelative, receiptLabel, issues, files);
   if (!loadedReceipt.loaded) return;
   const receipt = loadedReceipt.value;
 
@@ -1247,6 +1267,7 @@ function validateManifestationReceipt(skillsRoot, id, filename, schema, issues) 
     observationRelative,
     observationLabel,
     issues,
+    files,
   );
   if (loadedObservation.loaded && schema.$defs?.provider) {
     validateWithSchema(
@@ -1264,7 +1285,7 @@ function validateManifestationReceipt(skillsRoot, id, filename, schema, issues) 
 
   const contractRelative = `${id}/references/manifestation-contract.md`;
   const contractLabel = `skills/${contractRelative}`;
-  const contract = safeRead(skillsRoot, contractRelative, contractLabel, issues);
+  const contract = safeRead(skillsRoot, contractRelative, contractLabel, issues, "file", false, files);
   if (contract !== null && record(receipt?.provider)) {
     if (!contract.includes(`(${observationFilename})`)) {
       issues.push(issue(contractLabel, "$", "provider-observation-reference-missing"));
@@ -1287,21 +1308,21 @@ function validateManifestationReceipt(skillsRoot, id, filename, schema, issues) 
   }
 }
 
-function validateManifestationReceipts(skillsRoot, id, schema, issues) {
+function validateManifestationReceipts(skillsRoot, id, schema, issues, files = LOCAL_FILES) {
   let entries;
   try {
-    entries = readdirSync(join(skillsRoot, id, "assets"), { withFileTypes: true });
+    entries = files.list(join(skillsRoot, id, "assets"));
   } catch {
     return;
   }
   for (const entry of entries.sort((left, right) => binaryCompare(left.name, right.name))) {
     if (MANIFESTATION_RECEIPT_NAME.test(entry.name)) {
-      validateManifestationReceipt(skillsRoot, id, entry.name, schema, issues);
+      validateManifestationReceipt(skillsRoot, id, entry.name, schema, issues, files);
     }
   }
 }
 
-function validateAbility(skillsRoot, id, schema, manifestationReceiptSchema = null) {
+function validateAbility(skillsRoot, id, schema, manifestationReceiptSchema = null, files = LOCAL_FILES) {
   const issues = [];
   const manifestLabel = `skills/${id}/ability.json`;
   if (!ID_PATTERN.test(id)) {
@@ -1309,13 +1330,13 @@ function validateAbility(skillsRoot, id, schema, manifestationReceiptSchema = nu
     return { id, manifest: null, manifestSha256: null, bundleSha256: null, issues };
   }
 
-  const manifest = parseJsonFile(skillsRoot, `${id}/ability.json`, manifestLabel, issues);
+  const manifest = parseJsonFile(skillsRoot, `${id}/ability.json`, manifestLabel, issues, files);
   const skillLabel = `skills/${id}/SKILL.md`;
-  const skillText = safeRead(skillsRoot, `${id}/SKILL.md`, skillLabel, issues);
+  const skillText = safeRead(skillsRoot, `${id}/SKILL.md`, skillLabel, issues, "file", false, files);
   const yamlLabel = `skills/${id}/agents/openai.yaml`;
-  const yamlText = safeRead(skillsRoot, `${id}/agents/openai.yaml`, yamlLabel, issues);
+  const yamlText = safeRead(skillsRoot, `${id}/agents/openai.yaml`, yamlLabel, issues, "file", false, files);
   for (const optional of ["references", "scripts", "assets"]) {
-    optionalDirectorySymlink(skillsRoot, id, optional, issues);
+    optionalDirectorySymlink(skillsRoot, id, optional, issues, files);
   }
 
   if (manifest && schema) {
@@ -1323,7 +1344,7 @@ function validateAbility(skillsRoot, id, schema, manifestationReceiptSchema = nu
     semanticAbility(manifest, id, manifestLabel, issues);
   }
   if (manifestationReceiptSchema) {
-    validateManifestationReceipts(skillsRoot, id, manifestationReceiptSchema, issues);
+    validateManifestationReceipts(skillsRoot, id, manifestationReceiptSchema, issues, files);
   }
   if (skillText !== null) {
     const frontmatter = parseSkillFrontmatter(skillText, skillLabel, issues);
@@ -1332,7 +1353,7 @@ function validateAbility(skillsRoot, id, schema, manifestationReceiptSchema = nu
     }
   }
   if (yamlText !== null) validateOpenAiYaml(yamlText, id, yamlLabel, issues);
-  const inventory = inventorySkillBundle(skillsRoot, id, issues);
+  const inventory = inventorySkillBundle(skillsRoot, id, issues, files);
 
   sortIssues(issues);
   return {
@@ -1722,17 +1743,418 @@ function verifyManifestationReceipt(path, json, skillsRoot) {
   return issues.length === 0 ? 0 : 1;
 }
 
-function verifyReceipt(path, json, skillsRoot) {
-  const receiptSchema = loadReceiptSchema();
-  const abilitySchema = loadAbilitySchema();
-  const manifestationReceiptSchema = loadManifestationReceiptSchema();
-  const rightsInfo = loadRightsBaseline();
-  const issues = [
-    ...receiptSchema.issues,
-    ...abilitySchema.issues,
-    ...manifestationReceiptSchema.issues,
-    ...rightsInfo.issues,
-  ];
+// Local Git objects, read-only.
+//
+// A receipt binds an exact revision. Verifying it at that revision means
+// reading this repository's own object store: no fetch, no checkout, no
+// extracted tree. The environment is built from nothing so an inherited
+// GIT_DIR, replace ref, promisor remote or global config cannot redirect what
+// is read; lazy fetching and every transport protocol are switched off, so a
+// missing object stays missing.
+
+function gitEnvironment() {
+  return {
+    PATH: process.env.PATH ?? "/usr/bin:/bin",
+    LANG: "C",
+    LC_ALL: "C",
+    GIT_ALLOW_PROTOCOL: "",
+    GIT_CONFIG_GLOBAL: "/dev/null",
+    GIT_CONFIG_NOSYSTEM: "1",
+    GIT_LITERAL_PATHSPECS: "1",
+    GIT_NO_LAZY_FETCH: "1",
+    GIT_NO_REPLACE_OBJECTS: "1",
+    GIT_OPTIONAL_LOCKS: "0",
+    GIT_TERMINAL_PROMPT: "0",
+  };
+}
+
+function runGit(args, input = "") {
+  const result = spawnSync("git", ["-c", "protocol.allow=never", "-C", OS_ROOT, ...args], {
+    cwd: OS_ROOT,
+    env: gitEnvironment(),
+    input,
+    maxBuffer: GIT_OUTPUT_LIMIT,
+    timeout: GIT_TIMEOUT_MS,
+    killSignal: "SIGKILL",
+    windowsHide: true,
+  });
+  if (result.error || result.status !== 0 || !Buffer.isBuffer(result.stdout)) return null;
+  return result.stdout;
+}
+
+let suiteRepositoryAnswer = null;
+
+// The suite root must itself be a repository's top level. A copied suite
+// inside some unrelated checkout must not borrow that checkout's history.
+function suiteRepositoryAvailable() {
+  if (suiteRepositoryAnswer !== null) return suiteRepositoryAnswer;
+  const output = runGit(["rev-parse", "--show-toplevel"]);
+  let available = false;
+  if (output !== null) {
+    try {
+      available = realpathSync(output.toString("utf8").replace(/\n$/, "")) === realpathSync(OS_ROOT);
+    } catch {
+      available = false;
+    }
+  }
+  suiteRepositoryAnswer = available;
+  return available;
+}
+
+function localCommit(revision) {
+  const output = runGit(["cat-file", "-t", revision]);
+  if (output === null) return "missing";
+  return output.toString("utf8").trim() === "commit" ? "present" : "not-commit";
+}
+
+function revisionEntries(revision, paths, recursive) {
+  const args = ["ls-tree", "-z", "-l", "--full-tree"];
+  if (recursive) args.push("-r", "-t");
+  const output = runGit([...args, revision, "--", ...paths]);
+  if (output === null) return null;
+  const entries = [];
+  for (const line of output.toString("utf8").split("\0")) {
+    if (line === "") continue;
+    const match = line.match(/^([0-7]{6}) (blob|tree|commit) ([0-9a-f]{40,64}) +(-|[0-9]+)\t([\s\S]+)$/);
+    if (!match) return null;
+    entries.push({
+      mode: match[1],
+      type: match[2],
+      oid: match[3],
+      size: match[4] === "-" ? 0 : Number(match[4]),
+      path: match[5],
+    });
+  }
+  return entries;
+}
+
+function readGitBlobs(oids) {
+  const unique = [...new Set(oids)];
+  const blobs = new Map();
+  if (unique.length === 0) return blobs;
+  const output = runGit(["cat-file", "--batch"], `${unique.join("\n")}\n`);
+  if (output === null) return null;
+  let offset = 0;
+  for (const oid of unique) {
+    const newline = output.indexOf(0x0a, offset);
+    if (newline < 0) return null;
+    const header = output.subarray(offset, newline).toString("utf8").match(/^([0-9a-f]{40,64}) blob ([0-9]+)$/);
+    if (!header || header[1] !== oid) return null;
+    const start = newline + 1;
+    const end = start + Number(header[2]);
+    if (end >= output.length || output[end] !== 0x0a) return null;
+    blobs.set(oid, output.subarray(start, end));
+    offset = end + 1;
+  }
+  return blobs;
+}
+
+// The same lstat/read/list surface as LOCAL_FILES, answered from one
+// revision's tree listing and blobs held in memory. Git modes keep their
+// meaning: 120000 is a symlink, 100755 is executable, a gitlink is neither a
+// file nor a directory.
+function revisionFiles(root, entries, blobs) {
+  const nodes = new Map([[root, { kind: "directory", mode: 0o040000, size: 0, oid: null }]]);
+  const children = new Map();
+  for (const entry of entries) {
+    const parts = entry.path.split("/");
+    let parent = root;
+    parts.forEach((part, index) => {
+      const current = join(parent, part);
+      if (!children.has(parent)) children.set(parent, new Set());
+      children.get(parent).add(part);
+      if (index < parts.length - 1) {
+        if (!nodes.has(current)) nodes.set(current, { kind: "directory", mode: 0o040000, size: 0, oid: null });
+      } else {
+        const kind = entry.type === "tree"
+          ? "directory"
+          : entry.type === "blob"
+            ? (entry.mode === "120000" ? "symlink" : "file")
+            : "other";
+        nodes.set(current, { kind, mode: Number.parseInt(entry.mode, 8), size: entry.size, oid: entry.oid });
+      }
+      parent = current;
+    });
+  }
+  const absent = () => Object.assign(new Error("not present in this revision"), { code: "ENOENT" });
+  const stat = (node) => ({
+    isSymbolicLink: () => node.kind === "symlink",
+    isDirectory: () => node.kind === "directory",
+    isFile: () => node.kind === "file",
+    size: node.size,
+    mode: node.mode,
+  });
+  return Object.freeze({
+    lstat(path) {
+      const node = nodes.get(path);
+      if (!node) throw absent();
+      return stat(node);
+    },
+    read(path) {
+      const node = nodes.get(path);
+      if (!node || node.kind !== "file" || !blobs.has(node.oid)) throw absent();
+      return blobs.get(node.oid);
+    },
+    list(path) {
+      const node = nodes.get(path);
+      if (!node || node.kind !== "directory") throw absent();
+      return [...(children.get(path) ?? [])].map((name) => ({ name, ...stat(nodes.get(join(path, name))) }));
+    },
+  });
+}
+
+// Load the suite a receipt names: the three schemas, the rights baseline and
+// the one ability folder, exactly as committed at that revision.
+function loadRevisionSuite(revision, abilityId, label, issues) {
+  if (!suiteRepositoryAvailable()) {
+    issues.push(issue(label, "$.ability_revision", "suite-repository-unavailable"));
+    return { status: "repository_unavailable", files: null };
+  }
+  const presence = localCommit(revision);
+  if (presence === "missing") {
+    issues.push(issue(label, "$.ability_revision", "revision-not-present-locally"));
+    return { status: "revision_not_present_locally", files: null };
+  }
+  if (presence === "not-commit") {
+    issues.push(issue(label, "$.ability_revision", "revision-not-a-commit"));
+    return { status: "revision_not_a_commit", files: null };
+  }
+  const entries = revisionEntries(revision, [
+    ABILITY_SCHEMA_REL,
+    MANIFESTATION_RECEIPT_SCHEMA_REL,
+    RECEIPT_SCHEMA_REL,
+    RIGHTS_BASELINE_REL,
+    `skills/${abilityId}`,
+  ], true);
+  if (entries === null) {
+    issues.push(issue(label, "$.ability_revision", "revision-suite-unreadable"));
+    return { status: "unreadable", files: null };
+  }
+  // Blobs the validator would reject as oversized are never read.
+  const wanted = entries.filter((entry) =>
+    entry.type === "blob" && entry.mode !== "120000" && entry.size <= MAX_FILE_BYTES
+  );
+  if (
+    entries.length > MAX_REVISION_SUITE_ENTRIES
+    || wanted.reduce((total, entry) => total + entry.size, 0) > MAX_REVISION_SUITE_BYTES
+  ) {
+    issues.push(issue(label, "$.ability_revision", "revision-suite-too-large"));
+    return { status: "too_large", files: null };
+  }
+  const blobs = readGitBlobs(wanted.map((entry) => entry.oid));
+  if (blobs === null) {
+    issues.push(issue(label, "$.ability_revision", "revision-suite-unreadable"));
+    return { status: "unreadable", files: null };
+  }
+  return { status: "read", files: revisionFiles(OS_ROOT, entries, blobs) };
+}
+
+// Digest recomputation.
+//
+// Outputs and inputs are recomputed only where their bytes are reachable on
+// this machine without a request: a file in the receipt's own record
+// directory, or (with --at-revision) a path at an exact revision already in
+// local Git objects. Everything else is listed as not recomputed with a reason,
+// never counted as a pass.
+
+function plainPathParts(value) {
+  if (typeof value !== "string" || value.length === 0 || value.length > 1000) return null;
+  if (value.startsWith("/") || value.includes("\\") || value.includes(":") || /[\u0000-\u001f\u007f]/u.test(value)) {
+    return null;
+  }
+  const parts = value.split("/");
+  return parts.some((part) => part === "" || part === "." || part === "..") ? null : parts;
+}
+
+// An output reference starts with its path, optionally followed by ": " and a
+// description, as in "records/<record>/charter.yaml: the expedition charter".
+function outputReferenceParts(reference) {
+  const match = typeof reference === "string" ? reference.match(/^([^\s:]+)(?::\s|$)/u) : null;
+  return match ? plainPathParts(match[1]) : null;
+}
+
+// A path may be written relative to the record directory ("evidence/x.json")
+// or from a root whose trailing components are the record directory itself
+// ("records/<record>/evidence/x.json"). Either way it must land inside it.
+function recordRelativeParts(recordDirectory, parts) {
+  const directoryParts = recordDirectory.split(sep).filter(Boolean);
+  for (let shared = Math.min(parts.length - 1, directoryParts.length); shared >= 1; shared -= 1) {
+    const tail = directoryParts.slice(-shared);
+    if (parts.slice(0, shared).every((part, index) => part === tail[index])) return parts.slice(shared);
+  }
+  return parts;
+}
+
+function readRecordFile(recordDirectory, parts, budget) {
+  const relative = recordRelativeParts(recordDirectory, parts);
+  let current = recordDirectory;
+  for (const [index, part] of relative.entries()) {
+    current = join(current, part);
+    let stat;
+    try {
+      stat = lstatSync(current);
+    } catch {
+      return { reason: "not_in_record_directory" };
+    }
+    if (stat.isSymbolicLink()) return { reason: "not_a_regular_file" };
+    const leaf = index === relative.length - 1;
+    if (!leaf && !stat.isDirectory()) return { reason: "not_in_record_directory" };
+    if (leaf && !stat.isFile()) return { reason: "not_a_regular_file" };
+    if (leaf && (stat.size > MAX_DIGEST_FILE_BYTES || stat.size > budget.remaining)) return { reason: "too_large" };
+  }
+  try {
+    const bytes = readFileSync(current);
+    if (bytes.byteLength > MAX_DIGEST_FILE_BYTES || bytes.byteLength > budget.remaining) return { reason: "too_large" };
+    budget.remaining -= bytes.byteLength;
+    return { bytes };
+  } catch {
+    return { reason: "unreadable" };
+  }
+}
+
+function readRevisionFiles(requests, budget) {
+  // requests: [{ revision, path, settle(result) }]
+  const byRevision = new Map();
+  for (const request of requests) {
+    if (!byRevision.has(request.revision)) byRevision.set(request.revision, []);
+    byRevision.get(request.revision).push(request);
+  }
+  for (const [revision, group] of [...byRevision.entries()].sort(([left], [right]) => binaryCompare(left, right))) {
+    if (!suiteRepositoryAvailable()) {
+      for (const request of group) request.settle({ reason: "repository_unavailable" });
+      continue;
+    }
+    const presence = localCommit(revision);
+    if (presence !== "present") {
+      const reason = presence === "missing" ? "revision_not_in_local_objects" : "revision_not_a_commit";
+      for (const request of group) request.settle({ reason });
+      continue;
+    }
+    const entries = revisionEntries(revision, [...new Set(group.map((request) => request.path))], false);
+    if (entries === null) {
+      for (const request of group) request.settle({ reason: "unreadable" });
+      continue;
+    }
+    const byPath = new Map(entries.map((entry) => [entry.path, entry]));
+    const readable = [];
+    for (const request of group) {
+      const entry = byPath.get(request.path);
+      if (!entry) request.settle({ reason: "path_not_in_revision" });
+      else if (entry.type !== "blob" || !["100644", "100755"].includes(entry.mode)) {
+        request.settle({ reason: "not_a_regular_file" });
+      } else if (entry.size > MAX_DIGEST_FILE_BYTES || entry.size > budget.remaining) {
+        request.settle({ reason: "too_large" });
+      } else {
+        budget.remaining -= entry.size;
+        readable.push({ request, entry });
+      }
+    }
+    const blobs = readGitBlobs(readable.map(({ entry }) => entry.oid));
+    for (const { request, entry } of readable) {
+      if (blobs === null || !blobs.has(entry.oid)) request.settle({ reason: "unreadable" });
+      else request.settle({ bytes: blobs.get(entry.oid) });
+    }
+  }
+}
+
+function recomputeReceiptDigests(receipt, receiptPath, atRevision, label, issues) {
+  const recordDirectory = dirname(resolve(receiptPath));
+  const budget = { remaining: MAX_DIGEST_TOTAL_BYTES };
+  const entries = [];
+  const revisionRequests = [];
+
+  function settle(entry, expected, result, onMismatch, onBytes = null) {
+    entry.basis = result.basis ?? entry.basis;
+    if (!result.bytes) {
+      entry.status = "not_recomputed";
+      entry.basis = null;
+      entry.reason = result.reason;
+      return;
+    }
+    if (sha256(result.bytes) === expected) {
+      entry.status = "match";
+    } else {
+      entry.status = "mismatch";
+      onMismatch();
+    }
+    if (onBytes) onBytes(result.bytes.byteLength);
+  }
+
+  receipt.outputs.forEach((output, index) => {
+    const entry = { field: `$.outputs[${index}]`, status: "not_recomputed", basis: null, reason: null };
+    entries.push(entry);
+    const parts = outputReferenceParts(output.reference);
+    if (!parts) {
+      entry.reason = "not_a_path";
+      return;
+    }
+    settle(
+      entry,
+      output.digest,
+      { basis: "record_directory", ...readRecordFile(recordDirectory, parts, budget) },
+      () => issues.push(issue(label, `${entry.field}.digest`, "output-digest-mismatch")),
+    );
+  });
+
+  receipt.inputs.forEach((input, index) => {
+    const entry = { field: `$.inputs[${index}]`, status: "not_recomputed", basis: null, reason: null };
+    entries.push(entry);
+    const onMismatch = () => issues.push(issue(label, `${entry.field}.digest`, "input-digest-mismatch"));
+    const onBytes = (actual) => {
+      if (input.bytes?.basis === "observed" && /^[0-9]+$/.test(input.bytes.value) && BigInt(input.bytes.value) !== BigInt(actual)) {
+        issues.push(issue(label, `${entry.field}.bytes`, "input-bytes-mismatch"));
+      }
+    };
+    if (input.boundary === "remote_public" || input.boundary === "remote_private") {
+      entry.reason = "remote_boundary";
+      return;
+    }
+    const parts = plainPathParts(input.path);
+    if (!parts) {
+      entry.reason = "not_a_path";
+      return;
+    }
+    if (EXACT_REVISION.test(input.revision)) {
+      if (!atRevision) {
+        entry.reason = "revision_not_read";
+        return;
+      }
+      revisionRequests.push({
+        revision: input.revision,
+        path: parts.join("/"),
+        settle: (result) => settle(entry, input.digest, { basis: "git_revision", ...result }, onMismatch, onBytes),
+      });
+      return;
+    }
+    settle(
+      entry,
+      input.digest,
+      { basis: "record_directory", ...readRecordFile(recordDirectory, parts, budget) },
+      onMismatch,
+      onBytes,
+    );
+  });
+
+  readRevisionFiles(revisionRequests, budget);
+  const recomputed = entries.filter((entry) => entry.status !== "not_recomputed").length;
+  return {
+    recomputed,
+    mismatched: entries.filter((entry) => entry.status === "mismatch").length,
+    not_recomputed: entries.length - recomputed,
+    entries,
+  };
+}
+
+// verify-receipt checks one kingdom.karma/0.1 receipt. It is unsigned by
+// design, so a pass establishes only what can be recomputed here: the closed
+// schema, time order, absence of template placeholders, the bound ability's
+// manifest and bundle digests (working tree by default; with --at-revision,
+// the suite as committed at the receipt's own ability_revision), and the
+// SHA-256 of every output or input whose bytes are reachable locally. It does
+// not show that a finding is true, that the authority cited was real or
+// sufficient, or that any later action is permitted.
+function verifyReceipt(path, json, skillsRoot, atRevision = false) {
+  const issues = [];
   const label = basename(path) || "receipt.json";
   let receipt = null;
   try {
@@ -1752,8 +2174,43 @@ function verifyReceipt(path, json, skillsRoot) {
     issues.push(issue(label, "$", "missing-file"));
   }
 
+  // The suite the receipt is checked against. By default it is the working
+  // tree. --at-revision reads the receipt's own ability_revision from local Git
+  // objects and never falls back to the working tree when that fails.
+  const suite = atRevision
+    ? { source: "git_revision", revision: null, status: "not_read", files: null, skillsRoot: DEFAULT_SKILLS_ROOT }
+    : { source: "working_tree", files: LOCAL_FILES, skillsRoot };
+  if (atRevision && record(receipt)) {
+    if (typeof receipt.ability_revision !== "string" || !EXACT_REVISION.test(receipt.ability_revision)) {
+      issues.push(issue(label, "$.ability_revision", "revision-not-exact"));
+      suite.status = "revision_not_exact";
+    } else if (typeof receipt.ability_id !== "string" || !ID_PATTERN.test(receipt.ability_id)) {
+      suite.revision = receipt.ability_revision;
+      issues.push(issue(label, "$.ability_id", "ability-not-valid"));
+    } else {
+      suite.revision = receipt.ability_revision;
+      const loaded = loadRevisionSuite(suite.revision, receipt.ability_id, label, issues);
+      suite.status = loaded.status;
+      suite.files = loaded.files;
+    }
+  }
+  const unavailable = { schema: null, sha256: null, issues: [] };
+  const receiptSchema = suite.files ? loadReceiptSchema(suite.files) : unavailable;
+  const abilitySchema = suite.files ? loadAbilitySchema(suite.files) : unavailable;
+  const manifestationReceiptSchema = suite.files ? loadManifestationReceiptSchema(suite.files) : unavailable;
+  const rightsInfo = suite.files ? loadRightsBaseline(suite.files) : unavailable;
+  issues.push(
+    ...receiptSchema.issues,
+    ...abilitySchema.issues,
+    ...manifestationReceiptSchema.issues,
+    ...rightsInfo.issues,
+  );
+  let digests = null;
+
   if (receipt && receiptSchema.schema && receiptSchema.issues.length === 0) {
+    const issuesBeforeSchema = issues.length;
     validateWithSchema(receipt, receiptSchema.schema, receiptSchema.schema, label, "$", issues);
+    const schemaValid = issues.length === issuesBeforeSchema;
     if (receipt.state === "draft") {
       issues.push(issue(label, "$.state", "draft-receipt"));
     }
@@ -1818,10 +2275,11 @@ function verifyReceipt(path, json, skillsRoot) {
       && rightsInfo.issues.length === 0
     ) {
       const ability = validateAbility(
-        skillsRoot,
+        suite.skillsRoot,
         receipt.ability_id,
         abilitySchema.schema,
         manifestationReceiptSchema.schema,
+        suite.files,
       );
       if (ability.issues.length > 0 || !ability.manifestSha256 || !ability.bundleSha256) {
         issues.push(issue(label, "$.ability_id", "ability-not-valid"));
@@ -1834,6 +2292,8 @@ function verifyReceipt(path, json, skillsRoot) {
         }
       }
     }
+    // Paths in a receipt that failed its schema are not followed.
+    if (schemaValid) digests = recomputeReceiptDigests(receipt, path, atRevision, label, issues);
   }
   sortIssues(issues);
   const payload = {
@@ -1843,20 +2303,60 @@ function verifyReceipt(path, json, skillsRoot) {
     ability_schema_sha256: abilitySchema.sha256,
     manifestation_receipt_schema_sha256: manifestationReceiptSchema.sha256,
     rights_sha256: rightsInfo.sha256,
+    suite: atRevision
+      ? { source: "git_revision", revision: suite.revision, status: suite.status }
+      : { source: "working_tree" },
+    digests,
     issues,
   };
   if (json) process.stdout.write(`${JSON.stringify(payload, null, 2)}\n`);
   else {
     process.stdout.write(`KARMA receipt: ${payload.valid ? "valid" : "invalid"} · ${issues.length} issues · ${payload.receipt_schema_sha256 ?? "unavailable"}\n`);
+    if (atRevision) process.stdout.write(`${suiteSummary(suite)}\n`);
+    if (digests) process.stdout.write(`${digestSummary(digests)}\n`);
     printIssues(issues);
   }
   return issues.length === 0 ? 0 : 1;
 }
 
+function suiteSummary(suite) {
+  const revision = suite.revision ?? "unknown";
+  switch (suite.status) {
+    case "read":
+      return `Suite: Git revision ${revision}, read from local objects`;
+    case "revision_not_present_locally":
+      return `Suite: Git revision ${revision} is not in this repository's local objects; nothing was fetched`;
+    case "revision_not_a_commit":
+      return `Suite: Git object ${revision} is not a commit`;
+    case "revision_not_exact":
+      return "Suite: ability_revision is not an exact commit ID; no revision was read";
+    case "repository_unavailable":
+      return "Suite: the suite root is not the top level of a Git repository; no history was read";
+    case "too_large":
+    case "unreadable":
+      return `Suite: Git revision ${revision} could not be read within bounds`;
+    default:
+      return "Suite: no revision was read";
+  }
+}
+
+function digestSummary(digests) {
+  const reasons = new Map();
+  for (const entry of digests.entries) {
+    if (entry.reason) reasons.set(entry.reason, (reasons.get(entry.reason) ?? 0) + 1);
+  }
+  const detail = [...reasons.entries()]
+    .sort(([left], [right]) => binaryCompare(left, right))
+    .map(([reason, count]) => `${count} ${reason}`)
+    .join(", ");
+  return `Digests: ${digests.recomputed} recomputed · ${digests.mismatched} mismatched · ${digests.not_recomputed} not recomputed${detail ? ` (${detail})` : ""}`;
+}
+
 function usage() {
   process.stderr.write(
-    "usage: kingdom nen [list [--json] | validate [ID] [--json] | show ID [--json] | digest ID | types [--json] | receipt-template ID | verify-receipt FILE [--json] | verify-manifestation-receipt FILE [--json]]\n"
-    + "       bun bin/nen.mjs --skills-root /absolute/path <command>\n",
+    "usage: kingdom nen [list [--json] | validate [ID] [--json] | show ID [--json] | digest ID | types [--json] | receipt-template ID | verify-receipt FILE [--at-revision] [--json] | verify-manifestation-receipt FILE [--json]]\n"
+    + "       bun bin/nen.mjs --skills-root /absolute/path <command>\n"
+    + "       --at-revision reads the suite at the receipt's ability_revision from local Git objects; it never fetches and does not combine with --skills-root\n",
   );
   return 2;
 }
@@ -1876,15 +2376,24 @@ function parseCli(argv) {
   if (jsonCount > 1) return null;
   const json = jsonCount === 1;
   if (json) args.splice(args.indexOf("--json"), 1);
-  return { args, skillsRoot, json };
+  const atRevisionCount = args.filter((arg) => arg === "--at-revision").length;
+  if (atRevisionCount > 1) return null;
+  const atRevision = atRevisionCount === 1;
+  if (atRevision) {
+    // The revision supplies the skills; a second skills root would be ambiguous.
+    if (rootIndex >= 0) return null;
+    args.splice(args.indexOf("--at-revision"), 1);
+  }
+  return { args, skillsRoot, json, atRevision };
 }
 
 function main() {
   const parsed = parseCli(process.argv.slice(2));
   if (!parsed) return usage();
-  const { args, skillsRoot, json } = parsed;
+  const { args, skillsRoot, json, atRevision } = parsed;
   const command = args[0] ?? "list";
   const rest = args.slice(1);
+  if (atRevision && command !== "verify-receipt") return usage();
 
   if (command === "list" && rest.length === 0) return listCommand(skillsRoot, json);
   if (command === "validate" && rest.length <= 1) return validateCommand(skillsRoot, rest[0] ?? null, json);
@@ -1892,7 +2401,7 @@ function main() {
   if (command === "digest" && rest.length === 1 && !json) return digestCommand(skillsRoot, rest[0]);
   if (command === "types" && rest.length === 0) return typesCommand(json);
   if (command === "receipt-template" && rest.length === 1 && !json) return receiptTemplateCommand(skillsRoot, rest[0]);
-  if (command === "verify-receipt" && rest.length === 1) return verifyReceipt(rest[0], json, skillsRoot);
+  if (command === "verify-receipt" && rest.length === 1) return verifyReceipt(rest[0], json, skillsRoot, atRevision);
   if (command === "verify-manifestation-receipt" && rest.length === 1) {
     return verifyManifestationReceipt(rest[0], json, skillsRoot);
   }
