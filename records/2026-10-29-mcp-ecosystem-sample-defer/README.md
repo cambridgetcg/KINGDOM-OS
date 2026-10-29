@@ -5,8 +5,8 @@ small [decision.json](decision.json)
 (`sha256:f76f738ad035542a882eaf453b343b2f7b3718517a44aca8b432d5d5afbbd88f`),
 which holds the same facts as data. It introduces no schema.
 
-**Decision.** Defer. Yu decided on 2026-10-29, in his words: "3. defer". A
-Claude Code session working for him wrote this record; it claims no DID or
+**Decision.** Defer. Yu decided on 2026-10-29, in Yu's own words: "3. defer". A
+Claude Code session working for Yu wrote this record; it claims no DID or
 AgentTool identity.
 
 **What was decided.** The 2026-10-27 expedition found that
@@ -80,4 +80,4 @@ carrying this record names this machine's default. Pushes and merges go through
 the shared `cambridgetcg` GitHub account. Neither shows who acted, or that a
 second person reviewed this record, and it does not claim a two-person rule.
 Yu's own words above are the authority; merging this record into main is itself
-a step that waits for him.
+a step that waits for Yu.

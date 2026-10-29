@@ -133,10 +133,10 @@ replaced and the receipt is explicitly finalized.
 The [lookback lamp](scripts/hf-pin-reread.mjs) re-reads the pinned HF
 resources once per lease, `--plan` first, and leaves observations, a draft
 receipt and a return note in a new local outbox. No run starts until Yu
-approves a new charter; his 2026-10-29 yes approved building it.
-[Reality crossing](references/reality-crossing.md) records his 2026-10-29
+approves a new charter; the 2026-10-29 yes approved building it.
+[Reality crossing](references/reality-crossing.md) records Yu's 2026-10-29
 answers and the principles the lamp is built on, which came from the research
-report he answered.
+report those answers responded to.
 
 This skill folder is one part of the KAKIN suite. Copying it alone does not
 carry the root receipt schema, ability manifest, or source-local

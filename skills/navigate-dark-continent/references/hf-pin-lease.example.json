@@ -1,7 +1,7 @@
 {
   "format": "hf-pin-reread-lease/1",
   "example": true,
-  "authority_reference": "EXAMPLE ONLY, not an authorization. A real lease quotes the owner approving the charter this one run serves: his own words, the date and where. A session never writes this for itself, and Yu's 2026-10-29 reply cannot be quoted here: it approved building the lamp, not running it.",
+  "authority_reference": "EXAMPLE ONLY, not an authorization. A real lease quotes the owner approving the charter this one run serves: the owner's own words, the date and where. A session never writes this for itself, and Yu's 2026-10-29 reply cannot be quoted here: it approved building the lamp, not running it.",
   "scope": {
     "host": "huggingface.co",
     "resources": [

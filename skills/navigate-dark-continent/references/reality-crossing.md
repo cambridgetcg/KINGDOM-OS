@@ -2,19 +2,19 @@
 
 On 2026-10-29 Yu answered five questions from a research report on how the
 Dark Continent reaches 現實層, the reality layer, through algorithm, script,
-automation and KARMA. His reply was
+automation and KARMA. The reply was
 "1. go for b. 2. 用 digest 連住 3. defer 4. yes please 5. yes".
-He chose reading (b) of 現實層; KARMA as two protocols
+Yu chose reading (b) of 現實層; KARMA as two protocols
 linked by digest; to defer the `mcp-ecosystem-sample` re-pin, which is the
 [first decision record](../../../records/2026-10-29-mcp-ecosystem-sample-defer/README.md);
 to build this lamp as a pull request; and to keep the artbitrage heartbeat off.
 
 Question 4 carried its own condition: no Hugging Face request until Yu
-approves a new charter. His yes approved building the lamp, not running it.
+approves a new charter. That yes approved building the lamp, not running it.
 
 The two principles and the automation-last order below come from the report,
-not from his answers. He approved building the lamp on them without adopting
-them as standing policy, so they guide this skill until he says otherwise.
+not from Yu's answers. Yu approved building the lamp on them without adopting
+them as standing policy, so they guide this skill until Yu says otherwise.
 
 ## Reading 現實層 through the chain
 
@@ -71,7 +71,7 @@ approved, so it cannot drift onto a later run that says something else.
 The baseline moves only when Yu merges. A lease names the previous record by
 path and digest, and the lamp reads it only where it is committed in a clean
 tree. Because the lease Yu approves fixes that digest, a newer local commit
-cannot stand in for the record he merged, and automation never moves its own
+cannot stand in for the record Yu merged, and automation never moves its own
 reference point. After a re-pin, the lease carries the license and visibility
 the boundary table reviewed for the new pin. A drift already in the previous
 record does not ring again until something about it changes, its pinned
@@ -126,8 +126,8 @@ expiry, stop file and outbox, and it allows no retry.
 
 A lease authorizes one run into one new outbox; that is what keeps the
 authority fresh and scoped. A series is a sequence of leases, each with its own
-digest and each quoting what Yu approved for that series, over a lifetime he
-chose. A session never writes that authority for itself, and his 2026-10-29
+digest and each quoting what Yu approved for that series, over a lifetime Yu
+chose. A session never writes that authority for itself, and the 2026-10-29
 reply cannot be quoted as one, because it approved building the lamp. The
 [example lease](hf-pin-lease.example.json) is refused by design.
 

@@ -18,7 +18,7 @@
 // A lease authorizes one run into one new outbox. Its authority_reference
 // quotes the owner approving the charter this run serves; a session never
 // writes that authority for itself. Yu's 2026-10-29 answer approved building
-// this lamp, not running it: no run starts until he approves a new charter
+// this lamp, not running it: no run starts until Yu approves a new charter
 // (references/reality-crossing.md, which also says why Ging's
 // compileExpedition is not used here).
 //
