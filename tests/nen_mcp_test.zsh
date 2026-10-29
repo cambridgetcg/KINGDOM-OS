@@ -113,8 +113,8 @@ typeset -r SERVER_STATUS=$?
     and ._meta["io.modelcontextprotocol/serverInfo"].name == "kingdom-nen")
   and (map(select(.id == 2))[0].result
     | .resultType == "complete"
-    and (.tools | length) == 5
-    and ([.tools[].name] | unique | length) == 5
+    and (.tools | length) == 6
+    and ([.tools[].name] | unique | length) == 6
     and all(.tools[];
       .annotations.readOnlyHint
       and (.annotations.destructiveHint == false)
@@ -202,8 +202,8 @@ typeset -r COMPAT_SERVER_STATUS=$?
     and (has("_meta") | not))
   and (map(select(.id == 104))[0].error.code == -32002)
   and (map(select(.id == 105))[0].result
-    | (.tools | length) == 5
-    and ([.tools[].name] | unique | length) == 5
+    | (.tools | length) == 6
+    and ([.tools[].name] | unique | length) == 6
     and (has("resultType") | not)
     and (has("_meta") | not))
   and (map(select(.id == 106))[0].result
@@ -215,7 +215,7 @@ typeset -r COMPAT_SERVER_STATUS=$?
   and (map(select(.id == 107))[0].result == {})
   and (map(select(.id == 108))[0].result
     | .resultType == "complete"
-    and (.tools | length) == 5
+    and (.tools | length) == 6
     and ._meta["io.modelcontextprotocol/serverInfo"].name == "kingdom-nen")
   and (map(select(.id == 109))[0].error
     | .code == -32022

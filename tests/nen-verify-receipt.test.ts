@@ -15,9 +15,9 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// verify-receipt reads local files and local Git objects only. The CLI runs as
-// a child process, so the fetch stub below guards this test process; the
-// partial-clone fixture is what shows the child never fetches.
+// verify-receipt reads local files and local Git objects only. The CLI and the
+// MCP server run as child processes, so the fetch stub below guards this test
+// process; the partial-clone fixture is what shows the children never fetch.
 
 const REPO_ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const RECORD_1027 = "records/2026-10-27-dark-continent-hf-pin-drift";
@@ -26,6 +26,7 @@ const REVISION_1027 = "b719f2546c8765238a8f0ca0cfee9884669864c0";
 const FIXTURE_SKILL = "shape-kingdom-nen";
 const FIXTURE_FILES = [
   "bin/nen.mjs",
+  "bin/nen-mcp.mjs",
   "schemas/karma-receipt-v0.1.schema.json",
   "schemas/nen-ability-v0.1.schema.json",
   "schemas/nen-manifestation-receipt-v0.1.schema.json",
@@ -47,6 +48,11 @@ const GIT_ENV = {
   GIT_COMMITTER_NAME: "Nen fixture",
   GIT_COMMITTER_EMAIL: "nen-fixture@example.invalid",
   GIT_COMMITTER_DATE: "2026-10-29T00:00:00Z",
+};
+const MODERN_META = {
+  "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+  "io.modelcontextprotocol/clientInfo": { name: "nen-verify-test", version: "1.0.0" },
+  "io.modelcontextprotocol/clientCapabilities": {},
 };
 
 const tempRoots: string[] = [];
@@ -107,6 +113,28 @@ function commitBesideFirst(message: string, replace: Record<string, string> = {}
   return git(fixture.root, ["commit-tree", tree, "-p", fixture.first, "-m", message]);
 }
 
+function mcp(server: string, requests: object[]): Map<unknown, any> {
+  const input = `${requests.map((request) => JSON.stringify(request)).join("\n")}\n`;
+  const result = spawnSync(process.execPath, [server], { input, encoding: "utf8", env: CHILD_ENV });
+  expect(result.status).toBe(0);
+  expect(result.stderr).toBe("");
+  const responses = new Map<unknown, any>();
+  for (const line of result.stdout.split("\n").filter(Boolean)) {
+    const message = JSON.parse(line);
+    responses.set(message.id, message);
+  }
+  return responses;
+}
+
+function verifyCall(id: number, argumentsValue: object) {
+  return {
+    jsonrpc: "2.0",
+    id,
+    method: "tools/call",
+    params: { _meta: MODERN_META, name: "kingdom_karma_receipt_verify", arguments: argumentsValue },
+  };
+}
+
 // A small suite repository: two commits of one skill, so a receipt bound to
 // the first no longer matches the working tree. It is configured as a partial
 // clone whose promisor remote holds a commit the fixture does not, which is
@@ -114,6 +142,7 @@ function commitBesideFirst(message: string, replace: Record<string, string> = {}
 type Fixture = {
   root: string;
   cli: string;
+  server: string;
   first: string;
   second: string;
   remoteOnly: string;
@@ -154,7 +183,7 @@ function buildFixture(): Fixture {
   git(root, ["config", "remote.origin.url", upstream]);
   git(root, ["config", "remote.origin.promisor", "true"]);
 
-  return { root, cli, first, second, remoteOnly, template, skillAtFirst };
+  return { root, cli, server: join(root, "bin", "nen-mcp.mjs"), first, second, remoteOnly, template, skillAtFirst };
 }
 
 function finalReceipt(revision: string): any {
@@ -585,5 +614,78 @@ describe("the 2026-10-27 Dark Continent receipt", () => {
     // the fourth is a description of a listing, not a path.
     expect(reasons.filter((reason: string) => reason === "revision_not_present_locally")).toHaveLength(3);
     expect(reasons.filter((reason: string) => reason === "not_a_path")).toHaveLength(1);
+  });
+});
+
+describe("kingdom_karma_receipt_verify over MCP", () => {
+  test("is listed read-only with a bounded receipt path, and the instructions name it", () => {
+    const responses = mcp(join(REPO_ROOT, "bin", "nen-mcp.mjs"), [
+      { jsonrpc: "2.0", id: 1, method: "server/discover", params: { _meta: MODERN_META } },
+      { jsonrpc: "2.0", id: 2, method: "tools/list", params: { _meta: MODERN_META } },
+    ]);
+    expect(responses.get(1).result.instructions).toContain("KARMA receipt verification");
+    expect(responses.get(1).result.instructions).toContain("not that a finding is true or that anything is permitted");
+    const tools = responses.get(2).result.tools;
+    expect(tools.map((tool: any) => tool.name)).toEqual([
+      "kingdom_nen_list",
+      "kingdom_nen_validate",
+      "kingdom_nen_show",
+      "kingdom_nen_types",
+      "kingdom_karma_receipt_template",
+      "kingdom_karma_receipt_verify",
+    ]);
+    const verifyTool = tools.at(-1);
+    expect(verifyTool.annotations).toEqual({
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    });
+    expect(verifyTool.inputSchema).toMatchObject({
+      type: "object",
+      additionalProperties: false,
+      required: ["receipt_path"],
+    });
+    expect(Object.keys(verifyTool.inputSchema.properties).sort()).toEqual(["at_revision", "receipt_path"]);
+  });
+
+  test("returns the same verdicts as the CLI and rejects paths outside records/", () => {
+    const relative = `${RECORD_1027}/karma-receipt.json`;
+    const responses = mcp(join(REPO_ROOT, "bin", "nen-mcp.mjs"), [
+      verifyCall(1, { receipt_path: relative }),
+      verifyCall(2, { receipt_path: "records/../NEN.json" }),
+      verifyCall(3, { receipt_path: "/etc/karma-receipt.json" }),
+      verifyCall(4, { receipt_path: "skills/karma-receipt.json" }),
+      verifyCall(5, { receipt_path: relative, at_revision: "yes" }),
+      verifyCall(6, { receipt_path: relative, path: "elsewhere" }),
+    ]);
+    const current = responses.get(1).result;
+    expect(current.isError).toBe(true);
+    expect(current.structuredContent.result.issues).toEqual([
+      { file: "karma-receipt.json", field: "$.ability_bundle_sha256", code: "ability-digest-mismatch" },
+    ]);
+    for (const id of [2, 3, 4, 5, 6]) expect(responses.get(id).error.code).toBe(-32602);
+  });
+
+  test("verifies at a revision and refuses a receipt reached through a symlink", () => {
+    writeRecord("over-mcp");
+    const outside = tempRoot("nen-verify-mcp-outside.");
+    cpSync(join(fixture.root, "records", "over-mcp"), join(outside, "over-mcp"), { recursive: true });
+    symlinkSync(join(outside, "over-mcp"), join(fixture.root, "records", "linked"));
+
+    const responses = mcp(fixture.server, [
+      verifyCall(1, { receipt_path: "records/over-mcp/karma-receipt.json", at_revision: true }),
+      verifyCall(2, { receipt_path: "records/linked/karma-receipt.json", at_revision: true }),
+      verifyCall(3, { receipt_path: "records/absent/karma-receipt.json" }),
+    ]);
+    expect(responses.get(1).result.isError).toBe(false);
+    expect(responses.get(1).result.structuredContent).toMatchObject({
+      valid: true,
+      suite: { source: "git_revision", revision: fixture.first, status: "read" },
+    });
+    for (const id of [2, 3]) {
+      expect(responses.get(id).result.isError).toBe(true);
+      expect(responses.get(id).result.structuredContent.code).toBe("receipt-path-unavailable");
+    }
   });
 });
