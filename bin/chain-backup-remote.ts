@@ -78,6 +78,7 @@ export const FINISH_RESERVE_MS = 10 * 60 * 1000;
 const CLOCK_TICK_MS = 60_000;
 export type Limits = {
   sshMs: number; credentialMs: number; killGraceMs: number; runDeadlineMs: number; finishReserveMs: number; tickMs: number;
+  clock?: Clock; // tests only: the system clock otherwise
 };
 export const LIMITS: Readonly<Limits> = {
   sshMs: SSH_TIMEOUT_MS, credentialMs: CREDENTIAL_TIMEOUT_MS, killGraceMs: KILL_GRACE_MS,
@@ -411,8 +412,50 @@ async function withTimeout<T>(work: Promise<T>, ms: number): Promise<T> {
 export type ChildResult = { code: number | null; stdout: string | null; timedOut: boolean };
 export type ChildOptions = {
   timeoutMs: number; killGraceMs: number; stdoutLimit: number; stderr: "ignore" | "pipe";
-  onOutput?: (stream: "stdout" | "stderr", chunk: Uint8Array) => void; tickMs?: number;
+  onOutput?: (stream: "stdout" | "stderr", chunk: Uint8Array) => void; tickMs?: number; clock?: Clock;
 };
+
+// Each child leads its own group, so nothing outside the runner ends it: not
+// launchd's job cleanup, not the runner's exit. Two things do. Every way out of
+// main (a return, the deadline, an exception) first stops the groups still in
+// this set. And each group has a lifeline that ends it if the runner is gone
+// without doing that (a signal, SIGKILL, a crash).
+const activeChildren = new Set<() => Promise<void>>();
+
+// SIGTERM, then SIGKILL after the grace, to every child group still running.
+// Bounded, so a process the kernel cannot end yet never holds up the exit.
+export async function stopChildren(killGraceMs: number): Promise<void> {
+  if (activeChildren.size === 0) return;
+  await settlesWithin(Promise.all([...activeChildren].map((stop) => stop())), 2 * killGraceMs + 1000);
+}
+
+export function activeChildCount(): number {
+  return activeChildren.size;
+}
+
+// A detached bash that reads a pipe only this runner holds open. The kernel
+// closes it however the runner ends; then the lifeline sends the child's group
+// SIGTERM and, after the grace, SIGKILL. It never acts on a group already gone.
+// Its arguments are a group id and a count, nothing private.
+const LIFELINE = 'read -r _; g="-$1"; kill -0 -- "$g" 2>/dev/null || exit 0; kill -TERM -- "$g" 2>/dev/null; i=0; ' +
+  'while [ "$i" -lt "$2" ] && kill -0 -- "$g" 2>/dev/null; do /bin/sleep 0.1; i=$((i + 1)); done; kill -KILL -- "$g" 2>/dev/null; exit 0';
+
+function startLifeline(group: number, killGraceMs: number): { end(): Promise<void> } | null {
+  try {
+    const keeper = Bun.spawn(["/bin/bash", "-c", LIFELINE, "chain-backup-lifeline", String(group), String(Math.max(1, Math.ceil(killGraceMs / 100)))],
+      { stdin: "pipe", stdout: "ignore", stderr: "ignore", detached: true });
+    let ended: Promise<void> | null = null;
+    // Ended by SIGKILL, never by closing the pipe: once the group is gone its id could be reused.
+    return {
+      end: () => ended ??= (async () => {
+        try { keeper.kill("SIGKILL"); } catch { /* already gone */ }
+        await settlesWithin(Promise.resolve(keeper.exited), 1000);
+      })(),
+    };
+  } catch {
+    return null; // the runner's own exit paths still stop the group
+  }
+}
 
 // Every child of the runner: its own process group, a hard wall-clock bound and
 // bounded stdout. At the bound, on stdout overflow, or when its pipes stay open
@@ -449,56 +492,70 @@ export async function runBounded(argv: string[], options: ChildOptions): Promise
     if (lingering()) send("SIGKILL");
     await exited;
   })();
-
-  let timedOut = false;
-  const timer = startDeadline(options.timeoutMs, options.tickMs);
-  const onExpiry = () => { if (alive) { timedOut = true; void terminate(); } };
-  if (timer.signal.aborted) onExpiry();
-  else timer.signal.addEventListener("abort", onExpiry, { once: true });
-
-  const chunks: Uint8Array[] = [];
-  let size = 0;
-  let overflow = false;
-  const readers: Array<ReadableStreamDefaultReader<Uint8Array>> = [];
-  const pump = async (stream: unknown, name: "stdout" | "stderr") => {
-    if (!(stream instanceof ReadableStream)) return;
-    const reader = (stream as ReadableStream<Uint8Array>).getReader();
-    readers.push(reader);
-    try {
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) return;
-        try { options.onOutput?.(name, value); } catch { /* a transcript never stops intake */ }
-        if (name !== "stdout" || overflow) continue;
-        size += value.byteLength;
-        // Past the record's bound nothing is kept for parsing, and the child is ended.
-        if (size > options.stdoutLimit) {
-          overflow = true;
-          chunks.length = 0;
-          void terminate();
-        } else chunks.push(value);
-      }
-    } catch { /* a cancelled or broken pipe ends intake */ }
-  };
-  const intake = Promise.all([pump(proc.stdout, "stdout"), pump(options.stderr === "pipe" ? proc.stderr : null, "stderr")]);
-  const code = await exited;
-  timer.cancel();
-  if (!(await settlesWithin(intake, options.killGraceMs))) {
+  const lifeline = ownGroup ? startLifeline(pid, options.killGraceMs) : null;
+  const stop = async () => {
     await terminate();
-    if (!(await settlesWithin(intake, options.killGraceMs))) for (const reader of readers) reader.cancel().catch(() => {});
-  }
-  if (terminating) await terminating;
-  let stdout: string | null = null;
-  if (!overflow) {
-    const bytes = new Uint8Array(size);
-    let offset = 0;
-    for (const chunk of chunks) {
-      bytes.set(chunk, offset);
-      offset += chunk.byteLength;
+    await lifeline?.end();
+  };
+  activeChildren.add(stop);
+  const timer = startDeadline(options.timeoutMs, options.tickMs, options.clock);
+  try {
+    let timedOut = false;
+    const onExpiry = () => { if (alive) { timedOut = true; void terminate(); } };
+    if (timer.signal.aborted) onExpiry();
+    else timer.signal.addEventListener("abort", onExpiry, { once: true });
+
+    const chunks: Uint8Array[] = [];
+    let size = 0;
+    let overflow = false;
+    const readers: Array<ReadableStreamDefaultReader<Uint8Array>> = [];
+    const pump = async (stream: unknown, name: "stdout" | "stderr") => {
+      if (!(stream instanceof ReadableStream)) return;
+      const reader = (stream as ReadableStream<Uint8Array>).getReader();
+      readers.push(reader);
+      try {
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) return;
+          try { options.onOutput?.(name, value); } catch { /* a transcript never stops intake */ }
+          if (name !== "stdout" || overflow) continue;
+          size += value.byteLength;
+          // Past the record's bound nothing is kept for parsing, and the child is ended.
+          if (size > options.stdoutLimit) {
+            overflow = true;
+            chunks.length = 0;
+            void terminate();
+          } else chunks.push(value);
+        }
+      } catch { /* a cancelled or broken pipe ends intake */ }
+    };
+    const intake = Promise.all([pump(proc.stdout, "stdout"), pump(options.stderr === "pipe" ? proc.stderr : null, "stderr")]);
+    const code = await exited;
+    timer.cancel();
+    if (!(await settlesWithin(intake, options.killGraceMs))) {
+      await terminate();
+      if (!(await settlesWithin(intake, options.killGraceMs))) for (const reader of readers) reader.cancel().catch(() => {});
     }
-    try { stdout = new TextDecoder("utf-8", { fatal: true }).decode(bytes); } catch { stdout = null; }
+    if (terminating) await terminating;
+    let stdout: string | null = null;
+    if (!overflow) {
+      const bytes = new Uint8Array(size);
+      let offset = 0;
+      for (const chunk of chunks) {
+        bytes.set(chunk, offset);
+        offset += chunk.byteLength;
+      }
+      try { stdout = new TextDecoder("utf-8", { fatal: true }).decode(bytes); } catch { stdout = null; }
+    }
+    return { code, stdout, timedOut };
+  } finally {
+    timer.cancel();
+    // Whatever the way out: a member left in the group, even after the child
+    // itself exited cleanly, is ended before the lifeline and the entry go.
+    if (lingering()) await terminate();
+    await lifeline?.end();
+    activeChildren.delete(stop);
   }
-  return { code, stdout, timedOut };
 }
 
 // For the transcript only; the main log never holds raw output. Removes control
@@ -795,7 +852,7 @@ export async function main(
     log("Usage: bun bin/chain-backup-remote.ts [zerone-1|zerone-testnet-1]");
     return 2;
   }
-  const deadline = startDeadline(limits.runDeadlineMs, limits.tickMs);
+  const deadline = startDeadline(limits.runDeadlineMs, limits.tickMs, limits.clock);
   const expired = new Promise<"expired">((resolve) => {
     if (deadline.signal.aborted) resolve("expired");
     else deadline.signal.addEventListener("abort", () => resolve("expired"), { once: true });
@@ -818,8 +875,9 @@ export async function main(
       if (deadline.remainingMs() <= limits.finishReserveMs) result = deadlineOutcome(chain);
       else {
         result = emptyOutcome(chain);
-        // Whatever is still pending at the deadline is logged as it stands; the
-        // cutoff keeps it from writing a marker afterwards.
+        // Whatever is still pending at the deadline is logged as it stands at
+        // that instant; the cutoff keeps it from writing a marker afterwards,
+        // and its child groups are stopped below before main returns.
         if ((await Promise.race([captureChain(chain, effects, deadline.signal, result), expired])) === "expired") {
           result.error = "TIMEOUT_DEADLINE";
         }
@@ -830,6 +888,10 @@ export async function main(
     return failed ? 1 : 3;
   } finally {
     deadline.cancel();
+    // Every way out of main, the deadline included: no child group outlives it.
+    // On a wake past both deadlines a child may be untouched, or inside its
+    // SIGKILL grace; either way it is ended here, not abandoned at exit.
+    await stopChildren(limits.killGraceMs);
   }
 }
 
@@ -982,7 +1044,7 @@ async function productionEffects(run: RunContext): Promise<Effects> {
   // No child outlives the run: each is cut where the finish reserve begins.
   const bound = (ms: number) => Math.min(ms, deadline.remainingMs() - limits.finishReserveMs);
   const child = (argv: string[], timeoutMs: number, stdoutLimit: number, stderr: "ignore" | "pipe", onOutput?: ChildOptions["onOutput"]) =>
-    runBounded(argv, { timeoutMs, killGraceMs: limits.killGraceMs, stdoutLimit, stderr, onOutput, tickMs: limits.tickMs });
+    runBounded(argv, { timeoutMs, killGraceMs: limits.killGraceMs, stdoutLimit, stderr, onOutput, tickMs: limits.tickMs, clock: limits.clock });
   async function keychain(service: string): Promise<string> {
     // A credential is never transcribed: no onOutput, stderr discarded.
     const result = await child(["security", "find-generic-password", "-s", service, "-w"], bound(limits.credentialMs), 4096, "ignore");
@@ -1052,6 +1114,7 @@ async function productionEffects(run: RunContext): Promise<Effects> {
 }
 
 if (import.meta.main) {
-  // Exit outright: a request still pending past its bound must not keep the job alive.
+  // main has stopped every child group by now. Exit outright: a request still
+  // pending past its bound must not keep the job alive.
   process.exit(await main(process.argv.slice(2)));
 }

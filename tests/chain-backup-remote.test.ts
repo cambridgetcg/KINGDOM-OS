@@ -1433,7 +1433,9 @@ case "$3" in agenttool-tigris-access-key) printf '${FIXTURE_ACCESS_KEY}' ;; agen
       if (names.length !== 1) throw new Error(`expected one ${chain} transcript, found ${names.length}`);
       return { path: join(runs, names[0]), text: readFileSync(join(runs, names[0]), "utf8") };
     },
-    run(limits: Partial<Limits>, chains: string[] = []) {
+    // wake: the wall clock jumps by jumpMs after afterMs, as when the Mac wakes
+    // from a sleep; timers and the monotonic clock run on as before.
+    harness(limits: Partial<Limits>, chains: string[] = [], wake?: { afterMs: number; jumpMs: number }) {
       const harness = join(base, "harness.ts");
       writeFileSync(harness, `
 let stats = 0;
@@ -1444,16 +1446,28 @@ Object.defineProperty(Bun, "S3Client", { value: class {
   delete() { throw new Error("prohibited deletion"); }
 } });
 ${FAKE_MULTIPART_FETCH}
-const { main, LIMITS } = await import(${JSON.stringify(SUBJECT)});
+const { main, LIMITS, activeChildCount } = await import(${JSON.stringify(SUBJECT)});
+const wake = ${JSON.stringify(wake ?? null)};
+let jump = 0;
+if (wake) setTimeout(() => { jump = wake.jumpMs; }, wake.afterMs);
+const clock = { wall: () => Date.now() + jump, mono: () => performance.now() };
 const logs: string[] = [];
 const started = Date.now();
-const code = await main(${JSON.stringify(chains)}, undefined, (line: string) => logs.push(line), { ...LIMITS, ...${JSON.stringify(limits)} });
-console.log(JSON.stringify({ code, logs, stats, s3ops, elapsed: Date.now() - started }));
+const code = await main(${JSON.stringify(chains)}, undefined, (line: string) => logs.push(line), { ...LIMITS, ...${JSON.stringify(limits)}, clock });
+console.log(JSON.stringify({ code, logs, stats, s3ops, elapsed: Date.now() - started, active: activeChildCount() }));
+// As the real entry point does: exit outright, abandoning anything still pending.
+process.exit(0);
 `);
-      const result = spawnSync(process.execPath, [harness], { cwd: base, env, encoding: "utf8", timeout: 30000 });
+      return harness;
+    },
+    run(limits: Partial<Limits>, chains: string[] = [], wake?: { afterMs: number; jumpMs: number }) {
+      const result = spawnSync(process.execPath, [this.harness(limits, chains, wake)], { cwd: base, env, encoding: "utf8", timeout: 30000 });
       if (result.status !== 0) throw new Error(`harness failed: ${result.status} ${result.stderr}`);
       const summary = JSON.parse(result.stdout);
       return { ...summary, stderr: result.stderr, outcomes: summary.logs.map((line: string) => JSON.parse(line)) };
+    },
+    start(limits: Partial<Limits>, chains: string[] = []) {
+      return Bun.spawn([process.execPath, this.harness(limits, chains)], { cwd: base, env, stdout: "ignore", stderr: "ignore" });
     },
     close() {
       for (const pid of pids()) try { process.kill(pid, "SIGKILL"); } catch { /* already gone */ }
@@ -1601,6 +1615,50 @@ describe("hard bounds: no SSH session, and no run, outlives its bound", () => {
       ]);
       expect(run.outcomes[1]).toMatchObject({ upload_status: "NOT_ATTEMPTED", multipart_status: "NOT_STARTED", ssh_exit: null });
       expect(await allGone(f.pids())).toEqual([]);
+    } finally { f.close(); }
+  }, 30000);
+
+  test("a wake past both deadlines ends the child groups before main returns, whichever deadline fires first", async () => {
+    // Codex's ordering on #130: the Mac sleeps through the SSH cutoff and the run's
+    // deadline. On wake both expire within one tick. If main's fires first, the
+    // session is untouched; if the session's fires first, it is inside its SIGKILL
+    // grace (SIGTERM is ignored here). Either way main must not return, and the
+    // process exit, with the group alive.
+    const f = flyctlFixture({ "zerone-testnet-1": "hang", "zerone-1": "hang" });
+    try {
+      const run = f.run({ ...FAST, sshMs: 60_000, runDeadlineMs: 30_000, finishReserveMs: 500, killGraceMs: 2000, tickMs: 200 }, [],
+        { afterMs: 1000, jumpMs: 10 * 3600_000 });
+      expect(run.code).toBe(1);
+      expect(f.flyctlCalls()).toEqual(["zerone-testnet-1"]);
+      expect(run.outcomes.map((o: any) => [o.chain, o.error, o.landed_marker])).toEqual([
+        ["zerone-testnet-1", "TIMEOUT_DEADLINE", "NOT_WRITTEN"], ["zerone-1", "TIMEOUT_DEADLINE", "NOT_WRITTEN"],
+      ]);
+      // main waited out the grace for the SIGKILL, and then held no child.
+      expect(run.elapsed).toBeGreaterThanOrEqual(1000 + 2000);
+      expect(run.elapsed).toBeLessThan(1000 + 2 * 2000 + 3000);
+      expect(run.active).toBe(0);
+      expect(f.markers()).toEqual([]);
+      // Checked straight after the harness exited: nothing of the session was left behind.
+      expect(f.pids()).toHaveLength(2);
+      expect(await allGone(f.pids(), 500)).toEqual([]);
+    } finally { f.close(); }
+  }, 30000);
+
+  test("a runner killed outright still takes its child group with it, through the lifeline", async () => {
+    // SIGKILL, a crash or a signal skip every exit path main controls; the child
+    // leads its own group, so only its lifeline is left to end it.
+    const f = flyctlFixture({ "zerone-testnet-1": "hang", "zerone-1": "hang" });
+    try {
+      const runner = f.start({ ...FAST, sshMs: 20_000, killGraceMs: 500 });
+      const until = Date.now() + 10_000;
+      while (f.pids().length < 2 && Date.now() < until) await Bun.sleep(50);
+      expect(f.pids()).toHaveLength(2);
+      expect(await allGone(f.pids(), 0)).toEqual(f.pids());
+      runner.kill("SIGKILL");
+      expect(await runner.exited).toBe(137);
+      // SIGTERM is ignored by the fake, so this is the lifeline's SIGKILL after its grace.
+      expect(await allGone(f.pids(), 4000)).toEqual([]);
+      expect(f.markers()).toEqual([]);
     } finally { f.close(); }
   }, 30000);
 
