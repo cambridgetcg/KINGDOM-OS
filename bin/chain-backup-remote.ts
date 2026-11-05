@@ -6,11 +6,13 @@
  *
  * Run: bun bin/chain-backup-remote.ts [zerone-1|zerone-testnet-1]
  * Exit: 3 unverified capture(s) present, 1 operational failure (including a
- * low-disk skip on either chain), 2 usage error.
+ * low-disk skip on either chain or a timeout), 2 usage error.
+ * Every child has a hard wall-clock bound, and the whole run exits by RUN_DEADLINE_MS.
  * Installation/launchd activation is a separate authorised operation.
  */
 
 import { createHash, createHmac } from "node:crypto";
+import { closeSync, mkdirSync, openSync, writeSync } from "node:fs";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 
 const ENDPOINT = "https://fly.storage.tigris.dev";
@@ -51,6 +53,42 @@ export const MAX_REMOTE_COMMAND_BYTES = 96 * 1024;
 const MAX_S3_RESPONSE_BYTES = 256 * 1024;
 const S3_TIMEOUT_MS = 120_000;
 
+// Hard bounds (ledger zc-chain-backup-runner, 2026-11-05). The 2026-10-29 run hung
+// for 7 days: testnet's flyctl ssh session never returned although nothing was left
+// running on the remote, and it blocked every later night for both chains.
+// One flyctl ssh session is one whole remote capture. Testnet's slowest observed:
+// 2h14m staged (2026-10-27, landed 05:47 after a 03:33 start) and about 2h34m
+// streamed (2026-10-29, the remote's /tmp last changed at 06:07); on CPU-throttled
+// nights tar alone took 2h05-2h19. 4 h is about 1.5 times the slowest.
+export const SSH_TIMEOUT_MS = 4 * 60 * 60 * 1000;
+// A keychain read answers at once or not at all.
+export const CREDENTIAL_TIMEOUT_MS = 60_000;
+// On expiry the child's whole process group gets SIGTERM, then SIGKILL this long
+// after. Also how long a child's pipes may stay open, held by a descendant, after
+// the child itself has exited.
+export const KILL_GRACE_MS = 10_000;
+// The whole run ends by then, leaving the next 03:33 free: room for both chains'
+// full SSH bounds. No child runs, and no chain starts, in the last
+// FINISH_RESERVE_MS, which are kept for the S3 calls (2 min each at most) that
+// finish a capture. At the deadline every unfinished chain is logged as
+// TIMEOUT_DEADLINE and the process exits.
+export const RUN_DEADLINE_MS = 8 * 60 * 60 * 1000;
+export const FINISH_RESERVE_MS = 10 * 60 * 1000;
+// Timers pause while the Mac sleeps; deadlines re-read the wall clock this often.
+const CLOCK_TICK_MS = 60_000;
+export type Limits = {
+  sshMs: number; credentialMs: number; killGraceMs: number; runDeadlineMs: number; finishReserveMs: number; tickMs: number;
+};
+export const LIMITS: Readonly<Limits> = {
+  sshMs: SSH_TIMEOUT_MS, credentialMs: CREDENTIAL_TIMEOUT_MS, killGraceMs: KILL_GRACE_MS,
+  runDeadlineMs: RUN_DEADLINE_MS, finishReserveMs: FINISH_RESERVE_MS, tickMs: CLOCK_TICK_MS,
+};
+// Each SSH session's own words (both streams, redacted) are kept here per capture,
+// named like the object: <chain>-data-<capture id>.log.
+export const TRANSCRIPT_DIR = ".kingdom/logs/chain-backup-runs";
+const MAX_TRANSCRIPT_BYTES = 1024 * 1024;
+const MAX_TRANSCRIPT_LINE = 16 * 1024;
+
 type StreamUpload = number | "OVER" | "STAGE" | null;
 // Why a streamed capture was refused before anything ran: head is not GNU
 // coreutils (BSD/macOS head -c over-reads a pipe and drops the excess), or the
@@ -85,8 +123,11 @@ export type Outcome = {
   // OPEN: created and never completed (a skip, a refusal or a torn stream);
   // UNKNOWN: the complete call failed, so whether the object exists is for stat to say.
   multipart_status: "NOT_STARTED" | "OPEN" | "COMPLETED" | "UNKNOWN";
+  // TIMEOUT_SSH: the SSH session ran past its bound and was killed; any record it
+  // printed first is still read. TIMEOUT_DEADLINE: the run's deadline ended this
+  // chain, or came before it started. Neither ever writes a landed marker.
   error: "SETUP_FAILED" | "REMOTE_FAILED" | "PROTOCOL_FAILED" | "CAPTURE_FAILED" | "UPLOAD_FAILED" | "MULTIPART_FAILED"
-    | "STREAM_MISMATCH" | "OBJECT_FAILED" | "SKIPPED_LOW_DISK" | `REFUSED_${StreamRefusal}` | null;
+    | "STREAM_MISMATCH" | "OBJECT_FAILED" | "SKIPPED_LOW_DISK" | `REFUSED_${StreamRefusal}` | "TIMEOUT_SSH" | "TIMEOUT_DEADLINE" | null;
 };
 
 export type UploadedPart = { partNumber: number; etag: string; size: number };
@@ -98,7 +139,8 @@ export type UploadedPart = { partNumber: number; etag: string; size: number };
 export type Effects = {
   captureId(): string;
   presign(key: string): string;
-  remote(chain: Chain, command: string): Promise<{ code: number; stdout: string | null }>;
+  // timedOut: the session was killed at its bound; stdout is what arrived before.
+  remote(chain: Chain, command: string, captureId?: string): Promise<{ code: number | null; stdout: string | null; timedOut?: boolean }>;
   stat(key: string): Promise<{ size: number }>;
   lastLandedBytes(chain: Chain): Promise<number | null>;
   markLanded(chain: Chain, bytes: number, keyFiles: Outcome["key_files"]): Promise<void>;
@@ -320,6 +362,217 @@ export async function readBoundedOutput(stream: ReadableStream<Uint8Array>, limi
   }
 }
 
+export type Clock = { wall(): number; mono(): number };
+const systemClock: Clock = { wall: () => Date.now(), mono: () => performance.now() };
+export type Deadline = { signal: AbortSignal; remainingMs(): number; cancel(): void };
+
+// Expires when either clock has run ms. The wall clock keeps counting while the
+// Mac sleeps, which a timer alone does not; the monotonic clock ignores the wall
+// clock being set back. Re-checked at least every tickMs.
+export function startDeadline(ms: number, tickMs: number = CLOCK_TICK_MS, clock: Clock = systemClock): Deadline {
+  const wallEnd = clock.wall() + ms;
+  const monoEnd = clock.mono() + ms;
+  const controller = new AbortController();
+  const remainingMs = () => Math.max(0, Math.min(wallEnd - clock.wall(), monoEnd - clock.mono()));
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const check = () => {
+    const left = remainingMs();
+    if (left <= 0) controller.abort();
+    else timer = setTimeout(check, Math.max(1, Math.min(left, tickMs)));
+  };
+  check();
+  return { signal: controller.signal, remainingMs, cancel: () => clearTimeout(timer) };
+}
+
+function delay(ms: number): { promise: Promise<void>; cancel(): void } {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const promise = new Promise<void>((resolve) => { timer = setTimeout(resolve, Math.max(0, ms)); });
+  return { promise, cancel: () => clearTimeout(timer) };
+}
+
+async function settlesWithin(work: Promise<unknown>, ms: number): Promise<boolean> {
+  const wait = delay(ms);
+  try {
+    return await Promise.race([work.then(() => true, () => true), wait.promise.then(() => false)]);
+  } finally {
+    wait.cancel();
+  }
+}
+
+async function withTimeout<T>(work: Promise<T>, ms: number): Promise<T> {
+  const wait = delay(ms);
+  try {
+    return await Promise.race([Promise.resolve(work), wait.promise.then((): never => { throw new Error("timed out"); })]);
+  } finally {
+    wait.cancel();
+  }
+}
+
+export type ChildResult = { code: number | null; stdout: string | null; timedOut: boolean };
+export type ChildOptions = {
+  timeoutMs: number; killGraceMs: number; stdoutLimit: number; stderr: "ignore" | "pipe";
+  onOutput?: (stream: "stdout" | "stderr", chunk: Uint8Array) => void; tickMs?: number;
+};
+
+// Every child of the runner: its own process group, a hard wall-clock bound and
+// bounded stdout. At the bound, on stdout overflow, or when its pipes stay open
+// after it exits (held by a descendant), the whole group gets SIGTERM and then,
+// after the grace, SIGKILL. This returns only once that is done, with the stdout
+// that arrived before; every chunk of both streams also goes to onOutput.
+export async function runBounded(argv: string[], options: ChildOptions): Promise<ChildResult> {
+  if (!(options.timeoutMs > 0)) return { code: null, stdout: null, timedOut: true };
+  const proc = Bun.spawn(argv, { stdout: "pipe", stderr: options.stderr, detached: true });
+  const pid = proc.pid;
+  // Never 0 or 1 as a group: kill(0) is this runner's own group, kill(-1) everything.
+  const ownGroup = Number.isSafeInteger(pid) && pid > 1;
+  let alive = true;
+  const exited: Promise<number | null> = Promise.resolve(proc.exited).then(
+    (code) => { alive = false; return Number.isSafeInteger(code) ? code : null; },
+    () => { alive = false; return null; },
+  );
+  const send = (signal: "SIGTERM" | "SIGKILL" | 0): boolean => {
+    try {
+      if (ownGroup) process.kill(-pid, signal);
+      else if (signal !== 0) proc.kill(signal);
+      else return false;
+      return true;
+    } catch {
+      return false; // the group is gone
+    }
+  };
+  const lingering = () => alive || send(0);
+  let terminating: Promise<void> | null = null;
+  const terminate = () => terminating ??= (async () => {
+    send("SIGTERM");
+    const until = Date.now() + options.killGraceMs;
+    while (lingering() && Date.now() < until) await delay(Math.min(50, options.killGraceMs)).promise;
+    if (lingering()) send("SIGKILL");
+    await exited;
+  })();
+
+  let timedOut = false;
+  const timer = startDeadline(options.timeoutMs, options.tickMs);
+  const onExpiry = () => { if (alive) { timedOut = true; void terminate(); } };
+  if (timer.signal.aborted) onExpiry();
+  else timer.signal.addEventListener("abort", onExpiry, { once: true });
+
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  let overflow = false;
+  const readers: Array<ReadableStreamDefaultReader<Uint8Array>> = [];
+  const pump = async (stream: unknown, name: "stdout" | "stderr") => {
+    if (!(stream instanceof ReadableStream)) return;
+    const reader = (stream as ReadableStream<Uint8Array>).getReader();
+    readers.push(reader);
+    try {
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) return;
+        try { options.onOutput?.(name, value); } catch { /* a transcript never stops intake */ }
+        if (name !== "stdout" || overflow) continue;
+        size += value.byteLength;
+        // Past the record's bound nothing is kept for parsing, and the child is ended.
+        if (size > options.stdoutLimit) {
+          overflow = true;
+          chunks.length = 0;
+          void terminate();
+        } else chunks.push(value);
+      }
+    } catch { /* a cancelled or broken pipe ends intake */ }
+  };
+  const intake = Promise.all([pump(proc.stdout, "stdout"), pump(options.stderr === "pipe" ? proc.stderr : null, "stderr")]);
+  const code = await exited;
+  timer.cancel();
+  if (!(await settlesWithin(intake, options.killGraceMs))) {
+    await terminate();
+    if (!(await settlesWithin(intake, options.killGraceMs))) for (const reader of readers) reader.cancel().catch(() => {});
+  }
+  if (terminating) await terminating;
+  let stdout: string | null = null;
+  if (!overflow) {
+    const bytes = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+    try { stdout = new TextDecoder("utf-8", { fatal: true }).decode(bytes); } catch { stdout = null; }
+  }
+  return { code, stdout, timedOut };
+}
+
+// For the transcript only; the main log never holds raw output. Removes control
+// sequences, URLs (presigned ones carry their signature), credential-shaped
+// parameters, headers and tokens, the given literals, and any long opaque run.
+export function redactLine(line: string, literals: readonly string[] = []): string {
+  let text = line.replace(/\x1b\[[0-9;?]*[ -/]*[@-~]/g, "").replace(/[\x00-\x08\x0b-\x1f\x7f]/g, "");
+  for (const literal of literals) if (literal.length >= 8) text = text.split(literal).join("[redacted]");
+  return text
+    .replace(/[a-z][a-z0-9+.-]*:\/\/[^\s'"<>`]+/gi, "[url]")
+    .replace(/\b(authorization|proxy-authorization|cookie|set-cookie|x-amz-security-token)\b\s*[:=].*/gi, "$1: [redacted]")
+    .replace(/\b(bearer|basic|flyv1)\s+[^\s,;]+/gi, "$1 [redacted]")
+    .replace(/\b(x-amz-[a-z-]+|signature|credential|uploadid|access_?key_?id|secret_?access_?key|password|token|secret|key)=[^&\s'"]*/gi, "$1=[redacted]")
+    .replace(/\b(fm[12]|fo1|tid|tsec)_[A-Za-z0-9_+/=-]+/g, "[token]")
+    .replace(/[A-Za-z0-9+/=_%-]{40,}/g, "[redacted]");
+}
+
+export type Transcript = { write(stream: "stdout" | "stderr", chunk: Uint8Array): void; close(result: ChildResult): void };
+
+// One SSH session's own words, kept even when it fails or times out: both streams
+// line by line, each redacted and stamped with seconds since the start, at most
+// MAX_TRANSCRIPT_BYTES, mode 0600. Never the command, which carries presigned
+// URLs. Any failure here only loses the transcript, never the capture.
+export function openTranscript(path: string, header: string, literals: readonly string[] = [], now: () => number = Date.now): Transcript {
+  let fd: number | null = null;
+  try { fd = openSync(path, "wx", 0o600); } catch { fd = null; }
+  const started = now();
+  let kept = 0;
+  let dropped = 0;
+  const emit = (text: string, always = false) => {
+    if (fd === null) return;
+    const bytes = Buffer.from(text, "utf8");
+    if (!always && kept + bytes.byteLength > MAX_TRANSCRIPT_BYTES) { dropped += bytes.byteLength; return; }
+    try { writeSync(fd, bytes); kept += bytes.byteLength; } catch { fd = null; }
+  };
+  const stamp = () => `+${((now() - started) / 1000).toFixed(1)}s`;
+  const tag = { stdout: "out", stderr: "err" } as const;
+  const decoders = { stdout: new TextDecoder(), stderr: new TextDecoder() };
+  const pending = { stdout: "", stderr: "" };
+  // An over-long line is dropped whole, never cut: once its start is dropped, the
+  // rest of it is skipped up to the next newline.
+  const skipping = { stdout: false, stderr: false };
+  const tooLong = (name: "stdout" | "stderr", text: string) => {
+    dropped += Buffer.byteLength(text);
+    if (!skipping[name]) emit(`${stamp()} ${tag[name]} [line over ${MAX_TRANSCRIPT_LINE} characters not kept]\n`);
+  };
+  const take = (name: "stdout" | "stderr", text: string, final: boolean) => {
+    const lines = (pending[name] + text).split("\n");
+    pending[name] = final ? "" : lines.pop()!;
+    if (final && lines[lines.length - 1] === "") lines.pop();
+    for (const line of lines) {
+      if (line.length > MAX_TRANSCRIPT_LINE) tooLong(name, line);
+      else if (skipping[name]) dropped += Buffer.byteLength(line);
+      else emit(`${stamp()} ${tag[name]} ${redactLine(line, literals)}\n`);
+      skipping[name] = false;
+    }
+    if (pending[name].length > MAX_TRANSCRIPT_LINE) {
+      tooLong(name, pending[name]);
+      skipping[name] = true;
+      pending[name] = "";
+    }
+  };
+  emit(`# kingdom.chain-backup.transcript/1 ${header}\n`, true);
+  return {
+    write: (name, chunk) => take(name, decoders[name].decode(chunk, { stream: true }), false),
+    close(result) {
+      for (const name of ["stdout", "stderr"] as const) take(name, decoders[name].decode(), true);
+      emit(`# exit=${result.code ?? "NA"} timed_out=${result.timedOut} elapsed_s=${((now() - started) / 1000).toFixed(1)} kept_bytes=${kept} dropped_bytes=${dropped}\n`, true);
+      if (fd !== null) try { closeSync(fd); } catch { /* nothing more to keep */ }
+      fd = null;
+    },
+  };
+}
+
 function emptyOutcome(chain: Chain): Outcome {
   return {
     chain, capture_status: "FAILED", tar_exit: null,
@@ -343,15 +596,19 @@ export function partsAreWhole(listed: readonly UploadedPart[], count: number, pa
     (index < count - 1 ? part.size === partBytes : part.size >= 1 && part.size <= partBytes));
 }
 
-export async function captureChain(chain: Chain, effects: Effects): Promise<Outcome> {
-  const result = emptyOutcome(chain);
+// cutoff: once aborted (the run's deadline), no landed marker is written. result
+// is filled in place, so a caller that stops waiting still logs what happened.
+export async function captureChain(
+  chain: Chain, effects: Effects, cutoff?: AbortSignal, result: Outcome = emptyOutcome(chain),
+): Promise<Outcome> {
   const streamed = result.capture_mode === "STREAMED_MULTIPART";
+  let id: string;
   let key: string;
   let command: string;
   let uploadId = "";
   let partLimit = 0;
   try {
-    const id = effects.captureId();
+    id = effects.captureId();
     if (!/^[A-Za-z0-9-]{1,100}$/.test(id)) return result;
     key = `chain/${chain}/${chain}-data-${id}.tar.gz`;
     if (streamed) {
@@ -382,18 +639,22 @@ export async function captureChain(chain: Chain, effects: Effects): Promise<Outc
   result.upload_status = "FAILED";
   result.error = "REMOTE_FAILED";
   try {
-    remote = await effects.remote(chain, command);
-    result.ssh_exit = Number.isInteger(remote.code) && remote.code >= 0 && remote.code <= 255 ? remote.code : null;
+    remote = await effects.remote(chain, command, id);
+    result.ssh_exit = Number.isInteger(remote.code) && remote.code! >= 0 && remote.code! <= 255 ? remote.code : null;
   } catch {
     return result;
   }
+  // A session killed at its bound keeps that as its error, whatever else is
+  // reported. A record that arrived before the bound is still read, and checked
+  // like any other, but a timed-out capture never writes a landed marker.
+  const timedOut = remote.timedOut === true;
   const report = parseRemoteResult(remote.stdout);
   // A skip record is only believed from a chain that was asked to pre-flight,
   // and a capture record only in the protocol this chain was sent.
   if (!report || (report.kind === "skip" && report.needKib !== result.disk_need_kib) ||
       (report.kind === "stream" && (!streamed || report.parts > partLimit || (report.upload === "OVER" && report.parts !== partLimit))) ||
       (report.kind === "refuse" && !streamed) || (report.kind === "capture" && streamed)) {
-    result.error = "PROTOCOL_FAILED";
+    result.error = timedOut ? "TIMEOUT_SSH" : "PROTOCOL_FAILED";
     return result;
   }
   if (report.kind === "skip" || report.kind === "refuse") {
@@ -405,14 +666,16 @@ export async function captureChain(chain: Chain, effects: Effects): Promise<Outc
       result.disk_free_kib = report.freeKib;
       result.error = "SKIPPED_LOW_DISK";
     } else result.error = `REFUSED_${report.reason}`;
+    if (timedOut) result.error = "TIMEOUT_SSH";
     return result;
   }
-  if (report.kind === "stream") return finishStream(chain, result, report, key, uploadId, effects);
+  const sessionError: Outcome["error"] = timedOut ? "TIMEOUT_SSH" : result.ssh_exit === 0 ? null : "REMOTE_FAILED";
+  if (report.kind === "stream") return finishStream(chain, result, report, key, uploadId, effects, sessionError, cutoff);
   result.tar_exit = report.tarExit;
   result.capture_status = captureStatus(report.tarExit);
   result.upload_exit = report.uploadExit;
   result.upload_http = report.uploadHttp;
-  result.error = result.ssh_exit === 0 ? null : "REMOTE_FAILED";
+  result.error = sessionError;
   if (report.uploadExit === null) {
     result.upload_status = "NOT_ATTEMPTED";
     result.error ??= report.tarExit === null ? "SETUP_FAILED" : "CAPTURE_FAILED";
@@ -435,6 +698,7 @@ export async function captureChain(chain: Chain, effects: Effects): Promise<Outc
   else result.upload_status = "PRESENT";
   // The landed marker is pulse's per-chain heartbeat and the next pre-flight's
   // size: only a clean landing writes it. Its failure is reported, not hidden.
+  if (cutoff?.aborted) result.error ??= "TIMEOUT_DEADLINE";
   if (result.error === null && result.upload_status === "PRESENT") {
     try {
       await effects.markLanded(chain, size, result.key_files);
@@ -448,7 +712,7 @@ export async function captureChain(chain: Chain, effects: Effects): Promise<Outc
 
 async function finishStream(
   chain: Chain, result: Outcome, report: Extract<RemoteResult, { kind: "stream" }>,
-  key: string, uploadId: string, effects: Effects,
+  key: string, uploadId: string, effects: Effects, sessionError: Outcome["error"], cutoff?: AbortSignal,
 ): Promise<Outcome> {
   result.tar_exit = report.tarExit;
   result.capture_status = captureStatus(report.tarExit);
@@ -456,7 +720,7 @@ async function finishStream(
   result.upload_http = report.uploadHttp;
   result.parts = report.parts;
   result.stream_bytes = report.bytes;
-  result.error = result.ssh_exit === 0 ? null : "REMOTE_FAILED";
+  result.error = sessionError;
   if (report.upload === null) {
     result.upload_status = "NOT_ATTEMPTED";
     result.error ??= report.tarExit === null ? "SETUP_FAILED" : "CAPTURE_FAILED";
@@ -504,6 +768,7 @@ async function finishStream(
     result.upload_status = "PRESENT";
     if (result.multipart_status === "UNKNOWN") result.multipart_status = "COMPLETED";
   }
+  if (cutoff?.aborted) result.error ??= "TIMEOUT_DEADLINE";
   if (result.error === null && result.upload_status === "PRESENT") {
     try {
       await effects.markLanded(chain, expected, result.key_files);
@@ -515,30 +780,57 @@ async function finishStream(
   return result;
 }
 
+// The run's deadline: production effects cut every child at it (less the finish
+// reserve), and main stops waiting at it.
+export type RunContext = { deadline: Deadline; limits: Readonly<Limits> };
+
 export async function main(
   args: string[],
-  createEffects: () => Promise<Effects> = productionEffects,
+  createEffects: (run: RunContext) => Promise<Effects> = productionEffects,
   log: (line: string) => void = console.log,
+  limits: Readonly<Limits> = LIMITS,
 ): Promise<1 | 2 | 3> {
   const chains = parseArgs(args);
   if (!chains) {
     log("Usage: bun bin/chain-backup-remote.ts [zerone-1|zerone-testnet-1]");
     return 2;
   }
-  let effects: Effects;
+  const deadline = startDeadline(limits.runDeadlineMs, limits.tickMs);
+  const expired = new Promise<"expired">((resolve) => {
+    if (deadline.signal.aborted) resolve("expired");
+    else deadline.signal.addEventListener("abort", () => resolve("expired"), { once: true });
+  });
+  const deadlineOutcome = (chain: Chain): Outcome => ({ ...emptyOutcome(chain), error: "TIMEOUT_DEADLINE" });
   try {
-    effects = await createEffects();
-  } catch {
-    for (const chain of chains) log(JSON.stringify(emptyOutcome(chain)));
-    return 1;
+    let effects: Effects;
+    try {
+      const made = await Promise.race([createEffects({ deadline, limits }), expired]);
+      if (made === "expired") throw new Error("deadline");
+      effects = made;
+    } catch {
+      for (const chain of chains) log(JSON.stringify(deadline.signal.aborted ? deadlineOutcome(chain) : emptyOutcome(chain)));
+      return 1;
+    }
+    let failed = false;
+    for (const chain of chains) {
+      let result: Outcome;
+      // The reserve is for finishing a capture, never for starting one.
+      if (deadline.remainingMs() <= limits.finishReserveMs) result = deadlineOutcome(chain);
+      else {
+        result = emptyOutcome(chain);
+        // Whatever is still pending at the deadline is logged as it stands; the
+        // cutoff keeps it from writing a marker afterwards.
+        if ((await Promise.race([captureChain(chain, effects, deadline.signal, result), expired])) === "expired") {
+          result.error = "TIMEOUT_DEADLINE";
+        }
+      }
+      log(JSON.stringify(result));
+      failed ||= result.error !== null;
+    }
+    return failed ? 1 : 3;
+  } finally {
+    deadline.cancel();
   }
-  let failed = false;
-  for (const chain of chains) {
-    const result = await captureChain(chain, effects);
-    log(JSON.stringify(result));
-    failed ||= result.error !== null;
-  }
-  return failed ? 1 : 3;
 }
 
 // AWS Signature V4, only for the multipart calls Bun.S3Client does not expose
@@ -685,13 +977,17 @@ export function multipartEffects(signer: Signer, request: typeof fetch = fetch, 
   };
 }
 
-async function productionEffects(): Promise<Effects> {
+async function productionEffects(run: RunContext): Promise<Effects> {
+  const { deadline, limits } = run;
+  // No child outlives the run: each is cut where the finish reserve begins.
+  const bound = (ms: number) => Math.min(ms, deadline.remainingMs() - limits.finishReserveMs);
+  const child = (argv: string[], timeoutMs: number, stdoutLimit: number, stderr: "ignore" | "pipe", onOutput?: ChildOptions["onOutput"]) =>
+    runBounded(argv, { timeoutMs, killGraceMs: limits.killGraceMs, stdoutLimit, stderr, onOutput, tickMs: limits.tickMs });
   async function keychain(service: string): Promise<string> {
-    const proc = Bun.spawn(["security", "find-generic-password", "-s", service, "-w"], { stdout: "pipe", stderr: "ignore" });
-    const output = await readBoundedOutput(proc.stdout, 4096);
-    if (output === null) proc.kill();
-    if ((await proc.exited) !== 0 || !output?.trim()) throw new Error("credential unavailable");
-    return output.trim();
+    // A credential is never transcribed: no onOutput, stderr discarded.
+    const result = await child(["security", "find-generic-password", "-s", service, "-w"], bound(limits.credentialMs), 4096, "ignore");
+    if (result.timedOut || result.code !== 0 || !result.stdout?.trim()) throw new Error("credential unavailable");
+    return result.stdout.trim();
   }
   const signer: Signer = {
     endpoint: ENDPOINT, bucket: BUCKET, region: REGION,
@@ -707,6 +1003,7 @@ async function productionEffects(): Promise<Effects> {
   if (!home || !home.startsWith("/")) throw new Error("HOME unavailable");
   const markerDir = `${home}/.kingdom/state/chain-backup`;
   const markerPath = (chain: Chain) => `${markerDir}/${chain}.landed`;
+  const transcriptDir = `${home}/${TRANSCRIPT_DIR}`;
   return {
     async lastLandedBytes(chain) {
       const text = await readFile(markerPath(chain), "utf8").catch(() => null);
@@ -732,17 +1029,29 @@ async function productionEffects(): Promise<Effects> {
     // UUID prevents same-second invocations from overwriting earlier captures.
     captureId: () => `${new Date().toISOString().replace(/[-:]/g, "").replace(/\..+/, "Z")}-${crypto.randomUUID()}`,
     presign: (key) => s3.presign(key, { method: "PUT", expiresIn: UPLOAD_URL_TTL_SECONDS }),
-    stat: (key) => s3.stat(key),
+    stat: (key) => withTimeout(s3.stat(key), S3_TIMEOUT_MS),
     multipart: multipartEffects(signer),
-    async remote(chain, command) {
-      const proc = Bun.spawn(["flyctl", "ssh", "console", "-a", chain, "-C", command], { stdout: "pipe", stderr: "ignore" });
-      const stdout = await readBoundedOutput(proc.stdout, MAX_REMOTE_RESULT_BYTES);
-      if (stdout === null) proc.kill();
-      return { code: await proc.exited, stdout };
+    async remote(chain, command, captureId) {
+      const id = typeof captureId === "string" && /^[A-Za-z0-9-]{1,100}$/.test(captureId)
+        ? captureId : `${new Date().toISOString().replace(/[-:]/g, "").replace(/\..+/, "Z")}-${process.pid}`;
+      const timeoutMs = bound(limits.sshMs);
+      try { mkdirSync(transcriptDir, { recursive: true, mode: 0o700 }); } catch { /* the transcript is lost, not the capture */ }
+      const transcript = openTranscript(`${transcriptDir}/${chain}-data-${id}.log`,
+        `chain=${chain} capture=${id} started=${new Date().toISOString()} bound_s=${Math.max(0, Math.round(timeoutMs / 1000))}`,
+        [signer.accessKeyId, signer.secretAccessKey]);
+      // stdout is the one record (bounded); flyctl's and the remote's stderr reach only the transcript.
+      let result: ChildResult = { code: null, stdout: null, timedOut: false };
+      try {
+        result = await child(["flyctl", "ssh", "console", "-a", chain, "-C", command], timeoutMs, MAX_REMOTE_RESULT_BYTES, "pipe", transcript.write);
+        return result;
+      } finally {
+        transcript.close(result);
+      }
     },
   };
 }
 
 if (import.meta.main) {
-  process.exitCode = await main(process.argv.slice(2));
+  // Exit outright: a request still pending past its bound must not keep the job alive.
+  process.exit(await main(process.argv.slice(2)));
 }

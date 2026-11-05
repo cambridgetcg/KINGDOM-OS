@@ -1,14 +1,15 @@
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
-  awsUriEncode, buildRemoteCommand, buildStreamedRemoteCommand, captureChain, captureStatus, completeBody, EXCLUDED_KEY_FILES,
-  LOW_DISK_MARGIN_BYTES, main, MAX_PARTS, MAX_REMOTE_COMMAND_BYTES, MAX_REMOTE_RESULT_BYTES, multipartEffects, needKib, PART_BYTES,
-  parseArgs, parseListParts, parseRemoteResult, parseUploadId, partsAreWhole, presignS3Url, readBoundedOutput, ROLLOUT_CHAINS,
-  sigv4, STREAM_CHAINS, streamNeedKib, type Effects, type UploadedPart,
+  awsUriEncode, buildRemoteCommand, buildStreamedRemoteCommand, captureChain, captureStatus, CREDENTIAL_TIMEOUT_MS, completeBody,
+  EXCLUDED_KEY_FILES, FINISH_RESERVE_MS, KILL_GRACE_MS, LIMITS, type Limits, LOW_DISK_MARGIN_BYTES, main, MAX_PARTS, MAX_REMOTE_COMMAND_BYTES,
+  MAX_REMOTE_RESULT_BYTES, multipartEffects, needKib, openTranscript, PART_BYTES, parseArgs, parseListParts, parseRemoteResult, parseUploadId,
+  partsAreWhole, presignS3Url, readBoundedOutput, redactLine, ROLLOUT_CHAINS, RUN_DEADLINE_MS, sigv4, SSH_TIMEOUT_MS, startDeadline,
+  STREAM_CHAINS, streamNeedKib, type Effects, type UploadedPart,
 } from "../bin/chain-backup-remote.ts";
 
 const SUBJECT = new URL("../bin/chain-backup-remote.ts", import.meta.url).pathname;
@@ -355,7 +356,9 @@ else if (name === "tar") {
   symlinkSync("/bin/bash", join(base, "bin", "bash"));
   writeFileSync(join(base, "objects", "legacy-known-good"), "preserve");
   writeFileSync(join(base, "objects", "legacy-raw"), "preserve");
-  const env = { PATH: join(base, "bin"), HOME: join(base, "home"), TMPDIR: join(base, "tmp"), FIXTURE: base, LC_ALL: "C" };
+  // Bun caches the transpiled runner under HOME once it passes 50 KB; that is Bun's
+  // write, not the runner's, so it is switched off to keep HOME the runner's alone.
+  const env = { PATH: join(base, "bin"), HOME: join(base, "home"), TMPDIR: join(base, "tmp"), FIXTURE: base, LC_ALL: "C", BUN_RUNTIME_TRANSPILER_CACHE_PATH: "0" };
   return {
     base, env,
     calls: (): Array<{ name: string; args: string[] }> => existsSync(join(base, "calls")) ? readFileSync(join(base, "calls"), "utf8").trim().split("\n").filter(Boolean).map((s) => JSON.parse(s)) : [],
@@ -431,9 +434,12 @@ let stats = 0;
 const keys: string[] = [];
 const presigns: unknown[] = [];
 Bun.spawn = (args: string[], options: any) => {
-  if (options.stderr !== "ignore") throw new Error("stderr must be discarded");
   const credential = args[0] === "security";
   if (!credential && args[0] !== "flyctl") throw new Error("unexpected command");
+  // A credential's stderr is discarded; flyctl's goes only to the redacted transcript.
+  if (options.stderr !== (credential ? "ignore" : "pipe")) throw new Error("unexpected stderr wiring");
+  // Every child leads its own process group, so a timeout can end all of it.
+  if (options.detached !== true) throw new Error("child shares the runner's process group");
   const text = credential ? (mode === "credentials-oversize" ? "x".repeat(4097) : ${JSON.stringify(PRIVATE)})
     : (mode === "remote-oversize" ? "x".repeat(129)
       : String(args[args.length - 1]).includes("CHAIN_BACKUP_V3") ? ${JSON.stringify(streamRecord(1))} : ${JSON.stringify(record(1))});
@@ -474,6 +480,11 @@ console.log(JSON.stringify({ code, logs, kills, stats, keys, presigns, s3ops }))
         }
         expect(f.calls()).toEqual([]);
         expect(readdirSync(join(f.base, "tmp"))).toEqual([]);
+        // One transcript per SSH session, named like its object; never a credential.
+        const runs = join(f.base, "home", ".kingdom", "logs", "chain-backup-runs");
+        const transcripts = existsSync(runs) ? readdirSync(runs).sort() : [];
+        expect(transcripts.map((name) => name.replace(/-data-.*$/, ""))).toEqual(c.mode.startsWith("credentials") ? [] : ["zerone-1", "zerone-testnet-1"]);
+        for (const name of transcripts) expect(readFileSync(join(runs, name), "utf8")).not.toContain(PRIVATE);
       } finally { f.close(); }
     }
   }, 15000);
@@ -1362,5 +1373,323 @@ describe("multipart signing and parsing (offline)", () => {
       presignS3Url({ ...signer, accessKeyId: "tid_" + "A".repeat(40) }, "PUT", KEY, { partNumber: String(i + 1), uploadId: "U".repeat(200) }, 43200, "20261028T033300Z"));
     const command = buildStreamedRemoteCommand(urls, { excludeKeys: true, needKib: STREAM_NEED });
     expect(command.length).toBeLessThan(MAX_REMOTE_COMMAND_BYTES * 0.6);
+  });
+});
+
+// The 2026-10-29 03:33 run hung for 7 days: testnet's flyctl ssh session never
+// returned though nothing was left running on the remote, so its output was lost
+// and every later night was blocked. Here flyctl is a real child (a bash fake on
+// PATH) driven through the production adapter; only S3 is in-process.
+const FIXTURE_ACCESS_KEY = "tid_FIXTUREACCESSKEY0001";
+const FIXTURE_SECRET_KEY = "tsec_FIXTURESECRETVALUE0001";
+const STAGED_URL = `https://fly.storage.tigris.dev/kingdom-vault/staged?X-Amz-Credential=${FIXTURE_ACCESS_KEY}%2F20261105&X-Amz-Signature=${"ab".repeat(32)}`;
+const FAKE_FLYCTL = `#!/bin/bash
+# flyctl ssh console -a CHAIN -C COMMAND; MODE_<chain> picks the behaviour.
+chain=$4 command=$6
+mode_var="MODE_\${chain//-/_}"; mode=\${!mode_var}
+echo "$$" >> "$FIXTURE/pids"
+echo "$chain" >> "$FIXTURE/flyctl-calls"
+printf 'Connecting to fdaa:0:fixture::2... complete\\n' >&2
+answer() { case "$command" in *CHAIN_BACKUP_V3*) printf 'CHAIN_BACKUP_V3 tar=1 parts=1 bytes=64 upload=0 http=200\\n' ;; *) printf 'CHAIN_BACKUP_V2 tar=1 upload=0 http=200\\n' ;; esac; }
+case "$mode" in
+  hang) # Never returns, ignores SIGTERM, and a descendant holds both pipes.
+    trap '' TERM; /bin/sleep 1000 & echo "$!" >> "$FIXTURE/pids"; wait ;;
+  early) # Fails at once without a record, echoing what it choked on: presigned URLs, tokens, keys.
+    printf 'bash: -c: line 9: syntax error near unexpected token: %s\\n' "$command" >&2
+    set -f; for word in $command; do case $word in *X-Amz-Signature*) printf 'curl: (22) error: 403 %s\\n' "$word" >&2; break ;; esac; done
+    printf 'Authorization: Bearer fixture-bearer-token\\nError: FlyV1 fm2_fixturemacaroon ${FIXTURE_ACCESS_KEY} ${FIXTURE_SECRET_KEY}\\n' >&2
+    printf "Error: no access token available. Please login with 'flyctl auth login'\\n" >&2
+    exit 1 ;;
+  linger) # Exits at once, but leaves a descendant holding its pipes.
+    /bin/sleep 1000 & echo "$!" >> "$FIXTURE/pids"; exit 1 ;;
+  record) # The remote finished and printed its record; the session never closes.
+    answer; /bin/sleep 1000 & echo "$!" >> "$FIXTURE/pids"; wait ;;
+  clean) answer ;;
+  *) exit 99 ;;
+esac
+`;
+
+function flyctlFixture(modes: Record<"zerone-testnet-1" | "zerone-1", string>) {
+  const base = mkdtempSync(join(tmpdir(), "chain-backup-timeout-"));
+  for (const dir of ["bin", "home", "tmp"]) mkdirSync(join(base, dir));
+  writeFileSync(join(base, "bin", "flyctl"), FAKE_FLYCTL, { mode: 0o700 });
+  writeFileSync(join(base, "bin", "security"), `#!/bin/bash
+case "$3" in agenttool-tigris-access-key) printf '${FIXTURE_ACCESS_KEY}' ;; agenttool-tigris-secret-key) printf '${FIXTURE_SECRET_KEY}' ;; *) exit 44 ;; esac
+`, { mode: 0o700 });
+  symlinkSync("/bin/bash", join(base, "bin", "bash"));
+  const env = {
+    PATH: join(base, "bin"), HOME: join(base, "home"), TMPDIR: join(base, "tmp"), FIXTURE: base, LC_ALL: "C",
+    BUN_RUNTIME_TRANSPILER_CACHE_PATH: "0", MODE_zerone_testnet_1: modes["zerone-testnet-1"], MODE_zerone_1: modes["zerone-1"],
+  };
+  const lines = (name: string) => existsSync(join(base, name)) ? readFileSync(join(base, name), "utf8").trim().split("\n").filter(Boolean) : [];
+  const pids = () => lines("pids").map(Number);
+  const runs = join(base, "home", ".kingdom", "logs", "chain-backup-runs");
+  return {
+    base, pids, runs,
+    flyctlCalls: () => lines("flyctl-calls"),
+    markers: () => existsSync(join(base, "home", ".kingdom", "state", "chain-backup")) ? readdirSync(join(base, "home", ".kingdom", "state", "chain-backup")) : [],
+    transcript: (chain: string) => {
+      const names = existsSync(runs) ? readdirSync(runs).filter((name) => name.startsWith(`${chain}-data-`)) : [];
+      if (names.length !== 1) throw new Error(`expected one ${chain} transcript, found ${names.length}`);
+      return { path: join(runs, names[0]), text: readFileSync(join(runs, names[0]), "utf8") };
+    },
+    run(limits: Partial<Limits>, chains: string[] = []) {
+      const harness = join(base, "harness.ts");
+      writeFileSync(harness, `
+let stats = 0;
+Object.defineProperty(Bun, "S3Client", { value: class {
+  presign() { return ${JSON.stringify(STAGED_URL)}; }
+  async stat() { stats++; return { size: 64 }; }
+  list() { throw new Error("prohibited listing"); }
+  delete() { throw new Error("prohibited deletion"); }
+} });
+${FAKE_MULTIPART_FETCH}
+const { main, LIMITS } = await import(${JSON.stringify(SUBJECT)});
+const logs: string[] = [];
+const started = Date.now();
+const code = await main(${JSON.stringify(chains)}, undefined, (line: string) => logs.push(line), { ...LIMITS, ...${JSON.stringify(limits)} });
+console.log(JSON.stringify({ code, logs, stats, s3ops, elapsed: Date.now() - started }));
+`);
+      const result = spawnSync(process.execPath, [harness], { cwd: base, env, encoding: "utf8", timeout: 30000 });
+      if (result.status !== 0) throw new Error(`harness failed: ${result.status} ${result.stderr}`);
+      const summary = JSON.parse(result.stdout);
+      return { ...summary, stderr: result.stderr, outcomes: summary.logs.map((line: string) => JSON.parse(line)) };
+    },
+    close() {
+      for (const pid of pids()) try { process.kill(pid, "SIGKILL"); } catch { /* already gone */ }
+      rmSync(base, { recursive: true, force: true });
+    },
+  };
+}
+
+// Dead, or a zombie awaiting its reaper: either way nothing of the run is left running.
+async function allGone(pids: number[], ms = 3000): Promise<number[]> {
+  const running = (pid: number) => {
+    try { process.kill(pid, 0); } catch { return false; }
+    const state = spawnSync("ps", ["-o", "stat=", "-p", String(pid)], { encoding: "utf8" }).stdout.trim();
+    return state !== "" && !state.startsWith("Z");
+  };
+  const until = Date.now() + ms;
+  let left = pids.filter(running);
+  while (left.length > 0 && Date.now() < until) {
+    await Bun.sleep(50);
+    left = left.filter(running);
+  }
+  return left;
+}
+
+const FAST: Partial<Limits> = { sshMs: 1500, killGraceMs: 400, credentialMs: 5000, runDeadlineMs: 60_000, finishReserveMs: 1000, tickMs: 100 };
+
+describe("hard bounds: no SSH session, and no run, outlives its bound", () => {
+  test("the bounds are sized from real nights and fit inside one night", () => {
+    // Testnet's slowest observed capture is about 2h34m (streamed, 2026-10-29); throttled tar alone took 2h05-2h19.
+    expect(SSH_TIMEOUT_MS).toBe(4 * 3600_000);
+    expect([CREDENTIAL_TIMEOUT_MS, KILL_GRACE_MS, FINISH_RESERVE_MS]).toEqual([60_000, 10_000, 600_000]);
+    // Room for both chains' full SSH bounds, and over by 11:33 after a 03:33 start.
+    expect(RUN_DEADLINE_MS).toBe(8 * 3600_000);
+    expect(RUN_DEADLINE_MS).toBeGreaterThanOrEqual(2 * SSH_TIMEOUT_MS);
+    expect(RUN_DEADLINE_MS).toBeLessThan(24 * 3600_000 - SSH_TIMEOUT_MS);
+    expect(LIMITS).toMatchObject({ sshMs: SSH_TIMEOUT_MS, runDeadlineMs: RUN_DEADLINE_MS, killGraceMs: KILL_GRACE_MS });
+  });
+
+  test("a session that never returns is killed at its bound, whole group and SIGKILL past an ignored SIGTERM", async () => {
+    const f = flyctlFixture({ "zerone-testnet-1": "hang", "zerone-1": "hang" });
+    try {
+      const run = f.run(FAST);
+      expect(run.code).toBe(1);
+      expect(run.stderr).toBe("");
+      // Each chain waits its bound and the grace, no more; mainnet still runs after testnet hangs.
+      expect(run.elapsed).toBeLessThan(2 * (1500 + 400) + 3000);
+      expect(f.flyctlCalls()).toEqual(["zerone-testnet-1", "zerone-1"]);
+      expect(run.outcomes.map((o: any) => [o.chain, o.error, o.ssh_exit, o.capture_status, o.upload_status, o.landed_marker])).toEqual([
+        ["zerone-testnet-1", "TIMEOUT_SSH", 137, "FAILED", "FAILED", "NOT_WRITTEN"],
+        ["zerone-1", "TIMEOUT_SSH", 137, "FAILED", "FAILED", "NOT_WRITTEN"],
+      ]);
+      expect(run.outcomes[0].multipart_status).toBe("OPEN");
+      expect(run.s3ops).toEqual(["create"]);
+      expect(run.stats).toBe(0);
+      expect(f.markers()).toEqual([]);
+      expect(f.pids()).toHaveLength(4);
+      expect(await allGone(f.pids())).toEqual([]);
+      // What the session said before it hung is kept.
+      for (const chain of ["zerone-testnet-1", "zerone-1"]) {
+        const { text } = f.transcript(chain);
+        // Named and headed like the object's capture id; never the command.
+        expect(text).toMatch(new RegExp(`^# kingdom\\.chain-backup\\.transcript/1 chain=${chain} capture=[0-9]{8}T[0-9]{6}Z-[0-9a-f-]{36} started=\\S+ bound_s=2\\n`));
+        expect(text).not.toContain("bash -c");
+        expect(text).toMatch(/\+[0-9.]+s err Connecting to fdaa:0:fixture::2\.\.\. complete\n/);
+        expect(text).toMatch(/# exit=137 timed_out=true /);
+      }
+    } finally { f.close(); }
+  }, 30000);
+
+  test("an early exit without a record is a protocol failure, not a wait, and its words are kept redacted", async () => {
+    const f = flyctlFixture({ "zerone-testnet-1": "early", "zerone-1": "linger" });
+    try {
+      // A long bound: nothing here may wait for it.
+      const run = f.run({ ...FAST, sshMs: 20_000 });
+      expect(run.code).toBe(1);
+      expect(run.elapsed).toBeLessThan(5000);
+      expect(run.outcomes.map((o: any) => [o.chain, o.error, o.ssh_exit, o.landed_marker])).toEqual([
+        ["zerone-testnet-1", "PROTOCOL_FAILED", 1, "NOT_WRITTEN"], ["zerone-1", "PROTOCOL_FAILED", 1, "NOT_WRITTEN"],
+      ]);
+      expect(f.markers()).toEqual([]);
+      // The descendant that held mainnet's pipes after flyctl exited was ended too.
+      expect(f.pids()).toHaveLength(3);
+      expect(await allGone(f.pids())).toEqual([]);
+      const { path, text } = f.transcript("zerone-testnet-1");
+      expect(statSync(path).mode & 0o777).toBe(0o600);
+      expect(statSync(f.runs).mode & 0o777).toBe(0o700);
+      expect(text).toContain("err bash: -c: line 9: syntax error near unexpected token");
+      expect(text).toMatch(/err curl: \(22\) error: 403 .*\[url\]/);
+      expect(text).toContain("err Authorization: [redacted]");
+      expect(text).toContain("err Error: no access token available. Please login with 'flyctl auth login'");
+      // The part URLs' line is far over the line bound: dropped whole, never cut.
+      expect(text).toContain("[line over 16384 characters not kept]");
+      expect(text).toMatch(/# exit=1 timed_out=false /);
+      const everything = [text, f.transcript("zerone-1").text, ...run.logs].join("\n");
+      for (const secret of [FIXTURE_ACCESS_KEY, FIXTURE_SECRET_KEY, "fixture-bearer-token", "fm2_fixture", "https://", "X-Amz-Signature=", "X-Amz-Credential="]) {
+        expect(everything).not.toContain(secret);
+      }
+      expect(everything).not.toMatch(/[0-9a-f]{64}/);
+    } finally { f.close(); }
+  }, 30000);
+
+  test("a record that arrived before the bound is read, but a timed-out session never writes a marker", async () => {
+    const f = flyctlFixture({ "zerone-testnet-1": "record", "zerone-1": "record" });
+    try {
+      const run = f.run(FAST);
+      expect(run.code).toBe(1);
+      expect(run.outcomes[0]).toMatchObject({
+        chain: "zerone-testnet-1", error: "TIMEOUT_SSH", ssh_exit: 143, tar_exit: 1, parts: 1, stream_bytes: 64,
+        multipart_status: "COMPLETED", object_status: "PRESENT", upload_status: "PRESENT", landed_marker: "NOT_WRITTEN",
+      });
+      expect(run.outcomes[1]).toMatchObject({
+        chain: "zerone-1", error: "TIMEOUT_SSH", ssh_exit: 143, tar_exit: 1, upload_exit: 0, object_status: "PRESENT", landed_marker: "NOT_WRITTEN",
+      });
+      expect(run.s3ops).toEqual(["create", "list", "complete"]);
+      expect(run.stats).toBe(2);
+      expect(f.markers()).toEqual([]);
+      expect(await allGone(f.pids())).toEqual([]);
+      expect(f.transcript("zerone-testnet-1").text).toMatch(/\+[0-9.]+s out CHAIN_BACKUP_V3 tar=1 parts=1 bytes=64 upload=0 http=200\n/);
+      expect(f.transcript("zerone-1").text).toMatch(/\+[0-9.]+s out CHAIN_BACKUP_V2 tar=1 upload=0 http=200\n[^]*# exit=143 timed_out=true /);
+    } finally { f.close(); }
+  }, 30000);
+
+  test("a clean session is not slowed by the bounds and still lands, marks and keeps its transcript", async () => {
+    const f = flyctlFixture({ "zerone-testnet-1": "clean", "zerone-1": "clean" });
+    try {
+      const run = f.run({ ...FAST, killGraceMs: 3000 });
+      expect(run.code).toBe(3);
+      expect(run.elapsed).toBeLessThan(2500);
+      expect(run.outcomes.map((o: any) => [o.error, o.ssh_exit, o.landed_marker])).toEqual([[null, 0, "WRITTEN"], [null, 0, "WRITTEN"]]);
+      expect(f.markers().sort()).toEqual(["zerone-1.landed", "zerone-testnet-1.landed"]);
+      expect(f.transcript("zerone-testnet-1").text).toMatch(/# exit=0 timed_out=false /);
+    } finally { f.close(); }
+  }, 30000);
+
+  test("the run's deadline cuts the session it is in and starts no chain after it", async () => {
+    const f = flyctlFixture({ "zerone-testnet-1": "hang", "zerone-1": "hang" });
+    try {
+      // The SSH bound alone would wait a minute; the run's deadline less its reserve comes first.
+      const run = f.run({ ...FAST, sshMs: 60_000, runDeadlineMs: 3000, finishReserveMs: 800, killGraceMs: 300 });
+      expect(run.code).toBe(1);
+      expect(run.elapsed).toBeLessThan(6000);
+      expect(f.flyctlCalls()).toEqual(["zerone-testnet-1"]);
+      expect(run.outcomes.map((o: any) => [o.chain, o.error, o.landed_marker])).toEqual([
+        ["zerone-testnet-1", "TIMEOUT_SSH", "NOT_WRITTEN"], ["zerone-1", "TIMEOUT_DEADLINE", "NOT_WRITTEN"],
+      ]);
+      expect(run.outcomes[1]).toMatchObject({ upload_status: "NOT_ATTEMPTED", multipart_status: "NOT_STARTED", ssh_exit: null });
+      expect(await allGone(f.pids())).toEqual([]);
+    } finally { f.close(); }
+  }, 30000);
+
+  test("main never waits past the deadline, and nothing still pending writes a marker after it", async () => {
+    const tight: Limits = { ...LIMITS, runDeadlineMs: 300, finishReserveMs: 0, tickMs: 20 };
+    // A stat that answers only after the deadline.
+    const { effects, calls } = fakeEffects({ stat: async () => { await Bun.sleep(700); calls.push("stat"); return { size: 64 }; } });
+    const logs: string[] = [];
+    const started = Date.now();
+    expect(await main([], async () => effects, (line) => logs.push(line), tight)).toBe(1);
+    expect(Date.now() - started).toBeLessThan(650);
+    expect(logs.map((line) => JSON.parse(line)).map((o) => [o.chain, o.error, o.landed_marker])).toEqual([
+      ["zerone-testnet-1", "TIMEOUT_DEADLINE", "NOT_WRITTEN"], ["zerone-1", "TIMEOUT_DEADLINE", "NOT_WRITTEN"],
+    ]);
+    // The first chain is logged as it stood at the deadline: completed, its stat still pending.
+    expect(JSON.parse(logs[0])).toMatchObject({ multipart_status: "COMPLETED", upload_status: "FAILED" });
+    await Bun.sleep(800);
+    expect(calls).toContain("stat");
+    expect(calls.some((c) => c.startsWith("mark:"))).toBe(false);
+    // The cutoff alone stops a clean landing's marker.
+    const clean = fakeEffects();
+    expect(await captureChain("zerone-1", clean.effects, AbortSignal.abort())).toMatchObject({ upload_status: "PRESENT", error: "TIMEOUT_DEADLINE", landed_marker: "NOT_WRITTEN" });
+    expect(clean.calls.some((c) => c.startsWith("mark:"))).toBe(false);
+    // Effects that never come up are cut at the deadline too.
+    const stuck: string[] = [];
+    expect(await main([], () => new Promise<Effects>(() => {}), (line) => stuck.push(line), tight)).toBe(1);
+    expect(stuck.map((line) => JSON.parse(line).error)).toEqual(["TIMEOUT_DEADLINE", "TIMEOUT_DEADLINE"]);
+  });
+
+  test("deadlines count wall-clock time, so hours the Mac sleeps through still count", async () => {
+    let wall = 1_000_000;
+    let mono = 50;
+    const clock = { wall: () => wall, mono: () => mono };
+    const slept = startDeadline(4 * 3600_000, 10, clock);
+    expect(slept.remainingMs()).toBe(4 * 3600_000);
+    wall += 5 * 3600_000; // asleep: the wall clock moved, the monotonic one did not
+    await Bun.sleep(40);
+    expect(slept.signal.aborted).toBe(true);
+    slept.cancel();
+    const setBack = startDeadline(1000, 10, clock);
+    wall -= 3600_000; // the wall clock set back an hour does not extend the bound
+    mono += 1000;
+    await Bun.sleep(40);
+    expect(setBack.signal.aborted).toBe(true);
+    setBack.cancel();
+  });
+
+  test("transcript lines are redacted and bounded, and ordinary diagnostics survive", () => {
+    const presigned = presignS3Url({ endpoint: "https://fly.storage.tigris.dev", bucket: "kingdom-vault", region: "auto", accessKeyId: FIXTURE_ACCESS_KEY, secretAccessKey: FIXTURE_SECRET_KEY },
+      "PUT", "chain/zerone-1/x.tar.gz", { partNumber: "1", uploadId: "fixture-upload" }, 43200, "20261105T033300Z");
+    for (const line of [`curl -T part -- '${presigned}'`, `PUT ${presigned.replace("https://", "")}`, `uploadId=fixture-upload&X-Amz-Signature=${"c".repeat(64)}`,
+      `Authorization: AWS4-HMAC-SHA256 Credential=${FIXTURE_ACCESS_KEY}/x, Signature=${"d".repeat(64)}`, `token: FlyV1 fm2_${"e".repeat(30)}`, `key ${FIXTURE_SECRET_KEY}`]) {
+      const redacted = redactLine(line, [FIXTURE_ACCESS_KEY, FIXTURE_SECRET_KEY]);
+      for (const secret of [FIXTURE_ACCESS_KEY, FIXTURE_SECRET_KEY, "X-Amz-Signature=c", "fm2_e", "ccccccccccccccccccccccccccccccccccc", "ddddddddddddddddddddddddddddddddd"]) {
+        expect(redacted).not.toContain(secret);
+      }
+      expect(redacted).not.toMatch(/[0-9a-f]{64}/);
+    }
+    for (const line of ["Connecting to fdaa:50:5a26:a7b:4a4:93f4:2097:2... complete", "CHAIN_BACKUP_V3 tar=1 parts=27 bytes=6876956202 upload=0 http=200",
+      "Error: ssh: handshake failed: EOF", "\x1b[33mWARN\x1b[0m The running flyctl agent (v0.4.74) is older than the current flyctl (v0.4.69)."]) {
+      expect(redactLine(line)).toBe(line.replace(/\x1b\[[0-9;]*m/g, ""));
+    }
+    const dir = mkdtempSync(join(tmpdir(), "chain-backup-transcript-"));
+    try {
+      let now = 0;
+      const transcript = openTranscript(join(dir, "t.log"), "chain=zerone-1", [FIXTURE_SECRET_KEY], () => now);
+      const bytes = (text: string) => new TextEncoder().encode(text);
+      transcript.write("stderr", bytes("first "));
+      now = 1500;
+      transcript.write("stderr", bytes(`line ${FIXTURE_SECRET_KEY}\nsecret-bearing over-long line: `));
+      for (let i = 0; i < 3; i++) transcript.write("stderr", bytes("Z".repeat(8000)));
+      transcript.write("stderr", bytes("zz tail\nafter\n"));
+      transcript.write("stdout", bytes("CHAIN_BACKUP_V2 tar=1 upload=0 http=200"));
+      transcript.close({ code: 0, stdout: null, timedOut: false });
+      const text = readFileSync(join(dir, "t.log"), "utf8");
+      expect(text).toBe([
+        "# kingdom.chain-backup.transcript/1 chain=zerone-1",
+        "+1.5s err first line [redacted]",
+        "+1.5s err [line over 16384 characters not kept]",
+        "+1.5s err after",
+        "+1.5s out CHAIN_BACKUP_V2 tar=1 upload=0 http=200",
+        `# exit=0 timed_out=false elapsed_s=1.5 kept_bytes=${text.split("\n").slice(0, 5).join("\n").length + 1} dropped_bytes=24038`,
+        "",
+      ].join("\n"));
+      // An existing file is never overwritten; the capture goes on without a transcript.
+      const second = openTranscript(join(dir, "t.log"), "again");
+      second.write("stdout", bytes("x\n"));
+      second.close({ code: 0, stdout: null, timedOut: false });
+      expect(readFileSync(join(dir, "t.log"), "utf8")).toBe(text);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 });
