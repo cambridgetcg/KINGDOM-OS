@@ -1409,6 +1409,8 @@ case "$mode" in
 esac
 `;
 
+type Wake = { afterMs: number; jumpMs: number; whenPids: number };
+
 function flyctlFixture(modes: Record<"zerone-testnet-1" | "zerone-1", string>) {
   const base = mkdtempSync(join(tmpdir(), "chain-backup-timeout-"));
   for (const dir of ["bin", "home", "tmp"]) mkdirSync(join(base, dir));
@@ -1417,6 +1419,11 @@ function flyctlFixture(modes: Record<"zerone-testnet-1" | "zerone-1", string>) {
 case "$3" in agenttool-tigris-access-key) printf '${FIXTURE_ACCESS_KEY}' ;; agenttool-tigris-secret-key) printf '${FIXTURE_SECRET_KEY}' ;; *) exit 44 ;; esac
 `, { mode: 0o700 });
   symlinkSync("/bin/bash", join(base, "bin", "bash"));
+  // The first run of a freshly written script can take seconds on macOS; run each
+  // fake once, outside the fixture's records, so no test's timing pays for it.
+  const warm = join(base, "warm");
+  mkdirSync(warm);
+  for (const fake of ["flyctl", "security"]) spawnSync(join(base, "bin", fake), [], { env: { PATH: join(base, "bin"), FIXTURE: warm } });
   const env = {
     PATH: join(base, "bin"), HOME: join(base, "home"), TMPDIR: join(base, "tmp"), FIXTURE: base, LC_ALL: "C",
     BUN_RUNTIME_TRANSPILER_CACHE_PATH: "0", MODE_zerone_testnet_1: modes["zerone-testnet-1"], MODE_zerone_1: modes["zerone-1"],
@@ -1433,9 +1440,10 @@ case "$3" in agenttool-tigris-access-key) printf '${FIXTURE_ACCESS_KEY}' ;; agen
       if (names.length !== 1) throw new Error(`expected one ${chain} transcript, found ${names.length}`);
       return { path: join(runs, names[0]), text: readFileSync(join(runs, names[0]), "utf8") };
     },
-    // wake: the wall clock jumps by jumpMs after afterMs, as when the Mac wakes
-    // from a sleep; timers and the monotonic clock run on as before.
-    harness(limits: Partial<Limits>, chains: string[] = [], wake?: { afterMs: number; jumpMs: number }) {
+    // wake: the wall clock jumps by jumpMs afterMs after the session's first pids
+    // are recorded, as when the Mac wakes from a sleep; timers and the monotonic
+    // clock run on as before.
+    harness(limits: Partial<Limits>, chains: string[] = [], wake?: Wake) {
       const harness = join(base, "harness.ts");
       writeFileSync(harness, `
 let stats = 0;
@@ -1449,18 +1457,27 @@ ${FAKE_MULTIPART_FETCH}
 const { main, LIMITS, activeChildCount } = await import(${JSON.stringify(SUBJECT)});
 const wake = ${JSON.stringify(wake ?? null)};
 let jump = 0;
-if (wake) setTimeout(() => { jump = wake.jumpMs; }, wake.afterMs);
+let wokeAt: number | null = null;
+if (wake) {
+  const { readFileSync } = await import("node:fs");
+  const recorded = () => { try { return readFileSync(process.env.FIXTURE + "/pids", "utf8").trim().split("\\n").filter(Boolean).length; } catch { return 0; } };
+  const poll = setInterval(() => {
+    if (recorded() < wake.whenPids) return;
+    clearInterval(poll);
+    setTimeout(() => { jump = wake.jumpMs; wokeAt = Date.now(); }, wake.afterMs);
+  }, 20);
+}
 const clock = { wall: () => Date.now() + jump, mono: () => performance.now() };
 const logs: string[] = [];
 const started = Date.now();
 const code = await main(${JSON.stringify(chains)}, undefined, (line: string) => logs.push(line), { ...LIMITS, ...${JSON.stringify(limits)}, clock });
-console.log(JSON.stringify({ code, logs, stats, s3ops, elapsed: Date.now() - started, active: activeChildCount() }));
+console.log(JSON.stringify({ code, logs, stats, s3ops, elapsed: Date.now() - started, sinceWake: wokeAt === null ? null : Date.now() - wokeAt, active: activeChildCount() }));
 // As the real entry point does: exit outright, abandoning anything still pending.
 process.exit(0);
 `);
       return harness;
     },
-    run(limits: Partial<Limits>, chains: string[] = [], wake?: { afterMs: number; jumpMs: number }) {
+    run(limits: Partial<Limits>, chains: string[] = [], wake?: Wake) {
       const result = spawnSync(process.execPath, [this.harness(limits, chains, wake)], { cwd: base, env, encoding: "utf8", timeout: 30000 });
       if (result.status !== 0) throw new Error(`harness failed: ${result.status} ${result.stderr}`);
       const summary = JSON.parse(result.stdout);
@@ -1627,15 +1644,15 @@ describe("hard bounds: no SSH session, and no run, outlives its bound", () => {
     const f = flyctlFixture({ "zerone-testnet-1": "hang", "zerone-1": "hang" });
     try {
       const run = f.run({ ...FAST, sshMs: 60_000, runDeadlineMs: 30_000, finishReserveMs: 500, killGraceMs: 2000, tickMs: 200 }, [],
-        { afterMs: 1000, jumpMs: 10 * 3600_000 });
+        { afterMs: 1000, jumpMs: 10 * 3600_000, whenPids: 2 });
       expect(run.code).toBe(1);
       expect(f.flyctlCalls()).toEqual(["zerone-testnet-1"]);
       expect(run.outcomes.map((o: any) => [o.chain, o.error, o.landed_marker])).toEqual([
         ["zerone-testnet-1", "TIMEOUT_DEADLINE", "NOT_WRITTEN"], ["zerone-1", "TIMEOUT_DEADLINE", "NOT_WRITTEN"],
       ]);
       // main waited out the grace for the SIGKILL, and then held no child.
-      expect(run.elapsed).toBeGreaterThanOrEqual(1000 + 2000);
-      expect(run.elapsed).toBeLessThan(1000 + 2 * 2000 + 3000);
+      expect(run.sinceWake).toBeGreaterThanOrEqual(2000);
+      expect(run.sinceWake).toBeLessThan(2 * 2000 + 3000);
       expect(run.active).toBe(0);
       expect(f.markers()).toEqual([]);
       // Checked straight after the harness exited: nothing of the session was left behind.
@@ -1650,7 +1667,7 @@ describe("hard bounds: no SSH session, and no run, outlives its bound", () => {
     const f = flyctlFixture({ "zerone-testnet-1": "hang", "zerone-1": "hang" });
     try {
       const runner = f.start({ ...FAST, sshMs: 20_000, killGraceMs: 500 });
-      const until = Date.now() + 10_000;
+      const until = Date.now() + 25_000;
       while (f.pids().length < 2 && Date.now() < until) await Bun.sleep(50);
       expect(f.pids()).toHaveLength(2);
       expect(await allGone(f.pids(), 0)).toEqual(f.pids());
@@ -1660,7 +1677,7 @@ describe("hard bounds: no SSH session, and no run, outlives its bound", () => {
       expect(await allGone(f.pids(), 4000)).toEqual([]);
       expect(f.markers()).toEqual([]);
     } finally { f.close(); }
-  }, 30000);
+  }, 45000);
 
   test("main never waits past the deadline, and nothing still pending writes a marker after it", async () => {
     const tight: Limits = { ...LIMITS, runDeadlineMs: 300, finishReserveMs: 0, tickMs: 20 };

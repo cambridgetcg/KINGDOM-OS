@@ -490,6 +490,9 @@ export async function runBounded(argv: string[], options: ChildOptions): Promise
     const until = Date.now() + options.killGraceMs;
     while (lingering() && Date.now() < until) await delay(Math.min(50, options.killGraceMs)).promise;
     if (lingering()) send("SIGKILL");
+    // A member forked while the group was being killed escapes one SIGKILL:
+    // repeat it, bounded, while any member is left.
+    for (let i = 0; i < 40 && send(0); i++) { send("SIGKILL"); await delay(25).promise; }
     await exited;
   })();
   const lifeline = ownGroup ? startLifeline(pid, options.killGraceMs) : null;
