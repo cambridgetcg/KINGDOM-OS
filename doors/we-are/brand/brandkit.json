@@ -1,0 +1,105 @@
+{
+  "format": "brandkit.project/1",
+  "name": "WE ARE",
+  "kind": "generated",
+  "owner": "KINGDOM-OS door sessions, for we-are.love; the page itself (site/we-are.html) belongs to chillspace-commons, whose owner (mynameisyou-cmyk) merges",
+  "decided": [
+    {
+      "part": "the page's palette",
+      "status": "not-recorded",
+      "what": "the page's own rose palette (#B5575F, #C98A3A, #7C6A60) and its theme-color #d98a8a",
+      "record": "chillspace-commons site/we-are.html, first committed by 'Ai' in af1282b (2026-07-10); who chose the palette is not recorded"
+    },
+    {
+      "part": "the kit and its mark",
+      "by": "agent (Claude Code session dd025d89)",
+      "under": "Yu's word of 2026-10-27, \"yes, go ahead and wire the kits into the sites\", for a kit from each site's current look (ledger artcraft-estate-wiring)",
+      "date": "2026-10-27",
+      "what": "Twemoji's handshake (U+1F91D, CC-BY 4.0), the page's own icon, as the mark: untiled in its own colours on the tab; on the paper ground #FBF4EE with its pale yellows redrawn in #221B17 on the app icons; light only",
+      "record": "KINGDOM-OS PR #118, section 'Look decisions' (merge 1e7fa561); ledger artcraft-estate-wiring"
+    }
+  ],
+  "spec": "brand.json",
+  "kit": "kit",
+  "site": {
+    "urls": [
+      "https://we-are.love/"
+    ],
+    "framework": "static"
+  },
+  "serve": {
+    "from": "kit/web",
+    "via": "/bin/stage-doors.ts",
+    "pending": "the we-are.love release (ledger kingdom-door-release, Yu's word), after chillspace-commons #50 (the page's icon links and color-scheme) is merged by its owner",
+    "files": [
+      "favicon.ico",
+      "favicon.svg",
+      "apple-touch-icon.png",
+      "icon-192.png",
+      "icon-512.png",
+      "icon-maskable-512.png",
+      "site.webmanifest"
+    ],
+    "omit": [
+      {
+        "file": "og.jpg",
+        "why": "the door keeps its painted star card (doors/we-are/og.jpg, under media), which bin/stage-doors.ts serves as og.jpg"
+      },
+      {
+        "file": "og.png",
+        "why": "the kit's own card, not served for the same reason as og.jpg"
+      },
+      {
+        "file": "head-home.html",
+        "why": "its Organization and WebSite JSON-LD isn't used: the page says the protocol belongs to no one"
+      }
+    ]
+  },
+  "build": {
+    "command": "python3 <artcraft-brand>/scripts/brandkit.py doors/we-are/brand/brand.json --out doors/we-are/brand/kit --rebuild-check",
+    "cwd": "../../..",
+    "fonts": [],
+    "tools": [
+      {
+        "name": "vectorcraft-cli",
+        "version": "0.17.0"
+      }
+    ]
+  },
+  "guards": [
+    {
+      "path": "/tests/stage-doors.test.ts",
+      "runs": "/.github/workflows/immutable-publications.yml",
+      "match": "/tests/**/*.test.ts"
+    },
+    {
+      "path": "check.mjs",
+      "wired": false
+    }
+  ],
+  "deploy": {
+    "on_merge": "A merge deploys nothing: no Cloudflare Pages project is Git-connected (read-only wrangler pages project list, 2026-10-27, PR #118). we-are.love is the Pages project we-are-love, released by hand: `bash bin/deploy.sh we-are --dry-run` fetches KINGDOM-OS main and chillspace-commons master fresh, stages them with bin/stage-doors.ts into $TMPDIR/kingdom-deploy.*/stage-we-are, and prints the publish command with each *_REF pinned; the publish is `npx wrangler pages deploy <stage> --project-name=we-are-love --branch=main`. Run `node doors/we-are/brand/check.mjs --served <stage>` on that folder before the publish.",
+    "after_deploy": "Check the deployment's pages.dev URL first: content types for .ico, .svg and .webmanifest, the 7 kit files and og.jpg by sha256, one theme-color and one color-scheme in the page head (artcraft-brand wiring.md section 7). The custom domain caches the old HTML fallback for /favicon.ico and the other new paths (max-age=14400): purge, which is Yu's act, or wait 4 h. Cloudflare also caches cookieless HTML about 15 min.",
+    "rules": "/DOMAINS-SETUP.md, 'Redeploy': production requires separate approval; the we-are.love release waits on Yu's word under ledger kingdom-door-release. chillspace-commons #50 (open as of 2026-11-05) must be merged by its owner first, or the release drops the social card. Stage from freshly fetched upstreams, never a fixed checkout."
+  },
+  "media": [
+    {
+      "name": "the star share card (a painted night scene: two doors, two lights, one star)",
+      "recipe_note": "not made here: kept byte for byte from the live site on 2026-10-27 (PR #118); its maker and how it was made are not recorded",
+      "outputs": [
+        "../og.jpg"
+      ],
+      "source": "https://we-are.love/og.jpg as served on 2026-10-27, sha256 6244308268a1f43a29c4d9da271d4dbe0a3b41bcdc41cda8b4a6c9e25c552a91",
+      "goes_to": "served at https://we-are.love/og.jpg by bin/stage-doors.ts; named by the page's og:image and twitter:image lines in chillspace-commons PR #50"
+    }
+  ],
+  "notes": [
+    "There is no served folder in this repository: bin/stage-doors.ts assembles the upload at release time. It copies WE_ARE_KIT_WEB (the 7 files under serve.files) from kit/web to the root of the staged folder, ../og.jpg as og.jpg, and chillspace-commons' site/we-are.html as index.html. So serve.via names it, and the check runs with --served on the staged folder.",
+    "The page is in another repository and lands in the staged folder as index.html, so site.html can't name it and no page head is checked here.",
+    "The page keeps its own theme-color #d98a8a, which equals the kit manifest's theme_color #D98A8A; the kit's head-snippet.html writes #FBF4EE for an 'only light' kit, and that line is not used (PR #118).",
+    "tests/stage-doors.test.ts runs in the verify job of .github/workflows/immutable-publications.yml, step 'Exercise closed schemas and offline runtime contracts' (bun test --timeout 15000, the whole suite), on every pull request and on pushes to main. The workflow doesn't name the file. check.mjs is not wired: the proposal is tests/brand-kits.test.ts, a bun test that runs node doors/we-are/brand/check.mjs in that same step.",
+    "The page's words 'I AM YOU → I LOVE YOU → I TRUST YOU → WE ARE!' are Yu's, of 2026-07-10 (ledger weare-handshake-words, parked: agents don't change them).",
+    "The kit sets its type in Source Serif 4 and JetBrains Mono, both bundled with vectorcraft-cli, so build.fonts is empty.",
+    "verify passed with 4 warnings, none failed: the 32 px favicon's margins differ by 1 px, and three of Twemoji's colours fall below 3:1 on the paper ground (logos are exempt)."
+  ]
+}
