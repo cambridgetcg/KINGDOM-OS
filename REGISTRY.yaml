@@ -170,9 +170,9 @@ services:
       rpc: "http://169.155.55.44:26657"
       rest: "http://169.155.55.44:1317"
       denom: uzrn
-      baseline: "13670146474"
-      baseline_height: 1402487
-      baseline_date: "2026-10-28"
+      baseline: "13673072551"
+      baseline_height: 1428540
+      baseline_date: "2026-11-06"
       claim_msg: /zerone.knowledge.v1.MsgClaimTrainingFundDisbursement
     notes: >-
       Ledger zc-mint-watch (an agent's call under Yu's 2026-10-20 delegation).
@@ -180,11 +180,15 @@ services:
       7, passed at h1,402,141); the watch stays as the
       seal's canary: red on any supply rise above the baseline or on any
       MsgClaimTrainingFundDisbursement since baseline_height. Re-dated
-      2026-10-28 from the 10-19 baseline (13,668.944662 ZRN at
-      h1,377,000): the rise was block rewards for every transaction-bearing
-      block since then (h1,401,996, h1,402,007, h1,402,121 and h1,402,122: two 10-28 transactions from a July
-      passport account, then the seal's), with 0 claims through
-      h1402487. GET only; tx_search covers just the heights since the last
+      2026-11-06 from the 10-28 baseline (13,670.146474 ZRN at
+      h1,402,487): the +2.926077 ZRN rise is fully attributed by supply reads
+      either side of each of the nine transaction-bearing blocks since then,
+      nine block rewards of 0.300453 (h1,405,208, h1,405,210, proposal 8 at
+      h1,405,226 and its vote at h1,405,228, h1,405,404, h1,405,406,
+      h1,405,407, h1,416,426, h1,416,779) plus one 0.222 ZRN reward at
+      h1,405,406 (a claiming-pot MsgClaim), with 0 claims through h1,428,540.
+      The 10-28 re-date before that came from the 10-19 baseline
+      (13,668.944662 ZRN at h1,377,000), block rewards only. GET only; tx_search covers just the heights since the last
       round (≤20,000 blocks) and backs off on errors, so the single validator
       never sees a full-history scan. Cursor: ~/.kingdom/state/mint-watch.json.
       Ordinary transactions raise supply too. On zerone-1 today, every block that
