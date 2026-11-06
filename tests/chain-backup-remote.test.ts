@@ -1623,9 +1623,11 @@ describe("hard bounds: no SSH session, and no run, outlives its bound", () => {
     const f = flyctlFixture({ "zerone-testnet-1": "hang", "zerone-1": "hang" });
     try {
       // The SSH bound alone would wait a minute; the run's deadline less its reserve comes first.
-      const run = f.run({ ...FAST, sshMs: 60_000, runDeadlineMs: 3000, finishReserveMs: 800, killGraceMs: 300 });
+      // The reserve covers the session's cleanup: the grace, then up to about 1 s of repeated
+      // SIGKILL while a member lingers (an unreaped zombie in a Linux container counts).
+      const run = f.run({ ...FAST, sshMs: 60_000, runDeadlineMs: 4000, finishReserveMs: 2000, killGraceMs: 300 });
       expect(run.code).toBe(1);
-      expect(run.elapsed).toBeLessThan(6000);
+      expect(run.elapsed).toBeLessThan(7000);
       expect(f.flyctlCalls()).toEqual(["zerone-testnet-1"]);
       expect(run.outcomes.map((o: any) => [o.chain, o.error, o.landed_marker])).toEqual([
         ["zerone-testnet-1", "TIMEOUT_SSH", "NOT_WRITTEN"], ["zerone-1", "TIMEOUT_DEADLINE", "NOT_WRITTEN"],
