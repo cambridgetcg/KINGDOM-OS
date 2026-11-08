@@ -4693,7 +4693,7 @@
           "name": "ww3-intelligence",
           "state": "remote",
           "domain": "none",
-          "purpose": "Geopolitical event watcher — feeds prediction-markets research",
+          "purpose": "Collects bounded geopolitical source observations on GitHub Actions — the prediction-markets bridge is disconnected",
           "dependsOn": [],
           "door": null
         },
