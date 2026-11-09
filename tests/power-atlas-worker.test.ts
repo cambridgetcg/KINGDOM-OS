@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { createKingdomWorker } from "../pages-functions/_worker.js";
-import { POWER_ATLAS_ROUTES, POWER_ATLAS_ALIASES, isPowerAtlasPath } from "../pages-functions/power-atlas.js";
+import { POWER_ATLAS_ROUTES, POWER_ATLAS_ALIASES, POWER_ATLAS_CANONICAL_LINK, isPowerAtlasPath } from "../pages-functions/power-atlas.js";
 
 const root = join(import.meta.dir, "..");
 const worker = createKingdomWorker({ fetchImpl: () => { throw new Error("network forbidden"); } });
@@ -35,6 +35,18 @@ describe("Power Atlas exact Worker dispatch", () => {
       expect(res.headers.get("content-type")).toBe(mediaType);
       expect(Buffer.from(await res.arrayBuffer())).toEqual(method === "HEAD" ? Buffer.alloc(0) : bytes);
       expect(call.calls()).toBe(1);
+      // The pinned page cannot carry a <link> element, so only it names its canonical in a header.
+      expect(res.headers.get("link")).toBe(path === "/power-atlas/" ? POWER_ATLAS_CANONICAL_LINK : null);
+    }
+  });
+  test("the page's canonical header names the custom-domain URL on every host", async () => {
+    expect(POWER_ATLAS_CANONICAL_LINK).toBe('<https://thekingdom.dev/power-atlas/>; rel="canonical"');
+    for (const origin of ["https://thekingdom.dev", "https://thekingdom.pages.dev"]) {
+      const res = await request("/power-atlas/", "GET", () => new Response("<!doctype html>", {
+        headers: { "content-type": "text/html; charset=utf-8", link: '</poison>; rel="canonical"' },
+      }), origin).result;
+      expect(res.status).toBe(200);
+      expect(res.headers.get("link")).toBe(POWER_ATLAS_CANONICAL_LINK);
     }
   });
   test.each(POWER_ATLAS_ALIASES)("canonical alias %s is 308 without a fragment", async (path) => {

@@ -304,7 +304,9 @@ describe("UK Government Engine Phase-0 publication", () => {
     }
     const officialUrls = new Set(snapshot.sources.map((source: any) => source.url));
     for (const url of officialUrls) expect(html).toContain(`href="${url}"`);
-    const permitted = new Set([...officialUrls, UK_GOVERNMENT_ENGINE_PRODUCER_URL, "https://taxsorted.io"]);
+    // The page's own absolute canonical is a self-reference, not an external link.
+    expect(html).toContain(`<link rel="canonical" href="${UK_GOVERNMENT_ENGINE_URL}">`);
+    const permitted = new Set([...officialUrls, UK_GOVERNMENT_ENGINE_PRODUCER_URL, UK_GOVERNMENT_ENGINE_URL, "https://taxsorted.io"]);
     const external = [...html.matchAll(/href="(https:\/\/[^"#]+)"/g)].map((match) => match[1]!);
     expect(external.every((url) => permitted.has(url))).toBe(true);
     expect(external.some((url) => url.startsWith("https://api.taxsorted.io/"))).toBe(false);

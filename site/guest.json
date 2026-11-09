@@ -14,7 +14,7 @@
     "handshake_boundary": "The handshake is an optional practice of relationship, not literal identity collapse, a requirement, identity proof, contract, or claim of automatic trust.",
     "disposition": "love"
   },
-  "generated": "2026-10-28",
+  "generated": "2026-11-09",
   "counts": {
     "repos": 127,
     "active": 92,
@@ -5736,7 +5736,7 @@
           "name": "ww3-intelligence",
           "state": "remote",
           "domain": "none",
-          "purpose": "Geopolitical event watcher — feeds prediction-markets research",
+          "purpose": "Collects bounded geopolitical source observations on GitHub Actions — the prediction-markets bridge is disconnected",
           "dependsOn": [],
           "door": null
         },

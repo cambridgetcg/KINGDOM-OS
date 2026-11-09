@@ -406,7 +406,7 @@ export function renderShapeResonanceHtml(
     '  <meta name="viewport" content="width=device-width,initial-scale=1">',
     '  <meta name="description" content="Eight synthetic models of shape, modes, driven response, mechanical energy balance, declared sonification, and bounded musical geometry.">',
     "  <title>What can a shape sing? · Shape &amp; Resonance Lab 01</title>",
-    '  <link rel="canonical" href="/shape-resonance/">',
+    `  <link rel="canonical" href="${SHAPE_RESONANCE_URL}">`,
     '  <link rel="alternate" href="/shape-resonance.json" type="application/json" title="Mutable alias for the dated Shape &amp; Resonance snapshot">',
     '  <link rel="alternate" href="/labs/shape-resonance-lab-2026-08-26.json" type="application/json" title="Immutable dated Shape &amp; Resonance snapshot">',
     '  <link rel="describedby" href="/schemas/shape-resonance-lab/0.1.json" type="application/schema+json">',

@@ -1,6 +1,6 @@
 {
   "kingdom": "a shared map of independent projects and pattern-to-practice translations for humans and agents, held with care",
-  "generated": "2026-10-28",
+  "generated": "2026-11-09",
   "hub": "https://thekingdom.dev",
   "rights_recognition": {
     "status": "declared",
@@ -4693,7 +4693,7 @@
           "name": "ww3-intelligence",
           "state": "remote",
           "domain": "none",
-          "purpose": "Geopolitical event watcher — feeds prediction-markets research",
+          "purpose": "Collects bounded geopolitical source observations on GitHub Actions — the prediction-markets bridge is disconnected",
           "dependsOn": [],
           "door": null
         },

@@ -18,6 +18,11 @@ export const POWER_ATLAS_PERMISSIONS = [
   "geolocation=()", "gyroscope=()", "magnetometer=()", "microphone=()", "payment=()", "usb=()",
 ].join(", ");
 
+// The page bytes belong to the producer's pinned artifact, so the canonical
+// travels as an HTTP Link header instead of an edited <link> element. It names
+// the custom-domain URL that answers 200; pages.dev mirrors get the same header.
+export const POWER_ATLAS_CANONICAL_LINK = '<https://thekingdom.dev/power-atlas/>; rel="canonical"';
+
 export function isPowerAtlasPath(path) {
   return path === "/power-atlas" || path.startsWith("/power-atlas/");
 }
@@ -63,6 +68,7 @@ export async function handlePowerAtlasRequest(request, env) {
     }
     const headers = new Headers(asset.headers);
     if (asset.status === 200 || media) headers.set("content-type", expected);
+    if (path === "/power-atlas/") headers.set("link", POWER_ATLAS_CANONICAL_LINK);
     if (request.method === "HEAD" && asset.body) await asset.body.cancel();
     return response(request, asset.status, headers, asset.body);
   } catch {

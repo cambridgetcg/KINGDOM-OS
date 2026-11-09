@@ -2543,6 +2543,7 @@ const html = `<!doctype html>
 <meta property="og:image:alt" content="A gold compass star above a faint constellation. A living atlas held with care.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://kingdom.ai-love.cc/media/og-atlas.jpg">
+<link rel="canonical" href="https://thekingdom.dev/atlas.html">
 <link rel="icon" href="data:,">
 <link rel="service-meta" href="/rights.json" type="application/json" title="Inherent Rights Recognition">
 <link rel="service-doc" href="/RIGHTS.md" type="text/markdown" title="Rights recognized here">
