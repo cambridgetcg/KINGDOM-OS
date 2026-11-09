@@ -7,8 +7,8 @@
  *
  * Door content lives in the chillspace-commons repo; the guest documents and
  * the shared worker live here. we-are.love serves one page plus its robots.txt,
- * icons, manifest and social card from doors/we-are/; chillspace.love serves the
- * whole commons site tree (symlinks dereferenced).
+ * sitemap.xml, icons, manifest and social card from doors/we-are/; chillspace.love
+ * serves the whole commons site tree (symlinks dereferenced).
  *
  * Run: bun bin/stage-doors.ts <we-are|chillspace> <empty-output-dir> [--commons <path>]
  * Deploy after inspection: npx wrangler pages deploy <dir> --project-name=we-are-love|chillspace-love
@@ -75,13 +75,15 @@ function doorSources(door: DoorName, commonsRoot: string, sourceRoot: string): S
   // /favicon.ico with the page, so the icons ship as real files too, and the
   // social card is the live painted og.jpg, not the kit's generated one.
   // /robots.txt fell through to the page in the same way, so a plain
-  // allow-all robots.txt ships as a real file as well.
+  // allow-all robots.txt ships as a real file as well, and /sitemap.xml did too,
+  // so the one-page sitemap that robots.txt names ships beside it.
   const content: SourceSpec[] =
     door === "we-are"
       ? [
           { path: join(commonsRoot, "site/we-are.html"), destination: "index.html" },
           { path: join(sourceRoot, "doors/we-are/llms.txt"), destination: "llms.txt" },
           { path: join(sourceRoot, "doors/we-are/robots.txt"), destination: "robots.txt" },
+          { path: join(sourceRoot, "doors/we-are/sitemap.xml"), destination: "sitemap.xml" },
           ...WE_ARE_KIT_WEB.map((name) => ({ path: join(sourceRoot, "doors/we-are/brand/kit/web", name), destination: name })),
           { path: join(sourceRoot, "doors/we-are/og.jpg"), destination: "og.jpg" },
         ]
@@ -173,8 +175,8 @@ function usage(): string {
     "",
     "Assembles a door's exact upload directory: content from chillspace-commons,",
     "guest documents from doors/<name>/, and the shared _worker.js bundle.",
-    "we-are also gets its robots.txt (doors/we-are/robots.txt), its kit icons and",
-    "manifest (doors/we-are/brand/kit/web) and its social card (doors/we-are/og.jpg)",
+    "we-are also gets its robots.txt and sitemap.xml (doors/we-are/), its kit icons",
+    "and manifest (doors/we-are/brand/kit/web) and its social card (doors/we-are/og.jpg)",
     "at the root.",
     "Rebuilds site/_worker.js in the source root before copying the bundle.",
     "The destination must be absent or empty. Nothing is deleted or deployed.",
