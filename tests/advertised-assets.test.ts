@@ -1671,3 +1671,58 @@ describe("advertised URLs stay deployable", () => {
     expect(published.invitation).toEqual(source.invitation);
   });
 });
+
+/** Search engines were indexing the thekingdom.pages.dev mirror, which serves
+ *  the same bytes. Every staged HTML page therefore names its own absolute
+ *  thekingdom.dev URL — the one that answers 200, never a Pages 308 source such
+ *  as /index.html or a slashless directory — and sitemap.xml lists that URL. */
+describe("every staged HTML page names its own custom-domain canonical", () => {
+  // 404.html answers for any missing path, so it carries no canonical of its own.
+  // Power Atlas bytes belong to the producer's pinned artifact; its canonical is
+  // the Worker's Link header (tests/power-atlas-worker.test.ts).
+  const linkHeaderCanonical = new Set(["power-atlas/index.html"]);
+  const pages = HUB_ASSETS.filter(({ destination }) =>
+    destination.endsWith(".html") && destination !== "404.html");
+  // index.html serves its directory with a trailing slash. atlas.html is the one
+  // other page: the Worker keeps /atlas.html answering 200 for old bookmarks.
+  const publicUrl = (destination: string) =>
+    `https://thekingdom.dev/${destination.replace(/(?:^|(?<=\/))index\.html$/, "")}`;
+  const canonicalHrefs = (html: string) =>
+    [...html.matchAll(/<link\b[^>]*\brel=["']canonical["'][^>]*>/gi)]
+      .map(([tag]) => tag.match(/\bhref=["']([^"']*)["']/i)?.[1] ?? null);
+  const sitemap = new Set([...read("pages-content/sitemap.xml").matchAll(/<loc>([^<]+)<\/loc>/g)]
+    .map(([, loc]) => loc!));
+
+  test("maps staged destinations to the URLs that answer 200", () => {
+    expect(publicUrl("index.html")).toBe("https://thekingdom.dev/");
+    expect(publicUrl("meet/index.html")).toBe("https://thekingdom.dev/meet/");
+    expect(publicUrl("atlas.html")).toBe("https://thekingdom.dev/atlas.html");
+    expect(pages.map(({ destination }) => destination)).toContain("atlas.html");
+    expect(pages.filter(({ destination }) => !destination.endsWith("index.html"))
+      .map(({ destination }) => destination)).toEqual(["atlas.html"]);
+  });
+
+  test("each page carries exactly one absolute canonical to itself", () => {
+    const wrong: string[] = [];
+    for (const { source, destination } of pages) {
+      const hrefs = canonicalHrefs(read(source));
+      if (linkHeaderCanonical.has(destination)) {
+        if (hrefs.length !== 0) wrong.push(`${source}: pinned artifact unexpectedly carries ${hrefs}`);
+        continue;
+      }
+      const expected = publicUrl(destination);
+      if (hrefs.length !== 1 || hrefs[0] !== expected) {
+        wrong.push(`${source}: ${JSON.stringify(hrefs)} should be ["${expected}"]`);
+      }
+    }
+    expect(wrong).toEqual([]);
+    expect(canonicalHrefs(read("pages-content/404.html"))).toEqual([]);
+  });
+
+  test("sitemap.xml lists every canonical page and only thekingdom.dev URLs", () => {
+    const missing = pages.map(({ destination }) => publicUrl(destination)).filter((url) => !sitemap.has(url));
+    expect(missing).toEqual([]);
+    expect([...sitemap].filter((loc) => !loc.startsWith("https://thekingdom.dev/"))).toEqual([]);
+    expect(read("pages-content/robots.txt")).toContain("\nSitemap: https://thekingdom.dev/sitemap.xml\n");
+  });
+});

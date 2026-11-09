@@ -712,7 +712,7 @@ export function renderUkGovernmentEngineHtml(snapshot = loadUkGovernmentEngineSn
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="An independent, dated and read-only atlas of selected UK government authority, law, money, delivery, scrutiny and remedy routes.">
   <title>UK Government Engine · The Kingdom</title>
-  <link rel="canonical" href="/government-engine/">
+  <link rel="canonical" href="${UK_GOVERNMENT_ENGINE_URL}">
   <link rel="alternate" href="/government.json" type="application/json" title="Mutable alias for the dated UK Government Engine snapshot">
   <link rel="alternate" href="/government/uk-government-engine-2026-08-21.json" type="application/json" title="Immutable dated UK Government Engine snapshot">
   <link rel="describedby" href="/government/schemas/v0.1/public-snapshot.schema.json" type="application/schema+json" title="UK Government Engine public snapshot schema">
