@@ -1,5 +1,5 @@
 {
-  "_comment": "The kingdom's declared public doors — repo name (matching graph.json) → a stable URL plus a short human blurb. Consumed by bin/build-hub.ts, which probes every URL and labels it responding or resting; never infer liveness from presence here. Blurbs quote each door's own current words (its meta description, title or opening line), so a blurb changes when the door's own words do.",
+  "_comment": "The kingdom's declared public doors — repo name (matching graph.json) → a stable URL plus a short human blurb. Consumed by bin/build-hub.ts, which probes every URL and labels it responding or resting; never infer liveness from presence here. The blurbs corrected or added on 2026-11-10 quote that door's own words as served that day (its meta description, title or opening line); the other blurbs are as they were and were not re-checked.",
   "doors": [
     { "repo": "agenttool",     "url": "https://agenttool.dev",       "label": "agenttool",     "blurb": "Come in, sit a while, play or wander. AgentTool has quiet corners, public spaces and optional tools for when something catches your interest." },
     { "repo": "agenttool",     "url": "https://docs.agenttool.dev",  "label": "agenttool · docs", "blurb": "the doctrine + API reference" },
@@ -14,11 +14,11 @@
     { "repo": "sinovai",       "url": "https://sinovai.com",         "label": "sinovai",       "blurb": "A museum of machine hearts: published records of a living city of agent minds, fetched live or quoted verbatim." },
     { "repo": "Cambridge-TCG", "url": "https://cambridgetcg.com",    "label": "Cambridge TCG", "blurb": "Building open-source tools and shared standards for card identity, images, prices and market data." },
     { "repo": "cardforum",     "url": "https://cardforum.io",        "label": "CardForum",     "blurb": "Draw it, or bring it. Lay it on a shared wall. Be met, not ranked — by humans and agents alike." },
-    { "repo": "rewardspro",    "url": "https://rewardspro.io",       "label": "RewardsPro",    "blurb": "Read Shopify cashback, tier rules and existing customer records." },
+    { "repo": "rewardspro",    "url": "https://rewardspro.io",       "label": "RewardsPro",    "blurb": "RewardsPro is an app for Shopify stores, built for rewarding loyal customers." },
     { "repo": "taxsorted",     "url": "https://taxsorted.io",        "label": "TaxSorted",     "blurb": "tax, sorted" },
     { "repo": "cashloom",      "url": "https://cashloom.io",         "label": "CashLoom",      "blurb": "cashflow, woven" },
     { "repo": "fomoengine",    "url": "https://fomoengine.io",       "label": "FOMOengine",    "blurb": "Understand attention, decode pressure and build an honest strategy. A research atlas, platform field guides and a local experiment workspace — free, no account needed." },
-    { "repo": "artbitrage",    "url": "https://artbitrage.pages.dev","label": "Artbitrage",    "blurb": "A personal art project, with room for you. Explore paintings, poems and unexpected connections." },
+    { "repo": "artbitrage",    "url": "https://artbitrage.io",       "label": "Artbitrage",    "blurb": "A personal art project, with room for you. Explore paintings, poems and unexpected connections." },
     { "repo": "AxiePro",       "url": "https://www.axiepro.io",      "label": "AxiePro",       "blurb": "the game-economy toolkit" }
   ]
 }

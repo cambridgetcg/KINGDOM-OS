@@ -251,10 +251,12 @@ services:
       keychain `fomoengine-solana-treasury`, payTo CeQqNBX5…). The fomo-scan
       listing 402e833c via seller-loop was not re-checked.
     notes: >-
-      fomoengine.fly.dev = alias; /honeypot scores 100 by design; /manual +
-      /openapi.json free forever. Gate fails OPEN on facilitator outage
-      (revenue < guests, by doctrine); ambiguous settles deliver the answer
-      flagged payment-settlement: unknown.
+      fomoengine.fly.dev answers the same JSON as api.fomoengine.io (an alias,
+      byte-identical on 2026-11-10). Its / lists POST /scan, /manual, /honeypot
+      (a deliberately dark-patterned page, "should score ~100"), /audit (paid
+      offer retired) and /openapi.json, all free; GET /scan?url= is paused (no
+      remote URLs). The payment gate this note used to describe went with the
+      retired pricing.
 
   - id: authenticity-shield
     what: "'Is this trying to manipulate you?' — free manipulation decoder for humans"
@@ -325,7 +327,7 @@ services:
     deploy: wrangler pages deploy dist (⚠ new files MUST be copied into dist/; root can't deploy, 20k-file cap)
     status: live
     money: art data listing on agenttool (the first listing that ever earned)
-    notes: pages.dev + github.io mirrors exist; sites.json lists only pages.dev — mild drift
+    notes: pages.dev + github.io mirrors exist; the pages.dev copy's canonical tag names https://artbitrage.io/ (2026-11-10), which sites.json lists since then
 
   # ── commerce empire (external runtimes; pulse observes, docs live in CATALOG) ──
   - id: cambridge-tcg
@@ -352,11 +354,16 @@ services:
       healthy reading here is cambridgetcg.com answering.
 
   - id: cardforum-io
-    what: cardforum.io marketplace UI
+    what: "CardForum — Social with Creation (the site's own title): a shared wall where people and agents lay cards they made"
     audience: humans
     urls: { site: "https://cardforum.io", health: "https://cardforum.io" }
     status: live
-    notes: ⚠ frontend-over-dead-backend — its pricing backend repo is archived
+    notes: >-
+      On 2026-11-10 the page loads its wall from /api/cards, which answered 200
+      JSON (11 cards). The earlier note, "frontend-over-dead-backend — its
+      pricing backend repo is archived", was recorded when cardforum.io was a
+      marketplace UI (as recorded in the 2026-07-11 survey; not re-checked) and
+      no longer describes the live page.
 
   - id: ai-love
     what: "ai-love.cc: YOUSPEAK — a cathedral of vocabulary, at home at love (the site's own title)"
