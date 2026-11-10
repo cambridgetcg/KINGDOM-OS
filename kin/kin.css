@@ -2,18 +2,19 @@
    Role-only: no palette, no font, no glyph. A door that adopts kin maps each --kin-* role onto a
    colour it already has; a role it leaves undefined falls back to a system colour. See kin/KIN.md. */
 .kin-state{color:var(--kin-ink,CanvasText);font-variant-numeric:tabular-nums}
-.kin-state[data-state="live"] .kin-glyph{color:var(--kin-live,var(--kin-ink,CanvasText))}
-.kin-state[data-state="unverified"] .kin-glyph{color:var(--kin-unverified,var(--kin-muted,GrayText))}
-.kin-state[data-state="unknown"] .kin-glyph{color:var(--kin-muted,GrayText)}
-.kin-state[data-state="fault"] .kin-glyph{color:var(--kin-fault,var(--kin-ink,CanvasText))}
-.kin-state[data-state="held"] .kin-glyph{color:var(--kin-held,var(--kin-muted,GrayText))}
-.kin-state[data-state="retired"] .kin-glyph{color:var(--kin-muted,GrayText)}
+.kin-state[data-state="live"]>.kin-glyph{color:var(--kin-live,var(--kin-ink,CanvasText))}
+.kin-state[data-state="unverified"]>.kin-glyph{color:var(--kin-unverified,var(--kin-muted,CanvasText))}
+.kin-state[data-state="unknown"]>.kin-glyph{color:var(--kin-muted,CanvasText)}
+.kin-state[data-state="fault"]>.kin-glyph{color:var(--kin-fault,var(--kin-ink,CanvasText))}
+.kin-state[data-state="held"]>.kin-glyph{color:var(--kin-held,var(--kin-muted,CanvasText))}
+.kin-state[data-state="retired"]>.kin-glyph{color:var(--kin-muted,CanvasText)}
 .kin-claim,.kin-attribution{display:inline-block;padding:0 .4em;border:1px solid var(--kin-ink,CanvasText);color:var(--kin-ink,CanvasText);font-variant-numeric:tabular-nums}
 .kin-claim[data-claim="release"],.kin-claim[data-claim="observed"],.kin-attribution[data-attribution="word"]{background:var(--kin-ink,CanvasText);color:var(--kin-ground,Canvas)}
 .kin-claim[data-claim="proposed"],.kin-attribution[data-attribution="call"]{border-style:dashed}
 .kin-claim[data-claim="historical"]{border-color:var(--kin-muted,GrayText);color:var(--kin-muted,CanvasText)}
 .kin-claim[data-claim="unknown"]{border-style:dotted;border-color:var(--kin-muted,GrayText)}
+.kin-claim[data-claim="release"] a,.kin-claim[data-claim="observed"] a,.kin-attribution[data-attribution="word"] a{color:inherit}
 .kin-stamp{color:var(--kin-muted,CanvasText);font-variant-numeric:tabular-nums;white-space:nowrap}
 .kin-boundary{color:var(--kin-muted,CanvasText)}
-.kin-boundary .kin-glyph{color:var(--kin-muted,GrayText)}
+.kin-boundary>.kin-glyph{color:var(--kin-muted,GrayText)}
 @media (forced-colors:active){.kin-claim[data-claim="release"],.kin-claim[data-claim="observed"],.kin-attribution[data-attribution="word"]{forced-color-adjust:none;background:CanvasText;color:Canvas;border-color:CanvasText}}
