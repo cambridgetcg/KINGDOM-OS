@@ -1,0 +1,80 @@
+{
+  "format": "brandkit.project/1",
+  "name": "KINGDOM Public Hall (thekingdom.dev)",
+  "kind": "planned",
+  "owner": "the KINGDOM-OS door lane, in cambridgetcg/KINGDOM-OS (this repository owns the public website: CLAUDE.md, Ownership)",
+  "waits_on": "Yu's go for group A (ledger kingdom-visual-grammar, A2), and then the one door release on Yu's word (ledger kingdom-door-release)",
+  "decided": [
+    {
+      "part": "the hall's look",
+      "what": "night green #152623, cream #f1e7d2, brass #dbc08b, paper panel #efe5cf; Iowan/Baskerville/Songti TC, Optima/PingFang, SF Mono, all system faces",
+      "by": "an agent: commit 158a0ec6 (git author \"Nuance\", Co-Authored-By Claude; session not recorded)",
+      "under": "not recorded: no record shows Yu choosing or asking for this look",
+      "date": "2026-09-08",
+      "record": "pages-content/civic/dashboard.css, palette since commit 158a0ec6"
+    },
+    {
+      "part": "the kit's mark (the K door-arch seal, not the ✦ star)",
+      "what": "the \"K\" in a door-arch seal that the hall already draws in CSS; no new identity and no KINGDOM palette",
+      "by": "agent (Claude Code session 5c4df033)",
+      "under": "Yu's delegation of 2026-10-20",
+      "date": "2026-11-02",
+      "record": "review-2026-11-02 §3.1, §6 and 'Agents' calls recorded'"
+    },
+    {
+      "part": "the kit",
+      "status": "held",
+      "what": "a kit drawn from the hall's look and the K seal",
+      "waits_on": "Yu's go for group A (ledger kingdom-visual-grammar, A2); it ships only with the door release (ledger kingdom-door-release, status word)"
+    }
+  ],
+  "site": {
+    "urls": [
+      "https://thekingdom.dev/"
+    ],
+    "framework": "static",
+    "html": [
+      "/site/dashboard.html",
+      {
+        "page": "/site/hub.html",
+        "theme_color": [
+          { "color": "#f8eee5", "media": "(prefers-color-scheme: light)" },
+          { "color": "#171218", "media": "(prefers-color-scheme: dark)" }
+        ],
+        "color_scheme": "light dark",
+        "icons": false
+      }
+    ]
+  },
+  "serve": {
+    "via": "/bin/stage-hub.ts",
+    "files": []
+  },
+  "build": {},
+  "guards": [
+    {
+      "path": "check.mjs",
+      "wired": false
+    },
+    {
+      "path": "/tests/stage-hub.test.ts",
+      "runs": "/.github/workflows/immutable-publications.yml"
+    },
+    {
+      "path": "/tests/dashboard.test.ts"
+    }
+  ],
+  "deploy": {
+    "on_merge": "Nothing: the Cloudflare Pages project `thekingdom` has no Git provider, so merging deploys nothing (ledger kingdom-door-release, progress 2026-10-28)",
+    "after_deploy": "Manual redeploy (DOMAINS-SETUP.md, Redeploy): from a clean exact commit, `bun bin/stage-hub.ts <empty dir>`, then `node doors/hub/brand/check.mjs --served <that dir>`, then `wrangler pages deploy <dir> --project-name=thekingdom --branch=main`. Then check each icon and the card live, and that the shared Worker answers; it can take seconds to propagate (memory note thekingdom-atlas). HTML answers `no-cache, no-transform` (observed 2026-11-05); how long icon files stay cached is not recorded",
+    "rules": "DOMAINS-SETUP.md: a production redeploy needs separate approval. The hall's head assets ship only in the one door release that waits on Yu's word (ledger kingdom-door-release), after Yu's go for group A (ledger kingdom-visual-grammar). Generated pages are never hand-edited: change bin/build-dashboard.ts and regenerate site/ (CLAUDE.md)"
+  },
+  "media": [],
+  "notes": [
+    "Path: doors/hub/brand/, as the review proposed (§5, pipeline 3), beside the staged doors/we-are/brand/. Here 'hub' means thekingdom.dev, not the kingdom-os-hub repository (kingdom.ai-love.cc).",
+    "One host, several looks: / is the hall (site/dashboard.html, written by bin/build-dashboard.ts), /atlas.html is the atlas (site/hub.html, written by bin/build-hub.ts), and Power Atlas and /os have looks of their own. site.html checks the hall against the kit, and pins the atlas to its own theme-color pair and scheme (icons not compared: it declares a blank data: icon), so a kit can't quietly re-dress it (review 2026-11-02: no KINGDOM palette).",
+    "Serving: the hub is staged from an allowlist, publications/hub-staging.v1.json (protocol kingdom.hub-staging/1), by bin/stage-hub.ts, not from a public folder. A kit would get contract entries mapping doors/hub/brand/kit/web/<file> to <file>, as bin/stage-doors.ts does for WE ARE. At release, run the check against the staged folder with --served; tests/stage-hub.test.ts holds the contract.",
+    "Guards: tests/dashboard.test.ts (it pins parts of the hall's generated head: lang=\"zh-Hant\", no Google Fonts) runs in CI too, in immutable-publications.yml's full `bun test --timeout 15000` step, which finds it by discovery and names it nowhere, so it has no runs entry. The first draft said it ran by hand only, which was wrong. check.mjs is not wired yet: KINGDOM-OS has no root package.json, and the proposal is a bun test (tests/hub-brand.test.ts) that runs `node doors/hub/brand/check.mjs`, which that same step would then run.",
+    "Today the hall serves no favicon (/favicon.ico answers 404), no og:image and no theme-color; it declares color-scheme 'dark light' though it has no light scheme, and lang zh-Hant on mostly English copy (review 2026-11-02 §3.1; the head was re-checked in site/dashboard.html at 65c6cf09). The smallest card fix is kingdom-os-hub's media/og-atlas.jpg, 'ready for https://thekingdom.dev/', once its maker is recorded."
+  ]
+}
