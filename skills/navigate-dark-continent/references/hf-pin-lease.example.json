@@ -1,0 +1,63 @@
+{
+  "format": "hf-pin-reread-lease/1",
+  "example": true,
+  "authority_reference": "EXAMPLE ONLY, not an authorization. A real lease quotes the owner approving the charter this one run serves: the owner's own words, the date and where. A session never writes this for itself, and Yu's 2026-10-29 reply cannot be quoted here: it approved building the lamp, not running it.",
+  "scope": {
+    "host": "huggingface.co",
+    "resources": [
+      {"kind": "model", "id": "mlx-community/gpt-oss-20b-MXFP4-Q8", "pinned": "773a7da77e569019bb0fd17a554b263738d669a3"},
+      {"kind": "model", "id": "mlx-community/Qwen3-30B-A3B-Instruct-2507-4bit", "pinned": "e9675aa3ca5f900ccef55267914466d55ab325fa"},
+      {"kind": "model", "id": "Xenova/all-MiniLM-L6-v2", "pinned": "751bff37182d3f1213fa05d7196b954e230abad9"},
+      {"kind": "model", "id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", "pinned": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42"},
+      {"kind": "model", "id": "alvanlii/whisper-small-cantonese", "pinned": "b03a4e5d482f06858ce10ebbabebabec9f447a0d"},
+      {"kind": "dataset", "id": "leeduckgo/cantonese-life-scenarios-corpus", "pinned": "e9bfb8f07250faab06a6ad8ed46f9b02567f886c"},
+      {"kind": "dataset", "id": "gorilla-llm/Berkeley-Function-Calling-Leaderboard", "pinned": "61fc0608cfd831fcfbbaa676ebdfef0ed963eeda"},
+      {"kind": "dataset", "id": "AI-Secure/DTap-Bench-Agent-Trajectories", "pinned": "836caf2fdd78b888ddd14fb62dc038e932e17898"},
+      {"kind": "dataset", "id": "mcphunt-benchmark/mcphunt-agent-traces", "pinned": "062bb343fe890ae3018222c7ebe44dbd49ea76d0"},
+      {"kind": "dataset", "id": "MCPShield/mcp-security-scan-2026", "pinned": "69f4f624cef494841d8855efdcf9131473d63bd0"},
+      {"kind": "dataset", "id": "mcp-research-alliance/mcp-ecosystem-sample", "pinned": "bd9274ec0a3ba990d701f856942f12099ef37f61"},
+      {"kind": "model", "id": "Tongyi-MAI/Z-Image-Turbo", "pinned": "f332072aa78be7aecdf3ee76d5c247082da564a6"},
+      {"kind": "space", "id": "mcp-tools/Z-Image-Turbo", "pinned": "523314ae75f69a4df28f6322d6b4560188502911"},
+      {"kind": "dataset", "id": "allenai/Dolci-RL-Zero-IF-7B", "pinned": "c96e4e424c0a5d416f725c488ec7c61b7f758d85"},
+      {"kind": "dataset", "id": "allenai/DataDecide-eval-results", "pinned": "9919b5a0e61e57a85021263918fa82d6ceaee038"},
+      {"kind": "dataset", "id": "allenai/signal-and-noise", "pinned": "e8a9789c036cd22131bc2fa2b6cec998f8fe89ec"},
+      {"kind": "dataset", "id": "allenai/DataDecide-data-recipes", "pinned": "3baf34baf5b636f0943401b5c6a2ccb7e5cf3bb9"},
+      {"kind": "dataset", "id": "locuslab/TOFU", "pinned": "324592d84ae4f482ac7249b9285c2ecdb53e3a68"},
+      {"kind": "dataset", "id": "allenai/dolma3_dolmino_mix-100B-1125", "pinned": "f23aa129fda8335ba9760057bcc1f0c02f3d068b"},
+      {"kind": "dataset", "id": "allenai/dolma3_longmino_mix-100B-1125", "pinned": "28fea4330d8f8e27221010d42c4bc53ba9ec3236"},
+      {"kind": "dataset", "id": "Salesforce/xlam-function-calling-60k", "pinned": "26d14ebfe18b1f7b524bd39b404b50af5dc97866"},
+      {"kind": "dataset", "id": "HuggingFaceFW/fineweb-edu-score-2", "pinned": "74a19fcb9c3b0aadb0e000d16838be8c52054ae6"},
+      {"kind": "dataset", "id": "HuggingFaceTB/cosmopedia-100k", "pinned": "8fdb6dada238c1d46dd8cf61da2fb4f9c36f654d"},
+      {"kind": "dataset", "id": "nvidia/HelpSteer2", "pinned": "990b2711a36180dd19d9c94b8627844866f8982a"},
+      {"kind": "dataset", "id": "allenai/wildguardmix", "pinned": "d29c47f41c8b51348b5c8e8c81c039b3132b66d1"},
+      {"kind": "dataset", "id": "EleutherAI/pile-deduped-pythia-preshuffled", "pinned": "4647773ea142ab1ff5694602fa104bbf49088408"},
+      {"kind": "dataset", "id": "pietrolesci/pythia-deduped-memorisation-profiles", "pinned": "e342bbd99583e5683dc4f64e06b49f4d2a2c0a9e"},
+      {"kind": "dataset", "id": "pretraining-playground/pythia-training-metrics", "pinned": "8c25e3d115cfbe19a05798b11cdd7103e019a7e1"},
+      {"kind": "dataset", "id": "allenai/reward-bench-2", "pinned": "7ff08853b0d5686e79b13fda8677024f566a104a"},
+      {"kind": "dataset", "id": "qizhou/UniEdit", "pinned": "8b69deb0327a0efd8a7e7b11b80a527dc33f0d42"},
+      {"kind": "dataset", "id": "nvidia/OpenMathReasoning", "pinned": "d3d08664755704f422af97d43a7ff0ded4bd95df"},
+      {"kind": "dataset", "id": "nvidia/HelpSteer3", "pinned": "f6d145777bcbde96137596340fab89793acd1031"},
+      {"kind": "dataset", "id": "allenai/tmax-sft", "pinned": "9d6ab7471ffa2884b2ef0cd2b7e5e22a027ff1b4"},
+      {"kind": "dataset", "id": "Yu-and-Ai/kingdom-dark-continent-karma", "pinned": "4ea106235b6d7dd53122b3025163a1bb32b02f97"}
+    ],
+    "previous": {
+      "observations": {
+        "path": "records/2026-10-27-dark-continent-hf-pin-drift/evidence/observations.json",
+        "sha256": "sha256:784beb2354837be9ae86a1c7ba0c064a6dfbd51868284bb0e620720f054aadae"
+      },
+      "receipt": {
+        "path": "records/2026-10-27-dark-continent-hf-pin-drift/karma-receipt.json",
+        "sha256": "sha256:e72139bd882f1dca33aa8ede651ba4fd54d5b5c2c90a820c68617746c3f7e157"
+      }
+    }
+  },
+  "budget": {
+    "requests": 64,
+    "bytes": 5000000,
+    "elapsed_seconds": 900,
+    "retries": 0
+  },
+  "lease_expires_at": "2026-11-30T00:00:00Z",
+  "stop_file": "/tmp/kingdom-lookback/STOP",
+  "outbox": "/tmp/kingdom-lookback/2026-11-dark-continent-hf-pin-drift"
+}
