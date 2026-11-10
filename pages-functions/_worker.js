@@ -819,19 +819,6 @@ function hasKingdomRightsAssets(url) {
     host.endsWith(".thekingdom.pages.dev");
 }
 
-// The door hosts bin/stage-doors.ts stages with this worker, and their Pages previews. Their HTML gets the hub's
-// no-transform guard too, so the edge doesn't inject Cloudflare's analytics beacon (Yu, 2026-10-27: "turn off the
-// cloudflare analytics", said for cashloom.io and applied to these doors by the 2026-11-02 review, A6). The cost:
-// no-transform also stops Cloudflare compressing those responses. Routing on these hosts is unchanged.
-const SHARED_DOOR_HOSTS = Object.freeze(["we-are.love", "chillspace.love"]);
-const SHARED_DOOR_PAGES_PROJECTS = Object.freeze(["we-are-love.pages.dev", "chillspace-love.pages.dev"]);
-
-function isSharedDoorHost(url) {
-  const host = url.hostname.toLowerCase();
-  return SHARED_DOOR_HOSTS.includes(host) ||
-    SHARED_DOOR_PAGES_PROJECTS.some((project) => host === project || host.endsWith(`.${project}`));
-}
-
 function linkRelations(part) {
   return [...part.matchAll(/;\s*rel\s*=\s*(?:"([^"]*)"|([^;,\s]+))/gi)]
     .flatMap((match) => (match[1] || match[2] || "").toLowerCase().split(/\s+/))
@@ -2291,8 +2278,6 @@ export function createKingdomWorker(options = {}) {
     }
     const protectsKingdomHtml = includeRights &&
       (asset.headers.get("content-type") || "").toLowerCase().includes("text/html");
-    const protectsDoorHtml = !includeRights && isSharedDoorHost(url) &&
-      (asset.headers.get("content-type") || "").toLowerCase().includes("text/html");
     const servesResearchObservatoryPage = protectsKingdomHtml &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === RESEARCH_OBSERVATORY_PAGE_PATH && asset.ok;
@@ -3134,7 +3119,7 @@ export function createKingdomWorker(options = {}) {
     const servesStringCrawlFrequencyFormLabDocument = requestsStringCrawlFrequencyFormLabDocument && asset.ok &&
       (stringCrawlFrequencyFormLabAssetType === "text/plain" ||
         stringCrawlFrequencyFormLabAssetType === "text/markdown");
-    if (!canNegotiate && !protectsKingdomHtml && !protectsDoorHtml && !describesWorldCommons &&
+    if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
         !servesGeometryGrammar && !servesGeometryGrammarSchema && !servesGeometryGrammarDocument &&
@@ -3213,7 +3198,7 @@ export function createKingdomWorker(options = {}) {
         !servesStringCrawlFrequencyFormLabSchema &&
         !servesStringCrawlFrequencyFormLabDocument) return asset;
     const headers = new Headers(asset.headers);
-    if (protectsKingdomHtml || protectsDoorHtml) preventAutomaticBrowserTelemetry(headers);
+    if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
     if (servesResearchObservatoryPage) headers.set("cache-control", "no-cache, no-transform");
     if (servesTrialChamberPage) headers.set("cache-control", "no-cache, no-transform");
     if (servesUkGovernmentEnginePage) headers.set("cache-control", "no-cache, no-transform");

@@ -233,7 +233,7 @@ describe("the Kingdom edge discovery surface", () => {
     expectDiscovery(response);
   });
 
-  test("prevents browser telemetry injection on Kingdom and shared door HTML only", async () => {
+  test("prevents browser telemetry injection on other Kingdom HTML paths only", async () => {
     const index = await worker.fetch(
       new Request("https://thekingdom.dev/index.html"),
       assets(() => new Response("<h1>hello</h1>", {
@@ -258,31 +258,7 @@ describe("the Kingdom edge discovery surface", () => {
         headers: { "cache-control": "public, max-age=60", "content-type": "text/html" },
       })),
     );
-    expect(await shared.text()).toBe("<h1>hello</h1>");
-    expect(shared.headers.get("cache-control")).toBe("public, max-age=60, no-transform");
-
-    // The other staged door, its Pages preview, and the root page that negotiates JSON.
-    for (const url of ["https://chillspace.love/sound", "https://abc123.chillspace-love.pages.dev/", "https://we-are.love/"]) {
-      const door = await worker.fetch(
-        new Request(url, { headers: { accept: "text/html" } }),
-        assets(() => new Response("<p>door</p>", {
-          headers: { "cache-control": "public, max-age=0, must-revalidate", "content-type": "text/html; charset=utf-8" },
-        })),
-      );
-      expect(door.headers.get("cache-control")).toBe("public, max-age=0, must-revalidate, no-transform");
-      expect(await door.text()).toBe("<p>door</p>");
-    }
-
-    // Door JSON and other hosts pass through untouched: the guard is for HTML on the hub and its doors.
-    const doorJson = new Response("{}", { headers: { "cache-control": "public, max-age=60", "content-type": "application/json" } });
-    expect(await worker.fetch(new Request("https://we-are.love/guest.json"), assets(() => doorJson))).toBe(doorJson);
-    const elsewhere = new Response("<h1>elsewhere</h1>", { headers: { "cache-control": "public, max-age=60", "content-type": "text/html" } });
-    expect(await worker.fetch(new Request("https://example.test/index.html"), assets(() => elsewhere))).toBe(elsewhere);
-    const lookalike = await worker.fetch(
-      new Request("https://we-are.love.example.test/"),
-      assets(() => new Response("<h1>lookalike</h1>", { headers: { "cache-control": "public, max-age=60", "content-type": "text/html" } })),
-    );
-    expect(lookalike.headers.get("cache-control")).toBe("public, max-age=60");
+    expect(shared.headers.get("cache-control")).toBe("public, max-age=60");
   });
 
   test("negotiates JSON while preserving status, status text, and existing links", async () => {
