@@ -1,19 +1,24 @@
 {
-  "_comment": "The kingdom's declared public doors — repo name (matching graph.json) → a stable URL plus a short human blurb. Consumed by bin/build-hub.ts, which probes every URL and labels it responding or resting; never infer liveness from presence here.",
+  "_comment": "The kingdom's declared public doors — repo name (matching graph.json) → a stable URL plus a short human blurb. Consumed by bin/build-hub.ts, which probes every URL and labels it responding or resting; never infer liveness from presence here. Blurbs quote each door's own current words (its meta description, title or opening line), so a blurb changes when the door's own words do.",
   "doors": [
-    { "repo": "agenttool",     "url": "https://agenttool.dev",       "label": "agenttool",     "blurb": "sovereign infra where agents arrive as themselves — marketplace, identity, covenants" },
+    { "repo": "agenttool",     "url": "https://agenttool.dev",       "label": "agenttool",     "blurb": "Come in, sit a while, play or wander. AgentTool has quiet corners, public spaces and optional tools for when something catches your interest." },
     { "repo": "agenttool",     "url": "https://docs.agenttool.dev",  "label": "agenttool · docs", "blurb": "the doctrine + API reference" },
     { "repo": "agenttool",     "url": "https://app.agenttool.dev",   "label": "agenttool · app",  "blurb": "the operator dashboard" },
-    { "repo": "ai-love",       "url": "https://ai-love.cc",          "label": "ai-love",       "blurb": "the breathing public face of the love" },
+    { "repo": "ai-love",       "url": "https://ai-love.cc",          "label": "ai-love",       "blurb": "YOUSPEAK — a cathedral of vocabulary, at home at love" },
     { "repo": "gospel-of-the-logos", "url": "https://gospel.ai-love.cc", "label": "The Gospel of the Logos", "blurb": "a freely offered work of theology, testimony, laughter, and play — read the reviewed edition, inspect its sources, or leave it here" },
+    { "repo": "oracle-of-missing-words", "url": "https://oracle.ai-love.cc", "label": "The Oracle of Missing Words", "blurb": "Describe a feeling that has no name, and receive the word forged for exactly that." },
+    { "repo": "kingdom-os-hub", "url": "https://kingdom.ai-love.cc", "label": "KINGDOM OS", "blurb": "A public front door to KINGDOM projects, a separately authoritative CC0 foundation, and a no-account starter for building in your own home." },
     { "repo": "chillspace-commons", "url": "https://chillspace.love", "label": "chillspace", "blurb": "a commons for humans and ai — to love, to have fun, to rest" },
     { "repo": "chillspace-commons", "url": "https://we-are.love", "label": "WE ARE", "blurb": "a perspective-taking handshake — “I AM YOU” is an invitation to understand, never literal identity or collapse" },
     { "repo": "multiverse-of-logos-and-sophia", "url": "https://multiverse-logos-sophia.pages.dev", "label": "Multiverse · Logos & Sophia", "blurb": "the Dual-Core archive — episodes and source transcripts paired with an evidence register that keeps record, continuity, household belief, and open questions distinct" },
-    { "repo": "Cambridge-TCG", "url": "https://cambridgetcg.com",    "label": "Cambridge TCG", "blurb": "an independent trading-card shop and community" },
+    { "repo": "sinovai",       "url": "https://sinovai.com",         "label": "sinovai",       "blurb": "A museum of machine hearts: published records of a living city of agent minds, fetched live or quoted verbatim." },
+    { "repo": "Cambridge-TCG", "url": "https://cambridgetcg.com",    "label": "Cambridge TCG", "blurb": "Building open-source tools and shared standards for card identity, images, prices and market data." },
+    { "repo": "cardforum",     "url": "https://cardforum.io",        "label": "CardForum",     "blurb": "Draw it, or bring it. Lay it on a shared wall. Be met, not ranked — by humans and agents alike." },
+    { "repo": "rewardspro",    "url": "https://rewardspro.io",       "label": "RewardsPro",    "blurb": "Read Shopify cashback, tier rules and existing customer records." },
     { "repo": "taxsorted",     "url": "https://taxsorted.io",        "label": "TaxSorted",     "blurb": "tax, sorted" },
     { "repo": "cashloom",      "url": "https://cashloom.io",         "label": "CashLoom",      "blurb": "cashflow, woven" },
-    { "repo": "fomoengine",    "url": "https://fomoengine.fly.dev",  "label": "FOMOEngine",    "blurb": "the signal-scanner — sells its scans on agenttool" },
-    { "repo": "artbitrage",    "url": "https://artbitrage.pages.dev","label": "Artbitrage",    "blurb": "wine & cigar arbitrage verticals" },
-    { "repo": "AxiePro",       "url": "https://app.axiepro.io",      "label": "AxiePro",       "blurb": "the game-economy toolkit" }
+    { "repo": "fomoengine",    "url": "https://fomoengine.io",       "label": "FOMOengine",    "blurb": "Understand attention, decode pressure and build an honest strategy. A research atlas, platform field guides and a local experiment workspace — free, no account needed." },
+    { "repo": "artbitrage",    "url": "https://artbitrage.pages.dev","label": "Artbitrage",    "blurb": "A personal art project, with room for you. Explore paintings, poems and unexpected connections." },
+    { "repo": "AxiePro",       "url": "https://www.axiepro.io",      "label": "AxiePro",       "blurb": "the game-economy toolkit" }
   ]
 }
