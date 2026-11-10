@@ -352,7 +352,7 @@
         "id": "boundary-line",
         "glyph": "◇",
         "rule": "◇ and one sentence saying what a link or offer does not grant. The glyph takes the muted role and needs 3:1, as a non-text mark. Privacy notes are written as boundary lines.",
-        "on_the_hub": "Counted in site/hub.html (served as the research atlas, atlas.html) at commit 52de54d: of its 62 uses of ◇, 24 already mark boundary lines (15 under Wayfinder paths, 9 under World Commons kits), 16 mark World Commons' Public life & economy category, 14 mark groups in the Civilisation Flow section, 6 are the Wayfinder glyph of two paths (meet-agents and trial-chamber), and 2 are the possibility operator in a modal-logic formula. Only the two Wayfinder cards for those paths show ◇ both as a path glyph and on a boundary line, each time with its words beside it. kin keeps ◇ for boundary lines, the meaning most of its uses already have."
+        "on_the_hub": "Counted in site/hub.html (served as the research atlas, atlas.html) at commit 52de54d: of its 62 uses of ◇, 24 already mark boundary lines (15 under Wayfinder paths, 9 under World Commons kits), 16 mark World Commons' Public life & economy category, 14 mark groups in the Civilisation Flow section, 6 are the Wayfinder glyph of two paths (meet-agents and trial-chamber), and 2 are the possibility operator in a modal-logic formula. Three cards show ◇ twice, as a mark and on their boundary line, each time with words beside it: the Wayfinder cards \"meet agents and their tools\" and \"inspect bounded research evaluation drafts\" (as the path glyph), and the World Commons kit \"Navigate a UK small-business question\" (as its category mark). kin keeps ◇ for boundary lines, the meaning most of its uses already have."
       },
       {
         "id": "wall-label",
@@ -384,7 +384,7 @@
     "title_max_lines": 3,
     "subtitle_max_lines": 3,
     "footer": "‹Name› · ‹domain›",
-    "endorsement": "Optional and off by default: a footer endorsement, drawn only if the door chooses it (see kinship).",
+    "endorsement": "Optional and off by default: a footer endorsement, drawn only if the door chooses it (see kinship.card_endorsement).",
     "mark": "On the right, in a 340 px box. With a mark the text runs from x 88 to 700; without one, from x 88 to 1112.",
     "faces": "The page's own display and reading faces (later: the generator sets cards in the wordmark's face today).",
     "plate": "A card's plate follows its door's default scheme, and its text sits on a calm zone of the plate. Plates stay with their owner: kin does not adopt or restyle any plate, including the star-card plates in kingdom-os-hub.",
@@ -429,7 +429,12 @@
         "status": "Later: the rail is not built in v0.1."
       }
     ],
-    "commerce": "Commerce doors may use the information layer (states, chips, stamps, boundary lines, the card layout) without any KINGDOM line or rail."
+    "card_endorsement": {
+      "default": "none",
+      "options": ["none", "line"],
+      "rule": "Off by default. A door may add one endorsement line to its share card's footer only if it chooses to. Like the levels above, the choice is the door's own, made separately from its level."
+    },
+    "commerce": "Commerce doors may use the information layer (states, chips, stamps, boundary lines, the card layout) without any KINGDOM line, rail or card endorsement."
   },
   "icons": {
     "family_grid": {

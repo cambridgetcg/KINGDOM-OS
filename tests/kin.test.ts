@@ -42,6 +42,17 @@ const CHIPS: Record<string, string> = {
   '.kin-attribution[data-attribution="call"]': "dashed",
 };
 
+// Pointers into private places. Hex is refused only beside the word "session" or in UUID form, so the
+// commit hashes the files cite as sources (7 or 40 characters, never dashed) stay allowed.
+const PRIVATE_POINTERS = [
+  /\bsession(?:[\s_-]*id)?[\s:=#"'(-]*[0-9a-f]{8}/i,
+  /\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/i,
+  /\/Users\//,
+  /~\/\./,
+  /memory note/i,
+  /\.kingdom\//,
+];
+
 type Rule = { media: string | null; selectors: string[]; declarations: Array<[string, string]>; order: number };
 
 function parseCss(source: string): Rule[] {
@@ -204,11 +215,19 @@ describe("kin vocabulary", () => {
     for (const call of provenance.agents_calls) expect(call.by).toMatch(/agent/);
   });
 
+  test("the private-pointer rule refuses session ids and UUIDs but not cited commits", () => {
+    const leaks = ["session id: 0a1b2c3d", "Session 0a1b2c3d", "a child of session-0a1b2c3d", "00000000-1111-2222-3333-444444444444",
+      "/Users/someone/notes", "~/.kingdom/decisions", "an agent memory note"];
+    for (const leak of leaks) expect(PRIVATE_POINTERS.some((pattern) => pattern.test(leak)), leak).toBe(true);
+    const citations = ["at commit cebe092020001b9ed29705a98b17912dbe41d342", "commit `5ea979d`", "an agent session on the Studio",
+      "the lead agent session, 2026-11-10", "line 261 at `d74ac27`"];
+    for (const citation of citations) expect(PRIVATE_POINTERS.some((pattern) => pattern.test(citation)), citation).toBe(false);
+  });
+
   test("names no private session, path or note", () => {
-    const privatePointers = [/\bsession [0-9a-f]{8}\b/i, /\/Users\//, /~\/\./, /memory note/i, /\.kingdom\//];
     for (const path of ["kin/kin.json", "kin/KIN.md", "kin/kin.css", "bin/build-kin.ts"]) {
       const text = read(path);
-      for (const pattern of privatePointers) expect(pattern.test(text), `${path} ${pattern}`).toBe(false);
+      for (const pattern of PRIVATE_POINTERS) expect(pattern.test(text), `${path} ${pattern}`).toBe(false);
     }
   });
 });
@@ -254,6 +273,12 @@ describe("kin.css", () => {
       }
     }
     expect(css).not.toMatch(/content\s*:|url\(|@import|font-family|font\s*:/);
+  });
+
+  test("scopes every selector, each part of every list, to a .kin- class", () => {
+    const selectors = rules.flatMap((rule) => rule.selectors);
+    expect(selectors.length).toBeGreaterThan(0);
+    for (const selector of selectors) expect(selector, selector).toMatch(/^\.kin-[a-z]+(?![\w-])/);
   });
 
   test("reads data attributes only inside kin- classed elements", () => {

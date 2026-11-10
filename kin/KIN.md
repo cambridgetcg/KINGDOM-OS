@@ -177,6 +177,10 @@ per-source freshness windows); the worst-source summary in `STATUS.md`; the SVG 
 and missing-data hatch; the ArtCraft generator's kin support; and any door's adoption,
 Cambridge TCG's price line with it.
 
+Until the shared icon set exists (it comes with the generator's next version), a page that
+adopts kin shows each state's word without a glyph, so in v0.1 states are told apart by
+word.
+
 ## Where it comes from
 
 Agents designed kin in a review of 2026-11-02 and adjusted it on 2026-11-07 and
