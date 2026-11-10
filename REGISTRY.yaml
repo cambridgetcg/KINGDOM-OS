@@ -40,7 +40,7 @@
 # load-bearing one-liners. Surveyed 2026-07-11 (7-agent harvest + live probes).
 
 version: 1
-updated: 2026-10-28
+updated: 2026-11-10
 
 services:
   # ── the marketplace + its organs ─────────────────────────────────────────
@@ -244,14 +244,19 @@ services:
     deploy: cd ~/fomoengine && fly deploy --ha=false
     status: live
     money: >-
-      x402 LIVE 2026-07-19: /scan = $0.01 USDC on Solana mainnet (PayAI
-      facilitator, treasury keychain `fomoengine-solana-treasury`,
-      payTo CeQqNBX5…). Plus fomo-scan listing 402e833c via seller-loop.
+      x402 pricing retired: on 2026-11-10 https://api.fomoengine.io/ answered
+      pricing.purchases "retired" ("New paid scans and audit requests are
+      retired. All current scan doors are free."). History: from 2026-07-19
+      /scan cost $0.01 USDC on Solana mainnet (PayAI facilitator, treasury
+      keychain `fomoengine-solana-treasury`, payTo CeQqNBX5…). The fomo-scan
+      listing 402e833c via seller-loop was not re-checked.
     notes: >-
-      fomoengine.fly.dev = alias; /honeypot scores 100 by design; /manual +
-      /openapi.json free forever. Gate fails OPEN on facilitator outage
-      (revenue < guests, by doctrine); ambiguous settles deliver the answer
-      flagged payment-settlement: unknown.
+      fomoengine.fly.dev answers the same JSON as api.fomoengine.io (an alias,
+      byte-identical on 2026-11-10). Its / lists POST /scan, /manual, /honeypot
+      (a deliberately dark-patterned page, "should score ~100"), /audit (paid
+      offer retired) and /openapi.json, all free; GET /scan?url= is paused (no
+      remote URLs). The payment gate this note used to describe went with the
+      retired pricing.
 
   - id: authenticity-shield
     what: "'Is this trying to manipulate you?' — free manipulation decoder for humans"
@@ -314,7 +319,7 @@ services:
     status: suspended
 
   - id: artbitrage
-    what: art gallery + museum open-data search API; wine & cigar arbitrage verticals
+    what: "A personal art project, with room for you (its own words, 2026-11-10), plus a museum open-data search API (/api/sources answered 200 JSON)"
     audience: humans
     urls: { site: "https://artbitrage.io", api: "https://artbitrage.io/api", health: "https://artbitrage.io/api/sources" }
     repo: github.com/cambridgetcg/artbitrage
@@ -322,32 +327,46 @@ services:
     deploy: wrangler pages deploy dist (⚠ new files MUST be copied into dist/; root can't deploy, 20k-file cap)
     status: live
     money: art data listing on agenttool (the first listing that ever earned)
-    notes: pages.dev + github.io mirrors exist; sites.json lists only pages.dev — mild drift
+    notes: pages.dev + github.io mirrors exist; the pages.dev copy's canonical tag names https://artbitrage.io/ (2026-11-10), which sites.json lists since then
 
   # ── commerce empire (external runtimes; pulse observes, docs live in CATALOG) ──
   - id: cambridge-tcg
-    what: Cambridge TCG storefront
+    what: "Cambridge TCG — open-source TCG data infrastructure (the site's own title)"
     audience: humans
     urls: { site: "https://cambridgetcg.com", health: "https://cambridgetcg.com" }
-    runtime: shopify
+    runtime: vercel
     status: live
+    notes: >-
+      Vercel behind Cloudflare (x-vercel-id and x-vercel-cache on the home page,
+      2026-11-10), not Shopify. The home page says "New paid orders and
+      subscriptions are retired. Existing records, settlement and refunds remain
+      available through your account."
 
   - id: wholesaletcgdirect
-    what: TCG wholesale storefront
+    what: a redirect to cambridgetcg.com, no longer a storefront of its own
     audience: humans
     urls: { site: "https://wholesaletcgdirect.com", health: "https://wholesaletcgdirect.com" }
-    runtime: shopify
+    runtime: vercel
     status: live
+    notes: >-
+      On 2026-11-10 https://wholesaletcgdirect.com/ answered 301 to
+      https://cambridgetcg.com/ (server: Vercel). pulse follows redirects, so a
+      healthy reading here is cambridgetcg.com answering.
 
   - id: cardforum-io
-    what: cardforum.io marketplace UI
+    what: "CardForum — Social with Creation (the site's own title): a shared wall where people and agents lay cards they made"
     audience: humans
     urls: { site: "https://cardforum.io", health: "https://cardforum.io" }
     status: live
-    notes: ⚠ frontend-over-dead-backend — its pricing backend repo is archived
+    notes: >-
+      On 2026-11-10 the page loads its wall from /api/cards, which answered 200
+      JSON (11 cards). The earlier note, "frontend-over-dead-backend — its
+      pricing backend repo is archived", was recorded when cardforum.io was a
+      marketplace UI (as recorded in the 2026-07-11 survey; not re-checked) and
+      no longer describes the live page.
 
   - id: ai-love
-    what: ai-love.cc — the breathing public face of the love
+    what: "ai-love.cc: YOUSPEAK — a cathedral of vocabulary, at home at love (the site's own title)"
     audience: humans
     urls: { site: "https://ai-love.cc", health: "https://ai-love.cc" }
     status: live
