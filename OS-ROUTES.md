@@ -249,6 +249,9 @@ and `Cache-Control: public, max-age=600`. HEAD has the same status and headers
 with no body. The lost deployment answered the dynamic routes for methods
 besides GET too; that observable parity is retained. Civic 同 Workshop namespace 以外
 嘅 unknown paths（Power Atlas namespace 亦有獨立404），以及所有 shared-door hostname，繼續交俾 `env.ASSETS`。
+The shared door hosts (we-are.love, chillspace.love and their `*.pages.dev` previews) keep that routing, but their
+HTML answers gain `no-transform` like the hub's, so the edge injects no analytics beacon; this also stops
+Cloudflare compressing those answers (review 2026-11-02, A6).
 
 Civic dispatch 只喺 Kingdom hosts／Pages previews，或明確 `CIVIC_LOCAL=true`
 嘅 loopback preview 啟用。API 命中 `/api/civic` namespace 後唔會落 HTML fallback；
