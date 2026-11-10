@@ -1,0 +1,47 @@
+GIMP Palette
+Name: KINGDOM
+Columns: 0
+#
+# Group: kingdom-hall brand
+ 21  38  35	kingdom-hall primary
+219 192 139	kingdom-hall accent
+184 193 174	kingdom-hall neutral
+# Group: kingdom-hall ground
+239 229 207	kingdom-hall ground light
+ 21  38  35	kingdom-hall ground dark
+# Group: kingdom-hall primary scale
+245 247 247	kingdom-hall primary 50
+231 236 235	kingdom-hall primary 100
+210 219 217	kingdom-hall primary 200
+182 197 194	kingdom-hall primary 300
+148 166 162	kingdom-hall primary 400
+119 139 135	kingdom-hall primary 500
+ 93 112 109	kingdom-hall primary 600
+ 71  90  86	kingdom-hall primary 700
+ 53  71  67	kingdom-hall primary 800
+ 35  52  49	kingdom-hall primary 900
+ 21  38  35	kingdom-hall primary 950
+# Group: kingdom-hall accent scale
+250 246 238	kingdom-hall accent 50
+241 234 221	kingdom-hall accent 100
+232 215 184	kingdom-hall accent 200
+219 192 139	kingdom-hall accent 300
+184 158 106	kingdom-hall accent 400
+156 130  79	kingdom-hall accent 500
+129 104  53	kingdom-hall accent 600
+104  82  36	kingdom-hall accent 700
+ 82  63  24	kingdom-hall accent 800
+ 60  46  16	kingdom-hall accent 900
+ 37  27   6	kingdom-hall accent 950
+# Group: kingdom-hall neutral scale
+246 247 244	kingdom-hall neutral 50
+234 236 231	kingdom-hall neutral 100
+214 219 208	kingdom-hall neutral 200
+184 193 174	kingdom-hall neutral 300
+156 165 147	kingdom-hall neutral 400
+129 138 120	kingdom-hall neutral 500
+103 111  94	kingdom-hall neutral 600
+ 81  88  73	kingdom-hall neutral 700
+ 63  69  56	kingdom-hall neutral 800
+ 46  50  40	kingdom-hall neutral 900
+ 27  30  23	kingdom-hall neutral 950

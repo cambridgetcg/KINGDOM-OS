@@ -125,11 +125,11 @@ describe("stage 嘅 family preflight", () => {
     });
   });
 
-  test("production 真 UTC 今日 stage 全部 248 assets，逐一比對 actual source bytes", () => {
+  test("production 真 UTC 今日 stage 全部 252 assets，逐一比對 actual source bytes", () => {
     withSourceFixture((_sourceRoot, output) => {
       setSystemTime();
       const staged = stageHub(output, ROOT);
-      expect(staged).toHaveLength(248);
+      expect(staged).toHaveLength(252);
       for (const { source, destination } of staged) {
         expect(readFileSync(join(output, destination))).toEqual(readFileSync(join(ROOT, source)));
       }
@@ -144,7 +144,7 @@ describe("stage 嘅 family preflight", () => {
       );
       expect(readdirSync(output)).toEqual([]);
       setSystemTime(new Date("2027-08-26T23:59:59.999Z"));
-      expect(stageHub(output, sourceRoot)).toHaveLength(248);
+      expect(stageHub(output, sourceRoot)).toHaveLength(252);
     });
   });
 
@@ -154,7 +154,7 @@ describe("stage 嘅 family preflight", () => {
       expect(() => stageHub(output, sourceRoot)).toThrow("passed nextReviewDue 2027-08-26");
       expect(readdirSync(output)).toEqual([]);
       setSystemTime(new Date("2027-08-27T00:30:00+01:00"));
-      expect(stageHub(output, sourceRoot)).toHaveLength(248);
+      expect(stageHub(output, sourceRoot)).toHaveLength(252);
     });
   });
 
@@ -260,18 +260,18 @@ describe("the hub staging contract", () => {
 
       const staged = stageHub(output, sourceRoot);
       // Exact count 刻意鎖住；staging 合約增減要逐項核對，唔接受任意數量。
-      expect(HUB_ASSETS).toHaveLength(248);
-      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(94);
+      expect(HUB_ASSETS).toHaveLength(252);
+      expect(MUTABLE_HUB_DESTINATIONS).toHaveLength(98);
       // Global counts live here; individual publication tests pin their own family.
-      expect(new Set(HUB_ASSETS.map(({ source }) => source)).size).toBe(248);
+      expect(new Set(HUB_ASSETS.map(({ source }) => source)).size).toBe(252);
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("atlases/"))).toHaveLength(18);
       expect(HUB_ASSETS.filter(({ destination }) => destination.startsWith("schemas/"))).toHaveLength(41);
       const ledger = parseImmutablePublicationLedger(readFileSync(join(ROOT, IMMUTABLE_PUBLICATIONS_LEDGER_PATH)));
       expect(ledger.issues).toEqual([]);
       expect(ledger.ledger?.entries).toHaveLength(160);
       expect(HUB_ASSETS.filter(({ destination }) => destination !== "_worker.js" && destination !== "404.html"))
-        .toHaveLength(246);
-      expect(staged).toHaveLength(248);
+        .toHaveLength(250);
+      expect(staged).toHaveLength(252);
       expect(readdirSync(output, { recursive: true })).not.toContain("private-portfolio.json");
       expect(readdirSync(output, { recursive: true })).not.toContain("operations");
       expect(readdirSync(output).sort()).toEqual([
@@ -323,6 +323,7 @@ describe("the hub staging contract", () => {
         "_kingdom.base.json",
         "_worker.js",
         "agent-entry.json",
+        "apple-touch-icon.png",
         "atlas.html",
         "atlases",
         "challenges",
@@ -336,6 +337,8 @@ describe("the hub staging contract", () => {
         "dada.txt",
         "definitions",
         "experiments",
+        "favicon.ico",
+        "favicon.svg",
         "feedback",
         "geometries",
         "government",
@@ -352,6 +355,7 @@ describe("the hub staging contract", () => {
         "modules.json",
         "observations",
         "observatory",
+        "og.jpg",
         "ollama.json",
         "os",
         "polymorphs",

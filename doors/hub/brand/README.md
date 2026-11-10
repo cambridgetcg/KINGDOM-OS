@@ -1,9 +1,10 @@
 # KINGDOM Public Hall (thekingdom.dev): brand
 
-This folder is the place for the hall's brand kit, made with storytold's Craft apps through the artcraft-brand
-skill (the private repository `cambridgetcg/brandkit`). There is no kit yet (`kind: planned`). `brandkit.json`
-records this project's details, and `check.mjs` checks them. "Hub" here means thekingdom.dev; the separate
-kingdom-os-hub repository serves kingdom.ai-love.cc.
+This folder holds the hall's brand kit, made with storytold's Craft apps through the artcraft-brand skill (the
+private repository `cambridgetcg/brandkit`). `brandkit.json` records this project's details, and `check.mjs` checks
+them. "Hub" here means thekingdom.dev; the separate kingdom-os-hub repository serves kingdom.ai-love.cc.
+
+The kit is staged, not live: it ships only with the one door release on Yu's word (ledger `kingdom-door-release`).
 
 ## The look
 
@@ -14,10 +15,23 @@ all system faces. Its mark is the "K" in a door-arch seal, drawn in CSS. The loo
 Co-Authored-By Claude); no record shows Yu choosing it. Using the K seal, not the ✦ star, as the kit's mark is an
 agents' call recorded in the 2026-11-02 review (session 5c4df033, under Yu's delegation of 2026-10-20).
 
-A kit would be drawn from this look, with no new identity and no KINGDOM palette. It waits on Yu's go for group A
-(ledger `kingdom-visual-grammar`, A2), and it ships only with the door release (ledger `kingdom-door-release`).
+The kit adds no new identity and no KINGDOM palette:
+
+- **The mark** (`mark/k-seal.svg`) is the header's `.seal` redrawn at 10x: a 39×45 box with a 1 px border and
+  `border-radius: 40% 40% 2px 2px`, its K in Source Serif 4 Regular (OFL), because the page's Iowan Old Style is a
+  system face whose outlines can't go into a logo. `mark/k-seal-small.svg` is the same seal with a heavier arch and a
+  larger K, for favicons of 48 px and under.
+- **Icons**: the brass seal on a night-green tile, as the header draws it.
+- **The card** (`kit/web/og.jpg`, 1200×630): the generator's flat layout on the hall's ground, with the hall's own
+  words ("The Public Hall", "A shared map. A public square. Your own way in.").
+- **One dark scheme**: the hall paints only dark (`:root { color-scheme: dark }`), so the pages declare
+  `color-scheme: dark` and one theme-color, `#152623`. They used to declare `dark light`.
 
 The other looks on this host keep their own: the atlas (`/atlas.html`), Power Atlas and `/os`.
+
+The card route not taken: kingdom-os-hub's `media/og-atlas.jpg` ("ready for https://thekingdom.dev/") shows the ✦
+star the agents' call set aside, on a violet nebula, in Fraunces: the atlas's look, not the hall's. Its maker is not
+recorded.
 
 Don't change the identity without its owner's word. Every asset here records who made it in `CREDITS.md`.
 
@@ -25,44 +39,47 @@ Don't change the identity without its owner's word. Every asset here records who
 
 | Path | What it is |
 |---|---|
-| `brandkit.json` | this project's details: the look and who chose it, the page it dresses, the guards, what a deploy does |
+| `brandkit.json` | this project's details: the look and who chose it, the pages it dresses, the guards, what a deploy does |
+| `brand.json` | the generator's input |
+| `mark/` | the seal and its small cut, as SVG |
+| `kit/` | the built kit, never edited by hand (`kit/BRAND.md` is its guide, `kit/index.html` its review sheet) |
 | `CREDITS.md` | who made what, with fonts and their licences |
 | `check.mjs` | the check, copied from brandkit; update it there, not here |
 
-`brand.json` (the generator's input) and `kit/` (the built kit, never edited by hand) arrive with the kit.
-
 ## Rebuild
 
-No kit yet. Once group A has its go, the kit is generated from this look:
-
 ```sh
-python3 ~/.kingdom/tools/artcraft-brand/scripts/brandkit.py doors/hub/brand/brand.json --out doors/hub/brand/kit --rebuild-check
+ARTCRAFT_NO_TRASH=1 python3 ~/.kingdom/tools/artcraft-brand/scripts/brandkit.py doors/hub/brand/brand.json --out doors/hub/brand/kit --rebuild-check
 ```
 
-Nothing is copied: the hub is staged from `publications/hub-staging.v1.json`, so each served kit file gets an entry
-mapping `doors/hub/brand/kit/web/<file>` to `<file>`, as `bin/stage-doors.ts` does for WE ARE. Then run:
+A rebuild that changes the head snippet's lines changes `HALL_HEAD_ICONS` and `HALL_CARD` in
+`bin/build-dashboard.ts` too; `tests/dashboard.test.ts` fails until they match. Then regenerate `site/` with
+`bun bin/build-hub.ts <date>`.
+
+## How the site uses it
+
+The hall's pages are generated: `bin/build-dashboard.ts` writes `site/dashboard.html` (staged as `index.html`) and
+the meet, citizens and join pages. Their heads carry the kit's icon links, theme-color and color-scheme, and the
+card's lines with each page's own `og:url`. The staging contract (`publications/hub-staging.v1.json`) serves
+`favicon.ico`, `favicon.svg`, `apple-touch-icon.png` and `og.jpg` from `kit/web/` at the root, as mutable
+destinations.
+
+**Held:** `site.webmanifest` and its icons `icon-192.png`, `icon-512.png` and `icon-maskable-512.png`. The staging
+gate (`immutableLookingDestination` in `bin/immutable-publications.ts`) reads a number before the extension as a
+versioned route that must be ledgered, not mutable, and refused the three PNGs. The manifest waits with them, and the
+pages carry no manifest link until they ship, so `check.mjs` warns that the pages lack the kit's manifest link. The
+gate's owner decides: a narrow exception for icon sizes, as it has for font weights, or ledger entries.
 
 ```sh
 bun bin/stage-hub.ts "$STAGE"            # an empty folder
 node doors/hub/brand/check.mjs --served "$STAGE"
-bun --no-env-file test tests/stage-hub.test.ts tests/dashboard.test.ts
+bun --no-env-file test tests/dashboard.test.ts tests/hub-brand.test.ts tests/stage-hub.test.ts
 ```
-
-`serve.via` in `brandkit.json` names the stager, so without `--served` the check only says where to run it.
-
-## How the site uses it
-
-The hall's page is generated: `bin/build-dashboard.ts` writes `site/dashboard.html`, which stages as `index.html`.
-Its head tags (icons, theme-color, color-scheme, the card) are changed in the builder, never in the generated page.
-`site.html` lists the generated page, so the check compares its theme-color and color-scheme with the kit's head
-snippet once there is a kit. It also lists the atlas (`site/hub.html`) with its own theme-color pair, so the kit
-can't re-dress it. Today the hall has no icon, no card and no theme-color, and it declares
-`color-scheme: dark light` though it has no light scheme.
 
 ## Deploying
 
 Merging deploys nothing: the Pages project `thekingdom` has no Git provider. A release is the manual redeploy in
-`DOMAINS-SETUP.md` (stage with `bun bin/stage-hub.ts` into an empty folder, then `wrangler pages deploy … --project-name=thekingdom --branch=main`),
-it needs separate approval, and the hall's head assets wait for the one door release on Yu's word
-(`kingdom-door-release`). After a release, check each icon and the card live, and that the shared Worker answers.
-HTML is served `no-cache`; how long icon files stay cached is not recorded.
+`DOMAINS-SETUP.md`, it needs separate approval, and the hall's head assets wait for the one door release on Yu's word
+(`kingdom-door-release`). Before trusting the custom domain, check the new paths on the deployment's `pages.dev` URL
+(an HTML answer can be cached under a new path). After a release, check each icon and the card live, and that the
+shared Worker answers.

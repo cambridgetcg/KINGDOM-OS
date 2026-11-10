@@ -1,0 +1,45 @@
+{
+  "name": "KINGDOM",
+  "short_name": "KINGDOM",
+  "slug": "kingdom-hall",
+  "url": "https://thekingdom.dev",
+  "description": "A shared map. A public square. Your own way in.",
+  "lang": "en",
+  "colours": {
+    "primary": "#152623",
+    "accent": "#DBC08B",
+    "neutral": "#B8C1AE"
+  },
+  "ground": {
+    "light": "#EFE5CF",
+    "dark": "#152623"
+  },
+  "mark": {
+    "svg": "mark/k-seal.svg",
+    "small": "mark/k-seal-small.svg",
+    "dark": "#DBC08B"
+  },
+  "wordmark": {
+    "text": "KINGDOM",
+    "font": "Source Serif 4",
+    "style": "Regular",
+    "tracking": 130,
+    "colour": "#152623",
+    "colour_dark": "#F1E7D2"
+  },
+  "icon": {
+    "tile": "#152623",
+    "ink": "#DBC08B"
+  },
+  "og": {
+    "title": "The Public Hall",
+    "subtitle": "A shared map. A public square. Your own way in.",
+    "theme": "dark",
+    "alt": "The K door-arch seal and the KINGDOM wordmark on night green, with the words: The Public Hall. A shared map. A public square. Your own way in."
+  },
+  "app": {
+    "display": "browser",
+    "theme": "dark",
+    "color_scheme": "dark"
+  }
+}

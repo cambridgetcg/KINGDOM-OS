@@ -1,0 +1,46 @@
+/* KINGDOM */
+:root {
+  /* kingdom-hall brand */
+  --kingdom-hall-primary: #152623;
+  --kingdom-hall-accent: #dbc08b;
+  --kingdom-hall-neutral: #b8c1ae;
+  /* kingdom-hall ground */
+  --kingdom-hall-ground-light: #efe5cf;
+  --kingdom-hall-ground-dark: #152623;
+  /* kingdom-hall primary scale */
+  --kingdom-hall-primary-50: #f5f7f7;
+  --kingdom-hall-primary-100: #e7eceb;
+  --kingdom-hall-primary-200: #d2dbd9;
+  --kingdom-hall-primary-300: #b6c5c2;
+  --kingdom-hall-primary-400: #94a6a2;
+  --kingdom-hall-primary-500: #778b87;
+  --kingdom-hall-primary-600: #5d706d;
+  --kingdom-hall-primary-700: #475a56;
+  --kingdom-hall-primary-800: #354743;
+  --kingdom-hall-primary-900: #233431;
+  --kingdom-hall-primary-950: #152623;
+  /* kingdom-hall accent scale */
+  --kingdom-hall-accent-50: #faf6ee;
+  --kingdom-hall-accent-100: #f1eadd;
+  --kingdom-hall-accent-200: #e8d7b8;
+  --kingdom-hall-accent-300: #dbc08b;
+  --kingdom-hall-accent-400: #b89e6a;
+  --kingdom-hall-accent-500: #9c824f;
+  --kingdom-hall-accent-600: #816835;
+  --kingdom-hall-accent-700: #685224;
+  --kingdom-hall-accent-800: #523f18;
+  --kingdom-hall-accent-900: #3c2e10;
+  --kingdom-hall-accent-950: #251b06;
+  /* kingdom-hall neutral scale */
+  --kingdom-hall-neutral-50: #f6f7f4;
+  --kingdom-hall-neutral-100: #eaece7;
+  --kingdom-hall-neutral-200: #d6dbd0;
+  --kingdom-hall-neutral-300: #b8c1ae;
+  --kingdom-hall-neutral-400: #9ca593;
+  --kingdom-hall-neutral-500: #818a78;
+  --kingdom-hall-neutral-600: #676f5e;
+  --kingdom-hall-neutral-700: #515849;
+  --kingdom-hall-neutral-800: #3f4538;
+  --kingdom-hall-neutral-900: #2e3228;
+  --kingdom-hall-neutral-950: #1b1e17;
+}
