@@ -47,7 +47,9 @@ KEY="chain/${CHAIN}/${CHAIN}-data-${STAMP}-${TMP##*.}.tar.zst"
 # Validator identity keys stay out of new archives (data/priv_validator_state.json
 # stays in); older archives and the volume still hold them. Ledger zc-chain-backup-runner.
 tar_rc=0
-tar --use-compress-program="zstd -3 -T0" -cf "$TMP/archive.tar.zst" \
+# --hard-dereference: on a live node a new file can reuse a deleted, already archived file's inode,
+# and with two paths GNU tar would store it as a hard link to that file (chain-backup-remote.ts).
+tar --use-compress-program="zstd -3 -T0" -cf "$TMP/archive.tar.zst" --hard-dereference \
   --exclude=priv_validator_key.json --exclude=node_key.json \
   -C "$PARENT" "${DATA_DIR##*/}/data" "${DATA_DIR##*/}/config" >/dev/null 2>&1 || tar_rc=$?
 if [ "$tar_rc" -gt 1 ]; then
