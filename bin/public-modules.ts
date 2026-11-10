@@ -216,7 +216,7 @@ export function renderModuleDirectory(value: PublicModuleCatalog = PUBLIC_MODULE
   <p class="module-status"><strong>${esc(BEHAVIOR_LABELS[module.behavior])}</strong> · ${esc(module.status_note)}</p>
   ${module.related_ids.length ? `<details class="module-related"><summary>Related reading</summary><nav class="module-links" aria-label="Related entries"><ul>${module.related_ids.map((id) => `<li><a href="#civic-module-${esc(id)}">${esc(byId.get(id)!.label)}</a></li>`).join("")}</ul></nav></details>` : ""}
 </article>`;
-  const html = `<section id="civic-modules" class="module-directory" aria-labelledby="civic-modules-title">
+  const html = `<section id="civic-modules" class="module-directory" aria-labelledby="civic-modules-title" lang="en">
   <h2 id="civic-modules-title">Modules</h2>
   <p>${esc(value.purpose)}</p>
   <p class="module-links"><a href="/modules.json" type="application/json">Module catalogue (JSON)</a></p>
