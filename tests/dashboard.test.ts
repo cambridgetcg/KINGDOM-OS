@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { mkdtemp, mkdir, copyFile, readdir, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
-import { buildDashboard, DASHBOARD_OUTPUTS, extractLegacyAnchors, projectDashboardData, renderDashboardPage, safePublicUrl, stablePlaceId } from "../bin/build-dashboard";
+import { buildDashboard, DASHBOARD_OUTPUTS, englishLang, extractLegacyAnchors, projectDashboardData, renderDashboardPage, safePublicUrl, stablePlaceId } from "../bin/build-dashboard";
 import { captureDraft, settleDraft, filterPlaces, legacyRedirect, mapLayout, measuredSnapshot } from "../pages-content/civic/dashboard.js";
 
 // 純合成測試資料，唔係真工程／公民，唔寫入 repo site 或 production。
@@ -112,7 +112,7 @@ describe("legacy compatibility and safe rendering", () => {
   test.each(["explore", "meet", "citizens", "join"] as const)("%s primary navigation offers Power Atlas as an ordinary same-tab link", (page) => {
     const html = renderDashboardPage(page, data);
     const nav = html.match(/<nav aria-label="主要導航">([\s\S]*?)<\/nav>/)![1];
-    expect(nav).toContain('<a href="/power-atlas/">Power Atlas</a>');
+    expect(nav).toContain('<a href="/power-atlas/" lang="en">Power Atlas</a>');
     expect([...nav.matchAll(/href="([^"]+)"/g)].map(([, href]) => href))
       .toEqual(["/", "/meet/", "/join/", "/power-atlas/", "/atlas.html"]);
     expect(nav).not.toContain("target=");
@@ -192,4 +192,62 @@ test("isolated build writes exactly the public dashboard and compact entry outpu
     expect(js).toContain("rankWayfinderPaths");
     expect(js).not.toContain("localStorage"); expect(js).not.toContain("setInterval("); expect(js).not.toContain("innerHTML");
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+// The hall's frame is Cantonese (zh-Hant). English elements say so one by one, and no Chinese text is marked English.
+function langViolations(html: string): { englishWithHan: string[]; tagged: number } {
+  const body = html.replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, "").replace(/<!--[\s\S]*?-->/g, "");
+  const voids = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"]);
+  const stack: Array<{ tag: string; en: boolean }> = [];
+  const englishWithHan: string[] = [];
+  let tagged = 0;
+  for (const part of body.split(/(<[^>]+>)/)) {
+    if (part.startsWith("</")) {
+      const tag = part.slice(2).replace(/[\s>].*$/s, "").toLowerCase();
+      const at = stack.map((entry) => entry.tag).lastIndexOf(tag);
+      if (at >= 0) stack.length = at;
+    } else if (part.startsWith("<")) {
+      const tag = part.slice(1).replace(/[\s/>].*$/s, "").toLowerCase();
+      const lang = part.match(/\slang="([^"]*)"/)?.[1];
+      if (lang === "en") tagged += 1;
+      const en = lang ? lang === "en" : (stack.at(-1)?.en ?? false);
+      if (!voids.has(tag) && !part.endsWith("/>")) stack.push({ tag, en });
+    } else if (/\p{Script=Han}/u.test(part) && stack.at(-1)?.en) englishWithHan.push(part.trim().slice(0, 40));
+  }
+  return { englishWithHan, tagged };
+}
+describe("the hall's languages", () => {
+  test("an element is English only when its text has Latin letters and no Han character", () => {
+    expect(englishLang("the doctrine + API reference")).toBe(' lang="en"');
+    expect(englishLang("Wayfinder · 尋路")).toBe("");
+    expect(englishLang("公民目錄")).toBe("");
+    expect(englishLang("2026-11-10 · 12")).toBe("");
+    expect(englishLang(undefined)).toBe("");
+  });
+  test.each(["explore", "meet", "citizens", "join"] as const)("%s keeps html lang zh-Hant, tags its English labels, and marks no Chinese text English", (page) => {
+    const html = renderDashboardPage(page, data);
+    expect(html).toContain('<html lang="zh-Hant">');
+    expect(html).toContain('<span class="wordmark-note" lang="en">THE PUBLIC HALL</span>');
+    expect(html).toContain('探索 <span lang="en">Explore</span>');
+    expect(html).toContain('<a href="/power-atlas/" lang="en">Power Atlas</a>');
+    const { englishWithHan, tagged } = langViolations(html);
+    expect(englishWithHan).toEqual([]);
+    expect(tagged).toBeGreaterThan(5);
+  });
+  test("records, blurbs and module labels are tagged one by one; bilingual and Han text keep zh-Hant", () => {
+    const html = renderDashboardPage("explore", projectDashboardData({
+      doors: [{ name: "door", url: "https://example.test/", blurb: "an English blurb" }, { name: "門", url: "https://example.test/b", blurb: "中文簡介" }],
+      layers: [{ layer: "alpha", repos: [{ name: "a", purpose: "find a test" }, { name: "b", purpose: "測試用途" }] }],
+    }, { paths: [{ id: "p", label: "Rest", invitation: "休息", stops: [{ name: "Calm studio", url: "https://example.test/c", why: "安靜", scope: "local only" }] }] }));
+    expect(html).toContain('<p lang="en">an English blurb</p>');
+    expect(html).toContain("<p>中文簡介</p>");
+    expect(html).toContain('<p lang="en">find a test</p>');
+    expect(html).toContain("<p>測試用途</p>");
+    expect(html).toContain('rel="noreferrer noopener ugc" lang="en">Calm studio');
+    expect(html).toContain("<p>安靜</p>");
+    expect(html).toContain('<section id="civic-modules" class="module-directory" aria-labelledby="civic-modules-title">');
+    expect(html).toContain('>Wayfinder · 尋路</h4>');
+    expect(html).not.toMatch(/lang="en">[^<]*\p{Script=Han}/u);
+    expect(langViolations(html).englishWithHan).toEqual([]);
+  });
 });

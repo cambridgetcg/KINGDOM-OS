@@ -199,6 +199,14 @@ const LINK_FORMAT_LABELS: Record<PublicModuleLink["format"], string> = {
 const escapeHtml = (value: string): string => value.replace(/[&<>"']/g,
   (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]!);
 
+// The hall's frame is written Cantonese (html lang="zh-Hant"), but much of what it shows is English. An element whose
+// text has Latin letters and no Han character gets lang="en"; anything else, bilingual labels included, keeps the
+// page's language, so no Chinese text is ever marked English.
+export function englishLang(value: unknown): string {
+  const text = String(value ?? "");
+  return /[A-Za-z]/.test(text) && !/\p{Script=Han}/u.test(text) ? ' lang="en"' : "";
+}
+
 /** Complete static markup: no client payload, request, storage, or service invocation. */
 export function renderModuleDirectory(value: PublicModuleCatalog = PUBLIC_MODULE_CATALOG): string {
   assertCatalog(value);
@@ -206,24 +214,24 @@ export function renderModuleDirectory(value: PublicModuleCatalog = PUBLIC_MODULE
   const byId = new Map(value.modules.map((module) => [module.id, module]));
   // The colon separates heading IDs from the hyphen-only module-ID namespace.
   const card = (module: PublicModule): string => `<article id="civic-module-${esc(module.id)}" class="module-card" aria-labelledby="civic-module-label:${esc(module.id)}">
-  <h4 id="civic-module-label:${esc(module.id)}">${esc(module.label)}</h4>
-  <p>${esc(module.purpose)}</p>
+  <h4 id="civic-module-label:${esc(module.id)}"${englishLang(module.label)}>${esc(module.label)}</h4>
+  <p${englishLang(module.purpose)}>${esc(module.purpose)}</p>
   <ul class="module-links" aria-label="Entry links">${module.links.filter((link, index, links) => links.findIndex((other) => other.url === link.url) === index).map((link) => {
     const format = LINK_FORMAT_LABELS[link.format];
     const label = link.label + (format && !link.label.endsWith(format) ? ` (${format})` : "");
-    return `<li><a href="${esc(link.url)}" type="${esc(link.format)}">${esc(label)}</a></li>`;
+    return `<li${englishLang(label)}><a href="${esc(link.url)}" type="${esc(link.format)}">${esc(label)}</a></li>`;
   }).join("")}</ul>
-  <p class="module-status"><strong>${esc(BEHAVIOR_LABELS[module.behavior])}</strong> · ${esc(module.status_note)}</p>
-  ${module.related_ids.length ? `<details class="module-related"><summary>Related reading</summary><nav class="module-links" aria-label="Related entries"><ul>${module.related_ids.map((id) => `<li><a href="#civic-module-${esc(id)}">${esc(byId.get(id)!.label)}</a></li>`).join("")}</ul></nav></details>` : ""}
+  <p class="module-status"${englishLang(`${BEHAVIOR_LABELS[module.behavior]} ${module.status_note}`)}><strong>${esc(BEHAVIOR_LABELS[module.behavior])}</strong> · ${esc(module.status_note)}</p>
+  ${module.related_ids.length ? `<details class="module-related"><summary lang="en">Related reading</summary><nav class="module-links" aria-label="Related entries"><ul>${module.related_ids.map((id) => `<li${englishLang(byId.get(id)!.label)}><a href="#civic-module-${esc(id)}">${esc(byId.get(id)!.label)}</a></li>`).join("")}</ul></nav></details>` : ""}
 </article>`;
   const html = `<section id="civic-modules" class="module-directory" aria-labelledby="civic-modules-title">
-  <h2 id="civic-modules-title">Modules</h2>
-  <p>${esc(value.purpose)}</p>
-  <p class="module-links"><a href="/modules.json" type="application/json">Module catalogue (JSON)</a></p>
-  <p class="module-status">Links do not grant permission or verify availability. Related reading does not imply integration.</p>
+  <h2 id="civic-modules-title" lang="en">Modules</h2>
+  <p${englishLang(value.purpose)}>${esc(value.purpose)}</p>
+  <p class="module-links" lang="en"><a href="/modules.json" type="application/json">Module catalogue (JSON)</a></p>
+  <p class="module-status" lang="en">Links do not grant permission or verify availability. Related reading does not imply integration.</p>
   ${value.groups.map((group) => `<details class="module-group" open>
-    <summary><h3 id="civic-modules-group-${esc(group.id)}">${esc(group.label)}</h3></summary>
-    <p>${esc(group.purpose)}</p>
+    <summary><h3 id="civic-modules-group-${esc(group.id)}"${englishLang(group.label)}>${esc(group.label)}</h3></summary>
+    <p${englishLang(group.purpose)}>${esc(group.purpose)}</p>
     <div class="module-grid">${value.modules.filter((module) => module.group === group.id).map(card).join("\n")}</div>
   </details>`).join("\n")}
 </section>`;
