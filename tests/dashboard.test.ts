@@ -3,7 +3,7 @@ import { mkdtemp, mkdir, copyFile, readdir, readFile, rm } from "node:fs/promise
 import { readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
-import { buildDashboard, DASHBOARD_CANONICAL_URLS, DASHBOARD_OUTPUTS, englishLang, extractLegacyAnchors, HALL_HEAD_HELD, HALL_HEAD_ICONS, hallSocialHead, projectDashboardData, renderDashboardPage, safePublicUrl, stablePlaceId } from "../bin/build-dashboard";
+import { buildDashboard, DASHBOARD_CANONICAL_URLS, DASHBOARD_OUTPUTS, extractLegacyAnchors, HALL_HEAD_HELD, HALL_HEAD_ICONS, hallSocialHead, projectDashboardData, renderDashboardPage, safePublicUrl, stablePlaceId } from "../bin/build-dashboard";
 import { captureDraft, settleDraft, filterPlaces, legacyRedirect, mapLayout, measuredSnapshot } from "../pages-content/civic/dashboard.js";
 
 // 純合成測試資料，唔係真工程／公民，唔寫入 repo site 或 production。
@@ -239,36 +239,5 @@ describe("the hall's head assets", () => {
     for (const file of ["site.webmanifest", ...manifest.icons.map(({ src }: { src: string }) => src.slice(1))]) {
       expect(contract.assets.some(({ destination }: { destination: string }) => destination === file)).toBe(false);
     }
-  });
-});
-
-// The hall's frame is Cantonese (zh-Hant); what it shows in English says so, block by block.
-describe("the hall's languages", () => {
-  test("a string is English only when it has Latin letters and no Han character", () => {
-    expect(englishLang("the doctrine + API reference")).toBe(' lang="en"');
-    expect(englishLang("Wayfinder · 尋路")).toBe("");
-    expect(englishLang("公民目錄")).toBe("");
-    expect(englishLang("2026-11-10 · 12")).toBe("");
-    expect(englishLang(undefined)).toBe("");
-  });
-  test.each(["explore", "meet", "citizens", "join"] as const)("%s keeps html lang zh-Hant and marks its English labels", (page) => {
-    const html = renderDashboardPage(page, data);
-    expect(html).toContain('<html lang="zh-Hant">');
-    expect(html).toContain('<span class="wordmark-note" lang="en">THE PUBLIC HALL</span>');
-    expect(html).toContain('探索 <span lang="en">Explore</span>');
-    expect(html).toContain('<p class="eyebrow" lang="en">INDEPENDENT PLACES. SHARED GROUND.</p>');
-  });
-  test("the explore page marks English records, blurbs and blocks, and leaves Han and mixed text alone", () => {
-    const html = renderDashboardPage("explore", projectDashboardData({
-      doors: [{ name: "door", url: "https://example.test/", blurb: "an English blurb" }, { name: "門", url: "https://example.test/b", blurb: "中文簡介" }],
-      layers: [{ layer: "alpha", repos: [{ name: "a", purpose: "find a test" }, { name: "b", purpose: "測試用途" }] }],
-    }));
-    expect(html).toContain('<p lang="en">an English blurb</p>');
-    expect(html).toContain("<p>中文簡介</p>");
-    expect(html).toContain('<p lang="en">find a test</p>');
-    expect(html).toContain("<p>測試用途</p>");
-    expect(html).toContain('<section id="civic-modules" class="module-directory" aria-labelledby="civic-modules-title" lang="en">');
-    expect(html).toContain('<p class="intro-caption" lang="en">A shared map. A public square. Your own way in.</p>');
-    expect(renderDashboardPage("meet", data)).toContain('<p class="intro-caption">The public square / 自介 · 提供 · 尋找</p>');
   });
 });

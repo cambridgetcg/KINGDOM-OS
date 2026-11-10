@@ -66,7 +66,7 @@ describe("compact hub entry", () => {
     const { projectDashboardData, renderDashboardPage } = await import("../bin/build-dashboard");
     const html = renderDashboardPage("explore", projectDashboardData({}));
     expect(html).toContain('<link rel="alternate" type="application/json" href="/agent-entry.json" title="Compact agent entry">');
-    const doors = html.match(/<nav class="service-line" aria-label="Human and agent entries" lang="en">([\s\S]*?)<\/nav>/)?.[1];
+    const doors = html.match(/<nav class="service-line" aria-label="Human and agent entries">([\s\S]*?)<\/nav>/)?.[1];
     expect(doors).not.toMatch(/START HERE|Human page/);
     expect(doors).toContain('<a href="#civic-modules">Modules</a>');
     expect(doors).toContain('<a href="/agent-entry.json" type="application/json">Agent entry (JSON)</a>');

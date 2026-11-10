@@ -313,7 +313,7 @@ test("server-renders every grouped entry as readable, escaped navigation without
   expect(modules.renderModuleDirectory).toBeFunction();
   const render = modules.renderModuleDirectory;
   const html = render();
-  expect(html).toContain('<section id="civic-modules" class="module-directory" aria-labelledby="civic-modules-title" lang="en">');
+  expect(html).toContain('<section id="civic-modules" class="module-directory" aria-labelledby="civic-modules-title">');
   expect(html).toContain('<h2 id="civic-modules-title">');
   expect([...html.matchAll(/<details\b[^>]*class="module-group"/g)]).toHaveLength(PUBLIC_MODULE_CATALOG.groups.length);
   expect([...html.matchAll(/<article\b/g)]).toHaveLength(PUBLIC_MODULE_CATALOG.modules.length);
