@@ -26,7 +26,8 @@ export const DASHBOARD_CANONICAL_URLS: Record<DashboardPage, string> = {
   join: "https://thekingdom.dev/join/",
 };
 // The hall's head assets come from its brand kit: doors/hub/brand/kit/web/head-snippet.html, built by artcraft-brand
-// from doors/hub/brand/brand.json (the K door-arch seal the header already draws). Rebuild the kit instead of editing
+// from doors/hub/brand/brand.json (a new drawing of the header's K seal, its K in Source Serif 4, held for the owner's
+// choice of letterform). Rebuild the kit instead of editing
 // these lines; tests/dashboard.test.ts holds them to the snippet, and the staging contract serves the files at the root.
 // The snippet's manifest link is held with the manifest's PNG icons, which the staging gate refused (brandkit.json
 // serve.omit). The hall paints one dark scheme (dashboard.css :root color-scheme:dark), so the page declares "dark".

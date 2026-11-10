@@ -22,11 +22,17 @@
     },
     {
       "part": "the kit, built from the hall's look and the K seal",
-      "what": "brand.json: the seal redrawn from .seal in dashboard.css (39x45, 1px border, border-radius 40% 40% 2px 2px) at 10x, its K in Source Serif 4 Regular; brass #DBC08B on a night-green #152623 tile, as the header draws it; card set in the generator's flat layout on #152623 with the hall's own words; one dark scheme",
+      "what": "brand.json: a new drawing of the seal, made from .seal in dashboard.css (39x45, 1px border, border-radius 40% 40% 2px 2px) at 10x, with its K outlined from Source Serif 4 Regular, a substitute for the Iowan Old Style the hall renders on Apple devices; brass #DBC08B on a night-green #152623 tile; card in the generator's flat layout on #152623 with the hall's own words; one dark scheme",
       "by": "agent (Claude Code, Opus 5.5, child of session 5c4df033)",
       "under": "Yu's pick of 2026-11-10 for group A, \"Go: build, open PRs, merge\", in a question dialog whose options the lead session wrote; staged only, it ships with the door release (ledger kingdom-door-release)",
       "date": "2026-11-10",
       "record": "the pull request that added this kit (KINGDOM-OS, branch claude/group-a-hub-head)"
+    },
+    {
+      "part": "the K's letterform in the kit (Source Serif 4 in place of the hall's Iowan Old Style)",
+      "status": "held",
+      "what": "the hall draws its K in the CSS serif stack (Iowan Old Style, then Baskerville, Palatino Linotype, Songti TC, serif); the kit outlines Source Serif 4, whose arm, leg and serifs differ visibly at large sizes, so the kit's mark is a new drawing, not the hall's own K. A substitute letterform is the owner's choice.",
+      "waits_on": "the owner's word (Yu): accept the Source Serif 4 substitute, choose another open-licensed face closer to the hall's, or keep the hall without icon files"
     }
   ],
   "spec": "brand.json",
@@ -61,7 +67,7 @@
   "serve": {
     "from": "kit/web",
     "via": "/bin/stage-hub.ts",
-    "pending": "the one door release on Yu's word (ledger kingdom-door-release); nothing here is live until then",
+    "pending": "the owner's choice of the K's letterform (decided: held), then the staging gate's decision on the held manifest and icons, then the one door release on Yu's word (ledger kingdom-door-release); nothing here is live until then",
     "files": [
       "favicon.ico",
       "favicon.svg",
@@ -134,6 +140,8 @@
     "Serving: the hub is staged from an allowlist, publications/hub-staging.v1.json, by bin/stage-hub.ts. The four files under serve.files are contract entries mapping doors/hub/brand/kit/web/<file> to <file>, all mutable destinations. The manifest and its three PNG icons are held (serve.omit), so check.mjs warns that the pages lack the kit's manifest link while adoption is pending, and fails once pending is cleared: ship them, or record the choice, before the release. Pages on this host that declare no icon (/os and others) will find /favicon.ico at the root.",
     "The card: kingdom-os-hub's media/og-atlas.jpg ('ready for https://thekingdom.dev/', committed in b1c8e1bf on 2026-08-17 by git author cambridgetcg, maker not recorded, its plate from an image model per tools/compose-og.py) was compared and not used: it shows the ✦ star the agents' call set aside, a violet nebula and Fraunces, which are the atlas's look, not the hall's night green, brass and seal. The kit's own og.jpg is set in the hall's words on its ground.",
     "Guards: tests/dashboard.test.ts holds the hall's head to kit/web/head-snippet.html (less the held manifest link) and the staging contract to the kit's files; tests/hub-brand.test.ts runs check.mjs. Both run in the verify job of .github/workflows/immutable-publications.yml (bun test --timeout 15000, the whole suite), which names neither file.",
-    "verify passed 270 checks with 2 warnings: the night-green tile is close to a dark browser's tab strip (1.02:1 and 1.31:1); the brass seal on it reads there. The 16 px cut is the generator's baseline and was not hand-hinted."
+    "verify passed 270 checks with 2 warnings: the night-green tile is close to a dark browser's tab strip (1.02:1 and 1.31:1); the brass seal on it reads there. The 16 px cut is the generator's baseline and was not hand-hinted.",
+    "Release blockers found in review (2026-11-10): check.mjs fails on the pages' missing manifest link once serve.pending is cleared, so the staging gate's decision on the held files must come before a release; and the 32 px favicon's bottom edge is 2 px where its sides are 1 px (favicon-32.png, measured on the centre column and middle row).",
+    "og:locale is en_US (from brand.json lang \"en\", the card's language) on pages whose html lang is zh-Hant; left for the owner."
   ]
 }

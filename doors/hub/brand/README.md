@@ -4,7 +4,8 @@ This folder holds the hall's brand kit, made with storytold's Craft apps through
 private repository `cambridgetcg/brandkit`). `brandkit.json` records this project's details, and `check.mjs` checks
 them. "Hub" here means thekingdom.dev; the separate kingdom-os-hub repository serves kingdom.ai-love.cc.
 
-The kit is staged, not live: it ships only with the one door release on Yu's word (ledger `kingdom-door-release`).
+The kit is staged, not live, and held: its K is a substitute letterform waiting on the owner's choice, and it would
+ship only with the one door release on Yu's word (ledger `kingdom-door-release`).
 
 ## The look
 
@@ -15,12 +16,17 @@ all system faces. Its mark is the "K" in a door-arch seal, drawn in CSS. The loo
 Co-Authored-By Claude); no record shows Yu choosing it. Using the K seal, not the ✦ star, as the kit's mark is an
 agents' call recorded in the 2026-11-02 review (session 5c4df033, under Yu's delegation of 2026-10-20).
 
-The kit adds no new identity and no KINGDOM palette:
+The kit adds no KINGDOM palette, but its mark is a new drawing (below):
 
-- **The mark** (`mark/k-seal.svg`) is the header's `.seal` redrawn at 10x: a 39×45 box with a 1 px border and
-  `border-radius: 40% 40% 2px 2px`, its K in Source Serif 4 Regular (OFL), because the page's Iowan Old Style is a
-  system face whose outlines can't go into a logo. `mark/k-seal-small.svg` is the same seal with a heavier arch and a
-  larger K, for favicons of 48 px and under.
+- **The mark** (`mark/k-seal.svg`) is a new drawing of the header's `.seal`: a 39×45 box with a 1 px border and
+  `border-radius: 40% 40% 2px 2px`, redrawn at 10x, with its K outlined from Source Serif 4 Regular (OFL). The hall
+  renders its K in Iowan Old Style on Apple devices, and elsewhere in the next face of its CSS stack the device has
+  (Baskerville, Palatino Linotype, then the browser's serif). Iowan Old Style is a system face whose outlines can't
+  go into a logo, so Source Serif 4 stands in, and its arm, leg and serifs differ visibly at large sizes: the kit's
+  mark is not the hall's own K. **A substitute letterform is the owner's choice, and the kit waits on it**
+  (`brandkit.json`, decided: held): accept the substitute, choose another open-licensed face closer to the hall's, or
+  keep the hall without icon files. `mark/k-seal-small.svg` is the same seal with a heavier arch and a larger K, for
+  favicons of 48 px and under.
 - **Icons**: the brass seal on a night-green tile, as the header draws it.
 - **The card** (`kit/web/og.jpg`, 1200×630): the generator's flat layout on the hall's ground, with the hall's own
   words ("The Public Hall", "A shared map. A public square. Your own way in.").
