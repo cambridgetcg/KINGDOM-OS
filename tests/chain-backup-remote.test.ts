@@ -10,10 +10,14 @@ import {
   MAX_REMOTE_RESULT_BYTES, multipartEffects, needKib, openTranscript, PART_BYTES, parseArgs, parseListParts, parseRemoteResult, parseUploadId,
   partsAreWhole, presignS3Url, readBoundedOutput, redactLine, ROLLOUT_CHAINS, RUN_DEADLINE_MS, sigv4, SSH_TIMEOUT_MS, startDeadline,
   STREAM_CHAINS, streamNeedKib, type Effects, type UploadedPart,
+  emptyOutcome, type Chain,
 } from "../bin/chain-backup-remote.ts";
 
 const SUBJECT = new URL("../bin/chain-backup-remote.ts", import.meta.url).pathname;
 const FALLBACK = new URL("../bin/chain-backup-to-tigris.sh", import.meta.url).pathname;
+// The streamed set before mainnet joined (2026-11-11). Tests of the staged capture run mainnet
+// through it, so the staged path, mainnet's one-line rollback, stays covered.
+const STAGED_MAINNET: readonly Chain[] = ["zerone-testnet-1"];
 const PRIVATE = "PRIVATE_SUBPROCESS_SENTINEL";
 const URL_SENTINEL = `https://storage.invalid/fixture?signature=${PRIVATE}`;
 const record = (tar: number | "NA" = 0, upload: number | "NA" = 0, http: number | "NA" = upload === "NA" ? "NA" : 200) =>
@@ -51,9 +55,9 @@ function fakeEffects(overrides: Partial<Effects> = {}) {
   return { effects, calls };
 }
 
-async function runMain(effects: Effects, args: string[] = ["zerone-1"]) {
+async function runMain(effects: Effects, args: string[] = ["zerone-1"], streamChains: readonly Chain[] = STAGED_MAINNET) {
   const logs: string[] = [];
-  const code = await main(args, async () => effects, (line) => logs.push(line));
+  const code = await main(args, async () => effects, (line) => logs.push(line), undefined, streamChains);
   return { code, logs, outcomes: logs.map((line) => JSON.parse(line)) };
 }
 
@@ -135,7 +139,7 @@ describe("strict online capture contract", () => {
       expect(result.logs.join("\n")).not.toContain("archive/config");
     }
     const logs: string[] = [];
-    expect(await main([], fail, (s) => logs.push(s))).toBe(1);
+    expect(await main([], fail, (s) => logs.push(s), undefined, STAGED_MAINNET)).toBe(1);
     expect(logs).toHaveLength(2);
     expect(logs.join("\n")).not.toContain(PRIVATE);
     expect(JSON.parse(logs[0]).upload_status).toBe("NOT_ATTEMPTED");
@@ -187,7 +191,7 @@ describe("strict online capture contract", () => {
       remote: async () => { stored.add(pending); return { code: 0, stdout: record(1) }; },
     });
     Object.assign(effects, { list: () => { listed++; throw new Error("forbidden"); }, delete: () => { deleted++; throw new Error("forbidden"); } });
-    for (let i = 0; i < 2048; i++) expect((await captureChain("zerone-1", effects)).upload_status).toBe("PRESENT");
+    for (let i = 0; i < 2048; i++) expect((await captureChain("zerone-1", effects, undefined, emptyOutcome("zerone-1", STAGED_MAINNET))).upload_status).toBe("PRESENT");
     expect(stored.size).toBe(2050);
     expect(stored.has("legacy-known-good")).toBe(true);
     expect(stored.has("legacy-raw")).toBe(true);
@@ -458,7 +462,7 @@ Object.defineProperty(Bun, "S3Client", { value: class {
 ${FAKE_MULTIPART_FETCH}
 const { main } = await import(${JSON.stringify(SUBJECT)});
 const logs: string[] = [];
-const code = await main([], undefined, (line: string) => logs.push(line));
+const code = await main([], undefined, (line: string) => logs.push(line), undefined, ["zerone-testnet-1"]);
 console.log(JSON.stringify({ code, logs, kills, stats, keys, presigns, s3ops }));
 `);
         const result = spawnSync(process.execPath, [harness], { cwd: f.base, env: f.env, encoding: "utf8", timeout: 10000 });
@@ -830,7 +834,7 @@ ${FAKE_MULTIPART_FETCH}
 const { main, buildRemoteCommand, streamNeedKib } = await import(${JSON.stringify(SUBJECT)});
 const codes: number[] = [];
 // Mainnet's first bound is the margin alone: testnet's marker never sizes it.
-for (const chain of ["zerone-testnet-1", "zerone-testnet-1", "zerone-1", "zerone-1"]) codes.push(await main([chain], undefined, () => {}));
+for (const chain of ["zerone-testnet-1", "zerone-testnet-1", "zerone-1", "zerone-1"]) codes.push(await main([chain], undefined, () => {}, undefined, ["zerone-testnet-1"]));
 const bound = (need: number) => '"$free" ' + need + '; exit 0; fi';
 console.log(JSON.stringify({ codes, s3ops,
   streamed: commands.slice(0, 2).map((c) => c.includes("CHAIN_BACKUP_V3") && c.includes(bound(streamNeedKib()))),
@@ -866,9 +870,9 @@ const partUrls = (count = MAX_PARTS) => Array.from({ length: count }, (_, i) => 
 const fullParts = (count: number, last: number): UploadedPart[] =>
   Array.from({ length: count }, (_, i) => ({ partNumber: i + 1, etag: `"e${i + 1}"`, size: i === count - 1 ? last : PART_BYTES }));
 
-describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () => {
-  test("only testnet streams; mainnet's staged command is byte-identical to the installed runner (524a73c5)", () => {
-    expect(STREAM_CHAINS).toEqual(["zerone-testnet-1"]);
+describe("streamed multipart capture: testnet rehearsed, mainnet joined 2026-11-11", () => {
+  test("both rollout chains stream; the staged builder, mainnet's rollback, is byte-identical to the installed runner (524a73c5)", () => {
+    expect(STREAM_CHAINS).toEqual(["zerone-testnet-1", "zerone-1"]);
     expect([PART_BYTES, MAX_PARTS, STREAM_NEED]).toEqual([256 * 1024 ** 2, 64, 1310720]);
     // sha256 of 524a73c5's builder output for mainnet's 2026-10-28 bound and for the margin alone.
     const pins: Array<[number, string]> = [
@@ -898,6 +902,26 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
     expect(calls).toEqual([`create:${key}`, "remote", "list-parts", "complete:27", "stat", `mark:zerone-testnet-1:${26 * PART_BYTES + 5}:EXCLUDED`]);
     expect(commands).toEqual([buildStreamedRemoteCommand(partUrls(), { excludeKeys: true, needKib: STREAM_NEED })]);
     // The single-object presign is never used for the streamed chain.
+    expect(calls.some((c) => c.startsWith("presign:"))).toBe(false);
+  });
+
+  test("by default mainnet streams too: its own key, the streamed command and bound, a marker", async () => {
+    const commands: string[] = [];
+    const { effects, calls } = fakeEffects({
+      remote: async (_chain, command) => { calls.push("remote"); commands.push(command); return { code: 0, stdout: streamRecord(1, 27, 0, 200, 26 * PART_BYTES + 5) }; },
+      stat: async () => { calls.push("stat"); return { size: 26 * PART_BYTES + 5 }; },
+    });
+    effects.multipart.listParts = async () => { calls.push("list-parts"); return fullParts(27, 5); };
+    const { code, outcomes } = await runMain(effects, ["zerone-1"], STREAM_CHAINS);
+    expect(code).toBe(3);
+    expect(outcomes[0]).toMatchObject({
+      chain: "zerone-1", capture_mode: "STREAMED_MULTIPART", capture_status: "RAW_UNVERIFIED", key_files: "EXCLUDED",
+      disk_need_kib: STREAM_NEED, multipart_status: "COMPLETED", landed_marker: "WRITTEN", error: null,
+    });
+    const key = "chain/zerone-1/zerone-1-data-fixture-0.tar.gz";
+    expect(calls).toEqual([`create:${key}`, "remote", "list-parts", "complete:27", "stat", `mark:zerone-1:${26 * PART_BYTES + 5}:EXCLUDED`]);
+    expect(commands).toEqual([buildStreamedRemoteCommand(partUrls(), { excludeKeys: true, needKib: STREAM_NEED })]);
+    expect(commands[0]).toContain("--hard-dereference");
     expect(calls.some((c) => c.startsWith("presign:"))).toBe(false);
   });
 
@@ -1472,7 +1496,7 @@ if (wake) {
 const clock = { wall: () => Date.now() + jump, mono: () => performance.now() };
 const logs: string[] = [];
 const started = Date.now();
-const code = await main(${JSON.stringify(chains)}, undefined, (line: string) => logs.push(line), { ...LIMITS, ...${JSON.stringify(limits)}, clock });
+const code = await main(${JSON.stringify(chains)}, undefined, (line: string) => logs.push(line), { ...LIMITS, ...${JSON.stringify(limits)}, clock }, ["zerone-testnet-1"]);
 console.log(JSON.stringify({ code, logs, stats, s3ops, elapsed: Date.now() - started, sinceWake: wokeAt === null ? null : Date.now() - wokeAt, active: activeChildCount() }));
 // As the real entry point does: exit outright, abandoning anything still pending.
 process.exit(0);
@@ -1689,7 +1713,7 @@ describe("hard bounds: no SSH session, and no run, outlives its bound", () => {
     const { effects, calls } = fakeEffects({ stat: async () => { await Bun.sleep(700); calls.push("stat"); return { size: 64 }; } });
     const logs: string[] = [];
     const started = Date.now();
-    expect(await main([], async () => effects, (line) => logs.push(line), tight)).toBe(1);
+    expect(await main([], async () => effects, (line) => logs.push(line), tight, STAGED_MAINNET)).toBe(1);
     expect(Date.now() - started).toBeLessThan(650);
     expect(logs.map((line) => JSON.parse(line)).map((o) => [o.chain, o.error, o.landed_marker])).toEqual([
       ["zerone-testnet-1", "TIMEOUT_DEADLINE", "NOT_WRITTEN"], ["zerone-1", "TIMEOUT_DEADLINE", "NOT_WRITTEN"],
@@ -1701,11 +1725,11 @@ describe("hard bounds: no SSH session, and no run, outlives its bound", () => {
     expect(calls.some((c) => c.startsWith("mark:"))).toBe(false);
     // The cutoff alone stops a clean landing's marker.
     const clean = fakeEffects();
-    expect(await captureChain("zerone-1", clean.effects, AbortSignal.abort())).toMatchObject({ upload_status: "PRESENT", error: "TIMEOUT_DEADLINE", landed_marker: "NOT_WRITTEN" });
+    expect(await captureChain("zerone-1", clean.effects, AbortSignal.abort(), emptyOutcome("zerone-1", STAGED_MAINNET))).toMatchObject({ upload_status: "PRESENT", error: "TIMEOUT_DEADLINE", landed_marker: "NOT_WRITTEN" });
     expect(clean.calls.some((c) => c.startsWith("mark:"))).toBe(false);
     // Effects that never come up are cut at the deadline too.
     const stuck: string[] = [];
-    expect(await main([], () => new Promise<Effects>(() => {}), (line) => stuck.push(line), tight)).toBe(1);
+    expect(await main([], () => new Promise<Effects>(() => {}), (line) => stuck.push(line), tight, STAGED_MAINNET)).toBe(1);
     expect(stuck.map((line) => JSON.parse(line).error)).toEqual(["TIMEOUT_DEADLINE", "TIMEOUT_DEADLINE"]);
   });
 
