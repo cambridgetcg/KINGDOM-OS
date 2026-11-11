@@ -18,7 +18,7 @@ rather than guessing.
 
 | Family | File | Licence | Source | SHA-256 |
 |---|---|---|---|---|
-| Source Serif 4 Regular (the seal's K, the wordmark, the card): a substitute for the face the hall renders, accepted by the owner on 2026-11-10 | none committed: bundled with vectorcraft-cli 0.17.0 and outlined into the kit | SIL Open Font License 1.1 | [adobe-fonts/source-serif](https://github.com/adobe-fonts/source-serif) | not recorded |
+| Source Serif 4 Regular: the seal's K, a substitute for the face the hall renders, accepted by the owner on 2026-11-10 for the hub's icons and share card; also the kit's wordmark and the card's words, which the hall sets in its own system faces | none committed: bundled with vectorcraft-cli 0.17.0 and outlined into the kit | SIL Open Font License 1.1 | [adobe-fonts/source-serif](https://github.com/adobe-fonts/source-serif) | not recorded |
 | JetBrains Mono Regular (colour sheet labels) | none committed: bundled with vectorcraft-cli 0.17.0 | SIL Open Font License 1.1 | [JetBrains/JetBrainsMono](https://github.com/JetBrains/JetBrainsMono) | not recorded |
 | Iowan Old Style, Baskerville, Songti TC; Optima, PingFang TC; SF Mono (the pages) | none: the stylesheet names system faces and serves no font files | the reader's own system fonts | — | — |
 

@@ -15,3 +15,6 @@ node_modules/
 .civic-test-artifacts/
 .dev.vars*
 .env*
+
+# the hub brand kit generator keeps the previous kit here after a rebuild that changes its source
+doors/hub/brand/kit/.replaced/

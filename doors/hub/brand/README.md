@@ -38,7 +38,10 @@ The kit adds no KINGDOM palette, but its mark is a new drawing (below):
 - **One dark scheme**: the hall paints only dark (`:root { color-scheme: dark }`), so the pages declare
   `color-scheme: dark` and one theme-color, `#152623`. They used to declare `dark light`.
 
-The other looks on this host keep their own: the atlas (`/atlas.html`), Power Atlas and `/os`.
+The other looks on this host keep their own: the atlas (`/atlas.html`), Power Atlas and `/os`. Icons are the
+exception: pages that declare no icon link will show the hall's favicon once a release serves `/favicon.ico`. In the
+stage these are `404.html`, `contact/`, `government-engine/`, `observatory/`, `os/`, `shape-resonance/`,
+`trial-chamber/` and `workshop/`. The atlas declares a blank icon and Power Atlas its own, so they don't.
 
 The card route not taken: kingdom-os-hub's `media/og-atlas.jpg` ("ready for https://thekingdom.dev/") shows the ✦
 star the agents' call set aside, on a violet nebula, in Fraunces: the atlas's look, not the hall's. Its maker is not
@@ -63,9 +66,10 @@ Don't change the identity without its owner's word. Every asset here records who
 ARTCRAFT_NO_TRASH=1 python3 -B ~/.kingdom/tools/artcraft-brand/scripts/brandkit.py doors/hub/brand/brand.json --out doors/hub/brand/kit --rebuild-check
 ```
 
-Run it from the repository root. When the source changed, the previous kit is kept at `kit/.replaced/`: move it out
-of the repository rather than committing it. A second rebuild of an unchanged source is byte-identical (checked
-2026-11-11 with vectorcraft-cli 0.17.0, the active version that day by the skill's `scripts/install.sh --status`).
+Run it from the repository root. When the source changed, the previous kit is kept at `kit/.replaced/`, which git
+ignores (`.gitignore`); move it out of the repository once you have compared the two. A second rebuild of an
+unchanged source is byte-identical (checked 2026-11-11 with vectorcraft-cli 0.17.0, the active version that day
+by the skill's `scripts/install.sh --status`).
 A rebuild that changes the head snippet's lines changes `HALL_HEAD_ICONS` and `HALL_CARD` in
 `bin/build-dashboard.ts` too; `tests/dashboard.test.ts` fails until they match. Then regenerate `site/` with
 `bun bin/build-hub.ts <date>`.
