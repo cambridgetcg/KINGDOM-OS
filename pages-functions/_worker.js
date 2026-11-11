@@ -820,9 +820,9 @@ function hasKingdomRightsAssets(url) {
 }
 
 // we-are.love, one of the doors bin/stage-doors.ts stages with this worker, and its Pages project's hostnames. Its
-// HTML gets the hub's no-transform guard too, so the edge doesn't inject Cloudflare's analytics beacon (2026-11-02
-// review, A6). The cost: no-transform also stops Cloudflare compressing those responses, which for this one small
-// page is 3,618 bytes brotli against 9,627 plain (measured 2026-11-10). chillspace.love, the other staged door, is
+// HTML gets the hub's no-transform guard too, so the edge doesn't inject Cloudflare's analytics beacon. The cost:
+// no-transform also stops Cloudflare compressing those responses, which for this one small page is 3,618 bytes
+// brotli against 9,627 plain (measured 2026-11-10). chillspace.love, the other staged door, is
 // deliberately left out and answers exactly as before: its pages are far larger (/sound would go from 271,717 bytes
 // to 1,632,455), and the owner's decision of 2026-11-10 keeps its compression. Routing on both hosts is unchanged.
 const WE_ARE_DOOR_HOST = "we-are.love";

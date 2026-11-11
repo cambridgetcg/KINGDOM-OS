@@ -251,7 +251,7 @@ besides GET too; that observable parity is retained. Civic 同 Workshop namespac
 嘅 unknown paths（Power Atlas namespace 亦有獨立404），以及所有 shared-door hostname，繼續交俾 `env.ASSETS`。
 we-are.love (with `we-are-love.pages.dev` and its previews) keeps that routing, but its HTML answers gain
 `no-transform` like the hub's, so the edge should inject no analytics beacon; this also stops Cloudflare compressing
-those answers (review 2026-11-02, A6). chillspace.love does not: its pages are much larger, and the owner's decision
+those answers. chillspace.love does not: its pages are much larger, and the owner's decision
 of 2026-11-10 keeps their compression, so the worker answers it exactly as before.
 
 Civic dispatch 只喺 Kingdom hosts／Pages previews，或明確 `CIVIC_LOCAL=true`
