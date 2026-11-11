@@ -1,8 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import { mkdtemp, mkdir, copyFile, readdir, readFile, rm } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
-import { buildDashboard, DASHBOARD_OUTPUTS, englishLang, extractLegacyAnchors, projectDashboardData, renderDashboardPage, safePublicUrl, stablePlaceId } from "../bin/build-dashboard";
+import { buildDashboard, DASHBOARD_CANONICAL_URLS, DASHBOARD_OUTPUTS, englishLang, extractLegacyAnchors, HALL_HEAD_HELD, HALL_HEAD_ICONS, hallSocialHead, projectDashboardData, renderDashboardPage, safePublicUrl, stablePlaceId } from "../bin/build-dashboard";
 import { captureDraft, settleDraft, filterPlaces, legacyRedirect, mapLayout, measuredSnapshot } from "../pages-content/civic/dashboard.js";
 
 // 純合成測試資料，唔係真工程／公民，唔寫入 repo site 或 production。
@@ -192,6 +193,53 @@ test("isolated build writes exactly the public dashboard and compact entry outpu
     expect(js).toContain("rankWayfinderPaths");
     expect(js).not.toContain("localStorage"); expect(js).not.toContain("setInterval("); expect(js).not.toContain("innerHTML");
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+// The hall's head assets are the brand kit's (doors/hub/brand/kit/web), so the page and the staged files can't drift.
+describe("the hall's head assets", () => {
+  const ROOT = join(dirname(new URL(import.meta.url).pathname), "..");
+  const snippet = (name: string) => readFileSync(join(ROOT, "doors/hub/brand/kit/web", name), "utf8");
+  const head = (html: string) => html.slice(0, html.indexOf("</head>"));
+  const tags = (html: string, pattern: RegExp) => [...head(html).matchAll(pattern)].map(([tag]) => tag);
+  test("the icon links, theme-color and color-scheme are the kit snippet's own lines, less the held manifest", () => {
+    const kit = snippet("head-snippet.html").split("\n").filter((line) => /^<(link|meta name="(theme-color|color-scheme)")/.test(line));
+    expect([...HALL_HEAD_ICONS]).toEqual(kit.filter((line) => !HALL_HEAD_HELD.includes(line as never)));
+    expect(kit).toEqual(expect.arrayContaining([...HALL_HEAD_HELD]));
+    // The manifest goes back in only with its icons; the brand folder records why both are held.
+    const omitted = JSON.parse(readFileSync(join(ROOT, "doors/hub/brand/brandkit.json"), "utf8")).serve.omit.map(({ file }: { file: string }) => file);
+    expect(omitted).toEqual(expect.arrayContaining(["site.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-512.png"]));
+  });
+  test("the card lines are the kit snippet's, with each page naming its own URL", () => {
+    const kitSocial = snippet("head-snippet.html").split("\n").filter((line) => /^<meta (property="og:|name="twitter:)/.test(line));
+    for (const page of ["explore", "meet", "citizens", "join"] as const) {
+      const html = renderDashboardPage(page, data);
+      const social = tags(html, /<meta (?:property="og:|name="twitter:)[^>]*>/g);
+      expect(social).toHaveLength(kitSocial.length);
+      expect(social).toContain(`<meta property="og:url" content="${DASHBOARD_CANONICAL_URLS[page]}">`);
+      const same = (line: string) => !/og:(url|title)"/.test(line);
+      expect(social.filter(same)).toEqual(kitSocial.filter(same));
+    }
+    expect(hallSocialHead("explore")).toContain('<meta property="og:title" content="The Public Hall">');
+  });
+  test.each(["explore", "meet", "citizens", "join"] as const)("%s declares one dark scheme and only the kit's icons", (page) => {
+    const html = renderDashboardPage(page, data);
+    expect(tags(html, /<meta name="color-scheme"[^>]*>/g)).toEqual(['<meta name="color-scheme" content="dark">']);
+    expect(tags(html, /<meta name="theme-color"[^>]*>/g)).toEqual(['<meta name="theme-color" content="#152623">']);
+    expect(tags(html, /<link rel="(?:icon|apple-touch-icon|manifest|shortcut icon|mask-icon)"[^>]*>/g)).toEqual([...HALL_HEAD_ICONS].filter((tag) => tag.startsWith("<link")));
+    expect(head(html).indexOf('property="og:image"')).toBeLessThan(4000);
+  });
+  test("the staging contract serves the kit files at the root and holds the manifest with its icons", () => {
+    const contract = JSON.parse(readFileSync(join(ROOT, "publications/hub-staging.v1.json"), "utf8"));
+    const manifest = JSON.parse(snippet("site.webmanifest"));
+    const served = ["favicon.ico", "favicon.svg", "apple-touch-icon.png", "og.jpg"];
+    for (const file of served) {
+      expect(contract.assets).toContainEqual({ source: `doors/hub/brand/kit/web/${file}`, destination: file });
+      expect(contract.mutable_destinations).toContain(file);
+    }
+    for (const file of ["site.webmanifest", ...manifest.icons.map(({ src }: { src: string }) => src.slice(1))]) {
+      expect(contract.assets.some(({ destination }: { destination: string }) => destination === file)).toBe(false);
+    }
+  });
 });
 
 // The hall's frame is Cantonese (zh-Hant). English elements say so one by one, and no Chinese text is marked English.

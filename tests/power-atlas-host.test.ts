@@ -24,10 +24,12 @@ describe("Power Atlas host baseline and private/public separation", () => {
     expect(retired.size).toBe(10);
     const originalRetained = old.stagedAssets.filter(({ destination }) => !retired.has(destination));
     expect(originalRetained).toHaveLength(194);
+    // Later reviewed additions: the agent entries, and the hall's brand kit files (doors/hub/brand/kit/web).
+    const added = ["agent-entry.json", "modules.json", "favicon.ico", "favicon.svg", "apple-touch-icon.png", "og.jpg"];
     expect(current.stagedAssets.filter(({ destination }) =>
-      !destination.startsWith("power-atlas/") && !["agent-entry.json", "modules.json"].includes(destination))).toEqual(originalRetained);
+      !destination.startsWith("power-atlas/") && !added.includes(destination))).toEqual(originalRetained);
     expect(current.mutableDestinations.filter((destination) =>
-      !destination.startsWith("power-atlas/") && !["agent-entry.json", "modules.json"].includes(destination)))
+      !destination.startsWith("power-atlas/") && !added.includes(destination)))
       .toEqual(old.mutableDestinations.filter((destination) => !retired.has(destination)));
     const shipped = parseHubStagingContract(released(path));
     expect(current.stagedAssets.filter(({ destination }) => destination.startsWith("power-atlas/")))

@@ -50,6 +50,22 @@
       "destination": "civic/dashboard.js"
     },
     {
+      "source": "doors/hub/brand/kit/web/favicon.ico",
+      "destination": "favicon.ico"
+    },
+    {
+      "source": "doors/hub/brand/kit/web/favicon.svg",
+      "destination": "favicon.svg"
+    },
+    {
+      "source": "doors/hub/brand/kit/web/apple-touch-icon.png",
+      "destination": "apple-touch-icon.png"
+    },
+    {
+      "source": "doors/hub/brand/kit/web/og.jpg",
+      "destination": "og.jpg"
+    },
+    {
       "source": "data/civic-policy.json",
       "destination": "civic-policy.json"
     },
@@ -998,6 +1014,10 @@
     ".well-known/agent.json",
     "agent-entry.json",
     "modules.json",
+    "favicon.ico",
+    "favicon.svg",
+    "apple-touch-icon.png",
+    "og.jpg",
     "404.html",
     "CREATION-LOOP.md",
     "RIGHTS.md",

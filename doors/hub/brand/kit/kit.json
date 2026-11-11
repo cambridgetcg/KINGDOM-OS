@@ -1,0 +1,957 @@
+{
+ "generator": "artcraft-brand brandkit.py 1.8",
+ "tools": {
+  "vectorcraft-cli": "vectorcraft-cli 0.17.0"
+ },
+ "source_date_epoch": 1794323794,
+ "spec": {
+  "name": "KINGDOM",
+  "short_name": "KINGDOM",
+  "slug": "kingdom-hall",
+  "lang": "en",
+  "lang_given": true,
+  "url": "https://thekingdom.dev",
+  "description": "A shared map. A public square. Your own way in.",
+  "colours": {
+   "primary": "#152623",
+   "accent": "#DBC08B",
+   "neutral": "#B8C1AE"
+  },
+  "ground": {
+   "light": "#EFE5CF",
+   "dark": "#152623"
+  },
+  "wordmark": {
+   "text": "KINGDOM",
+   "font": "Source Serif 4",
+   "style": "Regular",
+   "tracking": 130,
+   "colour": "#152623",
+   "colour_dark": "#F1E7D2"
+  },
+  "mark": {
+   "kind": "svg",
+   "path": null,
+   "source": "source/mark-source.svg",
+   "recolour": false,
+   "small_path": null,
+   "small": "source/mark-small.svg",
+   "dark": {
+    "*": "#DBC08B"
+   }
+  },
+  "icon": {
+   "tile": "#152623",
+   "ink": "#DBC08B",
+   "padding": 0.18,
+   "radius": 0.22,
+   "ink_given": true,
+   "radius_given": false
+  },
+  "og": {
+   "title": "The Public Hall",
+   "subtitle": "A shared map. A public square. Your own way in.",
+   "theme": "dark",
+   "alt": "The K door-arch seal and the KINGDOM wordmark on night green, with the words: The Public Hall. A shared map. A public square. Your own way in."
+  },
+  "app": {
+   "display": "browser",
+   "theme": "dark",
+   "color_scheme": "dark"
+  },
+  "pages": []
+ },
+ "colours": {
+  "primary": "#152623",
+  "on_primary": "#FFFFFF",
+  "monogram_solo": "#152623"
+ },
+ "facts": {
+  "schemes": {
+   "mark": {
+    "mode": "original",
+    "ground": null,
+    "colours": {},
+    "lifted": {},
+    "knockouts": [],
+    "gaps": []
+   },
+   "mark-mono-black": {
+    "mode": "mono",
+    "ground": null,
+    "colours": {},
+    "lifted": {},
+    "knockouts": [],
+    "gaps": []
+   },
+   "mark-mono-white": {
+    "mode": "mono",
+    "ground": null,
+    "colours": {},
+    "lifted": {},
+    "knockouts": [],
+    "gaps": []
+   },
+   "lockup-horizontal": {
+    "mode": "original",
+    "ground": null,
+    "colours": {},
+    "lifted": {},
+    "knockouts": [],
+    "gaps": []
+   },
+   "lockup-horizontal-reversed": {
+    "mode": "mapped",
+    "ground": "#152623",
+    "colours": {
+     "#152623": "#DBC08B"
+    },
+    "lifted": {
+     "#152623": {
+      "to": "#DBC08B",
+      "step": "mark.dark in brand.json",
+      "ratio": 8.94,
+      "apca": -67.9,
+      "letters": null,
+      "knockout": false,
+      "letter_ink": null,
+      "ui": false,
+      "chosen": true
+     }
+    },
+    "knockouts": [],
+    "gaps": []
+   },
+   "lockup-stacked": {
+    "mode": "original",
+    "ground": null,
+    "colours": {},
+    "lifted": {},
+    "knockouts": [],
+    "gaps": []
+   },
+   "lockup-stacked-reversed": {
+    "mode": "mapped",
+    "ground": "#152623",
+    "colours": {
+     "#152623": "#DBC08B"
+    },
+    "lifted": {
+     "#152623": {
+      "to": "#DBC08B",
+      "step": "mark.dark in brand.json",
+      "ratio": 8.94,
+      "apca": -67.9,
+      "letters": null,
+      "knockout": false,
+      "letter_ink": null,
+      "ui": false,
+      "chosen": true
+     }
+    },
+    "knockouts": [],
+    "gaps": []
+   },
+   "og": {
+    "mode": "mapped",
+    "ground": "#152623",
+    "colours": {
+     "#152623": "#DBC08B"
+    },
+    "lifted": {
+     "#152623": {
+      "to": "#DBC08B",
+      "step": "mark.dark in brand.json",
+      "ratio": 8.94,
+      "apca": -67.9,
+      "letters": null,
+      "knockout": false,
+      "letter_ink": null,
+      "ui": false,
+      "chosen": true
+     }
+    },
+    "knockouts": [],
+    "gaps": []
+   }
+  },
+  "mark": {
+   "size": [
+    222,
+    256
+   ]
+  },
+  "wordmark": {
+   "size": [
+    519,
+    67
+   ],
+   "cap": 64,
+   "colour": "#152623",
+   "colour_dark": "#F1E7D2"
+  },
+  "lockup-horizontal": {
+   "size": [
+    501,
+    96
+   ],
+   "mark_height": 96,
+   "cap_height": 48.0,
+   "gap": 28.8,
+   "clear_space": 48.0,
+   "shared_baseline": false
+  },
+  "lockup-stacked": {
+   "size": [
+    332,
+    197
+   ],
+   "mark_height": 128,
+   "cap_height": 40.96,
+   "gap": 26.88,
+   "clear_space": 40.96,
+   "shared_baseline": false
+  },
+  "on_ground": {
+   "light": "#EFE5CF",
+   "dark": "#152623",
+   "scale": 2,
+   "boards": {
+    "light/lockup-horizontal": {
+     "size": [
+      597,
+      192
+     ],
+     "clear_space": 48
+    },
+    "light/lockup-stacked": {
+     "size": [
+      414,
+      279
+     ],
+     "clear_space": 41
+    },
+    "light/wordmark": {
+     "size": [
+      647,
+      195
+     ],
+     "clear_space": 64
+    },
+    "light/mark": {
+     "size": [
+      350,
+      384
+     ],
+     "clear_space": 64
+    },
+    "dark/lockup-horizontal": {
+     "size": [
+      597,
+      192
+     ],
+     "clear_space": 48
+    },
+    "dark/lockup-stacked": {
+     "size": [
+      414,
+      279
+     ],
+     "clear_space": 41
+    },
+    "dark/wordmark": {
+     "size": [
+      647,
+      195
+     ],
+     "clear_space": 64
+    },
+    "dark/mark": {
+     "size": [
+      350,
+      384
+     ],
+     "clear_space": 64
+    }
+   }
+  },
+  "app": {
+   "tile": "#152623",
+   "ink": "#DBC08B",
+   "ink_mode": "#DBC08B",
+   "ink_brand": false,
+   "ink_default": false,
+   "subset": "all",
+   "remapped": {},
+   "mark_extent": 0.7
+  },
+  "maskable": {
+   "tile": "#152623",
+   "predicted_radius": 176.1,
+   "safe_radius": 204.8,
+   "mark_extent": 0.537
+  },
+  "favicon": {
+   "small_mark": true,
+   "dark_plan": {},
+   "merged": [],
+   "tile": "#152623",
+   "radius": 0.22,
+   "radius_reason": "",
+   "ink": "#DBC08B",
+   "ink_mode": "#DBC08B",
+   "colours": [
+    "#DBC08B"
+   ],
+   "outer_colours": [
+    "#DBC08B"
+   ],
+   "ground_colours": [],
+   "cuts": {
+    "32": {
+     "label": "small mark",
+     "size": 32,
+     "longest": 26,
+     "box": [
+      5,
+      3,
+      22,
+      26
+     ],
+     "centre": "box",
+     "margins": [
+      5,
+      3,
+      5,
+      3
+     ],
+     "centred": true,
+     "centred_alternative": null,
+     "clear_of_corners": true,
+     "letter_px": null,
+     "letter_basis": null,
+     "letter_min": null,
+     "predicted": {
+      "ink_pixels": 232,
+      "clean_pixels": 191,
+      "crisp": 0.823
+     },
+     "fidelity": {
+      "strokes": 8,
+      "lost_strokes": 0,
+      "collapsed": 0,
+      "where": [],
+      "welded_points": 0,
+      "pockets_filled": [],
+      "specks": []
+     },
+     "reference": {
+      "d": [
+       "M 5 13.4 C 5 7.65 8.93 3 13.8 3 L 18.2 3 C 23.07 3 27 7.65 27 13.4 L 27 27.84 C 27 28.48 26.49 29 25.87 29 L 6.13 29 C 5.51 29 5 28.48 5 27.84 Z M 13.8 4.96 C 10.01 4.96 6.92 8.74 6.92 13.4 L 6.92 27.04 L 25.08 27.04 L 25.08 13.4 C 25.08 8.74 21.99 4.96 18.2 4.96 Z",
+       "M 10.64 10.78 L 10.64 10.05 L 15.56 10.05 L 15.56 10.78 L 13.91 10.98 C 13.89 11.74 13.89 12.51 13.88 13.29 C 13.87 14.06 13.87 14.84 13.87 15.61 L 13.87 16.74 L 18.41 11.03 L 17.15 10.78 L 17.15 10.05 L 21.17 10.05 L 21.17 10.78 L 19.48 11.01 L 16.56 14.61 L 20.09 21.12 L 21.43 21.3 L 21.43 22.03 L 16.94 22.03 L 16.94 21.3 L 18.38 21.12 L 15.6 15.81 L 13.87 17.93 C 13.87 18.41 13.87 18.92 13.88 19.45 C 13.89 19.99 13.89 20.54 13.91 21.1 L 15.56 21.3 L 15.56 22.03 L 10.64 22.03 L 10.64 21.3 L 12.25 21.1 C 12.27 20.35 12.28 19.59 12.28 18.81 C 12.28 18.04 12.28 17.26 12.28 16.49 L 12.28 15.61 C 12.28 14.84 12.28 14.06 12.28 13.29 C 12.28 12.51 12.27 11.74 12.25 10.98 Z"
+      ],
+      "rules": [
+       "nonzero",
+       "nonzero"
+      ]
+     },
+     "seam": {
+      "d": [
+       "M 5 13.4 C 5 7.65 8.93 3 13.8 3 L 18.2 3 C 23.07 3 27 7.65 27 13.4 L 27 27.84 C 27 28.48 26.49 29 25.87 29 L 6.13 29 C 5.51 29 5 28.48 5 27.84 Z M 13.8 4.96 C 10.01 4.96 6.92 8.74 6.92 13.4 L 6.92 27.04 L 25.08 27.04 L 25.08 13.4 C 25.08 8.74 21.99 4.96 18.2 4.96 Z",
+       "M 10.64 10.78 L 10.64 10.05 L 15.56 10.05 L 15.56 10.78 L 13.91 10.98 C 13.89 11.74 13.89 12.51 13.88 13.29 C 13.87 14.06 13.87 14.84 13.87 15.61 L 13.87 16.74 L 18.41 11.03 L 17.15 10.78 L 17.15 10.05 L 21.17 10.05 L 21.17 10.78 L 19.48 11.01 L 16.56 14.61 L 20.09 21.12 L 21.43 21.3 L 21.43 22.03 L 16.94 22.03 L 16.94 21.3 L 18.38 21.12 L 15.6 15.81 L 13.87 17.93 C 13.87 18.41 13.87 18.92 13.88 19.45 C 13.89 19.99 13.89 20.54 13.91 21.1 L 15.56 21.3 L 15.56 22.03 L 10.64 22.03 L 10.64 21.3 L 12.25 21.1 C 12.27 20.35 12.28 19.59 12.28 18.81 C 12.28 18.04 12.28 17.26 12.28 16.49 L 12.28 15.61 C 12.28 14.84 12.28 14.06 12.28 13.29 C 12.28 12.51 12.27 11.74 12.25 10.98 Z"
+      ],
+      "rules": [
+       "nonzero",
+       "nonzero"
+      ],
+      "knocked": [],
+      "gap_fronts": []
+     },
+     "extent": 0.812,
+     "considered": [
+      {
+       "label": "small mark",
+       "letter_px": null,
+       "crisp": 0.823,
+       "faithful": true
+      }
+     ],
+     "full": true
+    },
+    "48": {
+     "label": "small mark",
+     "size": 48,
+     "longest": 38,
+     "box": [
+      8,
+      5,
+      32,
+      38
+     ],
+     "centre": "box",
+     "margins": [
+      8,
+      5,
+      8,
+      5
+     ],
+     "centred": true,
+     "centred_alternative": null,
+     "clear_of_corners": true,
+     "letter_px": null,
+     "letter_basis": null,
+     "letter_min": null,
+     "predicted": {
+      "ink_pixels": 494,
+      "clean_pixels": 417,
+      "crisp": 0.844
+     },
+     "fidelity": {
+      "strokes": 8,
+      "lost_strokes": 0,
+      "collapsed": 0,
+      "where": [],
+      "welded_points": 0,
+      "pockets_filled": [],
+      "specks": []
+     },
+     "reference": {
+      "d": [
+       "M 8 20.2 C 8 11.8 13.72 5 20.8 5 L 27.2 5 C 34.28 5 40 11.8 40 20.2 L 40 41.31 C 40 42.24 39.27 43 38.36 43 L 9.64 43 C 8.73 43 8 42.24 8 41.31 Z M 20.8 7.87 C 15.28 7.87 10.79 13.39 10.79 20.2 L 10.79 40.13 L 37.21 40.13 L 37.21 20.2 C 37.21 13.39 32.72 7.87 27.2 7.87 Z",
+       "M 16.21 16.37 L 16.21 15.3 L 23.37 15.3 L 23.37 16.37 L 20.95 16.66 C 20.94 17.78 20.92 18.9 20.92 20.03 C 20.91 21.17 20.9 22.3 20.9 23.43 L 20.9 25.08 L 27.51 16.74 L 25.68 16.37 L 25.68 15.3 L 31.52 15.3 L 31.52 16.37 L 29.05 16.71 L 24.81 21.97 L 29.94 31.48 L 31.9 31.74 L 31.9 32.81 L 25.37 32.81 L 25.37 31.74 L 27.45 31.48 L 23.42 23.72 L 20.9 26.83 C 20.9 27.52 20.91 28.27 20.92 29.05 C 20.92 29.83 20.94 30.63 20.95 31.45 L 23.37 31.74 L 23.37 32.81 L 16.21 32.81 L 16.21 31.74 L 18.54 31.45 C 18.58 30.36 18.59 29.24 18.59 28.11 C 18.59 26.98 18.59 25.84 18.59 24.71 L 18.59 23.43 C 18.59 22.3 18.59 21.17 18.59 20.03 C 18.59 18.9 18.58 17.78 18.54 16.66 Z"
+      ],
+      "rules": [
+       "nonzero",
+       "nonzero"
+      ]
+     },
+     "seam": {
+      "d": [
+       "M 8 20.2 C 8 11.8 13.72 5 20.8 5 L 27.2 5 C 34.28 5 40 11.8 40 20.2 L 40 41.31 C 40 42.24 39.27 43 38.36 43 L 9.64 43 C 8.73 43 8 42.24 8 41.31 Z M 20.8 7.87 C 15.28 7.87 10.79 13.39 10.79 20.2 L 10.79 40.13 L 37.21 40.13 L 37.21 20.2 C 37.21 13.39 32.72 7.87 27.2 7.87 Z",
+       "M 16.21 16.37 L 16.21 15.3 L 23.37 15.3 L 23.37 16.37 L 20.95 16.66 C 20.94 17.78 20.92 18.9 20.92 20.03 C 20.91 21.17 20.9 22.3 20.9 23.43 L 20.9 25.08 L 27.51 16.74 L 25.68 16.37 L 25.68 15.3 L 31.52 15.3 L 31.52 16.37 L 29.05 16.71 L 24.81 21.97 L 29.94 31.48 L 31.9 31.74 L 31.9 32.81 L 25.37 32.81 L 25.37 31.74 L 27.45 31.48 L 23.42 23.72 L 20.9 26.83 C 20.9 27.52 20.91 28.27 20.92 29.05 C 20.92 29.83 20.94 30.63 20.95 31.45 L 23.37 31.74 L 23.37 32.81 L 16.21 32.81 L 16.21 31.74 L 18.54 31.45 C 18.58 30.36 18.59 29.24 18.59 28.11 C 18.59 26.98 18.59 25.84 18.59 24.71 L 18.59 23.43 C 18.59 22.3 18.59 21.17 18.59 20.03 C 18.59 18.9 18.58 17.78 18.54 16.66 Z"
+      ],
+      "rules": [
+       "nonzero",
+       "nonzero"
+      ],
+      "knocked": [],
+      "gap_fronts": []
+     },
+     "extent": 0.792,
+     "considered": [
+      {
+       "label": "small mark",
+       "letter_px": null,
+       "crisp": 0.844,
+       "faithful": true
+      }
+     ],
+     "full": true
+    },
+    "16": {
+     "label": "small mark",
+     "size": 16,
+     "longest": 12,
+     "box": [
+      3,
+      2,
+      10,
+      12
+     ],
+     "centre": "box",
+     "margins": [
+      3,
+      2,
+      3,
+      2
+     ],
+     "centred": true,
+     "centred_alternative": null,
+     "clear_of_corners": true,
+     "letter_px": null,
+     "letter_basis": null,
+     "letter_min": null,
+     "predicted": {
+      "ink_pixels": 62,
+      "clean_pixels": 38,
+      "crisp": 0.613
+     },
+     "fidelity": {
+      "strokes": 5,
+      "lost_strokes": 0,
+      "collapsed": 0,
+      "where": [],
+      "welded_points": 0,
+      "pockets_filled": [],
+      "specks": []
+     },
+     "reference": {
+      "d": [
+       "M 3 6.8 C 3 4.15 4.79 2 7 2 L 9 2 C 11.21 2 13 4.15 13 6.8 L 13 13.47 C 13 13.76 12.77 14 12.49 14 L 3.51 14 C 3.23 14 3 13.76 3 13.47 Z M 7 2.91 C 5.28 2.91 3.87 4.65 3.87 6.8 L 3.87 13.09 L 12.13 13.09 L 12.13 6.8 C 12.13 4.65 10.72 2.91 9 2.91 Z",
+       "M 5.56 5.59 L 5.56 5.25 L 7.8 5.25 L 7.8 5.59 L 7.05 5.68 C 7.04 6.03 7.04 6.39 7.04 6.75 C 7.03 7.1 7.03 7.46 7.03 7.82 L 7.03 8.34 L 9.1 5.71 L 8.52 5.59 L 8.52 5.25 L 10.35 5.25 L 10.35 5.59 L 9.58 5.7 L 8.25 7.36 L 9.86 10.36 L 10.47 10.44 L 10.47 10.78 L 8.43 10.78 L 8.43 10.44 L 9.08 10.36 L 7.82 7.91 L 7.03 8.89 C 7.03 9.11 7.03 9.35 7.04 9.59 C 7.04 9.84 7.04 10.1 7.05 10.35 L 7.8 10.44 L 7.8 10.78 L 5.56 10.78 L 5.56 10.44 L 6.29 10.35 C 6.3 10.01 6.31 9.66 6.31 9.3 C 6.31 8.94 6.31 8.58 6.31 8.22 L 6.31 7.82 C 6.31 7.46 6.31 7.1 6.31 6.75 C 6.31 6.39 6.3 6.03 6.29 5.68 Z"
+      ],
+      "rules": [
+       "nonzero",
+       "nonzero"
+      ]
+     },
+     "seam": {
+      "d": [
+       "M 3 6.8 C 3 4.15 4.79 2 7 2 L 9 2 C 11.21 2 13 4.15 13 6.8 L 13 13.47 C 13 13.76 12.77 14 12.49 14 L 3.51 14 C 3.23 14 3 13.76 3 13.47 Z M 7 2.91 C 5.28 2.91 3.87 4.65 3.87 6.8 L 3.87 13.09 L 12.13 13.09 L 12.13 6.8 C 12.13 4.65 10.72 2.91 9 2.91 Z",
+       "M 5.56 5.59 L 5.56 5.25 L 7.8 5.25 L 7.8 5.59 L 7.05 5.68 C 7.04 6.03 7.04 6.39 7.04 6.75 C 7.03 7.1 7.03 7.46 7.03 7.82 L 7.03 8.34 L 9.1 5.71 L 8.52 5.59 L 8.52 5.25 L 10.35 5.25 L 10.35 5.59 L 9.58 5.7 L 8.25 7.36 L 9.86 10.36 L 10.47 10.44 L 10.47 10.78 L 8.43 10.78 L 8.43 10.44 L 9.08 10.36 L 7.82 7.91 L 7.03 8.89 C 7.03 9.11 7.03 9.35 7.04 9.59 C 7.04 9.84 7.04 10.1 7.05 10.35 L 7.8 10.44 L 7.8 10.78 L 5.56 10.78 L 5.56 10.44 L 6.29 10.35 C 6.3 10.01 6.31 9.66 6.31 9.3 C 6.31 8.94 6.31 8.58 6.31 8.22 L 6.31 7.82 C 6.31 7.46 6.31 7.1 6.31 6.75 C 6.31 6.39 6.3 6.03 6.29 5.68 Z"
+      ],
+      "rules": [
+       "nonzero",
+       "nonzero"
+      ],
+      "knocked": [],
+      "gap_fronts": []
+     },
+     "extent": 0.75,
+     "considered": [
+      {
+       "label": "small mark",
+       "letter_px": null,
+       "crisp": 0.613,
+       "faithful": true
+      }
+     ],
+     "full": true
+    }
+   },
+   "dark_mapping": {}
+  },
+  "og": {
+   "theme": "dark",
+   "bg": "#152623",
+   "fg": "#F6F7F4",
+   "muted": "#9CA593",
+   "title_size": 84,
+   "wordmark": false,
+   "title_lines": [
+    "The Public Hall"
+   ],
+   "subtitle_lines": [
+    "A shared map. A public",
+    "square. Your own way in."
+   ],
+   "title_cut": false,
+   "subtitle_cut": false,
+   "contrast_title": 14.65,
+   "contrast_subtitle": 6.16,
+   "mark_colours": [
+    "#DBC08B"
+   ],
+   "badge": null,
+   "column": [
+    88,
+    612
+   ],
+   "rule_top": 170,
+   "lines": [
+    {
+     "role": "title",
+     "text": "The Public Hall",
+     "width": 577.7,
+     "x": 88,
+     "baseline": 274.3,
+     "size": 84
+    },
+    {
+     "role": "subtitle",
+     "text": "A shared map. A public",
+     "width": 310.2,
+     "x": 88,
+     "baseline": 361.6,
+     "size": 30
+    },
+    {
+     "role": "subtitle",
+     "text": "square. Your own way in.",
+     "width": 334.6,
+     "x": 88,
+     "baseline": 403.6,
+     "size": 30
+    }
+   ],
+   "floor": 524.0,
+   "footer": {
+    "text": "KINGDOM  ·  thekingdom.dev",
+    "width": 317.0,
+    "x": 88,
+    "baseline": 566,
+    "size": 24
+   },
+   "mark_box": [
+    796.1,
+    139.8,
+    1090.7,
+    479.8
+   ]
+  },
+  "og_pages": {},
+  "colour_sheet": {
+   "size": [
+    1200,
+    1128
+   ]
+  },
+  "cmyk": {
+   "#152623": {
+    "cmyk": [
+     55,
+     19,
+     40,
+     86
+    ],
+    "out_of_gamut": false
+   },
+   "#DBC08B": {
+    "cmyk": [
+     14,
+     18,
+     44,
+     3
+    ],
+    "out_of_gamut": false
+   },
+   "#B8C1AE": {
+    "cmyk": [
+     30,
+     12,
+     31,
+     1
+    ],
+    "out_of_gamut": false
+   },
+   "#EFE5CF": {
+    "cmyk": [
+     7,
+     7,
+     18,
+     0
+    ],
+    "out_of_gamut": false
+   }
+  },
+  "ground_light": "#EFE5CF",
+  "ground_dark": "#152623",
+  "measured": {
+   "maskable_radius": 174.4,
+   "maskable_extent": 0.539,
+   "app_extent": 0.701,
+   "favicon": {
+    "16": {
+     "left": 3,
+     "top": 2,
+     "right": 3,
+     "bottom": 2
+    },
+    "32": {
+     "left": 5,
+     "top": 3,
+     "right": 5,
+     "bottom": 3
+    },
+    "48": {
+     "left": 8,
+     "top": 5,
+     "right": 8,
+     "bottom": 5
+    }
+   }
+  }
+ },
+ "fonts": {
+  "wordmark": [
+   "Source Serif 4",
+   "Regular"
+  ],
+  "mark": null,
+  "mark_bold_cut": null,
+  "labels": [
+   "JetBrains Mono",
+   "Regular"
+  ],
+  "og": {
+   "title": [
+    "Source Serif 4",
+    "Regular"
+   ],
+   "subtitle": [
+    "Source Serif 4",
+    "Regular"
+   ]
+  },
+  "cap_height_em": 0.67,
+  "also_installed": [],
+  "stacks": {
+   "display": [
+    "Source Serif 4",
+    "Georgia",
+    "serif"
+   ],
+   "body": [
+    "Source Serif 4",
+    "Georgia",
+    "serif"
+   ],
+   "mono": [
+    "JetBrains Mono",
+    "ui-monospace",
+    "Menlo",
+    "monospace"
+   ]
+  }
+ },
+ "mark": {
+  "kind": "svg",
+  "shapes": 2,
+  "names": [
+   null,
+   null
+  ],
+  "colours": [
+   "#152623"
+  ],
+  "outer_colours": [
+   "#152623"
+  ],
+  "coverage": 0.14,
+  "knockouts": {},
+  "shape_colours": [
+   "#152623",
+   "#152623"
+  ]
+ },
+ "swatches": [
+  [
+   "kingdom-hall primary",
+   "#152623"
+  ],
+  [
+   "kingdom-hall accent",
+   "#DBC08B"
+  ],
+  [
+   "kingdom-hall neutral",
+   "#B8C1AE"
+  ],
+  [
+   "kingdom-hall ground light",
+   "#EFE5CF"
+  ],
+  [
+   "kingdom-hall ground dark",
+   "#152623"
+  ],
+  [
+   "kingdom-hall primary 50",
+   "#F5F7F7"
+  ],
+  [
+   "kingdom-hall primary 100",
+   "#E7ECEB"
+  ],
+  [
+   "kingdom-hall primary 200",
+   "#D2DBD9"
+  ],
+  [
+   "kingdom-hall primary 300",
+   "#B6C5C2"
+  ],
+  [
+   "kingdom-hall primary 400",
+   "#94A6A2"
+  ],
+  [
+   "kingdom-hall primary 500",
+   "#778B87"
+  ],
+  [
+   "kingdom-hall primary 600",
+   "#5D706D"
+  ],
+  [
+   "kingdom-hall primary 700",
+   "#475A56"
+  ],
+  [
+   "kingdom-hall primary 800",
+   "#354743"
+  ],
+  [
+   "kingdom-hall primary 900",
+   "#233431"
+  ],
+  [
+   "kingdom-hall primary 950",
+   "#152623"
+  ],
+  [
+   "kingdom-hall accent 50",
+   "#FAF6EE"
+  ],
+  [
+   "kingdom-hall accent 100",
+   "#F1EADD"
+  ],
+  [
+   "kingdom-hall accent 200",
+   "#E8D7B8"
+  ],
+  [
+   "kingdom-hall accent 300",
+   "#DBC08B"
+  ],
+  [
+   "kingdom-hall accent 400",
+   "#B89E6A"
+  ],
+  [
+   "kingdom-hall accent 500",
+   "#9C824F"
+  ],
+  [
+   "kingdom-hall accent 600",
+   "#816835"
+  ],
+  [
+   "kingdom-hall accent 700",
+   "#685224"
+  ],
+  [
+   "kingdom-hall accent 800",
+   "#523F18"
+  ],
+  [
+   "kingdom-hall accent 900",
+   "#3C2E10"
+  ],
+  [
+   "kingdom-hall accent 950",
+   "#251B06"
+  ],
+  [
+   "kingdom-hall neutral 50",
+   "#F6F7F4"
+  ],
+  [
+   "kingdom-hall neutral 100",
+   "#EAECE7"
+  ],
+  [
+   "kingdom-hall neutral 200",
+   "#D6DBD0"
+  ],
+  [
+   "kingdom-hall neutral 300",
+   "#B8C1AE"
+  ],
+  [
+   "kingdom-hall neutral 400",
+   "#9CA593"
+  ],
+  [
+   "kingdom-hall neutral 500",
+   "#818A78"
+  ],
+  [
+   "kingdom-hall neutral 600",
+   "#676F5E"
+  ],
+  [
+   "kingdom-hall neutral 700",
+   "#515849"
+  ],
+  [
+   "kingdom-hall neutral 800",
+   "#3F4538"
+  ],
+  [
+   "kingdom-hall neutral 900",
+   "#2E3228"
+  ],
+  [
+   "kingdom-hall neutral 950",
+   "#1B1E17"
+  ]
+ ],
+ "motion": false,
+ "files": [
+  "brand.vectorcraft",
+  "BRAND.md",
+  "index.html",
+  "kit.json",
+  "source/brand.json",
+  "source/mark-source.svg",
+  "source/mark-small.svg",
+  "logo/mark.svg",
+  "logo/mark.png",
+  "logo/mark@2x.png",
+  "logo/mark-mono-black.svg",
+  "logo/mark-mono-black.png",
+  "logo/mark-mono-black@2x.png",
+  "logo/mark-mono-white.svg",
+  "logo/mark-mono-white.png",
+  "logo/mark-mono-white@2x.png",
+  "logo/wordmark.svg",
+  "logo/wordmark.png",
+  "logo/wordmark@2x.png",
+  "logo/wordmark-reversed.svg",
+  "logo/wordmark-reversed.png",
+  "logo/wordmark-reversed@2x.png",
+  "logo/lockup-horizontal.svg",
+  "logo/lockup-horizontal.png",
+  "logo/lockup-horizontal@2x.png",
+  "logo/lockup-horizontal-reversed.svg",
+  "logo/lockup-horizontal-reversed.png",
+  "logo/lockup-horizontal-reversed@2x.png",
+  "logo/lockup-stacked.svg",
+  "logo/lockup-stacked.png",
+  "logo/lockup-stacked@2x.png",
+  "logo/lockup-stacked-reversed.svg",
+  "logo/lockup-stacked-reversed.png",
+  "logo/lockup-stacked-reversed@2x.png",
+  "logo/mark.pdf",
+  "logo/lockup-horizontal.pdf",
+  "logo/on-light/lockup-horizontal@2x.png",
+  "logo/on-light/lockup-stacked@2x.png",
+  "logo/on-light/wordmark@2x.png",
+  "logo/on-light/mark@2x.png",
+  "logo/on-dark/lockup-horizontal@2x.png",
+  "logo/on-dark/lockup-stacked@2x.png",
+  "logo/on-dark/wordmark@2x.png",
+  "logo/on-dark/mark@2x.png",
+  "web/favicon.ico",
+  "web/favicon.svg",
+  "web/favicon-16.png",
+  "web/favicon-32.png",
+  "web/apple-touch-icon.png",
+  "web/icon-192.png",
+  "web/icon-512.png",
+  "web/icon-maskable-512.png",
+  "web/site.webmanifest",
+  "web/head-snippet.html",
+  "web/head-home.html",
+  "web/og.jpg",
+  "web/og.png",
+  "social/avatar-1024.png",
+  "social/avatar-400.png",
+  "colour/palette.json",
+  "colour/tokens.json",
+  "colour/tokens.css",
+  "colour/tailwind.theme.css",
+  "colour/tailwind.colors.js",
+  "colour/contrast.md",
+  "colour/swatches.ase",
+  "colour/swatches.gpl",
+  "colour/swatches.css",
+  "colour/colour-sheet.svg",
+  "colour/colour-sheet.png",
+  "colour/colour-sheet@2x.png"
+ ],
+ "og_alt": "The K door-arch seal and the KINGDOM wordmark on night green, with the words: The Public Hall. A shared map. A public square. Your own way in.",
+ "page_alts": {}
+}

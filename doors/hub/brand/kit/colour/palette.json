@@ -1,0 +1,95 @@
+{
+  "name": "KINGDOM",
+  "palette": {
+    "primary": {
+      "base": "#152623",
+      "base_step": 950,
+      "50": "#F5F7F7",
+      "100": "#E7ECEB",
+      "200": "#D2DBD9",
+      "300": "#B6C5C2",
+      "400": "#94A6A2",
+      "500": "#778B87",
+      "600": "#5D706D",
+      "700": "#475A56",
+      "800": "#354743",
+      "900": "#233431",
+      "950": "#152623"
+    },
+    "accent": {
+      "base": "#DBC08B",
+      "base_step": 300,
+      "50": "#FAF6EE",
+      "100": "#F1EADD",
+      "200": "#E8D7B8",
+      "300": "#DBC08B",
+      "400": "#B89E6A",
+      "500": "#9C824F",
+      "600": "#816835",
+      "700": "#685224",
+      "800": "#523F18",
+      "900": "#3C2E10",
+      "950": "#251B06"
+    },
+    "neutral": {
+      "base": "#B8C1AE",
+      "base_step": 300,
+      "50": "#F6F7F4",
+      "100": "#EAECE7",
+      "200": "#D6DBD0",
+      "300": "#B8C1AE",
+      "400": "#9CA593",
+      "500": "#818A78",
+      "600": "#676F5E",
+      "700": "#515849",
+      "800": "#3F4538",
+      "900": "#2E3228",
+      "950": "#1B1E17"
+    }
+  },
+  "roles": {
+    "light": {
+      "bg": "#EFE5CF",
+      "surface": "#DBD1BC",
+      "border": "#C9C0AA",
+      "text": "#1B1E17",
+      "text-muted": "#515849",
+      "primary": "#152623",
+      "on-primary": "#FFFFFF",
+      "primary-text": "#152623",
+      "primary-ui": "#152623",
+      "accent": "#DBC08B",
+      "on-accent": "#1B1E17",
+      "accent-text": "#685224",
+      "accent-ui": "#816835",
+      "focus": "#152623"
+    },
+    "dark": {
+      "bg": "#152623",
+      "surface": "#293A37",
+      "border": "#3B4D49",
+      "text": "#F6F7F4",
+      "text-muted": "#9CA593",
+      "primary": "#778B87",
+      "on-primary": "#1B1E17",
+      "primary-text": "#94A6A2",
+      "primary-ui": "#778B87",
+      "accent": "#DBC08B",
+      "on-accent": "#1B1E17",
+      "accent-text": "#DBC08B",
+      "accent-ui": "#DBC08B",
+      "focus": "#778B87"
+    }
+  },
+  "lifted": {
+    "dark": {
+      "primary": {
+        "from": "#152623",
+        "to": "#778B87",
+        "step": "primary 500",
+        "ratio_from": 1.0,
+        "ratio_to": 4.37
+      }
+    }
+  }
+}
