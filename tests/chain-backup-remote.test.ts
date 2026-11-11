@@ -805,6 +805,7 @@ describe("rollout contract: testnet first, then mainnet", () => {
       }
       const args = f.calls().find((c) => c.name === "tar")!.args;
       expect(args.filter((a) => a.startsWith("--exclude="))).toEqual(["--exclude=priv_validator_key.json", "--exclude=node_key.json"]);
+      expect(args).toContain("--hard-dereference");
     } finally { f.close(); }
   });
 
@@ -1053,6 +1054,7 @@ describe("streamed multipart capture: testnet rehearses, mainnet unchanged", () 
         expect(intake.map((u) => u.url)).toEqual(urls.slice(0, c.parts.length));
         const tar = f.calls().find((call) => call.name === "tar")!.args;
         expect(tar.slice(0, 2)).toEqual(["czf", "-"]);
+        expect(tar).toContain("--hard-dereference");
         expect(tar.filter((a) => a.startsWith("--exclude="))).toEqual(["--exclude=priv_validator_key.json", "--exclude=node_key.json"]);
         expect(tar.slice(tar.indexOf("-C"))).toEqual(["-C", "/data", ".zeroned/data", ".zeroned/config"]);
         // rm twice: the part is removed before the record prints, then the EXIT trap runs.

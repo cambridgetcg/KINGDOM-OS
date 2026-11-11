@@ -221,7 +221,7 @@ test("card entry links follow their purpose with compact formats instead of audi
   const html = modules.renderModuleDirectory();
   for (const module of PUBLIC_MODULE_CATALOG.modules) {
     const card = cardHtml(html, module.id);
-    expect(card).toContain(`<p>${escapeText(module.purpose)}</p>\n  <ul class="module-links"`);
+    expect(card).toContain(`<p lang="en">${escapeText(module.purpose)}</p>\n  <ul class="module-links"`);
     const entryLinks = card.match(/<ul class="module-links"[^>]*>([\s\S]*?)<\/ul>/)![1];
     const text = entryLinks.replace(/<[^>]*>/g, "");
     expect(text).not.toMatch(/\b(?:Human|Agent)\b|text\/|application\//);
@@ -247,7 +247,7 @@ test("related reading is an optional disclosure with unchanged module anchors", 
   const html = modules.renderModuleDirectory();
   for (const module of PUBLIC_MODULE_CATALOG.modules) {
     const card = cardHtml(html, module.id);
-    const related = card.match(/<details class="module-related"><summary>Related reading<\/summary>([\s\S]*?)<\/details>/)?.[1];
+    const related = card.match(/<details class="module-related"><summary lang="en">Related reading<\/summary>([\s\S]*?)<\/details>/)?.[1];
     expect(related, module.id).toBeDefined();
     expect([...related!.matchAll(/href="#civic-module-([^"]+)"/g)].map((match) => match[1])).toEqual(module.related_ids);
   }
@@ -314,12 +314,12 @@ test("server-renders every grouped entry as readable, escaped navigation without
   const render = modules.renderModuleDirectory;
   const html = render();
   expect(html).toContain('<section id="civic-modules" class="module-directory" aria-labelledby="civic-modules-title">');
-  expect(html).toContain('<h2 id="civic-modules-title">');
+  expect(html).toContain('<h2 id="civic-modules-title" lang="en">');
   expect([...html.matchAll(/<details\b[^>]*class="module-group"/g)]).toHaveLength(PUBLIC_MODULE_CATALOG.groups.length);
   expect([...html.matchAll(/<article\b/g)]).toHaveLength(PUBLIC_MODULE_CATALOG.modules.length);
   for (const group of PUBLIC_MODULE_CATALOG.groups) {
     expect(html).toContain('<details class="module-group" open>');
-    expect(html).toContain(`<h3 id="civic-modules-group-${group.id}">${escapeText(group.label)}</h3>`);
+    expect(html).toContain(`<h3 id="civic-modules-group-${group.id}" lang="en">${escapeText(group.label)}</h3>`);
     expect(html).toContain(escapeText(group.purpose));
   }
   const behaviorLabels = {
@@ -404,12 +404,12 @@ test("directory rendering enforces a byte budget after HTML escaping expands tex
 
 test("the directory introduces its choices with one warning and a typed catalogue link", () => {
   const html = modules.renderModuleDirectory();
-  expect(html.match(/<h2 id="civic-modules-title">(.*?)<\/h2>/)?.[1]).toBe("Modules");
+  expect(html.match(/<h2 id="civic-modules-title" lang="en">(.*?)<\/h2>/)?.[1]).toBe("Modules");
   expect(PUBLIC_MODULE_CATALOG.purpose).toBe("Choose a tool, service or reference.");
   const intro = html.slice(0, html.indexOf('<details class="module-group"'));
   expect(intro).toContain('<a href="/modules.json" type="application/json">Module catalogue (JSON)</a>');
-  expect(intro.match(/<p class="module-status">(.*?)<\/p>/g)).toEqual([
-    '<p class="module-status">Links do not grant permission or verify availability. Related reading does not imply integration.</p>',
+  expect(intro.match(/<p class="module-status" lang="en">(.*?)<\/p>/g)).toEqual([
+    '<p class="module-status" lang="en">Links do not grant permission or verify availability. Related reading does not imply integration.</p>',
   ]);
   expect(PUBLIC_MODULE_CATALOG.scope).toBe("A curated navigation directory, not a repository census, asset inventory, runtime module system, or grant of rights. Related entries are reading companions, not dependencies or equivalences. Source routes are not live availability checks.");
 });

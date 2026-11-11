@@ -226,6 +226,15 @@ function shellQuote(value: string): string {
   return `'${value.replace(/'/g, `'"'"'`)}'`;
 }
 
+// --hard-dereference: given two paths, GNU tar enters every file's inode in its hard-link table,
+// and on a live node LevelDB deletes archived files whose inode numbers new files then reuse. Without
+// the flag those new files went in as "hard links" to the deleted ones: the testnet object of
+// 2026-11-10 held data/priv_validator_state.json as a link to an application.db .ldb file and one
+// state.db file as a link to another, so a restore wrote the wrong bytes into both. Only the
+// streamed capture takes the flag: the staged command stays byte-pinned for mainnet until
+// mainnet moves to streaming (rollout contract tests), and it has not run since 10-21 (LOW_DISK).
+export const TAR_CAPTURE_FLAGS = "--warning=no-file-changed --hard-dereference";
+
 function excludeFlags(excludeKeys: boolean): string {
   return excludeKeys ? EXCLUDED_KEY_FILES.map((name) => ` --exclude=${name}`).join("") : "";
 }
@@ -305,7 +314,7 @@ export function buildStreamedRemoteCommand(partUrls: readonly string[], options:
     // as one line on fd 4. An early break closes the pipe under tee and tar, so
     // a torn stream reports tar > 1. tee's second copy goes to fd 3, the pipe
     // into wc -c; nothing else writes there, and bash waits for wc.
-    `r=$( { { tar czf - --warning=no-file-changed${excludeFlags(options.excludeKeys)} -C /data .zeroned/data .zeroned/config 2>/dev/null | tee /dev/fd/3 2>/dev/null | {`,
+    `r=$( { { tar czf - ${TAR_CAPTURE_FLAGS}${excludeFlags(options.excludeKeys)} -C /data .zeroned/data .zeroned/config 2>/dev/null | tee /dev/fd/3 2>/dev/null | {`,
     "  parts=0 upload=NA http=NA",
     "  while :; do",
     `    head -c ${part} > "$tmp/part" 2>/dev/null || { upload=STAGE; break; }`,
