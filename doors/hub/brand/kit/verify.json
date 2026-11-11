@@ -19,28 +19,28 @@
    "pass": true,
    "level": "error",
    "file": "brand.vectorcraft",
-   "measured": 512689
+   "measured": 509197
   },
   {
    "id": "file.exists",
    "pass": true,
    "level": "error",
    "file": "BRAND.md",
-   "measured": 25008
+   "measured": 24921
   },
   {
    "id": "file.exists",
    "pass": true,
    "level": "error",
    "file": "index.html",
-   "measured": 34424
+   "measured": 34248
   },
   {
    "id": "file.exists",
    "pass": true,
    "level": "error",
    "file": "kit.json",
-   "measured": 24381
+   "measured": 21802
   },
   {
    "id": "file.exists",
@@ -61,7 +61,7 @@
    "pass": true,
    "level": "error",
    "file": "source/mark-small.svg",
-   "measured": 1204
+   "measured": 1369
   },
   {
    "id": "file.exists",
@@ -327,28 +327,28 @@
    "pass": true,
    "level": "error",
    "file": "web/favicon.ico",
-   "measured": 2351
+   "measured": 2321
   },
   {
    "id": "file.exists",
    "pass": true,
    "level": "error",
    "file": "web/favicon.svg",
-   "measured": 3493
+   "measured": 2578
   },
   {
    "id": "file.exists",
    "pass": true,
    "level": "error",
    "file": "web/favicon-16.png",
-   "measured": 411
+   "measured": 405
   },
   {
    "id": "file.exists",
    "pass": true,
    "level": "error",
    "file": "web/favicon-32.png",
-   "measured": 744
+   "measured": 753
   },
   {
    "id": "file.exists",
@@ -1240,9 +1240,9 @@
    "level": "error",
    "file": "web/favicon-16.png",
    "measured": {
-    "ink_pixels": 68,
-    "clean_pixels": 51,
-    "crisp": 0.75
+    "ink_pixels": 59,
+    "clean_pixels": 39,
+    "crisp": 0.661
    },
    "note": "share of mark pixels (not tile or badge) that are a clean colour rather than a blend (fail < 0.30)"
   },
@@ -1323,9 +1323,9 @@
    "level": "error",
    "file": "web/favicon-32.png",
    "measured": {
-    "ink_pixels": 193,
-    "clean_pixels": 152,
-    "crisp": 0.788
+    "ink_pixels": 233,
+    "clean_pixels": 192,
+    "crisp": 0.824
    },
    "note": "share of mark pixels (not tile or badge) that are a clean colour rather than a blend (fail < 0.30)"
   },
@@ -1439,9 +1439,9 @@
    "level": "error",
    "file": "web/favicon.ico (48 px frame)",
    "measured": {
-    "ink_pixels": 385,
-    "clean_pixels": 315,
-    "crisp": 0.818
+    "ink_pixels": 484,
+    "clean_pixels": 419,
+    "crisp": 0.866
    },
    "note": "share of mark pixels (not tile or badge) that are a clean colour rather than a blend (fail < 0.30)"
   },
@@ -2005,7 +2005,7 @@
    "file": "web/favicon.svg",
    "measured": {
     "paths": 5,
-    "bytes": 3493,
+    "bytes": 2578,
     "problems": []
    },
    "note": "XML parses; viewBox, <title>; no <text>, <image>, strokes, oklch(); named ids; not empty"
@@ -2599,7 +2599,7 @@
    "measured": {
     "identical": 71,
     "different": [],
-    "fingerprint": "0232b57defedd50ae81160a004ed469973bc9ed9bd36f068391d40da9f816bb9"
+    "fingerprint": "f55a65fb82f3009aa0ccc18710e14631a77d3353ad1fcc18f6b303dc36851273"
    },
    "note": "second build from source/brand.json in a temp folder, compared byte for byte (the PDFs too: both builds gave VectorCraft SOURCE_DATE_EPOCH 1794323794)"
   }

@@ -128,9 +128,9 @@ The tokens carry these stacks: `--font-display: "Source Serif 4", "Georgia", ser
 
   | size | cut | mark size | margins (left, top, right, bottom), measured | clean pixels, predicted |
   |---|---|---|---|---|
-  | 16 px | the small mark, each shape grown by about a third of a pixel so its thinnest parts hold a whole pixel | 12 px | 3, 2, 3, 2 | 73% |
-  | 32 px | the small mark | 26 px | 5, 3, 5, 3 | 76% |
-  | 48 px | the small mark | 38 px | 8, 5, 8, 5 | 81% |
+  | 16 px | the small mark | 12 px | 3, 2, 3, 2 | 61% |
+  | 32 px | the small mark | 26 px | 5, 3, 5, 3 | 82% |
+  | 48 px | the small mark | 38 px | 8, 5, 8, 5 | 84% |
 
   Each cut is hinted before it is drawn. Its box is set on whole pixels; every cut is centred to the pixel. Stems and bars that are straight, or within half a pixel of straight (a serif face's slightly flared stems, the longest straight part of a stem that flows into its bracket, and three quarters of a pixel for a long straight edge), are made straight, and their edges and every curve's outermost point move to whole pixels, shape by shape, so those strokes render as solid pixels rather than half-tones; diagonals and curves stay anti-aliased. Points two shapes share (a common vertex or edge) are welded to one position, so no crack of the ground opens where they meet (verify checks the pixels deep inside the ink for it), and where hinting closes a thin gap between two shapes of one colour, the speck it would leave at the gap's end is filled. A band that holds a stroke keeps at least one pixel however thin, so hinting never deletes an arm or a bar (verify compares every cut with its unhinted outline to prove it); a stem keeps its own width rounded, so equal stems stay equal; edges that nearly meet share a pixel line, so a counter never notches the stem beside it; a counter keeps a pixel only where it separates strokes that face each other. A shape that is mirror-symmetric about its box is hinted on one side and mirrored, and two shapes that mirror each other share one hinting, so a symmetric mark stays symmetric; when most of a mark mirrors about an axis of its own, contour by contour (a symmetric body beside an ornament off its axis), that part is hinted about its axis set on a pixel edge or centre, and the rest beside it (verify checks the pixels of both cases). On a tile, the cut is made 2 px smaller until no ink pixel touches the tile's soft rounded corner. `favicon.svg` carries the 32 and 16 px cuts and shows the 16 px one when drawn under 24 px; `favicon.ico` holds the 16, 32 and 48 px renders.
 
