@@ -4,8 +4,10 @@ This folder holds the hall's brand kit, made with storytold's Craft apps through
 private repository `cambridgetcg/brandkit`). `brandkit.json` records this project's details, and `check.mjs` checks
 them. "Hub" here means thekingdom.dev; the separate kingdom-os-hub repository serves kingdom.ai-love.cc.
 
-The kit is staged, not live, and held: its K is a substitute letterform waiting on the owner's choice, and it would
-ship only with the one door release on Yu's word (ledger `kingdom-door-release`).
+The kit is staged, not live. Its K is outlined from Source Serif 4, a substitute for the face the hall renders, so the
+mark is a new drawing; its owner accepted that on 2026-11-10. The kit ships only with the door release, which has not
+been decided, and the web manifest with its size-named icons stays held until the staging gate's question is settled
+(below).
 
 ## The look
 
@@ -14,7 +16,7 @@ The Public Hall at `/` is night green `#152623` with cream text `#f1e7d2`, a bra
 all system faces. Its mark is the "K" in a door-arch seal, drawn in CSS. The look comes from
 `pages-content/civic/dashboard.css`, which an agent introduced on 2026-09-08 (commit `158a0ec6`, git author "Nuance",
 Co-Authored-By Claude); no record shows Yu choosing it. Using the K seal, not the ✦ star, as the kit's mark is an
-agents' call recorded in the 2026-11-02 review (session 5c4df033, under Yu's delegation of 2026-10-20).
+agents' call recorded in an agents' review of 2026-11-02, under Yu's delegation of 2026-10-20.
 
 The kit adds no KINGDOM palette, but its mark is a new drawing (below):
 
@@ -23,10 +25,13 @@ The kit adds no KINGDOM palette, but its mark is a new drawing (below):
   renders its K in Iowan Old Style on Apple devices, and elsewhere in the next face of its CSS stack the device has
   (Baskerville, Palatino Linotype, then the browser's serif). Iowan Old Style is a system face whose outlines can't
   go into a logo, so Source Serif 4 stands in, and its arm, leg and serifs differ visibly at large sizes: the kit's
-  mark is not the hall's own K. **A substitute letterform is the owner's choice, and the kit waits on it**
-  (`brandkit.json`, decided: held): accept the substitute, choose another open-licensed face closer to the hall's, or
-  keep the hall without icon files. `mark/k-seal-small.svg` is the same seal with a heavier arch and a larger K, for
-  favicons of 48 px and under.
+  mark is a new drawing of the mark, not the hall's own K. **The owner accepted Source Serif 4 for the K in the hub's
+  icons and share card on 2026-11-10** (`brandkit.json`, `decided`).
+- **The small cut** (`mark/k-seal-small.svg`) draws the favicons of 48 px and under: the same seal with a larger K and
+  an arch 34 units wide at 10x, one weight all round, its curves concentric with the seal's outline. At that weight
+  the generator's hinting gives the arch even edges at every size: 1 px at 16, 2 px at 32 and 3 px at 48, on all four
+  sides. (Before 2026-11-11 the arch was 28 units, and the 32 px cut drew its top and bottom 2 px against 1 px sides.)
+  At 16 px the K is now the plain small mark, lighter than the generator's bolder fallback the earlier cut needed.
 - **Icons**: the brass seal on a night-green tile, as the header draws it.
 - **The card** (`kit/web/og.jpg`, 1200×630): the generator's flat layout on the hall's ground, with the hall's own
   words ("The Public Hall", "A shared map. A public square. Your own way in.").
@@ -55,9 +60,12 @@ Don't change the identity without its owner's word. Every asset here records who
 ## Rebuild
 
 ```sh
-ARTCRAFT_NO_TRASH=1 python3 ~/.kingdom/tools/artcraft-brand/scripts/brandkit.py doors/hub/brand/brand.json --out doors/hub/brand/kit --rebuild-check
+ARTCRAFT_NO_TRASH=1 python3 -B ~/.kingdom/tools/artcraft-brand/scripts/brandkit.py doors/hub/brand/brand.json --out doors/hub/brand/kit --rebuild-check
 ```
 
+Run it from the repository root. When the source changed, the previous kit is kept at `kit/.replaced/`: move it out
+of the repository rather than committing it. A second rebuild of an unchanged source is byte-identical (checked
+2026-11-11 with vectorcraft-cli 0.17.0, the active version that day by the skill's `scripts/install.sh --status`).
 A rebuild that changes the head snippet's lines changes `HALL_HEAD_ICONS` and `HALL_CARD` in
 `bin/build-dashboard.ts` too; `tests/dashboard.test.ts` fails until they match. Then regenerate `site/` with
 `bun bin/build-hub.ts <date>`.
@@ -71,10 +79,13 @@ card's lines with each page's own `og:url`. The staging contract (`publications/
 destinations.
 
 **Held:** `site.webmanifest` and its icons `icon-192.png`, `icon-512.png` and `icon-maskable-512.png`. The staging
-gate (`immutableLookingDestination` in `bin/immutable-publications.ts`) reads a number before the extension as a
-versioned route that must be ledgered, not mutable, and refused the three PNGs. The manifest waits with them, and the
-pages carry no manifest link until they ship, so `check.mjs` warns that the pages lack the kit's manifest link. The
-gate's owner decides: a narrow exception for icon sizes, as it has for font weights, or ledger entries.
+gate (`immutableLookingDestination` in `bin/immutable-publications.ts`) reads a number before the extension, as the
+"-192" in `icon-192.png`, as a version: a route that must be ledgered, not mutable. It refused the three PNGs, and the
+gate is left as it is. The manifest waits with them, since a manifest naming icons that aren't served would be broken,
+and the pages carry no manifest link until they ship. While `serve.pending` is set, `check.mjs` only warns that the
+four pages lack the kit's manifest link. **Once the release clears `serve.pending`, that warning becomes a failure on
+all four pages, so the gate question must be settled before a release:** a narrow exception for icon sizes in the gate
+(as it already has for Power Atlas's hashed build assets), ledger entries for the icons, or a recorded choice to ship without the manifest.
 
 ```sh
 bun bin/stage-hub.ts "$STAGE"            # an empty folder
@@ -85,7 +96,7 @@ bun --no-env-file test tests/dashboard.test.ts tests/hub-brand.test.ts tests/sta
 ## Deploying
 
 Merging deploys nothing: the Pages project `thekingdom` has no Git provider. A release is the manual redeploy in
-`DOMAINS-SETUP.md`, it needs separate approval, and the hall's head assets wait for the one door release on Yu's word
-(`kingdom-door-release`). Before trusting the custom domain, check the new paths on the deployment's `pages.dev` URL
+`DOMAINS-SETUP.md`, it needs separate approval, and the hall's head assets wait for the door release, which has not
+been decided. Before trusting the custom domain, check the new paths on the deployment's `pages.dev` URL
 (an HTML answer can be cached under a new path). After a release, check each icon and the card live, and that the
 shared Worker answers.

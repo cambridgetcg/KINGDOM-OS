@@ -15,24 +15,26 @@
     {
       "part": "the kit's mark (the K door-arch seal, not the ✦ star)",
       "what": "the \"K\" in a door-arch seal that the hall already draws in CSS; no new identity and no KINGDOM palette",
-      "by": "agent (Claude Code session 5c4df033)",
+      "by": "agent (Claude Code)",
       "under": "Yu's delegation of 2026-10-20",
       "date": "2026-11-02",
-      "record": "review-2026-11-02 §3.1, §6 and 'Agents' calls recorded'"
+      "record": "an agents' review of the hall, 2026-11-02 (kept privately; its call: the K seal, not the ✦ star)"
     },
     {
       "part": "the kit, built from the hall's look and the K seal",
       "what": "brand.json: a new drawing of the seal, made from .seal in dashboard.css (39x45, 1px border, border-radius 40% 40% 2px 2px) at 10x, with its K outlined from Source Serif 4 Regular, a substitute for the Iowan Old Style the hall renders on Apple devices; brass #DBC08B on a night-green #152623 tile; card in the generator's flat layout on #152623 with the hall's own words; one dark scheme",
-      "by": "agent (Claude Code, Opus 5.5, child of session 5c4df033)",
-      "under": "Yu's pick of 2026-11-10 for group A, \"Go: build, open PRs, merge\", in a question dialog whose options the lead session wrote; staged only, it ships with the door release (ledger kingdom-door-release)",
+      "by": "agent (Claude Code, Claude Opus 5.5, on the Studio)",
+      "under": "the owner's pick of 2026-11-10 to build this group of work (from options a lead agent session wrote); staged only, it ships with the door release, which has not been decided",
       "date": "2026-11-10",
-      "record": "the pull request that added this kit (KINGDOM-OS, branch claude/group-a-hub-head)"
+      "record": "the pull request that added this kit (cambridgetcg/KINGDOM-OS #139, branch claude/group-a-hub-head)"
     },
     {
-      "part": "the K's letterform in the kit (Source Serif 4 in place of the hall's Iowan Old Style)",
-      "status": "held",
-      "what": "the hall draws its K in the CSS serif stack (Iowan Old Style, then Baskerville, Palatino Linotype, Songti TC, serif); the kit outlines Source Serif 4, whose arm, leg and serifs differ visibly at large sizes, so the kit's mark is a new drawing, not the hall's own K. A substitute letterform is the owner's choice.",
-      "waits_on": "the owner's word (Yu): accept the Source Serif 4 substitute, choose another open-licensed face closer to the hall's, or keep the hall without icon files"
+      "part": "the K's letterform in the kit (Source Serif 4 in place of the face the hall renders)",
+      "status": "decided",
+      "what": "the hall draws its K in the CSS serif stack (Iowan Old Style on Apple devices, then Baskerville, Palatino Linotype, Songti TC, serif), whose faces can't be outlined into a logo; the kit outlines Source Serif 4 Regular (SIL OFL 1.1) as a substitute, whose arm, leg and serifs differ visibly at large sizes, so the kit's K is a new drawing of the mark. Accepted for the K in the hub's icons and share card",
+      "by": "the owner",
+      "date": "2026-11-10",
+      "record": "the owner's decision of 2026-11-10, relayed to the agent that finished this kit and recorded in the pull request that added it (cambridgetcg/KINGDOM-OS #139)"
     }
   ],
   "spec": "brand.json",
@@ -67,7 +69,7 @@
   "serve": {
     "from": "kit/web",
     "via": "/bin/stage-hub.ts",
-    "pending": "the owner's choice of the K's letterform (decided: held), then the staging gate's decision on the held manifest and icons, then the one door release on Yu's word (ledger kingdom-door-release); nothing here is live until then",
+    "pending": "the staging gate's question on the held manifest and its size-named icons (serve.omit), then the door release, which has not been decided; nothing here is live until then. Clearing this turns check.mjs's warning about the pages' missing manifest link into a failure on all four pages, so the gate question must be settled first",
     "files": [
       "favicon.ico",
       "favicon.svg",
@@ -81,15 +83,15 @@
       },
       {
         "file": "icon-192.png",
-        "why": "held: the staging gate (bin/immutable-publications.ts, immutableLookingDestination) reads a number before the extension, as in icon-192.png, as a versioned route that must be ledgered rather than mutable, and refused these on 2026-11-10; the gate's owner decides between a narrow exception for icon sizes (as it has for font weights) and ledger entries"
+        "why": "held: the staging gate (bin/immutable-publications.ts, immutableLookingDestination) reads a number before the extension, as in icon-192.png, as a versioned route that must be ledgered rather than mutable, and refused these on 2026-11-10; the gate's owner decides between a narrow exception for icon sizes (as it already has for Power Atlas's hashed build assets) and ledger entries"
       },
       {
         "file": "icon-512.png",
-        "why": "held: the staging gate (bin/immutable-publications.ts, immutableLookingDestination) reads a number before the extension, as in icon-192.png, as a versioned route that must be ledgered rather than mutable, and refused these on 2026-11-10; the gate's owner decides between a narrow exception for icon sizes (as it has for font weights) and ledger entries"
+        "why": "held: the staging gate (bin/immutable-publications.ts, immutableLookingDestination) reads a number before the extension, as in icon-192.png, as a versioned route that must be ledgered rather than mutable, and refused these on 2026-11-10; the gate's owner decides between a narrow exception for icon sizes (as it already has for Power Atlas's hashed build assets) and ledger entries"
       },
       {
         "file": "icon-maskable-512.png",
-        "why": "held: the staging gate (bin/immutable-publications.ts, immutableLookingDestination) reads a number before the extension, as in icon-192.png, as a versioned route that must be ledgered rather than mutable, and refused these on 2026-11-10; the gate's owner decides between a narrow exception for icon sizes (as it has for font weights) and ledger entries"
+        "why": "held: the staging gate (bin/immutable-publications.ts, immutableLookingDestination) reads a number before the extension, as in icon-192.png, as a versioned route that must be ledgered rather than mutable, and refused these on 2026-11-10; the gate's owner decides between a narrow exception for icon sizes (as it already has for Power Atlas's hashed build assets) and ledger entries"
       },
       {
         "file": "og.png",
@@ -102,7 +104,7 @@
     ]
   },
   "build": {
-    "command": "ARTCRAFT_NO_TRASH=1 python3 <artcraft-brand>/scripts/brandkit.py doors/hub/brand/brand.json --out doors/hub/brand/kit --rebuild-check",
+    "command": "ARTCRAFT_NO_TRASH=1 python3 -B <artcraft-brand>/scripts/brandkit.py doors/hub/brand/brand.json --out doors/hub/brand/kit --rebuild-check",
     "cwd": "../../..",
     "fonts": [],
     "tools": [
@@ -129,9 +131,9 @@
     }
   ],
   "deploy": {
-    "on_merge": "Nothing: the Cloudflare Pages project `thekingdom` has no Git provider, so merging deploys nothing (ledger kingdom-door-release, progress 2026-10-28)",
+    "on_merge": "Nothing: the Cloudflare Pages project `thekingdom` has no Git provider, so merging deploys nothing",
     "after_deploy": "Manual redeploy (DOMAINS-SETUP.md, Redeploy): from a clean exact commit, `bun bin/stage-hub.ts <empty dir>`, then `node doors/hub/brand/check.mjs --served <that dir>`, then the wrangler publish that runbook names. Check the new paths on the deployment's pages.dev URL first (artcraft-brand wiring.md §2: the custom domain can cache an HTML answer under a new path), then each icon and the card live, and that the shared Worker answers. HTML answers `no-cache, no-transform` (observed 2026-11-05); how long icon files stay cached is not recorded",
-    "rules": "DOMAINS-SETUP.md: a production redeploy needs separate approval. The hall's head assets ship only in the one door release that waits on Yu's word (ledger kingdom-door-release). Generated pages are never hand-edited: change bin/build-dashboard.ts and regenerate site/ (CLAUDE.md)"
+    "rules": "DOMAINS-SETUP.md: a production redeploy needs separate approval. The hall's head assets ship only in the door release, which has not been decided. Generated pages are never hand-edited: change bin/build-dashboard.ts and regenerate site/ (CLAUDE.md)"
   },
   "media": [],
   "notes": [
@@ -140,8 +142,8 @@
     "Serving: the hub is staged from an allowlist, publications/hub-staging.v1.json, by bin/stage-hub.ts. The four files under serve.files are contract entries mapping doors/hub/brand/kit/web/<file> to <file>, all mutable destinations. The manifest and its three PNG icons are held (serve.omit), so check.mjs warns that the pages lack the kit's manifest link while adoption is pending, and fails once pending is cleared: ship them, or record the choice, before the release. Pages on this host that declare no icon (/os and others) will find /favicon.ico at the root.",
     "The card: kingdom-os-hub's media/og-atlas.jpg ('ready for https://thekingdom.dev/', committed in b1c8e1bf on 2026-08-17 by git author cambridgetcg, maker not recorded, its plate from an image model per tools/compose-og.py) was compared and not used: it shows the ✦ star the agents' call set aside, a violet nebula and Fraunces, which are the atlas's look, not the hall's night green, brass and seal. The kit's own og.jpg is set in the hall's words on its ground.",
     "Guards: tests/dashboard.test.ts holds the hall's head to kit/web/head-snippet.html (less the held manifest link) and the staging contract to the kit's files; tests/hub-brand.test.ts runs check.mjs. Both run in the verify job of .github/workflows/immutable-publications.yml (bun test --timeout 15000, the whole suite), which names neither file.",
-    "verify passed 270 checks with 2 warnings: the night-green tile is close to a dark browser's tab strip (1.02:1 and 1.31:1); the brass seal on it reads there. The 16 px cut is the generator's baseline and was not hand-hinted.",
-    "Release blockers found in review (2026-11-10): check.mjs fails on the pages' missing manifest link once serve.pending is cleared, so the staging gate's decision on the held files must come before a release; and the 32 px favicon's bottom edge is 2 px where its sides are 1 px (favicon-32.png, measured on the centre column and middle row).",
+    "verify passed 270 checks with 2 warnings (rebuild of 2026-11-11): the night-green tile is close to a dark browser's tab strip (1.02:1 and 1.31:1); the brass seal on it reads there. The favicon cuts are the generator's own hinting of the small cut (mark/k-seal-small.svg); none is hand-drawn. The small cut's arch is 34 units wide at 10x so the hinting draws it 1, 2 and 3 px on every side at 16, 32 and 48 px (checked pixel by pixel on 2026-11-11; with the earlier 28-unit arch the 32 px cut drew its top and bottom 2 px against 1 px sides). At 16 px the generator now takes the plain small mark, not its bolder fallback, so the K there is lighter than before.",
+    "Before a release (2026-11-11): the staging gate's question on the held manifest and its icons (serve.omit) must be settled, because check.mjs fails on the four pages' missing manifest link once serve.pending is cleared. The gate itself is left as it is. The 32 px favicon's uneven arch, the other blocker found in review on 2026-11-10, was fixed at the source on 2026-11-11 (see the verify note).",
     "og:locale is en_US (from brand.json lang \"en\", the card's language) on pages whose html lang is zh-Hant; left for the owner."
   ]
 }
