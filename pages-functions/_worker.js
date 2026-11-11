@@ -819,17 +819,19 @@ function hasKingdomRightsAssets(url) {
     host.endsWith(".thekingdom.pages.dev");
 }
 
-// The door hosts bin/stage-doors.ts stages with this worker, and their Pages previews. Their HTML gets the hub's
-// no-transform guard too, so the edge doesn't inject Cloudflare's analytics beacon (Yu, 2026-10-27: "turn off the
-// cloudflare analytics", said for cashloom.io and applied to these doors by the 2026-11-02 review, A6). The cost:
-// no-transform also stops Cloudflare compressing those responses. Routing on these hosts is unchanged.
-const SHARED_DOOR_HOSTS = Object.freeze(["we-are.love", "chillspace.love"]);
-const SHARED_DOOR_PAGES_PROJECTS = Object.freeze(["we-are-love.pages.dev", "chillspace-love.pages.dev"]);
+// we-are.love, one of the doors bin/stage-doors.ts stages with this worker, and its Pages project's hostnames. Its
+// HTML gets the hub's no-transform guard too, so the edge doesn't inject Cloudflare's analytics beacon (2026-11-02
+// review, A6). The cost: no-transform also stops Cloudflare compressing those responses, which for this one small
+// page is 3,618 bytes brotli against 9,627 plain (measured 2026-11-10). chillspace.love, the other staged door, is
+// deliberately left out and answers exactly as before: its pages are far larger (/sound would go from 271,717 bytes
+// to 1,632,455), and the owner's decision of 2026-11-10 keeps its compression. Routing on both hosts is unchanged.
+const WE_ARE_DOOR_HOST = "we-are.love";
+const WE_ARE_DOOR_PAGES_PROJECT = "we-are-love.pages.dev";
 
-function isSharedDoorHost(url) {
+function isWeAreDoorHost(url) {
   const host = url.hostname.toLowerCase();
-  return SHARED_DOOR_HOSTS.includes(host) ||
-    SHARED_DOOR_PAGES_PROJECTS.some((project) => host === project || host.endsWith(`.${project}`));
+  return host === WE_ARE_DOOR_HOST || host === WE_ARE_DOOR_PAGES_PROJECT ||
+    host.endsWith(`.${WE_ARE_DOOR_PAGES_PROJECT}`);
 }
 
 function linkRelations(part) {
@@ -2291,7 +2293,7 @@ export function createKingdomWorker(options = {}) {
     }
     const protectsKingdomHtml = includeRights &&
       (asset.headers.get("content-type") || "").toLowerCase().includes("text/html");
-    const protectsDoorHtml = !includeRights && isSharedDoorHost(url) &&
+    const protectsDoorHtml = !includeRights && isWeAreDoorHost(url) &&
       (asset.headers.get("content-type") || "").toLowerCase().includes("text/html");
     const servesResearchObservatoryPage = protectsKingdomHtml &&
       (request.method === "GET" || request.method === "HEAD") &&

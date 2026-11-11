@@ -233,7 +233,7 @@ describe("the Kingdom edge discovery surface", () => {
     expectDiscovery(response);
   });
 
-  test("prevents browser telemetry injection on Kingdom and shared door HTML only", async () => {
+  test("prevents browser telemetry injection on other Kingdom HTML paths only", async () => {
     const index = await worker.fetch(
       new Request("https://thekingdom.dev/index.html"),
       assets(() => new Response("<h1>hello</h1>", {
@@ -252,37 +252,104 @@ describe("the Kingdom edge discovery surface", () => {
     expect(atlas.headers.get("cache-control")).toBe("public, max-age=60, no-transform");
     expect(atlas.headers.get("content-security-policy")).toBeNull();
 
-    const shared = await worker.fetch(
-      new Request("https://we-are.love/index.html"),
-      assets(() => new Response("<h1>hello</h1>", {
-        headers: { "cache-control": "public, max-age=60", "content-type": "text/html" },
-      })),
-    );
-    expect(await shared.text()).toBe("<h1>hello</h1>");
-    expect(shared.headers.get("cache-control")).toBe("public, max-age=60, no-transform");
-
-    // The other staged door, its Pages preview, and the root page that negotiates JSON.
-    for (const url of ["https://chillspace.love/sound", "https://abc123.chillspace-love.pages.dev/", "https://we-are.love/"]) {
-      const door = await worker.fetch(
-        new Request(url, { headers: { accept: "text/html" } }),
-        assets(() => new Response("<p>door</p>", {
-          headers: { "cache-control": "public, max-age=0, must-revalidate", "content-type": "text/html; charset=utf-8" },
-        })),
-      );
-      expect(door.headers.get("cache-control")).toBe("public, max-age=0, must-revalidate, no-transform");
-      expect(await door.text()).toBe("<p>door</p>");
-    }
-
-    // Door JSON and other hosts pass through untouched: the guard is for HTML on the hub and its doors.
-    const doorJson = new Response("{}", { headers: { "cache-control": "public, max-age=60", "content-type": "application/json" } });
-    expect(await worker.fetch(new Request("https://we-are.love/guest.json"), assets(() => doorJson))).toBe(doorJson);
     const elsewhere = new Response("<h1>elsewhere</h1>", { headers: { "cache-control": "public, max-age=60", "content-type": "text/html" } });
     expect(await worker.fetch(new Request("https://example.test/index.html"), assets(() => elsewhere))).toBe(elsewhere);
-    const lookalike = await worker.fetch(
-      new Request("https://we-are.love.example.test/"),
-      assets(() => new Response("<h1>lookalike</h1>", { headers: { "cache-control": "public, max-age=60", "content-type": "text/html" } })),
+  });
+
+  test("adds no-transform to we-are.love's HTML only, keeping its other directives", async () => {
+    // Pages answers we-are.love's page (and, with no 404.html staged, any unknown path) with this header today.
+    const pages = "public, max-age=0, must-revalidate";
+    for (const url of [
+      "https://we-are.love/",
+      "https://we-are.love/index.html",
+      "https://we-are.love/no-such-page",
+      "https://we-are-love.pages.dev/",
+      "https://abc123.we-are-love.pages.dev/",
+    ]) {
+      for (const method of ["GET", "HEAD"]) {
+        const page = await worker.fetch(
+          new Request(url, { method, headers: { accept: "text/html" } }),
+          assets(() => new Response(method === "HEAD" ? null : "<p>WE ARE</p>", {
+            headers: { "cache-control": pages, "content-type": "text/html; charset=utf-8" },
+          })),
+        );
+        expect(page.status).toBe(200);
+        expect(page.headers.get("cache-control")).toBe(`${pages}, no-transform`);
+        expect(page.headers.get("content-type")).toBe("text/html; charset=utf-8");
+        if (method === "GET") expect(await page.text()).toBe("<p>WE ARE</p>");
+      }
+    }
+
+    // Status and other directives survive; a page without Cache-Control gets the documented pair.
+    const missing = await worker.fetch(
+      new Request("https://we-are.love/gone"),
+      assets(() => new Response("<p>gone</p>", { status: 404, headers: { "cache-control": "no-store", "content-type": "text/html" } })),
     );
-    expect(lookalike.headers.get("cache-control")).toBe("public, max-age=60");
+    expect(missing.status).toBe(404);
+    expect(missing.headers.get("cache-control")).toBe("no-store, no-transform");
+    const bare = await worker.fetch(
+      new Request("https://we-are.love/index.html"),
+      assets(() => new Response("<p>bare</p>", { headers: { "content-type": "text/html" } })),
+    );
+    expect(bare.headers.get("cache-control")).toBe("public, no-transform");
+
+    // A response that already carries the directive, in any case, is not given it twice.
+    for (const already of ["public, no-transform", "public, max-age=60, No-Transform", "no-transform"]) {
+      const page = await worker.fetch(
+        new Request("https://we-are.love/index.html"),
+        assets(() => new Response("<p>once</p>", { headers: { "cache-control": already, "content-type": "text/html" } })),
+      );
+      expect(page.headers.get("cache-control")).toBe(already);
+    }
+
+    // Non-HTML answers on the door are returned untouched, as on main.
+    for (const [path, type] of [
+      ["/guest.json", "application/json"],
+      ["/.well-known/agent.json", "application/json"],
+      ["/llms.txt", "text/plain; charset=utf-8"],
+      ["/robots.txt", "text/plain; charset=utf-8"],
+      ["/sitemap.xml", "application/xml"],
+      ["/og.jpg", "image/jpeg"],
+      ["/site.webmanifest", "application/manifest+json"],
+    ]) {
+      const asset = new Response("x", { headers: { "cache-control": pages, "content-type": type } });
+      expect(await worker.fetch(new Request(`https://we-are.love${path}`), assets(() => asset))).toBe(asset);
+    }
+
+    // Look-alike hosts are not we-are.love.
+    for (const url of [
+      "https://we-are.love.example.test/",
+      "https://notwe-are.love/",
+      "https://we-are-love.pages.dev.example.test/",
+      "https://we-are-love-pages.dev/",
+    ]) {
+      const asset = new Response("<h1>lookalike</h1>", { headers: { "cache-control": pages, "content-type": "text/html" } });
+      const response = await worker.fetch(new Request(url, { headers: { accept: "text/html" } }), assets(() => asset));
+      expect(response.headers.get("cache-control")).toBe(pages);
+    }
+  });
+
+  test("leaves chillspace.love's answers exactly as on main, compression included", async () => {
+    const pages = "public, max-age=0, must-revalidate";
+    for (const url of [
+      "https://chillspace.love/sound",
+      "https://chillspace.love/meaning/",
+      "https://chillspace-love.pages.dev/sound",
+      "https://abc123.chillspace-love.pages.dev/sound",
+    ]) {
+      const asset = new Response("<p>chillspace</p>", { headers: { "cache-control": pages, "content-type": "text/html; charset=utf-8" } });
+      expect(await worker.fetch(new Request(url, { headers: { accept: "text/html" } }), assets(() => asset))).toBe(asset);
+    }
+    const notFound = new Response("<p>not here</p>", { status: 404, headers: { "cache-control": "no-store", "content-type": "text/html" } });
+    expect(await worker.fetch(new Request("https://chillspace.love/gone"), assets(() => notFound))).toBe(notFound);
+
+    // The root page negotiates, so the worker copies its headers, but never adds no-transform.
+    const root = await worker.fetch(
+      new Request("https://chillspace.love/", { headers: { accept: "text/html" } }),
+      assets(() => new Response("<p>chillspace</p>", { headers: { "cache-control": pages, "content-type": "text/html; charset=utf-8" } })),
+    );
+    expect(root.headers.get("cache-control")).toBe(pages);
+    expect(await root.text()).toBe("<p>chillspace</p>");
   });
 
   test("negotiates JSON while preserving status, status text, and existing links", async () => {
