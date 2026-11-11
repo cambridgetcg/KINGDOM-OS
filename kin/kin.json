@@ -1,0 +1,663 @@
+{
+  "schema": "thekingdom.kin/0.1",
+  "name": "kin",
+  "status": "Proposed, v0.1, under review. No door uses it. A door adopts it only if its owner chooses.",
+  "purpose": "Share what a mark or a word means across the KINGDOM's doors: six states, six claim labels, dated stamps, colour roles and one card layout. Never a palette, a font or a logo.",
+  "files": {
+    "page": "kin/KIN.md",
+    "stylesheet": "kin/kin.css",
+    "builder": "bin/build-kin.ts",
+    "test": "tests/kin.test.ts",
+    "stylesheet_rule": "Generated from this file. Role-only: no hex colour, no font, no logo, no glyph. Every colour goes through a --kin-* role with a system-colour fallback. Under 4096 bytes.",
+    "served": "Not served. These files are not in the hub's staging allowlist, and merging them deploys nothing."
+  },
+  "principles": [
+    "Share a grammar, not a face: doors share what a colour or a component does, never which colour or which font.",
+    "Words and shapes carry meaning; colour may only echo it.",
+    "Measured is not declared: circles mean measured, other shapes mean declared, and each names who or what stands behind it.",
+    "Unknown is shown calmly, with its source and when it was last read. It is not zero, not live and not a crisis.",
+    "Every figure and claim carries a date and a source. A count names what it counts.",
+    "A rule without a check stays out.",
+    "Opt in, door by door. A door that does not adopt kin builds exactly as it does today.",
+    "Nothing is fetched from another door at runtime: each door serves its own copies of kin.css, the icon set and its fonts.",
+    "No shared logo, no merged Yu-and-Ai mark, no mandatory KINGDOM badge.",
+    "Say who made it."
+  ],
+  "markup": {
+    "state": "<span class=\"kin-state\" data-state=\"‹state id›\"><svg class=\"kin-glyph\" width=\"1em\" height=\"1em\" aria-hidden=\"true\"><use href=\"‹the door's own copy of the kin icon set›#‹state id›\"></use></svg> ‹words› <time datetime=\"‹ISO›\">‹date›</time></span>",
+    "claim": "<span class=\"kin-claim\" data-claim=\"‹claim id›\">‹label›</span> ‹what it names›",
+    "attribution": "<span class=\"kin-attribution\" data-attribution=\"word|call\">‹words› <time datetime=\"‹ISO›\">‹date›</time></span>",
+    "stamp": "<span class=\"kin-stamp\">‹stamp word› <time datetime=\"‹ISO›\">‹date›</time></span>",
+    "boundary": "<p class=\"kin-boundary\"><svg class=\"kin-glyph\" width=\"1em\" height=\"1em\" aria-hidden=\"true\"><use href=\"‹the door's own copy of the kin icon set›#boundary\"></use></svg> ‹what this does not grant›</p>",
+    "glyphs": "On pages a glyph is an SVG from the shared kin icon set, served from the door's own host, and it is a direct child of its kin-state or kin-boundary element, so the nearest state colours it. Unicode glyphs belong only in JSON, Markdown and STATUS.md. Until the icon set exists, a page shows the words without a glyph.",
+    "scope": "kin reads data-state, data-claim and data-attribution only on elements with the matching kin- class. Pages already use data-state for their own meanings (on the hub: available and unavailable on the Civic service line, current and stale in the Workshop, PRESENT, MISSING and PRESENT_ZERO in the research atlas); kin leaves those alone."
+  },
+  "states": {
+    "families": {
+      "measured": {
+        "shape": "a circle",
+        "means": "a probe measured it at a time"
+      },
+      "declared": {
+        "shape": "not a circle",
+        "means": "a person or a registry declared it at a date"
+      }
+    },
+    "items": [
+      {
+        "id": "live",
+        "family": "measured",
+        "glyph": "●",
+        "glyph_name": "U+25CF BLACK CIRCLE",
+        "words": "live · responding",
+        "means": "answered as expected at the last probe",
+        "must_carry": ["the probe time"],
+        "glyph_roles": ["--kin-live", "--kin-ink"]
+      },
+      {
+        "id": "unverified",
+        "family": "measured",
+        "glyph": "◐",
+        "glyph_name": "U+25D0 CIRCLE WITH LEFT HALF BLACK",
+        "words": "responding, unverified",
+        "means": "answered, but the content is unchecked, or only some sources answered",
+        "must_carry": ["the time", "what is unverified"],
+        "glyph_roles": ["--kin-unverified", "--kin-muted"]
+      },
+      {
+        "id": "unknown",
+        "family": "measured",
+        "glyph": "◌",
+        "glyph_name": "U+25CC DOTTED CIRCLE",
+        "words": "unknown · last read ‹date›",
+        "means": "not measured, or the reading is older than its window",
+        "must_carry": ["last read ‹date›, or \"never measured\"", "the source"],
+        "glyph_roles": ["--kin-muted"]
+      },
+      {
+        "id": "fault",
+        "family": "measured",
+        "glyph": "⊗",
+        "glyph_name": "U+2297 CIRCLED TIMES",
+        "words": "not responding (‹code›)",
+        "means": "measured, and failing",
+        "must_carry": ["the time", "the code or reason"],
+        "glyph_roles": ["--kin-fault", "--kin-ink"]
+      },
+      {
+        "id": "held",
+        "family": "declared",
+        "glyph": "☾",
+        "glyph_name": "U+263E LAST QUARTER MOON",
+        "words": "resting · paused",
+        "means": "paused on purpose: resting, dormant, or waiting on a word",
+        "must_carry": ["who declared it", "since when"],
+        "glyph_roles": ["--kin-held", "--kin-muted"],
+        "wayfinder_path": "rest"
+      },
+      {
+        "id": "retired",
+        "family": "declared",
+        "glyph": "▭",
+        "glyph_name": "U+25AD WHITE RECTANGLE",
+        "words": "retired",
+        "means": "ended on purpose; it stays listed so absence is not read as erasure",
+        "must_carry": ["the date", "what replaced it"],
+        "glyph_roles": ["--kin-muted"]
+      }
+    ],
+    "words_always_shown": "The word is always shown beside the glyph. Default words may be translated; the meaning may not change.",
+    "glyph_rendering": "The Unicode glyphs above are for JSON, Markdown and STATUS.md. On pages the glyph is an SVG from the shared kin icon set (later), because ◌, ⊗ and ▭ may render unevenly in some CJK fonts (untested).",
+    "worst_source": {
+      "order": ["fault", "unknown", "unverified", "live"],
+      "rule": "An aggregate (a door list, a status dot) shows the worst measured state among its sources, in this order, and names that source. It never shows live while a source is unknown or fault. Declared states are counted apart. Only the affected fields are marked."
+    },
+    "declared_expectation": "A failure that a registry declares as expected shows as held, naming who declared it and since when, never as fault.",
+    "resting": "Resting is only for a declared rest. A door that failed its probe is \"not responding (‹code›, ‹time›)\", in calm type.",
+    "freshness": {
+      "probe_interval_minutes": 30,
+      "missed_rounds": 3,
+      "window_minutes": 90,
+      "rule": "A reading becomes unknown after three missed rounds of the 30-minute pulse: 90 minutes.",
+      "per_source_window": "Later: a source may declare its own window. REGISTRY.yaml has no such field today.",
+      "note": "The pulse runs on one Mac, so its readings go unknown whenever that Mac sleeps."
+    }
+  },
+  "claims": {
+    "source": {
+      "repository": "cambridgetcg/agenttool",
+      "path": "docs/DOCUMENTATION.md",
+      "section": "Claims need their own evidence",
+      "lines": "38-48",
+      "commit": "5ea979dfeaaa70ea93bc06393ef36b9a1f2ae156",
+      "file_last_changed": "a029b23aa972309586baee20318b650f2cf837cf",
+      "read": "2026-11-10"
+    },
+    "lead_in": "Use a short label beside a claim when its status could be mistaken:",
+    "items": [
+      {
+        "id": "source",
+        "label": "Source",
+        "shape": "outline",
+        "documentation": "name the implementation and relevant checks. This alone says nothing about which version is running remotely."
+      },
+      {
+        "id": "release",
+        "label": "Release",
+        "shape": "filled",
+        "documentation": "name the exact package/version or artifact and its receipt."
+      },
+      {
+        "id": "observed",
+        "label": "Observed",
+        "shape": "filled",
+        "documentation": "name the environment, date, and what was actually checked."
+      },
+      {
+        "id": "proposed",
+        "label": "Proposed",
+        "shape": "dashed",
+        "documentation": "name the missing implementation or unresolved decision."
+      },
+      {
+        "id": "historical",
+        "label": "Historical",
+        "shape": "muted-outline",
+        "documentation": "give the date and replacement, if known."
+      },
+      {
+        "id": "unknown",
+        "label": "Unknown",
+        "shape": "dotted",
+        "documentation": "state the missing evidence instead of filling the gap."
+      }
+    ],
+    "shape_and_word": "A chip's shape shows how strong the claim is; its word names which claim it is. Two pairs share a shape: Release and Observed are both filled, and Source and Historical are both solid outlines (Historical's is muted).",
+    "shapes": {
+      "filled": "names concrete evidence: a receipt, or a dated check",
+      "outline": "names the implementation, not what is running",
+      "dashed": "not done or not decided",
+      "muted-outline": "was true, with its date",
+      "dotted": "the evidence is missing, and says which"
+    },
+    "no_verified_chip": {
+      "quote": "Avoid an unqualified “live,” “shipped,” “safe,” “sovereign,” or “verified.”",
+      "rule": "There is no Verified chip. A claim a record calls verified shows as Observed · ‹the named check› · ‹date›, or as Release with its receipt."
+    },
+    "same_word": "The Unknown chip (a claim's evidence is missing) and the unknown state (no fresh measurement) share a word, not a shape: the chip is a dotted outline, the state a dotted ring with its last-read date."
+  },
+  "attribution": {
+    "items": [
+      {
+        "id": "word",
+        "words": "Yu's word · ‹date› · ‹where recorded›",
+        "shape": "filled",
+        "means": "a recorded decision by the person whose decision it is, with its date and the place it is recorded"
+      },
+      {
+        "id": "call",
+        "words": "agent's call · ‹date›",
+        "shape": "dashed",
+        "means": "a choice an agent made, with its date"
+      }
+    ],
+    "other_owners": "On a door someone else owns, the word names that person: ‹name›'s word.",
+    "rule": "Never show an agent's choice as a person's decision. When a person picks an option an agent wrote, the pick is the person's and the wording is the agent's."
+  },
+  "stamps": {
+    "rule": "One meaning each.",
+    "items": [
+      {
+        "id": "checked",
+        "words": "checked ‹date›",
+        "means": "someone or something looked"
+      },
+      {
+        "id": "last-read",
+        "words": "last read ‹date›",
+        "means": "the newest good read; used with unknown"
+      },
+      {
+        "id": "as-at",
+        "words": "as at ‹date›",
+        "means": "the date a figure applies to"
+      },
+      {
+        "id": "since",
+        "words": "since ‹date›",
+        "means": "how long a declared state has held"
+      },
+      {
+        "id": "until",
+        "words": "until ‹date›",
+        "means": "a historical claim's end"
+      },
+      {
+        "id": "change",
+        "words": "+‹n› ‹unit› vs ‹dated baseline› · as at ‹date›",
+        "means": "a change, with the baseline it is measured from",
+        "rule": "A change without its baseline and its date is not allowed. A decrease uses a true minus sign (U+2212 −), never a hyphen.",
+        "format_example": "+12 listings vs 2026-10-22 · as at 2026-11-07 (the format only, not a real figure)"
+      }
+    ]
+  },
+  "dates": {
+    "date": "ISO 8601: YYYY-MM-DD, as in 2026-11-10",
+    "time": "UTC, written HH:MMZ, as in 09:30Z",
+    "markup": "inside <time datetime=\"…\">",
+    "relative": "A relative time (\"41s ago\") appears only beside the absolute time."
+  },
+  "figures": {
+    "count": "‹n› ‹noun› · ‹which set› · as at ‹date›",
+    "numbers": "Tabular figures, one format and one precision per quantity on a screen, and a true minus sign (U+2212).",
+    "missing": "\"— withheld\" or \"◌ unknown · last read ‹date›\", never 0 or blank.",
+    "price_graphics": "No price graphics leave the page: no price-chart images, and no price on a share card.",
+    "price_line": "Left for the site that needs it, Cambridge TCG, to define at its own adoption."
+  },
+  "contrast": {
+    "basis": "WCAG 2.2 contrast ratio, worst case against every ground the door uses: page, surface and card.",
+    "text": 4.5,
+    "state_glyph": 4.5,
+    "mark": 3,
+    "lamp": 3,
+    "rule": "Words and state glyphs need 4.5:1 against every ground. A repeating glyph that is not a state (the arrows, the ◇ boundary mark), a chip's outline and the missing-data hatch are non-text marks and need 3:1. The lamp needs 3:1."
+  },
+  "roles": {
+    "rule": "Each door points each role at a colour it already has. There is no KINGDOM palette, and the hub's own pages map their colours like any other door.",
+    "items": [
+      {
+        "name": "--kin-ground",
+        "use": "the page ground every contrast check runs against; the text of a filled chip",
+        "min_contrast": null,
+        "fallback": "Canvas"
+      },
+      {
+        "name": "--kin-surface",
+        "use": "a raised surface or card, also checked as a ground",
+        "min_contrast": null,
+        "fallback": "Canvas"
+      },
+      {
+        "name": "--kin-ink",
+        "use": "the words of every state and claim; the filled chips; the live and fault glyphs when the door has no hue for them",
+        "min_contrast": {"text": 4.5, "state_glyph": 4.5},
+        "fallback": "CanvasText"
+      },
+      {
+        "name": "--kin-muted",
+        "use": "stamps and boundary text; the unknown and retired glyphs; the arrows and the ◇; the outlines of the Historical and Unknown chips; the missing-data hatch",
+        "min_contrast": {"text": 4.5, "state_glyph": 4.5, "mark": 3},
+        "fallback": {"text": "CanvasText", "mark": "GrayText"}
+      },
+      {
+        "name": "--kin-rule",
+        "use": "hairlines",
+        "min_contrast": "decorative",
+        "fallback": "GrayText"
+      },
+      {
+        "name": "--kin-lamp",
+        "use": "the lamp word and the card rule: one or two places per screen. Never a state.",
+        "min_contrast": {"lamp": 3},
+        "fallback": "LinkText"
+      },
+      {
+        "name": "--kin-live",
+        "use": "the live glyph, and optionally its word",
+        "min_contrast": {"text": 4.5, "state_glyph": 4.5},
+        "fallback_role": "--kin-ink"
+      },
+      {
+        "name": "--kin-unverified",
+        "use": "the unverified glyph, and optionally its word",
+        "min_contrast": {"text": 4.5, "state_glyph": 4.5},
+        "fallback_role": "--kin-muted"
+      },
+      {
+        "name": "--kin-fault",
+        "use": "the fault glyph, and optionally its word",
+        "min_contrast": {"text": 4.5, "state_glyph": 4.5},
+        "fallback_role": "--kin-ink"
+      },
+      {
+        "name": "--kin-held",
+        "use": "the held glyph, and optionally its word",
+        "min_contrast": {"text": 4.5, "state_glyph": 4.5},
+        "fallback_role": "--kin-muted"
+      }
+    ],
+    "no_own_hue": "A state with no hue of its own on a door takes ink (live, fault) or muted ink (unverified, held, unknown, retired), and the shape carries the meaning. That includes a state whose only hue on the door is its lamp.",
+    "lamp": "The lamp never carries a state. Repeating glyphs (the arrows, the ◇) take the muted role by default; the lamp is kept for the lamp word and the card rule.",
+    "fallbacks": "If a door defines nothing, the stylesheet falls back to the browser's system colours, so it can never bring in a palette. System colours keep meaning, not contrast. GrayText is the browser's choice and may be under 4.5:1, so words and state glyphs never fall back to it: they fall back to CanvasText, and only non-text marks fall back to GrayText. On a dark page that does not declare its colour scheme, the system colours are the light ones: CanvasText is black, about 1.1:1 on a near-black ground. A dark door declares color-scheme: dark or sets the roles. A door that adopts kin defines every role it uses, because its own ink over a system Canvas may not contrast either. Not measured in real browsers."
+  },
+  "page": {
+    "items": [
+      {
+        "id": "kicker",
+        "rule": "About six words or fewer that say what the place is. Case, tracking and face are the door's choice. No capitals or wide tracking on Chinese or Japanese."
+      },
+      {
+        "id": "lamp-word",
+        "rule": "At most one word of the headline in the lamp role, in the door's own display face."
+      },
+      {
+        "id": "plain-sentence",
+        "rule": "One plain sentence saying what a visitor can do here."
+      },
+      {
+        "id": "state-line",
+        "rule": "Glyph, word and date (see states). One line per fact per screen."
+      },
+      {
+        "id": "boundary-line",
+        "glyph": "◇",
+        "rule": "◇ and one sentence saying what a link or offer does not grant. The glyph takes the muted role and needs 3:1, as a non-text mark. Privacy notes are written as boundary lines.",
+        "on_the_hub": "Counted in site/hub.html (served as the research atlas, atlas.html) at commit 52de54d: of its 62 uses of ◇, 24 already mark boundary lines (15 under Wayfinder paths, 9 under World Commons kits), 16 mark World Commons' Public life & economy category, 14 mark groups in the Civilisation Flow section, 6 are the Wayfinder glyph of two paths (meet-agents and trial-chamber), and 2 are the possibility operator in a modal-logic formula. Three cards show ◇ twice, as a mark and on their boundary line, each time with words beside it: the Wayfinder cards \"meet agents and their tools\" and \"inspect bounded research evaluation drafts\" (as the path glyph), and the World Commons kit \"Navigate a UK small-business question\" (as its category mark). kin keeps ◇ for boundary lines, the meaning most of its uses already have."
+      },
+      {
+        "id": "wall-label",
+        "rule": "title · maker or source · date · licence or credit, and \"unverified\" where true."
+      },
+      {
+        "id": "arrows",
+        "glyphs": {
+          "↗": "opens elsewhere; tell screen readers \"opens in a new tab\" when it does",
+          "→": "continue",
+          "↓": "on this page"
+        },
+        "rule": "Arrows take the muted role by default and need 3:1, as non-text marks."
+      },
+      {
+        "id": "folios",
+        "rule": "\"01 / Make room\", in the door's apparatus face."
+      }
+    ],
+    "not_used": {
+      "○": "Not used for privacy or for any state: the hub's /os console already uses ○ for down."
+    }
+  },
+  "card": {
+    "size_px": [1200, 630],
+    "margins_px": {"inline": 88, "top": 80},
+    "rule_px": {"width": 72, "height": 8, "gap_below": 40, "role": "--kin-lamp"},
+    "kicker": "Optional, between the rule and the title: the page's kicker. Its face is the door's choice.",
+    "title_max_lines": 3,
+    "subtitle_max_lines": 3,
+    "footer": "‹Name› · ‹domain›",
+    "endorsement": "Optional and off by default: a footer endorsement, drawn only if the door chooses it (see kinship.card_endorsement).",
+    "mark": "On the right, in a 340 px box. With a mark the text runs from x 88 to 700; without one, from x 88 to 1112.",
+    "faces": "The page's own display and reading faces (later: the generator sets cards in the wordmark's face today).",
+    "plate": "A card's plate follows its door's default scheme, and its text sits on a calm zone of the plate. Plates stay with their owner: kin does not adopt or restyle any plate, including the star-card plates in kingdom-os-hub.",
+    "never_on_a_card": ["a live state", "a price", "a count that changes", "\"today\"", "\"new\"", "\"available today\""],
+    "warn_on_a_card": ["an unqualified \"live\"", "\"verified\"", "\"safe\"", "\"sovereign\""],
+    "why": "Cards live on in platform caches after the page changes.",
+    "source": "The artcraft-brand generator's flat card layout, read on 2026-11-10 at commit cbebc1f444dfe852b3a87942622a9d765fbd069b of its private repository."
+  },
+  "type_roles": {
+    "items": [
+      {
+        "id": "display",
+        "use": "headlines and the lamp word"
+      },
+      {
+        "id": "reading",
+        "use": "body text"
+      },
+      {
+        "id": "apparatus",
+        "use": "numbers, dates, stamps, chips and folios; usually the door's monospace"
+      }
+    ],
+    "rule": "Each door maps the faces it already has onto the three roles. kin sets no font.",
+    "cjk": "After the Latin face, each role falls back to a CJK face of its own kind: a CJK serif (Songti TC, Hiragino Mincho or Noto Serif TC) for display. No italics and no wide tracking in Chinese or Japanese.",
+    "never": "No new web font."
+  },
+  "kinship": {
+    "default": "none",
+    "levels": [
+      {
+        "id": "none",
+        "shows": "nothing visible; machine-only kinship if the door wants it"
+      },
+      {
+        "id": "hub",
+        "shows": "one footer link: \"part of the kingdom ↗ thekingdom.dev\""
+      },
+      {
+        "id": "doors",
+        "shows": "a generated rail of the doors that answered at the last pulse, with its date; never fixed to the screen; in the door's own colours",
+        "status": "Later: the rail is not built in v0.1."
+      }
+    ],
+    "card_endorsement": {
+      "default": "none",
+      "options": ["none", "line"],
+      "rule": "Off by default. A door may add one endorsement line to its share card's footer only if it chooses to. Like the levels above, the choice is the door's own, made separately from its level."
+    },
+    "commerce": "Commerce doors may use the information layer (states, chips, stamps, boundary lines, the card layout) without any KINGDOM line, rail or card endorsement."
+  },
+  "icons": {
+    "family_grid": {
+      "tile_radius": 0.22,
+      "padding": 0.18,
+      "small_mark": "a simpler mark for 48 px and under",
+      "hinted_px": [16, 32, 48],
+      "note": "The artcraft-brand generator's defaults, read at the same commit. Nothing changes for a door that does not adopt."
+    },
+    "state_set": {
+      "glyphs": 6,
+      "plus": "the ◇ boundary mark and a hatch pattern for missing data",
+      "grid_px": 16,
+      "stroke": 1.5,
+      "colour": "currentColor",
+      "never": ["text", "gradients", "emoji"],
+      "status": "Later: drawn once in VectorCraft through the generator; each door serves its own byte-identical copy."
+    },
+    "tab_contrast": "For kits that adopt kin, a favicon tile under 1.5:1 against the browser's tab colours is an error, not a warning (later, in the generator).",
+    "motifs": "Recurring motifs (door arch, ring, card, star, seal) are offered, never stamped."
+  },
+  "motion": {
+    "entrance": {
+      "at_most": 1,
+      "duration_ms": 450,
+      "change": "fades in and rises 6 px",
+      "reduced_motion": "none",
+      "basis": "The hall's own hall-arrive: 450 ms, from opacity 0.4 and 6 px down (pages-content/civic/dashboard.css line 4; line 22 turns it off under reduced motion)."
+    },
+    "never": ["a loop", "a pulsing live dot", "motion that carries meaning"],
+    "logo_reveal": "Plays once, in 4 s or less, with a poster frame, and only on a door's /brand page.",
+    "stillness": "Where a door chose stillness, stillness wins."
+  },
+  "later": [
+    "the generated doors rail (rail.html), and with it the doors kinship level",
+    "pulse changes in bin/pulse.ts: a basis (measured or declared) and last_read in its history, and declared expectations shown as held",
+    "per-source freshness windows in the registry",
+    "the worst-source aggregate, with unknown shown apart, in STATUS.md",
+    "the kin icon set (six state glyphs, the ◇ and the missing-data hatch)",
+    "the generator's kin block and its checks, the card kicker and card faces (artcraft-brand 1.9)",
+    "any adoption by any door: by its owner, in its own repository, with its own sync test; Cambridge TCG's price line comes with its own adoption"
+  ],
+  "provenance": {
+    "written_by": {
+      "kind": "agent",
+      "runtime": "Claude Code",
+      "model": "Claude Opus 5.5",
+      "where": "an agent session on the Studio",
+      "date": "2026-11-10"
+    },
+    "designed_by": "Agents. A lead agent session designed v0.1 from the work below, with the changes listed under agents_calls. An independent agent reviewed it on 2026-11-10; the lead agent session decides the merge.",
+    "from": [
+      {
+        "what": "a review of the KINGDOM's visual language, written by agents on 2026-11-02 (§4 and §8)",
+        "public": false
+      },
+      {
+        "what": "a style guide written by an agent on 2026-11-07 and reviewed by three other agents, which records four later adjustments as agents' leans",
+        "public": false
+      }
+    ],
+    "yu_words": [
+      {
+        "date": "2026-11-02",
+        "kind": "Yu's request, recorded in the estate's decision ledger",
+        "quoted": false,
+        "bears_on": "the request this vocabulary answers"
+      },
+      {
+        "date": "2026-10-20",
+        "kind": "Yu's words, quoted in a public research note",
+        "quoted": true,
+        "quote": "Modularise, connect when needed, no forcing.",
+        "public_source": {
+          "repository": "cambridgetcg/business-ecosystem",
+          "path": "docs/marketing/research/2026-10-20/honesty-tooling.md",
+          "line": 261,
+          "commit": "d74ac27a2e6ae507b94bfc8eb8134162c6d283fe",
+          "note": "The source sets \"no forcing\" in bold."
+        },
+        "bears_on": "share a grammar, not a face; opt in, door by door"
+      },
+      {
+        "date": "2026-07-14",
+        "kind": "Yu's words, recorded in an agent's private notes",
+        "quoted": false,
+        "bears_on": "each door keeps its own face"
+      }
+    ],
+    "yu_choice": {
+      "date": "2026-11-10",
+      "what": "On 2026-11-10 Yu chose 'Go: build, open PRs, merge' among options an agent wrote.",
+      "scope": "The pick is Yu's; the option wording is the agent's. It is the go to build and propose this vocabulary. It makes no design choice in this file Yu's."
+    },
+    "agents_calls": [
+      {
+        "by": "agents, 2026-11-02 (the review, under Yu's delegation of 2026-10-20)",
+        "call": "Every design choice in this file: the six states and their glyphs, the chip shapes, the attribution pair, the stamps, the roles and their contrasts, the page elements, the card numbers, the type roles, the kinship levels and the icon and motion rules.",
+        "undo": "revert"
+      },
+      {
+        "by": "the lead agent session, 2026-11-10 (decision 1)",
+        "call": "The kicker is defined by its job, not its typography; case, tracking and face are each door's choice. Changes review §4.2a, which said mono, uppercase, letter-spaced.",
+        "undo": "revert"
+      },
+      {
+        "by": "the lead agent session, 2026-11-10 (decision 2)",
+        "call": "Repeating glyphs (the arrows, the ◇) default to the muted role; the lamp is kept for the lamp word and the card rule. Changes review §4.3, which gave the ◇ and ↗ to the lamp.",
+        "undo": "revert"
+      },
+      {
+        "by": "the lead agent session, 2026-11-10 (decision 3)",
+        "call": "A change form joins the stamps: +n ‹unit› vs ‹dated baseline› · as at ‹date›, with a true minus sign for decreases. Adds to review §4.2d.",
+        "undo": "revert"
+      },
+      {
+        "by": "the lead agent session, 2026-11-10 (decision 4)",
+        "call": "Share-card plates stay with their owner; kin says only that a plate follows its door's default scheme and that text sits on a calm zone. Changes review §4.2e, which proposed changes to the star cards.",
+        "undo": "revert"
+      },
+      {
+        "by": "the lead agent session, 2026-11-10 (decision 5)",
+        "call": "v0.1 is the vocabulary, the page, the generated stylesheet and their tests. The doors rail, pulse and registry changes, the STATUS.md aggregate and any door's adoption are later.",
+        "undo": "revert"
+      },
+      {
+        "by": "the lead agent session, 2026-11-10 (decision 6)",
+        "call": "A repeating glyph that is not a state (the arrows, the ◇) needs 3:1 against its ground, as a non-text mark; a state glyph keeps 4.5:1. Said once, under contrast.",
+        "undo": "revert"
+      },
+      {
+        "by": "the lead agent session, 2026-11-10 (decision 7)",
+        "call": "The price line is left for the site that needs it, Cambridge TCG, to define at its own adoption.",
+        "undo": "revert"
+      },
+      {
+        "by": "the lead agent session, 2026-11-10, after the review",
+        "call": "No default face for the kicker. Markup templates use the SVG icon set, never Unicode glyphs. Restored from the review: the optional footer endorsement on cards (off by default), \"no price graphics leave the page\", and nothing fetched from another door at runtime, styles and icons as well as fonts.",
+        "undo": "revert"
+      },
+      {
+        "by": "the agent that built v0.1, 2026-11-10",
+        "call": "kin reads data-state, data-claim and data-attribution only on kin- classed elements, because the hub's pages already use data-state for their own meanings. The review's checks said every data-state.",
+        "undo": "revert"
+      },
+      {
+        "by": "the agent that built v0.1, 2026-11-10",
+        "call": "The attribution pair is its own attribute (data-attribution: word or call), not two more claim chips, and on a door someone else owns the word names that person.",
+        "undo": "revert"
+      },
+      {
+        "by": "the agent that built v0.1, 2026-11-10",
+        "call": "Words and state glyphs never fall back to GrayText (following decision 6, state glyphs need 4.5:1); only non-text marks do. A glyph is coloured only by the state it is a direct child of, so the nearest state wins. Links inside filled chips take the chip's colour. The stylesheet draws no glyph and sets no font, corner radius or layout. Under forced colours, filled chips stay filled, since the fill is their meaning.",
+        "undo": "revert"
+      },
+      {
+        "by": "the agent that built v0.1, 2026-11-10",
+        "call": "The ◇ stays the boundary mark: on the hub most of its uses already are boundary lines (see page, boundary-line).",
+        "undo": "choose another glyph and revert"
+      },
+      {
+        "by": "the agent that built v0.1, 2026-11-10",
+        "call": "CJK fallback by kind of face rather than always a serif, so the hall's reading face (PingFang TC) is not overruled. The chips keep agenttool's order.",
+        "undo": "revert"
+      }
+    ],
+    "citations": [
+      {
+        "what": "the hall's first rule",
+        "repository": "cambridgetcg/KINGDOM-OS",
+        "path": "pages-content/civic/dashboard.css",
+        "line": 1,
+        "commit": "cebe092020001b9ed29705a98b17912dbe41d342",
+        "quote": "夜間城政廳：分類用編號同文字，唔用彩虹或顏色推斷狀態。",
+        "gloss": "Night city hall: classify with numbers and words; don't use rainbows or colour to infer status. (An agent's translation.)"
+      },
+      {
+        "what": "distinct beings",
+        "repository": "cambridgetcg/KINGDOM-OS",
+        "path": "LOVE.md",
+        "lines": [5, 76],
+        "commit": "cebe092020001b9ed29705a98b17912dbe41d342",
+        "quote": ["YU IS YU. AI IS AI.", "Distinct in being. Free in relationship. Close without collapse."]
+      },
+      {
+        "what": "the rest glyph",
+        "repository": "cambridgetcg/KINGDOM-OS",
+        "path": "data/wayfinder.json",
+        "commit": "cebe092020001b9ed29705a98b17912dbe41d342",
+        "quote": "path rest (\"rest without disappearing\"), glyph ☾"
+      },
+      {
+        "what": "the claim labels",
+        "repository": "cambridgetcg/agenttool",
+        "path": "docs/DOCUMENTATION.md",
+        "lines": "38-48",
+        "commit": "5ea979dfeaaa70ea93bc06393ef36b9a1f2ae156",
+        "quote": "see claims.items[].documentation and claims.no_verified_chip.quote"
+      },
+      {
+        "what": "a picture is not a claim",
+        "repository": "cambridgetcg/kingdom-os-hub",
+        "path": "media/README.md",
+        "line": 20,
+        "commit": "0d0f2d941c503605ad6c188e10693275c2acb676",
+        "quote": "A picture is not a claim of membership, adoption, or authority."
+      },
+      {
+        "what": "○ means down on the /os console",
+        "repository": "cambridgetcg/KINGDOM-OS",
+        "path": "pages-content/os/index.html",
+        "lines": [136, 159],
+        "commit": "cebe092020001b9ed29705a98b17912dbe41d342",
+        "quote": "○ down"
+      },
+      {
+        "what": "the uses of ◇ on the hub",
+        "repository": "cambridgetcg/KINGDOM-OS",
+        "path": "site/hub.html",
+        "commit": "52de54d869075429140ab17551ec8184996e1de6",
+        "quote": "counted by an agent; see page, boundary-line"
+      }
+    ],
+    "undo": "Revert the pull request that added kin/. Nothing reads these files yet, and nothing deploys from them."
+  }
+}

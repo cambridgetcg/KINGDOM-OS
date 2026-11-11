@@ -360,7 +360,7 @@ describe("advertised URLs stay deployable", () => {
 
     const dashboard = read("site/dashboard.html");
     const primaryNav = dashboard.match(/<nav aria-label="主要導航">([\s\S]*?)<\/nav>/)![1];
-    expect(primaryNav).toContain('<a href="/power-atlas/">Power Atlas</a>');
+    expect(primaryNav).toContain('<a href="/power-atlas/" lang="en">Power Atlas</a>');
     expect(primaryNav).toContain('href="/atlas.html"');
     const projection = JSON.parse(dashboard.match(/<script id="civic-data" type="application\/json">([\s\S]*?)<\/script>/)![1]);
     const projected = projection.paths.find(({ id }: { id: string }) => id === "power-atlas");
