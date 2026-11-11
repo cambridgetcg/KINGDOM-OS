@@ -41,10 +41,12 @@ export const ROLLOUT_CHAINS: readonly Chain[] = ["zerone-testnet-1", "zerone-1"]
 // remote and each part goes straight to a presigned UploadPart URL. Tigris
 // refuses a chunked (unknown-length) PUT with 411, so each part is buffered as one
 // file of at most PART_BYTES before its PUT: peak rootfs use is one part, not
-// the whole archive. Testnet rehearses it for several nights before mainnet
-// joins (ledger zc-chain-backup-runner). A rollout chain outside this list keeps
-// the staged capture, byte for byte.
-export const STREAM_CHAINS: readonly Chain[] = ["zerone-testnet-1"];
+// the whole archive. Testnet rehearsed it for six nights (2026-11-06 to 11-11);
+// mainnet joined after the 11-11 testnet object was read back whole, with no
+// key files and no false hard links (ledger zc-chain-backup-runner). Mainnet's
+// staged capture had skipped every night since 10-21 (LOW_DISK). A rollout chain
+// outside this list keeps the staged capture, byte for byte.
+export const STREAM_CHAINS: readonly Chain[] = ["zerone-testnet-1", "zerone-1"];
 export const PART_BYTES = 256 * 1024 ** 2;
 // 64 parts = a 16 GiB ceiling; testnet's 2026-10-27 archive was 6876956202 bytes (26 parts).
 export const MAX_PARTS = 64;
@@ -642,14 +644,16 @@ export function openTranscript(path: string, header: string, literals: readonly 
   };
 }
 
-function emptyOutcome(chain: Chain): Outcome {
+// streamChains: which rollout chains stream. Production passes STREAM_CHAINS; tests pass a set
+// without zerone-1 to keep exercising the staged capture, which stays the one-line rollback.
+export function emptyOutcome(chain: Chain, streamChains: readonly Chain[] = STREAM_CHAINS): Outcome {
   return {
     chain, capture_status: "FAILED", tar_exit: null,
     upload_status: "NOT_ATTEMPTED", upload_exit: null, upload_http: null, object_status: "NOT_ATTEMPTED",
     ssh_exit: null, recovery_status: "NOT_ASSESSED", retention_status: "DISABLED",
     key_files: ROLLOUT_CHAINS.includes(chain) ? "EXCLUDED" : "INCLUDED",
     disk_free_kib: null, disk_need_kib: null, landed_marker: "NOT_WRITTEN",
-    capture_mode: ROLLOUT_CHAINS.includes(chain) && STREAM_CHAINS.includes(chain) ? "STREAMED_MULTIPART" : "STAGED",
+    capture_mode: ROLLOUT_CHAINS.includes(chain) && streamChains.includes(chain) ? "STREAMED_MULTIPART" : "STAGED",
     parts: null, stream_bytes: null, multipart_status: "NOT_STARTED", error: "SETUP_FAILED",
   };
 }
@@ -858,6 +862,7 @@ export async function main(
   createEffects: (run: RunContext) => Promise<Effects> = productionEffects,
   log: (line: string) => void = console.log,
   limits: Readonly<Limits> = LIMITS,
+  streamChains: readonly Chain[] = STREAM_CHAINS,
 ): Promise<1 | 2 | 3> {
   const chains = parseArgs(args);
   if (!chains) {
@@ -869,7 +874,7 @@ export async function main(
     if (deadline.signal.aborted) resolve("expired");
     else deadline.signal.addEventListener("abort", () => resolve("expired"), { once: true });
   });
-  const deadlineOutcome = (chain: Chain): Outcome => ({ ...emptyOutcome(chain), error: "TIMEOUT_DEADLINE" });
+  const deadlineOutcome = (chain: Chain): Outcome => ({ ...emptyOutcome(chain, streamChains), error: "TIMEOUT_DEADLINE" });
   try {
     let effects: Effects;
     try {
@@ -877,7 +882,7 @@ export async function main(
       if (made === "expired") throw new Error("deadline");
       effects = made;
     } catch {
-      for (const chain of chains) log(JSON.stringify(deadline.signal.aborted ? deadlineOutcome(chain) : emptyOutcome(chain)));
+      for (const chain of chains) log(JSON.stringify(deadline.signal.aborted ? deadlineOutcome(chain) : emptyOutcome(chain, streamChains)));
       return 1;
     }
     let failed = false;
@@ -886,7 +891,7 @@ export async function main(
       // The reserve is for finishing a capture, never for starting one.
       if (deadline.remainingMs() <= limits.finishReserveMs) result = deadlineOutcome(chain);
       else {
-        result = emptyOutcome(chain);
+        result = emptyOutcome(chain, streamChains);
         // Whatever is still pending at the deadline is logged as it stands at
         // that instant; the cutoff keeps it from writing a marker afterwards,
         // and its child groups are stopped below before main returns.
