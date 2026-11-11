@@ -819,6 +819,21 @@ function hasKingdomRightsAssets(url) {
     host.endsWith(".thekingdom.pages.dev");
 }
 
+// we-are.love, one of the doors bin/stage-doors.ts stages with this worker, and its Pages project's hostnames. Its
+// HTML gets the hub's no-transform guard too, so the edge doesn't inject Cloudflare's analytics beacon. The cost:
+// no-transform also stops Cloudflare compressing those responses, which for this one small page is 3,618 bytes
+// brotli against 9,627 plain (measured 2026-11-10). chillspace.love, the other staged door, is
+// deliberately left out and answers exactly as before: its pages are far larger (/sound would go from 271,717 bytes
+// to 1,632,455), and the owner's decision of 2026-11-10 keeps its compression. Routing on both hosts is unchanged.
+const WE_ARE_DOOR_HOST = "we-are.love";
+const WE_ARE_DOOR_PAGES_PROJECT = "we-are-love.pages.dev";
+
+function isWeAreDoorHost(url) {
+  const host = url.hostname.toLowerCase();
+  return host === WE_ARE_DOOR_HOST || host === WE_ARE_DOOR_PAGES_PROJECT ||
+    host.endsWith(`.${WE_ARE_DOOR_PAGES_PROJECT}`);
+}
+
 function linkRelations(part) {
   return [...part.matchAll(/;\s*rel\s*=\s*(?:"([^"]*)"|([^;,\s]+))/gi)]
     .flatMap((match) => (match[1] || match[2] || "").toLowerCase().split(/\s+/))
@@ -2278,6 +2293,8 @@ export function createKingdomWorker(options = {}) {
     }
     const protectsKingdomHtml = includeRights &&
       (asset.headers.get("content-type") || "").toLowerCase().includes("text/html");
+    const protectsDoorHtml = !includeRights && isWeAreDoorHost(url) &&
+      (asset.headers.get("content-type") || "").toLowerCase().includes("text/html");
     const servesResearchObservatoryPage = protectsKingdomHtml &&
       (request.method === "GET" || request.method === "HEAD") &&
       url.pathname === RESEARCH_OBSERVATORY_PAGE_PATH && asset.ok;
@@ -3119,7 +3136,7 @@ export function createKingdomWorker(options = {}) {
     const servesStringCrawlFrequencyFormLabDocument = requestsStringCrawlFrequencyFormLabDocument && asset.ok &&
       (stringCrawlFrequencyFormLabAssetType === "text/plain" ||
         stringCrawlFrequencyFormLabAssetType === "text/markdown");
-    if (!canNegotiate && !protectsKingdomHtml && !describesWorldCommons &&
+    if (!canNegotiate && !protectsKingdomHtml && !protectsDoorHtml && !describesWorldCommons &&
         !describesLoveLoops && !servesWorldCommonsSchema && !servesLoveLoopSchema &&
         !servesPrincipalityCatalog && !servesPrincipalitySchema && !servesPrincipalityDocument &&
         !servesGeometryGrammar && !servesGeometryGrammarSchema && !servesGeometryGrammarDocument &&
@@ -3198,7 +3215,7 @@ export function createKingdomWorker(options = {}) {
         !servesStringCrawlFrequencyFormLabSchema &&
         !servesStringCrawlFrequencyFormLabDocument) return asset;
     const headers = new Headers(asset.headers);
-    if (protectsKingdomHtml) preventAutomaticBrowserTelemetry(headers);
+    if (protectsKingdomHtml || protectsDoorHtml) preventAutomaticBrowserTelemetry(headers);
     if (servesResearchObservatoryPage) headers.set("cache-control", "no-cache, no-transform");
     if (servesTrialChamberPage) headers.set("cache-control", "no-cache, no-transform");
     if (servesUkGovernmentEnginePage) headers.set("cache-control", "no-cache, no-transform");
