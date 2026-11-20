@@ -11,6 +11,7 @@ documentation, not a public asset or proof that a route is live.
 | Check atomic families, dependencies and review windows | [Shared family gate](../bin/publication-families.ts) |
 | Inspect route, method and header behavior | [Route reference](../OS-ROUTES.md) |
 | Build and release an exact commit | [Deployment runbook](../DOMAINS-SETUP.md) |
+| Clear a copy the estate cannot recall (a torrent descriptor or an archive upload); not part of the immutable ledger or the staging contract | [Clearance rule](../ARCHIVE-LEDGER.md#copies-the-estate-cannot-recall), [replicas guide](replicas/README.md), [notice](IRREVERSIBLE-COPIES.md) |
 
 The [recorded web release](../OUTREACH.md#recorded-web-release) identifies the
 2026-09-27 deployment and live-check receipt. Earlier local implementation notes
