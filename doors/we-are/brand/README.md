@@ -13,7 +13,7 @@ yellows redrawn in `#221B17` so the shape holds. The colours are the page's own:
 `#7C6A60` on paper. The page is light only.
 
 - **Who chose it:** an agent, Claude Code session dd025d89, on 2026-10-27, under Yu's delegation. Yu's word that
-  day was "yes, go ahead and wire the kits into the sites", for a kit from each site's current look.
+  day covered adding a kit made from each site's current look.
 - **Where it is recorded:** KINGDOM-OS PR #118, section "Look decisions" (merge 1e7fa561), and ledger item
   `artcraft-estate-wiring`.
 - **The words** on the page and card, "I AM YOU → I LOVE YOU → I TRUST YOU → WE ARE!", are Yu's, of 2026-07-10.
